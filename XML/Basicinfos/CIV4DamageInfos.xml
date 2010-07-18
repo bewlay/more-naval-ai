@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Basic Infos -->
+<Civ4DamageInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
+	<DamageInfos>
+		<DamageInfo>
+			<Type>DAMAGE_COLD</Type>
+			<Description>TXT_KEY_DAMAGE_COLD</Description>
+            <Button>Art/Interface/Buttons/Cold.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_DEATH</Type>
+			<Description>TXT_KEY_DAMAGE_DEATH</Description>
+            <Button>Art/Interface/Buttons/Death.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_FIRE</Type>
+			<Description>TXT_KEY_DAMAGE_FIRE</Description>
+            <Button>Art/Interface/Buttons/Fire.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_HOLY</Type>
+			<Description>TXT_KEY_DAMAGE_HOLY</Description>
+            <Button>Art/Interface/Buttons/Holy.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_LIGHTNING</Type>
+			<Description>TXT_KEY_DAMAGE_LIGHTNING</Description>
+            <Button>Art/Interface/Buttons/Lightning.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_PHYSICAL</Type>
+			<Description>TXT_KEY_DAMAGE_PHYSICAL</Description>
+            <Button>Art/Interface/Buttons/Physical.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_POISON</Type>
+			<Description>TXT_KEY_DAMAGE_POISON</Description>
+            <Button>Art/Interface/Buttons/Poison.dds</Button>
+		</DamageInfo>
+		<DamageInfo>
+			<Type>DAMAGE_UNHOLY</Type>
+			<Description>TXT_KEY_DAMAGE_UNHOLY</Description>
+            <Button>Art/Interface/Buttons/Unholy.dds</Button>
+		</DamageInfo>
+	</DamageInfos>
+</Civ4DamageInfos>

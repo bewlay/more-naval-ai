@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- EspionageMissionMission Infos -->
+<Civ4EspionageMissionInfo xmlns="x-schema:CIV4GameInfoSchema.xml">
+	<EspionageMissionInfos>
+		<EspionageMissionInfo>
+			<Type>ESPIONAGEMISSION_SEE_DEMOGRAPHICS</Type>
+			<Description>TXT_KEY_ESPIONAGE_CAN_SEE_DEMOGRAPHICS</Description>
+			<iCost>30</iCost>
+			<bIsPassive>1</bIsPassive>
+			<bIsTwoPhases>0</bIsTwoPhases>
+			<bTargetsCity>0</bTargetsCity>
+			<bSelectPlot>0</bSelectPlot>
+			<TechPrereq>NONE</TechPrereq>
+			<iVisibilityLevel>0</iVisibilityLevel>
+			<bInvestigateCity>0</bInvestigateCity>
+			<bSeeDemographics>0</bSeeDemographics>
+			<bNoActiveMissions>0</bNoActiveMissions>
+			<bSeeResearch>0</bSeeResearch>
+			<bDestroyImprovement>0</bDestroyImprovement>
+			<iDifficultyMod>0</iDifficultyMod>
+			<iDestroyBuildingCostFactor>0</iDestroyBuildingCostFactor>
+			<iDestroyUnitCostFactor>0</iDestroyUnitCostFactor>
+			<iDestroyProjectCostFactor>0</iDestroyProjectCostFactor>
+			<iDestroyProductionCostFactor>0</iDestroyProductionCostFactor>
+			<iBuyUnitCostFactor>0</iBuyUnitCostFactor>
+			<iBuyCityCostFactor>0</iBuyCityCostFactor>
+			<iStealTreasuryTypes>0</iStealTreasuryTypes>
+			<iCityInsertCultureAmountFactor>0</iCityInsertCultureAmountFactor>
+			<iCityInsertCultureCostFactor>0</iCityInsertCultureCostFactor>
+			<iCityPoisonWaterCounter>0</iCityPoisonWaterCounter>
+			<iCityUnhappinessCounter>0</iCityUnhappinessCounter>
+			<iCityRevoltCounter>0</iCityRevoltCounter>
+			<iBuyTechCostFactor>0</iBuyTechCostFactor>
+			<iSwitchCivicCostFactor>0</iSwitchCivicCostFactor>
+			<iSwitchReligionCostFactor>0</iSwitchReligionCostFactor>
+			<iPlayerAnarchyCounter>0</iPlayerAnarchyCounter>
+			<iCounterespionageNumTurns>0</iCounterespionageNumTurns>
+			<iCounterespionageMod>0</iCounterespionageMod>
+		</EspionageMissionInfo>
+	</EspionageMissionInfos>
+</Civ4EspionageMissionInfo>

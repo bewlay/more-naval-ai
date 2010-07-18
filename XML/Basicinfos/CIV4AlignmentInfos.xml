@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Basic Infos -->
+<Civ4AlignmentInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
+	<AlignmentInfos>
+		<AlignmentInfo>
+			<Type>ALIGNMENT_GOOD</Type>
+			<Description>TXT_KEY_ALIGNMENT_GOOD</Description>
+		</AlignmentInfo>
+		<AlignmentInfo>
+			<Type>ALIGNMENT_NEUTRAL</Type>
+			<Description>TXT_KEY_ALIGNMENT_NEUTRAL</Description>
+		</AlignmentInfo>
+		<AlignmentInfo>
+			<Type>ALIGNMENT_EVIL</Type>
+			<Description>TXT_KEY_ALIGNMENT_EVIL</Description>
+		</AlignmentInfo>
+	</AlignmentInfos>
+</Civ4AlignmentInfos>

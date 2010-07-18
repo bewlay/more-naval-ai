@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_HYBOREMS_WHISPER_SELECT</Tag>
+		<English>[ICON_BULLET]Select City of %s1</English>
+		<French>[ICON_BULLET]Select City of %s1</French>
+		<German>[ICON_BULLET]Select City of %s1</German>
+		<Italian>[ICON_BULLET]Select City of %s1</Italian>
+		<Spanish>[ICON_BULLET]Select City of %s1</Spanish>
+	</TEXT>
+</Civ4GameText>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Firaxis Games (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Basic Infos -->
+<Civ4UnitCombatInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
+	<UnitCombatInfos>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_RECON</Type>
+			<Description>TXT_KEY_UNITCOMBAT_RECON</Description>
+			<Button>Art/Interface/Buttons/Units/UCRecon.dds</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_ARCHER</Type>
+			<Description>TXT_KEY_UNITCOMBAT_ARCHER</Description>
+			<Button>Art/Interface/Buttons/Units/UCArcher.dds</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_MOUNTED</Type>
+			<Description>TXT_KEY_UNITCOMBAT_MOUNTED</Description>
+			<Button>,Art/Interface/Buttons/Promotions/Formation.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,2</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_MELEE</Type>
+			<Description>TXT_KEY_UNITCOMBAT_MELEE</Description>
+			<Button>,Art/Interface/Buttons/Promotions/Shock.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,5</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_SIEGE</Type>
+			<Description>TXT_KEY_UNITCOMBAT_SIEGE</Description>
+			<Button>,Art/Interface/Buttons/Promotions/Charge.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,5</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_ADEPT</Type>
+			<Description>TXT_KEY_UNITCOMBAT_ADEPT</Description>
+			<Button>Art/Interface/Buttons/Units/UCAdept.dds</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_DISCIPLE</Type>
+			<Description>TXT_KEY_UNITCOMBAT_DISCIPLE</Description>
+			<Button>Art/Interface/Buttons/Units/UCDisciple.dds</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_ANIMAL</Type>
+			<Description>TXT_KEY_UNITCOMBAT_ANIMAL</Description>
+			<Button>Art/Interface/Buttons/Units/UCAnimal.dds</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_NAVAL</Type>
+			<Description>TXT_KEY_UNITCOMBAT_NAVAL</Description>
+			<Button>,Art/Interface/Buttons/Promotions/Naval_Units.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,7</Button>
+		</UnitCombatInfo>
+		<UnitCombatInfo>
+			<Type>UNITCOMBAT_BEAST</Type>
+			<Description>TXT_KEY_UNITCOMBAT_BEAST</Description>
+			<Button>Art/Interface/Buttons/Units/UCBeast.dds</Button>
+		</UnitCombatInfo>
+	</UnitCombatInfos>
+</Civ4UnitCombatInfos>

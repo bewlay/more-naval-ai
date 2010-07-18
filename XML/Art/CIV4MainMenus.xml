@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Main Menu Infos -->
+<Civ4MainMenus xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<MainMenus>
+		<MainMenu>
+			<Type>MAIN_MENU_HYBOREM</Type>
+			<Description>TXT_KEY_MAIN_MENU_HYBOREM</Description>
+			<Scene>MAINMENU_SCENE_HYBOREM</Scene>
+			<SceneNoShader>MAINMENU_SCENE_HYBOREM</SceneNoShader>
+			<Soundtrack>AS2D_OPENING_MENU</Soundtrack>
+			<Loading>MAINMENU_LOAD_BTS</Loading>
+			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
+		</MainMenu>
+		<MainMenu>
+			<Type>MAIN_MENU_MOM</Type>
+			<Description>TXT_KEY_MAIN_MENU_MOM</Description>
+			<Scene>MAINMENU_SCENE_MOM</Scene>
+			<SceneNoShader>MAINMENU_SCENE_MOM</SceneNoShader>
+			<Soundtrack>AS2D_LABYRINTH_OF_DREAMS</Soundtrack>
+			<Loading>MAINMENU_LOAD_BTS</Loading>
+			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
+		</MainMenu>		
+		<MainMenu>
+			<Type>MAIN_MENU_SPHENER</Type>
+			<Description>TXT_KEY_MAIN_MENU_SPHENER</Description>
+			<Scene>MAINMENU_SCENE_SPHENER</Scene>
+			<SceneNoShader>MAINMENU_SCENE_SPHENER</SceneNoShader>
+			<Soundtrack>AS2D_INNOCENT_CHILD</Soundtrack>
+			<Loading>MAINMENU_LOAD_BTS</Loading>
+			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
+		</MainMenu>
+		<MainMenu>
+			<Type>MAIN_MENU_THANKS</Type>
+			<Description>TXT_KEY_MAIN_MENU_THANKS</Description>
+			<Scene>MAINMENU_SCENE_THANKS</Scene>
+			<SceneNoShader>MAINMENU_SCENE_THANKS</SceneNoShader>
+			<Soundtrack>AS2D_THE_SIEGE</Soundtrack>
+			<Loading>MAINMENU_LOAD_BTS</Loading>
+			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
+		</MainMenu>		
+	</MainMenus>
+</Civ4MainMenus>

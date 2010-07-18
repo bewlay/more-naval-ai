@@ -1,0 +1,562 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Bart Muzzin (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Leaderhead art path information -->
+<Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<LeaderheadArtInfos>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_BARBARIAN</Type>
+			<Button>,Art/interface/LeaderHeads/Btn_LH_Mongol_Genghis.dds,Art/Interface/Buttons/Actions_Buildss_Specialists_Atlas.dds,6,12</Button>
+			<NIF>art/LeaderHeads/Sid/sid.nif</NIF>
+			<KFM>art/LeaderHeads/Sid/sid.kfm</KFM>
+			<NoShaderNIF>art/LeaderHeads/Sid/sid_noshader.nif</NoShaderNIF>
+			<BackgroundKFM>art/LeaderHeads/Sid/sid_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RANDOM_EVIL</Type>
+			<Button>,Art/interface/LeaderHeads/Random Evil button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Random Evil.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RANDOM_GOOD</Type>
+			<Button>,Art/interface/LeaderHeads/Random Good button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Random Good.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RANDOM_NEUTRAL</Type>
+			<Button>,Art/interface/LeaderHeads/Random Neutral button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Random Neutral.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SABATHIEL</Type>
+			<Button>,Art/interface/LeaderHeads/Sabathiel button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Sabathiel.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CAPRIA</Type>
+			<Button>,Art/interface/LeaderHeads/Capria button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Capria.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_TETHIRA</Type>
+			<Button>,Art/interface/LeaderHeads/Tethira button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Tethira.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DECIUS</Type>
+			<Button>,Art/interface/LeaderHeads/Decius button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Decius.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_VARN</Type>
+			<Button>,Art/interface/LeaderHeads/Varn button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Varn.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ETHNE</Type>
+			<Button>,Art/interface/LeaderHeads/Ethne button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Ethne.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_EINION</Type>
+			<Button>,Art/interface/LeaderHeads/Einion button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Einion.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_THESSALONICA</Type>
+			<Button>,Art/interface/LeaderHeads/Thessalonica button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Thessalonica.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_BASIUM</Type>
+			<Button>,Art/interface/LeaderHeads/Basium button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Basium.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_GARRIM</Type>
+			<Button>,Art/interface/LeaderHeads/Garrim button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Garrim.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_BEERI</Type>
+			<Button>,Art/interface/LeaderHeads/Beeri button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Beeri.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CARDITH</Type>
+			<Button>,Art/interface/LeaderHeads/Cardith button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Cardith.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_AMELANCHIER</Type>
+			<Button>,Art/interface/LeaderHeads/Amelanchier button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Amelanchier.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ARENDEL</Type>
+			<Button>,Art/interface/LeaderHeads/Arendel button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Arendel.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_THESSA</Type>
+			<Button>,Art/interface/LeaderHeads/Thessa button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Thessa.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ARTURUS</Type>
+			<Button>,Art/interface/LeaderHeads/Arturus button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Arturus.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_KANDROS</Type>
+			<Button>,Art/interface/LeaderHeads/Kandros button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Kandros.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SANDALPHON</Type>
+			<Button>,Art/interface/LeaderHeads/Sandalphon button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Sandalphon.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FALAMAR</Type>
+			<Button>,Art/interface/LeaderHeads/Falamar button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Falamar.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_HANNAH</Type>
+			<Button>,Art/interface/LeaderHeads/Hannah button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Hannah.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CASSIEL</Type>
+			<Button>,Art/interface/LeaderHeads/Cassiel button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Cassiel.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_KOUN</Type>
+			<Button>,Art/interface/LeaderHeads/Koun button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Koun.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_TASUNKE</Type>
+			<Button>,Art/interface/LeaderHeads/Tasunke button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Tasunke.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RHOANNA</Type>
+			<Button>,Art/interface/LeaderHeads/Rhoanna button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Rhoanna.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_VALLEDIA</Type>
+			<Button>,Art/interface/LeaderHeads/Valledia button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Valledia.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DAIN</Type>
+			<Button>,Art/interface/LeaderHeads/Dain button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Dain.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CHARADON</Type>
+			<Button>,Art/interface/LeaderHeads/Charadon button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Charadon.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MAHALA</Type>
+			<Button>,Art/interface/LeaderHeads/Mahala button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Mahala.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DUIN</Type>
+			<Button>,Art/interface/LeaderHeads/Duin button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Duin.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_KEELYN</Type>
+			<Button>,Art/interface/LeaderHeads/Keelyn button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Keelyn.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_PERPENTACH</Type>
+			<Button>,Art/interface/LeaderHeads/Perpentach button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Perpentach.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_JONAS</Type>
+			<Button>,Art/interface/LeaderHeads/Jonas button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Jonas.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SHEELBA</Type>
+			<Button>,Art/interface/LeaderHeads/Sheelba button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Sheelba.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_HAFGAN</Type>
+			<Button>,Art/interface/LeaderHeads/Hafgan button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Hafgan.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FAERYL</Type>
+			<Button>,Art/interface/LeaderHeads/Faeryl button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Faeryl.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RIVANNA</Type>
+			<Button>,Art/interface/LeaderHeads/Rivanna button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Rivanna.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_VOLANNA</Type>
+			<Button>,Art/interface/LeaderHeads/Volanna button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Volanna.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ALEXIS</Type>
+			<Button>,Art/interface/LeaderHeads/Alexis button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Alexis.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FLAUROS</Type>
+			<Button>,Art/interface/LeaderHeads/Flauros button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Flauros.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MAHON</Type>
+			<Button>,Art/interface/LeaderHeads/Mahon button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Mahon.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_TEBRYN</Type>
+			<Button>,Art/interface/LeaderHeads/Tebryn button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Tebryn.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_OS-GABELLA</Type>
+			<Button>,Art/interface/LeaderHeads/Os-Gabella button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Os-Gabella.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_HYBOREM</Type>
+			<Button>,Art/interface/LeaderHeads/Hyborem button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Hyborem.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_JUDECCA</Type>
+			<Button>,Art/interface/LeaderHeads/Judecca button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Judecca.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SALLOS</Type>
+			<Button>,Art/interface/LeaderHeads/Sallos button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Sallos.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_OUZZA</Type>
+			<Button>,Art/interface/LeaderHeads/Ouzza button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Ouzza.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MERESIN</Type>
+			<Button>,Art/interface/LeaderHeads/Meresin button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Meresin.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_STATIUS</Type>
+			<Button>,Art/interface/LeaderHeads/Statius button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Statius.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_LETHE</Type>
+			<Button>,Art/interface/LeaderHeads/Lethe button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Lethe.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_AURIC</Type>
+			<Button>,Art/interface/LeaderHeads/Auric button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Auric.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_BRAEDEN</Type>
+			<Button>,Art/interface/LeaderHeads/Braeden button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Braeden.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DUMANNIOS</Type>
+			<Button>,Art/interface/LeaderHeads/Dumannios button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Dumannios.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_RIUROS</Type>
+			<Button>,Art/interface/LeaderHeads/Riuros button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Riuros.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ANAGANTIOS</Type>
+			<Button>,Art/interface/LeaderHeads/Anagantios button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Anagantios.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_OSTANES</Type>
+			<Button>,Art/interface/LeaderHeads/Ostanes button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Ostanes.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ULDANOR</Type>
+			<Button>,Art/interface/LeaderHeads/Uldanor button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Uldanor.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_TYA</Type>
+			<Button>,Art/interface/LeaderHeads/Tya button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Tya.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_WEEVIL</Type>
+			<Button>,Art/interface/LeaderHeads/Weevil button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Weevil.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FURIA</Type>
+			<Button>,Art/interface/LeaderHeads/Furia button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Furia.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MELISANDRE</Type>
+			<Button>,Art/interface/LeaderHeads/Melisandre button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Melisandre.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_AVERAX</Type>
+			<Button>,Art/interface/LeaderHeads/Averax button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Averax.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_GOSEA</Type>
+			<Button>,Art/interface/LeaderHeads/Gosea button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Gosea.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MALCHAVIC</Type>
+			<Button>,Art/interface/LeaderHeads/Malchavic button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Malchavic.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_KANE</Type>
+			<Button>,Art/interface/LeaderHeads/Kane button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Kane.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SHEKINAH</Type>
+			<Button>,Art/interface/LeaderHeads/Shekinah button.dds</Button>
+			<NIF>art/interface/LeaderHeads/Shekinah.dds</NIF>
+			<KFM/>
+			<NoShaderNIF/>
+			<BackgroundKFM/>
+		</LeaderheadArtInfo>
+	</LeaderheadArtInfos>
+</Civ4ArtDefines>
