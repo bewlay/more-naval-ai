@@ -4042,7 +4042,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						iValue += 2;
 						if (GC.getBuildingInfo(eBuilding).isVictoryBuilding())
 						{
-							iValue += kOwner.getArcaneTowerVictoryFlag();
+							iValue += 10;
 						}
                     }
 					

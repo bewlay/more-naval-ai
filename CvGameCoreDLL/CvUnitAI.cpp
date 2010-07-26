@@ -141,6 +141,14 @@ bool CvUnitAI::AI_update()
 			AI_setUnitAIType(UNITAI_HERO);
 		}
 	}
+
+	// Crew Check
+	//if (m_pUnitInfo->getUnitCombatType() == UNITCOMBAT_NAVAL)
+	if (m_pUnitInfo->getDomainType() == DOMAIN_SEA)
+	{
+		AI_crewCheck();
+	}
+
 // End Tholal AI
 
 /** BETTER AI Sephi (Time for the Mages to Caste Haste, etc.)                   **/
@@ -28630,4 +28638,63 @@ int CvUnitAI::getChannelingLevel()
 
     return 0;
 }
+
+// Check for AI to use crew promotions (modified from Denev's mod
+bool CvUnitAI::AI_crewCheck()
+{
+	if (plot()->isCity(true))
+	{
+		const SpellTypes eNormalCrew = (SpellTypes)GC.getInfoTypeForString("SPELL_CREW_NORMAL_CREW");
+		const SpellTypes eLongshoremen = (SpellTypes)GC.getInfoTypeForString("SPELL_CREW_LONGSHOREMEN");
+		const SpellTypes eSkeletonCrew = (SpellTypes)GC.getInfoTypeForString("SPELL_CREW_SKELETON_CREW");
+		const SpellTypes eBuccaneerCrew = (SpellTypes)GC.getInfoTypeForString("SPELL_CREW_BUCCANEERS");
+		
+		const int iDefaultMoves = getUnitInfo().getMoves();
+		bool isCargoShip = (AI_getUnitAIType() == UNITAI_ASSAULT_SEA || AI_getUnitAIType() == UNITAI_SETTLER_SEA);
+		
+		if (isCargoShip)
+		{
+			if (canCast(eSkeletonCrew, false))
+			{
+				cast(eSkeletonCrew);
+			}
+			else if (isHasCasted())
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return true;
+			}
+		}
+		else
+		{
+			if (iDefaultMoves < 4)
+			{
+				if (canCast(eLongshoremen, false))
+				{
+					cast(eLongshoremen);
+				}
+				else if (isHasCasted())
+				{
+					getGroup()->pushMission(MISSION_SKIP);
+					return true;
+				}
+			}
+			else
+			{
+				if (canCast(eBuccaneerCrew, false))
+				{
+					cast(eBuccaneerCrew);
+				}
+				else if (isHasCasted())
+				{
+					getGroup()->pushMission(MISSION_SKIP);
+					return true;
+				}
+			}
+		}
+	}
+	
+	return false;
+}
+
+
 // End Tholal AI

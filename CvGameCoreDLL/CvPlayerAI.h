@@ -322,6 +322,12 @@ public:
 	void AI_forceUpdateVictoryStrategies();
 	int AI_getVictoryStrategyHash() const;
 	int AI_getStrategyRand() const;
+
+	// Tholal AI - Added victories for FFH2
+	int AI_getReligionVictoryStage() const;
+	int AI_getTowerMasteryVictoryStage() const;
+	int AI_getAltarVictoryStage() const;
+	// End Tholal AI
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/		

@@ -1261,6 +1261,19 @@ int CvPlayerAI::AI_movementPriority(CvSelectionGroup* pGroup) const
 			return 5;
 		}
 
+//>>>>Better BtS AI Merging: Added by Denev 2010/03/05
+//*** Added new AIs.
+		if ((pHeadUnit->AI_getUnitAIType() == UNITAI_TERRAFORMER) || (pHeadUnit->AI_getUnitAIType() == UNITAI_MANA_UPGRADE))
+		{
+			return 5;
+		}
+
+		if ((pHeadUnit->AI_getUnitAIType() == UNITAI_MAGE) || (pHeadUnit->AI_getUnitAIType() == UNITAI_WARWIZARD))
+		{
+			return 5;
+		}
+//<<<<Better BtS AI Merging: End Add
+
 		if ((pHeadUnit->AI_getUnitAIType() == UNITAI_EXPLORE) || (pHeadUnit->AI_getUnitAIType() == UNITAI_EXPLORE_SEA))
 		{
 			return 6;
@@ -5720,12 +5733,43 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iMilitaryValue += ((bWarPlan) ? 200 : 100);
 						break;
 
+//>>>>Advanced Rules: Added by Denev 2010/03/04
+//*** Values each new AIs.
+
+					case UNITAI_HERO:
+						iMilitaryValue += (bWarPlan ? 600 : 300);
+						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 800 : 0);
+						iUnitValue += 100;
+						break;
+
+					case UNITAI_FEASTING:
+						iMilitaryValue += (bWarPlan ? 800 : 400);
+						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 800 : 0);
+						iUnitValue += 400;
+						break;
+
+					case UNITAI_MEDIC:
+						iMilitaryValue += (bWarPlan ? 600 : 300);
+						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 600 : 0);
+						break;
+
+					case UNITAI_MAGE:
+						iUnitValue += 600;
+						break;
+
+					case UNITAI_WARWIZARD:
+						iMilitaryValue += (bWarPlan ? 600 : 300);
+						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 800 : 0);
+						iUnitValue += 100;
+						break;
+//<<<<Advanced Rules: End Add
+
 					default:
-//						FAssert(false); // - FFH and Spehi AIs not yet added to this list
+						FAssert(false);
 						break;
 					}
-					
-					if( AI_isDoStrategy(AI_STRATEGY_DAGGER) )
+
+					if( AI_isDoStrategy(AI_STRATEGY_ALERT1) )
 					{
 						if( kLoopUnit.getUnitAIType(UNITAI_COLLATERAL) )
 						{
@@ -5737,8 +5781,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iUnitValue += (1000 * GC.getGameINLINE().AI_combatValue(eLoopUnit))/100;
 						}
 					}
-					
-					if( iPathLength <= 1)
+
+					if( AI_isDoStrategy(AI_STRATEGY_TURTLE) && iPathLength <= 1)
 					{
 						if( kLoopUnit.getUnitAIType(UNITAI_COLLATERAL) )
 						{
@@ -5907,6 +5951,46 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iUnitValue += iMilitaryValue;
 					}
 					
+					//>>>>Better AI: Added by Denev 2010/06/19
+					const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
+					if (eFavoriteUnitCombat != NO_UNITCOMBAT)
+					{
+						if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
+						{
+							iUnitValue += 800;
+						}
+					}
+
+					// if this is a religious unit, its not as useful
+					bool bHeathenUnit = false;
+					const ReligionTypes eStateReligion = (ReligionTypes)kLoopUnit.getStateReligion();
+					if (eStateReligion != NO_RELIGION)
+					{
+						if (eStateReligion != getStateReligion())
+						{
+							bHeathenUnit = true;
+							iUnitValue /= std::max(1, GC.getNumReligionInfos());
+						}
+					}
+					else
+					{
+						const ReligionTypes eReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
+						if (eReligion != NO_RELIGION)
+						{
+							if (eReligion != getStateReligion())
+							{
+								if (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == UNITAI_MISSIONARY)
+								{
+									bHeathenUnit = true;
+									iUnitValue /= std::max(1, GC.getNumReligionInfos());
+								}
+							}
+						}
+					}
+					if (iUnitValue > iValue)
+					{
+						iValue = iUnitValue;
+					}
 					if (iPathLength <= 1)
 					{
 						if (getTotalPopulation() > 5)
@@ -8476,7 +8560,9 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 
 //FfH: Added by Kael 12/08/2007
     iValue += GC.getBonusInfo(eBonus).getBadAttitude() * GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeBadBonus() * 100;
-    if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA") || GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_RAWMANA"))
     {
         iValue += 100;
     }
@@ -9643,6 +9729,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				if (!(GC.getUnitInfo(eUnit).isOnlyDefensive()))
 				{
+//>>>>Better AI: Added by Denev 2010/05/22
+					if (!GC.getUnitInfo(eUnit).isPillage())
+					{
+						break;
+					}
+//<<<<Better AI: End Add
+
 					bValid = true;
 				}
 			}
@@ -9729,7 +9822,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_CITY_DEFENSE:
-			if (GC.getUnitInfo(eUnit).getCombat() > 0)
+//>>>>Better AI: Modified by Denev 2010/06/20
+//			if (GC.getUnitInfo(eUnit).getCombat() > 0)
+			if (GC.getUnitInfo(eUnit).getCombatDefense() > 0)
+//<<<<Better AI: End Modify
 			{
 				if (!(GC.getUnitInfo(eUnit).isNoDefensiveBonus()))
 				{
@@ -17742,6 +17838,127 @@ int CvPlayerAI::AI_getDiplomacyVictoryStage() const
 	return 0;
 }
 
+int CvPlayerAI::AI_getReligionVictoryStage() const
+{
+	int iValue = 0;
+
+	/*
+	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_RELIGION") <= 0 )
+	{
+		return 0;
+	}
+*/
+	// Tholal ToDo - Add check for game option
+	// Tholal ToDo - Make this a loop through all religions
+
+	bool bHoly, bState, bHolyState;
+	const iFavRel = getFavoriteReligion();
+	bHoly = hasHolyCity(getFavoriteReligion());
+	bState = (getStateReligion() == getFavoriteReligion());
+	bHolyState = (bHoly && bState);
+	int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iFavRel);
+
+	if (bHolyState)
+	{
+		if (iRelPercent > 65)
+		{
+			return 4;
+		}
+
+		if (iRelPercent > 50)
+		{
+			return 3;
+		}
+
+		if (iRelPercent > 25)
+		{
+			return 2;
+		}
+
+		return 1;
+	}
+
+	return 0;
+}
+
+int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
+{
+
+	/*
+	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_TOWERMASTERY") <= 0 )
+	{
+		return 0;
+	}
+	*/
+
+	// Tholal ToDo - Add check for victory option enabled
+	// Tholal ToDo - change this into a check for Tower of Mastery building prereqs so its not hardcoded
+
+	int iNumTowers = 0;
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_TOWER_OF_ALTERATION")) > 0)
+	{
+		iNumTowers ++;
+	}
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_TOWER_OF_DIVINATION")) > 0)
+	{
+		iNumTowers ++;
+	}
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_TOWER_OF_NECROMANCY")) > 0)
+	{
+		iNumTowers ++;
+	}
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_TOWER_OF_THE_ELEMENTS")) > 0)
+	{
+		iNumTowers ++;
+	}
+
+	if (iNumTowers > 0)
+	{
+		return iNumTowers;
+	}
+
+	if (GC.getLeaderHeadInfo(getLeaderType()).isArcaneTowerVictory())
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
+int CvPlayerAI::AI_getAltarVictoryStage() const
+{
+	/*
+	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_ALTAR") <= 0 )
+	{
+		return 0;
+	}
+	*/
+	// Tholal ToDo - Add check for vic. condition enabled
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")) > 0)
+	{
+		return 4;
+	}
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_CONSECRATED")) > 0)
+	{
+		return 3;
+	}
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_BLESSED")) > 0)
+	{
+		return 2;
+	}
+
+	if (GC.getLeaderHeadInfo(getLeaderType()).isAltarVictory())
+	{
+		return 1;
+	}
+
+	return 0;
+}
+
 /// \brief Returns whether player is pursuing a particular victory strategy.
 ///
 /// Victory strategies are computed on demand once per turn and stored for the rest
@@ -17960,6 +18177,77 @@ int CvPlayerAI::AI_getVictoryStrategyHash() const
 				{
 					bStartedOtherLevel4 = true;
                 	m_iVictoryStrategyHash |= AI_VICTORY_DIPLOMACY4;
+                }
+            }
+	    }
+	}
+
+// Tholal AI - Added victories for FFH2
+
+	// Religion victory
+	iVictoryStage = AI_getReligionVictoryStage();
+
+	if( iVictoryStage >= 1 )
+	{
+		m_iVictoryStrategyHash |= AI_VICTORY_RELIGION1;
+	    if (iVictoryStage > 1)
+	    {
+	        m_iVictoryStrategyHash |= AI_VICTORY_RELIGION2;
+            if (iVictoryStage > 2)
+            {
+				bStartedOtherLevel3 = true;
+                m_iVictoryStrategyHash |= AI_VICTORY_RELIGION3;
+
+				if (iVictoryStage > 3 && !bStartedOtherLevel4)
+				{
+					bStartedOtherLevel4 = true;
+                	m_iVictoryStrategyHash |= AI_VICTORY_RELIGION4;
+                }
+            }
+	    }
+	}
+
+	// Tower of Mastery victory
+	iVictoryStage = AI_getTowerMasteryVictoryStage();
+
+	if( iVictoryStage >= 1 )
+	{
+		m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY1;
+	    if (iVictoryStage > 1)
+	    {
+	        m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY2;
+            if (iVictoryStage > 2)
+            {
+				bStartedOtherLevel3 = true;
+                m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY3;
+
+				if (iVictoryStage > 3 && !bStartedOtherLevel4)
+				{
+					bStartedOtherLevel4 = true;
+                	m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY4;
+                }
+            }
+	    }
+	}
+
+	// Altar victory
+	iVictoryStage = AI_getAltarVictoryStage();
+
+	if( iVictoryStage >= 1 )
+	{
+		m_iVictoryStrategyHash |= AI_VICTORY_ALTAR1;
+	    if (iVictoryStage > 1)
+	    {
+	        m_iVictoryStrategyHash |= AI_VICTORY_ALTAR2;
+            if (iVictoryStage > 2)
+            {
+				bStartedOtherLevel3 = true;
+                m_iVictoryStrategyHash |= AI_VICTORY_ALTAR3;
+
+				if (iVictoryStage > 3 && !bStartedOtherLevel4)
+				{
+					bStartedOtherLevel4 = true;
+                	m_iVictoryStrategyHash |= AI_VICTORY_ALTAR4;
                 }
             }
 	    }

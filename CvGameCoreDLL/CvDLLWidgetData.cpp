@@ -3593,6 +3593,72 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
             szBuffer.append(szTempBuffer);
         }
 		
+		// Tholal AI - Added victory strategies for FFH2
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
+        {
+            szTempBuffer.Format(L"Relig1, ");
+            szBuffer.append(szTempBuffer);
+        }
+        if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+        {
+            szTempBuffer.Format(L"Relig2, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
+        {
+            szTempBuffer.Format(L"Relig3, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
+        {
+            szTempBuffer.Format(L"Relig4, ");
+            szBuffer.append(szTempBuffer);
+        }
+		
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+        {
+            szTempBuffer.Format(L"Tower1, ");
+            szBuffer.append(szTempBuffer);
+        }
+        if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
+        {
+            szTempBuffer.Format(L"Tower2, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3))
+        {
+            szTempBuffer.Format(L"Tower3, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY4))
+        {
+            szTempBuffer.Format(L"Tower4, ");
+            szBuffer.append(szTempBuffer);
+        }
+		
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
+        {
+            szTempBuffer.Format(L"Altar1, ");
+            szBuffer.append(szTempBuffer);
+        }
+        if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
+        {
+            szTempBuffer.Format(L"Altar2, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3))
+        {
+            szTempBuffer.Format(L"Altar3, ");
+            szBuffer.append(szTempBuffer);
+        }
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4))
+        {
+            szTempBuffer.Format(L"Altar4, ");
+            szBuffer.append(szTempBuffer);
+        }
+
+		// End Tholal AI
+
 		// skip a line
 		szBuffer.append(NEWLINE);
 		szBuffer.append(NEWLINE);

@@ -1282,6 +1282,17 @@ void CvGame::normalizeAddRiver()
 						CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(iK);
 						FAssert(pPlot != NULL);
 
+//>>>>Unofficial Bug Fix: Added by Denev 2010/03/15
+//*** To prevent erasing sun mana from Mirror of Heaven by flood plains.
+						if (pPlot->getImprovementType() != NO_IMPROVEMENT)
+						{
+							if (GC.getImprovementInfo(pPlot->getImprovementType()).isUnique())
+							{
+								continue;
+							}
+						}
+//>>>>Unofficial Bug Fix: End Add
+
 						for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
 						{
 							if (GC.getFeatureInfo((FeatureTypes)iJ).isRequiresRiver())
@@ -1292,6 +1303,10 @@ void CvGame::normalizeAddRiver()
 									{
 										if (pPlot->getBonusType() != NO_BONUS)
 										{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/03/15
+//*** If you want to appear Mirror of Heaven WITH flood plain, remove comment out of the following line and delete above addition.
+//											if (pPlot->getImprovementType() == NO_IMPROVEMENT || !GC.getImprovementInfo(pPlot->getImprovementType()).isUnique())
+//>>>>Unofficial Bug Fix: End Modify
 											pPlot->setBonusType(NO_BONUS);
 										}
 										pPlot->setFeatureType((FeatureTypes)iJ);
@@ -4882,6 +4897,16 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 		m_eWinner = eNewWinner;
 		m_eVictory = eNewVictory;
 
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        07/09/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		CvEventReporter::getInstance().victory(eNewWinner, eNewVictory);
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        END                                                  */
+/************************************************************************************************/
+
 		if (getVictory() != NO_VICTORY)
 		{
 			if (getWinner() != NO_TEAM)
@@ -4901,7 +4926,19 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 		}
 
 		gDLL->getInterfaceIFace()->setDirty(Center_DIRTY_BIT, true);
+
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        07/09/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+/* original code
 		CvEventReporter::getInstance().victory(eNewWinner, eNewVictory);
+*/
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        END                                                  */
+/************************************************************************************************/
+
 		gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 	}
 }
@@ -5973,11 +6010,22 @@ void CvGame::doTurn()
 			{
 				kTeam.setTurnActive(true);
 				FAssert(getNumGameTurnActive() == kTeam.getAliveCount());
-				// Tholal merge - break moved here at suggestion of Snarko - 6/15/10
-				break;
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                       06/10/10                       snarko & jdog5000       */
+/*                                                                                               */
+/* Bugfix                                                                                        */
+/*************************************************************************************************/
+/* original bts code
 			}
 
-			//break;
+			break;
+*/
+				// Break only after first found alive player
+				break;
+			}
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                         END                                                  */
+/*************************************************************************************************/
 		}
 	}
 	else

@@ -56,6 +56,22 @@
 #define AI_VICTORY_DIPLOMACY2			(1 << 18)
 #define AI_VICTORY_DIPLOMACY3			(1 << 19)
 #define AI_VICTORY_DIPLOMACY4			(1 << 20)
+
+// Tholal AI - Added victories for FFH2
+#define AI_VICTORY_RELIGION1			(1 << 21)
+#define AI_VICTORY_RELIGION2			(1 << 22)
+#define AI_VICTORY_RELIGION3			(1 << 23)
+#define AI_VICTORY_RELIGION4			(1 << 24)
+#define AI_VICTORY_TOWERMASTERY1		(1 << 25)
+#define AI_VICTORY_TOWERMASTERY2		(1 << 26)
+#define AI_VICTORY_TOWERMASTERY3		(1 << 27)
+#define AI_VICTORY_TOWERMASTERY4		(1 << 28)
+#define AI_VICTORY_ALTAR1				(1 << 29)
+#define AI_VICTORY_ALTAR2				(1 << 30)
+#define AI_VICTORY_ALTAR3				(1 << 31)
+#define AI_VICTORY_ALTAR4				(1 << 32)
+// End Tholal AI
+
 /********************************************************************************/
 /* 	BETTER_BTS_AI_MOD							END							*/
 /********************************************************************************/

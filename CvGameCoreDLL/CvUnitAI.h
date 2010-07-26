@@ -128,6 +128,7 @@ public:
     bool isChanneler();
     bool isDivine();
 	int getChannelingLevel();
+	bool AI_crewCheck();
 	// End Tholal AI
 
 	void read(FDataStreamBase* pStream);
