@@ -933,7 +933,7 @@ class CustomFunctions:
 
 
 ##--------		Tweaked Hyborem: Added by Denev	--------##
-		"""
+
 	def getAshenVeilCity(self, iNum):
 		iInfernal = gc.getInfoTypeForString('CIVILIZATION_INFERNAL')
 		iVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
@@ -979,7 +979,7 @@ class CustomFunctions:
 		if iNum == 3:
 			return pBestCity3
 		return -1
-		"""
+
 		
 	def getAshenVeilCities(self, iCasterPlayer, iNum):
 		iVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
