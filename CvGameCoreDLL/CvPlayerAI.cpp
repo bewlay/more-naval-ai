@@ -17853,29 +17853,35 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 
 	bool bHoly, bState, bHolyState;
 	const iFavRel = getFavoriteReligion();
-	bHoly = hasHolyCity(getFavoriteReligion());
-	bState = (getStateReligion() == getFavoriteReligion());
-	bHolyState = (bHoly && bState);
-	int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iFavRel);
-
-	if (bHolyState)
+	
+	
+	if (iFavRel != NO_RELIGION)
 	{
-		if (iRelPercent > 65)
-		{
-			return 4;
-		}
+		bHoly = hasHolyCity(getFavoriteReligion());
+		bState = (getStateReligion() == getFavoriteReligion());
+		bHolyState = (bHoly && bState);
+	
+		int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iFavRel);
 
-		if (iRelPercent > 50)
+		if (bHolyState)
 		{
-			return 3;
-		}
+			if (iRelPercent > 65)
+			{
+				return 4;
+			}
 
-		if (iRelPercent > 25)
-		{
-			return 2;
-		}
+			if (iRelPercent > 50)
+			{
+				return 3;
+			}
 
-		return 1;
+			if (iRelPercent > 25)
+			{
+				return 2;
+			}
+
+			return 1;
+		}
 	}
 
 	return 0;
@@ -17951,7 +17957,8 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 		return 2;
 	}
 
-	if (GC.getLeaderHeadInfo(getLeaderType()).isAltarVictory())
+	//if (GC.getLeaderHeadInfo(getLeaderType()).isAltarVictory())
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR")) > 0)
 	{
 		return 1;
 	}
@@ -18003,6 +18010,21 @@ bool CvPlayerAI::AI_isDoVictoryStrategyLevel4() const
 		return true;
 	}
 
+	if( AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4) )
+	{
+		return true;
+	}
+
+	if( AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY4) )
+	{
+		return true;
+	}
+
+	if( AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4) )
+	{
+		return true;
+	}
+
 	return false;
 }
 
@@ -18029,6 +18051,21 @@ bool CvPlayerAI::AI_isDoVictoryStrategyLevel3() const
 	}
 
 	if( AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY3) )
+	{
+		return true;
+	}
+
+	if( AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) )
+	{
+		return true;
+	}
+
+	if( AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3) )
+	{
+		return true;
+	}
+
+	if( AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3) )
 	{
 		return true;
 	}
