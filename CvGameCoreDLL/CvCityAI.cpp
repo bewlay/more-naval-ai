@@ -832,6 +832,13 @@ void CvCityAI::AI_chooseProduction()
 {
 	PROFILE_FUNC();
 
+//>>>>Better AI: Added by Denev 2010/03/31
+	if (isSettlement())
+	{
+		return;
+	}
+//<<<<Better AI: End Add
+
 	CvArea* pWaterArea;
 	UnitTypes eProductionUnit;
 	bool bWasFoodProduction;
@@ -894,6 +901,16 @@ void CvCityAI::AI_chooseProduction()
 			{
 				return;
 			}
+
+//>>>>Better AI: Added by Denev 2010/03/31
+			// if we are training a hero, do not cancel, keep training him (if no danger)
+			UnitTypes eProductionUnit = getProductionUnit();
+			if (!bDanger && eProductionUnit != NO_UNIT &&
+				isLimitedUnitClass((UnitClassTypes)GC.getUnitInfo(eProductionUnit).getUnitClassType()))
+			{
+				return;
+			}
+//<<<<Better AI: End Add
 		}
 
 		clearOrderQueue();
@@ -1076,7 +1093,7 @@ void CvCityAI::AI_chooseProduction()
 	iEconomyFlags |= BUILDINGFOCUS_MAINTENANCE;
 	iEconomyFlags |= BUILDINGFOCUS_HAPPY;
 	iEconomyFlags |= BUILDINGFOCUS_HEALTHY;
-	if (AI_isEmphasizeGreatPeople())
+	if (AI_isEmphasizeGreatPeople() || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 	{
 		iEconomyFlags |= BUILDINGFOCUS_SPECIALIST;
 	}
@@ -1313,7 +1330,7 @@ void CvCityAI::AI_chooseProduction()
 
 	if (plot()->getNumDefenders(getOwnerINLINE()) == 0
 // - Tholal AI - produce more than 1 troop if needed
-//		|| AI_neededDefenders() > (plot()->getNumDefenders(getOwnerINLINE()) - 1)
+		|| AI_neededDefenders() > (plot()->getNumDefenders(getOwnerINLINE()) - 1)
 // End Tholal
 		) // XXX check for other team's units?
 	{
@@ -1368,7 +1385,6 @@ void CvCityAI::AI_chooseProduction()
 	int iPlotCityDefenderCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
 	if( kPlayer.getCurrentEra() == 0 )
 	{
-		// Warriors are blocked from UNITAI_CITY_DEFENSE, in early game this confuses AI city building (??)
 		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= kPlayer.getNumCities() )
 		{
 			if( kPlayer.AI_bestCityUnitAIValue(UNITAI_CITY_DEFENSE, this) == 0 )
@@ -1479,7 +1495,10 @@ void CvCityAI::AI_chooseProduction()
 
 	if( GET_TEAM(getTeam()).isAVassal() && GET_TEAM(getTeam()).isCapitulated() )
 	{
-		if( !bLandWar )
+//>>>>Better AI: Modified by Denev 2010/03/31
+//		if( !bLandWar )
+	 	if (!bLandWar && !bAssault)
+//<<<<Better AI: End Modify
 		{
 			if ((goodHealth() - badHealth(true, 0)) < 1)
 			{
@@ -1518,6 +1537,7 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 	}
+// End Tholal AI
     
 	// -------------------- BBAI Notes -------------------------
 	// Minimal attack force, both land and sea
@@ -1872,6 +1892,15 @@ void CvCityAI::AI_chooseProduction()
 	UnitTypes eBestSpreadUnit = NO_UNIT;
 	int iBestSpreadUnitValue = -1;
 	
+	if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		// Tholal AI Todo - make this into a more useful function
+		if (AI_chooseUnit(UNITAI_MISSIONARY,10))
+		{
+			return;
+		}
+	}
+
 	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
@@ -2002,6 +2031,7 @@ void CvCityAI::AI_chooseProduction()
     }
 
 	// Tholal AI - try and construct some training buildings
+	/*
 	if (iProductionRank <= (kPlayer.getNumCities() / 3 ))
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_MILITARY,8))
@@ -2009,6 +2039,7 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 	}
+	*/
 	// End Tholal AI
 
 	// don't build frivolous things if this is an important city unless we at war
@@ -2057,7 +2088,7 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 
-	// Tholal AI - try and get the AI to make Elder Councils & Libraries
+	// Tholal AI - make Elder Councils & Libraries
 	if( !bLandWar )
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_RESEARCH, 10, 10 + 2*iWarTroubleThreshold, 50))
@@ -2112,7 +2143,7 @@ void CvCityAI::AI_chooseProduction()
 
 	if( !bDanger )
 	{
-		// Tholal ToDo :More Missionaries?
+		// Tholal ToDo : Add somethingfor religion victories
 		if (iBestSpreadUnitValue > ((iSpreadUnitThreshold * (bLandWar ? 80 : 60)) / 100))
 		{
 			if (AI_chooseUnit(eBestSpreadUnit, UNITAI_MISSIONARY))
@@ -2253,7 +2284,7 @@ void CvCityAI::AI_chooseProduction()
 			
 			int iUnitsToTransport = iAreaAttackCityUnits;
 			iUnitsToTransport += kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK);
-			iUnitsToTransport += kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_COUNTER)/2;
+			iUnitsToTransport += kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_COUNTER);
 
 /*************************************************************************************************/
 /**	BETTER AI (UNITAI_WARWIZARD) Sephi                                      					**/
@@ -2322,7 +2353,8 @@ void CvCityAI::AI_chooseProduction()
 						
 					if ((iAttackSea < ((1 + 2 * iTransports) / iDivisor)))
 					{
-						if (AI_chooseUnit(UNITAI_ATTACK_SEA, (iUnitCostPercentage < iMaxUnitSpending) ? 50 : 20))
+						//if (AI_chooseUnit(UNITAI_ATTACK_SEA, (iUnitCostPercentage < iMaxUnitSpending) ? 50 : 20))
+						if (AI_chooseUnit(UNITAI_ATTACK_SEA, bFinancialTrouble ? 20 : 50))
 						{
 							AI_chooseBuilding(BUILDINGFOCUS_DOMAINSEA, 12);
 							return;
@@ -2332,7 +2364,7 @@ void CvCityAI::AI_chooseProduction()
 				
 				if (iUnitsToTransport > iTransportCapacity)
 				{
-					if ((iUnitCostPercentage < iMaxUnitSpending) || (iUnitsToTransport > 2*iTransportCapacity))
+					if ((iUnitCostPercentage < iMaxUnitSpending + 5) || (2*iUnitsToTransport > 3*iTransportCapacity))
 					{
 						if (AI_chooseUnit(UNITAI_ASSAULT_SEA))
 						{
@@ -2437,6 +2469,24 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
+	// Tholal AI - ships
+	if (!bFinancialTrouble)
+	{
+		int iAttackSeaNeeded = kPlayer.countNumCoastalCities() / 2;
+		int iAssaultSeaNeeded = kPlayer.countNumCoastalCities() / 2;
+
+		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < iAssaultSeaNeeded)
+		{
+			AI_chooseUnit(UNITAI_ASSAULT_SEA,50);
+		}
+		if (kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_SEA) < iAttackSeaNeeded)
+		{
+			AI_chooseUnit(UNITAI_ATTACK_SEA,50);
+		}
+	}
+	// End tholal AI
+
+
 	UnitTypeWeightArray airUnitTypes;
 
     int iAircraftNeed = 0;
@@ -2856,7 +2906,10 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 
-	if (!bLandWar)
+//>>>>Better AI: Modified by Denev 2010/03/31
+//	if (!bLandWar)
+	if (!bLandWar && !bAssault)
+//<<<<Better AI: End Add
 	{
 		if (AI_chooseBuilding(iEconomyFlags, 40, 8))
 		{
@@ -2917,7 +2970,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (!kPlayer.isAgnostic())
 		{
-			if (AI_chooseUnit(UNITAI_MEDIC,8))
+			if (AI_chooseUnit(UNITAI_MEDIC,10))
 			{
 				return;
 			}
@@ -3072,8 +3125,8 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 		mojoBonus += 2;
 	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_ARCANE"))
 		mojoBonus += 2;
-	aiUnitAIVal[UNITAI_MAGE] += ((iNumCitiesInArea + 1) * mojoBonus);
-	aiUnitAIVal[UNITAI_MEDIC] += (iNumCitiesInArea + 1);
+	aiUnitAIVal[UNITAI_MAGE] += ((iNumCitiesInArea + 1) + mojoBonus);
+	aiUnitAIVal[UNITAI_MEDIC] += (iNumCitiesInArea * 2);
 	// End Add
 
 	if (bWarPossible)
@@ -4273,6 +4326,24 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					}
 					iValue += (kBuilding.getDomainFreeExperience(iI) * ((iHasMetCount > 0) ? iDomainExpValue : iDomainExpValue / 2));
 				}
+
+//>>>>Better AI: Added by Denev 2010/03/30
+//*** Training Yard, Mage Guild, Hunting Lodge, etc.
+				for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
+				{
+					const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
+					if (eLoopUnit != NO_UNIT)
+					{
+						if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == eBuildingClass)
+						{
+							if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass) == 0)
+							{
+								iValue += 24;
+							}
+						}
+					}
+				}
+//<<<<Better AI: End Add
 			}
 
 			// since this duplicates BUILDINGFOCUS_EXPERIENCE checks, do not repeat on pass 1
