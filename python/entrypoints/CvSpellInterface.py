@@ -1262,7 +1262,6 @@ def reqFeed(caster):
 	return True
 
 def spellFeed(caster):
-	caster.setDamage(caster.getDamage() - 20, caster.getOwner())
 	pVictim = -1
 	pPlot = caster.plot()
 	for i in range(pPlot.getNumUnits()):
@@ -1279,6 +1278,8 @@ def spellFeed(caster):
 #		pVictim.kill(True, 0)
 		pVictim.kill(True, PlayerTypes.NO_PLAYER)
 ##--------		Unofficial Bug Fix: End Modify			--------##
+		caster.setDamage(caster.getDamage() - 20, caster.getOwner())		
+		caster.setMadeAttack(false)
 
 def reqForTheHorde(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
@@ -1570,7 +1571,7 @@ def reqHyboremsWhisper(caster):
 	pCity = cf.getAshenVeilCity(3)
 	if pCity == -1:
 	"""
-	lpVeilCities = cf.getAshenVeilCities(caster.getOwner(), 1)
+	lpVeilCities = cf.getAshenVeilCities(caster.getOwner(), caster.getID(), 1)
 	if len(lpVeilCities) == 0:
 ##--------		Tweaked Hyborem: End Modify			--------##
 		return False
@@ -1584,21 +1585,22 @@ def spellHyboremsWhisper(caster):
 	iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_HYBOREMS_WHISPER')
 	triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), iPlayer, -1, -1, -1, -1, -1)
 	"""
+	iNumSelectableCities = 3
+	iCasterID = caster.getID()
+	lpVeilCities = cf.getAshenVeilCities(iPlayer, iCasterID, iNumSelectableCities)
 	if pPlayer.isHuman():
-		iNumSelectableCities = 3
-		lpVeilCities = cf.getAshenVeilCities(iPlayer, iNumSelectableCities)
-		popupHyboremsWhisper(iPlayer, lpVeilCities, 0)
+		popupHyboremsWhisper(iPlayer, iCasterID, lpVeilCities, 0)
 	else:
-		iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_HYBOREMS_WHISPER')
-		triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), iPlayer, -1, -1, -1, -1, -1)
+		pPlayer.acquireCity(lpVeilCities[0], False, True)
 
-def popupHyboremsWhisper(iPlayer, lpVeilCities, iCurrentSelected):
+def popupHyboremsWhisper(iPlayer, iCasterID, lpVeilCities, iCurrentSelected):
 	popupInfo = CyPopupInfo()
 	popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
 	popupInfo.setText(CyTranslator().getText("TXT_KEY_EVENT_HYBOREMS_WHISPER",()))
 	popupInfo.setData1(iPlayer)
 	popupInfo.setData2(len(lpVeilCities))
 	popupInfo.setData3(iCurrentSelected)
+	popupInfo.setFlags(iCasterID)
 
 	for pVeilCity in lpVeilCities:
 		popupInfo.addPythonButton(CyTranslator().getText("TXT_KEY_POPUP_HYBOREMS_WHISPER_SELECT", (pVeilCity.getNameKey(), )), "")
@@ -1615,7 +1617,8 @@ def applyHyboremsWhisper(argsList):
 	iPlayer = iData1
 	iNumCities = iData2
 	iCurrentSelected = iData3
-	lpVeilCities = cf.getAshenVeilCities(iPlayer, iNumCities)
+	iCasterID = iFlags
+	lpVeilCities = cf.getAshenVeilCities(iPlayer, iCasterID, iNumCities)
 
 	if iButtonId == iNumCities * 2:
 		pPlayer = gc.getPlayer(iPlayer)
@@ -1625,11 +1628,10 @@ def applyHyboremsWhisper(argsList):
 	iClickedKind = iButtonId % 2
 	iPickedUpIndex = iButtonId // 2
 	pSelectedCity = lpVeilCities[iPickedUpIndex]
-	if iClickedKind == 0:
-		CyCamera().JustLookAtPlot(pSelectedCity.plot())
-	else:
+	CyCamera().JustLookAtPlot(pSelectedCity.plot())
+	if iClickedKind == 1:
 		CyInterface().selectCity(pSelectedCity, False)
-	popupHyboremsWhisper(iPlayer, lpVeilCities, iPickedUpIndex)
+	popupHyboremsWhisper(iPlayer, iCasterID, lpVeilCities, iPickedUpIndex)
 ##--------		Tweaked Hyborem: End Modify			--------##
 
 def reqImpersonateLeader(caster):

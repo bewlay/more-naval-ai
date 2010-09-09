@@ -179,6 +179,10 @@ void CvPlayerAI::AI_init()
 		AI_setReligionTimer(1);
 		AI_setCivicTimer((getMaxAnarchyTurns() == 0) ? 1 : 2);
 	}
+
+//>>>>Unofficial Bug Fix: Added by Denev 2010/08/08
+	AI_getStrategyRand();
+//>>>>Unofficial Bug Fix: End Add
 }
 
 
@@ -2048,7 +2052,9 @@ int CvPlayerAI::AI_yieldWeight(YieldTypes eYield) const
 {
 	if (eYield == YIELD_PRODUCTION)
 	{
-		int iProductionModifier = 100 + (30 * std::max(0, GC.getGame().getCurrentEra() - 1) / std::max(1, (GC.getNumEraInfos() - 2)));
+		//int iProductionModifier = 100 + (30 * std::max(0, GC.getGame().getCurrentEra() - 1) / std::max(1, (GC.getNumEraInfos() - 2)));
+		// Tholal AI - era fix
+		int iProductionModifier = 100 + (30 * std::max(0, GC.getGameINLINE().getCurrentPeriod() - 1) / std::max(1, (GC.getNumEraInfos() - 2)));
 		return (GC.getYieldInfo(eYield).getAIWeightPercent() * iProductionModifier) / 100;
 	}
 	return GC.getYieldInfo(eYield).getAIWeightPercent();
@@ -2993,7 +2999,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
                         if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_SVARTALFAR") || getCivilizationType()==GC.getDefineINT("CIVILIZATION_LJOSALFAR"))
                         {
                             if (eFeature==GC.getDefineINT("FEATURE_FOREST"))
-                                iTempValue +=50;
+                                iTempValue +=25;
                             if (eFeature==GC.getDefineINT("FEATURE_FOREST_ANCIENT"))
                                 iTempValue +=15;
                         }
@@ -3310,7 +3316,8 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		    else if (iDistance < 4)
 		    {
 			// Tholal AI - increased from 2000 to try and keep AI cities apart
-		    	iValue -= (4 - iDistance) * 5000;
+				// ToDo - increase if not team city
+		    	iValue -= (4 - iDistance) * 7500;
 		    }
 			iValue *= (8 + iNumCities * 4);
 			iValue /= (2 + (iNumCities * 4) + iDistance);
@@ -4407,11 +4414,6 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 							{
 								iValue = AI_techValue( (TechTypes)iI, iPathLength, bIgnoreCost, bAsync, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave );
 
-								/*if( gPlayerLogLevel >= 3 )
-								{
-									logBBAI("      Player %d (%S) consider tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo((TechTypes)iI).getDescription(), iValue );
-								}*/
-
 								if (iValue > iBestValue)
 								{
 									iBestValue = iValue;
@@ -4463,8 +4465,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	int iConnectedForeignCities = countPotentialForeignTradeCitiesConnected();
 
 	int iCityCount = getNumCities();
-	//int iTeamCityCount = kTeam.getNumCities();
-	
+
+	if (iPathLength < 0)
+	{
+		iPathLength = findPathLength(eTech, false);
+	}
+
 	iValue = 1;
 
 	int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research"));
@@ -4559,30 +4565,32 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 	// Tile improvement abilities
+	int iMaxTileAbilityValue = 0;
 	if (GC.getTechInfo(eTech).isBridgeBuilding())
 	{
-		iValue += 200;
+		iMaxTileAbilityValue = std::max(200, iMaxTileAbilityValue);
 	}
 
 	if (GC.getTechInfo(eTech).isIrrigation())
 	{
-		iValue += 400;
+		iMaxTileAbilityValue = std::max(400, iMaxTileAbilityValue);
 	}
 
 	if (GC.getTechInfo(eTech).isIgnoreIrrigation())
 	{
-		iValue += 500;
+		iMaxTileAbilityValue = std::max(500, iMaxTileAbilityValue);
 	}
 
 	if (GC.getTechInfo(eTech).isWaterWork())
 	{
-		iValue += (600 * iCoastalCities);
+		iMaxTileAbilityValue = std::max(600 * iCoastalCities, iMaxTileAbilityValue);
 	}
+	iValue += iMaxTileAbilityValue;
 
 	iValue += (GC.getTechInfo(eTech).getFeatureProductionModifier() * 2);
 	iValue += (GC.getTechInfo(eTech).getWorkerSpeedModifier() * 4);
-	iValue += (GC.getTechInfo(eTech).getTradeRoutes() * (std::max((getNumCities() + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
-	
+	iValue += (GC.getTechInfo(eTech).getTradeRoutes() * (std::max((iCityCount + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
+
 	if ( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION4) )
 	{
 		iValue += (GC.getTechInfo(eTech).getHealth() * 350);
@@ -4653,7 +4661,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 			iTempValue += (GC.getImprovementInfo((ImprovementTypes)iJ).getTechYieldChanges(eTech, iK) * getImprovementCount((ImprovementTypes)iJ) * 50);
 
-			iTempValue *= AI_yieldWeight((YieldTypes)iK);
+			iTempValue *= 100 + AI_yieldWeight((YieldTypes)iK);
 			iTempValue /= 100;
 
 			iValue += iTempValue;
@@ -4741,23 +4749,32 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iTempValue += (kImprovement.getImprovementBonusYield(iK, iL) * 300);
 							iTempValue += (kImprovement.getIrrigatedYieldChange(iL) * 200);
 
-							// food bonuses are more valueble
-							if (iL == YIELD_FOOD)
+							// food bonuses are more valuable
+							if (iL == YIELD_COMMERCE)
 							{
 								iTempValue *= 2;
 							}
 							// otherwise, devalue the bonus slightly
-							else if (iL == YIELD_COMMERCE && bFinancialTrouble)
+
+							/*
+							else if (iL == YIELD_COMMERCE)
 							{
-								iTempValue *= 4;
-								iTempValue /= 3;
+								iTempValue *= 2;
+
+								if (bFinancialTrouble)
+								{
+									iTempValue *= 2;
+								}
 							}
+							*/
+							
 							else
 							{
 								iTempValue *= 3;
 								iTempValue /= 4;
 							}
 							
+
 							if (bAdvancedStart && getCurrentEra() < 2)
 							{
 								iValue *= (iL == YIELD_FOOD) ? 3 : 2;
@@ -4768,13 +4785,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 							iBonusValue += iTempValue;
 						}
-
+						
 						iNumBonuses = countOwnedBonuses((BonusTypes)iK);
 
 						if (iNumBonuses > 0)
 						{
 							iBonusValue *= (iNumBonuses + 2);
-							iBonusValue /= kImprovement.isWater() ? 4 : 3;	// water resources are worth less
+							iBonusValue /= (!isPirate() || kImprovement.isWater() ? 4 : 3);	// water resources are worth less
 
 							iImprovementValue += iBonusValue;
 						}
@@ -4786,6 +4803,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 					iImprovementValue *= iCoastalCities;
 					iImprovementValue /= std::max(1, iCityCount/2);
+
+					// Tholal AI - Pirates love sea resources
+					if (isPirate())
+					{
+						iImprovementValue *= 4;
+					}
+					// End Tholal AI
 				}
 				
 				iBuildValue += iImprovementValue;
@@ -4846,15 +4870,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
         }
     }
 
-	/*if (AI_totalUnitAIs(UNITAI_WORKER) == 0)
-	{
-		iBuildValue /= 2;
-	}*/
-
-//FfH: Added by Kael 06/06/2008
-	iBuildValue /= 5;
-//FfH: End Add
-
 	iValue += iBuildValue;
 
 	// does tech reveal bonus resources
@@ -4883,8 +4898,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
                 iMultiplier *= (paiBonusClassRevealed[eBonusClass] + 1);
                 iMultiplier /= ((paiBonusClassHave[eBonusClass] * iBonusClassTotal) + 1);
 			}
-			
-			iMultiplier *= std::min(3, getNumCities());
+
+			iMultiplier *= std::min(3, iCityCount);
 			iMultiplier /= 3;
 			
 			iRevealValue *= 100 + iMultiplier;
@@ -4903,10 +4918,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	
 	if (bEnablesUnitWonder)
 	{
-		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(400, "AI Research Wonder Unit"));
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
 		iValue += iWonderRandom + (bCapitalAlone ? 200 : 0);
 
-		iRandomMax += 400;
+		iRandomMax += 2000;
 		iRandomFactor += iWonderRandom;
 	}
 
@@ -4918,10 +4933,25 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	// if it gives at least one wonder
 	if (bEnablesWonder)
 	{
+//>>>>Better AI: Modified by Denev 2010/07/10
+/*
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(800, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
 		iValue += (500 + iWonderRandom) / (bAdvancedStart ? 5 : 1);
 
 		iRandomMax += 800;
+*/
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
+
+		iTempValue = (250 + iWonderRandom);
+		iTempValue *= 100 + getMaxGlobalBuildingProductionModifier();
+		iTempValue /= 100;
+
+		iTempValue /= (bAdvancedStart ? 5 : 1);
+
+		iValue += iTempValue;
+
+		iRandomMax += 400;
+//<<<<Better AI: End Modify
 		iRandomFactor += iWonderRandom;
 	}
 
@@ -5039,12 +5069,22 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			CivicTypes eCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo((CivicTypes)iJ).getCivicOptionType()));
 			if (NO_CIVIC != eCivic)
 			{
+//>>>>Better AI: Modified by Denev 2010/07/04
+/*
 				int iCurrentCivicValue = AI_civicValue(eCivic);
 				int iNewCivicValue = AI_civicValue((CivicTypes)iJ);
+*/
+				int iCurrentCivicValue	= std::max(1, AI_civicValue(eCivic));
+				int iNewCivicValue		= std::max(1, AI_civicValue((CivicTypes)iJ));
+//<<<<Better AI: End Modify
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					iValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
+//>>>>Better AI: Modified by Denev 2010/07/04
+//*** new:old odds)	[*1.5: +800], [*2: +1200], [*3: +1600], [*8: +2100]
+//					iValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
+					iValue += std::max(0, 2400 - ((2400 * iCurrentCivicValue) / iNewCivicValue));
+//<<<<Better AI: End Modify
 				}
 				
 				if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
@@ -5057,84 +5097,178 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if (iPathLength <= 2)
 	{
-		if (GC.getGameINLINE().countKnownTechNumTeams(eTech) == 0)
+		if (!isAgnostic())
 		{
-			int iReligionValue = 0;
-			int iPotentialReligions = 0;
-			for (int iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
+			AlignmentTypes eAlignment = (AlignmentTypes)GC.getLeaderHeadInfo(getPersonalityType()).getAlignment();
+
+			bool bHaveMyReligion = false;
+			bool bHaveMyHolyCity = false;
+			bool bHaveOurHolyCity = false;
+			for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
 			{
-				TechTypes eReligionTech = (TechTypes)GC.getReligionInfo((ReligionTypes)iJ).getTechPrereq();
-				if (kTeam.isHasTech(eReligionTech))
+				ReligionTypes eReligion = (ReligionTypes)iReligion;
+				CvReligionInfo& kReligionInfo = GC.getReligionInfo(eReligion);
+
+				if (kTeam.hasHolyCity(eReligion))
 				{
-					if (!(GC.getGameINLINE().isReligionSlotTaken((ReligionTypes)iJ)))
+					bHaveOurHolyCity = true;
+				}
+
+				const int iOverAlignmentBest = std::max(0, kReligionInfo.getAlignmentBest() - eAlignment);
+				const int iOverAlignmentWorst = std::max(0, eAlignment - kReligionInfo.getAlignmentWorst());
+				const int iOverAlignmentLevel = std::max(iOverAlignmentBest, iOverAlignmentWorst);
+
+				if (iOverAlignmentLevel < 1)
+				{
+					if (getHasReligionCount(eReligion) > 0)
 					{
-						iPotentialReligions++;
+						bHaveMyReligion = true;
 					}
 				}
-				if (eReligionTech == eTech)
-				{
-					if (!(GC.getGameINLINE().isReligionSlotTaken((ReligionTypes)iJ)))
-					{
-						int iRoll = 2400;
-						if (!GC.getGame().isOption(GAMEOPTION_PICK_RELIGION))
-						{
-							ReligionTypes eFavorite = (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
-							if (eFavorite != NO_RELIGION)
-							{
-								if (iJ == eFavorite)
-								{
-									iReligionValue += 1 + ((bAsync) ? GC.getASyncRand().get(1200, "AI Research Religion (Favorite) ASYNC") : GC.getGameINLINE().getSorenRandNum(1200, "AI Research Religion (Favorite)"));
-									iRandomMax += 1200;
-								}
-								else
-								{
-									iRoll *= 2;
-									iRoll /= 3;
-								}
-							}
-						}
-						iReligionValue += 1 + ((bAsync) ? GC.getASyncRand().get(iRoll, "AI Research Religion ASYNC") : GC.getGameINLINE().getSorenRandNum(iRoll, "AI Research Religion"));
-						iRandomMax += iRoll;
-						iRandomFactor += iReligionValue;
 
-						if (iPathLength < 2)
-						{
-							iReligionValue *= 3;
-							iReligionValue /= 2;
-						}
+				if (iOverAlignmentLevel < 2)
+				{
+					if (hasHolyCity(eReligion))
+					{
+						bHaveMyHolyCity = true;
 					}
 				}
 			}
-			
-			if (iReligionValue > 0)
-			{
-				if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
-				{
-					iReligionValue += 500;
 
-					if (countHolyCities() < 1)
+			int iBestReligionValue = 0;
+			for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
+			{
+				int iReligionValue = 1000;	// religion base value
+
+				// Tholal AI - every non-agnostic civ should want religion
+				if (getStateReligion() == NO_RELIGION && !isAgnostic())
+				{
+					iReligionValue += 1000;
+				}
+				// End Tholal AI
+
+				ReligionTypes eReligion = (ReligionTypes)iReligion;
+				CvReligionInfo& kReligionInfo = GC.getReligionInfo(eReligion);
+
+				const int iOverAlignmentBest = std::max(0, kReligionInfo.getAlignmentBest() - eAlignment);
+				const int iOverAlignmentWorst = std::max(0, eAlignment - kReligionInfo.getAlignmentWorst());
+				const int iOverAlignmentLevel = std::max(iOverAlignmentBest, iOverAlignmentWorst);
+
+				const TechTypes eReligionTech = (TechTypes)GC.getReligionInfo(eReligion).getTechPrereq();
+				const ReligionTypes ePrereqReligion = (ReligionTypes)GC.getTechInfo(eTech).getPrereqReligion();
+				// Religion founding techs
+				if (eReligionTech == eTech)
+				{
+
+					// Tholal AI - Add weight for favorite religions
+					if (getFavoriteReligion() == eReligion)
 					{
-						iReligionValue += 1000;
+						iReligionValue += 2000;
 					}
+					// End Tholal AI
+
+					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
+					{
+						if (!bHaveMyReligion)
+						{
+							iReligionValue *= 3;
+						}
+						else if (!bHaveOurHolyCity)
+						{
+							iReligionValue *= 2;
+						}
+						else if (!bHaveMyHolyCity)
+						{
+							iReligionValue *= 1;
+						}
+						else
+						{
+							iReligionValue *= 0;
+						}
+					}
+					else
+					{
+						if (!bHaveMyReligion)
+						{
+							iReligionValue *= (bCapitalAlone) ? 3 : 2;
+						}
+						else
+						{
+							iReligionValue *= 0;
+						}
+					}
+				}
+				else if (ePrereqReligion == eReligion)
+				{
+					// Mind Stapling, Hidden Paths, Arete, Infernal Pact
+					iReligionValue *= 4;
+					iReligionValue /= 3;
 				}
 				else
 				{
-					iReligionValue /= (1 + countHolyCities() + ((iPotentialReligions > 0) ? 1 : 0));
+					iReligionValue *= 0;
 				}
 
-				if ((countTotalHasReligion() == 0) && (iPotentialReligions == 0))
+				if (iReligionValue > 0)
 				{
-					iReligionValue *= 2;
-					iReligionValue += 500;
+					// all leaders don't like changing nature alignment.
+					if (iOverAlignmentLevel > 0)
+					{
+						iReligionValue /= (1 << iOverAlignmentLevel);
+					}
+					// good leader hates evil religion, vice versa.
+					if (abs(eAlignment - kReligionInfo.getAlignment()) > 1)
+					{
+						iReligionValue *= 2;
+						iReligionValue /= 3;
+					}
+
+					// each leader's certain favorite modifier
+					iReligionValue *= 100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion);
+					iReligionValue /= 100;
+
+					if (iReligionValue > iBestReligionValue)
+					{
+						iBestReligionValue = iReligionValue;
+					}
+				}
+			}
+
+			if (iBestReligionValue > 0)
+			{
+//				iBestReligionValue *= getLatestTier();
+				iBestReligionValue *= (1 + GC.getGameINLINE().getCurrentPeriod());
+
+				iBestReligionValue *= (10 + getTotalPopulation());
+				iBestReligionValue /= 10;
+
+				if (iPathLength <= 1)
+				{
+					iBestReligionValue *= 3;
+					iBestReligionValue /= 2;
+				}
+
+				if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
+				{
+					iBestReligionValue += 500;
+
+					if (!bHaveOurHolyCity)
+					{
+						iBestReligionValue += 1000;
+					}
 				}
 
 				if (AI_isDoStrategy(AI_STRATEGY_DAGGER))
 				{
-					iReligionValue /= 2;
+					iBestReligionValue /= 2;
 				}
-				iValue += iReligionValue;
-			}
 
+				iValue += iBestReligionValue;
+			}
+		}
+
+		if (GC.getGameINLINE().countKnownTechNumTeams(eTech) == 0)
+		{
 			for (int iJ = 0; iJ < GC.getNumCorporationInfos(); iJ++)
 			{
 				if (GC.getCorporationInfo((CorporationTypes)iJ).getTechPrereq() == eTech)
@@ -5168,11 +5302,106 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue += GC.getTechInfo(eTech).getAIWeight();
 
+//FfH: Added by Kael 06/17/2009
+	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech)
+	{
+		iValue += 3000;
+	}
+//FfH: End Add
+
+	// Tholal AI - account for various other favorite tech options
+	// Added a research time limit to try and control this somewhat - working?
+//	if (getResearchTurnsLeft(eTech, true) < 25)
+//	{
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyTech1() == eTech)
+		{
+			iValue += 2500;
+		}
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyTech2() == eTech)
+		{
+			iValue += 2000;
+		}
+			if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyTech3() == eTech)
+		{
+			iValue += 1000;
+		}
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyMilTech() == eTech)
+		{
+			iValue += 2500;
+		}
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyReligion() == eTech)
+		{
+			iValue += 3000;
+		}
+//	}
+	// temp hack - not sure why this is skipped by some civs
+	int iCreativeTrait=GC.getInfoTypeForString("TRAIT_CREATIVE");
+	if (eTech == GC.getInfoTypeForString("TECH_ANCIENT_CHANTS") && 	!hasTrait((TraitTypes)iCreativeTrait))
+	{
+		iValue += 1500;
+	}
+	// End Tholal AI
+
+//>>>>Better AI: Modified by Denev 2010/06/18
+/*
 	if (!isHuman())
 	{
 		for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 		{
 			iValue += (AI_getFlavorValue((FlavorTypes)iJ) * GC.getTechInfo(eTech).getFlavorValue(iJ) * 20);
+		}
+	}
+*/
+	int iFlavorValue = 0;
+	for (int iFlavorType = 0; iFlavorType < GC.getNumFlavorTypes(); iFlavorType++)
+	{
+/*
+		iTempValue = AI_getFlavorValue((FlavorTypes)iFlavorType) * GC.getTechInfo(eTech).getFlavorValue(iFlavorType);
+		iTempValue *= range((getTotalPopulation() - 5) / 2, 0, 20);
+		iValue += iTempValue;
+*/
+		iTempValue = iValue;
+
+		iTempValue *= AI_getFlavorValue((FlavorTypes)iFlavorType);
+		iTempValue /= 100;
+
+		iTempValue *= GC.getTechInfo(eTech).getFlavorValue(iFlavorType);
+		iTempValue /= 100;
+
+		iFlavorValue += iTempValue;
+	}
+	iValue += iFlavorValue;
+//<<<<Better AI: End Modify
+
+//>>>>Better AI: Modified by Denev 2010/03/15
+/*
+	if (GC.getTechInfo(eTech).getPreferredAlignment() == getAlignment())
+	{
+		iValue *= 5;
+		iValue /= 4;
+	}
+*/
+	const AlignmentTypes ePreferredAlignment = (AlignmentTypes)GC.getTechInfo(eTech).getPreferredAlignment();
+	if (ePreferredAlignment != NO_ALIGNMENT)
+	{
+		if (ePreferredAlignment  == getAlignment())
+		{
+			iValue *= 5;
+			iValue /= 4;
+		}
+		else if (abs(ePreferredAlignment - getAlignment()) > 1)
+		{
+			iValue *= 2;
+			iValue /= 3;
+		}
+	}
+//<<<<Better AI: End Modify
+
+	if (GC.getTechInfo(eTech).isWater())
+	{
+		if (iCoastalCities == 0)
+		{
+			iValue /= 4;
 		}
 	}
 
@@ -5282,7 +5511,21 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 			if (isTechRequiredForBuilding((eTech), eLoopBuilding))
 			{
 				int iBuildingValue = 0;
-				
+
+//>>>>Better AI: Added by Denev 2010/03/13
+				// if this is a religious building, its not as useful
+				const ReligionTypes eHolyCity = (ReligionTypes)kLoopBuilding.getHolyCity();
+				if (eHolyCity != NO_RELIGION)
+				{
+					if (!hasHolyCity(eHolyCity))
+					{
+						continue;
+					}
+				}
+
+				bool bHeathenBuilding = false;
+//<<<<Better AI: End Add
+
 				if (kLoopBuilding.getSpecialBuildingType() != NO_BUILDING)
 				{
 					iBuildingValue += ((bCapitalAlone) ? 100 : 25);
@@ -5292,11 +5535,19 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += ((bCapitalAlone) ? 200 : 50);
 				}
 
+//>>>>Better AI: Deleted by Denev 2010/08/11
+/*
 				//the granary effect is SO powerful it deserves special code
 				if (kLoopBuilding.getFoodKept() > 0)
 				{
-					iBuildingValue += (15 * kLoopBuilding.getFoodKept());
+					iBuildingValue += (10 * kLoopBuilding.getFoodKept());
 				}
+*/
+//<<<<Better AI: End Delete
+
+//>>>>Better AI: Added by Denev 2010/08/11
+				iBuildingValue += (kLoopBuilding.getHappiness() * 300);
+//<<<<Better AI: End Add
 
 				if (kLoopBuilding.getMaintenanceModifier() < 0)
 				{
@@ -5317,17 +5568,31 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iTempValue *= -kLoopBuilding.getMaintenanceModifier();
 					iTempValue /= 10 * 100;
 
-					iValue += iTempValue;
+					iBuildingValue += iTempValue;
 				}
 
 				iBuildingValue += 100;
 
-                if ((GC.getBuildingClassInfo((BuildingClassTypes)iJ).getDefaultBuildingIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iJ)))
-                {
-                    //UB
-                    iBuildingValue += 600;
-                }
-                
+//>>>>Better AI: Modified by Denev 2010/03/04
+//*** Unique building and Replaced building.
+/*
+				if ((GC.getBuildingClassInfo((BuildingClassTypes)iJ).getDefaultBuildingIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iJ)))
+				{
+					//UB
+					iBuildingValue += 600;
+				}
+*/
+				const BuildingClassTypes eBuildingClass = (BuildingClassTypes)iJ;
+
+				if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() == getCivilizationType())
+				{
+					iBuildingValue += 600;
+				}
+				else if ((GC.getBuildingClassInfo(eBuildingClass).getDefaultBuildingIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass)))
+				{
+					iBuildingValue += 200;
+				}
+//<<<<Better AI: End Modify
 				if( !isLimitedWonderClass((BuildingClassTypes)iJ) )
 				{
 					if (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 || kLoopBuilding.getObsoleteSafeCommerceChange(COMMERCE_CULTURE) > 0)
@@ -5350,31 +5615,47 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += kLoopBuilding.getCommerceModifier(COMMERCE_GOLD) * 15;
 				}
 
-				// if this is a religious building, its not as useful
-				ReligionTypes eReligion = (ReligionTypes) kLoopBuilding.getReligionType();
-				if (eReligion != NO_RELIGION)
-				{
-					
-					// reduce by a factor based on how many cities we have with that relgion
-					if (iTeamCityCount > 0)
-					{
-						int iCitiesWithReligion = GET_TEAM(getTeam()).getHasReligionCount(eReligion);
-						
-						iBuildingValue *= (4 + iCitiesWithReligion);
-						iBuildingValue /= (4 + iTeamCityCount);
-					}
-
-					// if this building requires a religion, then only count it as 1/7th as much
-					// or in other words, only count things like temples once, not 7 times
-					// doing it this way in case some mods give buildings to only one religion
-					iBuildingValue /= std::max(1, GC.getNumReligionInfos());
-				}
-
 				// if we're close to pop domination, we love medicine!
 				// don't adjust for negative modifiers to prevent ignoring assembly line, etc.
 				if ( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && kLoopBuilding.getHealth() > 0)
 				{
 					iBuildingValue += kLoopBuilding.getHealth() * 150;
+				}
+				// if this is a religious building, its not as useful
+				if (isWorldWonderClass((BuildingClassTypes)iJ))
+				{
+					const ReligionTypes eStateReligion = (ReligionTypes)kLoopBuilding.getStateReligion();
+					if (eStateReligion != NO_RELIGION)
+					{
+						if (eStateReligion != getStateReligion())
+						{
+							bHeathenBuilding = true;
+							iBuildingValue /= std::max(1, GC.getNumReligionInfos());
+						}
+					}
+				}
+				else
+				{
+					ReligionTypes eReligion = (ReligionTypes) kLoopBuilding.getPrereqReligion();
+					if (eReligion != NO_RELIGION)
+					{
+						// reduce by a factor based on how many cities we have with that relgion
+						if (iTeamCityCount > 0)
+						{
+							int iCitiesWithReligion = GET_TEAM(getTeam()).getHasReligionCount(eReligion);
+
+							iBuildingValue *= (4 + iCitiesWithReligion);
+							iBuildingValue /= (4 + iTeamCityCount);
+						}
+					}
+				}
+
+				if( AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY1) )
+				{
+					if( kLoopBuilding.getVoteSourceType() >= 0 )
+					{
+						iBuildingValue += 400;
+					}
 				}
 
 				if (kLoopBuilding.getPrereqAndTech() == eTech)
@@ -5395,7 +5676,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 											kLoopBuilding.getObsoleteSafeCommerceChange(COMMERCE_CULTURE) >= 3 ||
 											kLoopBuilding.getCommerceModifier(COMMERCE_CULTURE) >= 10)
 										{
-											iValue += 400;
+												iBuildingValue += 400;
 										}
 									}
 
@@ -5408,19 +5689,14 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 						}
 					}
 				}
+				
+				iBuildingValue += kLoopBuilding.getAIWeight();
 
-				if( AI_isDoVictoryStrategy(AI_VICTORY_DIPLOMACY1) )
+				if (eLoopBuilding == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteWonder())
 				{
-					if( kLoopBuilding.getVoteSourceType() >= 0 )
-					{
-						iValue += 400;
-					}
+					iBuildingValue += 600;
 				}
 
-				if (iBuildingValue > iBestLandBuildingValue)
-				{
-					iBestLandBuildingValue = iBuildingValue;
-				}
 
 				// if water building, weight by coastal cities
 				if (kLoopBuilding.isWater())
@@ -5433,6 +5709,13 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				{
 					iBestLandBuildingValue = iBuildingValue;
 				}
+				
+				if (iBuildingValue > iBestLandBuildingValue)
+				{
+					iBestLandBuildingValue = iBuildingValue;
+				}
+
+
 
 				iValue += iBuildingValue;
 			}
@@ -5451,7 +5734,10 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 			}
 		}
 	}
-	
+
+//>>>>Better AI: Modified by Denev 2010/05/22
+//*** AI must not ignore a monument.
+/*
 	if (bIsCultureBuilding && iExistingCultureBuildingCount < 2)
 	{
 		if (getFreeCityCommerce(COMMERCE_CULTURE) == 0)
@@ -5460,13 +5746,30 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 			{
 				iValue += 150 * std::max(1, (3 - 2 * iExistingCultureBuildingCount)) * (getNumCities() - 1);
 			}
+*/
+	if (bIsCultureBuilding && iExistingCultureBuildingCount == 0)
+	{
+		if (getFreeCityCommerce(COMMERCE_CULTURE) == 0)
+		{
+			int iTempValue = 200 * iCityCount;
+			if (iExistingCultureBuildingCount == 0)
+			{
+				iTempValue *= iCityCount;
+			}
+
+			iValue += iTempValue;
+//<<<<Better AI: End Modify
 		}
 	}
+//>>>>Better AI: Deleted by Denev 2010/06/20
+/*
 	// if tech gives at least one building (so we can count each individual building less)
 	if (iBestLandBuildingValue > 0)
 	{
 		iValue += iBestLandBuildingValue;
 	}
+*/
+//<<<<Better AI: End Delete
 
 	return iValue;
 }
@@ -5481,7 +5784,6 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 	CvCity* pCapitalCity = getCapitalCity();
 
 	UnitTypes eLoopUnit;
-	int iMilitaryValue = 0;
 	int iValue = 0;
 
 	bEnablesUnitWonder = false;
@@ -5494,32 +5796,59 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 			if (isTechRequiredForUnit((eTech), eLoopUnit))
 			{
 				CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
-				iValue += 200;
-				int iUnitValue = 0;
+
+//>>>>Better AI: Added by Denev 2010/03/12
+				const UnitClassTypes eUnitClass = (UnitClassTypes)iJ;
+
+				// Does not value already created world unit.
+				if (GC.getGameINLINE().isUnitClassMaxedOut(eUnitClass))
+				{
+					continue;
+				}
+
+				// Meshabber and Mithril Golem
+				const ReligionTypes eHolyCity = (ReligionTypes)kLoopUnit.getHolyCity();
+				if (eHolyCity != NO_RELIGION)
+				{
+					if (!hasHolyCity(eHolyCity))
+					{
+						continue;
+					}
+				}
+
+				if (GC.getGameINLINE().getGlobalCounter() < kLoopUnit.getPrereqGlobalCounter())
+				{
+					continue;
+				}
+
+				bool bHeathenUnit = false;
+//<<<<Better AI: End Add
+
+				int iUnitValue = 200;
 				int iNavalValue = 0;
 
-//FfH: Modified by Kael 04/29/2009
-//				if ((GC.getUnitClassInfo((UnitClassTypes)iJ).getDefaultUnitIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iJ)))
-//              {
-//              	//UU
-//                  iUnitValue += 600;
-//             }
+//>>>>Better AI: Modified by Denev 2010/03/04
+//*** Unique unit and Replaced unit.
+/*
 				if ((GC.getUnitClassInfo((UnitClassTypes)iJ).getDefaultUnitIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iJ)))
-                {
-                	iUnitValue += 200;
-                }
-                if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat() != NO_UNITCOMBAT)
-                {
-                	if(GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
-                    {
-                	     iUnitValue += 400;
-                    }
+				{
+					//UU
+					iUnitValue += 600;
 				}
-//FfH: End Modify
+*/
+				if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+				{
+					iUnitValue += 600;
+				}
+				else if ((GC.getUnitClassInfo(eUnitClass).getDefaultUnitIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass)))
+				{
+					iUnitValue += 200;
+				}
+//<<<<Better AI: End Modify
 
 				if (kLoopUnit.getPrereqAndTech() == eTech)
 				{
-					iMilitaryValue = 0;
+					int iMilitaryValue = 0;
 
 					// BBAI TODO: Change this to evaluating all unitai types defined in XML for unit?
 					// Without this change many unit types are hard to evaluate, like offensive value of rifles
@@ -5599,11 +5928,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						break;
 
 					case UNITAI_EXPLORE:
+						iMilitaryValue += ((bWarPlan) ? 600 : 300);
 						iUnitValue += ((bCapitalAlone) ? 100 : 200);
 						break;
 
 					case UNITAI_MISSIONARY:
-						iUnitValue += ((getStateReligion() != NO_RELIGION) ? 600 : 300);
+//>>>>Better AI: Modified by Denev 2010/07/10
+//						iUnitValue += ((getStateReligion() != NO_RELIGION) ? 600 : 300);
+						iUnitValue += ((getStateReligion() == NO_RELIGION || getStateReligion() == GC.getUnitInfo(eLoopUnit).getReligionType()) ? 400 : 0);
+//<<<<Better AI: End Modify
 						break;
 
 					case UNITAI_PROPHET:
@@ -5735,6 +6068,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 //>>>>Advanced Rules: Added by Denev 2010/03/04
 //*** Values each new AIs.
+					case UNITAI_BARBSMASHER:
+						iUnitValue += 600;
+						break;
 
 					case UNITAI_HERO:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
@@ -5754,6 +6090,14 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						break;
 
 					case UNITAI_MAGE:
+						iUnitValue += 600;
+						break;
+
+					case UNITAI_TERRAFORMER:
+						iUnitValue += 600;
+						break;
+
+					case UNITAI_MANA_UPGRADE:
 						iUnitValue += 600;
 						break;
 
@@ -5909,15 +6253,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 									
 									if (iBestAreaValue == 0)
 									{
-										iUnitValue += 2000;
+										iUnitValue += 2400;
 									}
 									else if (iBestAreaValue < iBestOtherValue)
 									{
-										iUnitValue += 1000;
+										iUnitValue += 1200;
 									}
 									else if (iBestOtherValue > 0)
 									{
-										iUnitValue += 500;
+										iUnitValue += 600;
 									}
 								}
 							}
@@ -5961,11 +6305,25 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						}
 					}
 
+					const AlignmentTypes ePrereqAlignment = (AlignmentTypes)kLoopUnit.getPrereqAlignment();
+					if (ePrereqAlignment != NO_ALIGNMENT)
+					{
+						if (ePrereqAlignment != getAlignment())
+						{
+							bHeathenUnit = true;
+							iUnitValue /= abs(ePrereqAlignment - getAlignment()) * 4;
+						}
+					}
+
 					// if this is a religious unit, its not as useful
-					bool bHeathenUnit = false;
 					const ReligionTypes eStateReligion = (ReligionTypes)kLoopUnit.getStateReligion();
 					if (eStateReligion != NO_RELIGION)
 					{
+						if (isAgnostic())
+						{
+							continue;
+						}
+						else
 						if (eStateReligion != getStateReligion())
 						{
 							bHeathenUnit = true;
@@ -5977,6 +6335,11 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						const ReligionTypes eReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
 						if (eReligion != NO_RELIGION)
 						{
+							if (GET_TEAM(getTeam()).getHasReligionCount(eReligion) == 0)
+							{
+								continue;
+							}
+
 							if (eReligion != getStateReligion())
 							{
 								if (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == UNITAI_MISSIONARY)
@@ -5987,10 +6350,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							}
 						}
 					}
+
 					if (iUnitValue > iValue)
 					{
 						iValue = iUnitValue;
 					}
+//<<<<Better AI: End Add
+
+//>>>>Better AI: Moved to below by Denev 2010/03/12
+/*
 					if (iPathLength <= 1)
 					{
 						if (getTotalPopulation() > 5)
@@ -6004,12 +6372,33 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							}
 						}
 					}
-//FfH: Modified by Kael 06/06/2008
-//					iValue += iUnitValue;
-					iValue += iUnitValue * 3;
-//FfH: End Modify
+*/
+//<<<<Better AI: End Move
 
+//>>>>Better AI: Deleted by Denev 2010/06/19
+//					iValue += iUnitValue;
+//<<<<Better AI: End Delete
 				}
+
+//>>>>Better AI: Moved from above by Denev 2010/07/10
+				if (isWorldUnitClass(eUnitClass))
+				{
+					if (!bHeathenUnit)
+					{
+						if (iPathLength <= 1)
+						{
+							CvCity* pCapitacCity = getCapitalCity();
+							if (pCapitacCity != NULL)
+							{
+								if (getTotalPopulation() > pCapitacCity->getProductionTurnsLeft(eLoopUnit, -1))
+								{
+									bEnablesUnitWonder = true;
+								}
+							}
+						}
+					}
+				}
+//<<<<Better AI: End Move
 			}
 		}
 	}
@@ -6031,7 +6420,7 @@ void CvPlayerAI::AI_chooseFreeTech()
 	argsList.add(getID());
 	argsList.add(true);
 	lResult = -1;
-	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
+//	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
 	eBestTech = ((TechTypes)lResult);
 
 	if (eBestTech == NO_TECH)
@@ -6093,19 +6482,23 @@ void CvPlayerAI::AI_chooseResearch()
 		argsList.add(getID());
 		argsList.add(false);
 		lResult = -1;
-		gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
+		//gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
 		eBestTech = ((TechTypes)lResult);
 
 		if (eBestTech == NO_TECH)
 		{
+			int iAIResearchDepth;
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      03/08/10                                jdog5000      */
+/*                                                                                              */
+/* Victory Strategy AI                                                                          */
+/************************************************************************************************/
+			iAIResearchDepth = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) ? 1 : 3;
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 
-//FfH: Added by Kael 06/17/2009
-//			int iAIResearchDepth;
-//			iAIResearchDepth = AI_isDoStrategy(AI_STRATEGY_CULTURE3) ? 1 : 3;
-//			eBestTech = AI_bestTech((isHuman()) ? 1 : iAIResearchDepth);
-			eBestTech = AI_bestTech(3);
-//FfH: End Add
-
+			eBestTech = AI_bestTech((isHuman()) ? 1 : iAIResearchDepth);
 		}
 
 		if (eBestTech != NO_TECH)
@@ -6469,12 +6862,12 @@ int CvPlayerAI::AI_getCloseBordersAttitude(PlayerTypes ePlayer) const
 		PROFILE_FUNC();
 		int iPercent;
 
-	if (getTeam() == GET_PLAYER(ePlayer).getTeam() || GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) || GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isVassal(getTeam()))
-	{
-		return 0;
-	}
+		if (getTeam() == GET_PLAYER(ePlayer).getTeam() || GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) || GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isVassal(getTeam()))
+		{
+			return 0;
+		}
 
-	iPercent = std::min(60, (AI_calculateStolenCityRadiusPlots(ePlayer) * 3));
+		iPercent = std::min(60, (AI_calculateStolenCityRadiusPlots(ePlayer) * 3));
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      06/12/10                                jdog5000      */
@@ -6486,6 +6879,10 @@ int CvPlayerAI::AI_getCloseBordersAttitude(PlayerTypes ePlayer) const
 			iPercent += 40;
 		}
 
+		if( AI_isDoStrategy(AI_VICTORY_CONQUEST3) )
+		{
+			iPercent = std::min( 120, (3 * iPercent)/2 );
+		}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -6583,10 +6980,10 @@ int CvPlayerAI::AI_getDifferentReligionAttitude(PlayerTypes ePlayer) const
 		}
 
 //FfH: Added by Kael 11/05/2007
-    if (!canSeeReligion(GET_PLAYER(ePlayer).getStateReligion(), NULL) || !GET_PLAYER(ePlayer).canSeeReligion(getStateReligion(), NULL))
-    {
-        iAttitude = 0;
-    }
+		if (!canSeeReligion(GET_PLAYER(ePlayer).getStateReligion(), NULL) || !GET_PLAYER(ePlayer).canSeeReligion(getStateReligion(), NULL))
+		{
+			iAttitude = 0;
+		}
 //FfH: End Add
 
 	}
@@ -9142,7 +9539,10 @@ int CvPlayerAI::AI_cityTradeVal(CvCity* pCity) const
 
 	iValue += (((((pCity->getPopulation() * 50) + GC.getGameINLINE().getElapsedGameTurns() + 100) * 4) * pCity->plot()->calculateCulturePercent(pCity->getOwnerINLINE())) / 100);
 
-	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
+//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (iI = 0; iI < pCity->getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = plotCity(pCity->getX_INLINE(), pCity->getY_INLINE(), iI);
 
@@ -10346,7 +10746,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    case UNITAI_MAGE:
+	case UNITAI_MEDIC:
+	case UNITAI_MAGE:
 	case UNITAI_TERRAFORMER:
     case UNITAI_MANA_UPGRADE:
 	case UNITAI_WARWIZARD:
@@ -10785,7 +11186,7 @@ int CvPlayerAI::AI_neededWorkers(CvArea* pArea) const
 	{
 		if (pLoopCity->getArea() == pArea->getID())
 		{
-		iCount += pLoopCity->AI_getWorkersNeeded() * 2;
+		iCount += pLoopCity->AI_getWorkersNeeded() * 3;
 	}
 	}
 
@@ -11673,7 +12074,11 @@ CivicTypes CvPlayerAI::AI_bestCivic(CivicOptionTypes eCivicOption, int* iBestVal
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/		
 
-
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      05/15/10                                jdog5000      */
+/*                                                                                              */
+/* Civic AI, Victory Strategy AI                                                                */
+/************************************************************************************************/
 int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 {
 	PROFILE_FUNC();
@@ -11689,6 +12094,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iI, iJ;
 	bool bCultureVictory3 = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 	bool bCultureVictory2 = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
+//>>>>Better AI: Added by Denev 2010/07/20
+	const AlignmentTypes eAlignment = (AlignmentTypes)GC.getLeaderHeadInfo(getPersonalityType()).getAlignment();
+//<<<<Better AI: End Add
 
 	FAssertMsg(eCivic < GC.getNumCivicInfos(), "eCivic is expected to be within maximum bounds (invalid Index)");
 	FAssertMsg(eCivic >= 0, "eCivic is expected to be non-negative (invalid Index)");
@@ -11713,6 +12121,24 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 
 	CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+
+//>>>>Better AI: Added by Denev 2010/07/20
+	const AlignmentTypes eBlockAlignment = (AlignmentTypes)GC.getCivicInfo(eCivic).getBlockAlignment();
+	const AlignmentTypes ePrereqAlignment = (AlignmentTypes)GC.getCivicInfo(eCivic).getPrereqAlignment();
+
+	if (eBlockAlignment == eAlignment)
+	{
+		return 1;
+	}
+
+	if (ePrereqAlignment != NO_ALIGNMENT)
+	{
+		if (ePrereqAlignment != eAlignment)
+		{
+			return 1;
+		}
+	}
+//<<<<Better AI: End Add
 
 	bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	if( bWarPlan )
@@ -11791,16 +12217,73 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	int iTemp = 0;
 	CvCity* pCapital = getCapitalCity();
-	iValue += ((kCivic.getGreatPeopleRateModifier() * getNumCities()) / 10);
+//>>>>Better AI: Modified by Denev 2010/03/15
+//	iValue += ((kCivic.getGreatPeopleRateModifier() * getNumCities()) / 10);
+	int iGreatPeopleTotalDelta = 0;
+	int iLoop;
+	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
+		{
+			int iGreatPeopleRateChange = GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getGreatPeopleRateChange();
+
+			int iSpecialistCount = 0;
+			iSpecialistCount += pLoopCity->getSpecialistCount((SpecialistTypes)iSpecialist);
+			iSpecialistCount += pLoopCity->getFreeSpecialistCount((SpecialistTypes)iSpecialist);
+
+			iGreatPeopleTotalDelta += iSpecialistCount * iGreatPeopleRateChange;
+		}
+	}
+	iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
+//<<<<Better AI: End Modify
+//>>>>Better AI: Added by Denev 2010/07/20
+	// Tholal AI - modified
+	//if (bBoostProphet)
+	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
+	{
+		//Denev ToDo: great people farm
+		iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
+	}
+//<<<<Better AI: End Add
 	iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
 	iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
+//>>>>Better AI: Modified by Denev 2010/07/21
+/*
 	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
 	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
+*/
+	int iNumCitiesMaintenance = 0;
+	int iDistanceMaintenance = 0;
+	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		iNumCitiesMaintenance += pLoopCity->calculateNumCitiesMaintenanceTimes100();
+		iDistanceMaintenance += pLoopCity->calculateDistanceMaintenanceTimes100();
+	}
+
+	int iBaseNumCitiesMaintenance = iNumCitiesMaintenance;
+	iBaseNumCitiesMaintenance *= 100;
+	iBaseNumCitiesMaintenance /= std::max(0, (getNumCitiesMaintenanceModifier() + 100));
+
+	int iBaseDistanceMaintenance = iDistanceMaintenance;
+	iBaseDistanceMaintenance *= 100;
+	iBaseDistanceMaintenance /= std::max(0, (getDistanceMaintenanceModifier() + 100));
+
+	int iMaintenanceDelta = 0;
+	iMaintenanceDelta += kCivic.getNumCitiesMaintenanceModifier() * iBaseNumCitiesMaintenance;
+	iMaintenanceDelta += kCivic.getDistanceMaintenanceModifier() * iBaseDistanceMaintenance;
+
+	iValue -= iMaintenanceDelta / 5000;	// (iMaintenanceDelta * 2 / 100 / 100)
+//<<<<Better AI: End Modify
+
 	iTemp = kCivic.getFreeExperience();
 	if( iTemp > 0 )
 	{
 		// Free experience increases value of hammers spent on units, population is an okay measure of base hammer production
 		iTempValue = (iTemp * getTotalPopulation() * (bWarPlan ? 30 : 12))/100;
+//>>>>Better AI: Added by Denev 2010/07/08
+//*** FfH2 promotions are more valuable than unmodded BtS.
+		iTempValue *= 2;
+//<<<<Better AI: End Add
 		iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
 		iTempValue /= 100;
 		iTempValue *= iWarmongerPercent;
@@ -11810,23 +12293,98 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue += ((kCivic.getWorkerSpeedModifier() * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
 	iValue += ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
-	iValue += (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500 ); 
+	iValue += (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / (bWarPlan ? 300 : 500 );
+//>>>>Better AI: Added by Denev 2010/07/08
+	int iFreeUnits;
+	int iFreeMilitaryUnits;
+	int iPaidUnits;
+	int iPaidMilitaryUnits;
+	int iMilitaryCost;
+	int iBaseUnitCost;
+	int iExtraCost;
+	int iUnitCost = calculateUnitCost(iFreeUnits, iFreeMilitaryUnits, iPaidUnits, iPaidMilitaryUnits, iBaseUnitCost, iMilitaryCost, iExtraCost);
+
+	if (iPaidUnits <= 0)
+	{
+		iValue += (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / 300;
+	}
+//<<<<Better AI: End Add
 	iValue += (kCivic.getBaseFreeUnits() / 2);
 	iValue += (kCivic.getBaseFreeMilitaryUnits() / 2);
 	iValue += ((kCivic.getFreeUnitsPopulationPercent() * getTotalPopulation()) / 200);
 	iValue += ((kCivic.getFreeMilitaryUnitsPopulationPercent() * getTotalPopulation()) / 300);
 	iValue += -(kCivic.getGoldPerUnit() * getNumUnits());
 	iValue += -(kCivic.getGoldPerMilitaryUnit() * getNumMilitaryUnits() * iWarmongerPercent) / 200;
+//>>>>Better AI: Added by Denev 2010/07/21
+	iValue += -(kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation() * 3);
+//<<<<Better AI: End Add
 
-	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
+	// Tholal AI - value Theocracy during religion victory push
+	if (kCivic.isNoNonStateReligionSpread())
+	{
+		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+		{
+			iValue += 100;
+		}
+		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
+		{
+			iValue += 500;
+		}
+		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
+		{
+			iValue += 1000;
+		}
+	}
+	// End Tholal AI
+
+		//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
+
+//FfH: Added by Kael 01/31/2009
+	if (kCivic.isMilitaryFoodProduction())
+	{
+//>>>>Advanced Rules: Modified by Denev 2010/03/04
+/*
+		if (getTotalPopulation() < 30)
+		{
+			iValue -= (30 - getTotalPopulation()) * 5;
+		}
+*/
+		int iTotalFoodDifference = 0;
+		int iTotalGrowingSpace = 0;
+		int iMaxGrowingSpace = 0;
+
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			iTotalFoodDifference += pLoopCity->foodDifference();
+			iTotalGrowingSpace += std::max(0, pLoopCity->AI_getTargetSize() - pLoopCity->getPopulation());
+
+			if (iTotalGrowingSpace > iMaxGrowingSpace)
+			{
+				iMaxGrowingSpace = iTotalGrowingSpace;
+			}
+		}
+
+		iTempValue = 0;
+		iTempValue += bWarPlan ? iTotalFoodDifference : 0;
+		iTempValue /= GET_PLAYER(getID()).canPopRush() ? 2 : 1;
+		iTempValue -= iTotalGrowingSpace;
+		iTempValue -= iMaxGrowingSpace * 2;
+
+//		if (FOOD_CONSUME_PER_POPULATION
+
+		iValue += iTempValue;
+//<<<<Advanced Rules: End Modify
+	}
+//FfH: End Add
 	iTemp = getWorldSizeMaxConscript(eCivic);
 	if( iTemp > 0 && (pCapital != NULL) )
 	{
 		UnitTypes eConscript = pCapital->getConscriptUnit();
 		if( eConscript != NO_UNIT )
 		{
-			// Nationhood
-			int iCombatValue = GC.getGameINLINE().AI_combatValue(eConscript);
+			// Military State
+			int iCombatValue = AI_combatValue(eConscript);
 			if( iCombatValue > 33 )
 			{
 				iTempValue = getNumCities() + ((bWarPlan) ? 30 : 10);
@@ -11848,24 +12406,16 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			}
 		}
 	}
-
-//FfH: Added by Kael 01/31/2009
-    if (kCivic.isMilitaryFoodProduction())
-    {
-        if (getTotalPopulation() < 30)
-        {
-            iValue -= (30 - getTotalPopulation()) * 5;
-        }
-    }
-//FfH: End Add
-
 	iValue += ((kCivic.isNoUnhealthyPopulation()) ? (getTotalPopulation() / 3) : 0);
 	if (bWarPlan)
 	{
 		iValue += ((kCivic.getExpInBorderModifier() * getNumMilitaryUnits()) / 200);
 	}
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
-	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
+//>>>>Better AI: Modified by Denev 2010/08/04
+//	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
+	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 25 : 50));
+//<<<<Better AI: End Modify
 	iValue += (kCivic.getFreeSpecialist() * getNumCities() * 12);
 	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2))); 
 	iValue += -((kCivic.isNoForeignTrade()) ? (iConnectedForeignCities * 3) : 0);
@@ -11899,6 +12449,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	}
 
+//>>>>Better AI: Modified by Denev 2010/07/20
+/*
 	if (kCivic.getCivicPercentAnger() != 0)
 	{
 		int iNumOtherCities = GC.getGameINLINE().getNumCities() - getNumCities();
@@ -11918,6 +12470,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue += (std::min(iTargetGameTurn, iElapsedTurns - iTargetGameTurn) * (iNumOtherCities * kCivic.getCivicPercentAnger())) / (15 * iTargetGameTurn);
 		}
 	}
+*/
+	iValue += (getTotalPopulation() * 4 * getCivicPercentAnger(eCivic, true)) / GC.getPERCENT_ANGER_DIVISOR();
+//>>>>Better AI: End Modify
 
 	if (kCivic.getExtraHealth() != 0)
 	{
@@ -12070,7 +12625,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		
 		if (pCapital) 
 		{
-			// Bureaucracy
+			// God King
 			// Benefit of having a supercity is higher than just increases in yield since will also win more
 			// wonder races, build things that much faster
 			//iTempValue += ((kCivic.getCapitalYieldModifier(iI)) / 2);
@@ -12085,7 +12640,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		for (iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
 		{
-			// Free Speech
+			// Aristocracy, Arete, Agrarianism
 			iTempValue += (AI_averageYieldMultiplier((YieldTypes)iI) * (kCivic.getImprovementYieldChanges(iJ, iI) * (getImprovementCount((ImprovementTypes)iJ) + getNumCities()/2))) / 100;
 		}
 
@@ -12110,8 +12665,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{
 		iTempValue = 0;
 
-		// Nationhood
+		// Consumption, Mercantilism, etc
 		iTempValue += ((kCivic.getCommerceModifier(iI) * getNumCities()) / 3);
+		// God King
 		iTempValue += (kCivic.getCapitalCommerceModifier(iI) / 2);
 		if (iI == COMMERCE_ESPIONAGE)
 		{
@@ -12119,7 +12675,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTempValue /= 500;
 		}
 
-		// Representation
+		// Scholarship, Caste system
 		iTempValue += ((kCivic.getSpecialistExtraCommerce(iI) * getTotalPopulation()) / 15);
 
 		iTempValue *= AI_commerceWeight((CommerceTypes)iI);
@@ -12142,10 +12698,14 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = kCivic.getBuildingHappinessChanges(iI);
 		if (iTempValue != 0)
 		{
-			// Nationalism
+			// Religion & Nationhood
 			if( !isNationalWonderClass((BuildingClassTypes)iI) )
 			{
-				iValue += (iTempValue * getNumCities())/2;
+				const BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI);
+				if (eBuilding != NO_BUILDING && canConstruct(eBuilding))
+				{
+					iValue += (iTempValue * getNumCities())/2;
+				}
 			}
 			iValue += (iTempValue * getBuildingClassCountPlusMaking((BuildingClassTypes)iI) * 2);
 		}
@@ -12153,7 +12713,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
-		// Environmentalism
+		// Guardian of Nature
 		iHappiness = kCivic.getFeatureHappinessChanges(iI);
 
 		if (iHappiness != 0)
@@ -12218,6 +12778,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /************************************************************************************************/
 
 
+//>>>>Better AI: Modified by Denev 2010/03/11
 ReligionTypes CvPlayerAI::AI_bestReligion() const
 {
 	ReligionTypes eBestReligion;
@@ -12228,7 +12789,45 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	iBestValue = 0;
 	eBestReligion = NO_RELIGION;
 
+	//int eStateRel = getStateReligion();
+
+	// Tholal AI - don't switch religions when pursuing religious victory
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
+	{
+		return getStateReligion();
+	}
+	// End Tholal AI
+
+	// Do we have any religion hero already?
+	if (getStateReligion() != NO_RELIGION)
+	{
+		CvReligionInfo& kReligionInfo = GC.getReligionInfo(getStateReligion());
+		//for (int iIndex = 0; iIndex < kReligionInfo.getNumReligionHeroes(); iIndex++)
+		//{
+			if (kReligionInfo.getReligionHero1() != NO_UNITCLASS)
+			{
+				if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero1()) > 0)
+				{
+					return getStateReligion();
+				}
+			}
+			if (kReligionInfo.getReligionHero2() != NO_UNITCLASS)
+			{
+				if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero2()) > 0)
+				{
+					return getStateReligion();
+				}
+			}
+		//}
+	}
+
 	ReligionTypes eFavorite = (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
+
+	// Are we the patriarch of favorite religion already?
+	if (eFavorite != NO_RELIGION && hasHolyCity(eFavorite))
+	{
+		return eFavorite;
+	}
 
 	for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
 	{
@@ -12292,6 +12891,16 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		return 0;
 	}
 
+//>>>>Better AI: Added by Denev 2010/07/21
+	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
+	{
+		if (GC.getReligionInfo(eReligion).getAlignmentBest() == ALIGNMENT_EVIL)
+		{
+			return 0;
+		}
+	}
+//>>>>Better AI: End Add
+
 	int iValue = GC.getGameINLINE().countReligionLevels(eReligion);
 
 	int iLoop;
@@ -12344,12 +12953,12 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	if (eReligion == getFavoriteReligion())
 		iValue *=2;
 
-//FfH: Modified by Kael 09/29/2007
-//	return iValue;
-    iValue += GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion);
-	return std::max(iValue, 0);
-//FfH: End Modify
+//>>>>Unofficial Bug Fix: Added by Denev 2010/03/11
+	iValue *= 100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion);
+	iValue /= 100;
+//<<<<Unofficial Bug Fix: End Add
 
+	return iValue;
 }
 
 /************************************************************************************************/
@@ -13407,7 +14016,22 @@ void CvPlayerAI::AI_doCounter()
 				{
 					if (GC.getLeaderHeadInfo(getPersonalityType()).getMemoryDecayRand(iJ) > 0)
 					{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/18
+/*
 						if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getMemoryDecayRand(iJ), "Memory Decay") == 0)
+						{
+							AI_changeMemoryCount(((PlayerTypes)iI), ((MemoryTypes)iJ), -1);
+						}
+*/
+						int iGameSpeedPercent = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
+						int iDenominator = iGameSpeedPercent * GC.getLeaderHeadInfo(getPersonalityType()).getMemoryDecayRand(iJ);
+						int iNumerator = 100;
+
+						int iDecrementalCount = iNumerator / iDenominator;
+						iNumerator -= iDecrementalCount * iDenominator;
+
+						int iReciprocal = iDenominator / iNumerator;
+						if (GC.getGameINLINE().getSorenRandNum(iReciprocal, "Memory Decay") == 0)
 						{
 							AI_changeMemoryCount(((PlayerTypes)iI), ((MemoryTypes)iJ), -1);
 						}
@@ -14855,7 +15479,23 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_ASK_FOR_HELP) == 0)
 											{
-												if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_ASK_FOR_HELP), "AI Diplo Ask For Help") == 0)
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      02/12/10                                jdog5000      */
+/*                                                                                              */
+/* Diplomacy                                                                                    */
+/************************************************************************************************/
+												int iRand = GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_ASK_FOR_HELP);
+												int iTechPerc = GET_TEAM(getTeam()).getBestKnownTechScorePercent();
+												if( iTechPerc < 90 )
+												{
+													iRand *= std::max(1, iTechPerc - 60);
+													iRand /= 30;
+												}
+
+												if (GC.getGameINLINE().getSorenRandNum(iRand, "AI Diplo Ask For Help") == 0)
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 												{
 													iBestValue = 0;
 													eBestReceiveTech = NO_TECH;
@@ -16022,6 +16662,39 @@ void CvPlayerAI::read(FDataStreamBase* pStream)
 
 	pStream->Read(&m_iStrategyHash);
 	pStream->Read(&m_iStrategyHashCacheTurn);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      03/18/10                                jdog5000      */
+/*                                                                                              */
+/* Victory Strategy AI, War strategy AI                                                         */
+/************************************************************************************************/
+	if( uiFlag < 3 )
+	{
+		m_iStrategyHash = 0;
+		m_iStrategyHashCacheTurn = -1;
+	}
+
+	if( uiFlag > 2 )
+	{
+		pStream->Read(&m_iStrategyRand);
+	}
+	else
+	{
+		m_iStrategyRand = 0;
+	}
+
+	if( uiFlag > 0 )
+	{
+		pStream->Read(&m_iVictoryStrategyHash);
+		pStream->Read(&m_iVictoryStrategyHashCacheTurn);
+	}
+	else
+	{
+		m_iVictoryStrategyHash = 0;
+		m_iVictoryStrategyHashCacheTurn = -1;
+	}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 	pStream->Read(&m_iAveragesCacheTurn);
 	pStream->Read(&m_iAverageGreatPeopleMultiplier);
 
@@ -16100,7 +16773,19 @@ void CvPlayerAI::write(FDataStreamBase* pStream)
 {
 	CvPlayer::write(pStream);	// write base class data first
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      03/18/10                                jdog5000      */
+/*                                                                                              */
+/* Victory Strategy AI                                                                          */
+/************************************************************************************************/
+/*
 	uint uiFlag=0;
+*/
+	// Flag for type of save
+	uint uiFlag=3;
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 	pStream->Write(uiFlag);		// flag for expansion
 
 	pStream->Write(m_iPeaceWeight);
@@ -16112,6 +16797,17 @@ void CvPlayerAI::write(FDataStreamBase* pStream)
 
 	pStream->Write(m_iStrategyHash);
 	pStream->Write(m_iStrategyHashCacheTurn);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      03/18/10                                jdog5000      */
+/*                                                                                              */
+/* Victory Strategy AI                                                                          */
+/************************************************************************************************/
+	pStream->Write(m_iStrategyRand);
+	pStream->Write(m_iVictoryStrategyHash);
+	pStream->Write(m_iVictoryStrategyHashCacheTurn);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 	pStream->Write(m_iAveragesCacheTurn);
 	pStream->Write(m_iAverageGreatPeopleMultiplier);
 
@@ -17255,6 +17951,8 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
 	}
 
+	// Tholal ToDo - keep this from conflicting with Religion strategies
+
 	if( iLegendaryCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
 	{
 		// Already won, keep playing culture heavy but do some tech to keep pace if human wants to keep playing
@@ -17286,6 +17984,13 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 			return 0;
 		}
     }
+
+	// Tholal AI - Cancel any low level culture strategy if getting somewhere with religion
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		return 0;
+	}
+	// End Tholal AI
 
     iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
 
@@ -17326,6 +18031,7 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		return 0;
 	}
     
+	// Tholal ToDo: Era fix
     if (getCurrentEra() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
     {
 		bool bAt3 = false;
@@ -17847,24 +18553,24 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 	{
 		return 0;
 	}
-*/
+	*/
+
 	// Tholal ToDo - Add check for game option
 	// Tholal ToDo - Make this a loop through all religions
 
-	bool bHoly, bState, bHolyState;
-	const iFavRel = getFavoriteReligion();
-	
-	
-	if (iFavRel != NO_RELIGION)
+	const iStateRel = getStateReligion();
+		
+	if (iStateRel != NO_RELIGION)
 	{
-		bHoly = hasHolyCity(getFavoriteReligion());
-		bState = (getStateReligion() == getFavoriteReligion());
-		bHolyState = (bHoly && bState);
-	
-		int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iFavRel);
+		bool bHoly = hasHolyCity((ReligionTypes)iStateRel);
 
-		if (bHolyState)
+
+		// Tholal ToDo - keep this from conflicting with Culture strategies
+
+		if (bHoly)
 		{
+			int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iStateRel);
+
 			if (iRelPercent > 65)
 			{
 				return 4;
@@ -17940,7 +18646,19 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 		return 0;
 	}
 	*/
-	// Tholal ToDo - Add check for vic. condition enabled
+		
+
+	//if (!GC.getGameINLINE().altarVictoryValid())
+	/*
+    {
+        return 0;
+    }
+	*/
+
+	if (GC.getLeaderHeadInfo(getLeaderType()).getAlignment() == ALIGNMENT_EVIL)
+	{
+		return 0;
+	}
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")) > 0)
 	{
@@ -18614,7 +19332,9 @@ int CvPlayerAI::AI_getStrategyHash() const
 	}
 
 	
+	// Tholal AI - era fix - maybe not do it here?
 	int iCurrentEra = getCurrentEra();
+	//int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 	int iParanoia = 0;
 	int iCloseTargets = 0;
 	int iOurDefensivePower = GET_TEAM(getTeam()).getDefensivePower();
@@ -18720,6 +19440,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 	}
 
 	// Scale paranoia in later eras/larger games
+	
 	iParanoia -= (100*(iCurrentEra + 1)) / std::max(1, GC.getNumEraInfos());
 
 	// Alert strategy
@@ -19572,7 +20293,10 @@ void CvPlayerAI::AI_calculateAverages() const
 
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
-		iPopulation = std::max(pLoopCity->getPopulation(), NUM_CITY_PLOTS);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
+//		iPopulation = std::max(pLoopCity->getPopulation(), NUM_CITY_PLOTS);
+		iPopulation = std::max(pLoopCity->getPopulation(), pLoopCity->getNumCityPlots());
+//<<<<Unofficial Bug Fix: End Modify
 		iTotalPopulation += iPopulation;
 
 		for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -19771,8 +20495,10 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 	int iCurrentEra = getCurrentEra();
 	int iAreaCities = pArea->getCitiesPerPlayer(getID());
 
-	iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
-
+	// Tholal AI - era fix
+	//iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
+	iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
+	
 	iDefenders = 1 + ((iCurrentEra + ((GC.getGameINLINE().getMaxCityElimination() > 0) ? 3 : 2)) * iAreaCities);
 	iDefenders /= 3;
 	iDefenders += pArea->getPopulationPerPlayer(getID()) / 7;
@@ -20292,7 +21018,10 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 	pCity->AI_updateBestBuild();
 
 	int iPlotsImproved = 0;
-	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
+//	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (int iI = 0; iI < pCity->getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		if (iI != CITY_HOME_PLOT)
 		{
@@ -20314,7 +21043,10 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 		CvPlot* pBestPlot;
 		ImprovementTypes eBestImprovement = NO_IMPROVEMENT;
 		int iBestValue = 0;
-		for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
+//		for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+		for (int iI = 0; iI < pCity->getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			int iValue = pCity->AI_getBestBuildValue(iI);
 			if (iValue > iBestValue)

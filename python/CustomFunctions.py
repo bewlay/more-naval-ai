@@ -931,9 +931,8 @@ class CustomFunctions:
 				elif(pPlot.getTerrainType() == iDesert):
 					pPlot.setTerrainType(iTundra,True,True)
 
-
 ##--------		Tweaked Hyborem: Added by Denev	--------##
-
+		"""
 	def getAshenVeilCity(self, iNum):
 		iInfernal = gc.getInfoTypeForString('CIVILIZATION_INFERNAL')
 		iVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
@@ -979,24 +978,64 @@ class CustomFunctions:
 		if iNum == 3:
 			return pBestCity3
 		return -1
+		"""
+	def getAshenVeilCities(self, iCasterPlayer, iCasterID, iNum):
+		pCasterPlayer = gc.getPlayer(iCasterPlayer)
+		pCaster = pCasterPlayer.getUnit(iCasterID)
 
-		
-	def getAshenVeilCities(self, iCasterPlayer, iNum):
 		iVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
 		ltVeilCities = []
+
 		for iPlayer in range(gc.getMAX_PLAYERS()):
-			pPlayer = gc.getPlayer(iPlayer)
-			if pPlayer.isAlive() and iPlayer != iCasterPlayer:
-				for pyCity in PyPlayer(iPlayer).getCityList():
-					pCity = pyCity.GetCy()
-					if pCity.isHasReligion(iVeil) and not pCity.isCapital():
-						iValue = pCity.getPopulation() * 100
-						iValue += pCity.getCulture(iPlayer) / 3
-						iValue += pCity.getNumBuildings() * 10
-						iValue += pCity.getNumWorldWonders() * 100
-						iValue += pCity.countNumImprovedPlots()
-						ltVeilCities.append((iValue, pCity))
+			pTargetPlayer = gc.getPlayer(iPlayer)
+
+			if not pTargetPlayer.isAlive():
+				continue
+
+			if pTargetPlayer.getTeam() == pCasterPlayer.getTeam():
+				continue
+
+			iBaseModifier = 100
+			if pTargetPlayer.getStateReligion() == iVeil:
+				iBaseModifier -= 20
+			if pTargetPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+				iBaseModifier -= 10
+
+			for pyCity in PyPlayer(iPlayer).getCityList():
+				pTargetCity = pyCity.GetCy()
+				if pTargetCity.isHasReligion(iVeil) and not pTargetCity.isCapital():
+					iValue = pTargetCity.getPopulation() * 100
+					iValue += pTargetCity.getCulture(iPlayer) / 3
+					iValue += pTargetCity.getNumBuildings() * 10
+					iValue += pTargetCity.getNumWorldWonders() * 100
+					iValue += pTargetCity.countNumImprovedPlots()
+
+					iModifier = iBaseModifier
+					pCasterCapital = pCasterPlayer.getCapitalCity()
+					if not pCasterCapital.isNone() and pTargetCity.area().getID() == pCasterCapital.area().getID():
+						iModifier += 10
+					if pTargetCity.area().getCitiesPerPlayer(iCasterPlayer) > 0:
+						iModifier += 10
+
+					if pCasterPlayer.getNumCities() > 0:
+						iMinDistance = -1
+						for pyCity in PyPlayer(iCasterPlayer).getCityList():
+							pLoopCity = pyCity.GetCy()
+							if pLoopCity.getID() == pTargetCity.getID():
+								continue
+							iDistance = stepDistance(pLoopCity.getX(), pLoopCity.getY(), pTargetCity.getX(), pTargetCity.getY())
+							if iMinDistance == -1 or iMinDistance > iDistance:
+								iMinDistance = iDistance
+						if iMinDistance != -1:
+							iModifier -= iMinDistance
+
+					iModifier = max(0, iModifier)
+					iValue = (iValue * iModifier) // 100
+
+					ltVeilCities.append((iValue, pTargetCity))
+
 		ltVeilCities.sort()
+		ltVeilCities.reverse()
 		lpVeilCities = []
 		if len(ltVeilCities) > 0:
 			ltVeilCities = ltVeilCities[0:min(iNum, len(ltVeilCities))]
@@ -1014,42 +1053,9 @@ class CustomFunctions:
 
 	def getHero(self, pPlayer):
 		iHero = -1
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BANNOR'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_DONAL')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MALAKIM'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_TEUTORIX')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_CORLINDALE')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_BASIUM')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LANUN'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_GUYBRUSH')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KURIOTATES'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_EURABATRES')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_GILDEN')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_MAROS')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_MAGNADINE')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_GOVANNON')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_LOKI')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_RANTINE')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_ALAZKAN')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CALABIM'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_LOSHA')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_ABASHI')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SIDAR'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_RATHUS')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_WILBOMAN')
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-			iHero = gc.getInfoTypeForString('UNITCLASS_HYBOREM')
+		iHeroUnit = gc.getCivilizationInfo(pPlayer.getCivilizationType()).getHero()
+		if iHeroUnit != -1:
+			iHero = gc.getUnitInfo(iHeroUnit).getUnitClassType()
 		return iHero
 
 	def getLeader(self, iLeader):

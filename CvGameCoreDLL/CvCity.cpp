@@ -183,6 +183,33 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	updateCultureLevel(false);
 
+//FfH: Added by Kael 11/07/2007
+	if (GET_PLAYER(getOwnerINLINE()).getMaxCities() != -1)
+	{
+		if (GET_PLAYER(getOwnerINLINE()).getNumCities() - GET_PLAYER(getOwnerINLINE()).getNumSettlements() - 1 >= GET_PLAYER(getOwnerINLINE()).getMaxCities())
+		{
+			setSettlement(true);
+		}
+		else
+		{
+			if (!GET_PLAYER(getOwnerINLINE()).isHuman() || GET_PLAYER(getOwnerINLINE()).getNumCities() == 1 || GC.getGameINLINE().isGameMultiPlayer())
+			{
+				setPlotRadius(3);
+			}
+			else
+			{
+				if (GET_PLAYER(getOwnerINLINE()).isHuman() && GET_PLAYER(getOwnerINLINE()).getNumCities() != 1)
+				{
+					CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRMSETTLEMENT);
+					pInfo->setData1(getID());
+					gDLL->getInterfaceIFace()->addPopup(pInfo, GET_PLAYER(getOwnerINLINE()).getID());
+				}
+			}
+		}
+	}
+	setCivilizationType(GET_PLAYER(getOwnerINLINE()).getCivilizationType());
+//FfH: End Add
+
 	if (pPlot->getCulture(getOwnerINLINE()) < GC.getDefineINT("FREE_CITY_CULTURE"))
 	{
 		pPlot->setCulture(getOwnerINLINE(), GC.getDefineINT("FREE_CITY_CULTURE"), bBumpUnits, false);
@@ -287,33 +314,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	updateFeatureHealth();
 	updateFeatureHappiness();
 	updatePowerHealth();
-
-//FfH: Added by Kael 11/07/2007
-    if (GET_PLAYER(getOwnerINLINE()).getMaxCities() != -1)
-    {
-        if (GET_PLAYER(getOwnerINLINE()).getNumCities() - GET_PLAYER(getOwnerINLINE()).getNumSettlements() - 1 >= GET_PLAYER(getOwnerINLINE()).getMaxCities())
-        {
-            setSettlement(true);
-        }
-        else
-        {
-            if (!GET_PLAYER(getOwnerINLINE()).isHuman() || GET_PLAYER(getOwnerINLINE()).getNumCities() == 1 || GC.getGameINLINE().isGameMultiPlayer())
-            {
-                setPlotRadius(3);
-            }
-            else
-            {
-                if (GET_PLAYER(getOwnerINLINE()).isHuman() && GET_PLAYER(getOwnerINLINE()).getNumCities() != 1)
-                {
-                    CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRMSETTLEMENT);
-                    pInfo->setData1(getID());
-                    gDLL->getInterfaceIFace()->addPopup(pInfo, GET_PLAYER(getOwnerINLINE()).getID());
-                }
-            }
-        }
-    }
-    setCivilizationType(GET_PLAYER(getOwnerINLINE()).getCivilizationType());
-//FfH: End Add
 
 	GET_PLAYER(getOwnerINLINE()).updateMaintenance();
 	GC.getMapINLINE().updateWorkingCity();
@@ -760,8 +760,10 @@ void CvCity::kill(bool bUpdatePlotGroups)
 
 	pPlot = plot();
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = getCityIndexPlot(iI);
 
@@ -1059,8 +1061,10 @@ void CvCity::doTurn()
 
 	if (!isDisorder())
 	{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 		for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			pLoopPlot = getCityIndexPlot(iI);
 
@@ -1147,8 +1151,10 @@ void CvCity::doTurn()
 
 			iCount = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //			for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
 			for (iJ = 0; iJ < getNumCityPlots(); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				if (isWorkingPlot(iJ))
 				{
@@ -1237,9 +1243,10 @@ bool CvCity::canBeSelected() const
 
 void CvCity::updateSelectedCity(bool bTestProduction)
 {
-
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (int iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		CvPlot* pLoopPlot = getCityIndexPlot(iI);
 		if (pLoopPlot != NULL)
@@ -1263,8 +1270,10 @@ void CvCity::updateYield()
 	CvPlot* pLoopPlot;
 	int iI;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = getCityIndexPlot(iI);
 
@@ -1485,7 +1494,10 @@ void CvCity::verifyWorkingPlot(int iIndex)
 	CvPlot* pPlot;
 
 	FAssertMsg(iIndex >= 0, "iIndex expected to be >= 0");
-	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+	FAssertMsg(iIndex < getNumCityPlots(), "iIndex expected to be < getNumCityPlots()");
+//<<<<Unofficial Bug Fix: End Modify
 
 	if (isWorkingPlot(iIndex))
 	{
@@ -1508,8 +1520,10 @@ void CvCity::verifyWorkingPlots()
 {
 	int iI;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		verifyWorkingPlot(iI);
 	}
@@ -1537,8 +1551,10 @@ int CvCity::countNumImprovedPlots(ImprovementTypes eImprovement, bool bPotential
 
 	iCount = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = getCityIndexPlot(iI);
 
@@ -1574,8 +1590,10 @@ int CvCity::countNumWaterPlots() const
 
 	iCount = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = getCityIndexPlot(iI);
 
@@ -1598,8 +1616,10 @@ int CvCity::countNumRiverPlots() const
 {
 	int iCount = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (int iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		CvPlot* pLoopPlot = getCityIndexPlot(iI);
 
@@ -6009,6 +6029,13 @@ int CvCity::calculateDistanceMaintenance() const
 
 int CvCity::calculateDistanceMaintenanceTimes100() const
 {
+//FfH: Added by Kael 11/18/2008
+	if (isSettlement() || GC.getGameINLINE().isOption(GAMEOPTION_NO_MAINTENANCE))
+	{
+		return 0;
+	}
+//FfH: End Add
+
 	CvCity* pLoopCity;
 	int iWorstCityMaintenance;
 	int iBestCapitalMaintenance;
@@ -6047,13 +6074,6 @@ int CvCity::calculateDistanceMaintenanceTimes100() const
 	iTempMaintenance = std::min(iWorstCityMaintenance, iBestCapitalMaintenance);
 	FAssert(iTempMaintenance >= 0);
 
-//FfH: Added by Kael 11/18/2008
-    if (isSettlement() || GC.getGameINLINE().isOption(GAMEOPTION_NO_MAINTENANCE))
-    {
-        iTempMaintenance = 0;
-    }
-//FfH: End Add
-
 	return iTempMaintenance;
 }
 
@@ -6064,6 +6084,13 @@ int CvCity::calculateNumCitiesMaintenance() const
 
 int CvCity::calculateNumCitiesMaintenanceTimes100() const
 {
+//FfH: Added by Kael 11/18/2008
+	if (isSettlement() || GC.getGameINLINE().isOption(GAMEOPTION_NO_MAINTENANCE))
+	{
+		return 0;
+	}
+//FfH: End Add
+
 	int iNumCitiesPercent = 100;
 
 	iNumCitiesPercent *= (getPopulation() + 17);
@@ -6092,17 +6119,11 @@ int CvCity::calculateNumCitiesMaintenanceTimes100() const
 //FfH: End Modify
 
 	iNumCitiesMaintenance = std::min(iNumCitiesMaintenance, GC.getHandicapInfo(getHandicapType()).getMaxNumCitiesMaintenance() * 100);
+
 	iNumCitiesMaintenance *= std::max(0, (GET_PLAYER(getOwnerINLINE()).getNumCitiesMaintenanceModifier() + 100));
 	iNumCitiesMaintenance /= 100;
 
 	FAssert(iNumCitiesMaintenance >= 0);
-
-//FfH: Added by Kael 11/18/2008
-    if (isSettlement() || GC.getGameINLINE().isOption(GAMEOPTION_NO_MAINTENANCE))
-    {
-        iNumCitiesMaintenance = 0;
-    }
-//FfH: End Add
 
 	return iNumCitiesMaintenance;
 }
@@ -6132,10 +6153,10 @@ int CvCity::calculateColonyMaintenanceTimes100() const
 	{
 		if (pLoopCity->isGovernmentCenter())
 		{
-            if (pLoopCity->area() == area())
-            {
-                return 0;
-            }
+			if (pLoopCity->area() == area())
+			{
+				return 0;
+			}
 		}
 	}
 //FfH: End Modify
@@ -6154,6 +6175,7 @@ int CvCity::calculateColonyMaintenanceTimes100() const
 	int iNumCities = (area()->getCitiesPerPlayer(getOwnerINLINE()) - 1) * iNumCitiesPercent;
 
 	int iMaintenance = (iNumCities * iNumCities) / 100;
+
 	iMaintenance = std::min(iMaintenance, (GC.getHandicapInfo(getHandicapType()).getMaxColonyMaintenance() * calculateDistanceMaintenanceTimes100()) / 100);
 
 	FAssert(iMaintenance >= 0);
@@ -6410,8 +6432,10 @@ void CvCity::updateFeatureHealth()
 	iNewGoodHealth = 0;
 	iNewBadHealth = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = getCityIndexPlot(iI);
 
@@ -7068,8 +7092,10 @@ void CvCity::updateFeatureHappiness()
 	int iNewFeatureGoodHappiness = 0;
 	int iNewFeatureBadHappiness = 0;
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (int iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		CvPlot* pLoopPlot = getCityIndexPlot(iI);
 
@@ -9737,8 +9763,10 @@ void CvCity::setRevealed(TeamTypes eIndex, bool bNewValue)
 
 		if (eIndex == GC.getGameINLINE().getActiveTeam())
 		{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //			for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 			for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				pLoopPlot = getCityIndexPlot(iI);
 
@@ -10398,8 +10426,10 @@ void CvCity::alterSpecialistCount(SpecialistTypes eIndex, int iChange)
 						else
 						{
 							int iNumCanWorkPlots = 0;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //							for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 							for (int iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 							{
 								if (iI != CITY_HOME_PLOT)
 								{
@@ -10703,7 +10733,10 @@ void CvCity::changeEspionageDefenseModifier(int iChange)
 bool CvCity::isWorkingPlot(int iIndex) const
 {
 	FAssertMsg(iIndex >= 0, "iIndex expected to be >= 0");
-	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+	FAssertMsg(iIndex < getNumCityPlots(), "iIndex expected to be < getNumCityPlots()");
+//<<<<Unofficial Bug Fix: End Modify
 
 	return m_pabWorkingPlot[iIndex];
 }
@@ -10730,7 +10763,10 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	int iI;
 
 	FAssertMsg(iIndex >= 0, "iIndex expected to be >= 0");
-	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+	FAssertMsg(iIndex < getNumCityPlots(), "iIndex expected to be < getNumCityPlots()");
+//<<<<Unofficial Bug Fix: End Modify
 
 	if (isWorkingPlot(iIndex) != bNewValue)
 	{
@@ -10797,7 +10833,10 @@ void CvCity::alterWorkingPlot(int iIndex)
 	CvPlot* pPlot;
 
 	FAssertMsg(iIndex >= 0, "iIndex expected to be >= 0");
-	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	FAssertMsg(iIndex < NUM_CITY_PLOTS, "iIndex expected to be < NUM_CITY_PLOTS");
+	FAssertMsg(iIndex < getNumCityPlots(), "iIndex expected to be < getNumCityPlots()");
+//<<<<Unofficial Bug Fix: End Modify
 
 	if (iIndex == CITY_HOME_PLOT)
 	{
@@ -12030,18 +12069,11 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 		{
 			swprintf(szBuffer, gDLL->getText(((isLimitedUnitClass((UnitClassTypes)(GC.getUnitInfo(eTrainUnit).getUnitClassType()))) ? "TXT_KEY_MISC_TRAINED_UNIT_IN_LIMITED" : "TXT_KEY_MISC_TRAINED_UNIT_IN"), GC.getUnitInfo(eTrainUnit).getTextKeyWide(), getNameKey()).GetCString());
 			strcpy( szSound, GC.getUnitInfo(eTrainUnit).getArtInfo(0,GET_PLAYER(getOwnerINLINE()).getCurrentEra(), NO_UNIT_ARTSTYLE)->getTrainSound() );
-/*************************************************************************************************/
-/**	FFHBUG denev																				**/
-/**	ADDON (FFHBUG) merged Sephi																	**/
-/**																								**/
-/*************************************************************************************************/
+//>>>>Unofficial Bug Fix: Modified by Denev 2009/09/28
+//*** Assimilated city produces a unit with original civilization artstyle.
 //			szIcon = GET_PLAYER(getOwnerINLINE()).getUnitButton(eTrainUnit);
 			szIcon = getUnitArtStyleButton(eTrainUnit);
-/*************************************************************************************************/
-/**	END																							**/
-/*************************************************************************************************/
-
-
+//<<<<Unofficial Bug Fix: End Modify
 		}
 		else if (eConstructBuilding != NO_BUILDING)
 		{
@@ -13021,7 +13053,11 @@ void CvCity::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumBuildingInfos(), m_paiNumRealBuilding);
 	pStream->Read(GC.getNumBuildingInfos(), m_paiNumFreeBuilding);
 
-	pStream->Read(NUM_CITY_PLOTS, m_pabWorkingPlot);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//*** m_iPlotRadius must be read before this.
+//	pStream->Read(NUM_CITY_PLOTS, m_pabWorkingPlot);
+	pStream->Read(getNumCityPlots(), m_pabWorkingPlot);
+//<<<<Unofficial Bug Fix: End Modify
 	pStream->Read(GC.getNumReligionInfos(), m_pabHasReligion);
 	pStream->Read(GC.getNumCorporationInfos(), m_pabHasCorporation);
 
@@ -13269,7 +13305,10 @@ void CvCity::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumBuildingInfos(), m_paiNumRealBuilding);
 	pStream->Write(GC.getNumBuildingInfos(), m_paiNumFreeBuilding);
 
-	pStream->Write(NUM_CITY_PLOTS, m_pabWorkingPlot);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	pStream->Write(NUM_CITY_PLOTS, m_pabWorkingPlot);
+	pStream->Write(getNumCityPlots(), m_pabWorkingPlot);
+//<<<<Unofficial Bug Fix: End Modify
 	pStream->Write(GC.getNumReligionInfos(), m_pabHasReligion);
 	pStream->Write(GC.getNumCorporationInfos(), m_pabHasCorporation);
 
@@ -13526,25 +13565,20 @@ const TCHAR* CvCity::getCityBillboardProductionIcon() const
 			{
 				UnitTypes eType = getProductionUnit();
 				FAssert(eType != NO_UNIT);
-/*************************************************************************************************/
-/**	FFHBUG denev																				**/
-/**	ADDON (FFHBUG) merged Sephi																	**/
-/**																								**/
-/*************************************************************************************************/
-//				szIcon = GET_PLAYER(getOwnerINLINE()).getUnitButton(eType);
-				szIcon = getUnitArtStyleButton(eType);
-/*************************************************************************************************/
-/**	END																							**/
-/*************************************************************************************************/
-
-
+//>>>>Unofficial Bug Fix: Modified by Denev 2009/09/28
+//*** Assimilated city produces a unit with original civilization artstyle.
+/*
+				szIcon = GET_PLAYER(getOwnerINLINE()).getUnitButton(eType);
 
 //FfH: Added by Kael 02/05/2009
-                if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() != NO_PROMOTION)
-                {
-                    szIcon = GC.getUnitInfo(eType).getArtInfo(0, NO_ERA, (UnitArtStyleTypes)GC.getPromotionInfo((PromotionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultRace()).getUnitArtStyleType())->getButton();
-                }
+				if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() != NO_PROMOTION)
+				{
+					szIcon = GC.getUnitInfo(eType).getArtInfo(0, NO_ERA, (UnitArtStyleTypes)GC.getPromotionInfo((PromotionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultRace()).getUnitArtStyleType())->getButton();
+				}
 //FfH: End Add
+*/
+				szIcon = getUnitArtStyleButton(eType);
+//<<<<Unofficial Bug Fix: End Modify
 
 				break;
 			}
@@ -13960,7 +13994,10 @@ bool CvCity::canApplyEvent(EventTypes eEvent, const EventTriggeredData& kTrigger
 	if (kEvent.getMinPillage() > 0)
 	{
 		int iNumImprovements = 0;
-		for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (int i = 0; i < NUM_CITY_PLOTS; ++i)
+		for (int i = 0; i < getNumCityPlots(); ++i)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			if (CITY_HOME_PLOT != i)
 			{
@@ -14046,10 +14083,19 @@ void CvCity::applyEvent(EventTypes eEvent, const EventTriggeredData& kTriggeredD
 			int iNumPillaged = 0;
 			for (int i = 0; i < iNumPillage; ++i)
 			{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
 				int iRandOffset = GC.getGameINLINE().getSorenRandNum(NUM_CITY_PLOTS, "Pick event pillage plot");
 				for (int j = 0; j < NUM_CITY_PLOTS; ++j)
+*/
+				int iRandOffset = GC.getGameINLINE().getSorenRandNum(getNumCityPlots(), "Pick event pillage plot");
+				for (int j = 0; j < getNumCityPlots(); ++j)
+//<<<<Unofficial Bug Fix: End Modify
 				{
-					int iPlot = (j + iRandOffset) % NUM_CITY_PLOTS;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//					int iPlot = (j + iRandOffset) % NUM_CITY_PLOTS;
+					int iPlot = (j + iRandOffset) % getNumCityPlots();
+//<<<<Unofficial Bug Fix: End Modify
 					if (CITY_HOME_PLOT != iPlot)
 					{
 						CvPlot* pPlot = getCityIndexPlot(iPlot);
@@ -14853,7 +14899,10 @@ PlayerTypes CvCity::getLiberationPlayer(bool bConquest) const
 			return NO_PLAYER;
 		}
 
-		for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+		for (int iPlot = 0; iPlot < getNumCityPlots(); ++iPlot)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			CvPlot* pLoopPlot = ::plotCity(getX_INLINE(), getY_INLINE(), iPlot);
 
@@ -14874,8 +14923,10 @@ int CvCity::getBestYieldAvailable(YieldTypes eYield) const
 {
 	int iBestYieldAvailable = 0;
 
-//	for (int iJ = 0; iJ < NUM_CITY_PLOTS; ++iJ)	modified Sephi (dynamic City Radius
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (int iJ = 0; iJ < NUM_CITY_PLOTS; ++iJ)
 	for (int iJ = 0; iJ < getNumCityPlots(); ++iJ)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		if (iJ != CITY_HOME_PLOT)
 		{
@@ -15050,30 +15101,25 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 	{
         pUnit->changeExperience(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIFreeXP(), -1, false, false, false);
 	}
-    if (getCivilizationType() != GET_PLAYER(getOwnerINLINE()).getCivilizationType())
-    {
-/*************************************************************************************************/
-/**	FFHBUG denev																				**/
-/**	ADDON (FFHBUG) merged Sephi																	**/
-/**	Assimilated city produces a unit with original civilization artstyle.   					**/
-/*************************************************************************************************/
+	if (getCivilizationType() != GET_PLAYER(getOwnerINLINE()).getCivilizationType())
+	{
+//>>>>Unofficial Bug Fix: Added by Denev 2009/09/28
+//*** Assimilated city produces a unit with original civilization artstyle.
 		pUnit->setUnitArtStyleType(getUnitArtStyleType());
 		pUnit->reloadEntity();
-/*************************************************************************************************/
-/**	END																							**/
-/*************************************************************************************************/
-        if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() != NO_PROMOTION)
-        {
-            if (pUnit->getRace() == NO_PROMOTION)
-            {
-                if (!::isWorldUnitClass(pUnit->getUnitClassType()) && !pUnit->isAnimal() && pUnit->isAlive() && pUnit->getDomainType() == DOMAIN_LAND)
-                {
-                    pUnit->setHasPromotion((PromotionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultRace(), true);
-                }
-            }
-        }
-        if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() != NO_TRAIT)
-        {
+//<<<<Unofficial Bug Fix: End Add
+		if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() != NO_PROMOTION)
+		{
+			if (pUnit->getRace() == NO_PROMOTION)
+			{
+				if (!::isWorldUnitClass(pUnit->getUnitClassType()) && !pUnit->isAnimal() && pUnit->isAlive() && pUnit->getDomainType() == DOMAIN_LAND)
+				{
+					pUnit->setHasPromotion((PromotionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultRace(), true);
+				}
+			}
+		}
+		if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() != NO_TRAIT)
+		{
 			for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 			{
 				if (GC.getTraitInfo((TraitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivTrait()).isFreePromotion(iI))
@@ -15180,7 +15226,14 @@ int CvCity::getNumCityPlots() const
 
     else if (getPlotRadius() == 1)
     {
-        return 9;
+		if (isSettlement())
+		{
+			return 1;
+		}
+		else
+		{
+	        return 9;
+		}
     }
 
     return 21;
@@ -15194,34 +15247,55 @@ int CvCity::getPlotRadius() const
 void CvCity::setPlotRadius(int iNewValue)
 {
     if (iNewValue != getPlotRadius())
-    {
-        /*That workers in outlying plots are not struck there...*/
-        CvPlot* pLoopPlot;
-        if (iNewValue < getPlotRadius())
-        {
-            for (int iI=8; iI<NUM_CITY_PLOTS; iI++)
-            {
+	{
+//>>>>Unofficial Bug Fix: Added by Denev 2010/07/13
+		const int iOldPlotRadius = getPlotRadius();
+//<<<<Unofficial Bug Fix: End Add
 
-                if (isWorkingPlot(iI) == true)
-                {
-                    setWorkingPlot(iI, false);
-                }
-            }
-        }
-        for (int iI=8; iI<NUM_CITY_PLOTS; iI++)
-        {
-            pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
-            if (pLoopPlot != NULL)
-            {
-                pLoopPlot->updateWorkingCity();
-            }
-        }
+		m_iPlotRadius = iNewValue;
+		CvPlot* pLoopPlot;
 
-        m_iPlotRadius = iNewValue;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/07/13
+//		if (iNewValue < getPlotRadius())
+		if (iNewValue < iOldPlotRadius)
+//<<<<Unofficial Bug Fix: End Modify
+		{
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/07/13
+//			for (int iI=8; iI<NUM_CITY_PLOTS; iI++)
+			for (int iI = 0; iI < iOldPlotRadius; iI++)
+//<<<<Unofficial Bug Fix: End Modify
+			{
+				/*That workers in outliing plots are not struck there...*/
+				if (isWorkingPlot(iI) == true)
+				{
+					setWorkingPlot(iI, false);
+				}
+			}
+		}
 
-        updateFeatureHealth();
-        updateFeatureHappiness();
-    }
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/07/13
+//		for (int iI=8; iI<NUM_CITY_PLOTS; iI++)
+		for (int iI = 0; iI < iOldPlotRadius; iI++)
+//<<<<Unofficial Bug Fix: End Modify
+		{
+			pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
+			if (pLoopPlot != NULL)
+			{
+				pLoopPlot->updateWorkingCity();
+			}
+		}
+
+		updateFeatureHealth();
+		updateFeatureHappiness();
+
+//>>>>Unofficial Bug Fix: Added by Denev 2010/07/22
+		AI_updateBestBuild();
+//<<<<Unofficial Bug Fix: End Add
+
+//>>>>Better AI: Added by Denev 2010/07/22
+		AI_setAssignWorkDirty(true);
+//<<<<Better AI: End Add
+	}
 }
 
 bool CvCity::isUnhappyProduction() const
@@ -15302,11 +15376,9 @@ int CvCity::getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSp
 	return (getSpecialistCount(eSpecialist) + getFreeSpecialistCount(eSpecialist)) * GET_PLAYER(getOwnerINLINE()).getSpecialistTypeExtraCommerce(eSpecialist, eIndex);
 }
 //FfH: End Add
-/*************************************************************************************************/
-/**	FFHBUG denev																				**/
-/**	ADDON (FFHBUG) merged Sephi																	**/
-/**																								**/
-/*************************************************************************************************/
+
+//>>>>Unofficial Bug Fix: Added by Denev 2009/09/28
+//*** Assimilated city produces a unit with original civilization artstyle.
 UnitArtStyleTypes CvCity::getUnitArtStyleType() const
 {
 	int iUnitArtStyle = NO_UNIT_ARTSTYLE;
@@ -15335,9 +15407,7 @@ const TCHAR* CvCity::getUnitArtStyleButton(UnitTypes eUnit) const
 {
 	return GC.getUnitInfo(eUnit).getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentEra(), getUnitArtStyleType())->getButton();
 }
-/*************************************************************************************************/
-/**	END																							**/
-/*************************************************************************************************/
+//<<<<Unofficial Bug Fix: End Add
 
 // Tholal AI - new functions
 

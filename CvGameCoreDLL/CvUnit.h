@@ -800,6 +800,7 @@ public:
 /*********************************************************************/
 
 // Tholal AI
+	virtual bool isInquisitor() = 0;
 	virtual bool isChanneler() = 0;
 	virtual bool isDivine() = 0;
 	int getChannelingLevel();

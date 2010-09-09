@@ -171,7 +171,7 @@ public:
     bool AI_isCityDefenseProduction();
     CvPlot* AI_getCityPatrolProduction();
     void AI_setCityPatrolProduction(CvPlot* newplot);
-    void AI_CityChoosePatrolProduction();
+//    void AI_CityChoosePatrolProduction();
     int AI_neededCityPatrolProduction(int type);
     bool AI_isCityPatrolProduction();
 /*************************************************************************************************/

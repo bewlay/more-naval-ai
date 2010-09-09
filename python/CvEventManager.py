@@ -1027,7 +1027,10 @@ class CvEventManager:
 			apUnitList = py.getUnitList()
 			for pUnit in apUnitList:
 				if pUnit.isAlive():
-					pUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL'), True)
+##--------		Unofficial Bug Fix: Added by Denev	--------##
+					if pUnit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+##--------		Unofficial Bug Fix: End Add			--------##
+						pUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL'), True)
 
 		if iProjectType == gc.getInfoTypeForString('PROJECT_PURGE_THE_UNFAITHFUL'):
 			for pyCity in PyPlayer(iPlayer).getCityList():

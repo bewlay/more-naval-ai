@@ -117,6 +117,7 @@ bool CvUnitAI::AI_update()
 /**						                                            							**/
 /*************************************************************************************************/
 
+	// Tholal ToDo - make a subfunction and teach bad freaks to use Arenas
     if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))
     {
         if (canConstruct(plot(),(BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW")))
@@ -127,10 +128,19 @@ bool CvUnitAI::AI_update()
     }
 
 // Tholal AI - Gift Vampirism
-// Todo - put in a check for vampires and do vampire stuff
+// Todo - put in a check for vampires and do vampire stuff - incorporate feasting move
 	if (canCast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"), false))
 	{
 		cast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"));
+	}
+
+	// Bring out the comfy chair!
+	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		if (isInquisitor())
+		{
+			AI_InquisitionMove();
+		}
 	}
 
 	// - Temporary hack to catch Heroes who have their AI switched
@@ -148,7 +158,6 @@ bool CvUnitAI::AI_update()
 	{
 		AI_crewCheck();
 	}
-
 // End Tholal AI
 
 /** BETTER AI Sephi (Time for the Mages to Caste Haste, etc.)                   **/
@@ -294,7 +303,11 @@ bool CvUnitAI::AI_update()
                 return false;
             }
 
-            AI_barbAttackMove();
+            if (AI_anyAttack(30, 0))
+            {
+                return false;
+            }
+            getGroup()->pushMission(MISSION_SKIP);
             return false;
         }
     }
@@ -466,6 +479,13 @@ bool CvUnitAI::AI_update()
 				case GROUPFLAG_SVARTALFAR_KIDNAP:
 					AI_SvartalfarKidnapMove();
 					break;
+				// Tholal AI - added Inquisition
+					/*
+				case GROUPFLAG_INQUISITION:
+					AI_InquisitionMove();
+					break;
+					*/
+				// End Tholal AI
                 case GROUPFLAG_PILLAGE:
                 	AI_PillageGroupMove();
                 	break;
@@ -1669,6 +1689,7 @@ void CvUnitAI::AI_settleMove()
                 {
                 getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
                 // Teleport other units to this plot
+				/* - Tholal AI - commented this section out
                 if (GC.getGameINLINE().getGameTurn()<4)
                 {
                     CvUnit* pLoopUnit;
@@ -1687,6 +1708,7 @@ void CvUnitAI::AI_settleMove()
                         }
                     }
                 }
+				*/
                 return;
                 }
             }
@@ -2168,27 +2190,25 @@ void CvUnitAI::AI_workerMove()
 	{
 		return;
 	}
-
-//FfH: Modified by Kael 11/11/2007
-//	bool bBuildFort = false;
-//
-//	if (GC.getGame().getSorenRandNum(5, "AI Worker build Fort with Priority"))
-//	{
-//		bool bCanal = ((100 * area()->getNumCities()) / std::max(1, GC.getGame().getNumCities()) < 85);
-//		CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
-//		bool bAirbase = false;
-//		bAirbase = (kPlayer.AI_totalUnitAIs(UNITAI_PARADROP) || kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_AIR) || kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR));
-//
-//		if (bCanal || bAirbase)
-//		{
-//			if (AI_fortTerritory(bCanal, bAirbase))
-//			{
-//				return;
-//			}
-//		}
-//		bBuildFort = true;
-//	}
-//FfH: End Modify
+	
+	bool bBuildFort = false;
+	
+	if (GC.getGame().getSorenRandNum(5, "AI Worker build Fort with Priority"))
+	{
+		bool bCanal = ((100 * area()->getNumCities()) / std::max(1, GC.getGame().getNumCities()) < 85);
+		CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+		bool bAirbase = false;
+		bAirbase = (kPlayer.AI_totalUnitAIs(UNITAI_PARADROP) || kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_AIR) || kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR));
+		
+		if (bCanal || bAirbase)
+		{
+			if (AI_fortTerritory(bCanal, bAirbase))
+			{
+				return;
+			}
+		}
+		bBuildFort = true;
+	}
 
 	if (bCanRoute && isBarbarian())
 	{
@@ -2267,24 +2287,22 @@ void CvUnitAI::AI_workerMove()
 	{
 		return;
 	}
-
-//FfH: Modified by Kael 11/11/2007
-//		if (!bBuildFort)
-//		{
-//			bool bCanal = ((100 * area()->getNumCities()) / std::max(1, GC.getGame().getNumCities()) < 85);
-//			CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
-//			bool bAirbase = false;
-//			bAirbase = (kPlayer.AI_totalUnitAIs(UNITAI_PARADROP) || kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_AIR) || kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR));
-//
-//			if (bCanal || bAirbase)
-//			{
-//				if (AI_fortTerritory(bCanal, bAirbase))
-//				{
-//					return;
-//				}
-//			}
-//		}
-//FfH: End Modify
+	
+	if (!bBuildFort)
+	{
+		bool bCanal = ((100 * area()->getNumCities()) / std::max(1, GC.getGame().getNumCities()) < 85);
+		CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+		bool bAirbase = false;
+		bAirbase = (kPlayer.AI_totalUnitAIs(UNITAI_PARADROP) || kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_AIR) || kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR));
+		
+		if (bCanal || bAirbase)
+		{
+			if (AI_fortTerritory(bCanal, bAirbase))
+			{
+				return;
+			}
+		}
+	}
 
 	if (bCanRoute)
 	{
@@ -2305,7 +2323,12 @@ void CvUnitAI::AI_workerMove()
 		}
 		if (!isHuman())
 		{
-		    /** TEMPFIX Sephi
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      01/14/09                                jdog5000      */
+/*                                                                                              */
+/* Worker AI                                                                                    */
+/************************************************************************************************/
+/*
 			if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, NO_UNITAI, -1, -1, -1, -1, MOVE_SAFE_TERRITORY))
 			{
 				return;
@@ -24732,7 +24755,8 @@ void CvUnitAI::AI_chooseGroupflag()
 //        PromotionTypes iPromotion=(PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR");
 //        if (iPromotion!=NO_PROMOTION && isHasPromotion(iPromotion))
 //  Must use UNITAI, since PromotionSelection peneds on Groupflag
-        if(AI_getUnitAIType()==UNITAI_MEDIC)
+        //if(AI_getUnitAIType()==UNITAI_MEDIC)
+		if (isInquisitor())
         {
             if ((GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_INQUISITION)-2)<(GET_PLAYER(getOwnerINLINE()).getNumCities()/5))
             {
@@ -25392,17 +25416,16 @@ void CvUnitAI::AI_barbsmashermove()
             {
 				if(pLoopUnit->AI_getUnitAIType()==UNITAI_HERO && pLoopUnit->AI_getGroupflag()==GROUPFLAG_DEFENSE_NEW)
                 {
-                    pLoopUnit->joinGroup(getGroup());
-					if(!getGroup()->canAllMove())
+					if(pLoopUnit->getGroup()->getActivityType()==ACTIVITY_AWAKE)
 					{
-						finishMoves();
-						getGroup()->pushMission(MISSION_SKIP);
-			            return;
+						pLoopUnit->joinGroup(getGroup());
+						if(!getGroup()->canAllMove())
+						{
+							finishMoves();
+							getGroup()->pushMission(MISSION_SKIP);
+							return;
+						}
 					}
-//                  pLoopUnit->getGroup()->pushMission(MISSION_SKIP);
-//					pLoopUnit->finishMoves();
-//					getGroup()->pushMission(MISSION_SKIP);
-//                  return;
                 }
             }
         }
@@ -27474,18 +27497,18 @@ bool CvUnitAI::AI_Lokimove()
     CvPlot* pLoopPlot;
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
-    if (plot()->isCity() && !bFinancialTrouble)
-    {
-	//	if (plot()->getCulture(plot()->getOwnerINLINE())==0)
-	//	{
+    if (plot()->isCity())
+	{
+		if (!bFinancialTrouble)
+	    {
 			if (canCast(GC.getDefineINT("SPELL_DISRUPT"),false))
 				cast(GC.getDefineINT("SPELL_DISRUPT"));
-	//	}
-	//	else
-	//	{
-	//		if (canCast(GC.getDefineINT("SPELL_ENTERTAIN"),false))
-	//			cast(GC.getDefineINT("SPELL_ENTERTAIN"));
-	//	}
+		}
+		else
+		{
+			if (canCast(GC.getDefineINT("SPELL_ENTERTAIN"),false))
+				cast(GC.getDefineINT("SPELL_ENTERTAIN"));
+		}
     }
     for (pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).nextCity(&iLoop))
     {
@@ -27757,6 +27780,7 @@ void CvUnitAI::AI_mageMove()
 		AI_setUnitAIType(UNITAI_RESERVE);
 	}
 	// Tholal AI
+
     getGroup()->pushMission(MISSION_FORTIFY);
 }
 
@@ -27828,10 +27852,12 @@ bool CvUnitAI::isSummoner()
 
     if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_SAND_LION"),false))
         return true;
+		
 /** CTD when puppet summons other puppet
     if (canCast(GC.getInfoTypeForString("SPELL_CREATE_PUPPET"),false))
         return true;
 **/
+
     return false;
 }
 
@@ -28226,69 +28252,84 @@ void CvUnitAI::changeAllowedExplore(bool bNewValue)
 
 void CvUnitAI::AI_InquisitionMove()
 {
-    CvPlot* pBestPlot=NULL;
-    int iValue;
-    int iBestValue=100;
 
-    for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
-    {
-        CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+// Tholal AI - rewritten to help with Religious victory strats
+// ToDo - figure out why they wont find target cities
 
-        if(pLoopPlot)
-        {
-            if (AI_plotValid(pLoopPlot))
-            {
-                if(pLoopPlot->isCity())
-                {
-                    if(pLoopPlot->getArea()==getArea())
-                    {
-                        if (!pLoopPlot->isVisibleEnemyUnit(this))
-                        {
-                            bool bValidTargetForInquisition=false;
-                            int iStateBelief = GET_PLAYER(getOwnerINLINE()).getStateReligion();
-                            CvCity* pCity=pLoopPlot->getPlotCity();
+	CvCity* pLoopCity;
+	CvCity* pBestCity;
+	CvPlot* pBestPlot;
 
-                            for (int iTarget=0;iTarget<GC.getNumReligionInfos();iTarget++)
-                            {
-                                if (iStateBelief != iTarget && pCity->isHasReligion((ReligionTypes)iTarget) && (!pCity->isHolyCity((ReligionTypes)iTarget)))
-                                {
-                                    bValidTargetForInquisition=true;
-                                }
-                            }
+	int iValue;
+	int iBestValue;
+	int iLoop;
 
-                            if (iStateBelief == NO_RELIGION)
-                            {
-                                if (getOwnerINLINE()!=pCity->getOwnerINLINE())
-                                {
-                                    bValidTargetForInquisition=false;
-                                }
-                            }
+	iBestValue = 0;
+	pBestCity = NULL;
+	iValue = 0;
 
-                            if (iStateBelief != GET_PLAYER(pCity->getOwner()).getStateReligion())
-                            {
-                                bValidTargetForInquisition=false;
-                            }
+	int iStateRel = GET_PLAYER(getOwnerINLINE()).getStateReligion();
 
-                            if (bValidTargetForInquisition && generatePath(pLoopPlot,0,true,&iValue))
-                            {
-                                if(iValue<iBestValue)
-                                {
-                                    pBestPlot=pLoopPlot;
-                                    iBestValue=iValue;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	if (iStateRel != NO_RELIGION)
+	{
+		CvCity* pCity = plot()->getPlotCity();
+	
+        bool bValidTargetForInquisition=false;
+		int iNumHeathenRels = 0;
 
-    if (pBestPlot!=NULL)
-    {
-        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
-        return;
-    }
+		for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
+		{
+
+			bValidTargetForInquisition=false;
+			iNumHeathenRels = 0;
+			//iValue = 0;
+
+			for (int iTarget=0;iTarget<GC.getNumReligionInfos();iTarget++)
+			{
+				if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+				{
+					bValidTargetForInquisition=true;
+					iNumHeathenRels ++;
+				}
+			}
+
+			if (bValidTargetForInquisition)
+			{
+				if (pCity != NULL && pCity == pLoopCity)
+				{
+					if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
+					{
+						cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
+						return;
+					}
+				}
+
+				iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
+				
+				if (pCity->isHolyCity((ReligionTypes)iStateRel))
+				{
+					iValue *= 2;
+				}
+
+				// ToDo - reduce value for long distance travel
+
+			//				iValue = std::max(1, iValue);
+				if (iValue > iBestValue)
+				{
+					iBestValue = iValue;
+					pBestCity = pLoopCity;
+				}
+			}
+		}
+
+		if (pBestCity != NULL)
+		{
+			pBestPlot = pBestCity->plot();
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+			return;
+		}
+	}
+//End Tholal AI
 
     getGroup()->pushMission(MISSION_SKIP);
     return;
@@ -28599,6 +28640,14 @@ bool CvUnitAI::AI_buildPirateCove()
 // Tholal AI - New functions
 // Mage check
 
+bool CvUnitAI::isInquisitor()
+{
+    if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
+        return true;
+
+	return false;
+}
+
 bool CvUnitAI::isChanneler()
 {
 
@@ -28639,9 +28688,11 @@ int CvUnitAI::getChannelingLevel()
     return 0;
 }
 
-// Check for AI to use crew promotions (modified from Denev's mod
+// Check for AI to use crew promotions (modified from Denev's mod)
+// ToDo - this isn't working
 bool CvUnitAI::AI_crewCheck()
 {
+
 	if (plot()->isCity(true))
 	{
 		const SpellTypes eNormalCrew = (SpellTypes)GC.getInfoTypeForString("SPELL_CREW_NORMAL_CREW");

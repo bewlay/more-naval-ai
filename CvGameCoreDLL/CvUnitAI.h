@@ -125,6 +125,7 @@ public:
 //FfH: End Add
 
 	// Tholal AI
+	bool isInquisitor();
     bool isChanneler();
     bool isDivine();
 	int getChannelingLevel();

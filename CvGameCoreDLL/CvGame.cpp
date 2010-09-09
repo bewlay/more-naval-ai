@@ -6854,15 +6854,6 @@ void CvGame::createBarbarianUnits()
 
 									bValid = (kUnit.getCombat() > 0 && !kUnit.isOnlyDefensive());
 
-									// Tholal AI - stop spawning freaks and lightbringers
-									/*
-									if (kUnit.getPrereqCiv() != NO_CIVILIZATION)
-									{
-										bValid = false;
-									}
-									// Tholal AI
-									*/
-
 //FfH: Added by Kael 08/14/2007
                                     if (GC.getUnitClassInfo((UnitClassTypes)iJ).getMaxGlobalInstances() == 1)
                                     {
@@ -7223,11 +7214,11 @@ void CvGame::updateMoves()
                             }
                             player.AI_setSummonSuicideMode(false);
                         }
-						player.setAutoMoves(false);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+						player.setAutoMoves(false);
 					}
 				}
 			}

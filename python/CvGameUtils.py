@@ -1564,8 +1564,6 @@ class CvGameUtils:
 #CIV SPECIFICS			
 			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				smokeb = false
-			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-				desertb = false
 			if iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				snowb = false
 			if (iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO') or iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
@@ -1613,9 +1611,6 @@ class CvGameUtils:
 					return 0
 				
 #-----------------------------------
-#TERRAFORMING
-#
-#MALAKIM EXCEPTION
 #TERRAFORMING
 #-----------------------------------
 
@@ -1817,7 +1812,6 @@ class CvGameUtils:
 														return 1											
 			
 #Nothing to do, lets move on to another City!
-#			chance = CyGame().getSorenRandNum(pPlayer.getNumCities(), "MOVE_AROUND")
 			iBestCount=0
 			pBestCity=0
 			for icity in range(pPlayer.getNumCities()):
