@@ -17460,7 +17460,9 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 */
 											// Assume non-visible city is properly defended
 											iValue *= iCargo;
-											iValue /= std::max(pLoopPlot->getPlotCity()->AI_neededDefenders(), (iVisibleEnemyDefenders * 3));
+											// Tholal AI - this statement caused a divide by 0 error. ToDo - track the root of the issue
+											//iValue /= std::max(pLoopPlot->getPlotCity()->AI_neededDefenders(), (iVisibleEnemyDefenders * 3));
+											iValue /= std::max(1, (iVisibleEnemyDefenders * 3));
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/		
@@ -19520,6 +19522,8 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 					int iValue = 0;
 					iValue += bCanal ? kOwner.AI_getPlotCanalValue(pLoopPlot) : 0;
 					iValue += bAirbase ? kOwner.AI_getPlotAirbaseValue(pLoopPlot) : 0;
+					if (pLoopPlot->isHills())
+						iValue += 10;
 
 					if (iValue > 0)
 					{

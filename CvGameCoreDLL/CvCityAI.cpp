@@ -1792,7 +1792,7 @@ void CvCityAI::AI_chooseProduction()
 	
 	//do a check for one tile island type thing?
     //this can be overridden by "wait and grow more"
-    if (bDanger && (iExistingWorkers == 0) && (isCapital() || (iNeededWorkers > 0) || (iNeededSeaWorkers > iExistingSeaWorkers)))
+    if (!bDanger && (iExistingWorkers == 0) && (isCapital() || (iNeededWorkers > 0) || (iNeededSeaWorkers > iExistingSeaWorkers)))
     {
 		if( !(bDefenseWar && iWarSuccessRatio < -30) && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
 		{
@@ -3041,7 +3041,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (!kPlayer.isAgnostic())
 		{
-			if (AI_chooseUnit(UNITAI_MEDIC,10))
+			if (AI_chooseUnit(UNITAI_MEDIC,15))
 			{
 				return;
 			}

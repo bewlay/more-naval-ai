@@ -14112,9 +14112,12 @@ void CvPlayerAI::AI_doCommerce()
 			// - Tholal AI (added if statement) - dont switch to no research when nearly done with a tech
 			TechTypes eCurrentResearch = getCurrentResearch();
 
-			if (getResearchTurnsLeft(eCurrentResearch, true) > 3)
+			if (eCurrentResearch != NO_TECH)
 			{
-	            setCommercePercent(COMMERCE_RESEARCH, 0);
+				if (getResearchTurnsLeft(eCurrentResearch, true) > 3)
+				{
+					setCommercePercent(COMMERCE_RESEARCH, 0);
+				}
 			}
         }
 
