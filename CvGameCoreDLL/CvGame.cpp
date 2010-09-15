@@ -3379,11 +3379,19 @@ bool CvGame::canTrainNukes() const
 
 
 // Tholal AI - something to replace Era checks for FFH2
+// Note: This function breaks when the Time victory condition is turned off, in which case we just default to getCurrentEra
 int CvGame::getCurrentPeriod() const
 {
 	int iPeriod;
-
-	iPeriod = (getElapsedGameTurns() * 5) / getMaxTurns();
+	
+	if (getMaxTurns() == 0)
+	{
+		iPeriod = getCurrentEra();
+	}
+	else
+	{
+		iPeriod = (getElapsedGameTurns() * 5) / getMaxTurns();
+	}
 
 	return iPeriod;
 }
