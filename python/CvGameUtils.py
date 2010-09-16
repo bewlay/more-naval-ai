@@ -1568,7 +1568,7 @@ class CvGameUtils:
 				snowb = false
 			if (iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO') or iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
 				tundrab = false	
-			if iCiv == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
+			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				hellterrb = false
 				
 #UNIT SPECIFIC
@@ -2304,12 +2304,11 @@ class CvGameUtils:
 
 #-----------------------------------
 #UNITAI_MANA_UPGRADE
-#Terraformer looks around for mana, changes UNITAI if he doesn't found some
+#Terraformer looks around for mana, changes UNITAI if he doesn't find some
 #
-#
-#Look for non raw mana and upgrade
-#Look for raw mana, decide how to upgrade, and do it!
-#Look for mana to dispel, and do it!
+# 1) Look for non raw mana and upgrade
+# 2) Look for raw mana, decide how to upgrade, and do it!
+# 3) Look for mana to dispel, and do it!
 #-----------------------------------
 		
 		pPlot = pUnit.plot()
@@ -2328,9 +2327,9 @@ class CvGameUtils:
 
 		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')):
 			smokeb = false
-#MALAKIM need SPRING to create floodplains sometimes
-		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')): 
-			desertb = false
+
+#		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')): 
+#			desertb = false
 
 		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
 			snowb = false
@@ -2387,9 +2386,8 @@ class CvGameUtils:
 #Choose Mana to Build
 #
 #Set Flags
-#
 #----------------------	
-#Set Flags
+
 									deathmagicb=true
 									holymagicb=true
 									if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
@@ -2401,83 +2399,86 @@ class CvGameUtils:
 									sType = ['BONUS_MANA_AIR','BONUS_MANA_BODY','BONUS_MANA_CHAOS','BONUS_MANA_DEATH']
 									sType = sType +['BONUS_MANA_EARTH','BONUS_MANA_ENCHANTMENT','BONUS_MANA_ENTROPY','BONUS_MANA_FIRE']
 									sType = sType +['BONUS_MANA_LAW','BONUS_MANA_LIFE','BONUS_MANA_MIND','BONUS_MANA_NATURE','BONUS_MANA_SHADOW']
-									sType = sType +['BONUS_MANA_SPIRIT','BONUS_MANA_SUN','BONUS_MANA_WATER']
+									sType = sType +['BONUS_MANA_SPIRIT','BONUS_MANA_SUN','BONUS_MANA_WATER','BONUS_MANA_METAMAGIC']
 
 									sBuildType = ['BUILD_MANA_AIR','BUILD_MANA_BODY','BUILD_MANA_CHAOS','BUILD_MANA_DEATH']
 									sBuildType = sBuildType +['BUILD_MANA_EARTH','BUILD_MANA_ENCHANTMENT','BUILD_MANA_ENTROPY','BUILD_MANA_FIRE']
 									sBuildType = sBuildType +['BUILD_MANA_LAW','BUILD_MANA_LIFE','BUILD_MANA_MIND','BUILD_MANA_NATURE','BUILD_MANA_SHADOW']
-									sBuildType = sBuildType +['BUILD_MANA_SPIRIT','BUILD_MANA_SUN','BUILD_MANA_WATER']
+									sBuildType = sBuildType +['BUILD_MANA_SPIRIT','BUILD_MANA_SUN','BUILD_MANA_WATER','BUILD_MANA_METAMAGIC']
 									
 									lValues = [0]
-									lStackvaluesMod = [-100] # by default a Civ doesn't like to stack mana
+									lStackvaluesMod = [1] # by default a Civ doesn't like to stack mana
 									for i in range(len(sType)):
-										lValues=lValues+[0]
-										lStackvaluesMod=lStackvaluesMod+[-100]
+										lValues=lValues+[1000]
+										lStackvaluesMod=lStackvaluesMod+[1]
 
 #---------------------
 #Adding Civ Values and their Mana stack values
 #---------------------
 									if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
-										lValues[sType.index('BONUS_MANA_DEATH')]+=100
-										lValues[sType.index('BONUS_MANA_ENTROPY')]+=100
-										lValues[sType.index('BONUS_MANA_CHAOS')]+=100										
-										lValues[sType.index('BONUS_MANA_LIFE')]-=100
-										lValues[sType.index('BONUS_MANA_LAW')]-=100
-										lValues[sType.index('BONUS_MANA_SPIRIT')]-=100	
+										lValues[sType.index('BONUS_MANA_DEATH')]*=2
+										lValues[sType.index('BONUS_MANA_ENTROPY')]*=2
+										lValues[sType.index('BONUS_MANA_CHAOS')]*=2
+										lValues[sType.index('BONUS_MANA_LIFE')]/=2
+										lValues[sType.index('BONUS_MANA_LAW')]/=2
+										lValues[sType.index('BONUS_MANA_SPIRIT')]/=2	
 										
 									if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
-										lValues[sType.index('BONUS_MANA_LIFE')]+=100
-										lValues[sType.index('BONUS_MANA_LAW')]+=100
-										lValues[sType.index('BONUS_MANA_SPIRIT')]+=100										
-										lValues[sType.index('BONUS_MANA_DEATH')]-=100
-										lValues[sType.index('BONUS_MANA_ENTROPY')]-=100
-										lValues[sType.index('BONUS_MANA_CHAOS')]-=100
+										lValues[sType.index('BONUS_MANA_LIFE')]*=2
+										lValues[sType.index('BONUS_MANA_LAW')]*=2
+										lValues[sType.index('BONUS_MANA_SPIRIT')]*=2
+										lValues[sType.index('BONUS_MANA_DEATH')]/=2
+										lValues[sType.index('BONUS_MANA_ENTROPY')]/=2
+										lValues[sType.index('BONUS_MANA_CHAOS')]/=2
 										
 																			
 #Amurites
 #Balseraph
-									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
-										lValues[sType.index('BONUS_MANA_CHAOS')]+=1000
+#									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
+#										lValues[sType.index('BONUS_MANA_CHAOS')]+=1000
 #LJOSALFAR
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):
-										lValues[sType.index('BONUS_MANA_FIRE')]+=3000
-										lStackvaluesMod[sType.index('BONUS_MANA_FIRE')]=-10
+										lValues[sType.index('BONUS_MANA_FIRE')]+=250
+										lStackvaluesMod[sType.index('BONUS_MANA_FIRE')]=2
 #Luchuirp
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
-										lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=4000
-										lValues[sType.index('BONUS_MANA_FIRE')]+=4000
-										lStackvaluesMod[sType.index('BONUS_MANA_ENCHANTMENT')]=-20
+										lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=250
+										lValues[sType.index('BONUS_MANA_FIRE')]+=250
+										lStackvaluesMod[sType.index('BONUS_MANA_ENCHANTMENT')]=2
 #SVARTALFAR				
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
-										lValues[sType.index('BONUS_MANA_FIRE')]+=4000
-										lStackvaluesMod[sType.index('BONUS_MANA_FIRE')]=-10
+										lValues[sType.index('BONUS_MANA_FIRE')]+=250
+										lStackvaluesMod[sType.index('BONUS_MANA_FIRE')]=2
+										lValues[sType.index('BONUS_MANA_NATURE')]+=250
+										lStackvaluesMod[sType.index('BONUS_MANA_NATURE')]=2
 #SHEAIM
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
-										lValues[sType.index('BONUS_MANA_ENTROPY')]+=1000
-										lStackvaluesMod[sType.index('BONUS_MANA_DEATH')]=0
+										lValues[sType.index('BONUS_MANA_ENTROPY')]+=250
+										lValues[sType.index('BONUS_MANA_DEATH')]+=250
+										lStackvaluesMod[sType.index('BONUS_MANA_DEATH')]=2
 #MANA TYPE VALUES
 
 #SPELL LEVEL 1
 									
 #Permanent
 									lValues[sType.index('BONUS_MANA_NATURE')]+=50									
-									lValues[sType.index('BONUS_MANA_MIND')]+=150
 									lValues[sType.index('BONUS_MANA_SPIRIT')]+=200
 									lValues[sType.index('BONUS_MANA_EARTH')]+=200
-									lValues[sType.index('BONUS_MANA_BODY')]+=500
 									lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=250
 #per turn buffs
+									lValues[sType.index('BONUS_MANA_MIND')]+=150
+									lValues[sType.index('BONUS_MANA_BODY')]+=250
 									lValues[sType.index('BONUS_MANA_CHAOS')]+=200
 									lValues[sType.index('BONUS_MANA_SHADOW')]+=200
-									lValues[sType.index('BONUS_MANA_ENTROPY')]+=700									
+									lValues[sType.index('BONUS_MANA_ENTROPY')]+=200									
 #Summons
-									lValues[sType.index('BONUS_MANA_DEATH')]+=400
+									lValues[sType.index('BONUS_MANA_DEATH')]+=200
 
 #SPELL LEVEL 2
 									if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):												
 #Direct Damage
-										lValues[sType.index('BONUS_MANA_AIR')]+=1000
-										lValues[sType.index('BONUS_MANA_FIRE')]+=450
+										lValues[sType.index('BONUS_MANA_AIR')]+=500
+										lValues[sType.index('BONUS_MANA_FIRE')]+=500
 	#Permanent
 										lValues[sType.index('BONUS_MANA_CHAOS')]+=0									
 										lValues[sType.index('BONUS_MANA_SPIRIT')]+=100
@@ -2504,10 +2505,12 @@ class CvGameUtils:
 													if pPlot4.getOwner()==pUnit.getOwner():
 														if desertb:
 															if (pPlot4.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot4.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-																lValues[sType.index('BONUS_MANA_WATER')]+=60
+																if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'))==0:
+																	lValues[sType.index('BONUS_MANA_WATER')]+=60
 														if snowb:
 															if pPlot4.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
-																lValues[sType.index('BONUS_MANA_SUN')]+=120
+																if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'))==0:
+																	lValues[sType.index('BONUS_MANA_SUN')]+=120
 														if tundrab:														
 															if pPlot4.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA'):
 																lValues[sType.index('BONUS_MANA_SUN')]+=60
@@ -2524,55 +2527,64 @@ class CvGameUtils:
 #ManaStackvalues
 									for i in range(len(sType)):
 										iNumberMana=0
-										iNumberMana+=pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString(sType[i]))													
-										lValues[i]+=lStackvaluesMod[i]*100*iNumberMana
+										iNumberMana+=pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString(sType[i]))
+										lValues[i]-=((iNumberMana * 500) / lStackvaluesMod[i])
 										
 #Values for Victory Condition
-									if (pPlayer.getArcaneTowerVictoryFlag()==1):
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_BODY'))==0:													
-											lValues[sType.index('BONUS_MANA_BODY')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LIFE'))==0:																								
-											lValues[sType.index('BONUS_MANA_LIFE')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENCHANTMENT'))==0:																																			
-											lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_NATURE'))==0:																																		
-											lValues[sType.index('BONUS_MANA_NATURE')]+=30000	
-
-									if (pPlayer.getArcaneTowerVictoryFlag()==2):
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LAW'))==0:													
-											lValues[sType.index('BONUS_MANA_LAW')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'))==0:																								
-											lValues[sType.index('BONUS_MANA_SUN')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SPIRIT'))==0:																																			
-											lValues[sType.index('BONUS_MANA_SPIRIT')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_MIND'))==0:																																		
-											lValues[sType.index('BONUS_MANA_MIND')]+=30000	
-
-									if (pPlayer.getArcaneTowerVictoryFlag()==3):
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_CHAOS'))==0:													
-											lValues[sType.index('BONUS_MANA_CHAOS')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_DEATH'))==0:																								
-											lValues[sType.index('BONUS_MANA_DEATH')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENTROPY'))==0:																																			
-											lValues[sType.index('BONUS_MANA_ENTROPY')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SHADOW'))==0:																																		
-											lValues[sType.index('BONUS_MANA_SHADOW')]+=30000	
- 
-									if (pPlayer.getArcaneTowerVictoryFlag()==4):
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_EARTH'))==0:													
-											lValues[sType.index('BONUS_MANA_EARTH')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_FIRE'))==0:																								
-											lValues[sType.index('BONUS_MANA_FIRE')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_AIR'))==0:																																			
-											lValues[sType.index('BONUS_MANA_AIR')]+=30000	
-										if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'))==0:																																		
-											lValues[sType.index('BONUS_MANA_WATER')]+=30000	
- 
-#									CyInterface().addImmediateMessage('TowerVictoryFlag is '+str(pPlayer.getArcaneTowerVictoryFlag()), "AS2D_NEW_ERA")										
+									#if (xPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1)):
+									
+									if (pPlayer.getArcaneTowerVictoryFlag()>0):
+										if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_METAMAGIC'))==0:													
+												lValues[sType.index('BONUS_MANA_METAMAGIC')]+=5000
+	
+										if (pPlayer.getArcaneTowerVictoryFlag()==1):
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_BODY'))==0:													
+												lValues[sType.index('BONUS_MANA_BODY')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LIFE'))==0:																								
+												lValues[sType.index('BONUS_MANA_LIFE')]+=4000	
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENCHANTMENT'))==0:																																			
+												lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_NATURE'))==0:																																		
+												lValues[sType.index('BONUS_MANA_NATURE')]+=4000
+	
+										if (pPlayer.getArcaneTowerVictoryFlag()==2):
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LAW'))==0:													
+												lValues[sType.index('BONUS_MANA_LAW')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'))==0:																								
+												lValues[sType.index('BONUS_MANA_SUN')]+=4000	
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SPIRIT'))==0:																																			
+												lValues[sType.index('BONUS_MANA_SPIRIT')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_MIND'))==0:																																		
+												lValues[sType.index('BONUS_MANA_MIND')]+=4000
+	
+										if (pPlayer.getArcaneTowerVictoryFlag()==3):
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_CHAOS'))==0:													
+												lValues[sType.index('BONUS_MANA_CHAOS')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_DEATH'))==0:																								
+												lValues[sType.index('BONUS_MANA_DEATH')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENTROPY'))==0:																																			
+												lValues[sType.index('BONUS_MANA_ENTROPY')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SHADOW'))==0:																																		
+												lValues[sType.index('BONUS_MANA_SHADOW')]+=4000	
+	 
+										if (pPlayer.getArcaneTowerVictoryFlag()==4):
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_EARTH'))==0:													
+												lValues[sType.index('BONUS_MANA_EARTH')]+=4000	
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_FIRE'))==0:																								
+												lValues[sType.index('BONUS_MANA_FIRE')]+=4000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_AIR'))==0:																																			
+												lValues[sType.index('BONUS_MANA_AIR')]+=4000	
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'))==0:																																		
+												lValues[sType.index('BONUS_MANA_WATER')]+=4000
+							
 
 #---------------------
 #Choose the best MANA
 #---------------------					
+# Tholal AI - ToDo  - reserve 1 raw mana if have lots and going for tower victory
+#									if (pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUSCLASS_RAWMANA')) == 1:					
+	
 									iBestMana=-1
 									iBestManaValue=0
 									for i in range(len(sType)):
@@ -2713,9 +2725,9 @@ class CvGameUtils:
 #		CyInterface().addImmediateMessage('This is AI_TowerMastery ', "AS2D_NEW_ERA")												
 #		CyInterface().addImmediateMessage('Flag is '+str(pPlayer.getArcaneTowerVictoryFlag()), "AS2D_NEW_ERA")										
 		
-		if flag==0:
-			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')) == False :
-				return 0
+		if flag == 0:
+#			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')) == False :
+#				return 0
 #			if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_METAMAGIC'))==0:				
 #				return 0
 
@@ -2733,17 +2745,22 @@ class CvGameUtils:
 			if possiblemana<4:
 				return 0
 			
-			if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_ALTERATION'))==0:
-				return 1
-				
-			if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_DIVINATION'))==0:
-				return 2
+			if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ALTERATION')):
+				if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_ALTERATION'))==0:
+					return 1
+			
+			if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_DIVINATION')):
+				if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_DIVINATION'))==0:
+					return 2
 
-			if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_NECROMANCY'))==0:
-				return 3
+			if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_NECROMANCY')):
+				if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_NECROMANCY'))==0:
+					if not pPlayer.isCivic(CvUtil.findInfoTypeNum(gc.getCivicInfo,gc.getNumCivicInfos(),'CIVIC_OVERCOUNCIL')):
+						return 3
 
-			if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_THE_ELEMENTS'))==0:
-				return 4
+			if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ELEMENTALISM')):
+				if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_THE_ELEMENTS'))==0:
+					return 4
 				
 		if flag==1:
 			if pPlayer.getBuildingClassCount(gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_ALTERATION'))>0:			
