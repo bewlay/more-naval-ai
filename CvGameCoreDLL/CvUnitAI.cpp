@@ -27498,12 +27498,14 @@ bool CvUnitAI::AI_Lokimove()
     int icount=0;
     int iDX, iDY;
     int iPathTurns;
+	int iBestValue=0, iValue;
     CvPlot* pLoopPlot;
+	CvPlot* pBestPlot;
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
     if (plot()->isCity())
 	{
-		if (!bFinancialTrouble)
+		if (!bFinancialTrouble && plot()->getPlotCity()->getCulture(plot()->getPlotCity()->getOwnerINLINE())==0)
 	    {
 			if (canCast(GC.getDefineINT("SPELL_DISRUPT"),false))
 				cast(GC.getDefineINT("SPELL_DISRUPT"));
@@ -27531,13 +27533,20 @@ bool CvUnitAI::AI_Lokimove()
                             {
                                 if (!GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
                                 {
-                                    if (pLoopPlot->getPlotCity()->getCulture(pLoopPlot->getOwnerINLINE())==0)
+									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
                                     {
-                                        if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                        {
-                                            getGroup()->pushMission(MISSION_MOVE_TO,pLoopPlot->getX_INLINE(),pLoopPlot->getY_INLINE(),MOVE_THROUGH_ENEMY);
-                                            return true;
+										iValue = pLoopPlot->getPlotCity()->getPopulation();
+
+										if (pLoopPlot->getPlotCity()->getCulture(pLoopPlot->getOwnerINLINE())==0)
+										{
+											iValue *= 20;
+											
                                         }
+										if (iValue >= iBestValue)
+										{
+											iBestValue = iValue;
+											pBestPlot = pLoopPlot;
+										}
                                     }
                                 }
                             }
@@ -27547,7 +27556,22 @@ bool CvUnitAI::AI_Lokimove()
             }
         }
     }
-    return false;
+	
+	if (pBestPlot!=NULL)
+	{
+		if(atPlot(pBestPlot))
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+			return true;
+		}
+		else
+		{
+			getGroup()->pushMission(MISSION_MOVE_TO,pBestPlot->getX_INLINE(),pBestPlot->getY_INLINE(),MOVE_THROUGH_ENEMY);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool CvUnitAI::AI_Rantinemove()
