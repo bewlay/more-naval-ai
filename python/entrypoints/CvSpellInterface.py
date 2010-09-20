@@ -2138,11 +2138,26 @@ def spellOpenChest(caster):
 def reqPromoteSettlement(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
+	
 	if not pCity.isSettlement():
 		return False
+	
 	pPlayer = gc.getPlayer(caster.getOwner())
+	
 	if pPlayer.getNumCities() - pPlayer.getNumSettlements() >= pPlayer.getMaxCities():
 		return False
+		
+	if pPlayer.isHuman() == False:
+		if pPlayer.getNumSettlements() >= (pPlayer.getNumCities() - 1):
+			return True
+			
+# None of this stuff is exposed to python unfortunately ...
+#		if pCityPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE):
+#		if kTeam.AI_getWarSuccessCapitulationRatio() < -20:
+#			return True
+		else:
+			return False
+		
 	return True
 
 def spellPromoteSettlement(caster):
@@ -2273,13 +2288,7 @@ def spellRally(caster):
 					newUnit.setReligion (gc.getInfoTypeForString ('RELIGION_THE_EMPYREAN'));
 				if pPlayer.getStateReligion() ==  gc.getInfoTypeForString ('RELIGION_COUNCIL_OF_ESUS'):
 					newUnit.setReligion (gc.getInfoTypeForString ('RELIGION_COUNCIL_OF_ESUS'));
-				if pPlot.isConnectedTo(pCity):
-					if pCity.hasBonus(gc.getInfoTypeForString ('BONUS_MITHRIL')):
-						newUnit.setHasPromotion(gc.getInfoTypeForString ('PROMOTION_MITHRIL_WEAPONS'), True)
-					elif pCity.hasBonus(gc.getInfoTypeForString ('BONUS_IRON')):
-						newUnit.setHasPromotion(gc.getInfoTypeForString ('PROMOTION_IRON_WEAPONS'), True)
-					elif pCity.hasBonus(gc.getInfoTypeForString ('BONUS_COPPER')):
-						newUnit.setHasPromotion(gc.getInfoTypeForString ('PROMOTION_BRONZE_WEAPONS'), True)
+
 				if pPlot.getImprovementType() == iEnclave:
 					pPlot.setImprovementType(iTown)
 				else:

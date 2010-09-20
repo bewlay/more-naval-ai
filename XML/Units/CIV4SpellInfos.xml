@@ -2178,6 +2178,7 @@
             <Description>TXT_KEY_SPELL_PROMOTE_SETTLEMENT</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <CivilizationPrereq>CIVILIZATION_KURIOTATES</CivilizationPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
             <bInCityOnly>1</bInCityOnly>
             <iAIWeight>300</iAIWeight>
