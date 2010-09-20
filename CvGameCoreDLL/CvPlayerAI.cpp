@@ -8962,6 +8962,13 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA") || GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_RAWMANA"))
     {
         iValue += 100;
+
+		// Tholal AI
+		if (AI_isNeededTowerMana(eBonus))
+		{
+			iValue *= 4;
+		}
+		// End Tholal AI
     }
 //FfH: End Add
 
@@ -8990,6 +8997,20 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iValue += (GC.getBonusInfo(eBonus).getHappiness() * 100);
 			iValue += (GC.getBonusInfo(eBonus).getHealth() * 100);
 
+			// Tholal AI ToDo - add in value for new FFH tags
+			/*
+			bModifierPerBonus- If this is set to true (1) then the bonus's effects are cumulative (ex: so a bonus with +1 happiness would give +1 for each amount of the bonus the city has access to instead of just +1 if it has it or not)
+			iBadAttitude- This value is multiplied by the leaders iAttitudeBadBonus value to determine an attitude adjustment for using this bonus type
+			iDiscoverRandModifier- Percent the bonus modifies the chance improvements find new resources
+			iGreatPeopleRateModifier- Percent amount the bonus modifies the great people rate
+			iHealChange- Amount the bonus effects the heal rate of friendly units within your borders
+			iHealChangeEnemy- Amount the bonus effects the heal rate of enemy units within your borders
+			iMaintenanceModifier- Effect having the resource has ont he cities maintenance costs
+			iMutateChance- Chance that units built in the city will begin mutated
+			iResearchModifier- Percent amount the bouns effects the players research amount
+			DamageType- If a unit has affinity to this bonus this is the damage type that affinity grants (ex: death mana has this set to DAMAGE_DEATH)
+			FreePromotion- If having access to this bonus in a city grants a promotion to units in that city
+			*/
 			CvTeam& kTeam = GET_TEAM(getTeam());
 
 			CvCity* pCapital = getCapitalCity();
@@ -9038,6 +9059,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					{
 						iTempValue += 50;
 					}
+
+					// Tholal AI - account for affinities
+					if (kLoopUnit.getBonusAffinity((BonusTypes)eBonus) != 0)
+					{
+						iTempValue += 100;
+					}
+					// End Tholal AI
 
 					for (iJ = 0; iJ < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); iJ++)
 					{
@@ -12236,15 +12264,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 	iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
 //<<<<Better AI: End Modify
-//>>>>Better AI: Added by Denev 2010/07/20
-	// Tholal AI - modified
-	//if (bBoostProphet)
-	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
+	// Tholal AI
+	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2))
 	{
-		//Denev ToDo: great people farm
 		iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
 	}
-//<<<<Better AI: End Add
+	// End Tholal AI
+	
 	iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
 	iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
 //>>>>Better AI: Modified by Denev 2010/07/21
@@ -12274,8 +12300,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue -= iMaintenanceDelta / 5000;	// (iMaintenanceDelta * 2 / 100 / 100)
 //<<<<Better AI: End Modify
-
-	iTemp = kCivic.getFreeExperience();
+	iTemp = kCivic.getFreeExperience() * 2;
 	if( iTemp > 0 )
 	{
 		// Free experience increases value of hammers spent on units, population is an okay measure of base hammer production
@@ -12337,7 +12362,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 	// End Tholal AI
 
-		//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
+	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
 
 //FfH: Added by Kael 01/31/2009
 	if (kCivic.isMilitaryFoodProduction())
@@ -12377,6 +12402,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 //<<<<Advanced Rules: End Modify
 	}
 //FfH: End Add
+
 	iTemp = getWorldSizeMaxConscript(eCivic);
 	if( iTemp > 0 && (pCapital != NULL) )
 	{
@@ -12412,10 +12438,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iValue += ((kCivic.getExpInBorderModifier() * getNumMilitaryUnits()) / 200);
 	}
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
-//>>>>Better AI: Modified by Denev 2010/08/04
-//	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
-	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 25 : 50));
-//<<<<Better AI: End Modify
+	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
 	iValue += (kCivic.getFreeSpecialist() * getNumCities() * 12);
 	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2))); 
 	iValue += -((kCivic.isNoForeignTrade()) ? (iConnectedForeignCities * 3) : 0);
@@ -12631,7 +12654,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			//iTempValue += ((kCivic.getCapitalYieldModifier(iI)) / 2);
 
 			iTemp = (kCivic.getCapitalYieldModifier(iI) * pCapital->getBaseYieldRate((YieldTypes)iI));
-			iTemp /= 80;
+			iTemp /= 50;
 			//iTemp *= pCapital->AI_yieldMultiplier((YieldTypes)iI);
 			//iTemp /= 100;
 			iTempValue += iTemp;
@@ -17253,6 +17276,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 	int iOtherPlayerAttitudeWeight = 0;
 
 	// Tholal ToDo - check to make sure this isn't being called on oneself (hit this assert through an event for some reason)
+	// Eventtrigger 215 - eEvent 12?
 	if (kTriggeredData.m_eOtherPlayer != NO_PLAYER)
 	{
 		iOtherPlayerAttitudeWeight = AI_getAttitudeWeight(kTriggeredData.m_eOtherPlayer);
