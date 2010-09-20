@@ -327,7 +327,11 @@ public:
 	int AI_getReligionVictoryStage() const;
 	int AI_getTowerMasteryVictoryStage() const;
 	int AI_getAltarVictoryStage() const;
+
+	// Tholal AI - Tower Mana
+	bool AI_isNeededTowerMana(BonusTypes eBonus) const;
 	// End Tholal AI
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/		

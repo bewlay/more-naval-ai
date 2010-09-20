@@ -22881,3 +22881,40 @@ void CvPlayerAI::AI_invalidateAttitudeCache()
 /************************************************************************************************/
 
 
+// Tholal AI - Tower mana
+// ToDo - give this function an option to check for just final mana - or incoporate extra value into bonus value function
+bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
+{
+	// No need to worry about Tower mana if we're about to win
+	if (AI_isDoVictoryStrategyLevel4())
+	{
+		return false;
+	}
+
+	// Don't count mana that we can't use due to Overcouncil resolutions
+    if (isFullMember((VoteSourceTypes)0))
+    {
+        if (GC.getGameINLINE().isNoBonus(eBonus))
+        {
+            return false;
+        }
+    }
+
+	/*
+	// get prereq buildings for Mastery Tower
+	// Do we have tech for the building? If yes, then get prereq bonuses
+	// if eBonusTYpe == prereq bonnus and number of eBonusType we have is 0, return true
+	
+	int iMasteryTower = gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY');
+	for (iI = 0; iI < numBuildingClassInfos; iI++)
+	{
+		if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(iMasteryTower, ((BuildingClassTypes)iI), ((bContinue) ? 0 : getBuildingClassMaking(eBuildingClass))))
+		{
+			return false;
+		}
+	}
+	
+*/
+	return false;
+}
+// End Tholal AI
