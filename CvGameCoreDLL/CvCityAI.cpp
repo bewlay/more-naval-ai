@@ -4792,7 +4792,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 				iValue += (kBuilding.getGlobalPopulationChange() * iNumCities * 4);
 
-				iValue += (kBuilding.getFreeTechs() * 80);
+				iValue += (kBuilding.getFreeTechs() * 100);
 
 				iValue += kBuilding.getEnemyWarWearinessModifier() / 2;
 
