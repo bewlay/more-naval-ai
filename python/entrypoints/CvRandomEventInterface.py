@@ -2109,6 +2109,20 @@ def doVolcanoCreation(argsList):
 	point = pPlot.getPoint()
 	CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_ARTILLERY_SHELL_EXPLODE'),point)
 	CyAudioGame().Play3DSound("AS3D_UN_GRENADE_EXPLODE",point.x,point.y,point.z)
+# FlavourMod: Idea nicked from Rystic's TweakMod by Jean Elcard 11/08/2009
+	iSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
+	iFlames = gc.getInfoTypeForString('FEATURE_FLAMES')
+	sFlammables = ['FOREST', 'FOREST_NEW', 'FOREST_ANCIENT', 'JUNGLE', 'SCRUB']
+	iFlammables = [gc.getInfoTypeForString('FEATURE_' + sFeature) for sFeature in sFlammables]
+	for iDirection in range(DirectionTypes.NUM_DIRECTION_TYPES):
+		pAdjacentPlot = plotDirection(pPlot.getX(), pPlot.getY(), DirectionTypes(iDirection))
+		if pAdjacentPlot.getFeatureType() in iFlammables:
+			iRandom = CyGame().getSorenRandNum(100, "FlavourMod: doVolcanoCreation")
+			if iRandom < 30:
+				pAdjacentPlot.setFeatureType(iFlames, -1)
+			elif iRandom < 60:
+				pAdjacentPlot.setImprovementType(iSmoke)
+# FlavourMod: End Pilferage
 
 def canTriggerWarGamesUnit(argsList):
 	eTrigger = argsList[0]
