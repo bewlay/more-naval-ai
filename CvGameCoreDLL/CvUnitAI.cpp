@@ -28287,7 +28287,7 @@ void CvUnitAI::AI_InquisitionMove()
 // ToDo - figure out why they wont find target cities
 
 	CvCity* pLoopCity;
-	CvCity* pBestCity;
+	CvCity* pBestCity=NULL;
 	CvPlot* pBestPlot;
 
 	int iValue;
@@ -28325,14 +28325,6 @@ void CvUnitAI::AI_InquisitionMove()
 
 			if (bValidTargetForInquisition)
 			{
-				if (pCity != NULL && pCity == pLoopCity)
-				{
-					if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
-					{
-						cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
-						return;
-					}
-				}
 
 				iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
 				
@@ -28343,7 +28335,6 @@ void CvUnitAI::AI_InquisitionMove()
 
 				// ToDo - reduce value for long distance travel
 
-			//				iValue = std::max(1, iValue);
 				if (iValue > iBestValue)
 				{
 					iBestValue = iValue;
@@ -28355,8 +28346,20 @@ void CvUnitAI::AI_InquisitionMove()
 		if (pBestCity != NULL)
 		{
 			pBestPlot = pBestCity->plot();
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
-			return;
+
+			if(atPlot(pBestPlot))
+			{
+				if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
+				{
+					cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
+					return;
+				}
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+				return;
+			}
 		}
 	}
 //End Tholal AI
@@ -28672,7 +28675,7 @@ bool CvUnitAI::AI_buildPirateCove()
 
 bool CvUnitAI::isInquisitor()
 {
-    if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
+	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR")))
         return true;
 
 	return false;
