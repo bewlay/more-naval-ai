@@ -1656,8 +1656,9 @@ class CvGameUtils:
 				if treesb:
 					if pPlot.getFeatureType()==-1:
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_BLOOM'),false):
-							pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
-							return 0
+							if treesimpb or pPlot.getBonusType(-1) == -1:
+								pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
+								return 0
 
 #-----------------------------------
 #LOOK FOR WORK
@@ -1807,7 +1808,7 @@ class CvGameUtils:
 										if (pPlot2.getFeatureType() == -1):
 											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):										
 												if not pPlot2.isCity():
-													if (pPlot2.getImprovementType()==-1 or treesimpb):										
+													if ((pPlot2.getImprovementType()==-1 and pPlot2.getBonusType(-1)==-1)or treesimpb):										
 														pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
 														return 1											
 			
