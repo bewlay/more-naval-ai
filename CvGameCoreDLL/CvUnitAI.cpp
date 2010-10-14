@@ -27500,7 +27500,7 @@ bool CvUnitAI::AI_Lokimove()
     int iPathTurns;
 	int iBestValue=0, iValue;
     CvPlot* pLoopPlot;
-	CvPlot* pBestPlot;
+	CvPlot* pBestPlot = NULL;
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
     if (plot()->isCity())
@@ -27518,6 +27518,8 @@ bool CvUnitAI::AI_Lokimove()
     }
     for (pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).nextCity(&iLoop))
     {
+		iValue = 0;
+
         if (pLoopCity)
         {
             for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
@@ -27527,7 +27529,7 @@ bool CvUnitAI::AI_Lokimove()
                     pLoopPlot = plotXY(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iDX, iDY);
                     if (pLoopPlot)
                     {
-                        if (AI_plotValid(pLoopPlot))
+						if (AI_plotValid(pLoopPlot))
                         {
                             if(pLoopPlot->isCity() && pLoopPlot->getTeam()!=getTeam())
                             {
@@ -27542,7 +27544,7 @@ bool CvUnitAI::AI_Lokimove()
 											iValue *= 20;
 											
                                         }
-										if (iValue >= iBestValue)
+										if (iValue > iBestValue)
 										{
 											iBestValue = iValue;
 											pBestPlot = pLoopPlot;
