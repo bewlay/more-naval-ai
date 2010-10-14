@@ -2148,15 +2148,7 @@ def reqPromoteSettlement(caster):
 		return False
 		
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumSettlements() >= (pPlayer.getNumCities() - 1):
-			return True
-			
-# None of this stuff is exposed to python unfortunately ...
-#		if pCityPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE):
-#		if kTeam.AI_getWarSuccessCapitulationRatio() < -20:
-#			return True
-		else:
-			return False
+		return True
 		
 	return True
 
