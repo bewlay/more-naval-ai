@@ -11866,16 +11866,6 @@ void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInB
 
 	}
 
-/*************************************************************************************************/
-/**	BUGFIX (no XP for NO_UNITCOMBAT)  Sephi	                                                    **/
-/*************************************************************************************************/
-    if(GC.getUnitInfo(getUnitType()).getUnitCombatType()==NO_UNITCOMBAT)
-    {
-        iUnitExperience =0;
-    }
-/*************************************************************************************************/
-/**	Tweak									END													**/
-/*************************************************************************************************/
 	setExperience((getExperience() + iUnitExperience), iMax);
 }
 
