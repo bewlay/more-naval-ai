@@ -1573,7 +1573,7 @@ class CvEventManager:
 						if unit.getUnitCombatType() != gc.getInfoTypeForString('UNITCOMBAT_NAVAL'):
 					"""
 					if not unit.isMechUnit():
-						if not unit.getUnitCombatType()==NO_UNITCOMBAT
+						if unit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
 ##--------		Unofficial Bug Fix: End Modify			--------##
 							newUnit = pPlayer.initUnit(unit.getUnitType(), city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 							city.applyBuildEffects(newUnit)

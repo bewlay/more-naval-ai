@@ -15099,7 +15099,12 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 	}
 	else
 	{
-        pUnit->changeExperience(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIFreeXP(), -1, false, false, false);
+		// Tholal AI - added IF statement to keep workers from getting free experience due to Handicap bonuses
+		if (pUnit->getUnitCombatType() != NO_UNITCOMBAT)
+		{
+	        pUnit->changeExperience(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIFreeXP(), -1, false, false, false);
+		}
+		// End Tholal AI
 	}
 	if (getCivilizationType() != GET_PLAYER(getOwnerINLINE()).getCivilizationType())
 	{
