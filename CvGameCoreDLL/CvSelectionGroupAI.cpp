@@ -448,7 +448,7 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupAttacker(const CvPlot* pPlot, bool bP
                             {
                                 if (iOdds<85)
                                 {
-                                    iValue=1;
+                                    iValue=0;
                                 }
                             }
 							if (pLoopUnit->getLevel()>4 && iOdds<95)
