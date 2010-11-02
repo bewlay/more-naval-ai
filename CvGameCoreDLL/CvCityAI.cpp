@@ -2546,11 +2546,11 @@ void CvCityAI::AI_chooseProduction()
 		{
 			AI_chooseUnit(UNITAI_ASSAULT_SEA,50);
 		}
-		if (kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_SEA) < iAttackSeaNeeded)
+		if ((kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iAttackSeaNeeded)
 		{
 			AI_chooseUnit(UNITAI_ATTACK_SEA,35);
 		}
-		if (kPlayer.AI_totalUnitAIs(UNITAI_ESCORT_SEA) < iEscortSeaNeeded)
+		if ((kPlayer.AI_totalUnitAIs(UNITAI_ESCORT_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iEscortSeaNeeded)
 		{
 			AI_chooseUnit(UNITAI_ESCORT_SEA,50);
 		}
