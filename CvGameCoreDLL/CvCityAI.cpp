@@ -1080,8 +1080,7 @@ void CvCityAI::AI_chooseProduction()
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
 	int iNeededPriests = kPlayer.getNumCities() * 2;
-	if (kPlayer.isAgnostic())
-		iNeededPriests = 0;
+
 	if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
 		iNeededPriests *= 2;
 
@@ -3041,7 +3040,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (!kPlayer.isAgnostic())
 		{
-			if (AI_chooseUnit(UNITAI_MEDIC,15))
+			if (AI_chooseUnit(UNITAI_MEDIC,25))
 			{
 				return;
 			}
