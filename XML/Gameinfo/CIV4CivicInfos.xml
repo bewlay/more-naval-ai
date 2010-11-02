@@ -17,7 +17,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-1000</iAIWeight>
+            <iAIWeight>-100</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -106,7 +106,7 @@
             <TechPrereq>TECH_CARTOGRAPHY</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -198,7 +198,7 @@
             <TechPrereq>TECH_MYSTICISM</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_HIGH</Upkeep>
-            <iAIWeight>-300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -293,7 +293,7 @@
             <TechPrereq>TECH_CODE_OF_LAWS</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -575,7 +575,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>200</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -873,7 +873,7 @@
             <TechPrereq>TECH_INFERNAL_PACT</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>NONE</Upkeep>
-            <iAIWeight>700</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>-20</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -965,7 +965,7 @@
             <TechPrereq>TECH_RELIGIOUS_LAW</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>700</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1166,7 +1166,7 @@
             <TechPrereq>TECH_ARCANE_LORE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_HIGH</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1365,7 +1365,7 @@
             <TechPrereq>TECH_FANATICISM</TechPrereq>
             <iAnarchyLength>5</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>1000</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1454,7 +1454,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-300</iAIWeight>
+            <iAIWeight>-100</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1632,7 +1632,7 @@
             <TechPrereq>TECH_WAY_OF_THE_WICKED</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-100</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1733,7 +1733,7 @@
             <TechPrereq>TECH_ARETE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1930,7 +1930,7 @@
             <TechPrereq>TECH_TAXATION</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2026,7 +2026,7 @@
             <TechPrereq>TECH_GUILDS</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>500</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2135,7 +2135,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>-100</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2224,7 +2224,7 @@
             <TechPrereq>TECH_CALENDAR</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2321,7 +2321,7 @@
             <TechPrereq>TECH_WARFARE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_MEDIUM</Upkeep>
-            <iAIWeight>700</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2598,7 +2598,7 @@
             <TechPrereq>TECH_HIDDEN_PATHS</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_HIGH</Upkeep>
-            <iAIWeight>1000</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2792,7 +2792,7 @@
             <TechPrereq>TECH_HONOR</TechPrereq>
             <iAnarchyLength>0</iAnarchyLength>
             <Upkeep>NONE</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2881,7 +2881,7 @@
             <TechPrereq>TECH_DECEPTION</TechPrereq>
             <iAnarchyLength>0</iAnarchyLength>
             <Upkeep>NONE</Upkeep>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
