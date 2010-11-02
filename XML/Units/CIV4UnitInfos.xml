@@ -19167,7 +19167,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <iCombatDefense>7</iCombatDefense>
+            <iCombatDefense>4</iCombatDefense>
             <iTier>3</iTier>
         </UnitInfo>
         <UnitInfo>
@@ -32962,7 +32962,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <iCombatDefense>7</iCombatDefense>
+            <iCombatDefense>6</iCombatDefense>
             <iTier>3</iTier>
         </UnitInfo>
         <UnitInfo>
@@ -33196,7 +33196,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <iCombatDefense>5</iCombatDefense>
+            <iCombatDefense>4</iCombatDefense>
             <iTier>2</iTier>
         </UnitInfo>
         <UnitInfo>
@@ -58438,8 +58438,6 @@
                     <UnitAIType>UNITAI_PIRATE_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-            </UnitAIs>
-            <NotUnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -58452,7 +58450,7 @@
                     <UnitAIType>UNITAI_ESCORT_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-            </NotUnitAIs>
+            </UnitAIs>
             <Builds>
             </Builds>
             <ReligionSpreads>
@@ -58665,8 +58663,6 @@
                     <UnitAIType>UNITAI_PIRATE_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-            </UnitAIs>
-            <NotUnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -58679,7 +58675,7 @@
                     <UnitAIType>UNITAI_ESCORT_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-            </NotUnitAIs>
+            </UnitAIs>
             <Builds>
             </Builds>
             <ReligionSpreads>
