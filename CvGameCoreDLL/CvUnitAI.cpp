@@ -5237,7 +5237,8 @@ void CvUnitAI::AI_missionaryMove()
 {
 	PROFILE_FUNC();
 
-// Tholal AI - make missionaries take care of nearby disorder and low culture
+	// Tholal AI - added variable
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
 	CvCity* pLoopCity;
 	CvCity* pBestCity;
@@ -5249,17 +5250,28 @@ void CvUnitAI::AI_missionaryMove()
 	pBestCity = NULL;
 	iValue = 0;
 
-// Tholal AI - catch Disciples who have been upgraded to different units
-// Tholal ToDo - Secondary check is for Savants who can never do Great Works. Better way to handle this?
+// Tholal AI - modifications to improve Missionary AI
+
+	// Initial check to make sure AI doesn't use it's first disciple for a Great Work
+	if (!kPlayer.isAgnostic() && kPlayer.getStateReligion() == NO_RELIGION)
+	{
+		if (AI_spreadReligion())
+			{
+				return;
+			}
+	}
+	
+	// Catch Disciples who have been upgraded to different units and change their AI
+	// Tholal ToDo - Secondary check is for Savants who can never do Great Works. Is there a better way to handle this?
 	if (!AI_greatWork())
 	{
-		if ((getLevel() > 4) || isDivine())
+		if ((getLevel() > 3) || isDivine())
 		{
 			AI_setUnitAIType(UNITAI_RESERVE);
 		}
 	}
 
-// Limit this section to those who can do Great Works - Find cities in disorder or who have no culture
+	// Find cities in disorder or who have no culture and perform Great Works
 	if (AI_greatWork())
 	{
 		CvCity* pCity = plot()->getPlotCity();
@@ -5273,7 +5285,7 @@ void CvUnitAI::AI_missionaryMove()
 			}
 		}
 	
-		for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
+		for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
 		{
 			if (pLoopCity->isDisorder() || (pLoopCity->getCultureLevel() == 0) )
 			{
