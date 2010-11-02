@@ -12274,10 +12274,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
 	iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
 //>>>>Better AI: Modified by Denev 2010/07/21
-/*
+
 	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
 	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
-*/
+/*
 	int iNumCitiesMaintenance = 0;
 	int iDistanceMaintenance = 0;
 	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
@@ -12299,8 +12299,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iMaintenanceDelta += kCivic.getDistanceMaintenanceModifier() * iBaseDistanceMaintenance;
 
 	iValue -= iMaintenanceDelta / 5000;	// (iMaintenanceDelta * 2 / 100 / 100)
+	*/
 //<<<<Better AI: End Modify
-	iTemp = kCivic.getFreeExperience() * 2;
+
+	iTemp = kCivic.getFreeExperience();
 	if( iTemp > 0 )
 	{
 		// Free experience increases value of hammers spent on units, population is an okay measure of base hammer production
@@ -12360,6 +12362,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue += 1000;
 		}
 	}
+
+	// Account for new FFH tag
+	iValue += kCivic.getCoastalTradeRoutes() * countNumCoastalCities();
+
 	// End Tholal AI
 
 	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
@@ -12438,7 +12444,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iValue += ((kCivic.getExpInBorderModifier() * getNumMilitaryUnits()) / 200);
 	}
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
-	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
+//>>>>Better AI: Modified by Denev 2010/08/04
+//	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 10 : 50));
+	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 25 : 50));
+//<<<<Better AI: End Modify
 	iValue += (kCivic.getFreeSpecialist() * getNumCities() * 12);
 	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2))); 
 	iValue += -((kCivic.isNoForeignTrade()) ? (iConnectedForeignCities * 3) : 0);
@@ -12654,7 +12663,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			//iTempValue += ((kCivic.getCapitalYieldModifier(iI)) / 2);
 
 			iTemp = (kCivic.getCapitalYieldModifier(iI) * pCapital->getBaseYieldRate((YieldTypes)iI));
-			iTemp /= 50;
+			iTemp /= 80;
 			//iTemp *= pCapital->AI_yieldMultiplier((YieldTypes)iI);
 			//iTemp /= 100;
 			iTempValue += iTemp;
@@ -12678,7 +12687,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		else if (iI == YIELD_COMMERCE) 
 		{ 
 			iTempValue *= ((AI_avoidScience()) ? 2 : 4);
-			iTempValue /= 3;
+			//iTempValue /= 3;
 		} 
 
 		iValue += iTempValue;
@@ -12690,8 +12699,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		// Consumption, Mercantilism, etc
 		iTempValue += ((kCivic.getCommerceModifier(iI) * getNumCities()) / 3);
+
 		// God King
-		iTempValue += (kCivic.getCapitalCommerceModifier(iI) / 2);
+		// Tholal AI - made this into an if statement akin to the Yield check above
+		if (pCapital)
+		{
+			//iTemp = (kCivic.getCapitalCommerceModifier(iI) * (pCapital->getBaseCommerceRate((CommerceTypes)iI) / getNumCities()));
+			//iTemp /= 100;
+
+			//iTempValue += iTemp;
+
+			iTempValue += (kCivic.getCapitalCommerceModifier(iI) / 2);
+		}
+		//End Tholal AI
+
 		if (iI == COMMERCE_ESPIONAGE)
 		{
 			iTempValue *= AI_getEspionageWeight();
@@ -12730,7 +12751,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 					iValue += (iTempValue * getNumCities())/2;
 				}
 			}
-			iValue += (iTempValue * getBuildingClassCountPlusMaking((BuildingClassTypes)iI) * 2);
+			iValue += (iTempValue * getBuildingClassCountPlusMaking((BuildingClassTypes)iI));
 		}
 	}
 
@@ -12777,6 +12798,37 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		} 
 		iValue += (iTempValue / 2); 
 	} 
+
+	// Tholal AI - more FFH variables
+	if (kCivic.isPrereqWar())
+	{
+		iValue += 100 * GET_TEAM(getTeam()).getAtWarCount(true);
+	}
+
+	if (ePrereqAlignment != NO_ALIGNMENT)
+	{
+		if (ePrereqAlignment == eAlignment)
+		{
+			iValue *= 2;
+		}
+	}
+
+	if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
+	{
+		if (kCivic.getPrereqCivilization() == getCivilizationType())
+		{
+			iValue *= 4;
+		}
+	}
+
+	if (kCivic.getPrereqReligion() != NO_RELIGION)
+	{
+		if (kCivic.getPrereqReligion() == getStateReligion())
+		{
+			iValue *= 4;
+		}
+	}
+	// End Tholal AI
 
 	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() == eCivic)
 	{
