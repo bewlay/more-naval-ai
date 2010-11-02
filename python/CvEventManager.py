@@ -489,11 +489,9 @@ class CvEventManager:
 					if bvalid:				
 						iUnit = gc.getInfoTypeForString('UNIT_ORTHUS')
 						cf.addUnit(iUnit)
-##--------	Merging Better BtS AI: Modified by Denev	--------##
-#					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_ORTHUS_CREATION",()), str(gc.getUnitInfo(iUnit).getImage()))
-					if( CyGame().getAIAutoPlay() == 0 ) :
-						cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_ORTHUS_CREATION",()), str(gc.getUnitInfo(iUnit).getImage()))
-##--------	Merging Better BtS AI: End Modify			--------##
+						if( CyGame().getAIAutoPlay() == 0 ) :
+							cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_ORTHUS_CREATION",()), str(gc.getUnitInfo(iUnit).getImage()))
+
 
 		if not CyGame().isOption(gc.getInfoTypeForString('GAMEOPTION_NO_PLOT_COUNTER')):
 			cf.doHellTerrain()
