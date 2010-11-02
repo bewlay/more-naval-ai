@@ -12867,7 +12867,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	//int eStateRel = getStateReligion();
 
 	// Tholal AI - don't switch religions when pursuing religious victory
-	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 	{
 		return getStateReligion();
 	}
