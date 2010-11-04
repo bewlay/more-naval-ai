@@ -18626,16 +18626,29 @@ int CvPlayerAI::AI_getDiplomacyVictoryStage() const
 int CvPlayerAI::AI_getReligionVictoryStage() const
 {
 	int iValue = 0;
+	int iReligionPercentNeeded = 0;
 
-	/*
-	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_RELIGION") <= 0 )
+	VictoryTypes eReligion = NO_VICTORY;
+	for (int iI = 0; iI < GC.getNumVictoryInfos(); iI++)
+	{
+		if (GC.getGameINLINE().isVictoryValid((VictoryTypes) iI))
+		{
+			CvVictoryInfo& kVictoryInfo = GC.getVictoryInfo((VictoryTypes) iI);
+			if( kVictoryInfo.getReligionPercent() > 0)
+			{
+				iReligionPercentNeeded = kVictoryInfo.getReligionPercent();
+				eReligion = (VictoryTypes)iI;
+				break;
+			}
+		}
+	}
+
+	if( eReligion == NO_VICTORY )
 	{
 		return 0;
 	}
-	*/
 
-	// Tholal ToDo - Add check for game option
-	// Tholal ToDo - Make this a loop through all religions
+	// Tholal ToDo - Make this a loop through all religions?
 
 	const iStateRel = getStateReligion();
 		
@@ -18650,17 +18663,19 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 		{
 			int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iStateRel);
 
-			if (iRelPercent > 65)
+			int iReligionStatus = (iRelPercent / iReligionPercentNeeded) * 100;
+
+			if (iReligionStatus > 85)
 			{
 				return 4;
 			}
 
-			if (iRelPercent > 50)
+			if (iReligionStatus > 60)
 			{
 				return 3;
 			}
 
-			if (iRelPercent > 25)
+			if (iReligionStatus > 35)
 			{
 				return 2;
 			}
