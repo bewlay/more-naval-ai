@@ -1259,6 +1259,11 @@ class CvEventManager:
 		if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
 			if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_ANIMAL'):
 				unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
+
+# Remove Hidden Nationality - temp hack until AI knows how to use these units
+		if pPlayer.isHuman() == False:
+			unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), False)
+
 #END THOLAL
 
 
