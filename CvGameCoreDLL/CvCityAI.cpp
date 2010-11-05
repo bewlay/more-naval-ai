@@ -2551,10 +2551,10 @@ void CvCityAI::AI_chooseProduction()
 		}
 		if ((kPlayer.AI_totalUnitAIs(UNITAI_ESCORT_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iEscortSeaNeeded)
 		{
-			AI_chooseUnit(UNITAI_ESCORT_SEA,50);
+			AI_chooseUnit(UNITAI_ESCORT_SEA,75);
 		}
 	}
-	// End tholal AI
+	// End Tholal AI
 
 
 	UnitTypeWeightArray airUnitTypes;
@@ -2739,9 +2739,9 @@ void CvCityAI::AI_chooseProduction()
 			if (kPlayer.AI_calculateUnitAIViability(UNITAI_SETTLER_SEA, DOMAIN_SEA) < 61)
 			{
 				// Force civs to build escorts for settler_sea units
-				if( kPlayer.AI_totalUnitAIs(UNITAI_SETTLER_SEA) > kPlayer.AI_getNumAIUnits(UNITAI_RESERVE_SEA) )
+				if( kPlayer.AI_totalUnitAIs(UNITAI_SETTLER_SEA) > kPlayer.AI_getNumAIUnits(UNITAI_ESCORT_SEA) )
 				{
-					if (AI_chooseUnit(UNITAI_RESERVE_SEA))
+					if (AI_chooseUnit(UNITAI_ESCORT_SEA))
 					{
 						return;
 					}
