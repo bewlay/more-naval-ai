@@ -1573,7 +1573,7 @@ void CvUnitAI::AI_animalMove()
 {
 	PROFILE_FUNC();
 
-//FfH: Added by Kael 10/26/2008 So that animals can built their pens...
+//FfH: Added by Kael 10/26/2008 So that animals can build their pens...
     if (!isBarbarian())
     {
         if (getLevel() < 2)
@@ -1583,6 +1583,9 @@ void CvUnitAI::AI_animalMove()
                 return;
             }
         }
+
+		AI_setUnitAIType(UNITAI_ATTACK);
+		return;
     }
 //FfH: End Add
 
