@@ -1252,17 +1252,17 @@ class CvEventManager:
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 		
 #THOLAL
-# Switch out some bad AIs
-#		if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_WORKER'):
-#			if unit.getUnitClassType() != (gc.getInfoTypeForString('UNITCLASS_WORKER') or gc.getInfoTypeForString('UNITCLASS_SLAVE')):
-#				unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
-		if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
-			if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_ANIMAL'):
+# Switch out AI for upgraded Doviello workers
+		if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_WORKER'):
+			if unit.getUnitClassType() != (gc.getInfoTypeForString('UNITCLASS_WORKER') or gc.getInfoTypeForString('UNITCLASS_SLAVE')):
 				unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
 
-# Remove Hidden Nationality - temp hack until AI knows how to use these units
-		if pPlayer.isHuman() == False:
-			unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), False)
+# temp hack - remove HN promo from units for AI civs
+		if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
+			if pPlayer.isHuman() == False:
+				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), False)
+				if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_ANIMAL'):
+					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
 
 #END THOLAL
 
