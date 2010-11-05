@@ -12271,8 +12271,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 	// End Tholal AI
 	
-	iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
-	iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
+	if ( bWarPlan ) // if loop added by Tholal
+	{
+		iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
+		iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
+	}
 //>>>>Better AI: Modified by Denev 2010/07/21
 
 	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
@@ -12581,7 +12584,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	
 	iValue += (kCivic.getNonStateReligionHappiness() * (iTotalReligonCount - iHighestReligionCount) * 5);
 
-	if (kCivic.isStateReligion())
+	//if (kCivic.isStateReligion())
+	if (getStateReligion() != NO_RELIGION)
 	{
 		if (iHighestReligionCount > 0)
 		{
@@ -12677,8 +12681,15 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		}
 
 		if (iI == YIELD_FOOD) 
-		{ 
-			iTempValue *= 3; 
+		{
+			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
+			{
+				iTempValue *= 3; 
+			}
+			else
+			{
+				iTempValue *= 2;
+			}
 		} 
 		else if (iI == YIELD_PRODUCTION) 
 		{ 
@@ -12709,7 +12720,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 			//iTempValue += iTemp;
 
-			iTempValue += (kCivic.getCapitalCommerceModifier(iI) / 2);
+			iTempValue += kCivic.getCapitalCommerceModifier(iI);
 		}
 		//End Tholal AI
 
@@ -12828,6 +12839,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue *= 4;
 		}
 	}
+	// ToDo - something for Overcouncil and Undercouncil
 	// End Tholal AI
 
 	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() == eCivic)
@@ -19437,8 +19449,8 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	
 	// Tholal AI - era fix - maybe not do it here?
-	int iCurrentEra = getCurrentEra();
-	//int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
+	//int iCurrentEra = getCurrentEra();
+	int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 	int iParanoia = 0;
 	int iCloseTargets = 0;
 	int iOurDefensivePower = GET_TEAM(getTeam()).getDefensivePower();
