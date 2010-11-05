@@ -3038,12 +3038,9 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal AI - make Priests
 	if ((iNumPriests < iNeededPriests) && kPlayer.isHasTech(GC.getDefineINT("TECH_PRIESTHOOD")))
 	{
-		if (!kPlayer.isAgnostic())
+		if (AI_chooseUnit(UNITAI_MEDIC,50))
 		{
-			if (AI_chooseUnit(UNITAI_MEDIC,25))
-			{
-				return;
-			}
+			return;
 		}
 	}
 
@@ -3531,22 +3528,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                     if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
                                     {
                                         iPromotionValue += 15;
-
-										// Tholal AI - add value for special FFH2 promotions
-										// Tholal ToDo: is this working?
-										//if (iJ.isSeeInvisible)
-											//iPromotionValue += 100;
-										if (iJ == GC.getDefineINT("PROMOTION_CHANNELING1"))
-											iPromotionValue += 100;
-										if (iJ == GC.getDefineINT("PROMOTION_CHANNELING2"))
-											iPromotionValue += 200;
-										if (iJ == GC.getDefineINT("PROMOTION_CHANNELING3"))
-											iPromotionValue += 300;
-										if (iJ == GC.getDefineINT("PROMOTION_DIVINE"))
-											iPromotionValue += 200;
-										if (iJ == GC.getDefineINT("PROMOTION_GOLEM"))
-											iPromotionValue += 50;
-										// End Tholal AI
 
                                         break;
                                     }
@@ -5574,11 +5555,10 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	}
 
 	// Control overbuilding Planar Gates
-	// ToDo - this doesnt seem to be working
 	if (eBuilding == GC.getInfoTypeForString("BUILDING_PLANAR_GATE"))
 	{
 		iValue *= GC.getGameINLINE().getGlobalCounter();
-		iValue /= 100;
+		iValue /= 200;
 	}
 	// End Tholal AI
 
@@ -13004,9 +12984,9 @@ void CvCityAI::AI_updateWorkersNeededHere()
 			iWorkersNeeded += 2;
 		}
 	}
-	// Tholal ToDo: Era fix
+	
 	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
-
+	
 	if (GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble())
 	{
 		iWorkersNeeded *= 3;
