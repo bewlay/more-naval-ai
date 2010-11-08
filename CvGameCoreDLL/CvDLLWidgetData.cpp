@@ -4748,10 +4748,10 @@ void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStr
 /************************************************************************************************/
 
 /************************************************************************************************/
-/* More Naval AI                      10/15/10                                Tholal            */
+/* More Naval AI                      11/08/10                                Tholal            */
 /************************************************************************************************/
 	// Add string showing version number
-	szTempBuffer.Format(L"%S", "More Naval AI v1.2");
+	szTempBuffer.Format(L"%S", "More Naval AI v1.3");
 	szBuffer.append(szTempBuffer);
 	szBuffer.append(NEWLINE);
 /************************************************************************************************/
