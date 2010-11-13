@@ -18660,8 +18660,6 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 		return 0;
 	}
 
-	// Tholal ToDo - Make this a loop through all religions?
-
 	const iStateRel = getStateReligion();
 		
 	if (iStateRel != NO_RELIGION)
@@ -18674,15 +18672,14 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 		if (bHoly)
 		{
 			int iRelPercent = GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iStateRel);
-
-			int iReligionStatus = (iRelPercent / iReligionPercentNeeded) * 100;
+			int iReligionStatus = ((iRelPercent * 100) / iReligionPercentNeeded);
 
 			if (iReligionStatus > 85)
 			{
 				return 4;
 			}
 
-			if (iReligionStatus > 60)
+			if (iReligionStatus > 50)
 			{
 				return 3;
 			}
