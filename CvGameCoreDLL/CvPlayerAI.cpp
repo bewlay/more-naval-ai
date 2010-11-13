@@ -6420,7 +6420,7 @@ void CvPlayerAI::AI_chooseFreeTech()
 	argsList.add(getID());
 	argsList.add(true);
 	lResult = -1;
-//	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
+	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
 	eBestTech = ((TechTypes)lResult);
 
 	if (eBestTech == NO_TECH)
@@ -6482,7 +6482,7 @@ void CvPlayerAI::AI_chooseResearch()
 		argsList.add(getID());
 		argsList.add(false);
 		lResult = -1;
-		//gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
+		gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_chooseTech", argsList.makeFunctionArgs(), &lResult);
 		eBestTech = ((TechTypes)lResult);
 
 		if (eBestTech == NO_TECH)
