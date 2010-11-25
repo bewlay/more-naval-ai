@@ -3160,6 +3160,8 @@ def spellTakeEquipmentBuilding(caster,unit):
 			pPlot.getPlotCity().setNumRealBuilding(i, 0)
 
 def reqTakeEquipmentPromotion(caster,unit):
+	if caster.getUnitCombatType() == gc.getInfoTypeForString('NONE'):
+		return False
 	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_NAVAL'):
 		return False
 	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_SIEGE'):
