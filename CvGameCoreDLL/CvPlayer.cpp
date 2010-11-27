@@ -6020,6 +6020,15 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
             return false;
         }
 	}
+
+	// Tholal AI - prereq civs
+	if (GC.getUnitInfo(eUnit).getPrereqCiv() != NO_CIVILIZATION)
+	{
+        if (getCivilizationType() != GC.getUnitInfo(eUnit).getPrereqCiv())
+        {
+            return false;
+        }
+	}
 //FfH: End Add
 
 	return true;
