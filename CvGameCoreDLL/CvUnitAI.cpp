@@ -28721,6 +28721,14 @@ bool CvUnitAI::isDivine()
     return false;
 }
 
+bool CvUnitAI::isVampire()
+{
+	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_VAMPIRE")))
+		return true;
+
+	return false;
+}
+
 int CvUnitAI::getChannelingLevel()
 {
 

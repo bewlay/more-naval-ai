@@ -803,6 +803,7 @@ public:
 	virtual bool isInquisitor() = 0;
 	virtual bool isChanneler() = 0;
 	virtual bool isDivine() = 0;
+	virtual bool isVampire() = 0;
 	int getChannelingLevel();
 // End Tholal AI
 

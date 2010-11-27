@@ -128,6 +128,7 @@ public:
 	bool isInquisitor();
     bool isChanneler();
     bool isDivine();
+	bool isVampire();
 	int getChannelingLevel();
 	bool AI_crewCheck();
 	// End Tholal AI
