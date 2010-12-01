@@ -1253,16 +1253,16 @@ class CvEventManager:
 		
 #THOLAL
 # Switch out AI for upgraded Doviello workers
-		if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_WORKER'):
-			if unit.getUnitClassType() != (gc.getInfoTypeForString('UNITCLASS_WORKER') or gc.getInfoTypeForString('UNITCLASS_SLAVE')):
-				unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
+#		if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_WORKER'):
+#			if unit.getUnitClassType() != (gc.getInfoTypeForString('UNITCLASS_WORKER') or gc.getInfoTypeForString('UNITCLASS_SLAVE')):
+#				unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
 
 # temp hack - remove HN promo from units for AI civs
 		if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
 			if pPlayer.isHuman() == False:
 				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), False)
-				if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_ANIMAL'):
-					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
+#				if unit.getUnitAIType()==gc.getInfoTypeForString('UNITAI_ANIMAL'):
+#					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
 
 #END THOLAL
 
