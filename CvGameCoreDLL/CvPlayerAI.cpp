@@ -10784,11 +10784,15 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /**						                                            							**/
 /*************************************************************************************************/
 	case UNITAI_MEDIC:
+		iValue += iCombatValue;
+		iValue *= 5;
+
 	case UNITAI_MAGE:
 	case UNITAI_TERRAFORMER:
     case UNITAI_MANA_UPGRADE:
 	case UNITAI_WARWIZARD:
 		iValue += iCombatValue;
+		iValue += AI_getMojoFactor();
 		break;
 /*************************************************************************************************/
 /**	END	                                        												**/
