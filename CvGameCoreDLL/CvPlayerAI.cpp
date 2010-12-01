@@ -23046,4 +23046,35 @@ bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
 */
 	return false;
 }
+
+// Mage factor
+int CvPlayerAI::AI_getMojoFactor() const
+{
+	//int iValue = 5; // Giving this a default setting because I dont think countOwnedBonuses includes palace mana. Need better solution.
+	int iValue = 0;
+
+	// Count amount of mana
+	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
+	{
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA") || GC.getDefineINT("BONUSCLASS_RAWMANA")))
+		{
+			iValue += (getNumAvailableBonuses((BonusTypes)iK) * 2);
+		}
+	}
+
+	// Count traits
+	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+	{
+		if (GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getDefineINT("UNITCOMBAT_ADEPT")))
+		{
+			if (hasTrait((TraitTypes)iJ))
+			{
+				iValue += 4;
+			}
+		}
+	}
+
+	return iValue;
+}
+
 // End Tholal AI

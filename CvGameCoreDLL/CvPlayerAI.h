@@ -330,6 +330,9 @@ public:
 
 	// Tholal AI - Tower Mana
 	bool AI_isNeededTowerMana(BonusTypes eBonus) const;
+
+	// Tholal AI - Magic factor
+	int AI_getMojoFactor() const;
 	// End Tholal AI
 
 /************************************************************************************************/
