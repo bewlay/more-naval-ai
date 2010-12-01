@@ -36,8 +36,7 @@
 #define BUILDINGFOCUS_DOMAINSEA				(1 << 15)
 #define BUILDINGFOCUS_WONDEROK				(1 << 16)
 #define BUILDINGFOCUS_CAPITAL				(1 << 17)
-#define BUILDINGFOCUS_MILITARY				(1 << 18)
-#define BUILDINGFOCUS_VICTORY				(1 << 19)
+#define BUILDINGFOCUS_VICTORY				(1 << 18)
 
 // Public Functions...
 
@@ -2099,19 +2098,6 @@ void CvCityAI::AI_chooseProduction()
         }
     }
 
-	// Tholal AI - try and construct some training buildings
-	// Note: This can be removed now I think
-	/*
-	if (iProductionRank <= (kPlayer.getNumCities() / 3 ))
-	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_MILITARY,8))
-		{
-			return;
-		}
-	}
-	*/
-	// End Tholal AI
-
 	// don't build frivolous things if this is an important city unless we at war
     if (!bImportantCity || bLandWar || bAssault)
     {
@@ -4019,59 +4005,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 			return std::max(0, iValue);
 		}
 	}
-
-
-// Tholal AI - Military building catch
-// ToDo - can remove this now? or change it into something else?
-	if ((iFocusFlags & BUILDINGFOCUS_MILITARY))
-	{
-		if (!(GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_BUILDING_PREREQS) || isBarbarian()))
-		{
-			UnitTypes eLoopUnit;
-        	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
-        	{
-            	eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
-            	if (eLoopUnit != NO_UNIT)
-            	{
-                	if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == GC.getBuildingInfo(eBuilding).getBuildingClassType())
-                	{
-                    	if (kOwner.AI_totalAreaUnitAIs(area(), ((UnitAITypes)(GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType()))) == 0)
-                    	{
-                        	iValue += iNumCitiesInArea * 5;
-                    	}
-                    	iValue += GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit) * 10;
-                    	if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType()) < 4)
-                    	{
-                    	    iValue += GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit) * 40;
-                    	}
-                    	else
-                    	{
-                        	iValue += GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit) * 10;
-                    	}
-                    	ReligionTypes eReligion = (ReligionTypes)(GC.getUnitInfo(eLoopUnit).getPrereqReligion());
-                    	if (eReligion != NO_RELIGION)
-                    	{
-                    	    if (bCulturalVictory1 || isHolyCity(eReligion) || isCapital())
-                    	    {
-                    	        iValue += (2 + iNumCitiesInArea);
-                    	    }
-                    	    if (bCulturalVictory2 && GC.getUnitInfo(eLoopUnit).getReligionSpreads(eReligion))
-                    	    {
-                    	        int iReligionCount = GET_PLAYER(getOwnerINLINE()).getHasReligionCount(eReligion);
-                    	        iValue += (100 * (iNumCities - iReligionCount)) / (iNumCities * (iReligionCount + 1));
-                    	    }
-                    	}
-					}
-					if (kOwner.getNumBuilding(eBuilding) == 0 || (kOwner.getNumBuilding(eBuilding) < (kOwner.getNumCities() / 3)))
-					{
-						iValue += iNumCitiesInArea * 5;
-					}
-                }
-			}
-		}
-		return std::max(0, iValue);
-	}
-// End Tholal AI
 
 	for (iPass = 0; iPass < 2; iPass++)
 	{
