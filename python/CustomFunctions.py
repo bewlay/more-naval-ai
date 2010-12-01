@@ -652,6 +652,10 @@ class CustomFunctions:
 		iSugar = gc.getInfoTypeForString('BONUS_SUGAR')
 		iToad = gc.getInfoTypeForString('BONUS_TOAD')
 		iWheat = gc.getInfoTypeForString('BONUS_WHEAT')
+		iForest = gc.getInfoTypeForString('FEATURE_FOREST')
+		iJungle = gc.getInfoTypeForString('FEATURE_JUNGLE')
+		iAForest = gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')
+		iBForest = gc.getInfoTypeForString('FEATURE_FOREST_BURNT')
 		iCount = CyGame().getGlobalCounter()
 		for i in range (CyMap().numPlots()):
 			pPlot = CyMap().plotByIndex(i)
@@ -703,6 +707,18 @@ class CustomFunctions:
 				if (iBonus == iCorn or iBonus == iRice or iBonus == iWheat):
 					pPlot.setBonusType(-1)
 					pPlot.setImprovementType(iSnakePillar)
+					
+#				if (iFeature == iForest or iFeature == iAForest or iFeature == iJungle):
+#					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Burnt Forest")
+#					if iRandom < 10:
+#						pPlot.setFeatureType(iBForest, 0)
+				
+				if pPlot.isPeak() == True:
+					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Volcanos")
+					if iRandom < 2:
+						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_VOLCANO_CREATION')
+						triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
+				
 			if iPlotCount < 10:
 				if iBonus == iToad:
 					if CyGame().getSorenRandNum(100, "Hell Convert") < 50:
