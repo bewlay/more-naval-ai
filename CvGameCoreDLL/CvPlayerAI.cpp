@@ -10393,7 +10393,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		case UNITAI_WARWIZARD:
 		case UNITAI_TERRAFORMER:
         case UNITAI_MANA_UPGRADE:
-			bValid = true;
+			if (GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_CHANNELING1")))
+			{
+				bValid = true;
+			}
 			break;
 /*************************************************************************************************/
 /**	END	                                        												**/
