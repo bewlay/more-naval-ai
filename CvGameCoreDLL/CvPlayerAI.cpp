@@ -1873,6 +1873,14 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 		}	
 	}
 
+	// Tholal AI - Don't raze if we can't build settlers
+	// ToDo: Don't make this an absolute. Factor it into the formulas above
+	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_SETTLERS))
+	{
+		bRaze = false;
+	}
+	// End Tholal AI
+
 	if( bRaze )
 	{
 		pCity->doTask(TASK_RAZE);
