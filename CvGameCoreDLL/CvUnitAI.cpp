@@ -27939,23 +27939,30 @@ void CvUnitAI::AI_SummonCast()
         {
             if (canCast(iSpell, false))
             {
-                int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
-                bool bEnemy = false;
-                for (int i = -iMoveRange; i <= iMoveRange; ++i)
-                {
-                    for (int j = -iMoveRange; j <= iMoveRange; ++j)
-                    {
-                        pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
-                        if (NULL != pLoopPlot)
-                        {
-                            if (pLoopPlot->isVisibleEnemyUnit(this))
-                            {
-                                bEnemy = true;
-                            }
-                        }
-                    }
-                }
-                if (bEnemy)
+				bool bPermSummon = GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate();
+				bool bEnemy = false;
+
+				if (!bPermSummon)
+				{
+					int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
+
+					for (int i = -iMoveRange; i <= iMoveRange; ++i)
+					{
+						for (int j = -iMoveRange; j <= iMoveRange; ++j)
+						{
+							pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
+							if (NULL != pLoopPlot)
+							{
+								if (pLoopPlot->isVisibleEnemyUnit(this))
+								{
+									bEnemy = true;
+								}
+							}
+						}
+					}
+				}
+
+                if (bEnemy || bPermSummon)
                 {
                     iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
                     for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
