@@ -1345,6 +1345,7 @@ def spellFormWolfPack(caster):
 		pPlayer = gc.getPlayer(caster.getOwner())
 		newUnit = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_WOLF_PACK'), caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 		newUnit.setExperience(caster.getExperience() + pWolf2.getExperience(), -1)
+		newUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_ATTACK'))
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
 		"""
 		caster.kill(True, 0)
