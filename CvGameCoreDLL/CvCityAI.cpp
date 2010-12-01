@@ -3533,7 +3533,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                             {
                                                 if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
                                                 {
-                                                    iPromotionValue += 15;
+                                                    iPromotionValue += 50;
                                                     break;
                                                 }
                                             }
