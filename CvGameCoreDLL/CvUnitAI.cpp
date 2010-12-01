@@ -10018,6 +10018,16 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
+	// Tholal AI - account for new FFH promotion tags
+	iValue += GC.getPromotionInfo(ePromotion).getCombatHealPercent();
+
+	iValue += GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * 2;
+
+	// ToDo: getPromotionCombatMod - mimic the Combatinfos function
+	// ToDo: go through other new FFH promotion tags and see what needs to be accounted for
+	// End Tholal AI
+
+
 	if (GC.getPromotionInfo(ePromotion).isAmphib())
 	{
 		if ((AI_getUnitAIType() == UNITAI_ATTACK) ||
