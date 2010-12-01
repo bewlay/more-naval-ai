@@ -12352,7 +12352,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += -(kCivic.getGoldPerUnit() * getNumUnits());
 	iValue += -(kCivic.getGoldPerMilitaryUnit() * getNumMilitaryUnits() * iWarmongerPercent) / 200;
 //>>>>Better AI: Added by Denev 2010/07/21
-	iValue += -(kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation() * 3);
+	if (!isIgnoreFood())
+		iValue += kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation() * 3;
 //<<<<Better AI: End Add
 
 	// Tholal AI - value Theocracy during religion victory push
@@ -12360,7 +12361,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 		{
-			iValue += 100;
+			iValue += 250;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 		{
@@ -12376,19 +12377,13 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += kCivic.getCoastalTradeRoutes() * countNumCoastalCities();
 
 	// End Tholal AI
-
 	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
 
 //FfH: Added by Kael 01/31/2009
-	if (kCivic.isMilitaryFoodProduction())
+	if (kCivic.isMilitaryFoodProduction() || (kCivic.getFoodConsumptionPerPopulation() > 0))
 	{
 //>>>>Advanced Rules: Modified by Denev 2010/03/04
-/*
-		if (getTotalPopulation() < 30)
-		{
-			iValue -= (30 - getTotalPopulation()) * 5;
-		}
-*/
+
 		int iTotalFoodDifference = 0;
 		int iTotalGrowingSpace = 0;
 		int iMaxGrowingSpace = 0;
@@ -12398,20 +12393,35 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		{
 			iTotalFoodDifference += pLoopCity->foodDifference();
 			iTotalGrowingSpace += std::max(0, pLoopCity->AI_getTargetSize() - pLoopCity->getPopulation());
-
+			iMaxGrowingSpace += iTotalGrowingSpace;
+			/*
 			if (iTotalGrowingSpace > iMaxGrowingSpace)
 			{
 				iMaxGrowingSpace = iTotalGrowingSpace;
 			}
+			*/
+		}
+		
+		iTempValue = 0;
+
+		if ((kCivic.getFoodConsumptionPerPopulation() > 0) && !(isIgnoreFood()))
+		{
+			iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
+			iTempValue += iMaxGrowingSpace * getNumCities() * 10;
+			//iTempValue -= (iTotalFoodDifference * 2);
+			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
+			{
+				iTempValue *= 2;
+			}
 		}
 
-		iTempValue = 0;
-		iTempValue += bWarPlan ? iTotalFoodDifference : 0;
-		iTempValue /= GET_PLAYER(getID()).canPopRush() ? 2 : 1;
-		iTempValue -= iTotalGrowingSpace;
-		iTempValue -= iMaxGrowingSpace * 2;
-
-//		if (FOOD_CONSUME_PER_POPULATION
+		if (kCivic.isMilitaryFoodProduction())
+		{
+			iTempValue += bWarPlan ? iTotalFoodDifference : 0;
+			iTempValue /= GET_PLAYER(getID()).canPopRush() ? 2 : 1;
+			iTempValue -= iTotalGrowingSpace;
+			iTempValue -= iMaxGrowingSpace * 2;
+		}
 
 		iValue += iTempValue;
 //<<<<Advanced Rules: End Modify
