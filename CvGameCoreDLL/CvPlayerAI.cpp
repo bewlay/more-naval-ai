@@ -9003,9 +9003,15 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iBadAttitude- This value is multiplied by the leaders iAttitudeBadBonus value to determine an attitude adjustment for using this bonus type
 			iDiscoverRandModifier- Percent the bonus modifies the chance improvements find new resources
 			iGreatPeopleRateModifier- Percent amount the bonus modifies the great people rate
+			iValue += ((GC.getBonusInfo(eBonus).getGreatPeopleRateModifier * 5)
+			if (AI_isDoVictoryStrategy(STRATEGY_CULTURE2 || STRATEGY_ALTAR2))
+			{
+				iValue += (100 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier);
+			}
 			iHealChange- Amount the bonus effects the heal rate of friendly units within your borders
 			iHealChangeEnemy- Amount the bonus effects the heal rate of enemy units within your borders
-			iMaintenanceModifier- Effect having the resource has ont he cities maintenance costs
+			iMaintenanceModifier- Effect having the resource has ont he cities maintenance costs (negative number)
+			iValue -= (GC.getBonusInfo(eBonus).getMaintenanceModifier * getNumCities()); // negative numbers are good
 			iMutateChance- Chance that units built in the city will begin mutated
 			iResearchModifier- Percent amount the bouns effects the players research amount
 			DamageType- If a unit has affinity to this bonus this is the damage type that affinity grants (ex: death mana has this set to DAMAGE_DEATH)
