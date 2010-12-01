@@ -2885,11 +2885,18 @@ def reqScorch(caster):
 		if pPlayer.isHuman() == False:
 			if caster.getOwner() != pPlot.getOwner():
 				return False
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):
-				return False
+#			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):
+#				return False
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				return False
 		return True	
+		
+# Tholal AI - allow marshes to be scorched
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
+		if pPlayer.isHuman() == False:
+			if caster.getOwner() != pPlot.getOwner():
+				return False
+		return True
 	return False
 
 def spellScorch(caster):
@@ -2900,6 +2907,8 @@ def spellScorch(caster):
 		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'),True,True)
 	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
 		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_TUNDRA'),True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
 	if pPlot.isOwned():
 		cf.startWar(caster.getOwner(), pPlot.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
 
