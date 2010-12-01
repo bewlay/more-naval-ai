@@ -126,14 +126,7 @@ bool CvUnitAI::AI_update()
             return false;
         }
     }
-
-// Tholal AI - Gift Vampirism
-// Todo - put in a check for vampires and do vampire stuff - incorporate feasting move
-	if (canCast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"), false))
-	{
-		cast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"));
-	}
-
+	
 	// Bring out the comfy chair!
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 	{
@@ -479,13 +472,6 @@ bool CvUnitAI::AI_update()
 				case GROUPFLAG_SVARTALFAR_KIDNAP:
 					AI_SvartalfarKidnapMove();
 					break;
-				// Tholal AI - added Inquisition
-					/*
-				case GROUPFLAG_INQUISITION:
-					AI_InquisitionMove();
-					break;
-					*/
-				// End Tholal AI
                 case GROUPFLAG_PILLAGE:
                 	AI_PillageGroupMove();
                 	break;
@@ -25862,31 +25848,84 @@ void CvUnitAI::CheckForEquipment()
 }
 void CvUnitAI::AI_feastingmove()
 {
-	if (!(getUnitType() == (UnitTypes)GC.getDefineINT("UNIT_VAMPIRE")
-          || getUnitType() == (UnitTypes)GC.getDefineINT("UNIT_VAMPIRE_LORD")))
+	if (!isVampire())
 	{
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
 		AI_setUnitAIType(UNITAI_ATTACK);
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
-    else if (getLevel()>5 || !(plot()->isCity()))
-	{
-		AI_setGroupflag(GROUPFLAG_CONQUEST);
-		getGroup()->pushMission(MISSION_SKIP);
-		return;
-	}
+
 	CvCity* pCity= plot()->getPlotCity();
-	if (pCity)
+
+	if (canCast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"), false))
 	{
-		if (pCity->getPopulation()>13 || pCity->angryPopulation()>1 || pCity->foodDifference() < 0 || pCity->unhealthyPopulation(false) > 3)
+		cast(GC.getDefineINT("SPELL_GIFT_VAMPIRISM"));
+	}
+
+	if (pCity && !isHasCasted())
+	{
+		if (pCity->angryPopulation() > 0 || pCity->unhealthyPopulation(false) > 1)
 		{
-			if (canCast(GC.getDefineINT("SPELL_FEAST"),false))
+			if (pCity->getPopulation() > 10 || pCity->foodDifference() < 0)
 			{
-				cast(GC.getDefineINT("SPELL_FEAST"));
+				if (canCast(GC.getDefineINT("SPELL_FEAST"),false))
+				{
+					cast(GC.getDefineINT("SPELL_FEAST"));
+				}
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
 			}
-			getGroup()->pushMission(MISSION_SKIP);
+		}
+	}
+
+	if (!isHasCasted())
+	{
+		AI_SummonCast();
+		AI_MovementCast();
+	}
+
+	if (getLevel() < 7)
+	{
+		CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+		CvCity* pLoopCity;
+		CvCity* pBestCity;
+		CvPlot* pBestPlot;
+		int iValue;
+		int iBestValue;
+		int iLoop;
+		iBestValue = 0;
+		pBestCity = NULL;
+		iValue = 0;
+
+		for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+		{
+			if (pLoopCity->getPopulation() > 3)
+			{
+				if (pLoopCity->angryPopulation()>0 || pLoopCity->unhealthyPopulation(false) > 2 )
+				{
+					iValue += pLoopCity->getPopulation();
+					iValue += pLoopCity->angryPopulation() * 10;
+					iValue += pLoopCity->unhealthyPopulation() * 2;
+					iValue += -(pLoopCity->foodDifference() * 5);
+
+					iValue = std::max(0, iValue);
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						pBestCity = pLoopCity;
+					}
+				}
+			}
+		}
+
+		if (pBestCity != NULL)
+		{
+			pBestPlot = pBestCity->plot();
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());//, MOVE_AVOID_ENEMY_WEIGHT_2, false, false, NO_MISSIONAI, pBestPlot);
 			return;
 		}
+
 		else
 		{
 			AI_setGroupflag(GROUPFLAG_CONQUEST);
@@ -25895,6 +25934,7 @@ void CvUnitAI::AI_feastingmove()
 			return;
 		}
 	}
+
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
@@ -27962,6 +28002,7 @@ void CvUnitAI::AI_SummonCast()
 					}
 				}
 
+				// Tholal AI - ToDo: Summon Floating Eyes
                 if (bEnemy || bPermSummon)
                 {
                     iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
