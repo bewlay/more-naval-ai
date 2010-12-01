@@ -1079,24 +1079,14 @@ void CvCityAI::AI_chooseProduction()
 	int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_TERRAFORMER) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
-	int iNeededPriests = kPlayer.getNumCities() * 2;
-
+	int iNeededPriests = kPlayer.getNumCities() * 3;
 	if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
 		iNeededPriests *= 2;
-
 	int iSpiritualTrait=GC.getInfoTypeForString("TRAIT_SPIRITUAL");
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = kPlayer.getNumCities() * 2;
-
-	// Tholal ToDo: Count amount of mana available
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SUNDERED"))
-		iNeededMages += kPlayer.getNumCities();
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SUMMONER"))
-		iNeededMages += kPlayer.getNumCities();
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_ARCANE"))
-		iNeededMages += kPlayer.getNumCities();
+	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + kPlayer.getNumCities());
 // End Tholal AI
 
     int iMaxSettlers = 0;
@@ -1935,7 +1925,26 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
-	
+
+	// Tholal AI - early check for Priests and Mages
+	if ((iNumPriests < (iNeededPriests / 2)))
+	{
+		if (AI_chooseUnit(UNITAI_MEDIC, 50))
+		{
+			return;
+		}
+	}
+
+	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
+	if (iNumMages == 0)
+	{
+		if (AI_chooseUnit(UNITAI_MAGE, 10 * kPlayer.AI_getMojoFactor()))
+		{
+			return;
+		}
+	}
+	// End Tholal AI
+
 	if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, isCapital() ? 5 : 30, 30))
 	{
 		return;
@@ -3036,18 +3045,18 @@ void CvCityAI::AI_chooseProduction()
 
 	// Tholal ToDo - better code 
 	// Tholal AI - make Priests
-	if ((iNumPriests < iNeededPriests) && kPlayer.isHasTech(GC.getDefineINT("TECH_PRIESTHOOD")))
+	if ((iNumPriests < iNeededPriests))
 	{
-		if (AI_chooseUnit(UNITAI_MEDIC,50))
+		if (AI_chooseUnit(UNITAI_MEDIC))
 		{
 			return;
 		}
 	}
 
 	// Tholal AI - make Adepts
-	if ((iNumMages < iNeededMages) && kPlayer.isHasTech(GC.getDefineINT("TECH_KNOWLEDGE_OF_THE_ETHER")))
+	if ((iNumMages < iNeededMages))
 	{
-		if (AI_chooseUnit(UNITAI_MAGE,5))
+		if (AI_chooseUnit(UNITAI_MAGE))
 		{
 			return;
 		}
@@ -3185,15 +3194,8 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 	aiUnitAIVal[UNITAI_CITY_SPECIAL] += ((iNumCitiesInArea + 1) / 2);
 
 	// Added by Tholal
-	int mojoBonus = 1;
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SUNDERED"))
-		mojoBonus += 2;
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SUMMONER"))
-		mojoBonus += 2;
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_ARCANE"))
-		mojoBonus += 2;
-	aiUnitAIVal[UNITAI_MAGE] += ((iNumCitiesInArea + 1) + mojoBonus);
-	aiUnitAIVal[UNITAI_MEDIC] += (iNumCitiesInArea * 2);
+	aiUnitAIVal[UNITAI_MAGE] += ((iNumCitiesInArea + 1) * GET_PLAYER(getOwnerINLINE()).AI_getMojoFactor());
+	aiUnitAIVal[UNITAI_MEDIC] += (iNumCitiesInArea * 5);
 	// End Add
 
 	if (bWarPossible)
@@ -3356,8 +3358,8 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 	aiUnitAIVal[UNITAI_MISSILE_AIR] *= 15;
 
 // Added by Tholal
-	aiUnitAIVal[UNITAI_MAGE] *= 10;
-	aiUnitAIVal[UNITAI_MEDIC] *= 10;
+	aiUnitAIVal[UNITAI_MAGE] *= 20;
+	aiUnitAIVal[UNITAI_MEDIC] *= 20;
 // End Add
 
 	for (iI = 0; iI < NUM_UNITAI_TYPES; iI++)
