@@ -805,7 +805,7 @@ class CvGameUtils:
 			smokeb = true #terraformer tries to put out smoke
 			desertb = true #terraformer tries to spring deserts
 			snowb = true #terraformer tries to scorch snow to tundra
-			tundrab = true #terraformer tries to scorch tundra to plains
+			tundrab = false #terraformer tries to scorch tundra to plains
 			marshb = true #terraformer tries to scorch marsh to grassland
 			grassb = false #terraformer tries to scorch grassland to plains			
 			hellterrb = true #terraformer tries to remove hell terrain
@@ -1593,7 +1593,7 @@ class CvGameUtils:
 		smokeb = true #Civ likes to put out smoke
 		desertb = true #Civ likes to spring deserts
 		snowb = true #Civ likes to scorch snow to tundra
-		tundrab = true #Civ likes to scorch tundra to plains
+		tundrab = false #Civ likes to scorch tundra to plains
 		marshb = true #Civ likes to scorch marsh to grassland
 		grassb = false #Civ likes to scorch grassland to plains			
 		hellterrb = true #Civ likes to remove hell terrain
@@ -1606,9 +1606,6 @@ class CvGameUtils:
 
 		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
 			snowb = false
-
-		tundrab = false				
-		marshb = false				
 		
 		if pPlayer.getCivilizationType()  == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
 			hellterrb = false
