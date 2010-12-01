@@ -23012,6 +23012,31 @@ void CvPlayerAI::AI_invalidateAttitudeCache()
 
 // Tholal AI - Tower mana
 // ToDo - give this function an option to check for just final mana - or incoporate extra value into bonus value function
+int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
+{
+
+	// Don't count mana that we can't use due to Overcouncil resolutions
+    if (isFullMember((VoteSourceTypes)0))
+    {
+        if (GC.getGameINLINE().isNoBonus(eBonus))
+        {
+            return 0;
+        }
+    }
+
+	// Set Mastery var
+	// loop through prereq buildings
+	// Do we have it already? If so, next
+	//Have buildinding count +1
+	// Do we have the tech for it?
+	// Building Count +1
+	// loop through prereq mana for those buildings
+	// mana count +1
+	// do we have it already? If so, next and havemana count +1
+
+	return 0;
+}
+
 bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
 {
 	// No need to worry about Tower mana if we're about to win

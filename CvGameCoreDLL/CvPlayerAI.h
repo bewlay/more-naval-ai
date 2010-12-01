@@ -329,6 +329,7 @@ public:
 	int AI_getAltarVictoryStage() const;
 
 	// Tholal AI - Tower Mana
+	int AI_getTowerManaValue(BonusTypes eBonus) const;
 	bool AI_isNeededTowerMana(BonusTypes eBonus) const;
 
 	// Tholal AI - Magic factor
