@@ -829,7 +829,7 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_DISPEL_MAGIC_HELP</Help>
             <PromotionPrereq1>PROMOTION_METAMAGIC2</PromotionPrereq1>
-            <bAllowAI>1</bAllowAI>
+            <bAllowAI>0</bAllowAI>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <iRange>2</iRange>
