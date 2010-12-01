@@ -4865,7 +4865,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
             if ((GC.getFeatureInfo(FeatureTypes(iJ)).getHealthPercent() < 0) ||
                 ((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
             {
-                iBuildValue += 25 * countCityFeatures((FeatureTypes)iJ);
+                iBuildValue += 25 * (countCityFeatures((FeatureTypes)iJ) * 10);
             }
         }
     }
