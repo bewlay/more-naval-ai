@@ -521,16 +521,6 @@ bool CvCityAI::AI_avoidGrowth()
 {
 	PROFILE_FUNC();
 
-// Tholal AI - Calabim wont avoid growth once they have vampires
-	/* Old hold for the moment - need to fix tech call and get Unit AI setup for proper feeding
-	// Move this to above function?
-	
-	if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_CALABIM")) && (GET_PLAYER(getOwnerINLINE()).isHasTech("TECH_FEUDALISM"))
-	{
-		return false;
-	}
-// End Tholal AI
-*/
 /*************************************************************************************************/
 /**	GrowthControl							11/15/08								Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/
@@ -3524,7 +3514,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                 //traits
                                 for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
                                 {
-									// Tholal ToDo - civ traits need more weight?
                                     if (hasTrait((TraitTypes)iJ))
                                     {
                                         for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
@@ -3533,6 +3522,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                             {
                                                 if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
                                                 {
+													// Tholal AI - increased value of free promotions from Civ traits
                                                     iPromotionValue += 50;
                                                     break;
                                                 }
@@ -4783,11 +4773,13 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
                                     }
                                 }
 								// Tholal AI
+								/* - Not sure why this is here - slated for removal
 								if (kOwner.getNumBuilding(eBuilding) == 0 || (kOwner.getNumBuilding(eBuilding) < (kOwner.getNumCities() / 3)))
 								{
 									iValue += iNumCitiesInArea * 5;
 								}
 								// End Tholal AI
+								*/
                             }
 //FfH: End Modify
 
@@ -5920,8 +5912,8 @@ int CvCityAI::AI_neededDefenders()
 		iDefenders += ((getPopulation() + 2) / 7);
 		return iDefenders;
 	}
-// Tholal AI - changed base defenders to 2; added check for Barbarian Allies
 
+	// Tholal AI - changed base defenders to 2; added check for Barbarian Allies and Altar Level
 	if (GET_TEAM(getTeam()).isBarbarianAlly())
 	{
 		iDefenders = 1;
@@ -5930,10 +5922,11 @@ int CvCityAI::AI_neededDefenders()
 	{
 		iDefenders = 2;
 	}
+
 	// defend the Altar!
 	iDefenders += getAltarLevel();
 
-// End Tholal
+	// End Tholal AI
 
 	if (hasActiveWorldWonder() || isCapital() || isHolyCity())
 	{
@@ -9109,6 +9102,7 @@ bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds)
 			GC.getGameINLINE().getSorenRandNum(100, "City AI choose unit") < iOdds )
 		{
 			// Tholal AI - Don't push other AI types for Hero Units
+			// Tholal ToDo: Move this into BestUnitAI function instead?
 			if (GC.getUnitInfo(eBestUnit).getDefaultUnitAIType() == UNITAI_HERO)
 			{
 				eUnitAI = UNITAI_HERO;
