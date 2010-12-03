@@ -1918,7 +1918,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Tholal AI - early check for Priests and Mages
-	if ((iNumPriests < (iNeededPriests / 2)))
+	if (iNumPriests < (iNeededPriests / 2))
 	{
 		if (AI_chooseUnit(UNITAI_MEDIC, 50))
 		{
@@ -1927,7 +1927,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
-	if (iNumMages == 0)
+	if (iNumMages < (iNeededMages / 2))
 	{
 		if (AI_chooseUnit(UNITAI_MAGE, 10 * kPlayer.AI_getMojoFactor()))
 		{
