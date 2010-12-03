@@ -1827,7 +1827,9 @@ void CvCityAI::AI_chooseProduction()
 
 		if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
 		{
-    		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+			 // Tholal AI - era fix
+    		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 2 : 7, 33))
 			{
 				return;
 			}
