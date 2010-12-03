@@ -2792,7 +2792,7 @@
             <TechPrereq>TECH_HONOR</TechPrereq>
             <iAnarchyLength>0</iAnarchyLength>
             <Upkeep>NONE</Upkeep>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>10</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2881,7 +2881,7 @@
             <TechPrereq>TECH_DECEPTION</TechPrereq>
             <iAnarchyLength>0</iAnarchyLength>
             <Upkeep>NONE</Upkeep>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>10</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
