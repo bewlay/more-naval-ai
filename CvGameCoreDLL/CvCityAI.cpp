@@ -11279,6 +11279,21 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 
 					}
 
+					// Tholal AI - fort control
+					if (GC.getImprovementInfo(eFinalImprovement).getDefenseModifier() > 0)
+					{
+						if (pPlot->isRoute())
+						{
+							iValue *= 2;
+						}
+
+						if (pPlot->isCityRadius())
+						{
+							iValue /= 100;
+						}
+					}
+					// End Tholal AI
+
 					if (iValue > iBestValue)
 					{
 						iBestValue = iValue;
