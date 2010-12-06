@@ -1065,7 +1065,7 @@ void CvCityAI::AI_chooseProduction()
 
 // Tholal AI - count number of mages & priests
 // Tholal ToDo - better formulas - or better yet, incorporate this into the choose unit function instead
-	int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_TERRAFORMER) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
+	int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
 	int iNeededPriests = kPlayer.getNumCities() * 3;
@@ -1825,11 +1825,12 @@ void CvCityAI::AI_chooseProduction()
 	{
 		//Building city hunting stack.
 
-		if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
+		//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
+		if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
 		{
 			 // Tholal AI - era fix
     		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
-			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 2 : 7, 33))
+			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 7, 33))
 			{
 				return;
 			}
@@ -2203,10 +2204,11 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
+	//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
+	if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
 	{
-		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 2 : 7, 33))
-    	if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentPeriod() > 1) ? 2 : 7, 33))
+		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
+    	if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 7, 33))
 		{
 			return;
 		}
@@ -3526,7 +3528,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                                 if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
                                                 {
 													// Tholal AI - increased value of free promotions from Civ traits
-                                                    iPromotionValue += 50;
+                                                    iPromotionValue += 80;
                                                     break;
                                                 }
                                             }
@@ -3604,34 +3606,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									}
 								}
 //FfH: End Add
-// Tholal AI - Klutzy add to catch civ traits - temp hack
-// Tholal ToDo: figure out why AI above doesnt value these units highly enough
-								if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_DEXTEROUS")) && (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ARCHER")))
-								{
-									iValue += 100;
-								}								
-								if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_HORSELORD")) && (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_MOUNTED")))
-								{
-									iValue += 100;
-								}								
-								if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SINISTER")) && (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_RECON")))
-								{
-									iValue += 100;
-								}								
-								if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SUNDERED")) && (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT")))
-								{
-									iValue += 100;
-								}
-// End Tholal AI
-								// Tholal AI 
-								// Extra value for heroes
-								if (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == GC.getInfoTypeForString("UNITAI_HERO"))
-								{
-									iValue *=5;
-								}
-
-								// ToDo - block missionaries from other religions if RELIGION2
-								// End Tholal
 
 								iValue = std::max(1, iValue);
 
@@ -3870,6 +3844,8 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	int iLimitedWonderLimit = limitedWonderClassLimit(eBuildingClass);
 	bool bIsLimitedWonder = (iLimitedWonderLimit >= 0);
 
+	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
+
 	ReligionTypes eStateReligion = kOwner.getStateReligion();
 
 	bool bAreaAlone = kOwner.AI_isAreaAlone(area());
@@ -3903,6 +3879,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+	int iProductionRank = findYieldRateRank(YIELD_PRODUCTION);
 
 	int iTotalPopulation = kOwner.getTotalPopulation();
 	int iNumCities = kOwner.getNumCities();
@@ -3978,13 +3955,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	
 	int iValue = 0;
 
-
-
-	// Tholal AI - variables for mage traits - temp hack
-	int iArcaneTrait=GC.getInfoTypeForString("TRAIT_ARCANE");
-	int iSummonerTrait=GC.getInfoTypeForString("TRAIT_SUMMONER");
-	int iSunderedTrait=GC.getInfoTypeForString("TRAIT_SUNDERED");
-
 	// Tholal AI - Victory Buildings
 	// Tholal ToDo: dynamic method of figuring out what victory buildings are
 	if ((iFocusFlags & BUILDINGFOCUS_VICTORY))
@@ -4002,17 +3972,11 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	for (iPass = 0; iPass < 2; iPass++)
 	{
 
-// - Tholal AI - various FFH tweaks - a lot of temp hacks
-// Tholal ToDo: Figure out why some buildings are getting too low priority and fix it properly
-
+		// - Tholal AI - temp hacks for FFH tweaks
+		// Tholal ToDo: Remove this code and update formulas
 		if (iPass == 0)
 		{
-			iValue += (kBuilding.getFreePromotionPick() * 5);
-
-			if (GC.getBuildingInfo(eBuilding).getPrereqCiv() == kOwner.getCivilizationType())
-			{
-				iValue ++;
-			}
+			//iValue += (kBuilding.getFreePromotionPick() * 5);
 
 			if (((GC.getBuildingInfo(eBuilding).getPrereqReligion()) == kOwner.getStateReligion()) && (kOwner.getStateReligion() != NO_RELIGION))
 			{
@@ -4027,33 +3991,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 			{
 				iValue++;
 			}
-			if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_DEXTEROUS")) && (kBuilding.getBuildingClassType() == GC.getInfoTypeForString("BUILDINGCLASS_ARCHERY_RANGE")))
-			{
-				iValue++;
-			}
-			if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_SINISTER")) && (kBuilding.getBuildingClassType() == GC.getInfoTypeForString("BUILDINGCLASS_HUNTING_LODGE")))
-			{
-				iValue++;
-			}
-			if ((GC.getCivilizationInfo(getCivilizationType()).getCivTrait() == GC.getInfoTypeForString("TRAIT_HORSELORD")) && (kBuilding.getBuildingClassType() == GC.getInfoTypeForString("BUILDINGCLASS_STABLE")))
-			{
-				iValue++;
-			}
-
-			if (kBuilding.getBuildingClassType() == GC.getInfoTypeForString("BUILDINGCLASS_MAGE_GUILD"))
-			{
-				if(hasTrait((TraitTypes)iArcaneTrait))
-					iValue++;
-				if(hasTrait((TraitTypes)iSummonerTrait))
-					iValue++;
-				if (hasTrait((TraitTypes)iSunderedTrait))
-					iValue++;
-				if (kOwner.getNumBuilding(eBuilding) == 0)
-				{
-					iValue++;
-				}
-			}
-		}
+		}	
 		// End Tholal AI
 
 		if ((iFocusFlags == 0) || (iValue > 0) || (iPass == 0))
@@ -4291,6 +4229,8 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 			{
 				iValue += (kBuilding.getFreeExperience() * ((iHasMetCount > 0) ? 12 : 6));
 
+				iValue += (kBuilding.getFreePromotionPick() * 5); // Tholal AI
+
 				for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 				{
 					if (canTrain((UnitCombatTypes)iI))
@@ -4317,8 +4257,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					iValue += (kBuilding.getDomainFreeExperience(iI) * ((iHasMetCount > 0) ? iDomainExpValue : iDomainExpValue / 2));
 				}
 
-//>>>>Better AI: Added by Denev 2010/03/30
+//>>>>Better AI: Added by Denev 2010/03/30 - heavily modified by Tholal
 //*** Training Yard, Mage Guild, Hunting Lodge, etc.
+				int iTotalUnits = 0;
+				iTempValue = 0;
+				int iUnitTempValue = 0;
+
 				for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
 				{
 					const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
@@ -4326,15 +4270,67 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					{
 						if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == eBuildingClass)
 						{
-							if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass) == 0)
+							if (GET_PLAYER(getOwnerINLINE()).canTrain(eLoopUnit))
 							{
-								iValue += 24;
+								iTotalUnits++;
+								int iCombatValue = GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit);
+
+								iUnitTempValue = iCombatValue;
+
+								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+								{
+									iUnitTempValue += kOwner.AI_getMojoFactor() * 50;
+								}
+
+								int iK;
+
+                                for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+                                {
+                                    if (hasTrait((TraitTypes)iJ))
+                                    {
+                                        for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
+                                        {
+                                            if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
+                                            {
+                                                if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+                                                {
+													iUnitTempValue ++;
+                                                    iUnitTempValue *= 10;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+								if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
+								{
+									if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+									{
+										iUnitTempValue *= 2;
+									}
+								}
+
+								iTempValue += iUnitTempValue;
 							}
 						}
 					}
 				}
-//<<<<Better AI: End Add
+
+				int iNumBuildings = GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass);
+
+				iTempValue -= iNumBuildings * 2;
+
+				// Divide by total number of units from this building to average the score out
+				if (iTotalUnits > 1)
+				{
+					iTempValue /= iTotalUnits;
+				}
+				iTempValue *= (bWarPlan ? 3: 2);
+				iTempValue /= iProductionRank;
+
+				iValue += iTempValue;
 			}
+//<<<<Better AI: End Add
 
 			// since this duplicates BUILDINGFOCUS_EXPERIENCE checks, do not repeat on pass 1
 			if ((iFocusFlags & BUILDINGFOCUS_DOMAINSEA))
@@ -4775,14 +4771,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
                                         iValue += (100 * (iNumCities - iReligionCount)) / (iNumCities * (iReligionCount + 1));
                                     }
                                 }
-								// Tholal AI
-								/* - Not sure why this is here - slated for removal
-								if (kOwner.getNumBuilding(eBuilding) == 0 || (kOwner.getNumBuilding(eBuilding) < (kOwner.getNumCities() / 3)))
-								{
-									iValue += iNumCitiesInArea * 5;
-								}
-								// End Tholal AI
-								*/
                             }
 //FfH: End Modify
 
@@ -5057,12 +5045,14 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 /************************************************************************************************/
 					iTempValue *= (100 * kBuilding.getCommerceModifier(iI));
 					iTempValue /= 100;
-// Tholal AI Add
+
+					// Tholal AI - More value for research
 					if ((CommerceTypes)iI == COMMERCE_RESEARCH)
 					{
-						iTempValue *= 25;
+						iTempValue *= 2; //5;
 					}
-// End Add
+					// End Tholal AI
+
 					if ((CommerceTypes)iI == COMMERCE_CULTURE)
 					{
 					    if (bCulturalVictory1)
@@ -5347,12 +5337,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					iValue += (kBuilding.getCommerceChange(COMMERCE_RESEARCH) * 4);
 					iValue += (kBuilding.getObsoleteSafeCommerceChange(COMMERCE_RESEARCH) * 4);
 					
-					// Tholal AI
-					
+					// Tholal AI - Tower Mastery Victory
 					if ((GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1)))
 					{
 						iValue *=2;
 					}
+					// End Tholal AI
 				}
 
 				if (iFocusFlags & BUILDINGFOCUS_CULTURE)
@@ -5476,21 +5466,17 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 		}
 	}
 
-
+	// Tholal AI - extra weight for civ-specific buildings
+	if (GC.getBuildingInfo(eBuilding).getPrereqCiv() == kOwner.getCivilizationType())
+	{
+		iValue++;
+	}
 
 	// Tholal AI - Build Victory Buldings
 	if (GC.getBuildingInfo(eBuilding).isVictoryBuilding())
 	{
 		iValue *= 10;
 	}
-
-	// Control overbuilding Planar Gates
-	if (eBuilding == GC.getInfoTypeForString("BUILDING_PLANAR_GATE"))
-	{
-		iValue *= GC.getGameINLINE().getGlobalCounter();
-		iValue /= 200;
-	}
-	// End Tholal AI
 
 	if (!canConstruct(eBuilding))
 	{
