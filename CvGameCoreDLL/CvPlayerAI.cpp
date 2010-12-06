@@ -23087,7 +23087,6 @@ bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
 // Mage factor
 int CvPlayerAI::AI_getMojoFactor() const
 {
-	//int iValue = 5; // Giving this a default setting because I dont think countOwnedBonuses includes palace mana. Need better solution.
 	int iValue = 0;
 
 	// Count amount of mana
@@ -23106,7 +23105,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 		{
 			if (hasTrait((TraitTypes)iJ))
 			{
-				iValue += 4;
+				iValue += 5;
 			}
 		}
 	}
