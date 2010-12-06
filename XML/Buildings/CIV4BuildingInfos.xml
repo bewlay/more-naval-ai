@@ -2938,7 +2938,7 @@
             <bNukeImmune>0</bNukeImmune>
             <bPrereqReligion>0</bPrereqReligion>
             <bCenterInCity>0</bCenterInCity>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>-20</iAIWeight>
             <iCost>150</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -6569,7 +6569,7 @@
             <bNukeImmune>0</bNukeImmune>
             <bPrereqReligion>0</bPrereqReligion>
             <bCenterInCity>0</bCenterInCity>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>-100</iAIWeight>
             <iCost>300</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
