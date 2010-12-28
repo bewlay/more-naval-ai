@@ -3534,6 +3534,19 @@ def reqWane(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.getUnitClassCount(gc.getInfoTypeForString('UNITCLASS_SHADE')) >= 4:
 		return False
+		
+	if pPlayer.isHuman() == False:
+		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
+		eTeam = gc.getTeam(iTeam)
+		if eTeam.getAtWarCount(True) > 0:
+			return False
+		if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ADEPT'):
+			return False
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_HERO'):
+			return False
+		if caster.getLevel() > 7:
+			return False
+		
 	return True
 
 def reqWarcry(caster):

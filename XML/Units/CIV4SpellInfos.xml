@@ -4435,6 +4435,7 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <CivilizationPrereq>CIVILIZATION_SIDAR</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>100</iAIWeight>
             <bCasterMustBeAlive>1</bCasterMustBeAlive>
             <iCasterMinLevel>6</iCasterMinLevel>
             <bHasCasted>1</bHasCasted>
