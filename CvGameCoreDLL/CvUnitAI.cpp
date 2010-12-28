@@ -126,6 +126,12 @@ bool CvUnitAI::AI_update()
             return false;
         }
     }
+
+	// Tholal AI - Shades
+    if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
+    {
+		AI_join();
+    }
 	
 	// Bring out the comfy chair!
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
