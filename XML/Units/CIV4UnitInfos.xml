@@ -48450,7 +48450,7 @@
             <HolyCity>NONE</HolyCity>
             <ReligionType>NONE</ReligionType>
             <StateReligion>NONE</StateReligion>
-            <PrereqReligion>NONE</PrereqReligion>
+            <PrereqReligion>RELIGION_OCTOPUS_OVERLORDS</PrereqReligion>
             <PrereqCorporation>NONE</PrereqCorporation>
             <PrereqBuilding>BUILDING_ASYLUM</PrereqBuilding>
             <PrereqTech>TECH_MIND_STAPLING</PrereqTech>
