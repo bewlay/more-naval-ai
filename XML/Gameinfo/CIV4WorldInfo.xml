@@ -91,7 +91,7 @@
 			<Help>TXT_KEY_WORLD_STANDARD_HELP</Help>
 			<iDefaultPlayers>7</iDefaultPlayers>
 			<iUnitNameModifier>20</iUnitNameModifier>
-			<iTargetNumCities>5</iTargetNumCities>
+			<iTargetNumCities>6</iTargetNumCities>
 			<iNumFreeBuildingBonuses>5</iNumFreeBuildingBonuses>
 			<iBuildingClassPrereqModifier>0</iBuildingClassPrereqModifier>
 			<iMaxConscriptModifier>25</iMaxConscriptModifier>
@@ -117,7 +117,7 @@
 			<Help>TXT_KEY_WORLD_LARGE_HELP</Help>
 			<iDefaultPlayers>9</iDefaultPlayers>
 			<iUnitNameModifier>10</iUnitNameModifier>
-			<iTargetNumCities>6</iTargetNumCities>
+			<iTargetNumCities>7</iTargetNumCities>
 			<iNumFreeBuildingBonuses>6</iNumFreeBuildingBonuses>
 			<iBuildingClassPrereqModifier>0</iBuildingClassPrereqModifier>
 			<iMaxConscriptModifier>50</iMaxConscriptModifier>
@@ -143,7 +143,7 @@
 			<Help>TXT_KEY_WORLD_HUGE_HELP</Help>
 			<iDefaultPlayers>11</iDefaultPlayers>
 			<iUnitNameModifier>0</iUnitNameModifier>
-			<iTargetNumCities>6</iTargetNumCities>
+			<iTargetNumCities>8</iTargetNumCities>
 			<iNumFreeBuildingBonuses>7</iNumFreeBuildingBonuses>
 			<iBuildingClassPrereqModifier>0</iBuildingClassPrereqModifier>
 			<iMaxConscriptModifier>75</iMaxConscriptModifier>
