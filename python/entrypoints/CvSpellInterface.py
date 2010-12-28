@@ -2154,18 +2154,14 @@ def spellOpenChest(caster):
 			
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
 #			if pUnit.getUnitType() == iTreasure:
-
 			if pUnit.getUnitType() == iTreasure and not pUnit.isDelayedDeath():
-			
 ##--------		Unofficial Bug Fix: End Modify			--------##
 
 				pTreasure = pUnit
 				
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
 #		pTreasure.kill(True, 0)
-
 		pTreasure.kill(True, PlayerTypes.NO_PLAYER)
-		
 ##--------		Unofficial Bug Fix: End Modify			--------##
 
 def reqPromoteSettlement(caster):
@@ -2910,8 +2906,6 @@ def reqScorch(caster):
 		if pPlayer.isHuman() == False:
 			if caster.getOwner() != pPlot.getOwner():
 				return False
-#			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):
-#				return False
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				return False
 		return True	
@@ -3535,8 +3529,6 @@ def reqVitalize(caster):
 		return False
 	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'):
 		return False
-#	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
-#		return False
 	return True
 
 def spellVitalize(caster):
