@@ -713,11 +713,11 @@ class CustomFunctions:
 #					if iRandom < 10:
 #						pPlot.setFeatureType(iBForest, 0)
 				
-				if pPlot.isPeak() == True:
-					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Volcanos")
-					if iRandom < 2:
-						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_VOLCANO_CREATION')
-						triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
+#				if pPlot.isPeak() == True:
+#					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Volcanos")
+#					if iRandom < 2:
+#						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_VOLCANO_CREATION')
+#						triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
 				
 			if iPlotCount < 10:
 				if iBonus == iToad:
