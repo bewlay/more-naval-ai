@@ -1604,6 +1604,7 @@ class CvGameUtils:
 
 		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')):
 			smokeb = false
+			hellterrb = false
 
 #		if (pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')): 
 #			desertb = false
