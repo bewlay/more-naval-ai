@@ -164,6 +164,10 @@ void CyInfoPythonInterface1()
 		.def("isImmuneToDefensiveStrike", &CvPromotionInfo::isImmuneToDefensiveStrike, "bool ()")
 		.def("getDefensiveStrikeChance", &CvPromotionInfo::getDefensiveStrikeChance, "int ()")
 		.def("getDefensiveStrikeDamage", &CvPromotionInfo::getDefensiveStrikeDamage, "int ()")
+
+		// Tholal AI
+		.def("getExpireChance", &CvPromotionInfo::getExpireChance, "int ()")
+		// End Tholal AI
 //FfH: End Add
 
 		// Arrays

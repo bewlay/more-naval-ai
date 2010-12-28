@@ -389,6 +389,36 @@ def reqAddToFleshGolem(caster):
 		return False
 	if caster.isImmuneToMagic():
 		return False
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if pPlayer.isHuman() == False:
+		pPlot = caster.plot()
+		iChanneling = gc.getInfoTypeForString('PROMOTION_CHANNELING')
+		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
+		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
+		iDivine = gc.getInfoTypeForString('PROMOTION_DIVINE')
+		iFleshGolem = gc.getInfoTypeForString('UNITCLASS_FLESH_GOLEM')
+		pFleshGolem = -1
+		for i in range(pPlot.getNumUnits()):
+			pUnit = pPlot.getUnit(i)
+			if (caster.getOwner() == pUnit.getOwner() and pUnit.getUnitClassType() == iFleshGolem):
+				pFleshGolem = pUnit
+		if pFleshGolem != -1:
+			if caster.baseCombatStr() > pFleshGolem.baseCombatStr():
+				return True
+			if caster.baseCombatStrDefense() > pFleshGolem.baseCombatStrDefense():
+				return True
+			for iCount in range(gc.getNumPromotionInfos()):
+				if (caster.isHasPromotion(iCount)):
+					if not gc.getPromotionInfo(iCount).getExpireChance() > 0:
+						if not (pFleshGolem.isHasPromotion(iCount)):
+							if (iCount != iChanneling and iCount != iChanneling2 and iCount != iChanneling3 and iCount != iDivine):
+								if not gc.getPromotionInfo(iCount).isRace():
+									if gc.getPromotionInfo(iCount).getBonusPrereq() == -1:
+										if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling2:
+											if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling3:
+												if gc.getPromotionInfo(iCount).isEquipment() == False:
+													return True
+		return False
 	return True
 
 def spellAddToFleshGolem(caster):

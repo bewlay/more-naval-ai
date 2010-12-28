@@ -31,6 +31,8 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FLESH_GOLEM_HELP</Help>
             <UnitInStackPrereq>UNIT_FLESH_GOLEM</UnitInStackPrereq>
+            <bAllowAI>1</bAllowAI>
+            <iAIWeight>300</iAIWeight>
             <bCasterMustBeAlive>1</bCasterMustBeAlive>
             <bCasterNoDuration>1</bCasterNoDuration>
             <bHasCasted>1</bHasCasted>
