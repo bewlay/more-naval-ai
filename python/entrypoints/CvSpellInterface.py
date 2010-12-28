@@ -1360,7 +1360,9 @@ def reqGiftsOfNantosuelta(caster):
 	if pPlayer.getNumCities() == 0:
 		return False
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumCities() < 5:
+#		if pPlayer.getNumCities() < 5:
+		map = gc.getMap()
+		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
 	return True
 
@@ -2163,31 +2165,16 @@ def reqRagingSeas(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
 		eTeam = gc.getTeam(pPlayer.getTeam())
-		iArcane = gc.getInfoTypeForString('UNITCLASS_ARCANE_BARGE')
-		iCaravel = gc.getInfoTypeForString('UNITCLASS_CARAVEL')
-		iGalley = gc.getInfoTypeForString('UNITCLASS_GALLEY')
-		iFrigate = gc.getInfoTypeForString('UNITCLASS_FRIGATE')
-		iGalleon = gc.getInfoTypeForString('UNITCLASS_GALLEON')
-		iManOWar = gc.getInfoTypeForString('UNITCLASS_MAN_O_WAR')
-		iPrivateer = gc.getInfoTypeForString('UNITCLASS_PRIVATEER')
-		iQueenOfTheLine = gc.getInfoTypeForString('UNITCLASS_QUEEN_OF_THE_LINE')
-		iTrireme = gc.getInfoTypeForString('UNITCLASS_TRIREME')
+		iCount = 0
 		for iPlayer2 in range(gc.getMAX_PLAYERS()):
 			pPlayer2 = gc.getPlayer(iPlayer2)
 			if pPlayer2.isAlive():
-				iTeam2 = gc.getPlayer(iPlayer2).getTeam()
-				if eTeam.isAtWar(iTeam2):
-					iCount = pPlayer2.getUnitClassCount(iArcane)
-					iCount += pPlayer2.getUnitClassCount(iCaravel)
-					iCount += pPlayer2.getUnitClassCount(iGalley)
-					iCount += pPlayer2.getUnitClassCount(iFrigate) * 2
-					iCount += pPlayer2.getUnitClassCount(iGalleon) * 2
-					iCount += pPlayer2.getUnitClassCount(iManOWar) * 3
-					iCount += pPlayer2.getUnitClassCount(iPrivateer)
-					iCount += pPlayer2.getUnitClassCount(iQueenOfTheLine) * 3
-					iCount += pPlayer2.getUnitClassCount(iTrireme)
-					if iCount > 10:
-						return True
+				if not pPlayer2.isBarbarian():
+					iTeam2 = gc.getPlayer(iPlayer2).getTeam()
+					if eTeam.isAtWar(iTeam2):
+						iCount += pPlayer2.countNumCoastalCities()
+		if iCount > 5:
+			return True
 		return False
 	return True
 
@@ -2233,7 +2220,12 @@ def reqRally(caster):
 	if pPlayer.getCivics(gc.getInfoTypeForString('CIVICOPTION_CULTURAL_VALUES')) != gc.getInfoTypeForString('CIVIC_CRUSADE'):
 		return False
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumCities() < 5:
+#		if pPlayer.getNumCities() < 5:
+		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
+		eTeam = gc.getTeam(iTeam)
+		if eTeam.getAtWarCount(True) == 0:
+			return False
+		if pPlayer.getImprovementCount(gc.getInfoTypeForString('IMPROVEMENT_TOWN')) < (3 * pPlayer.getNumCities()):
 			return False
 	return True
 
@@ -2657,7 +2649,9 @@ def reqRiverOfBlood(caster):
 	if pPlayer.getNumCities() == 0:
 		return False
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumCities() < 5:
+#		if pPlayer.getNumCities() < 5:
+		map = gc.getMap()
+		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
 	return True
 
@@ -3550,6 +3544,8 @@ def reqWarcry(caster):
 		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
 		eTeam = gc.getTeam(iTeam)
 		if eTeam.getAtWarCount(True) == 0:
+			return False
+		if pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_ATTACK_CITY')) < (pPlayer.getNumCities() * 3):
 			return False
 	return True
 
