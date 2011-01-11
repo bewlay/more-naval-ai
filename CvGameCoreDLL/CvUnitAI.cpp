@@ -426,6 +426,15 @@ bool CvUnitAI::AI_update()
 
         if (!isBarbarian())
 	    {
+			if (getExperience() > 100)
+			{
+				if (AI_getUnitAIType() != UNITAI_HERO)
+				{
+					AI_setUnitAIType(UNITAI_HERO);
+					AI_setGroupflag(GROUPFLAG_CONQUEST);
+				}
+			}
+
             switch (AI_getGroupflag())
             {
                 case GROUPFLAG_CONQUEST:
