@@ -1113,7 +1113,6 @@ public:
     int countGroupFlagUnits(int Groupflag) const;
 	bool AI_isSummonSuicideMode();
 	void AI_setSummonSuicideMode(bool newvalue);
-	void AI_doFavoriteReligion();
 	void AI_doTowerMastery();
 	int getConquestUnitClassCount(UnitClassTypes UnitClass, CvArea* pArea) const;
 /** BETTER AI (new Definitions) Sephi                                                 **/
