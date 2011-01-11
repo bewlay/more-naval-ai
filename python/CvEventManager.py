@@ -1448,11 +1448,17 @@ class CvEventManager:
 				if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):			
 					terraformersneeded=terraformersneeded+2
 				numberterraformer=0
+				numbermanaupgrade=0
 				for pUnit in player.getUnitList():
 					if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
 						numberterraformer = numberterraformer+1
 					if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'):
-						numberterraformer = numberterraformer+1					
+						numbermanaupgrade = numbermanaupgrade+1
+				
+				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_RAWMANA')) > 0:
+					if numbermanaupgrade == 0:
+						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
+				
 				if 	numberterraformer<terraformersneeded:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
 				else:				
