@@ -16567,13 +16567,10 @@ void CvUnit::castCreateUnit(int spell)
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        //let Tiger Construct Cages
-        if(isAnimal())
+        //Tholal AI - change AI type
+        if(pUnit->isAnimal())
         {
-            if(!GET_PLAYER(getOwnerINLINE()).AI_isPlotThreatened(plot(), 2))
-            {
-                AI_setGroupflag(GROUPFLAG_ANIMAL_CONSTRUCTBUILDING);
-            }
+			pUnit->AI_setUnitAIType(UNITAI_COUNTER);
         }
 
         if (GET_PLAYER(getOwnerINLINE()).AI_isSummonSuicideMode())
@@ -18003,6 +18000,14 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 					pUnit->setHasPromotion((PromotionTypes)pLoser->getRace(), true);
 				}
 			}
+
+			// Tholal AI - captured animals
+			if (pUnit->isAnimal())
+            {
+                pUnit->AI_setUnitAIType(UNITAI_COUNTER);
+            }
+			// End Tholal AI
+
 			if (bConvert)
 			{
 				pLoser->setDamage(75, NO_PLAYER, false);
