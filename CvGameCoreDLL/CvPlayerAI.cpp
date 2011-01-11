@@ -12916,7 +12916,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	}
 	// End Tholal AI
 
-	// Do we have any religion hero already?
+	// Do we have a religion hero already?
 	if (getStateReligion() != NO_RELIGION)
 	{
 		CvReligionInfo& kReligionInfo = GC.getReligionInfo(getStateReligion());
@@ -12955,19 +12955,14 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 
 			if (getStateReligion() == ((ReligionTypes)iI))
 			{
-				iValue *= 3;
-				iValue /= 2;
-				// THOLAL AI - Extra weight if your state religion is already your favorite religion
-				if (getStateReligion() == eFavorite)
-				{
-					iValue *= 2;
-				}
+				iValue *= 5;
+				iValue /= 4;
 			}
 
-			if (eFavorite == iI)
+			if (eFavorite == ((ReligionTypes)iI))
 			{
-				iValue *= 3;
-				iValue /= 2;
+				iValue *= 5;
+				iValue /= 4;
 			}
 
 			if (iValue > iBestValue)
@@ -12983,10 +12978,11 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 		return eBestReligion;
 	}
 
+	/*
 	int iBestCount = getHasReligionCount(eBestReligion);
 	int iSpreadPercent = (iBestCount * 100) / std::max(1, getNumCities());
 	int iPurityPercent = (iBestCount * 100) / std::max(1, countTotalHasReligion());
-	if (iPurityPercent < 49)
+	if (iPurityPercent < 39)
 	{
 		if (iSpreadPercent > ((eBestReligion == eFavorite) ? 65 : 75))
 		{
@@ -12997,6 +12993,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 		}
 		return NO_RELIGION;
 	}
+	*/
 
 	return eBestReligion;
 }
@@ -13020,7 +13017,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 //>>>>Better AI: End Add
 
 	int iValue = GC.getGameINLINE().countReligionLevels(eReligion);
-
+	
 	int iLoop;
 	CvCity* pLoopCity;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
@@ -13039,6 +13036,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 
 		if (bOurHolyCity || bOurTeamHolyCity)
         {
+			/*
 			int iCommerceCount = 0;
 
 			for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
@@ -13054,19 +13052,42 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
                     }
                 }
             }
+			*/
 
 			if (bOurHolyCity)
             {
-                iValue *= (3 + iCommerceCount);
+                //iValue *= (3 + iCommerceCount);
+				iValue *= 3;
                 iValue /= 2;
             }
 			else if (bOurTeamHolyCity)
             {
-                iValue *= (4 + iCommerceCount);
+                //iValue *= (4 + iCommerceCount);
+				iValue *= 4;
                 iValue /= 3;
             }
         }
 	}
+
+	// Tholal AI - add value for unused heros
+	const UnitTypes eReligionHero1 = (UnitTypes)GC.getReligionInfo(eReligion).getReligionHero1();
+	const UnitTypes eReligionHero2 = (UnitTypes)GC.getReligionInfo(eReligion).getReligionHero2();
+
+	const UnitClassTypes eReligionHeroClass1 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero1();
+	const UnitClassTypes eReligionHeroClass2 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero2();
+
+	if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
+	{
+		iValue *= 5;
+		iValue /= 4;
+	}
+
+	if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+	// End Tholal AI
 
 	if (eReligion == getFavoriteReligion())
 		iValue *=2;
