@@ -2896,8 +2896,6 @@ void CvPlayer::doTurn()
 
     if (!isHuman())
     {
-        AI_doFavoriteReligion();
-
         AI_doTowerMastery();
     }
 /*************************************************************************************************/
@@ -23944,90 +23942,7 @@ int CvPlayer::countGroupFlagUnits(int Groupflag) const
     return countunits;
 }
 
-void CvPlayer::AI_doFavoriteReligion()
-{
-	if (isAgnostic())
-    {
-        return;
-	}
 
-	//Pick a Favorite Religion
-	if (getFavoriteReligion()==NO_RELIGION)
-	{
-		for (int i=0;i<GC.getNumReligionInfos();i++)
-		{
-			if (GC.getGameINLINE().getSorenRandNum(100,"Choose Religion")<GC.getLeaderHeadInfo(getLeaderType()).getReligionWeightModifier(i))
-			{
-				setFavoriteReligion((ReligionTypes)i);
-				break;
-			}
-		}
-		//If still have none, pick randomly
-		int hack=0;
-		while (getFavoriteReligion()==NO_RELIGION)
-		{
-			ReligionTypes newReligion=(ReligionTypes)GC.getGameINLINE().getSorenRandNum(GC.getNumReligionInfos(),"Choose Religion");
-			if (GC.getLeaderHeadInfo(getLeaderType()).getReligionWeightModifier(newReligion)>=0)
-			{
-				setFavoriteReligion(newReligion);
-			}
-			hack++;
-			if (hack==30)
-			{
-				break;
-			}
-		}
-	}
-	//Convert to Favorite Religion if possible
-	if (getFavoriteReligion()!=NO_RELIGION)
-	{
-		if(canConvert(getFavoriteReligion()))
-		{
-			convert(getFavoriteReligion());
-		}
-	}
-	//Choose new Religion for Opportunists
-	if (GC.getLeaderHeadInfo(getLeaderType()).isReligionOpportunist() && getFavoriteReligion()!=NO_RELIGION)
-	{
-		const UnitClassTypes eReligionHero1 = (UnitClassTypes)GC.getReligionInfo(getFavoriteReligion()).getReligionHero1();
-		const UnitClassTypes eReligionHero2 = (UnitClassTypes)GC.getReligionInfo(getFavoriteReligion()).getReligionHero2();
-
-		bool bHoldCurrentFavorite = false;
-
-		if ((eReligionHero1 != NO_UNITCLASS && GC.getGameINLINE().getUnitClassCreatedCount(eReligionHero1) == 0)
-		 || (eReligionHero2 != NO_UNITCLASS && GC.getGameINLINE().getUnitClassCreatedCount(eReligionHero2) == 0))
-		{
-			bHoldCurrentFavorite = true;
-		}
-
-		if ((eReligionHero1 != NO_UNITCLASS && getUnitClassCountPlusMaking(eReligionHero1) > 0)
-		 || (eReligionHero2 != NO_UNITCLASS && getUnitClassCountPlusMaking(eReligionHero2) > 0))
-		{
-			bHoldCurrentFavorite = true;
-		}
-
-		if (!bHoldCurrentFavorite)
-		{
-			for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
-			{
-				const UnitClassTypes eLoopReligionHero1 = (UnitClassTypes)GC.getReligionInfo((ReligionTypes)iReligion).getReligionHero1();
-				const UnitClassTypes eLoopReligionHero2 = (UnitClassTypes)GC.getReligionInfo((ReligionTypes)iReligion).getReligionHero2();
-
-				if ((eLoopReligionHero1 != NO_UNITCLASS && GC.getGameINLINE().getUnitClassCreatedCount(eLoopReligionHero1) == 0)
-				 || (eLoopReligionHero2 != NO_UNITCLASS && GC.getGameINLINE().getUnitClassCreatedCount(eLoopReligionHero2) == 0))
-				{
-					if (GC.getLeaderHeadInfo(getLeaderType()).getReligionWeightModifier((ReligionTypes)iReligion) > 0)
-					{
-						setFavoriteReligion((ReligionTypes)iReligion);
-					}
-					break;
-				}
-			}
-		}
-//<<<<Unofficial Bug Fix: End Modify
-	}
-	return;
-}
 void CvPlayer::AI_doTowerMastery()
 {
 	if (GC.getLeaderHeadInfo(getLeaderType()).isArcaneTowerVictory())
