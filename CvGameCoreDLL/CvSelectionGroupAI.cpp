@@ -552,7 +552,7 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupSacrifice(const CvPlot* pPlot, bool b
 
                             if (pLoopUnit->AI_getUnitAIType()==UNITAI_HERO)
                             {
-	                            iValue=1;
+	                            iValue=0;
                             }
 							if (pLoopUnit->getLevel()>4)
 							{
