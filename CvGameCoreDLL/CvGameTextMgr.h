@@ -230,6 +230,10 @@ private:
 
 	void setCityPlotYieldValueString(CvWStringBuffer &szString, CvCity* pCity, int iIndex, bool bAvoidGrowth, bool bIgnoreGrowth, bool bIgnoreFood = false);
 	void setYieldValueString(CvWStringBuffer &szString, int iValue, bool bActive = false, bool bMakeWhitespace = false);
+
+// Better AI Debug (Skyre)
+	const wchar* getGroupflagName(int iGroupflag) const;
+// End Better AI Debug
 };
 
 // Singleton Accessor

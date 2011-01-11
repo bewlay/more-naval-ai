@@ -714,7 +714,20 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	if (GC.getGameINLINE().isDebugMode() && !bAlt && !bShift)
 	{
 		FAssertMsg(pUnit->AI_getUnitAIType() != NO_UNITAI, "pUnit's AI type expected to != NO_UNITAI");
+
+// Better AI Debug (Skyre)
+		/*
 		szTempBuffer.Format(L" (%s)", GC.getUnitAIInfo(pUnit->AI_getUnitAIType()).getDescription());
+		*/
+		if (pUnit->AI_getGroupflag() != GROUPFLAG_NONE)
+		{
+			szTempBuffer.Format(L" (%s)", getGroupflagName(pUnit->AI_getGroupflag()));
+		}
+		else
+		{
+			szTempBuffer.Format(L" (%s)", GC.getUnitAIInfo(pUnit->AI_getUnitAIType()).getDescription());
+		}
+// End Better AI Debug
 		szString.append(szTempBuffer);
 	}
 
@@ -18541,3 +18554,74 @@ void CvGameTextMgr::getCorporationDataForWB(bool bHeadquarters, std::vector<CvWB
 		mapCorporationData.push_back(CvWBData(i, strDescription, kInfo.getButton()));
 	}
 }
+// Better AI Debug (Skyre)
+
+const wchar* CvGameTextMgr::getGroupflagName(int iGroupflag) const
+{
+	FAssert(iGroupflag != GROUPFLAG_NONE);
+
+	switch (iGroupflag)
+	{
+	case GROUPFLAG_PERMDEFENSE:
+		return L"GROUPFLAG_PERMDEFENSE";
+
+	case GROUPFLAG_PERMDEFENSE_NEW:
+		return L"GROUPFLAG_PERMDEFENSE_NEW";
+
+	case GROUPFLAG_PATROL:
+		return L"GROUPFLAG_PATROL";
+
+	case GROUPFLAG_PATROL_NEW:
+		return L"GROUPFLAG_PATROL_NEW";
+
+	case GROUPFLAG_EXPLORE:
+		return L"GROUPFLAG_EXPLORE";
+
+	case GROUPFLAG_DEFENSE_NEW:
+		return L"GROUPFLAG_DEFENSE_NEW";
+
+	case GROUPFLAG_DEFENSE:
+		return L"GROUPFLAG_DEFENSE";
+
+	case GROUPFLAG_HERO:
+		return L"GROUPFLAG_HERO";
+
+	case GROUPFLAG_CONQUEST:
+		return L"GROUPFLAG_CONQUEST";
+
+	case GROUPFLAG_SETTLERGROUP:
+		return L"GROUPFLAG_SETTLERGROUP";
+
+	case GROUPFLAG_HNGROUP:
+		return L"GROUPFLAG_HNGROUP";
+
+	case GROUPFLAG_PICKUP_EQUIPMENT:
+		return L"GROUPFLAG_PICKUP_EQUIPMENT";
+
+	case GROUPFLAG_FEASTING:
+		return L"GROUPFLAG_FEASTING";
+
+	case GROUPFLAG_INQUISITION:
+		return L"GROUPFLAG_INQUISITION";
+
+	case GROUPFLAG_PILLAGE:
+		return L"GROUPFLAG_PILLAGE";
+
+	case GROUPFLAG_ANIMAL_CONSTRUCTBUILDING:
+		return L"GROUPFLAG_ANIMAL_CONSTRUCTBUILDING";
+
+	case GROUPFLAG_SVARTALFAR_KIDNAP:
+		return L"GROUPFLAG_SVARTALFAR_KIDNAP";
+
+	case GROUPFLAG_ESUS_MISSIONARY:
+		return L"GROUPFLAG_ESUS_MISSIONARY";
+
+    case GROUPFLAG_SUICIDE_SUMMON:
+        return L"GROUPFLAG_SUICIDE_SUMMON";
+
+	default:
+		return L"GROUPFLAG_NONE";
+	}
+}
+
+// End Better AI Debug
