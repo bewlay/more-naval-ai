@@ -16502,7 +16502,7 @@ void CvUnit::castCreateUnit(int spell)
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
 //*** summoned unit is pushed out if enemy unit exists in the same tile.
 //	pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)GC.getSpellInfo((SpellTypes)spell).getCreateUnitType(), getX_INLINE(), getY_INLINE(), UNITAI_ATTACK);
-	pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)GC.getSpellInfo((SpellTypes)spell).getCreateUnitType(), getX_INLINE(), getY_INLINE(), UNITAI_ATTACK, DIRECTION_SOUTH, false);
+	pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)GC.getSpellInfo((SpellTypes)spell).getCreateUnitType(), getX_INLINE(), getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, false);
 //<<<<Unofficial Bug Fix: End Modify
 	pUnit->setSummoner(getID());
 /*************************************************************************************************/
