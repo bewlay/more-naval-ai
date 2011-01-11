@@ -7979,21 +7979,6 @@ bool CvPlayer::canDoReligion(ReligionTypes eReligion) const
         return false;
     }
 //FfH: End Add
-/*************************************************************************************************/
-/**	BETTER AI (favorite Religions) Sephi                                                        **/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-    if (!isHuman())
-    {
-        if (GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion) < 0)
-        {
-            return false;
-        }
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 
 	return true;
 }
@@ -8017,29 +8002,7 @@ bool CvPlayer::canChangeReligion() const
 
 bool CvPlayer::canConvert(ReligionTypes eReligion) const
 {
-/*************************************************************************************************/
-/**	BETTER AI (favorite Religions) Sephi                                                        **/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-    if (!isHuman() && eReligion !=NO_RELIGION)
-    {
-        if (getFavoriteReligion()!=NO_RELIGION)
-        {
-            if (getFavoriteReligion()==getLastStateReligion() && GC.getLeaderHeadInfo(getLeaderType()).getReligionWeightModifier(getFavoriteReligion())>50)
-            {
-                return false;
-            }
-        }
 
-        if (GC.getLeaderHeadInfo(getLeaderType()).getReligionWeightModifier(eReligion)<0)
-        {
-            return false;
-        }
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 	if (isBarbarian())
 	{
 		return false;
