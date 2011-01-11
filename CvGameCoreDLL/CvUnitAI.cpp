@@ -485,12 +485,6 @@ bool CvUnitAI::AI_update()
                 case GROUPFLAG_SUICIDE_SUMMON:
                     AI_summonAttackMove();
                     return false;
-                case GROUPFLAG_ANIMAL_CONSTRUCTBUILDING:
-                    if(AI_construct(10000))
-                    {
-                        return false;
-                    }
-                    break;
 				case GROUPFLAG_SVARTALFAR_KIDNAP:
 					AI_SvartalfarKidnapMove();
 					break;
@@ -1584,16 +1578,15 @@ void CvUnitAI::AI_animalMove()
 //FfH: Added by Kael 10/26/2008 So that animals can build their pens...
     if (!isBarbarian())
     {
-        if (getLevel() < 2)
+		AI_setUnitAIType(UNITAI_COUNTER);
+
+        if (getLevel() < 3)
         {
             if (AI_construct())
             {
                 return;
             }
         }
-
-		AI_setUnitAIType(UNITAI_ATTACK);
-		return;
     }
 //FfH: End Add
 

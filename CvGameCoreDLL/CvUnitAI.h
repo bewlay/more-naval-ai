@@ -248,7 +248,7 @@ protected:
 	bool AI_discover(bool bThisTurnOnly = false, bool bFirstResearchOnly = false);
 	bool AI_lead(std::vector<UnitAITypes>& aeAIUnitTypes);
 	bool AI_join(int iMaxCount = MAX_INT);
-	bool AI_construct(int iMaxCount = MAX_INT, int iMaxSingleBuildingCount = MAX_INT, int iThreshold = 15);
+	bool AI_construct(int iMaxCount = MAX_INT, int iMaxSingleBuildingCount = MAX_INT, int iThreshold = 0); // iThreshold was 15
 	bool AI_switchHurry();
 	bool AI_hurry();
 	bool AI_greatWork();
