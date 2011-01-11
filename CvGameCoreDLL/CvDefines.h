@@ -50,13 +50,6 @@
 #define GROUPFLAG_INQUISITION                                           (15)
 #define GROUPFLAG_PILLAGE                                               (16)
 
-#define GROUPFLAG_NAVAL_SETTLE                                          (20)
-#define GROUPFLAG_NAVAL_SETTLE_NEW                                      (21)
-#define GROUPFLAG_NAVAL_SETTLE_PICKUP                                   (22)
-#define GROUPFLAG_NAVAL_SETTLE_REINFORCEMENTS                           (23)
-#define GROUPFLAG_NAVAL_INVASION                                        (24)
-#define GROUPFLAG_NAVAL_INVASION_NEW                                    (25)
-
 #define GROUPFLAG_ANIMAL_CONSTRUCTBUILDING                              (40)
 #define GROUPFLAG_SVARTALFAR_KIDNAP										(41)
 #define GROUPFLAG_ESUS_MISSIONARY										(42)
