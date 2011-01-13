@@ -2467,7 +2467,8 @@ def reqReligiousFervor(caster):
 			pCity = pyCity.GetCy()
 			if pCity.isHasReligion(iReligion):
 				iCount += 1
-		if iCount < 5:
+		map = gc.getMap()
+		if iCount < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
 	return True
 
