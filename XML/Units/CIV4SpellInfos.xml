@@ -346,7 +346,7 @@
             <Help>TXT_KEY_SPELL_CALL_BLIZZARD_HELP</Help>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_WINTER</UnitClassPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>150</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <PyResult>spellCallBlizzard(pCaster)</PyResult>
@@ -2281,6 +2281,7 @@
             <Help>TXT_KEY_SPELL_REBUILD_BARNAXUS_HELP</Help>
             <PromotionPrereq1>PROMOTION_PIECES_OF_BARNAXUS</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>30</iAIWeight>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -2382,7 +2383,7 @@
             <PromotionPrereq1>PROMOTION_ENCHANTMENT1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_DWARF</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>50</iAIWeightWar>
+            <iAIWeight>50</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <bAbility>1</bAbility>
@@ -2449,6 +2450,7 @@
             <PromotionPrereq2>PROMOTION_DIVINE</PromotionPrereq2>
             <ReligionPrereq>RELIGION_THE_EMPYREAN</ReligionPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>30</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <iRange>3</iRange>
