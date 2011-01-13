@@ -50,9 +50,8 @@
 #define GROUPFLAG_INQUISITION                                           (15)
 #define GROUPFLAG_PILLAGE                                               (16)
 
-#define GROUPFLAG_ANIMAL_CONSTRUCTBUILDING                              (40)
 #define GROUPFLAG_SVARTALFAR_KIDNAP										(41)
-#define GROUPFLAG_ESUS_MISSIONARY										(42)
+
 #define GROUPFLAG_SUICIDE_SUMMON                                        (43)
 
 #define NUM_PERMDEFENDER_TYPES                                          (5) //how many different Types of a permanent city Defender Specialization exist

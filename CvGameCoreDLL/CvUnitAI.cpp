@@ -24745,10 +24745,6 @@ void CvUnitAI::AI_chooseGroupflag()
             AI_setGroupflag(GROUPFLAG_HERO);
             return;
             break;
-        case UNITAI_SETTLER_SEA:
-            AI_setGroupflag(GROUPFLAG_NAVAL_SETTLE_NEW);
-            return;
-            break;
         default:
             break;
     }
