@@ -10144,6 +10144,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		case UNITAI_UNKNOWN:
 			break;
 
+		case UNITAI_HERO:
+			bValid = true;
+			break;
+
 		case UNITAI_ANIMAL:
 			if (GC.getUnitInfo(eUnit).isAnimal())
 			{
@@ -10648,6 +10652,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	{
 	case UNITAI_UNKNOWN:
 	case UNITAI_ANIMAL:
+		break;
+
+	case UNITAI_HERO:
+		iValue += (iCombatValue * 5);
 		break;
 
 	case UNITAI_SETTLE:
