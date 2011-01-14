@@ -25739,6 +25739,8 @@ void CvUnitAI::AI_barbsmashermove()
         return;
 	}
 
+	AI_attackCityMove();
+
 	//pick up reinforcements
     if (AI_group(UNITAI_BARBSMASHER, -1, -1, -1, false, false, true, 3, true))
 	{
@@ -25788,7 +25790,7 @@ void CvUnitAI::AI_barbsmashermove()
 	}
 
 	// Tholal AI - if group is overly large with nothing to do, switch AIs
-	
+	/*
 	if (getGroup()->getNumUnits()> (GET_PLAYER(getOwnerINLINE()).getNumCities() *8))
 	{
 		CLLNode<IDInfo>* pUnitNode;
@@ -25815,7 +25817,7 @@ void CvUnitAI::AI_barbsmashermove()
 //      pHeadUnit->AI_setUnitAIType(UNITAI_ATTACK_CITY);
 		return;
 	}
-	
+	*/
 	// End Tholal AI
 
 	getGroup()->pushMission(MISSION_SKIP);
