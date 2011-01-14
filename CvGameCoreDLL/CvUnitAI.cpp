@@ -27913,6 +27913,11 @@ void CvUnitAI::AI_mageMove()
 
 void CvUnitAI::AI_terraformerMove()
 {
+	if (!isChanneler())
+	{
+		AI_setUnitAIType(UNITAI_RESERVE);
+	}
+
     CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
     argsList1.add(gDLL->getPythonIFace()->makePythonObject(pyUnit1));	// pass in unit class
