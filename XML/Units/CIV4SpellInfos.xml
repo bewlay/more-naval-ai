@@ -217,6 +217,7 @@
             <Help>TXT_KEY_SPELL_ARENA_BATTLE_HELP</Help>
             <BuildingPrereq>BUILDING_ARENA</BuildingPrereq>
             <bInCityOnly>1</bInCityOnly>
+            <bAllowAI>1</bAllowAI>
             <iAIWeight>10</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <bAbility>1</bAbility>
@@ -234,9 +235,10 @@
             <PromotionPrereq1>PROMOTION_FIRE1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>-1000</iAIWeight>			
+            <iAIWeight>10</iAIWeight>			
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
+            <PyRequirement>reqBlaze(pCaster)</PyRequirement>
             <CreateImprovementType>IMPROVEMENT_SMOKE</CreateImprovementType>
             <Effect>EFFECT_SCORCH</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
@@ -284,6 +286,7 @@
             <PromotionPrereq2>PROMOTION_DIVINE</PromotionPrereq2>
             <ReligionPrereq>RELIGION_FELLOWSHIP_OF_LEAVES</ReligionPrereq>
             <bAllowAI>1</bAllowAI>
+            <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bInBordersOnly>1</bInBordersOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -2649,6 +2652,7 @@
             <PromotionPrereq1>PROMOTION_SUN1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>10</iAIWeight>
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bCausesWar>1</bCausesWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
