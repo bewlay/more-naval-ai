@@ -26538,6 +26538,12 @@ void CvUnitAI::PatrolMove()
         return;
     }
 
+	// Tholal AI - check for easy targets in immediate vicinity
+	if (AI_anyAttack(1, 80))
+	{
+		return;
+	}
+
     //Look for Settlers to escort?
     //Cycle through Cities we protect
     for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
@@ -26820,6 +26826,14 @@ void CvUnitAI::PatrolMove()
 
 void CvUnitAI::HNgroupMove()
 {
+	AI_attackMove();
+
+    if (!isHiddenNationality())
+    {
+        AI_setGroupflag(GROUPFLAG_CONQUEST);
+        return;
+    }
+
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
