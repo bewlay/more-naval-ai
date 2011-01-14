@@ -12949,7 +12949,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	//int eStateRel = getStateReligion();
 
 	// Tholal AI - don't switch religions when pursuing religious victory
-	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 	{
 		return getStateReligion();
 	}
@@ -13109,9 +13109,6 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	}
 
 	// Tholal AI - add value for unused heros
-	const UnitTypes eReligionHero1 = (UnitTypes)GC.getReligionInfo(eReligion).getReligionHero1();
-	const UnitTypes eReligionHero2 = (UnitTypes)GC.getReligionInfo(eReligion).getReligionHero2();
-
 	const UnitClassTypes eReligionHeroClass1 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero1();
 	const UnitClassTypes eReligionHeroClass2 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero2();
 
@@ -13126,10 +13123,20 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		iValue *= 4;
 		iValue /= 3;
 	}
-	// End Tholal AI
+
+	// Add value for like alignments
+	if (GC.getReligionInfo(eReligion).getAlignment() == getAlignment())
+	{
+		iValue *= 10;
+		iValue /= 9;
+	}
 
 	if (eReligion == getFavoriteReligion())
-		iValue *=2;
+	{
+		iValue *= 2;
+	}
+
+	// End Tholal AI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/03/11
 	iValue *= 100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion);
