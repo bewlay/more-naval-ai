@@ -117,7 +117,6 @@ bool CvUnitAI::AI_update()
 /**						                                            							**/
 /*************************************************************************************************/
 
-	// Tholal ToDo - make a subfunction and teach bad freaks to use Arenas
     if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))
     {
         if (canConstruct(plot(),(BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW")))
@@ -26842,11 +26841,6 @@ void CvUnitAI::HNgroupMove()
 //Look around for equipment, then join Defense/Conqueststack
 void CvUnitAI::PickupEquipmentMove()
 {
-	//is there a spellbook we can read?
-//	if (getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_ADEPT") && AI_wizardReadBook())
-//	{
-//		return;
-//	}
 	//is there other equipment we can pick up?
     for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
     {
@@ -27509,6 +27503,7 @@ void CvUnitAI::AI_heromove()
         getGroup()->pushMission(MISSION_SKIP);
         return;
     }
+	
     if (getUnitClassType()==GC.getDefineINT("UNITCLASS_LOKI"))
     {
         if (AI_Lokimove())
@@ -27518,7 +27513,7 @@ void CvUnitAI::AI_heromove()
         getGroup()->pushMission(MISSION_SKIP);
         return;
     }
-
+	
     if (getUnitClassType()==GC.getDefineINT("UNITCLASS_RANTINE"))
     {
         if (AI_Rantinemove())
@@ -27537,7 +27532,6 @@ void CvUnitAI::AI_heromove()
     }
     else
     {
-//        if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_DEFENSE_NEW)>4)
         if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_DEFENSE_NEW)>0)
         {
             AI_setGroupflag(GROUPFLAG_DEFENSE_NEW);
