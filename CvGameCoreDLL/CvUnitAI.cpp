@@ -27970,7 +27970,6 @@ bool CvUnitAI::isSummoner()
     return false;
 }
 
-//Make sure iNumSummonSpells is big enough
 void CvUnitAI::AI_SummonCast()
 {
     if (isHasCasted())
@@ -28016,7 +28015,6 @@ void CvUnitAI::AI_SummonCast()
 					}
 				}
 
-				// Tholal AI - ToDo: Summon Floating Eyes
                 if (bEnemy || bPermSummon)
                 {
                     iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
@@ -28028,8 +28026,15 @@ void CvUnitAI::AI_SummonCast()
                     iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
                     iValue += iTempValue;
                 }
+
+				// Tholal AI - Floating Eyes
+				if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
+				{
+					iValue += 100;
+				}
             }
         }
+
         if (iValue  > iBestValue)
         {
             iBestValue = iValue;
