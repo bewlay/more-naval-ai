@@ -27520,8 +27520,11 @@ void CvUnitAI::AI_heromove()
         {
             return;
         }
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
+		if (getLevel() < 8)
+		{
+	        getGroup()->pushMission(MISSION_SKIP);
+		    return;
+		}
     }
 
     if (GET_PLAYER(getOwnerINLINE()).isConquestMode())
@@ -27542,6 +27545,10 @@ void CvUnitAI::AI_heromove()
         {
             return;
         }
+		if (AI_retreatToCity())
+		{
+			return;
+		}
         getGroup()->pushMission(MISSION_SKIP);
         return;
     }
