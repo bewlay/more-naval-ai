@@ -24786,9 +24786,19 @@ void CvUnitAI::AI_chooseGroupflag()
     switch (AI_getUnitAIType())
     {
         case UNITAI_FEASTING:
-            AI_setGroupflag(GROUPFLAG_FEASTING);
-            return;
-            break;
+			if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_FEASTING) <= GET_PLAYER(getOwnerINLINE()).getNumCities())
+			{
+				AI_setGroupflag(GROUPFLAG_FEASTING);
+				return;
+	            break;
+			}
+			else
+			{
+				AI_setUnitAIType(UNITAI_ATTACK);
+				AI_setGroupflag(GROUPFLAG_CONQUEST);
+				return;
+				break;
+			}
         default:
             break;
     }
@@ -25918,53 +25928,55 @@ void CvUnitAI::AI_feastingmove()
 
 	if (getLevel() < 7)
 	{
-		if ((AI_getUnitAIType() != UNITAI_CITY_DEFENSE) && (AI_getUnitAIType() != UNITAI_CITY_COUNTER))
+		if (AI_getGroupflag() != GROUPFLAG_CONQUEST)
 		{
-			CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
-			CvCity* pLoopCity;
-			CvCity* pBestCity;
-			CvPlot* pBestPlot;
-			int iValue;
-			int iBestValue;
-			int iLoop;
-			iBestValue = 0;
-			pBestCity = NULL;
-			iValue = 0;
-
-			for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+			if ((AI_getUnitAIType() != UNITAI_CITY_DEFENSE) && (AI_getUnitAIType() != UNITAI_CITY_COUNTER))
 			{
-				if (pLoopCity->getPopulation() > 3)
-				{
-					if (pLoopCity->angryPopulation()>0 || pLoopCity->unhealthyPopulation(false) > 2 )
-					{
-						iValue += pLoopCity->getPopulation();
-						iValue += pLoopCity->angryPopulation() * 10;
-						iValue += pLoopCity->unhealthyPopulation() * 2;
-						iValue += -(pLoopCity->foodDifference() * 5);
+				CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+				CvCity* pLoopCity;
+				CvCity* pBestCity;
+				CvPlot* pBestPlot;
+				int iValue;
+				int iBestValue;
+				int iLoop;
+				iBestValue = 0;
+				pBestCity = NULL;
+				iValue = 0;
 
-						iValue = std::max(0, iValue);
-						if (iValue > iBestValue)
+				for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+				{
+					if (pLoopCity->getPopulation() > 3)
+					{
+						if (pLoopCity->angryPopulation()>0 || pLoopCity->unhealthyPopulation(false) > 2 )
 						{
-							iBestValue = iValue;
-							pBestCity = pLoopCity;
+							iValue += pLoopCity->getPopulation();
+							iValue += pLoopCity->angryPopulation() * 10;
+							iValue += pLoopCity->unhealthyPopulation() * 2;
+							iValue += -(pLoopCity->foodDifference() * 5);
+
+							iValue = std::max(0, iValue);
+							if (iValue > iBestValue)
+							{
+								iBestValue = iValue;
+								pBestCity = pLoopCity;
+							}
 						}
 					}
 				}
-			}
 
-			if (pBestCity != NULL)
-			{
-				pBestPlot = pBestCity->plot();
-				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());//, MOVE_AVOID_ENEMY_WEIGHT_2, false, false, NO_MISSIONAI, pBestPlot);
-				return;
-			}
-
-			else
-			{
-				AI_setGroupflag(GROUPFLAG_CONQUEST);
-				AI_setUnitAIType(UNITAI_ATTACK_CITY);
-				getGroup()->pushMission(MISSION_SKIP);
-				return;
+				if (pBestCity != NULL)
+				{
+					pBestPlot = pBestCity->plot();
+					getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());//, MOVE_AVOID_ENEMY_WEIGHT_2, false, false, NO_MISSIONAI, pBestPlot);
+					return;
+				}
+				else
+				{
+					AI_setGroupflag(GROUPFLAG_CONQUEST);
+					AI_setUnitAIType(UNITAI_ATTACK_CITY);
+					getGroup()->pushMission(MISSION_SKIP);
+					return;
+				}
 			}
 		}
 	}
