@@ -2986,25 +2986,64 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /**	Illians dont mind Snow or Tundra; Malakim don't mind Desert; Khazad like Hills				**/
 /**	Elves like Forest (less weight towards Ancient Forest so they dont build cities too close  	**/
 /*************************************************************************************************/
+						bool bDwarf = false;
+						bool bElf = false;
+						bool bWinterborn = false;
+						bool bDemon = false;
+						bool bNomad = false;
+
+						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DWARF"))
+						{
+							bDwarf = true;
+						}
+
+						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == (GC.getInfoTypeForString("PROMOTION_ELF") || GC.getInfoTypeForString("PROMOTION_DARK_ELF")))
+						{
+							bElf = true;
+						}
+
+						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_WINTERBORN"))
+						{
+							bWinterborn = true;
+						}
+
+						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DEMON"))
+						{
+							bDemon = true;
+						}
+
+						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_NOMAD"))
+						{
+							bNomad = true;
+						}
+
                         if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_ILLIANS"))
                         {
                         	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_SNOW"))
                                 iTempValue +=50;
+							if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_DESERT"))
+                                iTempValue +=10;
+						}
+
+						if (bWinterborn)
+						{
                         	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_TUNDRA"))
                                 iTempValue +=15;
                         }
-						if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_MALAKIM"))
+
+						if (bNomad)
                         {
                         	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_DESERT"))
                                 iTempValue +=10;
                         }
-						if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_KHAZAD"))
+
+						if (bDwarf)
                         {
                         	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_HILL"))
                                 iTempValue +=50;
                         }
-						// Tholal AI ToDo: Change this to a racial check?
-                        if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_SVARTALFAR") || getCivilizationType()==GC.getDefineINT("CIVILIZATION_LJOSALFAR"))
+
+                        if (bElf)
                         {
                             if (eFeature==GC.getDefineINT("FEATURE_FOREST"))
                                 iTempValue +=25;
