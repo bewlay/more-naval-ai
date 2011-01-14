@@ -3125,7 +3125,7 @@ void CvUnitAI::AI_attackMove()
 				return;
 			}
 
-			CheckForEquipment();
+			//CheckForEquipment();
 
 			if( getGroup()->getNumUnits() < 4 )
 			{
@@ -25733,7 +25733,7 @@ void CvUnitAI::AI_barbsmashermove()
     }
 
 	//pick up Equipment
-	CheckForEquipment();
+	//CheckForEquipment();
 
     if (AI_groupheal(1))
     {
@@ -27283,7 +27283,7 @@ void CvUnitAI::ConquestMove()
 
 
 	//pick up Equipment
-	CheckForEquipment();
+	//CheckForEquipment();
 
 
 	bool bIgnoreFaster = false;
