@@ -10020,9 +10020,27 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// Tholal AI - account for new FFH promotion tags
-	iValue += GC.getPromotionInfo(ePromotion).getCombatHealPercent();
+	int iCombatHeal = GC.getPromotionInfo(ePromotion).getCombatHealPercent();
+
+	if (iCombatHeal > 0)
+	{
+		if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY) || (AI_getUnitAIType() == UNITAI_COUNTER))
+		{
+			iValue += iCombatHeal * 2;
+		}
+		else
+		{
+			iValue++;
+		}
+	}
+	//iValue += ((GC.getPromotionInfo(ePromotion).getCombatHealPercent() * 3) / 2);
 
 	iValue += GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * 2;
+
+	if (GC.getPromotionInfo(ePromotion).isFear())
+	{
+		iValue += 100;
+	}
 
 	// ToDo: getPromotionCombatMod - mimic the Combatinfos function
 	// ToDo: go through other new FFH promotion tags and see what needs to be accounted for
