@@ -1065,7 +1065,9 @@ void CvCityAI::AI_chooseProduction()
 
 // Tholal AI - count number of mages & priests
 // Tholal ToDo - better formulas - or better yet, incorporate this into the choose unit function instead
-	int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
+	//int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
+	int iNumMages = (kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));// + kPlayer.getUnitClassCountPlusMaking(GC.getInfoTypeForString('UNITCLASS_MAGE')));
+
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
 	int iNeededPriests = kPlayer.getNumCities() * 3;
@@ -1930,7 +1932,7 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
 	if (iNumMages < (iNeededMages / 2))
 	{
-		if (AI_chooseUnit(UNITAI_MAGE, 10 * kPlayer.AI_getMojoFactor()))
+		if (AI_chooseUnit(UNITAI_MAGE, 5 * kPlayer.AI_getMojoFactor()))
 		{
 			return;
 		}
@@ -3025,21 +3027,24 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Tholal ToDo - better code 
-	// Tholal AI - make Priests
-	if ((iNumPriests < iNeededPriests))
+	if (!bFinancialTrouble)
 	{
-		if (AI_chooseUnit(UNITAI_MEDIC))
+		// Tholal AI - make Priests
+		if ((iNumPriests < iNeededPriests))
 		{
-			return;
+			if (AI_chooseUnit(UNITAI_MEDIC, 50))
+			{
+				return;
+			}
 		}
-	}
 
-	// Tholal AI - make Adepts
-	if ((iNumMages < iNeededMages))
-	{
-		if (AI_chooseUnit(UNITAI_MAGE))
+		// Tholal AI - make Adepts
+		if ((iNumMages < iNeededMages))
 		{
-			return;
+			if (AI_chooseUnit(UNITAI_MAGE, 50))
+			{
+				return;
+			}
 		}
 	}
 
@@ -3569,7 +3574,22 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									iValue += getUnitProduction(eLoopUnit);
 								}
 
+								//Tholal AI - account for Favorite Unit Combat tag
+								const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
+								if (eFavoriteUnitCombat != NO_UNITCOMBAT)
+								{
+									if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
+									{
+										iValue *= 5;
+										iValue /= 4;
+									}
+								}
+
+
 								iValue *= (GET_PLAYER(getOwnerINLINE()).getNumCities() * 2);
+								// Tholal AI ToDo - had a game where Mercurians triggered a divide by 0 error here - figure out why
+								// Temp(?) hack - added a std::max check to avoid the above mentioned divide by 0 error
+								//iValue /= std::max(1,(GET_PLAYER(getOwnerINLINE()).getUnitClassCountPlusMaking((UnitClassTypes)iI) + GET_PLAYER(getOwnerINLINE()).getNumCities() + 1));
 								iValue /= (GET_PLAYER(getOwnerINLINE()).getUnitClassCountPlusMaking((UnitClassTypes)iI) + GET_PLAYER(getOwnerINLINE()).getNumCities() + 1);
 
 								FAssert((MAX_INT / 1000) > iValue);
@@ -4263,6 +4283,8 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				iTempValue = 0;
 				int iUnitTempValue = 0;
 
+				int iNumBuildings = GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass);
+
 				for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
 				{
 					const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
@@ -4277,9 +4299,14 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 								iUnitTempValue = iCombatValue;
 
-								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 								{
-									iUnitTempValue += kOwner.AI_getMojoFactor() * 50;
+									iUnitTempValue += kOwner.AI_getMojoFactor();
+
+									if (iNumBuildings == 0) // Make sure we have at least one Mage Guild
+									{
+										iTempValue += 250;
+									}
 								}
 
 								int iK;
@@ -4315,8 +4342,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						}
 					}
 				}
-
-				int iNumBuildings = GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass);
 
 				iTempValue -= iNumBuildings * 2;
 
