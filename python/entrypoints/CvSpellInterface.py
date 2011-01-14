@@ -563,12 +563,21 @@ def spellArdor(caster):
 	pPlayer.setGreatPeopleThresholdModifier(0)
 
 def reqArenaBattle(caster):
-	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_MELEE'):
-		return True
-	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_RECON'):
-		return True
-	if caster.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_SLAVE'):
-		return True
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if pPlayer.isHuman() == True:
+		if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_MELEE'):
+			return True
+		if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_RECON'):
+			return True
+		if caster.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_SLAVE'):
+			return True
+	if pPlayer.isHuman() == False:
+		if caster.getLevel() > 3:
+			return False
+		if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_MELEE') or caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_RECON') or caster.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_SLAVE'):
+			if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK')):
+				return True
+			
 	return False
 
 def spellArenaBattle(caster):
@@ -585,6 +594,23 @@ def spellArenaBattle(caster):
 	else:
 		CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_ARENA_LOSE", ()),'',1,'Art/Interface/Buttons/Buildings/Arena.dds',ColorTypes(7),caster.getX(),caster.getY(),True,True)
 		caster.kill(True, PlayerTypes.NO_PLAYER)
+
+def reqBlaze(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
+	eTeam = pPlayer.getTeam()
+	pPlot = caster.plot()
+	
+	if not ((pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')) or (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE')) or (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST'))):
+		return False
+	if pPlayer.isHuman() == False:
+		p2Player = gc.getPlayer(pPlot.getOwner())
+		if pPlot.isOwned():
+			e2Team = gc.getTeam(p2Player.getTeam())
+			if e2Team.isAtWar(eTeam) == True:
+				return True
+			else:
+				return False
+	return True
 
 def reqCallBlizzard(caster):
 	iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
