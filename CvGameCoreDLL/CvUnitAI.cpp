@@ -24841,6 +24841,8 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
         }
     }
+
+	/*
     if  (isUnitAllowedExploreGroup())
     {
         if (AI_decide_exploregroup())
@@ -24848,6 +24850,7 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
         }
     }
+	*/
 
     if (isUnitAllowedDefenseGroup())
     {
@@ -25015,6 +25018,17 @@ bool CvUnitAI::AI_decide_permdefensegroup()
     {
         return false;
     }
+	
+	if (AI_getUnitAIType() == UNITAI_HERO)
+	{
+		return false;
+	}
+
+	if (!isMilitaryHappiness())
+	{
+		return false;
+	}
+
     //Check for Units specialized in Defense
     CivilizationTypes Civili=GET_PLAYER(getOwnerINLINE()).getCivilizationType();
 
@@ -25173,6 +25187,16 @@ bool CvUnitAI::isUnitAllowedPermDefense()
     {
         return false;
     }
+
+	if (AI_getUnitAIType() == UNITAI_HERO)
+	{
+		return false;
+	}
+
+	if (!isMilitaryHappiness())
+	{
+		return false;
+	}
 
     if (kUnitInfo.isAIblockPermDefense())
     {
@@ -27865,7 +27889,7 @@ void CvUnitAI::AI_upgrademanaMove()
     }
     if (lResult == 2)
     {
-        AI_setUnitAIType(UNITAI_TERRAFORMER);
+        AI_setUnitAIType(UNITAI_RESERVE);
     }
     getGroup()->pushMission(MISSION_SKIP);
     return;
