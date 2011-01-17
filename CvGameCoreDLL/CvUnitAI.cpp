@@ -25772,8 +25772,6 @@ void CvUnitAI::AI_barbsmashermove()
         return;
 	}
 
-	AI_attackCityMove();
-
 	//pick up reinforcements
     if (AI_group(UNITAI_BARBSMASHER, -1, -1, -1, false, false, true, 3, true))
 	{
@@ -25813,6 +25811,8 @@ void CvUnitAI::AI_barbsmashermove()
             return;
         }
     }
+
+	AI_attackCityMove();
 
 	if (!plot()->isCity())
 	{
