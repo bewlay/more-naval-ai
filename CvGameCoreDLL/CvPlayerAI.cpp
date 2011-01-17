@@ -23141,20 +23141,41 @@ bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
         }
     }
 
-	/*
 	// get prereq buildings for Mastery Tower
 	// Do we have tech for the building? If yes, then get prereq bonuses
 	// if eBonusTYpe == prereq bonnus and number of eBonusType we have is 0, return true
-	
-	int iMasteryTower = gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY');
+	//
+	//	int iMasteryTower = gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY');
+	/*
 	for (iI = 0; iI < numBuildingClassInfos; iI++)
 	{
-		if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(iMasteryTower, ((BuildingClassTypes)iI), ((bContinue) ? 0 : getBuildingClassMaking(eBuildingClass))))
+		if (getBuildingClassPrereqBuilding(((BuildingClassTypes)iI), GC.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY')))
 		{
 			return false;
 		}
 	}
-	
+	/*
+	int iAlterationTower = GC.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_ALTERATION');
+
+	if (getBuildingClassCount((BuildingClassTypes)iAlterationTower) == 0)
+	{
+		if (isHasTech  canConstruct(iAlterationTower))
+		{
+			// Get mana requirements
+			// check if we have it
+			// check it if matches eBonus
+			for (iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
+			{
+				if (GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+				{
+					if (!hasBonus((BonusTypes)GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI)))
+					{
+						 return false;
+					}
+				}
+			}
+		}
+	}
 */
 	return false;
 }
@@ -23167,9 +23188,13 @@ int CvPlayerAI::AI_getMojoFactor() const
 	// Count amount of mana
 	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 	{
-		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA") || GC.getDefineINT("BONUSCLASS_RAWMANA")))
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
 		{
-			iValue += (getNumAvailableBonuses((BonusTypes)iK) * 2);
+			iValue += getNumAvailableBonuses((BonusTypes)iK) * 2;
+		}
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_RAWMANA")))
+		{
+			iValue += countOwnedBonuses((BonusTypes)iK);
 		}
 	}
 
