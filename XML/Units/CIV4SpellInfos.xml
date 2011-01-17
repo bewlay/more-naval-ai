@@ -658,6 +658,8 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_CREW_BUCCANEERS_HELP</Help>
             <UnitCombatPrereq>UNITCOMBAT_NAVAL</UnitCombatPrereq>
+            <bAllowAI>1</bAllowAI>
+            <iAIWeight>300</iAIWeight>
             <bInCityOnly>1</bInCityOnly>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_BUCCANEERS</AddPromotionType1>
@@ -677,6 +679,8 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_CREW_LONGSHOREMEN_HELP</Help>
             <UnitCombatPrereq>UNITCOMBAT_NAVAL</UnitCombatPrereq>
+            <bAllowAI>1</bAllowAI>
+            <iAIWeight>300</iAIWeight>
             <bInCityOnly>1</bInCityOnly>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_LONGSHOREMEN</AddPromotionType1>
@@ -714,6 +718,8 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_CREW_SKELETON_CREW_HELP</Help>
             <UnitCombatPrereq>UNITCOMBAT_NAVAL</UnitCombatPrereq>
+            <bAllowAI>1</bAllowAI>
+            <iAIWeight>300</iAIWeight>
             <bInCityOnly>1</bInCityOnly>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_SKELETON_CREW</AddPromotionType1>

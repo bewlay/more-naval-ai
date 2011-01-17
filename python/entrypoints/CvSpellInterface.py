@@ -893,17 +893,25 @@ def reqCrewBuccaneers(caster):
 		return False
 	if caster.baseCombatStr() < 1:
 		return False
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if pPlayer.isHuman() == false:
+		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ATTACK_SEA')):
+			return True
+		return False
 	return True
 
 def reqCrewLongshoremen(caster):
 	pPlot = caster.plot()
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LONGSHOREMEN')):
 		return False
-#	if (PyInfo.UnitInfo(caster.getUnitType()).getCargoSpace() == 0 and caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_EXPANDED_HULL')) == False):
-#		return False
 	if caster.cargoSpaceAvailable(-1, gc.getInfoTypeForString('DOMAIN_LAND')) == 0:
 		return False
 	if caster.baseCombatStr() < 1:
+		return False
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if pPlayer.isHuman() == false:
+		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ESCORT_SEA') or caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_EXPLORE_SEA')):
+			return True
 		return False
 	return True
 
@@ -921,6 +929,11 @@ def reqCrewSkeletonCrew(caster):
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SKELETON_CREW')):
 		return False
 	if caster.baseCombatStr() < 1:
+		return False
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if pPlayer.isHuman() == false:
+		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ASSAULT_SEA') or caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_SETTLER_SEA')):
+			return True
 		return False
 	return True
 
