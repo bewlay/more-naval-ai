@@ -13120,16 +13120,22 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	const UnitClassTypes eReligionHeroClass1 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero1();
 	const UnitClassTypes eReligionHeroClass2 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero2();
 
-	if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
+	if (eReligionHeroClass1 != NO_UNITCLASS)
 	{
-		iValue *= 5;
-		iValue /= 4;
+		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
+		{
+			iValue *= 5;
+			iValue /= 4;
+		}
 	}
 
-	if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
+	if (eReligionHeroClass2 != NO_UNITCLASS)
 	{
-		iValue *= 4;
-		iValue /= 3;
+		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
+		{
+			iValue *= 4;
+			iValue /= 3;
+		}
 	}
 
 	// Add value for like alignments
