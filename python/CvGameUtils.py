@@ -960,8 +960,8 @@ class CvGameUtils:
 													desert=desert+1
 											if (desertb or pPlot.isRiver()):
 												if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-													if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):
-														desert=desert+1
+#													if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):
+													desert=desert+1
 										if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
 											if snowb:
 												if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
@@ -1001,9 +1001,9 @@ class CvGameUtils:
 												return 1
 										if (desertb or pPlot.isRiver()):
 											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
-													pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
-													return 1
+#												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
+												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
+												return 1
 
 
 				if snow>0:
@@ -1106,8 +1106,8 @@ class CvGameUtils:
 												iCount=iCount+1
 										if (desertb or pPlot.isRiver()):
 											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
-													iCount=iCount+1
+#												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
+												iCount=iCount+1
 									if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
 										if snowb:
 											if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
