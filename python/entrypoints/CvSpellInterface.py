@@ -1272,6 +1272,10 @@ def reqExploreLair(caster):
 	bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 	if not eTeam.isAtWar(bPlayer.getTeam()):
 		return False
+		
+	if pPlayer.isHuman() == False:
+		if gc.getGame().getElapsedGameTurns() < 10:
+			return False
 	return True
 
 def spellExploreLair(caster):
