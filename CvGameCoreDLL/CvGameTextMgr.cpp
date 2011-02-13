@@ -3785,6 +3785,12 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
                     szTempBuffer.Format(L"\nNeeded %c missionaries = %d", GC.getReligionInfo((ReligionTypes)iI).getChar(), iNeededMissionaries);
                     szString.append(szTempBuffer);
                 }
+
+				// Tholal AI - display religion values
+				int iReligionValue = GET_PLAYER(pPlot->getOwnerINLINE()).AI_religionValue((ReligionTypes)iI);
+				szTempBuffer.Format(L"\nValue %c: %d", GC.getReligionInfo((ReligionTypes)iI).getChar(), iReligionValue);
+                szString.append(szTempBuffer);
+				// End Tholal AI
             }
 
 			int iOurDefense = GET_PLAYER(pPlot->getOwnerINLINE()).AI_getOurPlotStrength(pPlot, 0, true, false);
