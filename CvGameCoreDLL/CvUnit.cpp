@@ -8473,6 +8473,15 @@ void CvUnit::upgrade(UnitTypes eUnit)
             eUnitAI = UNITAI_RESERVE;
         }
     }
+
+	// Tholal AI - AI switch for upgraded Slaves
+    if(eUnitAI == UNITAI_WORKER)
+    {
+		eUnitAI = UNITAI_ATTACK_CITY;
+    }
+	// End Tholal AI
+
+
 	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), eUnitAI);
 //FfH: End Modify
 
