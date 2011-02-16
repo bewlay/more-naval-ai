@@ -820,6 +820,8 @@ class CvEventManager:
 					gc.getTeam(iTeam).addTeam(iMercurianTeam)
 				else:
 					gc.getTeam(iMercurianTeam).addTeam(iTeam)
+					
+				pMercurianPlayer.startConquestMode()
 
 				pBasiumUnit = gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_BASIUM'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 				pBasiumUnit.setAvatarOfCivLeader(True)
@@ -1279,7 +1281,7 @@ class CvEventManager:
 			unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_FEASTING')) 
 
 #Conquestmode for Religion Heros			
-		if pPlayer.isConquestMode():
+		if not pPlayer.isConquestMode():
 			if pPlayer.getFavoriteReligion()!=ReligionTypes.NO_RELIGION:
 				if unit.getUnitClassType()==gc.getReligionInfo(pPlayer.getFavoriteReligion()).getReligionHero1():
 					unit.startConquestMode()					
@@ -1795,7 +1797,7 @@ class CvEventManager:
 					pPlayer.startConquestMode()
 
 			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_FESTIVALS'):
+				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
 					pPlayer.startConquestMode()
 
 			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
@@ -1811,7 +1813,7 @@ class CvEventManager:
 					pPlayer.startConquestMode()
 					
 			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_RHOANNA'):
-				if iTechType == gc.getInfoTypeForString('TECH_STIRRUPS'):
+				if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
 					pPlayer.startConquestMode()
 
 			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
@@ -1822,10 +1824,6 @@ class CvEventManager:
 				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
 					pPlayer.startConquestMode()
 
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-				# No tech requirement - attack immediately (Skyre)
-				pPlayer.startConquestMode()
-					
 			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
 				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
 					pPlayer.startConquestMode()
@@ -1850,10 +1848,6 @@ class CvEventManager:
 				if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
 					pPlayer.startConquestMode()
 
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'):
-				# No tech requirement - attack immediately (Skyre)
-				pPlayer.startConquestMode()
-					
 			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
 				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
 					pPlayer.startConquestMode()
@@ -1932,6 +1926,8 @@ class CvEventManager:
 
 							iBarbTeam = gc.getBARBARIAN_TEAM()
 							pInfernalTeam.makePeace(iBarbTeam)
+							
+							pInfernalPlayer.startConquestMode()
 
 							pInfernalPlayer.AI_changeAttitudeExtra(iPlayer, 4)
 
