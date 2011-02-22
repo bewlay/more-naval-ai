@@ -31121,7 +31121,7 @@
             <Capture>NONE</Capture>
             <Combat>NONE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_FLESH_GOLEM</Description>
