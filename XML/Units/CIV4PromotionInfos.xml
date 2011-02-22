@@ -638,6 +638,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Buccaneers.dds</Button>
+            <iAIWeight>150</iAIWeight>
             <iExtraCombatStr>1</iExtraCombatStr>
             <iExtraCombatDefense>1</iExtraCombatDefense>
             <iMinLevel>-1</iMinLevel>
@@ -4493,6 +4494,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Longshoremen.dds</Button>
+            <iAIWeight>150</iAIWeight>
             <iMinLevel>-1</iMinLevel>
         </PromotionInfo>
         <PromotionInfo>
@@ -6244,6 +6246,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Skeletoncrew.dds</Button>
+            <iAIWeight>50</iAIWeight>
             <iExtraCombatStr>-1</iExtraCombatStr>
             <iExtraCombatDefense>-1</iExtraCombatDefense>
             <iMinLevel>-1</iMinLevel>
