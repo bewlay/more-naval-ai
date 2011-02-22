@@ -3116,6 +3116,15 @@ def reqSpring(caster):
 	if pPlayer.isHuman() == False:
 		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 			return False
+		iX = pPlot.getX()
+		iY = pPlot.getY()
+		for iiX in range(iX-1, iX+2, 1):
+			for iiY in range(iY-1, iY+2, 1):
+				pPlot2 = CyMap().plot(iiX,iiY)
+				if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES'):
+					return True
+				if pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
+					return True
 	return True
 
 def spellSpring(caster):
