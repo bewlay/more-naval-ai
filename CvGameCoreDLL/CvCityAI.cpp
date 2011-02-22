@@ -2566,15 +2566,24 @@ void CvCityAI::AI_chooseProduction()
 
 		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < iAssaultSeaNeeded)
 		{
-			AI_chooseUnit(UNITAI_ASSAULT_SEA,50);
+			if (AI_chooseUnit(UNITAI_ASSAULT_SEA,50))
+			{
+				return;
+			}
 		}
 		if ((kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iAttackSeaNeeded)
 		{
-			AI_chooseUnit(UNITAI_ATTACK_SEA,35);
+			if (AI_chooseUnit(UNITAI_ATTACK_SEA,35))
+			{
+				return;
+			}
 		}
 		if ((kPlayer.AI_totalUnitAIs(UNITAI_ESCORT_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iEscortSeaNeeded)
 		{
-			AI_chooseUnit(UNITAI_ESCORT_SEA,75);
+			if (AI_chooseUnit(UNITAI_ESCORT_SEA,75))
+			{
+				return;
+			}
 		}
 	}
 	// End Tholal AI
