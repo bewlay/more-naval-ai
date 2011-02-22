@@ -2532,6 +2532,37 @@ void CvCityAI::AI_chooseProduction()
 		int iAttackSeaNeeded = kPlayer.countNumCoastalCities() / 2;
 		int iAssaultSeaNeeded = kPlayer.countNumCoastalCities() / 2;
 		int iEscortSeaNeeded = kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA);
+		int iMissionarySeaNeeded = 0;
+
+		if (!kPlayer.isAgnostic())
+		{
+			if (kPlayer.countNumCoastalCities() > 0)
+			{
+				iMissionarySeaNeeded++;
+			}
+		}
+
+		// Tholal AI - Missionary ships
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
+		{
+			iMissionarySeaNeeded++;
+
+			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+			{
+				iMissionarySeaNeeded++;
+			}
+		}
+
+		if (iMissionarySeaNeeded > 0)
+		{
+			if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) < iMissionarySeaNeeded)
+			{
+				if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
+				{
+					return;
+				}
+			}
+		}
 
 		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < iAssaultSeaNeeded)
 		{
