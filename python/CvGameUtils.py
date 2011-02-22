@@ -1630,14 +1630,14 @@ class CvGameUtils:
 							if pPlot2.getBonusType(-1) != -1:
 								iBonus = pPlot2.getBonusType(TeamTypes.NO_TEAM)
 								if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
-									if not pPlot2.isPlotGroupConnectedBonus(pUnit.getOwner(),iBonus):								
-										imanatype=pPlot2.getBonusType(TeamTypes.NO_TEAM)
-										if imanatype != -1:												
-											for iBuild in range(gc.getNumBuildInfos()):
-												if pUnit.canBuild(pPlot2,iBuild,false):
-													pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-													pUnit.getGroup().pushMission(MissionTypes.MISSION_BUILD, iBuild, -1, 0, True, False, MissionAITypes.NO_MISSIONAI, pPlot, pUnit)
-													return 1												
+#									if not pPlot2.isPlotGroupConnectedBonus(pUnit.getOwner(),iBonus):								
+									imanatype=pPlot2.getBonusType(TeamTypes.NO_TEAM)
+									if imanatype != -1:												
+										for iBuild in range(gc.getNumBuildInfos()):
+											if pUnit.canBuild(pPlot2,iBuild,false):
+												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+												pUnit.getGroup().pushMission(MissionTypes.MISSION_BUILD, iBuild, -1, 0, True, False, MissionAITypes.NO_MISSIONAI, pPlot, pUnit)
+												return 1												
 
 #Look for raw mana 		
 		searchdistance=15
