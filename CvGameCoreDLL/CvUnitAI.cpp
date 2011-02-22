@@ -1998,6 +1998,13 @@ void CvUnitAI::AI_workerMove()
 	bCanRoute = canBuildRoute();
 	bNextCity = false;
 
+	// Tholal AI - Catch for upgraded worker units
+	if (m_pUnitInfo->getWorkRate() == 0)
+	{
+		AI_setUnitAIType(UNITAI_RESERVE);
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+	}
+
 	// XXX could be trouble...
 	if (plot()->getOwnerINLINE() != getOwnerINLINE())
 	{
