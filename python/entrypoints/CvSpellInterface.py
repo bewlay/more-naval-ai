@@ -895,8 +895,9 @@ def reqCrewBuccaneers(caster):
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == false:
-		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ATTACK_SEA')):
-			return True
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_ATTACK_SEA'):
+			if gc.getUnitInfo(caster.getUnitType()).getMoves() > 2:
+				return True
 		return False
 	return True
 
@@ -910,8 +911,13 @@ def reqCrewLongshoremen(caster):
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == false:
-		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ESCORT_SEA') or caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_EXPLORE_SEA')):
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_ESCORT_SEA'):
 			return True
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_EXPLORE_SEA'):
+			return True
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_MISSIONARY_SEA'):
+			if gc.getUnitInfo(caster.getUnitType()).getCargoSpace() > 1:
+				return True	
 		return False
 	return True
 
@@ -921,6 +927,8 @@ def reqCrewNormalCrew(caster):
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_RESERVE_SEA'):
+			return True
 		return False
 	return True
 
@@ -932,7 +940,7 @@ def reqCrewSkeletonCrew(caster):
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == false:
-		if (caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_ASSAULT_SEA') or caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_SETTLER_SEA')):
+		if (caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_ASSAULT_SEA') or caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_SETTLER_SEA')):
 			return True
 		return False
 	return True
