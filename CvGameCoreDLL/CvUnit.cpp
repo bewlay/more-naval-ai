@@ -1326,7 +1326,10 @@ void CvUnit::doTurn()
         {
             if (AI_getGroupflag()==GROUPFLAG_NONE)
             {
-                AI_chooseGroupflag();
+				if (AI_getUnitAIType() != UNITAI_TERRAFORMER && AI_getUnitAIType() != UNITAI_MANA_UPGRADE)
+				{
+					AI_chooseGroupflag();
+				}
             }
         }
     }
