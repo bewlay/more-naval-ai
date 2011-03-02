@@ -1896,6 +1896,7 @@
             <Civilopedia>TXT_KEY_SPELL_LICHDOM_PEDIA</Civilopedia>
             <PromotionPrereq1>PROMOTION_DEATH3</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>200</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_UNDEAD</AddPromotionType1>
@@ -4555,7 +4556,7 @@
             <PromotionPrereq1>PROMOTION_CHAOS3</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
             <bCausesWar>1</bCausesWar>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>30</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <PyResult>spellWonder(pCaster)</PyResult>
