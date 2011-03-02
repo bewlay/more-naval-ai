@@ -5206,14 +5206,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				// Religion founding techs
 				if (eReligionTech == eTech)
 				{
-
-					// Tholal AI - Add weight for favorite religions
-					if (getFavoriteReligion() == eReligion)
-					{
-						iReligionValue += 2000;
-					}
-					// End Tholal AI
-
 					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
 					{
 						if (!bHaveMyReligion)
@@ -5244,6 +5236,14 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iReligionValue *= 0;
 						}
 					}
+
+					// Tholal AI - Add weight for favorite religions
+					if (getFavoriteReligion() == eReligion)
+					{
+						iReligionValue += 2000;
+					}
+					// End Tholal AI
+
 				}
 				else if (ePrereqReligion == eReligion)
 				{
