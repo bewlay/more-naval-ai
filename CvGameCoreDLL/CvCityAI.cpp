@@ -3620,8 +3620,8 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 								{
 									if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
 									{
-										iValue *= 5;
-										iValue /= 4;
+										iValue *= 4;
+										iValue /= 3;
 									}
 								}
 
