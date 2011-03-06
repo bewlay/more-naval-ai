@@ -21221,6 +21221,17 @@ PlayerTypes CvPlayer::initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationType
 			}
 		}
 
+		ReligionTypes eFavorite = getFavoriteReligion();
+		ReligionTypes eNewFavorite = GET_PLAYER(eNewPlayer).getFavoriteReligion();
+
+		if (eFavorite != NO_RELIGION)
+		{
+			if (eNewFavorite == NO_RELIGION)
+			{
+				GET_PLAYER(eNewPlayer).setFavoriteReligion(eFavorite);
+			}
+		}
+
 		for (int iTeam = 0; iTeam < GC.getMAX_TEAMS(); iTeam++)
 		{
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
