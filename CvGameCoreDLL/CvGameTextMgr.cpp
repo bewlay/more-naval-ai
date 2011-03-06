@@ -1173,6 +1173,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 //BUGFfH: End Move
 
 //BUGFfH: Added by Denev 2009/09/07
+				bFirst = true;
 				for (iI = 0; iI < GC.getNumTerrainInfos(); ++iI)
 				{
 					if (GC.getUnitInfo(pUnit->getUnitType()).getTerrainImpassable((TerrainTypes) iI))
@@ -1181,15 +1182,21 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 						if (NO_TECH == (TechTypes) iTerrainPassableTech
 						 || !GET_PLAYER(pUnit->getOwnerINLINE()).isHasTech(iTerrainPassableTech))
 						{
-							const char cBullet = gDLL->getSymbolID(BULLET_CHAR);
-							const wchar* szCantEnter = gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString();
-							const wchar* szTerrain = GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide();
-							szTempBuffer.Format(L"\n%c%s <link=literal>%s</link>", cBullet, szCantEnter, szTerrain);
-							szString.append(szTempBuffer);
+							szTempBuffer.Format(L"%s%s ", NEWLINE, gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString());
+							setListHelp(szString, szTempBuffer, gDLL->getText(GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()), L", ", bFirst);
+							bFirst = false;
+
+							//const char cBullet = gDLL->getSymbolID(BULLET_CHAR);
+							//const wchar* szCantEnter = gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString();
+							//const wchar* szTerrain = GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide();
+							//szTempBuffer.Format(L"\n%c%s <link=literal>%s</link>", cBullet, szCantEnter, szTerrain);
+							//szTempBuffer.Format(L"\n %s %s", szCantEnter, szTerrain);
+							//szString.append(szTempBuffer);
 						}
 					}
 				}
 
+				bFirst = true;
 				for (iI = 0; iI < GC.getNumFeatureInfos(); ++iI)
 				{
 					if (GC.getUnitInfo(pUnit->getUnitType()).getFeatureImpassable((FeatureTypes) iI))
@@ -1198,11 +1205,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 						if (NO_TECH == (TechTypes) iFeaturePassableTech
 						 || !GET_PLAYER(pUnit->getOwnerINLINE()).isHasTech(iFeaturePassableTech))
 						{
-							const char cBullet = gDLL->getSymbolID(BULLET_CHAR);
-							const wchar* szCantEnter = gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString();
-							const wchar* szFeature = GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide();
-							szTempBuffer.Format(L"\n%c%s <link=literal>%s</link>", cBullet, szCantEnter, szFeature);
-							szString.append(szTempBuffer);
+							szTempBuffer.Format(L"%s%s ", NEWLINE, gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString());
+							setListHelp(szString, szTempBuffer, gDLL->getText(GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()), L", ", bFirst);
+							bFirst = false;
+							//const char cBullet = gDLL->getSymbolID(BULLET_CHAR);
+							//const wchar* szCantEnter = gDLL->getText("TXT_KEY_UNIT_CANNOT_ENTER").GetCString();
+							//const wchar* szFeature = GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide();
+							//szTempBuffer.Format(L"\n%c%s <link=literal>%s</link>", cBullet, szCantEnter, szFeature);
+							//szString.append(szTempBuffer);
 						}
 					}
 				}
