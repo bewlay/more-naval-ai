@@ -10442,8 +10442,17 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /*************************************************************************************************/
 		case UNITAI_MAGE:
 		case UNITAI_WARWIZARD:
+		case UNITAI_MANA_UPGRADE:
+			if (GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_CHANNELING1")))
+			{
+				if (!GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_DIVINE")))
+				{
+					bValid = true;
+				}
+			}
+			break;
+
 		case UNITAI_TERRAFORMER:
-        case UNITAI_MANA_UPGRADE:
 			if (GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_CHANNELING1")))
 			{
 				bValid = true;
