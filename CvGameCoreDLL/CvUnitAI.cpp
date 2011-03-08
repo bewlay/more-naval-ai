@@ -600,10 +600,10 @@ bool CvUnitAI::AI_update()
             AI_upgrademanaMove();
             break;
 		case UNITAI_MAGE:
-//>>>>Unofficial Bug Fix: Added by Denev 2010/03/12
-		case UNITAI_WARWIZARD:
-//<<<<Unofficial Bug Fix: End Add
 			AI_mageMove();
+			break;
+		case UNITAI_WARWIZARD:
+			ConquestMove();
 			break;
 
 		case UNITAI_TERRAFORMER:
