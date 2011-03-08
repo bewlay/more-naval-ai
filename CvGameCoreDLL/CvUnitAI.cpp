@@ -141,7 +141,7 @@ bool CvUnitAI::AI_update()
 		}
 	}
 
-	// - Temporary hack to catch Heroes who have their AI switched
+	// - Temporary hack to catch Heroes who have their AI switched - still needed?
 	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
 	{
 		if (AI_getUnitAIType() != UNITAI_HERO)
@@ -152,6 +152,16 @@ bool CvUnitAI::AI_update()
 
 	// Ships choose crews
 	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
+	{
+		int ispell = chooseSpell();
+		if (ispell != NO_SPELL)
+		{
+		    cast(ispell);
+		}
+	}
+
+	// Upgrade to Liches - HARDCODE
+	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH3")))
 	{
 		int ispell = chooseSpell();
 		if (ispell != NO_SPELL)
