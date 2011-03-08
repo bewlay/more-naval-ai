@@ -1590,15 +1590,12 @@ void CvUnitAI::AI_animalMove()
 //FfH: Added by Kael 10/26/2008 So that animals can build their pens...
     if (!isBarbarian())
     {
-		AI_setUnitAIType(UNITAI_COUNTER);
-
-        if (getLevel() < 3)
+        if (AI_construct())
         {
-            if (AI_construct())
-            {
-                return;
-            }
+            return;
         }
+		AI_setUnitAIType(UNITAI_COUNTER);
+		return;
     }
 //FfH: End Add
 
