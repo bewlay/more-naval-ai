@@ -13076,22 +13076,35 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	
 	int iLoop;
 	CvCity* pLoopCity;
+	CvCity* pHolyCity = GC.getGameINLINE().getHolyCity(eReligion);
+
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
 		if (pLoopCity->isHasReligion(eReligion))
 		{
 			iValue += pLoopCity->getPopulation();
+			
+			if (pHolyCity != NULL)
+			{
+				if (pLoopCity == pHolyCity)
+				{
+					iValue += pLoopCity->getPopulation();
+				}
+			}
 		}
 	}
 
-	CvCity* pHolyCity = GC.getGameINLINE().getHolyCity(eReligion);
+
 	if (pHolyCity != NULL)
 	{
-		bool bOurHolyCity = pHolyCity->getOwnerINLINE() == getID();
+	//	bool bOurHolyCity = pHolyCity->getOwnerINLINE() == getID();
 		bool bOurTeamHolyCity = pHolyCity->getTeam() == getTeam();
 
-		if (bOurHolyCity || bOurTeamHolyCity)
+	//	if (bOurHolyCity || bOurTeamHolyCity)
+		if (bOurTeamHolyCity)
         {
+			iValue += 20;
+
 			/*
 			int iCommerceCount = 0;
 
@@ -13108,7 +13121,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
                     }
                 }
             }
-			*/
+
 
 			if (bOurHolyCity)
             {
@@ -13122,6 +13135,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 				iValue *= 4;
                 iValue /= 3;
             }
+			*/
         }
 	}
 
@@ -13134,7 +13148,8 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
 		{
 			iValue *= 5;
-			iValue /= 4;
+			iValue /= 3;
+			iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
@@ -13144,6 +13159,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		{
 			iValue *= 4;
 			iValue /= 3;
+			iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
