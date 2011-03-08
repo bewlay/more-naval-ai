@@ -25301,7 +25301,7 @@ bool CvUnitAI::isUnitAllowedPatrolGroup()
         case UNITAI_TERRAFORMER:
         case UNITAI_MANA_UPGRADE:
         case UNITAI_MISSIONARY:
-        case UNITAI_ANIMAL:
+		//case UNITAI_ANIMAL:
         case UNITAI_PROPHET:
         case UNITAI_ARTIST:
         case UNITAI_SCIENTIST:
