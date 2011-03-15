@@ -2550,9 +2550,9 @@ class CvEventManager:
 				if CyGame().getSorenRandNum(100, "Bob") < gc.getHandicapInfo(gc.getGame().getHandicapType()).getLairSpawnRate():
 ##--------		Unofficial Bug Fix: End Modify			--------##
 					iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_OF_ACHERON')
-					eTeam = gc.getTeam(pPlayer.getTeam())
-					if eTeam.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
-						iUnit = gc.getInfoTypeForString('UNIT_SON_OF_THE_INFERNO')
+#					eTeam = gc.getTeam(pPlayer.getTeam())
+#					if eTeam.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
+#						iUnit = gc.getInfoTypeForString('UNIT_SON_OF_THE_INFERNO')
 					newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 		CvAdvisorUtils.cityAdvise(pCity, iPlayer)

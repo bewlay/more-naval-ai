@@ -67693,7 +67693,7 @@
             <iLeaderExperience>0</iLeaderExperience>
             <bFreeXP>1</bFreeXP>
             <iCombatDefense>5</iCombatDefense>
-            <iMinLevel>1</iMinLevel>
+            <iMinLevel>7</iMinLevel>
             <iTier>4</iTier>
             <PrereqCiv>CIVILIZATION_BARBARIAN</PrereqCiv>
             <DamageTypeCombats>
