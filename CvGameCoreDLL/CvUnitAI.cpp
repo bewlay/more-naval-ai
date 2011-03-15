@@ -27030,6 +27030,9 @@ void CvUnitAI::ConquestMove()
     int iSearchRange;
     bool bFollow=false;
 
+	bool bHero = false;
+	bool bWizard = false;
+
     if (isHiddenNationality())
     {
         AI_setGroupflag(GROUPFLAG_NONE);
@@ -27040,7 +27043,10 @@ void CvUnitAI::ConquestMove()
     switch (AI_getUnitAIType())
     {
         case UNITAI_HERO:
+			bHero = true;
+			break;
         case UNITAI_WARWIZARD:
+			bWizard = true;
             break;
         default:
             AI_setUnitAIType(UNITAI_ATTACK_CITY);
@@ -27077,6 +27083,11 @@ void CvUnitAI::ConquestMove()
 						if (pLoopUnit->cityDefenseModifier()>0)
 						{
 							iValue/=2;
+						}
+
+						if (AI_getUnitAIType() == UNITAI_HERO)
+						{
+							iValue = 1000;
 						}
 
 						if(iValue<iBestValue)
@@ -27116,6 +27127,23 @@ void CvUnitAI::ConquestMove()
 			}
         }
     }
+
+	// Tholal AI - Heroes and Casters shouldnt wander around alone
+	if (bHero || bWizard)
+	{
+		if (getGroup()->getNumUnits() < getLevel() / 2)
+		{
+			if (AI_group(UNITAI_ATTACK_CITY))
+			{
+				return;
+			}
+			if (AI_retreatToCity(false, true, 1))
+			{
+				return;
+			}
+		}
+	}
+	// Tholal AI
 
 	bool bHuntBarbs = false;
 	if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 && !isBarbarian())
