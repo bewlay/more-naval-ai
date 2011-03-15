@@ -436,7 +436,7 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupAttacker(const CvPlot* pPlot, bool bP
 /*************************************************************************************************/
                         if (!GET_PLAYER(pLoopUnit->getOwnerINLINE()).isHuman())
                         {
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_WARWIZARD)
+                            if (pLoopUnit->getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
                             {
                                 if (iOdds<95)
                                 {
