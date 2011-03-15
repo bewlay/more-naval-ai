@@ -4780,6 +4780,11 @@ void CvUnitAI::AI_counterMove()
 		return;
 	}
 
+	if (AI_anyAttack(1, 80))
+	{
+		return;
+	}
+
 	if (AI_retreatToCity())
 	{
 		return;
