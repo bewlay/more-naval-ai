@@ -28039,62 +28039,33 @@ void CvUnitAI::AI_terraformerMove()
 //returns true if the Unit can Summon stuff
 bool CvUnitAI::isSummoner()
 {
+	if (!isChanneler())
+	{
+		return false;
+	}
+	
+	// Tholal ToDo - make this dynamic: Loop through spells, check that it creates unit, check canCast(),
+    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+    {
+		if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
+		{
+			// bPermOnly - if (GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate())
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH1")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_FIRE2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_LAW2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ENTROPY2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_AIR3")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SUN3")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC1")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC3")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_EARTH3")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SHADOW3")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_WATER3")))
-        return true;
-
-	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_BODY3")))
-        return true;
-
-    if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_TIGER"),false))
-        return true;
-
-    if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_TREANT"),false))
-        return true;
-
-    if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_BALOR"),false))
-        return true;
-
-    if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_ICE_ELEMENTAL"),false))
-        return true;
-
-    if (canCast(GC.getInfoTypeForString("SPELL_SUMMON_SAND_LION"),false))
-        return true;
-		
-/** CTD when puppet summons other puppet
-    if (canCast(GC.getInfoTypeForString("SPELL_CREATE_PUPPET"),false))
-        return true;
-**/
+		    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+		    {
+				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
+		        {
+				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
+				    {
+						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
+				        {
+							return true;
+				        }
+					 }
+				 }
+			}
+		}
+	}
 
     return false;
 }
@@ -28179,6 +28150,11 @@ void CvUnitAI::AI_SummonCast()
 //returns true if the Unit can Damage stuff
 bool CvUnitAI::isDirectDamageCaster()
 {
+	if (!isChanneler())
+	{
+		return false;
+	}
+
     if (isHasCasted())
     {
         return false;
@@ -28281,26 +28257,58 @@ void CvUnitAI::AI_DirectDamageCast(int Threshold)
 //returns true if the Unit can Debuff stuff
 bool CvUnitAI::isDeBuffer()
 {
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ENTROPY1")))
-        return true;
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ICE1")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_MIND2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SUN2")))
-        return true;
-
-	// Tholal AI - add Entangle for Druids
-	 if (canCast(GC.getInfoTypeForString("SPELL_ENTANGLE"),false))
-        return true;
-
-// ToDo - put in check for scorch & malakim & enemy land -> Malakim Sand assault
-	// End Tholal AI
+	if (!isChanneler())
+	{
+		return false;
+	}
 	
-    return false;
+	for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+    {
+		bool bDebuffPromo = false;
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getAIWeight() < 0)
+			{
+				bDebuffPromo = true;
+			}
+		}
+
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2()).getAIWeight() < 0)
+			{
+				bDebuffPromo = true;
+			}
+		}
+
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3()).getAIWeight() < 0)
+			{
+				bDebuffPromo = true;
+			}
+		}
+
+		if (bDebuffPromo)
+		{
+			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+		    {
+				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
+		        {
+				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
+				    {
+						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
+				        {
+							return true;
+				        }
+					 }
+				 }
+			}	
+		}
+	}
+	
+	return false;
 }
 
 void CvUnitAI::AI_DeBuffCast()
@@ -28385,40 +28393,58 @@ void CvUnitAI::AI_MovementCast()
 
 bool CvUnitAI::isBuffer()
 {
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ENCHANTMENT1")))
-        return true;
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ENCHANTMENT2")))
-        return true;
+	if (!isChanneler())
+	{
+		return false;
+	}
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_BODY1")))
-        return true;
+	for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+    {
+		bool bBuffPromo = false;
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getAIWeight() > 0)
+			{
+				bBuffPromo = true;
+			}
+		}
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_BODY2")))
-        return true;
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2()).getAIWeight() > 0)
+			{
+				bBuffPromo = true;
+			}
+		}
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_NATURE1")))
-        return true;
+		if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3()).getAIWeight() > 0)
+			{
+				bBuffPromo = true;
+			}
+		}
 
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_NATURE2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SPIRIT1")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_CHAOS2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SHADOW1")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_SHADOW2")))
-        return true;
-
-    if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_EARTH2")))
-        return true;
-
-    return false;
+		if (bBuffPromo)
+		{
+			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+		    {
+				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
+		        {
+				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
+				    {
+						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
+				        {
+							return true;
+				        }
+					 }
+				 }
+			}
+		}
+	}
+	
+	return false;
 }
 
 // This is run often, so lets keep things simple
