@@ -27593,12 +27593,12 @@ void CvUnitAI::AI_heromove()
 	
     if (getUnitClassType()==GC.getDefineINT("UNITCLASS_RANTINE"))
     {
-        if (AI_Rantinemove())
-        {
-            return;
-        }
-		if (getLevel() < 8)
+		if (getLevel() < 10)
 		{
+			if (AI_Rantinemove())
+			{
+				return;
+			}
 	        getGroup()->pushMission(MISSION_SKIP);
 		    return;
 		}
