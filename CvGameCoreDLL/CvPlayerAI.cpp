@@ -11320,7 +11320,7 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 {
     PROFILE_FUNC();
 	int iCount;
-	bool bHoly, bState, bHolyState;
+	bool bHoly, bState, bHolyState, bFavorite;
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/08/10                                jdog5000      */
 /*                                                                                              */
@@ -11331,21 +11331,23 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	//Tholal AI- Agnostics can't make missionaries so they shouldn't even try
+	if (isAgnostic())
+	{
+		return 0;
+	}
+	// End Tholal AI
+
 	bHoly = hasHolyCity(eReligion);
 	bState = (getStateReligion() == eReligion);
 	bHolyState = ((getStateReligion() != NO_RELIGION) && hasHolyCity(getStateReligion()));
 
+	bFavorite = (getFavoriteReligion() == eReligion);
+
 	iCount = 0;
 
-// Tholal AI - try and keep some state missionaries around at all times
-	if (bState)
-	{
-		iCount = 1;
-	}
-//	End Tholal AI
-
     //internal spread.
-    if (bCultureVictory || bState || bHoly)
+    if (bCultureVictory || bState || bHoly || bFavorite)
     {
         iCount = std::max(iCount, (pArea->getCitiesPerPlayer(getID()) - pArea->countHasReligion(eReligion, getID())));
         if (iCount > 0)
@@ -11359,10 +11361,17 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 	}
 
     //external spread.
-    if ((bHoly && bState) || (bHoly && !bHolyState && (getStateReligion() != NO_RELIGION)))
+    if ((bHoly && bState) || (bFavorite))//(bHoly && !bHolyState && (getStateReligion() != NO_RELIGION)))
     {
         iCount += ((pArea->getNumCities() * 2) - (pArea->countHasReligion(eReligion) * 3));
-        iCount /= 8;
+        if (bFavorite)
+		{
+			iCount /= 4;	
+		}
+		else
+		{
+			iCount /= 8;
+		}
 
         iCount = std::max(0, iCount);
 
@@ -11371,6 +11380,30 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 			iCount++;
 		}
     }
+
+	//Tholal AI - More missionaries when pushing for religious victory
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		if (!bState)
+		{
+			return 0;
+		}
+		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
+		{
+			iCount ++;
+		}
+		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
+		{
+			iCount ++;
+		}
+	}
+
+	// try and keep at least one state missionary around at all times
+	if (bState)
+	{
+		iCount++;
+	}
+	//	End Tholal AI
 
 	return iCount;
 }
