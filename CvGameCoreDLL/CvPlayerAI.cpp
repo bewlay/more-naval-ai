@@ -11563,17 +11563,18 @@ int CvPlayerAI::AI_missionaryValue(CvArea* pArea, ReligionTypes eReligion, Playe
 	int iOurCitiesHave = 0;
 	int iOurCitiesCount = 0;
 
-	if (NULL == pArea)
-	{
-		iOurCitiesHave = kTeam.getHasReligionCount(eReligion);
-		iOurCitiesCount = kTeam.getNumCities();
-	}
+	//if (NULL == pArea)
+	//{
+	iOurCitiesHave = kTeam.getHasReligionCount(eReligion);
+	iOurCitiesCount = kTeam.getNumCities();
+	//}
+	/*
 	else
 	{
 		iOurCitiesHave = pArea->countHasReligion(eReligion, getID()) + countReligionSpreadUnits(pArea, eReligion,true);
 		iOurCitiesCount = pArea->getCitiesPerPlayer(getID());
 	}
-	
+	*/
 	if (iOurCitiesHave < iOurCitiesCount)
 	{
 		iSpreadInternalValue *= 30 + ((100 * (iOurCitiesCount - iOurCitiesHave))/ iOurCitiesCount);
