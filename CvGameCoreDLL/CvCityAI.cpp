@@ -1923,7 +1923,7 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal AI - early check for Priests and Mages
 	if (iNumPriests < (iNeededPriests / 2))
 	{
-		if (AI_chooseUnit(UNITAI_MEDIC, 50))
+		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 75 : 50))
 		{
 			return;
 		}
