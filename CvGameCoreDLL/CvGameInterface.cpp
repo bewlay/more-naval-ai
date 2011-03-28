@@ -162,7 +162,10 @@ void CvGame::updateColoredPlots()
 	{
 		if (gDLL->getInterfaceIFace()->isCityScreenUp())
 		{
-			for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+			for (iI = 0; iI < pHeadSelectedCity->getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				if (pHeadSelectedCity->isWorkingPlot(iI))
 				{
