@@ -25196,22 +25196,6 @@ void CvUnitAI::AI_chooseGroupflag()
             break;
     }
 
-    // move to subfunction later
-    if(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).isReligionVictory())
-    {
-//        PromotionTypes iPromotion=(PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR");
-//        if (iPromotion!=NO_PROMOTION && isHasPromotion(iPromotion))
-//  Must use UNITAI, since PromotionSelection peneds on Groupflag
-        //if(AI_getUnitAIType()==UNITAI_MEDIC)
-		if (isInquisitor())
-        {
-            if ((GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_INQUISITION)-2)<(GET_PLAYER(getOwnerINLINE()).getNumCities()/5))
-            {
-                AI_setGroupflag(GROUPFLAG_INQUISITION);
-                return;
-            }
-        }
-    }
 
 	//Svartalfar Kidnap
 	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
