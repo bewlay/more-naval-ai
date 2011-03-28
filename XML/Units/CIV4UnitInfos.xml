@@ -19017,10 +19017,6 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_SETTLER_SEA</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
                     <UnitAIType>UNITAI_EXPLORE_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -33047,6 +33043,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE_SEA</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MISSIONARY_SEA</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
