@@ -1422,33 +1422,7 @@ class CvEventManager:
 					
 #UNITAI for AdeptUnits
 		if ((not pPlayer.isHuman()) and (not pPlayer.isBarbarian())):
-			if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_ADEPT'):
-				terraformersneeded=pPlayer.getNumCities()/4
-				if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):			
-					terraformersneeded=terraformersneeded+2
-				numberterraformer=0
-				numbermanaupgrade=0
-				for pUnit in player.getUnitList():
-					if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
-						numberterraformer = numberterraformer+1
-					if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'):
-						numbermanaupgrade = numbermanaupgrade+1
-				
-				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_RAWMANA')) > 0:
-					if numbermanaupgrade == 0:
-						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
-				
-				if 	numberterraformer<terraformersneeded:
-					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
-				else:				
-					pPlot = unit.plot()
-					numbermages=0
-#					if pPlot.AI_neededPermDefenseReserve(2)>0:
-					if pPlot.area().getAreaAIType(pPlayer.getTeam()) == AreaAITypes.AREAAI_DEFENSIVE:
-						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
-					else:
-						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_WARWIZARD'))
-
+			
 #UNITAI for Terraformers
 			if unit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):			
 				numberterraformer=0
@@ -1461,17 +1435,62 @@ class CvEventManager:
 				elif numberterraformer<3:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
 
-			elif unit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
-				if pPlayer.getStateReligion()==gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'):
-					numberterraformer=0
-					for pUnit in player.getUnitList():
-						if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
-							if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
-								numberterraformer = numberterraformer+1
-					if 	((numberterraformer*3)<pPlayer.getNumCities()):
-						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
-					elif numberterraformer<4:
-						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
+			numTreeTerraformer=0
+			if unit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
+				neededTreeTerraformer = 1
+				if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR') or pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
+					neededTreeTerraformer = neededTreeTerraformer + (pPlayer.getNumCities() / 3)
+				for pUnit in player.getUnitList():
+					if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
+						if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
+							numTreeTerraformer = numTreeTerraformer+1
+				if numTreeTerraformer < neededTreeTerraformer:
+					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
+		
+			if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_ADEPT'):
+			
+				bCanMageTerraform = false
+				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER')) > 0:
+					bCanMageTerraform = true
+				elif pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN')) > 0:
+					bCanMageTerraform = true
+			
+				numbermageterrafomer = (pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_TERRAFORMER')) - numTreeTerraformer)
+				numbermanaupgrade = pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
+				
+				bHasAI = false
+				canupgrademana = false
+								
+#				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUSCLASS_RAWMANA')) > 0:
+				if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):			
+					canupgrademana=true
+				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ALTERATION')):
+					canupgrademana=true			
+				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_DIVINATION')):
+					canupgrademana=true			
+				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ELEMENTALISM')):
+					canupgrademana=true			
+				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_NECROMANCY')):
+					canupgrademana=true		
+			
+				if canupgrademana:
+					if numbermanaupgrade == 0:
+						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
+						bHasAI = true
+			
+				if bHasAI == false:
+					if bCanMageTerraform:
+						if numbermageterrafomer < 2:
+							unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
+							bHasAI = true
+							
+				if bHasAI == false:			
+					pPlot = unit.plot()
+					if pPlot.area().getAreaAIType(pPlayer.getTeam()) == AreaAITypes.AREAAI_DEFENSIVE:
+						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
+					else:
+						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_WARWIZARD'))
+		
 		
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_BEAST_OF_AGARES'):
 			if city.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
