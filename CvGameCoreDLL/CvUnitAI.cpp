@@ -10028,6 +10028,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	iValue = 0;
 
+	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
+
 	if (GC.getPromotionInfo(ePromotion).isLeader())
 	{
 		// Don't consume the leader as a regular promotion
@@ -10036,6 +10038,15 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	if (GC.getPromotionInfo(ePromotion).isBlitz())
 	{
+		if (baseMoves() > 1)
+		{
+			iValue += 5 * baseMoves();
+			if (AI_getUnitAIType() == UNITAI_ATTACK_CITY)
+			{
+				iValue += 50;
+			}
+		}
+		/*
 		if ((AI_getUnitAIType() == UNITAI_RESERVE  && baseMoves() > 1) ||
 			AI_getUnitAIType() == UNITAI_PARADROP)
 		{
@@ -10046,33 +10057,124 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 //FfH: Modified by Kael 06/28/2008
 //			iValue += 2;
-			iValue += 3 * baseMoves();
+			iValue += 5 * baseMoves();
 //FfH: End Modify
 
 		}
+		*/
 	}
 
 	// Tholal AI - account for new FFH promotion tags
+
+	if (GC.getPromotionInfo(ePromotion).isSeeInvisible())
+	{
+		if ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE))
+		{
+			iValue += 50;
+		}
+		else
+		{
+			iValue += 25;
+		}
+	}
+
+	if (GC.getPromotionInfo(ePromotion).isInvisible())
+	{
+		if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY) || (AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_EXPLORE))
+		{
+			iValue += 25;
+		}
+	}
+
+	if (GC.getPromotionInfo(ePromotion).isTargetWeakestUnit())
+	{
+		if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY) || (AI_getUnitAIType() == UNITAI_COUNTER))
+		{
+			iValue += 25;
+		}
+	}
+
+	if (GC.getPromotionInfo(ePromotion).isTargetWeakestUnitCounter())
+	{
+		if ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) || (AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
+		{
+			iValue += 25;
+		}
+	}
+
 	int iCombatHeal = GC.getPromotionInfo(ePromotion).getCombatHealPercent();
 
 	if (iCombatHeal > 0)
 	{
 		if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY) || (AI_getUnitAIType() == UNITAI_COUNTER))
 		{
-			iValue += iCombatHeal * 2;
+			iValue += (iCombatHeal * (getLevel() + 1));
 		}
 		else
 		{
-			iValue++;
+			iValue += iCombatHeal;
 		}
 	}
-	//iValue += ((GC.getPromotionInfo(ePromotion).getCombatHealPercent() * 3) / 2);
 
-	iValue += GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * 2;
+	iValue += (GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * (getLevel() + 2));
 
 	if (GC.getPromotionInfo(ePromotion).isFear())
 	{
 		iValue += 100;
+	}
+
+	// Slaying
+	if (GC.getPromotionInfo(ePromotion).getPromotionCombatType() != NULL)
+	{
+		if ((AI_getUnitAIType() == UNITAI_CITY_COUNTER) || (AI_getUnitAIType() == UNITAI_COUNTER))
+		{
+			iValue += 30;
+		}
+		else
+		{
+			iValue += 20;
+		}
+	}
+
+	//Bounty Hunter
+	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (getLevel() + (bFinancialTrouble ? 2: 0));
+
+	// Tholal AI - HARDCODED promotions
+	// Inquisitor
+	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR")))
+	{
+		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+		{
+			// Tholal ToDo - Add Inquisitor AI - only need a few around
+			iValue += 40;
+		}
+	}
+
+	//Metamagic for Tower Victory Strategies
+	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC1")) || ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC2")))
+	{
+		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+		{
+			// Tholal ToDo - find a way to limit this to just a few units
+			iValue += 40;
+		}
+	}
+
+	// Nature 1
+	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_NATURE1")))
+	{
+		if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == (GC.getInfoTypeForString("PROMOTION_ELF") || GC.getInfoTypeForString("PROMOTION_DARK_ELF")))
+		{
+			iValue += 30;
+		}
+
+		if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != NO_RELIGION)
+		{
+			if (GET_PLAYER(getOwnerINLINE()).getStateReligion() == ((ReligionTypes)GC.getInfoTypeForString("RELIGION_FELLOWSHIP_OF_LEAVES")))
+			{
+				iValue += 25;
+			}
+		}
 	}
 
 	// ToDo: getPromotionCombatMod - mimic the Combatinfos function
@@ -10110,14 +10212,14 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	{
 		if (AI_getUnitAIType() == UNITAI_PILLAGE)
 		{
-			iValue += 40;
+			iValue += 25;
 		}
 		else if ((AI_getUnitAIType() == UNITAI_ATTACK) ||
 			       (AI_getUnitAIType() == UNITAI_ATTACK_CITY))
 		{
-			iValue += 20;
+			iValue += 15;
 		}
-		else if (AI_getUnitAIType() == UNITAI_PARADROP)
+		else if (AI_getUnitAIType() == UNITAI_PARADROP || AI_getUnitAIType() == UNITAI_EXPLORE)
 		{
 			iValue += 10;
 		}
@@ -10136,9 +10238,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 				(AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
 				(AI_getUnitAIType() == UNITAI_PIRATE_SEA) ||
 				(AI_getUnitAIType() == UNITAI_ESCORT_SEA) ||
-				(AI_getUnitAIType() == UNITAI_PARADROP))
+				(AI_getUnitAIType() == UNITAI_PARADROP) ||
+				(AI_getUnitAIType() == UNITAI_HERO))
 		{
-			iValue += 10;
+			iValue += 12;
 		}
 		else
 		{
@@ -10163,7 +10266,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	{
 		if ((AI_getUnitAIType() == UNITAI_ATTACK_CITY))
 		{
-			iValue += 12;
+			iValue += 20;
 		}
 		else if ((AI_getUnitAIType() == UNITAI_ATTACK))
 		{
@@ -10183,7 +10286,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 	else if (AI_getUnitAIType() == UNITAI_PIRATE_SEA)
 	{
-		iValue += (iTemp * 20);
+		iValue += (iTemp * 25);
 	}
 
 	iTemp = GC.getPromotionInfo(ePromotion).getMovesChange();
@@ -10196,9 +10299,14 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_SETTLER_SEA) ||
 			(AI_getUnitAIType() == UNITAI_PILLAGE) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK) ||
-			(AI_getUnitAIType() == UNITAI_PARADROP))
+			(AI_getUnitAIType() == UNITAI_PARADROP) ||
+			(AI_getUnitAIType() == UNITAI_TERRAFORMER) ||
+			(AI_getUnitAIType() == UNITAI_EXPLORE) ||
+			(AI_getUnitAIType() == UNITAI_HERO) ||
+			(AI_getUnitAIType() == UNITAI_MISSIONARY) ||
+			isInquisitor())
 	{
-		iValue += (iTemp * 20);
+		iValue += (iTemp * 35);
 	}
 	else
 	{
@@ -10257,7 +10365,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_CITY_DEFENSE) ||
 			(AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
 			(AI_getUnitAIType() == UNITAI_CITY_SPECIAL) ||
-			(AI_getUnitAIType() == UNITAI_ATTACK))
+			(AI_getUnitAIType() == UNITAI_ATTACK) ||
+			(AI_getUnitAIType() == UNITAI_ATTACK_CITY) ||
+			(AI_getUnitAIType() == UNITAI_HERO))
 	{
 		iTemp *= 8;
 		iExtra = getExtraChanceFirstStrikes() + getExtraFirstStrikes() * 2;
@@ -10277,7 +10387,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iExtra = (m_pUnitInfo->getWithdrawalProbability() + (getExtraWithdrawal() * 4));
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
-		if ((AI_getUnitAIType() == UNITAI_ATTACK_CITY))
+		if ((AI_getUnitAIType() == UNITAI_ATTACK_CITY) ||
+			(AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
+			(AI_getUnitAIType() == UNITAI_HERO))
 		{
 			iValue += (iTemp * 4) / 3;
 		}
@@ -10303,11 +10415,11 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 		if (AI_getUnitAIType() == UNITAI_COLLATERAL)
 		{
-			iValue += (iTemp * 1);
+			iValue += (iTemp * 2);
 		}
 		else if (AI_getUnitAIType() == UNITAI_ATTACK_CITY)
 		{
-			iValue += ((iTemp * 2) / 3);
+			iValue += iTemp;
 		}
 		else
 		{
@@ -10397,6 +10509,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
         iExtra = getAdjacentTileHeal();
         iTemp *= (100 + iExtra * 5);
         iTemp /= 100;
+
+		if ((AI_getUnitAIType() == UNITAI_MEDIC))
+		{
+			iTemp *= 2;
+		}
+
         if (getSameTileHeal() >= iTemp)
         {
             iValue += (iTemp * ((getGroup()->getNumUnits() > 9) ? 4 : 2));
@@ -10440,13 +10558,22 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_ESCORT_SEA) ||
 			(AI_getUnitAIType() == UNITAI_CARRIER_SEA) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK_AIR) ||
-			(AI_getUnitAIType() == UNITAI_CARRIER_AIR))
+			(AI_getUnitAIType() == UNITAI_CARRIER_AIR) ||
+			(AI_getUnitAIType() == UNITAI_HERO) ||
+			isSummoner())
 	{
 		iValue += (iTemp * 2);
 	}
 	else
 	{
-		iValue += (iTemp * 1);
+		if (isDeBuffer() ||	isDirectDamageCaster())
+		{
+			iValue += (iTemp * getChannelingLevel());
+		}
+		else
+		{
+			iValue += (iTemp * 1);
+		}
 	}
 
 	iTemp = GC.getPromotionInfo(ePromotion).getCityAttackPercent();
@@ -10468,6 +10595,15 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
+	if (GC.getPromotionInfo(ePromotion).isImmuneToDefensiveStrike())
+	{
+		if (AI_getUnitAIType() == UNITAI_ATTACK_CITY)
+		{
+			iValue += 50;
+		}
+	}
+
+
 	iTemp = GC.getPromotionInfo(ePromotion).getCityDefensePercent();
 	if (iTemp != 0)
 	{
@@ -10480,6 +10616,14 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		else
 		{
 			iValue += (iTemp / 4);
+		}
+	}
+
+	if (GC.getPromotionInfo(ePromotion).isDoubleFortifyBonus())
+	{
+		if (AI_getUnitAIType() == UNITAI_CITY_DEFENSE)
+		{
+			iValue += 50;
 		}
 	}
 
@@ -10782,12 +10926,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 		if ((AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
 		{
-		    iValue += (iTemp * iCombatWeight) / 50;
+		    iValue += (iTemp * iCombatWeight) / 10;
 		}
 		else if ((AI_getUnitAIType() == UNITAI_ATTACK) ||
 			       (AI_getUnitAIType() == UNITAI_RESERVE))
 		{
-			iValue += (iTemp * iCombatWeight) / 100;
+			iValue += (iTemp * iCombatWeight) / 20;
 		}
 		else
 		{
@@ -10825,7 +10969,191 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
         iTemp *= 2;
     }
     iValue += iTemp;
-    iValue += GC.getPromotionInfo(ePromotion).getAIWeight();
+
+	
+	// Tholal AI - mage promotion: loop through spells, check that they require ePromotion, add value for spell, check various arcane leader and civ Traits
+	if (isChanneler())
+	{
+		// traits
+		bool bSummoner = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
+		bool bSundered = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
+		bool bArcane = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
+
+		if (GC.getPromotionInfo(ePromotion).getPromotionSummonPerk() != NO_PROMOTION)
+		{
+			if (isSummoner())
+			{
+				iValue += 15;
+			}
+		}
+
+	    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+		{
+			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+			{
+				if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() == ePromotion)
+				{
+					iValue += (GC.getSpellInfo((SpellTypes)iSpell).getDamage() * 2);
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
+					{
+						int iTempValue = (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat() * 5) + 1;
+						
+						if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
+						{
+							iTempValue += 10;
+						}
+
+						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
+						{
+						    iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
+						}
+
+						// Tholal ToDo - add points for Bonus Affinities
+						int iModValue = 0;
+						if (bSummoner)
+						{
+							iModValue++;
+						}
+						if (bSundered)
+						{
+							iModValue++;
+						}
+
+						iValue += (iTempValue * (1 + iModValue));
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+					{
+						if (AI_getGroupflag()==GROUPFLAG_CONQUEST)// && !isBuffer())
+						{
+							iValue += 25;
+						}
+						else
+						{
+							iValue += 15;
+						}
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+					{
+						if (AI_getGroupflag()==GROUPFLAG_CONQUEST && !isBuffer())
+						{
+							iValue += 25;
+						}
+						else
+						{
+							iValue += 15;
+						}
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+					{
+						if (AI_getGroupflag()==GROUPFLAG_CONQUEST && !isBuffer())
+						{
+							iValue += 25;
+						}
+						else
+						{
+							iValue += 15;
+						}
+					}
+					if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1() != NO_PROMOTION)
+					{
+						if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
+						{
+							if (AI_getGroupflag()==GROUPFLAG_CONQUEST)
+							{
+								iValue += 35;
+							}
+						}
+						else
+						{
+							if (isBuffer())
+							{
+								iValue += 35;
+							}
+							else
+							{
+								iValue += 15;
+							}
+						}
+					}
+
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
+					{
+						if (AI_getUnitAIType() == UNITAI_MAGE || AI_getGroupflag()==GROUPFLAG_PERMDEFENSE)
+						{
+							iValue += 50;
+						}
+					}
+
+					// Blaze
+					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateFeatureType() != NO_FEATURE)
+					{
+						if (AI_getGroupflag()==GROUPFLAG_CONQUEST || AI_getUnitAIType() == UNITAI_TERRAFORMER)
+						{
+							iValue += 35;
+						}
+						else
+						{
+							iValue += 10;
+						}
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateImprovementType() != NO_IMPROVEMENT)
+					{
+						if (AI_getGroupflag()==GROUPFLAG_CONQUEST || AI_getUnitAIType() == UNITAI_TERRAFORMER)
+						{
+							iValue += 35;
+						}
+						else
+						{
+							iValue += 10;
+						}
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).isDispel())
+					{
+						iValue += 25;
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).isPush())
+					{
+						iValue += 20;
+					}
+					if (GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() != 0)
+					{
+						iValue += 25 * GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns();
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAutomateTerrain())
+					{
+						if (AI_getUnitAIType() == UNITAI_TERRAFORMER)
+						{
+							iValue += 50;
+						}
+						else
+						{
+							iValue += 10;
+						}
+					}
+
+					if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
+					{
+						if (AI_getUnitAIType() != UNITAI_WARWIZARD)
+						{
+							iValue /= 2;
+						}
+					}
+				}
+			}
+		}
+		iValue += ((GC.getPromotionInfo(ePromotion).getAIWeight() / 5) * getChannelingLevel());
+	}
+
+
 //FfH: End Add
 
 	if (iValue > 0)
