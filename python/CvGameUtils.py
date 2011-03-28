@@ -814,20 +814,7 @@ class CvGameUtils:
 			grassb = false #terraformer tries to scorch grassland to plains			
 			hellterrb = true #terraformer tries to remove hell terrain
 			treesb = false #terraformer tries to Create Trees
-			canupgrademana = false #terraformer tries to upgrade mana nodes
-
-			if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):			
-				canupgrademana=true
-			elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ALTERATION')):
-				canupgrademana=true			
-			elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_DIVINATION')):
-				canupgrademana=true			
-			elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ELEMENTALISM')):
-				canupgrademana=true			
-			elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_NECROMANCY')):
-				canupgrademana=true			
 								
-			rawmana = 0
 			desert = 0
 			snow = 0
 			tundra = 0
@@ -857,7 +844,6 @@ class CvGameUtils:
 				hellterrb = true #terraformer tries to remove hell terrain
 				treesb = false #terraformer tries to Create Trees				
 				treesimpb= false #terraformer can Create Trees in Improvements				
-				canupgrademana = false #terraformer tries to upgrade mana nodes
 
 			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
 				desertb = false #terraformer tries to spring deserts
@@ -874,23 +860,8 @@ class CvGameUtils:
 					if not pPlayer.isHuman():
 						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
 						return 0
-					
-				canupgrademana = false #terraformer tries to upgrade mana nodes
-				
-#prefer to upgrade mana rather than terraform?
-			if canupgrademana:
-				if CyGame().getSorenRandNum(100, "Upgrademana")<10:
-					pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
-					return 0
-				if (pPlayer.getArcaneTowerVictoryFlag()>0):
-					pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
-					return 0
-				
-#-----------------------------------
-#TERRAFORMING
-#-----------------------------------
 
-
+				
 #TERRAFORMING
 			if pPlot.getOwner()==pUnit.getOwner():
 				if (desertb or pPlot.isRiver()):
@@ -960,7 +931,6 @@ class CvGameUtils:
 													desert=desert+1
 											if (desertb or pPlot.isRiver()):
 												if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-#													if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):
 													desert=desert+1
 										if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
 											if snowb:
@@ -1001,7 +971,6 @@ class CvGameUtils:
 												return 1
 										if (desertb or pPlot.isRiver()):
 											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-#												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
 												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
 												return 1
 
@@ -1106,7 +1075,6 @@ class CvGameUtils:
 												iCount=iCount+1
 										if (desertb or pPlot.isRiver()):
 											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-#												if not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_OASIS'):											
 												iCount=iCount+1
 									if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
 										if snowb:
