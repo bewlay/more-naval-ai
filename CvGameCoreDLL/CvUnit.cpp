@@ -1141,9 +1141,12 @@ void CvUnit::doTurn()
                 kill(true);
                 GC.getGameINLINE().decrementUnitCreatedCount(getUnitType());
                 GC.getGameINLINE().decrementUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType()));
+
+				/* - Tholal AI - these functions are already handled in the kill section
                 GET_TEAM(getTeam()).changeUnitClassCount(((UnitClassTypes)(m_pUnitInfo->getUnitClassType())), -1);
                 GET_PLAYER(getOwnerINLINE()).changeUnitClassCount(((UnitClassTypes)(m_pUnitInfo->getUnitClassType())), -1);
                 GET_PLAYER(getOwnerINLINE()).changeExtraUnitCost(m_pUnitInfo->getExtraCost() * -1);
+				*/
             }
         }
     }
