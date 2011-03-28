@@ -17510,9 +17510,8 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 	int iOtherPlayerAttitudeWeight = 0;
 
-	// Tholal ToDo - check to make sure this isn't being called on oneself (hit this assert through an event for some reason)
-	// Eventtrigger 215 - eEvent 12?
-	if (kTriggeredData.m_eOtherPlayer != NO_PLAYER)
+	// Tholal AI - edited if statement to make sure we aren't checking attitude on ourselves (covers Insane and Adpative Trait events)
+	if ((kTriggeredData.m_eOtherPlayer != NO_PLAYER) && (GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam() != getTeam()))
 	{
 		iOtherPlayerAttitudeWeight = AI_getAttitudeWeight(kTriggeredData.m_eOtherPlayer);
 		iOtherPlayerAttitudeWeight += 10 - GC.getGame().getSorenRandNum(20, "AI event value attitude");
