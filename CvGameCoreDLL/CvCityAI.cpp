@@ -3627,9 +3627,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 
 
 								iValue *= (GET_PLAYER(getOwnerINLINE()).getNumCities() * 2);
-								// Tholal AI ToDo - had a game where Mercurians triggered a divide by 0 error here - figure out why
-								// Temp(?) hack - added a std::max check to avoid the above mentioned divide by 0 error
-								//iValue /= std::max(1,(GET_PLAYER(getOwnerINLINE()).getUnitClassCountPlusMaking((UnitClassTypes)iI) + GET_PLAYER(getOwnerINLINE()).getNumCities() + 1));
 								iValue /= (GET_PLAYER(getOwnerINLINE()).getUnitClassCountPlusMaking((UnitClassTypes)iI) + GET_PLAYER(getOwnerINLINE()).getNumCities() + 1);
 
 								FAssert((MAX_INT / 1000) > iValue);
