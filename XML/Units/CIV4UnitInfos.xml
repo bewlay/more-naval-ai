@@ -14605,10 +14605,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
