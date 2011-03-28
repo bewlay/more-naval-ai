@@ -11364,15 +11364,7 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
     if ((bHoly && bState) || (bFavorite))//(bHoly && !bHolyState && (getStateReligion() != NO_RELIGION)))
     {
         iCount += ((pArea->getNumCities() * 2) - (pArea->countHasReligion(eReligion) * 3));
-        if (bFavorite)
-		{
-			iCount /= 4;	
-		}
-		else
-		{
-			iCount /= 8;
-		}
-
+		iCount /= 8;
         iCount = std::max(0, iCount);
 
 		if (AI_isPrimaryArea(pArea))
@@ -11390,11 +11382,11 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 		{
-			iCount ++;
+			iCount++;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
 		{
-			iCount ++;
+			iCount++;
 		}
 	}
 
