@@ -1686,7 +1686,7 @@ class CvGameUtils:
 #Luchuirp
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
 										lValues[sType.index('BONUS_MANA_ENCHANTMENT')]+=250
-										lValues[sType.index('BONUS_MANA_FIRE')]+=250
+										lValues[sType.index('BONUS_MANA_FIRE')]+=300
 										lStackvaluesMod[sType.index('BONUS_MANA_ENCHANTMENT')]=2
 #SVARTALFAR				
 									if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
@@ -1771,15 +1771,16 @@ class CvGameUtils:
 									for i in range(len(sType)):
 										iNumberMana=0
 										iNumberMana+=pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString(sType[i]))
-										lValues[i]-=((iNumberMana * 500) / lStackvaluesMod[i])
+										lValues[i]-=((iNumberMana * 1000) / lStackvaluesMod[i])
 										
 #Values for Victory Condition
 									#if (xPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1)):
 									
 									if (pPlayer.getArcaneTowerVictoryFlag()>0):
 										if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
-											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_METAMAGIC'))==0:													
-												lValues[sType.index('BONUS_MANA_METAMAGIC')]+=5000
+											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_METAMAGIC'))==0:
+												if not pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_METAMAGIC2')):
+													lValues[sType.index('BONUS_MANA_METAMAGIC')]+=5000
 	
 										if (pPlayer.getArcaneTowerVictoryFlag()==1):
 											if pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_BODY'))==0:													
@@ -1825,9 +1826,6 @@ class CvGameUtils:
 #---------------------
 #Choose the best MANA
 #---------------------					
-# Tholal AI - ToDo  - reserve 1 raw mana if have lots and going for tower victory
-#									if (pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUSCLASS_RAWMANA')) == 1:					
-	
 									iBestMana=-1
 									iBestManaValue=0
 									for i in range(len(sType)):
@@ -1923,6 +1921,7 @@ class CvGameUtils:
 											if pUnit.canCast(gc.getInfoTypeForString('SPELL_DISPEL_MAGIC'),false):
 												pUnit.cast(gc.getInfoTypeForString('SPELL_DISPEL_MAGIC'))
 												return 1
+
 #Dispel more if we seek Tower Victory Condition
 			if (pPlayer.getArcaneTowerVictoryFlag()>0):												
 				iBestCount=0
@@ -1953,7 +1952,7 @@ class CvGameUtils:
 					return 1
 												
 												
-#found no mana, return 2 so UNITAI is set to UNITAI_TERRAFORMER
+#found no mana, return 2 so UNITAI is reset
 												
 		return 2
 
