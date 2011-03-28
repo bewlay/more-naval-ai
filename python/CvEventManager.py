@@ -1071,6 +1071,7 @@ class CvEventManager:
 			newUnit2.setName("Riuros")
 			newUnit3 = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_PRIEST_OF_WINTER'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			newUnit3.setName("Anagantios")
+			pPlayer.startConquestMode()
 
 		if iProjectType == gc.getInfoTypeForString('PROJECT_THE_DEEPENING'):
 			iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
@@ -1253,15 +1254,6 @@ class CvEventManager:
 		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 		
-
-#Conquestmode for Heroes (still needed?)
-
-		if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_DONAL'):
-			unit.startConquestMode()
-		if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_DEMAGOG'):
-			unit.startConquestMode()
-		if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_LOSHA'):
-			unit.startConquestMode()
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_VAMPIRE'):
 			unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_FEASTING')) 
 
@@ -1749,101 +1741,104 @@ class CvEventManager:
 			
 #Sephi	
 #Go into Conquest Mode
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
-				if iTechType == gc.getInfoTypeForString('TECH_BOWYERS'):
-					pPlayer.startConquestMode()
-			
-			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_PERPENTACH'):
-				if iTechType == gc.getInfoTypeForString('TECH_CONSTRUCTION'):
-					pPlayer.startConquestMode()
 
-			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KEELYN'):
-				if iTechType == gc.getInfoTypeForString('TECH_IRON_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
-				if iTechType == gc.getInfoTypeForString('TECH_IRON_WORKING'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BANNOR'):											
-				if iTechType == gc.getInfoTypeForString('TECH_FANATICISM'):			
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ALEXIS'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CALABIM'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_FEUDALISM'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_MASONRY'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
-				if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_GRIGORI'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TASUNKE'):
-				if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_RHOANNA'):
-				if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
-				if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KURIOTATES'):
-				if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LANUN'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_SORCERY'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MALAKIM'):
-				if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
-				if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-					pPlayer.startConquestMode()
-
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SIDAR'):
-				if iTechType == gc.getInfoTypeForString('TECH_POISONS'):
-					pPlayer.startConquestMode()
-					
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):											 
-				if iTechType == gc.getInfoTypeForString('TECH_HUNTING'):
-					pPlayer.startConquestMode()
+			if pPlayer.isConquestMode() == False:
+	
+				if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
+					if iTechType == gc.getInfoTypeForString('TECH_BOWYERS'):
+						pPlayer.startConquestMode()
+				
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_PERPENTACH'):
+					if iTechType == gc.getInfoTypeForString('TECH_CONSTRUCTION'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KEELYN'):
+					if iTechType == gc.getInfoTypeForString('TECH_IRON_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
+					if iTechType == gc.getInfoTypeForString('TECH_IRON_WORKING'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BANNOR'):											
+					if iTechType == gc.getInfoTypeForString('TECH_FANATICISM'):			
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ALEXIS'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CALABIM'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_FEUDALISM'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_MASONRY'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
+					if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_GRIGORI'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TASUNKE'):
+					if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_RHOANNA'):
+					if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
+					if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KURIOTATES'):
+					if iTechType == gc.getInfoTypeForString('TECH_HORSEBACK_RIDING'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LANUN'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_SORCERY'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MALAKIM'):
+					if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
+					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+						pPlayer.startConquestMode()
+	
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SIDAR'):
+					if iTechType == gc.getInfoTypeForString('TECH_POISONS'):
+						pPlayer.startConquestMode()
+						
+				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):											 
+					if iTechType == gc.getInfoTypeForString('TECH_HUNTING'):
+						pPlayer.startConquestMode()
 					
 			iReligion = -1
 			if iTechType == gc.getInfoTypeForString('TECH_CORRUPTION_OF_SPIRIT'):
