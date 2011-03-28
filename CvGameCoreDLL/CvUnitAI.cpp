@@ -28361,7 +28361,7 @@ void CvUnitAI::AI_mageCast()
 void CvUnitAI::AI_mageMove()
 {
 	// Tholal AI - catch for wrong units getting mage AI
-	if (!isChanneler())
+	if (!isChanneler() || isDivine())
 	{
 		AI_setUnitAIType(UNITAI_RESERVE);
 	}
