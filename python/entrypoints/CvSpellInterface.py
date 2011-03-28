@@ -1005,7 +1005,8 @@ def spellCrush(caster):
 def reqDeclareNationality(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
-		if (caster.getUnitAIType() in (UnitAITypes.UNITAI_PIRATE_SEA,UnitAITypes.UNITAI_ANIMAL)):
+#		if (caster.getUnitAIType() in (UnitAITypes.UNITAI_PIRATE_SEA,UnitAITypes.UNITAI_ANIMAL)):
+		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_PIRATE_SEA'):
 			return False
 		if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN')) or caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_INVISIBLE')):
 			return False
