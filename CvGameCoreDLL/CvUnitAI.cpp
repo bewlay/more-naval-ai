@@ -8586,6 +8586,15 @@ void CvUnitAI::AI_missionarySeaMove()
 {
 	PROFILE_FUNC();
 
+	// Tholal AI - catch for upgraded units
+	if (cargoSpace() == 0)
+	{
+		AI_setUnitAIType(UNITAI_EXPLORE_SEA);
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+	// End Tholal AI
+
 /********************************************************************************/
 /* 	BETTER_BTS_AI_MOD						10/21/08	Solver & jdog5000	*/
 /* 																			*/
