@@ -28295,7 +28295,31 @@ void CvUnitAI::AI_upgrademanaMove()
     }
     if (lResult == 2)
     {
-        AI_setUnitAIType(UNITAI_RESERVE);
+		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC2")))
+		{
+			if (AI_moveIntoCity(5))
+			{
+				return;
+			}
+		}
+		else
+		{
+			if (isTerraformer())
+			{
+				AI_setUnitAIType(UNITAI_TERRAFORMER);
+			}
+			else
+			{
+				if (isDeBuffer() || isBuffer() || isDirectDamageCaster())
+				{
+					AI_setUnitAIType(UNITAI_WARWIZARD);
+				}
+				else
+				{
+					AI_setUnitAIType(UNITAI_MAGE);
+				}
+			}
+		}
     }
     getGroup()->pushMission(MISSION_SKIP);
     return;
