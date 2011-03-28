@@ -5269,13 +5269,15 @@ void CvUnitAI::AI_missionaryMove()
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
 	CvCity* pLoopCity;
-	CvCity* pBestCity;
 	CvPlot* pBestPlot;
+	CvPlot* pBestGreatWorkPlot;
 	int iValue;
 	int iBestValue;
 	int iLoop;
+
 	iBestValue = 0;
-	pBestCity = NULL;
+	pBestPlot = NULL;
+	pBestGreatWorkPlot = NULL;
 	iValue = 0;
 
 // Tholal AI - modifications to improve Missionary AI
@@ -5284,14 +5286,14 @@ void CvUnitAI::AI_missionaryMove()
 	if (!kPlayer.isAgnostic() && kPlayer.getStateReligion() == NO_RELIGION)
 	{
 		if (AI_spreadReligion())
-			{
-				return;
-			}
+		{
+			return;
+		}
 	}
 	
 	// Catch Disciples who have been upgraded to different units and change their AI
 	// Tholal ToDo - Secondary check is for Savants who can never do Great Works. Is there a better way to handle this?
-	if (!AI_greatWork())
+	if (m_pUnitInfo->getGreatWorkCulture() == 0)
 	{
 		if ((getLevel() > 3) || isDivine())
 		{
@@ -5300,7 +5302,14 @@ void CvUnitAI::AI_missionaryMove()
 	}
 
 	// Find cities in disorder or who have no culture and perform Great Works
+	// Tholal ToDo - Incorporate this into the AI_greatWork() function rather than duplicating code
+	/*
 	if (AI_greatWork())
+	{
+		return;
+	}
+	*/
+	else
 	{
 		CvCity* pCity = plot()->getPlotCity();
 
@@ -5312,34 +5321,57 @@ void CvUnitAI::AI_missionaryMove()
 				return;
 			}
 		}
-	
+			
 		for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
 		{
-			if (pLoopCity->isDisorder() || (pLoopCity->getCultureLevel() == 0) )
+			if (pLoopCity->isDisorder() || pLoopCity->getCulture(pLoopCity->getOwnerINLINE()) == 0)//(pLoopCity->getCultureLevel() == 0) )
 			{
-				iValue += pLoopCity->getPopulation() * 10;
-				if (pLoopCity->isCapital())
+				if (canGreatWork(pLoopCity->plot()))
 				{
-					iValue *= 10;
-				}
-				if (pLoopCity->isSettlement())
-				{
-					iValue /= 8;
-				}
-				iValue = std::max(1, iValue);
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-					pBestCity = pLoopCity;
+					if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
+					{
+						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_GREAT_WORK, getGroup()) == 0)
+						{
+							if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true))
+							{
+								iValue = pLoopCity->getPopulation() * 10;
+
+								if (pLoopCity->isCapital())
+								{
+									iValue *= 10;
+								}
+								if (pLoopCity->isSettlement())
+								{
+									iValue /= 8;
+								}
+								if (iValue > 0)
+								{
+									if (iValue > iBestValue)
+									{
+										iBestValue = iValue;
+										pBestPlot = getPathEndTurnPlot();
+										pBestGreatWorkPlot = pLoopCity->plot();
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
-
-		if (pBestCity != NULL)
+		if ((pBestPlot != NULL) && (pBestGreatWorkPlot != NULL))
 		{
-			pBestPlot = pBestCity->plot();
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2, false, false, MISSIONAI_GREAT_WORK, pBestPlot);
-			return;
+			if (atPlot(pBestGreatWorkPlot))
+			{
+				getGroup()->pushMission(MISSION_GREAT_WORK);
+				return;
+			}
+			else
+			{
+				FAssert(!atPlot(pBestPlot));
+				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_GREAT_WORK, pBestGreatWorkPlot);
+				return;
+			}
 		}
 	}
 //End Tholal AI
