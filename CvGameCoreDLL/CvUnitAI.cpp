@@ -28973,6 +28973,7 @@ void CvUnitAI::AI_InquisitionMove()
 			}
 			else
 			{
+				AI_setGroupflag(GROUPFLAG_NONE);
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 				return;
 			}
