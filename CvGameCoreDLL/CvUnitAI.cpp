@@ -28737,55 +28737,36 @@ void CvUnitAI::AI_DeBuffCast()
     if (!isDeBuffer())
         return;
 
-    const int iNumSummonSpells=10;
-
-    int iSpellValue[iNumSummonSpells];
-    for (int i=0;i<iNumSummonSpells;i++)
+	int iBestSpell = NO_SPELL;
+    int iBestValue = 0;
+    int iValue = 0;
+    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
-        iSpellValue[i]=0;
-    }
-
-    int iSpellType[iNumSummonSpells];
-    for (int i=0;i<iNumSummonSpells;i++)
-    {
-        iSpellType[i]=NO_SPELL;
-    }
-
-    int iRange=1;
-    int iCountTargets=0;
-
-
-    iSpellType[0]=GC.getInfoTypeForString("SPELL_RUST");
-    iSpellType[1]=GC.getInfoTypeForString("SPELL_WITHER");
-    iSpellType[2]=GC.getInfoTypeForString("SPELL_SLOW");
-    iSpellType[3]=GC.getInfoTypeForString("SPELL_CHARM_PERSON");
-    iSpellType[4]=GC.getInfoTypeForString("SPELL_BLINDING_LIGHT");
-
-    iSpellValue[0]=500;
-    iSpellValue[1]=700;
-    iSpellValue[2]=400;
-    iSpellValue[3]=400;
-    iSpellValue[4]=400;
-    int iBestspell=-1;
-    int iBestspellvalue=0;
-    for (int i=0; i<iNumSummonSpells; i++)
-    {
-        if (iBestspellvalue<iSpellValue[i])
+        iValue = 0;
+        if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
         {
-            if (iSpellType[i]!=NO_SPELL)
+            if (canCast(iSpell, false))
             {
-                if (canCast(iSpellType[i],false))
+                iValue += GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getAIWeight();
+                if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
                 {
-                    iBestspell=i;
-                    iBestspellvalue=iSpellValue[i];
+                    iValue += GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2()).getAIWeight();
+                }
+                if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+                {
+                    iValue += GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3()).getAIWeight();
                 }
             }
         }
+        if (iValue < iBestValue)
+        {
+            iBestValue = iValue;
+            iBestSpell = iSpell;
+        }
     }
-
-    if (!(iBestspell==-1))
+    if (iBestSpell != NO_SPELL)
     {
-        cast(iSpellType[iBestspell]);
+        cast(iBestSpell);
     }
 }
 
