@@ -17502,7 +17502,7 @@ int CvUnit::chooseSpell()
             }
             if (GC.getSpellInfo((SpellTypes)iSpell).isDispel())
             {
-				if (!AI_getUnitAIType() == UNITAI_MANA_UPGRADE)
+				if (AI_getUnitAIType() != UNITAI_MANA_UPGRADE)
 				{
 	                iValue += 25 * (iRange + 1) * (iRange + 1);
 				}
