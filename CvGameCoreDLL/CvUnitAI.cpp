@@ -25059,6 +25059,23 @@ void CvUnitAI::AI_summonAttackMove()
 {
 	PROFILE_FUNC();
 
+	// Floating Eyes
+	if (getDomainType() == DOMAIN_AIR)
+	{
+		if (canRecon(plot()))
+		{
+			if (AI_exploreAir())
+			{
+				return;
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+	}
+
     if(getDuration()>0)
     {
         if (AI_anyAttack(getDuration()*baseMoves(), 0))
