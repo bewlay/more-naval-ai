@@ -3984,6 +3984,15 @@ def onMoveLetumFrigus(pCaster, pPlot):
 		triggerData = pPlayer.initTriggeredData(iEvent, true, -1, pCaster.getX(), pCaster.getY(), pCaster.getOwner(), -1, -1, -1, -1, -1)
 		CyInterface().addMessage(pCaster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_LETUM_FRIGUS", ()),'',1,'Art/Interface/Buttons/Improvements/Letum Frigus.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
 		pPlot.setPythonActive(False)
+# Tholal AI - give rewards to AI players for finding Letum Frigus
+	else:
+		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+			pPlayer.setHasTrait(gc.getInfoTypeForString('TRAIT_AGGRESSIVE'),True)
+		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
+			pPlayer.changeGoldenAgeTurns(CyGame().goldenAgeLength())
+			CyInterface().addMessage(pPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_GOLDEN_AGE",()),'',1,'Art/Interface/Buttons/Spells/Explore Lair.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
+		pPlot.setPythonActive(False)
+		
 
 def onMoveMaelstrom(pCaster, pPlot):
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
