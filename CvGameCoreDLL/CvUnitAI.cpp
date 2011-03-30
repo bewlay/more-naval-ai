@@ -27244,13 +27244,36 @@ void CvUnitAI::PatrolMove()
 
 void CvUnitAI::HNgroupMove()
 {
-	AI_attackMove();
 
-    if (!isHiddenNationality())
+	if (!isHiddenNationality())
     {
-        AI_setGroupflag(GROUPFLAG_CONQUEST);
+        AI_setGroupflag(GROUPFLAG_NONE);
         return;
     }
+
+	/*
+	if (isAnimal())
+	{
+		if (!isInvisible(getTeam(), false))
+		{
+			setHasPromotion((PromotionTypes)GC.getDefineINT("HIDDEN_NATIONALITY_PROMOTION"), false);
+			return;
+		}
+	}
+	*/
+
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
+	{
+		AI_pirateSeaMove();
+		return;
+	}
+	else
+	{
+		AI_attackMove();
+		return;
+	}
+
+
 
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
