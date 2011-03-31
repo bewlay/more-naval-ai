@@ -25420,7 +25420,7 @@ bool CvUnitAI::AI_decide_permdefensegroup()
         return false;
     }
 	
-	if (AI_getUnitAIType() == UNITAI_HERO)
+	if(!isUnitAllowedPermDefense())
 	{
 		return false;
 	}
@@ -25574,6 +25574,11 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         return false;
     }
 
+	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
+	{
+		return false;
+	}
+
     if (getDuration()>0)
     {
         return false;
@@ -25588,11 +25593,6 @@ bool CvUnitAI::isUnitAllowedPermDefense()
     {
         return false;
     }
-
-	if (AI_getUnitAIType() == UNITAI_HERO)
-	{
-		return false;
-	}
 
 	if (!isMilitaryHappiness())
 	{
