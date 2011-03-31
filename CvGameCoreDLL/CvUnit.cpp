@@ -17461,7 +17461,14 @@ int CvUnit::chooseSpell()
             }
             if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
             {
-                iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+				if (GC.getSpellInfo((SpellTypes)iSpell).isImmuneTeam())
+				{
+					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+				}
+				else
+				{
+	                iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+				}
             }
             if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
             {
