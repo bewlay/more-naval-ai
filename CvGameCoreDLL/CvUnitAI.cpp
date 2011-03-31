@@ -25926,6 +25926,7 @@ void CvUnitAI::AI_barbsmashermove()
                 if(pLoopUnit->AI_getGroupflag()==GROUPFLAG_DEFENSE_NEW)
                 {
                     pLoopUnit->joinGroup(NULL);
+					pLoopUnit->AI_setUnitAIType(UNITAI_ATTACK_CITY);
                     pLoopUnit->AI_setGroupflag(GROUPFLAG_CONQUEST);
                     pLoopUnit->getGroup()->pushMission(MISSION_SKIP);
                 }
@@ -26213,46 +26214,16 @@ void CvUnitAI::AI_barbsmashermove()
         }
     }
 
-	AI_attackCityMove();
-
-	if (!plot()->isCity())
+	if (getGroup()->getNumUnits() < 5)
 	{
-		if (AI_retreatToCity())
+		if (!plot()->isCity())
 		{
-			return;
+			if (AI_retreatToCity())
+			{
+				return;
+			}
 		}
 	}
-
-	// Tholal AI - if group is overly large with nothing to do, switch AIs
-	/*
-	if (getGroup()->getNumUnits()> (GET_PLAYER(getOwnerINLINE()).getNumCities() *8))
-	{
-		CLLNode<IDInfo>* pUnitNode;
-        CvUnit* pLoopUnit;
-        pUnitNode = plot()->headUnitNode();
-        while (pUnitNode != NULL)
-        {
-            pLoopUnit = ::getUnit(pUnitNode->m_data);
-            pUnitNode = plot()->nextUnitNode(pUnitNode);
-            if (pLoopUnit!=NULL && pLoopUnit->getOwnerINLINE()==getOwnerINLINE())
-            {
-                if(pLoopUnit->getGroup()== getGroup())
-                {
-					pLoopUnit->joinGroup(NULL);
-                    //pLoopUnit->AI_setGroupflag(GROUPFLAG_CONQUEST);
-					pLoopUnit->AI_setUnitAIType(UNITAI_ATTACK_CITY);
-					pLoopUnit->getGroup()->pushMission(MISSION_SKIP);
-                }
-            }
-        }
-//		CvUnit* pHeadUnit = NULL;
-//		pHeadUnit = getGroup()->getHeadUnit();
-//		pHeadUnit->AI_setGroupflag(GROUPFLAG_CONQUEST);
-//      pHeadUnit->AI_setUnitAIType(UNITAI_ATTACK_CITY);
-		return;
-	}
-	*/
-	// End Tholal AI
 
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
@@ -27469,6 +27440,7 @@ void CvUnitAI::ConquestMove()
             for (int iI = 0; iI < iNeededDefenders; iI++)
             {
                 //search for a unit without much experience and add it to the CityDefense
+				// Tholal ToDo - better check for which units to leave behind
                 CvUnit* pBestUnit=NULL;
                 int iBestValue=100;
                 CLLNode<IDInfo>* pUnitNode;
@@ -27530,12 +27502,33 @@ void CvUnitAI::ConquestMove()
         }
     }
 
-	// Tholal AI - Heroes and Casters shouldnt wander around alone
+	// Noone should wander alone
+	
+	if (getGroup()->getNumUnits() == 1)
+	{
+		if (AI_group(UNITAI_ATTACK_CITY, -1, -1, -1, false, false, true, 5))
+		{
+			//TEMPFIX to stop WoC
+            if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
+            {
+                getGroup()->pushMission(MISSION_SKIP);
+            }
+			return;
+		}
+		if (AI_retreatToCity(false, true, 1))
+		{
+			return;
+		}
+	}
+	
+	
+
+	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
 	{
-		if (getGroup()->getNumUnits() < getLevel() / 2)
+		if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
 		{
-			if (AI_group(UNITAI_ATTACK_CITY))
+			if (AI_group(UNITAI_ATTACK_CITY, -1, -1, -1, false, false, true, 3, true))
 			{
 				return;
 			}
@@ -27548,7 +27541,8 @@ void CvUnitAI::ConquestMove()
 	// Tholal AI
 
 	bool bHuntBarbs = false;
-	if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 && !isBarbarian())
+	if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 && !GET_TEAM(getTeam()).isBarbarianAlly())
+	//if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 && !isBarbarian())
 	{
 			bHuntBarbs = true;
 	}
@@ -27852,7 +27846,7 @@ void CvUnitAI::ConquestMove()
     }
 
 	bHuntBarbs = false;
-	if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0)
+	if ((area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0) && !GET_TEAM(getTeam()).isBarbarianAlly())
 	{
 		if ((area()->getAreaAIType(getTeam()) != AREAAI_OFFENSIVE) && (area()->getAreaAIType(getTeam()) != AREAAI_DEFENSIVE))
 		{
