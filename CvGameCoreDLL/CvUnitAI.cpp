@@ -10168,6 +10168,11 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
+	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
+	{
+		iValue += 25;
+	}
+
 	//Bounty Hunter
 	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (getLevel() + (bFinancialTrouble ? 2: 0));
 
@@ -10338,7 +10343,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_MISSIONARY) ||
 			isInquisitor())
 	{
-		iValue += (iTemp * 35);
+		iValue += (iTemp * 25);
 	}
 	else
 	{
@@ -10476,6 +10481,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 /************************************************************************************************/
 	iTemp = GC.getPromotionInfo(ePromotion).getEnemyHealChange();	
 	if ((AI_getUnitAIType() == UNITAI_ATTACK) ||
+		(AI_getUnitAIType() == UNITAI_ATTACK_CITY) ||
 		(AI_getUnitAIType() == UNITAI_PILLAGE) ||
 		(AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
 		(AI_getUnitAIType() == UNITAI_PARADROP) ||
@@ -10484,26 +10490,26 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 	{
-		iValue += (iTemp / 4);
+		iValue += iTemp;
 	}
 	else
 	{
-		iValue += (iTemp / 8);
+		iValue += (iTemp / 2);
 	}
 
 	iTemp = GC.getPromotionInfo(ePromotion).getNeutralHealChange();
-	iValue += (iTemp / 8);
+	iValue += (iTemp / 2);
 
 	iTemp = GC.getPromotionInfo(ePromotion).getFriendlyHealChange();
 	if ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) ||
 		  (AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
 		  (AI_getUnitAIType() == UNITAI_CITY_SPECIAL))
 	{
-		iValue += (iTemp / 4);
+		iValue += iTemp;
 	}
 	else
 	{
-		iValue += (iTemp / 8);
+		iValue += (iTemp / 4);
 	}
 
 /************************************************************************************************/
@@ -11182,7 +11188,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 				}
 			}
 		}
-		iValue += ((GC.getPromotionInfo(ePromotion).getAIWeight() / 5) * getChannelingLevel());
+		iValue += ((GC.getPromotionInfo(ePromotion).getAIWeight() / 10) * (getChannelingLevel() +1));
 	}
 
 
