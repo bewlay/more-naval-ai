@@ -117,64 +117,65 @@ bool CvUnitAI::AI_update()
 /**						                                            							**/
 /*************************************************************************************************/
 
-    if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))
+	if (!GET_PLAYER(getOwnerINLINE()).isHuman())
     {
-        if (canConstruct(plot(),(BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW")))
-        {
-            construct((BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW"));
-            return false;
-        }
-    }
-
-	// Tholal AI - Shades
-    if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
-    {
-		AI_join();
-    }
-	
-	// Bring out the comfy chair!
-	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
-	{
-		if (isInquisitor())
+		if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))
 		{
-			AI_InquisitionMove();
+			if (canConstruct(plot(),(BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW")))
+			{
+				construct((BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW"));
+				return false;
+			}
 		}
-	}
 
-	// - Temporary hack to catch Heroes who have their AI switched - still needed?
-	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
-	{
-		if (AI_getUnitAIType() != UNITAI_HERO)
+		// Tholal AI - Shades
+		if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
 		{
-			AI_setUnitAIType(UNITAI_HERO);
+			AI_join();
 		}
-	}
+		
+		// Bring out the comfy chair!
+		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+		{
+			if (isInquisitor())
+			{
+				AI_InquisitionMove();
+			}
+		}
 
-	// Ships choose crews
-	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
-	{
-		int ispell = chooseSpell();
-		if (ispell != NO_SPELL)
+		// - Temporary hack to catch Heroes who have their AI switched - still needed?
+		if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
 		{
-		    cast(ispell);
+			if (AI_getUnitAIType() != UNITAI_HERO)
+			{
+				AI_setUnitAIType(UNITAI_HERO);
+			}
 		}
-	}
 
-	// Upgrade to Liches - HARDCODE
-	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH3")))
-	{
-		int ispell = chooseSpell();
-		if (ispell != NO_SPELL)
+		// Ships choose crews
+		if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
 		{
-		    cast(ispell);
+			int ispell = chooseSpell();
+			if (ispell != NO_SPELL)
+			{
+				cast(ispell);
+			}
 		}
-	}
+
+		// Upgrade to Liches - HARDCODE
+		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH3")))
+		{
+			int ispell = chooseSpell();
+			if (ispell != NO_SPELL)
+			{
+				cast(ispell);
+			}
+		}
 // End Tholal AI
 
 /** BETTER AI Sephi (Time for the Mages to Caste Haste, etc.)                   **/
 
-    if (!GET_PLAYER(getOwnerINLINE()).isHuman())
-    {
+
         CLLNode<IDInfo>* pEntityNode = getGroup()->headUnitNode();
         CvUnit* pLoopUnit;
         while (pEntityNode != NULL)
