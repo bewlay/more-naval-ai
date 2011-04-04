@@ -27902,7 +27902,7 @@ void CvUnitAI::ConquestMove()
 //			((area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) && (getGroup()->getNumUnits() >= AI_stackOfDoomExtra())))
 	if (bReadyToAttack)
 	{
-		if (bHuntBarbs && AI_goToTargetBarbCity())
+		if (bHuntBarbs && AI_goToTargetBarbCity(15))
 		{
 			return;
 		}
@@ -27931,7 +27931,7 @@ void CvUnitAI::ConquestMove()
 	// Hunt barbs if we can't do anything else
 	else if (eAreaAIType != AREAAI_DEFENSIVE && getGroup()->getNumUnits() >= 3 && GET_TEAM(getTeam()).getAtWarCount(true) == 0)
 	{
-		if (AI_goToTargetBarbCity())
+		if (AI_goToTargetBarbCity(15))
 		{
 			return;
 		}
