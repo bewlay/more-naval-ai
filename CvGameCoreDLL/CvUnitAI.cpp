@@ -27428,7 +27428,14 @@ void CvUnitAI::ConquestMove()
 			bWizard = true;
             break;
         default:
-            AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+			{
+	            AI_setUnitAIType(UNITAI_WARWIZARD);
+			}
+			else
+			{
+				AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			}
             break;
     }
 
