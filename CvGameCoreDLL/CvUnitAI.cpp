@@ -10342,9 +10342,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_EXPLORE) ||
 			(AI_getUnitAIType() == UNITAI_HERO) ||
 			(AI_getUnitAIType() == UNITAI_MISSIONARY) ||
-			isInquisitor())
+			isInquisitor() ||
+			isWaterWalking())
 	{
-		iValue += (iTemp * 25);
+		iValue += ((iTemp * 26) - getMoves());
 	}
 	else
 	{
@@ -10598,21 +10599,18 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_CARRIER_SEA) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK_AIR) ||
 			(AI_getUnitAIType() == UNITAI_CARRIER_AIR) ||
-			(AI_getUnitAIType() == UNITAI_HERO) ||
-			isSummoner())
+			(AI_getUnitAIType() == UNITAI_HERO))
 	{
 		iValue += (iTemp * 2);
 	}
 	else
 	{
-		if (isDeBuffer() ||	isDirectDamageCaster())
-		{
-			iValue += (iTemp * getChannelingLevel());
-		}
-		else
-		{
-			iValue += (iTemp * 1);
-		}
+		iValue += (iTemp * 1);
+	}
+
+	if (isDirectDamageCaster())
+	{
+		iValue += GC.getPromotionInfo(ePromotion).getSpellDamageModify() * 2;
 	}
 
 	iTemp = GC.getPromotionInfo(ePromotion).getCityAttackPercent();
@@ -11022,7 +11020,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		{
 			if (isSummoner())
 			{
-				iValue += 15;
+				// Tholal TODO: have this check value of promotion for the summons? Might not be worth the effort
+				iValue += 25;
 			}
 		}
 
@@ -11036,17 +11035,19 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
 					{
-						int iTempValue = (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat() * 5) + 1;
+						int iTempValue = (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat());
 						
 						if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
 						{
-							iTempValue += 10;
+							iTempValue += 2;
 						}
 
 						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
 						{
-						    iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
+						    iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI) * 2);
 						}
+
+						 iTempValue *= 5;
 
 						// Tholal ToDo - add points for Bonus Affinities
 						int iModValue = 0;
@@ -11055,6 +11056,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 							iModValue++;
 						}
 						if (bSundered)
+						{
+							iModValue++;
+						}
+						if (AI_getUnitAIType() == UNITAI_HERO)
 						{
 							iModValue++;
 						}
