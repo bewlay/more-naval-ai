@@ -1086,6 +1086,10 @@ def spellDisrupt(caster):
 	pPlayer2 = gc.getPlayer(iPlayer2)
 	pCity.changeHurryAngerTimer(2)
 	iRnd = CyGame().getSorenRandNum(3, "Disrupt")
+	
+	if iRnd > pCity.getCulture(iPlayer2):
+		iRnd =  pCity.getCulture(iPlayer2)
+	
 	if iRnd != 0:
 		pCity.changeCulture(iPlayer2,-1 * iRnd,True)
 	CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_DISRUPT_ENEMY",()),'',1,'Art/Interface/Buttons/Spells/Disrupt.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
