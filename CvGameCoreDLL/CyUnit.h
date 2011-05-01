@@ -352,6 +352,7 @@ public:
 
 	bool isPromotionReady();
 	void setPromotionReady(bool bNewValue);
+	void setBlockading(bool bNewValue);
 	int getOwner();
 	int getVisualOwner();
 	int getCombatOwner(int /* TeamTypes*/ iForTeam);

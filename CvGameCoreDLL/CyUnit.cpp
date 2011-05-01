@@ -1462,6 +1462,12 @@ void CyUnit::setPromotionReady(bool bNewValue)
 		m_pUnit->setPromotionReady(bNewValue);
 }
 
+void CyUnit::setBlockading(bool bNewValue)
+{
+	if (m_pUnit)
+		m_pUnit->setBlockading(bNewValue);
+}
+
 int CyUnit::getOwner()
 {
 	return m_pUnit ? m_pUnit->getOwnerINLINE() : -1;

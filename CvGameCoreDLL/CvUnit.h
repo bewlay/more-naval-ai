@@ -639,7 +639,7 @@ public:
 	DllExport void setInfoBarDirty(bool bNewValue);
 
 	bool isBlockading() const;
-	void setBlockading(bool bNewValue);
+	void setBlockading(bool bNewValue);        //Exposed to Python
 	void collectBlockadeGold();
 
 	DllExport PlayerTypes getOwner() const;																									// Exposed to Python
