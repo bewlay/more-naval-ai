@@ -1014,6 +1014,9 @@ def reqDeclareNationality(caster):
 			return False
 	return True
 
+def spellDeclareNationality(caster):
+	caster.setBlockading(false)
+
 def reqDestroyUndead(caster):
 	iX = caster.getX()
 	iY = caster.getY()
