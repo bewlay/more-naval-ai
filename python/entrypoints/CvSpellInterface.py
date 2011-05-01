@@ -911,12 +911,12 @@ def reqCrewLongshoremen(caster):
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == false:
-		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_ESCORT_SEA'):
-			return True
-		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_EXPLORE_SEA'):
-			return True
-		if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_MISSIONARY_SEA'):
-			if gc.getUnitInfo(caster.getUnitType()).getCargoSpace() > 1:
+		if not caster.isFull():
+			if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_ESCORT_SEA'):
+				return True
+			if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_EXPLORE_SEA'):
+				return True
+			if caster.getUnitAIType() == gc.getInfoTypeForString('UNITAI_MISSIONARY_SEA'):
 				return True	
 		return False
 	return True
