@@ -345,7 +345,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("getVisualOwner", &CyUnit::getVisualOwner, "int ()")
 		.def("getCombatOwner", &CyUnit::getCombatOwner, "int (int)")
 		.def("getTeam", &CyUnit::getTeam, "int ()")
-
+		.def("setBlockading", &CyUnit::setBlockading, "void (int iNewValue)")
 		.def("getUnitType", &CyUnit::getUnitType, "int ()")
 		.def("getUnitClassType", &CyUnit::getUnitClassType, "int ()")
 		.def("getLeaderUnitType", &CyUnit::getLeaderUnitType, "int ()")

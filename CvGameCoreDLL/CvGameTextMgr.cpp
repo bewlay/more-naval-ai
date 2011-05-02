@@ -787,6 +787,13 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			szString.append(NEWLINE);
 			szString.append(gDLL->getText("TXT_KEY_UNIT_NOT_ALIVE"));
         }
+		if (pUnit->isBlockading())
+		{
+			szString.append(NEWLINE);
+            szString.append(CvWString::format(SETCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT")));
+			szString.append(gDLL->getText("TXT_KEY_MISSION_PLUNDER"));
+            szString.append(CvWString::format(ENDCOLR));
+		}
 		if (pUnit->isHasCasted())
 		{
 			szString.append(NEWLINE);
