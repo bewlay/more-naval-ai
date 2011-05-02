@@ -10059,6 +10059,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	int iExtra;
 	int iI;
 
+	int iLevel = getLevel();
+
 	iValue = 0;
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
@@ -10141,7 +10143,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	{
 		if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY) || (AI_getUnitAIType() == UNITAI_COUNTER))
 		{
-			iValue += (iCombatHeal * (getLevel() + 1));
+			iValue += (iCombatHeal * (iLevel + 1));
 		}
 		else
 		{
@@ -10149,7 +10151,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iValue += (GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * (getLevel() + 2));
+	iValue += (GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * (iLevel + 2));
 
 	if (GC.getPromotionInfo(ePromotion).isFear())
 	{
@@ -10171,11 +10173,22 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
 	{
-		iValue += 25;
+		iValue += 20;
 	}
 
 	//Bounty Hunter
-	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (getLevel() + (bFinancialTrouble ? 2: 0));
+	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (iLevel + (bFinancialTrouble ? 2: 0));
+
+
+	//Twincast
+	if (GC.getPromotionInfo(ePromotion).isTwincast())
+	{
+		if (isSummoner())
+		{
+			iValue += getLevel() * 8;
+		}
+	}
+
 
 	// Tholal AI - HARDCODED promotions
 	// Inquisitor
@@ -10194,7 +10207,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 		{
 			// Tholal ToDo - find a way to limit this to just a few units
-			iValue += 40;
+			if ((AI_getUnitAIType() == UNITAI_MANA_UPGRADE))
+			{
+				iValue += 40;
+			}
 		}
 	}
 
@@ -10214,9 +10230,6 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 	}
-
-	// ToDo: getPromotionCombatMod - mimic the Combatinfos function
-	// ToDo: go through other new FFH promotion tags and see what needs to be accounted for
 	// End Tholal AI
 
 
@@ -11047,7 +11060,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						    iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI) * 2);
 						}
 
-						 iTempValue *= 5;
+						iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getTier();
 
 						// Tholal ToDo - add points for Bonus Affinities
 						int iModValue = 0;
@@ -11064,7 +11077,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 							iModValue++;
 						}
 
-						iValue += (iTempValue * (1 + iModValue));
+						iValue += (iTempValue * (4 + iModValue));
 					}
 
 					if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
