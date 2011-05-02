@@ -6045,6 +6045,18 @@ int CvCityAI::AI_neededDefenders()
 			}
 		}
 	}
+
+	if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) )
+	{
+		int iStateRel = GET_PLAYER(getOwnerINLINE()).getStateReligion();
+
+		if (isHolyCity(((ReligionTypes)iStateRel)))
+		{
+			iDefenders += 3;
+		}
+	}
+
+
 /* - Commented out by Tholal - Not valid in FFH2
 	if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_SPACE3) )
 	{
