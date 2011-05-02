@@ -28487,13 +28487,10 @@ bool CvUnitAI::isSummoner()
 		return false;
 	}
 	
-	// Tholal ToDo - make this dynamic: Loop through spells, check that it creates unit, check canCast(),
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
 		if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
 		{
-			// bPermOnly - if (GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate())
-
 		    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
 		    {
 				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
@@ -28504,8 +28501,14 @@ bool CvUnitAI::isSummoner()
 				        {
 							return true;
 				        }
-					 }
-				 }
+						else
+						{
+							return false;
+						}
+					}
+
+					return true;
+				}
 			}
 		}
 	}
