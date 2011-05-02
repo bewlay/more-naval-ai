@@ -1065,25 +1065,26 @@ void CvCityAI::AI_chooseProduction()
 
 // Tholal AI - count number of mages & priests
 // Tholal ToDo - better formulas - or better yet, incorporate this into the choose unit function instead
-	//int iNumMages = (kPlayer.AI_totalUnitAIs(UNITAI_MAGE) + kPlayer.AI_totalUnitAIs(UNITAI_WARWIZARD));
-	int iNumMages = (kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));// + kPlayer.getUnitClassCountPlusMaking(GC.getInfoTypeForString('UNITCLASS_MAGE')));
+	int iNumCities = kPlayer.getNumCities();
+
+	int iNumMages = (kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));
 
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
-	int iNeededPriests = kPlayer.getNumCities() * 3;
+	int iNeededPriests = iNumCities * 2;
 	if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
 		iNeededPriests *= 2;
 	int iSpiritualTrait=GC.getInfoTypeForString("TRAIT_SPIRITUAL");
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + kPlayer.getNumCities());
+	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + iNumCities);
 // End Tholal AI
 
     int iMaxSettlers = 0;
     if (!bFinancialTrouble)
     {
-     	iMaxSettlers= std::min((kPlayer.getNumCities() + 1) / 2, iNumAreaCitySites + iNumWaterAreaCitySites);
+     	iMaxSettlers= std::min((iNumCities + 1) / 2, iNumAreaCitySites + iNumWaterAreaCitySites);
      	if (bLandWar || bAssault)
      	{
      		iMaxSettlers = (iMaxSettlers + 2) / 3;
@@ -1123,9 +1124,9 @@ void CvCityAI::AI_chooseProduction()
 				bBigCultureCity = true;
 
 				// if we do not have enough cities, then the highest culture city will not get special attention
-				if (iCultureRateRank > 1 || (kPlayer.getNumCities() > (iCulturalVictoryNumCultureCities + 1)))
+				if (iCultureRateRank > 1 || (iNumCities > (iCulturalVictoryNumCultureCities + 1)))
 				{
-					if ((((iNumAreaCitySites + iNumWaterAreaCitySites) > 0) && (kPlayer.getNumCities() < 6)) && (GC.getGameINLINE().getSorenRandNum(2, "AI Less Culture More Expand") == 0))
+					if ((((iNumAreaCitySites + iNumWaterAreaCitySites) > 0) && (iNumCities < 6)) && (GC.getGameINLINE().getSorenRandNum(2, "AI Less Culture More Expand") == 0))
 					{
 						bImportantCity = false;
 					}
@@ -1244,7 +1245,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (GC.getGameINLINE().getSorenRandNum(3, "AI Coast Raiders!") == 0)
 			{
-				if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) <= (1 + kPlayer.getNumCities() / 2))
+				if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) <= (1 + iNumCities / 2))
 				{
 					if (AI_chooseUnit(UNITAI_ASSAULT_SEA))
 					{
@@ -1254,7 +1255,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 			if (GC.getGameINLINE().getSorenRandNum(110, "AI arrrr!") < (iWaterPercent + 10))
 			{
-				if (kPlayer.AI_totalUnitAIs(UNITAI_PIRATE_SEA) <= kPlayer.getNumCities())
+				if (kPlayer.AI_totalUnitAIs(UNITAI_PIRATE_SEA) <= iNumCities)
 				{
 					if (AI_chooseUnit(UNITAI_PIRATE_SEA))
 					{
@@ -1390,7 +1391,7 @@ void CvCityAI::AI_chooseProduction()
 	//if( kPlayer.getCurrentEra() == 0 )
 	if (GC.getGameINLINE().getCurrentPeriod() == 0)
 	{
-		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= kPlayer.getNumCities() )
+		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= iNumCities)
 		{
 			if( kPlayer.AI_bestCityUnitAIValue(UNITAI_CITY_DEFENSE, this) == 0 )
 			{
@@ -1572,7 +1573,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if( !(bLandWar && iWarSuccessRatio < -30) && !bDanger && !bFinancialTrouble )
 		{
-			if (kPlayer.AI_getNumTrainAIUnits(UNITAI_ATTACK_SEA) + kPlayer.AI_getNumTrainAIUnits(UNITAI_PIRATE_SEA) + kPlayer.AI_getNumTrainAIUnits(UNITAI_RESERVE_SEA) < std::min(3,kPlayer.getNumCities()))
+			if (kPlayer.AI_getNumTrainAIUnits(UNITAI_ATTACK_SEA) + kPlayer.AI_getNumTrainAIUnits(UNITAI_PIRATE_SEA) + kPlayer.AI_getNumTrainAIUnits(UNITAI_RESERVE_SEA) < std::min(3,iNumCities))
 			{
 				if ((bMaybeWaterArea && bWaterDanger)
 					|| (pWaterArea != NULL && bPrimaryArea && kPlayer.AI_countNumAreaHostileUnits(pWaterArea, true, false, false, false) > 0))
@@ -1635,7 +1636,7 @@ void CvCityAI::AI_chooseProduction()
 	// Top normal priorities
 	
 	//if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2)
-	if (kPlayer.getNumCities() > 1 && kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
+	if (iNumCities > 1 && kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
 	{
 
 		//>>>>Better AI: Added by Denev 2010/03/12
@@ -1691,7 +1692,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if ((iExistingWorkers < ((iNeededWorkers + 1) / 2)))
 			{
-				if( getPopulation() > 3 || (iProductionRank < (kPlayer.getNumCities() + 1) / 2) )
+				if( getPopulation() > 3 || (iProductionRank < (iNumCities + 1) / 2) )
 				{
 					if (!bChooseWorker && AI_chooseUnit(UNITAI_WORKER))
 					{
@@ -1758,7 +1759,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (!bDanger && (iExistingWorkers < ((iNeededWorkers + 1) / 2)))
 			{
-				if( getPopulation() > 3 || (iProductionRank < (kPlayer.getNumCities() + 1) / 2) )
+				if( getPopulation() > 3 || (iProductionRank < (iNumCities + 1) / 2) )
 				{
 					if (!bChooseWorker && AI_chooseUnit(UNITAI_WORKER))
 					{
@@ -1889,7 +1890,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	//opportunistic wonder build (1)
-	if (!bDanger && (!hasActiveWorldWonder()) && (kPlayer.getNumCities() <= 3))
+	if (!bDanger && (!hasActiveWorldWonder()) && (iNumCities <= 3))
 	{
 		// For small civ at war, don't build wonders unless winning
 		if( !bLandWar || (iWarSuccessRatio > 30) )
@@ -1930,7 +1931,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
-	if (iNumMages < (iNeededMages / 2))
+	if (iNumMages < iNumCities)
 	{
 		if (AI_chooseUnit(UNITAI_MAGE, 5 * kPlayer.AI_getMojoFactor()))
 		{
@@ -1984,7 +1985,7 @@ void CvCityAI::AI_chooseProduction()
 	
 	if( !(bLandWar && iWarSuccessRatio < 30) )
 	{
-		if (!bDanger && (iProductionRank <= ((kPlayer.getNumCities() / 5) + 1)))
+		if (!bDanger && (iProductionRank <= ((iNumCities / 5) + 1)))
 		{
 			// BBAI TODO: Temporary for testing
 			//if( getOwnerINLINE()%2 == 1 )
@@ -2057,7 +2058,7 @@ void CvCityAI::AI_chooseProduction()
 					{
 						//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1", getName().GetCString());
 
-						if (kPlayer.getNumMilitaryUnits() <= kPlayer.getNumCities() + 1)
+						if (kPlayer.getNumMilitaryUnits() <= iNumCities + 1)
 						{
 							if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 							{
@@ -2151,7 +2152,7 @@ void CvCityAI::AI_chooseProduction()
 	// End Tholal AI
 
 	//opportunistic wonder build
-	if (!bDanger && (!hasActiveWorldWonder() || (kPlayer.getNumCities() > 2)))
+	if (!bDanger && (!hasActiveWorldWonder() || (iNumCities > 2)))
 	{
 		// For civ at war, don't build wonders if losing
 		if( !bLandWar || (iWarSuccessRatio > -30) )
@@ -2436,7 +2437,7 @@ void CvCityAI::AI_chooseProduction()
 					if (!bFinancialTrouble && iCarriers < (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) / 4))
 					{
 						// Reduce chances of starting if city has low production
-						if (AI_chooseUnit(UNITAI_CARRIER_SEA, (iProductionRank <= ((kPlayer.getNumCities() / 3) + 1)) ? -1 : 30))
+						if (AI_chooseUnit(UNITAI_CARRIER_SEA, (iProductionRank <= ((iNumCities / 3) + 1)) ? -1 : 30))
 						{
 							AI_chooseBuilding(BUILDINGFOCUS_DOMAINSEA, 16);
 							return;
@@ -2499,7 +2500,7 @@ void CvCityAI::AI_chooseProduction()
 			
 				if (!bFinancialTrouble && iMissileCarriers > 0 && !bImportantCity)
 				{
-					if( (iProductionRank <= ((kPlayer.getNumCities() / 2) + 1)) )
+					if( (iProductionRank <= ((iNumCities / 2) + 1)) )
 					{
 						UnitTypes eBestMissileCarrierUnit = NO_UNIT;  
 						kPlayer.AI_bestCityUnitAIValue(UNITAI_MISSILE_CARRIER_SEA, NULL, &eBestMissileCarrierUnit);
@@ -2607,7 +2608,7 @@ void CvCityAI::AI_chooseProduction()
 				iAircraftHave = kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_AIR) + kPlayer.AI_totalUnitAIs(UNITAI_DEFENSE_AIR) + kPlayer.AI_totalUnitAIs(UNITAI_MISSILE_AIR);
 				if (NO_UNIT != eBestAttackAircraft)
 				{
-					iAircraftNeed = (2 + kPlayer.getNumCities() * (3 * GC.getUnitInfo(eBestAttackAircraft).getAirCombat())) / (2 * std::max(1, GC.getGame().getBestLandUnitCombat()));
+					iAircraftNeed = (2 + iNumCities * (3 * GC.getUnitInfo(eBestAttackAircraft).getAirCombat())) / (2 * std::max(1, GC.getGame().getBestLandUnitCombat()));
 					int iBestDefenseValue = kPlayer.AI_bestCityUnitAIValue(UNITAI_DEFENSE_AIR, this);
 					if ((iBestDefenseValue > 0) && (iBestAirValue > iBestDefenseValue))
 					{
@@ -2617,7 +2618,7 @@ void CvCityAI::AI_chooseProduction()
 				}
 				if (iBestMissileValue > 0)
 				{
-					iAircraftNeed = std::max(iAircraftNeed, 1 + kPlayer.getNumCities() / 2);
+					iAircraftNeed = std::max(iAircraftNeed, 1 + iNumCities / 2);
 				}
 				
 				bool bAirBlitz = kPlayer.AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ);
@@ -2760,7 +2761,7 @@ void CvCityAI::AI_chooseProduction()
 		if( !bFinancialTrouble )
 		{
 			// Force civs with foreign colonies to build a few assault transports to defend the colonies
-			if( kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < (kPlayer.getNumCities() - iNumCapitalAreaCities)/3 )
+			if( kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < (iNumCities - iNumCapitalAreaCities)/3 )
 			{
 				if (AI_chooseUnit(UNITAI_ASSAULT_SEA))
 				{
@@ -2870,7 +2871,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if ((iProductionRank <= ((kPlayer.getNumCities() > 8) ? 3 : 2))
+	if ((iProductionRank <= ((iNumCities > 8) ? 3 : 2))
 		&& (getPopulation() > 3))
 	{
 		int iWonderRand = 8 + GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getWonderConstructRand(), "Wonder Construction Rand");
@@ -2926,7 +2927,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			int iOdds = 33;
 
-			if( iFreeAirExperience > 0 || (iProductionRank <= (1 + kPlayer.getNumCities()/2)) )
+			if( iFreeAirExperience > 0 || (iProductionRank <= (1 + iNumCities / 2)) )
 			{
 				iOdds = -1;
 			}
@@ -3092,7 +3093,7 @@ void CvCityAI::AI_chooseProduction()
 	if (iUnitCostPercentage < iMaxUnitSpending + 5)
 	{
 		if ((bLandWar) ||
-			  ((kPlayer.getNumCities() <= 3) && (GC.getGameINLINE().getElapsedGameTurns() < 60)) ||
+			  ((iNumCities <= 3) && (GC.getGameINLINE().getElapsedGameTurns() < 60)) ||
 			  (GC.getGameINLINE().getSorenRandNum(100, "AI Build Unit Production") < AI_buildUnitProb()) ||
 				(isHuman() && (getGameTurnFounded() == GC.getGameINLINE().getGameTurn())))
 		{
@@ -3109,8 +3110,7 @@ void CvCityAI::AI_chooseProduction()
 	//if( getOwnerINLINE()%2 == 1 )
 	//{
 		// Only cities with reasonable production
-		if ((iProductionRank <= ((kPlayer.getNumCities() > 8) ? 3 : 2))
-		&& (getPopulation() > 3))
+	if ((iProductionRank <= ((iNumCities > 8) ? 3 : 2))	&& (getPopulation() > 3))
 		{
 			if (AI_chooseProject())
 			{
