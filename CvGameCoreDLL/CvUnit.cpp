@@ -17397,6 +17397,7 @@ int CvUnit::chooseSpell()
             if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
             {
                 int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
+				bool bPermSummon = GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate();
                 bool bEnemy = false;
                 for (int i = -iMoveRange; i <= iMoveRange; ++i)
                 {
@@ -17412,7 +17413,7 @@ int CvUnit::chooseSpell()
                         }
                     }
                 }
-                if (bEnemy)
+                if (bEnemy || bPermSummon)
                 {
                     iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
                     for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
@@ -17421,6 +17422,17 @@ int CvUnit::chooseSpell()
                     }
                     iTempValue *= 100;
                     iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
+
+					if (bPermSummon)
+					{
+						iTempValue *= 2;
+					}
+
+					if (isTwincast())
+					{
+						iTempValue *= 2;
+					}
+
                     iValue += iTempValue;
                 }
             }
@@ -17428,44 +17440,76 @@ int CvUnit::chooseSpell()
             {
                 int iDmg = GC.getSpellInfo((SpellTypes)iSpell).getDamage();
                 int iDmgLimit = GC.getSpellInfo((SpellTypes)iSpell).getDamageLimit();
+
+				bool bIsCityPlot = false;
+
+				bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
+
                 for (int i = -iRange; i <= iRange; ++i)
                 {
                     for (int j = -iRange; j <= iRange; ++j)
                     {
                         pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
+
+						bIsCityPlot = pLoopPlot->isCity();
+
                         if (NULL != pLoopPlot)
                         {
-                            if (pLoopPlot->getX() != plot()->getX() || pLoopPlot->getY() != plot()->getY())
-                            {
-                                pUnitNode = pLoopPlot->headUnitNode();
-                                while (pUnitNode != NULL)
-                                {
-                                    pLoopUnit = ::getUnit(pUnitNode->m_data);
-                                    pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
-                                    if (!pLoopUnit->isImmuneToSpell(this, iSpell))
-                                    {
-                                        if (pLoopUnit->isEnemy(getTeam()))
-                                        {
-                                            if (pLoopUnit->getDamage() < iDmgLimit)
-                                            {
-                                                iValue += iDmg * 10;
-                                            }
-                                        }
-                                        if (pLoopUnit->getTeam() == getTeam())
-                                        {
-                                            iValue -= iDmg * 20;
-                                        }
-                                        if (pLoopUnit->getTeam() != getTeam() && pLoopUnit->isEnemy(getTeam()) == false)
-                                        {
-                                            iValue -= 1000;
-                                        }
-                                    }
-                                }
-                            }
+							if (bIsCoastalSpell && !pLoopPlot->isCoastalLand())
+							{
+								//do nothing - spell doesn't apply to this plot (Tsunami)
+							}
+							else
+							{
+								if (pLoopPlot->getX() != plot()->getX() || pLoopPlot->getY() != plot()->getY())
+								{
+									pUnitNode = pLoopPlot->headUnitNode();
+									while (pUnitNode != NULL)
+									{
+										pLoopUnit = ::getUnit(pUnitNode->m_data);
+										pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+										if (!pLoopUnit->isImmuneToSpell(this, iSpell))
+										{
+											if (pLoopUnit->isEnemy(getTeam()))
+											{
+												if (pLoopUnit->getDamage() < iDmgLimit)
+												{
+													if (bIsCityPlot)
+													{
+														iValue += iDmg * 20;
+													}
+													else
+													{
+														iValue += iDmg * 10;
+													}
+												}
+											}
+											if (pLoopUnit->getTeam() == getTeam())
+											{
+												if (bIsCityPlot)
+												{
+													iValue -= iDmg * 5;
+												}
+												else
+												{
+													iValue -= iDmg * 10;
+												}
+											}
+											if (pLoopUnit->getTeam() != getTeam() && pLoopUnit->isEnemy(getTeam()) == false)
+											{
+												iValue -= 1000;
+											}
+										}
+									}
+								}
+							}
                         }
                     }
                 }
             }
+			
+			// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
+
             if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
             {
 				if (GC.getSpellInfo((SpellTypes)iSpell).isImmuneTeam())
