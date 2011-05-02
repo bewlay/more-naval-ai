@@ -12956,21 +12956,6 @@ void CvCityAI::AI_updateWorkersNeededHere()
 		iWorkersNeeded /= 2;
 	}
 
-	// Tholal AI - account for racial changes to work rates
-	int iDefaultRace = GC.getCivilizationInfo(getCivilizationType()).getDefaultRace();
-
-	if (iDefaultRace != NO_PROMOTION)
-    {
-		int iWorkModify = GC.getPromotionInfo((PromotionTypes)iDefaultRace).getWorkRateModify();
-
-		if (iWorkModify != 0)
-		{
-			iWorkersNeeded *= 100;
-			iWorkersNeeded /= (100 + iWorkModify);
-		}
-	}
-	// End Tholal AI
-
 	if (iWorkersNeeded > 0)
 	{
 		iWorkersNeeded++;

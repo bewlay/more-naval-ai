@@ -11300,16 +11300,31 @@ int CvPlayerAI::AI_neededWorkers(CvArea* pArea) const
 		return 0;
 	}
 
+	// Tholal AI - account for racial changes to work rates
+	int iDefaultRace = GC.getCivilizationInfo(getCivilizationType()).getDefaultRace();
+
+	if (iDefaultRace != NO_PROMOTION)
+    {
+		int iWorkModify = GC.getPromotionInfo((PromotionTypes)iDefaultRace).getWorkRateModify();
+
+		if (iWorkModify != 0)
+		{
+			iCount *= 100;
+			iCount /= (100 + iWorkModify);
+		}
+	}
+	// End Tholal AI
+
 	if (getBestRoute() != NO_ROUTE)
 	{
 		iCount += pArea->getCitiesPerPlayer(getID()) / 2;
 	}
 
 
-	    iCount += 1;
-		iCount /= 3;
-		iCount = std::min(iCount, 3 * pArea->getCitiesPerPlayer(getID()));
-		iCount = std::min(iCount, (1 + getTotalPopulation()) / 2);
+    iCount += 1;
+	iCount /= 3;
+	iCount = std::min(iCount, 3 * pArea->getCitiesPerPlayer(getID()));
+	iCount = std::min(iCount, (1 + getTotalPopulation()) / 2);
 
 	return std::max(1, iCount);
 
