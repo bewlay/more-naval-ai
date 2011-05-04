@@ -13111,7 +13111,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	}
 
 //>>>>Better AI: Added by Denev 2010/07/21
-	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
+	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 	{
 		if (GC.getReligionInfo(eReligion).getAlignmentBest() == ALIGNMENT_EVIL)
 		{
