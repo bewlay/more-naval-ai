@@ -15905,6 +15905,17 @@ bool CvUnit::canSpreadReligion(int spell) const
 
 void CvUnit::cast(int spell)
 {
+
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Player %d Unit %d (%S's %S) casting %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
+			gDLL->messageControlLog(szOut);
+		}
+	}
+
     if (GC.getSpellInfo((SpellTypes)spell).isHasCasted())
     {
         setHasCasted(true);
