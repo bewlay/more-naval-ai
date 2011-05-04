@@ -17787,9 +17787,16 @@ void CvUnit::doDefensiveStrike(CvUnit* pAttacker)
 
 void CvUnit::doEscape()
 {
-    if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
+	CvCity* pCapital = GET_PLAYER(getOwnerINLINE()).getCapitalCity();
+
+    //if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
+	if (NULL != pCapital)
     {
-        setXY(GET_PLAYER(getOwnerINLINE()).getCapitalCity()->getX(), GET_PLAYER(getOwnerINLINE()).getCapitalCity()->getY(), false, true, true);
+		// Tholal AI - catch for Immortal units being killed in their capitol (no need to reset their XY position and it causes an assert when you do so)
+		if (pCapital->plot() != plot())
+		{
+	        setXY(GET_PLAYER(getOwnerINLINE()).getCapitalCity()->getX(), GET_PLAYER(getOwnerINLINE()).getCapitalCity()->getY(), false, true, true);
+		}
     }
 }
 
