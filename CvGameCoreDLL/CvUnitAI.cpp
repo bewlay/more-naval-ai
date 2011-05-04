@@ -15541,6 +15541,23 @@ bool CvUnitAI::AI_explore()
 
 	bool bNoContact = (GC.getGameINLINE().countCivTeamsAlive() > GET_TEAM(getTeam()).getHasMetCivCount(true));
 
+	if (getDomainType() == DOMAIN_AIR)
+	{
+		if (canRecon(plot()))
+		{
+			if (AI_exploreAir())
+			{
+				return true;
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return true;
+			}
+		}
+	}
+
+
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		PROFILE("AI_explore 1");
