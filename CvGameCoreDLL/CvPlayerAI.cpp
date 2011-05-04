@@ -1861,6 +1861,13 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 					iRazeValue += std::min( 75, iTempValue );
 				}
 			}
+			
+			// Tholal AI - Tolerant leaders less likely to raze
+			if (isAssimilation())
+			{
+				iRazeValue /= 2;
+			}
+			// End Tholal AI
 
 						
 			if (iRazeValue > 0)
