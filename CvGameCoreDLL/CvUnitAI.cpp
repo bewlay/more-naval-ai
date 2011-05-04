@@ -446,6 +446,10 @@ bool CvUnitAI::AI_update()
 					AI_setUnitAIType(UNITAI_HERO);
 					AI_setGroupflag(GROUPFLAG_CONQUEST);
 				}
+			// Tholal AI - catch for units who have casted already and now can't move
+			if (!canMove())
+			{
+				return false;
 			}
 
             switch (AI_getGroupflag())
