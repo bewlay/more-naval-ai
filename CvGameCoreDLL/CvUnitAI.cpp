@@ -5123,6 +5123,24 @@ void CvUnitAI::AI_exploreMove()
 {
 	PROFILE_FUNC();
 
+
+	// Floating Eyes
+	if (getDomainType() == DOMAIN_AIR)
+	{
+		if (canRecon(plot()))
+		{
+			if (AI_exploreAir())
+			{
+				return;
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+	}
+
 	if (!isHuman() && canAttack())
 	{
 		if (AI_cityAttack(1, 60))
