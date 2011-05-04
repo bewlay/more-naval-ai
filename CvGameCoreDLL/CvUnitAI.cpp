@@ -971,7 +971,8 @@ int CvUnitAI::AI_groupFirstVal()
 	{
 	case UNITAI_UNKNOWN:
 	case UNITAI_ANIMAL:
-		FAssert(false);
+		//FAssert(false);
+		return 1;
 		break;
 
 	case UNITAI_SETTLE:
