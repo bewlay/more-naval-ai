@@ -482,19 +482,12 @@ bool CvUnitAI::AI_update()
                     AI_heromove();
                     return false;
                     break;
-                case GROUPFLAG_SETTLERGROUP:
-                    SettlergroupMove();
-                    return false;
-                    break;
                 case GROUPFLAG_HNGROUP:
                     HNgroupMove();
                     return false;
 				case GROUPFLAG_PICKUP_EQUIPMENT:
 					PickupEquipmentMove();
 					return false;
-                case GROUPFLAG_FEASTING:
-                    AI_feastingmove();
-                    return false;
                 case GROUPFLAG_SUICIDE_SUMMON:
                     AI_summonAttackMove();
                     return false;

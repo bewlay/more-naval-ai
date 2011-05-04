@@ -43,11 +43,10 @@
 #define GROUPFLAG_DEFENSE       										(8)
 #define GROUPFLAG_HERO             										(9)
 #define GROUPFLAG_CONQUEST												(10)
-#define GROUPFLAG_SETTLERGROUP											(11)
+
 #define GROUPFLAG_HNGROUP                                               (12)
 #define GROUPFLAG_PICKUP_EQUIPMENT                                      (13)
-#define GROUPFLAG_FEASTING                                              (14)
-#define GROUPFLAG_INQUISITION                                           (15)
+
 #define GROUPFLAG_PILLAGE                                               (16)
 
 #define GROUPFLAG_SVARTALFAR_KIDNAP										(41)
