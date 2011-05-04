@@ -1987,15 +1987,10 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (!bDanger && (iProductionRank <= ((iNumCities / 5) + 1)))
 		{
-			// BBAI TODO: Temporary for testing
-			//if( getOwnerINLINE()%2 == 1 )
-			//{
-				if (AI_chooseProject())
-				{
-					//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose project 1", getName().GetCString());
-					return;
-				}
-			//}
+			if (AI_chooseProject())
+			{
+				return;
+			}
 		}
 	}
 	
@@ -2163,7 +2158,6 @@ void CvCityAI::AI_chooseProduction()
 			iWonderTime += 20;
 			if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
 			{
-				//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses oppurtunistic wonder build 2", getName().GetCString());
 				return;
 			}
 		}
@@ -2179,7 +2173,6 @@ void CvCityAI::AI_chooseProduction()
 				{
 					if (!bChooseWorker && AI_chooseUnit(UNITAI_WORKER))
 					{
-						//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker 6", getName().GetCString());
 						return;
 					}
 					bChooseWorker = true;
@@ -3106,19 +3099,13 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	// BBAI TODO: Temporary for testing
-	//if( getOwnerINLINE()%2 == 1 )
-	//{
-		// Only cities with reasonable production
 	if ((iProductionRank <= ((iNumCities > 8) ? 3 : 2))	&& (getPopulation() > 3))
+	{
+		if (AI_chooseProject())
 		{
-			if (AI_chooseProject())
-			{
-				//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose project 2", getName().GetCString());
-				return;
-			}
+			return;
 		}
-	//}
+	}
 
 	if (AI_chooseBuilding())
 	{
