@@ -1798,8 +1798,8 @@ class CvEventManager:
 						pPlayer.startConquestMode()
 	
 				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):											 
-					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
-						pPlayer.startConquestMode()
+#					if iTechType == gc.getInfoTypeForString('TECH_BRONZE_WORKING'):
+					pPlayer.startConquestMode()
 	
 				elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
 					if iTechType == gc.getInfoTypeForString('TECH_PRIESTHOOD'):
