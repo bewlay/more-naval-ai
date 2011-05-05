@@ -42243,7 +42243,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_ICE_ELEMENTAL</Description>
