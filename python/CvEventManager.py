@@ -1401,22 +1401,6 @@ class CvEventManager:
 			if pPlayer.getNumBuilding(gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY')) > 0:
 				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_STRONG'), True)
 
-		if CyGame().getWBMapScript():
-			sf.onUnitCreated(unit)
-
-		if (not self.__LOG_UNITBUILD):
-			return
-
-	def onUnitBuilt(self, argsList):
-		'Unit Completed'
-		city = argsList[0]
-		unit = argsList[1]
-		player = PyPlayer(city.getOwner())
-		pPlayer = gc.getPlayer(unit.getOwner())
-
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-#		iFreeProm = unit.getFreePromotionPick()
-##--------		Unofficial Bug Fix: End Delete			--------##
 
 #Sephi
 					
@@ -1490,8 +1474,26 @@ class CvEventManager:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
 					else:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_WARWIZARD'))
-		
-		
+
+
+
+		if CyGame().getWBMapScript():
+			sf.onUnitCreated(unit)
+
+		if (not self.__LOG_UNITBUILD):
+			return
+
+	def onUnitBuilt(self, argsList):
+		'Unit Completed'
+		city = argsList[0]
+		unit = argsList[1]
+		player = PyPlayer(city.getOwner())
+		pPlayer = gc.getPlayer(unit.getOwner())
+
+##--------		Unofficial Bug Fix: Deleted by Denev	--------##
+#		iFreeProm = unit.getFreePromotionPick()
+##--------		Unofficial Bug Fix: End Delete			--------##
+
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_BEAST_OF_AGARES'):
 			if city.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				iPop = city.getPopulation() - 4
