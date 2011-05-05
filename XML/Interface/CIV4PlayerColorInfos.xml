@@ -68,7 +68,7 @@
 		</PlayerColorInfo>
 		<PlayerColorInfo>
 			<Type>PLAYERCOLOR_INFERNAL</Type>
-			<ColorTypePrimary>COLOR_PLAYER_BLACK</ColorTypePrimary>
+			<ColorTypePrimary>COLOR_PLAYER_INFERNAL_BLACK</ColorTypePrimary>
 			<ColorTypeSecondary>COLOR_PLAYER_RED</ColorTypeSecondary>
 			<TextColorType>COLOR_PLAYER_BLACK_TEXT</TextColorType>
 		</PlayerColorInfo>
