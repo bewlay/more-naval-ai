@@ -392,7 +392,7 @@ def reqAddToFleshGolem(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
 		pPlot = caster.plot()
-		iChanneling = gc.getInfoTypeForString('PROMOTION_CHANNELING')
+		iChanneling = gc.getInfoTypeForString('PROMOTION_CHANNELING1')
 		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 		iDivine = gc.getInfoTypeForString('PROMOTION_DIVINE')
@@ -424,7 +424,7 @@ def reqAddToFleshGolem(caster):
 def spellAddToFleshGolem(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	pPlot = caster.plot()
-	iChanneling = gc.getInfoTypeForString('PROMOTION_CHANNELING')
+	iChanneling = gc.getInfoTypeForString('PROMOTION_CHANNELING1')
 	iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
 	iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 	iDivine = gc.getInfoTypeForString('PROMOTION_DIVINE')
