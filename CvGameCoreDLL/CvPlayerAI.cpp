@@ -18040,6 +18040,8 @@ bool CvPlayerAI::AI_disbandUnit(int iExpThreshold, bool bObsolete)
 								break;
 
 							case UNITAI_PIRATE_SEA:
+								iValue *= 5;
+								break;
 							case UNITAI_ATTACK_AIR:
 								break;
 

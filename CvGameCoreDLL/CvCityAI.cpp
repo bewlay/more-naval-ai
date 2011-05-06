@@ -2776,11 +2776,18 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	//Arr.  Don't build pirates in financial trouble, as they'll be disbanded with high probability
-	if ((pWaterArea != NULL) && !bLandWar && !bAssault && !bFinancialTrouble)
+	//Tholal AI - Pirates are good for free cash from blockades so don't ignore them when in Financial Trouble
+	//if ((pWaterArea != NULL) && !bLandWar && !bAssault && !bFinancialTrouble)
+	if ((pWaterArea != NULL) && !bLandWar && !bAssault)
 	{
 		int iPirateCount = kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_PIRATE_SEA);
 		int iNeededPirates = (1 + (pWaterArea->getNumTiles() / std::max(1, 200 - iBuildUnitProb)));
+
+		if (kPlayer.isPirate())
+		{
+			iNeededPirates *= 2;
+		}
+
 		iNeededPirates *= (20 + iWaterPercent);
 		iNeededPirates /= 100;
 		
