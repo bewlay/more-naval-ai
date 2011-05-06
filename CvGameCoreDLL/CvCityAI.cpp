@@ -5523,9 +5523,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	}
 
 	// Tholal AI - extra weight for civ-specific buildings
-	if (GC.getBuildingInfo(eBuilding).getPrereqCiv() == kOwner.getCivilizationType())
+	if (GC.getBuildingInfo(eBuilding).getPrereqCiv() != NO_CIVILIZATION)
 	{
-		iValue++;
+		if (GC.getBuildingInfo(eBuilding).getPrereqCiv() == kOwner.getCivilizationType() || kOwner.isAssimilation())
+		{
+			iValue++;
+		}
 	}
 
 	// Tholal AI - Build Victory Buldings
