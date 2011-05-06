@@ -25207,12 +25207,12 @@ void CvUnitAI::AI_setGroupflag(int newflag)
 // Chooses the Groupflag for AI Units in CvUnit::DoTurn()
 void CvUnitAI::AI_chooseGroupflag()
 {
-    if(AI_getGroupflag()!=GROUPFLAG_NONE)
+    if( AI_getGroupflag() != GROUPFLAG_NONE)
     {
         return;
     }
     //Don't Choose a Groupflag if we haven't already build a city
-    if(GET_PLAYER(getOwnerINLINE()).getNumCities()==0)
+    if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
     {
         return;
     }
@@ -25233,6 +25233,16 @@ void CvUnitAI::AI_chooseGroupflag()
             AI_setGroupflag(GROUPFLAG_HERO);
             return;
             break;
+		case UNITAI_WARWIZARD:
+            AI_setGroupflag(GROUPFLAG_CONQUEST);
+            return;
+            break;
+		case UNITAI_FEASTING:
+		case UNITAI_TERRAFORMER:
+		case UNITAI_MANA_UPGRADE:
+		case UNITAI_INQUISITOR:
+			return;
+			break;
         default:
             break;
     }
@@ -25252,27 +25262,6 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
         }
     }
-
-    switch (AI_getUnitAIType())
-    {
-        case UNITAI_FEASTING:
-			if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_FEASTING) <= GET_PLAYER(getOwnerINLINE()).getNumCities())
-			{
-				AI_setGroupflag(GROUPFLAG_FEASTING);
-				return;
-	            break;
-			}
-			else
-			{
-				AI_setUnitAIType(UNITAI_ATTACK);
-				AI_setGroupflag(GROUPFLAG_CONQUEST);
-				return;
-				break;
-			}
-        default:
-            break;
-    }
-
 
 	//Svartalfar Kidnap
 	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
