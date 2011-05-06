@@ -2272,6 +2272,7 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 						case UNITAI_HERO:
 						case UNITAI_FEASTING:
 						case UNITAI_MEDIC:
+						case UNITAI_INQUISITOR:
 							break;
 //<<<<Unofficial Bug Fix: End Add
 

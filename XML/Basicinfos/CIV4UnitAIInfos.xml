@@ -203,4 +203,8 @@
 			<Description>UNITAI_WARWIZARD</Description>
 		</UnitAIInfo>		
 	</UnitAIInfos>
+	<UnitAIInfo>
+		<Type>UNITAI_INQUISITOR</Type>
+		<Description>UNITAI_INQUISITOR</Description>
+	</UnitAIInfo>	
 </Civ4UnitAIInfos>

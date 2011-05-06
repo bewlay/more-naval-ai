@@ -592,6 +592,9 @@ bool CvUnitAI::AI_update()
                 AI_heromove();
 			}
             break;
+		case UNITAI_INQUISITOR:
+			AI_InquisitionMove();
+			break;
         case UNITAI_FEASTING:
             AI_feastingmove();
         case UNITAI_MANA_UPGRADE:
@@ -1065,6 +1068,7 @@ int CvUnitAI::AI_groupFirstVal()
     case UNITAI_BARBSMASHER:
     case UNITAI_FEASTING:
     case UNITAI_MEDIC:
+	case UNITAI_INQUISITOR:
 		return 3;
 		break;
     case UNITAI_HERO:

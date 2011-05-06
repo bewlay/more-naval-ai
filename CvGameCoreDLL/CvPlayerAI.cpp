@@ -2025,6 +2025,7 @@ DomainTypes CvPlayerAI::AI_unitAIDomainType(UnitAITypes eUnitAI) const
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	case UNITAI_INQUISITOR:
 		return DOMAIN_LAND;
 		break;
 
@@ -6161,6 +6162,10 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iUnitValue += 100;
 						break;
 //<<<<Advanced Rules: End Add
+
+					case UNITAI_INQUISITOR:
+						iUnitValue += 100;
+						break;
 
 					default:
 						FAssert(false);

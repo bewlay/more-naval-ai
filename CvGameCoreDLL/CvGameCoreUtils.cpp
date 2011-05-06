@@ -2467,6 +2467,7 @@ void getUnitAIString(CvWString& szString, UnitAITypes eUnitAI)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	case UNITAI_INQUISITOR: szString = L"inquisitor"; break;
 
 	default: szString = CvWString::format(L"unknown(%d)", eUnitAI); break;
 	}
