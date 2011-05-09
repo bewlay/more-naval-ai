@@ -889,45 +889,6 @@ void CvUnitAI::AI_promote()
 	iBestValue = 0;
 	eBestPromotion = NO_PROMOTION;
 
-/*************************************************************************************************/
-/**	BETTER AI (Better Promotion selection) Sephi                               					**/
-/**	values UNITAI and GROUPFLAG much higher when selecting Promotions							**/
-/**						                                            							**/
-/*************************************************************************************************/
-	//some units should wait to promote
-	/*
-    if (!isBarbarian())
-    {
-    //only temporary
-        if (AI_getUnitAIType()==UNITAI_MAGE || AI_getUnitAIType()==UNITAI_WARWIZARD)
-        {
-            PromotionTypes eBestPromotion;
-            eBestPromotion = NO_PROMOTION;
-            CyUnit* pyUnit = new CyUnit(this);
-            CyArgsList argsList;
-            argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
-            long lResult=-1;
-            gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_MagePromotion", argsList.makeFunctionArgs(), &lResult);
-            delete pyUnit;	// python fxn must not hold on to this pointer
-            eBestPromotion = ((PromotionTypes)lResult);
-            if (eBestPromotion != NO_PROMOTION)
-            {
-                promote(eBestPromotion, -1);
-                return;
-            }
-        }
-    }
-	*/
-	/*
-    if (AI_promoteMagicUnit())
-    {
-        return;
-    }
-	*/
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 		if (canPromote((PromotionTypes)iI, -1))
@@ -28275,33 +28236,6 @@ bool CvUnitAI::AI_Rantinemove()
         }
 	}
 	return false;
-}
-
-bool CvUnitAI::AI_promoteMagicUnit()
-{
-    PromotionTypes MagicTalent=(PromotionTypes)GC.getDefineINT("PROMOTION_CHANNELING1");
-
-    if (!isHasPromotion(MagicTalent))
-    {
-        return false;
-    }
-
-    PromotionTypes eBestPromotion;
-    eBestPromotion = NO_PROMOTION;
-    CyUnit* pyUnit = new CyUnit(this);
-    CyArgsList argsList;
-    argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
-    long lResult=-1;
-    gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_MagePromotion", argsList.makeFunctionArgs(), &lResult);
-    delete pyUnit;	// python fxn must not hold on to this pointer
-    eBestPromotion = ((PromotionTypes)lResult);
-    if (eBestPromotion != NO_PROMOTION)
-    {
-        promote(eBestPromotion, -1);
-        return true;
-    }
-
-    return false;
 }
 
 void CvUnitAI::AI_upgrademanaMove()

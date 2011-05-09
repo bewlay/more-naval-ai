@@ -116,8 +116,6 @@ public:
     void setSuicideSummon(bool newvalue);
 	bool isPermanentSummon();
     void setPermanentSummon(bool newvalue);
-    bool AI_promoteMagicUnit();
-
 
 //FfH Spell System: Modified by Kael 07/23/2007
 	int AI_promotionValue(PromotionTypes ePromotion);
