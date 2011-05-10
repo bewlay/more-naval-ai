@@ -15937,41 +15937,44 @@ bool CvUnitAI::AI_goToTargetCity(int iFlags, int iMaxPathTurns, CvCity* pTargetC
 
 				if (pAdjacentPlot != NULL)
 				{
-					if (AI_plotValid(pAdjacentPlot))
+					if (getGroup()->canMoveThrough(pAdjacentPlot))
 					{
-						if (!(pAdjacentPlot->isVisibleEnemyUnit(this)))
+						if (AI_plotValid(pAdjacentPlot))
 						{
-							if (generatePath(pAdjacentPlot, iFlags, true, &iPathTurns))
+							if (!(pAdjacentPlot->isVisibleEnemyUnit(this)))
 							{
-								if( iPathTurns <= iMaxPathTurns )
+								if (generatePath(pAdjacentPlot, iFlags, true, &iPathTurns))
 								{
-									iValue = std::max(0, (pAdjacentPlot->defenseModifier(getTeam(), false) + 100));
-
-									if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pTargetCity->plot()))))
+									if( iPathTurns <= iMaxPathTurns )
 									{
-										iValue += (12 * -(GC.getRIVER_ATTACK_MODIFIER()));
-									}
+										iValue = std::max(0, (pAdjacentPlot->defenseModifier(getTeam(), false) + 100));
 
-									if (!isEnemy(pAdjacentPlot->getTeam(), pAdjacentPlot))
-									{
-										iValue += 100;                                
-									}
+										if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pTargetCity->plot()))))
+										{
+											iValue += (12 * -(GC.getRIVER_ATTACK_MODIFIER()));
+										}
 
-									if( atPlot(pAdjacentPlot) )
-									{
-										iValue += 50;
-									}
+										if (!isEnemy(pAdjacentPlot->getTeam(), pAdjacentPlot))
+										{
+											iValue += 100;                                
+										}
 
-									iValue = std::max(1, iValue);
+										if( atPlot(pAdjacentPlot) )
+										{
+											iValue += 50;
+										}
 
-									iValue *= 1000;
+										iValue = std::max(1, iValue);
 
-									iValue /= (iPathTurns + 1);
+										iValue *= 1000;
 
-									if (iValue > iBestValue)
-									{
-										iBestValue = iValue;
-										pBestPlot = getPathEndTurnPlot();
+										iValue /= (iPathTurns + 1);
+
+										if (iValue > iBestValue)
+										{
+											iBestValue = iValue;
+											pBestPlot = getPathEndTurnPlot();
+										}
 									}
 								}
 							}
