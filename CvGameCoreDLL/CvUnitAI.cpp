@@ -13270,7 +13270,10 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 		for (unsigned int iI = 0; iI < aeDamagedUnits.size(); iI++)
 		{
 			CvUnit* pUnitToHeal = aeDamagedUnits[iI];
-			pUnitToHeal->joinGroup(NULL);
+			if (pGroup->getNumUnits() > 2)
+			{
+				pUnitToHeal->joinGroup(NULL);
+			}
 			pUnitToHeal->getGroup()->pushMission(MISSION_HEAL);
 
 			// note, removing the head unit from a group will force the group to be completely split if non-human
