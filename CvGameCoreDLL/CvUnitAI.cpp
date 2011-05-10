@@ -131,7 +131,11 @@ bool CvUnitAI::AI_update()
 		// Tholal AI - Shades
 		if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
 		{
-			AI_join();
+			AI_setGroupflag(GROUPFLAG_NONE);
+			if (AI_join())
+			{
+				return false;
+			}
 		}
 		
 		// Bring out the comfy chair!
@@ -162,7 +166,7 @@ bool CvUnitAI::AI_update()
 			}
 		}
 
-		// Upgrade to Liches - HARDCODE
+		// Upgrade to Liches - HARDCODE - figure out why normal spell cast check isnt working
 		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH3")))
 		{
 			int ispell = chooseSpell();
@@ -439,13 +443,61 @@ bool CvUnitAI::AI_update()
 
         if (!isBarbarian())
 	    {
-			if (getExperience() > 100)
+			if (getExperience() > 99)
 			{
 				if (AI_getUnitAIType() != UNITAI_HERO)
 				{
 					AI_setUnitAIType(UNITAI_HERO);
 					AI_setGroupflag(GROUPFLAG_CONQUEST);
 				}
+			}
+
+			// Tholal AI - temp hack for adepts that get wrong AI type
+			if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+			{
+				switch (AI_getUnitAIType())
+				{
+					case UNITAI_WARWIZARD:
+					case UNITAI_MANA_UPGRADE:
+					case UNITAI_TERRAFORMER:
+					case UNITAI_MAGE:
+					case UNITAI_HERO:
+						break;
+					case UNITAI_FEASTING:
+						if (isVampire())
+						{
+							break;
+						}
+					case UNITAI_INQUISITOR:
+						if (isInquisitor())
+						{
+							break;
+						}
+					default:
+						if (GET_PLAYER(getOwnerINLINE()).AI_totalUnitAIs(UNITAI_MANA_UPGRADE) == 0)
+						{
+							AI_setUnitAIType(UNITAI_MANA_UPGRADE);
+							AI_setGroupflag(GROUPFLAG_NONE);
+							break;
+						}
+						if (GET_PLAYER(getOwnerINLINE()).AI_totalUnitAIs(UNITAI_TERRAFORMER) == 0 && isTerraformer())
+						{
+							AI_setUnitAIType(UNITAI_TERRAFORMER);
+							AI_setGroupflag(GROUPFLAG_NONE);
+							break;
+						}
+						if (GET_PLAYER(getOwnerINLINE()).AI_totalUnitAIs(UNITAI_MAGE) < GET_PLAYER(getOwnerINLINE()).getNumCities())
+						{
+							AI_setUnitAIType(UNITAI_MAGE);
+							AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
+							break;
+						}
+						AI_setUnitAIType(UNITAI_WARWIZARD);
+						AI_setGroupflag(GROUPFLAG_CONQUEST);
+						break;
+				}
+			}
+
 			// Tholal AI - catch for units who have casted already and now can't move
 			if (!canMove())
 			{
@@ -459,7 +511,8 @@ bool CvUnitAI::AI_update()
                     return false;
                     break;
                 case GROUPFLAG_PERMDEFENSE:
-                    PermDefenseMove();
+                    //PermDefenseMove();
+					AI_cityDefenseMove();
                     return false;
                     break;
                 case GROUPFLAG_PERMDEFENSE_NEW:
@@ -607,15 +660,9 @@ bool CvUnitAI::AI_update()
 		case UNITAI_WARWIZARD:
 			ConquestMove();
 			break;
-
 		case UNITAI_TERRAFORMER:
             AI_terraformerMove();
             break;
-/** orig
-		case UNITAI_ATTACK_CITY:
-			AI_attackCityMove();
-			break;
-**/
 		case UNITAI_ATTACK_CITY:
 			if (isBarbarian())
 			{
