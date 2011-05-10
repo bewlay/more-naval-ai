@@ -1686,12 +1686,12 @@ void CvUnitAI::AI_settleMove()
                             {
                                 if (generatePath(pLoopPlot, 0, true, &iPathTurns))
                                 {
-                                    if (iPathTurns<3)
+                                    if (iPathTurns < 3)
                                     {
                                         iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
 										// Tholal AI - consider distance
 										iValue *= 2;
-										iValue /= iPathTurns;
+										iValue /= (iPathTurns + 1);
 										// End Tholal AI
                                         if (iValue > iBestValue)
                                         {
@@ -1812,52 +1812,39 @@ void CvUnitAI::AI_settleMove()
 	    }
     }
 
-    int iNeededPatrol=4;
-    if (GET_TEAM(getTeam()).isBarbarianAlly())
-    {
-        iNeededPatrol=2;
-    }
+	// Tholal AI - taken from BBAI
+	int iDanger = GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 3);
+	
+	if (iDanger > 0)
+	{
+		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > 2))
+		{
+			joinGroup(NULL);
+			if (AI_retreatToCity())
+			{
+				return;
+			}
+			if (AI_safety())
+			{
+				return;
+			}
+			getGroup()->pushMission(MISSION_SKIP);
+		}
+	}
 
-    if (plot()->isCity() && getGroup()->getNumUnits()<iNeededPatrol)
-    {
-        if (plot()->getOwnerINLINE()==getOwnerINLINE())
-        {
-            CLLNode<IDInfo>* pUnitNode;
-            CvUnit* pLoopUnit;
-            pUnitNode = plot()->headUnitNode();
+	if (plot()->isCity())
+	{
+		if (plot()->getOwnerINLINE() == getOwnerINLINE())
+		{
+			int iNeededSettleDefenders = (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS) ? 4 : 3);
 
-            while (pUnitNode != NULL)
-            {
-                pLoopUnit = ::getUnit(pUnitNode->m_data);
-                pUnitNode = plot()->nextUnitNode(pUnitNode);
-                if (pLoopUnit)
-                {
-                    if (pLoopUnit->AI_getGroupflag()==GROUPFLAG_SETTLERGROUP)
-                    {
-                        joinGroup(pLoopUnit->getGroup());
-                        getGroup()->pushMission(MISSION_SKIP);
-                        return;
-                    }
-                }
-            }
-
-            getGroup()->pushMission(MISSION_SKIP);
-            return;
-
-        }
-    }
-
-    if (getGroup()->getNumUnits()<iNeededPatrol)
-    {
-        if (plot()->isCity())
-        {
-            getGroup()->pushMission(MISSION_SKIP);
-            return;
-        }
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+			if (getGroup()->getNumUnits() < (GET_TEAM(getTeam()).isBarbarianAlly() ? 2 : iNeededSettleDefenders))
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+	}
 
 	int iAreaBestFoundValue = 0;
 	int iOtherBestFoundValue = 0;
@@ -1955,7 +1942,7 @@ void CvUnitAI::AI_settleMove()
 /************************************************************************************************/
 			&& (GC.getGameINLINE().getMaxCityElimination() > 0))
 		{
-			if (getGroup()->getNumUnits() < 3)
+			if (getGroup()->getNumUnits() < 4)
 			{
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
