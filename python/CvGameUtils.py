@@ -114,6 +114,13 @@ class CvGameUtils:
 		iX, iY, iBuild, iPlayer = argsList
 		pPlayer = gc.getPlayer(iPlayer)
 		eTeam = gc.getTeam(pPlayer.getTeam())
+		pPlot = CyMap().plot(iX, iY) 
+		
+		if pPlayer.isHuman() == False:
+			if pPlot.getBonusType(-1) != -1:
+				iBonus = pPlot.getBonusType(TeamTypes.NO_TEAM)
+				if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
+					return 0
 
 		return -1	# Returning -1 means ignore; 0 means Build cannot be performed; 1 or greater means it can
 
