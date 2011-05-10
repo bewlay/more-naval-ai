@@ -2458,8 +2458,8 @@ void getUnitAIString(CvWString& szString, UnitAITypes eUnitAI)
 /*************************************************************************************************/
 	case UNITAI_BARBSMASHER: szString = L"barbsmasher"; break;
 	case UNITAI_HERO: szString = L"Hero"; break;
-	case UNITAI_FEASTING: szString = L"Vampire"; break;
-	case UNITAI_MEDIC: szString = L"Medic"; break;
+	case UNITAI_FEASTING: szString = L"feasting"; break;
+	case UNITAI_MEDIC: szString = L"medic"; break;
 	case UNITAI_MAGE: szString = L"mage"; break;
 	case UNITAI_TERRAFORMER: szString = L"terraformer"; break;
 	case UNITAI_MANA_UPGRADE: szString = L"manaupgrader"; break;
