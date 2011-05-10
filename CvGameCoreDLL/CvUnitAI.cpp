@@ -16002,12 +16002,6 @@ bool CvUnitAI::AI_goToTargetCity(int iFlags, int iMaxPathTurns, CvCity* pTargetC
 	return false;
 }
 
-/*************************************************************************************************/
-/** Skyre Mod                                                                                   **/
-/** BETTER AI (Don't attack Archeron) merged Sephi                                              **/
-/**						                                            							**/
-/*************************************************************************************************/
-
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 {
@@ -16046,20 +16040,6 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 				{
 					if (iPathTurns < iMaxPathTurns)
 					{
-// Acheron Hack (Skyre)
-						/*
-                        CvUnit* pHeadUnit = ::getUnit(getGroup()->headUnitNode()->m_data);
-                        CvUnit* pBestDefender = pLoopCity->plot()->getBestDefender(BARBARIAN_PLAYER, getOwnerINLINE(), pHeadUnit);
-
-                        // Avoid dragon city unless we're very powerful
-                        if (pBestDefender != NULL &&
-							pBestDefender->getUnitType() == GC.getInfoTypeForString("UNIT_ACHERON") &&
-                            pHeadUnit->baseCombatStr() <= pBestDefender->baseCombatStrDefense())
-                        {
-							continue;
-						}
-						*/
-// End Acheron Hack
 						iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, false);
 
 						iValue *= 1000;
@@ -16098,16 +16078,16 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 							{
 								iValue = std::max(0, (pAdjacentPlot->defenseModifier(getTeam(), false) + 100));
 
-							if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pBestCity->plot()))))
-							{
-								iValue += (10 * -(GC.getRIVER_ATTACK_MODIFIER()));
-							}
+								if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pBestCity->plot()))))
+								{
+									iValue += (10 * -(GC.getRIVER_ATTACK_MODIFIER()));
+								}
 
-							iValue = std::max(1, iValue);
+								iValue = std::max(1, iValue);
 
-							iValue *= 1000;
+								iValue *= 1000;
 
-							iValue /= (iPathTurns + 1);
+								iValue /= (iPathTurns + 1);
 
 								if (iValue > iBestValue)
 								{
