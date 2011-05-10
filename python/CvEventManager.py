@@ -1254,8 +1254,6 @@ class CvEventManager:
 		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 		
-		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_VAMPIRE'):
-			unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_FEASTING')) 
 
 #Conquestmode for Religion Heros			
 		if not pPlayer.isConquestMode():
