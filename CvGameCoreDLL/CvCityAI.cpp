@@ -13031,11 +13031,11 @@ void CvCityAI::AI_calculateNeededPermDefense()
         {
             case 0: //CITY_DEFENSE
                 neededdefenders=(1+(getPopulation()+9)/12)*(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).getAIValueDefense()/100);
-                neededdefenders=std::max(1,neededdefenders);
+                neededdefenders=std::max(3,neededdefenders);
 
                 if (GET_TEAM(getTeam()).isBarbarianAlly())
                 {
-                    neededdefenders=1;
+                    neededdefenders -= 1;
                 }
                 break;
             case 1: //CITY_COUNTER
