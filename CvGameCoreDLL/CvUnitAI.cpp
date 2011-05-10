@@ -15823,72 +15823,76 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 				{
 					// BBAI efficiency: check area for land units before generating path
-					if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()))
+					if (pLoopCity->isRevealed(getTeam(), false))
 					{
-						if(AI_potentialEnemy(GET_PLAYER((PlayerTypes)iI).getTeam(), pLoopCity->plot()))
+						if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()))
 						{
-							if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), iFlags, true, &iPathTurns))
+							if (AI_potentialEnemy(GET_PLAYER((PlayerTypes)iI).getTeam(), pLoopCity->plot()))
 							{
-								if( iPathTurns <= iMaxPathTurns )
+
+								if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), iFlags, true, &iPathTurns))
 								{
-									// If city is visible and our force already in position is dominantly powerful or we have a huge force
-									// already on the way, pick a different target
-									if( iPathTurns > 2 && pLoopCity->isVisible(getTeam(), false) )
+									if( iPathTurns <= iMaxPathTurns )
 									{
-										/*
-										int iOurOffense = GET_TEAM(getTeam()).AI_getOurPlotStrength(pLoopCity->plot(),2,false,false,true);	
-										int iEnemyDefense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(pLoopCity->plot(),1,true,false);
-
-										if( 100*iOurOffense >= GC.getBBAI_SKIP_BOMBARD_BASE_STACK_RATIO()*iEnemyDefense )
+										// If city is visible and our force already in position is dominantly powerful or we have a huge force
+										// already on the way, pick a different target
+										if( iPathTurns > 2 && pLoopCity->isVisible(getTeam(), false) )
 										{
-											continue;
-										}
-										*/
+											/*
+											int iOurOffense = GET_TEAM(getTeam()).AI_getOurPlotStrength(pLoopCity->plot(),2,false,false,true);	
+											int iEnemyDefense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(pLoopCity->plot(),1,true,false);
 
-										if( GET_PLAYER(getOwnerINLINE()).AI_cityTargetUnitsByPath(pLoopCity, getGroup(), iPathTurns) > std::max( 6, 3 * pLoopCity->plot()->getNumVisibleEnemyDefenders(this) ) )
+											if( 100*iOurOffense >= GC.getBBAI_SKIP_BOMBARD_BASE_STACK_RATIO()*iEnemyDefense )
+											{
+												continue;
+											}
+											*/
+
+											if( GET_PLAYER(getOwnerINLINE()).AI_cityTargetUnitsByPath(pLoopCity, getGroup(), iPathTurns) > std::max( 6, 3 * pLoopCity->plot()->getNumVisibleEnemyDefenders(this) ) )
+											{
+												continue;
+											}
+										}
+
+										iValue = 0;
+										if (AI_getUnitAIType() == UNITAI_ATTACK_CITY) //lemming?
 										{
-											continue;
+											iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, false, false);
 										}
-									}
+										else
+										{
+											iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, true, true);
+										}
 
-									iValue = 0;
-									if (AI_getUnitAIType() == UNITAI_ATTACK_CITY) //lemming?
-									{
-										iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, false, false);
-									}
-									else
-									{
-										iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, true, true);
-									}
+										if( pLoopCity == pTargetCity )
+										{
+											iValue *= 2;
+										}
+										
+										if ((area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE))
+										{
+											iValue *= 50 + pLoopCity->calculateCulturePercent(getOwnerINLINE());
+											iValue /= 50;
+										}
 
-									if( pLoopCity == pTargetCity )
-									{
-										iValue *= 2;
-									}
-									
-									if ((area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE))
-									{
-										iValue *= 50 + pLoopCity->calculateCulturePercent(getOwnerINLINE());
-										iValue /= 50;
-									}
+										iValue *= 1000;
 
-									iValue *= 1000;
+										// If city is minor civ, less interesting - Tholal AI: removed barbarian cities from this value decrease
+										if( GET_PLAYER(pLoopCity->getOwnerINLINE()).isMinorCiv() )
+										{
+											iValue /= 2;
+										}
 
-									// If city is minor civ, less interesting - Tholal AI: removed barbarian cities from this value decrease
-									if( GET_PLAYER(pLoopCity->getOwnerINLINE()).isMinorCiv() )
-									{
-										iValue /= 2;
-									}
+										// If stack has poor bombard, direct towards lower defense cities
+										iPathTurns += std::min(12, getGroup()->getBombardTurns(pLoopCity)/4);
 
-									// If stack has poor bombard, direct towards lower defense cities
-									iPathTurns += std::min(12, getGroup()->getBombardTurns(pLoopCity)/4);
+										iValue /= (4 + iPathTurns*iPathTurns);
 
-									iValue /= (4 + iPathTurns*iPathTurns);
-
-									if (iValue > iBestValue)
-									{
-										iBestValue = iValue;
-										pBestCity = pLoopCity;
+										if (iValue > iBestValue)
+										{
+											iBestValue = iValue;
+											pBestCity = pLoopCity;
+										}
 									}
 								}
 							}
