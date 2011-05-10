@@ -2347,7 +2347,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
     if (getNumCities() == 0)
     {
-        if (getCivilizationType()==GC.getDefineINT("PIRATES"))
+		if (isPirate())
         {
             if (!pPlot->isCoastalLand(5))
             {
@@ -2544,7 +2544,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	some terrain ain't good for first city 														**/
-/**						                                            							**/
+/**	Tholal note - HARDCODE					                                            							**/
 /*************************************************************************************************/
             else if (pLoopPlot->getFeatureType()==GC.getDefineINT("JUNGLE_FEATURE"))
             {
@@ -2671,18 +2671,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
             }
         }
     }
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	adjust free first City selection    														**/
-/**						                                            							**/
-/*************************************************************************************************/
-    if (getNumCities() == 0)
-    {
-        iGreed=50;
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
     //iClaimThreshold is the culture required to pop the 2nd borders.
     int iClaimThreshold = GC.getGameINLINE().getCultureThreshold((CultureLevelTypes)(std::min(2, (GC.getNumCultureLevelInfos() - 1))));
     iClaimThreshold = std::max(1, iClaimThreshold);
@@ -2878,9 +2867,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /**	Pirates like Water                  														**/
 /**						                                            							**/
 /*************************************************************************************************/
-                if (getCivilizationType()==GC.getDefineINT("PIRATES"))
+				if (isPirate())
                 {
-                    iTempValue +=100;
+					if (!pLoopPlot->isCityRadius())
+					{
+	                    iTempValue +=100;
+					}
                 }
 /*************************************************************************************************/
 /**	END	                                        												**/
@@ -2969,7 +2961,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	grassland farms are really good        														**/
-/**						                                            							**/
+/**	Tholal note - HARDCODE					                                            							**/
 /*************************************************************************************************/
                         if (pLoopPlot->isFreshWater())
                         {
@@ -2990,7 +2982,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 						}
 
 /*************************************************************************************************/
-/**	THOLAL AI (Better City Placement) - Modified from Sephi's code                         		**/
+/**	THOLAL AI (Better City Placement) - Modified from Sephi's code   - HARDCODE                      		**/
 /**	Illians dont mind Snow or Tundra; Malakim don't mind Desert; Khazad like Hills				**/
 /**	Elves like Forest (less weight towards Ancient Forest so they dont build cities too close  	**/
 /*************************************************************************************************/
@@ -3071,10 +3063,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /** orig
                             iValue += (bIsCoastal ? 100 : -800);
 **/
-                            if (getCivilizationType()!=GC.getDefineINT("PIRATES"))
-                            {
-                                iValue += (bIsCoastal ? 100 : -800);
-                            }
+							if (!isPirate())
+							{
+								if (!pLoopPlot->isCityRadius())
+								{
+									iValue += (bIsCoastal ? 100 : -800);
+								}
+							}
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
