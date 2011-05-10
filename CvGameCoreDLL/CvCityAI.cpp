@@ -1401,7 +1401,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	//minimal defense.
-	if (iPlotCityDefenderCount <= iPlotSettlerCount)
+	if (iPlotCityDefenderCount <= (iPlotSettlerCount * 3))
 	{
 		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 		{
@@ -1933,7 +1933,7 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
 	if (iNumMages < iNumCities)
 	{
-		if (AI_chooseUnit(UNITAI_MAGE, 5 * kPlayer.AI_getMojoFactor()))
+		if (AI_chooseUnit(UNITAI_MAGE, 4 * kPlayer.AI_getMojoFactor()))
 		{
 			return;
 		}
@@ -1956,15 +1956,6 @@ void CvCityAI::AI_chooseProduction()
 	UnitTypes eBestSpreadUnit = NO_UNIT;
 	int iBestSpreadUnitValue = -1;
 	
-	if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
-	{
-		// Tholal AI Todo - make this into smarter function
-		if (AI_chooseUnit(UNITAI_MISSIONARY,10))
-		{
-			return;
-		}
-	}
-
 	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
@@ -2139,7 +2130,7 @@ void CvCityAI::AI_chooseProduction()
 	// ToDo - better numbers? Or find a change to the choose building function to cover this instead
 	if( !bLandWar )
 	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_RESEARCH, 10, 10 + 2*iWarTroubleThreshold, 75))
+		if (AI_chooseBuilding(BUILDINGFOCUS_RESEARCH, 10, (bFinancialTrouble ? 40 : 60), 75))
 		{
 			return;
 		}
@@ -2189,7 +2180,19 @@ void CvCityAI::AI_chooseProduction()
 
 	if( !bDanger )
 	{
-		// Tholal ToDo : Add something for religion victories
+
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+		{
+			// Tholal AI Todo - make this into smarter function
+			if (kPlayer.AI_getNumAIUnits(UNITAI_MISSIONARY) < iNumCities)
+			{
+				if (AI_chooseUnit(UNITAI_MISSIONARY,10))
+				{
+					return;
+				}
+			}
+		}
+
 		if (iBestSpreadUnitValue > ((iSpreadUnitThreshold * (bLandWar ? 80 : 60)) / 100))
 		{
 			if (AI_chooseUnit(eBestSpreadUnit, UNITAI_MISSIONARY))
