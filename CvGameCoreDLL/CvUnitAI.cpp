@@ -25707,6 +25707,7 @@ bool CvUnitAI::isUnitAllowedPatrolGroup()
         case UNITAI_SPY_SEA:
         case UNITAI_PIRATE_SEA:
         case UNITAI_MEDIC:
+		case UNITAI_INQUISITOR:
             return false;
             break;
         default:
@@ -25758,6 +25759,7 @@ bool CvUnitAI::isUnitAllowedDefenseGroup()
         case UNITAI_MISSIONARY_SEA:
         case UNITAI_SPY_SEA:
         case UNITAI_PIRATE_SEA:
+		case UNITAI_INQUISITOR:
             return false;
             break;
         default:
@@ -28850,7 +28852,6 @@ void CvUnitAI::AI_InquisitionMove()
 {
 
 // Tholal AI - rewritten to help with Religious victory strats
-// ToDo - figure out why they wont find target cities
 
 	CvCity* pLoopCity;
 	CvCity* pBestCity=NULL;
@@ -28866,8 +28867,41 @@ void CvUnitAI::AI_InquisitionMove()
 
 	int iStateRel = GET_PLAYER(getOwnerINLINE()).getStateReligion();
 
+	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		int iNeededInquisitors = (GET_PLAYER(getOwnerINLINE()).getNumCities() / 5);
+		iNeededInquisitors = std::max(1, iNeededInquisitors);
+
+		if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_INQUISITOR) < iNeededInquisitors)
+		{
+			joinGroup(NULL);
+			AI_setGroupflag(GROUPFLAG_NONE);
+			AI_setUnitAIType(UNITAI_INQUISITOR);
+		}
+	}
+
+	if (AI_getUnitAIType() != UNITAI_INQUISITOR)
+	{
+		return;
+	}
+
+	// Inquisitors should work alone
+	if (getGroup()->getNumUnits() > 1)
+	{
+		joinGroup(NULL);
+	}
+
 	if (iStateRel != NO_RELIGION)
 	{
+
+		// ToDo - check that no other inquisitors are here
+		if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
+		{
+			cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
+			return;
+		}
+
+
 		CvCity* pCity = plot()->getPlotCity();
 	
         bool bValidTargetForInquisition=false;
@@ -28876,35 +28910,37 @@ void CvUnitAI::AI_InquisitionMove()
 		for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
 		{
 
-			bValidTargetForInquisition=false;
-			iNumHeathenRels = 0;
-			//iValue = 0;
-
-			for (int iTarget=0;iTarget<GC.getNumReligionInfos();iTarget++)
+			if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true))
 			{
-				if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
-				{
-					bValidTargetForInquisition=true;
-					iNumHeathenRels ++;
-				}
-			}
+				bValidTargetForInquisition=false;
+				iNumHeathenRels = 0;
 
-			if (bValidTargetForInquisition)
-			{
-
-				iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
-				
-				if (pCity->isHolyCity((ReligionTypes)iStateRel))
+				for (int iTarget=0;iTarget<GC.getNumReligionInfos();iTarget++)
 				{
-					iValue *= 2;
+					if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+					{
+						bValidTargetForInquisition=true;
+						iNumHeathenRels ++;
+					}
 				}
 
-				// ToDo - reduce value for long distance travel
-
-				if (iValue > iBestValue)
+				if (bValidTargetForInquisition)
 				{
-					iBestValue = iValue;
-					pBestCity = pLoopCity;
+
+					iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
+					
+					if (pCity->isHolyCity((ReligionTypes)iStateRel))
+					{
+						iValue *= 2;
+					}
+
+					// ToDo - reduce value for long distance travel
+
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						pBestCity = pLoopCity;
+					}
 				}
 			}
 		}
@@ -28923,13 +28959,31 @@ void CvUnitAI::AI_InquisitionMove()
 			}
 			else
 			{
-				AI_setGroupflag(GROUPFLAG_NONE);
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 				return;
 			}
 		}
 	}
-//End Tholal AI
+
+	if (AI_guardCity())
+	{
+		return;
+	}
+
+	if (AI_anyAttack(1, 90))
+	{
+		return;
+	}
+
+	if (AI_retreatToCity())
+	{
+		return;
+	}
+
+	if (AI_safety())
+	{
+		return;
+	}
 
     getGroup()->pushMission(MISSION_SKIP);
     return;
