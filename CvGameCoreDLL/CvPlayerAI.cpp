@@ -10152,7 +10152,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_HERO:
-			bValid = true;
+			if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO)
+			{
+				bValid = true;
+			}
 			break;
 
 		case UNITAI_ANIMAL:
@@ -10856,14 +10859,31 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /*************************************************************************************************/
 	case UNITAI_MEDIC:
 		iValue += iCombatValue;
-		iValue *= 5;
+		for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+		{
+			if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+			{
+				iValue += GC.getPromotionInfo((PromotionTypes)iI).getSameTileHealChange();
+				iValue += GC.getPromotionInfo((PromotionTypes)iI).getAdjacentTileHealChange();
+			}
+		}
+		break;
 
 	case UNITAI_MAGE:
 	case UNITAI_TERRAFORMER:
     case UNITAI_MANA_UPGRADE:
 	case UNITAI_WARWIZARD:
-		iValue += iCombatValue;
-		iValue += AI_getMojoFactor();
+		if (GC.getUnitInfo(eUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+		{
+			iValue += iCombatValue;
+			for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+			{
+				if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+				{
+					iValue += GC.getPromotionInfo((PromotionTypes)iI).getSpellCasterXP();
+				}
+			}
+		}
 		break;
 /*************************************************************************************************/
 /**	END	                                        												**/
