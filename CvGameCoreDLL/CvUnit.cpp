@@ -1001,11 +1001,11 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
 	}
 //<<<<Unofficial Bug Fix: End Add
 
-	setXY(INVALID_PLOT_COORD, INVALID_PLOT_COORD, true);
-
-	joinGroup(NULL, false, false);
-
 	CvEventReporter::getInstance().unitLost(this);
+	
+	joinGroup(NULL, false, false);
+	
+	setXY(INVALID_PLOT_COORD, INVALID_PLOT_COORD, true);
 
 	GET_PLAYER(getOwnerINLINE()).deleteUnit(getID());
 

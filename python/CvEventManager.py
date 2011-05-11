@@ -1664,6 +1664,13 @@ class CvEventManager:
 		'Unit Lost'
 		unit = argsList[0]
 		player = PyPlayer(unit.getOwner())
+		pPlot = unit.plot()
+		
+		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_TREANT'):
+			if pPlot.getFeatureType() == -1:
+				if pPlot.canHaveFeature(gc.getInfoTypeForString('FEATURE_FOREST_NEW')):
+					pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FOREST_NEW'), 0)
+		
 		if (not self.__LOG_UNITLOST):
 			return
 		CvUtil.pyPrint('%s was lost by Player %d Civilization %s' 

@@ -102,7 +102,7 @@
 	</Define>
 	<Define>
 		<DefineName>USE_ON_UNIT_LOST_CALLBACK</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
+		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>USE_ON_UNIT_MOVE_CALLBACK</DefineName>
