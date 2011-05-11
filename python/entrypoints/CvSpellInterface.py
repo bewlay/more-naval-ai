@@ -2403,6 +2403,18 @@ def spellRebuildBarnaxus(caster):
 	if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
 		pCityPlayer.AI_changeAttitudeExtra(iPlayer,2)
 
+def reqRecruit(caster):
+	pPlot = caster.plot()
+	pCity = pPlot.getPlotCity()
+	iPlayer = caster.getOwner()
+	pPlayer = gc.getPlayer(iPlayer)
+	if pPlayer.isHuman() == False:
+		if caster.getUnitType() == gc.getInfoTypeForString('UNIT_DONAL'):
+			if pCity.getPopulation() > 8:
+				return True
+		return False
+	return True
+
 def spellRecruit(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
