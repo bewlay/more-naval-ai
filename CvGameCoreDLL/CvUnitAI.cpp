@@ -28780,10 +28780,16 @@ void CvUnitAI::AI_DeBuffCast()
 
 bool CvUnitAI::isMovementCaster()
 {
-    if (AI_getUnitAIType()==UNITAI_MAGE || AI_getUnitAIType()==UNITAI_TERRAFORMER)
+    if (AI_getUnitAIType()==UNITAI_MAGE || AI_getUnitAIType()==UNITAI_TERRAFORMER || AI_getUnitAIType()==UNITAI_FEASTING || AI_getUnitAIType()==UNITAI_INQUISITOR
+		 || AI_getUnitAIType()==UNITAI_MANA_UPGRADE)
     {
         return false;
     }
+
+	if (AI_getUnitAIType() == UNITAI_HERO && isSummoner())
+	{
+		return false;
+	}
 
     if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_BODY1")))
         return true;
