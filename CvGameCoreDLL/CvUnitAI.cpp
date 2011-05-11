@@ -28458,10 +28458,35 @@ void CvUnitAI::AI_terraformerMove()
     long lResult=-1;
     gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_MageTurn", argsList1.makeFunctionArgs(), &lResult);
     delete pyUnit1;	// python fxn must not hold on to this pointer
-    if (lResult!=1)
+    if (lResult != 1)
     {
+		if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+		{
+			if (isDeBuffer() || isBuffer() || isDirectDamageCaster())
+			{
+				AI_setUnitAIType(UNITAI_WARWIZARD);
+			}
+			else
+			{
+				AI_setUnitAIType(UNITAI_MAGE);
+			}
+		}
+		else
+		{
+			// Tholal note - are there other terraformers that arent mages or medics? This should probably be more dynamic
+			AI_setUnitAIType(UNITAI_MEDIC);
+		}
+
+		if (AI_retreatToCity())
+		{
+			return;
+		}
+
         getGroup()->pushMission(MISSION_SKIP);
+		return;
     }
+
+	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
 //returns true if the Unit can Summon stuff
