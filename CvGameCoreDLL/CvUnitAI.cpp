@@ -25203,6 +25203,12 @@ void CvUnitAI::AI_chooseGroupflag()
         return;
     }
 
+	if (getDuration() > 0)
+	{
+        AI_setGroupflag(GROUPFLAG_SUICIDE_SUMMON);
+        return;
+	}
+
     if (isHiddenNationality())
     {
         AI_setGroupflag(GROUPFLAG_HNGROUP);
