@@ -1599,10 +1599,11 @@ class CvEventManager:
 		player = PyPlayer(iPlayer)
 		attacker = PyPlayer(iAttacker)
 		pPlayer = gc.getPlayer(iPlayer)
+		iX = unit.getX()
+		iY = unit.getY()
+		pPlot = CyMap().plot(iX,iY)
 
 		if (unit.isAlive() and unit.isImmortal() == False):
-			iX = unit.getX()
-			iY = unit.getY()
 			iSoulForge = gc.getInfoTypeForString('BUILDING_SOUL_FORGE')
 			for iiX in range(iX-1, iX+2, 1):
 				for iiY in range(iY-1, iY+2, 1):
@@ -1612,7 +1613,7 @@ class CvEventManager:
 						if pCity.getNumRealBuilding(iSoulForge) > 0:
 							pCity.changeProduction(unit.getExperience() + 10)
 							CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_SOUL_FORGE",()),'AS2D_DISCOVERBONUS',1,'Art/Interface/Buttons/Buildings/Soulforge.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
-			pPlot = CyMap().plot(iX,iY)
+			
 			if pPlot.isCity():
 				pCity = pPlot.getPlotCity()
 				if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_MOKKAS_CAULDRON')) > 0:
