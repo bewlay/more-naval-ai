@@ -12728,7 +12728,7 @@ int CvCityAI::AI_cityThreat(bool bDangerPercent)
 	
 	if (isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
 	{
-		// Tholal ToDo: Era fix
+		// Tholal AI - Era fix
 		//int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
 		int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 
@@ -12948,7 +12948,9 @@ void CvCityAI::AI_updateWorkersNeededHere()
 		}
 	}
 	
-	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
+	// Tholal AI - era fix
+	//iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
+	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GC.getGameINLINE().getCurrentPeriod())) / 3;
 	
 	if (GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble())
 	{
