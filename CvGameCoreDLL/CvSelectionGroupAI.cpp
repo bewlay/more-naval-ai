@@ -247,8 +247,8 @@ bool CvSelectionGroupAI::AI_update()
 					TCHAR szOut[1024];
 					CvWString szTempString;
 					getUnitAIString(szTempString, pHeadUnit->AI_getUnitAIType());
-					sprintf(szOut, "Unit stuck in loop: %S(%S)[%d, %d] (%S)\n", pHeadUnit->getName().GetCString(), GET_PLAYER(pHeadUnit->getOwnerINLINE()).getName(),
-						pHeadUnit->getX_INLINE(), pHeadUnit->getY_INLINE(), szTempString.GetCString());
+					sprintf(szOut, "Unit stuck in loop: %S(%S)[%d, %d] (%S - %d)\n", pHeadUnit->getName().GetCString(), GET_PLAYER(pHeadUnit->getOwnerINLINE()).getName(),
+						pHeadUnit->getX_INLINE(), pHeadUnit->getY_INLINE(), szTempString.GetCString(), pHeadUnit->getID());
 					gDLL->messageControlLog(szOut);
 				}
 
