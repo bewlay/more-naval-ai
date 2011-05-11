@@ -952,7 +952,7 @@ CvUnit* CvSelectionGroupAI::AI_ejectBestDefender(CvPlot* pDefendPlot)
 		pLoopUnit = ::getUnit(pEntityNode->m_data);
 		pEntityNode = nextUnitNode(pEntityNode);
 
-		if (!pLoopUnit->noDefensiveBonus())
+		if (!pLoopUnit->noDefensiveBonus() && pLoopUnit->AI_getUnitAIType() != UNITAI_HERO)
 		{
 			int iValue = pLoopUnit->currEffectiveStr(pDefendPlot, NULL) * 100;
 
@@ -960,6 +960,11 @@ CvUnit* CvSelectionGroupAI::AI_ejectBestDefender(CvPlot* pDefendPlot)
 			{
 				iValue *= 100 + pLoopUnit->cityDefenseModifier();
 				iValue /= 100;
+			}
+
+			if (pDefendPlot->isHills())
+			{
+				iValue += pLoopUnit->hillsDefenseModifier();
 			}
 
 			iValue *= 100;
