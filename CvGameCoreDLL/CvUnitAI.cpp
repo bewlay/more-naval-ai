@@ -22741,11 +22741,16 @@ bool CvUnitAI::AI_exploreAir()
 	PROFILE_FUNC();
 
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
-	int iLoop;
-	CvCity* pLoopCity;
 	CvPlot* pBestPlot = NULL;
 	int iBestValue = 0;
 
+	CvPlot* pLoopPlot;
+	int iSearchRange;
+	int iValue;
+	int iDX, iDY;
+
+
+/*
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive() && !GET_PLAYER((PlayerTypes)iI).isBarbarian())
@@ -22758,7 +22763,7 @@ bool CvUnitAI::AI_exploreAir()
 					{
 						if (canReconAt(plot(), pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE()))
 						{
-							int iValue = 1 + GC.getGame().getSorenRandNum(15, "AI explore air");
+							iValue = 1 + GC.getGame().getSorenRandNum(15, "AI explore air");
 							if (isEnemy(GET_PLAYER((PlayerTypes)iI).getTeam()))
 							{
 								iValue += 10;
@@ -22783,6 +22788,79 @@ bool CvUnitAI::AI_exploreAir()
 	if (pBestPlot != NULL)
 	{
 		getGroup()->pushMission(MISSION_RECON, pBestPlot->getX(), pBestPlot->getY());
+		return true;
+	}
+	*/
+
+	iSearchRange = airRange();
+
+	iBestValue = 0;
+	pBestPlot = NULL;
+
+	for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
+	{
+		for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
+		{
+			pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+
+			if (pLoopPlot != NULL)
+			{
+				if (pLoopPlot != plot())
+				{
+					if (!pLoopPlot->isVisible(getTeam(), false) || pLoopPlot->isAdjacentOwned())
+					{
+						if (canReconAt(plot(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()))
+						{
+							iValue = 1 + GC.getGame().getSorenRandNum(10, "AI explore air");
+							iValue *= plotDistance(getX_INLINE(), getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+
+							if (pLoopPlot->isOwned())
+							{
+								if (GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
+								{
+									iValue += 5;
+								}
+
+								iValue *= 2;
+							}
+
+							if (pLoopPlot->isCity())
+							{
+								iValue *= 5;
+							}
+
+							if (!pLoopPlot->isRevealed(getTeam(), false))
+							{
+								iValue *= 2;
+							}
+
+							if (iValue > iBestValue)
+							{
+								iBestValue = iValue;
+								pBestPlot = pLoopPlot;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (pBestPlot != NULL)
+	{
+		FAssert(!atPlot(pBestPlot));
+
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut, "Player %d Unit %d (%S's %S) recon %d, %d \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestPlot->getX(), pBestPlot->getY());
+				gDLL->messageControlLog(szOut);
+			}
+		}
+
+		getGroup()->pushMission(MISSION_RECON, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 		return true;
 	}
 	
