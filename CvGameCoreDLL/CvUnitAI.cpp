@@ -5144,10 +5144,10 @@ void CvUnitAI::AI_exploreMove()
 	PROFILE_FUNC();
 
 
-	// Floating Eyes
+	// Floating Eyes & Hawks
 	if (getDomainType() == DOMAIN_AIR)
 	{
-		if (canRecon(plot()))
+		if (airRange() > 0)
 		{
 			if (AI_exploreAir())
 			{
