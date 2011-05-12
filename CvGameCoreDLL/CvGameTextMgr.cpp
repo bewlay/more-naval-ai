@@ -14960,7 +14960,8 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	}
 
 //FfH: Added by Kael 10/13/2007
-	int iUnhappyProd = (city.isUnhappyProduction() ? city.angryPopulation(0) : 0);
+	//int iUnhappyProd = (city.isUnhappyProduction() ? city.angryPopulation(0) : 0);
+	int iUnhappyProd = (city.isUnhappyProduction() ? city.unhappyLevel(0) : 0);
 	if (iUnhappyProd != 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_UNHAPPY_PROD", iUnhappyProd));
