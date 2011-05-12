@@ -6203,7 +6203,8 @@ bool CvCityAI::AI_isDanger()
 /* City AI, Efficiency                                                                          */
 /************************************************************************************************/
 	//return GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 2, false);
-	return GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 2, false);
+	int iDangerRange = getPlotRadius() + 1;
+	return GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), iDangerRange, false);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/	
