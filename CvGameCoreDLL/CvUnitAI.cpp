@@ -28054,31 +28054,13 @@ void CvUnitAI::AI_heromove()
 		}
     }
 
-    if (GET_PLAYER(getOwnerINLINE()).isConquestMode())
+	if (AI_getGroupflag() != GROUPFLAG_CONQUEST)
     {
         AI_setGroupflag(GROUPFLAG_CONQUEST);
         getGroup()->pushMission(MISSION_SKIP);
         return;
     }
-    else
-    {
-        if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_DEFENSE_NEW)>0)
-        {
-            AI_setGroupflag(GROUPFLAG_DEFENSE_NEW);
-            getGroup()->pushMission(MISSION_SKIP);
-            return;
-        }
-        if (AI_guardCity(true))
-        {
-            return;
-        }
-		if (AI_retreatToCity())
-		{
-			return;
-		}
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
+
 	return;
 }
 
