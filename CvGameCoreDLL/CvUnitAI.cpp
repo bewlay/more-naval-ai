@@ -26492,6 +26492,8 @@ void CvUnitAI::PermDefenseNewMove()
     {
         return;
     }
+
+	/*
     if (getGroup()->getNumUnits()>1)
     {
         getGroup()->pushMission(MISSION_SKIP);
@@ -26499,6 +26501,8 @@ void CvUnitAI::PermDefenseNewMove()
         getGroup()->pushMission(MISSION_SKIP);
         return;
     }
+	*/
+
     //Unit in a City that needs Defense?
     if (plot()->isCity() && plot()->getOwnerINLINE()==getOwnerINLINE())
     {
@@ -26681,6 +26685,12 @@ void CvUnitAI::PermDefenseNewMove()
         }
         //Look for Cities around
     }
+
+	if (AI_guardCityAirlift())
+	{
+		return;
+	}
+
 //Look for Cities around that need DefHelp
     int iSearchRange=10;
     int iDX,iDY;
