@@ -175,6 +175,12 @@ bool CvUnitAI::AI_update()
 				cast(ispell);
 			}
 		}
+
+		// Vampire stuff. Eating local pop, assignment of AI_FEASTING
+		if (isVampire())
+		{
+			AI_feastingmove();
+		}
 // End Tholal AI
 
 /** BETTER AI Sephi (Time for the Mages to Caste Haste, etc.)                   **/
@@ -192,13 +198,6 @@ bool CvUnitAI::AI_update()
             }
         }
     }
-
-// Tholal AI - Vampire move - can remove other references?
-	if (isVampire())
-	{
-		//AI_vampireMove();
-		AI_feastingmove();
-	}
 
 /*************************************************************************************************/
 /**	END	                                        												**/
