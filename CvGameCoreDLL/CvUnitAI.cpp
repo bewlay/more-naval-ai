@@ -4819,6 +4819,27 @@ void CvUnitAI::AI_cityDefenseMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	if (!isUnitAllowedPermDefense())
+	{
+		joinGroup(NULL);
+		if (GET_PLAYER(getOwnerINLINE()).isConquestMode() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+		{
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+		}
+		else
+		{
+			AI_setGroupflag(GROUPFLAG_PATROL);
+		}
+
+		if ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
+		{
+			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+		}
+
+		return;
+	}
+
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/18/09                                jdog5000      */
 /*                                                                                              */
