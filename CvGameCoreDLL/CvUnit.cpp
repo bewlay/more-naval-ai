@@ -10930,7 +10930,7 @@ void CvUnit::joinGroup(CvSelectionGroup* pSelectionGroup, bool bRemoveSelected, 
 
                 if (pSelectionGroup!=NULL && pSelectionGroup->getHeadUnit())
                 {
-                    if (AI_getGroupflag()==GROUPFLAG_DEFENSE_NEW && pSelectionGroup->getHeadUnit()->AI_getGroupflag()==GROUPFLAG_DEFENSE_NEW)
+                    if (AI_getGroupflag()==GROUPFLAG_PATROL && pSelectionGroup->getHeadUnit()->AI_getGroupflag()==GROUPFLAG_PATROL)
                     {
                         bValid=false;
                     }
