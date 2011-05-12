@@ -25736,6 +25736,11 @@ bool CvUnitAI::isUnitAllowedPermDefense()
 		return false;
 	}
 
+	if (kUnitInfo.getCombat() > kUnitInfo.getCombatDefense())
+	{
+		return false;
+	}
+
     if (getDuration()>0)
     {
         return false;
