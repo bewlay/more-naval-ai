@@ -28597,6 +28597,11 @@ void CvUnitAI::AI_SummonCast()
                     }
                     iTempValue *= 100;
                     iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
+
+					iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamage() * GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamageMaxUnits();
+
+					iTempValue *= GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getTier();
+
                     iValue += iTempValue;
                 }
 
