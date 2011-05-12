@@ -12496,19 +12496,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 //<<<<Better AI: End Add
 
 	// Tholal AI - value Theocracy during religion victory push
+	// Tholal ToDo - make better formulas - this is just arbitrary
 	if (kCivic.isNoNonStateReligionSpread())
 	{
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 		{
-			iValue += 250;
+			iValue += 200;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 		{
-			iValue += 500;
+			iValue += 350;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
 		{
-			iValue += 1000;
+			iValue += 500;
 		}
 	}
 
