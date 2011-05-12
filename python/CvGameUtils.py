@@ -117,6 +117,10 @@ class CvGameUtils:
 		pPlot = CyMap().plot(iX, iY) 
 		
 		if pPlayer.isHuman() == False:
+		
+			if iBuild == gc.getInfoTypeForString('BUILD_ROAD'):
+				return -1
+				
 			if pPlot.getBonusType(-1) != -1:
 				iBonus = pPlot.getBonusType(TeamTypes.NO_TEAM)
 				if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
