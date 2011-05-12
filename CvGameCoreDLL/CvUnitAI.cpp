@@ -25531,6 +25531,12 @@ bool CvUnitAI::AI_decide_patrolgroup()
 
     int flag;
 
+
+	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
+	{
+		return false;
+	}
+
     switch(AI_getUnitAIType())
     {
         case UNITAI_COUNTER:
@@ -25575,7 +25581,8 @@ bool CvUnitAI::AI_decide_patrolgroup()
                             {
                                 if(generatePath(pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin(),0,true,&iPathTurns))
                                 {
-                                    AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+                                    //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+									AI_setGroupflag(GROUPFLAG_PATROL);
                                     return true;
                                 }
                             }
@@ -25583,14 +25590,16 @@ bool CvUnitAI::AI_decide_patrolgroup()
                             {
                                 if(generatePath(pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin(),0,true,&iPathTurns))
                                 {
-                                    AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+                                    //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+									AI_setGroupflag(GROUPFLAG_PATROL);
                                     return true;
                                 }
                             }
                         }
                         else if(generatePath(pLoopPlot,0,true,&iPathTurns))
                         {
-                            AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+                            //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
+							AI_setGroupflag(GROUPFLAG_PATROL);
                             return true;
                         }
                     }
