@@ -11330,11 +11330,14 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 //FfH: Added by Kael 02/24/2009 dont build over recently built improvmenets
                         if (eImprovement != pPlot->getImprovementType())
                         {
+							iValue /= 4;
+							/*
                             iValue += (iValue / 4);
                             if (pPlot->getImprovementDuration() < 20)
                             {
                                 iValue *= 2;
                             }
+							*/
                         }
 //FfH: End Add
 
@@ -11343,11 +11346,6 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 					// Tholal AI - fort control
 					if (GC.getImprovementInfo(eFinalImprovement).getDefenseModifier() > 0)
 					{
-						if (pPlot->isRoute())
-						{
-							iValue *= 2;
-						}
-
 						if (pPlot->isCityRadius())
 						{
 							iValue /= 100;
