@@ -12090,6 +12090,16 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 	pPlot = plot();
 	pCity = pPlot->getPlotCity();
 
+	int pCities = GET_PLAYER(getOwnerINLINE()).getNumCities();
+
+	if (pCities > 1)
+	{
+		if ((getGroup()->getNumUnits() > (pCities * 5)) && (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+		{
+			return false;
+		}
+	}
+
 	if ((pCity != NULL) && (pCity->getOwnerINLINE() == getOwnerINLINE())) // XXX check for other team?
 	{
 		if (bLeave && !(pCity->AI_isDanger()))
