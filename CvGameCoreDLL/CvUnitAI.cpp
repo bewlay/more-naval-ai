@@ -497,7 +497,7 @@ bool CvUnitAI::AI_update()
 				}
 			}
 
-			// Tholal AI - catch for units who have casted already and now can't move
+			// Tholal AI - catch for units who have casted already this turn and now can't move
 			if (!canMove())
 			{
 				return false;
@@ -13154,8 +13154,7 @@ bool CvUnitAI::AI_chokeDefend()
 	CvCity* pCity;
 	int iPlotDanger;
 
-	// Tholal AI - why is this assert here?
-//	FAssert(AI_isCityAIType());
+	//FAssert(AI_isCityAIType());
 
 	// XXX what about amphib invasions?
 
@@ -15721,6 +15720,8 @@ bool CvUnitAI::AI_exploreRange(int iRange)
 				{
 					iValue = 0;
 
+					//Tholal ToDo - add AI for finding and exploring dungeons
+					
 					if (pLoopPlot->isRevealedGoody(getTeam()))
 					{
 						iValue += 100000;
@@ -24264,8 +24265,7 @@ int CvUnitAI::AI_finalOddsThreshold(CvPlot* pPlot, int iOddsThreshold)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-// Tholal AI - encourage attack when attackers have 4-1 numbers advantage
-	
+// Tholal AI - encourage attack when attackers have a numbers advantage
 	if (getGroup()->getNumUnits() > (iDefenders * 4))
 	{
 		iFinalOddsThreshold /= 2;
