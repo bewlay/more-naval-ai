@@ -5332,7 +5332,7 @@ void CvUnitAI::AI_missionaryMove()
 	// Tholal ToDo - Secondary check is for Savants who can never do Great Works. Is there a better way to handle this?
 	if (m_pUnitInfo->getGreatWorkCulture() == 0)
 	{
-		if ((getLevel() > 3) || isDivine())
+		if (m_pUnitInfo->getDefaultUnitAIType() != UNITAI_MISSIONARY)
 		{
 			AI_setUnitAIType(UNITAI_RESERVE);
 		}
