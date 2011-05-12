@@ -28342,6 +28342,9 @@ bool CvUnitAI::AI_Rantinemove()
 
 void CvUnitAI::AI_upgrademanaMove()
 {
+
+	// Tholal ToDo - bring movement into the DLL and call python to decide which mana node to create
+	
     CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
     argsList1.add(gDLL->getPythonIFace()->makePythonObject(pyUnit1));	// pass in unit class
@@ -28353,6 +28356,7 @@ void CvUnitAI::AI_upgrademanaMove()
     {
         return;
     }
+
     if (lResult == 2)
     {
 		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC2")))
@@ -28381,6 +28385,17 @@ void CvUnitAI::AI_upgrademanaMove()
 			}
 		}
     }
+
+	if (AI_retreatToCity())
+	{
+		return;
+	}
+
+	if (AI_safety())
+	{
+		return;
+	}
+
     getGroup()->pushMission(MISSION_SKIP);
     return;
 }
