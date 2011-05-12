@@ -26611,16 +26611,6 @@ void CvUnitAI::PermDefenseNewMove()
         return;
     }
 
-	/*
-    if (getGroup()->getNumUnits()>1)
-    {
-        getGroup()->pushMission(MISSION_SKIP);
-        joinGroup(NULL);
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
-	*/
-
     //Unit in a City that needs Defense?
     if (plot()->isCity() && plot()->getOwnerINLINE()==getOwnerINLINE())
     {
@@ -26692,6 +26682,8 @@ void CvUnitAI::PermDefenseNewMove()
     {
         reinforcement=true;
     }
+
+	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(false) > 0);
 
     if(reinforcement)
     {
@@ -26797,7 +26789,7 @@ void CvUnitAI::PermDefenseNewMove()
             }
             else
             {
-                getGroup()->pushMission(MISSION_MOVE_TO, pReplacement->getX_INLINE(), pReplacement->getY_INLINE(), MOVE_DIRECT_ATTACK);
+				getGroup()->pushMission(MISSION_MOVE_TO, pReplacement->getX_INLINE(), pReplacement->getY_INLINE(), ((bAtWar) ? MOVE_AVOID_ENEMY_WEIGHT_2 : MOVE_DIRECT_ATTACK));
                 return;
             }
         }
@@ -26874,7 +26866,7 @@ void CvUnitAI::PermDefenseNewMove()
 	}
     if (pBestPlot!=NULL)
     {
-        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_DIRECT_ATTACK);
+        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bAtWar) ? MOVE_AVOID_ENEMY_WEIGHT_2 : MOVE_DIRECT_ATTACK));
         return;
     }
     AI_setGroupflag(GROUPFLAG_NONE);
