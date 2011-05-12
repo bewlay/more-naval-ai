@@ -86,8 +86,6 @@ public:
     bool AI_decide_permdefensegroup();
     bool AI_decide_patrolgroup();
 
-    bool AI_patrol_guardcity();
-
 //used for spawns
     CvPlot* getOriginPlot() const;
     void setOriginPlot(CvPlot* newplot);

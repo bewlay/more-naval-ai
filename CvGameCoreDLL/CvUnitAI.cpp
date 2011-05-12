@@ -27402,43 +27402,6 @@ void CvUnitAI::PickupEquipmentMove()
 	return;
 }
 
-// returns true if the Patrol group decides to guard a city
-bool CvUnitAI::AI_patrol_guardcity()
-{
-    CvPlot* pBestCity=NULL;
-    int Bestvalue=0;
-    CvCity* pLoopCity;
-    int iLoop;
-    for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
-    {
-        if (pLoopCity->AI_getCityPatrolOrigin())
-        {
-            if (pLoopCity->AI_getCityPatrolOrigin()==getOriginPlot())
-            {
-                if(pLoopCity->AI_CityDangerValue()>Bestvalue)
-                {
-                    pBestCity=pLoopCity->plot();
-                    Bestvalue=pLoopCity->AI_CityDangerValue();
-                }
-            }
-        }
-    }
-    if (pBestCity!=NULL)
-    {
-        if (atPlot(pBestCity))
-        {
-            getGroup()->pushMission(MISSION_SKIP); //need to put in a check for an assault
-            return true;
-        }
-        else
-        {
-            getGroup()->pushMission(MISSION_MOVE_TO, pBestCity->getX_INLINE(), pBestCity->getY_INLINE(), MOVE_IGNORE_DANGER);
-            return true;
-        }
-    }
-    return false;
-}
-
 void CvUnitAI::ConquestMove()
 {
     CvSelectionGroup* pLoopSelectionGroup;
