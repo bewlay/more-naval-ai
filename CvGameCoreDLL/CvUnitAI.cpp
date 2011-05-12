@@ -12193,7 +12193,8 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 			{
 				if (pPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
 				{
-					if (pEjectedUnit->cityDefenseModifier() > 0)
+					//if (pEjectedUnit->cityDefenseModifier() > 0)
+					if (pEjectedUnit->isUnitAllowedPermDefense())
 					{
 						pEjectedUnit->AI_setUnitAIType(UNITAI_CITY_DEFENSE);
 					}
