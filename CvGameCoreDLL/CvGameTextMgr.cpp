@@ -5611,6 +5611,10 @@ void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes
 		szText = gDLL->getText("TXT_KEY_MISC_CIV_BLOCKED_UNITS");
 		if (bDawnOfMan)
 		{
+			if (bFound)
+			{
+				szInfoText.append(NEWLINE);
+			}
 			szTempString.Format(L"%s: ", szText.GetCString());
 		}
 		else
