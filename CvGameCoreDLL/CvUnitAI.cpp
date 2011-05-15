@@ -28148,13 +28148,37 @@ void CvUnitAI::AI_heromove()
 		}
     }
 
+	// Tholal AI - Heroes joining Patrol groups can cause infinite loop lockups. Forcing them into Conquest groups instead until I can track that down
+	/*
+	if ((AI_getGroupflag() != GROUPFLAG_CONQUEST) && (AI_getGroupflag() != GROUPFLAG_PATROL))
+    {
+		if (getGroup()->getNumUnits() > 1)
+		{
+			joinGroup(NULL);
+		}
+
+		if (GET_PLAYER(getOwnerINLINE()).isConquestMode() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+		{
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+		}
+		else
+		{
+			AI_setGroupflag(GROUPFLAG_PATROL);
+		}
+    }
+	*/
+
 	if (AI_getGroupflag() != GROUPFLAG_CONQUEST)
     {
-        AI_setGroupflag(GROUPFLAG_CONQUEST);
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
+		if (getGroup()->getNumUnits() > 1)
+		{
+			joinGroup(NULL);
+		}
 
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+	}
+
+	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
 
