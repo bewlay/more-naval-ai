@@ -3568,7 +3568,13 @@ def spellUnyieldingOrder(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
 	pCity.setOccupationTimer(0)
-	pCity.changeHurryAngerTimer(-9)
+	
+	iChange = -9
+	pTimer = pCity.getHurryAngerTimer()
+	
+	if  pTimer < 9:
+		iChange = 0 - pTimer
+	pCity.changeHurryAngerTimer(iChange)
 
 def reqUpgradeDovielloWarrior(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
