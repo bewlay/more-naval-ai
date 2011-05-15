@@ -202,9 +202,9 @@
 			<Type>UNITAI_WARWIZARD</Type>
 			<Description>UNITAI_WARWIZARD</Description>
 		</UnitAIInfo>		
+		<UnitAIInfo>
+			<Type>UNITAI_INQUISITOR</Type>
+			<Description>UNITAI_INQUISITOR</Description>
+		</UnitAIInfo>
 	</UnitAIInfos>
-	<UnitAIInfo>
-		<Type>UNITAI_INQUISITOR</Type>
-		<Description>UNITAI_INQUISITOR</Description>
-	</UnitAIInfo>	
 </Civ4UnitAIInfos>
