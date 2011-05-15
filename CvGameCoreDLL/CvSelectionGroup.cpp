@@ -3138,6 +3138,12 @@ bool CvSelectionGroup::calculateIsStranded()
 		}
 	}
 
+	// Tholal AI - make sure water walking groups aren't flagged as stranded
+	if (plot()->isWater() && getHeadUnit()->isWaterWalking())
+	{
+		return false;
+	}
+
 	return true;
 }
 
