@@ -5339,6 +5339,7 @@ void CvUnitAI::AI_missionaryMove()
 		if (m_pUnitInfo->getDefaultUnitAIType() != UNITAI_MISSIONARY)
 		{
 			AI_setUnitAIType(UNITAI_RESERVE);
+			return;
 		}
 	}
 
@@ -5365,7 +5366,7 @@ void CvUnitAI::AI_missionaryMove()
 			
 		for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
 		{
-			if (pLoopCity->isDisorder() || pLoopCity->getCulture(pLoopCity->getOwnerINLINE()) == 0)//(pLoopCity->getCultureLevel() == 0) )
+			if (pLoopCity->isDisorder() || pLoopCity->getCulture(pLoopCity->getOwnerINLINE()) == 0)
 			{
 				if (canGreatWork(pLoopCity->plot()))
 				{
@@ -5373,7 +5374,7 @@ void CvUnitAI::AI_missionaryMove()
 					{
 						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_GREAT_WORK, getGroup()) == 0)
 						{
-							if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true))
+							if (generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true))
 							{
 								iValue = pLoopCity->getPopulation() * 10;
 
@@ -5410,7 +5411,7 @@ void CvUnitAI::AI_missionaryMove()
 			else
 			{
 				FAssert(!atPlot(pBestPlot));
-				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_GREAT_WORK, pBestGreatWorkPlot);
+				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_GREAT_WORK, pBestGreatWorkPlot);
 				return;
 			}
 		}
@@ -5453,6 +5454,11 @@ void CvUnitAI::AI_missionaryMove()
 				return;
 			}
 		}
+	}
+
+	if (AI_guardCity())
+	{
+		return;
 	}
 
 	if (AI_retreatToCity())
