@@ -22819,12 +22819,17 @@ bool CvUnitAI::AI_exploreAir()
 			{
 				if (pLoopPlot != plot())
 				{
-					if (!pLoopPlot->isVisible(getTeam(), false) || pLoopPlot->isAdjacentOwned())
+					if (!pLoopPlot->isVisible(getTeam(), false) || (pLoopPlot->isAdjacentOwned() && pLoopPlot->getOwner() != getOwner()))
 					{
 						if (canReconAt(plot(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()))
 						{
 							iValue = 1 + GC.getGame().getSorenRandNum(10, "AI explore air");
 							iValue *= plotDistance(getX_INLINE(), getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+
+							if (pLoopPlot->isPeak())
+							{
+								iValue += 3;
+							}
 
 							if (pLoopPlot->isOwned())
 							{
