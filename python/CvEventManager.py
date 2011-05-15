@@ -1921,6 +1921,13 @@ class CvEventManager:
 										iPlot += 500
 									elif pPlot.getOwner() == iPlayer:
 										iPlot += 200
+										
+									if pPlot.isAdjacentOwned():
+										iPlot -= 250
+									if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW')) or (pPlot.getTerrainType() == gc.getInfoTypeForString("TERRAIN_DESERT")):
+										iPlot -= 250
+									
+										
 							if iPlot > iBestPlot:
 								iBestPlot = iPlot
 								pBestPlot = pPlot
