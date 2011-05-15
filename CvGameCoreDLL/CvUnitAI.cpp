@@ -27483,6 +27483,11 @@ void CvUnitAI::HNgroupMove()
 
 	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
 	{
+		if (AI_getUnitAIType() != UNITAI_PIRATE_SEA)
+		{
+			AI_setUnitAIType(UNITAI_PIRATE_SEA);
+		}
+
 		AI_pirateSeaMove();
 		return;
 	}
