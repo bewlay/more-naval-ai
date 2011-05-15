@@ -505,6 +505,22 @@ bool CvUnitAI::AI_update()
 
             switch (AI_getGroupflag())
             {
+				case GROUPFLAG_HNGROUP:
+                    HNgroupMove();
+                    return false;
+					break;
+				case GROUPFLAG_PICKUP_EQUIPMENT:
+					PickupEquipmentMove();
+					return false;
+					break;
+                case GROUPFLAG_SUICIDE_SUMMON:
+                    AI_summonAttackMove();
+                    return false;
+					break;
+				case GROUPFLAG_SVARTALFAR_KIDNAP:
+					AI_SvartalfarKidnapMove();
+					return false;
+					break;
                 case GROUPFLAG_CONQUEST:
                     ConquestMove();
                     return false;
