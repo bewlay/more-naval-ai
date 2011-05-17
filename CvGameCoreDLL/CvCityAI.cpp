@@ -5675,6 +5675,15 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		iValue += (std::max(0, (GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 10);
 	}
 
+	// bonus value for civ-specific projects
+    if (GC.getProjectInfo(eProject).getPrereqCivilization() != NO_CIVILIZATION)
+    {
+        if (GC.getProjectInfo(eProject).getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
+        {
+			iValue *= 2;
+		}
+	}
+
 //FfH: Added by Kael 09/26/2008
     iValue += GC.getProjectInfo(eProject).getAIWeight();
 //FfH: End Add
