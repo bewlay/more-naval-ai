@@ -21,7 +21,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>0</iAITradeModifier>
-            <iAIObjective>0</iAIObjective>
+            <iAIObjective>1</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>2</iPlacementOrder>
@@ -283,7 +283,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>0</iAITradeModifier>
-            <iAIObjective>5</iAIObjective>
+            <iAIObjective>10</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>1</iPlacementOrder>
@@ -443,7 +443,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>10</iAITradeModifier>
-            <iAIObjective>0</iAIObjective>
+            <iAIObjective>1</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>3</iPlacementOrder>
@@ -575,7 +575,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>10</iAITradeModifier>
-            <iAIObjective>5</iAIObjective>
+            <iAIObjective>10</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>-1</iPlacementOrder>
@@ -641,7 +641,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>90</iAITradeModifier>
-            <iAIObjective>10</iAIObjective>
+            <iAIObjective>5</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>-1</iPlacementOrder>
@@ -2347,7 +2347,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>0</iAITradeModifier>
-            <iAIObjective>0</iAIObjective>
+            <iAIObjective>10</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>0</iPlacementOrder>
