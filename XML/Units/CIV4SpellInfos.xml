@@ -1865,6 +1865,7 @@
             <Help>TXT_KEY_SPELL_KIDNAP_HELP</Help>
             <UnitCombatPrereq>UNITCOMBAT_RECON</UnitCombatPrereq>
             <CivilizationPrereq>CIVILIZATION_SVARTALFAR</CivilizationPrereq>
+            <bAllowAI>1</bAllowAI>
             <bCausesWar>1</bCausesWar>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
@@ -4192,6 +4193,7 @@
             <PromotionPrereq1>PROMOTION_CHANNELING2</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_DIVINE</PromotionPrereq2>
             <ReligionPrereq>RELIGION_OCTOPUS_OVERLORDS</ReligionPrereq>
+            <bAllowAI>1</bAllowAI>
             <bAdjacentToWaterOnly>1</bAdjacentToWaterOnly>
             <bCausesWar>1</bCausesWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
