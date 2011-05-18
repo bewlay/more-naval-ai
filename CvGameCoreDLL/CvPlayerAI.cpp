@@ -738,21 +738,13 @@ void CvPlayerAI::AI_doTurnUnitsPost()
                         {
                             iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "Upgrade"));
 
-/*************************************************************************************************/
-/**	BETTER AI (upgrading Units)         Sephi                                 					**/
-/** Block City counters from becoming Pyre Zombies                 								**/
-/**						                                            							**/
-/*************************************************************************************************/
-                            if ((UnitTypes)iI==GC.getDefineINT("PYRE_ZOMBIE_UNIT"))
-                            {
-                                if (pLoopUnit->AI_getUnitAIType()==UNITAI_CITY_COUNTER)
-                                {
-                                    iValue=-10000;
-                                }
-                            }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+							if (pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
+							{
+								if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
+								{
+									iValue = -1;
+								}
+							}
 
                             if (iValue > iBestValue)
                             {
