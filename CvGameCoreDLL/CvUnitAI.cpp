@@ -4823,24 +4823,30 @@ void CvUnitAI::AI_cityDefenseMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	if (!isUnitAllowedPermDefense())
+	// Try and switch out AI types for non-city defenders without gutting the defense
+	if (plot()->isCity())
 	{
-		joinGroup(NULL);
-		if (GET_PLAYER(getOwnerINLINE()).isConquestMode() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
-		{
-			AI_setGroupflag(GROUPFLAG_CONQUEST);
-		}
-		else
-		{
-			AI_setGroupflag(GROUPFLAG_PATROL);
-		}
+		CvCity* pCity = plot()->getPlotCity();
 
-		if ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
+		if (pCity->plot()->getNumDefenders(getOwnerINLINE()) >= pCity->AI_neededPermDefense(0))
 		{
-			AI_setUnitAIType(UNITAI_ATTACK_CITY);
-		}
+			if (!isUnitAllowedPermDefense() && !bDanger)
+			{
+				joinGroup(NULL);
+				if (GET_PLAYER(getOwnerINLINE()).isConquestMode() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+				{
+					AI_setGroupflag(GROUPFLAG_CONQUEST);
+					AI_setUnitAIType(UNITAI_ATTACK_CITY);
+				}
+				else
+				{
+					AI_setGroupflag(GROUPFLAG_PATROL);
+					AI_setUnitAIType(UNITAI_ATTACK);
+				}
 
-		return;
+				return;
+			}
+		}
 	}
 
 
