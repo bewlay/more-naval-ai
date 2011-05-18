@@ -17441,6 +17441,9 @@ int CvUnit::chooseSpell()
                     {
                         iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
                     }
+
+					iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamage() / 10);
+
                     iTempValue *= 100;
                     iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
 
@@ -17457,15 +17460,23 @@ int CvUnit::chooseSpell()
                     iValue += iTempValue;
                 }
             }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0)
+
+			// Hack for Tsunami since all of its effects are hidden in python
+			bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
+
+            if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
             {
                 int iDmg = GC.getSpellInfo((SpellTypes)iSpell).getDamage();
                 int iDmgLimit = GC.getSpellInfo((SpellTypes)iSpell).getDamageLimit();
 
+				if (bIsCoastalSpell)
+				{
+					iDmg = 30;
+					iDmgLimit = 75;
+				}
+
 				bool bIsCityPlot = false;
-
-				bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
-
+				
                 for (int i = -iRange; i <= iRange; ++i)
                 {
                     for (int j = -iRange; j <= iRange; ++j)
@@ -17476,7 +17487,7 @@ int CvUnit::chooseSpell()
 
                         if (NULL != pLoopPlot)
                         {
-							if (bIsCoastalSpell && !pLoopPlot->isCoastalLand())
+							if (bIsCoastalSpell && !pLoopPlot->isAdjacentToWater())
 							{
 								//do nothing - spell doesn't apply to this plot (Tsunami)
 							}
