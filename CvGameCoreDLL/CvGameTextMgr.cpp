@@ -3644,17 +3644,166 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 
 
 		}
-/** Sephi
-/** Disable cause it is very annoying
 		else if (pPlot->getOwner() != NO_PLAYER)
 		{
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      11/30/08                                jdog5000      */
+/*                                                                                              */
+/* Debug                                                                                        */
+/************************************************************************************************/
+/* original code
 			for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 			{
-				szString.append(CvWString::format(L"\n %s = %d", GC.getCivicInfo((CivicTypes)iI).getDescription(), GET_PLAYER(pPlot->getOwner()).AI_civicValue((CivicTypes)iI)));
+				szString.append(CvWString::format(L"\n %s = %d", GC.getCivicInfo((CivicTypes)iI).getDescription(), GET_PLAYER(pPlot->getOwner()).AI_civicValue((CivicTypes)iI)));			
 			}
+*/
+			if( bShift && !bAlt)
+			{
+				int* paiBonusClassRevealed;
+				int* paiBonusClassUnrevealed;
+				int* paiBonusClassHave;
+				
+				paiBonusClassRevealed = new int[GC.getNumBonusClassInfos()];
+				paiBonusClassUnrevealed = new int[GC.getNumBonusClassInfos()];
+				paiBonusClassHave = new int[GC.getNumBonusClassInfos()];
+				
+				for (int iI = 0; iI < GC.getNumBonusClassInfos(); iI++)
+				{
+					paiBonusClassRevealed[iI] = 0;
+					paiBonusClassUnrevealed[iI] = 0;
+					paiBonusClassHave[iI] = 0;	    
+				}
+				
+				for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+				{
+					TechTypes eRevealTech = (TechTypes)GC.getBonusInfo((BonusTypes)iI).getTechReveal();
+					BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo((BonusTypes)iI).getBonusClassType();
+					if (eRevealTech != NO_TECH)
+					{
+						if ((GET_TEAM(pPlot->getTeam()).isHasTech(eRevealTech)))
+						{
+							paiBonusClassRevealed[eBonusClass]++;
+						}
+						else
+						{
+							paiBonusClassUnrevealed[eBonusClass]++;
+						}
+
+						if (GET_PLAYER(pPlot->getOwner()).getNumAvailableBonuses((BonusTypes)iI) > 0)
+						{
+							paiBonusClassHave[eBonusClass]++;                
+						}
+						else if (GET_PLAYER(pPlot->getOwner()).countOwnedBonuses((BonusTypes)iI) > 0)
+						{
+							paiBonusClassHave[eBonusClass]++;
+						}
+					}
+				}
+
+				/*
+				int iPathLength;
+				bool bDummy;
+
+				for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
+				{
+					iPathLength = GET_PLAYER(pPlot->getOwner()).findPathLength(((TechTypes)iI), false);
+
+					if( iPathLength <= 3 && !GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)iI) )
+					{
+						szString.append(CvWString::format(L"\n%s(%d)=%7d", GC.getTechInfo((TechTypes)iI).getDescription(), iPathLength, GET_PLAYER(pPlot->getOwner()).AI_techValue((TechTypes)iI, 1, false, false, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave)));
+						szString.append(CvWString::format(L" (bld:%5d, ", GET_PLAYER(pPlot->getOwner()).AI_techBuildingValue((TechTypes)iI, 1, bDummy)));
+						szString.append(CvWString::format(L"unt:%5d)", GET_PLAYER(pPlot->getOwner()).AI_techUnitValue((TechTypes)iI, 1, bDummy)));
+					}
+				}
+				*/
+			}
+			else if( bAlt && !bShift )
+			{
+				if( pPlot->isHasPathToEnemyCity(pPlot->getTeam()) )
+				{
+					szString.append(CvWString::format(L"\nCan reach an enemy city\n\n"));	
+				}
+				else 
+				{
+					szString.append(CvWString::format(L"\nNo reachable enemy cities\n\n"));	
+				}
+				for (int iI = 0; iI < MAX_PLAYERS; ++iI)
+				{
+					if( GET_PLAYER((PlayerTypes)iI).isAlive() )
+					{
+						if( pPlot->isHasPathToPlayerCity(pPlot->getTeam(),(PlayerTypes)iI) )
+						{
+							szString.append(CvWString::format(SETCOLR L"Can reach %s city" ENDCOLR, TEXT_COLOR("COLOR_GREEN"), GET_PLAYER((PlayerTypes)iI).getName()));
+						}
+						else
+						{
+							szString.append(CvWString::format(SETCOLR L"Cannot reach any %s city" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), GET_PLAYER((PlayerTypes)iI).getName()));
+						}
+
+						if( GET_TEAM(pPlot->getTeam()).isAtWar(GET_PLAYER((PlayerTypes)iI).getTeam()) )
+						{
+							szString.append(CvWString::format(L" (enemy)"));
+						}
+						szString.append(CvWString::format(L"\n"));
+					}
+					
+				}
+			}
+			else if( bShift && bAlt )
+			{
+				for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+				{
+					szString.append(CvWString::format(L"\n %s = %d", GC.getCivicInfo((CivicTypes)iI).getDescription(), GET_PLAYER(pPlot->getOwner()).AI_civicValue((CivicTypes)iI)));			
+				}
+			}
+			else if( pPlot->headUnitNode() == NULL )
+			{
+				std::vector<UnitAITypes> vecUnitAIs;
+
+				if( pPlot->getFeatureType() != NO_FEATURE )
+				{
+					szString.append(CvWString::format(L"Defense unit AIs:\n"));
+					vecUnitAIs.push_back(UNITAI_CITY_DEFENSE);
+					vecUnitAIs.push_back(UNITAI_COUNTER);
+					vecUnitAIs.push_back(UNITAI_CITY_COUNTER);
+				}
+				else
+				{
+					szString.append(CvWString::format(L"Attack unit AIs:\n"));
+					vecUnitAIs.push_back(UNITAI_ATTACK);
+					vecUnitAIs.push_back(UNITAI_ATTACK_CITY);
+					vecUnitAIs.push_back(UNITAI_COUNTER);
+				}
+
+				CvCity* pCloseCity = GC.getMapINLINE().findCity(pPlot->getX_INLINE(), pPlot->getY_INLINE(), pPlot->getOwner(), NO_TEAM, true);
+
+				if( pCloseCity != NULL )
+				{
+					for( uint iI = 0; iI < vecUnitAIs.size(); iI++ )
+					{
+						CvWString szTempString;
+						getUnitAIString(szTempString, vecUnitAIs[iI]);
+						szString.append(CvWString::format(L"\n  %s  ", szTempString.GetCString()));
+						for( int iJ = 0; iJ < GC.getNumUnitClassInfos(); iJ++ )
+						{
+							UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(GET_PLAYER(pPlot->getOwner()).getCivilizationType()).getCivilizationUnits((UnitClassTypes)iJ);
+							if( eUnit != NO_UNIT && pCloseCity->canTrain(eUnit) )
+							{
+								int iValue = GET_PLAYER(pPlot->getOwner()).AI_unitValue(eUnit, vecUnitAIs[iI], pPlot->area());
+								if( iValue > 0 )
+								{
+									szString.append(CvWString::format(L"\n %s = %d", GC.getUnitInfo(eUnit).getDescription(), iValue));
+								}
+							}
+						}
+					}
+				}
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
-**/
-		return;
+		return;	
 	}
 	else if (bShift && !bAlt && (gDLL->getChtLvl() > 0))
 	{
