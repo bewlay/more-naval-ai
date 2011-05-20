@@ -4829,32 +4829,37 @@ void CvUnitAI::AI_cityDefenseMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	// Try and switch out AI types for non-city defenders without gutting the defense
-	if (plot()->isCity())
+	// Try and switch out AI types for extra defenders that are sitting around
+	// ToDo - smarter choices about which units have their AI switched - need an isAllowedConquest function?
+	if (!isBarbarian())
 	{
-		CvCity* pCity = plot()->getPlotCity();
-
-		if (pCity->plot()->getNumDefenders(getOwnerINLINE()) >= pCity->AI_neededPermDefense(0))
+		if (plot()->isCity() && (getGroup()->getNumUnits() == 1))
 		{
-			if (!isUnitAllowedPermDefense() && !bDanger)
-			{
-				joinGroup(NULL);
-				if (GET_PLAYER(getOwnerINLINE()).isConquestMode() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
-				{
-					AI_setGroupflag(GROUPFLAG_CONQUEST);
-					AI_setUnitAIType(UNITAI_ATTACK_CITY);
-				}
-				else
-				{
-					AI_setGroupflag(GROUPFLAG_PATROL);
-					AI_setUnitAIType(UNITAI_ATTACK);
-				}
+			CvCity* pCity = plot()->getPlotCity();
+			int iCityDefenders = plot()->plotCount(PUF_canDefendGroupHead, -1, -1, getOwnerINLINE(), NO_TEAM, PUF_isCityAIType);
 
-				return;
+			if (iCityDefenders > (pCity->AI_neededDefenders() +1))
+			{
+				if (!bDanger)
+				{
+					if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || 
+						GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || 
+						GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+					{
+						AI_setGroupflag(GROUPFLAG_CONQUEST);
+						AI_setUnitAIType(UNITAI_ATTACK_CITY);
+					}
+					else
+					{
+						AI_setGroupflag(GROUPFLAG_PATROL);
+						AI_setUnitAIType(UNITAI_ATTACK);
+					}
+
+					return;
+				}
 			}
 		}
 	}
-
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/18/09                                jdog5000      */
