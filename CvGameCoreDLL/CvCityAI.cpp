@@ -5961,6 +5961,8 @@ int CvCityAI::AI_neededDefenders()
 	bool bOffenseWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
 	bool bDefenseWar = ((area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE));
 	
+	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
+
 	if (!(GET_TEAM(getTeam()).AI_isWarPossible()))
 	{
 		return 1;
@@ -5973,20 +5975,17 @@ int CvCityAI::AI_neededDefenders()
 		return iDefenders;
 	}
 
-	// Tholal AI - changed base defenders to 2; added check for Barbarian Allies and Altar Level
-	if (GET_TEAM(getTeam()).isBarbarianAlly())
-	{
-		iDefenders = 1;
-	}
-	else
+	if (GET_TEAM(getTeam()).isBarbarianAlly() && !bAtWar)
 	{
 		iDefenders = 2;
 	}
+	else
+	{
+		iDefenders = 3;
+	}
 
 	// defend the Altar!
-	iDefenders += getAltarLevel();
-
-	// End Tholal AI
+	iDefenders += (getAltarLevel() / 2);
 
 	if (hasActiveWorldWonder() || isCapital() || isHolyCity())
 	{
@@ -5998,6 +5997,7 @@ int CvCityAI::AI_neededDefenders()
 		}
 	}
 	
+	/*
 	if (!GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_CRUSH))
 	{
 		iDefenders += AI_neededFloatingDefenders();
@@ -6006,7 +6006,8 @@ int CvCityAI::AI_neededDefenders()
 	{
 		iDefenders += (AI_neededFloatingDefenders() + 2) / 4;
 	}
-	
+	*/
+
 	if (bDefenseWar || GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_ALERT2))
 	{
 		if (!(plot()->isHills()))
@@ -6039,14 +6040,14 @@ int CvCityAI::AI_neededDefenders()
 	
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_LAST_STAND))
 	{
-		iDefenders += 10;
+		iDefenders += 5;
 	}
 
 	if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) )
 	{
 		if( findCommerceRateRank(COMMERCE_CULTURE) <= GC.getGameINLINE().culturalVictoryNumCultureCities() )
 		{
-			iDefenders += 4;
+			iDefenders++;
 
 			if( bDefenseWar )
 			{
@@ -6061,7 +6062,12 @@ int CvCityAI::AI_neededDefenders()
 
 		if (isHolyCity(((ReligionTypes)iStateRel)))
 		{
-			iDefenders += 3;
+			iDefenders++;
+
+			if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4) )
+			{
+				iDefenders += 2;
+			}
 		}
 	}
 
@@ -13040,13 +13046,17 @@ void CvCityAI::AI_calculateNeededPermDefense()
         switch(iFlag)
         {
             case 0: //CITY_DEFENSE
-                neededdefenders=(1+(getPopulation()+9)/12)*(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).getAIValueDefense()/100);
-                neededdefenders=std::max(3,neededdefenders);
+                //neededdefenders=(1+(getPopulation()+9)/12)*(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).getAIValueDefense()/100);
+				neededdefenders = AI_neededDefenders();
+                //neededdefenders=std::max(3,neededdefenders);
 
+				/*
                 if (GET_TEAM(getTeam()).isBarbarianAlly())
                 {
                     neededdefenders -= 1;
                 }
+				*/
+
                 break;
             case 1: //CITY_COUNTER
                 neededdefenders=1;
