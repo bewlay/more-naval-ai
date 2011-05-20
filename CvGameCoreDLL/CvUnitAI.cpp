@@ -25553,34 +25553,6 @@ bool CvUnitAI::isUnitAllowedPillageGroup()
 
     return true;
 }
-//Returns true if the Unit wants to be an Explorer
-bool CvUnitAI::AI_decide_exploregroup()
-{
-   if (getUnitClassType() == GC.getDefineINT("UNITCLASS_SCOUT"))
-    {
-        AI_setGroupflag(GROUPFLAG_EXPLORE);
-        return true;
-    }
-
-    int count=0;
-    int iLoop;
-    for (CvUnit* pUnit = GET_PLAYER(getOwnerINLINE()).firstUnit(&iLoop); NULL != pUnit; pUnit = GET_PLAYER(getOwnerINLINE()).nextUnit(&iLoop))
-    {
-        if (pUnit->getArea()==getArea())
-        {
-            if (pUnit->AI_getGroupflag()==GROUPFLAG_EXPLORE)
-            {
-                count++;
-                if (count>=1)    // replace 1 with a general function later
-                {
-                    return false;
-                }
-            }
-        }
-    }
-    AI_setGroupflag(GROUPFLAG_EXPLORE);
-    return true;
-}
 
 //Returns true if the Unit wants to join a City Defense
 bool CvUnitAI::AI_decide_permdefensegroup()

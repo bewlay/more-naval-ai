@@ -82,7 +82,6 @@ public:
     void changeAllowedPatrol(bool bnewValue);
     void changeAllowedExplore(bool bnewValue);
 
-    bool AI_decide_exploregroup();
     bool AI_decide_permdefensegroup();
     bool AI_decide_patrolgroup();
 
