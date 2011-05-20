@@ -75,7 +75,6 @@ public:
     bool isUnitAllowedPermDefense();
     bool isUnitAllowedPatrolGroup();
     bool isUnitAllowedDefenseGroup();
-    bool isUnitAllowedExploreGroup();
     bool isUnitAllowedPillageGroup();
 
     void changeAllowedPermDefense(bool bnewValue);

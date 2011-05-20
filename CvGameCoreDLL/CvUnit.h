@@ -787,7 +787,6 @@ public:
     virtual bool isUnitAllowedPermDefense() = 0;
     virtual bool isUnitAllowedPatrolGroup() = 0;
     virtual bool isUnitAllowedDefenseGroup() = 0;
-    virtual bool isUnitAllowedExploreGroup() = 0;
     virtual bool isUnitAllowedPillageGroup() = 0;
 
     virtual void changeAllowedPermDefense(bool bnewValue) = 0;
