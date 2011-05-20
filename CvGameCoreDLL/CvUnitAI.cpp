@@ -4480,6 +4480,12 @@ void CvUnitAI::AI_reserveMove()
 		}
 	}
 
+	if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
+	{
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		return;
+	}
+
 	if (AI_guardCity(true))
 	{
 		return;
