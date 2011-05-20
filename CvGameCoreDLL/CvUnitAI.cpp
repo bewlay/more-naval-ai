@@ -16102,7 +16102,7 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 	int iLoop;
 	int iI;
 
-	if (isBarbarian())
+	if (isBarbarian() || GET_TEAM(getTeam()).isBarbarianAlly())
 	{
 		return false;
 	}
