@@ -16616,29 +16616,16 @@ void CvUnit::castCreateUnit(int spell)
 			pUnit->AI_setUnitAIType(UNITAI_COUNTER);
         }
 
-        if (GET_PLAYER(getOwnerINLINE()).AI_isSummonSuicideMode())
+		if (pUnit->getDuration() > 0)
         {
 			if (pUnit->canMove())
 			{
-				pUnit->AI_setGroupflag(GROUPFLAG_NONE);
+				pUnit->AI_setGroupflag(GROUPFLAG_SUICIDE_SUMMON);
 				pUnit->setSuicideSummon(true);
 				pUnit->AI_update();
 			}
         }
-        else if (pUnit->getUnitType()==GC.getDefineINT("UNIT_FIREBALL"))
-        {
-            if (pUnit->bombard())
-            {
-                return;
-            }
-        }
-        if (pUnit->getDuration()>0)
-        {
-            if (pUnit->getMoves()>0)
-            {
-                pUnit->joinGroup(getGroup(),false,true);
-            }
-        }
+	
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
