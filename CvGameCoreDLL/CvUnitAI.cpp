@@ -10762,7 +10762,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		{
 			if (plot()->isCity() && plot()->isHills())
 			{
-				iValue += (iTemp * 4) / 3;
+				iValue += (iTemp * 2) / 3;
 			}
 		}
 		else if (AI_getUnitAIType() == UNITAI_COUNTER)
