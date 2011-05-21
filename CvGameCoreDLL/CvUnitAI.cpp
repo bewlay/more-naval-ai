@@ -25263,13 +25263,43 @@ void CvUnitAI::AI_summonAttackMove()
 		}
 	}
 
-    if(getDuration()>0)
+	bool bBombard = (bombardRate() > 0);
+
+    if (getDuration()>0)
     {
+		if (bBombard)
+		{
+			if (AI_bombardCity())
+			{
+				return;
+			}
+		}
+
         if (AI_anyAttack(getDuration()*baseMoves(), 0))
         {
             return;
-        }
-    }
+        }	
+
+		// check for distant bombard targets
+		if (bBombard)
+		{
+			CvCity* pTargetCity = NULL;
+			pTargetCity = AI_pickTargetCity(0, getDuration(), true);
+			
+			if( pTargetCity != NULL )
+			{
+				if( AI_goToTargetCity(0, getDuration() ,pTargetCity) )
+				{
+					if (AI_bombardCity())
+					{
+						return;
+					}
+					return;
+				}
+			}
+		}
+	}
+
     else
     {
         if (AI_anyAttack(baseMoves(), 0))
