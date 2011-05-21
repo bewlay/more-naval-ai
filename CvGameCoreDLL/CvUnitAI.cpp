@@ -567,6 +567,7 @@ bool CvUnitAI::AI_update()
                 setSuicideSummon(false);
                 return false;
             }
+			/*
             switch (AI_getUnitAIType())
             {
                 case UNITAI_UNKNOWN:
@@ -587,6 +588,7 @@ bool CvUnitAI::AI_update()
                 default:
                     break;
             }
+			*/
 	    }
 /*************************************************************************************************/
 /**	END	                                        												**/
