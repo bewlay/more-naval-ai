@@ -25417,6 +25417,21 @@ void CvUnitAI::AI_chooseGroupflag()
             break;
     }
 
+	//Svartalfar Kidnap
+	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
+	if (iSvartal!=NO_CIVILIZATION && getCivilizationType()==iSvartal)
+	{
+		UnitTypes iRanger=(UnitTypes)GC.getInfoTypeForString("UNIT_RANGER");
+		if(iRanger!=NO_UNIT && getUnitType()==iRanger)
+		{
+			if(GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_SVARTALFAR_KIDNAP)==0)
+			{
+                AI_setGroupflag(GROUPFLAG_SVARTALFAR_KIDNAP);
+                return;
+            }
+        }
+    }
+
     if(isUnitAllowedPermDefense())
     {
         if (AI_decide_permdefensegroup())
@@ -25433,20 +25448,6 @@ void CvUnitAI::AI_chooseGroupflag()
         }
     }
 
-	//Svartalfar Kidnap
-	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
-	if (iSvartal!=NO_CIVILIZATION && getCivilizationType()==iSvartal)
-	{
-		UnitTypes iRanger=(UnitTypes)GC.getInfoTypeForString("UNIT_RANGER");
-		if(iRanger!=NO_UNIT && getUnitType()==iRanger)
-		{
-			if(GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_SVARTALFAR_KIDNAP)==0)
-			{
-                AI_setGroupflag(GROUPFLAG_SVARTALFAR_KIDNAP);
-                return;
-            }
-        }
-    }
     if(isUnitAllowedPillageGroup())
     {
         if (GET_PLAYER(getOwnerINLINE()).AI_getNeededPillageUnits()>GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_PILLAGE))
@@ -25455,23 +25456,16 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
         }
     }
+    
+	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0))
+	{
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		AI_setUnitAIType(UNITAI_ATTACK_CITY);
+		return;
+	}
 
-	/*
-    if  (isUnitAllowedExploreGroup())
-    {
-        if (AI_decide_exploregroup())
-        {
-            return;
-        }
-    }
-	*/
-
-    if (isUnitAllowedDefenseGroup())
-    {
-        AI_setGroupflag(GROUPFLAG_DEFENSE_NEW);
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
+	getGroup()->pushMission(MISSION_SKIP);
+	return;
 }
 
 bool CvUnitAI::isUnitAllowedPillageGroup()
@@ -25723,6 +25717,14 @@ bool CvUnitAI::isUnitAllowedPermDefense()
     {
         return false;
     }
+
+	if (plot()->isCity())
+	{
+		if (plot()->isHills() && hillsDefenseModifier() > 0)
+		{
+			return true;
+		}
+	}
 
     if (noDefensiveBonus())
     {
