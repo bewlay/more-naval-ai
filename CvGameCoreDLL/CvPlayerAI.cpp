@@ -686,6 +686,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
                 if (pLoopUnit->canUpgrade((UnitTypes)iI))
                 {
                     iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "Upgrade"));
+
 					if (iValue > iBestValue)
 					{
 						iBestValue = iValue;
@@ -741,6 +742,16 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 							if (pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
 							{
 								if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
+								{
+									iValue = -1;
+								}
+							}
+
+							int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
+
+							if (iUpgradeTier > 2)
+							{
+								if (pLoopUnit->getLevel() < (iUpgradeTier + 1))
 								{
 									iValue = -1;
 								}
