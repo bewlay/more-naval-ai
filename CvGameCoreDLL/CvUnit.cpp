@@ -1342,7 +1342,7 @@ void CvUnit::doTurn()
 				{
 					AI_chooseGroupflag();
 				}
-            }
+			}
         }
     }
 	
