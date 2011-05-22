@@ -602,6 +602,10 @@ def reqBlaze(caster):
 	
 	if not ((pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')) or (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE')) or (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST'))):
 		return False
+		
+	if ((pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')) or (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES'))):
+		return False
+		
 	if pPlayer.isHuman() == False:
 		p2Player = gc.getPlayer(pPlot.getOwner())
 		if pPlot.isOwned():
