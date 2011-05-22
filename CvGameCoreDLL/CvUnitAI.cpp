@@ -28558,6 +28558,11 @@ void CvUnitAI::ConquestMove()
 void CvUnitAI::AI_heromove()
 {
 
+	if (AI_heal())
+	{
+		return;
+	}
+
     if (getUnitClassType()==GC.getDefineINT("UNITCLASS_GOVANNON"))
     {
         if (AI_Govannonmove())
@@ -28580,16 +28585,18 @@ void CvUnitAI::AI_heromove()
 	
     if (getUnitClassType()==GC.getDefineINT("UNITCLASS_RANTINE"))
     {
-		if (getLevel() < 10)
+		if (GET_TEAM(getTeam()).isBarbarianAlly() && getLevel() < 8)
 		{
 			if (AI_Rantinemove())
 			{
 				return;
 			}
-	        getGroup()->pushMission(MISSION_SKIP);
-		    return;
 		}
-    }
+
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+   }
 
 	// Tholal AI - Heroes joining Patrol groups can cause infinite loop lockups. Forcing them into Conquest groups instead until I can track that down
 	/*
@@ -28774,7 +28781,9 @@ bool CvUnitAI::AI_Lokimove()
 
 bool CvUnitAI::AI_Rantinemove()
 {
-   if (getGroup()->getNumUnits()<4)
+	//ToDo - figure out why this grouping code isn't working anymore - for now, just skip it
+	//if (getGroup()->getNumUnits()<4)
+	if (2 < 1)
     {
         if (!(plot()->isCity() && plot()->getOwnerINLINE()==getOwnerINLINE()))
         {
@@ -28845,51 +28854,57 @@ bool CvUnitAI::AI_Rantinemove()
 	else
 	{
         CvCity* pLoopCity;
+		CvCity* pBestCity = NULL;
         int iLoop;
         int iSearchRange=8;
         int icount=0;
-        int iDX, iDY;
         int iPathTurns;
-        CvPlot* pLoopPlot;
+		int iValue = 0;
+		int iBestValue = 0;
+		CvPlot* pBestPlot = NULL;
         if (plot()->isCity())
         {
             if (canCast(GC.getDefineINT("SPELL_CONVERT_CITY_RANTINE"),false))
                 cast(GC.getDefineINT("SPELL_CONVERT_CITY_RANTINE"));
         }
-        for (pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).nextCity(&iLoop))
-        {
-            if (pLoopCity)
-            {
-                for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-                {
-                    for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-                    {
-                        pLoopPlot = plotXY(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iDX, iDY);
-                        if (pLoopPlot)
-                        {
-                            if (AI_plotValid(pLoopPlot))
-                            {
-                                if(pLoopPlot->isCity() && pLoopPlot->getTeam()!=getTeam())
-                                {
-                                    if (!GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
-                                    {
-                                        if (pLoopPlot->getPlotCity()->isBarbarian())
-                                        {
-                                            if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                            {
-                                                getGroup()->pushMission(MISSION_MOVE_TO,pLoopPlot->getX_INLINE(),pLoopPlot->getY_INLINE(),MOVE_THROUGH_ENEMY);
-                                                return true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
+		//ToDo: figure out how to load Rantine into a boat
+		for (pLoopCity = GET_PLAYER(BARBARIAN_PLAYER).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(BARBARIAN_PLAYER).nextCity(&iLoop))
+		{
+			if (AI_plotValid(pLoopCity->plot()))
+			{
+				if (pLoopCity->isRevealed(getTeam(), false))
+				{
+					if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true, &iPathTurns))
+					{
+						iValue = (pLoopCity->getPopulation() * 3);
+
+						if ((pLoopCity->plot())->isAdjacentPlayer(getOwnerINLINE(), false))
+						{
+							iValue *= 3;
+						}
+
+						iValue /= (iPathTurns + 1);
+
+						if (iValue > iBestValue)
+						{
+							iBestValue = iValue;
+							pBestCity = pLoopCity;
+						}
+					}
+				}
+			}
+		}
+
+		if (pBestCity != NULL)
+		{
+			pBestPlot = pBestCity->plot();
+
+            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
+            return true;
+		}
 	}
+
 	return false;
 }
 
