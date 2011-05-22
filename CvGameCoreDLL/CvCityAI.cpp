@@ -1549,7 +1549,7 @@ void CvCityAI::AI_chooseProduction()
 	// Minimal attack force, both land and sea
     if (bDanger) 
     {
-		int iAttackNeeded = 4; 
+		int iAttackNeeded = 6; 
 		
 		// Tholal AI - more troops if in military engagement
 		if (bLandWar || bAssault)
@@ -1560,7 +1560,7 @@ void CvCityAI::AI_chooseProduction()
 
 		iAttackNeeded += std::max(0, AI_neededDefenders() - plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE()));
 
-		if( kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK) <  iAttackNeeded)
+		if( (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK) + kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY)) <  iAttackNeeded)
 		{
     		if (AI_chooseUnit(UNITAI_ATTACK))
     		{
@@ -4809,7 +4809,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
                                     iValue += iNumCitiesInArea * 5;
                                 }
                                 iValue += GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit) * 10;
-                                if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType()) < 4)
+                                if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking((BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType()) < ((iNumCitiesInArea / 4)+1))//4)
                                 {
                                     iValue += GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit) * 40;
                                 }
