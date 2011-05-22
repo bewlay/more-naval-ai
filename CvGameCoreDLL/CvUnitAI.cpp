@@ -4840,7 +4840,7 @@ void CvUnitAI::AI_cityDefenseMove()
 			CvCity* pCity = plot()->getPlotCity();
 			int iCityDefenders = plot()->plotCount(PUF_canDefendGroupHead, -1, -1, getOwnerINLINE(), NO_TEAM, PUF_isCityAIType);
 
-			if (iCityDefenders > (pCity->AI_neededDefenders() +1))
+			if (iCityDefenders > pCity->AI_neededDefenders())
 			{
 				if (!bDanger)
 				{
