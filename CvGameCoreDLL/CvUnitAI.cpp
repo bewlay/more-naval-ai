@@ -28996,12 +28996,6 @@ void CvUnitAI::AI_mageCast()
 
 void CvUnitAI::AI_mageMove()
 {
-	// Tholal AI - catch for wrong units getting mage AI
-	if (!isChanneler() || isDivine())
-	{
-		AI_setUnitAIType(UNITAI_RESERVE);
-		return;
-	}
 
 	if (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 	{
@@ -29018,7 +29012,9 @@ void CvUnitAI::AI_terraformerMove()
 {
 	if (!isChanneler())
 	{
-		AI_setUnitAIType(UNITAI_RESERVE);
+		AI_setUnitAIType(UNITAI_ATTACK_CITY);
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		return;
 	}
 
     CyUnit* pyUnit1 = new CyUnit(this);
