@@ -4858,14 +4858,16 @@ void CvUnitAI::AI_cityDefenseMove()
 					{
 						AI_setGroupflag(GROUPFLAG_CONQUEST);
 						AI_setUnitAIType(UNITAI_ATTACK_CITY);
+						getGroup()->pushMission(MISSION_SKIP);
+						return;
 					}
 					else
 					{
 						AI_setGroupflag(GROUPFLAG_PATROL);
 						AI_setUnitAIType(UNITAI_ATTACK);
+						getGroup()->pushMission(MISSION_SKIP);
+						return;
 					}
-
-					return;
 				}
 			}
 		}
