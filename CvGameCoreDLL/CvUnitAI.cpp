@@ -27171,21 +27171,6 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 
-	// switch to Conquest if we're at war
-	if (getGroup()->getNumUnits() == 1)
-	{
-		if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
-		{
-			AI_setGroupflag(GROUPFLAG_CONQUEST);
-			AI_setUnitAIType(UNITAI_ATTACK_CITY);
-			return;
-		}
-		if (AI_groupMergeRange(UNITAI_ATTACK, 3))
-		{
-			return;
-		}
-	}
-
 	// Attack choking units
 	if( plot()->getOwnerINLINE() == getOwnerINLINE() && bDanger )
 	{
@@ -27539,6 +27524,22 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 
+	// switch to Conquest if we're at war and can't find anything to do
+	if (getGroup()->getNumUnits() == 1)
+	{
+		if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
+		{
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			return;
+		}
+
+		if (AI_groupMergeRange(UNITAI_ATTACK, 3))
+		{
+			return;
+		}
+	}
+
 	if( getGroup()->getNumUnits() < 4 )
 	{
 		if (AI_patrol())
@@ -27663,6 +27664,8 @@ void CvUnitAI::ConquestMove()
 		}
 	}
 	
+	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
+
 	if (GC.getLogging())
 	{
 		if (gDLL->getChtLvl() > 0)
