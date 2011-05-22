@@ -5357,7 +5357,7 @@ void CvUnitAI::AI_missionaryMove()
 	{
 		if (m_pUnitInfo->getDefaultUnitAIType() != UNITAI_MISSIONARY)
 		{
-			AI_setUnitAIType(UNITAI_RESERVE);
+			AI_setUnitAIType(UNITAI_MEDIC);
 			return;
 		}
 	}
