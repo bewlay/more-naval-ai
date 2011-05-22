@@ -58556,7 +58556,7 @@
             <BonusProductionModifiers>
             </BonusProductionModifiers>
             <iBombRate>0</iBombRate>
-            <iBombardRate>5</iBombardRate>
+            <iBombardRate>0</iBombardRate>
             <SpecialCargo>NONE</SpecialCargo>
             <DomainCargo>DOMAIN_LAND</DomainCargo>
             <iCargo>1</iCargo>
@@ -58781,7 +58781,7 @@
             <BonusProductionModifiers>
             </BonusProductionModifiers>
             <iBombRate>0</iBombRate>
-            <iBombardRate>5</iBombardRate>
+            <iBombardRate>0</iBombardRate>
             <SpecialCargo>NONE</SpecialCargo>
             <DomainCargo>DOMAIN_LAND</DomainCargo>
             <iCargo>1</iCargo>
