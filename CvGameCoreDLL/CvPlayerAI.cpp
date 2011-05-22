@@ -3713,6 +3713,20 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		}
 	}
 
+	// Target Altar cities
+	if( GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) )
+	{
+		if (pCity->getAltarLevel() > 1)
+		{
+			iValue += 15;
+			
+			if (GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4))
+			{
+				iValue += 25;
+			}
+		}
+	}
+
 /*
 	if( GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_SPACE3) )
 	{
