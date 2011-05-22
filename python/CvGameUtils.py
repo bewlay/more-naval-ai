@@ -873,7 +873,7 @@ class CvGameUtils:
 					treesimpb = true
 				if ((treesimpb == False) and (pPlayer.getStateReligion() != gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'))):
 					if not pPlayer.isHuman():
-						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_RESERVE'))
+						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
 						return 0
 
 				
