@@ -27750,7 +27750,7 @@ void CvUnitAI::ConquestMove()
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
 	{
-	if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
+		if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
 		{
 			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 10, false, true, false))
 			{
@@ -27760,6 +27760,14 @@ void CvUnitAI::ConquestMove()
 			{
 				return;
 			}
+		}
+	}
+	else // Mainly affects Clan and the units they get from their World Spell
+	{
+		if (getGroup()->isStranded() && (getLevel() < 3) && bFinancialTrouble)
+		{
+			kill(true);
+			return;
 		}
 	}
 
