@@ -2966,6 +2966,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /**	grassland farms are really good        														**/
 /**	Tholal note - HARDCODE					                                            							**/
 /*************************************************************************************************/
+						/*
                         if (pLoopPlot->isFreshWater())
                         {
                             if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_GRASS"))
@@ -2973,6 +2974,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
                             if (eFeature == GC.getDefineINT("FLOOD_PLAINS_FEATURE"))
                                 iSpecialFood ++;
                         }
+						*/
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
