@@ -4625,8 +4625,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if (GC.getTechInfo(eTech).isWaterWork())
 	{
-		iMaxTileAbilityValue = std::max(600 * iCoastalCities, iMaxTileAbilityValue);
+		int iWaterTechValue = (isPirate() ? 7500 : 1000);
+		iMaxTileAbilityValue = std::max((iWaterTechValue * (iCoastalCities + 1)), iMaxTileAbilityValue);
 	}
+
 	iValue += iMaxTileAbilityValue;
 
 	iValue += (GC.getTechInfo(eTech).getFeatureProductionModifier() * 2);
@@ -4833,8 +4835,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						if (iNumBonuses > 0)
 						{
 							iBonusValue *= (iNumBonuses + 2);
-							iBonusValue /= (!isPirate() || kImprovement.isWater() ? 4 : 3);	// water resources are worth less
-
+							//iBonusValue /= ((!isPirate() && kImprovement.isWater()) ? 4 : 3);	// water resources are worth less
+							iBonusValue /= 3;
 							iImprovementValue += iBonusValue;
 						}
 					}
@@ -5371,10 +5373,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		{
 			iValue += 2500;
 		}
+		/*
 		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteEarlyReligion() == eTech)
 		{
-			iValue += 3000;
+			iValue += 500;
 		}
+		*/
 //	}
 	// temp hack - not sure why this is skipped by some civs
 	int iCreativeTrait=GC.getInfoTypeForString("TRAIT_CREATIVE");
@@ -5397,11 +5401,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	int iFlavorValue = 0;
 	for (int iFlavorType = 0; iFlavorType < GC.getNumFlavorTypes(); iFlavorType++)
 	{
-/*
-		iTempValue = AI_getFlavorValue((FlavorTypes)iFlavorType) * GC.getTechInfo(eTech).getFlavorValue(iFlavorType);
-		iTempValue *= range((getTotalPopulation() - 5) / 2, 0, 20);
-		iValue += iTempValue;
-*/
 		iTempValue = iValue;
 
 		iTempValue *= AI_getFlavorValue((FlavorTypes)iFlavorType);
