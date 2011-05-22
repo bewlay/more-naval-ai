@@ -4749,14 +4749,14 @@ void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStr
 /************************************************************************************************/
 
 /************************************************************************************************/
-/* More Naval AI                      1/17/11                                Tholal            */
+/* More Naval AI                      5/22/11                                 Tholal            */
 /************************************************************************************************/
 	// Add string showing version number
-	szTempBuffer.Format(L"%S", "More Naval AI v1.61");
+	szTempBuffer.Format(L"%S", "More Naval AI v1.7");
 	szBuffer.append(szTempBuffer);
 	szBuffer.append(NEWLINE);
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
+/* More Naval AI                           END                                                  */
 /************************************************************************************************/
 	szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getDescription());
 	szBuffer.append(szTempBuffer);
