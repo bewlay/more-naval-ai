@@ -8155,26 +8155,6 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 	}
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (Smarter Upgrading) Sephi 0.41k                                 					**/
-/**	   												        						            **/
-/**						                                            							**/
-/*************************************************************************************************/
-    if (!isHuman())
-    {
-        if((AI_getGroupflag()==GROUPFLAG_PERMDEFENSE)
-         || (AI_getGroupflag()==GROUPFLAG_PERMDEFENSE_NEW))
-        {
-            if(GC.getUnitInfo(eUnit).isNoDefensiveBonus())
-            {
-                return false;
-            }
-        }
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	if (hasUpgrade(eUnit))
 	{
 		return true;
