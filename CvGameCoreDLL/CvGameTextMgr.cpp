@@ -18769,9 +18769,6 @@ const wchar* CvGameTextMgr::getGroupflagName(int iGroupflag) const
 	case GROUPFLAG_HNGROUP:
 		return L"GROUPFLAG_HNGROUP";
 
-	case GROUPFLAG_PICKUP_EQUIPMENT:
-		return L"GROUPFLAG_PICKUP_EQUIPMENT";
-
 	case GROUPFLAG_PILLAGE:
 		return L"GROUPFLAG_PILLAGE";
 
