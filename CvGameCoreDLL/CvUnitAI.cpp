@@ -26386,59 +26386,6 @@ void CvUnitAI::AI_barbsmashermove()
 	return;
 }
 
-//checks if Player needs Units to pick up Equipment and changes Groupflag of groupmembers if necessary
-void CvUnitAI::CheckForEquipment()
-{
-	bool bNeedMage=false;
-	bool bNeedPickup=false;
-
-    for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
-    {
-        CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-		if (pLoopPlot->getOwnerINLINE()==getOwnerINLINE() && pLoopPlot->getNumUnits()==1)
-		{
-		    CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode();
-			if (pUnitNode!=NULL)
-			{
-				CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
-				if(GC.getUnitInfo(pUnit->getUnitType()).getUnitCaptureClassType()!=NO_UNITCLASS)
-				{
-					bNeedPickup=true;
-				}
-			}
-		}
-	}
-
-    CLLNode<IDInfo>* pUnitNode;
-    CvUnit* pLoopUnit;
-    pUnitNode = getGroup()->headUnitNode();
-    while (pUnitNode != NULL)
-    {
-		pLoopUnit = ::getUnit(pUnitNode->m_data);
-		pUnitNode = getGroup()->nextUnitNode(pUnitNode);
-        if (pLoopUnit!=NULL)
-        {
-			if(bNeedMage && pLoopUnit!=this && pLoopUnit->getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
-			{
-                pLoopUnit->joinGroup(NULL);
-                pLoopUnit->AI_setGroupflag(GROUPFLAG_PICKUP_EQUIPMENT);
-                pLoopUnit->getGroup()->pushMission(MISSION_SKIP);
-				bNeedMage=false;
-            }
-			else if(bNeedPickup && pLoopUnit!=this && pLoopUnit->getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
-			{
-                pLoopUnit->joinGroup(NULL);
-                pLoopUnit->AI_setGroupflag(GROUPFLAG_PICKUP_EQUIPMENT);
-                pLoopUnit->getGroup()->pushMission(MISSION_SKIP);
-				bNeedPickup=false;
-            }
-		}
-		if (!(bNeedMage || bNeedPickup))
-		{
-			break;
-		}
-    }
-}
 void CvUnitAI::AI_feastingmove()
 {
 

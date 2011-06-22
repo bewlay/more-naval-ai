@@ -65,7 +65,6 @@ public:
 
 	void AI_PillageGroupMove();
 
-	void CheckForEquipment();
 	bool RejoinPatrolGroup();
 
     int AI_getGroupflag() const;

@@ -45,7 +45,7 @@
 #define GROUPFLAG_CONQUEST												(10)
 
 #define GROUPFLAG_HNGROUP                                               (12)
-#define GROUPFLAG_PICKUP_EQUIPMENT                                      (13)
+
 
 #define GROUPFLAG_PILLAGE                                               (16)
 
