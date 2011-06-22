@@ -27551,35 +27551,6 @@ void CvUnitAI::HNgroupMove()
 	return;
 }
 
-//called in CvUnitAI::AI_update
-//Look around for equipment, then join Defense/Conqueststack
-void CvUnitAI::PickupEquipmentMove()
-{
-	//is there other equipment we can pick up?
-    for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
-    {
-        CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-		if (pLoopPlot->getOwnerINLINE()==getOwnerINLINE() && pLoopPlot->getNumUnits()==1)
-		{
-		    CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode();
-			if (pUnitNode!=NULL)
-			{
-				CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
-				if(GC.getUnitInfo(pUnit->getUnitType()).getUnitCaptureClassType()!=NO_UNITCLASS)
-				{
-					if(!atPlot(pLoopPlot))
-					{
-				        getGroup()->pushMission(MISSION_MOVE_TO, pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), MOVE_DIRECT_ATTACK);
-						return;
-					}
-				}
-			}
-		}
-	}
-	AI_setGroupflag(GROUPFLAG_DEFENSE_NEW);
-	getGroup()->pushMission(MISSION_SKIP);
-	return;
-}
 
 void CvUnitAI::ConquestMove()
 {

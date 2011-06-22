@@ -59,7 +59,6 @@ public:
     void PatrolMove();
     void PatrolNewMove();
     void HNgroupMove();
-	void PickupEquipmentMove();
     void AI_InquisitionMove();
 	void AI_SvartalfarKidnapMove();
 
