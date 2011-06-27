@@ -2042,13 +2042,10 @@ void CvCityAI::AI_chooseProduction()
 				{
 					if (AI_chooseUnit(UNITAI_SETTLE, bLandWar ? 50 : -1))
 					{
-						//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1", getName().GetCString());
-
 						if (kPlayer.getNumMilitaryUnits() <= iNumCities + 1)
 						{
 							if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 							{
-								//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1 extra quick defense", getName().GetCString());
 								return;
 							}
 						}
@@ -3354,10 +3351,6 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 	aiUnitAIVal[UNITAI_PILLAGE] *= 3;
 	aiUnitAIVal[UNITAI_RESERVE] *= 3;
 	aiUnitAIVal[UNITAI_COUNTER] *= 3;
-//>>>>Unofficial Bug Fix: Deleted by Denev 2010/03/28
-//*** Remove redundant code.
-//	aiUnitAIVal[UNITAI_COUNTER] *= 2;
-//<<<<Unofficial Bug Fix: End Delete
 	aiUnitAIVal[UNITAI_CITY_DEFENSE] *= 2;
 	aiUnitAIVal[UNITAI_CITY_COUNTER] *= 2;
 	aiUnitAIVal[UNITAI_CITY_SPECIAL] *= 2;
