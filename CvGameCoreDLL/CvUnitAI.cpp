@@ -27765,6 +27765,103 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 	return false;
 }
 
+
+//Look around for equipment
+bool CvUnitAI::AI_pickupEquipment(int iRange)
+{
+	CvUnit* pLoopUnit;
+	CvUnit* pBestUnit = NULL;
+	CvPlot* pBestPlot;
+	int iValue = 0;
+	int iBestValue = iRange + 1;
+	int iLoop;
+	int iPathTurns;
+	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
+
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Player %d Unit %d (%S's %S) looking for equipment\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+			gDLL->messageControlLog(szOut);
+		}
+	}
+
+
+	// First, look for our equipment and treasure
+	for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
+	{
+		if (pLoopUnit->getDomainType() == DOMAIN_IMMOBILE)
+		{
+			if (generatePath(pLoopUnit->plot(), 0, true, &iPathTurns))
+			{
+				if (iPathTurns <= iRange)
+				{
+					iValue = iPathTurns;
+					if (iValue < iBestValue)
+					{
+						iBestValue = iValue;
+						pBestUnit = pLoopUnit;
+					}
+				}
+			}
+		}
+	}
+
+	if (pBestUnit != NULL)
+	{
+
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut, "Player %d Unit %d (%S's %S) picking up %S\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestUnit->getName().GetCString());
+				gDLL->messageControlLog(szOut);
+			}
+		}
+
+		pBestPlot = pBestUnit->plot();
+		if (atPlot(pBestPlot))
+		{
+            int ispell = chooseSpell();
+            if (ispell != NO_SPELL)
+            {
+                cast(ispell);
+			}
+			getGroup()->pushMission(MISSION_SKIP);
+			return true;
+		}
+		else
+		{
+	        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
+			return true;
+		}
+	}
+
+	// TODO - look for enemy equipment nearby
+	/*
+	CvPlot* pBestPlot = NULL;
+	for (int iX = -iRange; iX <= iRange; iX++)
+	{
+		for (int iY = -iRange; iY <= iRange; iY++)
+		{
+			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
+			if (pLoopPlot != NULL)
+			{
+				if (pLoopPlot->isVisibleEnemy(GET_TEAM(getTeam())))
+				{
+
+				}
+			}
+		}
+	}
+	*/
+
+	return false;
+}
+
 void CvUnitAI::ConquestMove()
 {
     CvSelectionGroup* pLoopSelectionGroup;

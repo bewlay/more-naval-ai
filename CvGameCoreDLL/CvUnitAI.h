@@ -61,6 +61,7 @@ public:
     void HNgroupMove();
 	bool AI_exploreLairSea(int iRange = 0);
 	bool AI_exploreLair(int iRange = 0);
+	bool AI_pickupEquipment(int iRange = 0);
     void AI_InquisitionMove();
 	void AI_SvartalfarKidnapMove();
 
