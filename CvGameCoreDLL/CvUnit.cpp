@@ -16094,6 +16094,9 @@ void CvUnit::castAddPromotion(int spell)
    	PromotionTypes ePromotion1 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType1();
    	PromotionTypes ePromotion2 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType2();
    	PromotionTypes ePromotion3 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType3();
+
+	bool bAlreadyAffected;
+
     if (GC.getSpellInfo((SpellTypes)spell).isBuffCasterOnly())
     {
         if (ePromotion1 != NO_PROMOTION)
@@ -16130,7 +16133,35 @@ void CvUnit::castAddPromotion(int spell)
                         pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
                         if (!pLoopUnit->isImmuneToSpell(this, spell))
                         {
-                            if (bResistable)
+							// Tholal AI - don't try and put this spell effect on units already affected by it
+
+							bAlreadyAffected = true;
+
+							if (ePromotion1 != NO_PROMOTION)
+                            {
+								if (!pLoopUnit->isHasPromotion(ePromotion1))
+								{
+									bAlreadyAffected = false;
+								}
+							}
+
+							if (ePromotion2 != NO_PROMOTION)
+                            {
+								if (!pLoopUnit->isHasPromotion(ePromotion2))
+								{
+									bAlreadyAffected = false;
+								}
+							}
+
+							if (ePromotion3 != NO_PROMOTION)
+                            {
+								if (!pLoopUnit->isHasPromotion(ePromotion3))
+								{
+									bAlreadyAffected = false;
+								}
+							}
+
+							if (bResistable && !bAlreadyAffected)
                             {
                                 if (!pLoopUnit->isResisted(this, spell))
                                 {
@@ -16422,6 +16453,8 @@ void CvUnit::castPush(int spell)
 
 void CvUnit::castRemovePromotion(int spell)
 {
+	bool bNotAffected;
+
    	PromotionTypes ePromotion1 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getRemovePromotionType1();
    	PromotionTypes ePromotion2 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getRemovePromotionType2();
    	PromotionTypes ePromotion3 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getRemovePromotionType3();
@@ -16461,7 +16494,33 @@ void CvUnit::castRemovePromotion(int spell)
                         pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
                         if (!pLoopUnit->isImmuneToSpell(this, spell))
                         {
-                            if (bResistable)
+							bNotAffected = true;
+
+							if (ePromotion1 != NO_PROMOTION)
+                            {
+								if (pLoopUnit->isHasPromotion(ePromotion1))
+								{
+									bNotAffected = false;
+								}
+							}
+
+							if (ePromotion2 != NO_PROMOTION)
+                            {
+								if (pLoopUnit->isHasPromotion(ePromotion2))
+								{
+									bNotAffected = false;
+								}
+							}
+
+							if (ePromotion3 != NO_PROMOTION)
+                            {
+								if (pLoopUnit->isHasPromotion(ePromotion3))
+								{
+									bNotAffected = false;
+								}
+							}
+
+                            if (bResistable && !bNotAffected)
                             {
                                 if (!pLoopUnit->isResisted(this, spell))
                                 {
