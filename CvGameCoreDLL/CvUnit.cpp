@@ -15904,6 +15904,7 @@ bool CvUnit::canSpreadReligion(int spell) const
 
 void CvUnit::cast(int spell)
 {
+	CvWString szBuffer;
 
 	if (GC.getLogging())
 	{
@@ -16069,7 +16070,8 @@ void CvUnit::cast(int spell)
         {
             gDLL->getInterfaceIFace()->playGeneralSound(GC.getSpellInfo((SpellTypes)spell).getSound(), plot()->getPoint());
         }
-        gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(), GC.getSpellInfo((SpellTypes)spell).getDescription(), "AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, GC.getSpellInfo((SpellTypes)spell).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"), getX_INLINE(), getY_INLINE(), true, true);
+		szBuffer = gDLL->getText("TXT_KEY_MESSAGE_SPELL_CAST", getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
+        gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, GC.getSpellInfo((SpellTypes)spell).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"), getX_INLINE(), getY_INLINE(), true, true);
     }
 	if (!CvString(GC.getSpellInfo((SpellTypes)spell).getPyResult()).empty())
     {
@@ -17317,8 +17319,8 @@ bool CvUnit::isResisted(CvUnit* pCaster, int iSpell) const
 	if (GC.getGameINLINE().getSorenRandNum(100, "is Resisted") < getResistChance(pCaster, iSpell))
 //<<<<Unofficial Bug Fix: End Modify
 	{
-		gDLL->getInterfaceIFace()->addMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_SPELL_RESISTED"), "", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/promotions/magicresistance.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), getX_INLINE(), getY_INLINE(), true, true);
-		gDLL->getInterfaceIFace()->addMessage(pCaster->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_SPELL_RESISTED"), "", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/promotions/magicresistance.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
+		gDLL->getInterfaceIFace()->addMessage(getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_SPELL_RESISTED", getName().GetCString(), GC.getSpellInfo((SpellTypes)iSpell).getDescription()), "", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/promotions/magicresistance.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), getX_INLINE(), getY_INLINE(), true, true);
+		gDLL->getInterfaceIFace()->addMessage(pCaster->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_SPELL_RESISTED", getName().GetCString(), GC.getSpellInfo((SpellTypes)iSpell).getDescription()), "", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/promotions/magicresistance.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
 		gDLL->getInterfaceIFace()->playGeneralSound("AS3D_RESIST", plot()->getPoint());
 		return true;
 	}
