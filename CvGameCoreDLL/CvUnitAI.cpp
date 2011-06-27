@@ -29812,24 +29812,9 @@ void CvUnitAI::changeAllowedExplore(bool bNewValue)
 }
 
 
+// Tholal AI - rewritten to help with Religious victory strats
 void CvUnitAI::AI_InquisitionMove()
 {
-
-// Tholal AI - rewritten to help with Religious victory strats
-
-	CvCity* pLoopCity;
-	CvCity* pBestCity=NULL;
-	CvPlot* pBestPlot;
-
-	int iValue;
-	int iBestValue;
-	int iLoop;
-
-	iBestValue = 0;
-	pBestCity = NULL;
-	iValue = 0;
-
-	int iStateRel = GET_PLAYER(getOwnerINLINE()).getStateReligion();
 
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 	{
@@ -29849,6 +29834,21 @@ void CvUnitAI::AI_InquisitionMove()
 		return;
 	}
 
+
+	CvCity* pLoopCity;
+	CvCity* pBestCity=NULL;
+	CvPlot* pBestPlot;
+
+	int iValue;
+	int iBestValue;
+	int iLoop;
+
+	iBestValue = 0;
+	pBestCity = NULL;
+	iValue = 0;
+
+	int iStateRel = GET_PLAYER(getOwnerINLINE()).getStateReligion();
+
 	// Inquisitors should work alone
 	if (getGroup()->getNumUnits() > 1)
 	{
@@ -29858,7 +29858,7 @@ void CvUnitAI::AI_InquisitionMove()
 	if (iStateRel != NO_RELIGION)
 	{
 
-		// ToDo - check that no other inquisitors are here
+		// ToDo - check that no other inquisitors are here - count untiaitypes unitai_inquisitor
 		if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 		{
 			cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
