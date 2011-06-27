@@ -5788,7 +5788,7 @@ void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes
                     {
                         szInfoText.append(L", ");
                     }
-                    szBuffer.Format((bLinks ? L"<link=literal>%s</link> - (<link=literal>%s</link>)" : L"%s"),
+                    szBuffer.Format((bLinks ? L"<link=literal>%s</link>" : L"%s"),
                         GC.getUnitInfo(eDefaultUnit).getDescription());
                 }
                 else
