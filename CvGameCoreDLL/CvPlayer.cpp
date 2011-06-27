@@ -2185,6 +2185,10 @@ void CvPlayer::disbandUnit(bool bAnnounce)
                         case UNITAI_TERRAFORMER:
                         case UNITAI_MANA_UPGRADE:
                         case UNITAI_MAGE:
+						case UNITAI_HERO:
+						case UNITAI_FEASTING:
+						case UNITAI_MEDIC:
+						case UNITAI_INQUISITOR:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -2217,6 +2221,10 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 
 						case UNITAI_MISSIONARY:
 							iValue *= 8;
+							if (pLoopUnit->isAIControl())
+							{
+								iValue = 0;
+							}
 							break;
 
 						case UNITAI_PROPHET:
@@ -2269,10 +2277,6 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/23
 						case UNITAI_BARBSMASHER:
-						case UNITAI_HERO:
-						case UNITAI_FEASTING:
-						case UNITAI_MEDIC:
-						case UNITAI_INQUISITOR:
 							break;
 //<<<<Unofficial Bug Fix: End Add
 
