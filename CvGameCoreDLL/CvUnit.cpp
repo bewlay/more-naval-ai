@@ -17520,10 +17520,10 @@ int CvUnit::chooseSpell()
                     {
                         pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
 
-						bIsCityPlot = pLoopPlot->isCity();
-
                         if (NULL != pLoopPlot)
                         {
+							bIsCityPlot = pLoopPlot->isCity();
+
 							if (bIsCoastalSpell && !pLoopPlot->isAdjacentToWater())
 							{
 								//do nothing - spell doesn't apply to this plot (Tsunami)
