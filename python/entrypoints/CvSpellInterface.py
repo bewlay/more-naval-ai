@@ -1252,6 +1252,8 @@ def spellEntertain(caster):
 		pPlayer = gc.getPlayer(iPlayer)
 		pPlayer2 = gc.getPlayer(iPlayer2)
 		iGold = (pCity.getPopulation() / 2) + 1
+		if pPlayer2.getGold() < iGold:
+			iGold = pPlayer2.getGold()
 		pPlayer.changeGold(iGold)
 		szBuffer = CyTranslator().getText("TXT_KEY_MESSAGE_ENTERTAIN_GOOD", (iGold, ))
 		CyInterface().addMessage(iPlayer,true,25,szBuffer,'',1,'Art/Interface/Buttons/Spells/Entertain.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
