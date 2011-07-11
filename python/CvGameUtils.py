@@ -173,68 +173,41 @@ class CvGameUtils:
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_THE_ORDER'))<0:
-					return True
 		if eTech == gc.getInfoTypeForString('TECH_WAY_OF_THE_EARTHMOTHER'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_3):
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH'))<0:
-					return True
 				
 		if eTech == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_0):
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'))<0:
-					return True
 				
 		if eTech == gc.getInfoTypeForString('TECH_MESSAGE_FROM_THE_DEEP'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_2):
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS'))<0:
-					return True
 				
 		if eTech == gc.getInfoTypeForString('TECH_CORRUPTION_OF_SPIRIT'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_4):
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'))<0:
-					return True
 				
 		if eTech == gc.getInfoTypeForString('TECH_HONOR'):
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True		
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_THE_EMPYREAN'))<0:
-					return True
 				
 		if eTech == gc.getInfoTypeForString('TECH_DECEPTION'):
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True		
-			if pPlayer.isHuman() == False:
-				if gc.getLeaderHeadInfo(pPlayer.getLeaderType()).getReligionWeightModifier(gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS'))<0:
-					return True
 
 		if eTech == gc.getInfoTypeForString('TECH_SEAFARING'):
 			if iCiv != gc.getInfoTypeForString('CIVILIZATION_LANUN'):
 				return True
-		if pPlayer.isHuman() == False:
-			if eTech == gc.getInfoTypeForString('TECH_STIRRUPS'):
-				if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
-					return True
-				if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
-					return True
 										
 		if CyGame().getWBMapScript():
 			bBlock = sf.cannotResearch(ePlayer, eTech, bTrade)
