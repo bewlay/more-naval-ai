@@ -2820,9 +2820,6 @@ def spellRoar(caster):
 
 def reqRobGrave(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
-	if pPlayer.isHuman() == False:
-		if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
-			return False
 	if pPlayer.isBarbarian():	#fix by Sephi
 		return False
 	return True
