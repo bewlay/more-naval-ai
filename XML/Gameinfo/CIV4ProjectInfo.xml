@@ -41,7 +41,7 @@
 			</BonusProductionModifiers>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<iAIWeight>300</iAIWeight>
+			<iAIWeight>0</iAIWeight>
 			<iPrereqGlobalCounter>70</iPrereqGlobalCounter>
 		</ProjectInfo>
 		<ProjectInfo>
@@ -108,7 +108,7 @@
 			</BonusProductionModifiers>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<iAIWeight>100</iAIWeight>
+			<iAIWeight>300</iAIWeight>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_GLORY_EVERLASTING</Type>
@@ -179,7 +179,7 @@
 			</BonusProductionModifiers>
 			<CreateSound/>
 			<MovieDefineTag>ART_DEF_MOVIE_RITES_OF_OGHMA</MovieDefineTag>
-			<iAIWeight>0</iAIWeight>
+			<iAIWeight>100</iAIWeight>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_NATURES_REVOLT</Type>
@@ -301,7 +301,7 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag>ART_DEF_MOVIE_PURGE_THE_UNFAITHFUL</MovieDefineTag>
-			<iAIWeight>100</iAIWeight>
+			<iAIWeight>0</iAIWeight>
 			<iModifyGlobalCounter>3</iModifyGlobalCounter>
 		</ProjectInfo>
 		<ProjectInfo>
@@ -330,7 +330,7 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<iAIWeight>0</iAIWeight>
+			<iAIWeight>300</iAIWeight>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_SAMHAIN</Type>
@@ -533,7 +533,7 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<iAIWeight>100</iAIWeight>
+			<iAIWeight>300</iAIWeight>
 		</ProjectInfo>
 	</ProjectInfos>
 </Civ4ProjectInfo>
