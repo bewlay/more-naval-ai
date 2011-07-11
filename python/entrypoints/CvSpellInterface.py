@@ -1294,9 +1294,6 @@ def reqExploreLair(caster):
 	if not eTeam.isAtWar(bPlayer.getTeam()):
 		return False
 		
-	if pPlayer.isHuman() == False:
-		if gc.getGame().getElapsedGameTurns() < 10:
-			return False
 	return True
 
 def spellExploreLair(caster):
