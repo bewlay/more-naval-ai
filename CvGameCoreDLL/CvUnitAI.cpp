@@ -538,18 +538,6 @@ bool CvUnitAI::AI_update()
                     PatrolMove();
                     return false;
                     break;
-                case GROUPFLAG_PATROL_NEW:
-                    PatrolNewMove();
-                    return false;
-                    break;
-                case GROUPFLAG_EXPLORE:
-                    AI_exploreMove();
-                    return false;
-                    break;
-                case GROUPFLAG_DEFENSE_NEW:
-                    AI_barbsmashermove();
-                    return false;
-                    break;
                 case GROUPFLAG_HERO:
                     AI_heromove();
                     return false;

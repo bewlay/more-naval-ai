@@ -18751,12 +18751,6 @@ const wchar* CvGameTextMgr::getGroupflagName(int iGroupflag) const
 	case GROUPFLAG_PATROL_NEW:
 		return L"GROUPFLAG_PATROL_NEW";
 
-	case GROUPFLAG_EXPLORE:
-		return L"GROUPFLAG_EXPLORE";
-
-	case GROUPFLAG_DEFENSE_NEW:
-		return L"GROUPFLAG_DEFENSE_NEW";
-
 	case GROUPFLAG_DEFENSE:
 		return L"GROUPFLAG_DEFENSE";
 

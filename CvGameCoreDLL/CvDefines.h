@@ -38,8 +38,8 @@
 #define GROUPFLAG_PERMDEFENSE_NEW										(3)
 #define GROUPFLAG_PATROL    											(4)
 #define GROUPFLAG_PATROL_NEW    										(5)
-#define GROUPFLAG_EXPLORE                                               (6)
-#define GROUPFLAG_DEFENSE_NEW    										(7)
+
+
 #define GROUPFLAG_DEFENSE       										(8)
 #define GROUPFLAG_HERO             										(9)
 #define GROUPFLAG_CONQUEST												(10)
