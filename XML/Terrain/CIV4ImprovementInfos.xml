@@ -2705,7 +2705,7 @@
                 <BonusTypeStruct>
                     <BonusType>BONUS_MANA</BonusType>
                     <bBonusMakesValid>1</bBonusMakesValid>
-                    <bBonusTrade>1</bBonusTrade>
+                    <bBonusTrade>0</bBonusTrade>
                     <iDiscoverRand>0</iDiscoverRand>
                     <YieldChanges>
                         <iYieldChange>0</iYieldChange>
@@ -2945,7 +2945,7 @@
                 <BonusTypeStruct>
                     <BonusType>BONUS_MANA</BonusType>
                     <bBonusMakesValid>1</bBonusMakesValid>
-                    <bBonusTrade>1</bBonusTrade>
+                    <bBonusTrade>0</bBonusTrade>
                     <iDiscoverRand>0</iDiscoverRand>
                     <YieldChanges>
                         <iYieldChange>0</iYieldChange>
@@ -3505,7 +3505,7 @@
                 <BonusTypeStruct>
                     <BonusType>BONUS_MANA</BonusType>
                     <bBonusMakesValid>1</bBonusMakesValid>
-                    <bBonusTrade>1</bBonusTrade>
+                    <bBonusTrade>0</bBonusTrade>
                     <iDiscoverRand>0</iDiscoverRand>
                     <YieldChanges>
                         <iYieldChange>0</iYieldChange>
