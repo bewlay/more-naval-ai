@@ -625,9 +625,6 @@ bool CvUnitAI::AI_update()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        case UNITAI_BARBSMASHER:
-            AI_barbsmashermove();
-            break;
         case UNITAI_HERO:
 			if (isBarbarian())
 			{

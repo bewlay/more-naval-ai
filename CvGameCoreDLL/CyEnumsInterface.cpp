@@ -1029,7 +1029,6 @@ void CyEnumsPythonInterface()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        .value("UNITAI_BARBSMASHER",UNITAI_BARBSMASHER)
         .value("UNITAI_HERO",UNITAI_HERO)
         .value("UNITAI_FEASTING",UNITAI_FEASTING)
         .value("UNITAI_MEDIC",UNITAI_MEDIC)

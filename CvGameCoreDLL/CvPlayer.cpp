@@ -2275,11 +2275,6 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 							iValue *= 3;
 							break;
 
-//>>>>Unofficial Bug Fix: Added by Denev 2010/02/23
-						case UNITAI_BARBSMASHER:
-							break;
-//<<<<Unofficial Bug Fix: End Add
-
 						default:
 							FAssert(false);
 							break;

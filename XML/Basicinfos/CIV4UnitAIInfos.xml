@@ -171,10 +171,6 @@
 			<Description>UNITAI_ATTACK_CITY_LEMMING</Description>
 		</UnitAIInfo>
 		<UnitAIInfo>
-			<Type>UNITAI_BARBSMASHER</Type>
-			<Description>UNITAI_BARBSMASHER</Description>
-		</UnitAIInfo>
-		<UnitAIInfo>
 			<Type>UNITAI_HERO</Type>
 			<Description>UNITAI_HERO</Description>
 		</UnitAIInfo>			
