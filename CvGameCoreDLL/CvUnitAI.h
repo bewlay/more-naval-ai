@@ -51,7 +51,6 @@ public:
 /**						                                            							**/
 /*************************************************************************************************/
     bool AI_groupheal(int iDamagePercent = 0, int iMaxPath = MAX_INT);
-    void AI_barbsmashermove();
     void AI_feastingmove();
     void ConquestMove();
     void PermDefenseMove();
