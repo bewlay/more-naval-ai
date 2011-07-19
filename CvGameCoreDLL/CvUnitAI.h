@@ -56,7 +56,6 @@ public:
     void PermDefenseMove();
     void PermDefenseNewMove();
     void PatrolMove();
-    void PatrolNewMove();
     void HNgroupMove();
 	bool AI_exploreLairSea(int iRange = 0);
 	bool AI_exploreLair(int iRange = 0);
