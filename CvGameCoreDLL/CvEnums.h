@@ -1409,7 +1409,6 @@ enum UnitAITypes			// Exposed to Python
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    UNITAI_BARBSMASHER,
     UNITAI_HERO,
     UNITAI_FEASTING,
     UNITAI_MEDIC,
