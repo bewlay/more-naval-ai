@@ -2880,19 +2880,6 @@ void CvPlayer::doTurn()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    //caching some values
-    if (!isHuman())
-    {
-        for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
-        {
-
-            pLoopCity->AI_calculateNeededPermDefense();
-            pLoopCity->AI_calculateNeededPatrol();
-            pLoopCity->AI_calculateNeededCityDefenseProduction();
-            pLoopCity->AI_calculateNeededCityPatrolProduction();
-
-        }
-    }
 
     if (!isHuman())
     {
