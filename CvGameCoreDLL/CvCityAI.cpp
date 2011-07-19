@@ -4033,11 +4033,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					iValue ++;
 				}
 			}
-
-			if  (kBuilding.getBuildingClassType() == (GC.getInfoTypeForString("BUILDINGCLASS_MARKET") || GC.getInfoTypeForString("BUILDINGCLASS_ELDER_COUNCIL")))
-			{
-				iValue++;
-			}
 		}	
 		// End Tholal AI
 
@@ -5362,7 +5357,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						iValue += iTempValue;
 					}
 
-					iValue += (kBuilding.getCommerceChange(COMMERCE_GOLD) * 4);
+					iValue += (kBuilding.getCommerceChange(COMMERCE_GOLD) * 10);
 					iValue += (kBuilding.getObsoleteSafeCommerceChange(COMMERCE_GOLD) * 4);
 				}
 
@@ -5386,7 +5381,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 						iValue += iTempValue;
 					}
-					iValue += (kBuilding.getCommerceChange(COMMERCE_RESEARCH) * 4);
+					iValue += (kBuilding.getCommerceChange(COMMERCE_RESEARCH) * 10);
 					iValue += (kBuilding.getObsoleteSafeCommerceChange(COMMERCE_RESEARCH) * 4);
 					
 					// Tholal AI - Tower Mastery Victory
