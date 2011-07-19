@@ -5372,10 +5372,13 @@ void CvUnitAI::AI_missionaryMove()
 
 	    if (pCity != NULL)
 		{
-			if  (pCity->isDisorder() || pCity->getCultureLevel() == 0)
+			if (pCity->getOwner() == getOwner())
 			{
-				getGroup()->pushMission(MISSION_GREAT_WORK);
-				return;
+				if  (pCity->isDisorder() || pCity->getCultureLevel() == 0)
+				{
+					getGroup()->pushMission(MISSION_GREAT_WORK);
+					return;
+				}
 			}
 		}
 			
@@ -5401,14 +5404,12 @@ void CvUnitAI::AI_missionaryMove()
 								{
 									iValue /= 8;
 								}
-								if (iValue > 0)
+
+								if (iValue > iBestValue)
 								{
-									if (iValue > iBestValue)
-									{
-										iBestValue = iValue;
-										pBestPlot = getPathEndTurnPlot();
-										pBestGreatWorkPlot = pLoopCity->plot();
-									}
+									iBestValue = iValue;
+									pBestPlot = getPathEndTurnPlot();
+									pBestGreatWorkPlot = pLoopCity->plot();
 								}
 							}
 						}
