@@ -727,7 +727,6 @@ bool CvSelectionGroupAI::AI_isDeclareWar(const CvPlot* pPlot)
 /**						                                            							**/
 /*************************************************************************************************/
 			case UNITAI_WARWIZARD:
-			case UNITAI_BARBSMASHER:
             case UNITAI_HERO:
 /*************************************************************************************************/
 /**	END	                                        												**/
