@@ -23869,7 +23869,8 @@ void CvPlayer::startConquestMode()
 
 ReligionTypes CvPlayer::getFavoriteReligion() const
 {
-    return m_eFavoriteReligion;
+    //return m_eFavoriteReligion;
+	return (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
 }
 
 void CvPlayer::setFavoriteReligion(ReligionTypes newvalue)
