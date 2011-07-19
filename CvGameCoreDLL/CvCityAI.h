@@ -154,16 +154,12 @@ public:
 /*************************************************************************************************/
     // functions used to cache some vars to avoid OOS
     void AI_calculateNeededPermDefense();
-    void AI_calculateNeededPatrol();
-    void AI_calculateNeededCityDefenseProduction();
-    void AI_calculateNeededCityPatrolProduction();
 
     int AI_neededPermDefense(int flag);
-    void AI_setCityPatrolOrigin(CvPlot* newpatrolorigin);
     CvPlot* AI_getCityPatrolOrigin();
 
     int AI_neededPatrol(int flag);
-    int AI_CityDangerValue();
+
     CvPlot* AI_getCityDefenseProduction();
     void AI_setCityDefenseProduction(CvPlot* newplot);
     void AI_CityChooseDefenseProduction();

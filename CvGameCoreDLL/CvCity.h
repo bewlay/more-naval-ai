@@ -1028,15 +1028,11 @@ public:
 /**						                                            							**/
 /*************************************************************************************************/
     virtual void AI_calculateNeededPermDefense() = 0;
-    virtual void AI_calculateNeededPatrol() = 0;
-    virtual void AI_calculateNeededCityDefenseProduction() = 0;
-    virtual void AI_calculateNeededCityPatrolProduction() = 0;
 
     virtual int AI_neededPermDefense(int flag) = 0;
-    virtual void AI_setCityPatrolOrigin(CvPlot* newpatrolgroup) = 0;
     virtual CvPlot* AI_getCityPatrolOrigin() = 0;
     virtual int AI_neededPatrol(int flag) = 0;
-    virtual int AI_CityDangerValue() = 0;
+
     virtual CvPlot* AI_getCityDefenseProduction() = 0;
     virtual int AI_neededCityDefenseProduction(int type) = 0;
     virtual bool AI_isCityDefenseProduction() = 0;
