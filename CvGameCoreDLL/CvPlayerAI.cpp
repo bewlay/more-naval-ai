@@ -2021,7 +2021,6 @@ DomainTypes CvPlayerAI::AI_unitAIDomainType(UnitAITypes eUnitAI) const
 	case UNITAI_TERRAFORMER:
 	case UNITAI_MANA_UPGRADE:
 	case UNITAI_WARWIZARD:
-	case UNITAI_BARBSMASHER:
 	case UNITAI_HERO:
 	case UNITAI_FEASTING:
 	case UNITAI_MEDIC:
@@ -6136,10 +6135,6 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 //>>>>Advanced Rules: Added by Denev 2010/03/04
 //*** Values each new AIs.
-					case UNITAI_BARBSMASHER:
-						iUnitValue += 600;
-						break;
-
 					case UNITAI_HERO:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
 						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 800 : 0);
@@ -19449,11 +19444,7 @@ int CvPlayerAI::AI_getStrategyHash() const
                 CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
                 bool bIsUU = (GC.getUnitClassInfo((UnitClassTypes)iI).getDefaultUnitIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI));
                 if (kLoopUnit.getUnitAIType(UNITAI_RESERVE) || kLoopUnit.getUnitAIType(UNITAI_ATTACK_CITY)
-				  || kLoopUnit.getUnitAIType(UNITAI_COUNTER) || kLoopUnit.getUnitAIType(UNITAI_PILLAGE)
-				  // Tholal AI - account for Barbsmashers
-				  || kLoopUnit.getUnitAIType(UNITAI_BARBSMASHER)
-				  // End Tholal AI
-				  )
+				  || kLoopUnit.getUnitAIType(UNITAI_COUNTER) || kLoopUnit.getUnitAIType(UNITAI_PILLAGE))
                 {
 					iAttackUnitCount++;
 						//UU love

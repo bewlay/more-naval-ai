@@ -555,28 +555,6 @@ bool CvUnitAI::AI_update()
                 setSuicideSummon(false);
                 return false;
             }
-			/*
-            switch (AI_getUnitAIType())
-            {
-                case UNITAI_UNKNOWN:
-                case UNITAI_ANIMAL:
-                case UNITAI_ATTACK:
-                case UNITAI_WARWIZARD:
-                case UNITAI_BARBSMASHER:
-                case UNITAI_ATTACK_CITY:
-                case UNITAI_COLLATERAL:
-                case UNITAI_PILLAGE:
-                case UNITAI_RESERVE:
-                case UNITAI_COUNTER:
-                case UNITAI_CITY_DEFENSE:
-                case UNITAI_CITY_COUNTER:
-                    getGroup()->pushMission(MISSION_SKIP);
-                    return false;
-                    break;
-                default:
-                    break;
-            }
-			*/
 	    }
 /*************************************************************************************************/
 /**	END	                                        												**/
@@ -1064,7 +1042,6 @@ int CvUnitAI::AI_groupFirstVal()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    case UNITAI_BARBSMASHER:
     case UNITAI_FEASTING:
     case UNITAI_MEDIC:
 	case UNITAI_INQUISITOR:
@@ -24956,12 +24933,6 @@ bool CvUnitAI::AI_canGroupWithAIType(UnitAITypes eUnitAI) const
 /*************************************************************************************************/
 		case (UNITAI_SETTLE):
             if (GC.getGame().getGameTurn()<10)
-            {
-                return false;
-            }
-            break;
-		case (UNITAI_BARBSMASHER):
-            if (AI_getUnitAIType()!=UNITAI_BARBSMASHER)
             {
                 return false;
             }
