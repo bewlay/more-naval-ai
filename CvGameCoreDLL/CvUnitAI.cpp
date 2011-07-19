@@ -26443,51 +26443,6 @@ void CvUnitAI::PermDefenseMove()
 	return;
 }
 
-//returns true if a Mission was pushed
-bool CvUnitAI::RejoinPatrolGroup()
-{
-    int iBestValue=-1;
-    CvUnit* pBestUnit=NULL;
-	int iLoop;
-
-    for (CvUnit* pUnit = GET_PLAYER(getOwnerINLINE()).firstUnit(&iLoop); NULL != pUnit; pUnit = GET_PLAYER(getOwnerINLINE()).nextUnit(&iLoop))
-    {
-        if (pUnit->AI_getGroupflag()==GROUPFLAG_PATROL && AI_canJoinGroup(pUnit->getGroup()))
-        {
-            if (pUnit->getOriginPlot() && pUnit!=this)
-            {
-                if (pUnit->getOriginPlot()==getOriginPlot())
-                {
-					if(pUnit->getGroup()->getNumUnits()>iBestValue)
-					{
-						pBestUnit=pUnit;
-						iBestValue=pUnit->getGroup()->getNumUnits();
-					}
-				}
-			}
-		}
-	}
-	if (pBestUnit!=NULL)
-	{
-		if (atPlot(pBestUnit->plot()))
-		{
-			joinGroup(pBestUnit->getGroup());
-            if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
-            {
-                getGroup()->pushMission(MISSION_SKIP);
-            }
-            return true;
-		}
-		else
-		{
-			// getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(),pBestUnit->getID(),0,false,false, MISSIONAI_GROUP, NULL, pBestUnit);
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
-		}
-	    return true;
-	}
-	return false;
-}
-
 void CvUnitAI::PatrolMove()
 {
     bool bFollow=false;
