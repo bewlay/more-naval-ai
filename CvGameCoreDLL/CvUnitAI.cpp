@@ -857,39 +857,56 @@ void CvUnitAI::AI_upgrade()
 
 	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea);
 
-	for (int iPass = 0; iPass < 2; iPass++)
+	if (isOnlyDefensive())
 	{
-		int iBestValue = 0;
-		UnitTypes eBestUnit = NO_UNIT;
+		iCurrentValue = 1;
+	}
 
- 		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	int iBestValue = 0;
+	int iNewValue = 0;
+	UnitTypes eBestUnit = NO_UNIT;
+
+	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	{
+		if (canUpgrade((UnitTypes)iI))
 		{
-			if ((iPass > 0) || GC.getUnitInfo((UnitTypes)iI).getUnitAIType(AI_getUnitAIType()))
-			{
-				int iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
-				if ((iPass == 0 || iNewValue > 0) && iNewValue > iCurrentValue)
-				{
-					if (canUpgrade((UnitTypes)iI))
-					{
-						int iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Upgrade"));
+			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
 
-						if (iValue > iBestValue)
-						{
-							iBestValue = iValue;
-							eBestUnit = ((UnitTypes)iI);
-						}
-					}
+			if (AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
+			{
+				if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
+				{
+					iNewValue = 0;
 				}
 			}
-		}
 
-		if (eBestUnit != NO_UNIT)
-		{
-			upgrade(eBestUnit);
-			doDelayedDeath();
-			return;
+			int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
+
+			if (iUpgradeTier > 2)
+			{
+				if ((getLevel() < (iUpgradeTier + 1)) && (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_DISCIPLE")))
+				{
+					iNewValue = 0;
+				}
+			}
+
+
+			if ((iNewValue > iBestValue) && (iNewValue > iCurrentValue))
+			{
+				iBestValue = iNewValue;
+				eBestUnit = ((UnitTypes)iI);
+			}
 		}
 	}
+
+	if (eBestUnit != NO_UNIT)
+	{
+		upgrade(eBestUnit);
+		doDelayedDeath();
+		return;
+	}
+
+	return;
 }
 
 
