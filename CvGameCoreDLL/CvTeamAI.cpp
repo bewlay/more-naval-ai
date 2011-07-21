@@ -1269,7 +1269,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 /*                                                                                              */
 /* Victory Strategy AI                                                                          */
 /************************************************************************************************/
-	// Make it harder to bribe player to start a war
+	// avoid wars if pursuing a more peaceful type of victory
 	if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE4))
 	{
 		iValue /= 8;
@@ -1279,6 +1279,18 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		iValue /= 4;
 	}
 	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE3))
+	{
+		iValue /= 3;
+	}
+	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_ALTAR3))
+	{
+		iValue /= 4;
+	}
+	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3))
+	{
+		iValue /= 4;
+	}
+	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
 	{
 		iValue /= 3;
 	}

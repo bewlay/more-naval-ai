@@ -16751,19 +16751,15 @@ void CvPlayerAI::AI_doDiplo()
 											iDeclareWarTradeRand /= 4;
 											iDeclareWarTradeRand ++;
 										}
-/*************************************************************************************************/
-/** BETTER AI (Diplomatics)  Sephi		                        	    						**/
-/**                                                                                             **/
-/** AI more willing to ask/join a war in ConquestMode                                           **/
-/*************************************************************************************************/
-                                        if (isConquestMode())
-                                        {
-											iDeclareWarTradeRand /= 2;
+
+										if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) ||
+											AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) ||
+											AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
+										{
 											iDeclareWarTradeRand ++;
-                                        }
-/*************************************************************************************************/
-/** End															    							**/
-/*************************************************************************************************/
+											iDeclareWarTradeRand *= 10;
+
+										}
 
 										if (GC.getGameINLINE().getSorenRandNum(iDeclareWarTradeRand, "AI Diplo Declare War Trade") == 0)
 										{
