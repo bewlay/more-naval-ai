@@ -509,10 +509,6 @@ bool CvUnitAI::AI_update()
                     HNgroupMove();
                     return false;
 					break;
-				case GROUPFLAG_PICKUP_EQUIPMENT:
-					PickupEquipmentMove();
-					return false;
-					break;
                 case GROUPFLAG_SUICIDE_SUMMON:
                     AI_summonAttackMove();
                     return false;
