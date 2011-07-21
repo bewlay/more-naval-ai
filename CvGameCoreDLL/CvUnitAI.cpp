@@ -5151,7 +5151,6 @@ void CvUnitAI::AI_exploreMove()
 {
 	PROFILE_FUNC();
 
-
 	// Floating Eyes & Hawks
 	if (getDomainType() == DOMAIN_AIR)
 	{
@@ -5216,6 +5215,16 @@ void CvUnitAI::AI_exploreMove()
 		return;
 	}
 
+	if (AI_pickupEquipment(6))
+	{
+		return;
+	}
+
+	if (AI_exploreLair(6))
+	{
+		return;
+	}
+
 	if (AI_exploreRange(3))
 	{
 		return;
@@ -5250,19 +5259,6 @@ void CvUnitAI::AI_exploreMove()
 		}
 	}
 
-//FfH: Modified by Kael 08/21/2008
-//	if (!isHuman() && (AI_getUnitAIType() == UNITAI_EXPLORE))
-//	{
-//		if (GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(area(), UNITAI_EXPLORE) > GET_PLAYER(getOwnerINLINE()).AI_neededExplorers(area()))
-//		{
-//			if (GET_PLAYER(getOwnerINLINE()).calculateUnitCost() > 0)
-//			{
-//				scrap();
-//				return;
-//			}
-//		}
-//	}
-//FfH: End Add
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      12/03/08                                jdog5000      */
 /*                                                                                              */
@@ -5278,6 +5274,11 @@ void CvUnitAI::AI_exploreMove()
 /************************************************************************************************/
 
 	if (AI_patrol())
+	{
+		return;
+	}
+
+	if (AI_pickupEquipment(12))
 	{
 		return;
 	}
