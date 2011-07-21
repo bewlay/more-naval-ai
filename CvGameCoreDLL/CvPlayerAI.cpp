@@ -18980,7 +18980,7 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
     }
 	*/
 
-	if (GC.getLeaderHeadInfo(getLeaderType()).getAlignment() == ALIGNMENT_EVIL)
+	if (getAlignment() == ALIGNMENT_EVIL)
 	{
 		return 0;
 	}
@@ -18992,7 +18992,7 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")) > 0)
 	{
-		return 4;
+		return 3;
 	}
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_CONSECRATED")) > 0)
@@ -19007,11 +19007,15 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_ANOINTED")) > 0)
 	{
+		return 2;
+	}
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR")) > 0)
+	{
 		return 1;
 	}
 
-	//if (GC.getLeaderHeadInfo(getLeaderType()).isAltarVictory())
-	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR")) > 0)
+	if (getAlignment() == ALIGNMENT_GOOD)
 	{
 		return 1;
 	}
