@@ -1159,15 +1159,8 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc) const
 		for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 		{
 			pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-/*************************************************************************************************/
-/**	BETTER AI (first settler)         Sephi                                 					**/
-/**                								**/
-/**						                                            							**/
-/*************************************************************************************************/
-			if (pLoopPlot->isRevealed(getTeam(), false) || getNumCities()==0)// || AI_isPrimaryArea(pLoopPlot->area()))
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
+			if (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam()))
 			{
 				long lResult=-1;
 				if(GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK())
