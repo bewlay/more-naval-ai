@@ -10456,12 +10456,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		case UNITAI_MAGE:
 		case UNITAI_WARWIZARD:
 		case UNITAI_MANA_UPGRADE:
-			if (GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_CHANNELING1")))
+			if (GC.getUnitInfo(eUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 			{
-				if (!GC.getUnitInfo(eUnit).getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_DIVINE")))
-				{
-					bValid = true;
-				}
+				bValid = true;
 			}
 			break;
 
@@ -10471,6 +10468,25 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 				bValid = true;
 			}
 			break;
+		case UNITAI_MEDIC:
+			for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+			{
+				if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+				{
+					if (GC.getPromotionInfo((PromotionTypes)iI).getSameTileHealChange() > 0)
+					{
+						bValid = true;
+						break;
+					}
+					if (GC.getPromotionInfo((PromotionTypes)iI).getAdjacentTileHealChange() > 0)
+					{
+						bValid = true;
+						break;
+					}
+				}
+			}
+			break;
+
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
