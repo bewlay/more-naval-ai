@@ -10158,10 +10158,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_HERO:
-			if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO)
-			{
-				bValid = true;
-			}
+			bValid = true;
 			break;
 
 		case UNITAI_ANIMAL:
