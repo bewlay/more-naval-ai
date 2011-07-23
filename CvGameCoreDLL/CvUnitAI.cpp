@@ -7569,6 +7569,12 @@ void CvUnitAI::AI_exploreSeaMove()
 /* 	BETTER_BTS_AI_MOD						END								*/
 /********************************************************************************/
 
+
+	if (AI_exploreLairSea(6))
+	{
+		return;
+	}
+
 	CvArea* pWaterArea = plot()->waterArea();
 
 	if (!isHuman())
