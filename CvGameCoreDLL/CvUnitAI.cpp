@@ -3131,8 +3131,6 @@ void CvUnitAI::AI_attackMove()
 				return;
 			}
 
-			//CheckForEquipment();
-
 			if( getGroup()->getNumUnits() < 4 )
 			{
 				if (AI_choke(1))
