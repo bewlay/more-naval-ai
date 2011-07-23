@@ -4042,6 +4042,8 @@ def onMoveMaelstrom(pCaster, pPlot):
 				iValue = CyGame().getSorenRandNum(1000, "Maelstrom")
 				if pTargetPlot.isOwned() == False:
 					iValue += 1000
+				if pTargetPlot == pPlot:
+					iValue = 0
 				if iValue > iBestValue:
 					iBestValue = iValue
 					pBestPlot = pTargetPlot
