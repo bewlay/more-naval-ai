@@ -4893,10 +4893,12 @@ def canTriggerTea(argsList):
 		return false
 
 	bCanTrade = false		
-	for iLoopPlayer in range(gc.getMAX_CIV_PLAYERS()):
-		if player.canHaveTradeRoutesWith(iLoopPlayer):
-			bCanTrade = true	
-			break
+	for iPlayer in range(gc.getMAX_CIV_PLAYERS()):			
+		loopPlayer = gc.getPlayer(iPlayer)
+		if loopPlayer.isAlive() and iPlayer != kTriggeredData.ePlayer:	
+			if player.canHaveTradeRoutesWith(iPlayer):
+				bCanTrade = true	
+				break
 			
 	if not bCanTrade:
 		return false
