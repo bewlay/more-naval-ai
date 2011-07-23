@@ -1130,7 +1130,7 @@ class CvGameUtils:
 			hellterrb = false
 
 #Look for non raw mana 		
-		searchdistance=15
+		searchdistance=20
 		imanatype = -1
 		
 		for isearch in range(1,searchdistance+1,1):
@@ -1148,13 +1148,13 @@ class CvGameUtils:
 									imanatype=pPlot2.getBonusType(TeamTypes.NO_TEAM)
 									if imanatype != -1:												
 										for iBuild in range(gc.getNumBuildInfos()):
-											if pUnit.canBuild(pPlot2,iBuild,false):
+											if pUnit.canBuild(pPlot2,iBuild,true):
 												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
 												pUnit.getGroup().pushMission(MissionTypes.MISSION_BUILD, iBuild, -1, 0, True, False, MissionAITypes.NO_MISSIONAI, pPlot, pUnit)
 												return 1												
 
 #Look for raw mana 		
-		searchdistance=15
+		searchdistance=20
 		imanatype = -1
 		
 		for isearch in range(1,searchdistance+1,1):
@@ -1287,8 +1287,8 @@ class CvGameUtils:
 										pPlot3 = pCity.plot()
 										cX = pPlot3.getX()
 										cY = pPlot3.getY()										
-										for iiX in range(cX-2, cX+2, 1):
-											for iiY in range(cY-2, cY+2, 1):
+										for iiX in range(cX-3, cX+3, 1):
+											for iiY in range(cY-3, cY+3, 1):
 												pPlot4 = CyMap().plot(iiX,iiY)
 												if not (pPlot4.isNone() or pPlot4.isImpassable()):
 													if pPlot4.getOwner()==pUnit.getOwner():
