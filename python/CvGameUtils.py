@@ -846,44 +846,44 @@ class CvGameUtils:
 					if pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT'):
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
 							pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
-							return 0
+							return 1
 				elif smokeb:
 					if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
 							pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
-							return 0
+							return 1
 
 				if (snowb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 0
+						return 1
 
 				if (tundrab and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 0
+						return 1
 
 				if (marshb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_MARSH')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 0
+						return 1
 
 				if (grassb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_GRASS')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 0
+						return 1
 
 				if hellterrb:
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SANCTIFY'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SANCTIFY'))
-						return 0
+						return 1
 
 				if treesb:
 					if pPlot.getFeatureType()==-1:
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_BLOOM'),false):
 							if treesimpb or pPlot.getBonusType(-1) == -1:
 								pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
-								return 0
+								return 1
 
 #-----------------------------------
 #LOOK FOR WORK
