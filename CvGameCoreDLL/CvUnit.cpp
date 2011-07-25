@@ -1329,18 +1329,22 @@ void CvUnit::doTurn()
         {
 			if (AI_getGroupflag() == GROUPFLAG_NONE && (getGroup()->getNumUnits() == 1))
 			{
-				if (AI_getUnitAIType() == UNITAI_ATTACK ||
-					AI_getUnitAIType() == UNITAI_ATTACK_CITY ||
-					AI_getUnitAIType() == UNITAI_CITY_DEFENSE ||
-					AI_getUnitAIType() == UNITAI_CITY_COUNTER ||
-					AI_getUnitAIType() == UNITAI_COUNTER ||
-					AI_getUnitAIType() == UNITAI_HERO ||
-					AI_getUnitAIType() == UNITAI_WARWIZARD ||
-					AI_getUnitAIType() == UNITAI_MAGE ||
-					AI_getUnitAIType() == UNITAI_MEDIC ||
-					AI_getUnitAIType() == UNITAI_COLLATERAL)
+				switch (AI_getUnitAIType())
 				{
-					AI_chooseGroupflag();
+					case UNITAI_ATTACK:
+					case UNITAI_ATTACK_CITY:
+					case UNITAI_COUNTER:
+					case UNITAI_CITY_COUNTER:
+					case UNITAI_CITY_DEFENSE:
+					case UNITAI_HERO:
+					case UNITAI_WARWIZARD:
+					case UNITAI_MAGE:
+					case UNITAI_MEDIC:
+					case UNITAI_COLLATERAL:
+						AI_chooseGroupflag();
+						break;
+					default:
+						break;
 				}
 			}
         }
