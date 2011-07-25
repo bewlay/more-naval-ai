@@ -15065,13 +15065,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	{
 		return false;
 	}
-    if (!isHuman())
-    {
-        if (!GC.getSpellInfo(eSpell).isAllowAI())
-        {
-            return false;
-        }
-    }
+
     if (GC.getSpellInfo(eSpell).getPromotionPrereq1() != NO_PROMOTION)
     {
         if (!isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionPrereq1()))
@@ -17461,223 +17455,227 @@ int CvUnit::chooseSpell()
         iValue = 0;
         if (canCast(iSpell, false))
         {
-            iRange = GC.getSpellInfo((SpellTypes)iSpell).getRange();
-            if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
-            {
-                int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
-				bool bPermSummon = GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate();
-                bool bEnemy = false;
-                for (int i = -iMoveRange; i <= iMoveRange; ++i)
-                {
-                    for (int j = -iMoveRange; j <= iMoveRange; ++j)
-                    {
-                        pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
-                        if (NULL != pLoopPlot)
-                        {
-                            if (pLoopPlot->isVisibleEnemyUnit(this))
-                            {
-                                bEnemy = true;
-                            }
-                        }
-                    }
-                }
-                if (bEnemy || bPermSummon)
-                {
-                    iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
-                    for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
-                    {
-                        iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
-                    }
-
-					iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamage() / 10);
-
-                    iTempValue *= 100;
-                    iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
-
-					if (bPermSummon)
-					{
-						iTempValue *= 2;
-					}
-
-					if (isTwincast())
-					{
-						iTempValue *= 2;
-					}
-
-                    iValue += iTempValue;
-                }
-            }
-
-			// Hack for Tsunami since all of its effects are hidden in python
-			bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
-
-            if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
-            {
-                int iDmg = GC.getSpellInfo((SpellTypes)iSpell).getDamage();
-                int iDmgLimit = GC.getSpellInfo((SpellTypes)iSpell).getDamageLimit();
-
-				if (bIsCoastalSpell)
+			if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAI())
+			{
+				iRange = GC.getSpellInfo((SpellTypes)iSpell).getRange();
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
 				{
-					iDmg = 30;
-					iDmgLimit = 75;
+					int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
+					bool bPermSummon = GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate();
+					bool bEnemy = false;
+					for (int i = -iMoveRange; i <= iMoveRange; ++i)
+					{
+						for (int j = -iMoveRange; j <= iMoveRange; ++j)
+						{
+							pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
+							if (NULL != pLoopPlot)
+							{
+								if (pLoopPlot->isVisibleEnemyUnit(this))
+								{
+									bEnemy = true;
+								}
+							}
+						}
+					}
+					if (bEnemy || bPermSummon)
+					{
+						iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
+						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
+						{
+							iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
+						}
+
+						iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamage() / 10);
+
+						iTempValue *= 100;
+						iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
+
+						if (bPermSummon)
+						{
+							iTempValue *= 2;
+						}
+
+						if (isTwincast())
+						{
+							iTempValue *= 2;
+						}
+
+						iValue += iTempValue;
+					}
 				}
 
-				bool bIsCityPlot = false;
-				
-                for (int i = -iRange; i <= iRange; ++i)
-                {
-                    for (int j = -iRange; j <= iRange; ++j)
-                    {
-                        pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
+				// Hack for Tsunami since all of its effects are hidden in python
+				bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
 
-                        if (NULL != pLoopPlot)
-                        {
-							bIsCityPlot = pLoopPlot->isCity();
+				if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
+				{
+					int iDmg = GC.getSpellInfo((SpellTypes)iSpell).getDamage();
+					int iDmgLimit = GC.getSpellInfo((SpellTypes)iSpell).getDamageLimit();
 
-							if (bIsCoastalSpell && !pLoopPlot->isAdjacentToWater())
+					if (bIsCoastalSpell)
+					{
+						iDmg = 30;
+						iDmgLimit = 75;
+					}
+
+					bool bIsCityPlot = false;
+					
+					for (int i = -iRange; i <= iRange; ++i)
+					{
+						for (int j = -iRange; j <= iRange; ++j)
+						{
+							pLoopPlot = ::plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), i, j);
+
+							if (NULL != pLoopPlot)
 							{
-								//do nothing - spell doesn't apply to this plot (Tsunami)
-							}
-							else
-							{
-								if (pLoopPlot->getX() != plot()->getX() || pLoopPlot->getY() != plot()->getY())
+								bIsCityPlot = pLoopPlot->isCity();
+
+								if (bIsCoastalSpell && !pLoopPlot->isAdjacentToWater())
 								{
-									pUnitNode = pLoopPlot->headUnitNode();
-									while (pUnitNode != NULL)
+									//do nothing - spell doesn't apply to this plot (Tsunami)
+								}
+								else
+								{
+									if (pLoopPlot->getX() != plot()->getX() || pLoopPlot->getY() != plot()->getY())
 									{
-										pLoopUnit = ::getUnit(pUnitNode->m_data);
-										pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
-										if (!pLoopUnit->isImmuneToSpell(this, iSpell))
+										pUnitNode = pLoopPlot->headUnitNode();
+										while (pUnitNode != NULL)
 										{
-											if (pLoopUnit->isEnemy(getTeam()))
+											pLoopUnit = ::getUnit(pUnitNode->m_data);
+											pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+											if (!pLoopUnit->isImmuneToSpell(this, iSpell))
 											{
-												if (pLoopUnit->getDamage() < iDmgLimit)
+												if (pLoopUnit->isEnemy(getTeam()))
+												{
+													if (pLoopUnit->getDamage() < iDmgLimit)
+													{
+														if (bIsCityPlot)
+														{
+															iValue += iDmg * 20;
+														}
+														else
+														{
+															iValue += iDmg * 10;
+														}
+													}
+												}
+												if (pLoopUnit->getTeam() == getTeam())
 												{
 													if (bIsCityPlot)
 													{
-														iValue += iDmg * 20;
+														iValue -= iDmg * 5;
 													}
 													else
 													{
-														iValue += iDmg * 10;
+														iValue -= iDmg * 10;
 													}
 												}
-											}
-											if (pLoopUnit->getTeam() == getTeam())
-											{
-												if (bIsCityPlot)
+												if (pLoopUnit->getTeam() != getTeam() && pLoopUnit->isEnemy(getTeam()) == false)
 												{
-													iValue -= iDmg * 5;
+													iValue -= 1000;
 												}
-												else
-												{
-													iValue -= iDmg * 10;
-												}
-											}
-											if (pLoopUnit->getTeam() != getTeam() && pLoopUnit->isEnemy(getTeam()) == false)
-											{
-												iValue -= 1000;
 											}
 										}
 									}
 								}
 							}
-                        }
-                    }
-                }
-            }
-			
-			// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
+						}
+					}
+				}
+				
+				// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
 
-            if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
-            {
-				if (GC.getSpellInfo((SpellTypes)iSpell).isImmuneTeam())
+				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
 				{
-					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+					if (GC.getSpellInfo((SpellTypes)iSpell).isImmuneTeam())
+					{
+						iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+					}
+					else
+					{
+						iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+					}
 				}
-				else
+				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
 				{
-	                iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+					iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2());
 				}
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
-            {
-                iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
-            {
-                iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1() != NO_PROMOTION)
-            {
-                iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2() != NO_PROMOTION)
-            {
-                iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3() != NO_PROMOTION)
-            {
-                iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType() != NO_UNIT)
-            {
-                iValue += GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType(), UNITAI_ATTACK, area());
-                iValue -= GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
-            {
-                iValue += plot()->getPlotCity()->AI_buildingValue((BuildingTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getCreateFeatureType() != NO_FEATURE)
-            {
-                iValue += 10;
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getCreateImprovementType() != NO_IMPROVEMENT)
-            {
-                iValue += 10;
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).isDispel())
-            {
-				if (AI_getUnitAIType() != UNITAI_MANA_UPGRADE)
+				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
 				{
-	                iValue += 25 * (iRange + 1) * (iRange + 1);
+					iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3());
 				}
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).isPush())
-            {
-                iValue += 20 * (iRange + 1) * (iRange + 1);
-                if (plot()->isCity())
-                {
-                    iValue *= 3;
-                }
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation() != 0)
-            {
-                iValue += 50 * GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation();
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getCost() != 0)
-            {
-                iValue -= 4 * GC.getSpellInfo((SpellTypes)iSpell).getCost();
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() != 0)
-            {
-                iValue += 20 * GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() * (iRange + 1) * (iRange + 1);
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
-            {
-                iValue -= getLevel() * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
-            }
-            if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
-            {
-                iValue /= 2;
-            }
-            iValue += GC.getSpellInfo((SpellTypes)iSpell).getAIWeight();
-            if (iValue > iBestSpellValue)
-            {
-                iBestSpellValue = iValue;
-                iBestSpell = iSpell;
-            }
+				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1() != NO_PROMOTION)
+				{
+					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2() != NO_PROMOTION)
+				{
+					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3() != NO_PROMOTION)
+				{
+					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType() != NO_UNIT)
+				{
+					iValue += GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType(), UNITAI_ATTACK, area());
+					iValue -= GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
+				{
+					iValue += plot()->getPlotCity()->AI_buildingValue((BuildingTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateFeatureType() != NO_FEATURE)
+				{
+					iValue += 10;
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateImprovementType() != NO_IMPROVEMENT)
+				{
+					iValue += 10;
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).isDispel())
+				{
+					if (AI_getUnitAIType() != UNITAI_MANA_UPGRADE)
+					{
+						iValue += 25 * (iRange + 1) * (iRange + 1);
+					}
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).isPush())
+				{
+					iValue += 20 * (iRange + 1) * (iRange + 1);
+					if (plot()->isCity())
+					{
+						iValue *= 3;
+					}
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation() != 0)
+				{
+					iValue += 50 * GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation();
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCost() != 0)
+				{
+					iValue -= 4 * GC.getSpellInfo((SpellTypes)iSpell).getCost();
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() != 0)
+				{
+					iValue += 20 * GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() * (iRange + 1) * (iRange + 1);
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
+				{
+					iValue -= getLevel() * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+				}
+				if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
+				{
+					iValue /= 2;
+				}
+				iValue += GC.getSpellInfo((SpellTypes)iSpell).getAIWeight();
+
+				if (iValue > iBestSpellValue)
+				{
+					iBestSpellValue = iValue;
+					iBestSpell = iSpell;
+				}
+			}
         }
     }
     return iBestSpell;
