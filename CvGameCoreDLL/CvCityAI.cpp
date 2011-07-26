@@ -1851,11 +1851,7 @@ void CvCityAI::AI_chooseProduction()
 
 		if( iStartAttackStackRand > 0 )
 		{
-			int iAttackCityCount = kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY)
-				// Tholal AI - account for Barbsmashers
-				+ kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_BARBSMASHER)
-				// End Tholal AI
-				;
+			int iAttackCityCount = kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY);
 			int iAttackCount = iAttackCityCount + kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK);
 
 
