@@ -216,9 +216,9 @@ int CyPlayer::countTotalCulture()
 	return m_pPlayer ? m_pPlayer->countTotalCulture() : -1;
 }
 
-int CyPlayer::countOwnedBonuses(int /*BonusTypes*/ eBonus)
+int CyPlayer::countOwnedBonuses(int /*BonusTypes*/ eBonus, bool bCheckBlockingFeatures)
 {
-	return m_pPlayer ? m_pPlayer->countOwnedBonuses((BonusTypes)eBonus) : NO_BONUS;
+	return m_pPlayer ? m_pPlayer->countOwnedBonuses((BonusTypes)eBonus, bCheckBlockingFeatures) : NO_BONUS;
 }
 
 int CyPlayer::countUnimprovedBonuses(CyArea* pArea, CyPlot* pFromPlot)

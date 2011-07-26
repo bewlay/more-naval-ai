@@ -128,7 +128,7 @@ public:
     void AI_updateSpecialYieldMultiplier();
     int AI_specialYieldMultiplier(YieldTypes eYield);
 
-    int AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand = true, bool bWater = true);
+    int AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand = true, bool bWater = true, bool bCheckBlockingFeatures = false);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      11/14/09                                jdog5000      */
 /*                                                                                              */

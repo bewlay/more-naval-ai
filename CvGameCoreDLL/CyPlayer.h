@@ -68,7 +68,7 @@ public:
 	int countNumCoastalCitiesByArea(CyArea* pArea);
 
 	int countTotalCulture();
-	int countOwnedBonuses(int /*BonusTypes*/ eBonus);
+	int countOwnedBonuses(int /*BonusTypes*/ eBonus, bool bCheckBlockingFeatures);
 	int countUnimprovedBonuses(CyArea* pArea, CyPlot* pFromPlot);
 	int countCityFeatures(int /*FeatureTypes*/ eFeature);
 	int countNumBuildings(int /*BuildingTypes*/ eBuilding);
