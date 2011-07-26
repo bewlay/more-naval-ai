@@ -445,10 +445,6 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
         .def("leaveAnyMode", &CyUnit::leaveAnyMode, "void ()")
         .def("AI_setGroupflag", &CyUnit::AI_setGroupflag, "void (int)")
 
-        .def("changeAllowedExplore", &CyUnit::changeAllowedExplore, "void (bool bNewValue)")
-        .def("changeAllowedPatrol", &CyUnit::changeAllowedPatrol, "void (bool bNewValue)")
-        .def("changeAllowedPermDefense", &CyUnit::changeAllowedPermDefense, "void (bool bNewValue)")
-
 		.def("AI_getGroupflag", &CyUnit::AI_getGroupflag, "int ()")
         .def ("joinGroup", &CyUnit::joinGroup, "void (CySelectionGroup* pNewGroup)")
 /*************************************************************************************************/

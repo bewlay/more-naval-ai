@@ -1956,24 +1956,6 @@ int CyUnit::AI_getGroupflag()
 	return m_pUnit ? m_pUnit->AI_getGroupflag() : -1;
 }
 
-void CyUnit::changeAllowedPermDefense(bool bnewValue)
-{
-    if (m_pUnit)
-        m_pUnit->changeAllowedPermDefense(bnewValue);
-}
-
-void CyUnit::changeAllowedPatrol(bool bnewValue)
-{
-    if (m_pUnit)
-        m_pUnit->changeAllowedPatrol(bnewValue);
-}
-
-void CyUnit::changeAllowedExplore(bool bnewValue)
-{
-    if (m_pUnit)
-        m_pUnit->changeAllowedExplore(bnewValue);
-}
-
 //>>>>Unofficial Bug Fix: Added by Denev 2009/12/21
 int CyUnit::getDamageTypeCombat(int /*DamageTypes*/ eDamageType) const
 {

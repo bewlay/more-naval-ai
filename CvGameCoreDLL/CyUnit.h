@@ -458,9 +458,7 @@ public:
     void leaveAnyMode();
 	int AI_getGroupflag();
     void AI_setGroupflag(int iNewValue);
-    void changeAllowedPermDefense(bool bnewValue);
-    void changeAllowedPatrol(bool bnewValue);
-    void changeAllowedExplore(bool bnewValue);
+
     void joinGroup(CySelectionGroup* pNewGroup);
     CyPlot* getOriginPlot() const;
     void setOriginPlot(CyPlot* newplot);

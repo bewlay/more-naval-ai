@@ -25853,55 +25853,6 @@ bool CvUnitAI::isUnitAllowedPatrolGroup()
 }
 
 
-bool CvUnitAI::isUnitAllowedDefenseGroup()
-{
-    if (getDomainType() != DOMAIN_LAND)
-        return false;
-
-    if (isHiddenNationality())
-    {
-        return false;
-    }
-
-    if (getUnitClassType() == GC.getDefineINT("UNITCLASS_SCOUT"))
-    {
-        return false;
-    }
-
-    switch (AI_getUnitAIType())
-    {
-        case UNITAI_SETTLE:
-        case UNITAI_WORKER:
-        case UNITAI_TERRAFORMER:
-        case UNITAI_MANA_UPGRADE:
-        case UNITAI_MISSIONARY:
-        case UNITAI_ANIMAL:
-        case UNITAI_PROPHET:
-        case UNITAI_ARTIST:
-        case UNITAI_SCIENTIST:
-        case UNITAI_GENERAL:
-        case UNITAI_MERCHANT:
-        case UNITAI_ENGINEER:
-        case UNITAI_FEASTING:
-        case UNITAI_SETTLER_SEA:
-        case UNITAI_WORKER_SEA:
-        case UNITAI_ATTACK_SEA:
-        case UNITAI_RESERVE_SEA:
-        case UNITAI_ESCORT_SEA:
-        case UNITAI_ASSAULT_SEA:
-        case UNITAI_MISSIONARY_SEA:
-        case UNITAI_SPY_SEA:
-        case UNITAI_PIRATE_SEA:
-		case UNITAI_INQUISITOR:
-            return false;
-            break;
-        default:
-            break;
-    }
-
-    return true;
-}
-
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_groupheal(int iDamagePercent, int iMaxPath)
 {
@@ -29174,22 +29125,6 @@ void CvUnitAI::setPermanentSummon(bool newvalue)
 {
     m_bPermanentSummon=newvalue;
 }
-
-void CvUnitAI::changeAllowedPermDefense(bool bNewValue)
-{
-    m_bAllowedPermDefense=bNewValue;
-}
-
-void CvUnitAI::changeAllowedPatrol(bool bNewValue)
-{
-    m_bAllowedPatrol=bNewValue;
-}
-
-void CvUnitAI::changeAllowedExplore(bool bNewValue)
-{
-    m_bAllowedExplore=bNewValue;
-}
-
 
 // Tholal AI - rewritten to help with Religious victory strats
 void CvUnitAI::AI_InquisitionMove()

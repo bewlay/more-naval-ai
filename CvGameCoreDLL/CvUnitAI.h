@@ -71,12 +71,7 @@ public:
 
     bool isUnitAllowedPermDefense();
     bool isUnitAllowedPatrolGroup();
-    bool isUnitAllowedDefenseGroup();
     bool isUnitAllowedPillageGroup();
-
-    void changeAllowedPermDefense(bool bnewValue);
-    void changeAllowedPatrol(bool bnewValue);
-    void changeAllowedExplore(bool bnewValue);
 
     bool AI_decide_permdefensegroup();
     bool AI_decide_patrolgroup();
