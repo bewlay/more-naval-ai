@@ -1589,7 +1589,18 @@ void CvUnitAI::AI_animalMove()
         {
             return;
         }
-		AI_setUnitAIType(UNITAI_COUNTER);
+
+		// ToDo: here's where we should decide whether or not to keep animals as HN - requires more HN move code
+		if (getDomainType() == DOMAIN_SEA)
+		{
+			// ToDo: set HN naval animal units to Pirate?
+			AI_setUnitAIType(UNITAI_ATTACK_SEA);
+		}
+		else
+		{
+			AI_setUnitAIType(UNITAI_COUNTER);
+		}
+
 		return;
     }
 //FfH: End Add
