@@ -28482,8 +28482,204 @@ bool CvUnitAI::AI_Rantinemove()
 void CvUnitAI::AI_upgrademanaMove()
 {
 
+	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
+
+	if (bDanger)
+	{
+		if (AI_retreatToCity())
+		{
+			return;
+		}
+	}
+
+	if (AI_heal())
+	{
+		return;
+	}
+
 	// Tholal ToDo - bring movement into the DLL and call python to decide which mana node to create
+	/*
+	int iValue = 0;
+	int iBestValue = 10;
+	int iPathTurns;
+	bool bBonusRawMana = false;
+	bool bBonusMana = false;
+	int iRange = 12;
+
+	CvPlot* pBestPlot = NULL;
+	BuildTypes eBuild = NO_BUILD;
+	BuildTypes eBestBuild = NO_BUILD;
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Player %d Unit %d (%S's %S) starting mana upgrade move\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+			gDLL->messageControlLog(szOut);
+		}
+	}
+
+	bool bReadytoBuild = false;
+	// loop through plots in range
+	// ToDo - make this a map search?
+	for (int iX = -iRange; iX <= iRange; iX++)
+	{
+		for (int iY = -iRange; iY <= iRange; iY++)
+		{
+			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
+			if (pLoopPlot != NULL)
+			{
+				if ( pLoopPlot->getOwner() == getOwner())
+				{
+					if (!pLoopPlot->isVisibleEnemyDefender(this))
+					{
+						if (pLoopPlot->getBonusType() != NO_BONUS)
+						{
+							bBonusRawMana = false;
+							bBonusMana = false;
+
+							// HARDCODE - should have some sort of global variable to let the AI know about mana - XML tag?
+							if (GC.getBonusInfo(pLoopPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+							{
+								// check to make sure we don't check existing nodes
+								if (pLoopPlot->getImprovementType() == NO_IMPROVEMENT)
+								{
+									bBonusMana = true;
+								}
+								else
+								{
+									if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).getBonusConvert() == NO_BONUS)
+									{
+										bBonusMana = true;
+									}
+								}
+							}
+
+							// HARDCODE
+							if (GC.getBonusInfo(pLoopPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW"))
+							{
+								bBonusRawMana = true;
+							}
+
+							if (bBonusMana || bBonusRawMana)
+							{
+								if (GC.getLogging())
+								{
+									if (gDLL->getChtLvl() > 0)
+									{
+										char szOut[1024];
+										sprintf(szOut, "Player %d Unit %d (%S's %S)found mana bonus (%d, %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pLoopPlot->getX(), pLoopPlot->getY());
+										gDLL->messageControlLog(szOut);
+									}
+								}
+
+								// found mana, now check path
+								if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+								{
+									bool bFoundBuild = false;
+									// we can reach mana, now make sure we can build
+									for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+									{
+										eBuild = ((BuildTypes)iJ);
+										if (canBuild(pLoopPlot, eBuild))
+										{
+											iValue = iPathTurns;
+
+											if (iValue < iBestValue)
+											{
+												pBestPlot = pLoopPlot;
+												bFoundBuild = true;
+											}
+										}
+
+										if (bFoundBuild)
+										{
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (pBestPlot != NULL)
+	{
+		if (atPlot(pBestPlot))
+		{
+			iBestValue = 0;
+			eBestBuild = NO_BUILD;
+
+			// loop through various builds and find the best one
+			for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+			{
+				eBuild = ((BuildTypes)iJ);
+				if (canBuild(plot(), eBuild))
+				{
+					// we have to first get the improvement, then find out what mana this node will be converted to
+					ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+					BonusTypes eNewBonus = (BonusTypes)GC.getImprovementInfo(eImprovement).getBonusConvert();
+
+					iValue = kPlayer.AI_bonusVal(eNewBonus);
+
+					if (GC.getLogging())
+					{
+						if (gDLL->getChtLvl() > 0)
+						{
+							char szOut[1024];
+							sprintf(szOut, "Player %d %S - %S mana value: %d\n", getOwnerINLINE(), GET_PLAYER(getOwnerINLINE()).getName(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
+							gDLL->messageControlLog(szOut);
+						}
+					}
+
+
+					if (iValue > iBestValue)
+					{
+						eBestBuild = eBuild;
+					}
+				}
+			}
+
+			if (GC.getLogging())
+			{
+				if (gDLL->getChtLvl() > 0)
+				{
+					char szOut[1024];
+					sprintf(szOut, "Player %d Unit %d (%S's %S) building mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+					gDLL->messageControlLog(szOut);
+				}
+			}
+			
+			if (eBestBuild != NO_BUILD)
+			{
+				getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, false, false, MISSIONAI_BUILD, plot());
+				return;
+			}
+		}
+		else
+		{
+			if (GC.getLogging())
+			{
+				if (gDLL->getChtLvl() > 0)
+				{
+					char szOut[1024];
+					sprintf(szOut, "Player %d Unit %d (%S's %S) moving to mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+					gDLL->messageControlLog(szOut);
+				}
+			}
+
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
+			return;
+		}
+	}
+	*/
 	
+
     CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
     argsList1.add(gDLL->getPythonIFace()->makePythonObject(pyUnit1));	// pass in unit class
@@ -28493,37 +28689,14 @@ void CvUnitAI::AI_upgrademanaMove()
 
     if (lResult == 1)
     {
+		getGroup()->pushMission(MISSION_SKIP);
         return;
     }
 
-    if (lResult == 2)
-    {
-		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC2")))
-		{
-			if (AI_moveIntoCity(5))
-			{
-				return;
-			}
-		}
-		else
-		{
-			if (isTerraformer())
-			{
-				AI_setUnitAIType(UNITAI_TERRAFORMER);
-			}
-			else
-			{
-				if (isDeBuffer() || isBuffer() || isDirectDamageCaster())
-				{
-					AI_setUnitAIType(UNITAI_WARWIZARD);
-				}
-				else
-				{
-					AI_setUnitAIType(UNITAI_MAGE);
-				}
-			}
-		}
-    }
+	if (AI_moveIntoCity(5))
+	{
+		return;
+	}
 
 	if (AI_retreatToCity())
 	{
