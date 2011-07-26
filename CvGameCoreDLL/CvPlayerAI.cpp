@@ -3938,7 +3938,11 @@ bool CvPlayerAI::AI_getAnyPlotDanger(CvPlot* pPlot, int iRange, bool bTestMoves)
 								    {
                                         if (!bTestMoves)
                                         {
-                                            return true;
+											// this check is here so that we dont worry about danger that is near but cant get to us easily (such as behind a large mountain range)
+											if (GC.getMapINLINE().calculatePathDistance(pPlot, pLoopPlot) < (iRange * 2))
+											{
+	                                            return true;
+											}
                                         }
                                         else
                                         {
