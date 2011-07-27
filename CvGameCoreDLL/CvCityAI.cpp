@@ -5659,6 +5659,27 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		iValue += (std::max(0, (GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 10);
 	}
 
+	bool bReverse = false;
+
+	if (GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
+		GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_INFERNAL"))
+	{
+		bReverse = true;
+	}
+
+	if (!bReverse)
+	{
+		iValue += (GC.getProjectInfo(eProject).getModifyGlobalCounter() * (GC.getGameINLINE().getGlobalCounter() / 10) * -1);
+	}
+	else
+	{
+		iValue += GC.getProjectInfo(eProject).getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 2);
+	}
+
+//FfH: Added by Kael 09/26/2008
+    iValue += GC.getProjectInfo(eProject).getAIWeight();
+//FfH: End Add
+
 	// bonus value for civ-specific projects
     if (GC.getProjectInfo(eProject).getPrereqCivilization() != NO_CIVILIZATION)
     {
@@ -5668,9 +5689,6 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		}
 	}
 
-//FfH: Added by Kael 09/26/2008
-    iValue += GC.getProjectInfo(eProject).getAIWeight();
-//FfH: End Add
 
 	return iValue;
 }
