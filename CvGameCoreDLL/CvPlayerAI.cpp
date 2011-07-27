@@ -18875,8 +18875,6 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
 	}
 
-	// Tholal ToDo - keep this from conflicting with Religion strategies
-
 	if( iLegendaryCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
 	{
 		// Already won, keep playing culture heavy but do some tech to keep pace if human wants to keep playing
@@ -18900,6 +18898,11 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		return 0;
 	}
 
+	if (GC.getGame().getStartEra() > 1)
+    {
+    	return 0;
+    }
+
 	if (getCapitalCity()->getGameTurnFounded() > (10 + GC.getGameINLINE().getStartTurn()))
     {
 		if( iHighCultureCount < GC.getGameINLINE().culturalVictoryNumCultureCities() )
@@ -18909,20 +18912,18 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
     }
 
-	// Tholal AI - Cancel any low level culture strategy if getting somewhere with religion
-	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
-	{
-		return 0;
-	}
-	// End Tholal AI
-
+	// Note: this tag is currently not being used in Leaderheadinfos.xml
+	// ToDo - add some base weights to the xml
     iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
 
-	// Tholal AI  - ToDo: make this a more dynamic check for leader traits
-	int iCreativeTrait=GC.getInfoTypeForString("TRAIT_CREATIVE");
-	if(hasTrait((TraitTypes)iCreativeTrait))
-		iValue += 10;
-	// End Tholal AI
+	// account for traits which give free culture
+	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+	{
+		if (hasTrait((TraitTypes)iJ))
+		{
+			iValue += (GC.getTraitInfo((TraitTypes)iJ).getCommerceChange(COMMERCE_CULTURE) * 3);
+		}
+	}
 
 	if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE))
 	{
@@ -18935,17 +18936,6 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	{
 		iValue += 10*countHolyCities();
 	}
-	/*
-	if ((GET_TEAM(getTeam()).isAVassal()) && (getNumCities() > 5))
-	{
-		int iReligionCount = countTotalHasReligion();
-		if (((iReligionCount * 100) / getNumCities()) > 250)
-		{
-			iValue += 1;
-			iValue += ((2 * iReligionCount) + 1) / getNumCities();
-		}
-	}
-	*/
 
 	int iNonsense = AI_getStrategyRand() + 10;
 	iValue += (iNonsense % 100);
@@ -18956,7 +18946,8 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	}
     
 	// Tholal ToDo: Era fix
-    if (getCurrentEra() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
+    //if (getCurrentEra() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
+	if (GC.getGameINLINE().getCurrentPeriod() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
     {
 		bool bAt3 = false;
         
@@ -18986,7 +18977,14 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
     }
 
-	if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
+	// cancel any low level culture strategy if we're already getting somewhere with religion
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	{
+		return 0;
+	}
+
+	//if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
+	if (GC.getGameINLINE().getCurrentPeriod() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
 	{
 	    return 2;
 	}
@@ -19264,6 +19262,17 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 		int iNonsense = AI_getStrategyRand() + 30;
 		iValue += (iNonsense % 100);
 
+		// Tholal AI - If we seem to be powerful scorewise
+		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 4))
+		{
+			iValue += 10;
+		}
+		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 3))
+		{
+			iValue += 20;
+		}
+		// End Tholal AI
+
 		if (iValue >= 100)
 		{
 			if( m_iStrategyHash & AI_STRATEGY_GET_BETTER_UNITS )
@@ -19276,18 +19285,6 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 
 			return 1;
 		}
-
-		// Tholal AI - If we seem to be powerful scorewise
-		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 4))
-		{
-			return 2;
-		}
-		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 3))
-		{
-			return 1;
-		}
-		// End Tholal AI
-
 	}
 
 	return 0;
@@ -19360,11 +19357,14 @@ int CvPlayerAI::AI_getDominationVictoryStage() const
 		
 		iValue += (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? 20 : 0);
 
-		// Tholal AI  - ToDo: make this a more dynamic check for leader traits
-		int iExpansiveTrait=GC.getInfoTypeForString("TRAIT_EXPANSIVE");
-		if(hasTrait((TraitTypes)iExpansiveTrait))
-			iValue += 10;
-		// End Tholal AI
+		// account for traits which give free health bonuses
+		for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+		{
+			if (hasTrait((TraitTypes)iJ))
+			{
+				iValue += (GC.getTraitInfo((TraitTypes)iJ).getHealth() * 10);
+			}
+		}
 
 		int iNonsense = AI_getStrategyRand() + 70;
 		iValue += (iNonsense % 100);
@@ -19498,9 +19498,12 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 	if (iStateRel != NO_RELIGION)
 	{
 		bool bHoly = hasHolyCity((ReligionTypes)iStateRel);
+		bool bCultureStrat = false;
 
-
-		// Tholal ToDo - keep this from conflicting with Culture strategies
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3))
+		{
+			bCultureStrat = true;
+		}
 
 		if (bHoly)
 		{
@@ -19515,6 +19518,12 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 			if (iReligionStatus > 50)
 			{
 				return 3;
+			}
+
+			// ignore low-level Religious strats if we're already pushing for a Culture Victory
+			if (bCultureStrat)
+			{
+				return 0;
 			}
 
 			if (iReligionStatus > 35)
