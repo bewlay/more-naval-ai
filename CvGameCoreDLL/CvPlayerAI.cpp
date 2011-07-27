@@ -9539,34 +9539,30 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 {
 	int iValue = 0;
 	int iBonusCount = getNumAvailableBonuses(eBonus);
-	if ((iChange == 0) || ((iChange == 1) && (iBonusCount == 0)) || ((iChange == -1) && (iBonusCount == 1)))
+
+	// all calculations for mana will be handled in BaseBonusVal
+	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
 	{
-		//This is assuming the none-to-one or one-to-none case.
 		iValue += AI_baseBonusVal(eBonus);
-		iValue += AI_corporationBonusVal(eBonus);
 	}
 	else
 	{
-		//This is basically the marginal value of an additional instance of a bonus.
-		iValue += AI_baseBonusVal(eBonus) / 5;
-		iValue += AI_corporationBonusVal(eBonus);
+		if ((iChange == 0) || ((iChange == 1) && (iBonusCount == 0)) || ((iChange == -1) && (iBonusCount == 1)))
+		{
+			//This is assuming the none-to-one or one-to-none case.
+			iValue += AI_baseBonusVal(eBonus);
+			iValue += AI_corporationBonusVal(eBonus);
+		}
+		else
+		{
+			//This is basically the marginal value of an additional instance of a bonus.
+			iValue += AI_baseBonusVal(eBonus) / 5;
+			iValue += AI_corporationBonusVal(eBonus);
+		}
 	}
 
 //FfH: Added by Kael 12/08/2007
-    iValue += GC.getBonusInfo(eBonus).getBadAttitude() * GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeBadBonus() * 100;
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
-//	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
-	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA") || GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_RAWMANA"))
-    {
-        iValue += 100;
-
-		// Tholal AI
-		if (AI_isNeededTowerMana(eBonus))
-		{
-			iValue *= 4;
-		}
-		// End Tholal AI
-    }
+    iValue += GC.getBonusInfo(eBonus).getBadAttitude() * GC.getLeaderHeadInfo(getPersonalityType()).getAttitudeBadBonus() * 5;
 //FfH: End Add
 
 	return iValue;
@@ -9576,6 +9572,10 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 {
 	PROFILE_FUNC();
+
+	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
+	
+	bool bDemon = (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DEMON"));
 
 	//recalculate if not defined
 	if(m_aiBonusValue[eBonus] == -1)
@@ -9589,31 +9589,28 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		int iTempValue;
 		int iI, iJ;
 
+		bool bMana = (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
+
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
-			iValue += (GC.getBonusInfo(eBonus).getHappiness() * 100);
-			iValue += (GC.getBonusInfo(eBonus).getHealth() * 100);
+			iValue += (GC.getBonusInfo(eBonus).getHappiness() * (bDemon ? 0 : 100));
+			iValue += (GC.getBonusInfo(eBonus).getHealth() * (bDemon ? 0 : 100));
 
-			// Tholal AI ToDo - add in value for new FFH tags
-			/*
-			bModifierPerBonus- If this is set to true (1) then the bonus's effects are cumulative (ex: so a bonus with +1 happiness would give +1 for each amount of the bonus the city has access to instead of just +1 if it has it or not)
-			iBadAttitude- This value is multiplied by the leaders iAttitudeBadBonus value to determine an attitude adjustment for using this bonus type
-			iDiscoverRandModifier- Percent the bonus modifies the chance improvements find new resources
-			iGreatPeopleRateModifier- Percent amount the bonus modifies the great people rate
-			iValue += ((GC.getBonusInfo(eBonus).getGreatPeopleRateModifier * 5)
-			if (AI_isDoVictoryStrategy(STRATEGY_CULTURE2 || STRATEGY_ALTAR2))
+			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2 || AI_VICTORY_ALTAR2))
 			{
-				iValue += (100 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier);
+				iValue += (100 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier());
 			}
-			iHealChange- Amount the bonus effects the heal rate of friendly units within your borders
-			iHealChangeEnemy- Amount the bonus effects the heal rate of enemy units within your borders
-			iMaintenanceModifier- Effect having the resource has ont he cities maintenance costs (negative number)
-			iValue -= (GC.getBonusInfo(eBonus).getMaintenanceModifier * getNumCities()); // negative numbers are good
-			iMutateChance- Chance that units built in the city will begin mutated
-			iResearchModifier- Percent amount the bouns effects the players research amount
-			DamageType- If a unit has affinity to this bonus this is the damage type that affinity grants (ex: death mana has this set to DAMAGE_DEATH)
-			FreePromotion- If having access to this bonus in a city grants a promotion to units in that city
-			*/
+
+			// new FFH tags
+			iValue += (GC.getBonusInfo(eBonus).getHealChange() * (bAtWar ? 10 : 5));
+			iValue += (GC.getBonusInfo(eBonus).getHealChangeEnemy() * (bAtWar ? -20 : -10));
+			iValue -= (GC.getBonusInfo(eBonus).getMaintenanceModifier() * getNumCities());
+			if (GC.getBonusInfo(eBonus).getFreePromotion() != NO_PROMOTION)
+			{
+				iValue += 100;
+			}
+			iValue += (GC.getBonusInfo(eBonus).getResearchModifier() * 25);
+
 			CvTeam& kTeam = GET_TEAM(getTeam());
 
 			CvCity* pCapital = getCapitalCity();
@@ -9666,7 +9663,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					// Tholal AI - account for affinities
 					if (kLoopUnit.getBonusAffinity((BonusTypes)eBonus) != 0)
 					{
-						iTempValue += 100;
+						iTempValue += 10;
 					}
 					// End Tholal AI
 
@@ -9710,7 +9707,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						if (kLoopUnit.getPrereqAndTech() != NO_TECH)
 						{
-							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - getCurrentEra());
+							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentPeriod());
 
 							if (iDiff == 0)
 							{
@@ -9813,7 +9810,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						if (kLoopBuilding.getPrereqAndTech() != NO_TECH)
 						{
-							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - getCurrentEra());
+							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentPeriod());
 
 							if (iDiff == 0)
 							{
@@ -9909,6 +9906,79 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			//	{
 			//		iValue /= 3;
 			//	}
+
+			// Tholal AI - mana valuation
+			// HARCODE - lots of it!
+			// Note: we could loop through spells, find which ones require this mana and then value those spells. Too much? Probably the best way to do it in the long run
+
+			if (bMana)
+			{
+				bool bStack = false;
+
+				bool bKhazad = (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_KHAZAD"));
+
+				if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_BALSERAPHS"))
+				{
+					iValue += (GC.getBonusInfo(eBonus).getMutateChance() * 25);
+				}
+
+				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_FIRE"))
+				{
+					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_LUCHUIRP") || getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_LJOSALFAR") ||
+						getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR"))
+					{
+						bStack = true;
+						iValue += 150;
+					}
+				}
+
+				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_ENCHANTMENT"))
+				{
+					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_LUCHUIRP"))
+					{
+						iValue += 150;
+					}
+					else
+					{
+						const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
+						if (eFavoriteUnitCombat == GC.getInfoTypeForString("UNITCOMBAT_MELEE"))
+						{
+							iValue += 50;
+						}
+					}
+
+				}
+
+				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_METAMAGIC"))
+				{
+					iValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 100 : 0);
+				}
+
+				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_DEATH"))
+				{
+					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM"))
+					{
+						bStack = true;
+						iValue += 100;
+					}
+				}
+
+				iValue += (GC.getBonusInfo(eBonus).getDiscoverRandModifier() * (bKhazad ? 10 : 5));
+
+				/*
+				if (AI_isNeededTowerMana(eBonus))
+				{
+					iValue *= 4;
+				}
+				*/
+
+				if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
+				{
+					int iNumBonuses = getNumAvailableBonuses(eBonus);
+					iValue /= (iNumBonuses + 1);
+				}
+			}
+			// End Tholal AI
 
 			iValue /= 10;
 		}
