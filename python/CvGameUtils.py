@@ -389,11 +389,7 @@ class CvGameUtils:
 			if eBuilding == gc.getInfoTypeForString('BUILDING_PROPHECY_OF_RAGNAROK'):
 				if pPlayer.getAlignment() != gc.getInfoTypeForString('ALIGNMENT_EVIL'):
 					return True
-					
-			if eBuilding == gc.getInfoTypeForString('BUILDING_PLANAR_GATE'):
-				if CyGame().getGlobalCounter() < 20:
-					return True
-					
+				
 			if eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
 				if pCity.isHolyCity():
 					return True
