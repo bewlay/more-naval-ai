@@ -2351,10 +2351,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
         }
     }
 
-// stop AI from founding Cities on Bonus
-    if (pPlot->getBonusType()!=NO_BONUS)
-    {
-        return 0;
+	// disallow the AI from founding new cities on Mana bonuses
+    if (pPlot->getBonusType() != NO_BONUS)
+	{
+		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_RAWMANA") || 
+			(GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA")))
+		{
+			return 0;
+		}
     }
 /*************************************************************************************************/
 /**	END	                                        												**/
