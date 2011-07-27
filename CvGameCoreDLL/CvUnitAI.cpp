@@ -13604,8 +13604,7 @@ bool CvUnitAI::AI_spreadReligion()
 			{
 				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 				{
-
-					if (AI_plotValid(pLoopCity->plot()) && pLoopCity->area() == area())
+					if (AI_plotValid(pLoopCity->plot()) && pLoopCity->area() == area() && (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam())))
 					{
 						if (canSpread(pLoopCity->plot(), eReligion))
 						{
