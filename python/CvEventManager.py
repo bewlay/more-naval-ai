@@ -1905,18 +1905,21 @@ class CvEventManager:
 							iPlot = -1
 							if pInfernalPlayer.canFound(pPlot.getX(), pPlot.getY()):
 								if pPlot.getNumUnits() == 0:
-									iPlot = CyGame().getSorenRandNum(500, "Place Hyborem")
+									iPlot = CyGame().getSorenRandNum(10, "Place Hyborem")
+									iPlot += 50
 									iPlot += pPlot.area().getNumTiles() * 2
 									iPlot += pPlot.area().getNumUnownedTiles() * 10
-									if not pPlot.isOwned():
-										iPlot += 500
-									elif pPlot.getOwner() == iPlayer:
-										iPlot += 200
+
+									for jPlayer in range(gc.getMAX_PLAYERS()):
+										lPlayer = gc.getPlayer(jPlayer)
+										if lPlayer.isAlive():
+											if pPlot.getCulture(jPlayer) > 100:
+												iPlot -= 250
 										
 									if pPlot.isAdjacentOwned():
-										iPlot -= 250
+										iPlot -= 25
 									if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW')) or (pPlot.getTerrainType() == gc.getInfoTypeForString("TERRAIN_DESERT")):
-										iPlot -= 250
+										iPlot -= 25
 									
 										
 							if iPlot > iBestPlot:
