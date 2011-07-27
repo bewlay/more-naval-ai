@@ -1196,15 +1196,6 @@ class CvEventManager:
 			newUnit3.setUnitAIType(gc.getInfoTypeForString('UNITAI_ATTACK_CITY'))
 
 #some AI help
-			newUnit1.changeAllowedPermDefense(false)
-			newUnit1.changeAllowedPatrol(false)
-			newUnit1.changeAllowedExplore(false)					
-			newUnit2.changeAllowedPermDefense(false)
-			newUnit2.changeAllowedPatrol(false)
-			newUnit2.changeAllowedExplore(false)					
-			newUnit3.changeAllowedPermDefense(false)
-			newUnit3.changeAllowedPatrol(false)
-			newUnit3.changeAllowedExplore(false)					
 			if pPlayer.isHuman:
 				newUnit1.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)			
 				newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)	
