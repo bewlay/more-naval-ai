@@ -1423,9 +1423,9 @@ class CvEventManager:
 			if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_ADEPT'):
 			
 				bCanMageTerraform = false
-				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER')) > 0:
+				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'), False) > 0:
 					bCanMageTerraform = true
-				elif pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN')) > 0:
+				elif pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'), False) > 0:
 					bCanMageTerraform = true
 			
 				numbermageterrafomer = (pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_TERRAFORMER')) - numTreeTerraformer)
