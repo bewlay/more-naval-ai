@@ -25404,6 +25404,9 @@ void CvUnitAI::AI_chooseGroupflag()
         return;
     }
 
+
+	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
+
     switch (AI_getUnitAIType())
     {
         case UNITAI_MAGE:
@@ -25418,6 +25421,18 @@ void CvUnitAI::AI_chooseGroupflag()
             AI_setGroupflag(GROUPFLAG_CONQUEST);
             return;
             break;
+		case UNITAI_CITY_DEFENSE:
+		case UNITAI_CITY_COUNTER:
+            AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
+            return;
+            break;
+		case UNITAI_ATTACK_CITY:
+			if (bWarPlan)
+			{
+				AI_setGroupflag(GROUPFLAG_CONQUEST);
+				return;
+				break;
+			}
 		case UNITAI_FEASTING:
 		case UNITAI_TERRAFORMER:
 		case UNITAI_MANA_UPGRADE:
@@ -25442,6 +25457,20 @@ void CvUnitAI::AI_chooseGroupflag()
             }
         }
     }
+
+	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0) || bWarPlan)
+	{
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		return;
+	}
+
+	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
+
+	if (bDanger)
+	{
+		AI_setGroupflag(GROUPFLAG_PATROL);
+		return;
+	}
 
     if(isUnitAllowedPermDefense())
     {
@@ -25468,13 +25497,6 @@ void CvUnitAI::AI_chooseGroupflag()
         }
     }
     
-	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0))
-	{
-		AI_setGroupflag(GROUPFLAG_CONQUEST);
-		AI_setUnitAIType(UNITAI_ATTACK_CITY);
-		return;
-	}
-
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
