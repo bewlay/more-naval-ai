@@ -1661,7 +1661,9 @@ class CvEventManager:
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_TREANT'):
 			if pPlot.getFeatureType() == -1:
 				if pPlot.canHaveFeature(gc.getInfoTypeForString('FEATURE_FOREST_NEW')):
-					pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FOREST_NEW'), 0)
+					if pPlot.getOwner() == player:
+						if CyGame().getSorenRandNum(100, "Treant Spawn Chance") < 50:
+							pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FOREST_NEW'), 0)
 		
 		if (not self.__LOG_UNITLOST):
 			return
