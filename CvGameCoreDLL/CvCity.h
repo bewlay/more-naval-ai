@@ -1024,21 +1024,11 @@ public:
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     virtual void AI_calculateNeededPermDefense() = 0;
-
     virtual int AI_neededPermDefense(int flag) = 0;
     virtual CvPlot* AI_getCityPatrolOrigin() = 0;
     virtual int AI_neededPatrol(int flag) = 0;
-
-    virtual CvPlot* AI_getCityDefenseProduction() = 0;
-    virtual int AI_neededCityDefenseProduction(int type) = 0;
-    virtual bool AI_isCityDefenseProduction() = 0;
-    virtual CvPlot* AI_getCityPatrolProduction() = 0;
-    virtual int AI_neededCityPatrolProduction(int type) = 0;
-    virtual bool AI_isCityPatrolProduction() = 0;
 /*************************************************************************************************/
 /**	END                                                                  						**/
 /*************************************************************************************************/

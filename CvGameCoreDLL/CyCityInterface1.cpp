@@ -489,8 +489,6 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
         .def("AI_neededPatrol", &CyCity::AI_neededPatrol, "int (int flag)")
 		.def("AI_stopGrowth", &CyCity::AI_stopGrowth, "bool ()")
 		.def("AI_neededSeaWorkers", &CyCity::AI_neededSeaWorkers, "int ()")
-		.def("AI_neededCityDefenseProduction", &CyCity::AI_neededCityDefenseProduction, "int (int)")
-		.def("AI_neededCityPatrolProduction", &CyCity::AI_neededCityPatrolProduction, "int (int)")
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

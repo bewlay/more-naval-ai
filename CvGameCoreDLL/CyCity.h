@@ -492,8 +492,6 @@ public:
     int AI_neededPatrol(int flag);
     bool AI_stopGrowth();
     int AI_neededSeaWorkers();
-    int AI_neededCityDefenseProduction(int type);
-    int AI_neededCityPatrolProduction(int type);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

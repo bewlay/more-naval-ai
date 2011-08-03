@@ -149,27 +149,12 @@ public:
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     // functions used to cache some vars to avoid OOS
     void AI_calculateNeededPermDefense();
-
     int AI_neededPermDefense(int flag);
     CvPlot* AI_getCityPatrolOrigin();
-
     int AI_neededPatrol(int flag);
-
-    CvPlot* AI_getCityDefenseProduction();
-    void AI_setCityDefenseProduction(CvPlot* newplot);
-    void AI_CityChooseDefenseProduction();
-    int AI_neededCityDefenseProduction(int type);
-    bool AI_isCityDefenseProduction();
-    CvPlot* AI_getCityPatrolProduction();
-    void AI_setCityPatrolProduction(CvPlot* newplot);
-//    void AI_CityChoosePatrolProduction();
-    int AI_neededCityPatrolProduction(int type);
-    bool AI_isCityPatrolProduction();
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

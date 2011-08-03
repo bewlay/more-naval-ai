@@ -2335,16 +2335,6 @@ int CyCity::AI_neededSeaWorkers()
     return m_pCity ? m_pCity->AI_neededSeaWorkers() : -1;
 }
 
-int CyCity::AI_neededCityDefenseProduction(int type)
-{
-    return m_pCity ? m_pCity->AI_neededCityDefenseProduction(type) : -1;
-}
-
-int CyCity::AI_neededCityPatrolProduction(int type)
-{
-    return m_pCity ? m_pCity->AI_neededCityPatrolProduction(type) : -1;
-}
-
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
