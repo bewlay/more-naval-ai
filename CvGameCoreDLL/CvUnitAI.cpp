@@ -12523,6 +12523,8 @@ bool CvUnitAI::AI_guardBonus(int iMinValue)
 						}
                     }
                     iValue += GC.getImprovementInfo(eImprovement).getRangeDefenseModifier() * GC.getImprovementInfo(eImprovement).getRange() * 200;
+					iValue += GC.getImprovementInfo(eImprovement).getHealRateChange() * 10;
+					iValue += GC.getImprovementInfo(eImprovement).getDefenseModifier();
 //FfH: End Modify
 
 						if (iValue > iMinValue)
