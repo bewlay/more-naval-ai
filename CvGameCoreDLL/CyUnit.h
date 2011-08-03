@@ -452,10 +452,6 @@ public:
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    void startConquestMode();
-    void startDefenseMode();
-    void startDefenseNewMode();
-    void leaveAnyMode();
 	int AI_getGroupflag();
     void AI_setGroupflag(int iNewValue);
 

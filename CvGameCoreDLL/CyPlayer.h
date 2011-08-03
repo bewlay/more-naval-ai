@@ -538,13 +538,10 @@ public:
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    bool isConquestMode() const;
-    void startConquestMode();
     int getFavoriteReligion() const;
     void setFavoriteReligion(ReligionTypes newvalue);
     int getArcaneTowerVictoryFlag() const;
     int countGroupFlagUnits(int Groupflag) const;
-	int getConquestUnitClassCount(int Unitclass, CyArea* pArea) const;
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

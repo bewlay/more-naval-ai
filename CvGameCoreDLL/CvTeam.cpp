@@ -1324,19 +1324,6 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			}
 		}
 
-		// Tholal AI - go into conquest mode when at war
-		for (iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if ((GET_PLAYER((PlayerTypes)iI).getTeam() == getID()) || (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam))
-			{
-				if (!GET_PLAYER((PlayerTypes)iI).isConquestMode())
-				{
-					GET_PLAYER((PlayerTypes)iI).startConquestMode();
-				}
-			}
-		}
-		// End Tholal AI
-
 		FAssertMsg(eTeam != getID(), "eTeam is not expected to be equal with getID()");
 		setAtWar(eTeam, true);
 		GET_TEAM(eTeam).setAtWar(getID(), true);

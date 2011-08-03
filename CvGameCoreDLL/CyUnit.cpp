@@ -1920,36 +1920,12 @@ void CyUnit::setWeapons()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-void CyUnit::startConquestMode()
-{
-    if (m_pUnit)
-        m_pUnit->AI_setGroupflag(GROUPFLAG_CONQUEST);
-}
-
-void CyUnit::startDefenseMode()
-{
-    if (m_pUnit)
-        m_pUnit->AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
-}
-
-void CyUnit::startDefenseNewMode()
-{
-    if (m_pUnit)
-        m_pUnit->AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-}
 
 void CyUnit::AI_setGroupflag(int iNewValue)
 {
     if (m_pUnit)
         m_pUnit->AI_setGroupflag(iNewValue);
 }
-
-void CyUnit::leaveAnyMode()
-{
-    if (m_pUnit)
-        m_pUnit->AI_setGroupflag(GROUPFLAG_NONE);
-}
-
 
 int CyUnit::AI_getGroupflag()
 {

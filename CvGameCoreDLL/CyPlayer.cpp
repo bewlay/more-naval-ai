@@ -2396,15 +2396,6 @@ void CyPlayer::setHasTrait(int /*TraitTypes*/ iIndex, bool bNewValue)
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-bool CyPlayer::isConquestMode() const
-{
-    return m_pPlayer ? m_pPlayer->isConquestMode() : false;
-}
-void CyPlayer::startConquestMode()
-{
-    if (m_pPlayer)
-        m_pPlayer->startConquestMode();
-}
 int CyPlayer::getFavoriteReligion() const
 {
     return m_pPlayer ? m_pPlayer->getFavoriteReligion() : false;
@@ -2425,10 +2416,6 @@ int CyPlayer::countGroupFlagUnits(int Groupflag) const
     return m_pPlayer ? m_pPlayer->countGroupFlagUnits(Groupflag) : -1;
 }
 
-int CyPlayer::getConquestUnitClassCount(int UnitClass, CyArea* pArea) const
-{
-    return m_pPlayer ? m_pPlayer->getConquestUnitClassCount((UnitClassTypes)UnitClass,pArea->getArea()) : -1;
-}
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

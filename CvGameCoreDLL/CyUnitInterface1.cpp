@@ -439,12 +439,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        .def("startConquestMode", &CyUnit::startConquestMode, "void ()")
-        .def("startDefenseMode", &CyUnit::startDefenseMode, "void ()")
-        .def("startDefenseNewMode", &CyUnit::startDefenseNewMode, "void ()")
-        .def("leaveAnyMode", &CyUnit::leaveAnyMode, "void ()")
         .def("AI_setGroupflag", &CyUnit::AI_setGroupflag, "void (int)")
-
 		.def("AI_getGroupflag", &CyUnit::AI_getGroupflag, "int ()")
         .def ("joinGroup", &CyUnit::joinGroup, "void (CySelectionGroup* pNewGroup)")
 /*************************************************************************************************/

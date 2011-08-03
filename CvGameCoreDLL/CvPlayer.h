@@ -1104,8 +1104,6 @@ public:
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    bool isConquestMode() const;
-    void startConquestMode();
     ReligionTypes getFavoriteReligion() const;
     void setFavoriteReligion(ReligionTypes newvalue);
     int getArcaneTowerVictoryFlag() const;
@@ -1114,7 +1112,6 @@ public:
 	bool AI_isSummonSuicideMode();
 	void AI_setSummonSuicideMode(bool newvalue);
 	void AI_doTowerMastery();
-	int getConquestUnitClassCount(UnitClassTypes UnitClass, CvArea* pArea) const;
 /** BETTER AI (new Definitions) Sephi                                                 **/
     int AI_getNeededPillageUnits() const;
 /*************************************************************************************************/
@@ -1322,10 +1319,7 @@ protected:
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
-    bool m_bConquestMode;
     ReligionTypes m_eFavoriteReligion;
 	int m_iTowerVicFlag;
 	bool m_bSumSuiMode;

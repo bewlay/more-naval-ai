@@ -100,13 +100,10 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        .def("isConquestMode", &CyPlayer::isConquestMode,  "bool ()")
-        .def("startConquestMode", &CyPlayer::startConquestMode, "void ()")
         .def("getFavoriteReligion",&CyPlayer::getFavoriteReligion, "int ()")
         .def("setFavoriteReligion",&CyPlayer::setFavoriteReligion, "void (ReligionTypes (newvalue))")
         .def("getArcaneTowerVictoryFlag",&CyPlayer::getArcaneTowerVictoryFlag, "int ()")
         .def("countGroupFlagUnits",&CyPlayer::countGroupFlagUnits, "int (int)")
-        .def("getConquestUnitClassCount",&CyPlayer::getConquestUnitClassCount, "int (int Unitclass, CvArea* pArea)")
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
