@@ -153,33 +153,6 @@ void CyInfoPythonInterface3()
 //FfH: End Add
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-        .def("isAltarVictory", &CvLeaderHeadInfo::isAltarVictory, "bool ()")
-        .def("isArcaneTowerVictory", &CvLeaderHeadInfo::isArcaneTowerVictory, "bool ()")
-        .def("isCultureVictory", &CvLeaderHeadInfo::isCultureVictory, "bool ()")
-        .def("isReligionOpportunist", &CvLeaderHeadInfo::isReligionOpportunist, "bool ()")
-        .def("isReligionVictory", &CvLeaderHeadInfo::isReligionVictory, "bool ()")
-        .def("getAIPatrolGroupSize", &CvLeaderHeadInfo::getAIPatrolGroupSize, "int ()")
-        .def("getAIPatrolGroupMage", &CvLeaderHeadInfo::getAIPatrolGroupMage, "int ()")
-        .def("getAIValueDefense", &CvLeaderHeadInfo::getAIValueDefense, "int ()")
-        .def("getAIValueMage", &CvLeaderHeadInfo::getAIValueMage, "int ()")
-        .def("getEconomyTechValue", &CvLeaderHeadInfo::getEconomyTechValue, "int ()")
-        .def("getFavoriteEarlyReligion", &CvLeaderHeadInfo::getFavoriteEarlyReligion, "int ()")
-        .def("getFavoriteEarlyMilTech", &CvLeaderHeadInfo::getFavoriteEarlyMilTech, "int ()")
-        .def("getFavoriteEarlyTech1", &CvLeaderHeadInfo::getFavoriteEarlyTech1, "int ()")
-        .def("getFavoriteEarlyTech2", &CvLeaderHeadInfo::getFavoriteEarlyTech2, "int ()")
-        .def("getFavoriteEarlyTech3", &CvLeaderHeadInfo::getFavoriteEarlyTech3, "int ()")
-        .def("getFavoriteEarlyWonder", &CvLeaderHeadInfo::getFavoriteEarlyWonder, "int ()")
-        .def("getFavoriteLateWonder", &CvLeaderHeadInfo::getFavoriteLateWonder, "int ()")
-        .def("getReligionWeightModifier", &CvLeaderHeadInfo::getReligionWeightModifier, "int (int i)")
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 		// Arrays
 
 		.def("hasTrait", &CvLeaderHeadInfo::hasTrait, "bool (int i)")

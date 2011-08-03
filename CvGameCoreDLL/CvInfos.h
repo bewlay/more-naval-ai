@@ -4342,35 +4342,6 @@ public:
 	int getFavoriteUnitCombat() const;
 	int getFavoriteWonder() const;
 	DllExport int getPermanentTrait() const;
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    bool isAltarVictory() const;
-    bool isArcaneTowerVictory() const;
-    bool isCultureVictory() const;
-    bool isReligionVictory() const;
-
-    bool isReligionOpportunist() const;
-    int getAIPatrolGroupSize() const;
-    int getAIPatrolGroupMage() const;
-    int getAIValueDefense() const;
-    int getAIValueMage() const;
-    int getEconomyTechValue() const;
-    int getFavoriteEarlyReligion() const;
-    int getFavoriteEarlyMilTech() const;
-    int getFavoriteEarlyTech1() const;
-    int getFavoriteEarlyTech2() const;
-    int getFavoriteEarlyTech3() const;
-    int getFavoriteEarlyWonder() const;
-    int getFavoriteLateWonder() const;
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
     int getReligionWeightModifier(int i) const;
 //FfH: End Add
 
@@ -4487,33 +4458,6 @@ protected:
 	int m_iFavoriteUnitCombat;
 	int m_iFavoriteWonder;
 	int m_iPermanentTrait;
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    bool m_bAltarVictory;
-    bool m_bArcaneTowerVictory;
-    bool m_bCultureVictory;
-    bool m_bReligionVictory;
-	bool m_bReligionOpportunist;
-    int m_iAIPatrolGroupSize;
-    int m_iAIPatrolGroupMage;
-    int m_iAIValueDefense;
-    int m_iAIValueMage;
-    int m_iEconomyTechValue;
-    int m_iFavoriteEarlyReligion;
-    int m_iFavoriteEarlyMilTech;
-    int m_iFavoriteEarlyTech1;
-    int m_iFavoriteEarlyTech2;
-    int m_iFavoriteEarlyTech3;
-    int m_iFavoriteEarlyWonder;
-    int m_iFavoriteLateWonder;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
     int* m_piReligionWeightModifier;
 //FfH: End Add
 

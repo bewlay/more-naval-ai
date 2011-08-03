@@ -191,28 +191,11 @@
 	</ElementType>
 	<ElementType name="bFemale" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bGraphicalOnly" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bAltarVictory" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bArcaneTowerVictory" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bCultureVictory" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bReligionVictory" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bReligionOpportunist" content="textOnly" dt:type="boolean"/>
-	<ElementType name="iAIPatrolGroupMage" content="textOnly" dt:type="int"/>
-	<ElementType name="iAIPatrolGroupSize" content="textOnly" dt:type="int"/>
-	<ElementType name="iAIValueDefense" content="textOnly" dt:type="int"/>
-	<ElementType name="iAIValueMage" content="textOnly" dt:type="int"/>
 	<ElementType name="iAttitudeBadBonus" content="textOnly" dt:type="int"/>
 	<ElementType name="iAttitudeFromFemales" content="textOnly" dt:type="int"/>
 	<ElementType name="iAttitudeFromMales" content="textOnly" dt:type="int"/>
 	<ElementType name="iAttitudeToFemales" content="textOnly" dt:type="int"/>
 	<ElementType name="iAttitudeToMales" content="textOnly" dt:type="int"/>
-	<ElementType name="iEconomyTechValue" content="textOnly" dt:type="int"/>
-	<ElementType name="iFavoriteEarlyMilTech" content="textOnly" />
-	<ElementType name="iFavoriteEarlyReligion" content="textOnly" />
-	<ElementType name="iFavoriteEarlyTech1" content="textOnly" />
-	<ElementType name="iFavoriteEarlyTech2" content="textOnly" />
-	<ElementType name="iFavoriteEarlyTech3" content="textOnly" />
-	<ElementType name="iFavoriteEarlyWonder" content="textOnly" />
-	<ElementType name="iFavoriteLateWonder" content="textOnly" />
 	<ElementType name="iSomniumAggressiveness" content="textOnly" dt:type="int"/>
 	<ElementType name="Alignment" content="textOnly"/>
 	<ElementType name="FavoriteTech" content="textOnly"/>
@@ -320,28 +303,11 @@
 		<element type="DiplomacyMusicWar"/>
 		<element type="bFemale"/>
 		<element type="bGraphicalOnly"/>
-		<element type="bAltarVictory" minOccurs="0"/>
-		<element type="bArcaneTowerVictory" minOccurs="0"/>
-		<element type="bCultureVictory" minOccurs="0"/>
-		<element type="bReligionVictory" minOccurs="0"/>
-		<element type="bReligionOpportunist" minOccurs="0"/>
-		<element type="iAIPatrolGroupMage" minOccurs="0"/>
-		<element type="iAIPatrolGroupSize" minOccurs="0"/>
-		<element type="iAIValueDefense" minOccurs="0"/>
-		<element type="iAIValueMage" minOccurs="0"/>
 		<element type="iAttitudeBadBonus"/>
 		<element type="iAttitudeFromFemales"/>
 		<element type="iAttitudeFromMales"/>
 		<element type="iAttitudeToFemales"/>
 		<element type="iAttitudeToMales"/>
-		<element type="iEconomyTechValue" minOccurs="0"/>
-		<element type="iFavoriteEarlyMilTech" minOccurs="0"/>
-		<element type="iFavoriteEarlyReligion" minOccurs="0"/>
-		<element type="iFavoriteEarlyTech1" minOccurs="0"/>
-		<element type="iFavoriteEarlyTech2" minOccurs="0"/>
-		<element type="iFavoriteEarlyTech3" minOccurs="0"/>
-		<element type="iFavoriteEarlyWonder" minOccurs="0"/>
-		<element type="iFavoriteLateWonder" minOccurs="0"/>
 		<element type="iSomniumAggressiveness"/>
 		<element type="Alignment"/>
 		<element type="FavoriteTech"/>

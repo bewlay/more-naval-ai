@@ -2744,24 +2744,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_SANITATION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_ORDERS_FROM_HEAVEN</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TEMPLE_OF_TEMPORENCE</iFavoriteLateWonder>
 			<iSomniumAggressiveness>35</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -3401,22 +3388,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDING_AQUAE_SUCELLUS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>30</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
@@ -4056,24 +4032,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>10</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>50</iAIPatrolGroupSize>
-			<iAIValueDefense>70</iAIValueDefense>
-			<iAIValueMage>50</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_CONSTRUCTION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_SANITATION</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TEMPLE_OF_TEMPORENCE</iFavoriteLateWonder>
 			<iSomniumAggressiveness>30</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_ORDERS_FROM_HEAVEN</FavoriteTech>
@@ -4709,7 +4672,6 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bReligionOpportunist>1</bReligionOpportunist>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -5358,23 +5320,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_HONOR</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CELESTIAL_COMPASS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_HONOR</FavoriteTech>
@@ -6034,23 +5984,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_HONOR</FavoriteTech>
@@ -6730,23 +6668,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_DRAMA</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_THEATRE_OF_DREAMS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_HALL_OF_KINGS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>20</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
@@ -7422,22 +7348,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_THEATRE_OF_DREAMS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TEMPLE_OF_TEMPORENCE</iFavoriteLateWonder>
 			<iSomniumAggressiveness>25</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
@@ -8114,11 +8029,6 @@
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_THEATRE_OF_DREAMS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TEMPLE_OF_TEMPORENCE</iFavoriteLateWonder>
 			<iSomniumAggressiveness>25</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
@@ -8779,10 +8689,6 @@
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>10</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -9430,23 +9336,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_CONSTRUCTION</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_ELEMENTALISM</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>45</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_CONSTRUCTION</FavoriteTech>
@@ -10094,23 +9988,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_CONSTRUCTION</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_ELEMENTALISM</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_CONSTRUCTION</FavoriteTech>
@@ -10770,21 +10652,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HORSEBACK_RIDING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_THEATRE_OF_DREAMS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TEMPLE_OF_TEMPORENCE</iFavoriteLateWonder>
 			<iSomniumAggressiveness>35</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -11432,25 +11304,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_FELLOWSHIP_OF_LEAVES</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_HIDDEN_PATHS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_ELEMENTALISM</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_ARCHERY</FavoriteTech>
@@ -12098,25 +11956,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_FELLOWSHIP_OF_LEAVES</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_HIDDEN_PATHS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_ELEMENTALISM</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_WAY_OF_THE_FORESTS</FavoriteTech>
@@ -12764,24 +12608,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_FELLOWSHIP_OF_LEAVES</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_HIDDEN_PATHS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_ELEMENTALISM</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDING_CATACOMB_LIBRALUS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDING_GREAT_LIBRARY</iFavoriteLateWonder>
 			<iSomniumAggressiveness>45</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_WAY_OF_THE_FORESTS</FavoriteTech>
@@ -13441,23 +13272,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_WAY_OF_THE_EARTHMOTHER</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_ARETE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>60</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_WAY_OF_THE_EARTHMOTHER</FavoriteTech>
@@ -14117,23 +13936,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_WAY_OF_THE_EARTHMOTHER</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_RUNES_OF_KILMORPH</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_ARETE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_WAY_OF_THE_EARTHMOTHER</FavoriteTech>
@@ -14789,22 +14596,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIBRARY</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -15448,22 +15244,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIBRARY</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
@@ -16107,23 +15892,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>2</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>2</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_SAILING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIGHTHOUSE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CELESTIAL_COMPASS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_OPTICS</FavoriteTech>
@@ -16767,23 +16540,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_SAILING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIGHTHOUSE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CELESTIAL_COMPASS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_MESSAGE_FROM_THE_DEEP</FavoriteTech>
@@ -17435,21 +17196,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIBRARY</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_HALL_OF_KINGS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>50</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -18109,19 +17860,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIBRARY</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_HALL_OF_KINGS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -18785,23 +18528,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HORSEBACK_RIDING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_TRADE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GUILD_OF_THE_NINE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
@@ -19441,22 +19172,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HORSEBACK_RIDING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_TRADE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GUILD_OF_THE_NINE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>60</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
@@ -20092,22 +19812,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HORSEBACK_RIDING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_TRADE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GUILD_OF_THE_NINE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>60</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
@@ -20743,22 +20452,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bAltarVictory>1</bAltarVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HORSEBACK_RIDING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_TRADE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GUILD_OF_THE_NINE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_TOWER_OF_EYES</iFavoriteLateWonder>
 			<iSomniumAggressiveness>60</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
@@ -21394,22 +21092,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>200</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_ARCHERY</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_GREAT_LIBRARY</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_SORCERY</FavoriteTech>
@@ -22021,22 +21708,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>200</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_ARCHERY</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_CATACOMB_LIBRALUS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>50</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_SORCERY</FavoriteTech>
@@ -22644,22 +22320,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>200</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_ARCHERY</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_CATACOMB_LIBRALUS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>50</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
 			<FavoriteTech>TECH_SORCERY</FavoriteTech>
@@ -23291,23 +22956,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>85</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
@@ -23939,23 +23592,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
@@ -24579,23 +24220,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_GUILD_OF_HAMMERS</iFavoriteLateWonder>
 			<iSomniumAggressiveness>85</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
@@ -25239,25 +24868,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>130</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_FESTIVALS</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_BRONZE_WORKING</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyTech3>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech3>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>70</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -25913,25 +25528,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_FESTIVALS</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_BRONZE_WORKING</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CONSTRUCTION</iFavoriteEarlyTech2>
-			<iFavoriteEarlyTech3>TECH_DRAMA</iFavoriteEarlyTech3>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_THEATRE_OF_DREAMS</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>75</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FESTIVALS</FavoriteTech>
@@ -26587,22 +26188,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_FESTIVALS</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>75</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FESTIVALS</FavoriteTech>
@@ -27250,22 +26840,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_FESTIVALS</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>70</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FESTIVALS</FavoriteTech>
@@ -27917,22 +27496,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_FESTIVALS</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_WARFARE</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>70</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FESTIVALS</FavoriteTech>
@@ -28588,24 +28156,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CONSTRUCTION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyTech3>TECH_DRAMA</iFavoriteEarlyTech3>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>85</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MASONRY</FavoriteTech>
@@ -29245,23 +28800,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CONSTRUCTION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyTech3>TECH_DRAMA</iFavoriteEarlyTech3>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MASONRY</FavoriteTech>
@@ -29901,22 +29444,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CONSTRUCTION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyTech3>TECH_DRAMA</iFavoriteEarlyTech3>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_FORM_OF_THE_TITAN</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MASONRY</FavoriteTech>
@@ -30552,20 +30084,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
@@ -31213,20 +30736,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
@@ -31874,20 +31388,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bCultureVictory>1</bCultureVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_HUNTING</iFavoriteEarlyMilTech>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
@@ -32543,24 +32048,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<bReligionOpportunist>1</bReligionOpportunist>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>80</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CODE_OF_LAWS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FEUDALISM</FavoriteTech>
@@ -33212,23 +32704,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CODE_OF_LAWS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FEUDALISM</FavoriteTech>
@@ -33876,23 +33356,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bCultureVictory>1</bCultureVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>120</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_CODE_OF_LAWS</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_WARFARE</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_SYLIVENS_PERFECT_LYRE</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_EYES_AND_EARS_NETWORK</iFavoriteLateWonder>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_FEUDALISM</FavoriteTech>
@@ -34528,24 +33996,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-1</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CORRUPTION_OF_SPIRIT</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>95</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_SORCERY</FavoriteTech>
@@ -35189,24 +34644,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>-4</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_KNOWLEDGE_OF_THE_ETHER</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CORRUPTION_OF_SPIRIT</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_CORRUPTION_OF_SPIRIT</FavoriteTech>
@@ -35850,24 +35292,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_SANITATION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CORRUPTION_OF_SPIRIT</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -36511,24 +35940,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_SANITATION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CORRUPTION_OF_SPIRIT</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -37168,24 +36584,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bArcaneTowerVictory>1</bArcaneTowerVictory>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyReligion>RELIGION_OCTOPUS_OVERLORDS</iFavoriteEarlyReligion>
-			<iFavoriteEarlyTech1>TECH_SANITATION</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_CORRUPTION_OF_SPIRIT</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>NONE</FavoriteTech>
@@ -37833,20 +37236,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -38502,20 +37896,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -39171,20 +38556,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -39840,20 +39216,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -40509,20 +39876,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -41178,20 +40536,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -41847,20 +41196,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<bReligionVictory>1</bReligionVictory>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_PROPHECY_OF_RAGNAROK</iFavoriteEarlyWonder>
-			<iFavoriteLateWonder>BUILDINGCLASS_CROWN_OF_AKHARIEN</iFavoriteLateWonder>
 			<iSomniumAggressiveness>100</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_MALEVOLENT_DESIGNS</FavoriteTech>
@@ -42536,20 +41876,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_ARCHERY</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_BONE_PALACE</iFavoriteEarlyWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>
@@ -43225,20 +42556,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_ARCHERY</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_BONE_PALACE</iFavoriteEarlyWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>
@@ -43910,20 +43232,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_ARCHERY</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_BONE_PALACE</iFavoriteEarlyWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>
@@ -44595,20 +43908,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_ARCHERY</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_BONE_PALACE</iFavoriteEarlyWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>
@@ -45280,20 +44584,11 @@
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
 			<bGraphicalOnly>1</bGraphicalOnly>
-			<iAIPatrolGroupMage>100</iAIPatrolGroupMage>
-			<iAIPatrolGroupSize>100</iAIPatrolGroupSize>
-			<iAIValueDefense>100</iAIValueDefense>
-			<iAIValueMage>100</iAIValueMage>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
 			<iAttitudeToFemales>0</iAttitudeToFemales>
 			<iAttitudeToMales>0</iAttitudeToMales>
-			<iEconomyTechValue>100</iEconomyTechValue>
-			<iFavoriteEarlyMilTech>TECH_BRONZE_WORKING</iFavoriteEarlyMilTech>
-			<iFavoriteEarlyTech1>TECH_ARCHERY</iFavoriteEarlyTech1>
-			<iFavoriteEarlyTech2>TECH_DRAMA</iFavoriteEarlyTech2>
-			<iFavoriteEarlyWonder>BUILDINGCLASS_BONE_PALACE</iFavoriteEarlyWonder>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
 			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>

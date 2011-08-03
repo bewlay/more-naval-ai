@@ -17075,31 +17075,6 @@ m_iFavoriteUnitCombat(NO_UNITCOMBAT),
 m_iFavoriteWonder(NO_BUILDING),
 m_iPermanentTrait(NO_TRAIT)
 //FfH: End Add
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-,m_bAltarVictory(false)
-,m_bArcaneTowerVictory(false)
-,m_bCultureVictory(false)
-,m_bReligionVictory(false)
-,m_bReligionOpportunist(false)
-,m_iAIPatrolGroupSize(0)
-,m_iAIPatrolGroupMage(0)
-,m_iAIValueDefense(0)
-,m_iAIValueMage(0)
-,m_iEconomyTechValue(0)
-,m_iFavoriteEarlyReligion(NO_RELIGION)
-,m_iFavoriteEarlyMilTech(NO_TECH)
-,m_iFavoriteEarlyTech1(NO_TECH)
-,m_iFavoriteEarlyTech2(NO_TECH)
-,m_iFavoriteEarlyTech3(NO_TECH)
-,m_iFavoriteEarlyWonder(NO_BUILDINGCLASS)
-,m_iFavoriteLateWonder(NO_BUILDINGCLASS)
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 {
 }
 
@@ -17625,99 +17600,6 @@ bool CvLeaderHeadInfo::isFemale() const
     return m_bFemale;
 }
 //FfH: End Add
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-bool CvLeaderHeadInfo::isAltarVictory() const
-{
-    return m_bAltarVictory;
-}
-
-bool CvLeaderHeadInfo::isArcaneTowerVictory() const
-{
-    return m_bArcaneTowerVictory;
-}
-
-bool CvLeaderHeadInfo::isCultureVictory() const
-{
-    return m_bCultureVictory;
-}
-
-bool CvLeaderHeadInfo::isReligionVictory() const
-{
-    return m_bReligionVictory;
-}
-
-bool CvLeaderHeadInfo::isReligionOpportunist() const
-{
-    return m_bReligionOpportunist;
-}
-
-int CvLeaderHeadInfo::getAIPatrolGroupSize() const
-{
-    return m_iAIPatrolGroupSize;
-}
-
-int CvLeaderHeadInfo::getAIPatrolGroupMage() const
-{
-    return m_iAIPatrolGroupMage;
-}
-
-int CvLeaderHeadInfo::getAIValueDefense() const
-{
-    return m_iAIValueDefense;
-}
-int CvLeaderHeadInfo::getAIValueMage() const
-{
-    return m_iAIValueMage;
-}
-
-int CvLeaderHeadInfo::getEconomyTechValue() const
-{
-    return m_iEconomyTechValue;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyReligion() const
-{
-    return m_iFavoriteEarlyReligion;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyMilTech() const
-{
-    return m_iFavoriteEarlyMilTech;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyTech1() const
-{
-    return m_iFavoriteEarlyTech1;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyTech2() const
-{
-    return m_iFavoriteEarlyTech2;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyTech3() const
-{
-    return m_iFavoriteEarlyTech3;
-}
-
-int CvLeaderHeadInfo::getFavoriteEarlyWonder() const
-{
-    return m_iFavoriteEarlyWonder;
-}
-
-int CvLeaderHeadInfo::getFavoriteLateWonder() const
-{
-    return m_iFavoriteLateWonder;
-}
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 // Arrays
 
 bool CvLeaderHeadInfo::hasTrait(int i) const
@@ -17926,33 +17808,6 @@ void CvLeaderHeadInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iFavoriteWonder);
 	stream->Read(&m_iPermanentTrait);
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    stream->Read(&m_bAltarVictory);
-    stream->Read(&m_bArcaneTowerVictory);
-    stream->Read(&m_bCultureVictory);
-    stream->Read(&m_bReligionVictory);
-    stream->Read(&m_bReligionOpportunist);
-    stream->Read(&m_iAIPatrolGroupSize);
-    stream->Read(&m_iAIPatrolGroupMage);
-    stream->Read(&m_iAIValueDefense);
-    stream->Read(&m_iAIValueMage);
-    stream->Read(&m_iEconomyTechValue);
-    stream->Read(&m_iFavoriteEarlyReligion);
-    stream->Read(&m_iFavoriteEarlyMilTech);
-    stream->Read(&m_iFavoriteEarlyTech1);
-    stream->Read(&m_iFavoriteEarlyTech2);
-    stream->Read(&m_iFavoriteEarlyTech3);
-    stream->Read(&m_iFavoriteEarlyWonder);
-    stream->Read(&m_iFavoriteLateWonder);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
-
 	SAFE_DELETE_ARRAY(m_piReligionWeightModifier);
 	m_piReligionWeightModifier = new int[GC.getNumReligionInfos()];
 	stream->Read(GC.getNumReligionInfos(), m_piReligionWeightModifier);
@@ -18113,33 +17968,6 @@ void CvLeaderHeadInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iFavoriteUnitCombat);
 	stream->Write(m_iFavoriteWonder);
 	stream->Write(m_iPermanentTrait);
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    stream->Write(m_bAltarVictory);
-    stream->Write(m_bArcaneTowerVictory);
-    stream->Write(m_bCultureVictory);
-    stream->Write(m_bReligionVictory);
-	stream->Write(m_bReligionOpportunist);
-    stream->Write(m_iAIPatrolGroupSize);
-    stream->Write(m_iAIPatrolGroupMage);
-    stream->Write(m_iAIValueDefense);
-    stream->Write(m_iAIValueMage);
-    stream->Write(m_iEconomyTechValue);
-    stream->Write(m_iFavoriteEarlyReligion);
-    stream->Write(m_iFavoriteEarlyMilTech);
-    stream->Write(m_iFavoriteEarlyTech1);
-    stream->Write(m_iFavoriteEarlyTech2);
-    stream->Write(m_iFavoriteEarlyTech3);
-    stream->Write(m_iFavoriteEarlyWonder);
-    stream->Write(m_iFavoriteLateWonder);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
     stream->Write(GC.getNumReligionInfos(), m_piReligionWeightModifier);
 //FfH: End Add
 
@@ -18340,41 +18168,6 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 	m_iFavoriteWonder = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PermanentTrait");
 	m_iPermanentTrait = pXML->FindInInfoClass(szTextVal);
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-	pXML->GetChildXmlValByName(&m_bAltarVictory, "bAltarVictory",0);
-	pXML->GetChildXmlValByName(&m_bArcaneTowerVictory, "bArcaneTowerVictory",0);
-	pXML->GetChildXmlValByName(&m_bCultureVictory, "bCultureVictory",0);
-	pXML->GetChildXmlValByName(&m_bReligionVictory, "bReligionVictory",0);
-	pXML->GetChildXmlValByName(&m_bReligionOpportunist, "bReligionOpportunist",0);
-    pXML->GetChildXmlValByName(&m_iAIPatrolGroupMage, "iAIPatrolGroupMage",100);
-    pXML->GetChildXmlValByName(&m_iAIPatrolGroupSize, "iAIPatrolGroupSize",100);
-    pXML->GetChildXmlValByName(&m_iAIValueDefense, "iAIValueDefense",100);
-    pXML->GetChildXmlValByName(&m_iAIValueMage, "iAIValueMage",100);
-
-    pXML->GetChildXmlValByName(&m_iEconomyTechValue, "iEconomyTechValue",100);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyReligion");
-	m_iFavoriteEarlyReligion = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyMilTech");
-	m_iFavoriteEarlyMilTech = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyTech1");
-	m_iFavoriteEarlyTech1 = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyTech2");
-	m_iFavoriteEarlyTech2 = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyTech3");
-	m_iFavoriteEarlyTech3 = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteEarlyWonder");
-	m_iFavoriteEarlyWonder = pXML->FindInInfoClass(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "iFavoriteLateWonder");
-	m_iFavoriteLateWonder = pXML->FindInInfoClass(szTextVal);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	pXML->SetVariableListTagPair(&m_piReligionWeightModifier, "ReligionWeightModifiers", sizeof(GC.getReligionInfo((ReligionTypes)0)), GC.getNumReligionInfos());
 //FfH: End Add
 
