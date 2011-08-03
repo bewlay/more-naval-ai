@@ -8536,7 +8536,13 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 
 int CvCity::getYieldRate(YieldTypes eIndex) const
 {
-	return ((getBaseYieldRate(eIndex) * getBaseYieldRateModifier(eIndex)) / 100);
+	int iUnhappyProd = 0;
+    if (isUnhappyProduction() && (eIndex == YIELD_PRODUCTION))
+    {
+        iUnhappyProd += unhappyLevel(0);
+    }
+
+	return (((getBaseYieldRate(eIndex) + iUnhappyProd) * getBaseYieldRateModifier(eIndex)) / 100);
 }
 
 
