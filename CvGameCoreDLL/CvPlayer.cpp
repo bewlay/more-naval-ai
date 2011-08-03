@@ -524,10 +524,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
-    m_bConquestMode = false;
     m_eFavoriteReligion = NO_RELIGION;
     m_iTowerVicFlag = 0;
 	m_bSumSuiMode = false;
@@ -17019,10 +17016,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(&m_bStrike);
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
-    pStream->Read(&m_bConquestMode);
     pStream->Read((int*)&m_eFavoriteReligion);
     pStream->Read(&m_iTowerVicFlag);
 	pStream->Read(&m_bSumSuiMode);
@@ -17538,18 +17532,14 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
-    pStream->Write(m_bConquestMode);
     pStream->Write(m_eFavoriteReligion);
     pStream->Write(m_iTowerVicFlag);
-
 	pStream->Write(m_bSumSuiMode);
-
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+
 //FfH Traits: Added by Kael 08/02/2007
 	pStream->Write(m_bAdaptive);
 	pStream->Write(m_bAgnostic);
@@ -23844,15 +23834,7 @@ bool CvPlayer::isPirate() const
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-bool CvPlayer::isConquestMode() const
-{
-    return m_bConquestMode;
-}
 
-void CvPlayer::startConquestMode()
-{
-    m_bConquestMode = true;
-}
 
 ReligionTypes CvPlayer::getFavoriteReligion() const
 {
@@ -23920,24 +23902,6 @@ void CvPlayer::AI_doTowerMastery()
 	return;
 }
 
-int CvPlayer::getConquestUnitClassCount(UnitClassTypes UnitClass, CvArea* pArea) const
-{
-	int count=0;
-	int iLoop;
-	for(CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
-	{
-		if (pLoopUnit)
-		{
-			if ((pLoopUnit->getUnitClassType()==UnitClass) && (pArea==pLoopUnit->area()) && (pLoopUnit->AI_getGroupflag()==GROUPFLAG_CONQUEST))
-			{
-				count++;
-			}
-		}
-	}
-
-	return count;
-}
-/*************************************************************************************************/
 int CvPlayer::AI_getNeededPillageUnits() const
 {
     int iRaiderTrait=GC.getInfoTypeForString("TRAIT_RAIDERS");
