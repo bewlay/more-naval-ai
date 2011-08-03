@@ -388,7 +388,7 @@
 			<CreateSound/>
 			<MovieDefineTag/>
 			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
-			<iAIWeight>300</iAIWeight>
+			<iAIWeight>500</iAIWeight>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_THE_DEEPENING</Type>
