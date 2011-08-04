@@ -352,9 +352,6 @@ class CvGameUtils:
 				return True
 			if pCity.isCapital():
 				return True
-			if pPlayer.isHuman() == False:
-				if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
-					return True
 
 		iAltar1 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR')
 		iAltar2 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED')
@@ -385,6 +382,7 @@ class CvGameUtils:
 				if pPlayer.countNumBuildings(iAltar7) > 0:
 					return True
 
+### Start AI restrictions ###
 		if pPlayer.isHuman() == False:
 			if eBuilding == gc.getInfoTypeForString('BUILDING_PROPHECY_OF_RAGNAROK'):
 				if pPlayer.getAlignment() != gc.getInfoTypeForString('ALIGNMENT_EVIL'):
@@ -393,6 +391,9 @@ class CvGameUtils:
 			if eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
 				if pCity.isHolyCity():
 					return True
+				if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+					return True
+### End AI restrictions ###
 
 		if eBuilding == gc.getInfoTypeForString('BUILDING_SMUGGLERS_PORT'):
 			if pPlayer.isSmugglingRing() == False:
