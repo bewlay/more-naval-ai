@@ -128,10 +128,7 @@ def postCombatExplode(pCaster, pOpponent):
 				pPlot = CyMap().plot(iiX,iiY)
 				if pPlot.isNone() == False:
 					if (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST') or pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE') or pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_NEW')):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#						if CyGame().getSorenRandNum(100, "Flames Spread") <= gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
 						if CyGame().getSorenRandNum(100, "Flames Spread") < gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
-##--------		Unofficial Bug Fix: End Modify			--------##
 							bValid = True
 							iImprovement = pPlot.getImprovementType()
 							if iImprovement != -1 :
@@ -150,14 +147,8 @@ def postCombatHeal50(pCaster, pOpponent):
 def postCombatIra(pCaster, pOpponent):
 	if pOpponent.isAlive():
 		if pCaster.baseCombatStr() < 32:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-			"""
-			pCaster.setBaseCombatStr(pCaster.baseCombatStr() - 3)
-			pCaster.setBaseCombatStrDefense(pCaster.baseCombatStrDefense() - 3)
-			"""
 			pCaster.setBaseCombatStr(pCaster.baseCombatStr() - pCaster.getTotalDamageTypeCombat() + 1)
 			pCaster.setBaseCombatStrDefense(pCaster.baseCombatStrDefense() - pCaster.getTotalDamageTypeCombat() + 1)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def postCombatMimic(pCaster, pOpponent):
 	iBronze = gc.getInfoTypeForString('PROMOTION_BRONZE_WEAPONS')
@@ -209,14 +200,6 @@ def postCombatArs(pCaster, pOpponent):
 def postCombatAuricAscendedLost(pCaster, pOpponent):
 	iPlayer = pCaster.getOwner()
 	pPlayer = gc.getPlayer(iPlayer)
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-	"Duplicated Auric doesn't cause losing traits. This process is moved to DLL."
-	"""
-	for iTrait in range(gc.getNumTraitInfos()):
-		if pPlayer.hasTrait(iTrait):
-			pPlayer.setHasTrait(iTrait, False)
-	"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 	if pOpponent.isHasPromotion(gc.getInfoTypeForString('PROMOTION_GODSLAYER')):
 		pOppPlayer = gc.getPlayer(pOpponent.getOwner())
 		if pOppPlayer.isHuman():
@@ -228,14 +211,6 @@ def postCombatAuricAscendedWon(pCaster, pOpponent):
 	if pOpponent.isHasPromotion(gc.getInfoTypeForString('PROMOTION_GODSLAYER')):
 		iPlayer = pCaster.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"Duplicated Auric doesn't cause losing traits. This process is moved to DLL."
-		"""
-		for iTrait in range(gc.getNumTraitInfos()):
-			if pPlayer.hasTrait(iTrait):
-				pPlayer.setHasTrait(iTrait, False)
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 		pCaster.kill(True, pOpponent.getOwner())
 		pOppPlayer = gc.getPlayer(pOpponent.getOwner())
 		if pOppPlayer.isHuman():
@@ -247,14 +222,6 @@ def postCombatBasium(pCaster, pOpponent):
 	if not pCaster.isImmortal():
 		iPlayer = pCaster.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"Duplicated Basium doesn't cause losing traits. This process is moved to DLL."
-		"""
-		for iTrait in range(gc.getNumTraitInfos()):
-			if pPlayer.hasTrait(iTrait):
-				pPlayer.setHasTrait(iTrait, False)
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 		pOppPlayer = gc.getPlayer(pOpponent.getOwner())
 		if pOppPlayer.isHuman():
 			t = "TROPHY_DEFEATED_BASIUM"
@@ -282,15 +249,6 @@ def postCombatHyborem(pCaster, pOpponent):
 	if not pCaster.isImmortal():
 		iPlayer = pCaster.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"Duplicated Hyborem doesn't cause losing traits. This process is moved to DLL."
-		"""
-		for iTrait in range(gc.getNumTraitInfos()):
-			if iTrait != gc.getInfoTypeForString('TRAIT_FALLOW'):
-				if pPlayer.hasTrait(iTrait):
-					pPlayer.setHasTrait(iTrait, False)
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 		pOppPlayer = gc.getPlayer(pOpponent.getOwner())
 		if pOppPlayer.isHuman():
 			t = "TROPHY_DEFEATED_HYBOREM"
@@ -333,18 +291,10 @@ def postCombatYersinia(pCaster, pOpponent):
 
 def postCombatReduceCombat1(pCaster, pOpponent):
 	if pOpponent.isAlive():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-		"""
-		if pCaster.baseCombatStr() > 5:
-			pCaster.setBaseCombatStr(pCaster.baseCombatStr() - 5)
-			pCaster.setBaseCombatStrDefense(pCaster.baseCombatStrDefense() - 5)
-			CyInterface().addMessage(pCaster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_STRENGTH_REDUCED", ()),'',1,'Art/Interface/Buttons/Units/Repentant Angel.dds',ColorTypes(7),pCaster.getX(),pCaster.getY(),True,True)
-		"""
 		if pCaster.baseCombatStr() > pCaster.getTotalDamageTypeCombat():
 			pCaster.setBaseCombatStr(pCaster.baseCombatStr() - pCaster.getTotalDamageTypeCombat() - 1)
 			pCaster.setBaseCombatStrDefense(pCaster.baseCombatStrDefense() - pCaster.getTotalDamageTypeCombat() - 1)
 			CyInterface().addMessage(pCaster.getOwner(), True, gc.getEVENT_MESSAGE_TIME(), CyTranslator().getText("TXT_KEY_MESSAGE_STRENGTH_REDUCED", ()), '', InterfaceMessageTypes.MESSAGE_TYPE_INFO, pCaster.getButton(), gc.getInfoTypeForString('COLOR_RED'), pCaster.getX(), pCaster.getY(), True, True)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def postCombatReducePopulation(pCaster, pOpponent):
 	pPlot = pOpponent.plot()
@@ -1216,20 +1166,14 @@ def spellEarthquake(caster):
 					pCity = pPlot.getPlotCity()
 					for i in range(gc.getNumBuildingInfos()):
 						iRnd = CyGame().getSorenRandNum(100, "Bob")
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#						if (gc.getBuildingInfo(i).getConquestProbability() != 100 and iRnd <= 25):
 						if (gc.getBuildingInfo(i).getConquestProbability() != 100 and iRnd < 25):
-##--------		Unofficial Bug Fix: End Modify			--------##
 							pCity.setNumRealBuilding(i, 0)
 				for iUnit in range(pPlot.getNumUnits()):
 					pUnit = pPlot.getUnit(iUnit)
 					if pUnit.isFlying() == False:
 						pUnit.setFortifyTurns(0)
 				iRnd = CyGame().getSorenRandNum(100, "Bob")
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#				if iRnd <= 25:
 				if iRnd < 25:
-##--------		Unofficial Bug Fix: End Modify			--------##
 					iImprovement = pPlot.getImprovementType()
 					if iImprovement != -1:
 						if gc.getImprovementInfo(iImprovement).isPermanent() == False:
@@ -1285,8 +1229,6 @@ def reqExploreLair(caster):
 		return False
 	if caster.getSpecialUnitType() == gc.getInfoTypeForString('SPECIALUNIT_BIRD'):
 		return False
-#	pPlot = caster.plot()
-#		if not pPlot.isWater():
 	pPlayer = gc.getPlayer(caster.getOwner())
 	iTeam = pPlayer.getTeam()
 	eTeam = gc.getTeam(iTeam)
@@ -1358,17 +1300,11 @@ def spellFeed(caster):
 	for i in range(pPlot.getNumUnits()):
 		pUnit = pPlot.getUnit(i)
 		if pUnit.getOwner() == caster.getOwner():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_BLOODPET'):
 			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_BLOODPET') and not pUnit.isDelayedDeath():
-##--------		Unofficial Bug Fix: End Modify			--------##
 				if pVictim == -1 or pVictim.getLevel() > pUnit.getLevel():
 					pVictim = pUnit
 	if pVictim != -1:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		pVictim.kill(True, 0)
 		pVictim.kill(True, PlayerTypes.NO_PLAYER)
-##--------		Unofficial Bug Fix: End Modify			--------##
 		caster.setDamage(caster.getDamage() - 20, caster.getOwner())		
 		caster.setMadeAttack(false)
 
@@ -1437,14 +1373,8 @@ def spellFormWolfPack(caster):
 		newUnit = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_WOLF_PACK'), caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 		newUnit.setExperience(caster.getExperience() + pWolf2.getExperience(), -1)
 		newUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_ATTACK'))
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-		"""
-		caster.kill(True, 0)
-		pWolf2.kill(True, 0)
-		"""
 		caster.kill(True, PlayerTypes.NO_PLAYER)
 		pWolf2.kill(True, PlayerTypes.NO_PLAYER)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def reqGiftsOfNantosuelta(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
@@ -1555,10 +1485,7 @@ def spellHeal(caster,amount):
 		pUnit = pPlot.getUnit(i)
 		pUnit.setHasPromotion(iPoisoned,False)
 		if pUnit.isAlive():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			pUnit.changeDamage(-amount,0) #player doesn't matter - it won't kill
 			pUnit.changeDamage(-amount, PlayerTypes.NO_PLAYER)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def reqHealingSalve(caster):
 	if caster.getDamage() == 0:
@@ -1665,25 +1592,14 @@ def spellHireWolfRider(caster):
 def reqHyboremsWhisper(caster):
 	if gc.getGame().isNetworkMultiPlayer():
 		return False
-##--------		Tweaked Hyborem: Modified by Denev	--------##
-	"""
-	pCity = cf.getAshenVeilCity(3)
-	if pCity == -1:
-	"""
 	lpVeilCities = cf.getAshenVeilCities(caster.getOwner(), caster.getID(), 1)
 	if len(lpVeilCities) == 0:
-##--------		Tweaked Hyborem: End Modify			--------##
 		return False
 	return True
 
 def spellHyboremsWhisper(caster):
 	iPlayer = caster.getOwner()
 	pPlayer = gc.getPlayer(iPlayer)
-##--------		Tweaked Hyborem: Modified by Denev	--------##
-	"""
-	iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_HYBOREMS_WHISPER')
-	triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), iPlayer, -1, -1, -1, -1, -1)
-	"""
 	iNumSelectableCities = 3
 	iCasterID = caster.getID()
 	lpVeilCities = cf.getAshenVeilCities(iPlayer, iCasterID, iNumSelectableCities)
@@ -1731,7 +1647,6 @@ def applyHyboremsWhisper(argsList):
 	if iClickedKind == 1:
 		CyInterface().selectCity(pSelectedCity, False)
 	popupHyboremsWhisper(iPlayer, iCasterID, lpVeilCities, iPickedUpIndex)
-##--------		Tweaked Hyborem: End Modify			--------##
 
 def reqImpersonateLeader(caster):
 	pCity = caster.plot().getPlotCity()
@@ -1841,23 +1756,14 @@ def spellKidnap(caster):
 	if iChance > 95:
 		iChance = 95
 	pPlayer = gc.getPlayer(caster.getOwner())
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#	if CyGame().getSorenRandNum(100, "Kidnap") <= iChance:
 	if CyGame().getSorenRandNum(100, "Kidnap") < iChance:
-##--------		Unofficial Bug Fix: End Modify			--------##
 		newUnit = pPlayer.initUnit(iUnit, caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 		pCity.changeFreeSpecialistCount(iSpec, -1)
 	else:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		if CyGame().getSorenRandNum(100, "Kidnap") <= 50:
 		if CyGame().getSorenRandNum(100, "Kidnap") < 50:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			caster.setXY(pPlayer.getCapitalCity().getX(), pPlayer.getCapitalCity().getY(), false, true, true)
 		else:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			caster.kill(True, 0)
 			caster.kill(True, PlayerTypes.NO_PLAYER)
-##--------		Unofficial Bug Fix: End Modify			--------##
 		cf.startWar(caster.getOwner(), pCity.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
 
 def reqLegends(caster):
@@ -1990,7 +1896,6 @@ def reqPeaceSevenPines(caster):
 	eTeam = gc.getTeam(iTeam)
 	if eTeam.getAtWarCount(True) == 0:
 		return False
-#AI added Sephi		
 	if caster.isBarbarian():
 		return False
 	if not pPlayer.isHuman():
@@ -2001,7 +1906,6 @@ def reqPeaceSevenPines(caster):
 					if gc.getTeam(caster.getTeam()).getPower(true)*80<eTeam.getPower(true)*100:
 						return True
 		return False				
-#AI added Sephi				
 	return True
 
 def spellPeaceSevenPines(caster):
@@ -2070,10 +1974,7 @@ def spellPillarofFire(caster):
 				if gc.getImprovementInfo(iImprovement).isPermanent():
 					bValid = False
 			if bValid:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#				if CyGame().getSorenRandNum(100, "Flames Spread") <= gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
 				if CyGame().getSorenRandNum(100, "Flames Spread") < gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
-##--------		Unofficial Bug Fix: End Modify			--------##
 					pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_SMOKE'))
 		CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_PILLAR_OF_FIRE'),pBestPlot.getPoint())
 
@@ -2141,7 +2042,6 @@ def spellMarchOfTheTrees(caster):
 						newUnit = pPlayer.initUnit(iTreant, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						newUnit.setDuration(5)
 						pPlot.setFeatureType(iNewForest,0)
-#added Sephi
 						newUnit.AI_setGroupflag(43)	# 43=GROUPFLAG_SUICIDE_SUMMON
 						if newUnit.isHuman():
 							newUnit.getGroup().setActivityType(ActivityTypes.ACTIVITY_SLEEP)
@@ -2218,18 +2118,9 @@ def spellOpenChest(caster):
 		iTreasure = gc.getInfoTypeForString('EQUIPMENT_TREASURE')
 		for i in range(pPlot.getNumUnits()):
 			pUnit = pPlot.getUnit(i)
-			
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			if pUnit.getUnitType() == iTreasure:
 			if pUnit.getUnitType() == iTreasure and not pUnit.isDelayedDeath():
-##--------		Unofficial Bug Fix: End Modify			--------##
-
 				pTreasure = pUnit
-				
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		pTreasure.kill(True, 0)
 		pTreasure.kill(True, PlayerTypes.NO_PLAYER)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def reqPromoteSettlement(caster):
 	pPlot = caster.plot()
@@ -2293,10 +2184,7 @@ def spellRagingSeas(caster):
 					if pPlot.isOwned():
 						if gc.getImprovementInfo(pPlot.getImprovementType()).isPermanent() == False:
 							if gc.getPlayer(pPlot.getOwner()).getCivilizationType() != iLanun:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#								if CyGame().getSorenRandNum(100, "Raging Seas") <= 25:
 								if CyGame().getSorenRandNum(100, "Raging Seas") < 25:
-##--------		Unofficial Bug Fix: End Modify			--------##
 									pPlot.setImprovementType(-1)
 			if pPlot.isVisibleToWatchingHuman():
 				CyEngine().triggerEffect(iSpring,pPlot.getPoint())
@@ -2313,7 +2201,6 @@ def reqRally(caster):
 	if pPlayer.getCivics(gc.getInfoTypeForString('CIVICOPTION_CULTURAL_VALUES')) != gc.getInfoTypeForString('CIVIC_CRUSADE'):
 		return False
 	if pPlayer.isHuman() == False:
-#		if pPlayer.getNumCities() < 5:
 		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
 		eTeam = gc.getTeam(iTeam)
 		if eTeam.getAtWarCount(True) == 0:
@@ -2435,55 +2322,37 @@ def spellRecruit(caster):
 	for i in range(iLoop):
 		iRnd = CyGame().getSorenRandNum(60, "Bob")
 		iUnit = -1
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		if iRnd <= 10:
 		if iRnd < 10:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_SCOUT')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_HUNTING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_HUNTER')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_ANIMAL_HANDLING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_RANGER')
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		elif iRnd <= 20:
 		elif iRnd < 20:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_SCOUT')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_HUNTING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_HUNTER')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_POISONS')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_ASSASSIN')
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		elif iRnd <= 30:
 		elif iRnd < 30:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_SCOUT')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_HORSEBACK_RIDING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_HORSEMAN')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_STIRRUPS')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_HORSE_ARCHER')
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		elif iRnd <= 40:
 		elif iRnd < 40:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_SCOUT')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_HORSEBACK_RIDING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_HORSEMAN')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_TRADE')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_CHARIOT')
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		elif iRnd <= 50:
 		elif iRnd < 50:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_WARRIOR')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_BRONZE_WORKING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_AXEMAN')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_IRON_WORKING')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_CHAMPION')
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#		elif iRnd <= 60:
 		elif iRnd < 60:
-##--------		Unofficial Bug Fix: End Modify			--------##
 			iUnit = gc.getInfoTypeForString('UNITCLASS_WARRIOR')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_ARCHERY')):
 				iUnit = gc.getInfoTypeForString('UNITCLASS_ARCHER')
@@ -2748,10 +2617,7 @@ def spellRingofFlames(caster):
 						bValid = False
 				if bValid:
 					if (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST') or pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE') or pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_NEW')):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#						if CyGame().getSorenRandNum(100, "Flames Spread") <= gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
 						if CyGame().getSorenRandNum(100, "Flames Spread") < gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
-##--------		Unofficial Bug Fix: End Modify			--------##
 							pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_SMOKE'))
 
 def reqRiverOfBlood(caster):
@@ -2759,7 +2625,6 @@ def reqRiverOfBlood(caster):
 	if pPlayer.getNumCities() == 0:
 		return False
 	if pPlayer.isHuman() == False:
-#		if pPlayer.getNumCities() < 5:
 		map = gc.getMap()
 		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
@@ -3015,21 +2880,8 @@ def spellScorch(caster):
 def spellSing(caster):
 	pPlot = caster.plot()
 	point = pPlot.getPoint()
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-	"""
-	iRnd = CyGame().getSorenRandNum(100, "Sing")
-	szText = "AS3D_SING1"
-	if iRnd > 25:
-		szText = "AS3D_SING2"
-	if iRnd > 50:
-		szText = "AS3D_SING3"
-	if iRnd > 75:
-		szText = "AS3D_SING4"
-	CyAudioGame().Play3DSound(szText,point.x,point.y,point.z)
-	"""
 	lszSound = ["AS3D_SING1", "AS3D_SING2", "AS3D_SING3", "AS3D_SING4"]
 	CyAudioGame().Play3DSound(lszSound[CyGame().getSorenRandNum(4, "Sing")], point.x, point.y, point.z)
-##--------		Unofficial Bug Fix: End Modify			--------##
 
 def reqSironasTouch(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
@@ -3230,10 +3082,7 @@ def spellSteal(caster):
 			for iProm in range(gc.getNumPromotionInfos()):
 				if pUnit.isHasPromotion(iProm):
 					if gc.getPromotionInfo(iProm).isEquipment():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-# 						if CyGame().getSorenRandNum(100, "Steal") <= 20:
  						if CyGame().getSorenRandNum(100, "Steal") < 20:
-##--------		Unofficial Bug Fix: End Modify			--------##
 							cf.startWar(caster.getOwner(), pUnit.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
 						else:
 							caster.setHasPromotion(iProm, True)
@@ -3244,10 +3093,7 @@ def spellSteal(caster):
 			for iBuild in range(gc.getNumBuildingInfos()):
 				if pCity.getNumRealBuilding(iBuild) > 0:
 					if gc.getBuildingInfo(iBuild).isEquipment():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-# 						if CyGame().getSorenRandNum(100, "Steal") <= 20:
  						if CyGame().getSorenRandNum(100, "Steal") < 20:
-##--------		Unofficial Bug Fix: End Modify			--------##
 							cf.startWar(caster.getOwner(), pUnit.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
 						else:
 							for iUnit in range(gc.getNumUnitInfos()):
@@ -3563,10 +3409,7 @@ def spellTsunami(caster):
 						pUnit.doDamage(30, 75, caster, gc.getInfoTypeForString('DAMAGE_COLD'), True)
 					if pPlot.getImprovementType() != -1:
 						if gc.getImprovementInfo(pPlot.getImprovementType()).isPermanent() == False:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#							if CyGame().getSorenRandNum(100, "Tsunami") <= 25:
 							if CyGame().getSorenRandNum(100, "Tsunami") < 25:
-##--------		Unofficial Bug Fix: End Modify			--------##
 								pPlot.setImprovementType(-1)
 					CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_SPRING'),pPlot.getPoint())
 
@@ -3931,10 +3774,7 @@ def spellWorldbreak(caster):
 				bValid = False
 		if bValid:
 			if pPlot.isCity():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#				if CyGame().getSorenRandNum(100, "Worldbreak") <= (iCounter / 4):
 				if CyGame().getSorenRandNum(100, "Worldbreak") < (iCounter / 4):
-##--------		Unofficial Bug Fix: End Modify			--------##
 					cf.doCityFire(pPlot.getPlotCity())
 				for i in range(pPlot.getNumUnits()):
 					pUnit = pPlot.getUnit(i)
@@ -3942,10 +3782,7 @@ def spellWorldbreak(caster):
 				CyEngine().triggerEffect(iPillar,pPlot.getPoint())
 			if (pPlot.getFeatureType() == iForest or pPlot.getFeatureType() == iJungle):
 				if pPlot.getImprovementType() == -1:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#					if CyGame().getSorenRandNum(100, "Flames Spread") <= (iCounter / 4):
 					if CyGame().getSorenRandNum(100, "Flames Spread") < (iCounter / 4):
-##--------		Unofficial Bug Fix: End Modify			--------##
 						pPlot.setImprovementType(iSmoke)
 
 def atRangeGuardian(pCaster, pPlot):
@@ -3981,10 +3818,7 @@ def onMoveAncientForest(pCaster, pPlot):
 					pCity = pPlot.getWorkingCity()
 					if pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_TEMPLE_OF_LEAVES')) > 0:
 						iChance = iChance * 3
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#				if CyGame().getSorenRandNum(100, "Treant Spawn Chance") <= iChance:
 				if CyGame().getSorenRandNum(100, "Treant Spawn Chance") < iChance:
-##--------		Unofficial Bug Fix: End Modify			--------##
 					pPlayer = gc.getPlayer(pCaster.getOwner())
 					p2Player = gc.getPlayer(pPlot.getOwner())
 					eTeam = gc.getTeam(pPlayer.getTeam())
@@ -4025,10 +3859,7 @@ def onMoveLetumFrigus(pCaster, pPlot):
 		
 
 def onMoveMaelstrom(pCaster, pPlot):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#	if CyGame().getSorenRandNum(100, "Maelstrom") <= 25:
 	if CyGame().getSorenRandNum(100, "Maelstrom") < 25:
-##--------		Unofficial Bug Fix: End Modify			--------##
 		CyInterface().addMessage(pCaster.getOwner(), True, gc.getEVENT_MESSAGE_TIME(), CyTranslator().getText("TXT_KEY_MESSAGE_MAELSTROM_KILL",()), 'AS2D_FEATUREGROWTH', InterfaceMessageTypes.MESSAGE_TYPE_INFO, 'Art/Interface/Buttons/Improvements/Maelstrom.dds',ColorTypes(7), pPlot.getX(), pPlot.getY(), True, True)
 		pCaster.kill(True, PlayerTypes.NO_PLAYER)
 	else:

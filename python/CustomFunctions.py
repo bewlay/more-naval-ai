@@ -948,53 +948,6 @@ class CustomFunctions:
 					pPlot.setTerrainType(iTundra,True,True)
 
 ##--------		Tweaked Hyborem: Added by Denev	--------##
-		"""
-	def getAshenVeilCity(self, iNum):
-		iInfernal = gc.getInfoTypeForString('CIVILIZATION_INFERNAL')
-		iVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
-		iBestValue1 = 0
-		iBestValue2 = 0
-		iBestValue3 = 0
-		pBestCity1 = -1
-		pBestCity2 = -1
-		pBestCity3 = -1
-		for iPlayer in range(gc.getMAX_PLAYERS()):
-			pPlayer = gc.getPlayer(iPlayer)
-			if (pPlayer.isAlive() and pPlayer.getCivilizationType() != iInfernal):
-				for pyCity in PyPlayer(iPlayer).getCityList():
-					pCity = pyCity.GetCy()
-					if (pCity.isHasReligion(iVeil) and pCity.isCapital() == False):
-						bValid = True
-						iValue = pCity.getPopulation() * 100
-						iValue += pCity.getCulture(iPlayer) / 3
-						iValue += pCity.getNumBuildings() * 10
-						iValue += pCity.getNumWorldWonders() * 100
-						iValue += pCity.countNumImprovedPlots()
-						if iValue > iBestValue1:
-							iBestValue3 = iBestValue2
-							pBestCity3 = pBestCity2
-							iBestValue2 = iBestValue1
-							pBestCity2 = pBestCity1
-							iBestValue1 = iValue
-							pBestCity1 = pCity
-							bValid = False
-						if (bValid and iValue > iBestValue2):
-							iBestValue3 = iBestValue2
-							pBestCity3 = pBestCity2
-							iBestValue2 = iValue
-							pBestCity2 = pCity
-							bValid = False
-						if (bValid and iValue > iBestValue3):
-							iBestValue3 = iValue
-							pBestCity3 = pCity
-		if iNum == 1:
-			return pBestCity1
-		if iNum == 2:
-			return pBestCity2
-		if iNum == 3:
-			return pBestCity3
-		return -1
-		"""
 	def getAshenVeilCities(self, iCasterPlayer, iCasterID, iNum):
 		pCasterPlayer = gc.getPlayer(iCasterPlayer)
 		pCaster = pCasterPlayer.getUnit(iCasterID)
@@ -1081,19 +1034,6 @@ class CustomFunctions:
 			if pPlayer.getLeaderType() == iLeader:
 				i = iPlayer
 		return i
-
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-	"Moved to DLL"
-	"""
-	def getOpenPlayer(self):
-		i = -1
-		for iPlayer in range(gc.getMAX_PLAYERS()):
-			pPlayer = gc.getPlayer(iPlayer)
-			if (pPlayer.isEverAlive() == False and i == -1):
-				i = iPlayer
-		return i
-	"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 
 	def getUnholyVersion(self, pUnit):
 		iUnit = -1

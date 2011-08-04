@@ -503,11 +503,8 @@ class CvEventManager:
 		cs.doTurn()
 # FfH Card Game: end
 
-##--------	Merging Better BtS AI: Modified by Denev	--------##
-#		CvTopCivs.CvTopCivs().turnChecker(iGameTurn)
 		if( CyGame().getAIAutoPlay() == 0 ) :
 			CvTopCivs.CvTopCivs().turnChecker(iGameTurn)
-##--------	Merging Better BtS AI: End Modify			--------##
 
 	def onEndGameTurn(self, argsList):
 		'Called at the end of the end of each turn'
@@ -769,10 +766,7 @@ class CvEventManager:
 				popupInfo.addPopup(pCity.getOwner())
 
 		if iBuildingType == gc.getInfoTypeForString('BUILDING_INFERNAL_GRIMOIRE'):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			if CyGame().getSorenRandNum(100, "Bob") <= 20:
 			if CyGame().getSorenRandNum(100, "Bob") < 20:
-##--------		Unofficial Bug Fix: End Modify			--------##
 				pPlot2 = cf.findClearPlot(-1, pPlot)
 				if pPlot2 != -1:
 					bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
@@ -795,18 +789,6 @@ class CvEventManager:
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'), 0)
 
 		if iBuildingType == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-			"""
-			iMercurianPlayer = cf.getOpenPlayer()
-			iTeam = pPlayer.getTeam()
-			pPlot2 = cf.findClearPlot(-1, pCity.plot())
-			if (iMercurianPlayer != -1 and pPlot2 != -1):
-				for i in range(pPlot.getNumUnits(), -1, -1):
-					pUnit = pPlot.getUnit(i)
-					pUnit.setXY(pPlot2.getX(), pPlot2.getY(), True, True, True)
-				CyGame().addPlayerAdvanced(iMercurianPlayer, iTeam, gc.getInfoTypeForString('LEADER_BASIUM'), gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'))
-				gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_BASIUM'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
-			"""
 			for iLoop in range(pPlot.getNumUnits(), -1, -1):
 				pUnit = pPlot.getUnit(iLoop)
 				pUnit.jumpToNearestValidPlot()
@@ -823,7 +805,6 @@ class CvEventManager:
 					
 				pBasiumUnit = gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_BASIUM'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 				pBasiumUnit.setAvatarOfCivLeader(True)
-##--------		Unofficial Bug Fix: End Modify			--------##
 				gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_SETTLER'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 				gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_ANGEL'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 				gc.getPlayer(iMercurianPlayer).initUnit(gc.getInfoTypeForString('UNIT_ANGEL'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
@@ -1025,9 +1006,7 @@ class CvEventManager:
 			apUnitList = py.getUnitList()
 			for pUnit in apUnitList:
 				if pUnit.isAlive():
-##--------		Unofficial Bug Fix: Added by Denev	--------##
 					if pUnit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
-##--------		Unofficial Bug Fix: End Add			--------##
 						pUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL'), True)
 
 		if iProjectType == gc.getInfoTypeForString('PROJECT_PURGE_THE_UNFAITHFUL'):
@@ -1144,12 +1123,8 @@ class CvEventManager:
 				pLoopCity.setPopulation(iPop)
 
 		if iProjectType == gc.getInfoTypeForString('PROJECT_ASCENSION'):
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-			"When Auric is killed, his civilization loses all trait from him."
-#			pPlayer.initUnit(gc.getInfoTypeForString('UNIT_AURIC_ASCENDED'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			pAuricUnit = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_AURIC_ASCENDED'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			pAuricUnit.setAvatarOfCivLeader(True)
-##--------		Unofficial Bug Fix: End Modify			--------##
 			if pPlayer.isHuman():
 				t = "TROPHY_FEAT_ASCENSION"
 				if not CyGame().isHasTrophy(t):
@@ -1378,13 +1353,8 @@ class CvEventManager:
 			if pPlayer.getNumBuilding(gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY')) > 0:
 				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_STRONG'), True)
 
-
-#Sephi
-					
-#UNITAI for AdeptUnits
+#UNITAI for Adepts and Terraformers
 		if ((not pPlayer.isHuman()) and (not pPlayer.isBarbarian())):
-			
-#UNITAI for Terraformers
 			if unit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):			
 				numberterraformer=0
 				for pUnit in player.getUnitList():
@@ -1422,7 +1392,6 @@ class CvEventManager:
 				bHasAI = false
 				canupgrademana = false
 								
-#				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUSCLASS_RAWMANA')) > 0:
 				if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):			
 					canupgrademana=true
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ALTERATION')):
@@ -1467,10 +1436,6 @@ class CvEventManager:
 		player = PyPlayer(city.getOwner())
 		pPlayer = gc.getPlayer(unit.getOwner())
 
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-#		iFreeProm = unit.getFreePromotionPick()
-##--------		Unofficial Bug Fix: End Delete			--------##
-
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_BEAST_OF_AGARES'):
 			if city.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				iPop = city.getPopulation() - 4
@@ -1478,41 +1443,6 @@ class CvEventManager:
 					iPop = 1
 				city.setPopulation(iPop)
 				city.setOccupationTimer(4)
-
-
-
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"Moved to self.applyBuildEffects"
-		"""
-		if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_CHANCEL_OF_GUARDIANS')) > 0:
-			if CyGame().getSorenRandNum(100, "Chancel of Guardians") < 20:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DEFENSIVE'), True)
-
-		if (city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS')) > 0 and unit.getUnitCombatType() == (gc.getInfoTypeForString('UNITCOMBAT_ADEPT'))):
-			i = 0
-			for iBonus in range(gc.getNumBonusInfos()):
-				if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
-					if city.hasBonus(iBonus):
-						i = i + 1
-			if i >= 1:
-				unit.changeExperience(i, -1, False, False, False)
-
-		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_GOLEM')):
-			if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_BLASTING_WORKSHOP')) > 0:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_FIRE2'), True)
-			if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_PALLENS_ENGINE')) > 0:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_PERFECT_SIGHT'), True)
-			if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_ADULARIA_CHAMBER')) > 0:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN'), True)
-
-		if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_ASYLUM')) > 0:
-			if unit.isAlive():
-				if isWorldUnitClass(unit.getUnitClassType()) == False:
-					if CyGame().getSorenRandNum(100, "Bob") <= 10:
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_CRAZED'), True)
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENRAGED'), True)
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_ACHERON'):
 			unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HELD'), True)
@@ -1524,43 +1454,14 @@ class CvEventManager:
 					pPlot = CyMap().plot(iiX,iiY)
 					if (pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST') or pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE')):
 						pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FLAMES'), 0)
-##--------	Merging Better BtS AI: Modified by Denev	--------##
-#			cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_ACHERON_CREATION",()), str(gc.getUnitInfo(unit.getUnitType()).getImage()))
 			if( CyGame().getAIAutoPlay() == 0 ) :
 				cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_ACHERON_CREATION",()), str(gc.getUnitInfo(unit.getUnitType()).getImage()))
-##--------	Merging Better BtS AI: End Modify			--------##
-
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"Moved to self.applyBuildEffects"
-		"""
-		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_DWARF')):
-			if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_BREWERY')) > 0:
-				unit.changeExperience(2, -1, False, False, False)
-
-		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_DEMON')):
-			if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR')) > 0:
-				unit.changeExperience(2, -1, False, False, False)
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
-
-##--------		Unofficial Bug Fix: Deleted by Denev	--------##
-		"""
-		if unit.getFreePromotionPick() < iFreeProm:
-			unit.changeFreePromotionPick(iFreeProm - unit.getFreePromotionPick())
-		"""
-##--------		Unofficial Bug Fix: End Delete			--------##
 
 		if city.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_WARRENS')) > 0:
 			if isWorldUnitClass(unit.getUnitClassType()) == False:
 				if isNationalUnitClass(unit.getUnitClassType()) == False:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-					"""
-					if unit.getUnitCombatType() != gc.getInfoTypeForString('UNITCOMBAT_SIEGE'):
-						if unit.getUnitCombatType() != gc.getInfoTypeForString('UNITCOMBAT_NAVAL'):
-					"""
 					if not unit.isMechUnit():
 						if unit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
-##--------		Unofficial Bug Fix: End Modify			--------##
 							newUnit = pPlayer.initUnit(unit.getUnitType(), city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 							city.applyBuildEffects(newUnit)
 
@@ -2170,10 +2071,7 @@ class CvEventManager:
 		if CyGame().getWBMapScript():
 			sf.onCityBuilt(city)
 
-##--------	Merging Better BtS AI: Modified by Denev	--------##
-#		if (city.getOwner() == gc.getGame().getActivePlayer()):
 		if (city.getOwner() == CyGame().getActivePlayer() and CyGame().getAIAutoPlay() == 0 ):
-##--------	Merging Better BtS AI: End Modify			--------##
 			self.__eventEditCityNameBegin(city, False)
 		CvUtil.pyPrint('City Built Event: %s' %(city.getName()))
 		
@@ -2399,10 +2297,7 @@ class CvEventManager:
 			if CyGame().getGlobalCounter() == 100:
 				iMax = 4
 				iMult = 2.5
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#			if CyGame().getSorenRandNum(10000, "Planar Gate") <= gc.getDefineINT('PLANAR_GATE_CHANCE') * iMult:
 			if CyGame().getSorenRandNum(10000, "Planar Gate") < gc.getDefineINT('PLANAR_GATE_CHANCE') * iMult:
-##--------		Unofficial Bug Fix: End Modify			--------##
 				listUnits = []
 				iMax = iMax * pPlayer.countNumBuildings(gc.getInfoTypeForString('BUILDING_PLANAR_GATE'))
 				if pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_GAMBLING_HOUSE')) > 0:
@@ -2453,10 +2348,7 @@ class CvEventManager:
 
 		if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_THE_DRAGONS_HORDE')) > 0:
 			if pPlayer.isBarbarian():
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#				if CyGame().getSorenRandNum(100, "Bob") <= gc.getHandicapInfo(gc.getGame().getHandicapType()).getLairSpawnRate():
 				if CyGame().getSorenRandNum(100, "Bob") < gc.getHandicapInfo(gc.getGame().getHandicapType()).getLairSpawnRate():
-##--------		Unofficial Bug Fix: End Modify			--------##
 					iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_OF_ACHERON')
 #					eTeam = gc.getTeam(pPlayer.getTeam())
 #					if eTeam.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
