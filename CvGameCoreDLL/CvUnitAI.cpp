@@ -26425,22 +26425,24 @@ void CvUnitAI::PatrolMove()
     int iBestValue=-1;
     CvPlot* pBestPlot=NULL;
 
-    int flag;
+	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
 
-    switch(AI_getUnitAIType())
+	bool bHero = false;
+	bool bWizard = false;
+    switch (AI_getUnitAIType())
     {
-        case UNITAI_COUNTER:
-            flag=0;
-            break;
+        case UNITAI_HERO:
+			bHero = true;
+			break;
         case UNITAI_WARWIZARD:
-            flag=1;
+			bWizard = true;
             break;
         default:
-            flag=0;
             break;
     }
 
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
+	bool bAnyWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 
 	if (GC.getLogging())
 	{
@@ -26452,22 +26454,61 @@ void CvUnitAI::PatrolMove()
 		}
 	}
 
-	if( getGroup()->getNumUnits() > 5 )
+	// Heroes and Casters should seek larger groups
+	if (bHero || bWizard)
 	{
-		UnitAITypes eGroupAI = getGroup()->getHeadUnitAI();
-		if( eGroupAI == AI_getUnitAIType() )
+		if (bAtWar || bAnyWarPlan)
 		{
-			if( plot()->getOwnerINLINE() == getOwnerINLINE() && !bDanger )
-			{
-				// Should never have attack city group lead by attack unit
-				if( getGroup()->countNumUnitAIType(UNITAI_ATTACK_CITY) > 0 )
-				{
-					getGroup()->AI_separateAI(UNITAI_ATTACK_CITY); // will change group
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+		}
 
-					// Since ATTACK can try to join ATTACK_CITY again, need these units to
-					// take a break to let ATTACK_CITY group move and avoid hang
-					getGroup()->pushMission(MISSION_SKIP);
-					return;
+		if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
+		{
+			/*
+			if (AI_groupMergeRange(UNITAI_ATTACK, 10, false, true, false))
+			{
+				return;
+			}
+			*/
+			if (AI_group(UNITAI_ATTACK))
+			{
+				return;
+			}
+			if (AI_moveToStagingCity())
+			{
+				return;
+			}
+		}
+	}
+
+	if( getGroup()->getNumUnits() > 5)
+	{
+		if (bAnyWarPlan)
+		{
+			if (getGroup()->getNumUnits() > ((GET_PLAYER(getOwnerINLINE()).getNumCities() + 1) * 3))
+			{
+				AI_setGroupflag(GROUPFLAG_CONQUEST);
+				return;
+			}
+		}
+
+		if (bAtWar)
+		{
+			UnitAITypes eGroupAI = getGroup()->getHeadUnitAI();
+			if( eGroupAI == AI_getUnitAIType() )
+			{
+				if( plot()->getOwnerINLINE() == getOwnerINLINE() && !bDanger )
+				{
+					// Should never have attack city group lead by attack unit
+					if( getGroup()->countNumUnitAIType(UNITAI_ATTACK_CITY) > 0 )
+					{
+						getGroup()->AI_separateAI(UNITAI_ATTACK_CITY); // will change group
+
+						// Since ATTACK can try to join ATTACK_CITY again, need these units to
+						// take a break to let ATTACK_CITY group move and avoid hang
+						getGroup()->pushMission(MISSION_SKIP);
+						return;
+					}
 				}
 			}
 		}
@@ -26484,8 +26525,17 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 
-	if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
+	if (!bHero)
 	{
+		if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
+		{
+			return;
+		}
+	}
+
+	if (AI_groupMergeRange(UNITAI_ATTACK, 0, true, true))
+	{
+		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
 
@@ -26529,12 +26579,12 @@ void CvUnitAI::PatrolMove()
 	// switch to PermDefense if needed
 	if (plot()->isCity() && plot()->getOwnerINLINE() == getOwnerINLINE())
 	{
-		if (plot()->getPlotCity()->AI_neededPermDefense(0)>0)
-		//if (plot()->getPlotCity()->AI_neededDefenders() > plot()->getNumDefenders(getOwnerINLINE()))
+		//if (plot()->getPlotCity()->AI_neededPermDefense(0)>0)
+		if (plot()->getPlotCity()->AI_neededDefenders() > plot()->getNumDefenders(getOwnerINLINE()))
 	    {
 			if (isUnitAllowedPermDefense())
 			{
-				AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
+				AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
 				AI_setUnitAIType(UNITAI_CITY_DEFENSE);
 				return;
 			}
@@ -26573,7 +26623,7 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 		
-	if (!bDanger)
+	if (!bDanger && !bHero)
 	{
 		if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
 		{
@@ -26639,6 +26689,11 @@ void CvUnitAI::PatrolMove()
 				return;
 			}
 		}
+	}
+
+	if (AI_pickupEquipment(3))
+	{
+		return;
 	}
 
 	if (!noDefensiveBonus())
@@ -26845,14 +26900,13 @@ void CvUnitAI::PatrolMove()
 	// switch to Conquest if we're at war and can't find anything to do
 	if (getGroup()->getNumUnits() == 1)
 	{
-		if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
+		if (bAtWar || bAnyWarPlan)
 		{
 			AI_setGroupflag(GROUPFLAG_CONQUEST);
-			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			//AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			return;
 		}
-
-		if (AI_groupMergeRange(UNITAI_ATTACK, 3))
+		if (AI_group(UNITAI_ATTACK, 5))
 		{
 			return;
 		}
