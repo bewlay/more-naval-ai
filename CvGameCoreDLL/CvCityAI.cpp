@@ -1218,7 +1218,6 @@ void CvCityAI::AI_chooseProduction()
 			
 			if (AI_chooseBuilding(iBarbarianFlags, 15))
 			{
-				//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses barb AI_chooseBuilding with flags and iBuildUnitProb = %d", getName().GetCString(), iBuildUnitProb);
 				return;
 			}
 
@@ -1226,7 +1225,6 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseBuilding())
 				{
-					//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses barb AI_chooseBuilding without flags and iBuildUnitProb = %d", getName().GetCString(), iBuildUnitProb);
 					return;
 				}
 			}
@@ -1405,7 +1403,6 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 		{
-			// BBAI TODO: Does this work right after settler is built???
 			return;
 		}
 
@@ -2026,7 +2023,6 @@ void CvCityAI::AI_chooseProduction()
 				{
 					if (AI_chooseUnit(UNITAI_SETTLER_SEA))
 					{
-						//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses main settler sea", getName().GetCString());
 						return;
 					}
 				}
