@@ -113,9 +113,12 @@ public:
 /*                                                                                              */
 /* Tech AI                                                                                      */
 /************************************************************************************************/
-	int AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave ) const;
-	int AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bEnablesWonder ) const;
-	int AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder ) const;
+	// ALN AITechValues Start
+	// int AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave ) const;
+	int AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave, bool bDebugLog = false ) const;
+	// ALN AITechValues End
+	int AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bEnablesWonder, bool bDebugLog = false ) const;
+	int AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder, bool bDebugLog = false ) const;
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/

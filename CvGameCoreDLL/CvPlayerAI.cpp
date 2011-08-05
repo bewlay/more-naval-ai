@@ -4489,7 +4489,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 
 							if (iPathLength <= iMaxPathLength)
 							{
-								iValue = AI_techValue( (TechTypes)iI, iPathLength, bIgnoreCost, bAsync, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave );
+								iValue = AI_techValue( (TechTypes)iI, iPathLength, bIgnoreCost, bAsync, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave, true );
 
 								if (iValue > iBestValue)
 								{
@@ -4513,7 +4513,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	return eBestTech;
 }
 
-int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave ) const
+int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost, bool bAsync, int* paiBonusClassRevealed, int* paiBonusClassUnrevealed, int* paiBonusClassHave, bool bDebugLog ) const
 {
 	PROFILE_FUNC();
 
@@ -4547,7 +4547,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iPathLength = findPathLength(eTech, false);
 	}
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -4561,9 +4561,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue = 1;
 
+	/*
 	int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
 	int iRandomMax = 2000;
 	iValue += iRandomFactor;
+	*/
 
 	iValue += kTeam.getResearchProgress(eTech);
 
@@ -4748,7 +4750,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -4903,7 +4905,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue = 0;
 						}
 
-						if (GC.getLogging())
+						if (GC.getLogging() && bDebugLog)
 						{
 							if (gDLL->getChtLvl() > 0)
 							{
@@ -4942,7 +4944,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					// End Tholal AI
 				}
 
-				if (GC.getLogging())
+				if (GC.getLogging() && bDebugLog)
 				{
 					if (gDLL->getChtLvl() > 0)
 					{
@@ -5018,7 +5020,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue += iBuildValue;
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5069,7 +5071,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5084,8 +5086,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	/* ------------------ Unit Value  ------------------ */
 	bool bEnablesUnitWonder;
-	iValue += AI_techUnitValue( eTech, iPathLength, bEnablesUnitWonder );
+	iValue += AI_techUnitValue( eTech, iPathLength, bEnablesUnitWonder, bDebugLog );
 	
+	/*
 	if (bEnablesUnitWonder)
 	{
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
@@ -5094,6 +5097,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iRandomMax += 2000;
 		iRandomFactor += iWonderRandom;
 	}
+	*/
 
 	// add a small bonus for promotions that require this tech
 	int iPromotionValue = 0;
@@ -5110,7 +5114,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getLogging() && iPromotionValue > 0)
+	if (GC.getLogging() && iPromotionValue > 0 && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5126,9 +5130,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	/* ------------------ Building Value  ------------------ */
 	bool bEnablesWonder;
-	iValue += AI_techBuildingValue( eTech, iPathLength, bEnablesWonder );
+	iValue += AI_techBuildingValue( eTech, iPathLength, bEnablesWonder, bDebugLog );
 
 	// if it gives at least one wonder
+	/*
 	if (bEnablesWonder)
 	{
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
@@ -5144,6 +5149,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iRandomMax += 400;
 		iRandomFactor += iWonderRandom;
 	}
+	*/
 
 	/* ------------------ Project Value  ------------------ */
 	bool bEnablesProjectWonder = false;
@@ -5202,6 +5208,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			}
 		}
 	}
+	/*
 	if (bEnablesProjectWonder)
 	{
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
@@ -5210,8 +5217,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iRandomMax += 200;
 		iRandomFactor += iWonderRandom;
 	}
+	*/
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5272,7 +5280,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5328,7 +5336,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iCivicTechValue /= 3;
 				}
 
-				if (GC.getLogging())
+				if (GC.getLogging() && bDebugLog)
 				{
 					if (gDLL->getChtLvl() > 0)
 					{
@@ -5453,7 +5461,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						if (eReligion == eFavorite)
 						{
 							iReligionValue += (bHasReligion ? 1000 : 1500);
-							if (GC.getLogging())
+							if (GC.getLogging() && bDebugLog)
 							{
 								if (gDLL->getChtLvl() > 0)
 								{
@@ -5503,7 +5511,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iReligionValue *= (100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion));
 					iReligionValue /= 100;
 
-					if (GC.getLogging())
+					if (GC.getLogging() && bDebugLog)
 					{
 						if (gDLL->getChtLvl() > 0)
 						{
@@ -5525,32 +5533,35 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 					if (!(GC.getGameINLINE().isCorporationFounded((CorporationTypes)iJ)))
 					{
-						iValue += 100 + ((bAsync) ? GC.getASyncRand().get(2400, "AI Research Corporation ASYNC") : GC.getGameINLINE().getSorenRandNum(2400, "AI Research Corporation"));
+						iValue += 1000; //+ ((bAsync) ? GC.getASyncRand().get(2400, "AI Research Corporation ASYNC") : GC.getGameINLINE().getSorenRandNum(2400, "AI Research Corporation"));
 					}
 				}
 			}
 
 			if (getTechFreeUnit(eTech) != NO_UNIT)
 			{
+				/*
 				int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
 				iValue += iGreatPeopleRandom;
 				
 				iRandomMax += 3200;
 				iRandomFactor += iGreatPeopleRandom;
+				*/
 
 				if (bCapitalAlone)
 				{
 					iValue += 400;
 				}
 
-				iValue += 200;
+				//iValue += 200;
+				iValue += 1000;
 			}
 
-			iValue += (GC.getTechInfo(eTech).getFirstFreeTechs() * (200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
+			iValue += (GC.getTechInfo(eTech).getFirstFreeTechs() * 200);//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
 		}
 	}
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5567,7 +5578,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 //FfH: Added by Kael 06/17/2009
 	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech)
 	{
-		if (GC.getLogging())
+		if (GC.getLogging() && bDebugLog)
 		{
 			if (gDLL->getChtLvl() > 0)
 			{
@@ -5625,6 +5636,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 //<<<<Better AI: End Modify
 
 	// give a bump to techs that offer a free Great Person as long as they havent already been researched
+	/*
 	bool bUnresearchedTech = true;
 
 	for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; iTeam++)
@@ -5658,6 +5670,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iValue += 1000;
 		}
 	}
+	*/
 
 	if (GC.getTechInfo(eTech).isWater())
 	{
@@ -5683,7 +5696,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	int iTurnsLeft = 0;
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5725,7 +5738,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 	
-	//Tech Whore								
+	//Tech Whore
+	/*
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING))
 	{
 		if (GC.getTechInfo(eTech).isTechTrading() || kTeam.isTechTrading())
@@ -5763,6 +5777,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			}
 		}
 	}
+	*/
 
 	if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3))
 	{
@@ -5773,7 +5788,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue = std::max(1, iValue);
 
-	if (GC.getLogging())
+	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
@@ -5790,7 +5805,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 }
 
 
-int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bEnablesWonder ) const
+int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bEnablesWonder, bool bDebugLog ) const
 {
 	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bool bCapitalAlone = (GC.getGameINLINE().getElapsedGameTurns() > 0) ? AI_isCapitalAreaAlone() : false;
@@ -6168,7 +6183,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				}
 
 
-				if (GC.getLogging())
+				if (GC.getLogging() && bDebugLog)
 				{
 					if (gDLL->getChtLvl() > 0)
 					{
@@ -6239,7 +6254,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 }
 
 
-int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder ) const
+int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder, bool bDebugLog ) const
 {
 	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
@@ -6324,7 +6339,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 				if (kLoopUnit.getPrereqAndTech() == eTech)
 				{
-					if (GC.getLogging())
+					if (GC.getLogging() && bDebugLog)
 					{
 						if (gDLL->getChtLvl() > 0)
 						{
@@ -6351,7 +6366,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						{
 							iUnitValue += 1000;
 
-							if (GC.getLogging())
+							if (GC.getLogging() && bDebugLog)
 							{
 								if (gDLL->getChtLvl() > 0)
 								{
@@ -6847,7 +6862,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iMilitaryValue /= 3;
 						}
 
-						if (GC.getLogging())
+						if (GC.getLogging() && bDebugLog)
 						{
 							if (gDLL->getChtLvl() > 0)
 							{
@@ -6954,7 +6969,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 					if (bRequiresBonus && !bHasRequiredBonus)
 					{
-						if (GC.getLogging())
+						if (GC.getLogging() && bDebugLog)
 						{
 							if (gDLL->getChtLvl() > 0)
 							{
@@ -6971,7 +6986,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iUnitValue /= 2;
 					}
 
-					if (GC.getLogging())
+					if (GC.getLogging() && bDebugLog)
 					{
 						if (gDLL->getChtLvl() > 0)
 						{

@@ -3663,6 +3663,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 				int* paiBonusClassUnrevealed;
 				int* paiBonusClassHave;
 				
+				// ALN AITechValues Start
+				std::vector< std::pair<TechTypes, int> > aTechValues;
+				std::vector< std::pair<TechTypes, int> >::iterator it;
+				// ALN AITechValues End
+				
 				paiBonusClassRevealed = new int[GC.getNumBonusClassInfos()];
 				paiBonusClassUnrevealed = new int[GC.getNumBonusClassInfos()];
 				paiBonusClassHave = new int[GC.getNumBonusClassInfos()];
@@ -3716,6 +3721,69 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 					}
 				}
 				*/
+				
+				// ALN AITechValues Start
+				int iPathLength;
+				// bool bDummy;
+				bool bLastInLine;
+				int iTechValue;
+				TechTypes eLoopTech;
+				for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
+				{
+					
+					iPathLength = GET_PLAYER(pPlot->getOwner()).findPathLength(((TechTypes)iI), false);
+
+					if( iPathLength <= 3 && !GET_TEAM(pPlot->getTeam()).isHasTech((TechTypes)iI) && GET_PLAYER(pPlot->getOwner()).canEverResearch((TechTypes)iI))
+					{
+						iTechValue = GET_PLAYER(pPlot->getOwner()).AI_techValue((TechTypes)iI, iPathLength, false, false, paiBonusClassRevealed, paiBonusClassUnrevealed, paiBonusClassHave, false);
+						// szString.append(CvWString::format(L"\n%s(%d)=%d", GC.getTechInfo((TechTypes)iI).getDescription(), iPathLength, iTechValue));
+						if (aTechValues.empty())
+						{
+							aTechValues.push_back(std::make_pair((TechTypes)iI, iTechValue));
+						}
+						else
+						{
+							bLastInLine = true;
+							for (it = aTechValues.begin(); it != aTechValues.end(); ++it)
+							{
+								if (it != NULL)
+								{
+									if (iTechValue > (*it).second)
+									{
+										aTechValues.insert(it, std::make_pair((TechTypes)iI, iTechValue));
+										bLastInLine = false;
+										break;
+									}
+								}
+							}
+							if (bLastInLine)
+							{
+								aTechValues.push_back(std::make_pair((TechTypes)iI, iTechValue));
+							}
+						}
+					}
+				}
+				it = aTechValues.begin();
+				if (it != NULL)
+				{
+					int iBestTechValue = (*it).second;
+					for (it = aTechValues.begin(); it != aTechValues.end(); ++it)
+					{
+						if (it != NULL)
+						{
+							eLoopTech = (*it).first;
+							iTechValue = (*it).second * 1000 / iBestTechValue;
+							iPathLength = GET_PLAYER(pPlot->getOwner()).findPathLength((eLoopTech), false);
+							szString.append(CvWString::format(SETCOLR L"\n%s(%d)" ENDCOLR L" = %d.%d", TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getTechInfo(eLoopTech).getDescription(), iPathLength, iTechValue / 10, iTechValue % 10));
+							// szString.append(CvWString::format(L" (bld:%d, ", GET_PLAYER(pPlot->getOwner()).AI_techBuildingValue(eLoopTech, 1, bDummy)));
+							// szString.append(CvWString::format(L"unt:%d)", GET_PLAYER(pPlot->getOwner()).AI_techUnitValue(eLoopTech, 1, bDummy)));
+						}
+					}
+				}
+				SAFE_DELETE_ARRAY(paiBonusClassRevealed);
+				SAFE_DELETE_ARRAY(paiBonusClassUnrevealed);
+				SAFE_DELETE_ARRAY(paiBonusClassHave);
+				// aTechValues.clear();
 			}
 			else if( bAlt && !bShift )
 			{
