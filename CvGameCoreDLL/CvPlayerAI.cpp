@@ -12071,13 +12071,10 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
 	}
 
 	// try and keep at least one state missionary around at all times
-	if (bState)
-	{
-		iCount++;
-	}
-	//	End Tholal AI
+	int iFinalCount;
+	iFinalCount = std::max((bState ? 1 : 0), iCount);
 
-	return iCount;
+	return iFinalCount;
 }
 
 
