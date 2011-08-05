@@ -2802,6 +2802,28 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				}
 			}
 
+			// Tholal Note - put this section in to try and boost value of settling near unique improvements such as Remnants of Patria
+			if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
+			{
+				if (GC.getImprovementInfo((ImprovementTypes)(pLoopPlot->getImprovementType())).isUnique())
+				{
+					// Remnants of Patria
+					for (int iYieldType = 0; iYieldType < NUM_YIELD_TYPES; ++iYieldType)
+					{
+						iTempValue += GC.getImprovementInfo((ImprovementTypes)(pLoopPlot->getImprovementType())).getYieldChange(iYieldType) * 150;
+					}
+
+					// Well, Pyre, Ygdrassil, etc
+					if (GC.getImprovementInfo((ImprovementTypes)(pLoopPlot->getImprovementType())).getBonusConvert() != NO_BONUS)
+					{
+						iTempValue += 100;
+					}
+
+					// Tomb of Sucellus
+					iTempValue += (GC.getImprovementInfo((ImprovementTypes)(pLoopPlot->getImprovementType())).getHealRateChange() * 2);
+				}
+			}
+
             if (iI == CITY_HOME_PLOT)
 			{
 				iTempValue += aiYield[YIELD_FOOD] * 60;
@@ -2957,23 +2979,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 							iSpecialCommerce += pLoopPlot->calculateBestNatureYield(YIELD_COMMERCE, getTeam()) + GC.getImprovementInfo(eBonusImprovement).getImprovementBonusYield(eBonus, YIELD_COMMERCE);
 						}
 
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	grassland farms are really good        														**/
-/**	Tholal note - HARDCODE					                                            							**/
-/*************************************************************************************************/
-						/*
-                        if (pLoopPlot->isFreshWater())
-                        {
-                            if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_GRASS"))
-                                iSpecialFood ++;
-                            if (eFeature == GC.getDefineINT("FLOOD_PLAINS_FEATURE"))
-                                iSpecialFood ++;
-                        }
-						*/
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 						if (eFeature != NO_FEATURE)
 						{
 							if (GC.getFeatureInfo(eFeature).getYieldChange(YIELD_FOOD) < 0)
@@ -3056,24 +3061,27 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
                         if (pLoopPlot->isWater())
                         {
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	Pirates like Water                  														**/
-/**						                                            							**/
-/*************************************************************************************************/
-/** orig
-                            iValue += (bIsCoastal ? 100 : -800);
-**/
-							if (!isPirate())
+							if (!bIsCoastal)
 							{
-								if (!pLoopPlot->isCityRadius())
+								iValue += -800;
+							}
+							else
+							{
+								iValue += (isSprawling() ? 25 : 50);
+								if (isPirate())
 								{
-									iValue += (bIsCoastal ? 100 : -800);
+									iValue += 100;
 								}
 							}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
+//                          iValue += (bIsCoastal ? 100 : -800);
+							/*
+							iValue += (bIsCoastal ? 50 : -800);
+							if (isPirate())
+							{
+								iValue += 100;
+							}
+							*/
                         }
                     }
 				}
@@ -3125,13 +3133,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*                                                                                              */
 /* Settler AI                                                                                   */
 /************************************************************************************************/
-				iValue += 200;
+				//iValue += 200;
 
 				// Push players to get more coastal cities so they can build navies
 				CvArea* pWaterArea = pPlot->waterArea(true);
 				if( pWaterArea != NULL )
 				{
-					iValue += 200;
+					//iValue += 200;
 
 					if( GET_TEAM(getTeam()).AI_isWaterAreaRelevant(pWaterArea) )
 					{
@@ -3368,7 +3376,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		    {
 			// Tholal AI - increased from 2000 to try and keep AI cities apart
 				// ToDo - increase if not team city
-		    	iValue -= (4 - iDistance) * 7500;
+		    	iValue -= (4 - iDistance) * 5000;
 		    }
 			iValue *= (8 + iNumCities * 4);
 			iValue /= (2 + (iNumCities * 4) + iDistance);
