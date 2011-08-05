@@ -3814,7 +3814,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 						}
 						szString.append(CvWString::format(L"\n"));
 					}
-					
+					// ALN AITechValues End
 				}
 			}
 			else if( bShift && bAlt )
