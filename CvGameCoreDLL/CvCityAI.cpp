@@ -5973,16 +5973,16 @@ int CvCityAI::AI_neededDefenders()
 	{
 		iDefenders = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getBarbarianInitialDefenders();
 		iDefenders += ((getPopulation() + 2) / 7);
-		return iDefenders;
+		return std::max(1, iDefenders);
 	}
 
 	if (GET_TEAM(getTeam()).isBarbarianAlly() && !bAtWar)
 	{
-		iDefenders = 2;
+		iDefenders = 1;
 	}
 	else
 	{
-		iDefenders = 3;
+		iDefenders = 2;
 	}
 
 	// defend the Altar!
