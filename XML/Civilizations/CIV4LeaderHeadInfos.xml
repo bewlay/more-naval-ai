@@ -6035,7 +6035,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>400</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>130</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>100</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>60</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>180</iLimitedWarRand>
@@ -6719,7 +6719,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>400</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>130</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>100</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>60</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>180</iLimitedWarRand>
@@ -17919,8 +17919,8 @@
 			<iMaxGoldTradePercent>20</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>75</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
-			<iMaxWarDistantPowerRatio>60</iMaxWarDistantPowerRatio>
+			<iMaxWarNearbyPowerRatio>120</iMaxWarNearbyPowerRatio>
+			<iMaxWarDistantPowerRatio>80</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>90</iLimitedWarRand>
 			<iLimitedWarPowerRatio>80</iLimitedWarPowerRatio>
@@ -18559,8 +18559,8 @@
 			<iMaxGoldTradePercent>20</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>90</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
-			<iMaxWarDistantPowerRatio>60</iMaxWarDistantPowerRatio>
+			<iMaxWarNearbyPowerRatio>120</iMaxWarNearbyPowerRatio>
+			<iMaxWarDistantPowerRatio>80</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>90</iLimitedWarRand>
 			<iLimitedWarPowerRatio>80</iLimitedWarPowerRatio>
@@ -22355,7 +22355,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>50</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>130</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>40</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>60</iLimitedWarRand>
@@ -22987,7 +22987,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>50</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>130</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>40</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>60</iLimitedWarRand>
@@ -27539,7 +27539,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>60</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>120</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>50</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>60</iLimitedWarRand>
@@ -28187,7 +28187,7 @@
 			<iMaxGoldTradePercent>10</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>60</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>120</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>50</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>60</iLimitedWarRand>
@@ -36631,7 +36631,7 @@
 			<iMaxGoldTradePercent>20</iMaxGoldTradePercent>
 			<iMaxGoldPerTurnTradePercent>10</iMaxGoldPerTurnTradePercent>
 			<iMaxWarRand>50</iMaxWarRand>
-			<iMaxWarNearbyPowerRatio>80</iMaxWarNearbyPowerRatio>
+			<iMaxWarNearbyPowerRatio>120</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>40</iMaxWarDistantPowerRatio>
 			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>300</iLimitedWarRand>
