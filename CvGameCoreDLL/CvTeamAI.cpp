@@ -1458,7 +1458,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		iTheirAttackers += countEnemyDangerByArea(pLoopArea, eTeam);
 	}
 
-	int iAttackerRatio = (100 * iOurAttackers) / std::max(1 + GC.getGameINLINE().getCurrentEra(), iTheirAttackers);
+	int iAttackerRatio = (100 * iOurAttackers) / std::max(1 + GC.getGameINLINE().getCurrentPeriod(), iTheirAttackers);
 		
 	if( GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) )
 	{
@@ -2793,7 +2793,7 @@ void CvTeamAI::AI_getWarThresholds( int &iTotalWarThreshold, int &iLimitedWarThr
 	iTotalWarThreshold /= 3;
 	iTotalWarThreshold += bAggressive ? 1 : 0;
 
-	if( bAggressive && GET_PLAYER(getLeaderID()).getCurrentEra() < 3 )
+	if( bAggressive && GC.getGameINLINE().getCurrentPeriod() < 3 )
 	{
 		iLimitedWarThreshold += 2;
 	}

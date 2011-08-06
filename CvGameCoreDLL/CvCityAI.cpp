@@ -685,7 +685,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		}
 
 		// Tholal ToDo: Era fix
-		int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
+		//int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
+		int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 		int iTotalEras = GC.getNumEraInfos();
 		
 /************************************************************************************************/
@@ -1387,7 +1388,7 @@ void CvCityAI::AI_chooseProduction()
 	int iPlotCityDefenderCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
 	// Tholal AI - Era fix
 	//if( kPlayer.getCurrentEra() == 0 )
-	if (GC.getGameINLINE().getCurrentPeriod() == 0)
+	if (GC.getGameINLINE().getCurrentPeriod() <= 1)
 	{
 		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= iNumCities)
 		{
@@ -1677,8 +1678,9 @@ void CvCityAI::AI_chooseProduction()
 	}
 	// End Tholal AI
 
-	// Tholal ToDo: Era fix
-	if (!bDanger && ((kPlayer.getCurrentEra() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (kPlayer.getCurrentEra() > (GC.getNumEraInfos() / 2)))
+	// Tholal AI: Era fix
+	//if (!bDanger && ((kPlayer.getCurrentEra() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (kPlayer.getCurrentEra() > (GC.getNumEraInfos() / 2)))
+	if (!bDanger && ((GC.getGameINLINE().getCurrentPeriod() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (GC.getGameINLINE().getCurrentPeriod() > (GC.getNumEraInfos() / 2)))
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20 - iWarTroubleThreshold, 15, ((bLandWar || bAssault) ? 25 : -1)))
 		{
@@ -7446,7 +7448,8 @@ int CvCityAI::AI_getImprovementValue( CvPlot* pPlot, ImprovementTypes eImproveme
 				{
 					if ((aiDiffYields[YIELD_PRODUCTION] > 0) && (aiFinalYields[YIELD_FOOD]+aiFinalYields[YIELD_PRODUCTION] > 3))
 					{
-						if (iFoodPriority < 100 || GET_PLAYER(getOwnerINLINE()).getCurrentEra() < 2)
+						//if (iFoodPriority < 100 || GET_PLAYER(getOwnerINLINE()).getCurrentEra() < 2)
+						if (iFoodPriority < 100 || GC.getGameINLINE().getCurrentPeriod() < 2)
 						{
 							//value booster for mines on hills
 							iValue *= (100 + 25 * aiDiffYields[YIELD_PRODUCTION]);
@@ -11161,7 +11164,7 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 						{
 							if ((aiDiffYields[YIELD_PRODUCTION] > 0) && (aiFinalYields[YIELD_FOOD]+aiFinalYields[YIELD_PRODUCTION] > 3))
 							{
-								if (iFoodPriority < 100 || GET_PLAYER(getOwnerINLINE()).getCurrentEra() < 2)
+								if (iFoodPriority < 100 || GC.getGameINLINE().getCurrentPeriod() < 2)
 								{
 									//value booster for mines on hills
 									iValue *= (100 + 25 * aiDiffYields[YIELD_PRODUCTION]);

@@ -8079,7 +8079,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 		iPrice *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitUpgradePercent();
 		iPrice /= 100;
 
-		iPrice *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GET_PLAYER(getOwnerINLINE()).getCurrentEra()) + 100));
+		iPrice *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
 		iPrice /= 100;
 	}
 

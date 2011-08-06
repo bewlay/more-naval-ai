@@ -7117,7 +7117,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 		iSupport *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitCostPercent();
 		iSupport /= 100;
 
-		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
 		iSupport /= 100;
 	}
 
@@ -7188,7 +7188,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 		iSupply *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitSupplyPercent();
 		iSupply /= 100;
 
-		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
 		iSupply /= 100;
 	}
 
@@ -7241,7 +7241,7 @@ int CvPlayer::calculateInflationRate() const
 	if (!isHuman() && !isBarbarian())
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
-		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
 		iAIModifier /= 100;
 
 		iModifier += iAIModifier - 100;
@@ -9865,7 +9865,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 		iWarWearinessPercentAnger *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWarWearinessPercent();
 		iWarWearinessPercentAnger /= 100;
 
-		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
 		iWarWearinessPercentAnger /= 100;
 	}
 
