@@ -1073,8 +1073,13 @@ void CvCityAI::AI_chooseProduction()
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
 	
 	int iNeededPriests = iNumCities * 2;
-	if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
-		iNeededPriests *= 2;
+	if (kPlayer.getStateReligion() != NO_RELIGION)
+	{
+		if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
+		{
+			iNeededPriests *= 2;
+		}
+	}
 	int iSpiritualTrait=GC.getInfoTypeForString("TRAIT_SPIRITUAL");
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
@@ -1400,7 +1405,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	//minimal defense.
-	if (iPlotCityDefenderCount <= (iPlotSettlerCount * 3))
+	if (iPlotCityDefenderCount <= (iPlotSettlerCount * 4))
 	{
 		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 		{
@@ -1452,7 +1457,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if( !(bDefenseWar && iWarSuccessRatio < -50) && !bDanger )
+	if( (!(bDefenseWar && iWarSuccessRatio < -50) && !bDanger ) || ((iExistingWorkers == 0) && (iNumCities == 1)))
 	{
 		if ((iExistingWorkers == 0))
 		{
@@ -1828,7 +1833,8 @@ void CvCityAI::AI_chooseProduction()
 		//Building city hunting stack.
 
 		//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
-		if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
+		//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
+		if (findYieldRateRank(YIELD_PRODUCTION) < 4)
 		{
 			 // Tholal AI - era fix
     		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
@@ -1884,6 +1890,21 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
+
+	//minimal defense.
+	if (iPlotCityDefenderCount < (AI_minDefenders() + iPlotSettlerCount))
+	{
+		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
+		{
+			return;
+		}
+
+		if (AI_chooseUnit(UNITAI_ATTACK))
+		{
+			return;
+		}
+	}
+
 	//opportunistic wonder build (1)
 	if (!bDanger && (!hasActiveWorldWonder()) && (iNumCities <= 3))
 	{
@@ -1917,7 +1938,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// Tholal AI - early check for Priests and Mages
-	if (iNumPriests < (iNeededPriests / 2))
+	if (iNumPriests == 0)
 	{
 		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 75 : 50))
 		{
@@ -1969,6 +1990,15 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
+	// Tholal AI - early check for Priests and Mages
+	if (iNumPriests < (iNeededPriests / 2))
+	{
+		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 75 : 50))
+		{
+			return;
+		}
+	}
+
 	if( !(bLandWar && iWarSuccessRatio < 30) )
 	{
 		if (!bDanger && (iProductionRank <= ((iNumCities / 5) + 1)))
@@ -1977,21 +2007,6 @@ void CvCityAI::AI_chooseProduction()
 			{
 				return;
 			}
-		}
-	}
-	
-	//minimal defense.
-	if (iPlotCityDefenderCount < (AI_minDefenders() + iPlotSettlerCount))
-	{
-		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
-		{
-			return;
-		}
-
-		if (AI_chooseUnit(UNITAI_ATTACK))
-		{
-			//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose min defender (attack ai)", getName().GetCString());
-			return;
 		}
 	}
 	
@@ -2195,7 +2210,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
-	if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
+	if (findYieldRateRank(YIELD_PRODUCTION) < 4)
 	{
 		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
     	if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 7, 33))
@@ -2513,69 +2528,33 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	// Tholal AI - minimal ships (temp hack)
-	// ToDo - figure out why section above isn't generating enough naval forces
-	if (!bFinancialTrouble)
+	// Missionary ships
+	int iMissionarySeaNeeded = 0;
+	if (!kPlayer.isAgnostic() && !bFinancialTrouble && isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
 	{
-		int iAttackSeaNeeded = kPlayer.countNumCoastalCities() / 2;
-		int iAssaultSeaNeeded = kPlayer.countNumCoastalCities() / 2;
-		int iEscortSeaNeeded = kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA);
-		int iMissionarySeaNeeded = 0;
-
-		if (!kPlayer.isAgnostic())
+		if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
 		{
-			if (kPlayer.countNumCoastalCities() > 0)
-			{
-				iMissionarySeaNeeded++;
-			}
+			iMissionarySeaNeeded++;
 		}
 
-		// Tholal AI - Missionary ships
 		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
 		{
 			iMissionarySeaNeeded++;
 
-			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 			{
 				iMissionarySeaNeeded++;
 			}
 		}
 
-		if (iMissionarySeaNeeded > 0)
+		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) < iMissionarySeaNeeded)
 		{
-			if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) < iMissionarySeaNeeded)
-			{
-				if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
-				{
-					return;
-				}
-			}
-		}
-
-		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < iAssaultSeaNeeded)
-		{
-			if (AI_chooseUnit(UNITAI_ASSAULT_SEA,50))
-			{
-				return;
-			}
-		}
-		if ((kPlayer.AI_totalUnitAIs(UNITAI_ATTACK_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iAttackSeaNeeded)
-		{
-			if (AI_chooseUnit(UNITAI_ATTACK_SEA,35))
-			{
-				return;
-			}
-		}
-		if ((kPlayer.AI_totalUnitAIs(UNITAI_ESCORT_SEA) + kPlayer.AI_totalUnitAIs(UNITAI_RESERVE_SEA)) < iEscortSeaNeeded)
-		{
-			if (AI_chooseUnit(UNITAI_ESCORT_SEA,75))
+			if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
 			{
 				return;
 			}
 		}
 	}
-	// End Tholal AI
-
 
 	UnitTypeWeightArray airUnitTypes;
 
@@ -3598,18 +3577,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									iValue += getUnitProduction(eLoopUnit);
 								}
 
-								//Tholal AI - account for Favorite Unit Combat tag
-								const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
-								if (eFavoriteUnitCombat != NO_UNITCOMBAT)
-								{
-									if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
-									{
-										iValue *= 4;
-										iValue /= 3;
-									}
-								}
-
-
 								iValue *= (GET_PLAYER(getOwnerINLINE()).getNumCities() * 2);
 								iValue /= (GET_PLAYER(getOwnerINLINE()).getUnitClassCountPlusMaking((UnitClassTypes)iI) + GET_PLAYER(getOwnerINLINE()).getNumCities() + 1);
 
@@ -3634,19 +3601,26 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									iValue /= 100;
 								}
 
-//FfH: Added by Kael 04/29/2009
-								if (GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getFavoriteUnitCombat() != NO_UNITCOMBAT)
+								//account for Favorite Unit Combat tag
+								const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
+								if (eFavoriteUnitCombat != NO_UNITCOMBAT)
 								{
-									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getFavoriteUnitCombat())
+									if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
 									{
-//>>>>Better AI: Modified by Denev 2010/06/20
-//										iValue += 100;
-										iValue *= 6;
-										iValue /= 5;
-//<<<<Better AI: End Modify
+										iValue *= 3;
+										iValue /= 2;
 									}
 								}
-//FfH: End Add
+
+								// avoid building heroes in bad production cities
+								if (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == UNITAI_HERO)
+								{
+									if (findYieldRateRank(YIELD_PRODUCTION) > 3)
+									{
+										iValue /= 4;
+									}
+								}
+
 
 								iValue = std::max(1, iValue);
 
@@ -3886,6 +3860,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	bool bIsLimitedWonder = (iLimitedWonderLimit >= 0);
 
 	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
+	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
 
 	ReligionTypes eStateReligion = kOwner.getStateReligion();
 
@@ -3900,7 +3875,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	int iFoodDifference = foodDifference(false);
 
 	// Reduce reaction to espionage induced happy/health problems
-	int iHappinessLevel = happyLevel() - unhappyLevel(1) + getEspionageHappinessCounter()/2;
+	int iHappinessLevel = happyLevel() - unhappyLevel(1);// + getEspionageHappinessCounter()/2;
 	int iAngryPopulation = range(-iHappinessLevel, 0, (getPopulation() + 1));
 	int iHealthLevel = goodHealth() - badHealth(/*bNoAngry*/ false, std::max(0, (iHappinessLevel + 1) / 2)) + getEspionageHealthCounter()/2;
 	int iBadHealth = std::max(0, -iHealthLevel);
@@ -3956,6 +3931,9 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	bool bCulturalVictory3 = GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 
 	bool bSpaceVictory1 = GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_SPACE1);
+
+	bool bAltarVictory2 = GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2);
+	bool bTowerVictory2 = GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/		
@@ -4012,24 +3990,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 	for (iPass = 0; iPass < 2; iPass++)
 	{
-
-		// - Tholal AI - temp hacks for FFH tweaks
-		// Tholal ToDo: Remove this code and update formulas
-		if (iPass == 0)
-		{
-			//iValue += (kBuilding.getFreePromotionPick() * 5);
-
-			if (((GC.getBuildingInfo(eBuilding).getPrereqReligion()) == kOwner.getStateReligion()) && (kOwner.getStateReligion() != NO_RELIGION))
-			{
-				iValue ++;
-				if ((GC.getBuildingInfo(eBuilding).getPrereqReligion()) == kOwner.getFavoriteReligion())
-				{
-					iValue ++;
-				}
-			}
-		}	
-		// End Tholal AI
-
 		if ((iFocusFlags == 0) || (iValue > 0) || (iPass == 0))
 		{
 		    
@@ -4157,21 +4117,24 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					iValue += (kBuilding.getCommerceHappiness(iI) * iHappyModifier) / 4;
 				}
 
-				int iWarWearinessModifer = kBuilding.getWarWearinessModifier();
-				if (iWarWearinessModifer != 0)
+				if (bWarPlan)
 				{
-					iValue += (-iWarWearinessModifer * iHappyModifier) / 16;
-				}
+					int iWarWearinessModifer = kBuilding.getWarWearinessModifier();
+					if (iWarWearinessModifer != 0)
+					{
+						iValue += (-iWarWearinessModifer * iHappyModifier) / 16;
+					}
 
-				iValue += (kBuilding.getAreaHappiness() * (iNumCitiesInArea - 1) * 8);
-				iValue += (kBuilding.getGlobalHappiness() * iNumCities * 8);
+					iValue += (kBuilding.getAreaHappiness() * (iNumCitiesInArea - 1) * 8);
+					iValue += (kBuilding.getGlobalHappiness() * iNumCities * 8);
 
-				int iWarWearinessPercentAnger = kOwner.getWarWearinessPercentAnger();
-				int iGlobalWarWearinessModifer = kBuilding.getGlobalWarWearinessModifier();
-				if (iGlobalWarWearinessModifer != 0)
-				{
-					iValue += (-(((iGlobalWarWearinessModifer * iWarWearinessPercentAnger / 100) / GC.getPERCENT_ANGER_DIVISOR())) * iNumCities);
-					iValue += (-iGlobalWarWearinessModifer * iHappyModifier) / 16;
+					int iWarWearinessPercentAnger = kOwner.getWarWearinessPercentAnger();
+					int iGlobalWarWearinessModifer = kBuilding.getGlobalWarWearinessModifier();
+					if (iGlobalWarWearinessModifer != 0)
+					{
+						iValue += (-(((iGlobalWarWearinessModifer * iWarWearinessPercentAnger / 100) / GC.getPERCENT_ANGER_DIVISOR())) * iNumCities);
+						iValue += (-iGlobalWarWearinessModifer * iHappyModifier) / 16;
+					}
 				}
 				
 				for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
@@ -4295,6 +4258,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 //>>>>Better AI: Added by Denev 2010/03/30 - heavily modified by Tholal
 //*** Training Yard, Mage Guild, Hunting Lodge, etc.
+				// ToDo - better weighting of this section for aggresive and peaceful civs; also check various victory and war statuses
 				int iTotalUnits = 0;
 				iTempValue = 0;
 				int iUnitTempValue = 0;
@@ -4313,20 +4277,15 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 								iTotalUnits++;
 								int iCombatValue = GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit);
 
-								iUnitTempValue = iCombatValue;
+								iUnitTempValue = (iCombatValue * 2);
 
+								// Harcode - ToDo - fix this
 								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 								{
-									iUnitTempValue += kOwner.AI_getMojoFactor();
-
-									if (iNumBuildings == 0) // Make sure we have at least one Mage Guild
-									{
-										iTempValue += 250;
-									}
+									iUnitTempValue += (kOwner.AI_getMojoFactor() * 5);
 								}
 
 								int iK;
-
                                 for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
                                 {
                                     if (hasTrait((TraitTypes)iJ))
@@ -4337,13 +4296,20 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
                                             {
                                                 if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
                                                 {
-													iUnitTempValue ++;
-                                                    iUnitTempValue *= 10;
+                                                    iUnitTempValue += 3;
                                                 }
                                             }
                                         }
                                     }
                                 }
+
+								if (bCulturalVictory2 || bAltarVictory2 || bTowerVictory2)
+								{
+									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getCombatDefense() * 2;
+								}
+
+								iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier();
+								iUnitTempValue += GC.getUnitInfo(eLoopUnit).getWeaponTier();
 
 								if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
 								{
@@ -4351,6 +4317,21 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 									{
 										iUnitTempValue *= 2;
 									}
+								}
+
+								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
+								{
+									iUnitTempValue *= 2;
+								}
+
+								if (iNumBuildings == 0) // should have at least one of each type training building
+								{
+									iUnitTempValue *= 10;
+								}
+
+								if (bAtWar || bWarPlan)
+								{
+									iUnitTempValue *= 2;
 								}
 
 								iTempValue += iUnitTempValue;
@@ -4366,8 +4347,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				{
 					iTempValue /= iTotalUnits;
 				}
-				iTempValue *= (bWarPlan ? 3: 2);
-				iTempValue /= iProductionRank;
 
 				iValue += iTempValue;
 			}
@@ -4574,6 +4553,16 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					iValue++;
 				}
 
+				if (kBuilding.isApplyFreePromotionOnMove())
+				{
+					iValue += 25;
+				}
+
+				if (kBuilding.getRemovePromotion() != NO_PROMOTION)
+				{
+					iValue += 25;
+				}
+
 				if (kBuilding.getFreeBonus() != NO_BONUS)
 				{
 					iValue += (kOwner.AI_bonusVal((BonusTypes)(kBuilding.getFreeBonus()), 1) *
@@ -4606,6 +4595,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				}
 
 				int iGreatPeopleRateModifier = kBuilding.getGreatPeopleRateModifier();
+
+				if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2) || kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
+				{
+					iGreatPeopleRateModifier *= 2;
+				}
+
 				if (iGreatPeopleRateModifier > 0)
 				{
 					int iGreatPeopleRate = getBaseGreatPeopleRate();
@@ -4895,14 +4890,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 			if (iPass > 0)
 			{
-
-				// Tholal AI - account for new FFH2 building tag
-				if (kBuilding.isUnhappyProduction())
-				{
-					iValue *= 2;
-				}
-				// End Tholal AI
-
 				for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 				{
 					iTempValue = 0;
@@ -4915,7 +4902,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 					if (iFoodDifference > 0)
 					{
-						iValue += kBuilding.getFoodKept() / 2;
+						iValue += ((kBuilding.getFoodKept()  * getPopulation()) / (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 15 : 20));/// 2;
 					}
 
 					if (kBuilding.getSeaPlotYieldChange(iI) > 0)
@@ -4982,7 +4969,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				if (iFocusFlags & BUILDINGFOCUS_FOOD)
 				{
 
-					iValue += kBuilding.getFoodKept();
+					iValue += ((kBuilding.getFoodKept() * getPopulation()) / (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10 : 15));
 
 					if (kBuilding.getSeaPlotYieldChange(YIELD_FOOD) > 0)
 					{
@@ -5031,6 +5018,11 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					if (bIsLimitedWonder && (aiYieldRank[YIELD_PRODUCTION] > (3 + iLimitedWonderLimit)))
 					{
 						iTempValue *= -1;
+					}
+
+					if (kBuilding.isUnhappyProduction())
+					{
+						iTempValue += 10 * getPopulation();
 					}
 
 					iValue += iTempValue;
@@ -5091,6 +5083,10 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					if ((CommerceTypes)iI == COMMERCE_RESEARCH)
 					{
 						iTempValue *= 2; //5;
+					}
+					if ((CommerceTypes)iI == COMMERCE_GOLD)
+					{
+						iTempValue *= (bFinancialTrouble ? 4 : 2); //5;
 					}
 					// End Tholal AI
 
@@ -5512,7 +5508,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	{
 		if (GC.getBuildingInfo(eBuilding).getPrereqCiv() == kOwner.getCivilizationType() || kOwner.isAssimilation())
 		{
-			iValue++;
+			iValue *= 4;
 		}
 	}
 
@@ -5657,21 +5653,26 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		iValue += (std::max(0, (GC.getProjectInfo((ProjectTypes)iI).getProjectsNeeded(eProject) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 10);
 	}
 
-	bool bReverse = false;
+	// look for projects that affect the Armageddon Counter
+	if (GC.getGameINLINE().getGlobalCounter() > 20)
+	{
+		bool bReverse = false;
 
-	if (GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
-		GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_INFERNAL"))
-	{
-		bReverse = true;
-	}
+		// HARDCODE
+		if (GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
+			GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_INFERNAL"))
+		{
+			bReverse = true;
+		}
 
-	if (!bReverse)
-	{
-		iValue += (GC.getProjectInfo(eProject).getModifyGlobalCounter() * (GC.getGameINLINE().getGlobalCounter() / 10) * -1);
-	}
-	else
-	{
-		iValue += GC.getProjectInfo(eProject).getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 2);
+		if (!bReverse)
+		{
+			iValue += (GC.getProjectInfo(eProject).getModifyGlobalCounter() * (GC.getGameINLINE().getGlobalCounter() / 10) * -1);
+		}
+		else
+		{
+			iValue += GC.getProjectInfo(eProject).getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 4);
+		}
 	}
 
 //FfH: Added by Kael 09/26/2008
