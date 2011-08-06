@@ -5525,7 +5525,7 @@ void CvUnitAI::AI_prophetMove()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-    if(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).isAltarVictory())
+	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
     {
         if (AI_construct(10000,10000))
         {
