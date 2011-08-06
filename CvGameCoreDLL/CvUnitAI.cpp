@@ -15999,7 +15999,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 				{
 					// BBAI efficiency: check area for land units before generating path
-					if (pLoopCity->isRevealed(getTeam(), false))
+					if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
 					{
 						if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()))
 						{
@@ -16210,7 +16210,7 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 			{
 				continue;
 			}
-			if (pLoopCity->isRevealed(getTeam(), false))
+			if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
 			{
 				if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), 0, true, &iPathTurns))
 				{
@@ -28636,7 +28636,7 @@ bool CvUnitAI::AI_Rantinemove()
 		{
 			if (AI_plotValid(pLoopCity->plot()))
 			{
-				if (pLoopCity->isRevealed(getTeam(), false))
+				if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
 				{
 					if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true, &iPathTurns))
 					{
