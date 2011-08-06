@@ -27372,11 +27372,14 @@ void CvUnitAI::ConquestMove()
 
     if (isHiddenNationality() || isInvisibleFromPromotion())
     {
-        AI_setGroupflag(GROUPFLAG_NONE);
-        joinGroup(NULL);
-		AI_setUnitAIType(UNITAI_ATTACK);
-        getGroup()->pushMission(MISSION_SKIP);
-		return;
+		if (!bHero && !bWizard)
+		{
+			AI_setGroupflag(GROUPFLAG_NONE);
+			joinGroup(NULL);
+			AI_setUnitAIType(UNITAI_ATTACK);
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
     }
 
 
@@ -27392,6 +27395,10 @@ void CvUnitAI::ConquestMove()
 				AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			}
             break;
+		case UNITAI_RESERVE:
+		case UNITAI_ATTACK:
+			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			break;
         default:
             break;
     }
@@ -27407,12 +27414,12 @@ void CvUnitAI::ConquestMove()
 
 	if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
 	{
-		// force heal if we in our own city and damaged
-		// can we remove this or call AI_heal here?
 		if ((getGroup()->getNumUnits() == 1) && (getDamage() > 0))
 		{
-			getGroup()->pushMission(MISSION_HEAL);
-			return;
+			if (AI_heal())
+			{
+				return;
+			}
 		}
 
 		if( bIgnoreFaster )
@@ -27427,6 +27434,21 @@ void CvUnitAI::ConquestMove()
 		        return;
 		    }
 		}
+
+		if (plot()->getNumDefenders(getOwnerINLINE()) == getGroupSize())
+		{
+			if (GC.getLogging())
+			{
+				if (gDLL->getChtLvl() > 0)
+				{
+					char szOut[1024];
+					sprintf(szOut, "Player %d Unit %d (%S's %S) new defense check (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
+					gDLL->messageControlLog(szOut);
+				}
+			}
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
     }
 
 	// Opportunistic attacks
@@ -27437,26 +27459,8 @@ void CvUnitAI::ConquestMove()
 
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
 	{
+		getGroup()->pushMission(MISSION_SKIP);
 		return;
-	}
-
-	// Noone should wander alone
-	if (getGroup()->getNumUnits() == 1)
-	{
-		if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 3, true, true, bIgnoreFaster))
-		{
-			//TEMPFIX to stop WoC
-            if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
-            {
-                getGroup()->pushMission(MISSION_SKIP);
-            }
-			return;
-		}
-
-		if (AI_retreatToCity(false, true, 3))
-		{
-			return;
-		}
 	}
 
 	// Heroes and Casters should seek larger groups
@@ -27464,6 +27468,10 @@ void CvUnitAI::ConquestMove()
 	{
 		if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
 		{
+			if (AI_pickupEquipment(3))
+			{
+				return;
+			}
 			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 10, false, true, false))
 			{
 				return;
@@ -27479,6 +27487,24 @@ void CvUnitAI::ConquestMove()
 		if (getGroup()->isStranded() && (getLevel() < 3) && bFinancialTrouble)
 		{
 			kill(true);
+			return;
+		}
+	}
+
+	// Noone should wander alone
+	if (getGroup()->getNumUnits() == 1)
+	{
+		if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 3, true, true, bIgnoreFaster))
+		{
+            if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
+            {
+                getGroup()->pushMission(MISSION_SKIP);
+            }
+			return;
+		}
+
+		if (AI_retreatToCity(false, true, 3))
+		{
 			return;
 		}
 	}
@@ -27504,7 +27530,7 @@ void CvUnitAI::ConquestMove()
 		return;
 	}
 
-
+	//ToDo - better incorporation of this section into rest of code
 	if (plot()->getOwnerINLINE()==getOwnerINLINE())
     {
         iBestValue=getGroup()->getNumUnits();
@@ -27648,7 +27674,7 @@ void CvUnitAI::ConquestMove()
         int iMinStack=1+(getGroup()->getNumUnits()/5);
         int iRange=20;
         pBestPlot=NULL;
-        iSearchRange=20;
+        iSearchRange=10;
         iBestValue=0;
         for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
         {
@@ -27808,11 +27834,26 @@ void CvUnitAI::ConquestMove()
 				{
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
+						/*
+						// Tholal Note: this section wasn't doing much useful
 						// Move to good tile to attack from unless we're way more powerful
-						if( AI_goToTargetCity(0,1,pTargetCity) )
+						if (plot()->defenseModifier(getTeam(), false) <= 0)
 						{
-							return;
+							if( AI_goToTargetCity(0,1,pTargetCity) )
+							{
+								if (GC.getLogging())
+								{
+									if (gDLL->getChtLvl() > 0)
+									{
+										char szOut[1024];
+										sprintf(szOut, "   GOING to target city\n");
+										gDLL->messageControlLog(szOut);
+									}
+								}
+								return;
+							}
 						}
+						*/
 					}
 
 					// Bombard may skip if stack is powerful enough
@@ -27850,10 +27891,12 @@ void CvUnitAI::ConquestMove()
 			if( iComparePostBombard < iAttackRatio )
 			{
 				// If not strong enough, pillage around target city without exposing ourselves
+				/*
 				if( AI_pillageRange(0) )
 				{
 					return;
 				}
+				*/
 				
 				if( AI_anyAttack(1, 60, 0, false) )
 				{
@@ -28041,9 +28084,12 @@ void CvUnitAI::ConquestMove()
 
 	if (bReadyToAttack)
 	{
-		if (bHuntBarbs && AI_goToTargetBarbCity((bAnyWarPlan ? 7 : 15)))
+		if (bHuntBarbs || pTargetCity == NULL)
 		{
-			return;
+			if (AI_goToTargetBarbCity((bAnyWarPlan ? 7 : 15)))
+			{
+				return;
+			}
 		}
 		else if (bLandWar && pTargetCity != NULL)
 		{
