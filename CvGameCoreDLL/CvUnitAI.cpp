@@ -4831,6 +4831,16 @@ void CvUnitAI::AI_cityDefenseMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Player %d Unit %d (%S's %S) starting city defense move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
+			gDLL->messageControlLog(szOut);
+		}
+	}
+
 	// Try and switch out AI types for extra defenders that are sitting around
 	// ToDo - smarter choices about which units have their AI switched - need an isAllowedConquest function?
 	if (!isBarbarian())
@@ -4840,7 +4850,7 @@ void CvUnitAI::AI_cityDefenseMove()
 			CvCity* pCity = plot()->getPlotCity();
 			int iCityDefenders = plot()->plotCount(PUF_canDefendGroupHead, -1, -1, getOwnerINLINE(), NO_TEAM, PUF_isCityAIType);
 
-			if (iCityDefenders > pCity->AI_neededDefenders())
+			if (iCityDefenders > (pCity->AI_neededDefenders() + 1))
 			{
 				if (!bDanger)
 				{
@@ -4927,7 +4937,7 @@ void CvUnitAI::AI_cityDefenseMove()
 			return;
 		}
 
-		if (AI_group(UNITAI_SETTLE, /*iMaxGroup*/ 2, -1, -1, false, false, false, /*iMaxPath*/ 2, /*bAllowRegrouping*/ true))
+		if (AI_group(UNITAI_SETTLE, /*iMaxGroup*/ 3, -1, -1, false, false, false, /*iMaxPath*/ 2, /*bAllowRegrouping*/ true))
 		{
 			return;
 		}
