@@ -25541,22 +25541,6 @@ void CvUnitAI::AI_chooseGroupflag()
         }
     }
 
-    if (isUnitAllowedPatrolGroup())
-    {
-        if (AI_decide_patrolgroup())
-        {
-            return;
-        }
-    }
-
-    if(isUnitAllowedPillageGroup())
-    {
-        if (GET_PLAYER(getOwnerINLINE()).AI_getNeededPillageUnits()>GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_PILLAGE))
-        {
-            AI_setGroupflag(GROUPFLAG_PILLAGE);
-            return;
-        }
-    }
     
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
