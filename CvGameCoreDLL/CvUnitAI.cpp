@@ -15633,14 +15633,15 @@ bool CvUnitAI::AI_goody(int iRange)
 							{
 								if (iPathTurns <= iRange)
 								{
-									iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Goody"));
+									iValue = (10 + GC.getGameINLINE().getSorenRandNum(10000, "AI Goody"));
 
 									iValue /= (iPathTurns + 1);
 
 									if (iValue > iBestValue)
 									{
 										iBestValue = iValue;
-										pBestPlot = getPathEndTurnPlot();
+										//pBestPlot = getPathEndTurnPlot();
+										pBestPlot = pLoopPlot;
 									}
 								}
 							}
