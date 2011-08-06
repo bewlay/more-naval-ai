@@ -46364,8 +46364,8 @@
                 </FreePromotion>
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
-            <bNeverObsolete>1</bNeverObsolete>
             <iLeaderExperience>0</iLeaderExperience>
+	    <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
             <PrereqCiv>CIVILIZATION_MALAKIM</PrereqCiv>
