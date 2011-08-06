@@ -2751,7 +2751,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>35</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_FANATICISM</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_MELEE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_AQUAE_SUCELLUS</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -5327,7 +5327,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
-			<FavoriteTech>TECH_HONOR</FavoriteTech>
+			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_DISCIPLE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_TOWER_OF_EYES</FavoriteWonder>
 			<PermanentTrait>TRAIT_SPIRITUAL</PermanentTrait>
@@ -8691,7 +8691,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>10</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_RAGE</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_TEMPLE_OF_TEMPORENCE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -10659,7 +10659,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>35</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_TEMPLE_OF_TEMPORENCE</FavoriteWonder>
 			<PermanentTrait>TRAIT_EXPANSIVE</PermanentTrait>
@@ -12615,7 +12615,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>45</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>TECH_WAY_OF_THE_FORESTS</FavoriteTech>
+			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ARCHER</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_CATACOMB_LIBRALUS</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -14603,7 +14603,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_HUNTING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_RECON</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_GREAT_LIBRARY</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -17203,7 +17203,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>50</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_HALL_OF_KINGS</FavoriteWonder>
 			<PermanentTrait>TRAIT_PHILOSOPHICAL</PermanentTrait>
@@ -17867,7 +17867,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>55</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_HALL_OF_KINGS</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -24875,7 +24875,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>70</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_FESTIVALS</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_SYLIVENS_PERFECT_LYRE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -34003,7 +34003,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>95</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_SORCERY</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -35299,7 +35299,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -35947,7 +35947,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -36591,7 +36591,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>NONE</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -41883,7 +41883,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>80</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_OMNISCIENCE</FavoriteTech>
+			<FavoriteTech>TECH_PRIESTHOOD</FavoriteTech>
 			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_BONE_PALACE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
