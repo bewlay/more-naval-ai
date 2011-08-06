@@ -16613,7 +16613,7 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 										pLoopUnit = ::getUnit(pUnitNode->m_data);
 										pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
 
-										if (pLoopUnit->getDuration()==0 && (!pLoopUnit->isPermanentSummon()))
+										if (pLoopUnit->getDuration()==0 || pLoopUnit->isPermanentSummon())
 										{
 											bOnlySummons=false;
 											break;
