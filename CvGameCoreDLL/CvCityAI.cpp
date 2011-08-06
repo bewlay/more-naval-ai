@@ -13087,7 +13087,6 @@ void CvCityAI::AI_calculateNeededPermDefense()
         switch(iFlag)
         {
             case 0: //CITY_DEFENSE
-                //neededdefenders=(1+(getPopulation()+9)/12)*(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).getAIValueDefense()/100);
 				neededdefenders = AI_neededDefenders();
                 //neededdefenders=std::max(3,neededdefenders);
 
@@ -13103,7 +13102,6 @@ void CvCityAI::AI_calculateNeededPermDefense()
                 neededdefenders=1;
                 break;
             case 2: //CITY_MAGE
-                neededdefenders=(1+getPopulation()/10)*(GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType()).getAIValueMage()/100);
                 neededdefenders=std::max(1,neededdefenders);
                 break;
             case 3: //CITY_MEDIC
