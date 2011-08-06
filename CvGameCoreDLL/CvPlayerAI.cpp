@@ -10813,6 +10813,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_HERO:
+			// adventurers
+			if (GC.getUnitInfo(eUnit).isOnlyDefensive())
+			{
+				return 1;
+			}
 			bValid = true;
 			break;
 
@@ -11101,6 +11106,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		case UNITAI_MERCHANT:
 		case UNITAI_ENGINEER:
 		case UNITAI_SPY:
+		case UNITAI_INQUISITOR:
+		case UNITAI_FEASTING:
 			break;
 
 /*************************************************************************************************/
@@ -11320,7 +11327,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		default:
-//			FAssert(false);  //not all new UNITAIs added Sephi
+			FAssert(false);
 			break;
 		}
 	}
@@ -11334,7 +11341,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 //	iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit);
 	iCombatValue = AI_combatValue(eUnit) * 3;
 //FfH: End Modify
-
+	
+	if (GC.getUnitInfo(eUnit).isExplodeInCombat())
+	{
+		iCombatValue += 25;
+	}
+	
 	iValue = 1;
 
 	iValue += GC.getUnitInfo(eUnit).getAIWeight();
@@ -11524,6 +11536,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_CITY_DEFENSE:
 		iValue += ((iCombatValue * 2) / 3);
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getCityDefenseModifier()) / 75);
+		if (!GC.getUnitInfo(eUnit).isMilitaryHappiness())
+		{
+			iValue /= 4;
+		}
 		break;
 
 /*************************************************************************************************/
@@ -11554,7 +11570,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
 				{
-					iValue += GC.getPromotionInfo((PromotionTypes)iI).getSpellCasterXP();
+					iValue += GC.getPromotionInfo((PromotionTypes)iI).getSpellCasterXP() * 2;
 				}
 			}
 		}
@@ -11675,6 +11691,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_GENERAL:
 	case UNITAI_MERCHANT:
 	case UNITAI_ENGINEER:
+	case UNITAI_INQUISITOR:
+	case UNITAI_FEASTING:
 		break;
 
 	case UNITAI_SPY:
@@ -11833,6 +11851,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	default:
 		FAssert(false);
 		break;
+	}
+
+	if (GC.getUnitInfo(eUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
+	{
+		iValue *= 2;
 	}
 
 	if ((iCombatValue > 0) && ((eUnitAI == UNITAI_ATTACK) || (eUnitAI == UNITAI_ATTACK_CITY)))
