@@ -16218,7 +16218,7 @@ void CvPlayerAI::AI_doDiplo()
 /** orig
 										if (getStateReligion() != NO_RELIGION)
 **/
-										if ((getStateReligion() != NO_RELIGION)	&& getStateReligion()==getFavoriteReligion())
+										if ((getStateReligion() != NO_RELIGION)	&& (getStateReligion()==getFavoriteReligion() || AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1)))
 /*************************************************************************************************/
 /** End															    							**/
 /*************************************************************************************************/
@@ -16228,7 +16228,7 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_RELIGION_PRESSURE) == 0)
 												{
-													if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_RELIGION_PRESSURE), "AI Diplo Religion Pressure") == 0)
+													if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_RELIGION_PRESSURE), "AI Diplo Religion Pressure") == 0 || AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 													{
 														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
 														{
