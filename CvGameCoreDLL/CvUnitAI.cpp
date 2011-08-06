@@ -868,6 +868,7 @@ void CvUnitAI::AI_upgrade()
 		{
 			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
 
+			/*
 			if (AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
 			{
 				if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
@@ -875,6 +876,7 @@ void CvUnitAI::AI_upgrade()
 					iNewValue = 0;
 				}
 			}
+			*/
 
 			int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
 

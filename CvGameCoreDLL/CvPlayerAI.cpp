@@ -706,75 +706,81 @@ void CvPlayerAI::AI_doTurnUnitsPost()
     }
     else
     {
-        bool bValid;
-        for (iPass = 0; iPass < 3; iPass++)
-        {
-            for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
-            {
-                bValid = false;
-                switch (iPass)
-                {
-                    case 0:
-                        pUnitPlot = pLoopUnit->plot();
-                        if ((AI_getPlotDanger(pUnitPlot, 1, false)) > 0)
-                        {
-                            bValid = true;
-                        }
-                        break;
-                    case 1:
-                        if (pLoopUnit->getLevel() > 3)
-                        {
-                            bValid = true;
-                        }
-                        break;
-                    case 2:
-                        if (pLoopUnit->getLevel() <= 3)
-                        {
-                            bValid = true;
-                        }
-                        break;
-                }
-                if (bValid)
-                {
-                    for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
-                    {
-                        if (pLoopUnit->canUpgrade((UnitTypes)iI))
-                        {
-                            iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "Upgrade"));
-
-							if (pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
+		bool bValid;
+		for (iPass = 0; iPass < 3; iPass++)
+		{
+			for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+			{
+				if (pLoopUnit->hasUpgrade())
+				{
+					bValid = false;
+					switch (iPass)
+					{
+						case 0:
+							pUnitPlot = pLoopUnit->plot();
+							if (((AI_getPlotDanger(pUnitPlot, 1, false)) > 0) || (pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler())
 							{
-								if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
+								bValid = true;
+							}
+							break;
+						case 1:
+							if (pLoopUnit->getLevel() > 3)
+							{
+								bValid = true;
+							}
+							break;
+						case 2:
+							if (pLoopUnit->getLevel() <= 3)
+							{
+								bValid = true;
+							}
+							break;
+					}
+					if (bValid)
+					{
+						pLoopUnit->AI_upgrade();
+						/*
+						for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+						{
+							if (pLoopUnit->canUpgrade((UnitTypes)iI))
+							{
+								iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "Upgrade"));
+
+								if (pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
 								{
-									iValue = -1;
+									if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
+									{
+										iValue = -1;
+									}
+								}
+
+								int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
+
+								if (iUpgradeTier > 2)
+								{
+									if (pLoopUnit->getLevel() < (iUpgradeTier + 1))
+									{
+										iValue = -1;
+									}
+								}
+
+								if (iValue > iBestValue)
+								{
+									iBestValue = iValue;
+									eBestUnit = ((UnitTypes)iI);
 								}
 							}
-
-							int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
-
-							if (iUpgradeTier > 2)
-							{
-								if (pLoopUnit->getLevel() < (iUpgradeTier + 1))
-								{
-									iValue = -1;
-								}
-							}
-
-                            if (iValue > iBestValue)
-                            {
-                                iBestValue = iValue;
-                                eBestUnit = ((UnitTypes)iI);
-                            }
-                        }
-                    }
-                    if (eBestUnit != NO_UNIT)
-                    {
-                        pLoopUnit->upgrade(eBestUnit);
-                        pLoopUnit->doDelayedDeath();
-                    }
-                }
-            }
-        }
+						}
+						if (eBestUnit != NO_UNIT)
+						{
+							pLoopUnit->upgrade(eBestUnit);
+							pLoopUnit->doDelayedDeath();
+						}
+						*/
+					}
+				}
+			}
+		}
     }
 //FfH: End Modify
 
