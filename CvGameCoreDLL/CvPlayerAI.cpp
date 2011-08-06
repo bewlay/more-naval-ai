@@ -414,17 +414,20 @@ void CvPlayerAI::AI_doTurnPre()
 		}
     }
 
-	AI_doResearch();
+	if (getNumCities() > 0)
+	{
+		AI_doResearch();
 
-	AI_doCommerce();
+		AI_doCommerce();
 
-	AI_doMilitary();
+		AI_doMilitary();
 
-	AI_doCivics();
+		AI_doCivics();
 
-	AI_doReligion();
+		AI_doReligion();
 
-	AI_doCheckFinancialTrouble();
+		AI_doCheckFinancialTrouble();
+	}
 
 	if (isBarbarian())
 	{
