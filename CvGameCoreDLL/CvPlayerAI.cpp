@@ -4333,7 +4333,7 @@ int CvPlayerAI::AI_goldTarget() const
 /**						                                            							**/
 /*************************************************************************************************/
 
-//returns the Amount of Gold an AI wants to have
+//returns the amount of extra gold an AI wants to have
 int CvPlayerAI::AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTrading, bool bReserve)  const
 {
     int iGold = 0;
@@ -9708,13 +9708,12 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						iTempValue += 50;
 					}
 
-					// Tholal AI - account for affinities
+					// account for affinities
 					if (kLoopUnit.getBonusAffinity((BonusTypes)eBonus) != 0)
 					{
 						iTempValue += 10;
 					}
-					// End Tholal AI
-
+					
 					for (iJ = 0; iJ < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); iJ++)
 					{
 						if (kLoopUnit.getPrereqOrBonuses(iJ) == eBonus)
@@ -18907,7 +18906,7 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 /************************************************************************************************/
 int CvPlayerAI::AI_getCultureVictoryStage() const
 {
-    int iValue;
+    int iValue = 0;
 
 	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_CULTURE") <= 0 )
 	{
@@ -18991,9 +18990,9 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
     }
 
-	// Note: this tag is currently not being used in Leaderheadinfos.xml
+	// Note: this tag is currently not being used in Leaderheadinfos.xml - this tag is from BBAI
 	// ToDo - add some base weights to the xml
-    iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
+    //iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
 
 	// account for traits which give free culture
 	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
