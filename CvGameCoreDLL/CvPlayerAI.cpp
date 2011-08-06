@@ -4677,7 +4677,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if (GC.getTechInfo(eTech).isIrrigation())
 	{
-		iMaxTileAbilityValue = std::max(400, iMaxTileAbilityValue);
+		iMaxTileAbilityValue = std::max(200, iMaxTileAbilityValue);
 	}
 
 	if (GC.getTechInfo(eTech).isIgnoreIrrigation())
@@ -4876,14 +4876,16 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							}
 							else if (iL == YIELD_COMMERCE)
 							{
-								iTempValue *= 3;
+								iTempValue *= 4;
 							}
 							// otherwise, devalue the bonus slightly
+							/*
 							else
 							{
 								iTempValue *= 3;
 								iTempValue /= 4;
 							}
+							*/
 							
 							if (bAdvancedStart && getCurrentEra() < 2)
 							{
@@ -4904,10 +4906,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 						if (iNumBonuses > 0)
 						{
-							iImprovementValue += ((kImprovement.isImprovementBonusMakesValid(iK)) ? 150 : 0);
-							iBonusValue *= (iNumBonuses + 2);
+							//iImprovementValue += ((kImprovement.isImprovementBonusMakesValid(iK)) ? 150 : 0) * iNumBonuses;
+							iBonusValue *= (iNumBonuses + 1);
 							//iBonusValue /= ((!isPirate() && kImprovement.isWater()) ? 4 : 3);	// water resources are worth less
-							iBonusValue /= 3;
+							iBonusValue /= 2;
 						}
 						else
 						{
@@ -5941,7 +5943,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				iBuildingValue -= kLoopBuilding.getCrime();
 				if (kLoopBuilding.isUnhappyProduction())
 				{
-					iBuildingValue += 100 * (bIsLimitedWonder ? 1 : iCityCount);
+					iBuildingValue += 50 * (bIsLimitedWonder ? (getTotalPopulation() / iCityCount) : getTotalPopulation());
 				}
 
 				if (kLoopBuilding.getMaintenanceModifier() < 0)
@@ -6373,7 +6375,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 1000;
+							iUnitValue += 500;
 
 							if (GC.getLogging() && bDebugLog)
 							{
@@ -6649,8 +6651,6 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						break;
 					}
 
-					iMilitaryValue += (kLoopUnit.getWithdrawalProbability() * 2);
-
 					if (kLoopUnit.getDomainType() != DOMAIN_SEA)
 					{
 						int iCombatValue = kLoopUnit.getCombat();
@@ -6664,9 +6664,16 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iMilitaryValue += kLoopUnit.getWeaponTier() * 100;
 						iMilitaryValue += kLoopUnit.getTier() * 100;
 
+						if (kLoopUnit.isMechUnit())
+						{
+							iMilitaryValue *= 2;
+							iMilitaryValue /= 3;
+						}
+
 						if (kLoopUnit.getMoves() > 2)
 						{
 							iMilitaryValue += 500;
+							iMilitaryValue += (kLoopUnit.getWithdrawalProbability() * 2);
 						}
 
 						if (kLoopUnit.isExplodeInCombat())
@@ -6674,7 +6681,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iMilitaryValue += 2500;
 						}
 
-						if (bWarPlan)
+						if (bWarPlan || AI_isDoStrategy(AI_STRATEGY_GET_BETTER_UNITS))
 						{
 							iMilitaryValue *= 3;
 							iMilitaryValue /= 2;
@@ -6879,6 +6886,11 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 								sprintf(szOut, "       Military value: %d\n", iMilitaryValue);
 								gDLL->messageControlLog(szOut);
 							}
+						}
+
+						if (!bWarPlan)
+						{
+							iMilitaryValue /= 2;
 						}
 
 						iUnitValue += iMilitaryValue;
