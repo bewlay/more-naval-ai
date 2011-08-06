@@ -15829,8 +15829,6 @@ bool CvUnitAI::AI_exploreRange(int iRange)
 				{
 					iValue = 0;
 
-					//Tholal ToDo - add AI for finding and exploring dungeons
-					
 					if (pLoopPlot->isRevealedGoody(getTeam()))
 					{
 						iValue += 100000;
@@ -26943,7 +26941,7 @@ void CvUnitAI::PatrolMove()
 	{
 		return;
 	}
-		
+	
 	if( getGroup()->isStranded() )
 	{
 		if (AI_load(UNITAI_ASSAULT_SEA, MISSIONAI_LOAD_ASSAULT, NO_UNITAI, -1, -1, -1, -1, MOVE_NO_ENEMY_TERRITORY, 1))
@@ -27031,8 +27029,6 @@ void CvUnitAI::HNgroupMove()
 		AI_attackMove();
 		return;
 	}
-
-
 
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
@@ -27320,7 +27316,7 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 		}
 	}
 
-	// TODO - look for enemy equipment nearby
+	// TODO - look for ENEMY equipment nearby
 	/*
 	CvPlot* pBestPlot = NULL;
 	for (int iX = -iRange; iX <= iRange; iX++)
@@ -28909,6 +28905,7 @@ void CvUnitAI::AI_upgrademanaMove()
 }
 
 // this is called every turn once in DoTurnUnitsPre()
+// Tholal note - lots of hardcode
 void CvUnitAI::AI_mageCast()
 {
 
@@ -28987,6 +28984,24 @@ void CvUnitAI::AI_terraformerMove()
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 		return;
 	}
+
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Player %d Unit %d (%S's %S) starting terraformer move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
+			gDLL->messageControlLog(szOut);
+		}
+	}
+
+	// ToDo - try and move some of the terraformer python function into the DLL
+	// loop through spells
+	// if is allowautomateterrain()
+	// need to avoid scorching the wrong places - this is the tricky part without harcoding it
+	// cast spell; break
+	// if !canmove; return
+	// else look for work -> go to python for this
 
     CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
