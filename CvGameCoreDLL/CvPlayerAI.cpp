@@ -17589,18 +17589,11 @@ void CvPlayerAI::AI_doDiplo()
 														}
 													}
 												}
-/*************************************************************************************************/
-/** BETTER AI (Diplomatics)  Sephi		                        	    						**/
-/**                                                                                             **/
-/** AI more willing to ask/join a war in ConquestMode                                           **/
-/*************************************************************************************************/
-                                                if (GET_PLAYER((PlayerTypes)iI).isConquestMode())
+
+												if (GET_PLAYER((PlayerTypes)iI).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
                                                 {
                                                     iTheirValue = (iTheirValue * 3) /2;
                                                 }
-/*************************************************************************************************/
-/** End															    							**/
-/*************************************************************************************************/
 
 												if (iTheirValue > (iOurValue * 3 / 4))
 												{
