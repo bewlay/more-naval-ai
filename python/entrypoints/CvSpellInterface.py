@@ -1317,9 +1317,9 @@ def reqForTheHorde(caster):
 	if bPlayer.getNumUnits() == 0:
 		return False
 	if pPlayer.isHuman() == False:
-		if bPlayer.getNumUnits() < 60:			
+		if eTeam.getAtWarCount(True) == 0:
 			return False
-		if pPlayer.isConquestMode() == False:
+		if bPlayer.getNumUnits() < (pPlayer.getNumCities() * 5):			
 			return False
 	return True
 
