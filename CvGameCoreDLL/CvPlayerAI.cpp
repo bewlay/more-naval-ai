@@ -394,22 +394,23 @@ void CvPlayerAI::AI_doTurnPre()
 	//Decay Gold Traded
     if (!isHuman())
     {
-		for(int i=0;i<GC.getMAX_CIV_PLAYERS();i++)
+		for (int iI =0 ; iI < GC.getMAX_CIV_PLAYERS(); iI++)
 		{
-			if(getID()!=(PlayerTypes)i)
+			CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (kPlayer.isAlive() && (kPlayer.getID() != (PlayerTypes)iI))
 			{
-				int iDecayGoldTraded=AI_getGoldTradedTo((PlayerTypes)i)/40;
+				int iDecayGoldTraded = AI_getGoldTradedTo((PlayerTypes)iI) / 40;
 
-				if (GET_PLAYER((PlayerTypes)i).getAlignment()==getAlignment())
+				if (kPlayer.getAlignment() == getAlignment())
 				{
-					iDecayGoldTraded*=2;
+					iDecayGoldTraded *= 2;
 				}
-				if (GET_PLAYER((PlayerTypes)i).getFavoriteReligion()==getFavoriteReligion())
+				if (kPlayer.getFavoriteReligion() == getFavoriteReligion())
 				{
-					iDecayGoldTraded*=2;
+					iDecayGoldTraded *= 2;
 				}
 
-				AI_changeGoldTradedTo((PlayerTypes)i, std::min(AI_getGoldTradedTo((PlayerTypes)i),iDecayGoldTraded));
+				AI_changeGoldTradedTo((PlayerTypes)iI, std::min(AI_getGoldTradedTo((PlayerTypes)iI),iDecayGoldTraded));
 			}
 		}
     }
