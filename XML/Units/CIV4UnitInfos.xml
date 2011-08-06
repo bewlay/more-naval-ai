@@ -36040,7 +36040,7 @@
             </ProductionTraits>
             <Flavors>
             </Flavors>
-            <iAIWeight>-999</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>20</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>-1</iAdvancedStartCost>

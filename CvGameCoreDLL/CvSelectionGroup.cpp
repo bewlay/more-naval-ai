@@ -2382,9 +2382,24 @@ bool CvSelectionGroup::canDoInterfaceModeAt(InterfaceModeTypes eInterfaceMode, C
 		case INTERFACEMODE_REBASE:
 			if (pLoopUnit != NULL)
 			{
-				if (pLoopUnit->canMoveInto(pPlot))
+				//Limit hawks a bit
+				if (plotDistance(pLoopUnit->plot()->getX(), pLoopUnit->plot()->getY(), pPlot->getX(), pPlot->getY()) < (pLoopUnit->airRange() * 2))
 				{
-					return true;
+					// todo - make this a team check instead. maybe include vassals?
+					if (pPlot->getOwner() == pLoopUnit->getOwner())
+					{
+						if (pLoopUnit->canMoveInto(pPlot))
+						{
+							if (GC.getUnitInfo((UnitTypes)pLoopUnit->getUnitType()).getPrereqBuilding() != NO_BUILDING)
+							{
+								//todo - can only rebase to cities with prereq building
+							}
+							else
+							{
+								return true;
+							}
+						}
+					}
 				}
 			}
 			break;
