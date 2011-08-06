@@ -10755,7 +10755,7 @@
 			<iVassalPowerModifier>20</iVassalPowerModifier>
 			<iFreedomAppreciation>0</iFreedomAppreciation>
 			<FavoriteCivic>CIVIC_NATIONHOOD</FavoriteCivic>
-			<FavoriteReligion>NONE</FavoriteReligion>
+			<FavoriteReligion>RELIGION_FELLOWSHIP_OF_LEAVES</FavoriteReligion>
 			<Traits>
 				 <Trait>
 					<TraitType>TRAIT_DEFENDER</TraitType>
@@ -11399,7 +11399,7 @@
 			<iVassalPowerModifier>20</iVassalPowerModifier>
 			<iFreedomAppreciation>0</iFreedomAppreciation>
 			<FavoriteCivic>CIVIC_ARISTOCRACY</FavoriteCivic>
-			<FavoriteReligion>NONE</FavoriteReligion>
+			<FavoriteReligion>RELIGION_FELLOWSHIP_OF_LEAVES</FavoriteReligion>
 			<Traits>
 				 <Trait>
 					<TraitType>TRAIT_CREATIVE</TraitType>
@@ -15339,7 +15339,7 @@
 			<iVassalPowerModifier>20</iVassalPowerModifier>
 			<iFreedomAppreciation>0</iFreedomAppreciation>
 			<FavoriteCivic>CIVIC_CASTE_SYSTEM</FavoriteCivic>
-			<FavoriteReligion>NONE</FavoriteReligion>
+			<FavoriteReligion>RELIGION_OCTOPUS_OVERLORDS</FavoriteReligion>
 			<Traits>
 				 <Trait>
 					<TraitType>TRAIT_CHARISMATIC</TraitType>
@@ -15995,7 +15995,7 @@
 			<iVassalPowerModifier>20</iVassalPowerModifier>
 			<iFreedomAppreciation>0</iFreedomAppreciation>
 			<FavoriteCivic>CIVIC_FOREIGN_TRADE</FavoriteCivic>
-			<FavoriteReligion>NONE</FavoriteReligion>
+			<FavoriteReligion>RELIGION_OCTOPUS_OVERLORDS</FavoriteReligion>
 			<Traits>
 				 <Trait>
 					<TraitType>TRAIT_FINANCIAL</TraitType>
