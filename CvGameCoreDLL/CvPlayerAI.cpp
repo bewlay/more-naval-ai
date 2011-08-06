@@ -19653,7 +19653,24 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 		return iNumTowers;
 	}
 
-	if (GC.getLeaderHeadInfo(getLeaderType()).isArcaneTowerVictory())
+	// if we have magic type traits, pursue a Tower victory
+	bool bHasMageTrait = false;
+	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+	{
+		if (hasTrait((TraitTypes)iJ))
+		{
+			for (int iK = 0; iK < GC.getNumPromotionInfos(); iK++)
+			{
+				if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getDefineINT("UNITCOMBAT_ADEPT")))
+				{
+					bHasMageTrait = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if (bHasMageTrait)
 	{
 		return 1;
 	}

@@ -23889,7 +23889,7 @@ int CvPlayer::countGroupFlagUnits(int Groupflag) const
 
 void CvPlayer::AI_doTowerMastery()
 {
-	if (GC.getLeaderHeadInfo(getLeaderType()).isArcaneTowerVictory())
+
 	{
 		CyArgsList argsList;
 		argsList.add(getID());	// pass in unit class
