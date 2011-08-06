@@ -11508,62 +11508,65 @@ bool CvUnitAI::AI_group(UnitAITypes eUnitAI, int iMaxGroup, int iMaxOwnUnitAI, i
 		}
 
 		CvPlot* pPlot = pLoopUnit->plot();
-		if (AI_plotValid(pPlot))
+		if (pLoopUnit->AI_getUnitAIType() == eUnitAI)
 		{
-			if (iMaxPath > 0 || pPlot == plot())
+			if (AI_plotValid(pPlot))
 			{
-				if (!isEnemy(pPlot->getTeam()))
+				if (iMaxPath > 0 || pPlot == plot())
 				{
-					if (AI_allowGroup(pLoopUnit, eUnitAI))
+					if (!isEnemy(pPlot->getTeam()))
 					{
-						if ((iMaxGroup == -1) || ((pLoopGroup->getNumUnits() + GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(pLoopUnit, MISSIONAI_GROUP, getGroup())) <= (iMaxGroup + ((bStackOfDoom) ? AI_stackOfDoomExtra() : 0))))
+						if (AI_allowGroup(pLoopUnit, eUnitAI))
 						{
-							if ((iMaxOwnUnitAI == -1) || (pLoopGroup->countNumUnitAIType(AI_getUnitAIType()) <= (iMaxOwnUnitAI + ((bStackOfDoom) ? AI_stackOfDoomExtra() : 0))))
+							if ((iMaxGroup == -1) || ((pLoopGroup->getNumUnits() + GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(pLoopUnit, MISSIONAI_GROUP, getGroup())) <= (iMaxGroup + ((bStackOfDoom) ? AI_stackOfDoomExtra() : 0))))
 							{
-								if ((iMinUnitAI == -1) || (pLoopGroup->countNumUnitAIType(eUnitAI) >= iMinUnitAI))
+								if ((iMaxOwnUnitAI == -1) || (pLoopGroup->countNumUnitAIType(AI_getUnitAIType()) <= (iMaxOwnUnitAI + ((bStackOfDoom) ? AI_stackOfDoomExtra() : 0))))
 								{
-									if (!bIgnoreFaster || (pLoopGroup->baseMoves() <= baseMoves()))
+									if ((iMinUnitAI == -1) || (pLoopGroup->countNumUnitAIType(eUnitAI) >= iMinUnitAI))
 									{
-										if (!bIgnoreOwnUnitType || (pLoopUnit->getUnitType() != getUnitType()))
+										if (!bIgnoreFaster || (pLoopGroup->baseMoves() <= baseMoves()))
 										{
-											if (!bWithCargoOnly || pLoopUnit->getGroup()->hasCargo())
+											if (!bIgnoreOwnUnitType || (pLoopUnit->getUnitType() != getUnitType()))
 											{
-												if( !bInCityOnly || pLoopUnit->plot()->isCity() )
+												if (!bWithCargoOnly || pLoopUnit->getGroup()->hasCargo())
 												{
-													if( (eIgnoreMissionAIType == NO_MISSIONAI) || (eIgnoreMissionAIType != pLoopUnit->getGroup()->AI_getMissionAIType()) )
+													if( !bInCityOnly || pLoopUnit->plot()->isCity() )
 													{
-														if (!(pPlot->isVisibleEnemyUnit(this)))
+														if( (eIgnoreMissionAIType == NO_MISSIONAI) || (eIgnoreMissionAIType != pLoopUnit->getGroup()->AI_getMissionAIType()) )
 														{
-															if( iOurImpassableCount > 0 || AI_getUnitAIType() == UNITAI_ASSAULT_SEA )
+															if (!(pPlot->isVisibleEnemyUnit(this)))
 															{
-																int iTheirImpassableCount = 0;
-																pUnitNode = pLoopGroup->headUnitNode();
-																while (pUnitNode != NULL)
+																if( iOurImpassableCount > 0 || AI_getUnitAIType() == UNITAI_ASSAULT_SEA )
 																{
-																	CvUnit* pImpassUnit = ::getUnit(pUnitNode->m_data);
-																	pUnitNode = pLoopGroup->nextUnitNode(pUnitNode);
-
-																	iTheirImpassableCount = std::max(iTheirImpassableCount, GET_PLAYER(getOwnerINLINE()).AI_unitImpassableCount(pImpassUnit->getUnitType()));
-																}
-
-																if( iOurImpassableCount != iTheirImpassableCount )
-																{
-																	continue;
-																}
-															}
-
-															if (generatePath(pPlot, 0, true, &iPathTurns))
-															{
-																if (iPathTurns <= iMaxPath)
-																{
-																	iValue = 1000 * (iPathTurns + 1);
-																	iValue *= 4 + pLoopGroup->getCargo();
-																	iValue /= pLoopGroup->getNumUnits();
-
-																	if (iValue < iBestValue)
+																	int iTheirImpassableCount = 0;
+																	pUnitNode = pLoopGroup->headUnitNode();
+																	while (pUnitNode != NULL)
 																	{
-																		iBestValue = iValue;
-																		pBestUnit = pLoopUnit;
+																		CvUnit* pImpassUnit = ::getUnit(pUnitNode->m_data);
+																		pUnitNode = pLoopGroup->nextUnitNode(pUnitNode);
+
+																		iTheirImpassableCount = std::max(iTheirImpassableCount, GET_PLAYER(getOwnerINLINE()).AI_unitImpassableCount(pImpassUnit->getUnitType()));
+																	}
+
+																	if( iOurImpassableCount != iTheirImpassableCount )
+																	{
+																		continue;
+																	}
+																}
+
+																if (generatePath(pPlot, 0, true, &iPathTurns))
+																{
+																	if (iPathTurns <= iMaxPath)
+																	{
+																		iValue = 1000 * (iPathTurns + 1);
+																		iValue *= 4 + pLoopGroup->getCargo();
+																		iValue /= pLoopGroup->getNumUnits();
+
+																		if (iValue < iBestValue)
+																		{
+																			iBestValue = iValue;
+																			pBestUnit = pLoopUnit;
+																		}
 																	}
 																}
 															}
@@ -11658,53 +11661,56 @@ bool CvUnitAI::AI_groupMergeRange(UnitAITypes eUnitAI, int iMaxRange, bool bBigg
 
 					CvSelectionGroup* pLoopGroup = pLoopUnit->getGroup();
 
-					if (AI_allowGroup(pLoopUnit, eUnitAI))
+					if (pLoopUnit->AI_getUnitAIType() == eUnitAI)
 					{
-						if (!bIgnoreFaster || (pLoopUnit->getGroup()->baseMoves() <= baseMoves()))
+						if (AI_allowGroup(pLoopUnit, eUnitAI))
 						{
-							if (!bBiggerOnly || (pLoopGroup->getNumUnits() >= pGroup->getNumUnits()))
+							if (!bIgnoreFaster || (pLoopUnit->getGroup()->baseMoves() <= baseMoves()))
 							{
-/*************************************************************************************************/
-/**	SPEED TWEAK  Sephi                                                             				**/
-/**	We don't have to check for a path to distant shores if we want to move only short distance  **/
-/**	anyway, so approx maximum distance for a possible path by iMaxPath                			**/
-/*************************************************************************************************/
-//								int iPathTurns;
-//								if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-//								{
-//									if (iPathTurns <= (iMaxRange + 2))
-//									{
-//										int iValue = 1000 * (iPathTurns + 1);
-//										iValue /= pLoopGroup->getNumUnits();
-//										if (iValue < iBestValue)
-//										{
-//											iBestValue = iValue;
-//											pBestUnit = pLoopUnit;
-//										}
-//									}
-//								}
-                                int XDist=pLoopPlot->getX_INLINE() - plot()->getX_INLINE();
-                                int YDist=pLoopPlot->getY_INLINE() - plot()->getY_INLINE();
-                                if (((XDist*XDist)+(YDist*YDist))<(iMaxRange + 2)*(iMaxRange + 2)*4)
-                                {
-                                    int iPathTurns;
-                                    if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                    {
-                                        if (iPathTurns <= (iMaxRange + 2))
-                                        {
-                                            int iValue = 1000 * (iPathTurns + 1);
-                                            iValue /= pLoopGroup->getNumUnits();
-                                            if (iValue < iBestValue)
-                                            {
-                                                iBestValue = iValue;
-                                                pBestUnit = pLoopUnit;
-                                            }
-                                        }
-                                    }
-                                }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+								if (!bBiggerOnly || (pLoopGroup->getNumUnits() >= pGroup->getNumUnits()))
+								{
+	/*************************************************************************************************/
+	/**	SPEED TWEAK  Sephi                                                             				**/
+	/**	We don't have to check for a path to distant shores if we want to move only short distance  **/
+	/**	anyway, so approx maximum distance for a possible path by iMaxPath                			**/
+	/*************************************************************************************************/
+	//								int iPathTurns;
+	//								if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+	//								{
+	//									if (iPathTurns <= (iMaxRange + 2))
+	//									{
+	//										int iValue = 1000 * (iPathTurns + 1);
+	//										iValue /= pLoopGroup->getNumUnits();
+	//										if (iValue < iBestValue)
+	//										{
+	//											iBestValue = iValue;
+	//											pBestUnit = pLoopUnit;
+	//										}
+	//									}
+	//								}
+									int XDist=pLoopPlot->getX_INLINE() - plot()->getX_INLINE();
+									int YDist=pLoopPlot->getY_INLINE() - plot()->getY_INLINE();
+									if (((XDist*XDist)+(YDist*YDist))<(iMaxRange + 2)*(iMaxRange + 2)*4)
+									{
+										int iPathTurns;
+										if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+										{
+											if (iPathTurns <= (iMaxRange + 2))
+											{
+												int iValue = 1000 * (iPathTurns + 1);
+												iValue /= pLoopGroup->getNumUnits();
+												if (iValue < iBestValue)
+												{
+													iBestValue = iValue;
+													pBestUnit = pLoopUnit;
+												}
+											}
+										}
+									}
+	/*************************************************************************************************/
+	/**	END	                                        												**/
+	/*************************************************************************************************/
+								}
 							}
 						}
 					}
