@@ -24022,6 +24022,10 @@ int CvPlayerAI::AI_getMojoFactor() const
 		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
 		{
 			iValue += getNumAvailableBonuses((BonusTypes)iK) * 2;
+			if (getNumAvailableBonuses((BonusTypes)iK) > 1)
+			{
+				iValue ++;
+			}
 		}
 		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_RAWMANA")))
 		{
@@ -24036,7 +24040,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 		{
 			if (hasTrait((TraitTypes)iJ))
 			{
-				iValue += 5;
+				iValue += 3;
 			}
 		}
 	}
