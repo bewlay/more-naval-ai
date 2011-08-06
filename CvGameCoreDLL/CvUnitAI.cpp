@@ -25796,6 +25796,11 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         return false;
     }
 
+    if (noDefensiveBonus())
+    {
+        return false;
+    }
+
 	if (plot()->isCity())
 	{
 		if (plot()->isHills() && hillsDefenseModifier() > 0)
@@ -25803,21 +25808,6 @@ bool CvUnitAI::isUnitAllowedPermDefense()
 			return true;
 		}
 	}
-
-    if (noDefensiveBonus())
-    {
-        return false;
-    }
-
-	if (!isMilitaryHappiness())
-	{
-		return false;
-	}
-
-    if (kUnitInfo.isAIblockPermDefense())
-    {
-        return false;
-    }
 
     if (isHiddenNationality())
     {
