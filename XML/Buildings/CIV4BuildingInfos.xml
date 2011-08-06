@@ -2328,7 +2328,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>4</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -2772,7 +2772,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -4616,7 +4616,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -4849,7 +4849,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -5069,7 +5069,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>1</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -5736,7 +5736,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>3</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -5956,7 +5956,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -6176,7 +6176,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>3</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -6404,7 +6404,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -7111,7 +7111,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -7335,7 +7335,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -7555,7 +7555,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -8266,7 +8266,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -9855,7 +9855,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>1</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -10075,7 +10075,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>1</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -12958,7 +12958,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -13417,7 +13417,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -13672,7 +13672,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -15559,7 +15559,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -17437,7 +17437,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>8</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -17667,7 +17667,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -18105,7 +18105,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -18337,7 +18337,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -19001,7 +19001,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -19903,7 +19903,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -20362,7 +20362,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -20595,7 +20595,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>8</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -20819,7 +20819,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -25373,7 +25373,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1000</iAsset>
-            <iPower>1000</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -26936,7 +26936,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1000</iAsset>
-            <iPower>1000</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -27895,7 +27895,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -28809,7 +28809,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -29046,7 +29046,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>1</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -29274,7 +29274,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>12</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -29507,7 +29507,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -29737,7 +29737,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -30661,7 +30661,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -31101,7 +31101,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -34364,7 +34364,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>8</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -34831,7 +34831,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>6</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -35763,7 +35763,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -36208,7 +36208,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -36429,7 +36429,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>6</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -36652,7 +36652,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -36889,7 +36889,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -37114,7 +37114,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -37998,7 +37998,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>1</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -38214,7 +38214,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
@@ -38434,7 +38434,7 @@
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>0</iPower>
             <fVisibilityPriority>10</fVisibilityPriority>
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>

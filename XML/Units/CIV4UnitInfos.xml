@@ -5112,7 +5112,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>42</iAsset>
-            <iPower>84</iPower>
+            <iPower>60</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -5335,7 +5335,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>38</iAsset>
-            <iPower>76</iPower>
+            <iPower>70</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -6500,7 +6500,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -6714,7 +6714,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -6961,7 +6961,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -7223,7 +7223,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -7448,7 +7448,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -7686,7 +7686,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -7911,7 +7911,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -8131,7 +8131,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -8357,7 +8357,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -8585,7 +8585,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -8868,7 +8868,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -9164,7 +9164,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -9392,7 +9392,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>20</iAsset>
-            <iPower>40</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -9603,7 +9603,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>26</iAsset>
-            <iPower>52</iPower>
+            <iPower>100</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -9859,7 +9859,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -10355,7 +10355,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -10588,7 +10588,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -10833,7 +10833,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -11064,7 +11064,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -11305,7 +11305,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -11542,7 +11542,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -11768,7 +11768,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -11983,7 +11983,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -12193,7 +12193,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>400</iAsset>
-            <iPower>800</iPower>
+            <iPower>200</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -12443,7 +12443,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -12678,7 +12678,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -13140,7 +13140,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -13375,7 +13375,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -13594,7 +13594,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -13816,7 +13816,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>9</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -14041,7 +14041,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -14265,7 +14265,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -14717,7 +14717,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -14949,7 +14949,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>1</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -15169,7 +15169,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -15393,7 +15393,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -15617,7 +15617,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -15834,7 +15834,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>28</iAsset>
-            <iPower>56</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>4</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -16051,7 +16051,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>28</iAsset>
-            <iPower>56</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>4</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -16272,7 +16272,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>28</iAsset>
-            <iPower>56</iPower>
+            <iPower>34</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -16477,7 +16477,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>34</iPower>
             <UnitMeshGroups>
             <iGroupSize>4</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -16696,7 +16696,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -16930,7 +16930,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -17145,7 +17145,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>26</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -17381,7 +17381,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -17595,7 +17595,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>30</iAsset>
-            <iPower>60</iPower>
+            <iPower>26</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -17811,7 +17811,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -18027,7 +18027,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -18465,7 +18465,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>50</iAsset>
-            <iPower>100</iPower>
+            <iPower>70</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -18707,7 +18707,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -18919,7 +18919,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>20</iAsset>
-            <iPower>40</iPower>
+            <iPower>18</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -19132,7 +19132,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -19565,7 +19565,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -19773,7 +19773,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>40</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -20063,7 +20063,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -20307,7 +20307,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -20567,7 +20567,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -20815,7 +20815,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -21055,7 +21055,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>15</iAsset>
-            <iPower>30</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -21303,7 +21303,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -21536,7 +21536,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -21782,7 +21782,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -22014,7 +22014,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -22233,7 +22233,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -22465,7 +22465,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -22680,7 +22680,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -23350,7 +23350,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -23597,7 +23597,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -23814,7 +23814,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>26</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -24051,7 +24051,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -24290,7 +24290,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -24520,7 +24520,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -24755,7 +24755,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -24990,7 +24990,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -25205,7 +25205,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>16</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -25462,7 +25462,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -25701,7 +25701,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -25936,7 +25936,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -26395,7 +26395,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -26678,7 +26678,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>18</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -26931,7 +26931,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>42</iAsset>
-            <iPower>84</iPower>
+            <iPower>60</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -27180,7 +27180,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -27412,7 +27412,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -27653,7 +27653,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -27898,7 +27898,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -28139,7 +28139,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>20</iAsset>
-            <iPower>40</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -28382,7 +28382,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>33</iPower>
+            <iPower>16</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -28606,7 +28606,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -28820,7 +28820,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -29051,7 +29051,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -29276,7 +29276,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>9</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -29951,7 +29951,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>46</iAsset>
-            <iPower>92</iPower>
+            <iPower>60</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -30381,7 +30381,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -30598,7 +30598,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -30831,7 +30831,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -31071,7 +31071,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -31291,7 +31291,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -31529,7 +31529,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -31758,7 +31758,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -32180,7 +32180,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -32400,7 +32400,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -32931,7 +32931,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -33394,7 +33394,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -33612,7 +33612,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -33821,7 +33821,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -34053,7 +34053,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -34282,7 +34282,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -34563,7 +34563,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -34803,7 +34803,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>33</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -35026,7 +35026,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -35239,7 +35239,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -35472,7 +35472,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>13</iAsset>
-            <iPower>27</iPower>
+            <iPower>9</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -35681,7 +35681,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -35905,7 +35905,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -36406,7 +36406,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -36630,7 +36630,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>28</iAsset>
-            <iPower>56</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -36846,7 +36846,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -37078,7 +37078,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -37329,7 +37329,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -37574,7 +37574,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -37829,7 +37829,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -38080,7 +38080,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -38331,7 +38331,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -38574,7 +38574,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -38844,7 +38844,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1</fMaxSpeed>
@@ -39062,7 +39062,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -39280,7 +39280,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -39502,7 +39502,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -39728,7 +39728,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -39950,7 +39950,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -40175,7 +40175,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -40401,7 +40401,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -40632,7 +40632,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -40850,7 +40850,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -41068,7 +41068,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -41295,7 +41295,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -41517,7 +41517,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -41745,7 +41745,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -41967,7 +41967,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -42177,7 +42177,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -42441,7 +42441,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -42682,7 +42682,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>26</iAsset>
-            <iPower>52</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -42910,7 +42910,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -43131,7 +43131,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -43357,7 +43357,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -43577,7 +43577,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -43815,7 +43815,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -44043,7 +44043,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -44262,7 +44262,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>22</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -44472,7 +44472,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>22</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -44691,7 +44691,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -44927,7 +44927,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -45145,7 +45145,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -45359,7 +45359,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -45569,7 +45569,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>26</iAsset>
-            <iPower>52</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -45779,7 +45779,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -46058,7 +46058,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -46517,7 +46517,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -46756,7 +46756,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -46971,7 +46971,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -47428,7 +47428,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -47654,7 +47654,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>9</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -47885,7 +47885,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>9</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -48091,7 +48091,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -48320,7 +48320,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -48544,7 +48544,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -48834,7 +48834,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -49135,7 +49135,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -49432,7 +49432,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -49661,7 +49661,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>33</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -49891,7 +49891,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>25</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -50120,7 +50120,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>1</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -50351,7 +50351,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -50836,7 +50836,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -51046,7 +51046,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>16</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -51259,7 +51259,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -51475,7 +51475,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -51696,7 +51696,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -51907,7 +51907,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -52361,7 +52361,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>38</iAsset>
-            <iPower>76</iPower>
+            <iPower>100</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -52609,7 +52609,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -52841,7 +52841,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -53054,7 +53054,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -53582,7 +53582,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -53796,7 +53796,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -54040,7 +54040,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -54267,7 +54267,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -54504,7 +54504,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>9</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -54735,7 +54735,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -54961,7 +54961,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -55202,7 +55202,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>22</iAsset>
-            <iPower>44</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -55442,7 +55442,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -55664,7 +55664,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>26</iAsset>
-            <iPower>52</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -55891,7 +55891,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -56110,7 +56110,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>26</iAsset>
-            <iPower>52</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -56338,7 +56338,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -56548,7 +56548,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -56792,7 +56792,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -57043,7 +57043,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -57294,7 +57294,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -57551,7 +57551,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>6</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -57812,7 +57812,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -58067,7 +58067,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -58304,7 +58304,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -58564,7 +58564,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>13</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -58789,7 +58789,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>13</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -59289,7 +59289,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -59498,7 +59498,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -59718,7 +59718,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -59937,7 +59937,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>20</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -60162,7 +60162,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -60385,7 +60385,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -60603,7 +60603,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -60830,7 +60830,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -61500,7 +61500,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>18</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -61744,7 +61744,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -61969,7 +61969,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -62192,7 +62192,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>9</iAsset>
-            <iPower>18</iPower>
+            <iPower>9</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -62411,7 +62411,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -62641,7 +62641,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>28</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -63094,7 +63094,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -63319,7 +63319,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>7</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -63546,7 +63546,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>13</iAsset>
-            <iPower>27</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -63764,7 +63764,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>14</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -64241,7 +64241,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>5</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -64685,7 +64685,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>1</iAsset>
-            <iPower>2</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -65132,7 +65132,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -65349,7 +65349,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -65799,7 +65799,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>2</iAsset>
-            <iPower>4</iPower>
+            <iPower>0</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -66023,7 +66023,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>4</iAsset>
-            <iPower>8</iPower>
+            <iPower>0</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -66236,7 +66236,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -66465,7 +66465,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>24</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -66697,7 +66697,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -66925,7 +66925,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -67632,7 +67632,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>3</iAsset>
-            <iPower>6</iPower>
+            <iPower>30</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.25</fMaxSpeed>
@@ -67878,7 +67878,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -68109,7 +68109,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>44</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -68371,7 +68371,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>40</iAsset>
-            <iPower>80</iPower>
+            <iPower>60</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -68637,7 +68637,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>7</iAsset>
-            <iPower>15</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -68862,7 +68862,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -69142,7 +69142,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>6</iAsset>
-            <iPower>12</iPower>
+            <iPower>0</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -69582,7 +69582,7 @@
             <iCultureGarrison>7</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>24</iAsset>
-            <iPower>48</iPower>
+            <iPower>40</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -69808,7 +69808,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>3</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -70025,7 +70025,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>20</iAsset>
-            <iPower>40</iPower>
+            <iPower>10</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -70269,7 +70269,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>5</iAsset>
-            <iPower>10</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>2.25</fMaxSpeed>
@@ -70486,7 +70486,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>15</iAsset>
-            <iPower>30</iPower>
+            <iPower>14</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -70709,7 +70709,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>20</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -70935,7 +70935,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -71162,7 +71162,7 @@
             <iCultureGarrison>5</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>8</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -71380,7 +71380,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>38</iAsset>
-            <iPower>76</iPower>
+            <iPower>40</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -71600,7 +71600,7 @@
             <iCultureGarrison>3</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>1</iAsset>
-            <iPower>3</iPower>
+            <iPower>4</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -72255,7 +72255,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>16</iAsset>
-            <iPower>32</iPower>
+            <iPower>12</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -72491,7 +72491,7 @@
             <iCultureGarrison>4</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>2</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -72728,7 +72728,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>10</iAsset>
-            <iPower>21</iPower>
+            <iPower>18</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -72968,7 +72968,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>1</iPower>
             <UnitMeshGroups>
             <iGroupSize>3</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -73179,7 +73179,7 @@
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>0</iAsset>
-            <iPower>0</iPower>
+            <iPower>2</iPower>
             <UnitMeshGroups>
             <iGroupSize>5</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -74141,7 +74141,7 @@
             <iCultureGarrison>6</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>12</iAsset>
-            <iPower>24</iPower>
+            <iPower>15</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -74374,7 +74374,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>66</iAsset>
-            <iPower>132</iPower>
+            <iPower>100</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -74590,7 +74590,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>30</iAsset>
-            <iPower>60</iPower>
+            <iPower>80</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -74864,7 +74864,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>18</iAsset>
-            <iPower>36</iPower>
+            <iPower>40</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
