@@ -504,7 +504,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>10</iAITradeModifier>
             <iCost>300</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -578,7 +578,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_RELIGION</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>0</iAITradeModifier>
             <iCost>640</iCost>
             <iAdvancedStartCost>-1</iAdvancedStartCost>
@@ -731,7 +731,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>10</iAITradeModifier>
             <iCost>5400</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -801,7 +801,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>10</iAITradeModifier>
             <iCost>2400</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -875,7 +875,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>25</iAITradeModifier>
             <iCost>400</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -1389,7 +1389,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_GROWTH</Advisor>
-            <iAIWeight>500</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>0</iAITradeModifier>
             <iCost>120</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -2042,7 +2042,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_GROWTH</Advisor>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>10</iAITradeModifier>
             <iCost>80</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -2731,7 +2731,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_ECONOMY</Advisor>
-            <iAIWeight>4</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>-25</iAITradeModifier>
             <iCost>700</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -2952,7 +2952,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_RELIGION</Advisor>
-            <iAIWeight>2000</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>0</iAITradeModifier>
             <iCost>1200</iCost>
             <iAdvancedStartCost>-1</iAdvancedStartCost>
@@ -3022,7 +3022,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>25</iAITradeModifier>
             <iCost>2600</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -3987,7 +3987,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <iAIWeight>10</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>25</iAITradeModifier>
             <iCost>7400</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -4065,7 +4065,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_RELIGION</Advisor>
-            <iAIWeight>300</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>0</iAITradeModifier>
             <iCost>200</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
