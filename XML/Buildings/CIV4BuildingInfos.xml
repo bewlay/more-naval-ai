@@ -1441,6 +1441,7 @@
             <RemovePromotion>NONE</RemovePromotion>
             <SpecialistCommerceChanges>
             </SpecialistCommerceChanges>
+            <bVictoryBuilding>1</bVictoryBuilding>	
         </BuildingInfo>
         <BuildingInfo>
             <BuildingClass>BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE</BuildingClass>
@@ -1695,6 +1696,7 @@
             <RemovePromotion>NONE</RemovePromotion>
             <SpecialistCommerceChanges>
             </SpecialistCommerceChanges>
+            <bVictoryBuilding>1</bVictoryBuilding>	
         </BuildingInfo>
         <BuildingInfo>
             <BuildingClass>BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED</BuildingClass>
@@ -1949,6 +1951,7 @@
             <RemovePromotion>NONE</RemovePromotion>
             <SpecialistCommerceChanges>
             </SpecialistCommerceChanges>
+            <bVictoryBuilding>1</bVictoryBuilding>	
         </BuildingInfo>
         <BuildingInfo>
             <BuildingClass>BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_FINAL</BuildingClass>
