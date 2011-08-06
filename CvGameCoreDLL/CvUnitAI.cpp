@@ -10176,6 +10176,15 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// Tholal AI - account for new FFH promotion tags
+	// ToDo - add logic for tags that arent selectable but could be in mods (flying, Dispellable, Immortal, immunetofear, bImmuneToMagic, 
+
+	if (GC.getPromotionInfo(ePromotion).isIgnoreBuildingDefense())
+	{
+		if ((AI_getUnitAIType() == UNITAI_ATTACK_CITY))
+		{
+			iValue += 25;
+		}
+	}
 
 	if (GC.getPromotionInfo(ePromotion).isSeeInvisible())
 	{
@@ -10245,6 +10254,26 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		{
 			iValue += 20;
 		}
+
+		// prepare counters for the Favorite Unit Combats of whoever we have warplans against
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (kLoopPlayer.isAlive())
+			{
+				if (GET_TEAM(getTeam()).AI_getWarPlan(kLoopPlayer.getTeam()) != NO_WARPLAN)
+				{
+					if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() != NO_UNITCOMBAT)
+					{
+						if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() == GC.getPromotionInfo(ePromotion).getPromotionCombatType())
+						{
+							iValue += 20;
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
@@ -10253,7 +10282,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	//Bounty Hunter
-	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (iLevel + (bFinancialTrouble ? 2: 0));
+	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (iLevel / (bFinancialTrouble ? 1: 2));
 
 
 	//Twincast
@@ -10266,14 +10295,19 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 
-	// Tholal AI - HARDCODED promotions
+	// HARDCODED promotions
 	// Inquisitor
 	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR")))
 	{
 		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 		{
-			// Tholal ToDo - Add Inquisitor AI - only need a few around
-			iValue += 40;
+			int iNeededInquisitors = (GET_PLAYER(getOwnerINLINE()).getNumCities() / 5);
+			iNeededInquisitors = std::max(1, iNeededInquisitors);
+
+			if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_INQUISITOR) < iNeededInquisitors)
+			{
+				iValue += 40;
+			}
 		}
 	}
 
@@ -10282,10 +10316,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	{
 		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 		{
-			// Tholal ToDo - find a way to limit this to just a few units
 			if ((AI_getUnitAIType() == UNITAI_MANA_UPGRADE))
 			{
-				iValue += 40;
+				iValue += 100;
 			}
 		}
 	}
@@ -10337,7 +10370,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	if (GC.getPromotionInfo(ePromotion).isEnemyRoute())
 	{
-		if (AI_getUnitAIType() == UNITAI_PILLAGE)
+		if (AI_getUnitAIType() == UNITAI_PILLAGE || isBlitz())
 		{
 			iValue += 25;
 		}
@@ -10431,8 +10464,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_EXPLORE) ||
 			(AI_getUnitAIType() == UNITAI_HERO) ||
 			(AI_getUnitAIType() == UNITAI_MISSIONARY) ||
+			(AI_getUnitAIType() == UNITAI_MANA_UPGRADE) ||
 			isInquisitor() ||
-			isWaterWalking())
+			isWaterWalking() ||
+			isBlitz())
 	{
 		iValue += ((iTemp * 26) - getMoves());
 	}
@@ -10494,10 +10529,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
 			(AI_getUnitAIType() == UNITAI_CITY_SPECIAL) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK) ||
-			(AI_getUnitAIType() == UNITAI_ATTACK_CITY) ||
 			(AI_getUnitAIType() == UNITAI_HERO))
 	{
-		iTemp *= 8;
+		iTemp *= iLevel;
 		iExtra = getExtraChanceFirstStrikes() + getExtraFirstStrikes() * 2;
 		iTemp *= 100 + iExtra * 15;
 		iTemp /= 100;
@@ -10611,6 +10645,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
     if ( getDamage() > 0 || ((AI_getBirthmark() % 8 == 0) && (AI_getUnitAIType() == UNITAI_COUNTER || 
 															AI_getUnitAIType() == UNITAI_PILLAGE ||
 															AI_getUnitAIType() == UNITAI_ATTACK_CITY ||
+															AI_getUnitAIType() == UNITAI_MEDIC ||
 															AI_getUnitAIType() == UNITAI_RESERVE )) )
     {
 /************************************************************************************************/
@@ -10688,6 +10723,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_CARRIER_SEA) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK_AIR) ||
 			(AI_getUnitAIType() == UNITAI_CARRIER_AIR) ||
+			(AI_getUnitAIType() == UNITAI_WARWIZARD) ||
 			(AI_getUnitAIType() == UNITAI_HERO))
 	{
 		iValue += (iTemp * 2);
@@ -11100,7 +11136,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	// Tholal AI - mage promotion: loop through spells, check that they require ePromotion, add value for spell, check various arcane leader and civ Traits
 	if (isChanneler())
 	{
-		// traits
+		// traits - HARDCODE
 		bool bSummoner = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
 		bool bSundered = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
 		bool bArcane = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
@@ -11110,7 +11146,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			if (isSummoner())
 			{
 				// Tholal TODO: have this check value of promotion for the summons? Might not be worth the effort
-				iValue += 25;
+				iValue += 35;
 			}
 		}
 
@@ -11150,7 +11186,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 						if (AI_getUnitAIType() == UNITAI_HERO)
 						{
-							iModValue++;
+							iModValue += 2;
 						}
 
 						iValue += (iTempValue * (4 + iModValue));
@@ -11222,10 +11258,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 
-					// Blaze
+					// Bloom - not currently used for any selectable spell promotions in base FFH
 					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateFeatureType() != NO_FEATURE)
 					{
-						if (AI_getGroupflag()==GROUPFLAG_CONQUEST || AI_getUnitAIType() == UNITAI_TERRAFORMER)
+						if (AI_getUnitAIType() == UNITAI_TERRAFORMER)
 						{
 							iValue += 35;
 						}
@@ -11235,6 +11271,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 
+					// Blaze
 					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateImprovementType() != NO_IMPROVEMENT)
 					{
 						if (AI_getGroupflag()==GROUPFLAG_CONQUEST || AI_getUnitAIType() == UNITAI_TERRAFORMER)
@@ -11275,7 +11312,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 					if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
 					{
-						if (AI_getUnitAIType() != UNITAI_WARWIZARD)
+						if (AI_getUnitAIType() != UNITAI_WARWIZARD && AI_getUnitAIType() != UNITAI_HERO)
 						{
 							iValue /= 2;
 						}
