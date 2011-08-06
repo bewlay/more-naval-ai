@@ -17636,7 +17636,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_NAVAL</Combat>
             <Domain>DOMAIN_SEA</Domain>
-            <DefaultUnitAI>UNITAI_ASSAULT_SEA</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_PIRATE_SEA</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_BLACK_WIND</Description>
@@ -27057,11 +27057,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK_SEA</UnitAIType>
+                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -28486,6 +28486,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -33933,14 +33937,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -35065,7 +35061,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_MEDIC</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_GRIGORI_MEDIC</Description>
@@ -35123,6 +35119,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -36896,7 +36896,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_RUNEKEEPER</Description>
@@ -37147,7 +37147,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_HIGH_PRIEST_OF_LEAVES</Description>
@@ -37392,7 +37392,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_HIGH_PRIEST_OF_THE_EMPYREAN</Description>
@@ -37647,7 +37647,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_PRIOR</Description>
@@ -37898,7 +37898,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_SPEAKER</Description>
@@ -38149,7 +38149,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_PROFANE</Description>
@@ -38400,7 +38400,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_HIGH_PRIEST_OF_WINTER</Description>
@@ -40052,6 +40052,14 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -40277,6 +40285,14 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -40505,6 +40521,14 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -40726,6 +40750,14 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -54787,7 +54819,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_ORTHUS</Description>
@@ -56665,6 +56697,10 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -56916,6 +56952,10 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -57166,6 +57206,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -57423,6 +57467,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -57685,6 +57733,10 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -57939,6 +57991,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -68912,7 +68968,7 @@
             <Capture>UNITCLASS_SUPPLIES</Capture>
             <Combat>NONE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ENGINEER</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_SUPPLIES</Description>
@@ -70304,7 +70360,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MOUNTED</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_TUMTUM</Description>
