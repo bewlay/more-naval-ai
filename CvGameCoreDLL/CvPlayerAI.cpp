@@ -4956,6 +4956,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					// End Tholal AI
 				}
 
+				// include leaderhead weight values
+				iImprovementValue *= (200 + GC.getLeaderHeadInfo(getPersonalityType()).getImprovementWeightModifier(eImprovement));
+				iImprovementValue /= 200;
+
 				if (GC.getLogging() && bDebugLog)
 				{
 					if (gDLL->getChtLvl() > 0)
