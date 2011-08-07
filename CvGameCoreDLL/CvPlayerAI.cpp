@@ -19654,8 +19654,18 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 		return iNumTowers;
 	}
 
-	// if we have magic type traits, pursue a Tower victory
+	// if we have magic type traits, pursue a Tower victory - HARDCODE
 	bool bHasMageTrait = false;
+
+	bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
+	bool bSundered = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
+	bool bArcane = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
+
+	if (bSummoner || bSundered || bArcane)
+	{
+		bHasMageTrait = true;
+	}
+	/* - this section isn't working like I had hoped - too many non-magic traits give free promos to adepts
 	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 	{
 		if (hasTrait((TraitTypes)iJ))
@@ -19670,6 +19680,7 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 			}
 		}
 	}
+	*/
 
 	if (bHasMageTrait)
 	{
