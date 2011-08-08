@@ -541,6 +541,13 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_GLOBELAYER_OPTION,
 	WIDGET_GLOBELAYER_TOGGLE,
 
+// BUG - Foreign Advisor INFO Trade - start
+	WIDGET_TRADE_ROUTES,
+// BUG - Foreign Advisor INFO Trade - end
+
+// BUG - Food Rate Hover - start
+	WIDGET_FOOD_MOD_HELP,
+// BUG - Food Rate Hover - end
 //FfH: Added by Kael 07/23/2007
 	WIDGET_PEDIA_JUMP_TO_SPELL,
 	WIDGET_HELP_SPELL,
@@ -1022,6 +1029,11 @@ enum FontSymbols					// Exposed to Python
 	MAP_CHAR,
 	OCCUPATION_CHAR,
 	POWER_CHAR,
+// BUG - start
+	CITIZEN_CHAR,
+	GREAT_GENERAL_CHAR,
+	AIRPORT_CHAR,
+// BUG - end
 
 #ifdef _USRDLL
 	MAX_NUM_SYMBOLS

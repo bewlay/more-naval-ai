@@ -389,6 +389,13 @@ void CyEnumsPythonInterface()
 		.value("WIDGET_GLOBELAYER_OPTION", WIDGET_GLOBELAYER_OPTION)
 		.value("WIDGET_GLOBELAYER_TOGGLE", WIDGET_GLOBELAYER_TOGGLE)
 
+// BUG - Foreign Advisor INFO Trade - start
+		.value("WIDGET_TRADE_ROUTES", WIDGET_TRADE_ROUTES)
+// BUG - Foreign Advisor INFO Trade - end
+
+// BUG - Food Rate Hover - start
+		.value("WIDGET_FOOD_MOD_HELP", WIDGET_FOOD_MOD_HELP)
+// BUG - Food Rate Hover - end
 //FfH Spell System: Added by Kael 07/23/2007
 		.value("WIDGET_PEDIA_JUMP_TO_SPELL", WIDGET_PEDIA_JUMP_TO_SPELL)
 		.value("WIDGET_HELP_SPELL", WIDGET_HELP_SPELL)
@@ -754,6 +761,11 @@ void CyEnumsPythonInterface()
 		.value("MAP_CHAR", MAP_CHAR)
 		.value("OCCUPATION_CHAR", OCCUPATION_CHAR)
 		.value("POWER_CHAR", POWER_CHAR)
+// BUG - start
+		.value("CITIZEN_CHAR", CITIZEN_CHAR)
+		.value("GREAT_GENERAL_CHAR", GREAT_GENERAL_CHAR)
+		.value("AIRPORT_CHAR", GREAT_GENERAL_CHAR)
+// BUG - end
 		.value("MAX_NUM_SYMBOLS", MAX_NUM_SYMBOLS)
 		;
 

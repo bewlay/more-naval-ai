@@ -153,6 +153,16 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 
 	case WIDGET_ZOOM_CITY:
 		szBuffer.append(gDLL->getText("TXT_KEY_ZOOM_CITY_HELP"));
+// BUG - Zoom City Details - start
+		// if (getBugOptionBOOL("MiscHover__CDAZoomCityDetails", true, "BUG_CDA_ZOOM_CITY_DETAILS"))
+		{
+			// only if the active player owns the city
+			if (GC.getGame().getActivePlayer() == widgetDataStruct.m_iData1) {
+				szBuffer.append(NEWLINE);
+				GAMETEXT.setCityBarHelp(szBuffer, GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCity(widgetDataStruct.m_iData2));
+			}
+		}
+// BUG - Zoom City Details - end
 		break;
 
 	case WIDGET_END_TURN:
@@ -578,6 +588,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_COMMERCE_MOD_HELP:
 		parseCommerceModHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Trade Hover - start
+	case WIDGET_TRADE_ROUTES:
+		parseTradeRoutes(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Hover - end
 
 //FfH: Added by Kael 07/23/2007
 	case WIDGET_PEDIA_JUMP_TO_SPELL:
@@ -1828,7 +1844,9 @@ void CvDLLWidgetData::parseConstructHelp(CvWidgetDataStruct &widgetDataStruct, C
 	{
 		eBuilding = (BuildingTypes)GC.getCivilizationInfo(pHeadSelectedCity->getCivilizationType()).getCivilizationBuildings(widgetDataStruct.m_iData1);
 
-		GAMETEXT.setBuildingHelp(szBuffer, eBuilding, false, widgetDataStruct.m_bOption, false, pHeadSelectedCity);
+// BUG - Building Actual Effects - start
+		GAMETEXT.setBuildingHelpActual(szBuffer, eBuilding, false, widgetDataStruct.m_bOption, false, pHeadSelectedCity);
+// BUG - Building Actual Effects - end
 	}
 }
 
@@ -2367,7 +2385,9 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 			}
 			else if (GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_JOIN)
 			{
-				GAMETEXT.parseSpecialistHelp(szBuffer, ((SpecialistTypes)(GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData())), pMissionCity, true);
+// BUG - Specialist Actual Effects - start
+				GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData())), pMissionCity, true, 1);
+// BUG - Specialist Actual Effects - end
 			}
 			else if (GC.getActionInfo(widgetDataStruct.m_iData1).getMissionType() == MISSION_CONSTRUCT)
 			{
@@ -2385,7 +2405,9 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 					else
 					{
 						szBuffer.append(NEWLINE);
-						GAMETEXT.setBuildingHelp(szBuffer, ((BuildingTypes)(GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData())), false, false, false, pMissionCity);
+// BUG - Building Actual Effects - start
+						GAMETEXT.setBuildingHelpActual(szBuffer, ((BuildingTypes)(GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData())), false, false, false, pMissionCity);
+// BUG - Building Actual Effects - end
 					}
 				}
 			}
@@ -3197,7 +3219,9 @@ void CvDLLWidgetData::parseDisabledCitizenHelp(CvWidgetDataStruct &widgetDataStr
 	{
 		if (widgetDataStruct.m_iData1 != NO_SPECIALIST)
 		{
-			GAMETEXT.parseSpecialistHelp(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity);
+// BUG - Specialist Actual Effects - start
+			GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity, false, 1);
+// BUG - Specialist Actual Effects - end
 
 			if (!(pHeadSelectedCity->isSpecialistValid(((SpecialistTypes)(widgetDataStruct.m_iData1)), 1)))
 			{
@@ -3260,7 +3284,9 @@ void CvDLLWidgetData::parseChangeSpecialistHelp(CvWidgetDataStruct &widgetDataSt
 	{
 		if (widgetDataStruct.m_iData2 > 0)
 		{
-			GAMETEXT.parseSpecialistHelp(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity);
+// BUG - Specialist Actual Effects - start
+			GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity, false, widgetDataStruct.m_iData2);
+// BUG - Specialist Actual Effects - end
 
 			if (widgetDataStruct.m_iData1 != GC.getDefineINT("DEFAULT_SPECIALIST"))
 			{
@@ -3276,7 +3302,20 @@ void CvDLLWidgetData::parseChangeSpecialistHelp(CvWidgetDataStruct &widgetDataSt
 		}
 		else
 		{
-			szBuffer.assign(gDLL->getText("TXT_KEY_MISC_REMOVE_SPECIALIST", GC.getSpecialistInfo((SpecialistTypes) widgetDataStruct.m_iData1).getTextKeyWide()));
+// BUG - Remove Specialist Hover - start
+			// if (getBugOptionBOOL("MiscHover__RemoveSpecialist", true, "BUG_CITY_SCREEN_REMOVE_SPECIALIST_HOVER"))
+			if (true)
+			{
+				szBuffer.assign(gDLL->getText("TXT_KEY_MISC_REMOVE_SPECIALIST", L""));
+// BUG - Specialist Actual Effects - start
+				GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity, false, widgetDataStruct.m_iData2);
+// BUG - Specialist Actual Effects - end
+			}
+			else
+			{
+				szBuffer.assign(gDLL->getText("TXT_KEY_MISC_REMOVE_SPECIALIST", GC.getSpecialistInfo((SpecialistTypes) widgetDataStruct.m_iData1).getTextKeyWide()));
+			}
+// BUG - Remove Specialist Hover - end
 
 			if (pHeadSelectedCity->getForceSpecialistCount((SpecialistTypes)(widgetDataStruct.m_iData1)) > 0)
 			{
@@ -3382,8 +3421,9 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 
 		szBuffer.append("Power");
 		szBuffer.append(NEWLINE);
+		// ALN FfH-AI Debug Start
 		// show everyones power for the active player
-		if (eActivePlayer == ePlayer)
+		/* if (eActivePlayer == ePlayer)
 		{
 			for (int iI = 0; iI < MAX_PLAYERS; iI++)
 			{
@@ -3406,7 +3446,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			}
 		}
 		// only should this one power if not active player
-		else
+		else */
+		// ALN FfH-AI Debug End
 		{
 			szBuffer.append(CvWString::format(SETCOLR L"%d (%d) power" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kPlayer.getPower(), kTeam.getPower(true)));
 			
@@ -3659,9 +3700,101 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 
 		// End Tholal AI
 
+		// ALN FfH-AI Debug Start
+		szBuffer.append(NEWLINE);
+		szBuffer.append(NEWLINE);
+
+		// Economy
+		// Gold & Research
+		int iGoldPercent = kPlayer.getCommercePercent(COMMERCE_GOLD);
+		int iGold = kPlayer.getCommerceRate(COMMERCE_GOLD);
+		int iResearchPercent = kPlayer.getCommercePercent(COMMERCE_RESEARCH);
+		int iResearch = kPlayer.getCommerceRate(COMMERCE_RESEARCH);
+		szBuffer.append(CvWString::format(L"Gold Commerce(" SETCOLR L"%d%%" ENDCOLR L"): ", TEXT_COLOR("COLOR_UNIT_TEXT"), iGoldPercent));
+		szBuffer.append(CvWString::format(SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iGold));
+		szBuffer.append(NEWLINE);
+		szBuffer.append(CvWString::format(L"Research Commerce(" SETCOLR L"%d%%" ENDCOLR L"): ", TEXT_COLOR("COLOR_UNIT_TEXT"), iResearchPercent));
+		szBuffer.append(CvWString::format(SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iResearch));
+		szBuffer.append(NEWLINE);
+		
+		// NetCommerce/Expenses
+		int iNetCommerce = 1 + kPlayer.getCommerceRate(COMMERCE_GOLD) + kPlayer.getCommerceRate(COMMERCE_RESEARCH) + std::max(0, kPlayer.getGoldPerTurn());
+		int iNetExpenses = kPlayer.calculateInflatedCosts() + std::max(0, -kPlayer.getGoldPerTurn());
+		szBuffer.append(CvWString::format(L"NetCommerce/Expenses: "));
+		szBuffer.append(CvWString::format(SETCOLR L"%d" ENDCOLR L"/" SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_POSITIVE_TEXT"), iNetCommerce, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), iNetExpenses));
+		szBuffer.append(NEWLINE);
+		
+		// FundedPercent
+		int iFundedPercent = kPlayer.AI_getFundedPercent();
+		if (iFundedPercent >= 70)
+		{
+			szBuffer.append(CvWString::format(L"FundedPercent: " SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_POSITIVE_TEXT"), iFundedPercent));
+		}
+		else if (iFundedPercent >= 45)
+		{
+			szBuffer.append(CvWString::format(L"FundedPercent: " SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), iFundedPercent));
+		}
+		else
+		{
+			szBuffer.append(CvWString::format(L"FundedPercent: " SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), iFundedPercent));
+		}
+		szBuffer.append(NEWLINE);
+		szBuffer.append(NEWLINE);
+		
+		// Unit Costs
+		int iFreeUnits = 0;
+		int iFreeMilitaryUnits = 0;
+		int iUnits = kPlayer.getNumUnits();
+		int iMilitaryUnits = kPlayer.getNumMilitaryUnits();
+		int iPaidUnits = 0;
+		int iPaidMilitaryUnits = 0;
+		int iMilitaryCost = 0;
+		int iBaseUnitCost = 0;
+		int iExtraCost = 0;
+		int iUnitCost = kPlayer.calculateUnitCost(iFreeUnits, iFreeMilitaryUnits, iPaidUnits, iPaidMilitaryUnits, iBaseUnitCost, iMilitaryCost, iExtraCost);
+		
+		// Total UnitCost
+		szBuffer.append(CvWString::format(L"UnitCosts: " SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iUnitCost));
+		szBuffer.append(NEWLINE);
+		
+		// Units/FreeUnits
+		szBuffer.append(CvWString::format(L"Units/FreeUnits: " SETCOLR L"%d/%d" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iUnits, iFreeUnits));
+		szBuffer.append(NEWLINE);
+		
+		// As % of NetCommerce
+		int iUnitCostPercent = iUnitCost * 100 / iNetCommerce;
+		szBuffer.append(CvWString::format(L"%% of NetCommerce: " SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iUnitCostPercent));
+		szBuffer.append(NEWLINE);
+
+		// Capital Max Unit Spending
+		CvCity* pCapital = kPlayer.getCapitalCity();
+		if (pCapital != NULL)
+		{
+			int iMaxUnitSpending = pCapital->AI_calculateMaxUnitSpending();
+			szBuffer.append(CvWString::format(L"Max Unit Spending %%: " SETCOLR L"%d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iMaxUnitSpending));
+			szBuffer.append(NEWLINE);
+		}
+		
+		// MilitarySupportPopulatoin
+		//int iMilSupportPop = kPlayer.getMilitarySupportPopulation();
+		//int iBaseMilitarySupportDiv;
+		//iBaseMilitarySupportDiv = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getFreeUnits();
+		//iBaseMilitarySupportDiv += kPlayer.getBaseFreeUnits();
+		//iBaseMilitarySupportDiv += ((iMilSupportPop * 75) / 100);
+		//
+		//szBuffer.append(CvWString::format(L"UnitSupportPop(RealPop): " SETCOLR L"%d (%d)" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iMilSupportPop, kPlayer.getTotalPopulation()));
+		//szBuffer.append(NEWLINE);
+		//szBuffer.append(CvWString::format(L"UnitSupportMod: " SETCOLR L"%d/%d = %d%%" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), iUnits, iBaseMilitarySupportDiv, std::max(100, iUnits*100/iBaseMilitarySupportDiv)));
+		//szBuffer.append(NEWLINE);
+
+	}
+	// ALN - moved all war stuff to shift key
+	if (gDLL->shiftKey() && gDLL->getChtLvl() > 0)
+	{
 		// skip a line
-		szBuffer.append(NEWLINE);
-		szBuffer.append(NEWLINE);
+		// szBuffer.append(NEWLINE);
+		// szBuffer.append(NEWLINE);
+	// ALN FfH-AI Debug End
 
 		// show peace values
 		bool bHadAny = false;
@@ -4839,7 +4972,15 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				swprintf(szTempBuffer, L" (%s%d%%)", ((iMaintenanceValue > 0) ? L"+" : L""), iMaintenanceValue);
 				szBuffer.append(szTempBuffer);
 			}
-		}
+
+// BUG - Building Saved Maintenance - start
+			// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingSavedMaintenance", true, "BUG_BUILDING_SAVED_MAINTENANCE_HOVER"))
+			if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+			{
+				GAMETEXT.setBuildingSavedMaintenanceHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+			}
+// BUG - Building Saved Maintenance - end
+			}
 	}
 }
 
@@ -4852,7 +4993,15 @@ void CvDLLWidgetData::parseHealthHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 		GAMETEXT.setBadHealthHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		GAMETEXT.setGoodHealthHelp(szBuffer, *pHeadSelectedCity);
-	}
+
+// BUG - Building Additional Health - start
+		// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHealth", true, "BUG_BUILDING_ADDITIONAL_HEALTH_HOVER"))
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+		{
+			GAMETEXT.setBuildingAdditionalHealthHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+		}
+// BUG - Building Additional Health - end
+		}
 }
 
 
@@ -4918,7 +5067,15 @@ void CvDLLWidgetData::parseHappinessHelp(CvWidgetDataStruct &widgetDataStruct, C
 		GAMETEXT.setAngerHelp(szBuffer, *pHeadSelectedCity);
 		szBuffer.append(L"\n=======================\n");
 		GAMETEXT.setHappyHelp(szBuffer, *pHeadSelectedCity);
-	}
+
+// BUG - Building Additional Happiness - start
+		// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHappiness", true, "BUG_BUILDING_ADDITIONAL_HAPPINESS_HOVER"))
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+		{
+			GAMETEXT.setBuildingAdditionalHappinessHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
+		}
+// BUG - Building Additional Happiness - end
+		}
 }
 
 
@@ -5034,7 +5191,9 @@ void CvDLLWidgetData::parseSelectedHelp(CvWidgetDataStruct &widgetDataStruct, Cv
 				break;
 
 			case ORDER_CONSTRUCT:
-				GAMETEXT.setBuildingHelp(szBuffer, ((BuildingTypes)(pOrder->iData1)), false, false, false, pHeadSelectedCity);
+// BUG - Building Actual Effects - start
+				GAMETEXT.setBuildingHelpActual(szBuffer, ((BuildingTypes)(pOrder->iData1)), false, false, false, pHeadSelectedCity);
+// BUG - Building Actual Effects - end
 				break;
 
 			case ORDER_CREATE:
@@ -5793,4 +5952,12 @@ void CvDLLWidgetData::parseScoreHelp(CvWidgetDataStruct& widgetDataStruct, CvWSt
 {
 	GAMETEXT.setScoreHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
 }
+
+// BUG - Trade Hover - start
+void CvDLLWidgetData::parseTradeRoutes(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+	GAMETEXT.buildTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+	GAMETEXT.getActiveDealsString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+}
+// BUG - Trade Hover - end
 

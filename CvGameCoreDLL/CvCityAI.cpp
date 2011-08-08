@@ -820,6 +820,84 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	return (iValue * 100);
 }
 
+// ALN FfH-AI MaxUnitSpending Start
+int CvCityAI::AI_calculateMaxUnitSpending()
+{
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+	CvArea* pArea = area();
+	bool bAggressiveAI = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
+	bool bAlwaysPeace = GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE);
+	int iBuildUnitProb = AI_buildUnitProb();
+	
+	int iMaxUnitSpending = (bAggressiveAI ? 3 : 0) + ((iBuildUnitProb - 10) / 3);
+
+	if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4) )
+	{
+		iMaxUnitSpending += 3;
+	}
+	else if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) )
+	{
+		iMaxUnitSpending += 2;
+	}
+	else if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) )
+	{
+		iMaxUnitSpending += 1;
+	}
+
+    if (bAlwaysPeace)
+	{
+		iMaxUnitSpending = -5;
+		iMaxUnitSpending = std::max(0, iMaxUnitSpending);
+	}
+    else if (kPlayer.AI_isDoStrategy(AI_STRATEGY_FINAL_WAR))
+    {
+    	iMaxUnitSpending = 5 + iMaxUnitSpending + (100 - iMaxUnitSpending) / 2;
+    }
+    else
+    {
+    	switch (pArea->getAreaAIType(getTeam()))
+    	{
+			case AREAAI_OFFENSIVE:
+				iMaxUnitSpending += 2;
+				break;
+			
+			case AREAAI_DEFENSIVE:
+				iMaxUnitSpending += 3;
+				break;
+			
+			case AREAAI_MASSING:
+				iMaxUnitSpending += 10;
+				break;
+			
+			case AREAAI_ASSAULT:
+				iMaxUnitSpending += 3;
+				break;
+				
+			case AREAAI_ASSAULT_MASSING:
+				iMaxUnitSpending += 8;
+				break;
+			
+			case AREAAI_ASSAULT_ASSIST:
+				iMaxUnitSpending += 2;
+				break;
+			
+			case AREAAI_NEUTRAL:
+				break;
+
+			default:
+				FAssert(false);
+		}
+
+		int iSpendingDivisor;
+		iSpendingDivisor = range((((100-kPlayer.AI_getFundedPercent()) + 10) / 4), 10, 18);
+		iMaxUnitSpending = iMaxUnitSpending * 10 / iSpendingDivisor;
+
+	}
+	return iMaxUnitSpending;
+}
+// ALN FfH-AI MaxUnitSpending End
+
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/22/09                                jdog5000      */
 /*                                                                                              */

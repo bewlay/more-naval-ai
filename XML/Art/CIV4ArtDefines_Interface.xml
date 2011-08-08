@@ -1063,6 +1063,10 @@
 			<Path>Art/Interface/Main Menu/CIV4MainMenuStartGame.kfm</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
+			<Type>OVERLAY_PROMOTION_FRAME</Type>
+			<Path>Art/Interface/Buttons/Units/frame_promo.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
 			<Type>OVERLAY_FORTIFY</Type>
 			<Path>Art/Interface/Buttons/Units/Medallion_Fortify.dds</Path>
 		</InterfaceArtInfo>
@@ -1499,6 +1503,22 @@
 		<InterfaceArtInfo>
 			<Type>SCROLL_DOWN_ARROW</Type>
 			<Path>Art/Interface/Buttons/down_arrow.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>SCROLL_PAGE_UP_ARROW</Type>
+			<Path>Art/Interface/Buttons/page_up_arrow.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>SCROLL_PAGE_DOWN_ARROW</Type>
+			<Path>Art/Interface/Buttons/page_down_arrow.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>SCROLL_TOP_ARROW</Type>
+			<Path>Art/Interface/Buttons/top_arrow.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>SCROLL_BOTTOM_ARROW</Type>
+			<Path>Art/Interface/Buttons/bottom_arrow.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
 			<Type>WHITE_CIRCLE_20</Type>

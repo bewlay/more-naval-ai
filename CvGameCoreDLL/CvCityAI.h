@@ -30,6 +30,9 @@ public:
 	bool AI_ignoreGrowth();
 	int AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth, bool bRemove);
 
+	// ALN FfH-AI MaxUnitSpending Start
+	int AI_calculateMaxUnitSpending();
+	// ALN FfH-AI MaxUnitSpending End
 	void AI_chooseProduction();
 
 	UnitTypes AI_bestUnit(bool bAsync = false, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR, UnitAITypes* peBestUnitAI = NULL);

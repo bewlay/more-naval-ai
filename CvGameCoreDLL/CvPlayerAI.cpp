@@ -3570,6 +3570,20 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+	// ALN FfH-AI Start
+	// I don't want to make a hard and fast rule that the city can't border a cityRadius tile
+	// but I want to damn well discourage it
+	for (iI = 0; iI < 9; iI++)
+	{
+		pLoopPlot = plotCity(iX, iY, iI);
+		if (pLoopPlot->isCityRadius())
+		{
+			iValue /= 4;
+			break;
+		}
+	}
+	// ALN End
 
 
 	return std::max(1, iValue);
@@ -4207,62 +4221,92 @@ bool CvPlayerAI::AI_avoidScience() const
 }
 
 
-// XXX
+// ALN FfH-AI FundedPercent Start
 bool CvPlayerAI::AI_isFinancialTrouble() const
 {
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      06/12/09                                jdog5000      */
-/*                                                                                              */
-/* Barbarian AI                                                                                 */
-/************************************************************************************************/
+	return AI_isFinancialTrouble(40, false);
+}
+
+bool CvPlayerAI::AI_isFinancialTrouble(int iSafePercent, bool bIgnoreWarplans) const
+{
 	if( isBarbarian() )
 	{
 		return false;
 	}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-
-	//if (getCommercePercent(COMMERCE_GOLD) > 50)
-//	{
 	int iNetCommerce = 1 + getCommerceRate(COMMERCE_GOLD) + getCommerceRate(COMMERCE_RESEARCH) + std::max(0, getGoldPerTurn());
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       06/11/09                       jdog5000 & DanF5771    */
-/*                                                                                              */
-/* Bugfix                                                                                       */
-/************************************************************************************************/
-/* original BTS code
-		int iNetExpenses = calculateInflatedCosts() + std::min(0, getGoldPerTurn());
-*/
-		int iNetExpenses = calculateInflatedCosts() + std::max(0, -getGoldPerTurn());
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/		
-		
-		int iFundedPercent = (100 * (iNetCommerce - iNetExpenses)) / std::max(1, iNetCommerce);
-
-		int iSafePercent = 40;
-		if (AI_avoidScience())
-		{
-			iSafePercent -= 8;
-		}
-
+	int iNetExpenses = calculateInflatedCosts() + std::max(0, -getGoldPerTurn());
+	
+	int iFundedPercent = (100 * (iNetCommerce - iNetExpenses)) / std::max(1, iNetCommerce);
+	
+	if (!bIgnoreWarplans)
+	{
 		if (GET_TEAM(getTeam()).getAnyWarPlanCount(true))
 		{
-			iSafePercent -= 12;
+			iSafePercent = iSafePercent * 70 / 100;
 		}
+	}
+	
+	if (AI_avoidScience())
+	{
+		iSafePercent -= 8;
+	}
+	if (isCurrentResearchRepeat())
+	{
+		iSafePercent -= 10;
+	}
+	
+	if (iFundedPercent < iSafePercent)
+	{
+		return true;
+	}
 
-		if (isCurrentResearchRepeat())
-		{
-			iSafePercent -= 10;
-		}
-
-		if (iFundedPercent < iSafePercent)
-		{
-			return true;
-		}
 	return false;
 }
+
+bool CvPlayerAI::AI_isSafeMilitaryBudget(int iMaxBudgetPercent, int iSafePercent) const
+{
+	int iUnitCost = calculateUnitCost();
+	
+	if (iUnitCost <= 0)
+	{
+		return true;
+	}
+	// ignore if iSafePercent == -1
+	if (iSafePercent > 0)
+	{
+		if (AI_isFinancialTrouble(iSafePercent))
+		{
+			return false;
+		}
+	}
+	// ignore if iMaxBudgetPercent == -1
+	if (iMaxBudgetPercent > 0)
+	{
+		int iNetCommerce = 1 + getCommerceRate(COMMERCE_GOLD) + getCommerceRate(COMMERCE_RESEARCH) + std::max(0, getGoldPerTurn());
+		int iCurBudgetPercent = iUnitCost * 10000 / iNetCommerce;
+		// give extra precision
+		if (iCurBudgetPercent > (iMaxBudgetPercent*100))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+int CvPlayerAI::AI_getFundedPercent() const
+{
+	if( isBarbarian() )
+	{
+		return 100;
+	}
+	int iNetCommerce = 1 + getCommerceRate(COMMERCE_GOLD) + getCommerceRate(COMMERCE_RESEARCH) + std::max(0, getGoldPerTurn());
+	int iNetExpenses = calculateInflatedCosts() + std::max(0, -getGoldPerTurn());
+	
+	int iFundedPercent = (100 * (iNetCommerce - iNetExpenses)) / std::max(1, iNetCommerce);
+	
+	return iFundedPercent;
+}
+// ALN FfH-AI FundedPercent End
 
 int CvPlayerAI::AI_goldTarget() const
 {
@@ -4571,11 +4615,20 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue = 1;
 
-	/*
-	int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
-	int iRandomMax = 2000;
-	iValue += iRandomFactor;
-	*/
+	// ALN AITechValues Start
+	// int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
+	// int iRandomMax = 2000;
+	/*int iRandomFactor;
+	if (bAddRandom)
+	{
+		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
+	}
+	else
+	{
+		iRandomFactor = 250;
+	}
+	// ALN AITechValues End
+	iValue += iRandomFactor;*/
 
 	iValue += kTeam.getResearchProgress(eTech);
 
@@ -5104,16 +5157,25 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	bool bEnablesUnitWonder;
 	iValue += AI_techUnitValue( eTech, iPathLength, bEnablesUnitWonder, bDebugLog );
 	
-	/*
 	if (bEnablesUnitWonder)
 	{
-		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
-		iValue += iWonderRandom + (bCapitalAlone ? 200 : 0);
+		// ALN AITechValues Start
+		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
+		// iRandomMax += 2000;
+		// iRandomFactor += iWonderRandom;
+		/*int iWonderRandom;
+		if (bAddRandom)
+		{
+			int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
+		}
+		else
+		{
+			int iWonderRandom = 1000;
+		}
+		// ALN AITechValues End
+		iValue += iWonderRandom + (bCapitalAlone ? 200 : 0);*/
 
-		iRandomMax += 2000;
-		iRandomFactor += iWonderRandom;
 	}
-	*/
 
 	// add a small bonus for promotions that require this tech
 	int iPromotionValue = 0;
@@ -5152,7 +5214,20 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/*
 	if (bEnablesWonder)
 	{
-		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
+		// ALN AITechValues Start
+		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
+		// iRandomMax += 400;
+		// iRandomFactor += iWonderRandom;
+		int iWonderRandom;
+		if (bAddRandom)
+		{
+			iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
+		}
+		else
+		{
+			iWonderRandom = 400;
+		}
+		// ALN AITechValues Start
 
 		iTempValue = (250 + iWonderRandom);
 		iTempValue *= 100 + getMaxGlobalBuildingProductionModifier();
@@ -5162,10 +5237,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 		iValue += iTempValue;
 
-		iRandomMax += 400;
-		iRandomFactor += iWonderRandom;
 	}
-	*/
 
 	/* ------------------ Project Value  ------------------ */
 	bool bEnablesProjectWonder = false;
@@ -5227,13 +5299,23 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/*
 	if (bEnablesProjectWonder)
 	{
-		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
+		// ALN AITechValues Start
+		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
+		// iRandomMax += 200;
+		// iRandomFactor += iWonderRandom;
+		int iWonderRandom;
+		if (bAddRandom)
+		{
+			iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
+		}
+		else
+		{
+			iWonderRandom = 100;
+		}
+		// ALN AITechValues End
 		iValue += iWonderRandom;
 
-		iRandomMax += 200;
-		iRandomFactor += iWonderRandom;
 	}
-	*/
 
 	if (GC.getLogging() && bDebugLog)
 	{
@@ -5557,11 +5639,21 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if (getTechFreeUnit(eTech) != NO_UNIT)
 			{
 				/*
-				int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
+				// ALN AITechValues Start
+				// int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
+				// iRandomMax += 3200;
+				// iRandomFactor += iGreatPeopleRandom;
+				int iGreatPeopleRandom;
+				if (bAddRandom)
+				{
+					iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
+				}
+				else
+				{
+					iGreatPeopleRandom = 1600;
+				}
+				// ALN AITechValues End
 				iValue += iGreatPeopleRandom;
-				
-				iRandomMax += 3200;
-				iRandomFactor += iGreatPeopleRandom;
 				*/
 
 				if (bCapitalAlone)

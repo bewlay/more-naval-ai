@@ -105,6 +105,11 @@ public:
 
 	bool AI_avoidScience() const;
 	bool AI_isFinancialTrouble() const;
+	// ALN FfH-AI FundedPercent Start
+	bool AI_isFinancialTrouble(int iSafePercent, bool bIgnoreWarplans = false) const;
+	bool AI_isSafeMilitaryBudget(int iMaxBudgetPercent, int iSafePercent = -1) const;
+	int AI_getFundedPercent() const;
+	// ALN FfH-AI FundedPercent End
 	int AI_goldTarget() const;
 
 	TechTypes AI_bestTech(int iMaxPathLength = 1, bool bIgnoreCost = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR) const;

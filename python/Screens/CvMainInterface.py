@@ -536,6 +536,16 @@ class CvMainInterface:
 				xOffset = i * 34
 				
 				szString = "PlotListButton" + str(k)
+				
+				# ALN - Promo Frame - start
+				# place/init the promotion frame.
+				# Important to have it at first place within the for loop
+				# so that it sits behind the unit icon button
+				szStringPromoFrame = szString + "PromoFrame"
+				screen.addDDSGFCAt(szStringPromoFrame, szStringPanel, ArtFileMgr.getInterfaceArtInfo("OVERLAY_PROMOTION_FRAME").getPath(), xOffset + 3, 3, 32, 32, WidgetTypes.WIDGET_GENERAL, k, -1, False )
+				screen.hide(szStringPromoFrame)
+				# ALN - Promo Frame - end
+
 				screen.addCheckBoxGFCAt(szStringPanel, szString, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_GOVERNOR").getPath(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), xOffset + 3, 3, 32, 32, WidgetTypes.WIDGET_PLOT_LIST, k, -1, ButtonStyles.BUTTON_STYLE_LABEL, True )
 				screen.hide( szString )
 				
@@ -1355,6 +1365,11 @@ class CvMainInterface:
 				szStringIcon = szString + "Icon"
 				screen.hide( szStringIcon )
 
+				# ALN - Promo Frame - start
+				szStringPromoFrame = szString + "PromoFrame"
+				screen.hide( szStringPromoFrame )
+				# ALN - Promo Frame - end
+
 		if ( pPlot and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyEngine().isGlobeviewUp() == False):
 
 			iVisibleUnits = CyInterface().getNumVisibleUnits()
@@ -1407,6 +1422,14 @@ class CvMainInterface:
 						else:
 							screen.setState(szString, False)
 						screen.show( szString )
+						
+						# ALN - Promo Frame - start
+						szStringPromoFrame = szString + "PromoFrame"
+						if (pLoopUnit.isPromotionReady()):
+							screen.show(szStringPromoFrame)
+						else:
+							screen.hide(szStringPromoFrame)
+						# ALN - Promo Frame - end
 						
 						# place the health bar
 						if (pLoopUnit.isFighting()):
