@@ -465,6 +465,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseTechEntryHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Trade Denial - start
+	case WIDGET_PEDIA_JUMP_TO_TECH_TRADE:
+		parseTechTradeEntryHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Denial - end
+
 	case WIDGET_PEDIA_JUMP_TO_REQUIRED_TECH:
 		parseTechTreePrereq(widgetDataStruct, szBuffer, false);
 		break;
@@ -492,6 +498,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_PEDIA_JUMP_TO_BONUS:
 		parseBonusHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Trade Denial - start
+	case WIDGET_PEDIA_JUMP_TO_BONUS_TRADE:
+		parseBonusTradeHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Trade Denial - end
 
 	case WIDGET_PEDIA_MAIN:
 		break;
@@ -5277,6 +5289,19 @@ void CvDLLWidgetData::parseTechEntryHelp(CvWidgetDataStruct &widgetDataStruct, C
 	}
 }
 
+// BUG - Trade Denial - start
+void CvDLLWidgetData::parseTechTradeEntryHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	if (widgetDataStruct.m_iData2 == -1)
+	{
+		parseTechEntryHelp(widgetDataStruct, szBuffer);
+	}
+	else
+	{
+		GAMETEXT.setTechTradeHelp(szBuffer, (TechTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2, false, false, false, true, NO_TECH);
+	}
+}
+// BUG - Trade Denial - end
 
 void CvDLLWidgetData::parseTechPrereqHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
@@ -5586,6 +5611,20 @@ void CvDLLWidgetData::parseBonusHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 		GAMETEXT.setBonusHelp(szBuffer, (BonusTypes)widgetDataStruct.m_iData1);
 	}
 }
+
+// BUG - Trade Denial - start
+void CvDLLWidgetData::parseBonusTradeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	if (widgetDataStruct.m_iData2 == -1)
+	{
+		parseBonusHelp(widgetDataStruct, szBuffer);
+	}
+	else
+	{
+		GAMETEXT.setBonusTradeHelp(szBuffer, (BonusTypes)widgetDataStruct.m_iData1, false, (PlayerTypes)widgetDataStruct.m_iData2);
+	}
+}
+// BUG - Trade Denial - end
 
 void CvDLLWidgetData::parseReligionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {

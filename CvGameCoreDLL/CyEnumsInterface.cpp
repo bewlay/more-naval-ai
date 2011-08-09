@@ -389,6 +389,11 @@ void CyEnumsPythonInterface()
 		.value("WIDGET_GLOBELAYER_OPTION", WIDGET_GLOBELAYER_OPTION)
 		.value("WIDGET_GLOBELAYER_TOGGLE", WIDGET_GLOBELAYER_TOGGLE)
 
+// BUG - Trade Denial - start
+		.value("WIDGET_PEDIA_JUMP_TO_BONUS_TRADE", WIDGET_PEDIA_JUMP_TO_BONUS_TRADE)
+		.value("WIDGET_PEDIA_JUMP_TO_TECH_TRADE", WIDGET_PEDIA_JUMP_TO_TECH_TRADE)
+// BUG - Trade Denial - end
+
 // BUG - Foreign Advisor INFO Trade - start
 		.value("WIDGET_TRADE_ROUTES", WIDGET_TRADE_ROUTES)
 // BUG - Foreign Advisor INFO Trade - end

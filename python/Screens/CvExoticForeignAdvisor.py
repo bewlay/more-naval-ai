@@ -877,27 +877,38 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 					for iLoopTech in range(gc.getNumTechInfos()):
 						
 						tradeData.iData = iLoopTech
-						if (activePlayer.canTradeItem(iLoopPlayer, tradeData, False) and activePlayer.getTradeDenial(iLoopPlayer, tradeData) == DenialTypes.NO_DENIAL): # wants
+						bDebug = gc.getGame().isDebugMode()
+						
+						bWeHave = gc.getTeam(activePlayer.getTeam()).isHasTech(iLoopTech)
+						bWeCanResearch = activePlayer.canResearch(iLoopTech, False)
+						bWeCanTrade = activePlayer.canTradeItem(iLoopPlayer, tradeData, False)
+						bWeWillTrade = (activePlayer.getTradeDenial(iLoopPlayer, tradeData) == DenialTypes.NO_DENIAL)
+						
+						bTheyHave = gc.getTeam(currentPlayer.getTeam()).isHasTech(iLoopTech)
+						bTheyCanResearch = currentPlayer.canResearch(iLoopTech, False)
+						bTheyCanTrade = currentPlayer.canTradeItem(self.iActiveLeader, tradeData, False)
+						bTheyWillTrade = (currentPlayer.getTradeDenial(self.iActiveLeader, tradeData) == DenialTypes.NO_DENIAL)
+						
+						if (bWeCanTrade and bWeWillTrade): # wants
 							self.techIconGrid.addIcon( currentRow, iTechColWants, gc.getTechInfo(iLoopTech).getButton()
 																				 , 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech )
-						elif (gc.getTeam(activePlayer.getTeam()).isHasTech(iLoopTech) and currentPlayer.canResearch(iLoopTech, False)):
+						elif (bWeHave and (bTheyCanResearch or (bDebug and not bTheyHave))):
 							self.techIconGrid.addIcon( currentRow, iTechColCantYou, gc.getTechInfo(iLoopTech).getButton()
 																					 , 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech )
-						elif currentPlayer.canResearch(iLoopTech, False):
+						elif (bTheyCanResearch):
 							self.techIconGrid.addIcon( currentRow, iTechColResearch, gc.getTechInfo(iLoopTech).getButton()
 																			, 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech )
 						
-						if (currentPlayer.canTradeItem(self.iActiveLeader, tradeData, False)):
-							if (currentPlayer.getTradeDenial(self.iActiveLeader, tradeData) == DenialTypes.NO_DENIAL): # will trade
+						if (bTheyCanTrade):
+							if (bTheyWillTrade): # will trade
 								self.techIconGrid.addIcon( currentRow, iTechColWill, gc.getTechInfo(iLoopTech).getButton()
 																					 , 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech )
 							else: # won't trade
 								self.techIconGrid.addIcon( currentRow, iTechColWont, gc.getTechInfo(iLoopTech).getButton()
-																					 , 64, *BugDll.widget("WIDGET_PEDIA_JUMP_TO_TECH_TRADE", iLoopTech, iLoopPlayer, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech, -1) )
-						elif (gc.getTeam(currentPlayer.getTeam()).isHasTech(iLoopTech) and activePlayer.canResearch(iLoopTech, False)):
+																					 , 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH_TRADE, iLoopTech, iLoopPlayer )
+						elif (bTheyHave and (bWeCanResearch or (bDebug and not bWeHave))):
 							self.techIconGrid.addIcon( currentRow, iTechColCantThem, gc.getTechInfo(iLoopTech).getButton()
 																					 , 64, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iLoopTech )
-																					 
 				currentRow += 1
 		self.techIconGrid.refresh()
 													 

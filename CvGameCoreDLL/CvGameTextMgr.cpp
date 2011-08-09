@@ -5163,7 +5163,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 			szString.append(gDLL->getText("TXT_KEY_CITY_BAR_PRODUCTION", pCity->getProductionName(), pCity->getProduction(), pCity->getProductionNeeded()));
 		}
 		
-// BUG - Building Actual Effects - start !!!!setBuildingActualEffects()
+// BUG - Building Actual Effects - start
 		// if (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("CityBar__BuildingActualEffects", true, "BUG_CITYBAR_BUILDING_ACTUAL_EFFECTS"))
 		if (pCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
 		{
@@ -8677,7 +8677,14 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 }
 
 
+// BUG - Trade Denial - start
 void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)
+{
+	setTechTradeHelp(szBuffer, eTech, NO_PLAYER, bCivilopediaText, bPlayerContext, bStrategyText, bTreeInfo, eFromTech);
+}
+
+void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech, PlayerTypes eTradePlayer, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)
+// BUG - Trade Denial - end
 {
 	PROFILE_FUNC();
 
@@ -9109,6 +9116,28 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 	}
 
+// BUG - Trade Denial - start
+	// if (eTradePlayer != NO_PLAYER && GC.getGameINLINE().getActivePlayer() != NO_PLAYER && getBugOptionBOOL("MiscHover__TechTradeDenial", true, "BUG_TECH_TRADE_DENIAL_HOVER"))
+	if (eTradePlayer != NO_PLAYER && GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
+	{
+		TradeData trade;
+		trade.m_eItemType = TRADE_TECHNOLOGIES;
+		trade.m_iData = eTech;
+
+		if (GET_PLAYER(eTradePlayer).canTradeItem(GC.getGameINLINE().getActivePlayer(), trade, false))
+		{
+			DenialTypes eDenial = GET_PLAYER(eTradePlayer).getTradeDenial(GC.getGameINLINE().getActivePlayer(), trade);
+			if (eDenial != NO_DENIAL)
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), GC.getDenialInfo(eDenial).getDescription());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+		}
+	}
+// BUG - Trade Denial - end
+	
+	
 //FfH: Added by Kael 08/09/2007
     if (GC.getTechInfo(eTech).getPrereqReligion() != NO_RELIGION)
     {
@@ -13652,7 +13681,14 @@ bool CvGameTextMgr::setResumableValueTimes100ChangeHelp(CvWStringBuffer &szBuffe
 }
 // BUG - Resumable Value Change Help - end
 
+// BUG - Trade Denial - start
 void CvGameTextMgr::setBonusHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText)
+{
+	setBonusTradeHelp(szBuffer, eBonus, bCivilopediaText, NO_PLAYER);
+}
+
+void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText, PlayerTypes eTradePlayer)
+// BUG - Trade Denial - end
 {
 	if (NO_BONUS == eBonus)
 	{
@@ -13854,6 +13890,28 @@ void CvGameTextMgr::setBonusHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, b
 			}
 		}
 	}
+
+// BUG - Trade Denial - start
+	// if (eTradePlayer != NO_PLAYER && GC.getGameINLINE().getActivePlayer() != NO_PLAYER && getBugOptionBOOL("MiscHover__BonusTradeDenial", true, "BUG_BONUS_TRADE_DENIAL_HOVER"))
+	if (eTradePlayer != NO_PLAYER && GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
+	{
+		TradeData trade;
+		trade.m_eItemType = TRADE_RESOURCES;
+		trade.m_iData = eBonus;
+
+		if (GET_PLAYER(eTradePlayer).canTradeItem(GC.getGameINLINE().getActivePlayer(), trade, false))
+		{
+			DenialTypes eDenial = GET_PLAYER(eTradePlayer).getTradeDenial(GC.getGameINLINE().getActivePlayer(), trade);
+			if (eDenial != NO_DENIAL)
+			{
+				CvWString szTempBuffer;
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), GC.getDenialInfo(eDenial).getDescription());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+		}
+	}
+// BUG - Trade Denial - end
 
 	if (!CvWString(GC.getBonusInfo(eBonus).getHelp()).empty())
 	{

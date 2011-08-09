@@ -14,7 +14,7 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Pallens Engine/gaurilibrary.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Pallens Engine.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Pallens_Engine.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_ADULARIA_CHAMBER</Type>
@@ -24,7 +24,7 @@
 			<fInterfaceScale>0.5</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Adularia Chamber/gaurishrine.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Adularia Chamber.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Adularia_Chamber.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GUILD_OF_THE_NINE</Type>
@@ -34,7 +34,7 @@
 			<fInterfaceScale>0.25</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Guild of the Nine/Watchtower.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Guild of the Nine.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Guild_of_the_Nine.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_HERON_THRONE</Type>
@@ -44,7 +44,7 @@
 			<fInterfaceScale>0.7</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Portuguese_Feitoria/Potuguese_Feitoria.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Heron Throne.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Heron_Throne.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_TEMPLE_OF_THE_HAND</Type>
@@ -54,7 +54,7 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Temple of the Hand/oldtemple.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Temple of the Hand.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Temple_of_the_Hand.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_PALISADE</Type>
@@ -84,7 +84,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Demonic Citizens/Anubis_room.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Demonic Citizens.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Demonic_Citizens.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_CITY_OF_A_THOUSAND_SLUMS</Type>
@@ -94,7 +94,7 @@
 			<fInterfaceScale>0.4</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Obelisk/Obelisk.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/City of a Thousand Slums.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/City_of_a_Thousand_Slums.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_SMUGGLERS_PORT</Type>
@@ -104,7 +104,7 @@
 			<fInterfaceScale>0.4</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Obelisk/Obelisk.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Smugglers Port.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Smugglers_Port.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_THEATRE_OF_DREAMS</Type>
@@ -124,7 +124,7 @@
 			<fInterfaceScale>0.4</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Pillar of Chains/pillar_of_chains.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Pillar of Chains.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Pillar_of_Chains.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_TEMPLE_EMPYREAN</Type>
@@ -134,7 +134,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Temple Empyrean/hut.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Temple of the Empyrean.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Temple_of_the_Empyrean.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_DIES_DIEI</Type>
@@ -154,7 +154,7 @@
 			<fInterfaceScale>0.52</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Nox Noctis/citadelstrife.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Nox Noctis.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Nox_Noctis.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GUILD_OF_HAMMERS</Type>
@@ -184,7 +184,7 @@
 			<fInterfaceScale>0.8</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Freak Show/fest_alb_tentround.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Hall of Mirrors.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Hall_of_Mirrors.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_TOWER_OF_DIVINATION</Type>
@@ -204,7 +204,7 @@
 			<fInterfaceScale>0.8</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Carnival/fest_mid_tentbig.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Grand Menagerie.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Grand_Menagerie.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_MERCURIAN_GATE</Type>
@@ -214,7 +214,7 @@
 			<fInterfaceScale>.5</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Mercurian Gate/Stygia_SmallPortal.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Mercurian Gate.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Mercurian_Gate.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_CELESTIAL_COMPASS</Type>
@@ -224,7 +224,7 @@
 			<fInterfaceScale>.5</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Celestial Compass/relic_storm_orrery_ni4.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Celestial Compass.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Celestial_Compass.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GORILLA_CAGE</Type>
@@ -234,7 +234,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Cage/Cage.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Gorilla Cage.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Gorilla_Cage.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_RIDE_OF_THE_NINE_KINGS</Type>
@@ -244,7 +244,7 @@
 			<fInterfaceScale>0.4</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Ride of the Nine Kings/clas_mid_horsetrophy_5years.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Ride of the Nine Kings.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Ride_of_the_Nine_Kings.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_MOKKAS_CAULDRON</Type>
@@ -254,7 +254,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Mokkas Cauldron/r_hcauldron_large.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Mokkas Cauldron.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Mokkas_Cauldron.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_SHRINE_OF_SIRONA</Type>
@@ -264,7 +264,7 @@
 			<fInterfaceScale>0.3</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Shrine of Sirona/statue_angel_prop.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Shrine of Sirona.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Shrine_of_Sirona.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_PLANAR_GATE</Type>
@@ -274,7 +274,7 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Planar Gate/dr_demonseal_item.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Planar Gate.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Planar_Gate.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_TRUST</Type>
@@ -494,7 +494,7 @@
 			<fInterfaceScale>0.52</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Sculptors Studio/somtex.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Sculptors Studio.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Sculptors_Studio.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GOVERNORS_MANOR</Type>
@@ -544,7 +544,7 @@
 			<fInterfaceScale>0.52</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Barracks/Barracks.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Theaterofdreams.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Theater_of_dreams.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_THE_NEXUS</Type>
@@ -974,7 +974,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Cage/Cage.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Dancing Bear.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Dancing_Bear.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_FREAK_SHOW</Type>
@@ -984,7 +984,7 @@
 			<fInterfaceScale>0.8</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Freak Show/fest_alb_tentround.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Freak Show.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Freak_Show.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_CARNIVAL</Type>
