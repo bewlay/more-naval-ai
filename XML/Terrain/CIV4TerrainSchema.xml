@@ -462,6 +462,7 @@
 	</ElementType>
 	<ElementType name="bRequiresPeak" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bUnique" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bExploreTarget" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iAppearanceProbability" content="textOnly" dt:type="int"/>
 	<ElementType name="iHealRateChange" content="textOnly" dt:type="int"/>
 	<ElementType name="iRange" content="textOnly" dt:type="int"/>
@@ -518,6 +519,7 @@
 		<element type="bGraphicalOnly"/>
 		<element type="bRequiresPeak"/>
 		<element type="bUnique"/>
+		<element type="bExploreTarget"/>
 		<element type="iAppearanceProbability"/>
 		<element type="iHealRateChange"/>
 		<element type="iRange"/>

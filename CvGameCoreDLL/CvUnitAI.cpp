@@ -27036,10 +27036,7 @@ bool CvUnitAI::AI_exploreLairSea(int iRange)
 					{
 						if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
 						{
-							//if (pLoopPlot->isExplorable())
-							// Tholal - temp hardcode - add XML tag later
-							if (pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_AIFON_ISLE")) ||
-								pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_SHIP_WRECK")))
+							if ((GC.getImprovementInfo((ImprovementTypes)pLoopPlot->getImprovementType()).isExploreTarget()))
 							{
 								if (!pLoopPlot->isVisibleEnemyDefender(this))
 								{
@@ -27139,16 +27136,7 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 				{
 					if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
 					{
-						//if (pLoopPlot->isExplorable())
-						// Tholal - temp hardcode - add XML tag later
-						if (pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_DUNGEON")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_BARROW")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_BRADELINES_WELL")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_BROKEN_SEPULCHER")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_CAGE")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_GOBLIN_FORT")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_GRAVEYARD")) ||
-							pLoopPlot->getImprovementType() == ((ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_PYRE_OF_THE_SERAPHIC")))
+						if ((GC.getImprovementInfo((ImprovementTypes)pLoopPlot->getImprovementType()).isExploreTarget()))
 						{
 							if (!pLoopPlot->isVisibleEnemyDefender(this))
 							{

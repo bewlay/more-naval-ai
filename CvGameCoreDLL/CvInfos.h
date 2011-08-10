@@ -3528,6 +3528,7 @@ public:
 //FfH Improvements: Added by Kael 08/07/2007
 	bool isRequiresPeak() const;
 	bool isUnique() const;
+	bool isExploreTarget() const;
 	int getAppearanceProbability() const;
 	int getHealRateChange() const;
 	int getRange() const;
@@ -3589,6 +3590,7 @@ protected:
 //FfH Improvements: Added by Kael 08/07/2007
 	bool m_bRequiresPeak;
 	bool m_bUnique;
+	bool m_bExploreTarget;
 	int m_iAppearanceProbability;
 	int m_iHealRateChange;
 	int m_iRange;

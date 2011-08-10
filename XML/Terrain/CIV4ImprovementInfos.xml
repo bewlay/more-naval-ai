@@ -53,6 +53,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -153,6 +154,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>75</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -212,6 +214,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -307,6 +310,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -415,6 +419,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -470,6 +475,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -560,6 +566,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -656,6 +663,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>10</iHealRateChange>
             <iRange>2</iRange>
@@ -752,6 +760,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>20</iHealRateChange>
             <iRange>3</iRange>
@@ -807,6 +816,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -897,6 +907,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1022,6 +1033,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1117,6 +1129,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>75</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1186,6 +1199,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1319,6 +1333,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1421,6 +1436,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1517,6 +1533,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>1</iRange>
@@ -1601,6 +1618,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>50</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>1</iRange>
@@ -1701,6 +1719,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1792,6 +1811,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>25</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1883,6 +1903,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>1</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -1944,6 +1965,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2040,6 +2062,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2096,6 +2119,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2151,6 +2175,7 @@
             <bGraphicalOnly>1</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2227,6 +2252,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2286,6 +2312,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2355,6 +2382,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2414,6 +2442,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2494,6 +2523,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2574,6 +2604,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2654,6 +2685,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2734,6 +2766,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2814,6 +2847,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2894,6 +2928,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -2974,6 +3009,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3054,6 +3090,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3134,6 +3171,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3214,6 +3252,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3294,6 +3333,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3374,6 +3414,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3454,6 +3495,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3534,6 +3576,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3614,6 +3657,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3694,6 +3738,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3774,6 +3819,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3910,6 +3956,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -3987,6 +4034,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4042,6 +4090,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4118,6 +4167,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4174,6 +4224,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4265,6 +4316,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>3</iRange>
@@ -4388,6 +4440,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4443,6 +4496,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4508,6 +4562,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4573,6 +4628,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>10</iHealRateChange>
             <iRange>1</iRange>
@@ -4638,6 +4694,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>20</iHealRateChange>
             <iRange>2</iRange>
@@ -4795,6 +4852,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -4862,6 +4920,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>50</iHealRateChange>
             <iRange>0</iRange>
@@ -4946,6 +5005,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5025,6 +5085,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5121,6 +5182,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5180,6 +5242,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5259,6 +5322,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>75</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5330,6 +5394,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5389,6 +5454,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>1</bExploreTarget>
             <iAppearanceProbability>100</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5485,6 +5551,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5560,6 +5627,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5668,6 +5736,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5752,6 +5821,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>25</iHealRateChange>
             <iRange>0</iRange>
@@ -5843,6 +5913,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>60</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5912,6 +5983,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -5981,6 +6053,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6037,6 +6110,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6092,6 +6166,7 @@
             <bGraphicalOnly>1</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6160,6 +6235,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6228,6 +6304,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6297,6 +6374,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6410,6 +6488,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6515,6 +6594,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>1</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>
@@ -6570,6 +6650,7 @@
             <bGraphicalOnly>0</bGraphicalOnly>
             <bRequiresPeak>0</bRequiresPeak>
             <bUnique>0</bUnique>
+            <bExploreTarget>0</bExploreTarget>
             <iAppearanceProbability>0</iAppearanceProbability>
             <iHealRateChange>0</iHealRateChange>
             <iRange>0</iRange>

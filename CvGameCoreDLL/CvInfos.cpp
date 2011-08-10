@@ -14275,6 +14275,7 @@ m_paImprovementBonus(NULL),
 //FfH Improvements: Added by Kael 08/07/2007
 m_bRequiresPeak(false),
 m_bUnique(false),
+m_bExploreTarget(false),
 m_iAppearanceProbability(0),
 m_iHealRateChange(0),
 m_iRange(0),
@@ -14552,6 +14553,11 @@ bool CvImprovementInfo::isUnique() const
 {
 	return m_bUnique;
 }
+
+bool CvImprovementInfo::isExploreTarget() const
+{
+	return m_bExploreTarget;
+}
 //FfH: End Add
 
 // Arrays
@@ -14756,6 +14762,7 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 //FfH Improvements: Added by Kael 08/07/2007
 	stream->Read(&m_bRequiresPeak);
 	stream->Read(&m_bUnique);
+	stream->Read(&m_bExploreTarget);
 	stream->Read(&m_iAppearanceProbability);
 	stream->Read(&m_iHealRateChange);
 	stream->Read(&m_iRange);
@@ -14883,6 +14890,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 //FfH Improvements: Added by Kael 08/07/2007
 	stream->Write(m_bRequiresPeak);
 	stream->Write(m_bUnique);
+	stream->Write(&m_bExploreTarget);
 	stream->Write(m_iAppearanceProbability);
 	stream->Write(m_iHealRateChange);
 	stream->Write(m_iRange);
@@ -15136,6 +15144,7 @@ bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 //FfH Improvements: Added by Kael 08/07/2007
 	pXML->GetChildXmlValByName(&m_bRequiresPeak, "bRequiresPeak");
 	pXML->GetChildXmlValByName(&m_bUnique, "bUnique");
+	pXML->GetChildXmlValByName(&m_bExploreTarget, "bExploreTarget");
 	pXML->GetChildXmlValByName(&m_iAppearanceProbability, "iAppearanceProbability");
 	pXML->GetChildXmlValByName(&m_iHealRateChange, "iHealRateChange");
 	pXML->GetChildXmlValByName(&m_iRange, "iRange");
