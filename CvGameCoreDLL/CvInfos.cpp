@@ -4836,6 +4836,7 @@ m_paszUnitNames(NULL),
 //FfH Units: Added by Kael 08/04/2007
 m_bAbandon(false),
 m_bAutoRaze(false),
+m_bObject(false),
 m_bDisableUpgradeTo(false),
 m_bExplodeInCombat(false),
 m_bFreeXP(false),
@@ -5535,6 +5536,11 @@ bool CvUnitInfo::isAbandon() const
 bool CvUnitInfo::isAutoRaze() const
 {
 	return m_bAutoRaze;
+}
+
+bool CvUnitInfo::isObject() const
+{
+	return m_bObject;
 }
 
 bool CvUnitInfo::isDisableUpgradeTo() const
@@ -6315,6 +6321,7 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 //FfH Units: Added by Kael 08/04/2007
 	stream->Read(&m_bAbandon);
 	stream->Read(&m_bAutoRaze);
+	stream->Read(&m_bObject);
 	stream->Read(&m_bDisableUpgradeTo);
 	stream->Read(&m_bExplodeInCombat);
 	stream->Read(&m_bFreeXP);
@@ -6672,6 +6679,7 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 //FfH Units: Added by Kael 08/04/2007
 	stream->Write(m_bAbandon);
 	stream->Write(m_bAutoRaze);
+	stream->Write(m_bObject);
 	stream->Write(m_bDisableUpgradeTo);
 	stream->Write(m_bExplodeInCombat);
 	stream->Write(m_bFreeXP);
@@ -7115,6 +7123,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 //FfH Units: Added by Kael 08/04/2007
 	pXML->GetChildXmlValByName(&m_bAbandon,"bAbandon");
 	pXML->GetChildXmlValByName(&m_bAutoRaze,"bAutoRaze");
+	pXML->GetChildXmlValByName(&m_bObject,"bObject");
 	pXML->GetChildXmlValByName(&m_bDisableUpgradeTo,"bDisableUpgradeTo");
 	pXML->GetChildXmlValByName(&m_bExplodeInCombat,"bExplodeInCombat");
 	pXML->GetChildXmlValByName(&m_bFreeXP,"bFreeXP");

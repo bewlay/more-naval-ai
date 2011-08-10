@@ -1876,6 +1876,14 @@ void CvPlot::changeAdjacentSight(TeamTypes eTeam, int iRange, bool bIncrement, C
 		iRange++;
 	}
 
+	if (NULL != pUnit)
+	{
+		if (pUnit->getUnitInfo().isObject())
+		{
+			iRange = 0;
+		}
+	}
+
 	for(int i=0;i<(int)aSeeInvisibleTypes.size();i++)
 	{
 		for (int dx = -iRange; dx <= iRange; dx++)

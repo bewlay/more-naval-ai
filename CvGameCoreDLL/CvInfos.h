@@ -1299,6 +1299,7 @@ public:
 //FfH Units: Added by Kael 08/04/2007
 	bool isAbandon() const;
 	bool isAutoRaze() const;
+	bool isObject() const;
 	bool isDisableUpgradeTo() const;
 	bool isExplodeInCombat() const;
 	bool isFreeXP() const;
@@ -1554,6 +1555,7 @@ protected:
 //FfH Units: Added by Kael 08/04/2007
 	bool m_bAbandon;
 	bool m_bAutoRaze;
+	bool m_bObject;
 	bool m_bDisableUpgradeTo;
 	bool m_bExplodeInCombat;
 	bool m_bFreeXP;

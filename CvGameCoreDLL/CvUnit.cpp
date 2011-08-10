@@ -3932,7 +3932,8 @@ bool CvUnit::canScrap() const
     {
         return false;
     }
-    if (m_pUnitInfo->getEquipmentPromotion() != NO_PROMOTION)
+    //if (m_pUnitInfo->getEquipmentPromotion() != NO_PROMOTION)
+	if (m_pUnitInfo->isObject())
     {
         return false;
     }
@@ -8669,6 +8670,10 @@ bool CvUnit::isHuman() const
 
 int CvUnit::visibilityRange() const
 {
+	if (getUnitInfo().isObject())
+	{
+		return 0;
+	}
 
 //FfH: Modified by Kael 08/10/2007
 //	return (GC.getDefineINT("UNIT_VISIBILITY_RANGE") + getExtraVisibilityRange());
@@ -11387,15 +11392,19 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			load();
 		}
 
-		for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
+		// objects shouldnt trigger contacts
+		if (!getUnitInfo().isObject())
 		{
-			if (GET_TEAM((TeamTypes)iI).isAlive())
+			for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 			{
-				if (!isInvisible(((TeamTypes)iI), false))
+				if (GET_TEAM((TeamTypes)iI).isAlive())
 				{
-					if (pNewPlot->isVisible((TeamTypes)iI, false))
+					if (!isInvisible(((TeamTypes)iI), false))
 					{
-						GET_TEAM((TeamTypes)iI).meet(getTeam(), true);
+						if (pNewPlot->isVisible((TeamTypes)iI, false))
+						{
+							GET_TEAM((TeamTypes)iI).meet(getTeam(), true);
+						}
 					}
 				}
 			}
@@ -15077,6 +15086,12 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		return false;
 	}
 
+	// objects cant cast spells
+	if (getUnitInfo().isObject())
+	{
+		return false;
+	}
+
     if (GC.getSpellInfo(eSpell).getPromotionPrereq1() != NO_PROMOTION)
     {
         if (!isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionPrereq1()))
@@ -16725,6 +16740,12 @@ void CvUnit::setIgnoreHide(bool bNewValue)
 
 bool CvUnit::isImmuneToSpell(CvUnit* pCaster, int spell) const
 {
+	// objects are immune to spell effects
+	if (getUnitInfo().isObject())
+	{
+		return true;
+	}
+
     if (isImmuneToMagic())
     {
         if (!GC.getSpellInfo((SpellTypes)spell).isAbility())

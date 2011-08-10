@@ -786,6 +786,10 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
         {
 			szString.append(NEWLINE);
 			szString.append(gDLL->getText("TXT_KEY_UNIT_NOT_ALIVE"));
+			if (pUnit->getUnitInfo().isObject())
+			{
+				szString.append(" (object)");
+			}
         }
 		if (pUnit->isBlockading())
 		{

@@ -515,6 +515,7 @@
 	<ElementType name="bAIblockPatrol" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAIblockExplore" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAutoRaze" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bObject" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDisableUpgradeTo" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bExplodeInCombat" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bFreeXP" content="textOnly" dt:type="boolean"/>
@@ -729,6 +730,7 @@
 		<element type="bAIblockPatrol" minOccurs="0"/>				
 		<element type="bAIblockPermDefense" minOccurs="0"/>						
 		<element type="bAutoRaze" minOccurs="0"/>
+		<element type="bObject" minOccurs="0"/>
 		<element type="bDisableUpgradeTo" minOccurs="0"/>
 		<element type="bExplodeInCombat" minOccurs="0"/>
 		<element type="bFreeXP" minOccurs="0"/>

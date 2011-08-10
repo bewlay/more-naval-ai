@@ -7096,7 +7096,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 	int iLoop;
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
-	    if (pLoopUnit->getDuration() > 0)
+	    if (pLoopUnit->getDuration() > 0 || pLoopUnit->getUnitInfo().isObject())
 	    {
 	        iFreeUnits += 1;
 	    }

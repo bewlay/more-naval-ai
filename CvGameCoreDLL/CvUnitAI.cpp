@@ -27231,7 +27231,7 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 	// First, look for our equipment and treasure
 	for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
 	{
-		if (pLoopUnit->getDomainType() == DOMAIN_IMMOBILE)
+		if (pLoopUnit->getUnitInfo().isObject())
 		{
 			if (generatePath(pLoopUnit->plot(), 0, true, &iPathTurns))
 			{

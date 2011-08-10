@@ -208,6 +208,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_ATHAME</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -412,6 +413,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_BLACK_MIRROR</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -620,6 +622,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_CROWN_OF_AKHARIEN</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -824,6 +827,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_CROWN_OF_COMMAND</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -1032,6 +1036,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_DRAGONS_HORDE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -1236,6 +1241,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_EMPTY_BIER</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -1440,6 +1446,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_GELA</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -1644,6 +1651,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_GODSLAYER</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -1848,6 +1856,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_GOLDEN_HAMMER</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -2052,6 +2061,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_HEALING_SALVE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -2260,6 +2270,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_INFERNAL_GRIMOIRE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -2464,6 +2475,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_JADE_TORC</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -2668,6 +2680,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_NETHER_BLADE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -2872,6 +2885,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_ORTHUSS_AXE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -3076,6 +3090,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_PIECES_OF_BARNAXUS</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -3280,6 +3295,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_POTION_OF_INVISIBILITY</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -3484,6 +3500,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_POTION_OF_RESTORATION</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -3688,6 +3705,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_ROD_OF_WINDS</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -3892,6 +3910,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_SCORCHED_STAFF</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -4096,6 +4115,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_STAFF_OF_SOULS</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -4304,6 +4324,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_SYLIVENS_PERFECT_LYRE</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -4508,6 +4529,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_TIMOR_MASK</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
@@ -4716,6 +4738,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
         </UnitInfo>
         <UnitInfo>
             <Class>EQUIPMENTCLASS_WAR</Class>
@@ -4919,6 +4942,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bObject>1</bObject>
             <EquipmentPromotion>PROMOTION_WAR</EquipmentPromotion>
         </UnitInfo>
         <UnitInfo>
