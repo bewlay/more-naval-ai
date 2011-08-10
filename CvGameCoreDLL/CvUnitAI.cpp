@@ -25442,7 +25442,8 @@ void CvUnitAI::AI_chooseGroupflag()
     {
         return;
     }
-    //Don't Choose a Groupflag if we haven't already build a city
+
+    //Don't Choose a Groupflag if we haven't already built a city
     if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
     {
         return;
@@ -25525,7 +25526,7 @@ void CvUnitAI::AI_chooseGroupflag()
 		return;
 	}
 
-	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
+	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3, false));
 
 	if (bDanger)
 	{
