@@ -2843,11 +2843,15 @@ def reqSandLion(caster):
 def reqScorch(caster):
 	pPlot = caster.plot()
 	pPlayer = gc.getPlayer(caster.getOwner())
+
 	if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')):
 		if pPlayer.isHuman() == False:
-			if caster.getOwner() == pPlot.getOwner():
+			ePlotOwner = pPlot.getOwner()
+			if (ePlotOwner == caster.getOwner()) or (ePlotOwner == -1):
 				return False
+			return gc.getTeam(pPlayer.getTeam()).isAtWar(gc.getPlayer(ePlotOwner).getTeam())
 		return True
+		
 	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
 		if pPlayer.isHuman() == False:
 			if caster.getOwner() != pPlot.getOwner():
@@ -2855,7 +2859,7 @@ def reqScorch(caster):
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				return False
 		return True	
-		
+
 # Tholal AI - allow marshes to be scorched
 	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
 		if pPlayer.isHuman() == False:
