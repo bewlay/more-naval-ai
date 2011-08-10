@@ -13279,7 +13279,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>60</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>TECH_WAY_OF_THE_EARTHMOTHER</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_SIEGE</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_GUILD_OF_HAMMERS</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -34651,7 +34651,7 @@
 			<iAttitudeToMales>-4</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_CORRUPTION_OF_SPIRIT</FavoriteTech>
+			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
