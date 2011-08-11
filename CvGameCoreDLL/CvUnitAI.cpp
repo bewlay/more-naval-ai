@@ -2407,7 +2407,6 @@ void CvUnitAI::AI_workerMove()
 		}
 	}
 
-
 	if (AI_retreatToCity(false, true))
 	{
 		return;
@@ -2453,7 +2452,7 @@ void CvUnitAI::AI_barbAttackMove()
 /**	                        																	**/
 /** will hopefully run faster now                                   							**/
 /*************************************************************************************************/
-	if (plot()->isCity())
+	/* if (plot()->isCity())
 	{
         if (plot()->getNumUnits()==1)
         {
@@ -2706,23 +2705,61 @@ void CvUnitAI::AI_barbAttackMove()
 	}
 
 	getGroup()->pushMission(MISSION_SKIP);
-	return;
+	return; */
 
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
 
-	if (AI_guardCity(false, true, 1))
+	// ALN Notes: This is an experiment in mixing up barb behaivor, some will attack earlier, some later in terms of civ developement
+	// the more 'cautious' they are, the later they will step up their attacks against civilized lands
+	// basically it's all about not having them all hang back then attack at the same time all of a sudden, barbs aren't that coordinated
+	// but still give some breathing room early on
+	bool bRagingBarbs = GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS);
+	bool bHero = AI_getUnitAIType() == UNITAI_HERO;
+	int iHeroAttMod = (bHero ? 15 + (AI_getBirthmark() % 15) : 0);
+	int iCaution = 1;
+	iCaution += AI_getBirthmark() % 7;
+	if (bHero)
+
 	{
-		return;
+		// Barbarian Heros hang back till they level up typically
+		iCaution += 8 - getLevel();
+	}
+	else
+	{
+		// everyone else more aggressive (attack cities earlier) when raging barbarians is on
+		if (bRagingBarbs)
+		{
+			iCaution = std::max(0, iCaution - 2);
+		}
+	}
+	
+	// ALN - I don't think this is even implemented to do anything if OriginPlot set 'true'?
+    //chance every turn for a Lair unit to break free
+    if(getOriginPlot()!=NULL)
+    {
+        if (GC.getGameINLINE().getSorenRandNum(300, "break free") == 0)
+        {
+            setOriginPlot(NULL);
+        }
 	}
 
-	if (plot()->isGoody())
+	// Heros shouldn't be guarding cities or goodies
+	if (!bHero)
 	{
-		if (plot()->plotCount(PUF_isUnitAIType, UNITAI_ATTACK, -1, getOwnerINLINE()) == 1)
+		if (AI_guardCity(false, true, 1))
 		{
-			getGroup()->pushMission(MISSION_SKIP);
 			return;
+		}
+
+		if (plot()->isGoody())
+		{
+			if (plot()->plotCount(PUF_isUnitAIType, UNITAI_ATTACK, -1, getOwnerINLINE()) == 1)
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
 		}
 	}
 
@@ -2734,52 +2771,15 @@ void CvUnitAI::AI_barbAttackMove()
 		}
 	}
 
-	if (AI_anyAttack(1, 20))
+	if (AI_anyAttack(1, 20 + iHeroAttMod))
 	{
 		return;
 	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS))
+	// Aggressive movements
+	if (GC.getGameINLINE().getNumCivCities() * 2 > (GC.getGameINLINE().countCivPlayersAlive() * iCaution))
 	{
-		if (AI_pillageRange(4))
-		{
-			return;
-		}
-
-		if (AI_cityAttack(3, 10))
-		{
-			return;
-		}
-
-		if (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE)
-		{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/15/10                                jdog5000      */
-/*                                                                                              */
-/* Barbarian AI                                                                                 */
-/************************************************************************************************/
-			if (AI_groupMergeRange(UNITAI_ATTACK, 1, true, true, true))
-			{
-				return;
-			}
-
-			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 3, true, true, true))
-			{
-				return;
-			}
-			
-			if (AI_goToTargetCity(0, 12))
-			{
-				return;
-			}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/		
-		}
-	}
-	else if (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * 3))
-	{
-		if (AI_cityAttack(1, 15))
+		if (AI_cityAttack(1, 15 + iHeroAttMod))
 		{
 			return;
 		}
@@ -2789,18 +2789,13 @@ void CvUnitAI::AI_barbAttackMove()
 			return;
 		}
 
-		if (AI_cityAttack(2, 10))
+		if (AI_cityAttack(2, 10 + iHeroAttMod))
 		{
 			return;
 		}
 
 		if (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE)
 		{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/15/10                                jdog5000      */
-/*                                                                                              */
-/* Barbarian AI                                                                                 */
-/************************************************************************************************/
 			if (AI_groupMergeRange(UNITAI_ATTACK, 1, true, true, true))
 			{
 				return;
@@ -2815,19 +2810,18 @@ void CvUnitAI::AI_barbAttackMove()
 			{
 				return;
 			}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/		
 		}
 	}
-	else if (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * 2))
+	// Cautious Movements
+	// If they don't meet this, they'll pretty much stay out in the wilderness until more cities are built
+	if (GC.getGameINLINE().getNumCivCities() * 4 > (GC.getGameINLINE().countCivPlayersAlive() * iCaution))
 	{
 		if (AI_pillageRange(2))
 		{
 			return;
 		}
 
-		if (AI_cityAttack(1, 10))
+		if (AI_cityAttack(1, 10 + iHeroAttMod))
 		{
 			return;
 		}
