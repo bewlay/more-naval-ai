@@ -4580,17 +4580,17 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	// ALN AITechValues Start
 	// int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
 	// int iRandomMax = 2000;
-	/*int iRandomFactor;
-	if (bAddRandom)
+	int iRandomFactor = 300;
+	if (bDebugLog)
 	{
-		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
+		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(iRandomFactor, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(iRandomFactor, "AI Research"));
 	}
 	else
 	{
-		iRandomFactor = 250;
+		iRandomFactor = iRandomFactor / 2;
 	}
 	// ALN AITechValues End
-	iValue += iRandomFactor;*/
+	iValue += iRandomFactor;
 
 	iValue += kTeam.getResearchProgress(eTech);
 
@@ -4994,6 +4994,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 			if (eRoute != NO_ROUTE)
 			{
+				// ALN TODO: resources we can hook up?
 				iBuildValue += ((getBestRoute() == NO_ROUTE) ? 700 : 200) * (getNumCities() + (bAdvancedStart ? 4 : 0));
 
 				for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
@@ -5023,6 +5024,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	for (int iJ = 0; iJ < GC.getNumFeatureInfos(); iJ++)
     {
+		// ALN TODO: bonus improvements removing the feature allows?
         bool bIsFeatureRemove = false;
         for (int iK = 0; iK < GC.getNumBuildInfos(); iK++)
         {
@@ -5064,12 +5066,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 	// does tech reveal bonus resources
+	int iBestRevealValue = 0;
 	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 	{
 		if (GC.getBonusInfo((BonusTypes)iJ).getTechReveal() == eTech)
 		{
 			int iRevealValue = 150;
-			iRevealValue += (AI_bonusVal((BonusTypes)iJ) * 10);
+			iRevealValue += (AI_bonusVal((BonusTypes)iJ) * 25);
 			
 			BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo((BonusTypes)iJ).getBonusClassType();
 			int iBonusClassTotal = (paiBonusClassRevealed[eBonusClass] + paiBonusClassUnrevealed[eBonusClass]);
@@ -5089,6 +5092,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
                 iMultiplier *= (paiBonusClassRevealed[eBonusClass] + 1);
                 iMultiplier /= ((paiBonusClassHave[eBonusClass] * iBonusClassTotal) + 1);
 			}
+			// ALN - Min multiplier for early game
+			if (paiBonusClassHave[eBonusClass] == 0)
+			{
+				iMultiplier = std::max(50, iMultiplier);
+			}
 
 			iMultiplier *= std::min(3, iCityCount);
 			iMultiplier /= 3;
@@ -5096,11 +5104,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iRevealValue *= 100 + iMultiplier;
 			iRevealValue /= 100;
         
-
-			iValue += iRevealValue;
+			iBestRevealValue = std::max(iRevealValue, iBestRevealValue);
 			
 		}
 	}
+	iValue += iBestRevealValue;
 
 	if (GC.getLogging() && bDebugLog)
 	{
@@ -5581,7 +5589,15 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						}
 					}
 				}
-				iValue += iReligionValue;
+				// iValue += iReligionValue;
+				if (bDebugLog)
+				{
+					iValue += ((bAsync) ? GC.getASyncRand().get(iReligionValue, "AI Research Religion ASYNC") : GC.getGameINLINE().getSorenRandNum(iReligionValue, "AI Research Religion"));
+				}
+				else
+				{
+					iValue += iReligionValue / 2;
+				}
 			}
 		}
 
