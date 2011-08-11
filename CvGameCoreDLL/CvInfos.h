@@ -1342,17 +1342,7 @@ public:
 	bool readPass2(CvXMLLoadUtility* pXML);
 	bool readPass3();
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    bool isAIblockPermDefense() const;
-    bool isAIblockPatrol() const;
-    bool isAIblockExplore() const;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
 	// Arrays
 
 	int getPrereqAndTechs(int i) const;				// Exposed to Python
@@ -1596,18 +1586,7 @@ protected:
 	CvString m_szImage;
 	std::vector<CvString> m_aszExtraXML2forPass3;
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    bool m_bAIblockPermDefense;
-    bool m_bAIblockPatrol;
-    bool m_bAIblockExplore;
 
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 	// Arrays
 
 	int* m_piPrereqAndTechs;

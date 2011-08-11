@@ -868,16 +868,6 @@ void CvUnitAI::AI_upgrade()
 		{
 			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
 
-			/*
-			if (AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
-			{
-				if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
-				{
-					iNewValue = 0;
-				}
-			}
-			*/
-
 			int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
 
 			if (iUpgradeTier > 2)
@@ -25536,74 +25526,13 @@ void CvUnitAI::AI_chooseGroupflag()
 
     if(isUnitAllowedPermDefense())
     {
-        if (AI_decide_permdefensegroup())
-        {
-            return;
-        }
+		AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
+		return;
     }
 
     
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
-}
-
-bool CvUnitAI::isUnitAllowedPillageGroup()
-{
-    CvUnitInfo& kUnitInfo = GC.getUnitInfo(getUnitType());
-
-    if (getDuration()>0)
-    {
-        return false;
-    }
-
-    switch (AI_getUnitAIType())
-    {
-        case UNITAI_SETTLE:
-        case UNITAI_WORKER:
-        case UNITAI_WORKER_SEA:
-        case UNITAI_HERO:
-        case UNITAI_TERRAFORMER:
-        case UNITAI_MANA_UPGRADE:
-        case UNITAI_WARWIZARD:
-        case UNITAI_MISSIONARY:
-        case UNITAI_ANIMAL:
-        case UNITAI_PROPHET:
-        case UNITAI_ARTIST:
-        case UNITAI_SCIENTIST:
-        case UNITAI_GENERAL:
-        case UNITAI_MERCHANT:
-        case UNITAI_ENGINEER:
-        case UNITAI_SETTLER_SEA:
-        case UNITAI_ATTACK_SEA:
-        case UNITAI_RESERVE_SEA:
-        case UNITAI_ESCORT_SEA:
-        case UNITAI_ASSAULT_SEA:
-        case UNITAI_MISSIONARY_SEA:
-        case UNITAI_SPY_SEA:
-        case UNITAI_PIRATE_SEA:
-            return false;
-            break;
-        default:
-            break;
-    }
-
-    if (kUnitInfo.getTier()==1)
-        return false;
-
-    if (kUnitInfo.getTier()==4)
-        return false;
-
-    int iMountedCombat=GC.getInfoTypeForString("UNITCOMBAT_MOUNTED");
-
-    if (iMountedCombat!=NO_UNITCOMBAT)
-    {
-        if (kUnitInfo.getUnitCombatType()!=iMountedCombat)
-        {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 //Returns true if the Unit wants to join a City Defense
@@ -25677,95 +25606,6 @@ bool CvUnitAI::AI_decide_permdefensegroup()
         return true;
     }
 
-    return false;
-}
-
-//Returns true if the Unit wants to join a Patrol
-bool CvUnitAI::AI_decide_patrolgroup()
-{
-    int iSearchRange=10;
-    int iDX,iDY;
-    CvPlot* pLoopPlot;
-    int iPathTurns;
-
-    int flag;
-
-
-	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
-	{
-		return false;
-	}
-
-    switch(AI_getUnitAIType())
-    {
-        case UNITAI_COUNTER:
-            flag=0;
-            break;
-        case UNITAI_WARWIZARD:
-            flag=1;
-            break;
-        default:
-            flag=0;
-            break;
-    }
-    for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-    {
-        for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-        {
-            pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
-            if (pLoopPlot != NULL)
-            {
-                if(pLoopPlot->isCity())
-                {
-                    if(pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
-                    {
-                        if(pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin())
-                        {
-                            CvSelectionGroup* Patrolgroup=NULL;
-                            int iLoop;
-
-                            for (CvUnit* pUnit = GET_PLAYER(getOwnerINLINE()).firstUnit(&iLoop); NULL != pUnit; pUnit = GET_PLAYER(getOwnerINLINE()).nextUnit(&iLoop))
-                            {
-                                if (pUnit->AI_getGroupflag()==GROUPFLAG_PATROL)
-                                {
-                                    if (pUnit->getOriginPlot()==pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin())
-                                    {
-                                        Patrolgroup=pUnit->getGroup();
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (!Patrolgroup)
-                            {
-                                if(generatePath(pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin(),0,true,&iPathTurns))
-                                {
-                                    //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
-									AI_setGroupflag(GROUPFLAG_PATROL);
-                                    return true;
-                                }
-                            }
-                            else if(pLoopPlot->getPlotCity()->AI_neededPatrol(flag)>0)
-                            {
-                                if(generatePath(pLoopPlot->getPlotCity()->AI_getCityPatrolOrigin(),0,true,&iPathTurns))
-                                {
-                                    //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
-									AI_setGroupflag(GROUPFLAG_PATROL);
-                                    return true;
-                                }
-                            }
-                        }
-                        else if(generatePath(pLoopPlot,0,true,&iPathTurns))
-                        {
-                            //AI_setGroupflag(GROUPFLAG_PATROL_NEW);
-							AI_setGroupflag(GROUPFLAG_PATROL);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-    }
     return false;
 }
 
@@ -25850,77 +25690,6 @@ bool CvUnitAI::isUnitAllowedPermDefense()
 
     return m_bAllowedPermDefense;
 }
-
-bool CvUnitAI::isUnitAllowedPatrolGroup()
-{
-    CvUnitInfo& kUnitInfo = GC.getUnitInfo(getUnitType());
-
-    if (getDomainType() != DOMAIN_LAND)
-        return false;
-
-    if (isHiddenNationality())
-    {
-        return false;
-    }
-
-    if (getDuration()>0)
-    {
-        return false;
-    }
-
-    if (isPermanentSummon())
-    {
-        return false;
-    }
-
-    if (getUnitCombatType()==GC.getInfoTypeForString("UNITCOMBAT_SIEGE"))
-    {
-        return false;
-    }
-
-    if (kUnitInfo.isAIblockPatrol())
-    {
-        return false;
-    }
-
-    switch (AI_getUnitAIType())
-    {
-        case UNITAI_SETTLE:
-        case UNITAI_WORKER:
-        case UNITAI_HERO:
-        case UNITAI_TERRAFORMER:
-        case UNITAI_MANA_UPGRADE:
-        case UNITAI_MISSIONARY:
-		//case UNITAI_ANIMAL:
-        case UNITAI_PROPHET:
-        case UNITAI_ARTIST:
-        case UNITAI_SCIENTIST:
-        case UNITAI_GENERAL:
-        case UNITAI_MERCHANT:
-        case UNITAI_ENGINEER:
-        case UNITAI_FEASTING:
-        case UNITAI_SETTLER_SEA:
-        case UNITAI_WORKER_SEA:
-        case UNITAI_ATTACK_SEA:
-        case UNITAI_RESERVE_SEA:
-        case UNITAI_ESCORT_SEA:
-        case UNITAI_ASSAULT_SEA:
-        case UNITAI_MISSIONARY_SEA:
-        case UNITAI_SPY_SEA:
-        case UNITAI_PIRATE_SEA:
-        case UNITAI_MEDIC:
-		case UNITAI_INQUISITOR:
-            return false;
-            break;
-        default:
-            break;
-    }
-    if (kUnitInfo.getTier()==4)
-        return false;
-
-    return m_bAllowedPatrol;
-}
-
 
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_groupheal(int iDamagePercent, int iMaxPath)

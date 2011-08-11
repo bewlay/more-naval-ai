@@ -511,9 +511,6 @@
 	<ElementType name="LeaderPromotion" content="textOnly"/>
 	<ElementType name="iLeaderExperience" content="textOnly" dt:type="int"/>
 	<ElementType name="bAbandon" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bAIblockPermDefense" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bAIblockPatrol" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bAIblockExplore" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAutoRaze" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bObject" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDisableUpgradeTo" content="textOnly" dt:type="boolean"/>
@@ -726,9 +723,6 @@
 		<element type="LeaderPromotion" minOccurs="0"/>
 		<element type="iLeaderExperience" minOccurs="0"/>
 		<element type="bAbandon" minOccurs="0"/>
-		<element type="bAIblockExplore" minOccurs="0"/>				
-		<element type="bAIblockPatrol" minOccurs="0"/>				
-		<element type="bAIblockPermDefense" minOccurs="0"/>						
 		<element type="bAutoRaze" minOccurs="0"/>
 		<element type="bObject" minOccurs="0"/>
 		<element type="bDisableUpgradeTo" minOccurs="0"/>

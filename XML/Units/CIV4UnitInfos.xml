@@ -10406,9 +10406,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
@@ -10639,9 +10636,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
@@ -10888,9 +10882,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>5</iCombatDefense>
@@ -11123,9 +11114,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
@@ -11360,9 +11348,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
@@ -11593,9 +11578,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
@@ -12952,7 +12934,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <bExplodeInCombat>1</bExplodeInCombat>
             <iCombatDefense>3</iCombatDefense>
             <iTier>2</iTier>
@@ -14996,9 +14977,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>1</iCombatDefense>
             <iTier>2</iTier>
         </UnitInfo>
@@ -18754,9 +18732,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>6</iCombatDefense>
             <iTier>4</iTier>
         </UnitInfo>
@@ -18966,9 +18941,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>7</iCombatDefense>
             <iTier>4</iTier>
         </UnitInfo>
@@ -19396,9 +19368,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>3</iCombatDefense>
             <iTier>2</iTier>
         </UnitInfo>
@@ -19612,9 +19581,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockExplore>1</bAIblockExplore>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>4</iCombatDefense>
             <iTier>2</iTier>
         </UnitInfo>
@@ -35298,7 +35264,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockPatrol>1</bAIblockPatrol>
             <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>4</iCombatDefense>
             <iTier>3</iTier>
@@ -64571,8 +64536,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
             <UpgradeCiv>CIVILIZATION_CLAN_OF_EMBERS</UpgradeCiv>
@@ -64792,8 +64755,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
             <UpgradeCiv>CIVILIZATION_CLAN_OF_EMBERS</UpgradeCiv>
@@ -65023,8 +64984,6 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
-            <bAIblockPatrol>1</bAIblockPatrol>
-            <bAIblockPermDefense>1</bAIblockPermDefense>
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
         </UnitInfo>

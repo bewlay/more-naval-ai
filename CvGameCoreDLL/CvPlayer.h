@@ -1121,8 +1121,6 @@ public:
 	bool AI_isSummonSuicideMode();
 	void AI_setSummonSuicideMode(bool newvalue);
 	void AI_doTowerMastery();
-/** BETTER AI (new Definitions) Sephi                                                 **/
-    int AI_getNeededPillageUnits() const;
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

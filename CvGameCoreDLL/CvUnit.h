@@ -785,8 +785,6 @@ public:
     virtual void setPermanentSummon(bool newvalue) = 0;
 
     virtual bool isUnitAllowedPermDefense() = 0;
-    virtual bool isUnitAllowedPatrolGroup() = 0;
-    virtual bool isUnitAllowedPillageGroup() = 0;
 
     int getPower();
     bool AI_canJoinGroup(CvSelectionGroup* pSelectionGroup) const;

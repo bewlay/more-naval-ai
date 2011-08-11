@@ -70,11 +70,8 @@ public:
     void AI_chooseGroupflag();
 
     bool isUnitAllowedPermDefense();
-    bool isUnitAllowedPatrolGroup();
-    bool isUnitAllowedPillageGroup();
 
     bool AI_decide_permdefensegroup();
-    bool AI_decide_patrolgroup();
 
 //used for spawns
     CvPlot* getOriginPlot() const;

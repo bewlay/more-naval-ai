@@ -4874,17 +4874,6 @@ m_piBonusAffinity(NULL),
 m_piDamageTypeCombat(NULL),
 m_szImage(NULL)
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-,m_bAIblockPermDefense(false)
-,m_bAIblockPatrol(false)
-,m_bAIblockExplore(false)
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 {
 }
 
@@ -5998,28 +5987,6 @@ int CvUnitInfo::getLeaderExperience() const
 	return m_iLeaderExperience;
 }
 
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-bool CvUnitInfo::isAIblockPermDefense() const
-{
-    return m_bAIblockPermDefense;
-}
-
-bool CvUnitInfo::isAIblockPatrol() const
-{
-    return m_bAIblockPatrol;
-}
-
-bool CvUnitInfo::isAIblockExplore() const
-{
-    return m_bAIblockExplore;
-}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 const TCHAR* CvUnitInfo::getEarlyArtDefineTag(int i, UnitArtStyleTypes eStyle) const
 {
 	FAssertMsg(i < getGroupDefinitions(), "Index out of bounds");
@@ -6368,18 +6335,6 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	stream->Read(GC.getNumDamageTypeInfos(), m_piDamageTypeCombat);
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    stream->Read(&m_bAIblockExplore);
-    stream->Read(&m_bAIblockPatrol);
-    stream->Read(&m_bAIblockPermDefense);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	SAFE_DELETE_ARRAY(m_piPrereqAndTechs);
 	m_piPrereqAndTechs = new int[GC.getNUM_UNIT_AND_TECH_PREREQS()];
 	stream->Read(GC.getNUM_UNIT_AND_TECH_PREREQS(), m_piPrereqAndTechs);
@@ -6720,18 +6675,6 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumBonusInfos(), m_piBonusAffinity);
 	stream->Write(GC.getNumDamageTypeInfos(), m_piDamageTypeCombat);
 //FfH: End Add
-
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    stream->Write(m_bAIblockExplore);
-    stream->Write(m_bAIblockPatrol);
-    stream->Write(m_bAIblockPermDefense);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 
 	stream->Write(GC.getNUM_UNIT_AND_TECH_PREREQS(), m_piPrereqAndTechs);
 	stream->Write(GC.getNUM_UNIT_PREREQ_OR_BONUSES(), m_piPrereqOrBonuses);
@@ -7169,18 +7112,6 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piBonusAffinity, "BonusAffinities", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (New Functions Definition) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-
-	pXML->GetChildXmlValByName(&m_bAIblockExplore,"bAIblockExplore",false);
-	pXML->GetChildXmlValByName(&m_bAIblockPermDefense,"bAIblockPermDefense",false);
-	pXML->GetChildXmlValByName(&m_bAIblockPatrol,"bAIblockPatrol",false);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 	updateArtDefineButton();
 	return true;
 }
