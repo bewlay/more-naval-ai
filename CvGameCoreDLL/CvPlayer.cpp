@@ -23989,32 +23989,6 @@ void CvPlayer::AI_doTowerMastery()
 	return;
 }
 
-int CvPlayer::AI_getNeededPillageUnits() const
-{
-    int iRaiderTrait=GC.getInfoTypeForString("TRAIT_RAIDERS");
-    int iLeaderValue=100;     //add Leader tag in the future
-
-    int iNeededPillageUnits;
-
-    iNeededPillageUnits=getNumCities()*(8+2*GC.getGameINLINE().getHandicapType())/30;
-
-    iNeededPillageUnits*=iLeaderValue;
-    iNeededPillageUnits/=100;
-
-    if (iRaiderTrait!=NO_TRAIT)
-    {
-        if(hasTrait((TraitTypes)iRaiderTrait))
-        {
-            iNeededPillageUnits*=150;
-            iNeededPillageUnits/=100;
-        }
-    }
-
-    return iNeededPillageUnits;
-}
-/** BETTER AI End																				**/
-/*************************************************************************************************/
-
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/29
 //*** Assimilated city produces a unit with original civilization artstyle.
 UnitArtStyleTypes CvPlayer::getUnitArtStyleType() const
