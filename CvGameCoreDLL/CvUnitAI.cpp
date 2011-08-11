@@ -10295,6 +10295,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
 	{
 		iValue += 20;
+		if (AI_getUnitAIType() == UNITAI_EXPLORE)
+		{
+			iValue += 25;
+		}
 	}
 
 	//Bounty Hunter
