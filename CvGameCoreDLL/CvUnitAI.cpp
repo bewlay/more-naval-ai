@@ -2398,6 +2398,16 @@ void CvUnitAI::AI_workerMove()
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+	// slaves can hurry production
+	if (GC.getUnitInfo(getUnitType()).getBaseHurry() > 0)
+	{
+		if (AI_hurry())
+		{
+			return;
+		}
+	}
+
+
 	if (AI_retreatToCity(false, true))
 	{
 		return;
