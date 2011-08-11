@@ -5361,67 +5361,63 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 	/* ------------------ Civic Value  ------------------ */
+	int iCivicTechValue = 0;
+	int iBestCivicTechValue = 0;
 	for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 	{
-		if (GC.getCivicInfo((CivicTypes)iJ).getTechPrereq() == eTech)
+		CivicTypes eNewCivic = ((CivicTypes)iJ);
+		if (GC.getCivicInfo(eNewCivic).getTechPrereq() == eTech)
 		{
-
-			CivicTypes eCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo((CivicTypes)iJ).getCivicOptionType()));
-			if (NO_CIVIC != eCivic)
+			// check blocking restrictions
+			if (GC.getCivicInfo(eNewCivic).getPrereqAlignment() != NO_ALIGNMENT)
 			{
-				// check blocking restrictions
-				if (GC.getCivicInfo((CivicTypes)iJ).getPrereqAlignment() != NO_ALIGNMENT)
+				if (GC.getCivicInfo(eNewCivic).getPrereqAlignment() != getAlignment())
 				{
-					if (GC.getCivicInfo((CivicTypes)iJ).getPrereqAlignment() != getAlignment())
-					{
-						continue;
-					}
+					continue;
 				}
-
-				if (GC.getCivicInfo((CivicTypes)iJ).getPrereqCivilization() != NO_CIVILIZATION)
-				{
-					if (GC.getCivicInfo((CivicTypes)iJ).getPrereqCivilization() != getCivilizationType())
-					{
-						continue;
-					}
-				}
-
-				if (GC.getCivicInfo((CivicTypes)iJ).getPrereqReligion() != NO_RELIGION)
-				{
-					if (GC.getCivicInfo((CivicTypes)iJ).getPrereqReligion() != getStateReligion())
-					{
-						continue;
-					}
-				}
-
-				int iCivicTechValue = 0;
-				// get a value for this civic
-
-				iCivicTechValue += (AI_civicValue((CivicTypes)iJ) * 100);
-				if (eCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
-				{
-					iCivicTechValue *= 4;
-					iCivicTechValue /= 3;
-				}
-
-				if (GC.getLogging() && bDebugLog)
-				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
-						char szOut[1024];
-						sprintf(szOut, "     Civic - %S : %d\n", GC.getCivicInfo((CivicTypes)iJ).getDescription(), iCivicTechValue);
-						gDLL->messageControlLog(szOut);
-					}
-				}
-
-				iValue += iCivicTechValue;
-
 			}
+
+			if (GC.getCivicInfo(eNewCivic).getPrereqCivilization() != NO_CIVILIZATION)
+			{
+				if (GC.getCivicInfo(eNewCivic).getPrereqCivilization() != getCivilizationType())
+				{
+					continue;
+				}
+			}
+
+			if (GC.getCivicInfo(eNewCivic).getPrereqReligion() != NO_RELIGION)
+			{
+				if (GC.getCivicInfo(eNewCivic).getPrereqReligion() != getStateReligion())
+				{
+					continue;
+				}
+			}
+			
+			iCivicTechValue += 200;
+
+			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo(eNewCivic).getCivicOptionType()));
+			if (NO_CIVIC != eCurrCivic)
+			{
+				int iCurrentCivicValue = std::max(0, AI_civicValue(eCurrCivic));
+				int iNewCivicValue = std::max(0, AI_civicValue(eNewCivic));
+
+				if (iNewCivicValue > iCurrentCivicValue)
+				{
+					iCivicTechValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
+				}
+			}
+			
+			if (eNewCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
+			{
+				iCivicTechValue += 600;
+			}
+			
+			iBestCivicTechValue = std::max(iCivicTechValue, iBestCivicTechValue);
 		}
 	}
+	iValue += iBestCivicTechValue;
 
+	/* ------------------ Religion Value  ------------------ */
 	if (iPathLength <= 3)
 	{
 		if (!isAgnostic())
