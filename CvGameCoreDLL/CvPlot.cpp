@@ -501,6 +501,12 @@ void CvPlot::doTurn()
                         int iChance = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getLairSpawnRate();
                         iChance *= 10000;
                         iChance /= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+						// ALN - reduce 'bear den' overspawning?
+						// probably will have to count separately somehow, but this will help for now
+						if (GC.getUnitInfo((UnitTypes)iUnit).isAnimal())
+						{
+							iChance /= 4;
+						}
                         if (GC.getGameINLINE().getSorenRandNum(10000, "Spawn Unit") < iChance)
                         {
                             if (!isVisibleOtherUnit(BARBARIAN_PLAYER))
