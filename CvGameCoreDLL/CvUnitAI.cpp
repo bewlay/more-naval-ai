@@ -25811,7 +25811,7 @@ void CvUnitAI::AI_feastingmove()
 		}
 	}
 
-	// Tholal ToDo: move this into python?
+	// Tholal ToDo: move this into python? - Hardcode
 	if ((pCity != NULL) && !isHasCasted())
 	{
 		if (pCity->angryPopulation() > 0 || pCity->unhealthyPopulation(false) > 1)

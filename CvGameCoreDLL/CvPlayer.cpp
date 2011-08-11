@@ -23894,7 +23894,6 @@ void CvPlayer::setGreatPeopleThresholdModifier(int iNewValue)
 /** Skyre Mod                                                                                   **/
 /** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
 /** Rewritten by Kael 09/19/2009                                                                **/
-/**						                                            							**/
 /*************************************************************************************************/
 bool CvPlayer::isPirate() const
 {
@@ -23912,20 +23911,13 @@ bool CvPlayer::isPirate() const
 
     return false;
 }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions) Sephi                                 					        **/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
-
 
 ReligionTypes CvPlayer::getFavoriteReligion() const
 {
-    //return m_eFavoriteReligion;
 	return (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
 }
 

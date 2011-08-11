@@ -740,44 +740,6 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 					if (bValid)
 					{
 						pLoopUnit->AI_upgrade();
-						/*
-						for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
-						{
-							if (pLoopUnit->canUpgrade((UnitTypes)iI))
-							{
-								iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "Upgrade"));
-
-								if (pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE || pLoopUnit->AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
-								{
-									if (GC.getUnitInfo((UnitTypes)iI).isAIblockPermDefense())
-									{
-										iValue = -1;
-									}
-								}
-
-								int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
-
-								if (iUpgradeTier > 2)
-								{
-									if (pLoopUnit->getLevel() < (iUpgradeTier + 1))
-									{
-										iValue = -1;
-									}
-								}
-
-								if (iValue > iBestValue)
-								{
-									iBestValue = iValue;
-									eBestUnit = ((UnitTypes)iI);
-								}
-							}
-						}
-						if (eBestUnit != NO_UNIT)
-						{
-							pLoopUnit->upgrade(eBestUnit);
-							pLoopUnit->doDelayedDeath();
-						}
-						*/
 					}
 				}
 			}
