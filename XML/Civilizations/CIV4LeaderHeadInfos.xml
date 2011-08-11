@@ -15251,7 +15251,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>40</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_NEUTRAL</Alignment>
-			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
+			<FavoriteTech>TECH_HUNTING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_RECON</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_GREAT_LIBRARY</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -30091,7 +30091,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
+			<FavoriteTech>TECH_HUNTING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_RECON</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_SOUL_FORGE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -30743,7 +30743,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
+			<FavoriteTech>TECH_HUNTING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_RECON</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_SOUL_FORGE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -31395,7 +31395,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>65</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_DECEPTION</FavoriteTech>
+			<FavoriteTech>TECH_HUNTING</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_RECON</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_SOUL_FORGE</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
