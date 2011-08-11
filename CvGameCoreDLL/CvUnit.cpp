@@ -1327,7 +1327,7 @@ void CvUnit::doTurn()
     {
         if (!isBarbarian())
         {
-			if (AI_getGroupflag() == GROUPFLAG_NONE && (getGroup()->getNumUnits() == 1))
+			if (AI_getGroupflag() == GROUPFLAG_NONE && (getGroup()->getNumUnits() < 3))
 			{
 				switch (AI_getUnitAIType())
 				{
