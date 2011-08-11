@@ -5403,7 +5403,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					iCivicTechValue += std::min(2400, (2400 * (iNewCivicValue - iCurrentCivicValue)) / std::max(1, iCurrentCivicValue));
+					iCivicTechValue += std::min(2400, (100 * (iNewCivicValue - iCurrentCivicValue)));
 				}
 			}
 			
