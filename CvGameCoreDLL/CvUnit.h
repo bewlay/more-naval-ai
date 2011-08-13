@@ -817,6 +817,12 @@ public:
 	virtual bool AI_follow() = 0;
 	virtual void AI_upgrade() = 0;
 	virtual void AI_promote() = 0;
+	virtual int AI_getBirthmark() const = 0;
+	virtual int AI_getBirthmark2() const = 0;
+	virtual int AI_getBirthmark3() const = 0;
+	virtual int AI_getBarbLeadership() const = 0;
+	virtual int AI_getBarbLeadership(int &iFollowers) const = 0;
+	virtual bool AI_groupBarbLeader(int iMaxRange) const = 0;
 	virtual int AI_groupFirstVal() = 0;
 	virtual int AI_groupSecondVal() = 0;
 	virtual int AI_attackOdds(const CvPlot* pPlot, bool bPotentialEnemy) const = 0;

@@ -23916,6 +23916,7 @@ bool CvPlayer::isPirate() const
 /**	BETTER AI (New Functions) Sephi                                 					        **/
 /*************************************************************************************************/
 
+
 ReligionTypes CvPlayer::getFavoriteReligion() const
 {
 	return (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();

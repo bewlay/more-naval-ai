@@ -45,6 +45,8 @@ void CvUnitAI::AI_init(UnitAITypes eUnitAI)
 	//--------------------------------
 	// Init other game data
 	AI_setBirthmark(GC.getGameINLINE().getSorenRandNum(10000, "AI Unit Birthmark"));
+	AI_setBirthmark2(GC.getGameINLINE().getSorenRandNum(10000, "AI Unit Birthmark"));
+	AI_setBirthmark3(GC.getGameINLINE().getSorenRandNum(10000, "AI Unit Birthmark"));
 
 	FAssertMsg(AI_getUnitAIType() != NO_UNITAI, "AI_getUnitAIType() is not expected to be equal with NO_UNITAI");
 	area()->changeNumAIUnits(getOwnerINLINE(), AI_getUnitAIType(), 1);
@@ -934,6 +936,11 @@ void CvUnitAI::AI_promote()
 
 int CvUnitAI::AI_groupFirstVal()
 {
+	if (isBarbarian() && AI_getUnitAIType() != UNITAI_HERO)
+	{
+		return (AI_getBarbLeadership());
+	}
+
 /*************************************************************************************************/
 /**	BETTER AI (improved logic which unit becomes head of a group) Sephi                        	**/
 /**																								**/
@@ -1425,6 +1432,179 @@ int CvUnitAI::AI_getBirthmark() const
 	return m_iBirthmark;
 }
 
+int CvUnitAI::AI_getBirthmark2() const
+{
+	return m_iBirthmark;
+}
+
+int CvUnitAI::AI_getBirthmark3() const
+{
+	return m_iBirthmark;
+}
+
+int CvUnitAI::AI_getBarbLeadership() const
+{
+	int iFollowers = 0;
+	return (AI_getBarbLeadership(iFollowers));
+}
+
+// ALN - This is used as a measure of how able a barbarian unit is able to pull
+// others barbarians under his command
+int CvUnitAI::AI_getBarbLeadership(int& iFollowers) const
+{
+	bool bHero = AI_getUnitAIType() == UNITAI_HERO;
+	bool bAttack = AI_getUnitAIType() == UNITAI_ATTACK;
+	bool bAttackCity = AI_getUnitAIType() == UNITAI_ATTACK_CITY;
+	
+	// Only certain unitAIs can command other barbs
+	if (!bHero && !bAttack && !bAttackCity)
+	{
+		return 0;
+	}
+	
+	int iLeadership = AI_getBirthmark3() % 8;
+	
+	// more experienced units are better leaders
+	iLeadership += (std::min(3, getLevel() / 2));
+	
+	// heros always are better leaders, not always great ones though
+	iLeadership += (bHero ? 2 + (AI_getBirthmark3() % 3) : 0);
+	
+
+	// Absolute highest level possible will be 11
+	iLeadership = std::min(11, iLeadership);
+	// sorry goblins, you won't be leading any stacks of doom
+	iLeadership = std::min((baseCombatStr() * 2) + 1, iLeadership);
+	// undead don't lead large groups
+	if (!bHero & !isAlive())
+	{
+		iLeadership -= 1;
+		iLeadership = std::min(5 + (AI_getBirthmark3() % 2), iLeadership);
+	}
+
+	// max follower units based on leadership
+	if (iLeadership >= 8)
+	{
+		iFollowers = iLeadership - 5;
+	}
+	else if (iLeadership >= 4)
+	{
+		iFollowers = 2;
+	}
+	else if (iLeadership >= 2)
+	{
+		iFollowers = 1;
+	}
+	
+	return iLeadership;
+}
+
+// ALN - This function is always to be called in the position of a barb looking for a higher 'leadership' barbarian
+// that he's looking to join, never from the leader side, but from the follower side(looking for a better leader).
+bool CvUnitAI::AI_groupBarbLeader(int iMaxRange) const
+{
+	bool bHero = AI_getUnitAIType() == UNITAI_HERO;
+	bool bAttack = AI_getUnitAIType() == UNITAI_ATTACK;
+	bool bAttackCity = AI_getUnitAIType() == UNITAI_ATTACK_CITY;
+
+	if (isCargo())
+	{
+		return false;
+	}
+
+	if (bHero)
+	{
+		return false;
+	}
+	
+	CvPlot* pPlot = plot();
+	CvSelectionGroup* pGroup = getGroup();
+	int iGroupSize = pGroup->getNumUnits();
+	int iFollowers = iGroupSize - 1;
+	int iOurLeadership = AI_getBarbLeadership();
+	
+	int iLeadership;
+	int iMaxFollowers = 0;
+	
+	int iBestValue = 0;
+	CvUnit* pBestUnit = NULL;
+
+	for (int iDX = -(iMaxRange); iDX <= iMaxRange; iDX++)
+	{
+		for (int iDY = -(iMaxRange); iDY <= iMaxRange; iDY++)
+		{
+			CvPlot* pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
+
+			if (pLoopPlot != NULL && pLoopPlot->getArea() == pPlot->getArea())
+			{
+				CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode();
+				while (pUnitNode != NULL)
+				{
+					CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+					pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+
+					CvSelectionGroup* pLoopGroup = pLoopUnit->getGroup();
+
+					if (AI_allowGroup(pLoopUnit, UNITAI_UNKNOWN))
+					{
+						iLeadership = pLoopUnit->AI_getBarbLeadership(iMaxFollowers);
+						if (iLeadership > iOurLeadership)
+						{
+							MissionAITypes eMissionAIType = MISSIONAI_GROUP;
+							int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(pLoopUnit, &eMissionAIType, 1, pLoopGroup, 3);
+							if (iFollowers + iJoiners <= iMaxFollowers)
+							{
+								int XDist=pLoopPlot->getX_INLINE() - plot()->getX_INLINE();
+								int YDist=pLoopPlot->getY_INLINE() - plot()->getY_INLINE();
+								if (((XDist*XDist)+(YDist*YDist))<(iMaxRange + 2)*(iMaxRange + 2)*4)
+								{
+									int iPathTurns;
+									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+									{
+										if (iPathTurns <= (iMaxRange <= 2 ? iMaxRange + 2 : iMaxRange + 1))
+										{
+											int iValue = iLeadership * 1000;
+											iValue /= iPathTurns + 2;
+											if (iValue > iBestValue)
+											{
+												iBestValue = iValue;
+												pBestUnit = pLoopUnit;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (pBestUnit != NULL)
+	{
+		if (atPlot(pBestUnit->plot()))
+		{
+			pGroup->mergeIntoGroup(pBestUnit->getGroup());
+			return true;
+		}
+		else
+		{
+			if (getGroup()->getNumUnits() > 1)
+			{
+				pGroup->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
+				return true;
+			}
+			else
+			{
+				pGroup->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
 
 void CvUnitAI::AI_setBirthmark(int iNewValue)
 {
@@ -1459,6 +1639,15 @@ void CvUnitAI::AI_setBirthmark(int iNewValue)
 	}
 }
 
+void CvUnitAI::AI_setBirthmark2(int iNewValue)
+{
+	m_iBirthmark = iNewValue;
+}
+
+void CvUnitAI::AI_setBirthmark3(int iNewValue)
+{
+	m_iBirthmark = iNewValue;
+}
 
 UnitAITypes CvUnitAI::AI_getUnitAIType() const
 {
@@ -2716,37 +2905,65 @@ void CvUnitAI::AI_barbAttackMove()
 	// basically it's all about not having them all hang back then attack at the same time all of a sudden, barbs aren't that coordinated
 	// but still give some breathing room early on
 	bool bRagingBarbs = GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS);
+	bool bBarbWorld = GC.getGameINLINE().isOption(GAMEOPTION_BARBARIAN_WORLD);
+
 	bool bHero = AI_getUnitAIType() == UNITAI_HERO;
-	int iHeroAttMod = (bHero ? 15 + (AI_getBirthmark() % 15) : 0);
+	bool bAttack = AI_getUnitAIType() == UNITAI_ATTACK;
+	bool bAttackCity = AI_getUnitAIType() == UNITAI_ATTACK_CITY;
+
+	int iPillage = AI_getBirthmark2() % 10;
+	
+	// pay attention to where we are
+	bool bFriendlyTerritory = false;
+	bool bEnemyTerritory = false;
+	if (plot()->isOwned() && plot()->getOwnerINLINE() != getOwnerINLINE())
+	{
+		if (!isEnemy(plot()->getTeam()))
+		{
+			bFriendlyTerritory = true;
+		}
+		else
+		{
+			bEnemyTerritory = true;
+		}
+	}
+
+	int iMaxFollowers;
+	int iLeadership = AI_getBarbLeadership(iMaxFollowers);
+	int iHeroAttMod = (bHero ? 10 + (AI_getBirthmark() % 15) : 0);
+	
+	// This is a measure of how likely a given barb is likely to stay away from civs or else seek one out to attack or plunder
 	int iCaution = 1;
 	iCaution += AI_getBirthmark() % 7;
 	if (bHero)
 
 	{
 		// Barbarian Heros hang back till they level up typically
-		iCaution += 8 - getLevel();
+		iCaution += 6 - getLevel();
 	}
-	else
+	// larger stacks more likely to attack civs
+	iCaution -= (getGroup()->getNumUnits() - 1);
+	// more aggressive (attack cities earlier) when raging barbarians is on
+	if (bRagingBarbs)
 	{
-		// everyone else more aggressive (attack cities earlier) when raging barbarians is on
-		if (bRagingBarbs)
-		{
-			iCaution = std::max(0, iCaution - 2);
-		}
+		iCaution -= 2;
 	}
+	else if (bBarbWorld)
+	{
+		iCaution -= 1;
+	}
+	iCaution = std::max(0, iCaution);
 	
-	// ALN - I don't think this is even implemented to do anything if OriginPlot set 'true'?
-    //chance every turn for a Lair unit to break free
-    if(getOriginPlot()!=NULL)
-    {
-        if (GC.getGameINLINE().getSorenRandNum(300, "break free") == 0)
-        {
-            setOriginPlot(NULL);
-        }
-	}
-
+	// how likely they are to attack against poor odds
+	int iRecklessness = iHeroAttMod + (iPillage) - (int)pow((float)(GC.getGameINLINE().getSorenRandNum(100, "AI Barb")), 0.5f);
+	
+	// Aggression steps based on units caution level and number of civilized cities per player
+	bool bAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 2));
+	bool bSemiAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 3));
+	bool bPassiveAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 4) || bEnemyTerritory);
+	
 	// Heros shouldn't be guarding cities or goodies
-	if (!bHero)
+	if (!bHero && ((!bAttackCity || !bAttack) && iCaution > 4))
 	{
 		if (AI_guardCity(false, true, 1))
 		{
@@ -2763,23 +2980,84 @@ void CvUnitAI::AI_barbAttackMove()
 		}
 	}
 
-	if (GC.getGameINLINE().getSorenRandNum(2, "AI Barb") == 0)
+	// new grouping code
+	// higher leadership barbs will wait at longer path lengths
+	MissionAITypes eMissionAIType = MISSIONAI_GROUP;
+	int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), (iLeadership > 7 ? 3 : 2));
+	
+	// wait for joiners
+	int iFollowers = getGroup()->getNumUnits() - 1;
+	if (iLeadership > 5)
+	{
+		if (iJoiners > 0 && !bEnemyTerritory)
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
+	}
+	// look for higher leadership barbs to join with
+	if (iLeadership <= 8)
+	{
+		if (bEnemyTerritory)
+		{
+			if (AI_groupBarbLeader(1))
+			{
+				return;
+			}
+		}
+		else
+		{
+			if (AI_groupBarbLeader(3))
+			{
+				return;
+			}
+		}
+	}
+
+	// Pillaging
+	if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
 	{
 		if (AI_pillageRange(1))
 		{
 			return;
 		}
 	}
-
-	if (AI_anyAttack(1, 20 + iHeroAttMod))
+	
+	// General Attack on adjacent units
+	if (AI_anyAttack(1, std::max(10, 20 + iRecklessness)))
 	{
 		return;
 	}
 
-	// Aggressive movements
-	if (GC.getGameINLINE().getNumCivCities() * 2 > (GC.getGameINLINE().countCivPlayersAlive() * iCaution))
+	// don't wander aimlessly in Clan territory, please
+	if (bFriendlyTerritory)
 	{
-		if (AI_cityAttack(1, 15 + iHeroAttMod))
+		if (AI_goToTargetCity(0, 12))
+		{
+			return;
+		}
+		if (AI_retreatToCity())
+		{
+			return;
+		}
+	}
+		
+	// Aggressive movements (actively seek out distant cities)
+	if (bAggressive)
+	{
+		// high pillage barbs get another go at this check
+		if (iPillage > 5)
+		{
+			if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
+			{
+				if (AI_pillageRange(1))
+				{
+					return;
+				}
+			}
+		}
+
+		if (AI_cityAttack(1, std::max(8, 15 + iRecklessness)))
 		{
 			return;
 		}
@@ -2789,39 +3067,60 @@ void CvUnitAI::AI_barbAttackMove()
 			return;
 		}
 
-		if (AI_cityAttack(2, 10 + iHeroAttMod))
+		if (AI_cityAttack(2, std::max(5, 10 + iRecklessness)))
 		{
 			return;
 		}
 
-		if (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE)
+		if (AI_goToTargetCity(0, 12))
 		{
-			if (AI_groupMergeRange(UNITAI_ATTACK, 1, true, true, true))
-			{
-				return;
-			}
-
-			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 3, true, true, true))
-			{
-				return;
-			}
-			
-			if (AI_goToTargetCity(0, 12))
-			{
-				return;
-			}
+			return;
 		}
 	}
-	// Cautious Movements
-	// If they don't meet this, they'll pretty much stay out in the wilderness until more cities are built
-	if (GC.getGameINLINE().getNumCivCities() * 4 > (GC.getGameINLINE().countCivPlayersAlive() * iCaution))
+	// Semi-Aggressive Movements (attack cities if nearby)
+	if (bSemiAggressive)
+	{
+		// high pillage barbs get another go at this check
+		if (iPillage > 5)
+		{
+			if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
+			{
+				if (AI_pillageRange(1))
+				{
+					return;
+				}
+			}
+		}
+
+		if (AI_cityAttack(1, std::max(8, 15 + iRecklessness)))
+		{
+			return;
+		}
+
+		if (AI_pillageRange(3))
+		{
+			return;
+		}
+
+		if (AI_cityAttack(1, std::max(5, 10 + iRecklessness)))
+		{
+			return;
+		}
+
+		if (AI_goToTargetCity(0, 4))
+		{
+			return;
+		}
+	}
+	// Cautious Movements (only cause trouble if they stumble into it)
+	if (bPassiveAggressive)
 	{
 		if (AI_pillageRange(2))
 		{
 			return;
 		}
 
-		if (AI_cityAttack(1, 10 + iHeroAttMod))
+		if (AI_cityAttack(1, std::max(5, 10 + iRecklessness)))
 		{
 			return;
 		}
@@ -2837,15 +3136,19 @@ void CvUnitAI::AI_barbAttackMove()
 		return;
 	}
     
-	if (!isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())))
+	if (!bHero)
     {
         if (AI_guardCity(false, true, 2))
         {
             return;
         }
     }
-//FfH: End Modify
 
+	if (AI_groupBarbLeader(5))
+	{
+		return;
+	}
+	
 	if (AI_patrol())
 	{
 		return;
@@ -15208,15 +15511,7 @@ bool CvUnitAI::AI_patrol()
 
 						if (isBarbarian())
 						{
-							if (!(pAdjacentPlot->isOwned()))
-							{
-								iValue += 20000;
-							}
-
-							if (!(pAdjacentPlot->isAdjacentOwned()))
-							{
-								iValue += 10000;
-							}
+							// ALN - removed to allow barbs to wander into claimed territory on 'patrol'
 						}
 						else
 						{
@@ -25152,7 +25447,8 @@ bool CvUnitAI::AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const
 		return false;
 	}
 
-	if (pUnit->AI_getUnitAIType() != eUnitAI)
+	// if (pUnit->AI_getUnitAIType() != eUnitAI)
+	if (eUnitAI != UNITAI_UNKNOWN && pUnit->AI_getUnitAIType() != eUnitAI)
 	{
 		return false;
 	}
@@ -25175,6 +25471,12 @@ bool CvUnitAI::AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const
 		// do not join groups that are loading into transports (we might not fit and get stuck in loop forever)
 		return false;
 		break;
+	// ALN - Barbs shouldn't go after a group already joining another group
+	case MISSIONAI_GROUP:
+		if (isBarbarian())
+		{
+			return false;
+		}
 	default:
 		break;
 	}

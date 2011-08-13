@@ -40,7 +40,14 @@ public:
 	bool AI_bestCityBuild(CvCity* pCity, CvPlot** ppBestPlot = NULL, BuildTypes* peBestBuild = NULL, CvPlot* pIgnorePlot = NULL, CvUnit* pUnit = NULL);
 	bool AI_isCityAIType() const;
 	int AI_getBirthmark() const;
+	int AI_getBirthmark2() const;
+	int AI_getBirthmark3() const;
+	int AI_getBarbLeadership() const;
+	int AI_getBarbLeadership(int &iFollowers) const;
+	bool AI_groupBarbLeader(int iMaxRange) const;
 	void AI_setBirthmark(int iNewValue);
+	void AI_setBirthmark2(int iNewValue);
+	void AI_setBirthmark3(int iNewValue);
 	UnitAITypes AI_getUnitAIType() const;
 	void AI_setUnitAIType(UnitAITypes eNewValue);
 	int AI_sacrificeValue(const CvPlot* pPlot) const;

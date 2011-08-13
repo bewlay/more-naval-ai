@@ -5362,7 +5362,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	/* ------------------ Civic Value  ------------------ */
 	int iCivicTechValue = 0;
-	int iBestCivicTechValue = 0;
+	int* m_iBestCivicTechValue = new int[GC.getNumCivicOptionInfos()];
+	for (int iCivicOpt = 0; iCivicOpt < GC.getNumCivicOptionInfos(); iCivicOpt++)
+	{
+		m_iBestCivicTechValue[iCivicOpt] = 0;
+	}
 	for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 	{
 		CivicTypes eNewCivic = ((CivicTypes)iJ);
@@ -5395,7 +5399,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			
 			iCivicTechValue += 200;
 
-			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)(GC.getCivicInfo(eNewCivic).getCivicOptionType()));
+			int iCivicOpt = (GC.getCivicInfo(eNewCivic).getCivicOptionType());
+			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)iCivicOpt);
+			
 			if (NO_CIVIC != eCurrCivic)
 			{
 				int iCurrentCivicValue = std::max(0, AI_civicValue(eCurrCivic));
@@ -5412,10 +5418,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				iCivicTechValue += 600;
 			}
 			
-			iBestCivicTechValue = std::max(iCivicTechValue, iBestCivicTechValue);
+			m_iBestCivicTechValue[iCivicOpt] = std::max(iCivicTechValue, m_iBestCivicTechValue[iCivicOpt]);
 		}
 	}
-	iValue += iBestCivicTechValue;
+	for (int iCivicOpt = 0; iCivicOpt < GC.getNumCivicOptionInfos(); iCivicOpt++)
+	{
+		iValue += m_iBestCivicTechValue[iCivicOpt];
+	}
 
 	/* ------------------ Religion Value  ------------------ */
 	if (iPathLength <= 3)
@@ -5776,6 +5785,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
+	// enforce a little more discretion with picking techs at longer path lengths
+	iValue *= 100 - (5 * std::max(0, iPathLength - 1));
+	iValue /= 100;
 	int iTurnsLeft = 0;
 
 	if (GC.getLogging() && bDebugLog)
