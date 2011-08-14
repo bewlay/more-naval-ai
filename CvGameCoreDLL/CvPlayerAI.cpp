@@ -3539,10 +3539,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	for (iI = 0; iI < 9; iI++)
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
-		if (pLoopPlot->isCityRadius())
+		if (pLoopPlot != NULL)
 		{
-			iValue /= 4;
-			break;
+			if (pLoopPlot->isCityRadius())
+			{
+				iValue /= 4;
+				break;
+			}
 		}
 	}
 	// ALN End
