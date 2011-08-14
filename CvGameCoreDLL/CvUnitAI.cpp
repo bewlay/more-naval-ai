@@ -15529,7 +15529,8 @@ bool CvUnitAI::AI_patrol()
 						if (iValue > iBestValue)
 						{
 							iBestValue = iValue;
-							pBestPlot = getPathEndTurnPlot();
+							//pBestPlot = getPathEndTurnPlot();
+							pBestPlot = pAdjacentPlot;
 							FAssert(!atPlot(pBestPlot));
 						}
 					}
