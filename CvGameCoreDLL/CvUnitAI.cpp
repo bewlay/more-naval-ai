@@ -1483,11 +1483,11 @@ int CvUnitAI::AI_getBarbLeadership(int& iFollowers) const
 	}
 
 	// max follower units based on leadership
-	if (iLeadership >= 8)
+	if (iLeadership >= 9)
 	{
-		iFollowers = iLeadership - 5;
+		iFollowers = iLeadership - 6;
 	}
-	else if (iLeadership >= 4)
+	else if (iLeadership >= 5)
 	{
 		iFollowers = 2;
 	}
@@ -1520,11 +1520,14 @@ bool CvUnitAI::AI_groupBarbLeader(int iMaxRange) const
 	CvPlot* pPlot = plot();
 	CvSelectionGroup* pGroup = getGroup();
 	int iGroupSize = pGroup->getNumUnits();
-	int iFollowers = iGroupSize - 1;
 	int iOurLeadership = AI_getBarbLeadership();
+	int iOurRace = getRace();
 	
 	int iLeadership;
-	int iMaxFollowers = 0;
+	int iRace;
+	int iMaxFollowers;
+	int iFollowers;
+	int iJoiners;
 	
 	int iBestValue = 0;
 	CvUnit* pBestUnit = NULL;
@@ -1544,31 +1547,40 @@ bool CvUnitAI::AI_groupBarbLeader(int iMaxRange) const
 					pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
 
 					CvSelectionGroup* pLoopGroup = pLoopUnit->getGroup();
+					iRace = pLoopUnit->getRace();
 
-					if (AI_allowGroup(pLoopUnit, UNITAI_UNKNOWN))
+					// if pLoopUnit is not a hero, require race to be the same
+					if (iRace == iOurRace || pLoopUnit->AI_getUnitAIType() == UNITAI_HERO)
 					{
-						iLeadership = pLoopUnit->AI_getBarbLeadership(iMaxFollowers);
-						if (iLeadership > iOurLeadership)
+						if (AI_allowGroup(pLoopUnit, UNITAI_UNKNOWN))
 						{
-							MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-							int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(pLoopUnit, &eMissionAIType, 1, pLoopGroup, 3);
-							if (iFollowers + iJoiners <= iMaxFollowers)
+							iLeadership = pLoopUnit->AI_getBarbLeadership(iMaxFollowers);
+							iFollowers = pLoopGroup->getNumUnits() - 1;
+							if (iLeadership > iOurLeadership)
 							{
-								int XDist=pLoopPlot->getX_INLINE() - plot()->getX_INLINE();
-								int YDist=pLoopPlot->getY_INLINE() - plot()->getY_INLINE();
-								if (((XDist*XDist)+(YDist*YDist))<(iMaxRange + 2)*(iMaxRange + 2)*4)
+								MissionAITypes eMissionAIType = MISSIONAI_GROUP;
+								iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(pLoopUnit, MISSIONAI_GROUP, pLoopGroup);
+								if (iFollowers + iJoiners + iGroupSize <= iMaxFollowers)
 								{
-									int iPathTurns;
-									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+									int XDist=pLoopPlot->getX_INLINE() - plot()->getX_INLINE();
+									int YDist=pLoopPlot->getY_INLINE() - plot()->getY_INLINE();
+									if (((XDist*XDist)+(YDist*YDist))<(iMaxRange + 2)*(iMaxRange + 2)*4)
 									{
-										if (iPathTurns <= (iMaxRange <= 2 ? iMaxRange + 2 : iMaxRange + 1))
+										int iPathTurns;
+										if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 										{
-											int iValue = iLeadership * 1000;
-											iValue /= iPathTurns + 2;
-											if (iValue > iBestValue)
+											if (iPathTurns <= (iMaxRange <= 2 ? iMaxRange + 2 : iMaxRange + 1))
 											{
-												iBestValue = iValue;
-												pBestUnit = pLoopUnit;
+												int iValue = iLeadership * 1000;
+												// leaders can pick up different race units, but reduce it's value still
+												// so those different race units will prefer one of their own if also in range
+												iValue /= (iRace == iOurRace ? 1 : 2);
+												iValue /= (iPathTurns + 2);
+												if (iValue > iBestValue)
+												{
+													iBestValue = iValue;
+													pBestUnit = pLoopUnit;
+												}
 											}
 										}
 									}
@@ -3007,7 +3019,7 @@ void CvUnitAI::AI_barbAttackMove()
 		}
 		else
 		{
-			if (AI_groupBarbLeader(3))
+			if (AI_groupBarbLeader(2))
 			{
 				return;
 			}
@@ -3144,7 +3156,7 @@ void CvUnitAI::AI_barbAttackMove()
         }
     }
 
-	if (AI_groupBarbLeader(5))
+	if (AI_groupBarbLeader(3))
 	{
 		return;
 	}

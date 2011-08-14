@@ -5781,7 +5781,29 @@ void CvPlayer::found(int iX, int iY)
 
 	if (isBarbarian())
 	{
-		eDefenderUnit = pCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
+		// ALN - !!HardCoded!! - direct import from onCityBuilt Python Code
+		CvTeam& kTeam = GET_TEAM(getTeam());
+		eDefenderUnit = (UnitTypes)GC.getInfoTypeForString("UNIT_ARCHER");
+
+		if (kTeam.isHasTech((TechTypes)GC.getInfoTypeForString("TECH_BOWYERS")) || GC.getGameINLINE().getStartEra() > GC.getInfoTypeForString("ERA_CLASSICAL"))
+		{
+			eDefenderUnit = (UnitTypes)GC.getInfoTypeForString("UNIT_LONGBOWMAN");
+		}
+
+		CvUnit* pNewUnit;
+		if (eDefenderUnit != NO_UNIT)
+		{
+			for (iI = 0; iI < GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getBarbarianInitialDefenders(); iI++)
+			{
+				pNewUnit = initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE);
+				if (!(kTeam.isHasTech((TechTypes)GC.getInfoTypeForString("TECH_BOWYERS"))) && GC.getGameINLINE().getStartEra() == GC.getInfoTypeForString("ERA_ANCIENT"))
+				{
+					pNewUnit->setHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_WEAK"), true);
+				}
+			}
+		}
+		// Original code
+		/* eDefenderUnit = pCity->AI_bestUnitAI(UNITAI_CITY_DEFENSE);
 
 		if (eDefenderUnit == NO_UNIT)
 		{
@@ -5794,7 +5816,8 @@ void CvPlayer::found(int iX, int iY)
 			{
 				initUnit(eDefenderUnit, iX, iY, UNITAI_CITY_DEFENSE);
 			}
-		}
+		} */
+		// ALN end
 	}
 
 	for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
