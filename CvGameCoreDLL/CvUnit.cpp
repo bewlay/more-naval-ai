@@ -15089,7 +15089,18 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	// objects cant cast spells
 	if (getUnitInfo().isObject())
 	{
-		return false;
+		// moved this section here to account for objects that are supposed to cast spells such as the Golden Hammer
+		if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
+		{
+			if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != getUnitClassType())
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 
     if (GC.getSpellInfo(eSpell).getPromotionPrereq1() != NO_PROMOTION)
