@@ -2324,10 +2324,12 @@ void CvUnitAI::AI_workerMove()
 		}
 	}
 
+	/*
     if (AI_improveBonus(25, &pBestBonusPlot, &eBestBonusBuild, &iBestBonusValue))
 	{
 		return;
 	}
+	*/
 
 
 /*************************************************************************************************/
