@@ -70,15 +70,11 @@ public:
     void AI_InquisitionMove();
 	void AI_SvartalfarKidnapMove();
 
-	void AI_PillageGroupMove();
-
     int AI_getGroupflag() const;
     void AI_setGroupflag(int newflag);
     void AI_chooseGroupflag();
 
     bool isUnitAllowedPermDefense();
-
-    bool AI_decide_permdefensegroup();
 
 //used for spawns
     CvPlot* getOriginPlot() const;

@@ -277,16 +277,5 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("setTempTerrainType", &CyPlot::setTempTerrainType, "void (TerrainTypes eNewValue, int iTimer)")
 		.def("isVisibleToCivTeam", &CyPlot::isVisibleToCivTeam, "bool ()")
 //FfH: End Add
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-        .def("AI_neededPermDefenseReserve", &CyPlot::AI_neededPermDefenseReserve, "int (int flag)")
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	;
 }

@@ -540,9 +540,6 @@ bool CvUnitAI::AI_update()
                     AI_heromove();
                     return false;
                     break;
-                case GROUPFLAG_PILLAGE:
-                	AI_PillageGroupMove();
-                	break;
                 default:
                     break;
             }
@@ -25858,80 +25855,7 @@ void CvUnitAI::AI_chooseGroupflag()
 	return;
 }
 
-//Returns true if the Unit wants to join a City Defense
-bool CvUnitAI::AI_decide_permdefensegroup()
-{
-    if (plot()->getOwnerINLINE()!=getOwnerINLINE())
-    {
-        return false;
-    }
-	
-	if(!isUnitAllowedPermDefense())
-	{
-		return false;
-	}
-
-	if (!isMilitaryHappiness())
-	{
-		return false;
-	}
-
-    //Check for Units specialized in Defense
-    CivilizationTypes Civili=GET_PLAYER(getOwnerINLINE()).getCivilizationType();
-
-    if (getUnitClassType()==GC.getCivilizationInfo(Civili).getBestDefender1())
-    {
-        if (plot()->AI_neededBetterDefender(1)>0)
-        {
-            AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-            return true;
-        }
-    }
-
-    if (getUnitClassType()==GC.getCivilizationInfo(Civili).getBestDefender2())
-    {
-        if (plot()->AI_neededBetterDefender(2)>0)
-        {
-            AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-            return true;
-        }
-    }
-
-    if (getUnitClassType()==GC.getCivilizationInfo(Civili).getBestDefender3())
-    {
-        if (plot()->AI_neededBetterDefender(3)>0)
-        {
-            AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-            return true;
-        }
-    }
-
-    if (plot()->AI_neededPermDefenseReserve(3)>0 && AI_getUnitAIType()==UNITAI_MEDIC)
-    {
-        AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-        return true;
-    }
-    if (plot()->AI_neededPermDefenseReserve(2)>0 && AI_getUnitAIType()==UNITAI_MAGE)
-    {
-        AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-        return true;
-    }
-    if (plot()->AI_neededPermDefenseReserve(0)>0)
-    {
-        AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-        AI_setUnitAIType(UNITAI_CITY_DEFENSE);
-        return true;
-    }
-    if (plot()->AI_neededPermDefenseReserve(1)>0)
-    {
-        AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-        AI_setUnitAIType(UNITAI_CITY_COUNTER);
-        return true;
-    }
-
-    return false;
-}
-
+//Returns true if the Unit can be set to City Defense
 bool CvUnitAI::isUnitAllowedPermDefense()
 {
     CvUnitInfo& kUnitInfo = GC.getUnitInfo(getUnitType());
@@ -29781,90 +29705,6 @@ void CvUnitAI::AI_SvartalfarKidnapMove()
     return;
 }
 
-
-void CvUnitAI::AI_PillageGroupMove()
-{
-    //we are not in Enemy land yet
-    if(!plot()->isOwned() || getTeam()==plot()->getTeam() || (!GET_TEAM(getTeam()).isAtWar(plot()->getTeam())))
-    {
-        if (AI_moveToStagingCity())
-        {
-            return;
-        }
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
-
-    CvPlot* pBestPlot=NULL;
-    int iValue;
-    int iBestValue=100;
-
-    int iSearchRange=5;
-
-    //raider units
-    if (isEnemyRoute())
-    {
-        iSearchRange*=3;
-    }
-
-    int iDX, iDY;
-    CvPlot* pLoopPlot;
-    CvPlot* pBestPillagePlot;
-    int iPathTurns;
-
-    for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-    {
-        for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-        {
-            pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
-
-            if (pLoopPlot != NULL)
-            {
-				if (AI_plotValid(pLoopPlot) && !(pLoopPlot->isBarbarian()) && pLoopPlot->isOwned())
-				{
-					if (pLoopPlot->getArea()==getArea() && potentialWarAction(pLoopPlot))
-					{
-                        if (!pLoopPlot->isVisibleEnemyUnit(this) || getGroup()->AI_attackOdds(pLoopPlot, true)>80)
-                        {
-                            if (generatePath(pLoopPlot,0,true,&iPathTurns))
-                            {
-                                if(canPillage(pLoopPlot))
-                                {
-                                    iValue = AI_pillageValue(pLoopPlot,0);
-
-                                    if (pLoopPlot->getNonObsoleteBonusType((pLoopPlot->getTeam()))!= NO_BONUS)
-                                    {
-                                        iValue*=3;
-                                    }
-
-                                    iValue *= 1000;
-                                    iValue /= (iPathTurns + 1);
-
-                                    if (iValue > iBestValue)
-                                    {
-                                        iBestValue = iValue;
-                                        pBestPlot = getPathEndTurnPlot();
-                                        pBestPillagePlot = pLoopPlot;
-                                    }
-                                }
-                            }
-                        }
-					}
-				}
-            }
-        }
-    }
-
-    if (pBestPlot!=NULL)
-    {
-        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
-        return;
-    }
-
-    getGroup()->pushMission(MISSION_SKIP);
-    return;
-}
-
 /*************************************************************************************************/
 /** Skyre Mod                                                                                   **/
 /** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
@@ -29994,7 +29834,7 @@ bool CvUnitAI::AI_buildPirateCove()
 
 
 // Tholal AI - New functions
-// Mage check
+// Hardcode!
 
 bool CvUnitAI::isInquisitor()
 {

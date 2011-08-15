@@ -156,8 +156,6 @@ public:
     // functions used to cache some vars to avoid OOS
     void AI_calculateNeededPermDefense();
     int AI_neededPermDefense(int flag);
-    CvPlot* AI_getCityPatrolOrigin();
-    int AI_neededPatrol(int flag);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -216,16 +214,7 @@ protected:
 /*************************************************************************************************/
     // used for caching
 	int m_aiPermdefenderNeeded[NUM_PERMDEFENDER_TYPES]; //array for Specialization of City Defenders
-	int m_aiPatrolNeeded[NUM_PATROL_TYPES]; //array for Specialization of Patrol
-	int m_aiCityDefenseProductionNeeded[NUM_CITYDEFENSE_TIERS];
-	int m_aiPatrolProductionNeeded[NUM_PATROL_TIERS];
 
-    int m_iAI_CityPatrolgroupOrigin_X;
-    int m_iAI_CityPatrolgroupOrigin_Y;
-    int m_iAI_CityDefenseProduction_X;
-    int m_iAI_CityDefenseProduction_Y;
-    int m_iAI_CityPatrolProduction_X;
-    int m_iAI_CityPatrolProduction_Y;
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

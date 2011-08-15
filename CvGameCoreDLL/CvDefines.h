@@ -46,17 +46,12 @@
 
 #define GROUPFLAG_HNGROUP                                               (12)
 
-
-#define GROUPFLAG_PILLAGE                                               (16)
-
 #define GROUPFLAG_SVARTALFAR_KIDNAP										(41)
 
 #define GROUPFLAG_SUICIDE_SUMMON                                        (43)
 
 #define NUM_PERMDEFENDER_TYPES                                          (5) //how many different Types of a permanent city Defender Specialization exist
-#define NUM_PATROL_TYPES                                                (2) //how many different Types of a patrol Specialization exist
-#define NUM_CITYDEFENSE_TIERS                                           (3) //how many different Tiers the AI has for preferred City Defenders
-#define NUM_PATROL_TIERS                                                (3) //how many different Tiers the AI has for preferred Patrol Units
+
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

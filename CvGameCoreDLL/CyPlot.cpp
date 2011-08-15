@@ -1152,17 +1152,3 @@ bool CyPlot::isVisibleToCivTeam() const
 	return m_pPlot ? m_pPlot->isVisibleToCivTeam() : false;
 }
 //FfH: End Add
-
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-int CyPlot::AI_neededPermDefenseReserve(int flag)
-{
-    return m_pPlot ? m_pPlot->AI_neededPermDefenseReserve(flag) : -1;
-}
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/

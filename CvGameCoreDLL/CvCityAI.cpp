@@ -170,25 +170,7 @@ void CvCityAI::AI_reset()
 		m_aiPermdefenderNeeded[iI] = 0;
 	}
 
-	for (iI = 0; iI < NUM_PATROL_TYPES; iI++)
-	{
-		m_aiPatrolNeeded[iI] = 0;
-	}
 
-	for (iI = 0; iI < NUM_CITYDEFENSE_TIERS; iI++)
-	{
-		m_aiCityDefenseProductionNeeded[iI] = 0;
-	}
-
-	for (iI = 0; iI < NUM_PATROL_TIERS; iI++)
-	{
-		m_aiPatrolProductionNeeded[iI] = 0;
-	}
-
-    m_iAI_CityPatrolgroupOrigin_X = -1;
-    m_iAI_CityPatrolgroupOrigin_Y = -1;
-    m_iAI_CityDefenseProduction_X = -1;
-    m_iAI_CityDefenseProduction_Y = -1;
 /*************************************************************************************************/
 /**	END                                                                  						**/
 /*************************************************************************************************/
@@ -13248,26 +13230,6 @@ int CvCityAI::AI_neededPermDefense(int flag)
 	return m_aiPermdefenderNeeded[flag];
 }
 
-CvPlot* CvCityAI::AI_getCityPatrolOrigin()
-{
-    if (m_iAI_CityPatrolgroupOrigin_X == -1 && m_iAI_CityPatrolgroupOrigin_Y == -1)
-    {
-        return NULL;
-    }
-    else
-    {
-        return plotXY(m_iAI_CityPatrolgroupOrigin_X,m_iAI_CityPatrolgroupOrigin_Y,0,0);
-    }
-}
-
-int CvCityAI::AI_neededPatrol(int flag)
-{
-	FAssertMsg(flag<NUM_PATROL_TYPES, "AI_neededPatrol() flag is wrong");
-	FAssertMsg(flag>=0, "AI_neededPatrol() flag is wrong");
-
-	return m_aiPatrolNeeded[flag];
-}
-
 /*************************************************************************************************/
 /**	END                                                                  						**/
 /*************************************************************************************************/
@@ -13317,14 +13279,7 @@ void CvCityAI::read(FDataStreamBase* pStream)
 /*************************************************************************************************/
 
     pStream->Read(NUM_PERMDEFENDER_TYPES,m_aiPermdefenderNeeded);
-    pStream->Read(NUM_PATROL_TYPES,m_aiPatrolNeeded);
-    pStream->Read(NUM_CITYDEFENSE_TIERS,m_aiCityDefenseProductionNeeded);
-    pStream->Read(NUM_PATROL_TIERS,m_aiPatrolProductionNeeded);
 
-    pStream->Read(&m_iAI_CityPatrolgroupOrigin_X);
-    pStream->Read(&m_iAI_CityPatrolgroupOrigin_Y);
-    pStream->Read(&m_iAI_CityDefenseProduction_X);
-    pStream->Read(&m_iAI_CityDefenseProduction_Y);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -13385,14 +13340,7 @@ void CvCityAI::write(FDataStreamBase* pStream)
 /*************************************************************************************************/
 
     pStream->Write(NUM_PERMDEFENDER_TYPES,m_aiPermdefenderNeeded);
-    pStream->Write(NUM_PATROL_TYPES,m_aiPatrolNeeded);
-    pStream->Write(NUM_CITYDEFENSE_TIERS,m_aiCityDefenseProductionNeeded);
-    pStream->Write(NUM_PATROL_TIERS,m_aiPatrolProductionNeeded);
 
-    pStream->Write(m_iAI_CityPatrolgroupOrigin_X);
-    pStream->Write(m_iAI_CityPatrolgroupOrigin_Y);
-    pStream->Write(m_iAI_CityDefenseProduction_X);
-    pStream->Write(m_iAI_CityDefenseProduction_Y);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
