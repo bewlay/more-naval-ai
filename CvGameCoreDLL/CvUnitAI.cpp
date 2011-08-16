@@ -1861,28 +1861,31 @@ void CvUnitAI::AI_settleMove()
 
                     if (pLoopPlot != NULL)
                     {
-                        if ((AI_plotValid(pLoopPlot)) && canFound(pLoopPlot))
-                        {
-                            if (!pLoopPlot->isVisibleEnemyUnit(this))
-                            {
-                                if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                {
-                                    if (iPathTurns < 4)
-                                    {
-                                        iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
-										// Tholal AI - consider distance
-										iValue *= 2;
-										iValue /= (iPathTurns + 2);
-										// End Tholal AI
-                                        if (iValue > iBestValue)
-                                        {
-                                            iBestValue = iValue;
-                                            pBestPlot = pLoopPlot;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+						if (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam()))
+						{
+							if ((AI_plotValid(pLoopPlot)) && canFound(pLoopPlot))
+							{
+								if (!pLoopPlot->isVisibleEnemyUnit(this))
+								{
+									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+									{
+										if (iPathTurns < 4)
+										{
+											iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
+											// Tholal AI - consider distance
+											iValue *= 2;
+											iValue /= (iPathTurns + 2);
+											// End Tholal AI
+											if (iValue > iBestValue)
+											{
+												iBestValue = iValue;
+												pBestPlot = pLoopPlot;
+											}
+										}
+									}
+								}
+							}
+						}
                     }
                 }
             }
