@@ -17545,9 +17545,15 @@ int CvUnit::chooseSpell()
 
 						iValue += iTempValue;
 					}
+					// Severed Souls & Floating Eyes
+					if ((GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getInvisibleType() != NO_INVISIBLE) ||
+						(GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0))
+					{
+						iValue += 25;
+					}
 				}
 
-				// Hack for Tsunami since all of its effects are hidden in python
+				// extra code for Tsunami since all of its effects are hidden in python
 				bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
 
 				if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
