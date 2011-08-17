@@ -17,7 +17,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-100</iAIWeight>
+            <iAIWeight>-10</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -1454,7 +1454,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-100</iAIWeight>
+            <iAIWeight>-10</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2135,7 +2135,7 @@
             <TechPrereq>NONE</TechPrereq>
             <iAnarchyLength>1</iAnarchyLength>
             <Upkeep>UPKEEP_LOW</Upkeep>
-            <iAIWeight>-100</iAIWeight>
+            <iAIWeight>-10</iAIWeight>
             <iGreatPeopleRateModifier>0</iGreatPeopleRateModifier>
             <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
             <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
