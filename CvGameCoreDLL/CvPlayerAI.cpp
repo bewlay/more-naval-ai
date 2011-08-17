@@ -5051,6 +5051,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				iBuildValue += 200;
                 iBuildValue += 40 * (countCityFeatures((FeatureTypes)iJ) * 10);
             }
+			else
+			{
+                iBuildValue += 10 * (countCityFeatures((FeatureTypes)iJ) * 10);
+            }
         }
     }
 
