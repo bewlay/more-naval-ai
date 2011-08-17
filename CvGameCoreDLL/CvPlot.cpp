@@ -513,9 +513,10 @@ void CvPlot::doTurn()
                             {
                                 CvUnit* pUnit;
                                 pUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit((UnitTypes)iUnit, getX_INLINE(), getY_INLINE(), UNITAI_ATTACK);
-                                if (pUnit->isAnimal())
+								if (pUnit->isAnimal())
                                 {
                                     pUnit->setHasPromotion((PromotionTypes)GC.getDefineINT("HIDDEN_NATIONALITY_PROMOTION"), true);
+									pUnit->AI_setUnitAIType(UNITAI_ANIMAL);		
                                 }
                             }
                         }
