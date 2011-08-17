@@ -13266,7 +13266,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
 
 	int iMilitaryTemp = kCivic.getMilitaryProductionModifier() * getNumCities();
-	iMilitaryTemp /= (bWarPlan ? 2 : 3);
+	iMilitaryTemp /= (bWarPlan ? 2 : 4);
 	iMilitaryTemp *= iWarmongerPercent;
 	iMilitaryTemp /= (bWarPlan ? 100 : 150);
 		
@@ -13743,7 +13743,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 				//iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
 				//iTempValue += iMaxGrowingSpace * getNumCities() * 10;
 				//iTempValue -= (iTotalFoodDifference * 2);
-				iTempValue += iTotalFoodDifference * getNumCities();
+				iTempValue += iTotalFoodDifference * (getNumCities() / 3);
+
+				if (GET_PLAYER(getID()).isMilitaryFoodProduction())
+				{
+					iTempValue /= 5;
+				}
 			}
 			iValue += iTempValue;
 		}
