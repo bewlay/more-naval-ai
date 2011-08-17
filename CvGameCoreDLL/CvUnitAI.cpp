@@ -25821,11 +25821,12 @@ void CvUnitAI::AI_chooseGroupflag()
     }
 
 	//Svartalfar Kidnap
+	// ToDo - better code for this
 	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
 	if (iSvartal!=NO_CIVILIZATION && getCivilizationType()==iSvartal)
 	{
-		UnitTypes iRanger=(UnitTypes)GC.getInfoTypeForString("UNIT_RANGER");
-		if(iRanger!=NO_UNIT && getUnitType()==iRanger)
+		UnitTypes iHunter=(UnitTypes)GC.getInfoTypeForString("UNIT_HUNTER");
+		if(iHunter!=NO_UNIT && getUnitType()==iHunter)
 		{
 			if(GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_SVARTALFAR_KIDNAP)==0)
 			{
