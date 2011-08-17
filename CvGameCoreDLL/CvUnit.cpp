@@ -1211,7 +1211,9 @@ void CvUnit::doTurn()
 
     if (getSpellCasterXP() > 0)
     {
-        if (GC.getGameINLINE().getSorenRandNum(100, "SpellCasterXP") < getSpellCasterXP() - getExperience())
+		int iGameSpeedMod = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+
+        if (((GC.getGameINLINE().getSorenRandNum(100, "SpellCasterXP") * iGameSpeedMod) / 100) < getSpellCasterXP() - getExperience())
         {
             changeExperience(1, -1, false, false, false);
         }
