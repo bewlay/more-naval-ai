@@ -4853,16 +4853,25 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iTempValue += (kImprovement.getHillsYieldChange(iK) * 50);
 					iTempValue += (kImprovement.getIrrigatedYieldChange(iK) * 75);
 
-					// food yield is more valueble
+					// food yield is more valuable
 					if (iK == YIELD_FOOD)// && !kImprovement.isWater())
 					{
-						iTempValue *= 3;
-						iTempValue /= 2;
+						iTempValue *= 2;
 					}
 					
-					if (bFinancialTrouble && iK == YIELD_COMMERCE)
+					// high commerce yields are very valuable
+					if (iK == YIELD_COMMERCE)
 					{
-						iTempValue *= 2;
+						if (kImprovement.getYieldChange(iK) > 3)
+						{
+							iTempValue *= 5;
+							iTempValue /= 2;
+						}
+
+						if (bFinancialTrouble)
+						{
+							iTempValue *= 2;
+						}
 					}
 
 					iTempValue *= AI_yieldWeight((YieldTypes)iK);
