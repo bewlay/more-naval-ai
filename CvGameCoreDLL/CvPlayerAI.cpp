@@ -5375,6 +5375,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		CivicTypes eNewCivic = ((CivicTypes)iJ);
 		if (GC.getCivicInfo(eNewCivic).getTechPrereq() == eTech)
 		{
+			iCivicTechValue = 0;
 			// check blocking restrictions
 			if (GC.getCivicInfo(eNewCivic).getPrereqAlignment() != NO_ALIGNMENT)
 			{
