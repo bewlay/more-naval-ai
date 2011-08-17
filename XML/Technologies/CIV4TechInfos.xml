@@ -3841,7 +3841,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_ECONOMY</Advisor>
-            <iAIWeight>900</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iAITradeModifier>10</iAITradeModifier>
             <iCost>200</iCost>
             <iAdvancedStartCost>100</iAdvancedStartCost>
