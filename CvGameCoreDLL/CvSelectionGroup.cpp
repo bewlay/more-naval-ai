@@ -3079,6 +3079,12 @@ bool CvSelectionGroup::calculateIsStranded()
 		return false;
 	}
 
+	// barbarian animals shouldnt be flagged as stranded
+	if (getHeadUnit()->isBarbarian() && getHeadUnit()->isAnimal())
+	{
+		return false;
+	}
+
 	if( AI_getMissionAIType() != NO_MISSIONAI )
 	{
 		return false;
@@ -3132,6 +3138,12 @@ bool CvSelectionGroup::calculateIsStranded()
 		if( plot()->getImprovementType() != NO_IMPROVEMENT )
 		{
 			if( GC.getImprovementInfo(plot()->getImprovementType()).isActsAsCity() && canDefend() )
+			{
+				return false;
+			}
+
+			// units guarding lairs shouldnt be flagged as stranded
+			if (GC.getImprovementInfo(plot()->getImprovementType()).getSpawnUnitType() == getHeadUnit()->getUnitType())
 			{
 				return false;
 			}
