@@ -5558,9 +5558,12 @@ void CvUnitAI::AI_exploreMove()
 		return;
 	}
 
-	if (AI_exploreLair(6))
+	if (!isHuman())
 	{
-		return;
+		if (AI_exploreLair(6))
+		{
+			return;
+		}
 	}
 
 	if (AI_exploreRange(3))
@@ -7909,10 +7912,12 @@ void CvUnitAI::AI_exploreSeaMove()
 /* 	BETTER_BTS_AI_MOD						END								*/
 /********************************************************************************/
 
-
-	if (AI_exploreLairSea(6))
+	if (!isHuman())
 	{
-		return;
+		if (AI_exploreLairSea(6))
+		{
+			return;
+		}
 	}
 
 	CvArea* pWaterArea = plot()->waterArea();
