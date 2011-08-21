@@ -3849,7 +3849,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			{
 				for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 				{
-					szString.append(CvWString::format(L"\n %s = %d", GC.getCivicInfo((CivicTypes)iI).getDescription(), GET_PLAYER(pPlot->getOwner()).AI_civicValue((CivicTypes)iI)));			
+					szString.append(CvWString::format(L"\n %s = %d", GC.getCivicInfo((CivicTypes)iI).getDescription(), GET_PLAYER(pPlot->getOwner()).AI_civicValue((CivicTypes)iI)));
+					if (GET_PLAYER(pPlot->getOwner()).isCivic((CivicTypes)iI))
+					{
+						szString.append(CvWString::format(SETCOLR L" (active)" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+					}
 				}
 			}
 			else if( pPlot->headUnitNode() == NULL )
