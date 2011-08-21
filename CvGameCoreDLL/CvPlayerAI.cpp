@@ -13095,17 +13095,33 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	if (eBlockAlignment == eAlignment)
 	{
-		return 1;
+		return 0;
 	}
 
 	if (ePrereqAlignment != NO_ALIGNMENT)
 	{
 		if (ePrereqAlignment != eAlignment)
 		{
-			return 1;
+			return 0;
 		}
 	}
 //<<<<Better AI: End Add
+
+	if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
+	{
+		if (kCivic.getPrereqCivilization() != getCivilizationType())
+		{
+			return 0;
+		}
+	}
+
+	if (kCivic.getPrereqReligion() != NO_RELIGION)
+	{
+		if (kCivic.getPrereqReligion() != getStateReligion())
+		{
+			return 0;
+		}
+	}
 
 	bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	if( bWarPlan )
@@ -13172,7 +13188,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iHighestReligionCount = ((eBestReligion == NO_RELIGION) ? 0 : getHasReligionCount(eBestReligion));
 	iWarmongerPercent = 25000 / std::max(100, (100 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand())); 
 
-	iValue = (getNumCities() * 6);
+	//iValue = (getNumCities() * 6);
+	iValue = 1;
 
 	iValue += (getCivicPercentAnger(eCivic) / 10);
 
@@ -13182,8 +13199,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	int iTemp = 0;
 	CvCity* pCapital = getCapitalCity();
+
 //>>>>Better AI: Modified by Denev 2010/03/15
-//	iValue += ((kCivic.getGreatPeopleRateModifier() * getNumCities()) / 10);
 	int iGreatPeopleTotalDelta = 0;
 	int iLoop;
 	int iTotalFoodDifference = 0;
@@ -13191,6 +13208,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iMaxGrowingSpace = 0;
 	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
+		// calculate how many Great Person points we're getting from Specialists
 		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
 		{
 			int iGreatPeopleRateChange = GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getGreatPeopleRateChange();
@@ -13208,26 +13226,16 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iMaxGrowingSpace += iTotalGrowingSpace;
 	}
 
-	iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
+	iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / ((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 30 : 50));
 //<<<<Better AI: End Modify
-	// Tholal AI
-	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2))
-	{
-		iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / 50);
-	}
-	// End Tholal AI
 	
-	// Tholal note - this code section doesn't really work with FFH since you don't get GG points for combat
-	// TODO: better way to utilize these XML values so they can work with mods
-	/*
 	if ( bWarPlan )
 	{
 		iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
 		iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
 	}
-	*/
-//>>>>Better AI: Modified by Denev 2010/07/21
 
+//>>>>Better AI: Modified by Denev 2010/07/21
 	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
 	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
 /*
@@ -13262,7 +13270,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = (iTemp * getTotalPopulation() * (bWarPlan ? 30 : 12))/100;
 //>>>>Better AI: Added by Denev 2010/07/08
 //*** FfH2 promotions are more valuable than unmodded BtS.
-		iTempValue *= 2;
+		iTempValue *= (bAtWar ? 4 : 2);
 //<<<<Better AI: End Add
 		iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
 		iTempValue /= 100;
@@ -13271,16 +13279,19 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iValue += iTempValue;
 	}
 
+	// infrastructure bonuses
 	iValue += ((kCivic.getWorkerSpeedModifier() * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
 	iValue += ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
 
+	// military production bonuses
 	int iMilitaryTemp = kCivic.getMilitaryProductionModifier() * getNumCities();
-	iMilitaryTemp /= (bWarPlan ? 2 : 4);
+	iMilitaryTemp /= (bAtWar ? 1 : 3);
 	iMilitaryTemp *= iWarmongerPercent;
 	iMilitaryTemp /= (bWarPlan ? 100 : 150);
-		
-//	iValue += (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / (bWarPlan ? 5000 : 7500 );
-//>>>>Better AI: Added by Denev 2010/07/08
+
+	iValue += iMilitaryTemp; //bAtWar
+
+	//>>>>Better AI: Added by Denev 2010/07/08
 	int iFreeUnits;
 	int iFreeMilitaryUnits;
 	int iPaidUnits;
@@ -13304,33 +13315,28 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += -(kCivic.getGoldPerUnit() * getNumUnits());
 	iValue += -(kCivic.getGoldPerMilitaryUnit() * getNumMilitaryUnits() * iWarmongerPercent) / 200;
 //>>>>Better AI: Added by Denev 2010/07/21
+	/*
 	if (!isIgnoreFood())
-		iValue += kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation() * 3;
+		iValue += kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation();
+	*/
 //<<<<Better AI: End Add
 
-	// Tholal AI - value Theocracy during religion victory push
-	// Tholal ToDo - make better formulas - this is just arbitrary
+	// value Theocracy during religion victory push
 	if (kCivic.isNoNonStateReligionSpread())
 	{
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 		{
-			iValue += 200;
+			iValue += 20;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 		{
-			iValue += 350;
+			iValue += 35;
 		}
 		if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4))
 		{
-			iValue += 500;
+			iValue += 50;
 		}
 	}
-
-	// Account for new FFH tag
-	iValue += kCivic.getCoastalTradeRoutes() * countNumCoastalCities();
-
-	// End Tholal AI
-	//iValue += ((kCivic.isMilitaryFoodProduction()) ? 0 : 0);
 
 //FfH: Added by Kael 01/31/2009
 	if (kCivic.isMilitaryFoodProduction() || (kCivic.getFoodConsumptionPerPopulation() > 0))
@@ -13339,8 +13345,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = 0;
 		if ((kCivic.getFoodConsumptionPerPopulation() > 0) && !(isIgnoreFood()))
 		{
-			iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
-			iTempValue += iMaxGrowingSpace * getNumCities() * 10;
+			iTempValue += (getTotalPopulation() * 2 ) / kCivic.getFoodConsumptionPerPopulation();
+			//TempValue += iMaxGrowingSpace * getNumCities() * 10;
 			//iTempValue -= (iTotalFoodDifference * 2);
 			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
 			{
@@ -13406,7 +13412,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
 	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 25 : 50));
 	iValue += (kCivic.getFreeSpecialist() * getNumCities() * 12);
-	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2))); 
+	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2)));
+	
+	// ToDo: better way to calculate the value of coastal trade routes
+	iValue += kCivic.getCoastalTradeRoutes() * countNumCoastalCities();
 	iValue += -((kCivic.isNoForeignTrade()) ? (iConnectedForeignCities * 3) : 0);
 
 	// coporation stuff
@@ -13651,7 +13660,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		else if (iI == YIELD_COMMERCE) 
 		{ 
 			iTempValue *= ((AI_avoidScience()) ? 2 : 4);
-			//iTempValue /= 3;
+			iTempValue /= 2;
 		} 
 
 		iValue += iTempValue;
@@ -13665,14 +13674,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue += ((kCivic.getCommerceModifier(iI) * getNumCities()) / 3);
 
 		// God King
-		// Tholal AI - made this into an if statement akin to the Yield check above
 		if (pCapital)
 		{
-			//iTemp = (kCivic.getCapitalCommerceModifier(iI) * (pCapital->getBaseCommerceRate((CommerceTypes)iI) / getNumCities()));
-			//iTemp /= 100;
-
-			//iTempValue += iTemp;
-
 			iTemp = kCivic.getCapitalCommerceModifier(iI) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
 			iTemp /= 100;
 
@@ -13681,7 +13684,6 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			
 			iTempValue += iTemp;
 		}
-		//End Tholal AI
 
 		if (iI == COMMERCE_ESPIONAGE)
 		{
@@ -13732,7 +13734,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		if (iHappiness != 0)
 		{
-			iValue += (iHappiness * countCityFeatures((FeatureTypes)iI) * 5);
+			iValue += (iHappiness * countCityFeatures((FeatureTypes)iI) * 2);
 		}
 	}
 
@@ -13782,9 +13784,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	} 
 
 	// Tholal AI - more FFH variables
-	if (bWarPlan || bAtWar)
+	//ToDo - Overcouncil and Undercouncil
+	if (bWarPlan)
 	{
-		iValue += ((kCivic.getEnslavementChance() * 5) / 10);
+		iValue += ((kCivic.getEnslavementChance() * 5) / (bAtWar ? 5 : 10));
 	}
 
 	if (kCivic.isPrereqWar())
@@ -13794,44 +13797,45 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue += GC.getCivicInfo(eCivic).getAIWeight();
 
-	if (ePrereqAlignment != NO_ALIGNMENT)
+	if (iValue > 0)
 	{
-		if (ePrereqAlignment == eAlignment)
+		if (ePrereqAlignment != NO_ALIGNMENT)
 		{
-			iValue *= 3;
-			iValue/= 2;
+			if (ePrereqAlignment == eAlignment)
+			{
+				iValue *= 4;
+				iValue/= 3;
+			}
 		}
-	}
 
-	if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
-	{
-		if (kCivic.getPrereqCivilization() == getCivilizationType())
+		if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
 		{
-			iValue *= 3;
-			iValue/= 2;
+			if (kCivic.getPrereqCivilization() == getCivilizationType())
+			{
+				iValue *= 4;
+				iValue/= 3;
+			}
 		}
-	}
 
-	if (kCivic.getPrereqReligion() != NO_RELIGION)
-	{
-		if (kCivic.getPrereqReligion() == getStateReligion())
+		if (kCivic.getPrereqReligion() != NO_RELIGION)
 		{
-			iValue *= 3;
-			iValue/= 2;
+			if (kCivic.getPrereqReligion() == getStateReligion())
+			{
+				iValue *= 5;
+				iValue/= 4;
+			}
 		}
-	}
-	// ToDo - something for Overcouncil and Undercouncil
-	// End Tholal AI
 
-	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() == eCivic)
-	{
-		iValue *= 4;
-		iValue /= 3;
-	}
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic() == eCivic)
+		{
+			iValue *= 4;
+			iValue /= 3;
+		}
 
-	if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) && (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread()))
-	{
-	    iValue /= 10;	    
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) && (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread()))
+		{
+			iValue /= 10;	    
+		}
 	}
 
 	return iValue;
