@@ -27204,7 +27204,7 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 											{
 												if (!pNearestCity->AI_isDefended())
 												{
-													iValue /= 4;
+													iValue = 0;
 												}
 											}
 											else
@@ -27231,10 +27231,10 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 	{
 		if (atPlot(pBestPlot))
 		{
-            int ispell = chooseSpell();
-            if (ispell != NO_SPELL)
-            {
-                cast(ispell);
+			int ispell = chooseSpell();
+			if (ispell != NO_SPELL)
+			{
+				cast(ispell);
 			}
 			getGroup()->pushMission(MISSION_SKIP);
 			return true;
