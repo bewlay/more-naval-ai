@@ -11473,15 +11473,27 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	if (isChanneler())
 	{
 		// traits - HARDCODE
+		/*
 		bool bSummoner = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
 		bool bSundered = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
 		bool bArcane = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
+		*/
+		int iNumMageTraits = 0;
+		for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+		{
+			if (GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getDefineINT("UNITCOMBAT_ADEPT")))
+			{
+				if (GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)iJ))
+				{
+					iNumMageTraits++;
+				}
+			}
+		}
 
 		if (GC.getPromotionInfo(ePromotion).getPromotionSummonPerk() != NO_PROMOTION)
 		{
 			if (isSummoner())
 			{
-				// Tholal TODO: have this check value of promotion for the summons? Might not be worth the effort
 				iValue += 35;
 			}
 		}
@@ -11511,15 +11523,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getTier();
 
 						// Tholal ToDo - add points for Bonus Affinities
-						int iModValue = 0;
-						if (bSummoner)
-						{
-							iModValue++;
-						}
-						if (bSundered)
-						{
-							iModValue++;
-						}
+						int iModValue = iNumMageTraits;
+
+						// heroes make powerful summoners
 						if (AI_getUnitAIType() == UNITAI_HERO)
 						{
 							iModValue += 2;
@@ -11538,8 +11544,19 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						{
 							iValue += 15;
 						}
+
+						// extra value for haste if we can use enemy roads
+						// ToDo - use this format to pull other tidbits about the promotion
+						if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getMovesChange() > 0)
+						{
+							if (isEnemyRoute())
+							{
+								iValue += 15;
+							}
+						}
 					}
 
+					/* - promotiontype2 is only used to add fatigued to centaurs; promotiontype3 isnt used at all
 					if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
 					{
 						if (AI_getGroupflag()==GROUPFLAG_CONQUEST && !isBuffer())
@@ -11563,6 +11580,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 							iValue += 15;
 						}
 					}
+					*/
 					if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1() != NO_PROMOTION)
 					{
 						if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
@@ -11572,9 +11590,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 								iValue += 35;
 							}
 						}
-						else
+						else // if its not resistable, that means its a spell you cast on your own troops
 						{
-							if (isBuffer())
+							if (isBuffer() || AI_getUnitAIType() == UNITAI_MAGE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
 							{
 								iValue += 35;
 							}
@@ -11588,7 +11606,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 					if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
 					{
-						if (AI_getUnitAIType() == UNITAI_MAGE || AI_getGroupflag()==GROUPFLAG_PERMDEFENSE)
+						if (AI_getUnitAIType() == UNITAI_MAGE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
 						{
 							iValue += 50;
 						}
