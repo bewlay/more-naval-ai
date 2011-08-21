@@ -6024,6 +6024,7 @@ int CvCityAI::AI_neededDefenders()
 	int iDefenders;
 	bool bOffenseWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
 	bool bDefenseWar = ((area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE));
+	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 	
 	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
 
@@ -6155,6 +6156,10 @@ int CvCityAI::AI_neededDefenders()
 		}
 	}
 */
+	if (bFinancialTrouble)
+	{
+		iDefenders /= 2;
+	}
 	
 	iDefenders = std::max(iDefenders, AI_minDefenders());
 
