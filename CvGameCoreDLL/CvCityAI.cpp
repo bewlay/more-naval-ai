@@ -4319,98 +4319,101 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 //>>>>Better AI: Added by Denev 2010/03/30 - heavily modified by Tholal
 //*** Training Yard, Mage Guild, Hunting Lodge, etc.
 				// ToDo - better weighting of this section for aggresive and peaceful civs; also check various victory and war statuses
-				int iTotalUnits = 0;
-				iTempValue = 0;
-				int iUnitTempValue = 0;
-
-				int iNumBuildings = GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass);
-
-				for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
+				if (!(GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_BUILDING_PREREQS)))
 				{
-					const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
-					if (eLoopUnit != NO_UNIT)
+					int iTotalUnits = 0;
+					iTempValue = 0;
+					int iUnitTempValue = 0;
+
+					int iNumBuildings = GET_PLAYER(getOwnerINLINE()).getBuildingClassCountPlusMaking(eBuildingClass);
+
+					for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
 					{
-						if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == eBuildingClass)
+						const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
+						if (eLoopUnit != NO_UNIT)
 						{
-							if (GET_PLAYER(getOwnerINLINE()).canTrain(eLoopUnit))
+							if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == eBuildingClass)
 							{
-								iTotalUnits++;
-								int iCombatValue = GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit);
-
-								iUnitTempValue = (iCombatValue * 2);
-
-								// Harcode - ToDo - fix this
-								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+								if (GET_PLAYER(getOwnerINLINE()).canTrain(eLoopUnit))
 								{
-									iUnitTempValue += (kOwner.AI_getMojoFactor() * 5);
-								}
+									iTotalUnits++;
+									int iCombatValue = GET_PLAYER(getOwnerINLINE()).AI_combatValue(eLoopUnit);
 
-								int iK;
-                                for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
-                                {
-                                    if (hasTrait((TraitTypes)iJ))
-                                    {
-                                        for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
-                                        {
-                                            if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
-                                            {
-                                                if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
-                                                {
-                                                    iUnitTempValue += 3;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+									iUnitTempValue = (iCombatValue * 2);
 
-								if (bCulturalVictory2 || bAltarVictory2 || bTowerVictory2)
-								{
-									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getCombatDefense() * 2;
-								}
+									// Harcode - ToDo - fix this
+									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+									{
+										iUnitTempValue += (kOwner.AI_getMojoFactor() * 5);
+									}
 
-								iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier();
-								iUnitTempValue += GC.getUnitInfo(eLoopUnit).getWeaponTier();
+									int iK;
+									for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+									{
+										if (hasTrait((TraitTypes)iJ))
+										{
+											for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
+											{
+												if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
+												{
+													if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+													{
+														iUnitTempValue += 3;
+													}
+												}
+											}
+										}
+									}
 
-								if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
-								{
-									if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+									if (bCulturalVictory2 || bAltarVictory2 || bTowerVictory2)
+									{
+										iUnitTempValue += GC.getUnitInfo(eLoopUnit).getCombatDefense() * 2;
+									}
+
+									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier();
+									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getWeaponTier();
+
+									if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
+									{
+										if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+										{
+											iUnitTempValue *= 2;
+										}
+									}
+
+									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
 									{
 										iUnitTempValue *= 2;
 									}
-								}
 
-								if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
-								{
-									iUnitTempValue *= 2;
-								}
+									if (iNumBuildings == 0) // should have at least one of each type training building
+									{
+										iUnitTempValue *= 10;
+									}
 
-								if (iNumBuildings == 0) // should have at least one of each type training building
-								{
-									iUnitTempValue *= 10;
-								}
+									if (bAtWar || bWarPlan)
+									{
+										iUnitTempValue *= 2;
+									}
 
-								if (bAtWar || bWarPlan)
-								{
-									iUnitTempValue *= 2;
+									iTempValue += iUnitTempValue;
 								}
-
-								iTempValue += iUnitTempValue;
 							}
 						}
 					}
+
+					iTempValue -= iNumBuildings * 2;
+
+					// Divide by total number of units from this building to average the score out
+					if (iTotalUnits > 1)
+					{
+						iTempValue /= iTotalUnits;
+					}
+
+					iValue += iTempValue;
 				}
-
-				iTempValue -= iNumBuildings * 2;
-
-				// Divide by total number of units from this building to average the score out
-				if (iTotalUnits > 1)
-				{
-					iTempValue /= iTotalUnits;
-				}
-
-				iValue += iTempValue;
+	//<<<<Better AI: End Add
 			}
-//<<<<Better AI: End Add
 
 			// since this duplicates BUILDINGFOCUS_EXPERIENCE checks, do not repeat on pass 1
 			if ((iFocusFlags & BUILDINGFOCUS_DOMAINSEA))
