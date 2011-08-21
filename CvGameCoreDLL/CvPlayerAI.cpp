@@ -543,7 +543,8 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 	int iPass;
 	int iLoop;
 
-	if (!isHuman() || isOption(PLAYEROPTION_AUTO_PROMOTION))
+	// auto promotes for player
+	if (isOption(PLAYEROPTION_AUTO_PROMOTION))
 	{
 		for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
@@ -745,6 +746,12 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 			}
 		}
     }
+
+	// do AI promotions after upgrade
+	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+	{
+		pLoopUnit->AI_promote();
+	}
 //FfH: End Modify
 
 
