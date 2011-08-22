@@ -13215,7 +13215,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iMaxGrowingSpace = 0;
 	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
-		// calculate how many Great Person points we're getting from Specialists
+		// calculate how many Great Person points we're generating
+		iGreatPeopleTotalDelta += pLoopCity->getBaseGreatPeopleRate();
+		/*
 		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
 		{
 			int iGreatPeopleRateChange = GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getGreatPeopleRateChange();
@@ -13226,6 +13228,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 			iGreatPeopleTotalDelta += iSpecialistCount * iGreatPeopleRateChange;
 		}
+		*/
 
 		// calculate food and growth potential for use later in the function
 		iTotalFoodDifference += pLoopCity->foodDifference();
@@ -13233,7 +13236,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iMaxGrowingSpace += iTotalGrowingSpace;
 	}
 
-	iValue += (kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta / ((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 30 : 50));
+	iValue += ((kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta) / ((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 10 : 25));
 //<<<<Better AI: End Modify
 	
 	if ( bWarPlan )
@@ -13291,12 +13294,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
 
 	// military production bonuses
-	int iMilitaryTemp = kCivic.getMilitaryProductionModifier() * getNumCities();
-	iMilitaryTemp /= (bAtWar ? 1 : 3);
+	int iMilitaryTemp = kCivic.getMilitaryProductionModifier();
+	iMilitaryTemp /= (bWarPlan ? 1 : 5);
 	iMilitaryTemp *= iWarmongerPercent;
-	iMilitaryTemp /= (bWarPlan ? 100 : 150);
+	iMilitaryTemp /= (bWarPlan ? 100 : 200);
 
-	iValue += iMilitaryTemp; //bAtWar
+	iValue += iMilitaryTemp * (bAtWar ? getNumCities() : 1);
 
 	//>>>>Better AI: Added by Denev 2010/07/08
 	int iFreeUnits;
@@ -13637,7 +13640,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTemp = kCivic.getCapitalYieldModifier(iI) * pCapital->getYieldRate((YieldTypes)iI);
 			iTemp /= 100;
 			iTemp *= 3;
-			iTemp /= (getNumCities() + 1);
+			iTemp /= std::max(1, getNumCities());
 
 			iTempValue += iTemp;
 		}
@@ -13687,7 +13690,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTemp /= 100;
 
 			iTemp *= 3;
-			iTemp /= (getNumCities() + 1);
+			iTemp /= std::max(1, getNumCities());
 			
 			iTempValue += iTemp;
 		}
