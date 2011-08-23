@@ -4813,6 +4813,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
+	CvCity* pCapital = getCapitalCity();
+
 	iBuildValue = 0;
 	for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
 	{
@@ -4932,7 +4934,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 							iBonusValue += iTempValue;
 						}
-						
+
 						// doesnt include bonuses we cant use due to blocking features
 						iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
 
@@ -4945,6 +4947,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue *= (iNumBonuses + 1);
 							//iBonusValue /= ((!isPirate() && kImprovement.isWater()) ? 4 : 3);	// water resources are worth less
 							iBonusValue /= 2;
+
+							// make sure AI develops its starting resources
+							iBonusValue *= 2;
+							iBonusValue /= std::min(2, iCityCount);
 						}
 						else
 						{
@@ -4955,8 +4961,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						{
 							if (gDLL->getChtLvl() > 0)
 							{
-								CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 								char szOut[1024];
 								sprintf(szOut, "     BONUS - %S: %d (%d - %d)\n", GC.getBonusInfo((BonusTypes)iK).getDescription(), iBonusValue, iNumBonuses, iTotalBonuses);
 								gDLL->messageControlLog(szOut);
@@ -5517,7 +5521,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					// every civ should want some sort of religion
 					if (!bHasReligion)
 					{
-						iReligionValue += 2000;
+						iReligionValue += 1700;
 					}
 					
 					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
@@ -5557,7 +5561,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (eReligion == eFavorite)
 						{
-							iReligionValue += (bHasReligion ? 1000 : 1500);
+							iReligionValue += (bHasReligion ? 1500 : 2000);
 							if (GC.getLogging() && bDebugLog)
 							{
 								if (gDLL->getChtLvl() > 0)
@@ -5702,8 +5706,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				gDLL->messageControlLog(szOut);
 			}
 		}
-		iValue *= 4;
-		iValue /= 3;
+		iValue *= 10;
+		iValue /= 9;
 	}
 //FfH: End Add
 
