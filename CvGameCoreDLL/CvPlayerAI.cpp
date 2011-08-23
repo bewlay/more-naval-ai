@@ -6377,11 +6377,12 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
 	bool bFinancialTrouble = AI_isFinancialTrouble();
+	bool bAggressiveAI = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
 
 	if( !bWarPlan )
 	{
-		// Aggressive players will stick with war civics
-		if( GET_TEAM(getTeam()).AI_getTotalWarOddsTimes100() > 400 )
+		// Aggressive players will prefer units to war with
+		if( GET_TEAM(getTeam()).AI_getTotalWarOddsTimes100() > 400  || bAggressiveAI)
 		{
 			bWarPlan = true;
 		}
@@ -6408,12 +6409,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 		{
 			if (isTechRequiredForUnit((eTech), eLoopUnit))
 			{
+				// set up unit info and variables
 				CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
+				int iTier = kLoopUnit.getTier();
 
-//>>>>Better AI: Added by Denev 2010/03/12
+				// skip valuing units that we won't be able to build
 				const UnitClassTypes eUnitClass = (UnitClassTypes)iJ;
+				const ReligionTypes eReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
 
-				// Do not value already created world unit
+				// do not value already created world unit
 				if (GC.getGameINLINE().isUnitClassMaxedOut(eUnitClass))
 				{
 					continue;
@@ -6423,6 +6427,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 				if (kLoopUnit.getPrereqCiv() != NO_CIVILIZATION)
 				{
 					if (kLoopUnit.getPrereqCiv() != getCivilizationType())
+					{
+						continue;
+					}
+				}
+
+				// do not value religious units when we dont have that religion in any cities
+				if (eReligion != NO_RELIGION)
+				{
+					if (GET_TEAM(getTeam()).getHasReligionCount(eReligion) == 0 || isAgnostic())
 					{
 						continue;
 					}
@@ -6482,7 +6495,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 500;
+							iUnitValue += 350;
 
 							if (GC.getLogging() && bDebugLog)
 							{
@@ -6724,14 +6737,14 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 //*** Values each new AIs.
 					case UNITAI_HERO:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
-						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 800 : 0);
-						iUnitValue += 500;
+						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 600 : 0);
+						iUnitValue += 350 * iTier;
 						break;
 
 					case UNITAI_MEDIC:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
 						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 600 : 0);
-						iUnitValue += 250;
+						iUnitValue += 250 * iTier;
 						break;
 
 					case UNITAI_MAGE:
@@ -6764,18 +6777,37 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
 						{
-							iCombatValue += (kLoopUnit.getDamageTypeCombat(iI) * 2);
+							iCombatValue += (kLoopUnit.getDamageTypeCombat(iI));
+						}
+
+						for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
+						{
+							if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
+							{
+								iMilitaryValue += 10;
+								if (GC.getPromotionInfo((PromotionTypes)GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ)).getSpellCasterXP() > 0)
+								{
+									iMilitaryValue += 15;
+								}
+
+								if ((PromotionTypes)GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE"))
+								{
+									iMilitaryValue += 25 * iTier;
+								}
+							}
 						}
 
 						iMilitaryValue += iCombatValue * 150;
 						iMilitaryValue += kLoopUnit.getWeaponTier() * 100;
-						iMilitaryValue += kLoopUnit.getTier() * 100;
+						iMilitaryValue += iTier * 100;
 
+						/*
 						if (kLoopUnit.isMechUnit())
 						{
 							iMilitaryValue *= 2;
 							iMilitaryValue /= 3;
 						}
+						*/
 
 						if (kLoopUnit.getMoves() > 2)
 						{
@@ -6794,9 +6826,10 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iMilitaryValue /= 2;
 						}
 
-						if (bAtWar)
+						if (!bAtWar)
 						{
-							iMilitaryValue += 250;
+							iMilitaryValue *= 2;
+							iMilitaryValue /= 3;
 						}
 					}
 
@@ -6906,11 +6939,13 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					if (AI_totalUnitAIs((UnitAITypes)(kLoopUnit.getDefaultUnitAIType())) == 0)
 					{
 						// do not give bonus to seagoing units if they are worthless
+						/*
 						if (iUnitValue > 0)
 						{
 							iUnitValue *= 3;
 							iUnitValue /= 2;
 						}
+						*/
 
 						if (kLoopUnit.getDefaultUnitAIType() == UNITAI_EXPLORE)
 						{
@@ -7030,11 +7065,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					const ReligionTypes eStateReligion = (ReligionTypes)kLoopUnit.getStateReligion();
 					if (eStateReligion != NO_RELIGION)
 					{
-						if (isAgnostic())
-						{
-							continue;
-						}
-						else
+						//const ReligionTypes ePrereqReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
+
 						if (eStateReligion != getStateReligion())
 						{
 							if (getStateReligion() == NO_RELIGION)
@@ -7047,23 +7079,18 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 								iUnitValue = 0;
 							}
 						}
+						else
+						{
+							iUnitValue *= 10;
+							iUnitValue /= 9;
+						}
 					}
 					else
 					{
-						const ReligionTypes eReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
-						if (eReligion != NO_RELIGION)
+						if ((eReligion != getStateReligion()) && (getStateReligion() != NO_RELIGION) && (eReligion != getFavoriteReligion()))
 						{
-							if (GET_TEAM(getTeam()).getHasReligionCount(eReligion) == 0)
-							{
-								iUnitValue = 0;
-								continue;
-							}
-
-							if ((eReligion != getStateReligion()) && (getStateReligion() != NO_RELIGION) && (eReligion != getFavoriteReligion()))
-							{
-								bHeathenUnit = true;
-								iUnitValue /= std::max(1, GC.getNumReligionInfos());
-							}
+							bHeathenUnit = true;
+							iUnitValue /= std::max(1, GC.getNumReligionInfos());
 						}
 					}
 
