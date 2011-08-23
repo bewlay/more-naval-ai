@@ -24194,16 +24194,21 @@ int CvPlayerAI::AI_getMojoFactor() const
 		}
 	}
 
-	// Count traits
-	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+	// HARDCODE
+	// ToDo - figure out how to value traits dynamically
+	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER")))
 	{
-		if (GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getDefineINT("UNITCOMBAT_ADEPT")))
-		{
-			if (hasTrait((TraitTypes)iJ))
-			{
-				iValue += 3;
-			}
-		}
+		iValue += 2;
+	}
+
+	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED")))
+	{
+		iValue += 2;
+	}
+
+	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE")))
+	{
+		iValue += 2;
 	}
 
 	return iValue;
