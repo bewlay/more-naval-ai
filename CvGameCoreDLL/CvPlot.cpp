@@ -467,12 +467,13 @@ void CvPlot::doTurn()
 		changeOwnershipDuration(1);
 	}
 
-	if (getImprovementType() != NO_IMPROVEMENT)
+	ImprovementTypes eImprovement = getImprovementType();
+	if (eImprovement != NO_IMPROVEMENT)
 	{
 		changeImprovementDuration(1);
 
 //FfH Improvements: Added by Kael 08/07/2007
-		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
+		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
 		if (eImprovementUpdrade != NO_IMPROVEMENT)
 		{
             if (!isBeingWorked())
@@ -483,7 +484,7 @@ void CvPlot::doTurn()
                 }
             }
 		}
-        int iUnit = GC.getImprovementInfo(getImprovementType()).getSpawnUnitType();
+        int iUnit = GC.getImprovementInfo(eImprovement).getSpawnUnitType();
         if (iUnit != NO_UNIT)
         {
             if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS))
@@ -499,14 +500,26 @@ void CvPlot::doTurn()
                     if (pArea->getUnitsPerPlayer((PlayerTypes)BARBARIAN_PLAYER) == 0 || (pArea->getNumUnownedTiles() / pArea->getUnitsPerPlayer((PlayerTypes)BARBARIAN_PLAYER)) > iTiles)
                     {
                         int iChance = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getLairSpawnRate();
+						
+						// ALN - increase spawn rate if not defended
+						// !!ToDo!! should eventually replace hardcoding here with an XML tag for min defenders
+						bool bGoblinFort = (eImprovement == (ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_GOBLIN_FORT"));
+						int iDefenders = plotCount(PUF_isUnitAIType, UNITAI_LAIRGUARDIAN, -1, (PlayerTypes)BARBARIAN_PLAYER);
+						bool bDefended = iDefenders > (bGoblinFort ? 1 : 0);
+						
                         iChance *= 10000;
+						if (iDefenders == 0)
+						{
+							iChance *= 2;
+						}
                         iChance /= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
-						// ALN - reduce 'bear den' overspawning?
-						// probably will have to count separately somehow, but this will help for now
+						
+						// ALN - reduce 'bear den' overspawning
 						if (GC.getUnitInfo((UnitTypes)iUnit).isAnimal())
 						{
-							iChance /= 4;
+							iChance /= 3;
 						}
+						
                         if (GC.getGameINLINE().getSorenRandNum(10000, "Spawn Unit") < iChance)
                         {
                             if (!isVisibleOtherUnit(BARBARIAN_PLAYER))
@@ -518,6 +531,10 @@ void CvPlot::doTurn()
                                     pUnit->setHasPromotion((PromotionTypes)GC.getDefineINT("HIDDEN_NATIONALITY_PROMOTION"), true);
 									pUnit->AI_setUnitAIType(UNITAI_ANIMAL);		
                                 }
+								if (!bDefended)
+								{
+									pUnit->AI_setUnitAIType(UNITAI_LAIRGUARDIAN);
+								}
                             }
                         }
                     }
@@ -11353,3 +11370,20 @@ bool CvPlot::isFeatureRemove(BuildTypes eBuild) const
 	return bFeatureRemove;
 }
 //<<<<Unofficial Bug Fix: End Add
+
+bool CvPlot::isLair(bool bIgnoreIsAnimal, bool bAnimal) const
+{
+	ImprovementTypes eImprovement = getImprovementType();
+	if (eImprovement != NO_IMPROVEMENT)
+	{
+		int iUnit = GC.getImprovementInfo(eImprovement).getSpawnUnitType();
+		if (iUnit != NO_UNIT)
+		{
+			if (bIgnoreIsAnimal || (GC.getUnitInfo((UnitTypes)iUnit).isAnimal() == bAnimal))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}

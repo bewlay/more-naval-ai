@@ -1057,6 +1057,9 @@ void CyEnumsPythonInterface()
 /**	END	                                        												**/
 /*************************************************************************************************/
 		.value("UNITAI_INQUISITOR", UNITAI_INQUISITOR)
+		// ALN LairGuards Start
+		.value("UNITAI_LAIRGUARDIAN", UNITAI_LAIRGUARDIAN)
+		// ALN End
 		.value("NUM_UNITAI_TYPES", NUM_UNITAI_TYPES)
 		;
 

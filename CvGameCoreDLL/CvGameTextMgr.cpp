@@ -10514,6 +10514,13 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 				szTempBuffer.Format(L" - %d%c", pCity->getProductionNeeded(eUnit), GC.getYieldInfo(YIELD_PRODUCTION).getChar());
 				szBuffer.append(szTempBuffer);
 			}
+			// ALN - debug info (production unit UnitAI)
+			if (GC.getGameINLINE().isDebugMode() && pCity->getProductionUnitAI() != NO_UNITAI)
+			{
+				szTempBuffer.Format(L"\n%s", GC.getUnitAIInfo(pCity->getProductionUnitAI()).getDescription());
+				szBuffer.append(szTempBuffer);
+			}
+			// ALN End
 		}
 	}
 

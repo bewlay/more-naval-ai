@@ -785,6 +785,11 @@ bool CvUnitAI::AI_update()
 			AI_attackCityLemmingMove();
 			break;
 
+		case UNITAI_LAIRGUARDIAN:
+			AI_lairGuardianMove();
+			break;
+
+			
 		default:
 			FAssert(false);
 			break;
@@ -1149,6 +1154,9 @@ int CvUnitAI::AI_groupFirstVal()
 		return 1;
 		break;
 
+	case UNITAI_LAIRGUARDIAN:
+		break;
+
 	default:
 		FAssert(false);
 		break;
@@ -1488,10 +1496,15 @@ int CvUnitAI::AI_getBarbLeadership(int& iFollowers) const
 	{
 		iFollowers = 2;
 	}
-	else if (iLeadership >= 2)
+	else if (iLeadership >= 3)
 	{
 		iFollowers = 1;
 	}
+	
+	// limit group sizes in the begining of the game
+	int iCivCities = GC.getGameINLINE().getNumCivCities();
+	int iCivs = GC.getGameINLINE().countCivPlayersAlive();
+	iFollowers = std::min((iCivCities / (iCivs + (iCivs / 2))) + 1, iFollowers);
 	
 	return iLeadership;
 }
@@ -2208,6 +2221,7 @@ void CvUnitAI::AI_workerMove()
 	bCanRoute = canBuildRoute();
 	bNextCity = false;
 
+	// ALN !!ToDo!! - why always reserve, what units does this apply to?
 	// Tholal AI - Catch for upgraded worker units
 	if (m_pUnitInfo->getWorkRate() == 0)
 	{
@@ -2947,7 +2961,7 @@ void CvUnitAI::AI_barbAttackMove()
 	int iHeroAttMod = (bHero ? 10 + (AI_getBirthmark() % 15) : 0);
 	
 	// This is a measure of how likely a given barb is likely to stay away from civs or else seek one out to attack or plunder
-	int iCaution = 1;
+	int iCaution = 2;
 	iCaution += AI_getBirthmark() % 7;
 	if (bHero)
 
@@ -2975,6 +2989,27 @@ void CvUnitAI::AI_barbAttackMove()
 	bool bAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 2));
 	bool bSemiAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 3));
 	bool bPassiveAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 4) || bEnemyTerritory);
+	
+	// heros and aggressive units will wait till someone else starts defending the plot then move on
+	// otherwise switch UnitAIs
+	if (!bHero && plot()->isLair(false, isAnimal()))
+	{
+		if (plot()->plotCount(PUF_isUnitAIType, UNITAI_LAIRGUARDIAN, -1, (PlayerTypes)BARBARIAN_PLAYER) == 0)
+		{
+			// ToDo, split off a unit to guard it if we are in a group
+			if ((!bHero || iCaution >= 4) && getGroup()->getNumUnits() == 1)
+			{
+				AI_setUnitAIType(UNITAI_LAIRGUARDIAN);
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+			else // wait till we have a guard unit
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+	}
 	
 	// Heros shouldn't be guarding cities or goodies
 	if (!bHero && ((!bAttackCity || !bAttack) && iCaution > 4))
@@ -3010,7 +3045,7 @@ void CvUnitAI::AI_barbAttackMove()
 		}
 	}
 	// look for higher leadership barbs to join with
-	if (iLeadership <= 8)
+	if (iLeadership <= 8 && (bSemiAggressive || bAggressive))
 	{
 		if (bEnemyTerritory)
 		{
@@ -3158,10 +3193,10 @@ void CvUnitAI::AI_barbAttackMove()
         }
     }
 
-	if (AI_groupBarbLeader(3))
+	/* if (AI_groupBarbLeader(3))
 	{
 		return;
-	}
+	} */
 	
 	if (AI_patrol())
 	{
@@ -27391,6 +27426,7 @@ void CvUnitAI::ConquestMove()
 	bool bHero = false;
 	bool bWizard = false;
 
+	// ALN !!ToDo!! - why are we reseting UnitAI here?  These kinds of blind UnitAI changes are bad as a general rule
     if (isHiddenNationality() || isInvisibleFromPromotion())
     {
 		if (!bHero && !bWizard)
@@ -27403,7 +27439,8 @@ void CvUnitAI::ConquestMove()
 		}
     }
 
-
+	// ALN !!ToDo!! - again, why are we switching UnitAI's around?  Makes no sense
+	// UnitAI is used for more than just unit movements
     switch (AI_getUnitAIType())
     {
         case UNITAI_HERO:
@@ -27456,6 +27493,8 @@ void CvUnitAI::ConquestMove()
 		    }
 		}
 
+		// ALN !!ToDo!! we should split off part of the force to defend newly captured cities
+		// I'd really like to sometimes bring some City_Defense units along to garrison immediately like a human sometimes does
 		if (plot()->getNumDefenders(getOwnerINLINE()) == getGroupSize())
 		{
 			if (GC.getLogging())
@@ -27552,20 +27591,20 @@ void CvUnitAI::ConquestMove()
 	}
 
 	//ToDo - better incorporation of this section into rest of code
-	if (plot()->getOwnerINLINE()==getOwnerINLINE())
+	if (plot()->getOwnerINLINE() == getOwnerINLINE())
     {
-        iBestValue=getGroup()->getNumUnits();
+        iBestValue = getGroup()->getNumUnits();
         pBestUnit = NULL;
 
-        if (getGroup()->getNumUnits()==1)
+        if (getGroup()->getNumUnits() == 1)
         {
             for(pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).nextSelectionGroup(&iLoop))
             {
                 if (pLoopSelectionGroup->getHeadUnit() != NULL)
                 {
-                    if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag()==GROUPFLAG_CONQUEST && (!pLoopSelectionGroup->getHeadUnit()->isHiddenNationality())) //TEMPFIX FOR HIDDEN NATIONALITY
+                    if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST && !(pLoopSelectionGroup->getHeadUnit()->isHiddenNationality())) //TEMPFIX FOR HIDDEN NATIONALITY
                     {
-                        if (pLoopSelectionGroup!=getGroup())
+                        if (pLoopSelectionGroup != getGroup())
                         {
                             pLoopPlot = pLoopSelectionGroup->getHeadUnit()->plot();
                             if (AI_plotValid(pLoopPlot))
@@ -27707,7 +27746,7 @@ void CvUnitAI::ConquestMove()
                 {
                     if ((AI_plotValid(pLoopPlot)))
 					{
-						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
+						if (pLoopPlot->getOwnerINLINE()==getOwnerINLINE() || pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false))
 						{
 							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity())
 							{
@@ -29922,3 +29961,113 @@ int CvUnitAI::getChannelingLevel()
 }
 
 // End Tholal AI
+
+// ALN lairguards Start
+void CvUnitAI::AI_lairGuardianMove()
+{
+	CvPlot* pPlot = plot();
+	
+	if (pPlot->isLair(false, isAnimal()))
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+	
+	// go to any adjacent lairs
+	if (AI_seekLair(1))
+	{
+		return;
+	}
+	
+	// opportunistic attacks if not on a lair
+	if (AI_anyAttack(1, 55))
+	{
+		return;
+	}
+	
+	// if not on a lair, look for one in the area
+	if (AI_seekLair(6))
+	{
+		return;
+	}
+	
+	if (AI_heal())
+	{
+		return;
+	}
+    
+	if (AI_patrol())
+	{
+		return;
+	}
+
+	if (AI_safety())
+	{
+		return;
+	}
+
+	getGroup()->pushMission(MISSION_SKIP);
+	return;
+}
+
+// ALN End
+bool CvUnitAI::AI_seekLair(int iRange)
+{
+	int iDX;
+	int iDY;
+	int iPathTurns;
+	int iValue = 0;
+	int iBestValue = 0;
+	int iSearchRange = baseMoves() * iRange;
+	CvPlot* pLoopPlot;
+	CvPlot* pPlot = plot();
+	CvPlot* pBestPlot = NULL;
+
+	// only returns animal dens for animals, non-animal dens for all other barbarians
+	for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
+	{
+		for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
+		{
+			pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+			if (pLoopPlot != NULL)
+			{
+				if (pLoopPlot->isLair(false, isAnimal()) && AI_plotValid(pLoopPlot))
+				{
+					if (pLoopPlot->getArea() == getArea())
+					{
+						if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+						{
+							if (iPathTurns > iRange)
+							{
+								continue;
+							}
+							int iDefenders = pLoopPlot->plotCount(PUF_isUnitAIType, UNITAI_LAIRGUARDIAN, -1, (PlayerTypes)BARBARIAN_PLAYER);
+							iValue = 10000;
+							iValue /= (5 + iDefenders);
+							iValue /= (1 + iPathTurns);
+							if (iValue > iBestValue)
+							{
+								iBestValue = iValue;
+								pBestPlot = pLoopPlot;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if (pBestPlot != NULL)
+	{
+		if (atPlot(pBestPlot))
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+		}
+		else
+		{
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_GUARD_CITY, NULL);
+		}
+		return true;
+	}
+
+	return false;
+}

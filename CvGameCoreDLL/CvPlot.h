@@ -594,6 +594,7 @@ public:
 //*** Elvish civilization can see the amount of production from forest chopping.
 	bool isFeatureRemove(BuildTypes eBuild) const;
 //<<<<Unofficial Bug Fix: End Add
+	bool isLair(bool bIgnoreIsAnimal = true, bool bAnimal = false) const;
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);

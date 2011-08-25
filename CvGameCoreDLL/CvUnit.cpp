@@ -6449,7 +6449,9 @@ bool CvUnit::found()
     {
         CLLNode<IDInfo>* pUnitNode;
         CvUnit* pLoopUnit;
-        pUnitNode = getGroup()->headUnitNode();
+		// ALN - bug fix?
+        // pUnitNode = getGroup()->headUnitNode();
+        pUnitNode = plot()->headUnitNode();
         while (pUnitNode != NULL)
         {
             pLoopUnit = ::getUnit(pUnitNode->m_data);
@@ -16612,6 +16614,7 @@ void CvUnit::castConvertUnit(int spell)
 /*************************************************************************************************/
 /**	BETTER AI (Doviello Worker needs decent UNITAI after upgrade) Sephi            	            **/
 /*************************************************************************************************/
+	// ALN !!ToDo!! - this is just pretty sloppy, look for best unit AI?
     if(pUnit->AI_getUnitAIType()==UNITAI_WORKER)
     {
         int iWorkerClass = GC.getInfoTypeForString("UNITCLASS_WORKER");

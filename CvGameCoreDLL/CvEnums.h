@@ -1437,6 +1437,9 @@ enum UnitAITypes			// Exposed to Python
 /**	END	                                        												**/
 /*************************************************************************************************/
 	UNITAI_INQUISITOR,
+	// ALN LairGuards Start
+	UNITAI_LAIRGUARDIAN,
+	// ALN End
 
 	NUM_UNITAI_TYPES
 };

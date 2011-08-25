@@ -2000,6 +2000,9 @@ DomainTypes CvPlayerAI::AI_unitAIDomainType(UnitAITypes eUnitAI) const
 /**	END	                                        												**/
 /*************************************************************************************************/
 	case UNITAI_INQUISITOR:
+	// ALN LairGuards Start
+	case UNITAI_LAIRGUARDIAN:
+	// ALN End
 		return DOMAIN_LAND;
 		break;
 

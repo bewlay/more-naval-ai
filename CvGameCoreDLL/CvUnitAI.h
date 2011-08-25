@@ -116,6 +116,8 @@ public:
 	bool isVampire();
 	int getChannelingLevel();
 	// End Tholal AI
+	void AI_lairGuardianMove();
+	bool AI_seekLair(int iRange);
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
