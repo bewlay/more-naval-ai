@@ -491,26 +491,26 @@ class CvGameUtils:
 			if pPlot.isVisibleEnemyUnit(pUnit.getOwner()):
 				pUnit.cast(gc.getInfoTypeForString('SPELL_BREATH_FIRE'))
 
-		iImprovement = pPlot.getImprovementType()
-		if iImprovement != -1:
-			if (iImprovement == gc.getInfoTypeForString('IMPROVEMENT_BARROW') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_RUINS') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_HELLFIRE')):
-				if not pUnit.isAnimal():
-					if pPlot.getNumUnits() - pPlot.getNumAnimalUnits() == 1:
-						pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
-						return 1
-			if (iImprovement == gc.getInfoTypeForString('IMPROVEMENT_BEAR_DEN') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_LION_DEN')):
-				if pUnit.isAnimal():
-					if pPlot.getNumAnimalUnits() == 1:
-						pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
-						return 1
-			if iImprovement == gc.getInfoTypeForString('IMPROVEMENT_GOBLIN_FORT'):
-				if pUnit.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ARCHER'):
-					pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
-					return 1
-				if not pUnit.isAnimal():
-					if pPlot.getNumUnits() - pPlot.getNumAnimalUnits() <= 2:
-						pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
-						return 1
+		# iImprovement = pPlot.getImprovementType()
+		# if iImprovement != -1:
+			# if (iImprovement == gc.getInfoTypeForString('IMPROVEMENT_BARROW') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_RUINS') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_HELLFIRE')):
+				# if not pUnit.isAnimal():
+					# if pPlot.getNumUnits() - pPlot.getNumAnimalUnits() == 1:
+						# pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+						# return 1
+			# if (iImprovement == gc.getInfoTypeForString('IMPROVEMENT_BEAR_DEN') or iImprovement == gc.getInfoTypeForString('IMPROVEMENT_LION_DEN')):
+				# if pUnit.isAnimal():
+					# if pPlot.getNumAnimalUnits() == 1:
+						# pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+						# return 1
+			# if iImprovement == gc.getInfoTypeForString('IMPROVEMENT_GOBLIN_FORT'):
+				# if pUnit.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ARCHER'):
+					# pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+					# return 1
+				# if not pUnit.isAnimal():
+					# if pPlot.getNumUnits() - pPlot.getNumAnimalUnits() <= 2:
+						# pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+						# return 1
 		
 		return False
 
