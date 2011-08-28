@@ -27491,7 +27491,7 @@ void CvUnitAI::ConquestMove()
 			}
             break;
 		case UNITAI_RESERVE:
-		case UNITAI_ATTACK:
+		//case UNITAI_ATTACK:
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			break;
         default:
@@ -27771,7 +27771,7 @@ void CvUnitAI::ConquestMove()
         int iMinStack=1+(getGroup()->getNumUnits()/5);
         int iRange=20;
         pBestPlot=NULL;
-        iSearchRange=10;
+		iSearchRange= (bAtWar ? 3 : 10);
         iBestValue=0;
         for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
         {
@@ -27783,7 +27783,7 @@ void CvUnitAI::ConquestMove()
                 {
                     if ((AI_plotValid(pLoopPlot)))
 					{
-						if (pLoopPlot->getOwnerINLINE()==getOwnerINLINE() || pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false))
+						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
 						{
 							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity())
 							{
@@ -27800,7 +27800,7 @@ void CvUnitAI::ConquestMove()
 											
 											if (getGroup()->getNumUnits() >= (pLoopPlot->getNumVisibleEnemyDefenders(this) * 5))
 											{
-												iValue = 50;
+												iValue = (bAtWar ? 0 : 50);
 											}
 											
 
