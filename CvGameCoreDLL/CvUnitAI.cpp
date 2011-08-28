@@ -29970,6 +29970,14 @@ int CvUnitAI::getChannelingLevel()
 // ALN lairguards Start
 void CvUnitAI::AI_lairGuardianMove()
 {
+	// only barbarians should use this AI
+	if (!isBarbarian())
+	{
+		joinGroup(NULL);
+		AI_setUnitAIType(UNITAI_ATTACK);
+		return;
+	}
+
 	CvPlot* pPlot = plot();
 	
 	if (pPlot->isLair(false, isAnimal()))
