@@ -4427,12 +4427,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					if (NO_UNIT != eUnit)
 					{
 						CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
-					int iCombatType = kUnitInfo.getUnitCombatType();
+						int iCombatType = kUnitInfo.getUnitCombatType();
 						if (kUnitInfo.getDomainType() == DOMAIN_SEA && canTrain(eUnit) && iCombatType != NO_UNITCOMBAT)
-					{
-						iValue += (kBuilding.getUnitCombatFreeExperience(iCombatType) * ((iHasMetCount > 0) ? 6 : 3));
+						{
+							iValue += (kBuilding.getUnitCombatFreeExperience(iCombatType) * ((iHasMetCount > 0) ? 6 : 3));
+						}
 					}
-				}
 				}
 
 				iValue += (kBuilding.getDomainFreeExperience(DOMAIN_SEA) * ((iHasMetCount > 0) ? 16 : 8));
