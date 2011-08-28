@@ -1144,7 +1144,7 @@ void CvCityAI::AI_chooseProduction()
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + iNumCities);
+	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + (iNumCities / 2));
 // End Tholal AI
 
     int iMaxSettlers = 0;
@@ -1853,7 +1853,7 @@ void CvCityAI::AI_chooseProduction()
 
 			if (iNeededSeaWorkers > iExistingSeaWorkers)
 			{
-				if (AI_chooseUnit(UNITAI_WORKER_SEA))
+				if (AI_chooseUnit(UNITAI_WORKER_SEA), 60)
 				{
 					return;
 				}
