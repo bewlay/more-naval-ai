@@ -13869,7 +13869,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	if (kCivic.isPrereqWar())
 	{
-		iValue += 100 * GET_TEAM(getTeam()).getAtWarCount(true);
+		iValue += 15 * GET_TEAM(getTeam()).getAtWarCount(true);
 	}
 
 	iValue += GC.getCivicInfo(eCivic).getAIWeight();
