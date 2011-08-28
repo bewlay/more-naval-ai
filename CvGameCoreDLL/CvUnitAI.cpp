@@ -27199,6 +27199,11 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 		return false;
 	}
 
+	if (GC.getGameINLINE().getElapsedGameTurns() < 10)
+	{
+		return false;
+	}
+
 	int iValue = 0;
 	int iBestValue = 0;
 	int iPathTurns;
