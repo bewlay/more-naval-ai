@@ -5683,6 +5683,39 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
+	// world spells
+	int iSpellValue = 0;
+	for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+	{
+		if (GC.getSpellInfo((SpellTypes)iSpell).getTechPrereq() == eTech)
+		{
+			if (GC.getSpellInfo((SpellTypes)iSpell).getCivilizationPrereq() != NO_CIVILIZATION)
+			{
+				if (GC.getSpellInfo((SpellTypes)iSpell).getCivilizationPrereq() == getCivilizationType())
+				{
+					iSpellValue += 500;
+				}
+			}
+		}
+	}
+
+	if (iSpellValue > 0)
+	{
+		if (GC.getLogging() && bDebugLog)
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
+
+				char szOut[1024];
+				sprintf(szOut, "   Spell value: %d\n", iSpellValue);
+				gDLL->messageControlLog(szOut);
+			}
+		}
+	}
+
+	iValue += iSpellValue;
+
 	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
