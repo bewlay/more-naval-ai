@@ -610,7 +610,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	if (iGreatPeopleRate != 0)
 	{
 		int iGPPValue = 4;
-		if (AI_isEmphasizeGreatPeople())
+		if (AI_isEmphasizeGreatPeople() || GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1) || GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 		{
 			iGPPValue = isHuman() ? 30 : 20;
 		}
