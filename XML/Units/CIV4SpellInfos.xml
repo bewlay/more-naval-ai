@@ -1376,6 +1376,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_KILMORPH</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_KILMORPH</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -1393,6 +1394,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_LEAVES</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_LEAVES</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -1410,6 +1412,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_THE_EMPYREAN</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_THE_EMPYREAN</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -1427,6 +1430,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_THE_ORDER</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_THE_ORDER</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
@@ -1444,6 +1448,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_THE_OVERLORDS</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_THE_OVERLORDS</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
