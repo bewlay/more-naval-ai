@@ -1466,6 +1466,7 @@
             <Description>TXT_KEY_SPELL_FOUND_TEMPLE_OF_THE_VEIL</Description>
             <Civilopedia>TXT_KEY_SPELL_FOUND_TEMPLE_PEDIA</Civilopedia>
             <UnitClassPrereq>UNITCLASS_PRIEST_OF_THE_VEIL</UnitClassPrereq>
+            <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
