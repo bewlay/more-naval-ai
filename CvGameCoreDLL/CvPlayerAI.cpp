@@ -11569,6 +11569,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			iValue -= (iCombatValue * (125 - GC.getUnitInfo(eUnit).getCombatLimit())) / 100;
 		}
+		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWeaponTier()) / 2);
 		
 		break;
 
@@ -11599,6 +11600,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getCollateralDamage()) / 200);
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getMoves() * iFastMoverMultiplier) / 4);
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 100);
+		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWeaponTier()) / 2);
 
 		if (!AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ))
 		{
