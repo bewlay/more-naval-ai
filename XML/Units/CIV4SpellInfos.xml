@@ -15,7 +15,7 @@
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
             <bInCityOnly>1</bInCityOnly>
-            <iAIWeightCity>10</iAIWeightCity>
+            <iAIWeight>10</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <bAbility>1</bAbility>
@@ -303,7 +303,6 @@
             <PromotionPrereq1>PROMOTION_SHADOW1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>50</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_BLUR</AddPromotionType1>
@@ -522,7 +521,6 @@
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <iAIWeight>1000</iAIWeight>
-            <iAIWeightCity>1000</iAIWeightCity>
             <bHasCasted>1</bHasCasted>
             <bAbility>1</bAbility>
             <PyResult>spellConvertCityBasium(pCaster)</PyResult>
@@ -540,7 +538,6 @@
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
             <iAIWeight>1000</iAIWeight>
-            <iAIWeightCity>1000</iAIWeightCity>
             <bHasCasted>1</bHasCasted>
             <bAbility>1</bAbility>
             <PyResult>spellConvertCityRantine(pCaster)</PyResult>
@@ -794,7 +791,6 @@
             <PromotionPrereq1>PROMOTION_CHAOS1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>50</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_DANCE_OF_BLADES</AddPromotionType1>
@@ -1023,7 +1019,6 @@
             <PromotionPrereq1>PROMOTION_ENCHANTMENT1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>100</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_ENCHANTED_BLADE</AddPromotionType1>
@@ -1320,7 +1315,6 @@
             <Civilopedia>TXT_KEY_SPELL_FLAMING_ARROWS_PEDIA</Civilopedia>
             <PromotionPrereq1>PROMOTION_ENCHANTMENT2</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>100</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_FLAMING_ARROWS</AddPromotionType1>
@@ -1749,7 +1743,6 @@
             <PromotionPrereq1>PROMOTION_SPIRIT2</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
-            <iAIWeightCity>50</iAIWeightCity>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <CreateBuildingType>BUILDING_HOPE</CreateBuildingType>
@@ -1818,7 +1811,6 @@
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
-            <iAIWeightCity>50</iAIWeightCity>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <CreateBuildingType>BUILDING_INSPIRATION</CreateBuildingType>
@@ -2053,7 +2045,6 @@
             <Help>TXT_KEY_SPELL_MUTATION_HELP</Help>
             <PromotionPrereq1>PROMOTION_CHAOS2</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>10</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_MUTATED</AddPromotionType1>
@@ -2575,7 +2566,6 @@
             <PromotionPrereq1>PROMOTION_ENTROPY1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>100</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <bResistable>1</bResistable>
@@ -2785,7 +2775,6 @@
             <PromotionPrereq1>PROMOTION_ICE1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightWar>50</iAIWeightWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <bResistable>1</bResistable>
@@ -4446,7 +4435,6 @@
             <PromotionPrereq1>PROMOTION_EARTH1</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_CHANNELING1</PromotionPrereq2>
             <bAllowAI>1</bAllowAI>
-            <iAIWeightCity>50</iAIWeightCity>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <CreateBuildingType>BUILDING_WALL_OF_STONE</CreateBuildingType>

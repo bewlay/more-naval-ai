@@ -785,8 +785,6 @@ public:
 	int getRange() const;
     int getEffect() const;
 	int getAIWeight() const;
-	int getAIWeightCity() const;
-	int getAIWeightWar() const;
 	int getCasterMinLevel() const;
 	int getChangePopulation() const;
 	int getCost() const;
@@ -864,8 +862,6 @@ public:
 protected:
 
     int m_iAIWeight;
-    int m_iAIWeightCity;
-    int m_iAIWeightWar;
     int m_iCasterMinLevel;
 	int m_iPromotionPrereq1;
 	int m_iPromotionPrereq2;

@@ -3075,8 +3075,6 @@ m_bInCityOnly(false),
 m_bPrereqSlaveTrade(false),
 m_bResistable(false),
 m_iAIWeight(0),
-m_iAIWeightCity(0),
-m_iAIWeightWar(0),
 m_iCasterMinLevel(0),
 m_bDisplayWhenDisabled(false),
 m_bHasCasted(false),
@@ -3388,16 +3386,6 @@ int CvSpellInfo::getAIWeight() const
 	return m_iAIWeight;
 }
 
-int CvSpellInfo::getAIWeightCity() const
-{
-	return m_iAIWeightCity;
-}
-
-int CvSpellInfo::getAIWeightWar() const
-{
-	return m_iAIWeightWar;
-}
-
 int CvSpellInfo::getCasterMinLevel() const
 {
 	return m_iCasterMinLevel;
@@ -3589,8 +3577,6 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bPrereqSlaveTrade);
 	stream->Read(&m_bResistable);
 	stream->Read(&m_iAIWeight);
-	stream->Read(&m_iAIWeightCity);
-	stream->Read(&m_iAIWeightWar);
 	stream->Read(&m_iCasterMinLevel);
 	stream->Read(&m_bDisplayWhenDisabled);
 	stream->Read(&m_bHasCasted);
@@ -3687,8 +3673,6 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bPrereqSlaveTrade);
 	stream->Write(m_bResistable);
 	stream->Write(m_iAIWeight);
-	stream->Write(m_iAIWeightCity);
-	stream->Write(m_iAIWeightWar);
 	stream->Write(m_iCasterMinLevel);
 	stream->Write(m_bDisplayWhenDisabled);
 	stream->Write(m_bHasCasted);
@@ -3803,8 +3787,6 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bPrereqSlaveTrade, "bPrereqSlaveTrade");
 	pXML->GetChildXmlValByName(&m_bResistable, "bResistable");
 	pXML->GetChildXmlValByName(&m_iAIWeight, "iAIWeight");
-	pXML->GetChildXmlValByName(&m_iAIWeightCity, "iAIWeightCity");
-	pXML->GetChildXmlValByName(&m_iAIWeightWar, "iAIWeightWar");
 	pXML->GetChildXmlValByName(&m_iCasterMinLevel, "iCasterMinLevel");
 	pXML->GetChildXmlValByName(&m_bDisplayWhenDisabled, "bDisplayWhenDisabled");
 	pXML->GetChildXmlValByName(&m_bHasCasted, "bHasCasted");
