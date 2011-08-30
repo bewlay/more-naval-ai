@@ -2336,7 +2336,15 @@ void CvPlayer::killUnits()
         }
         else
         {
-            pLoopUnit->betray(BARBARIAN_PLAYER);
+			// HARDCODE - kill treasure chests on civ elimination
+			if (pLoopUnit->getUnitClassType() == GC.getInfoTypeForString("EQUIPMENTCLASS_TREASURE"))
+			{
+				pLoopUnit->kill(false);
+			}
+			else
+			{
+	            pLoopUnit->betray(BARBARIAN_PLAYER);
+			}
         }
 	}
 //FfH: End Modify
