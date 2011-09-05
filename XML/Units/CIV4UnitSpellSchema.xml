@@ -37,8 +37,6 @@
 	<ElementType name="bInCityOnly" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPrereqSlaveTrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iAIWeight" content="textOnly" dt:type="int"/>
-	<ElementType name="iAIWeightCity" content="textOnly" dt:type="int"/>
-	<ElementType name="iAIWeightWar" content="textOnly" dt:type="int"/>
 	<ElementType name="iCasterMinLevel" content="textOnly" dt:type="int"/>
 	<ElementType name="bDisplayWhenDisabled" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bHasCasted" content="textOnly" dt:type="boolean"/>
@@ -133,8 +131,6 @@
 		<element type="bInCityOnly" minOccurs="0"/>
 		<element type="bPrereqSlaveTrade" minOccurs="0"/>
 		<element type="iAIWeight" minOccurs="0"/>
-		<element type="iAIWeightCity" minOccurs="0"/>
-		<element type="iAIWeightWar" minOccurs="0"/>
 		<element type="iCasterMinLevel" minOccurs="0"/>
 		<element type="bDisplayWhenDisabled" minOccurs="0"/>
 		<element type="bHasCasted" minOccurs="0"/>
