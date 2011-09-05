@@ -202,5 +202,9 @@
 			<Type>UNITAI_INQUISITOR</Type>
 			<Description>UNITAI_INQUISITOR</Description>
 		</UnitAIInfo>
+		<UnitAIInfo>
+			<Type>UNITAI_LAIRGUARDIAN</Type>
+			<Description>UNITAI_LAIRGUARDIAN</Description>
+		</UnitAIInfo>
 	</UnitAIInfos>
 </Civ4UnitAIInfos>
