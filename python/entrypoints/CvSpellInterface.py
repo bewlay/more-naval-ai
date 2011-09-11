@@ -557,8 +557,8 @@ def reqBlaze(caster):
 		return False
 		
 	if pPlayer.isHuman() == False:
-		p2Player = gc.getPlayer(pPlot.getOwner())
 		if pPlot.isOwned():
+			p2Player = gc.getPlayer(pPlot.getOwner())
 			e2Team = gc.getTeam(p2Player.getTeam())
 			if e2Team.isAtWar(eTeam) == True:
 				return True
