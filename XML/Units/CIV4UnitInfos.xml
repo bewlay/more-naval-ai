@@ -62950,6 +62950,7 @@
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
             <bAbandon>1</bAbandon>
+            <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>8</iCombatDefense>
             <iTier>3</iTier>
             <iWeaponTier>3</iWeaponTier>
