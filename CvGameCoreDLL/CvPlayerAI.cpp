@@ -4590,20 +4590,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue = 1;
 
-	// ALN AITechValues Start
-	// int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
-	// int iRandomMax = 2000;
-	int iRandomFactor = 300;
-	if (bDebugLog)
-	{
-		iRandomFactor = ((bAsync) ? GC.getASyncRand().get(iRandomFactor, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(iRandomFactor, "AI Research"));
-	}
-	else
-	{
-		iRandomFactor = iRandomFactor / 2;
-	}
-	// ALN AITechValues End
+	/*
+	int iRandomFactor = ((bAsync) ? GC.getASyncRand().get(500, "AI Research ASYNC") : GC.getGameINLINE().getSorenRandNum(500, "AI Research"));
+	int iRandomMax = 2000;
 	iValue += iRandomFactor;
+	*/
 
 	iValue += kTeam.getResearchProgress(eTech);
 
@@ -5157,25 +5148,16 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	bool bEnablesUnitWonder;
 	iValue += AI_techUnitValue( eTech, iPathLength, bEnablesUnitWonder, bDebugLog );
 	
+	/*
 	if (bEnablesUnitWonder)
 	{
-		// ALN AITechValues Start
-		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
-		// iRandomMax += 2000;
-		// iRandomFactor += iWonderRandom;
-		/*int iWonderRandom;
-		if (bAddRandom)
-		{
-			int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
-		}
-		else
-		{
-			int iWonderRandom = 1000;
-		}
-		// ALN AITechValues End
-		iValue += iWonderRandom + (bCapitalAlone ? 200 : 0);*/
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(2000, "AI Research Wonder Unit ASYNC") : GC.getGameINLINE().getSorenRandNum(2000, "AI Research Wonder Unit"));
+		iValue += iWonderRandom + (bCapitalAlone ? 200 : 0);
 
+		iRandomMax += 2000;
+		iRandomFactor += iWonderRandom;
 	}
+	*/
 
 	// add a small bonus for promotions that require this tech
 	int iPromotionValue = 0;
@@ -5214,20 +5196,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/*
 	if (bEnablesWonder)
 	{
-		// ALN AITechValues Start
-		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
-		// iRandomMax += 400;
-		// iRandomFactor += iWonderRandom;
-		int iWonderRandom;
-		if (bAddRandom)
-		{
-			iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
-		}
-		else
-		{
-			iWonderRandom = 400;
-		}
-		// ALN AITechValues Start
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(400, "AI Research Wonder Building ASYNC") : GC.getGameINLINE().getSorenRandNum(800, "AI Research Wonder Building"));
 
 		iTempValue = (250 + iWonderRandom);
 		iTempValue *= 100 + getMaxGlobalBuildingProductionModifier();
@@ -5237,7 +5206,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 		iValue += iTempValue;
 
+		iRandomMax += 400;
+		iRandomFactor += iWonderRandom;
 	}
+	*/
 
 	/* ------------------ Project Value  ------------------ */
 	bool bEnablesProjectWonder = false;
@@ -5299,23 +5271,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/*
 	if (bEnablesProjectWonder)
 	{
-		// ALN AITechValues Start
-		// int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
-		// iRandomMax += 200;
-		// iRandomFactor += iWonderRandom;
-		int iWonderRandom;
-		if (bAddRandom)
-		{
-			iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
-		}
-		else
-		{
-			iWonderRandom = 100;
-		}
-		// ALN AITechValues End
+		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(200, "AI Research Wonder Project ASYNC") : GC.getGameINLINE().getSorenRandNum(200, "AI Research Wonder Project"));
 		iValue += iWonderRandom;
 
+		iRandomMax += 200;
+		iRandomFactor += iWonderRandom;
 	}
+	*/
 
 	if (GC.getLogging() && bDebugLog)
 	{
@@ -5444,9 +5406,23 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 			}
 			
+			/*
 			if (eNewCivic == GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic())
 			{
-				iCivicTechValue += 600;
+				iCivicTechValue += 500;
+			}
+			*/
+			
+			if (GC.getLogging() && bDebugLog)
+			{
+				if (gDLL->getChtLvl() > 0)
+				{
+					CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
+
+					char szOut[1024];
+					sprintf(szOut, "     Civic - %S : %d\n", GC.getCivicInfo(eNewCivic).getDescription(), iCivicTechValue);
+					gDLL->messageControlLog(szOut);
+				}
 			}
 			
 			m_iBestCivicTechValue[iCivicOpt] = std::max(iCivicTechValue, m_iBestCivicTechValue[iCivicOpt]);
@@ -5625,15 +5601,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						}
 					}
 				}
-				// iValue += iReligionValue;
-				if (bDebugLog)
-				{
-					iValue += ((bAsync) ? GC.getASyncRand().get(iReligionValue, "AI Research Religion ASYNC") : GC.getGameINLINE().getSorenRandNum(iReligionValue, "AI Research Religion"));
-				}
-				else
-				{
-					iValue += iReligionValue / 2;
-				}
+				iValue += iReligionValue;
 			}
 		}
 
@@ -5653,21 +5621,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if (getTechFreeUnit(eTech) != NO_UNIT)
 			{
 				/*
-				// ALN AITechValues Start
-				// int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
-				// iRandomMax += 3200;
-				// iRandomFactor += iGreatPeopleRandom;
-				int iGreatPeopleRandom;
-				if (bAddRandom)
-				{
-					iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
-				}
-				else
-				{
-					iGreatPeopleRandom = 1600;
-				}
-				// ALN AITechValues End
+				int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
 				iValue += iGreatPeopleRandom;
+				
+				iRandomMax += 3200;
+				iRandomFactor += iGreatPeopleRandom;
 				*/
 
 				if (bCapitalAlone)
