@@ -2009,7 +2009,7 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
 	if (iNumMages < iNumCities)
 	{
-		if (AI_chooseUnit(UNITAI_MAGE, 4 * kPlayer.AI_getMojoFactor()))
+		if (AI_chooseUnit(UNITAI_MAGE, kPlayer.AI_getMojoFactor() * ((bLandWar || bAssault) ? 4 : 2)))
 		{
 			return;
 		}
@@ -2032,7 +2032,7 @@ void CvCityAI::AI_chooseProduction()
 	UnitTypes eBestSpreadUnit = NO_UNIT;
 	int iBestSpreadUnitValue = -1;
 	
-	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
+	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault)
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
 		iSpreadUnitRoll += bLandWar ? 0 : 10;
@@ -2050,10 +2050,10 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	// Tholal AI - early check for Priests and Mages
+	// Tholal AI - second check for Priests
 	if (iNumPriests < (iNeededPriests / 2))
 	{
-		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 75 : 50))
+		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 50 : 25))
 		{
 			return;
 		}
@@ -2160,7 +2160,7 @@ void CvCityAI::AI_chooseProduction()
             }
         }
 
-        if (!bLandWar && !bDanger && !bFinancialTrouble)
+        if (!bLandWar && !bDanger && !bFinancialTrouble && !bAssault)
         {
 			if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_EXPLORE) < (kPlayer.AI_neededExplorers(pArea)))
 			{
@@ -2181,20 +2181,19 @@ void CvCityAI::AI_chooseProduction()
 
         	if (AI_chooseLeastRepresentedUnit(panicDefenderTypes, (bGetBetterUnits ? 40 : 60) - iWarSuccessRatio/3))
         	{
-				//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose panic defender", getName().GetCString());
         		return;
         	}
         }
     }
         
-	if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, 60, 10, (bLandWar ? 30 : -1)))
+	if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, 60, 10, ((bLandWar || bAssault) ? 30 : -1)))
 	{
 		return;
 	}
 
 	// Tholal AI - make Elder Councils & Libraries
 	// ToDo - better numbers? Or find a change to the choose building function to cover this instead
-	if( !bLandWar )
+	if(!bLandWar && !bAssault)
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_RESEARCH, 10, (bFinancialTrouble ? 40 : 60), 75))
 		{
@@ -2379,9 +2378,7 @@ void CvCityAI::AI_chooseProduction()
 
 		if( bBuildAssault )
 		{
-			//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build assault", getName().GetCString());
-
-			UnitTypes eBestAssaultUnit = NO_UNIT; 
+			UnitTypes eBestAssaultUnit = NO_UNIT;
 			if (NULL != pAssaultWaterArea)
 			{
 				kPlayer.AI_bestCityUnitAIValue(UNITAI_ASSAULT_SEA, this, &eBestAssaultUnit);
@@ -2394,7 +2391,7 @@ void CvCityAI::AI_chooseProduction()
 			int iBestSeaAssaultCapacity = 0;
 			if (eBestAssaultUnit != NO_UNIT)
 			{
-				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpace();
+				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpace() + 1;
 			}
 
 			int iAreaAttackCityUnits = kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY);
@@ -2418,10 +2415,12 @@ void CvCityAI::AI_chooseProduction()
 			{
 				iTransportsAtSea = kPlayer.AI_totalAreaUnitAIs(pAssaultWaterArea, UNITAI_ASSAULT_SEA);
 			}
+			/*
 			else
 			{
 				iTransportsAtSea = kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA)/2;
 			}
+			*/
 
 			//The way of calculating numbers is a bit fuzzy since the ships
 			//can make return trips. When massing for a war it'll train enough
@@ -2479,7 +2478,7 @@ void CvCityAI::AI_chooseProduction()
 					}
 				}
 				
-				if (iUnitsToTransport > iTransportCapacity)
+				if (iUnitsToTransport > (iTransportCapacity / 2) )
 				{
 					if ((iUnitCostPercentage < iMaxUnitSpending + 5) || (2*iUnitsToTransport > 3*iTransportCapacity))
 					{
