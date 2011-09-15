@@ -2940,6 +2940,11 @@ void CvUnitAI::AI_barbAttackMove()
 	bool bAttackCity = AI_getUnitAIType() == UNITAI_ATTACK_CITY;
 
 	int iPillage = AI_getBirthmark2() % 10;
+
+	if (!isAlive())
+	{
+		iPillage = 0;
+	}
 	
 	// pay attention to where we are
 	bool bFriendlyTerritory = false;
@@ -2964,13 +2969,19 @@ void CvUnitAI::AI_barbAttackMove()
 	int iCaution = 2;
 	iCaution += AI_getBirthmark() % 7;
 	if (bHero)
-
 	{
 		// Barbarian Heros hang back till they level up typically
 		iCaution += 6 - getLevel();
 	}
+
 	// larger stacks more likely to attack civs
 	iCaution -= (getGroup()->getNumUnits() - 1);
+
+	if (!isAlive())
+	{
+		iCaution = 0;
+	}
+
 	// more aggressive (attack cities earlier) when raging barbarians is on
 	if (bRagingBarbs)
 	{
@@ -2984,6 +2995,11 @@ void CvUnitAI::AI_barbAttackMove()
 	
 	// how likely they are to attack against poor odds
 	int iRecklessness = iHeroAttMod + (iPillage) - (int)pow((float)(GC.getGameINLINE().getSorenRandNum(100, "AI Barb")), 0.5f);
+
+	if (!isAlive())
+	{
+		iRecklessness -= 10;
+	}
 	
 	// Aggression steps based on units caution level and number of civilized cities per player
 	bool bAggressive = (GC.getGameINLINE().getNumCivCities() > (GC.getGameINLINE().countCivPlayersAlive() * iCaution / 2));
@@ -3064,11 +3080,14 @@ void CvUnitAI::AI_barbAttackMove()
 	}
 
 	// Pillaging
-	if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
+	if (isAlive())
 	{
-		if (AI_pillageRange(1))
+		if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
 		{
-			return;
+			if (AI_pillageRange(1))
+			{
+				return;
+			}
 		}
 	}
 	
@@ -3095,7 +3114,7 @@ void CvUnitAI::AI_barbAttackMove()
 	if (bAggressive)
 	{
 		// high pillage barbs get another go at this check
-		if (iPillage > 5)
+		if (iPillage > 5 && isAlive())
 		{
 			if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
 			{
@@ -3111,9 +3130,12 @@ void CvUnitAI::AI_barbAttackMove()
 			return;
 		}
 
-		if (AI_pillageRange(3))
+		if (isAlive())
 		{
-			return;
+			if (AI_pillageRange(3))
+			{
+				return;
+			}
 		}
 
 		if (AI_cityAttack(2, std::max(5, 10 + iRecklessness)))
@@ -3130,7 +3152,7 @@ void CvUnitAI::AI_barbAttackMove()
 	if (bSemiAggressive)
 	{
 		// high pillage barbs get another go at this check
-		if (iPillage > 5)
+		if (iPillage > 5 && isAlive())
 		{
 			if (GC.getGameINLINE().getSorenRandNum(20, "AI Barb") + iPillage >= 15)
 			{
@@ -3146,9 +3168,12 @@ void CvUnitAI::AI_barbAttackMove()
 			return;
 		}
 
-		if (AI_pillageRange(3))
+		if (isAlive())
 		{
-			return;
+			if (AI_pillageRange(3))
+			{
+				return;
+			}
 		}
 
 		if (AI_cityAttack(1, std::max(5, 10 + iRecklessness)))
@@ -3164,9 +3189,12 @@ void CvUnitAI::AI_barbAttackMove()
 	// Cautious Movements (only cause trouble if they stumble into it)
 	if (bPassiveAggressive)
 	{
-		if (AI_pillageRange(2))
+		if (isAlive())
 		{
-			return;
+			if (AI_pillageRange(2))
+			{
+				return;
+			}
 		}
 
 		if (AI_cityAttack(1, std::max(5, 10 + iRecklessness)))
