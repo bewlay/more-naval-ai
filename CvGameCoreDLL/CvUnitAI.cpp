@@ -25928,12 +25928,6 @@ void CvUnitAI::AI_chooseGroupflag()
 				return;
 				break;
 			}
-		case UNITAI_FEASTING:
-		case UNITAI_TERRAFORMER:
-		case UNITAI_MANA_UPGRADE:
-		case UNITAI_INQUISITOR:
-			return;
-			break;
         default:
             break;
     }
@@ -25957,6 +25951,15 @@ void CvUnitAI::AI_chooseGroupflag()
 	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0) || bWarPlan)
 	{
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
+
+		int iAttackCityCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
+		int iAttackCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
+
+		if (iAttackCount > iAttackCityCount)
+		{
+			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+		}
+
 		return;
 	}
 
@@ -25970,10 +25973,9 @@ void CvUnitAI::AI_chooseGroupflag()
 
     if(isUnitAllowedPermDefense())
     {
-		AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
+		AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
 		return;
     }
-
     
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
