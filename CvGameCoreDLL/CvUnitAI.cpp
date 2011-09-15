@@ -28786,6 +28786,26 @@ void CvUnitAI::AI_upgrademanaMove()
 		return;
 	}
 
+	// build mana nodes on existing mana
+	if ( plot()->getOwner() == getOwner())
+	{
+		if (plot()->getBonusType() != NO_BONUS)
+		{
+			BuildTypes eBuild = NO_BUILD;
+			for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+			{
+				eBuild = ((BuildTypes)iJ);
+				if (canBuild(plot(), eBuild))
+				{
+					getGroup()->pushMission(MISSION_BUILD, eBuild, -1, 0, false, false, MISSIONAI_BUILD, plot());
+					return;
+				}
+			}
+		}
+	}
+
+
+
 	// Tholal ToDo - bring movement into the DLL and call python to decide which mana node to create
 	/*
 	int iValue = 0;
