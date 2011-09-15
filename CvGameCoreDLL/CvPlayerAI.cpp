@@ -11523,7 +11523,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 100);
+		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 25);
 		if (GC.getUnitInfo(eUnit).getCombatLimit() < 100)
 		{
 			iValue -= (iCombatValue * (125 - GC.getUnitInfo(eUnit).getCombatLimit())) / 100;
@@ -11646,7 +11646,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		}
 
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getMoves()) / 2);
-		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 100);
+		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 25);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/20/10                                jdog5000      */
 /*                                                                                              */
@@ -11755,6 +11755,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			iValue += 100;
 		}
+		iValue += GC.getUnitInfo(eUnit).getAnimalCombatModifier();
+		iValue += (GC.getUnitInfo(eUnit).getNumSeeInvisibleTypes() * 10);
 		break;
 
 	case UNITAI_MISSIONARY:
@@ -11876,6 +11878,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += iCombatValue;
 		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getMoves()) / 2);
 		iValue += (GC.getUnitInfo(eUnit).getBombardRate() * 4);
+		iValue -= (GC.getUnitInfo(eUnit).getCargoSpace() * 10);
 		break;
 
 	case UNITAI_RESERVE_SEA:
@@ -11934,7 +11937,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_SPY_SEA:
 		iValue += (iCombatValue / 2);
 		iValue += (GC.getUnitInfo(eUnit).getMoves() * 200);
-		iValue += (GC.getUnitInfo(eUnit).getCargoSpace() * 300);
+		iValue += (GC.getUnitInfo(eUnit).getCargoSpace() * 500);
 		break;
 
 	case UNITAI_CARRIER_SEA:
