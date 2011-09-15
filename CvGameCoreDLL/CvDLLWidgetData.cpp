@@ -4970,6 +4970,40 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CORPORATION_MAINT_FLOAT", szMaint.GetCString()));
 			}
 
+			// Bonuses
+			for (int i = 0; i < GC.getNumBonusInfos(); i++)
+			{
+				if (pHeadSelectedCity->hasBonus((BonusTypes)i))
+				{
+					CvBonusInfo& bonus = GC.getBonusInfo((BonusTypes)i);
+					int iBonusMod = bonus.getMaintenanceModifier();
+					if (0 != iBonusMod)
+					{
+						int iTotalBonusMod = iBonusMod;
+						if (bonus.isModifierPerBonus())
+						{
+							iTotalBonusMod = iBonusMod * pHeadSelectedCity->getNumBonuses((BonusTypes)i);
+						}
+
+						iMaintenanceValue = ((iTotalBonusMod * pHeadSelectedCity->calculateBaseMaintenanceTimes100()) / 100);//>getMaintenanceTimes100()) /100);
+						if (iMaintenanceValue < 0)
+						{
+							iMaintenanceValue *= -1;
+							CvWString szMaint = CvWString::format(L"-%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
+							szBuffer.append(NEWLINE);
+							szBuffer.append(gDLL->getText("TXT_KEY_MISC_BONUS_MAINT_FLOAT", szMaint.GetCString(), bonus.getTextKeyWide())); //iTotalBonusMod, bonus.getTextKeyWide()));
+						}
+						else
+						{
+							CvWString szMaint = CvWString::format(L"%d.%02d", iMaintenanceValue/100, iMaintenanceValue%100);
+							szBuffer.append(NEWLINE);
+							szBuffer.append(gDLL->getText("TXT_KEY_MISC_BONUS_MAINT_FLOAT", szMaint.GetCString(), bonus.getTextKeyWide())); //iTotalBonusMod, bonus.getTextKeyWide()));
+						}
+
+					}
+				}
+			}
+
 			szBuffer.append(SEPARATOR);
 
 			//		swprintf(szTempBuffer, "\n%d%c Total Maintenance", pHeadSelectedCity->getMaintenance(), GC.getCommerceInfo(COMMERCE_GOLD).getChar());

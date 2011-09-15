@@ -17193,6 +17193,45 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 		}
 	}
 
+	// Bonuses
+	if (eCommerceType == COMMERCE_RESEARCH)
+	{
+		for (int i = 0; i < GC.getNumBonusInfos(); i++)
+		{
+			if (city.hasBonus((BonusTypes)i))
+			{
+				CvBonusInfo& bonus = GC.getBonusInfo((BonusTypes)i);
+				int iBonusMod = bonus.getResearchModifier();
+				if (0 != iBonusMod)
+				{
+					int iTotalBonusMod = iBonusMod;
+					if (bonus.isModifierPerBonus())
+					{
+						iTotalBonusMod = iBonusMod * city.getNumBonuses((BonusTypes)i);
+					}
+
+					int iFinalResearchBonusValue = ((iTotalBonusMod * city.getCommerceRateTimes100(COMMERCE_RESEARCH)) / 100);
+
+					if (iFinalResearchBonusValue < 0)
+					{
+						iFinalResearchBonusValue *= -1;
+						CvWString szMaint = CvWString::format(L"-%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
+						szBuffer.append(NEWLINE);
+					}
+					else
+					{
+						CvWString szMaint = CvWString::format(L"+%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
+						szBuffer.append(NEWLINE);
+					}
+					iModifier += iTotalBonusMod;
+				}
+			}
+		}
+	}
+
+
 	// Capital
 	int iCapitalMod = city.isCapital() ? owner.getCapitalCommerceRateModifier(eCommerceType) : 0;
 	if (iCapitalMod != 0)
@@ -17679,6 +17718,28 @@ void CvGameTextMgr::parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_GREATPEOPLE_TRAIT", iTraitMod, trait.getTextKeyWide()));
 				szBuffer.append(NEWLINE);
 				iModifier += iTraitMod;
+			}
+		}
+	}
+
+	// Bonuses
+	for (int i = 0; i < GC.getNumBonusInfos(); i++)
+	{
+		if (city.hasBonus((BonusTypes)i))
+		{
+			CvBonusInfo& bonus = GC.getBonusInfo((BonusTypes)i);
+			int iBonusMod = bonus.getGreatPeopleRateModifier();
+			if (0 != iBonusMod)
+			{
+				int iTotalBonusMod = iBonusMod;
+				if (bonus.isModifierPerBonus())
+				{
+					iTotalBonusMod = iBonusMod * city.getNumBonuses((BonusTypes)i);
+				}
+				
+				szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_GREATPEOPLE_BONUS", iTotalBonusMod, bonus.getTextKeyWide()));
+				szBuffer.append(NEWLINE);
+				iModifier += iTotalBonusMod;
 			}
 		}
 	}
