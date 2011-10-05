@@ -1124,15 +1124,33 @@ void CvCityAI::AI_chooseProduction()
     	}
     }
 
+	// count number of cities we have to build things in
+	int iNumCities = kPlayer.getNumCities();
+	if (kPlayer.isSprawling())
+	{
+		if (iNumCities > kPlayer.getMaxCities())
+		{
+			iNumCities = kPlayer.getMaxCities();
+		}
+	}
+
 // Tholal AI - count number of mages & priests
 // Tholal ToDo - better formulas - or better yet, incorporate this into the choose unit function instead
-	int iNumCities = kPlayer.getNumCities();
-
 	int iNumMages = (kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + kPlayer.getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));
 
 	int iNumPriests = (kPlayer.AI_totalUnitAIs(UNITAI_MEDIC));
-	
-	int iNeededPriests = iNumCities * 2;
+	int iNeededPriests = 0;
+
+	//HARDCODE
+	if (kPlayer.isHasTech(GC.getDefineINT("TECH_PRIESTHOOD")) && !kPlayer.isAgnostic())
+	{
+		iNeededPriests = iNumCities * 2;
+	}
+	else
+	{
+		iNeededPriests = iNumCities / 2;
+	}
+
 	if (kPlayer.getStateReligion() != NO_RELIGION)
 	{
 		if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
@@ -1140,6 +1158,8 @@ void CvCityAI::AI_chooseProduction()
 			iNeededPriests *= 2;
 		}
 	}
+
+	// HARDCODE
 	int iSpiritualTrait=GC.getInfoTypeForString("TRAIT_SPIRITUAL");
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
@@ -1686,7 +1706,6 @@ void CvCityAI::AI_chooseProduction()
 					{
 						if (AI_chooseUnit(UNITAI_SETTLER_SEA, iOdds))
 						{
-							//if( gCityLogLevel >= 2 ) logBBAI("      City %S uses early settler sea", getName().GetCString());
 							return;
 						}
 					}
