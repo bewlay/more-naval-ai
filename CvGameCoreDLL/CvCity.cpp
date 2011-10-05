@@ -517,7 +517,8 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 //FfH: Added by Kael 08/21/2007
     m_bSettlement = false;
     m_iCiv = NO_CIVILIZATION;
-    m_iCrime = GC.getGameINLINE().getSorenRandNum(20, "Crime");
+    //m_iCrime = GC.getGameINLINE().getSorenRandNum(20, "Crime");
+	m_iCrime = 0;
     m_iMutateChance = 0;
     m_iPlotRadius = 2;
     m_iResistMagic = 0;
