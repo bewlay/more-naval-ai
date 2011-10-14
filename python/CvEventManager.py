@@ -2054,20 +2054,19 @@ class CvEventManager:
 			city.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD'), 1)
 			city.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'), 1)
 
-		# ALN - moved to DLL, python code wasn't working on some computers (reason unknown)
-		# if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
-			# eTeam = gc.getTeam(gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam())
+		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
+			eTeam = gc.getTeam(gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam())
 
-			# iUnit = gc.getInfoTypeForString('UNIT_ARCHER')
-			# if (eTeam.isHasTech(gc.getInfoTypeForString('TECH_BOWYERS')) or CyGame().getStartEra() > gc.getInfoTypeForString('ERA_CLASSICAL')):
-				# iUnit = gc.getInfoTypeForString('UNIT_LONGBOWMAN')
-			# newUnit2 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-			# newUnit3 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-			# newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), true)
-			# newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), true)
-			# if ((not eTeam.isHasTech(gc.getInfoTypeForString('TECH_ARCHERY'))) or CyGame().getStartEra() == gc.getInfoTypeForString('ERA_ANCIENT')):
-				# newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK'), true)
-				# newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK'), true)
+			iUnit = gc.getInfoTypeForString('UNIT_ARCHER')
+			if (eTeam.isHasTech(gc.getInfoTypeForString('TECH_BOWYERS')) or CyGame().getStartEra() > gc.getInfoTypeForString('ERA_CLASSICAL')):
+				iUnit = gc.getInfoTypeForString('UNIT_LONGBOWMAN')
+			newUnit2 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			newUnit3 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), true)
+			newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), true)
+			if ((not eTeam.isHasTech(gc.getInfoTypeForString('TECH_ARCHERY'))) or CyGame().getStartEra() == gc.getInfoTypeForString('ERA_ANCIENT')):
+				newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK'), true)
+				newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK'), true)
 
 		if CyGame().getWBMapScript():
 			sf.onCityBuilt(city)
