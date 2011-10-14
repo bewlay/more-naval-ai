@@ -6235,6 +6235,11 @@ void CvCityAI::AI_updateNeededFloatingDefenders()
 
 int CvCityAI::AI_neededAirDefenders()
 {
+
+	// No air defender type units in FFH so we might as well abort out of this function early (added by Tholal 10/11/11)
+	return 0;
+
+	/*
 	int iDefenders;
 
 	if (!(GET_TEAM(getTeam()).AI_isWarPossible()))
@@ -6259,19 +6264,19 @@ int CvCityAI::AI_neededAirDefenders()
 				iOtherTeam++;
 				if (GET_TEAM(getTeam()).AI_getWarPlan(pLoopPlot->getTeam()) != NO_WARPLAN)
 				{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      01/01/09                                jdog5000      */
-/*                                                                                              */
-/* Air AI                                                                                       */
-/************************************************************************************************/
+/***********************************************************************************************
+/* BETTER_BTS_AI_MOD                      01/01/09                                jdog5000      
+/*                                                                                              
+/* Air AI                                                                                       
+/***********************************************************************************************
 					// If enemy has no bombers, don't need to defend as much
 					if( GET_PLAYER(pLoopPlot->getOwner()).AI_totalUnitAIs(UNITAI_ATTACK_AIR) == 0 )
 					{
 						continue;
 					}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+/***********************************************************************************************
+/* BETTER_BTS_AI_MOD                       END                                                  
+/***********************************************************************************************
 					iEnemyTeam += 2;
 					if (pLoopPlot->isCity())
 					{
@@ -6294,6 +6299,7 @@ int CvCityAI::AI_neededAirDefenders()
 		}
 	}
 	return iDefenders;
+	*/
 }
 
 
