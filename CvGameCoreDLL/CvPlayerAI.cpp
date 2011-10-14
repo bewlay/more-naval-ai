@@ -2336,7 +2336,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	// disallow the AI from founding new cities on Mana bonuses
     if (pPlot->getBonusType() != NO_BONUS)
 	{
-		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_RAWMANA") || 
+		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW") || 
 			(GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA")))
 		{
 			return 0;
@@ -9776,7 +9776,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iValue += (GC.getBonusInfo(eBonus).getHappiness() * (bDemon ? 0 : 100));
 			iValue += (GC.getBonusInfo(eBonus).getHealth() * (bDemon ? 0 : 100));
 
-			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2 || AI_VICTORY_ALTAR2))
+			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) || AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 			{
 				iValue += (100 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier());
 			}
