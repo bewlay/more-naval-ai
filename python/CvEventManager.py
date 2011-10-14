@@ -1461,7 +1461,8 @@ class CvEventManager:
 			if isWorldUnitClass(unit.getUnitClassType()) == False:
 				if isNationalUnitClass(unit.getUnitClassType()) == False:
 					if not unit.isMechUnit():
-						if unit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+#						if unit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+						if unit.isAlive():
 							newUnit = pPlayer.initUnit(unit.getUnitType(), city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 							city.applyBuildEffects(newUnit)
 
