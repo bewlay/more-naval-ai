@@ -27151,6 +27151,7 @@ void CvUnitAI::HNgroupMove()
 	return;
 }
 
+// look around for sea lairs to explore
 bool CvUnitAI::AI_exploreLairSea(int iRange)
 {
 
@@ -27191,17 +27192,25 @@ bool CvUnitAI::AI_exploreLairSea(int iRange)
 
 											if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isUnique())
 											{
-												iValue *= 2;
+												if (pLoopPlot->getOwner() != getOwner())
+												{
+													iValue = 0;
+												}
+												else
+												{
+													iValue += 2 * getLevel();
+												}
 											}
 
-											pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());//, NO_PLAYER, NO_TEAM, !(pLoopPlot->isWater()));
+											pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
 											if (pNearestCity != NULL)
 											{
-												if (pNearestCity->getOwner() == getOwner())
+												// avoid opening lairs near our team if they are lightly defended or its early in the game
+												if (pNearestCity->getTeam() == getTeam())
 												{
-													if (!pNearestCity->AI_isDefended())
+													if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
 													{
-														iValue /= 4;
+														iValue = 0;
 													}
 												}
 												else
@@ -27247,7 +27256,7 @@ bool CvUnitAI::AI_exploreLairSea(int iRange)
 	return false;
 }
 
-
+// look around for lairs to explore
 bool CvUnitAI::AI_exploreLair(int iRange)
 {
 
@@ -27257,11 +27266,6 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 	}
 
 	if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
-	{
-		return false;
-	}
-
-	if (GC.getGameINLINE().getElapsedGameTurns() < 10)
 	{
 		return false;
 	}
@@ -27296,15 +27300,31 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 
 										if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isUnique())
 										{
-											iValue *= 2;
+											iValue += 2 * getLevel();
+
+											if (pLoopPlot->isOwned())
+											{
+												// cant explore unique lairs in other player's territory
+												if (pLoopPlot->getOwner() != getOwner())
+												{
+													iValue = 0;
+												}
+												// dont explore lairs in our territory that offer up free bonuses
+												// TODO - allow exploration after we have the tech and units to build the proper improvement
+												else if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).getBonusConvert() != NO_BONUS)
+												{
+													iValue = 0;
+												}
+											}
 										}
 
-										pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());//, NO_PLAYER, NO_TEAM, !(pLoopPlot->isWater()));
+										pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
 										if (pNearestCity != NULL)
 										{
-											if (pNearestCity->getOwner() == getOwner())
+											// avoid opening lairs near our team if they are lightly defended or its early in the game
+											if (pNearestCity->getTeam() == getTeam())
 											{
-												if (!pNearestCity->AI_isDefended())
+												if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
 												{
 													iValue = 0;
 												}
