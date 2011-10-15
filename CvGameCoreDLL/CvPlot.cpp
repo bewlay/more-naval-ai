@@ -6169,7 +6169,8 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	{
 		if (isCity())
 		{
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			//for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI > getPlotCity()->getNumCityPlots(); ++iI)
 			{
 				pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
