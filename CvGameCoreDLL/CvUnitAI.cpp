@@ -14617,6 +14617,7 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 	TechTypes eDiscoverTech;
 	bool bIsFirstTech;
 	int iPercentWasted = 0;
+	int iBonusPoints = 0;
 
 	if (canDiscover(plot()))
 	{
@@ -14631,16 +14632,40 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 		iPercentWasted = (100 - ((getDiscoverResearch(eDiscoverTech) * 100) / getDiscoverResearch(NO_TECH)));
 		FAssert(((iPercentWasted >= 0) && (iPercentWasted <= 100)));
 
+		if (bIsFirstTech)
+		{
+			// techs that give free GPs
+			if (GET_PLAYER(getOwnerINLINE()).getTechFreeUnit(eDiscoverTech) != NO_UNIT)
+			{
+				iBonusPoints += 15;
+			}
+
+			// Religion founding techs
+			for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
+			{
+				ReligionTypes eReligion = (ReligionTypes)iReligion;
+				CvReligionInfo& kReligionInfo = GC.getReligionInfo(eReligion);
+				const TechTypes eReligionTech = (TechTypes)GC.getReligionInfo(eReligion).getTechPrereq();
+
+				if (eReligionTech == eDiscoverTech)
+				{
+					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
+					{
+						iBonusPoints += 25;
+					}
+				}
+			}
+		}
 
         if (getDiscoverResearch(eDiscoverTech) >= GET_TEAM(getTeam()).getResearchLeft(eDiscoverTech))
         {
-            if ((iPercentWasted < 51) && bFirstResearchOnly && bIsFirstTech)
+            if ((iPercentWasted < (65 + iBonusPoints)) && bFirstResearchOnly && bIsFirstTech)
             {
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
             }
 
-            if (iPercentWasted < (bIsFirstTech ? 31 : 11))
+            if (iPercentWasted < ((bIsFirstTech ? 31 : 11) + iBonusPoints))
             {
                 //I need a good way to assess if the tech is actually valuable...
                 //but don't have one.
