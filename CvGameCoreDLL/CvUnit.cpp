@@ -6449,9 +6449,7 @@ bool CvUnit::found()
     {
         CLLNode<IDInfo>* pUnitNode;
         CvUnit* pLoopUnit;
-		// ALN - bug fix?
-        // pUnitNode = getGroup()->headUnitNode();
-        pUnitNode = plot()->headUnitNode();
+        pUnitNode = getGroup()->headUnitNode();
         while (pUnitNode != NULL)
         {
             pLoopUnit = ::getUnit(pUnitNode->m_data);
