@@ -19243,6 +19243,12 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	// ToDo - add some base weights to the xml
     //iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
 
+	iValue += getNumCities();
+
+	iValue += iHighCultureCount * 10;
+	iValue += iCloseToLegendaryCount * 20;
+	iValue += iLegendaryCount * 50;
+
 	// account for traits which give free culture
 	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 	{
