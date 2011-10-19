@@ -26093,6 +26093,8 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         case UNITAI_MISSIONARY_SEA:
         case UNITAI_SPY_SEA:
         case UNITAI_PIRATE_SEA:
+		case UNITAI_INQUISITOR:
+		case UNITAI_FEASTING:
             return false;
             break;
         default:
