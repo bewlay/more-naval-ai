@@ -9755,6 +9755,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
 	
+	// HARDCODE
 	bool bDemon = (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DEMON"));
 
 	//recalculate if not defined
@@ -9778,7 +9779,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) || AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 			{
-				iValue += (100 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier());
+				iValue += (50 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier());
 			}
 
 			// new FFH tags
@@ -10089,9 +10090,69 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			// Tholal AI - mana valuation
 			// HARCODE - lots of it!
 			// Note: we could loop through spells, find which ones require this mana and then value those spells. Too much? Probably the best way to do it in the long run
+			// value spells that provide promotions for favorite unitcombat
+			// NOTE: make sure the values add up to the appropriate range
+
 
 			if (bMana)
 			{
+				if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+				{
+					iValue += 50;
+				}
+
+				if (iValue == 0)
+				{
+					iValue += 25;
+				}
+
+				bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
+				for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+				{
+					// convoluted, but its the only way to connect the spell with the bonus
+					if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+					{
+						if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()).getBonusPrereq() == eBonus)
+						{
+							iValue += 25;
+							
+							// summons
+							if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
+							{
+								iValue += (bSummoner ? 50 : 25);
+							}
+							
+
+							// buffs and debuffs
+							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+							{
+								iValue =+ 10;
+								if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getMovesChange() > 0)
+								{
+									if (!bDemon)
+									{
+										iValue += 25;
+									}
+								}
+							}
+							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+							{
+								iValue += 10;
+							}
+							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+							{
+								iValue += 10;
+							}
+
+							// city spells
+							if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
+							{
+								iValue += 10;
+							}
+						}
+					}
+				}
+				
 				bool bStack = false;
 
 				bool bKhazad = (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_KHAZAD"));
@@ -10151,10 +10212,20 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				}
 				*/
 
-				if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
+				iValue += 100 * AI_getTowerManaValue(eBonus);
+
+				int iNumBonuses = countOwnedBonuses(eBonus) + getNumAvailableBonuses(eBonus);
+				if (iNumBonuses > 0)
 				{
-					int iNumBonuses = getNumAvailableBonuses(eBonus);
-					iValue /= (iNumBonuses + 1);
+					if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
+					{
+						//iValue /= (iNumBonuses + 2);
+						iValue /= 3;
+					}
+					else
+					{
+						iValue /= 2;
+					}
 				}
 			}
 			// End Tholal AI
