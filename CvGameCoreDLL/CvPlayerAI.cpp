@@ -11990,32 +11990,60 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		break;
 	}
 
-	if (GC.getUnitInfo(eUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
-	{
-		iValue *= 2;
-	}
 
-	if ((iCombatValue > 0) && ((eUnitAI == UNITAI_ATTACK) || (eUnitAI == UNITAI_ATTACK_CITY)))
+
+	if (iCombatValue > 0)
 	{
-		if (pArea != NULL)
+		//traits
+		int iTraitMod = 0;
+		for (iI = 0; iI < GC.getNumTraitInfos(); iI++)
 		{
-			AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
-			if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
+			if (hasTrait((TraitTypes)iI))
 			{
-				for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+				for (int iK = 0; iK < GC.getNumPromotionInfos(); iK++)
 				{
-					if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+					if (GC.getTraitInfo((TraitTypes) iI).isFreePromotion(iK))
 					{
-						if (GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
+						if ((GC.getUnitInfo(eUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iI).isFreePromotionUnitCombat(GC.getUnitInfo(eUnit).getUnitCombatType()))
 						{
-							iValue *= 133;
-							iValue /= 100;
-							break;
+							iTraitMod += 20;
 						}
 					}
 				}
 			}
 		}
+
+		iValue *= (100 + iTraitMod);
+		iValue /= 100;
+
+		if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+		{
+			if (pArea != NULL)
+			{
+				AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
+				if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
+				{
+					for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+					{
+						if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+						{
+							if (GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
+							{
+								iValue *= 133;
+								iValue /= 100;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (GC.getUnitInfo(eUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
+	{
+		iValue *= 125;
+		iValue /= 100;
 	}
 
 	return std::max(0, iValue);
