@@ -2512,7 +2512,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 						}
 					}
 					
-					/* if( !gDLL->altKey() )
+					if( !gDLL->altKey() )
 					{
 						if( pPlot->getTeam() == NO_TEAM || GET_TEAM(pHeadGroup->getTeam()).isAtWar(pPlot->getTeam()) )
 						{
@@ -2662,7 +2662,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 								}
 							}
 						}
-					} */
+					}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
