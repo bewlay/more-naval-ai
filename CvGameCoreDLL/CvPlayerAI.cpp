@@ -24188,7 +24188,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 				iValue ++;
 			}
 		}
-		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_RAWMANA")))
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA_RAW")))
 		{
 			iValue += countOwnedBonuses((BonusTypes)iK);
 		}
