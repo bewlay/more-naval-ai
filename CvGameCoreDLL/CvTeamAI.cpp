@@ -1318,7 +1318,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	iValue += getTotalPopulation();
 	iValue += GET_TEAM(eTeam).getTotalPopulation();
 
-	iValue += (GET_TEAM(eTeam).AI_getWarSuccess(getID()) * 20);
+	iValue += (GET_TEAM(eTeam).AI_getWarSuccess(getID()) * 30);
 
 	int iOurPower = std::max(1, getPower(true));
 	int iTheirPower = std::max(1, GET_TEAM(eTeam).getDefensivePower());
@@ -1419,11 +1419,11 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 /*                                                                                              */
 /* War strategy AI, Victory Strategy AI                                                         */
 /************************************************************************************************/	
-	if( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE4) )
+	if( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE4) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_ALTAR3) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3))
 	{
 		iValue *= 4;
 	}
-	else if( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE3) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_SPACE4) )
+	else if( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE3) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_SPACE4) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_ALTAR2) || AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
 	{
 		iValue *= 2;
 	}
