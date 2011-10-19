@@ -2928,6 +2928,21 @@ void CvUnitAI::AI_barbAttackMove()
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+	// catch for wrong AI - units spawned through lair events maybe?
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
+	{
+		AI_setUnitAIType(UNITAI_PIRATE_SEA);
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
+	if (isAnimal())
+	{
+		AI_setUnitAIType(UNITAI_ANIMAL);
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
 	// ALN Notes: This is an experiment in mixing up barb behaivor, some will attack earlier, some later in terms of civ developement
 	// the more 'cautious' they are, the later they will step up their attacks against civilized lands
 	// basically it's all about not having them all hang back then attack at the same time all of a sudden, barbs aren't that coordinated
