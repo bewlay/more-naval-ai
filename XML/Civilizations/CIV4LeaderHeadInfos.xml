@@ -10660,7 +10660,7 @@
 			<iSomniumAggressiveness>35</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_GOOD</Alignment>
 			<FavoriteTech>TECH_HORSEBACK_RIDING</FavoriteTech>
-			<FavoriteUnitCombat>NONE</FavoriteUnitCombat>
+			<FavoriteUnitCombat>UNITCOMBAT_MOUNTED</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_TEMPLE_OF_TEMPORENCE</FavoriteWonder>
 			<PermanentTrait>TRAIT_EXPANSIVE</PermanentTrait>
 			<ReligionWeightModifiers>
