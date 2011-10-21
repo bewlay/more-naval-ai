@@ -408,7 +408,7 @@ class CvEventManager:
 
 		for iPlayer in range(gc.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
-			if (player.isAlive() and player.isHuman()):
+			if player.isAlive():
 				if player.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
 					cf.showUniqueImprovements(iPlayer)
 
