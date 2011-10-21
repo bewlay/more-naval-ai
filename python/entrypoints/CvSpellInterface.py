@@ -1328,6 +1328,9 @@ def reqForTheHorde(caster):
 	if bPlayer.getNumUnits() == 0:
 		return False
 	if pPlayer.isHuman() == False:
+		map = gc.getMap()
+		if pPlayer.getNumCities() > (gc.getWorldInfo(map.getWorldSize()).getTargetNumCities() - 1):
+			return True
 		if eTeam.getAtWarCount(True) == 0:
 			return False
 		if bPlayer.getNumUnits() < (pPlayer.getNumCities() * 5):			
