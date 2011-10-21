@@ -1124,13 +1124,15 @@ void CvCityAI::AI_chooseProduction()
     	}
     }
 
-	// count number of cities we have to build things in
+	// account for the Sprawling trait
 	int iNumCities = kPlayer.getNumCities();
+	bool bSlowSettlerProduction = false;
 	if (kPlayer.isSprawling())
 	{
 		if (iNumCities > kPlayer.getMaxCities())
 		{
 			iNumCities = kPlayer.getMaxCities();
+			bSlowSettlerProduction = true;
 		}
 	}
 
@@ -1175,6 +1177,13 @@ void CvCityAI::AI_chooseProduction()
      	{
      		iMaxSettlers = (iMaxSettlers + 2) / 3;
      	}
+
+		// Sprawling civs at max cities should slow down settler production
+		if (bSlowSettlerProduction)
+		{
+			iMaxSettlers = 1;
+		}
+
 		// Tholal AI - don't build settlers if you dont have extra defenders
 		if ((iNumCitiesInArea<3) &&  (AI_neededDefenders() > (plot()->getNumDefenders(getOwnerINLINE()) - 1 )))
 		{
