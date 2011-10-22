@@ -4526,6 +4526,24 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 					szString.append(CvWString::format(L"\n %s: %d", kLoopPlayer.getName(), kLoopPlayer.AI_bonusVal(eBonus)));
 				}
 			}
+
+			// show valuation of different mana types when looking at rawmana
+			if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW"))
+			{
+				szString.append(CvWString::format(SETCOLR L"\nMana upgrade values:" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+				for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
+				{
+					if (GC.getBonusInfo((BonusTypes)iBonus).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
+					{
+						if (pPlot->isOwned())
+						{
+							szString.append(NEWLINE);
+							szString.append(GC.getBonusInfo((BonusTypes)iBonus).getDescription());
+							szString.append(CvWString::format(L" (%d): %d", GET_PLAYER(pPlot->getOwner()).countOwnedBonuses((BonusTypes)iBonus) , GET_PLAYER(pPlot->getOwner()).AI_bonusVal((BonusTypes)iBonus))); // GET_PLAYER(GC.getGameINLINE().getActivePlayer())
+						}
+					}
+				}
+			}
 		}
 	}
 	else
