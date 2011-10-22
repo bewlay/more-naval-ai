@@ -28805,7 +28805,7 @@ bool CvUnitAI::AI_Rantinemove()
 				{
 					if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true, &iPathTurns))
 					{
-						iValue = (pLoopCity->getPopulation() * 3);
+						iValue = (pLoopCity->getPopulation() * 10);
 
 						if ((pLoopCity->plot())->isAdjacentPlayer(getOwnerINLINE(), false))
 						{
