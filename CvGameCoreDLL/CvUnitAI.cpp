@@ -26662,6 +26662,7 @@ void CvUnitAI::PatrolMove()
 
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
 	bool bAnyWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
+	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
 	if (GC.getLogging())
 	{
@@ -26700,7 +26701,7 @@ void CvUnitAI::PatrolMove()
 		}
 	}
 
-	if( getGroup()->getNumUnits() > 5)
+	if( getGroup()->getNumUnits() > 5 || bFinancialTrouble)
 	{
 		if (bAnyWarPlan)
 		{
@@ -26734,17 +26735,20 @@ void CvUnitAI::PatrolMove()
 	}
 
 	// check for easy targets in the area
-	if (AI_anyAttack(1, 80))
+	if (getGroupSize() == 1)
 	{
-		return;
+		if (AI_anyAttack(1, 80))
+		{
+			return;
+		}
+
+		if (AI_anyAttack(2, 90))
+		{
+			return;
+		}
 	}
 
-	if (AI_anyAttack(2, 90))
-	{
-		return;
-	}
-
-	if (!bHero)
+	if (!bHero && (GET_TEAM(getTeam()).getAtWarCount(false) == 0))
 	{
 		if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
 		{
@@ -26842,7 +26846,7 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 		
-	if (!bDanger && !bHero)
+	if (!bDanger && !bHero && (GET_TEAM(getTeam()).getAtWarCount(false) == 0))
 	{
 		if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
 		{
