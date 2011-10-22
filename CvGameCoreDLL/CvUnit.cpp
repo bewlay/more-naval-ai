@@ -11883,6 +11883,12 @@ void CvUnit::setExperience(int iNewValue, int iMax)
 
 void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInBorders, bool bUpdateGlobal)
 {
+	// dont bother changing experience if the unit cant use it
+	if (getUnitCombatType() == NO_UNITCOMBAT)
+	{
+		return;
+	}
+
 	int iUnitExperience = iChange;
 
 	if (bFromCombat)
