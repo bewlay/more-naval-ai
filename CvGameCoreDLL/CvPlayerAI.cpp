@@ -19164,6 +19164,11 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
         return 0;
     }
 
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	{
+		return 0;
+	}
+
 	// Necessary as capital city pointer is used later
     if (getCapitalCity() == NULL)
     {
