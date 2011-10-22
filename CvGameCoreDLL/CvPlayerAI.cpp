@@ -6413,7 +6413,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 				// skip valuing units that we won't be able to build
 				const UnitClassTypes eUnitClass = (UnitClassTypes)iJ;
-				const ReligionTypes eReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
+				const ReligionTypes ePrereqReligion = (ReligionTypes)kLoopUnit.getPrereqReligion();
 
 				// do not value already created world unit
 				if (GC.getGameINLINE().isUnitClassMaxedOut(eUnitClass))
@@ -6431,9 +6431,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 				}
 
 				// do not value religious units when we dont have that religion in any cities
-				if (eReligion != NO_RELIGION)
+				if (ePrereqReligion != NO_RELIGION)
 				{
-					if (GET_TEAM(getTeam()).getHasReligionCount(eReligion) == 0 || isAgnostic())
+					if (GET_TEAM(getTeam()).getHasReligionCount(ePrereqReligion) == 0 || isAgnostic())
 					{
 						continue;
 					}
@@ -7007,7 +7007,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					
 					if( iMilitaryValue > 0 )
 					{
-						if (iHasMetCount == 0)
+						if (iHasMetCount == 0 || !bWarPlan)
 						{
 							iMilitaryValue /= 2;
 						}
@@ -7026,11 +7026,6 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 								sprintf(szOut, "       Military value: %d\n", iMilitaryValue);
 								gDLL->messageControlLog(szOut);
 							}
-						}
-
-						if (!bWarPlan)
-						{
-							iMilitaryValue /= 2;
 						}
 
 						iUnitValue += iMilitaryValue;
@@ -7083,6 +7078,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iUnitValue /= 9;
 						}
 					}
+					/*
 					else
 					{
 						if ((eReligion != getStateReligion()) && (getStateReligion() != NO_RELIGION) && (eReligion != getFavoriteReligion()))
@@ -7091,6 +7087,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iUnitValue /= std::max(1, GC.getNumReligionInfos());
 						}
 					}
+					*/
 
 					bool bHasRequiredBonus = false;
 					bool bRequiresBonus = false;
