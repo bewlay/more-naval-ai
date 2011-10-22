@@ -27559,7 +27559,6 @@ void CvUnitAI::ConquestMove()
 	bool bHero = false;
 	bool bWizard = false;
 
-	// ALN !!ToDo!! - why are we reseting UnitAI here?  These kinds of blind UnitAI changes are bad as a general rule
     if (isHiddenNationality() || isInvisibleFromPromotion())
     {
 		if (!bHero && !bWizard)
@@ -27572,8 +27571,6 @@ void CvUnitAI::ConquestMove()
 		}
     }
 
-	// ALN !!ToDo!! - again, why are we switching UnitAI's around?  Makes no sense
-	// UnitAI is used for more than just unit movements
     switch (AI_getUnitAIType())
     {
         case UNITAI_HERO:
@@ -27587,9 +27584,14 @@ void CvUnitAI::ConquestMove()
 			}
             break;
 		case UNITAI_RESERVE:
-		//case UNITAI_ATTACK:
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			break;
+		case UNITAI_ATTACK:
+			if ((getLevel() > 4) || ((GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_ATTACK_CITY) < GET_PLAYER(getOwnerINLINE()).getNumCities())))
+			{
+				AI_setUnitAIType(UNITAI_ATTACK_CITY);
+				break;
+			}
         default:
             break;
     }
@@ -27599,9 +27601,7 @@ void CvUnitAI::ConquestMove()
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 	}
 
-
 	bool bInCity = plot()->isCity();
-
 
 	if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
 	{
@@ -27626,31 +27626,23 @@ void CvUnitAI::ConquestMove()
 		    }
 		}
 
-		// ALN !!ToDo!! we should split off part of the force to defend newly captured cities
-		// I'd really like to sometimes bring some City_Defense units along to garrison immediately like a human sometimes does
 		if (plot()->getNumDefenders(getOwnerINLINE()) == getGroupSize())
 		{
-			if (GC.getLogging())
-			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					char szOut[1024];
-					sprintf(szOut, "Player %d Unit %d (%S's %S) new defense check (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-					gDLL->messageControlLog(szOut);
-				}
-			}
 			getGroup()->pushMission(MISSION_SKIP);
 			return;
 		}
     }
 
 	// Opportunistic attacks
-	if (AI_anyAttack(1, 90))
+	if (getGroupSize() == 1)
 	{
-		return;
+		if (AI_anyAttack(1, 90))
+		{
+			return;
+		}
 	}
 
-	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
+	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, false, true, bIgnoreFaster))
 	{
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
@@ -27857,10 +27849,10 @@ void CvUnitAI::ConquestMove()
 
 	bool bAtWar = isEnemy(plot()->getTeam());
 
-	// Look for local threats
+	// Look for local threats - mainly meant to deal with early barbarian or HN threats
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3, false));
 
-	if (!bReadyToAttack || (bDanger && GET_TEAM(getTeam()).getAtWarCount(true) == 0) || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
+	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
     {
         //check for enemies in own territory
         int iOddsThreshold=70;
@@ -27896,7 +27888,8 @@ void CvUnitAI::ConquestMove()
 											
 											if (getGroup()->getNumUnits() >= (pLoopPlot->getNumVisibleEnemyDefenders(this) * 5))
 											{
-												iValue = (bAtWar ? 0 : 50);
+												//iValue = (bAtWar ? 0 : 50);
+												iValue /= 2;
 											}
 											
 
@@ -27957,6 +27950,19 @@ void CvUnitAI::ConquestMove()
 		}
 	}
 
+	if (AI_guardCity(false, false))
+	{
+		/*
+		if( bReadyToAttack && (eAreaAIType != AREAAI_DEFENSIVE))
+		{
+			CvSelectionGroup* pOldGroup = getGroup();
+
+			pOldGroup->AI_separateNonAI(UNITAI_ATTACK_CITY);
+		}
+		*/
+
+		return;
+	}
 	
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
 	{
@@ -28460,6 +28466,11 @@ void CvUnitAI::ConquestMove()
 	}
 
 	if (AI_guardFort(true))
+	{
+		return;
+	}
+
+	if (AI_travelToUpgradeCity())
 	{
 		return;
 	}
