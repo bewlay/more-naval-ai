@@ -5737,18 +5737,18 @@ bool CvUnit::pillage()
 
 				GET_PLAYER(getOwnerINLINE()).changeGold(iPillageGold);
 
-				// Tholal AI - pillaging affects War Success
-				if (iPillageGold > 10)
-				{
-					GET_TEAM(getTeam()).AI_changeWarSuccess(getTeam(), 1);
-				}
-				// End Tholal AI
-
 				szBuffer = gDLL->getText("TXT_KEY_MISC_PLUNDERED_GOLD_FROM_IMP", iPillageGold, GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
 				gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGE", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
 
 				if (pPlot->isOwned())
 				{
+					// Tholal AI - pillaging affects War Success
+					if ((iPillageGold > 10) || (pPlot->getBonusType() != NO_BONUS))
+					{
+						GET_TEAM(getTeam()).AI_changeWarSuccess(pPlot->getTeam(), 1);
+					}
+					// End Tholal AI
+
 					szBuffer = gDLL->getText("TXT_KEY_MISC_IMP_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey(), getVisualCivAdjective(pPlot->getTeam()));
 					gDLL->getInterfaceIFace()->addMessage(pPlot->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
 				}
