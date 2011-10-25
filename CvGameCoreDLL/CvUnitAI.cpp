@@ -8218,10 +8218,10 @@ void CvUnitAI::AI_assaultSeaMove()
 	bool bIsCity = plot()->isCity(true);
 
 	// Cargo if already at war
-	int iTargetReinforcementSize = (bIsBarbarian ? AI_stackOfDoomExtra() : 2);
+	int iTargetReinforcementSize = (bIsBarbarian ? 2 : AI_stackOfDoomExtra());
 
 	// Cargo to launch a new invasion
-	int iTargetInvasionSize = 2*iTargetReinforcementSize;
+	int iTargetInvasionSize = 2 * iTargetReinforcementSize;
 
 	int iCargo = getGroup()->getCargo();
 	int iEscorts = getGroup()->countNumUnitAIType(UNITAI_ESCORT_SEA) + getGroup()->countNumUnitAIType(UNITAI_ATTACK_SEA);
