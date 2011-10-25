@@ -11884,7 +11884,20 @@ void CvUnit::setExperience(int iNewValue, int iMax)
 void CvUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInBorders, bool bUpdateGlobal)
 {
 	// dont bother changing experience if the unit cant use it
-	if (getUnitCombatType() == NO_UNITCOMBAT)
+	bool bHero = false;
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		if (isHasPromotion((PromotionTypes)iI))
+		{
+		    if (GC.getPromotionInfo((PromotionTypes)iI).getFreeXPPerTurn() != 0)
+		    {
+				bHero = true;
+				break;
+			}
+		}
+	}
+
+	if (getUnitCombatType() == NO_UNITCOMBAT && !bHero)
 	{
 		return;
 	}
