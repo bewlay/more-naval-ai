@@ -6076,6 +6076,16 @@ int CvCityAI::AI_neededDefenders()
 		iDefenders = 2;
 	}
 
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	{
+		iDefenders++;
+	}
+
+	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2))
+	{
+		iDefenders++;
+	}
+
 	// defend the Altar!
 	iDefenders += (getAltarLevel() / 2);
 
