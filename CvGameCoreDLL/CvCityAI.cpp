@@ -666,7 +666,6 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 			}
 		}
 
-		// Tholal ToDo: Era fix
 		//int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
 		int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 		int iTotalEras = GC.getNumEraInfos();
@@ -676,7 +675,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 /*                                                                                              */
 /* Victory Strategy AI                                                                          */
 /************************************************************************************************/
-		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
+		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 		{
 			int iUnitClass = GC.getSpecialistInfo(eSpecialist).getGreatPeopleUnitClass();
 			FAssert(iUnitClass != NO_UNITCLASS);
