@@ -3191,6 +3191,40 @@ void CvCityAI::AI_chooseProduction()
 	{
 		return;
 	}
+
+	if (AI_chooseBuilding())
+	{
+		return;
+	}
+
+	int iBestValue = MIN_INT;
+	BuildingTypes eBestBuilding = NO_BUILDING;
+	for (int iBuildingClass = 0; iBuildingClass < GC.getNumBuildingClassInfos(); iBuildingClass++)
+	{
+		const BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iBuildingClass);
+
+		if (eBuilding != NO_BUILDING)
+		{
+			if (canConstruct(eBuilding))
+			{
+				if (!GC.getBuildingInfo((BuildingTypes)eBuilding).isCapital())
+				{
+					const int iValue = AI_buildingValue(eBuilding);
+					if (eBestBuilding == NO_BUILDING || iBestValue < iValue)
+					{
+						eBestBuilding = eBuilding;
+						iBestValue = iValue;
+					}
+				}
+			}
+		}
+	}
+	if (eBestBuilding != NO_BUILDING)
+	{
+		pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, false);
+		return;
+	}
+
 }
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
