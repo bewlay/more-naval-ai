@@ -391,6 +391,8 @@ class CvGameUtils:
 			if eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
 				if pCity.isHolyCity():
 					return True
+				if pCity.getAltarLevel() > 0:
+					return True
 				if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
 					return True
 ### End AI restrictions ###
