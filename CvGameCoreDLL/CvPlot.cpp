@@ -502,8 +502,7 @@ void CvPlot::doTurn()
                         int iChance = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getLairSpawnRate();
 						
 						// ALN - increase spawn rate if not defended
-						// !!ToDo!! should eventually replace hardcoding here with an XML tag for min defenders
-						bool bGoblinFort = (eImprovement == (ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_GOBLIN_FORT"));
+						bool bGoblinFort = (GC.getImprovementInfo(eImprovement).getDefenseModifier() > 0);
 						int iDefenders = plotCount(PUF_isUnitAIType, UNITAI_LAIRGUARDIAN, -1, (PlayerTypes)BARBARIAN_PLAYER);
 						bool bDefended = iDefenders > (bGoblinFort ? 1 : 0);
 						
