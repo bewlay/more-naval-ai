@@ -2557,6 +2557,11 @@ int CyCity::AI_neededSeaWorkers()
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+int CyCity::getAltarLevel()
+{
+    return m_pCity ? m_pCity->getAltarLevel() : -1;
+}
+
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/28
 //*** Assimilated city produces a unit with original civilization artstyle.
 const TCHAR* CyCity::getUnitArtStyleButton(int /*UnitTypes*/ eUnit) const

@@ -538,6 +538,7 @@ public:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	int getAltarLevel();
 
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/28
 //*** Assimilated city produces a unit with original civilization artstyle.
