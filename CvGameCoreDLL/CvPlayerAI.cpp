@@ -19876,14 +19876,11 @@ int CvPlayerAI::AI_getReligionVictoryStage() const
 int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 {
 
-	/*
-	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_TOWERMASTERY") <= 0 )
+	if (!GC.getGameINLINE().isVictoryValid((VictoryTypes)GC.getInfoTypeForString("VICTORY_TOWER_OF_MASTERY")))
 	{
-		return 0;
-	}
-	*/
+        return 0;
+    }
 
-	// Tholal ToDo - Add check for victory option enabled
 	// Tholal ToDo - change this into a check for Tower of Mastery building prereqs so its not hardcoded
 
 	int iNumTowers = 0;
@@ -19948,21 +19945,11 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 
 int CvPlayerAI::AI_getAltarVictoryStage() const
 {
-	/*
-	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_ALTAR") <= 0 )
+	if (!GC.getGameINLINE().isVictoryValid((VictoryTypes)GC.getInfoTypeForString("VICTORY_ALTAR_OF_THE_LUONNOTAR")))
 	{
-		return 0;
-	}
-	*/
-		
-
-	//if (!GC.getGameINLINE().altarVictoryValid())
-	/*
-    {
         return 0;
     }
-	*/
-
+	
 	if (getAlignment() == ALIGNMENT_EVIL)
 	{
 		return 0;
