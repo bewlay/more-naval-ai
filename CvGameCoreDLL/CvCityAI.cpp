@@ -703,25 +703,19 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
             bool bNeedProphet = false;
             int iBestSpreadValue = 0;
 
+			CvCivilizationInfo* pCivilizationInfo = &GC.getCivilizationInfo(getCivilizationType());
 
-			for (iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
-            {
-                ReligionTypes eReligion = (ReligionTypes) iJ;
+			int iUnitClass = GC.getSpecialistInfo(eSpecialist).getGreatPeopleUnitClass();
+            FAssert(iUnitClass != NO_UNITCLASS);
 
-				if (isHolyCity(eReligion) && !hasShrine(eReligion)
-//>>>>Better AI: Modified by Denev 2010/03/05
-//*** Because we don't eras like vanilla civ4, and Shrines are always powerful in FfH2.
-//					&& ((iCurrentEra < iTotalEras / 2) || GC.getGameINLINE().countReligionLevels(eReligion) >= 10))
-					&& (GC.getGameINLINE().countReligionLevels(eReligion) >= 10))
-//<<<<Better AI: End Modify
+			UnitTypes eGreatPeopleUnit = (UnitTypes) pCivilizationInfo->getCivilizationUnits(iUnitClass);
+			if (eGreatPeopleUnit != NO_UNIT)
+			{
+				for (iJ = 0; iJ < GC.getNumReligionInfos(); iJ++)
 				{
-					CvCivilizationInfo* pCivilizationInfo = &GC.getCivilizationInfo(getCivilizationType());
+					ReligionTypes eReligion = (ReligionTypes) iJ;
 
-					int iUnitClass = GC.getSpecialistInfo(eSpecialist).getGreatPeopleUnitClass();
-                    FAssert(iUnitClass != NO_UNITCLASS);
-
-					UnitTypes eGreatPeopleUnit = (UnitTypes) pCivilizationInfo->getCivilizationUnits(iUnitClass);
-					if (eGreatPeopleUnit != NO_UNIT)
+					if (isHolyCity(eReligion) && !hasShrine(eReligion) && (GC.getGameINLINE().countReligionLevels(eReligion) >= 10))
 					{
 						// note, for normal XML, this count will be one (there is only 1 shrine building for each religion)
 						int	shrineBuildingCount = GC.getGameINLINE().getShrineBuildingCount(eReligion);
@@ -739,16 +733,17 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 					}
 				}
+				// Tholal AI - Make Prophets for the Altar - some HARDCODE - ToDo: make this more dynamic somehow in regards to victory buildings
+				if (getAltarLevel() > 0 || GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
+				{
+					if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_PROPHET)
+					{
+						bNeedProphet = true;
+						iBestSpreadValue += (50 * (getAltarLevel() + 1));
+					}
+				}
 			}
 			
-			// Tholal AI - Make Prophets for the Altar
-			if (getAltarLevel()>0)
-			{
-				bNeedProphet = true;
-				iBestSpreadValue += (10 * getAltarLevel());
-			}
-			// End Tholal AI
-
 			if (bNeedProphet)
             {
                 iTempValue += ((iGreatPeopleRate * iBestSpreadValue));
