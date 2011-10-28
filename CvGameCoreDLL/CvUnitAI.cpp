@@ -15683,7 +15683,18 @@ bool CvUnitAI::AI_patrol()
 
 						if (isBarbarian())
 						{
-							// ALN - removed to allow barbs to wander into claimed territory on 'patrol'
+							if (isAnimal()) // keep animals out of owned territory
+							{
+								if (!(pAdjacentPlot->isOwned()))
+								{
+									iValue += 20000; 	 
+								} 	 
+		  	 
+								if (!(pAdjacentPlot->isAdjacentOwned()))
+								{
+								iValue += 10000;
+								}
+							}
 						}
 						else
 						{
