@@ -84,7 +84,7 @@ class CvInfoScreen:
 		self.AGRICULTURE_SCORE	= 3
 		self.POWER_SCORE	= 4
 		self.CULTURE_SCORE	= 5
-		self.ESPIONAGE_SCORE	= 6
+#		self.ESPIONAGE_SCORE	= 6
 		self.NUM_SCORES		= 7
 		self.RANGE_SCORES	= range(self.NUM_SCORES)
 
@@ -155,7 +155,7 @@ class CvInfoScreen:
 		self.AGRICULTURE_SCORE	= 3
 		self.POWER_SCORE	= 4
 		self.CULTURE_SCORE	= 5
-		self.ESPIONAGE_SCORE	= 6
+#		self.ESPIONAGE_SCORE	= 6
 
 ############################################### DEMOGRAPHICS ###############################################
 
@@ -366,7 +366,7 @@ class CvInfoScreen:
 		self.TEXT_SCORE = localText.getText("TXT_KEY_GAME_SCORE", ())
 		self.TEXT_POWER = localText.getText("TXT_KEY_POWER", ())
 		self.TEXT_CULTURE = localText.getObjectText("TXT_KEY_COMMERCE_CULTURE", 0)
-		self.TEXT_ESPIONAGE = localText.getObjectText("TXT_KEY_ESPIONAGE_CULTURE", 0)
+#		self.TEXT_ESPIONAGE = localText.getObjectText("TXT_KEY_ESPIONAGE_CULTURE", 0)
 
 		self.TEXT_VALUE = localText.getText("TXT_KEY_DEMO_SCREEN_VALUE_TEXT", ())
 		self.TEXT_RANK = localText.getText("TXT_KEY_DEMO_SCREEN_RANK_TEXT", ())
@@ -657,7 +657,7 @@ class CvInfoScreen:
 	    screen.addPullDownString(self.szGraphDropdownWidget, self.TEXT_AGRICULTURE, 3, 3, False )
 	    screen.addPullDownString(self.szGraphDropdownWidget, self.TEXT_POWER, 4, 4, False )
 	    screen.addPullDownString(self.szGraphDropdownWidget, self.TEXT_CULTURE, 5, 5, False )
-	    screen.addPullDownString(self.szGraphDropdownWidget, self.TEXT_ESPIONAGE, 6, 6, False )
+#	    screen.addPullDownString(self.szGraphDropdownWidget, self.TEXT_ESPIONAGE, 6, 6, False )
 
 	    self.dropDownTurns = []
 	    self.szTurnsDropdownWidget = self.getNextWidgetName()
@@ -2216,8 +2216,8 @@ class CvInfoScreen:
 					elif (iSelected == 5):
 						self.iGraphTabID = self.CULTURE_SCORE
 
-					elif (iSelected == 6):
-						self.iGraphTabID = self.ESPIONAGE_SCORE
+#					elif (iSelected == 6):
+#						self.iGraphTabID = self.ESPIONAGE_SCORE
 
 					self.drawGraph()
 
