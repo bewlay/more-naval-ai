@@ -4692,11 +4692,13 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 DenialTypes CvPlayer::getTradeDenial(PlayerTypes eWhoTo, TradeData item) const
 {
 	CvCity* pCity;
+	
+	const CvTeamAI& kOurTeam = GET_TEAM(getTeam());
 
 	switch (item.m_eItemType)
 	{
 	case TRADE_TECHNOLOGIES:
-		return GET_TEAM(getTeam()).AI_techTrade(((TechTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_techTrade(((TechTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_RESOURCES:
@@ -4716,23 +4718,23 @@ DenialTypes CvPlayer::getTradeDenial(PlayerTypes eWhoTo, TradeData item) const
 		break;
 
 	case TRADE_MAPS:
-		return GET_TEAM(getTeam()).AI_mapTrade(GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_mapTrade(GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_SURRENDER:
-		return GET_TEAM(getTeam()).AI_surrenderTrade(GET_PLAYER(eWhoTo).getTeam(), 140);
+		return kOurTeam.AI_surrenderTrade(GET_PLAYER(eWhoTo).getTeam(), 140);
 		break;
 
 	case TRADE_VASSAL:
-		return GET_TEAM(getTeam()).AI_vassalTrade(GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_vassalTrade(GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_PEACE:
-		return GET_TEAM(getTeam()).AI_makePeaceTrade(((TeamTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_makePeaceTrade(((TeamTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_WAR:
-		return GET_TEAM(getTeam()).AI_declareWarTrade(((TeamTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_declareWarTrade(((TeamTypes)(item.m_iData)), GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_EMBARGO:
@@ -4748,15 +4750,15 @@ DenialTypes CvPlayer::getTradeDenial(PlayerTypes eWhoTo, TradeData item) const
 		break;
 
 	case TRADE_OPEN_BORDERS:
-		return GET_TEAM(getTeam()).AI_openBordersTrade(GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_openBordersTrade(GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_DEFENSIVE_PACT:
-		return GET_TEAM(getTeam()).AI_defensivePactTrade(GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_defensivePactTrade(GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_PERMANENT_ALLIANCE:
-		return GET_TEAM(getTeam()).AI_permanentAllianceTrade(GET_PLAYER(eWhoTo).getTeam());
+		return kOurTeam.AI_permanentAllianceTrade(GET_PLAYER(eWhoTo).getTeam());
 		break;
 
 	case TRADE_PEACE_TREATY:
