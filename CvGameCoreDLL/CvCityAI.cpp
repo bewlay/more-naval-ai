@@ -12561,7 +12561,7 @@ int CvCityAI::AI_specialYieldMultiplier(YieldTypes eYield)
 }
 
 
-int CvCityAI::AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand, bool bWater, bool bCheckBlockingFeatures)
+int CvCityAI::AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand, bool bWater)
 {
     CvPlot* pLoopPlot;
     BonusTypes eLoopBonus;
@@ -12585,56 +12585,19 @@ int CvCityAI::AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bInc
 				{
 					if ((eBonus == NO_BONUS) || (eBonus == eLoopBonus))
 					{
-						// this section is used in tech valuation - dont want to research techs for resources we cant exploit due to blocking features
-						if (bCheckBlockingFeatures)
+						if (bIncludeOurs && (pLoopPlot->getOwnerINLINE() == getOwnerINLINE()) && (pLoopPlot->getWorkingCity() == this))
 						{
-							bCanWork = false;
-
-							if (pLoopPlot->getFeatureType() == NO_FEATURE)
-							{
-								bCanWork = true;
-							}
-							else if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
-							{
-								bCanWork = true;
-							}
-							else
-							{
-								for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
-								{
-									BuildTypes eBuild = ((BuildTypes)iJ);
-									if (eBuild != NO_BUILD)
-									{
-										ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
-										if ( eImp != NO_IMPROVEMENT && GC.getImprovementInfo(eImp).isImprovementBonusTrade(eLoopBonus) )
-										{
-											if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
-											{
-												bCanWork = true;
-												break;
-											}
-										}
-									}
-								}
-							}
+							iCount++;
 						}
-
-						if (!bCheckBlockingFeatures || bCanWork)
+						else if (bIncludeNeutral && (!pLoopPlot->isOwned()))
 						{
-							if (bIncludeOurs && (pLoopPlot->getOwnerINLINE() == getOwnerINLINE()) && (pLoopPlot->getWorkingCity() == this))
+							iCount++;
+						}
+						else if ((iOtherCultureThreshold > 0) && (pLoopPlot->isOwned() && (pLoopPlot->getOwnerINLINE() != getOwnerINLINE())))
+						{
+							if ((pLoopPlot->getCulture(pLoopPlot->getOwnerINLINE()) - pLoopPlot->getCulture(getOwnerINLINE())) < iOtherCultureThreshold)
 							{
 								iCount++;
-							}
-							else if (bIncludeNeutral && (!pLoopPlot->isOwned()))
-							{
-								iCount++;
-							}
-							else if ((iOtherCultureThreshold > 0) && (pLoopPlot->isOwned() && (pLoopPlot->getOwnerINLINE() != getOwnerINLINE())))
-							{
-								if ((pLoopPlot->getCulture(pLoopPlot->getOwnerINLINE()) - pLoopPlot->getCulture(getOwnerINLINE())) < iOtherCultureThreshold)
-								{
-									iCount++;
-								}
 							}
 						}
 					}

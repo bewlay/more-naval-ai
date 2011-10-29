@@ -1077,7 +1077,7 @@ public:
 
 	virtual int AI_calculateCulturePressure(bool bGreatWork = false) = 0;
 	virtual int AI_calculateWaterWorldPercent() = 0;
-	virtual int AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand = true, bool bWater = true, bool bCheckBlockingFeatures = false) = 0;
+	virtual int AI_countNumBonuses(BonusTypes eBonus, bool bIncludeOurs, bool bIncludeNeutral, int iOtherCultureThreshold, bool bLand = true, bool bWater = true) = 0;
 	virtual int AI_yieldMultiplier(YieldTypes eYield) = 0;
 	virtual int AI_playerCloseness(PlayerTypes eIndex, int iMaxDistance = 7) = 0;
 	virtual int AI_cityThreat(bool bDangerPercent = false) = 0;

@@ -3768,16 +3768,67 @@ int CvPlayer::countTotalCulture() const
 int CvPlayer::countOwnedBonuses(BonusTypes eBonus, bool bCheckBlockingFeatures) const
 {
 	PROFILE("CvPlayer::countOwnedBonuses");
-    CvCity* pLoopCity;
+    //CvCity* pLoopCity;
 	CvPlot* pLoopPlot;
 	int iCount;
 	int iI;
-    int iLoop;
+	//int iLoop;
 
     bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentEra() < 3);
+	bool bCanWork;
 
 	iCount = 0;
 
+	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+		if (pLoopPlot->getOwnerINLINE() == getID())
+		{
+			if (pLoopPlot->getBonusType(getTeam()) == eBonus)
+			{
+				// this section is used in tech valuation - dont want to research techs for resources we cant exploit due to blocking features
+				if (bCheckBlockingFeatures)
+				{
+					bCanWork = false;
+					if (pLoopPlot->getFeatureType() == NO_FEATURE)
+					{
+						bCanWork = true;
+					}
+					else if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
+					{
+						bCanWork = true;
+					}
+					else
+					{
+						for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+						{
+							BuildTypes eBuild = ((BuildTypes)iJ);
+							if (eBuild != NO_BUILD)
+							{
+								ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+								if ( eImp != NO_IMPROVEMENT && GC.getImprovementInfo(eImp).isImprovementBonusTrade(eBonus) )
+								{
+									if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
+									{
+										bCanWork = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if (!bCheckBlockingFeatures || bCanWork)
+				{
+					iCount++;
+				}
+			}
+		}
+	}
+
+	/*
 	//count bonuses outside city radius
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -3804,8 +3855,9 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus, bool bCheckBlockingFeatures) 
 	//count bonuses inside city radius or easily claimed
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
-		iCount += pLoopCity->AI_countNumBonuses(eBonus, true, pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0, -1, true, true, bCheckBlockingFeatures);
+		iCount += pLoopCity->AI_countNumBonuses(eBonus, true, pLoopCity->getCommerceRate(COMMERCE_CULTURE) > 0, -1, true, true);
 	}
+	*/
 
 	return iCount;
 }
