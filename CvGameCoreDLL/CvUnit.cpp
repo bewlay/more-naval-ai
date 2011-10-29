@@ -8230,14 +8230,14 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	UnitAITypes eUnitAI = AI_getUnitAIType();
 	CvArea* pArea = area();
 
-	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea);
+	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true);
 
 	int iBestSearchValue = MAX_INT;
 	CvCity* pBestUpgradeCity = NULL;
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		int iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
+		int iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea, true);
 		if (iNewValue > iCurrentValue)
 		{
 			int iSearchValue;

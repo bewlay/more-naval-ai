@@ -10975,7 +10975,7 @@ int CvPlayerAI::AI_unitImpassableCount(UnitTypes eUnit) const
 }
 
 
-int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea) const
+int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea, bool bUpgrade) const
 {
 	PROFILE_FUNC();
 
@@ -11004,6 +11004,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	bValid = GC.getUnitInfo(eUnit).getUnitAIType(eUnitAI);
 
+	if ((GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO) && (eUnitAI != UNITAI_HERO))
+	{
+		return 0;
+	}
+
 	if (!bValid)
 	{
 		switch (eUnitAI)
@@ -11012,6 +11017,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_HERO:
+			if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() != UNITAI_HERO && !bUpgrade)
+			{
+				break;
+			}
 			// adventurers
 			if (GC.getUnitInfo(eUnit).isOnlyDefensive())
 			{
@@ -11092,6 +11101,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						break;
 					}
 //<<<<Better AI: End Add
+					// check moves
+					if (!(GC.getUnitInfo(eUnit).getMoves() > 1))
+					{
+						// TODO -check double feature moves
+						//for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+						break;
+					}
 
 					bValid = true;
 				}
@@ -11591,7 +11607,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 25);
+		iValue += ((iCombatValue * GC.getUnitInfo(eUnit).getWithdrawalProbability()) / 75);
 		if (GC.getUnitInfo(eUnit).getCombatLimit() < 100)
 		{
 			iValue -= (iCombatValue * (125 - GC.getUnitInfo(eUnit).getCombatLimit())) / 100;
@@ -21447,7 +21463,7 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 
 		UnitAITypes eUnitAIType = pLoopUnit->AI_getUnitAIType();
 		CvArea* pUnitArea = pLoopUnit->area();
-		int iUnitValue = AI_unitValue(eUnitType, eUnitAIType, pUnitArea);
+		int iUnitValue = AI_unitValue(eUnitType, eUnitAIType, pUnitArea, true);
 
 		for (int iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 		{
@@ -21457,7 +21473,7 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 			if (NO_UNIT != eUpgradeUnitType)
 			{
 				// is it better?
-				int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea);
+				int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea, true);
 				if (iUpgradeValue > iUnitValue)
 				{
 					// is this a valid upgrade?

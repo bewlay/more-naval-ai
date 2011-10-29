@@ -855,12 +855,7 @@ void CvUnitAI::AI_upgrade()
 	UnitAITypes eUnitAI = AI_getUnitAIType();
 	CvArea* pArea = area();
 
-	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea);
-
-	if (isOnlyDefensive())
-	{
-		iCurrentValue = 1;
-	}
+	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true);
 
 	int iBestValue = 0;
 	int iNewValue = 0;
@@ -870,7 +865,7 @@ void CvUnitAI::AI_upgrade()
 	{
 		if (canUpgrade((UnitTypes)iI))
 		{
-			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea);
+			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea, true);
 
 			int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
 
@@ -881,7 +876,6 @@ void CvUnitAI::AI_upgrade()
 					iNewValue = 0;
 				}
 			}
-
 
 			if ((iNewValue > iBestValue) && (iNewValue > iCurrentValue))
 			{
