@@ -6888,16 +6888,8 @@ void CvUnitAI::AI_workerSeaMove()
 
 	if (!(getGroup()->canDefend()))
 	{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      08/20/09                                jdog5000      */
-/*                                                                                              */
-/* Unit AI, Efficiency                                                                          */
-/************************************************************************************************/
-		//if (GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot()) > 0)
-		if (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot()))
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+		//if (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot()))
+		if (GET_PLAYER(getOwnerINLINE()).AI_getWaterDanger(plot(), -1))
 		{
 			if (AI_retreatToCity())
 			{
@@ -6905,6 +6897,7 @@ void CvUnitAI::AI_workerSeaMove()
 			}
 		}
 	}
+
 /*************************************************************************************************/
 /** Skyre Mod                                                                                   **/
 /** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
