@@ -331,6 +331,7 @@ void CyInfoPythonInterface2()
 
 //FfH: Added by Kael 09/27/2007
 		.def("isUnique", &CvImprovementInfo::isUnique, "bool ()")
+		.def("getBonusConvert", &CvImprovementInfo::getBonusConvert, "int ()")
 		.def("isExploreTarget", &CvImprovementInfo::isExploreTarget, "bool ()")
 		.def("getPythonAtRange", &CvImprovementInfo::getPythonAtRange, "string ()")
 		.def("getPythonOnMove", &CvImprovementInfo::getPythonOnMove, "string ()")
