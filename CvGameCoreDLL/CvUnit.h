@@ -761,8 +761,6 @@ public:
     virtual int AI_getGroupflag() const = 0;
     virtual void AI_setGroupflag(int newflag) = 0;
     virtual void AI_chooseGroupflag() = 0;
-    virtual CvPlot* getOriginPlot() const = 0;
-    virtual void setOriginPlot(CvPlot* newplot) = 0;
 
 	virtual void AI_mageMove() = 0;
 	virtual void AI_mageCast() = 0;

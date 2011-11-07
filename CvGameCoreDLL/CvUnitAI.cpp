@@ -77,8 +77,6 @@ void CvUnitAI::AI_reset(UnitAITypes eUnitAI)
     m_bPermanentSummon=false;
 
     m_bAllowedPermDefense=true;
-    m_bAllowedPatrol=true;
-    m_bAllowedExplore=true;
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -25746,8 +25744,6 @@ void CvUnitAI::read(FDataStreamBase* pStream)
 /**						                                            							**/
 /*************************************************************************************************/
     pStream->Read(&m_bAllowedPermDefense);
-    pStream->Read(&m_bAllowedPatrol);
-    pStream->Read(&m_bAllowedExplore);
     pStream->Read(&m_bPermanentSummon);
     pStream->Read(&m_bSuicideSummon);
 
@@ -25776,8 +25772,6 @@ void CvUnitAI::write(FDataStreamBase* pStream)
 /**						                                            							**/
 /*************************************************************************************************/
     pStream->Write(m_bAllowedPermDefense);
-    pStream->Write(m_bAllowedPatrol);
-    pStream->Write(m_bAllowedExplore);
     pStream->Write(m_bPermanentSummon);
     pStream->Write(m_bSuicideSummon);
 
@@ -25880,29 +25874,6 @@ void CvUnitAI::AI_summonAttackMove()
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-CvPlot* CvUnitAI::getOriginPlot() const
-{
-   if (m_iOriginX==-1 && m_iOriginY==-1)
-   {
-        return NULL;
-   }
-   return plotXY(m_iOriginX,m_iOriginY,0,0);
-}
-
-void CvUnitAI::setOriginPlot(CvPlot* newplot)
-{
-    if (newplot==NULL)
-    {
-        m_iOriginX=-1;
-        m_iOriginY=-1;
-    }
-    else
-    {
-        m_iOriginX=newplot->getX_INLINE();
-        m_iOriginY=newplot->getY_INLINE();
-    }
-}
-
 int CvUnitAI::AI_getGroupflag() const
 {
     return m_iGroupflag;
@@ -28774,7 +28745,6 @@ bool CvUnitAI::AI_Rantinemove()
                                                     pLoopUnit->joinGroup(NULL);
                                                     pLoopUnit->AI_setGroupflag(GROUPFLAG_NONE);
                                                     pLoopUnit->AI_setUnitAIType(UNITAI_ATTACK);
-                                                    pLoopUnit->setOriginPlot(NULL);
                                                     pLoopUnit->joinGroup(getGroup());
                                                     return false;
                                                 }

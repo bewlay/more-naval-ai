@@ -456,8 +456,6 @@ public:
     void AI_setGroupflag(int iNewValue);
 
     void joinGroup(CySelectionGroup* pNewGroup);
-    CyPlot* getOriginPlot() const;
-    void setOriginPlot(CyPlot* newplot);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

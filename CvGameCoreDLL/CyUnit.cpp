@@ -1974,17 +1974,6 @@ void CyUnit::joinGroup(CySelectionGroup* pNewGroup)
         m_pUnit->joinGroup(pNewGroup->getSelectionGroup());
 }
 
-CyPlot* CyUnit::getOriginPlot() const
-{
-	return m_pUnit ? new CyPlot(m_pUnit->getOriginPlot()) : false;
-
-}
-
-void CyUnit::setOriginPlot(CyPlot* newplot)
-{
-    if (m_pUnit)
-        m_pUnit->setOriginPlot(newplot->getPlot());
-}
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

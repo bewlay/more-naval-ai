@@ -76,11 +76,7 @@ public:
 
     bool isUnitAllowedPermDefense();
 
-//used for spawns
-    CvPlot* getOriginPlot() const;
-    void setOriginPlot(CvPlot* newplot);
 // heroes
-
     void AI_heromove();
     bool AI_Govannonmove();
     bool AI_Lokimove();
@@ -141,8 +137,6 @@ protected:
 	bool m_bSuicideSummon;
 	bool m_bPermanentSummon;
     bool m_bAllowedPermDefense;
-    bool m_bAllowedPatrol;
-    bool m_bAllowedExplore;
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
