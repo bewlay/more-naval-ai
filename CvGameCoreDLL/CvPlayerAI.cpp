@@ -500,7 +500,7 @@ void CvPlayerAI::AI_doTurnUnitsPre()
     {
         if (pLoopUnit->AI_getUnitAIType()==UNITAI_WORKER)
         {
-            if (AI_isPlotThreatened(pLoopUnit->plot(), 3))
+			if (AI_isPlotThreatened(pLoopUnit->plot(), 3) && !pLoopUnit->plot()->isCity())
             {
 //              pLoopUnit->getGroup()->setAutomateType(NO_AUTOMATE);
                 pLoopUnit->getGroup()->clearMissionQueue();
