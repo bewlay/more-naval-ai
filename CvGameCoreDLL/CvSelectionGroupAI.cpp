@@ -528,35 +528,28 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupSacrifice(const CvPlot* pPlot, bool b
 						FAssertMsg(iValue > 0, "iValue is expected to be greater than 0");
 /*************************************************************************************************/
 /**	BETTER AI (Summons make good groupattack sacrifice units) Sephi              				**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
 						if (pLoopUnit->getDuration()>0)
 						{
 						    iValue+=10000;
 						}
 /*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-/*************************************************************************************************/
 /**	BETTER AI (Block some Units from attacking at low odds) Sephi              					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
                         if (!GET_PLAYER(pLoopUnit->getOwnerINLINE()).isHuman())
                         {
                             if (pLoopUnit->AI_getUnitAIType()==UNITAI_WARWIZARD)
                             {
-	                            iValue=1;
+	                            iValue = 0;
                             }
 
                             if (pLoopUnit->AI_getUnitAIType()==UNITAI_HERO)
                             {
-	                            iValue=0;
+	                            iValue = 0;
                             }
 							if (pLoopUnit->getLevel()>4)
 							{
-	                            iValue=1;
+	                            iValue = 1;
 							}
                         }
 /*************************************************************************************************/
@@ -564,7 +557,7 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupSacrifice(const CvPlot* pPlot, bool b
 /*************************************************************************************************/
 
 						// we want to pick the last unit of highest value, so pick the last unit with a good value
-						if (iValue >= iBestValue)
+						if ((iValue > 0) && (iValue >= iBestValue))
 						{
 							iBestValue = iValue;
 							pBestUnit = pLoopUnit;
