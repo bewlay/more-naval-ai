@@ -3114,7 +3114,8 @@ TeamTypes CvUnit::getDeclareWarMove(const CvPlot* pPlot) const
 		{
 			if (pPlot->isActiveVisible(false))
 			{
-				if (canMoveInto(pPlot, true, true, true))
+				//if (canMoveInto(pPlot, true, true, true))
+				if (canMoveInto(pPlot, true, true, true) && !canMoveInto(pPlot))
 				{
 					pUnit = pPlot->plotCheck(PUF_canDeclareWar, getOwnerINLINE(), isAlwaysHostile(pPlot), NO_PLAYER, NO_TEAM, PUF_isVisible, getOwnerINLINE());
 
