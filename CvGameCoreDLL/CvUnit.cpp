@@ -6441,43 +6441,6 @@ bool CvUnit::found()
 		gDLL->getInterfaceIFace()->lookAt(plot()->getPoint(), CAMERALOOKAT_NORMAL);
 	}
 
-/*************************************************************************************************/
-/**	BETTER AI (Use Patrol for CityDefense) Sephi                               					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    if (!isHuman())
-    {
-        CLLNode<IDInfo>* pUnitNode;
-        CvUnit* pLoopUnit;
-        pUnitNode = getGroup()->headUnitNode();
-        while (pUnitNode != NULL)
-        {
-            pLoopUnit = ::getUnit(pUnitNode->m_data);
-            pUnitNode = plot()->nextUnitNode(pUnitNode);
-            if (pLoopUnit!=NULL)
-            {
-                if(pLoopUnit!=this && pLoopUnit->AI_getUnitAIType()==UNITAI_COUNTER)
-                {
-                    if(pLoopUnit->isUnitAllowedPermDefense())
-                    {
-                        pLoopUnit->joinGroup(NULL);
-                        pLoopUnit->AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
-                        pLoopUnit->setOriginPlot(NULL);
-                        pLoopUnit->AI_setUnitAIType(UNITAI_CITY_DEFENSE);
-                    }
-                    else
-                    {
-                        pLoopUnit->joinGroup(NULL);
-                        pLoopUnit->setOriginPlot(NULL);
-                    }
-                }
-            }
-        }
-    }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 	GET_PLAYER(getOwnerINLINE()).found(getX_INLINE(), getY_INLINE());
 
 	if (plot()->isActiveVisible(false))
