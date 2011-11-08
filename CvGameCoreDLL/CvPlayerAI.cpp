@@ -522,10 +522,10 @@ void CvPlayerAI::AI_doTurnUnitsPre()
 		return;
 	}
 
-//	if (AI_isDoStrategy(AI_STRATEGY_CRUSH))
-//	{
-//		AI_convertUnitAITypesForCrush();
-//	}
+	if (AI_isDoStrategy(AI_STRATEGY_CRUSH))
+	{
+		AI_convertUnitAITypesForCrush();
+	}
 }
 
 
@@ -20904,7 +20904,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	}
 	
-	if( m_iStrategyHash & !AI_STRATEGY_ALERT2 )
+	if( !(m_iStrategyHash & AI_STRATEGY_ALERT2) )
 	{//Crush
 		int iWarCount = 0;
 		int iCrushValue = 0;
@@ -20918,6 +20918,10 @@ int CvPlayerAI::AI_getStrategyHash() const
 		if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
 		{
 			iCrushValue += 3;
+		}
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+		{
+			iCrushValue += 1;
 		}
 		for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 		{
@@ -21736,6 +21740,10 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 			{
 				if (pLoopUnit->plot()->getPlotCity()->getOwner() == getID())
 				{
+					if (pLoopUnit->plot()->getPlotCity()->isDisorder())
+					{
+						bValid = false;
+					}
 					if (pLoopUnit->plot()->getBestDefender(getID()) == pLoopUnit)
 					{
 						bValid = false;
@@ -21747,6 +21755,7 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 		if (bValid)
 		{
 			pLoopUnit->AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			pLoopUnit->AI_setGroupflag(GROUPFLAG_CONQUEST);
 		}
 	}
 }
