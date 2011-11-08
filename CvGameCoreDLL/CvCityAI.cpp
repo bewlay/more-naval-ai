@@ -9321,13 +9321,6 @@ bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds)
 			getUnitProduction(eBestUnit) > 0 ||
 			GC.getGameINLINE().getSorenRandNum(100, "City AI choose unit") < iOdds )
 		{
-			// Tholal AI - Don't push other AI types for Hero Units
-			// Tholal ToDo: Move this into BestUnitAI function instead?
-			if (GC.getUnitInfo(eBestUnit).getDefaultUnitAIType() == UNITAI_HERO)
-			{
-				eUnitAI = UNITAI_HERO;
-			}
-			// End Tholal AI
 			pushOrder(ORDER_TRAIN, eBestUnit, eUnitAI, false, false, false);
 			return true;
 		}
@@ -9340,13 +9333,6 @@ bool CvCityAI::AI_chooseUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 {
 	if (eUnit != NO_UNIT)
 	{
-// Tholal AI - Don't push other AI types for Hero Units
-// ToDo - Figure out why improper AIs are sometimes being assigned to units
-		if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO)
-		{
-			eUnitAI = UNITAI_HERO;
-		}
-// End Tholal AI
 		pushOrder(ORDER_TRAIN, eUnit, eUnitAI, false, false, false);
 		return true;
 	}

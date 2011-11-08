@@ -147,15 +147,6 @@ bool CvUnitAI::AI_update()
 			}
 		}
 
-		// - Temporary hack to catch Heroes who have their AI switched - still needed?
-		if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
-		{
-			if (AI_getUnitAIType() != UNITAI_HERO)
-			{
-				AI_setUnitAIType(UNITAI_HERO);
-			}
-		}
-
 		// Ships choose crews
 		if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
 		{
@@ -25705,11 +25696,6 @@ bool CvUnitAI::isUnitAllowedPermDefense()
     {
         return false;
     }
-
-	if (m_pUnitInfo->getDefaultUnitAIType() == UNITAI_HERO)
-	{
-		return false;
-	}
 
 	if (kUnitInfo.getCombat() > kUnitInfo.getCombatDefense())
 	{
