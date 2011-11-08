@@ -4958,40 +4958,6 @@ void CvUnitAI::AI_cityDefenseMove()
 		}
 	}
 
-	// Try and switch out AI types for extra defenders that are sitting around
-	// ToDo - smarter choices about which units have their AI switched - need an isAllowedConquest function?
-	if (!isBarbarian())
-	{
-		if (plot()->isCity() && (getGroup()->getNumUnits() == 1))
-		{
-			CvCity* pCity = plot()->getPlotCity();
-			int iCityDefenders = plot()->plotCount(PUF_canDefendGroupHead, -1, -1, getOwnerINLINE(), NO_TEAM, PUF_isCityAIType);
-
-			if (iCityDefenders > (pCity->AI_neededDefenders() + 1))
-			{
-				if (!bDanger)
-				{
-					if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || 
-						GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || 
-						GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-					{
-						AI_setGroupflag(GROUPFLAG_CONQUEST);
-						AI_setUnitAIType(UNITAI_ATTACK_CITY);
-						getGroup()->pushMission(MISSION_SKIP);
-						return;
-					}
-					else
-					{
-						AI_setGroupflag(GROUPFLAG_PATROL);
-						AI_setUnitAIType(UNITAI_ATTACK);
-						getGroup()->pushMission(MISSION_SKIP);
-						return;
-					}
-				}
-			}
-		}
-	}
-
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/18/09                                jdog5000      */
 /*                                                                                              */
@@ -5065,6 +5031,11 @@ void CvUnitAI::AI_cityDefenseMove()
 			{
 				return;
 			}
+		}
+
+		if (AI_travelToUpgradeCity())
+		{
+			return;
 		}
 	}
 
