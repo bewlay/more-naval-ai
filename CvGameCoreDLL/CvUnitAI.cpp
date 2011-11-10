@@ -1819,8 +1819,6 @@ void CvUnitAI::AI_settleMove()
 	PROFILE_FUNC();
 /*************************************************************************************************/
 /**	BETTER AI (UNITAI_SETTLE move) Sephi                        	                            **/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
 
     //reset values after first city is build
@@ -1870,7 +1868,7 @@ void CvUnitAI::AI_settleMove()
 											iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
 											// Tholal AI - consider distance
 											iValue *= 2;
-											iValue /= (iPathTurns + 2);
+											iValue /= ((iPathTurns * 3) + 1);
 											// End Tholal AI
 											if (iValue > iBestValue)
 											{
@@ -1926,80 +1924,20 @@ void CvUnitAI::AI_settleMove()
             getGroup()->pushMission(MISSION_FOUND);
             return;
         }
-
-        //haven't found a City after 3 turns?
-		/*
-	    if (GC.getGameINLINE().getGameTurn() > 5)
-	    {
-            CvPlot* pLoopPlot;
-            CvPlot* pBestPlot;
-            int iSearchRange;
-            int iPathTurns;
-            int iValue;
-            int iBestValue;
-            int iDX, iDY;
-
-            iSearchRange = 6;
-            int iRange = 6;
-
-
-            iBestValue = 0;
-            pBestPlot = NULL;
-
-            for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-            {
-                for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-                {
-                    pLoopPlot	= plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
-
-                    if (pLoopPlot != NULL)
-                    {
-                        if ((AI_plotValid(pLoopPlot)) && canFound(pLoopPlot))
-                        {
-                            if (!pLoopPlot->isVisibleEnemyUnit(this))
-                            {
-                                if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                {
-                                    if (iPathTurns<3)
-                                    {
-                                        iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
-                                        if (iValue > iBestValue)
-                                        {
-                                            iBestValue = iValue;
-                                            pBestPlot = pLoopPlot;
-                                            FAssert(!atPlot(pBestPlot));
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (pBestPlot != NULL)
-            {
-                if(atPlot(pBestPlot))
-                {
-                    getGroup()->pushMission(MISSION_FOUND);
-                    return;
-                }
-                else
-                {
-                    getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
-                    return;
-                }
-            }
-	    }
-		*/
     }
 
 	// Tholal AI - modified from BBAI
-	int iDanger = GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 3);
+	int iDanger = GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 2);
 	int iNeededSettleDefenders = (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS) ? 4 : 3);
 
 	if (GET_TEAM(getTeam()).isBarbarianAlly() && GET_TEAM(getTeam()).getAtWarCount(true) == 0)
 	{
 		iNeededSettleDefenders = 2;
+	}
+
+	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS) || GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE))
+	{
+		iNeededSettleDefenders -= 1;
 	}
 
 	if (iDanger > 0)
@@ -2008,7 +1946,6 @@ void CvUnitAI::AI_settleMove()
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
-				joinGroup(NULL);
 				if (AI_retreatToCity())
 				{
 					return;
@@ -2032,7 +1969,7 @@ void CvUnitAI::AI_settleMove()
 				return;
 			}
 
-			if (getGroup()->getNumUnits() > iNeededSettleDefenders + 1)
+			if (getGroup()->getNumUnits() > iNeededSettleDefenders + 2)
 			{
 				joinGroup(NULL, true);
 				return;
@@ -2136,7 +2073,7 @@ void CvUnitAI::AI_settleMove()
 /************************************************************************************************/
 			&& (GC.getGameINLINE().getMaxCityElimination() > 0))
 		{
-			if (getGroup()->getNumUnits() < 4)
+			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
@@ -2160,6 +2097,19 @@ void CvUnitAI::AI_settleMove()
 		}
 
 		// BBAI TODO: Go to a good city (like one with a transport) ...
+	}
+
+	// make sure combat units dont get stuck guarding settlers in cities during wartime
+	if (plot()->isCity() && (plot()->getOwnerINLINE() == getOwnerINLINE()))
+	{
+		if (getGroup()->getNumUnits() > 2)
+		{
+			if ((GET_TEAM(getTeam()).getAtWarCount(false) > 0) && (iDanger > 0))
+			{
+				joinGroup(NULL, true);
+				return;
+			}
+		}
 	}
 
 	if (AI_retreatToCity())
