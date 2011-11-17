@@ -1306,6 +1306,15 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			}
 		}
 //FfH: End Add
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut,"  Team %d (%S) declares war on team %d \n", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), eTeam);
+				gDLL->messageControlLog(szOut);
+			}
+		}
 
 		for (pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
 		{

@@ -789,6 +789,23 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 		break;
 
 	case TRADE_WAR:
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut,"    Team %d (%S) declares war on team %d due to TRADE_WAR with %d (%S) \n", GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eFromPlayer).getCivilizationDescription(0), trade.m_iData, eToPlayer, GET_PLAYER(eToPlayer).getCivilizationDescription(0) );
+			gDLL->messageControlLog(szOut);
+		}
+	}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		GET_TEAM(GET_PLAYER(eFromPlayer).getTeam()).declareWar(((TeamTypes)trade.m_iData), true, NO_WARPLAN);
 
 		for (iI = 0; iI < MAX_PLAYERS; iI++)

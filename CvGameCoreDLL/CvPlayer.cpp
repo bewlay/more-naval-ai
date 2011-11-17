@@ -4239,7 +4239,23 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	case DIPLOEVENT_DEMAND_WAR:
 		FAssertMsg(GET_PLAYER(ePlayer).getTeam() != getTeam(), "shouldn't call this function on our own team");
-
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut,"    Team %d (%S) declares war on team %d due to DIPLOEVENT \n", getTeam(), getCivilizationDescription(0), ePlayer );
+				gDLL->messageControlLog(szOut);
+			}
+		}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		GET_TEAM(getTeam()).declareWar(GET_PLAYER(ePlayer).getTeam(), false, WARPLAN_LIMITED);
 		break;
 
@@ -4277,6 +4293,23 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	case DIPLOEVENT_JOIN_WAR:
 		AI_changeMemoryCount(ePlayer, MEMORY_ACCEPTED_JOIN_WAR, 1);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut,"    Team %d (%S) declares war on team %d due to DIPLOEVENT \n", getTeam(), getCivilizationDescription(0), ePlayer );
+				gDLL->messageControlLog(szOut);
+			}
+		}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		GET_TEAM(GET_PLAYER(ePlayer).getTeam()).declareWar(((TeamTypes)iData1), false, WARPLAN_DOGPILE);
 
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -19321,6 +19354,23 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 	{
 		if (NO_PLAYER != pTriggeredData->m_eOtherPlayer)
 		{
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut,"    Team %d (%S) declares war on team %d due to event \n", GET_PLAYER(pTriggeredData->m_eOtherPlayer).getTeam(), GET_PLAYER(pTriggeredData->m_eOtherPlayer).getCivilizationDescription(0), getTeam() );
+			gDLL->messageControlLog(szOut);
+		}
+	}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 			GET_TEAM(GET_PLAYER(pTriggeredData->m_eOtherPlayer).getTeam()).declareWar(getTeam(), false, WARPLAN_LIMITED);
 		}
 	}
