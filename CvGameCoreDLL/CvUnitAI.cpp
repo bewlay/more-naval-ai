@@ -14309,14 +14309,30 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
         {
             if ((iPercentWasted < (65 + iBonusPoints)) && bFirstResearchOnly && bIsFirstTech)
             {
+				if (GC.getLogging())
+				{
+					if (gDLL->getChtLvl() > 0)
+					{
+						char szOut[1024];
+						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted) \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
+						gDLL->messageControlLog(szOut);
+					}
+				}
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
             }
 
             if (iPercentWasted < ((bIsFirstTech ? 31 : 11) + iBonusPoints))
             {
-                //I need a good way to assess if the tech is actually valuable...
-                //but don't have one.
+				if (GC.getLogging())
+				{
+					if (gDLL->getChtLvl() > 0)
+					{
+						char szOut[1024];
+						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
+						gDLL->messageControlLog(szOut);
+					}
+				}
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
             }
@@ -14330,6 +14346,15 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
         {
             if (GET_PLAYER(getOwnerINLINE()).getCurrentResearch() == eDiscoverTech)
             {
+				if (GC.getLogging())
+				{
+					if (gDLL->getChtLvl() > 0)
+					{
+						char szOut[1024];
+						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
+						gDLL->messageControlLog(szOut);
+					}
+				}
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
             }
