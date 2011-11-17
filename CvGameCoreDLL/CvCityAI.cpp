@@ -5806,6 +5806,11 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		}
 	}
 
+	// repeatable projects are less valuable
+	if (GC.getProjectInfo(eProject).getMaxGlobalInstances() == -1)
+	{
+		iValue /= 4;
+	}
 
 	return iValue;
 }
