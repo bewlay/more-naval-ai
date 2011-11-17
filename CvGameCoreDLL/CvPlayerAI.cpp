@@ -19638,6 +19638,16 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 		}
 	}
 
+	if (getPlayersKilled() > 0)
+	{
+		return 1;
+	}
+
+	if (GC.getGameINLINE().getPlayerRank(getID()) == 1)
+	{
+		return 1;
+	}
+
 	return 0;
 }
 
