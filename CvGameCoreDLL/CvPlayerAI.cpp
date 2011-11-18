@@ -3968,7 +3968,7 @@ bool CvPlayerAI::AI_getAnyPlotDanger(CvPlot* pPlot, int iRange, bool bTestMoves)
 
 						if (pLoopUnit->isEnemy(eTeam))
 						{
-							if (pLoopUnit->canAttack())
+							if (pLoopUnit->canAttack() && !pLoopUnit->isHeld())
 							{
 								if (!(pLoopUnit->isInvisible(eTeam, false)))
 								{
