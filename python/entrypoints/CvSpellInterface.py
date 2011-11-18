@@ -1240,8 +1240,9 @@ def reqExploreLair(caster):
 	if pPlot.isOwned():
 		iImprovement = pPlot.getImprovementType()
 		if gc.getImprovementInfo(iImprovement).isUnique():
-			if not pPlot.getOwner() == caster.getOwner():
-				return False
+			if not gc.getImprovementInfo(iImprovement).getBonusConvert() == BonusTypes.NO_BONUS:
+				if not pPlot.getOwner() == caster.getOwner():
+					return False
 				
 	if pPlayer.isHuman() == False:
 		if pPlayer.getNumCities() < 1:
