@@ -524,7 +524,10 @@ void CvPlayerAI::AI_doTurnUnitsPre()
 
 	if (AI_isDoStrategy(AI_STRATEGY_CRUSH))
 	{
-		AI_convertUnitAITypesForCrush();
+		if (AI_getFundedPercent() > 30)
+		{
+			AI_convertUnitAITypesForCrush();
+		}
 	}
 }
 
