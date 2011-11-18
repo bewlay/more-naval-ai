@@ -1844,6 +1844,8 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 			}
 			// End Tholal AI
 
+			// armageddon counter
+			iRazeValue -= ((GC.getGameINLINE().getGlobalCounter() * pCity->getPopulation()) / 10);
 						
 			if (iRazeValue > 0)
 			{
