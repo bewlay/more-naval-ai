@@ -9787,7 +9787,7 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 	int iValue = 0;
 	int iBonusCount = getNumAvailableBonuses(eBonus);
 
-	// all calculations for mana will be handled in BaseBonusVal
+	// calculations for mana will be handled in BaseBonusVal
 	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
 	{
 		iValue += AI_baseBonusVal(eBonus);
@@ -10270,7 +10270,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					}
 				}
 
-				iValue += (GC.getBonusInfo(eBonus).getDiscoverRandModifier() * (bKhazad ? 10 : 5));
+				iValue += (GC.getBonusInfo(eBonus).getDiscoverRandModifier() * (bKhazad ? 5 : 2));
 
 				/*
 				if (AI_isNeededTowerMana(eBonus))
@@ -10279,9 +10279,9 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				}
 				*/
 
-				iValue += 100 * AI_getTowerManaValue(eBonus);
+				//iValue += 100 * AI_getTowerManaValue(eBonus);
 
-				int iNumBonuses = countOwnedBonuses(eBonus) + getNumAvailableBonuses(eBonus);
+				int iNumBonuses = countOwnedBonuses(eBonus);
 				if (iNumBonuses > 0)
 				{
 					if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
