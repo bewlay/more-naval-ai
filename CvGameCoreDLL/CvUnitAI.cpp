@@ -28258,7 +28258,7 @@ bool CvUnitAI::AI_Lokimove()
 {
     CvCity* pLoopCity;
     int iLoop;
-    int iSearchRange=6;
+    int iSearchRange=8;
     int icount=0;
     int iDX, iDY;
     int iPathTurns;
@@ -28276,10 +28276,22 @@ bool CvUnitAI::AI_Lokimove()
 		}
 		else
 		{
-			if (canCast(GC.getDefineINT("SPELL_ENTERTAIN"),false))
-				cast(GC.getDefineINT("SPELL_ENTERTAIN"));
+			if (plot()->getOwnerINLINE() == getOwnerINLINE())
+			{
+			int ispell = chooseSpell();
+			if (ispell != NO_SPELL)
+			{
+				cast(ispell);
+			}
+			}
+			else
+			{
+				if (canCast(GC.getDefineINT("SPELL_ENTERTAIN"),false))
+					cast(GC.getDefineINT("SPELL_ENTERTAIN"));
+			}
 		}
     }
+	// find a target city - preference given to high population cities (for entertain) and no culture cities (for disrupt)
     for (pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).nextCity(&iLoop))
     {
 		iValue = 0;
@@ -28335,6 +28347,21 @@ bool CvUnitAI::AI_Lokimove()
 			getGroup()->pushMission(MISSION_MOVE_TO,pBestPlot->getX_INLINE(),pBestPlot->getY_INLINE(),MOVE_THROUGH_ENEMY);
 			return true;
 		}
+	}
+
+	if (AI_exploreRange(5))
+	{
+		return true;
+	}
+
+	if (AI_retreatToCity())
+	{
+		return true;
+	}
+
+	if (AI_safety())
+	{
+		return true;
 	}
 
 	return false;
