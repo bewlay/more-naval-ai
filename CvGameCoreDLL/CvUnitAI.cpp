@@ -25604,12 +25604,13 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
             break;
 		case UNITAI_ATTACK_CITY:
-			if (bWarPlan)
-			{
-				AI_setGroupflag(GROUPFLAG_CONQUEST);
-				return;
-				break;
-			}
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+			return;
+			break;
+		case UNITAI_ATTACK:
+			AI_setGroupflag(GROUPFLAG_PATROL);
+			return;
+			break;
         default:
             break;
     }
