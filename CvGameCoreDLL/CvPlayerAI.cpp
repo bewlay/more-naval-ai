@@ -21917,7 +21917,7 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 
 	// Tholal AI - era fix
 	//iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
-	iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
+	iCurrentEra = (GC.getGameINLINE().getCurrentPeriod() / 2);
 	
 	iDefenders = 1 + ((iCurrentEra + ((GC.getGameINLINE().getMaxCityElimination() > 0) ? 3 : 2)) * iAreaCities);
 	iDefenders /= 3;
