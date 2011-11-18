@@ -4942,7 +4942,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							}
 							else if (iL == YIELD_COMMERCE)
 							{
-								iTempValue *= 4;
+								iTempValue *= (bFinancialTrouble ? 8 : 4);
 							}
 							// otherwise, devalue the bonus slightly
 							/*
@@ -4978,7 +4978,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue /= 2;
 
 							// make sure AI develops its starting resources
-							iBonusValue *= 2;
+							iBonusValue *= 3;
 							iBonusValue /= std::min(2, iCityCount);
 						}
 						else
@@ -5047,7 +5047,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if (eRoute != NO_ROUTE)
 			{
 				// ALN TODO: resources we can hook up?
-				iBuildValue += ((getBestRoute() == NO_ROUTE) ? 700 : 200) * (getNumCities() + (bAdvancedStart ? 4 : 0));
+				iBuildValue += ((getBestRoute() == NO_ROUTE) ? 1000 : 200) * (iCityCount + (bAdvancedStart ? 4 : 0));
 
 				for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
 				{
@@ -5063,7 +5063,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iTempValue *= AI_yieldWeight((YieldTypes)iK);
 					iTempValue /= 100;
 
-					iBuildValue += iTempValue;
+					iBuildValue += (iTempValue * (iCityCount + (bFinancialTrouble ? 2: 0)));
 				}
 			}
 		}
@@ -6034,9 +6034,9 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					continue;
 				}
 
-				if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() != NO_CIVILIZATION)
+				if (kLoopBuilding.getPrereqCiv() != NO_CIVILIZATION)
 				{
-					if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() != getCivilizationType())
+					if (kLoopBuilding.getPrereqCiv() != getCivilizationType())
 					{
 						continue;
 					}
@@ -6064,6 +6064,37 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iGreatPeopleRateModifier *= 2;
 				}
 
+				int iCultureSpecialist = 0;
+				int iProphetSpecialist = 0;
+
+				for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+				{
+					if (kLoopBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+					{
+
+						if (GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(COMMERCE_CULTURE) > 0)
+						{
+							iCultureSpecialist++;
+						}
+
+						int iUnitClass = GC.getSpecialistInfo((SpecialistTypes)iI).getGreatPeopleUnitClass();
+						FAssert(iUnitClass != NO_UNITCLASS);
+						
+						CvCivilizationInfo* pCivilizationInfo = &GC.getCivilizationInfo(getCivilizationType());
+						UnitTypes eGreatPeopleUnit = (UnitTypes) pCivilizationInfo->getCivilizationUnits(iUnitClass);
+
+						//TODO - make these two sections more dynamic
+						if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_PROPHET)
+						{
+							iProphetSpecialist++;
+						}
+						if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_ARTIST)
+						{
+							iCultureSpecialist++;
+						}
+					}
+				}
+
 				if (kLoopBuilding.getSpecialBuildingType() != NO_BUILDING)
 				{
 					iBuildingValue += ((bCapitalAlone) ? 100 : 25);
@@ -6083,7 +6114,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				iBuildingValue -= kLoopBuilding.getCrime();
 				if (kLoopBuilding.isUnhappyProduction())
 				{
-					iBuildingValue += 50 * (bIsLimitedWonder ? (getTotalPopulation() / iCityCount) : getTotalPopulation());
+					iBuildingValue += 50 * (bIsLimitedWonder ? (getTotalPopulation() / std::max(1, iCityCount)) : getTotalPopulation());
 				}
 
 				if (kLoopBuilding.getMaintenanceModifier() < 0)
@@ -6164,19 +6195,23 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					}
 				}
 
-                if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2))
+                if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
                 {
                     int iMultiplier = (isLimitedWonderClass((BuildingClassTypes)iJ) ? 1 : 3);
                     iBuildingValue += (150 * (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) + kLoopBuilding.getObsoleteSafeCommerceChange(COMMERCE_CULTURE))) * iMultiplier;
                     iBuildingValue += kLoopBuilding.getCommerceModifier(COMMERCE_CULTURE) * 4 * iMultiplier ;
 					iBuildingValue += iGreatPeopleRateModifier * 2;
 					iBuildingValue += iGlobalGreatPeopleRateModifier * 4;
+
+					iBuildingValue += iCultureSpecialist * 25;
                 }
 
 				if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
                 {
 					iBuildingValue += iGreatPeopleRateModifier * 2;
 					iBuildingValue += iGlobalGreatPeopleRateModifier * 4;
+
+					iBuildingValue += iProphetSpecialist * 25;
                 }
 
 				if (bFinancialTrouble)
