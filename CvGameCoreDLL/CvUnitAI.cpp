@@ -27286,7 +27286,11 @@ void CvUnitAI::ConquestMove()
 	// Opportunistic attacks
 	if (getGroupSize() == 1)
 	{
-		if (AI_anyAttack(1, 90))
+		if (AI_anyAttack(1, 80))
+		{
+			return;
+		}
+		if (AI_anyAttack(2, 90))
 		{
 			return;
 		}
@@ -27326,24 +27330,6 @@ void CvUnitAI::ConquestMove()
 		}
 	}
 
-	// Noone should wander alone
-	if (getGroup()->getNumUnits() == 1)
-	{
-		if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 3, true, true, bIgnoreFaster))
-		{
-            if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
-            {
-                getGroup()->pushMission(MISSION_SKIP);
-            }
-			return;
-		}
-
-		if (AI_retreatToCity(false, true, 3))
-		{
-			return;
-		}
-	}
-
 	bool bHuntBarbs = false;
 	if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0 && !GET_TEAM(getTeam()).isBarbarianAlly())
 	{
@@ -27377,7 +27363,7 @@ void CvUnitAI::ConquestMove()
             {
                 if (pLoopSelectionGroup->getHeadUnit() != NULL)
                 {
-                    if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST && !(pLoopSelectionGroup->getHeadUnit()->isHiddenNationality())) //TEMPFIX FOR HIDDEN NATIONALITY
+                    if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST)
                     {
                         if (pLoopSelectionGroup != getGroup())
                         {
@@ -27390,23 +27376,30 @@ void CvUnitAI::ConquestMove()
                                     {
                                         if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                                         {
-                                            if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                            {
-                                                iValue = pLoopSelectionGroup->getNumUnits();
-												iValue /= (iPathTurns * 2);
-
-												// Tholal AI - trying to give the AI some sense of when a group is too big
-												if (pLoopSelectionGroup->getNumUnits() > (GET_PLAYER(getOwnerINLINE()).getNumCities() * 8))
+											if (atPlot(pLoopPlot))
+											{
+												iValue = 10;
+											}
+											else
+											{
+												if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 												{
-													iValue = 0;
-												}
+													iValue = pLoopSelectionGroup->getNumUnits();
+													iValue /= (iPathTurns + 1);
 
-                                                if (iValue >= iBestValue)
-                                                {
-                                                    iBestValue = iValue;
-                                                    pBestUnit = pLoopSelectionGroup->getHeadUnit();
-                                                }
-                                            }
+													// Tholal AI - trying to give the AI some sense of when a group is too big - obsolete?
+													if (pLoopSelectionGroup->getNumUnits() > (GET_PLAYER(getOwnerINLINE()).getNumCities() * 8))
+													{
+														iValue = 0;
+													}
+												}
+											}
+
+											if (iValue > iBestValue)
+											{
+												iBestValue = iValue;
+												pBestUnit = pLoopSelectionGroup->getHeadUnit();
+											}
                                         }
                                     }
                                 }
@@ -27625,17 +27618,6 @@ void CvUnitAI::ConquestMove()
 	
 	if( pTargetCity != NULL )
 	{
-
-		if (GC.getLogging())
-		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "Player %d Unit %d (%S's %S) found target city\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
-				gDLL->messageControlLog(szOut);
-			}
-		}
-
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
 
@@ -27666,7 +27648,7 @@ void CvUnitAI::ConquestMove()
 				int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(pTargetCity->plot(),2,false,false);
 
 				// If in danger, seek defensive ground
-				if( 4*iOurOffense < 3*iEnemyOffense )
+				if( 4*iOurOffense < 3*iEnemyOffense)
 				{
 					if( AI_choke(1, true) )
 					{
@@ -27683,22 +27665,14 @@ void CvUnitAI::ConquestMove()
 				{
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
-						/*
+						
 						// Tholal Note: this section wasn't doing much useful
 						// Move to good tile to attack from unless we're way more powerful
+						/*
 						if (plot()->defenseModifier(getTeam(), false) <= 0)
 						{
 							if( AI_goToTargetCity(0,1,pTargetCity) )
 							{
-								if (GC.getLogging())
-								{
-									if (gDLL->getChtLvl() > 0)
-									{
-										char szOut[1024];
-										sprintf(szOut, "   GOING to target city\n");
-										gDLL->messageControlLog(szOut);
-									}
-								}
 								return;
 							}
 						}
@@ -27737,16 +27711,14 @@ void CvUnitAI::ConquestMove()
 				}
 			}
 
-			if( iComparePostBombard < iAttackRatio )
+			if( iComparePostBombard < iAttackRatio)
 			{
 				// If not strong enough, pillage around target city without exposing ourselves
-				/*
 				if( AI_pillageRange(0) )
 				{
 					return;
 				}
-				*/
-				
+								
 				if( AI_anyAttack(1, 60, 0, false) )
 				{
 					return;
