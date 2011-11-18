@@ -26311,6 +26311,8 @@ void CvUnitAI::PatrolMove()
 	bool bAnyWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
+	bool bInCity = plot()->isCity();
+
 	if (GC.getLogging())
 	{
 		if (gDLL->getChtLvl() > 0)
@@ -26382,9 +26384,9 @@ void CvUnitAI::PatrolMove()
 	}
 
 	// check for easy targets in the area
-	if (getGroupSize() == 1)
+	if (getGroupSize() == 1 && !bAtWar)
 	{
-		if (AI_anyAttack(1, 80))
+		if (AI_anyAttack(1, (bInCity ? 60 : 80)))
 		{
 			return;
 		}
@@ -26493,7 +26495,7 @@ void CvUnitAI::PatrolMove()
 		return;
 	}
 		
-	if (!bDanger && !bHero && (GET_TEAM(getTeam()).getAtWarCount(false) == 0))
+	if (!bDanger && !bHero)
 	{
 		if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
 		{
@@ -26698,7 +26700,8 @@ void CvUnitAI::PatrolMove()
 	{
 		if (area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0)
 		{
-			if (getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getBarbarianInitialDefenders())
+			//if (getGroup()->getNumUnits() >= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getBarbarianInitialDefenders())
+			if (getGroup()->getNumUnits() >= 5)
 			{
 				if (AI_goToTargetBarbCity(10))
 				{
