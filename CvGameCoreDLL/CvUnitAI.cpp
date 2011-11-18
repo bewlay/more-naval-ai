@@ -14270,7 +14270,7 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 	if (canDiscover(plot()))
 	{
 		eDiscoverTech = getDiscoveryTech();
-		bIsFirstTech = (GET_PLAYER(getOwnerINLINE()).AI_isFirstTech(eDiscoverTech));
+		bIsFirstTech = (GC.getGameINLINE().countKnownTechNumTeams(eDiscoverTech) == 0);
 
         if (bFirstResearchOnly && !bIsFirstTech)
         {
@@ -14282,10 +14282,16 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 
 		if (bIsFirstTech)
 		{
-			// techs that give free GPs
+			// techs that give free techs
+			if (GC.getTechInfo(eDiscoverTech).getFirstFreeTechs() > 0)
+			{
+				iBonusPoints +=25;
+			}
+
+			// techs that give a free unit (generally a Great Person)
 			if (GET_PLAYER(getOwnerINLINE()).getTechFreeUnit(eDiscoverTech) != NO_UNIT)
 			{
-				iBonusPoints += 15;
+				iBonusPoints += 25;
 			}
 
 			// Religion founding techs
@@ -14297,9 +14303,12 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 
 				if (eReligionTech == eDiscoverTech)
 				{
-					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
+					if (!GC.getGameINLINE().isReligionFounded(eReligion))
 					{
-						iBonusPoints += 25;
+						if (!GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+						{
+							iBonusPoints += 25;
+						}
 					}
 				}
 			}
@@ -14307,7 +14316,7 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 
         if (getDiscoverResearch(eDiscoverTech) >= GET_TEAM(getTeam()).getResearchLeft(eDiscoverTech))
         {
-            if ((iPercentWasted < (65 + iBonusPoints)) && bFirstResearchOnly && bIsFirstTech)
+            if ((iPercentWasted < (45 + iBonusPoints)) && bFirstResearchOnly && bIsFirstTech)
             {
 				if (GC.getLogging())
 				{
