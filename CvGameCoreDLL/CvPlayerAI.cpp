@@ -3641,6 +3641,19 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 
 	FAssertMsg(pCity != NULL, "City is not assigned a valid value");
 
+    int iNumCityPlots=21;
+    if (isSprawling())
+    {
+        if (getNumCities() < getMaxCities())
+        {
+            iNumCityPlots = 37;
+        }
+        else
+        {
+            iNumCityPlots = 9;
+        }
+    }
+
 	iValue = 1;
 	// Tholal AI: Increased valuation of our culture percent in the city (was set to 50%)
 	iValue += ((pCity->getPopulation() * (75 + pCity->calculateCulturePercent(getID()))) / 100);
@@ -3698,7 +3711,8 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		iValue += std::min( 8, (AI_adjacentPotentialAttackers(pCity->plot()) + 2)/3 );
 	}
 
-	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	//for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (iI = 0; iI < iNumCityPlots; iI++)
 	{
 		pLoopPlot = plotCity(pCity->getX_INLINE(), pCity->getY_INLINE(), iI);
 
@@ -4580,6 +4594,14 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	int iConnectedForeignCities = countPotentialForeignTradeCitiesConnected();
 
 	int iCityCount = getNumCities();
+
+	if (isSprawling())
+	{
+		if (iCityCount >= getMaxCities())
+		{
+			iCityCount = getMaxCities();
+		}
+	}
 
 	if (iPathLength < 0)
 	{
