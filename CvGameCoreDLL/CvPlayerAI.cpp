@@ -21798,8 +21798,8 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
 		bool bValid = false;
-		if ((pLoopUnit->AI_getUnitAIType() == UNITAI_RESERVE)
-			|| (pLoopUnit->AI_isCityAIType() && (pLoopUnit->getExtraCityDefensePercent() <= 0)))
+		if ((pLoopUnit->AI_getUnitAIType() == UNITAI_RESERVE) || 
+			(pLoopUnit->AI_isCityAIType() && (pLoopUnit->getExtraCityDefensePercent() <= 0) && (pLoopUnit->cityDefenseModifier() <= 0)))
 		{
 			bValid = true;
 		}
@@ -21824,9 +21824,19 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 					{
 						bValid = false;
 					}
+
 					if (pLoopUnit->plot()->getBestDefender(getID()) == pLoopUnit)
 					{
 						bValid = false;
+					}
+
+					// dont convert city defenders who need to stay and defend
+					if (pLoopUnit->AI_getUnitAIType() == UNITAI_CITY_DEFENSE)
+					{
+						if (pLoopUnit->plot()->getNumDefenders(pLoopUnit->getOwner()) <= pLoopUnit->plot()->getPlotCity()->AI_neededDefenders())
+						{
+							bValid = false;
+						}
 					}
 				}
 			}
