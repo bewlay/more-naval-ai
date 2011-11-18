@@ -13048,27 +13048,17 @@ void CvCity::doGrowth()
 
 void CvCity::doCulture()
 {
-/*************************************************************************************************/
-/**	SPEEDTWEAK (Block Python) Sephi                                               	            **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-	if(GC.getDefineINT("USE_CULTURE_CALLBACK")==1)
-	{
-        CyCity* pyCity = new CyCity(this);
-        CyArgsList argsList;
-        argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));	// pass in city class
-        long lResult=0;
-        gDLL->getPythonIFace()->callFunction(PYGameModule, "doCulture", argsList.makeFunctionArgs(), &lResult);
-        delete pyCity;	// python fxn must not hold on to this pointer
-        if (lResult == 1)
-        {
-            return;
-        }
-	}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
+    CyCity* pyCity = new CyCity(this);
+    CyArgsList argsList;
+    argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));	// pass in city class
+    long lResult=0;
+    gDLL->getPythonIFace()->callFunction(PYGameModule, "doCulture", argsList.makeFunctionArgs(), &lResult);
+    delete pyCity;	// python fxn must not hold on to this pointer
+    if (lResult == 1)
+    {
+        return;
+    }
 
 	changeCultureTimes100(getOwnerINLINE(), getCommerceRateTimes100(COMMERCE_CULTURE), false, true);
 }

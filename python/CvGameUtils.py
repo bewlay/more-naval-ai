@@ -569,6 +569,11 @@ class CvGameUtils:
 
 	def doCulture(self,argsList):
 		pCity = argsList[0]
+		
+		pPlayer = gc.getPlayer(pCity.getOwner())
+		if pPlayer.isBarbarian():
+			if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_THE_DRAGONS_HORDE')) == 0:
+				return 1
 		return False
 
 	def doPlotCulture(self,argsList):
