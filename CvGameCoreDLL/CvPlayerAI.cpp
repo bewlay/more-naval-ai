@@ -2289,14 +2289,17 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	adjust for Kuriotates																		**/
-/**						                                            							**/
 /*************************************************************************************************/
     int iNumCityPlots=21;
+
+	bool bSprawlingExpand = false;
+
     if (isSprawling())
     {
         if (getNumCities() < getMaxCities())
         {
             iNumCityPlots = 37;
+			bSprawlingExpand = true;
         }
         else
         {
@@ -2308,6 +2311,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 
 	bool bNeutralTerritory = true;
+	bool bPirate = isPirate();
 
 	int iGreed;
 	int iNumAreaCities;
@@ -2318,23 +2322,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		return 0;
 	}
-
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	Pirates love the open sea   																**/
-/**						                                            							**/
-/*************************************************************************************************/
-    if (getNumCities() == 0)
-    {
-		if (isPirate())
-        {
-            if (!pPlot->isCoastalLand(5))
-            {
-                return 0;
-            }
-        }
-    }
-
+	
 	// disallow the AI from founding new cities on Mana bonuses
     if (pPlot->getBonusType() != NO_BONUS)
 	{
@@ -2344,25 +2332,29 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			return 0;
 		}
     }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 
 	bIsCoastal = pPlot->isCoastalLand(GC.getMIN_WATER_SIZE_FOR_OCEAN());
+
+	// Pirates want a coastal city for their capitol
+    if (getNumCities() == 0)
+    {
+		if (bPirate)
+        {
+            if (!bIsCoastal)
+            {
+                return 0;
+            }
+        }
+    }
+
 	pArea = pPlot->area();
 	iNumAreaCities = pArea->getCitiesPerPlayer(getID());
 
 	bool bAdvancedStart = (getAdvancedStartPoints() >= 0);
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	adjust free first City selection    														**/
-/**						                                            							**/
-/*************************************************************************************************/
+
+	// first cities in new colonies should be coastal
 	if (!bStartingLoc && !bAdvancedStart && !(getNumCities() == 0))
 	{
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 		if (!bIsCoastal && iNumAreaCities == 0)
 		{
 			return 0;
@@ -2386,7 +2378,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /*************************************************************************************************/
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	adjust for Kuriotates																		**/
-/**						                                            							**/
 /*************************************************************************************************/
 /** orig
 	std::vector<bool> abCitySiteRadius(NUM_CITY_PLOTS, false);
@@ -2400,12 +2391,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		if (!AI_isPlotCitySite(pPlot))
 		{
-
-//FfH: Modified by Kael 11/18/2007
-//			for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 			for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 			{
 				pLoopPlot = plotCity(iX, iY, iI);
 				if (pLoopPlot != NULL)
@@ -2461,14 +2447,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			return 0;
 		}
 
-//FfH: Modified by Kael 11/18/2007
-//		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
         for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 		{
 			pLoopPlot = plotCity(iX, iY, iI);
 
+			// dont place first city near the map edge
 			if (pLoopPlot == NULL)
 			{
 				return 0;
@@ -2478,11 +2461,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	iOwnedTiles = 0;
 
-//FfH: Modified by Kael 11/18/2007
-//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
     for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 
@@ -2499,22 +2478,15 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
         }
 	}
 
-//FfH: Modified by Kael 11/18/2007
-//	if (iOwnedTiles > (NUM_CITY_PLOTS / 3))
 	if (iOwnedTiles > (iNumCityPlots / 3))
-//FfH: End Modify
-
 	{
 		return 0;
 	}
 
 	iBadTile = 0;
+	bool bCanWork;
 
-//FfH: Modified by Kael 11/18/2007
-//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
-    for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
+	for (iI = 0; iI < iNumCityPlots; iI++)
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 
@@ -2524,33 +2496,43 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				iBadTile += 2;
 			}
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	some terrain ain't good for first city 														**/
-/**	Tholal note - HARDCODE					                                            							**/
-/*************************************************************************************************/
-            else if (pLoopPlot->getFeatureType()==GC.getDefineINT("JUNGLE_FEATURE"))
-            {
-                if (!isHasTech(GC.getDefineINT("TECH_BRONZE_WORKING")))
-                {
-                    iBadTile +=2;
-                }
-            }
-           else if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_TUNDRA") && getNumCities()<1)
-            {
+			// avoid unhealthy terrain if we dont have the tech to deal with it
+			else if	(pLoopPlot->getFeatureType() != NO_FEATURE)
+			{
+				if (GC.getFeatureInfo((FeatureTypes)pLoopPlot->getFeatureType()).getHealthPercent() < 0)
+				{
+					bCanWork = false;
 
-                iBadTile +=2;
-            }
-            else if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_SNOW") && getNumCities()<1)
-            {
-                 if (!(getCivilizationType()==GC.getDefineINT("CIVILIZATION_ILLIANS")))
-                 {
-                     iBadTile +=2;
-                 }
-            }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+					if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
+					{
+						bCanWork = true;
+					}
+					else
+					{
+						for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+						{
+							BuildTypes eBuild = ((BuildTypes)iJ);
+							if (eBuild != NO_BUILD)
+							{
+								ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+								if ( eImp != NO_IMPROVEMENT )
+								{
+									if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
+									{
+										bCanWork = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+
+					if (!bCanWork)
+					{
+						iBadTile += 2;
+					}
+				}
+			}
 			else if (!(pLoopPlot->isFreshWater()) && !(pLoopPlot->isHills()))
 			{
 
@@ -2584,20 +2566,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (!bStartingLoc)
 	{
-
-//FfH: Modified by Kael 11/18/2007
-//		if ((iBadTile > (NUM_CITY_PLOTS / 2)) || (pArea->getNumTiles() <= 2))
 		if ((iBadTile > (iNumCityPlots / 2)) || (pArea->getNumTiles() <= 2))
-//FfH: End Modify
-
 		{
 			bHasGoodBonus = false;
 
-//FfH: Modified by Kael 11/18/2007
-//			for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 			for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 			{
 				pLoopPlot = plotCity(iX, iY, iI);
 
@@ -2616,6 +2589,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 								{
 									bHasGoodBonus = true;
 									break;
+								}
+								
+								if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
+								{
+									if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
+									{
+										bHasGoodBonus = false;
+									}
 								}
 							}
 						}
@@ -2636,24 +2617,106 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	iValue = 1000;
 
 	iGreed = 100;
+	// K-Mod
+	// some trait information that will influence where we settle
+	bool bEasyCulture = false; // easy for us to pop the culture to the 2nd border
+	bool bAmbitious = false; // expectation of taking foreign land, either by culture or by force
+	bool bFinancial = false; // more value for rivers
+	bool bDefensive = false; // more value for settlings on hills
 
 	if (bAdvancedStart)
 	{
 		iGreed = 150;
 	}
-	else if (!bStartingLoc)
-    {
-        for (iI = 0; iI < GC.getNumTraitInfos(); iI++)
-        {
-            if (hasTrait((TraitTypes)iI))
-            {
-                //Greedy founding means getting the best possible sites - fitting maximum
-                //resources into the fat cross.
-                iGreed += (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier() / 2);
-                iGreed += 20 * (GC.getTraitInfo((TraitTypes)iI).getCommerceChange(COMMERCE_CULTURE));
-            }
-        }
-    }
+
+	// START K-mod addition
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			if (GC.getTraitInfo((TraitTypes)iTrait).getCommerceChange(COMMERCE_CULTURE) > 0)
+			{
+				//bEasyCulture = true;
+
+				if (GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight() <= 5)
+				{
+					bAmbitious = true;
+				}
+
+				iGreed += 10 * GC.getTraitInfo((TraitTypes)iTrait).getCommerceChange(COMMERCE_CULTURE);
+			}
+
+			if (GC.getTraitInfo((TraitTypes)iTrait).getExtraYieldThreshold(YIELD_COMMERCE) > 0)
+			{
+				bFinancial = true;
+			}
+
+			for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
+			{
+				if (GC.getTraitInfo((TraitTypes)iTrait).isFreePromotion(iJ))
+				{
+					// aggressive, protective... it doesn't really matter to me.
+					if (GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight() >= 5)
+					{
+						bDefensive = true;
+					}
+				}
+			}
+
+			for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
+			{
+				if (GC.getUnitInfo((UnitTypes)iJ).isFound() && GC.getUnitInfo((UnitTypes)iJ).getProductionTraits(iTrait) &&	canTrain((UnitTypes)iJ))
+				{
+					iGreed += 20;
+					if (GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand() <= 150)
+					{
+						bAmbitious = true;
+					}
+				}
+
+			}
+		}
+	}
+
+	// culture building process
+	if (!bEasyCulture)
+	{
+		for (int iJ = 0; iJ < GC.getNumProcessInfos(); iJ++)
+		{
+			if (GC.getProcessInfo((ProcessTypes)iJ).getProductionToCommerceModifier(COMMERCE_CULTURE) > 0)
+			{
+				if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getProcessInfo((ProcessTypes)iJ).getTechPrereq()))
+				{
+					bEasyCulture = true;
+					break;
+				}
+			}
+		}
+	}
+
+	// free culture building
+	if (!bEasyCulture)
+	{
+		for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+		{
+			if (isBuildingFree((BuildingTypes)iJ) && GC.getBuildingInfo((BuildingTypes)iJ).getObsoleteSafeCommerceChange(COMMERCE_CULTURE) > 0)
+			{
+				bEasyCulture = true;
+				break;
+			}
+		}
+	}
+
+	if (bEasyCulture)
+	{
+		iGreed += 20;
+	}
+
+	if (bAmbitious)
+	{
+		iGreed += 20;
+	}
+	// END K-Mod addition
 
     //iClaimThreshold is the culture required to pop the 2nd borders.
     int iClaimThreshold = GC.getGameINLINE().getCultureThreshold((CultureLevelTypes)(std::min(2, (GC.getNumCultureLevelInfos() - 1))));
@@ -2661,7 +2724,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
     iClaimThreshold *= (std::max(100, iGreed));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       04/25/10                          denev & jdog5000    */
-/*                                                                                              */
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 	// Was missing this
@@ -2672,11 +2734,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
     
     int iYieldLostHere = 0;
 
-//FfH: Modified by Kael 11/18/2007
-//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 
@@ -2700,6 +2758,55 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			eFeature = pLoopPlot->getFeatureType();
 			eBonus = pLoopPlot->getBonusType((bStartingLoc) ? NO_TEAM : getTeam());
 			eBonusImprovement = NO_IMPROVEMENT;
+
+			// dont value bonuses that have blocking features. working?
+			bool bCanWork = true;
+
+			if (eFeature != NO_FEATURE)
+			{
+				bCanWork = false;
+
+				if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
+				{
+					bCanWork = true;
+					iTempValue += 10;
+				}
+				else
+				{
+					for (int iBuilds = 0; iBuilds < GC.getNumBuildInfos(); iBuilds++)
+					{
+						BuildTypes eBuild = ((BuildTypes)iBuilds);
+						if (eBuild != NO_BUILD)
+						{
+							ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+							if ( eImp != NO_IMPROVEMENT )
+							{
+								if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+								{
+									bCanWork = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (eBonus != NO_BONUS)
+			{
+				if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
+				{
+					if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
+					{
+						bCanWork = false;
+					}
+				}
+			}
+
+			if (!bCanWork)
+			{
+				eBonus = NO_BONUS;
+			}
 
 			int iCultureMultiplier;
             if (!pLoopPlot->isOwned() || (pLoopPlot->getOwnerINLINE() == getID()))
@@ -2844,7 +2951,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      08/05/09                                jdog5000      */
-/*                                                                                              */
 /* Settler AI                                                                                   */
 /************************************************************************************************/
 /* orginal bts code
@@ -2856,7 +2962,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-					if (bIsCoastal && (aiYield[YIELD_FOOD] >= GC.getFOOD_CONSUMPTION_PER_POPULATION()))
+					if (bIsCoastal && (aiYield[YIELD_FOOD] > GC.getFOOD_CONSUMPTION_PER_POPULATION()))
 					{
 						iSpecialFoodPlus += 1;                    	
 					}
@@ -2867,26 +2973,22 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 						iTempValue += bIsCoastal ? 0 : -400;
 					}
 				}
-/*************************************************************************************************/
-/**	BETTER AI (Better City Placement) Sephi                                             		**/
-/**	Pirates like Water                  														**/
-/**						                                            							**/
-/*************************************************************************************************/
-				if (isPirate())
+
+				// pirates like water
+				if (bPirate)
                 {
 					if (!pLoopPlot->isCityRadius())
 					{
 	                    iTempValue +=100;
 					}
                 }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 			}
 
 			if (pLoopPlot->isRiver())
 			{
-				iTempValue += 10;
+				//iTempValue += 10;
+				iTempValue += (bFinancial ? 20 : 10);
+				iTempValue += (pPlot->isRiver() ? 15 : 0);
 			}
 
 			if (iI == CITY_HOME_PLOT)
@@ -2906,6 +3008,9 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 
 			iTempValue *= iCultureMultiplier;
+			iTempValue /= 100;
+
+			iTempValue *= (bAmbitious ? 140 : 100);
 			iTempValue /= 100;
 
 			iValue += iTempValue;
@@ -2971,78 +3076,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 							}
 						}
 
-/*************************************************************************************************/
-/**	THOLAL AI (Better City Placement) - Modified from Sephi's code   - HARDCODE                      		**/
-/**	Illians dont mind Snow or Tundra; Malakim don't mind Desert; Khazad like Hills				**/
-/**	Elves like Forest (less weight towards Ancient Forest so they dont build cities too close  	**/
-/*************************************************************************************************/
-						bool bDwarf = false;
-						bool bElf = false;
-						bool bWinterborn = false;
-						bool bDemon = false;
-						bool bNomad = false;
-
-						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DWARF"))
-						{
-							bDwarf = true;
-						}
-
-						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == (GC.getInfoTypeForString("PROMOTION_ELF") || GC.getInfoTypeForString("PROMOTION_DARK_ELF")))
-						{
-							bElf = true;
-						}
-
-						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_WINTERBORN"))
-						{
-							bWinterborn = true;
-						}
-
-						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DEMON"))
-						{
-							bDemon = true;
-						}
-
-						if (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_NOMAD"))
-						{
-							bNomad = true;
-						}
-
-                        if (getCivilizationType()==GC.getDefineINT("CIVILIZATION_ILLIANS"))
-                        {
-                        	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_SNOW"))
-                                iTempValue +=50;
-							if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_DESERT"))
-                                iTempValue +=10;
-						}
-
-						if (bWinterborn)
-						{
-                        	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_TUNDRA"))
-                                iTempValue +=15;
-                        }
-
-						if (bNomad)
-                        {
-                        	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_DESERT"))
-                                iTempValue +=10;
-                        }
-
-						if (bDwarf)
-                        {
-                        	if (pLoopPlot->getTerrainType()==GC.getDefineINT("TERRAIN_HILL"))
-                                iTempValue +=50;
-                        }
-
-                        if (bElf)
-                        {
-                            if (eFeature==GC.getDefineINT("FEATURE_FOREST"))
-                                iTempValue +=25;
-                            if (eFeature==GC.getDefineINT("FEATURE_FOREST_ANCIENT"))
-                                iTempValue +=15;
-                        }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+						/*
                         if (pLoopPlot->isWater())
                         {
 							if (!bIsCoastal)
@@ -3051,22 +3085,23 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 							}
 							else
 							{
-								iValue += (isSprawling() ? 25 : 50);
-								if (isPirate())
+								iValue += (isSprawling() ? 15 : 25);
+								if (bPirate)
 								{
 									iValue += 100;
 								}
 							}
-
+							*/
 //                          iValue += (bIsCoastal ? 100 : -800);
+
 							/*
 							iValue += (bIsCoastal ? 50 : -800);
 							if (isPirate())
 							{
 								iValue += 100;
 							}
-							*/
                         }
+						*/
                     }
 				}
 			}
@@ -3083,11 +3118,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	iValue += std::max(0, iResourceValue);
 
-//FfH: Modified by Kael 11/18/2007
-//	if (iTakenTiles > (NUM_CITY_PLOTS / 3) && iResourceValue < 250)
 	if (iTakenTiles > (iNumCityPlots / 3) && iResourceValue < 250)
-//FfH: End Modify
-
 	{
 		return 0;
 	}
@@ -3114,7 +3145,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      02/03/09                                jdog5000      */
-/*                                                                                              */
 /* Settler AI                                                                                   */
 /************************************************************************************************/
 				//iValue += 200;
@@ -3143,7 +3173,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		else
 		{
 		    //let other penalties bring this down.
-		    iValue += 600;
+		    //iValue += 600;
 		    if (!pPlot->isStartingPlot())
 		    {
                 if (pArea->getNumStartingPlots() == 0)
@@ -3156,20 +3186,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (pPlot->isHills())
 	{
-		iValue += 200;
+		iValue += (bDefensive ? 400 : 200);
 	}
 
 	if (pPlot->isRiver())
 	{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      02/03/09                                jdog5000      */
-/*                                                                                              */
-/* Settler AI                                                                                   */
-/************************************************************************************************/
 		iValue += 60;
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
 	}
 
 	if (pPlot->isFreshWater())
@@ -3230,11 +3252,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 		int iWaterCount = 0;
 
-//FfH: Modified by Kael 11/18/2007
-//		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 		for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 		{
 		    pLoopPlot = plotCity(iX, iY, iI);
 
@@ -3252,20 +3270,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 		iWaterCount /= 2;
 
-//FfH: Modified by Kael 11/18/2007
-//		int iLandCount = (NUM_CITY_PLOTS - iWaterCount);
-//		if (iLandCount < (NUM_CITY_PLOTS / 2))
-//		{
-//		    //discourage very water-heavy starts.
-//		    iValue *= 1 + iLandCount;
-//		    iValue /= (1 + (NUM_CITY_PLOTS / 2));
 		int iLandCount = (iNumCityPlots - iWaterCount);
 		if (iLandCount < (iNumCityPlots / 2))
 		{
 		    iValue *= 1 + iLandCount;
 		    iValue /= (1 + (iNumCityPlots / 2));
-//FfH: End Modify
-
 		}
 	}
 
@@ -3352,18 +3361,27 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		{
 		    int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
 		    int iNumCities = getNumCities();
+
 		    if (iDistance > 5)
 		    {
 		    	iValue -= (iDistance - 5) * 500;
 		    }
-		    else if (iDistance < 4)
+			else if (iDistance < 4)
 		    {
-			// Tholal AI - increased from 2000 to try and keep AI cities apart
-				// ToDo - increase if not team city
 		    	iValue -= (4 - iDistance) * 5000;
 		    }
+
+			if (bSprawlingExpand)
+			{
+				if (iDistance < 6)
+				{
+					iValue /= 2;
+				}
+			}
+			/*
 			iValue *= (8 + iNumCities * 4);
 			iValue /= (2 + (iNumCities * 4) + iDistance);
+			*/
 			if (pNearestCity->isCapital())
 			{
 				iValue *= 150;
@@ -3478,20 +3496,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		iValue /= (1 + iDeadLockCount);
 	}
 
-//FfH: Modified by Kael 11/18/2007
-//	iValue /= (std::max(0, (iBadTile - (NUM_CITY_PLOTS / 4))) + 3);
 	iValue /= (std::max(0, (iBadTile - (iNumCityPlots / 4))) + 3);
-//FfH: End Modify
 
 	if (bStartingLoc)
 	{
 		iDifferentAreaTile = 0;
 
-//FfH: Modified by Kael 11/18/2007
-//		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
 		for (iI = 0; iI < iNumCityPlots; iI++)
-//FfH: End Modify
-
 		{
 			pLoopPlot = plotCity(iX, iY, iI);
 
@@ -3501,18 +3512,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 		}
 
-//FfH: Modified by Kael 11/18/2007
-//		iValue /= (std::max(0, (iDifferentAreaTile - ((NUM_CITY_PLOTS * 2) / 3))) + 2);
 		iValue /= (std::max(0, (iDifferentAreaTile - ((iNumCityPlots * 2) / 3))) + 2);
-//FfH: End Modify
-
 	}
 
 /*************************************************************************************************/
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	adjust for Kuriotates																		**/
-/**						                                            							**/
 /*************************************************************************************************/
+	/*
 
     if (isSprawling())
     {
@@ -3535,11 +3542,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				}
 			}
 		}
-		if (!bOtherCity)
+		if (bOtherCity)
 		{
 		    iValue+=30000;
 		}
     }
+	*/
 
 /*************************************************************************************************/
 /**	END	                                        												**/
@@ -3548,7 +3556,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	// ALN FfH-AI Start
 	// I don't want to make a hard and fast rule that the city can't border a cityRadius tile
 	// but I want to damn well discourage it
-	for (iI = 0; iI < 9; iI++)
+	for (int iI = 0; iI < 9; iI++)
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 		if (pLoopPlot != NULL)
