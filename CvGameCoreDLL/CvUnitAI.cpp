@@ -18053,6 +18053,12 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 		return false;
 	}
 
+	if (getGroup()->AI_getMissionAIType() == MISSIONAI_ASSAULT)
+	{
+		getGroup()->pushMission(MISSION_MOVE_TO, getGroup()->AI_getMissionAIPlot()->getX(), getGroup()->AI_getMissionAIPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
+		return true;
+	}
+
 	std::vector<CvUnit*> aGroupCargo;
 	CLLNode<IDInfo>* pUnitNode = plot()->headUnitNode();
 	while (pUnitNode != NULL)
@@ -18101,7 +18107,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 									if( iVisibleEnemyDefenders > 0 )
 									{
 										CvUnit* pDefender = pLoopPlot->getBestDefender(NO_PLAYER, pAttacker->getOwnerINLINE(), pAttacker, true);
-										if (pDefender == NULL || !pAttacker->canAttack(*pDefender))
+										if (pDefender == NULL || !pAttacker->canAttack(*pDefender) || !pAttacker->isAmphib())
 										{
 											bCanCargoAllUnload = false;
 											break;
@@ -18110,7 +18116,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 									else if( pLoopPlot->isCity() && !(pLoopPlot->isVisible(getTeam(),false)) )
 									{
 										// Assume city is defended, artillery can't naval invade
-										if( pAttacker->combatLimit() < 100 )
+										if(( pAttacker->combatLimit() < 100 ) || !pAttacker->isAmphib())
 										{
 											bCanCargoAllUnload = false;
 											break;
@@ -18260,7 +18266,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 											iValue /= std::max(1, (iVisibleEnemyDefenders * 3));
 */
 											// Assume non-visible city is properly defended
-											iValue *= iCargo;
+											iValue *= (iCargo / 2);
 											iValue /= std::max(pLoopPlot->getPlotCity()->AI_neededDefenders(), (iVisibleEnemyDefenders * 3));
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
@@ -18340,7 +18346,8 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-		if ((pBestPlot == pBestAssaultPlot) || (stepDistance(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE()) == 1))
+		//if ((pBestPlot == pBestAssaultPlot) || (stepDistance(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE()) == 1))
+		if (stepDistance(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE()) == 1)
 		{
 			if (atPlot(pBestAssaultPlot))
 			{
