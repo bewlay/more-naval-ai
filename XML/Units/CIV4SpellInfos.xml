@@ -2051,6 +2051,7 @@
             <Help>TXT_KEY_SPELL_MUTATION_HELP</Help>
             <PromotionPrereq1>PROMOTION_CHAOS2</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>50</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_MUTATED</AddPromotionType1>
