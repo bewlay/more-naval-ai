@@ -2562,7 +2562,9 @@ def reqRevelry(caster):
 	if pPlayer.isGoldenAge():
 		return False
 	if pPlayer.isHuman() == False:
-		if pPlayer.getTotalPopulation() < 25:
+#		if pPlayer.getTotalPopulation() < 25:
+		map = gc.getMap()
+		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
 	return True
 
@@ -3458,12 +3460,13 @@ def reqUpgradeDovielloWarrior(caster):
 def reqVeilOfNight(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumUnits() < 25:
-			return False
-		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
-		eTeam = gc.getTeam(iTeam)
-		if eTeam.getAtWarCount(True) > 0:
-			return False
+		return False
+#		if pPlayer.getNumUnits() < 25:
+#			return False
+#		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
+#		eTeam = gc.getTeam(iTeam)
+#		if eTeam.getAtWarCount(True) > 0:
+#			return False
 	return True
 
 def spellVeilOfNight(caster):
