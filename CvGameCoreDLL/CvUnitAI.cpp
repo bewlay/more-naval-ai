@@ -16208,6 +16208,15 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 										iValue /= (4 + iPathTurns*iPathTurns);
 
+										// dont start new wars unless we have a seemingly overwhelming force
+										if (!GET_TEAM(getTeam()).isAtWar(pLoopCity->getTeam()))
+										{
+											if (getGroupSize() < (2 * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
+											{
+												iValue = 0;
+											}
+										}
+
 										if (iValue > iBestValue)
 										{
 											iBestValue = iValue;
@@ -16219,6 +16228,19 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 						}
 					}
 				}
+			}
+		}
+	}
+
+	if (pBestCity != NULL)
+	{
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut, "Player %d Unit %d (%S's %S) targeting city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestCity->getName().GetCString());
+				gDLL->messageControlLog(szOut);
 			}
 		}
 	}
@@ -16379,6 +16401,17 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 
 	if (pBestCity != NULL)
 	{
+
+		if (GC.getLogging())
+		{
+			if (gDLL->getChtLvl() > 0)
+			{
+				char szOut[1024];
+				sprintf(szOut, "Player %d Unit %d (%S's %S) targeting barb city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestCity->getName().GetCString());
+				gDLL->messageControlLog(szOut);
+			}
+		}
+
 		iBestValue = 0;
 		pBestPlot = NULL;
 
