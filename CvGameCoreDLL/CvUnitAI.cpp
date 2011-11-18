@@ -28462,7 +28462,7 @@ bool CvUnitAI::AI_Rantinemove()
 			{
 				if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
 				{
-					if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true, &iPathTurns))
+					if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 					{
 						iValue = (pLoopCity->getPopulation() * 10);
 
