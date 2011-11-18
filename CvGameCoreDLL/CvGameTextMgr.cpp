@@ -3512,6 +3512,13 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 //				szString+=CvWString::format(L"\nHostiles = %d", iHostileUnits);
 //			}
 
+			int iWorkersHave = pPlotCity->AI_getWorkersHave();
+			int iWorkersNeeded = pPlotCity->AI_getWorkersNeeded();
+			szString.append(CvWString::format(L"\nWorkers H/N (%d , %d)", iWorkersHave, iWorkersNeeded));
+
+			int iWorkBoatsNeeded = pPlotCity->AI_neededSeaWorkers();
+			szString.append(CvWString::format(L"\nWorkboats Needed = %d", iWorkBoatsNeeded));
+
 			szString.append(CvWString::format(L"\nThreat C/P (%d / %d)", pPlotCity->AI_cityThreat(), kPlayer.AI_getTotalAreaCityThreat(pPlotCity->area())));
 
 			bool bFirst = true;
@@ -3649,13 +3656,6 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 /************************************************************************************************/
 				}
 			}
-
-			int iWorkersHave = pPlotCity->AI_getWorkersHave();
-			int iWorkersNeeded = pPlotCity->AI_getWorkersNeeded();
-			szString.append(CvWString::format(L"\n\nWorkers H/N (%d , %d)", iWorkersHave, iWorkersNeeded));
-
-			int iWorkBoatsNeeded = pPlotCity->AI_neededSeaWorkers();
-			szString.append(CvWString::format(L"\n\nWorkboats Needed = %d", iWorkBoatsNeeded));
 
 			int iAreaSiteBestValue = 0;
 			int iNumAreaCitySites = kPlayer.AI_getNumAreaCitySites(pPlot->getArea(), iAreaSiteBestValue);
@@ -3860,16 +3860,24 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			{
 				std::vector<UnitAITypes> vecUnitAIs;
 
-				if( pPlot->getFeatureType() != NO_FEATURE )
+				if (pPlot->isWater())
 				{
-					szString.append(CvWString::format(L"Defense unit AIs:\n"));
+					szString.append(CvWString::format(SETCOLR L"Sea Unit AI Values:\n" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
+					vecUnitAIs.push_back(UNITAI_ATTACK_SEA);
+					vecUnitAIs.push_back(UNITAI_ASSAULT_SEA);
+					vecUnitAIs.push_back(UNITAI_ESCORT_SEA);
+					vecUnitAIs.push_back(UNITAI_PIRATE_SEA);
+				}
+				else if( pPlot->getFeatureType() != NO_FEATURE )
+				{
+					szString.append(CvWString::format(SETCOLR L"Defense Unit AI Values:\n" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
 					vecUnitAIs.push_back(UNITAI_CITY_DEFENSE);
 					vecUnitAIs.push_back(UNITAI_COUNTER);
 					vecUnitAIs.push_back(UNITAI_CITY_COUNTER);
 				}
 				else
 				{
-					szString.append(CvWString::format(L"Attack unit AIs:\n"));
+					szString.append(CvWString::format(SETCOLR L"Attack Unit AI Values:\n" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT")));
 					vecUnitAIs.push_back(UNITAI_ATTACK);
 					vecUnitAIs.push_back(UNITAI_ATTACK_CITY);
 					vecUnitAIs.push_back(UNITAI_COUNTER);
