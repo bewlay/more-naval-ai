@@ -24274,7 +24274,7 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 
 	if (getDomainType() != DOMAIN_AIR)
 	{
-		if (pPlot->isRoute())
+		if (pPlot->isRoute() && !isEnemyRoute())
 		{
 			iValue++;
 			if (eNonObsoleteBonus != NO_BONUS)
@@ -24326,6 +24326,9 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 		if (getDomainType() != DOMAIN_AIR)
 		{
 			iValue += GC.getImprovementInfo(eImprovement).getPillageGold();
+
+			// raiders
+			iValue += (GC.getImprovementInfo(eImprovement).getPillageGold() * GET_PLAYER(getOwnerINLINE()).getPillagingGold()) / 100;
 		}
 
 		if (eNonObsoleteBonus != NO_BONUS)
