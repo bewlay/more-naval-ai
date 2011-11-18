@@ -6132,7 +6132,6 @@ int CvCityAI::AI_neededDefenders()
 		}
 	}
 	
-	/*
 	if (!GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_CRUSH))
 	{
 		iDefenders += AI_neededFloatingDefenders();
@@ -6141,8 +6140,7 @@ int CvCityAI::AI_neededDefenders()
 	{
 		iDefenders += (AI_neededFloatingDefenders() + 2) / 4;
 	}
-	*/
-
+	
 	if (bDefenseWar || GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_ALERT2))
 	{
 		if (!(plot()->isHills()))
