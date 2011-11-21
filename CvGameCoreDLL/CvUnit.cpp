@@ -18110,11 +18110,16 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	}
 	if (getGoldFromCombat() != 0)
 	{
-		if (!pLoser->isAnimal())
+		// doesnt work on animals or temporary summons
+		if (!pLoser->isAnimal() && !(pLoser->getDuration() > 0))
 		{
-			GET_PLAYER(getOwnerINLINE()).changeGold(getGoldFromCombat());
-			CvWString szBuffer = gDLL->getText("TXT_KEY_MESSAGE_GOLD_FROM_COMBAT", getGoldFromCombat()).GetCString();
-			gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_GOODY_GOLD", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX_INLINE(), getY_INLINE(), true, true);
+			// also wont work on angels, avatars, demons, elementals, golem, illusions, puppets, undead
+			if (pLoser->isAlive() || (pLoser->getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL")))
+			{
+				GET_PLAYER(getOwnerINLINE()).changeGold(getGoldFromCombat());
+				CvWString szBuffer = gDLL->getText("TXT_KEY_MESSAGE_GOLD_FROM_COMBAT", getGoldFromCombat()).GetCString();
+				gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_GOODY_GOLD", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX_INLINE(), getY_INLINE(), true, true);
+			}
 		}
 	}
 	if (getDuration() > 0)
