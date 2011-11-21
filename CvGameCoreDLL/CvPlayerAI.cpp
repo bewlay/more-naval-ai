@@ -6069,12 +6069,15 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 
 				for (int iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 				{
-					if (kLoopBuilding.getFreeSpecialistCount((SpecialistTypes)iI) != 0)
+					int iNumFreeSpecialists = kLoopBuilding.getFreeSpecialistCount((SpecialistTypes)iI);
+					int iNumSpecialists = kLoopBuilding.getSpecialistCount((SpecialistTypes)iI);
+
+					if (iNumSpecialists != 0 || iNumFreeSpecialists != 0)
 					{
 
 						if (GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(COMMERCE_CULTURE) > 0)
 						{
-							iCultureSpecialist++;
+							iCultureSpecialist += iNumSpecialists + (iNumFreeSpecialists * 3);
 						}
 
 						int iUnitClass = GC.getSpecialistInfo((SpecialistTypes)iI).getGreatPeopleUnitClass();
@@ -6086,11 +6089,11 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 						//TODO - make these two sections more dynamic
 						if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_PROPHET)
 						{
-							iProphetSpecialist++;
+							iProphetSpecialist += iNumSpecialists + (iNumFreeSpecialists * 3);
 						}
 						if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_ARTIST)
 						{
-							iCultureSpecialist++;
+							iCultureSpecialist += iNumSpecialists + (iNumFreeSpecialists * 3);
 						}
 					}
 				}
@@ -6211,7 +6214,16 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += iGreatPeopleRateModifier * 2;
 					iBuildingValue += iGlobalGreatPeopleRateModifier * 4;
 
-					iBuildingValue += iProphetSpecialist * 25;
+					iBuildingValue += iProphetSpecialist * 100;
+
+					if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
+					{
+						iBuildingValue += iGreatPeopleRateModifier * 2;
+						iBuildingValue += iGlobalGreatPeopleRateModifier * 4;
+
+						iBuildingValue += iProphetSpecialist * (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) ? 250: 100);
+					}
+
                 }
 
 				if (bFinancialTrouble)
@@ -24298,10 +24310,16 @@ void CvPlayerAI::AI_invalidateAttitudeCache()
 /************************************************************************************************/
 
 
-// Tholal AI - Tower mana
+// Tholal AI - Tower mana - lots of HARDCODE
 // ToDo - give this function an option to check for just final mana - or incoporate extra value into bonus value function
+// ToDo - improve code; make it more dynamic if possible
 int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 {
+
+	if (!GC.getGameINLINE().isVictoryValid((VictoryTypes)GC.getInfoTypeForString("VICTORY_TOWER_OF_MASTERY")))
+	{
+        return 0;
+    }
 
 	// Don't count mana that we can't use due to Overcouncil resolutions
     if (isFullMember((VoteSourceTypes)0))
