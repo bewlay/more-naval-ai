@@ -20083,6 +20083,26 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	}
 	*/
 
+	//TODO - reference getMojoFactor() instead?
+	// Count amount of mana
+	int iTotalMana = 0;
+	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
+	{
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
+		{
+			iTotalMana += getNumAvailableBonuses((BonusTypes)iK);
+		}
+		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA_RAW")))
+		{
+			iTotalMana += countOwnedBonuses((BonusTypes)iK);
+		}
+	}
+
+	if (iTotalMana > 5)
+	{
+		return 1;
+	}
+
 	if (bHasMageTrait)
 	{
 		return 1;
