@@ -17584,14 +17584,7 @@ int CvUnit::chooseSpell()
 												{
 													if (pLoopUnit->getDamage() < iDmgLimit)
 													{
-														if (bIsCityPlot)
-														{
-															iValue += iDmg * 20;
-														}
-														else
-														{
-															iValue += iDmg * 10;
-														}
+														iValue += iDmg * (10 + pLoopUnit->getLevel());
 													}
 												}
 												if (pLoopUnit->getTeam() == getTeam())
@@ -17602,7 +17595,7 @@ int CvUnit::chooseSpell()
 													}
 													else
 													{
-														iValue -= iDmg * 10;
+														iValue -= iDmg * (10 + pLoopUnit->getLevel());
 													}
 												}
 												if (pLoopUnit->getTeam() != getTeam() && pLoopUnit->isEnemy(getTeam()) == false)
@@ -17695,7 +17688,7 @@ int CvUnit::chooseSpell()
 				{
 					iValue += 20 * GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() * (iRange + 1) * (iRange + 1);
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
+				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster()) // TODO - add a check for financial trouble and/or overabundance of troops
 				{
 					iValue -= getLevel() * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
 				}
