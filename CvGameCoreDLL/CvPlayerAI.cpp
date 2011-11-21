@@ -5005,10 +5005,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						}
 
 						// doesnt include bonuses we cant use due to blocking features
+						// TODO - this isnt counting mana from buildings - need a better check
 						iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
 
 						// used for debugging
-						int iTotalBonuses = countOwnedBonuses((BonusTypes)iK);
+						int iTotalBonuses = getNumAvailableBonuses((BonusTypes)iK);
 
 						if (iNumBonuses > 0)
 						{
@@ -10324,21 +10325,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				iValue += (GC.getBonusInfo(eBonus).getDiscoverRandModifier() * (bKhazad ? 5 : 2));
 
-				/*
-				if (AI_isNeededTowerMana(eBonus))
-				{
-					iValue *= 4;
-				}
-				*/
-
-				//iValue += 100 * AI_getTowerManaValue(eBonus);
+				iValue += 100 * AI_getTowerManaValue(eBonus);
 
 				int iNumBonuses = countOwnedBonuses(eBonus);
 				if (iNumBonuses > 0)
 				{
 					if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
 					{
-						//iValue /= (iNumBonuses + 2);
 						iValue /= 3;
 					}
 					else
@@ -24390,17 +24383,246 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
         }
     }
 
-	// Set Mastery var
-	// loop through prereq buildings
-	// Do we have it already? If so, next
-	//Have buildinding count +1
-	// Do we have the tech for it?
-	// Building Count +1
-	// loop through prereq mana for those buildings
-	// mana count +1
-	// do we have it already? If so, next and havemana count +1
+	if (getNumAvailableBonuses(eBonus) > 0)
+	{
+		return 0;
+	}
 
-	return 0;
+	int iValue = 0;
+	int iBestTowerManaValue = 0;
+	int iNumCompletedTowers = 0;
+
+	if (isHasTech((TechTypes)GC.getInfoTypeForString("TECH_ELEMENTALISM")))
+	{
+		//BuildingTypes kTowerBuilding = NO_BUILDING;
+		BuildingTypes kTowerBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_TOWER_OF_THE_ELEMENTS");
+
+		int iBonusesNeeded = 0;
+		int iBonusesHave = 0;
+		int iBonusesLeft = 0;
+
+		if (countNumBuildings(kTowerBuilding) > 0)
+		{
+			iNumCompletedTowers++;
+		}
+		else
+		{
+			bool bManaIsForTower = false;
+			for (int iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
+			{
+				if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+				{
+					iBonusesNeeded++;
+
+					if (hasBonus((BonusTypes)GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI)))
+					{
+						 iBonusesHave++;
+					}
+
+					if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) == eBonus)
+					{
+						bManaIsForTower = true;
+					}
+				}
+			}
+
+			if (bManaIsForTower)
+			{
+				iValue = 1 + iBonusesHave;
+				iBonusesLeft = iBonusesNeeded - iBonusesHave;
+
+				if (iBonusesLeft == 1)
+				{
+					iValue += 2;
+				}
+
+				if (iBonusesLeft == 2)
+				{
+					iValue++;
+				}
+
+				if (iValue > iBestTowerManaValue)
+				{
+					iBestTowerManaValue = iValue;
+				}
+			}
+		}
+	}
+
+	if (isHasTech((TechTypes)GC.getInfoTypeForString("TECH_DIVINATION")))
+	{
+		//BuildingTypes kTowerBuilding = NO_BUILDING;
+		BuildingTypes kTowerBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_TOWER_OF_DIVINATION");
+
+		int iBonusesNeeded = 0;
+		int iBonusesHave = 0;
+		int iBonusesLeft = 0;
+
+		if (countNumBuildings(kTowerBuilding) > 0)
+		{
+			iNumCompletedTowers++;
+		}
+		else
+		{
+			bool bManaIsForTower = false;
+			for (int iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
+			{
+				if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+				{
+					iBonusesNeeded++;
+
+					if (hasBonus((BonusTypes)GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI)))
+					{
+						 iBonusesHave++;
+					}
+
+					if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) == eBonus)
+					{
+						bManaIsForTower = true;
+					}
+				}
+			}
+
+			if (bManaIsForTower)
+			{
+				iValue = 1 + iBonusesHave;
+				iBonusesLeft = iBonusesNeeded - iBonusesHave;
+
+				if (iBonusesLeft == 1)
+				{
+					iValue += 2;
+				}
+
+				if (iBonusesLeft == 2)
+				{
+					iValue++;
+				}
+
+				if (iValue > iBestTowerManaValue)
+				{
+					iBestTowerManaValue = iValue;
+				}
+			}
+		}
+	}
+
+	if (isHasTech((TechTypes)GC.getInfoTypeForString("TECH_NECROMANCY")))
+	{
+		//BuildingTypes kTowerBuilding = NO_BUILDING;
+		BuildingTypes kTowerBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_TOWER_OF_NECROMANCY");
+
+		int iBonusesNeeded = 0;
+		int iBonusesHave = 0;
+		int iBonusesLeft = 0;
+
+		if (countNumBuildings(kTowerBuilding) > 0)
+		{
+			iNumCompletedTowers++;
+		}
+		else
+		{
+			bool bManaIsForTower = false;
+			for (int iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
+			{
+				if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+				{
+					iBonusesNeeded++;
+
+					if (hasBonus((BonusTypes)GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI)))
+					{
+						 iBonusesHave++;
+					}
+
+					if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) == eBonus)
+					{
+						bManaIsForTower = true;
+					}
+				}
+			}
+
+			if (bManaIsForTower)
+			{
+				iValue = 1 + iBonusesHave;
+				iBonusesLeft = iBonusesNeeded - iBonusesHave;
+
+				if (iBonusesLeft == 1)
+				{
+					iValue += 2;
+				}
+
+				if (iBonusesLeft == 2)
+				{
+					iValue++;
+				}  
+
+				if (iValue > iBestTowerManaValue)
+				{
+					iBestTowerManaValue = iValue;
+				}
+			}
+		}
+	}
+
+	if (isHasTech((TechTypes)GC.getInfoTypeForString("TECH_ALTERATION")))
+	{
+		//BuildingTypes kTowerBuilding = NO_BUILDING;
+		BuildingTypes kTowerBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_TOWER_OF_ALTERATION");
+
+		int iBonusesNeeded = 0;
+		int iBonusesHave = 0;
+		int iBonusesLeft = 0;
+
+		if (countNumBuildings(kTowerBuilding) > 0)
+		{
+			iNumCompletedTowers++;
+		}
+		else
+		{
+			bool bManaIsForTower = false;
+			for (int iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
+			{
+				if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+				{
+					iBonusesNeeded++;
+
+					if (hasBonus((BonusTypes)GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI)))
+					{
+						 iBonusesHave++;
+					}
+
+					if (GC.getBuildingInfo(kTowerBuilding).getPrereqOrBonuses(iI) == eBonus)
+					{
+						bManaIsForTower = true;
+					}
+				}
+			}
+
+			if (bManaIsForTower)
+			{
+				iValue = 1 + iBonusesHave;
+				iBonusesLeft = iBonusesNeeded - iBonusesHave;
+
+				if (iBonusesLeft == 1)
+				{
+					iValue += 2;
+				}
+
+				if (iBonusesLeft == 2)
+				{
+					iValue++;
+				} 
+
+				if (iValue > iBestTowerManaValue)
+				{
+					iBestTowerManaValue = iValue;
+				}
+			}
+		}
+	}
+
+	iBestTowerManaValue += iNumCompletedTowers;
+
+	return iBestTowerManaValue;
 }
 
 bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
