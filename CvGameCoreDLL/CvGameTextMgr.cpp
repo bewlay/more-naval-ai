@@ -4547,7 +4547,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 						{
 							szString.append(NEWLINE);
 							szString.append(GC.getBonusInfo((BonusTypes)iBonus).getDescription());
-							szString.append(CvWString::format(L" (%d): %d", GET_PLAYER(pPlot->getOwner()).countOwnedBonuses((BonusTypes)iBonus) , GET_PLAYER(pPlot->getOwner()).AI_bonusVal((BonusTypes)iBonus))); // GET_PLAYER(GC.getGameINLINE().getActivePlayer())
+							szString.append(CvWString::format(L" (%d): %d", GET_PLAYER(pPlot->getOwner()).getNumAvailableBonuses((BonusTypes)iBonus) , GET_PLAYER(pPlot->getOwner()).AI_bonusVal((BonusTypes)iBonus))); // GET_PLAYER(GC.getGameINLINE().getActivePlayer())
 						}
 					}
 				}
