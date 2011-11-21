@@ -2591,14 +2591,54 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 									|| (GC.getBonusInfo(eBonus).getYieldChange(YIELD_FOOD) > 0))
 								{
 									bHasGoodBonus = true;
-									break;
-								}
-								
-								if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
-								{
-									if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
+
+									// check blocking features
+									if	(pLoopPlot->getFeatureType() != NO_FEATURE)
 									{
-										bHasGoodBonus = false;
+										bool bCanWork = false;
+
+										if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
+										{
+											bCanWork = true;
+										}
+										else
+										{
+											for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+											{
+												BuildTypes eBuild = ((BuildTypes)iJ);
+												if (eBuild != NO_BUILD)
+												{
+													ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+													if ( eImp != NO_IMPROVEMENT )
+													{
+														if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
+														{
+															bCanWork = true;
+															break;
+														}
+													}
+												}
+											}
+										}
+
+										if (!bCanWork)
+										{
+											bHasGoodBonus = false;
+										}
+									}
+
+									// make sure we can see the bonus (no cheating!)
+									if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
+									{
+										if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
+										{
+											bHasGoodBonus = false;
+										}
+									}
+
+									if (bHasGoodBonus)
+									{
+										break;
 									}
 								}
 							}
