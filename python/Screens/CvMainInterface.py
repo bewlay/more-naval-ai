@@ -102,6 +102,10 @@ HUD_Main_Extra_1_Width = 10
 manaTypes1 = [ 'BONUS_MANA_AIR','BONUS_MANA_BODY','BONUS_MANA_CHAOS','BONUS_MANA_DEATH','BONUS_MANA_EARTH','BONUS_MANA_ENCHANTMENT','BONUS_MANA_ENTROPY','BONUS_MANA_FIRE','BONUS_MANA_ICE' ]
 manaTypes2 = [ 'BONUS_MANA_LAW','BONUS_MANA_LIFE','BONUS_MANA_METAMAGIC','BONUS_MANA_MIND','BONUS_MANA_NATURE','BONUS_MANA_SHADOW','BONUS_MANA_SPIRIT','BONUS_MANA_SUN','BONUS_MANA_WATER' ]
 #FfH: End Add
+# BUG - Great Person Bar - start
+import GPUtil
+GP_BAR_WIDTH = 520
+# BUG - Great Person Bar - end
 
 g_NumEmphasizeInfos = 0
 g_NumCityTabTypes = 0
@@ -659,6 +663,15 @@ class CvMainInterface:
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
 		screen.hide( "ResearchBar" )
 		
+# BUG - Great Person Bar - start
+		screen.addStackedBarGFC( "GreatPersonBar", 390 + ( (xResolution - 1024) / 2 ), 27, 243, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
+		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
+		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
+		screen.setStackedBarColors( "GreatPersonBar", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
+		screen.hide( "GreatPersonBar" )
+# BUG - Great Person Bar - end
+		
 		# *********************************************************************************
 		# SELECTION DATA BUTTONS/STRINGS
 		# *********************************************************************************
@@ -1033,6 +1046,10 @@ class CvMainInterface:
 		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 		
 		xResolution = screen.getXResolution()
+
+# BUG - Great Person Bar - start
+		self.updateGreatPersonBar(screen)
+# BUG - Great Person Bar - end
 
 		if ( CyInterface().shouldDisplayFlag() and CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
 			screen.show( "CivilizationFlag" )
@@ -2024,6 +2041,11 @@ class CvMainInterface:
 		screen.hide( "TimeText" )
 		screen.hide( "ResearchBar" )
 
+# BUG - Great Person Bar - start
+		screen.hide( "GreatPersonBar" )
+		screen.hide( "GreatPersonBarText" )
+# BUG - Great Person Bar - end
+
 		bShift = CyInterface().shiftKey()
 		
 		xResolution = screen.getXResolution()
@@ -2131,6 +2153,10 @@ class CvMainInterface:
 						screen.setBarPercentage( "ResearchBar", InfoBarTypes.INFOBAR_RATE, ( ( float(researchRate) / float(researchCost) ) ) / ( 1 - iFirst ) )
 
 					screen.show( "ResearchBar" )
+
+# BUG - Great Person Bar - start
+				self.updateGreatPersonBar(screen)
+# BUG - Great Person Bar - end
 					
 		return 0
 		
@@ -3767,3 +3793,50 @@ class CvMainInterface:
 
 	def update(self, fDelta):
 		return
+
+
+# BUG - Great Person Bar - start
+	def updateGreatPersonBar(self, screen):
+		if (not CyInterface().isCityScreenUp()):
+			pHeadSelectedCity = CyInterface().getHeadSelectedCity()
+			if (pHeadSelectedCity and pHeadSelectedCity.getTeam() == gc.getGame().getActiveTeam()):
+				pGPCity = pHeadSelectedCity
+				iGPTurns = GPUtil.getCityTurns(pGPCity)
+			else:
+				pGPCity, iGPTurns = GPUtil.findNextCity()
+				if (not pGPCity):
+					pGPCity, iGPP = GPUtil.findMaxCity()
+			szText = GPUtil.getGreatPeopleText(pGPCity, iGPTurns, GP_BAR_WIDTH, True, False, True)
+			szText = u"<font=2>%s</font>" % (szText)
+			if (pGPCity):
+				iCityID = pGPCity.getID()
+			else:
+				iCityID = -1
+
+# BUG - Bars on single line for higher resolution screens - start
+			xResolution = screen.getXResolution()
+			szGreatPersonBar = "GreatPersonBar"
+			xCoord = 371 + (xResolution - 1024) / 2 + 243 / 2
+			yCoord = 30
+
+			screen.setText( "GreatPersonBarText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xCoord, yCoord, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, iCityID, -1 )
+			if (not pGPCity):
+				screen.setHitTest( "GreatPersonBarText", HitTestTypes.HITTEST_NOHIT )
+			screen.show( "GreatPersonBarText" )
+# BUG - Bars on single line for higher resolution screens - end
+
+			if (pGPCity):
+				fThreshold = float(gc.getPlayer( pGPCity.getOwner() ).greatPeopleThreshold(False))
+				fRate = float(pGPCity.getGreatPeopleRate())
+				fFirst = float(pGPCity.getGreatPeopleProgress()) / fThreshold
+
+				screen.setBarPercentage( szGreatPersonBar, InfoBarTypes.INFOBAR_STORED, fFirst )
+				if ( fFirst == 1 ):
+					screen.setBarPercentage( szGreatPersonBar, InfoBarTypes.INFOBAR_RATE, fRate / fThreshold )
+				else:
+					screen.setBarPercentage( szGreatPersonBar, InfoBarTypes.INFOBAR_RATE, fRate / fThreshold / ( 1 - fFirst ) )
+			else:
+				screen.setBarPercentage( szGreatPersonBar, InfoBarTypes.INFOBAR_STORED, 0 )
+				screen.setBarPercentage( szGreatPersonBar, InfoBarTypes.INFOBAR_RATE, 0 )
+
+			screen.show( szGreatPersonBar )
