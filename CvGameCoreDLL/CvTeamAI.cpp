@@ -1224,6 +1224,15 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		iValue *= (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? 3 : 2);
 	}
 
+	// boost for declaring war on other religious leaders when pursuing a religious victory
+	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION3))
+	{
+		if (GET_TEAM(eTeam).AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION1))
+		{
+			iValue *= 2;
+		}
+	}
+	
 	// If occupied or conquest inclined and early/not strong, value weak opponents
 	if( getAnyWarPlanCount(true) > 0 || 
 		(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST2) && !(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST3))) )
