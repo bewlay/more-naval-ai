@@ -2243,6 +2243,43 @@ void CyPlayer::setParent(int /*PlayerTypes*/ eParent)
 }
 //<<<<Unofficial Bug Fix: End Add
 
+/************************************************************************/
+/*** PUPPET STATES 04/21/08 by DPII                                   ***/
+/************************************************************************/
+bool CyPlayer::makePuppet(int /*PlayerTypes*/ eSplitPlayer, CvCity* pVassalCapital) const
+{
+    if (m_pPlayer)
+    {
+        return m_pPlayer->makePuppet((PlayerTypes)eSplitPlayer, pVassalCapital);
+    }
+
+    return false;
+}
+
+bool CyPlayer::canMakePuppet(int /*PlayerTypes*/ eFromPlayer) const
+{
+    if (m_pPlayer)
+    {
+        return m_pPlayer->canMakePuppet((PlayerTypes)eFromPlayer);
+    }
+
+    return false;
+}
+
+// Puppet State functions (added by Tholal)
+bool CyPlayer::isPuppetState() const
+{
+	return m_pPlayer ? m_pPlayer->isPuppetState() : false;
+}
+
+void CyPlayer::setPuppetState(bool newvalue)
+{
+    if (m_pPlayer)
+        m_pPlayer->setPuppetState(newvalue);
+}
+
+/*************************************************************************/
+
 bool CyPlayer::canHaveTradeRoutesWith(int iPlayer)
 {
 	return m_pPlayer ? m_pPlayer->canHaveTradeRoutesWith((PlayerTypes)iPlayer) : false;

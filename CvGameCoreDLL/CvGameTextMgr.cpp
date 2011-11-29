@@ -15669,6 +15669,10 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 					{
 						szBuffer.append(NEWLINE);
 						szBuffer.append(gDLL->getText("TXT_KEY_ATTITUDE_VASSAL_OF", kLoopTeam.getName().GetCString()));
+						if (GET_PLAYER(ePlayer).isPuppetState())
+						{
+							szBuffer.append(" (puppet state)");
+						}
 
 						setVassalRevoltHelp(szBuffer, (TeamTypes)iTeam, kTeam.getID());
 					}

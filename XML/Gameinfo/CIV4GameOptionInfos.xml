@@ -587,5 +587,12 @@
 			<bDefault>0</bDefault>
 			<bVisible>0</bVisible>
 		</GameOptionInfo>
+		<GameOptionInfo>
+			<Type>GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS</Type>
+			<Description>TXT_KEY_GAME_OPTION_PUPPET_STATES_AND_REVOLUTIONS</Description>
+			<Help>TXT_KEY_GAME_OPTION_PUPPET_STATES_AND_REVOLUTIONS_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
 	</GameOptionInfos>
 </Civ4GameOptionInfos>

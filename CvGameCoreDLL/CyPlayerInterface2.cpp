@@ -64,6 +64,12 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("initNewEmpire", &CyPlayer::initNewEmpire, "int /*PlayerTypes*/ (int /*LeaderHeadTypes*/ eNewLeader, int /*CivilizationTypes*/ eNewCiv)")
 		.def("setParent", &CyPlayer::setParent, "void (int /*PlayerTypes*/ eParent)")
 //<<<<Unofficial Bug Fix: End Add
+
+		/*** PUPPET STATES 04/21/08 by DPII ***/
+		.def("makePuppet", &CyPlayer::makePuppet, "bool (int /*PlayerTypes*/ eSplitPlayer, int (CyCity* pVassalCapital)")
+		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int /*PlayerTypes*/ eFromPlayer)")
+		/*************************************/
+		
 		.def("canHaveTradeRoutesWith", &CyPlayer::canHaveTradeRoutesWith, "bool (int)")
 		.def("forcePeace", &CyPlayer::forcePeace, "void (int)")
 

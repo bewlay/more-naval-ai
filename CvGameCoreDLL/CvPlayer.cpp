@@ -522,15 +522,14 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bFoundedFirstCity = false;
 	m_bStrike = false;
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/*************************************************************************************************/
+	// Puppet States
+	m_bPuppetState = false;
+
+// Sephi BETTER AI (New Functions Definition)
     m_eFavoriteReligion = NO_RELIGION;
     m_iTowerVicFlag = 0;
 	m_bSumSuiMode = false;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
 
 //FfH: Added by Kael 04/11/2008
 	m_bAdaptive = false;
@@ -1426,6 +1425,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	int* paiBuildingOriginalTime;
 	CvWString szBuffer;
 	CvWString szName;
+	/*** PUPPET STATES 04/21/08 by DPII ***/
+	CvWString szTempBuffer;
+	/*************************************/
 	bool abEverOwned[MAX_PLAYERS];
 	int aiCulture[MAX_PLAYERS];
 	PlayerTypes eOldOwner;
@@ -2890,9 +2892,31 @@ void CvPlayer::doTurn()
     {
         AI_doTowerMastery();
     }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
+	// Puppet States
+	if (isPuppetState())
+	{
+		// check for legitimacy - requires that we be the only civ of our type left in the game
+		bool bLegitimateCiv = true;
+		
+		for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAlive() && (iI!= getID()))
+			{
+				if (GET_PLAYER((PlayerTypes)iI).getCivilizationType() == getCivilizationType())
+				{
+					bLegitimateCiv = false;
+					break;
+				}
+			}
+		}
+
+		if (bLegitimateCiv)
+		{
+			setPuppetState(false);
+			findNewCapital();
+		}
+	}
 
 	GC.getGameINLINE().verifyDeals();
 	AI_doTurnPre();
@@ -5079,6 +5103,11 @@ void CvPlayer::findNewCapital()
 	int iBestValue;
 	int iLoop;
 
+	if (isPuppetState())
+	{
+		return;
+	}
+	
 	eCapitalBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(GC.getDefineINT("CAPITAL_BUILDINGCLASS"))));
 
 	if (eCapitalBuilding == NO_BUILDING)
@@ -5973,6 +6002,14 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 //	}
 //FfH: End Modify
 
+	if (GC.getUnitClassInfo(eUnitClass).getMaxGlobalInstances() == 1)
+	{
+		if (isPuppetState())
+		{
+			return false;
+		}
+	}
+		
 	if (!bIgnoreCost)
 	{
 		if (GC.getUnitInfo(eUnit).getProductionCost() == -1)
@@ -6131,6 +6168,11 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 //		return false;
 //	}
 //FfH: End Modify
+
+	if (GC.getBuildingInfo(eBuilding).isCapital() && isPuppetState())
+	{
+		return false;
+	}
 
 	if (!bIgnoreCost)
 	{
@@ -17159,15 +17201,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(&m_bExtendedGame);
 	pStream->Read(&m_bFoundedFirstCity);
 	pStream->Read(&m_bStrike);
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/*************************************************************************************************/
+
+	// Puppet States
+	pStream->Read(&m_bPuppetState);
+
+// Sephi BETTER AI (New Functions Definition)
     pStream->Read((int*)&m_eFavoriteReligion);
     pStream->Read(&m_iTowerVicFlag);
 	pStream->Read(&m_bSumSuiMode);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
 //FfH Traits: Added by Kael 08/02/2007
 	pStream->Read(&m_bAdaptive);
 	pStream->Read(&m_bAgnostic);
@@ -17675,15 +17717,13 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_bFoundedFirstCity);
 	pStream->Write(m_bStrike);
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/*************************************************************************************************/
+	// Puppet States
+	pStream->Write(m_bPuppetState);
+
+// Sephi BETTER AI (New Functions Definition) Sephi
     pStream->Write(m_eFavoriteReligion);
     pStream->Write(m_iTowerVicFlag);
 	pStream->Write(m_bSumSuiMode);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 
 //FfH Traits: Added by Kael 08/02/2007
 	pStream->Write(m_bAdaptive);
@@ -21392,6 +21432,386 @@ PlayerTypes CvPlayer::initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationType
 }
 //<<<<Unofficial Bug Fix: End Add
 
+// PUPPET STATES 07/15/08 by DPII
+// returns a player number for the new player
+PlayerTypes CvPlayer::getPuppetPlayer() const
+{
+    PlayerTypes eNewPlayer = NO_PLAYER;
+    for (int i = 0; i < MAX_CIV_PLAYERS; ++i)
+    {
+        if (!GET_PLAYER((PlayerTypes)i).isEverAlive())
+        {
+            eNewPlayer = (PlayerTypes)i;
+            break;
+        }
+    }
+
+    return eNewPlayer;
+}
+
+bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
+{
+    if (GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES))
+    {
+        return false;
+    }
+
+    if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+    {
+        return false;
+    }
+
+    if (GET_TEAM(getTeam()).isAVassal())
+    {
+        return false;
+    }
+
+	if (!GET_TEAM(getTeam()).isVassalStateTrading())
+	{
+		return false;
+	}
+
+    PlayerTypes ePlayer = getPuppetPlayer();
+    if (ePlayer == NO_PLAYER)
+    {
+        return false;
+    }
+    else if (GET_PLAYER(ePlayer).isAlive())
+    {
+        return false;
+    }
+
+    CivLeaderArray aLeaders;
+    if (!getPuppetLeaders(aLeaders))
+    {
+        return false;
+    }
+
+    if (findPuppetPlayer(eFromPlayer) != NO_PLAYER)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool CvPlayer::getPuppetLeaders(CivLeaderArray& aLeaders) const
+{
+	aLeaders.clear();
+
+	for (int i = 0; i < GC.getNumCivilizationInfos(); ++i)
+	{
+		bool bValid = true;
+
+		if (getCivilizationType() == i)
+		{
+			bValid = false;
+		}
+
+		if (bValid)
+		{
+			if (!GC.getCivilizationInfo((CivilizationTypes)i).isPlayable() || !GC.getCivilizationInfo((CivilizationTypes)i).isAIPlayable())
+			{
+				bValid = false;
+			}
+		}
+
+		if (bValid)
+		{
+			for (int j = 0; j < MAX_CIV_PLAYERS; ++j)
+			{
+				if (getID() != j && GET_PLAYER((PlayerTypes)j).isEverAlive() && GET_PLAYER((PlayerTypes)j).getCivilizationType() == i)
+				{
+					bValid = false;
+					break;
+				}
+			}
+		}
+
+		if (bValid)
+		{
+			for (int j = 0; j < GC.getNumLeaderHeadInfos(); ++j)
+			{
+				bool bLeaderValid = true;
+				if (!GC.getCivilizationInfo((CivilizationTypes)i).isLeaders(j) && !GC.getGameINLINE().isOption(GAMEOPTION_LEAD_ANY_CIV))
+				{
+					bLeaderValid = false;
+				}
+
+				if (bLeaderValid)
+				{
+					for (int k = 0; k < MAX_CIV_PLAYERS; ++k)
+					{
+						if (GET_PLAYER((PlayerTypes)k).isEverAlive() && GET_PLAYER((PlayerTypes)k).getPersonalityType() == j)
+						{
+							bLeaderValid = false;
+						}
+					}
+				}
+
+				if (bLeaderValid)
+				{
+					aLeaders.push_back(std::make_pair((CivilizationTypes)i, (LeaderHeadTypes)j));
+				}
+			}
+		}
+	}
+
+	return (aLeaders.size() > 0);
+}
+
+bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
+{
+    PROFILE_FUNC();
+
+    int iI;
+
+    if (!canMakePuppet(eSplitPlayer))
+    {
+        return false;
+    }
+
+    PlayerTypes eNewPlayer = getPuppetPlayer();
+    if (eNewPlayer == NO_PLAYER)
+    {
+        return false;
+    }
+
+    bool bPlayerExists = GET_PLAYER(eNewPlayer).isAlive();
+    FAssert(!bPlayerExists);
+    if (!bPlayerExists)
+    {
+		int iValue = 0;
+        int iBestValue = -1;
+		int iBestLeader = -1;
+        LeaderHeadTypes eBestLeader = NO_LEADER;
+        CivilizationTypes eBestCiv = NO_CIVILIZATION;
+
+		eBestCiv = GET_PLAYER(pVassalCapital->getOriginalOwner()).getCivilizationType();
+
+        for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
+        {
+            if (GC.getCivilizationInfo(eBestCiv).isLeaders(iLeader))
+            {
+                iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+                for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+                {
+                    if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
+                    {
+                        iValue -= 2000;
+                    }
+				}
+				if (iValue > iBestValue)
+                {
+                    iBestLeader = iLeader;
+                    iBestValue = iValue;
+                }
+			}
+		}
+		
+		eBestLeader = (LeaderHeadTypes)iBestLeader;
+
+		/*
+        CivLeaderArray aLeaders;
+        if (getPuppetLeaders(aLeaders))
+        {
+            CivLeaderArray::iterator it;
+            for (it = aLeaders.begin(); it != aLeaders.end(); ++it)
+            {
+                int iValue = (1 + GC.getGameINLINE().getSorenRandNum(100, "Choosing Split Personality"));
+
+                if (GC.getCivilizationInfo(GET_PLAYER(eSplitPlayer).getCivilizationType()).getDerivativeCiv() == it->first)
+                {
+                    iValue += 1000;
+                }
+
+                if (iValue > iBestValue)
+                {
+					iBestValue = iValue;
+					eBestLeader = it->second;
+					eBestCiv = it->first;
+				}
+			}
+		}
+		*/
+
+		if (eBestLeader == NO_LEADER || eBestCiv == NO_CIVILIZATION)
+		{
+			return false;
+		}
+
+		CvWString szMessage = gDLL->getText("TXT_KEY_MISC_MAKE_PUPPET", getCivilizationAdjectiveKey(), GET_PLAYER(eSplitPlayer).getNameKey(), GC.getCivilizationInfo(eBestCiv).getShortDescriptionKey(), GC.getLeaderHeadInfo(eBestLeader).getTextKeyWide(), pVassalCapital->getNameKey());
+		for (int i = 0; i < MAX_CIV_PLAYERS; ++i)
+		{
+			if (GET_PLAYER((PlayerTypes)i).isAlive())
+			{
+				if (i == getID() || i == eNewPlayer || GET_TEAM(GET_PLAYER((PlayerTypes)i).getTeam()).isHasMet(GET_PLAYER((PlayerTypes)getID()).getTeam()))
+				{
+					gDLL->getInterfaceIFace()->addMessage((PlayerTypes)i, false, GC.getEVENT_MESSAGE_TIME(), szMessage, "AS2D_REVOLTEND", MESSAGE_TYPE_MAJOR_EVENT, ARTFILEMGR.getInterfaceArtInfo("INTERFACE_CITY_BAR_CAPITAL_TEXTURE")->getPath());
+				}
+			}
+		}
+		GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szMessage, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+
+		GC.getGameINLINE().addPlayer(eNewPlayer, eBestLeader, eBestCiv);
+		GET_PLAYER(eNewPlayer).setParent(GET_PLAYER(eSplitPlayer).getID());
+
+        if (getStateReligion() != NO_RELIGION)
+        {
+            if (GET_PLAYER(eNewPlayer).getStateReligion() != getStateReligion())
+            {
+                if (GET_PLAYER(eNewPlayer).canConvert(getStateReligion()))
+                {
+                    GET_PLAYER(eNewPlayer).convert(getStateReligion());
+                }
+            }
+        }
+
+        for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+        {
+            if (getCivics((CivicOptionTypes)iI) != GET_PLAYER(eNewPlayer).getCivics((CivicOptionTypes)iI))
+            {
+                GET_PLAYER(eNewPlayer).setCivics((CivicOptionTypes)iI, getCivics((CivicOptionTypes)iI));
+            }
+        }
+
+		CvTeam& kNewTeam = GET_TEAM(GET_PLAYER(eNewPlayer).getTeam());
+		for (int i = 0; i < GC.getNumTechInfos(); ++i)
+		{
+			kNewTeam.setHasTech((TechTypes)i, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).isHasTech((TechTypes)i), eNewPlayer, false, false);
+		}
+
+		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+		{
+			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
+
+			if (kLoopTeam.isAlive())
+			{
+				kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
+				kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(GET_PLAYER(eSplitPlayer).getTeam()));
+			}
+		}
+		kNewTeam.setEspionagePointsEver(GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsEver());
+
+		GET_TEAM(getTeam()).assignVassal(GET_PLAYER(eNewPlayer).getTeam(), false);
+		GET_PLAYER(eNewPlayer).setPuppetState(true);
+
+		AI_updateBonusValue();
+	}
+
+	if (pVassalCapital != NULL)
+	{
+	    CvPlot* pPlot = pVassalCapital->plot();
+        int iCulture = (pVassalCapital->getCultureTimes100(eSplitPlayer) * (GC.getDefineINT("PUPPET_CULTURE_MULTIPLIER") / 100));
+
+        GET_PLAYER(eNewPlayer).acquireCity(pVassalCapital, false, true, true);
+
+        if (NULL != pPlot)
+        {
+            CvCity* pCity = pPlot->getPlotCity();
+            if (NULL != pCity)
+            {
+                pCity->setCultureTimes100(eNewPlayer, iCulture, true, true);
+            }
+
+            for (int i = 0; i < GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS"); ++i)
+            {
+                pCity->initConscriptedUnit();
+            }
+        }
+	}
+
+	GC.getGameINLINE().updatePlotGroups();
+
+	return true;
+}
+
+bool CvPlayer::annex(PlayerTypes eAnnexedPlayer) const
+{
+    int iI;
+    bool bTransferPlot = false;
+    CvPlayer& kPlayer = GET_PLAYER(eAnnexedPlayer);
+
+    for (iI = 0; iI < GC.getNumTechInfos(); iI++)
+    {
+        if (GET_TEAM(kPlayer.getTeam()).isHasTech((TechTypes)iI))
+        {
+            GET_TEAM(getTeam()).setHasTech((TechTypes)iI, true, getID(), false, false);
+        }
+    }
+
+	CvCity* pLoopCity;
+	CvUnit* pLoopUnit;
+
+	// Give cities
+	int iLoop;
+	for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+	{
+		GET_PLAYER(getID()).acquireCity(pLoopCity, false, true, true);
+	}
+
+	// Give units
+	for(pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
+	{
+		pLoopUnit->gift(getID());
+	}
+
+    // Change control of plots
+	std::vector< std::pair<int, int> > aCultures;
+	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
+	{
+		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
+
+		bool bTranferPlot = false;
+
+        if (!bTransferPlot && pLoopPlot->getOwner() == eAnnexedPlayer)
+        {
+            bTransferPlot = true;
+        }
+
+		if (bTranferPlot)
+		{
+			int iCulture = pLoopPlot->getCulture(eAnnexedPlayer);
+
+            iCulture = std::max(iCulture, pLoopPlot->getCulture(getID()));
+
+			aCultures.push_back(std::make_pair(iPlot, iCulture));
+		}
+	}
+
+	for (uint i = 0; i < aCultures.size(); ++i)
+	{
+		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(aCultures[i].first);
+		pPlot->setCulture(getID(), aCultures[i].second, true, false);
+		pPlot->setCulture(eAnnexedPlayer, 0, true, false);
+
+		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+		{
+			if (pPlot->getRevealedOwner((TeamTypes)iTeam, false) == eAnnexedPlayer)
+			{
+				pPlot->setRevealedOwner((TeamTypes)iTeam, getID());
+			}
+		}
+	}
+
+	return true;
+
+}
+
+PlayerTypes CvPlayer::findPuppetPlayer(PlayerTypes eParent) const
+{
+    for (int iI = 0; iI < MAX_PLAYERS; iI++)
+    {
+        if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()) && (GET_PLAYER((PlayerTypes)iI).getParent() == eParent))
+        {
+            return ((PlayerTypes)iI);
+        }
+    }
+    return NO_PLAYER;
+}
+
+/************************************************************************/
+
 bool CvPlayer::isValidTriggerReligion(const CvEventTriggerInfo& kTrigger, CvCity* pCity, ReligionTypes eReligion) const
 {
 	if (kTrigger.getNumReligionsRequired() > 0)
@@ -24001,6 +24421,27 @@ void CvPlayer::setGreatPeopleThresholdModifier(int iNewValue)
 	m_iGreatPeopleThresholdModifier = iNewValue;
 }
 //FfH: End Add
+
+// Puppet State functions (added by Tholal)
+bool CvPlayer::isPuppetState() const
+{
+	return m_bPuppetState;
+}
+
+void CvPlayer::setPuppetState(bool newvalue)
+{
+    m_bPuppetState = newvalue;
+	if (GC.getLogging())
+	{
+		if (gDLL->getChtLvl() > 0)
+		{
+			char szOut[1024];
+			sprintf(szOut, "Puppet state set to %d\n", newvalue);
+			gDLL->messageControlLog(szOut);
+		}
+	}
+}
+// End Puppet State Functions
 
 /*************************************************************************************************/
 /** Skyre Mod                                                                                   **/

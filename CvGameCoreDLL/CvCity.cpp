@@ -324,17 +324,20 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1)
 		{
-			for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+			if (!GET_PLAYER(getOwnerINLINE()).isPuppetState())
 			{
-				if (GC.getCivilizationInfo(getCivilizationType()).isCivilizationFreeBuildingClass(iI))
+				for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 				{
-					eLoopBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI)));
-					if (eLoopBuilding != NO_BUILDING)
+					if (GC.getCivilizationInfo(getCivilizationType()).isCivilizationFreeBuildingClass(iI))
 					{
-						setNumRealBuilding(eLoopBuilding, true);
+						eLoopBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI)));
+						if (eLoopBuilding != NO_BUILDING)
+						{
+							setNumRealBuilding(eLoopBuilding, true);
+						}
 					}
 				}
-            }
+			}
 			if (!isHuman())
 			{
 				changeOverflowProduction(GC.getDefineINT("INITIAL_AI_CITY_PRODUCTION"), 0);
@@ -15743,6 +15746,32 @@ bool CvCity::isAutoRaze() const
 
 	return false;
 }
+
+
+/*** PUPPET STATES 07/15/08 by DPII ***/
+bool CvCity::canJoinPuppetState(PlayerTypes eOfPlayer) const
+{
+    bool bFound = false;
+    PlayerTypes eHighestCulturePlayer = (PlayerTypes)findHighestCulture();
+
+	if (eHighestCulturePlayer != NO_PLAYER)
+	{
+		if ((eHighestCulturePlayer == eOfPlayer) || GET_PLAYER(eHighestCulturePlayer).getTeam() == GET_PLAYER(eOfPlayer).getTeam())
+		{
+			return false;
+		}
+	}
+
+    for (int iI = 0; iI < MAX_PLAYERS; iI++)
+    {
+        if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(GET_PLAYER(eOfPlayer).getTeam()) && ((GET_PLAYER((PlayerTypes)iI).getParent() == getOwnerINLINE()) || GET_PLAYER((PlayerTypes)iI).getParent() == getPreviousOwner()))
+        {
+            bFound = true;
+        }
+    }
+    return bFound;
+}
+/*** PUPPET STATES END 07/15/08 by DPII ***/
 
 int CvCity::getMusicScriptId() const
 {

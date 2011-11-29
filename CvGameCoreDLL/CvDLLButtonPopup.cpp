@@ -355,6 +355,23 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 				CvEventReporter::getInstance().cityAcquiredAndKept(GC.getGameINLINE().getActivePlayer(), pCity);
 			}
 		}
+		/*** PUPPET STATES 04/21/08 by DPII START ***/
+		else if (pPopupReturn->getButtonClicked() == 4)
+		{
+		    bool bValid;
+		    CvCity* pCity = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCity(info.getData1());
+		    if (NULL != pCity)
+		    {
+                bValid = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).makePuppet(pCity->getPreviousOwner(), pCity);
+
+                if (!bValid)
+                {
+                    pCity->chooseProduction();
+                    CvEventReporter::getInstance().cityAcquiredAndKept(GC.getGameINLINE().getActivePlayer(), pCity);
+                }
+		    }
+		}
+		/*** PUPPET STATES END ***/
 		break;
 
 	case BUTTONPOPUP_DISBANDCITY:
@@ -1458,14 +1475,47 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 		return false;
 	}
 
+    /*** PUPPET STATES 04/21/08 by DPII
 	PlayerTypes eHighestCulturePlayer = (PlayerTypes)info.getData2();
 
 	int iCaptureGold = info.getData3();
 	bool bRaze = player.canRaze(pNewCity);
-	bool bGift = ((eHighestCulturePlayer != NO_PLAYER)
-		&& (eHighestCulturePlayer != player.getID())
+	bool bGift = ((eHighestCulturePlayer != NO_PLAYER) 
+		&& (eHighestCulturePlayer != player.getID()) 
 		&& ((player.getTeam() == GET_PLAYER(eHighestCulturePlayer).getTeam()) || GET_TEAM(player.getTeam()).isOpenBorders(GET_PLAYER(eHighestCulturePlayer).getTeam()) || GET_TEAM(GET_PLAYER(eHighestCulturePlayer).getTeam()).isVassal(player.getTeam())));
+    END ORIGINAL CODE ***/
+    int iI;
+	int iCaptureGold = info.getData3();
+    PlayerTypes eReceivingPlayer = (PlayerTypes)info.getData2();
+	bool bRaze = player.canRaze(pNewCity);
+	bool bGift = ((eReceivingPlayer != NO_PLAYER)
+		&& (eReceivingPlayer != player.getID())
+		&& ((player.getTeam() == GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(player.getTeam()).isOpenBorders(GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(GET_PLAYER(eReceivingPlayer).getTeam()).isVassal(player.getTeam())));
+	bool bPuppet = (player.canMakePuppet(pNewCity->getPreviousOwner()) && 
+		!pNewCity->canJoinPuppetState(player.getID()) && 
+		!GET_PLAYER(pNewCity->getOriginalOwner()).isBarbarian());
+	bool bPuppetGift = false;
 
+	if (bPuppet)
+    {
+        PlayerTypes ePuppetPlayer = player.getPuppetPlayer();
+    }
+	
+    if (!bGift && !bPuppet)
+    {
+        for (iI = 0; iI < MAX_PLAYERS; iI++)
+        {
+            if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(player.getTeam()) && (GET_PLAYER((PlayerTypes)iI).getParent() == pNewCity->getPreviousOwner()))
+            {
+                eReceivingPlayer = ((PlayerTypes)iI);
+                info.setData2(eReceivingPlayer);
+                bPuppet = false;
+                bPuppetGift = true;
+                break;
+            }
+        }
+    }
+    /*** PUPPET STATES END ***/
 	CvWString szBuffer;
 	if (iCaptureGold > 0)
 	{
@@ -1475,6 +1525,8 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 	{
 		szBuffer = gDLL->getText("TXT_KEY_POPUP_CITY_CAPTURE_KEEP", pNewCity->getNameKey());
 	}
+	szBuffer += info.getText();
+
 	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, szBuffer);
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_POPUP_KEEP_CAPTURED_CITY").c_str(), NULL, 0, WIDGET_GENERAL);
 
@@ -1484,10 +1536,28 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 	}
 	if (bGift)
 	{
+	    /*** PUPPET STATES 04/21/08 by DPII
 		szBuffer = gDLL->getText("TXT_KEY_POPUP_RETURN_ALLIED_CITY", GET_PLAYER(eHighestCulturePlayer).getCivilizationDescriptionKey());
 		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 2, WIDGET_GENERAL, 2, eHighestCulturePlayer);
+		END ORIGINAL CODE ***/
+		szBuffer = gDLL->getText("TXT_KEY_POPUP_RETURN_ALLIED_CITY", GET_PLAYER(eReceivingPlayer).getCivilizationDescriptionKey());
+		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 2, WIDGET_GENERAL, 2, eReceivingPlayer);
 	}
+	if (bPuppetGift)
+	{
+		szBuffer = gDLL->getText("TXT_KEY_POPUP_RETURN_PUPPET_CITY", GET_PLAYER(eReceivingPlayer).getCivilizationDescriptionKey());
+		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 2, WIDGET_GENERAL, 2, eReceivingPlayer);
+	}
+
+	/*** PUPPET STATES 04/21/08 by DPII START ***/
+	if (bPuppet)
+	{
+        szBuffer = gDLL->getText("TXT_KEY_POPUP_CREATE_PUPPET_STATE", GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationAdjectiveKey(), pNewCity->getNameKey());
+        gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 4, WIDGET_GENERAL);
+	}
+		/*** PUPPET STATES END ***/
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_CITY_WARNING_ANSWER3").c_str(), NULL, 3, WIDGET_GENERAL, -1, -1);
+	
 	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);
 
 	gDLL->getInterfaceIFace()->playGeneralSound("AS2D_CITYCAPTURE");

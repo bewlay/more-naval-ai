@@ -1130,6 +1130,9 @@ public:
 
 	int getBestYieldAvailable(YieldTypes eYield) const;
 
+	/*** PUPPET STATES 07/15/08 by DPII ***/
+	bool canJoinPuppetState(PlayerTypes eOfPlayer) const;
+	/**************************************/
 protected:
 
 	int m_iID;

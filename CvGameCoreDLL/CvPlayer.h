@@ -971,6 +971,19 @@ public:
 	PlayerTypes initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationTypes eNewCiv);
 //<<<<Unofficial Bug Fix: End Add
 
+    /*** PUPPET STATES 04/21/08 by DPII ***/
+    DllExport bool makePuppet(PlayerTypes eSplitPlayer = NO_PLAYER, CvCity* pVassalCapital = NULL);
+    DllExport bool canMakePuppet(PlayerTypes eFromPlayer) const;
+    PlayerTypes getPuppetPlayer() const;
+    bool getPuppetLeaders(CivLeaderArray& aLeaders) const;
+    DllExport bool annex(PlayerTypes eAnnexPlayer) const;
+
+    PlayerTypes findPuppetPlayer(PlayerTypes eParent) const;
+
+	bool isPuppetState() const;
+	void setPuppetState(bool newvalue);
+    /*** PUPPET STATES END ***/
+
 	DllExport void launch(VictoryTypes victoryType);
 
 	bool hasShrine(ReligionTypes eReligion);
@@ -1323,6 +1336,9 @@ protected:
 	ReligionTypes m_eLastStateReligion;
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;
+
+	// Puppet States
+	bool m_bPuppetState;
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
