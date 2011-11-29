@@ -2430,8 +2430,6 @@ void CyPlayer::setHasTrait(int /*TraitTypes*/ iIndex, bool bNewValue)
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
 int CyPlayer::getFavoriteReligion() const
 {

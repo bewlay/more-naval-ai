@@ -2882,12 +2882,7 @@ void CvPlayer::doTurn()
 
 	doUpdateCacheOnTurn();
 
-/*************************************************************************************************/
-/**	BETTER AI (new Player::DoTurn Functions) Sephi                         					    **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-
+//	Sephi BETTER AI (new Player::DoTurn Functions)
     if (!isHuman())
     {
         AI_doTowerMastery();
@@ -7229,6 +7224,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 	iFreeUnits += ((getTotalPopulation() * getFreeUnitsPopulationPercent()) / 100);
 
 //FfH: Added by Kael 04/19/2009
+	// dont count summons or objects for unit maintenance
 	CvUnit* pLoopUnit;
 	int iLoop;
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))

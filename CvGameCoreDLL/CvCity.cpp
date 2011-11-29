@@ -2087,7 +2087,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 
-	if(GC.getUSE_CAN_CONSTRUCT_CALLBACK())
+	if (GC.getUSE_CAN_CONSTRUCT_CALLBACK())
 	{
 		CyCity* pyCity = new CyCity((CvCity*)this);
 		CyArgsList argsList;

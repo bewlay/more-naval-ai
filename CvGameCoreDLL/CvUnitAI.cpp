@@ -111,12 +111,9 @@ bool CvUnitAI::AI_update()
         }
     }
 //FfH: End Modify
-/*************************************************************************************************/
-/**	BETTER AI (Balseraph Freaks) Sephi                                       					**/
-/**	should be moved to some subfunction													**/
-/**						                                            							**/
-/*************************************************************************************************/
 
+// Various FFH AI functions - lots of HARDCODE
+	// TODO: make this section better
 	if (!GET_PLAYER(getOwnerINLINE()).isHuman())
     {
 		if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))

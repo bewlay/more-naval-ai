@@ -1112,20 +1112,12 @@ public:
     void setGreatPeopleThresholdModifier(int iNewValue);
 //FfH: End Add
 
-/*************************************************************************************************/
-/** Skyre Mod                                                                                   **/
-/** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
-/**						                                            							**/
-/*************************************************************************************************/
+// Skyre Mod
+// BETTER AI (Lanun Pirate Coves) merged Sephi
     bool isPirate() const;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+// End Skyre Mod
+
+// Sephi BETTER AI (New Functions Definition)
     ReligionTypes getFavoriteReligion() const;
     void setFavoriteReligion(ReligionTypes newvalue);
     int getArcaneTowerVictoryFlag() const;
@@ -1134,9 +1126,7 @@ public:
 	bool AI_isSummonSuicideMode();
 	void AI_setSummonSuicideMode(bool newvalue);
 	void AI_doTowerMastery();
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+// End Sephi AI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/29
 //*** Assimilated city produces a unit with original civilization artstyle.
