@@ -465,7 +465,7 @@
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_MAGE_GUILD</Type>
-			<Description>NONE</Description>
+			<Description>TXT_KEY_BUILDING_MAGE_GUILD</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
 			<iMaxTeamInstances>-1</iMaxTeamInstances>
 			<iMaxPlayerInstances>-1</iMaxPlayerInstances>
