@@ -128,12 +128,8 @@ protected:
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     int m_iGroupflag;
-    int m_iOriginX; //used for Spawns
-    int m_iOriginY; //used for Spawns
 	bool m_bSuicideSummon;
 	bool m_bPermanentSummon;
     bool m_bAllowedPermDefense;

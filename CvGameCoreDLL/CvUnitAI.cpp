@@ -67,15 +67,10 @@ void CvUnitAI::AI_reset(UnitAITypes eUnitAI)
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     m_iGroupflag=GROUPFLAG_NONE;
-    m_iOriginX=-1;
-    m_iOriginY=-1;
     m_bSuicideSummon=false;
     m_bPermanentSummon=false;
-
     m_bAllowedPermDefense=true;
 /*************************************************************************************************/
 /**	END	                                        												**/
@@ -25455,16 +25450,11 @@ void CvUnitAI::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iBirthmark);
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                          		**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     pStream->Read(&m_bAllowedPermDefense);
     pStream->Read(&m_bPermanentSummon);
     pStream->Read(&m_bSuicideSummon);
-
     pStream->Read(&m_iGroupflag);
-    pStream->Read(&m_iOriginX);
-    pStream->Read(&m_iOriginY);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -25483,16 +25473,12 @@ void CvUnitAI::write(FDataStreamBase* pStream)
 	pStream->Write(m_iBirthmark);
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                          		**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
     pStream->Write(m_bAllowedPermDefense);
     pStream->Write(m_bPermanentSummon);
     pStream->Write(m_bSuicideSummon);
 
     pStream->Write(m_iGroupflag);
-    pStream->Write(m_iOriginX);
-    pStream->Write(m_iOriginY);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
