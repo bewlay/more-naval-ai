@@ -2776,7 +2776,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/26
 //*** Unique buildings can not be kept by other civilization.
 			const CivilizationTypes ePrereqCiv = (CivilizationTypes)GC.getBuildingInfo((BuildingTypes)iI).getPrereqCiv();
-			if (ePrereqCiv == NO_CIVILIZATION || ePrereqCiv == pNewCity->getCivilizationType())
+			if (ePrereqCiv == NO_CIVILIZATION || ePrereqCiv == pNewCity->getCivilizationType() || isAssimilation())
 			{
 //<<<<Unofficial Bug Fix: End Add
 				BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getBuildingInfo((BuildingTypes)iI).getBuildingClassType();
