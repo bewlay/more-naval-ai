@@ -32,6 +32,15 @@
 #include "CvDLLFAStarIFaceBase.h"
 #include "CvDLLPythonIFaceBase.h"
 /************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      05/09/09                                jdog5000      */
+/*                                                                                              */
+/* General AI                                                                                   */
+/************************************************************************************************/
+#include "CvDLLFlagEntityIFaceBase.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+/************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
 /*                                                                                              */
 /* AI logging                                                                                   */
@@ -26925,3 +26934,70 @@ void CvPlayer::addReminder(int iGameTurn, CvWString szMessage) const
 	CvMessageControl::getInstance().sendAddReminder(getID(), iGameTurn, szMessage);
 }
 // BUG - Reminder Mod - end
+
+/************************************************************************************************/
+/* Afforess	                  Start		 06/01/10                                               */
+/*Ruthless AI Helper Function                                                                   */
+/************************************************************************************************/
+bool CvPlayer::isTradingMilitaryBonus(PlayerTypes ePlayer) const
+{
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		if (GET_PLAYER(ePlayer).AI_militaryBonusVal((BonusTypes)iI) > 0)
+		{
+			if (getNumTradeImportsByBonus(ePlayer, ((BonusTypes)iI)) > 0)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+int CvPlayer::getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const
+{
+	CLLNode<TradeData>* pNode;
+	CvDeal* pLoopDeal;
+	int iCount;
+	int iLoop;
+
+	FAssert(ePlayer != getID());
+
+	iCount = 0;
+
+	for(pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
+	{
+		if ((pLoopDeal->getFirstPlayer() == getID()) && (pLoopDeal->getSecondPlayer() == ePlayer))
+		{
+			for (pNode = pLoopDeal->headSecondTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextSecondTradesNode(pNode))
+			{
+				if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
+				{
+					if (pNode->m_data.m_iData == eBonus)
+					{
+						iCount++;
+					}
+				}
+			}
+		}
+
+		if ((pLoopDeal->getFirstPlayer() == ePlayer) && (pLoopDeal->getSecondPlayer() == getID()))
+		{
+			for (pNode = pLoopDeal->headFirstTradesNode(); (pNode != NULL); pNode = pLoopDeal->nextFirstTradesNode(pNode))
+			{
+				if (pNode->m_data.m_eItemType == TRADE_RESOURCES)
+				{
+					if (pNode->m_data.m_iData == eBonus)
+					{
+						iCount++;
+					}
+				}
+			}
+		}
+	}
+
+	return iCount;
+}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/

@@ -11186,7 +11186,28 @@ DenialTypes CvPlayerAI::AI_stopTradingTrade(TeamTypes eTradeTeam, PlayerTypes eP
 			}
 		}
 	}
+/************************************************************************************************/
+/* Afforess	                  Start		 03/19/10                                               */
+/* Ruthless AI: Don't cancel open borders, we may need those in war                             */
+/************************************************************************************************/
+//Fuyu: looks like a good idea, not just for ruthless AI
+/*
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+*/
+	{
+		if (GET_TEAM(getTeam()).isOpenBorders(eTradeTeam))
+		{
+			if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
+			{
+				return DENIAL_MYSTERY;
+			}
+		}
 
+	}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	return NO_DENIAL;
 }
 
@@ -11289,6 +11310,23 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_ATTITUDE;
 	}
 
+/************************************************************************************************/
+/* Afforess	                  Start		 03/19/10                                               */
+/*                                                                                              */
+/* Ruthless AI: Don't change civics when planning war                                           */
+/************************************************************************************************/
+//	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
+	if (1 < 2)
+	{
+		if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
+		{
+			return DENIAL_JOKING;
+		}
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 	return NO_DENIAL;
 }
 
@@ -11362,7 +11400,22 @@ DenialTypes CvPlayerAI::AI_religionTrade(ReligionTypes eReligion, PlayerTypes eP
 	{
 		return DENIAL_ATTITUDE;
 	}
-
+/************************************************************************************************/
+/* Afforess	                  Start		 03/19/10                                               */
+/*                                                                                              */
+/* Ruthless AI: Don't Change Religions When we are planning war (Anarchy is bad)                */
+/************************************************************************************************/
+//	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
+	if (1 < 2)
+	{
+		if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
+		{
+			return DENIAL_NO_GAIN;
+		}
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	return NO_DENIAL;
 }
 
