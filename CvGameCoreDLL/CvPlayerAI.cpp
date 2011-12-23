@@ -4725,6 +4725,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	int iCoastalCities = countNumCoastalCities();
 	int iConnectedForeignCities = countPotentialForeignTradeCitiesConnected();
 
+	int iNumMages = (getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + 
+						getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));
 	int iCityCount = getNumCities();
 
 	if (isSprawling())
@@ -5147,8 +5149,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				// give extra boost for researching magic techs
 				if (kImprovement.getBonusConvert() != NO_BONUS)
 				{
-					iImprovementValue += AI_getMojoFactor() * 10;
-					iImprovementValue += (countOwnedBonuses((BonusTypes)GC.getInfoTypeForString("BONUS_MANA")) * 500);
+					// if we have adepts to build nodes
+					if (iNumMages > 0)
+					{
+						iImprovementValue += AI_getMojoFactor() * 10;
+						iImprovementValue += (countOwnedBonuses((BonusTypes)GC.getInfoTypeForString("BONUS_MANA")) * (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 500 : 250));
+					}
 				}
 
 				// if water improvement, weight by coastal cities (weight the whole build)
@@ -6814,7 +6820,6 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						break;
 
 					case UNITAI_EXPLORE:
-						iMilitaryValue += ((bWarPlan) ? 600 : 300);
 						iUnitValue += ((bCapitalAlone) ? 100 : 200);
 						break;
 
