@@ -21925,7 +21925,12 @@ bool CvUnitAI::AI_pickupStranded(UnitAITypes eUnitAI, int iMaxPath)
 			if( 1000*iCount > iBestValue )
 			{
 				pPickupPlot = NULL;
-				if( atPlot(pLoopPlot) || (AI_plotValid(pLoopPlot) && generatePath(pLoopPlot, 0, true, &iPathTurns)) )
+				if( atPlot(pLoopPlot) )
+				{
+					pPickupPlot = pLoopPlot;
+					iPathTurns = 0;
+				}
+				else if( AI_plotValid(pLoopPlot) && generatePath(pLoopPlot, 0, true, &iPathTurns) )
 				{
 					pPickupPlot = pLoopPlot;
 				}
@@ -21935,12 +21940,27 @@ bool CvUnitAI::AI_pickupStranded(UnitAITypes eUnitAI, int iMaxPath)
 					{
 						pAdjacentPlot = plotDirection(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), ((DirectionTypes)iI));
 
-						if (pAdjacentPlot != NULL && AI_plotValid(pAdjacentPlot))
+						if (pAdjacentPlot != NULL && atPlot(pLoopPlot))
 						{
-							if( generatePath(pAdjacentPlot, 0, true, &iPathTurns) )
+							pPickupPlot = pAdjacentPlot;
+							iPathTurns = 0;
+							break;
+						}
+					}
+
+					if (pPickupPlot == NULL)
+					{
+						for (iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
+						{
+							pAdjacentPlot = plotDirection(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), ((DirectionTypes)iI));
+
+							if (pAdjacentPlot != NULL && AI_plotValid(pAdjacentPlot))
 							{
-								pPickupPlot = pAdjacentPlot;
-								break;
+								if( generatePath(pAdjacentPlot, 0, true, &iPathTurns) )
+								{
+									pPickupPlot = pAdjacentPlot;
+									break;
+								}
 							}
 						}
 					}
