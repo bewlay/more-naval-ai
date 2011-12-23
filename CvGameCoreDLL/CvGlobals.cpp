@@ -108,6 +108,9 @@ CvGlobals gGlobals;
 // CONSTRUCTOR
 //
 CvGlobals::CvGlobals() :
+
+m_bDYNAMIC_CIV_NAMES(false),
+
 m_bGraphicsInitialized(false),
 m_bLogging(false),
 m_bRandLogging(false),
@@ -2689,6 +2692,9 @@ FVariableSystem* CvGlobals::getDefinesVarSystem()
 
 void CvGlobals::cacheGlobals()
 {
+
+	m_bDYNAMIC_CIV_NAMES = (getDefineINT("DYNAMIC_CIV_NAMES") > 0) ? true : false;
+
 	m_iMOVE_DENOMINATOR = getDefineINT("MOVE_DENOMINATOR");
 	m_iNUM_UNIT_PREREQ_OR_BONUSES = getDefineINT("NUM_UNIT_PREREQ_OR_BONUSES");
 	m_iNUM_BUILDING_PREREQ_OR_BONUSES = getDefineINT("NUM_BUILDING_PREREQ_OR_BONUSES");
@@ -3827,4 +3833,10 @@ int CvGlobals::getBBAI_SKIP_BOMBARD_MIN_STACK_RATIO()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+
+
+bool CvGlobals::isDYNAMIC_CIV_NAMES()
+{
+	return m_bDYNAMIC_CIV_NAMES;
+}
 

@@ -2416,6 +2416,92 @@ void CvXMLLoadUtility::SetVariableListTagPair(int **ppiList, const TCHAR* szRoot
 	}
 }
 
+/************************************************************************************************/
+/* RevDCM  XMLloading                             05/05/10             phungus420               */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+//allows loading of a variable pair into an array by tag name
+void CvXMLLoadUtility::SetVariableListTagPair(int **ppiList, const TCHAR* szRootTagName,
+		int iInfoBaseSize, int iInfoBaseLength,
+		const TCHAR* szValueTagName, int iValueInfoBaseLength, int iDefaultListVal)
+{
+	int i;
+	int iIndexVal;
+	int iNumSibs;
+	int iValue;
+	TCHAR szTextPosition[256];
+	TCHAR szTextVal[256];
+	int* piList = NULL;
+
+	if (0 > iInfoBaseLength)
+	{
+		char	szMessage[1024];
+		sprintf( szMessage, "Allocating zero or less memory in CvXMLLoadUtility::SetVariableListTagPair \n Current XML file is: %s", GC.getCurrentXMLFile().GetCString());
+		gDLL->MessageBox(szMessage, "XML Error");
+	}
+	InitList(ppiList, iInfoBaseLength, iDefaultListVal);
+	piList = *ppiList;
+
+	if (gDLL->getXMLIFace()->SetToChildByTagName(m_pFXml,szRootTagName))
+	{
+		if (SkipToNextVal())
+		{
+			iNumSibs = gDLL->getXMLIFace()->GetNumChildren(m_pFXml);
+			if (0 < iNumSibs)
+			{
+				if(!(iNumSibs <= iInfoBaseLength))
+				{
+					char	szMessage[1024];
+					sprintf( szMessage, "There are more siblings than memory allocated for them in CvXMLLoadUtility::SetVariableListTagPair \n Current XML file is: %s", GC.getCurrentXMLFile().GetCString());
+					gDLL->MessageBox(szMessage, "XML Error");
+				}
+				if (gDLL->getXMLIFace()->SetToChild(m_pFXml))
+				{
+					for (i=0;i<iNumSibs;i++)
+					{
+						if (GetChildXmlVal(szTextPosition))
+						{
+							iIndexVal = FindInInfoClass(szTextPosition);
+
+							if (iIndexVal != -1)
+							{
+								gDLL->getXMLIFace()->SetToParent(m_pFXml);
+								GetChildXmlValByName(szTextVal, szValueTagName);
+								iValue = FindInInfoClass(szTextVal);
+								if( (iValue < -1) || (iValue >= iValueInfoBaseLength) )
+								{
+									char	szMessage[1024];
+									sprintf( szMessage, "A defined value for an array is outside of the accepted size of the infoclass!\n Current XML file is: %s", GC.getCurrentXMLFile().GetCString());
+									gDLL->MessageBox(szMessage, "XML Error");
+								} else
+								{
+									piList[iIndexVal] = iValue;
+								}
+							} else
+							{
+								gDLL->getXMLIFace()->SetToParent(m_pFXml);
+							}
+						}
+
+						if (!gDLL->getXMLIFace()->NextSibling(m_pFXml))
+						{
+							break;
+						}
+					}
+
+					gDLL->getXMLIFace()->SetToParent(m_pFXml);
+				}
+			}
+		}
+
+		gDLL->getXMLIFace()->SetToParent(m_pFXml);
+	}
+}
+/************************************************************************************************/
+/* RevDCM	                                 END                                                */
+/************************************************************************************************/
+
 //------------------------------------------------------------------------------------------------------
 //
 //  FUNCTION:   SetVariableListTagPair(	bool **ppbList, const TCHAR* szRootTagName,

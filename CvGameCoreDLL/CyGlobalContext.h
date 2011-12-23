@@ -267,6 +267,16 @@ public:
 	void setDefineFLOAT( const char * szName, float fValue ) { return GC.setDefineFLOAT( szName, fValue ); }
 	void setDefineSTRING( const char * szName, const char * szValue ) { return GC.setDefineSTRING( szName, szValue ); }
 
+/************************************************************************************************/
+/* Mod Globals    Start                          09/13/10                           phungus420  */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	bool isDYNAMIC_CIV_NAMES() const { return GC.isDYNAMIC_CIV_NAMES(); }
+/************************************************************************************************/
+/* Mod Globals                        END                                           phungus420  */
+/************************************************************************************************/
+
 	int getMOVE_DENOMINATOR() const { return GC.getMOVE_DENOMINATOR(); }
 	int getNUM_UNIT_PREREQ_OR_BONUSES() const { return GC.getNUM_UNIT_PREREQ_OR_BONUSES(); }
 	int getNUM_BUILDING_PREREQ_OR_BONUSES() const { return GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); }

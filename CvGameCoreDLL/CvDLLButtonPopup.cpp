@@ -2274,10 +2274,19 @@ bool CvDLLButtonPopup::launchMainMenuPopup(CvPopup* pPopup, CvPopupInfo &info)
 
 		if (bShow)
 		{
-			if (!GC.getGameINLINE().getScriptData().empty())
+/********************************************************************************/
+/**		REVOLUTION_MOD							2/29/08				jdog5000	*/
+/**																				*/
+/**																				*/
+/********************************************************************************/
+			// Don't block regenerate on game script data
+			/*if (!GC.getGameINLINE().getScriptData().empty())
 			{
 				bShow = false;
-			}
+			}*/
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
 		}
 
 		if (bShow)

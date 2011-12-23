@@ -19,6 +19,15 @@ public:
 	void reportWindowActivation(bool bActive);
 
 	void reportBeginGameTurn(int iGameTurn);
+/************************************************************************************************/
+/* RevolutionDCM MpFix                                                           lemmy101       */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void reportPreEndGameTurn(int iGameTurn);
+/************************************************************************************************/
+/* RevolutionDCM                           END                                                  */
+/************************************************************************************************/
 	void reportEndGameTurn(int iGameTurn);
 
 	void reportBeginPlayerTurn(int iGameTurn, PlayerTypes);

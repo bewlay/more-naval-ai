@@ -19,6 +19,19 @@ public:
 
 	bool isNone() { return (m_pTeam==NULL); }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	bool isRebel();
+	bool isSingleCityTeam();
+	bool isRebelAgainst( int iTeam );
+	void setRebelAgainst( int iTeam, bool bNewValue );
+	int countRebelAgainst( );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	void addTeam(int /*TeamTypes*/ eTeam);
 
 	bool canChangeWarPeace(int /*TeamTypes*/ eTeam);
@@ -70,6 +83,15 @@ public:
 	bool isHuman();
 	bool isBarbarian();
 	bool isMinorCiv();
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/23/08                                jdog5000      */
+/*                                                                                              */
+/* For minor civs                                                                               */
+/************************************************************************************************/
+	void setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int /*PlayerTypes*/ getLeaderID();
 	int /*PlayerTypes*/ getSecretaryID();
 	int /*HandicapTypes*/ getHandicapType();

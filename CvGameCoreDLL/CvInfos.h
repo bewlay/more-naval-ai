@@ -1817,6 +1817,35 @@ public:
 	int getStateReligionBuildingProductionModifier() const;				// Exposed to Python
 	int getStateReligionFreeExperience() const;								// Exposed to Python
 	int getExpInBorderModifier() const;				// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivicEffects                                                                              */
+/************************************************************************************************/
+	bool isUpgradeAnywhere() const;
+	bool isAllowInquisitions() const;
+	bool isDisallowInquisitions() const;
+	int getRevIdxLocal() const;
+	int getRevIdxNational() const;
+	int getRevIdxDistanceModifier() const;
+	int getRevIdxHolyCityGood() const;
+	int getRevIdxHolyCityBad() const;
+	int getRevIdxSwitchTo() const;
+	float getRevIdxNationalityMod() const;
+	float getRevIdxBadReligionMod() const;
+	float getRevIdxGoodReligionMod() const;
+	float getRevViolentMod() const;
+	int getRevReligiousFreedom() const;
+	int getRevLaborFreedom() const;
+	int getRevEnvironmentalProtection() const;
+	int getRevDemocracyLevel() const;
+
+	bool isCommunism() const;
+	bool isFreeSpeech() const;
+	bool isCanDoElection() const;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	bool isMilitaryFoodProduction() const;				// Exposed to Python
 	bool isNoUnhealthyPopulation() const;				// Exposed to Python
@@ -1914,7 +1943,35 @@ protected:
 	int m_iStateReligionBuildingProductionModifier;
 	int m_iStateReligionFreeExperience;
 	int m_iExpInBorderModifier;
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+	int m_bUpgradeAnywhere;
+	int m_bAllowInquisitions;
+	int m_bDisallowInquisitions;
+	int m_iRevIdxLocal;
+	int m_iRevIdxNational;
+	int m_iRevIdxDistanceModifier;
+	int m_iRevIdxHolyCityGood;
+	int m_iRevIdxHolyCityBad;
+	int m_iRevIdxSwitchTo;
+	float m_fRevIdxNationalityMod;
+	float m_fRevIdxGoodReligionMod;
+	float m_fRevIdxBadReligionMod;
+	float m_fRevViolentMod;
+	int m_iRevReligiousFreedom;
+	int m_iRevLaborFreedom;
+	int m_iRevEnvironmentalProtection;
+	int m_iRevDemocracyLevel;
 
+	bool m_bCommunism;
+	bool m_bFreeSpeech;
+	bool m_bCanDoElection;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	bool m_bMilitaryFoodProduction;
 	bool m_bNoUnhealthyPopulation;
 	bool m_bBuildingOnlyHealthy;
@@ -2141,6 +2198,20 @@ public:
 	int getBombardDefenseModifier() const;					// Exposed to Python
 	int getAllCityDefenseModifier() const;				// Exposed to Python
 	int getEspionageDefenseModifier() const;					// Exposed to Python
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+	int getUnitUpgradePriceModifier() const;					// Exposed to Python
+	int getRevIdxLocal() const;					// Exposed to Python
+	int getRevIdxNational() const;					// Exposed to Python
+	int getRevIdxDistanceModifier() const;					// Exposed to Python
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 	int getMissionType() const;											// Exposed to Python
 	void setMissionType(int iNewType);
 	int getVoteSourceType() const;				// Exposed to Python
@@ -2373,6 +2444,20 @@ protected:
 	int m_iBombardDefenseModifier;
 	int m_iAllCityDefenseModifier;
 	int m_iEspionageDefenseModifier;
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+	int m_iUnitUpgradePriceModifier;
+	int m_iRevIdxLocal;
+	int m_iRevIdxNational;
+	int m_iRevIdxDistanceModifier;
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 	int m_iMissionType;
 	int m_iVoteSourceType;
 

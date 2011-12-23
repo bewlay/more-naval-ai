@@ -44,6 +44,16 @@ public:
 	void beginGameTurn(int iGameTurn);
 	void endGameTurn(int iGameTurn);
 
+/************************************************************************************************/
+/* RevolutionDCM MpFix                                                           lemmy101       */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void preEndGameTurn(int iGameTurn);
+/************************************************************************************************/
+/* RevolutionDCM                           END                                                  */
+/************************************************************************************************/
+
 	void beginPlayerTurn(int iGameTurn, PlayerTypes);
 	void endPlayerTurn(int iGameTurn, PlayerTypes);
 

@@ -22,6 +22,16 @@ public:
 	CyMap(CvMap* pMap);		// Call from C++
 	CvMap* getMap() { return m_pMap;	}	// Call from C++
 	bool isNone() { return (m_pMap==NULL); }
+	
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/29/08                                jdog5000      */
+/*                                                                                              */
+/* Used by barbarian civ                                                                        */
+/************************************************************************************************/
+	void verifyUnitValidPlot();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	void erasePlots();
 	void setRevealedPlots(int /*TeamTypes*/ eTeam, bool bNewValue, bool bTerrainOnly);

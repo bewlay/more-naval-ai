@@ -22,6 +22,16 @@
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLFAStarIFaceBase.h"
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 #define FOUND_RANGE				(7)
 
 // Public Functions...
@@ -905,6 +915,11 @@ void CvUnitAI::AI_promote()
 
 	if (eBestPromotion != NO_PROMOTION)
 	{
+		if( gUnitLogLevel >= 3 )
+		{
+			logBBAI("    %S (unit %d) choosing promotion %S (value: %d)", getName().GetCString(), getID(), GC.getPromotionInfo(eBestPromotion).getDescription(), iBestValue);
+		}
+
 		promote(eBestPromotion, -1);
 		AI_promote();
 	}
@@ -1993,6 +2008,11 @@ void CvUnitAI::AI_settleMove()
 			{
 				if (canFound(plot()))
 				{
+					if( gUnitLogLevel >= 2 )
+					{
+						logBBAI("    Settler founding in place since it's at a city site %d, %d", getX_INLINE(), getY_INLINE());
+					}
+
 					getGroup()->pushMission(MISSION_FOUND);
 					return;
 				}
@@ -2038,6 +2058,11 @@ void CvUnitAI::AI_settleMove()
 	{
 		if (canFound(plot()))
 		{
+			if( gUnitLogLevel >= 2 )
+			{
+				logBBAI("    Settler founding in place due to best adjacent found");
+			}
+
 			getGroup()->pushMission(MISSION_FOUND);
 			return;
 		}
@@ -3226,6 +3251,23 @@ void CvUnitAI::AI_attackMove()
 				return;
 			}
 		}
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/11/09                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+		// Change grouping rules shortly after civ creation
+		if( GET_PLAYER(getOwnerINLINE()).getFreeUnitCountdown() > 0 )
+		{
+			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 2, false, true, true))
+			{
+				return;
+			}
+		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		if ((GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_CITY_DEFENSE) > 0) || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
 		{
@@ -14310,14 +14352,9 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
         {
             if ((iPercentWasted < (45 + iBonusPoints)) && bFirstResearchOnly && bIsFirstTech)
             {
-				if (GC.getLogging())
+				if( gUnitLogLevel >= 2 )
 				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						char szOut[1024];
-						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted) \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
-						gDLL->messageControlLog(szOut);
-					}
+						logBBAI("Player %d Unit %d (%S's %S) discovering tech (first) %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
 				}
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
@@ -14325,15 +14362,11 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
 
             if (iPercentWasted < ((bIsFirstTech ? 31 : 11) + iBonusPoints))
             {
-				if (GC.getLogging())
+				if( gUnitLogLevel >= 2 )
 				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						char szOut[1024];
-						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
-						gDLL->messageControlLog(szOut);
-					}
+						logBBAI("Player %d Unit %d (%S's %S) discovering tech (bonus points) %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
 				}
+
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
             }
@@ -14347,14 +14380,9 @@ bool CvUnitAI::AI_discover(bool bThisTurnOnly, bool bFirstResearchOnly)
         {
             if (GET_PLAYER(getOwnerINLINE()).getCurrentResearch() == eDiscoverTech)
             {
-				if (GC.getLogging())
+				if( gUnitLogLevel >= 2 )
 				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						char szOut[1024];
-						sprintf(szOut, "Player %d Unit %d (%S's %S) discovering tech %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
-						gDLL->messageControlLog(szOut);
-					}
+						logBBAI("Player %d Unit %d (%S's %S) discovering tech (current research) %S (%d wasted)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getTechInfo(eDiscoverTech).getDescription(), iPercentWasted);
 				}
                 getGroup()->pushMission(MISSION_DISCOVER);
                 return true;
@@ -14487,6 +14515,20 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 	{
 		if (atPlot(pBestPlot) && pBestUnit)
 		{
+			if( gUnitLogLevel > 2 )
+			{
+				CvWString szString;
+				getUnitAIString(szString, pBestUnit->AI_getUnitAIType());
+
+				if(bBestUnitLegend)
+				{
+					logBBAI("      Great general %d for %S chooses to lead %S Legend Unit", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString());
+				}
+				else
+				{
+					logBBAI("      Great general %d for %S chooses to lead %S with UNITAI %S", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString(), szString.GetCString());
+				}
+			}
 			getGroup()->pushMission(MISSION_LEAD, pBestUnit->getID());
 			return true;
 		}
@@ -16226,14 +16268,9 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 	if (pBestCity != NULL)
 	{
-		if (GC.getLogging())
+		if( gUnitLogLevel >= 2 )
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "Player %d Unit %d (%S's %S) targeting city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestCity->getName().GetCString());
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("Player %d Unit %d (%S's %S) (groupsize: %d) targeting city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroupSize(), pBestCity->getName().GetCString());
 		}
 	}
 
@@ -16597,6 +16634,7 @@ bool CvUnitAI::AI_bombardCity()
 			// Big troop advantage plus pretty good starting odds, don't wait to allow reinforcements
 			if( iComparison > (iBase - 4*iAttackOdds) )
 			{
+				if( gUnitLogLevel > 2 ) logBBAI("      Stack skipping bombard of %S with compare %d and starting odds %d", pBombardCity->getName().GetCString(), iComparison, iAttackOdds);
 				return false;
 			}
 
@@ -16622,6 +16660,7 @@ bool CvUnitAI::AI_bombardCity()
 				int iBombardTurns = getGroup()->getBombardTurns(pBombardCity);
 				if( iComparison > std::max(iMin, iBase - 3*iAttackOdds - 3*iBombardTurns) )
 				{
+					if( gUnitLogLevel > 2 ) logBBAI("      Stack skipping bombard of %S with compare %d, starting odds %d, and bombard turns %d", pBombardCity->getName().GetCString(), iComparison, iAttackOdds, iBombardTurns);
 					return false;
 				}
 			}
@@ -17938,11 +17977,21 @@ bool CvUnitAI::AI_found()
 	{
 		if (atPlot(pBestFoundPlot))
 		{
+			if( gUnitLogLevel >= 2 )
+			{
+				logBBAI("    Settler founding at best found plot %d, %d", pBestFoundPlot->getX_INLINE(), pBestFoundPlot->getY_INLINE());
+			}
+
 			getGroup()->pushMission(MISSION_FOUND, -1, -1, 0, false, false, MISSIONAI_FOUND, pBestFoundPlot);
 			return true;
 		}
 		else
 		{
+			if( gUnitLogLevel >= 2 )
+			{
+				logBBAI("    Settler heading for best found plot %d, %d", pBestFoundPlot->getX_INLINE(), pBestFoundPlot->getY_INLINE());
+			}
+
 			FAssert(!atPlot(pBestPlot));
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_SAFE_TERRITORY, false, false, MISSIONAI_FOUND, pBestFoundPlot);
 			return true;
@@ -24634,6 +24683,12 @@ bool CvUnitAI::AI_stackAttackCity(int iRange, int iPowerThreshold, bool bFollow)
 
 	if (pBestPlot != NULL)
 	{
+		if( gUnitLogLevel >= 1 && pBestPlot->getPlotCity() != NULL )
+		{
+			logBBAI("    Stack for player %d (%S) decides to attack city %S with stack ratio %d", getOwner(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestPlot->getPlotCity()->getName(0).GetCString(), iBestValue );
+			logBBAI("    City %S has defense modifier %d, %d with ignore building", pBestPlot->getPlotCity()->getName(0).GetCString(), pBestPlot->getPlotCity()->getDefenseModifier(false), pBestPlot->getPlotCity()->getDefenseModifier(true) );
+		}
+
 		FAssert(!atPlot(pBestPlot));
 		getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
 		return true;
@@ -27222,15 +27277,12 @@ void CvUnitAI::ConquestMove()
 	
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
-	if (GC.getLogging())
+	/*
+	if( gUnitLogLevel >= 3 )
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) starting conquest move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("Player %d Unit %d (%S's %S) starting conquest move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
 	}
+	*/
 
 	bool bHero = false;
 	bool bWizard = false;

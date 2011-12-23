@@ -251,8 +251,27 @@ public:
 	CivicTypes AI_bestCivic(CivicOptionTypes eCivicOption) const;
 	int AI_civicValue(CivicTypes eCivic) const;
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/22/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+	int AI_RevCalcCivicRelEffect(CivicTypes eCivic) const;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 	ReligionTypes AI_bestReligion() const;
 	int AI_religionValue(ReligionTypes eReligion) const;
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/22/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+	ReligionTypes AI_findHighestHasReligion();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	EspionageMissionTypes AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerTypes& eTargetPlayer, CvPlot*& pPlot, int& iData) const;
 	int AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes eMission, CvPlot* pPlot, int iData) const;

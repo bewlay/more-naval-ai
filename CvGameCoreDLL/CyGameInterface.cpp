@@ -15,6 +15,15 @@ void CyGamePythonInterface()
 
 	python::class_<CyGame>("CyGame")
 		.def("isNone", &CyGame::isNone, "CyGame* () - is the instance valid?")
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("isMultiplayer", &CyGame::isMultiplayer, "CyGame* () - is the instance valid?")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		.def("updateScore", &CyGame::updateScore, "void (bool bForce)")
 		.def("cycleCities", &CyGame::cycleCities, "void (bool bForward, bool bAdd)")
@@ -63,6 +72,15 @@ void CyGamePythonInterface()
 		.def("getImprovementUpgradeTime", &CyGame::getImprovementUpgradeTime, "int (int /*ImprovementTypes*/ eImprovement)")
 		.def("canTrainNukes", &CyGame::canTrainNukes, "bool ()")
 
+/************************************************************************************************/
+/* RevDCM	                  Start		 11/04/10                                phungus420     */
+/*                                                                                              */
+/* New World Logic                                                                              */
+/************************************************************************************************/
+		.def("getHighestEra", &CyGame::getHighestEra, "int /*EratTypes*/ ()")
+/************************************************************************************************/
+/* New World Logic                 END                                                          */
+/************************************************************************************************/
 		.def("getCurrentEra", &CyGame::getCurrentEra, "int /*EratTypes*/ ()")
 
 		.def("getActiveTeam", &CyGame::getActiveTeam, "int () - returns ID for the group")
@@ -75,7 +93,16 @@ void CyGamePythonInterface()
 		.def("isModem", &CyGame::isModem, "bool () - Using a modem? ")
 		.def("setModem", &CyGame::setModem, "void (bool bModem) - Use a modem! (or don't)")
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
 		.def("reviveActivePlayer", &CyGame::reviveActivePlayer, "void ()")
+		.def("revivePlayer", &CyGame::revivePlayer, "void ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		.def("getGameTurn", &CyGame::getGameTurn, "int () - current game turn")
 		.def("setGameTurn", &CyGame::setGameTurn, "void (iNewValue) - set current game turn")
@@ -127,8 +154,19 @@ void CyGamePythonInterface()
 		.def("getInitTech", &CyGame::getInitTech)
 		.def("getInitWonders", &CyGame::getInitWonders)
 
-		.def("getAIAutoPlay", &CyGame::getAIAutoPlay)
-		.def("setAIAutoPlay", &CyGame::setAIAutoPlay)
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("getAIAutoPlay", &CyGame::getAIAutoPlay, "int (int iPlayer)")
+		.def("setAIAutoPlay", &CyGame::setAIAutoPlay, "void (int iPlayer, int iValue)")
+		.def("isForcedAIAutoPlay", &CyGame::isForcedAIAutoPlay, "bool (int iPlayer)")
+		.def("getForcedAIAutoPlay", &CyGame::getForcedAIAutoPlay, "int (int iPlayer)")
+		.def("setForcedAIAutoPlay", &CyGame::setForcedAIAutoPlay, "void (int iPlayer, int iValue, bool bForced)")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		.def("isScoreDirty", &CyGame::isScoreDirty, "bool ()")
 		.def("setScoreDirty", &CyGame::setScoreDirty)
@@ -138,6 +176,16 @@ void CyGamePythonInterface()
 		.def("changeDiploVote", &CyGame::changeDiploVote, "void (VoteSourceTypes, int)")
 		.def("isDebugMode", &CyGame::isDebugMode, "bool () - is the game in Debug Mode?")
 		.def("toggleDebugMode", &CyGame::toggleDebugMode)
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/18/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("getChtLvl", &CyGame::getChtLvl, "int getChtLvl()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 
 		.def("getPitbossTurnTime", &CyGame::getPitbossTurnTime, "int ()")
 		.def("setPitbossTurnTime", &CyGame::setPitbossTurnTime, "void (int)")
@@ -248,7 +296,22 @@ void CyGamePythonInterface()
 		.def("getReplayInfo", &CyGame::getReplayInfo, python::return_value_policy<python::manage_new_object>())
 		.def("hasSkippedSaveChecksum", &CyGame::hasSkippedSaveChecksum)
 		.def("saveReplay", &CyGame::saveReplay)
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
 		.def("addPlayer", &CyGame::addPlayer, "void (int eNewPlayer, int eLeader, int eCiv)")
+		//.def("addPlayer", &CyGame::addPlayer, "void (int eNewPlayer, int eLeader, int eCiv, [bool bSetAlive = true]) - if bSetAlive = false new player isn't set to be alive and won't die if not given units or cities")
+		.def("changeHumanPlayer", &CyGame::changeHumanPlayer, "void ( int /*PlayerTypes*/ eOldHuman, int /*PlayerTypes*/ eNewHuman )" )
+		.def("addReplayMessage", &CyGame::addReplayMessage, "void (int /*ReplayMessageTypes*/ eType, int /*PlayerTypes*/ ePlayer, std::wstring pszText, int iPlotX, int iPlotY, int /*ColorTypes*/ eColor)" )
+		.def("log", &CyGame::log, "void log(str)")
+		.def("logw", &CyGame::logw, "void log(wstring str)")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 		.def("getCultureThreshold", &CyGame::getCultureThreshold, "int getCultureThreshold(CultureLevelTypes eLevel)")
 
 //FfH: Added by Kael 08/24/2007

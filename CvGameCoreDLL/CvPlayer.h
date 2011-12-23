@@ -35,6 +35,51 @@ public:
 	DllExport void setupGraphical();
 	DllExport void reset(PlayerTypes eID = NO_PLAYER, bool bConstructorCall = false);
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      12/30/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	// REVOLUTION_MOD:  Customized version of initInGame below
+	void resetPlotAndCityData( );
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* CHANGE_PLAYER                          12/30/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void logMsg(char* format, ... );
+	void clearTraitBonuses();
+	void addTraitBonuses();
+	void changePersonalityType();
+	void resetCivTypeEffects();
+	void changeLeader( LeaderHeadTypes eNewLeader );
+	void changeCiv( CivilizationTypes eNewCiv );
+	void setIsHuman( bool bNewValue );
+/************************************************************************************************/
+/* CHANGE_PLAYER                           END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/04/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void initInGame(PlayerTypes eID, bool bSetAlive);
+	void setIsRebel( bool bNewValue );
+	bool isRebel( ) const;
+	int getStabilityIndex( ) const;
+	void setStabilityIndex( int iNewValue );
+	void changeStabilityIndex( int iChange );
+	int getStabilityIndexAverage( ) const;
+	void setStabilityIndexAverage( int iNewValue );
+	void updateStabilityIndexAverage( );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 protected:
 
 	void uninit();
@@ -43,6 +88,15 @@ public:
 
 	void initFreeState();
 	void initFreeUnits();
+/************************************************************************************************/
+/* LoR                                        11/03/10                          phungus420      */
+/*                                                                                              */
+/* Colonists                                                                                    */
+/************************************************************************************************/
+	UnitTypes getBestUnitType(UnitAITypes eUnitAI) const;									// Exposed to Python
+/************************************************************************************************/
+/* LoR                            END                                                           */
+/************************************************************************************************/
 	void addFreeUnitAI(UnitAITypes eUnitAI, int iCount);
 	void addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI = NO_UNITAI);
 
@@ -71,11 +125,31 @@ public:
 	CvSelectionGroup* cycleSelectionGroups(CvUnit* pUnit, bool bForward, bool bWorkers, bool* pbWrap);
 
 	bool hasTrait(TraitTypes eTrait) const;																																			// Exposed to Python
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                       07/09/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void setHumanDisabled( bool newVal );
+	bool isHumanDisabled( );
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        END                                                  */
+/************************************************************************************************/
 	DllExport bool isHuman() const;																																							// Exposed to Python
 	DllExport void updateHuman();
 	DllExport bool isBarbarian() const;																																					// Exposed to Python
 
 	DllExport const wchar* getName(uint uiForm = 0) const;																											// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/15/08                                jdog5000      */
+/*                                                                                              */
+/* Used for dynamic civ names                                                                   */
+/************************************************************************************************/
+	void setName(std::wstring szNewValue);															// Exposed to Python																// Exposed to Python
+	void setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::wstring szNewAdj);																														// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	DllExport const wchar* getNameKey() const;																																	// Exposed to Python
 	DllExport const wchar* getCivilizationDescription(uint uiForm = 0) const;																		// Exposed to Python
 	DllExport const wchar* getCivilizationDescriptionKey() const;																								// Exposed to Python
@@ -237,6 +311,16 @@ public:
 	int calculatePreInflatedCosts() const;																																// Exposed to Python
 	int calculateInflationRate() const;																																		// Exposed to Python
 	int calculateInflatedCosts() const;																																		// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/04/09                                jdog5000      */
+/*                                                                                              */
+/* For rebels and BarbarianCiv                                                                  */
+/************************************************************************************************/
+	int getFreeUnitCountdown() const;
+	void setFreeUnitCountdown( int iValue );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	int calculateBaseNetGold() const;
 	int calculateBaseNetResearch(TechTypes eTech = NO_TECH) const;   // Exposed to Python
@@ -425,6 +509,64 @@ public:
 
 	int getCityDefenseModifier() const;																																		// Exposed to Python
 	void changeCityDefenseModifier(int iChange);
+
+/************************************************************************************************/
+/* REVDCM                                 09/02/10                                phungus420    */
+/*                                                                                              */
+/* Player Functions                                                                             */
+/************************************************************************************************/
+	bool isNonStateReligionCommerce() const;
+	void changeNonStateReligionCommerce(int iNewValue);
+
+	bool isUpgradeAnywhere() const;	
+	void changeUpgradeAnywhere(int iNewValue);
+
+	int getRevIdxLocal() const;																																		// Exposed to Python
+	void changeRevIdxLocal(int iChange);
+
+	int getRevIdxNational() const;																																		// Exposed to Python
+	void changeRevIdxNational(int iChange);
+
+	int getRevIdxDistanceModifier() const;																																		// Exposed to Python
+	void changeRevIdxDistanceModifier(int iChange);
+
+	int getRevIdxHolyCityGood() const;																																		// Exposed to Python
+	void changeRevIdxHolyCityGood(int iChange);
+
+	int getRevIdxHolyCityBad() const;																																		// Exposed to Python
+	void changeRevIdxHolyCityBad(int iChange);
+
+	float getRevIdxNationalityMod() const;																																		// Exposed to Python
+	void changeRevIdxNationalityMod(float fChange);
+
+	float getRevIdxBadReligionMod() const;																																		// Exposed to Python
+	void changeRevIdxBadReligionMod(float fChange);
+
+	float getRevIdxGoodReligionMod() const;																																		// Exposed to Python
+	void changeRevIdxGoodReligionMod(float fChange);
+
+	//bool isInquisitionConditions() const;																																		// Exposed to Python
+	//void setInquisitionConditions();
+
+	//int getUnitUpgradePriceModifier() const;																																		// Exposed to Python
+	//void changeUnitUpgradePriceModifier(int iChange);
+
+	//bool canFoundReligion() const;																																		// Exposed to Python
+
+	//bool isBuildingClassRequiredToTrain(BuildingClassTypes eBuildingClass, UnitTypes eUnit) const;																			// Exposed to Python
+/************************************************************************************************/
+/* REVDCM                                  END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* Afforess	                  Start		 06/01/10                                               */
+/*            Ruthless AI                                                                       */
+/************************************************************************************************/
+	bool isTradingMilitaryBonus(PlayerTypes ePlayer) const;
+	int getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	int getNumNukeUnits() const;																																					// Exposed to Python
 	void changeNumNukeUnits(int iChange);
@@ -625,6 +767,15 @@ public:
 	DllExport bool isAlive() const;																																						// Exposed to Python
 	DllExport bool isEverAlive() const;																																				// Exposed to Python
 	void setAlive(bool bNewValue);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/15/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void setNewPlayerAlive(bool bNewValue);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	void verifyAlive();
 
 	DllExport bool isTurnActive() const;
@@ -923,6 +1074,19 @@ public:
 	int getEspionageHistory(int iTurn) const;																							// Exposed to Python
 	void updateEspionageHistory(int iTurn, int iBestEspionage);
 
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         02/04/08                            Glider1        */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	// RevolutionDCM - revolution stability history
+	int getRevolutionStabilityHistory(int iTurn) const;																							// Exposed to Python
+	void updateRevolutionStabilityHistory(int iTurn, int m_iStabilityIndexAverage);
+	// RevolutionDCM - end
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         END                                 Glider1        */
+/************************************************************************************************/
+
 	// Script data needs to be a narrow string for pickling in Python
 	std::string getScriptData() const;																									// Exposed to Python
 	void setScriptData(std::string szNewValue);																					// Exposed to Python
@@ -983,6 +1147,16 @@ public:
 	bool isPuppetState() const;
 	void setPuppetState(bool newvalue);
     /*** PUPPET STATES END ***/
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         11/15/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	bool assimilatePlayer( PlayerTypes ePlayer );																																							// Exposed to Python			
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	DllExport void launch(VictoryTypes victoryType);
 
@@ -1237,6 +1411,26 @@ protected:
 	int m_iMilitaryProductionModifier;
 	int m_iSpaceProductionModifier;
 	int m_iCityDefenseModifier;
+/************************************************************************************************/
+/* REVDCM                                 09/02/10                                phungus420    */
+/*                                                                                              */
+/* Player Functions                                                                             */
+/************************************************************************************************/
+	int m_iNonStateReligionCommerceCount;
+	int m_iUpgradeAnywhereCount;
+	int m_iRevIdxLocal;
+	int m_iRevIdxNational;
+	int m_iRevIdxDistanceModifier;
+	int m_iRevIdxHolyCityGood;
+	int m_iRevIdxHolyCityBad;
+	float m_fRevIdxNationalityMod;
+	float m_fRevIdxBadReligionMod;
+	float m_fRevIdxGoodReligionMod;
+	//bool m_bInquisitionConditions;
+	//int m_iUnitUpgradePriceModifier;
+/************************************************************************************************/
+/* REVDCM                                  END                                                  */
+/************************************************************************************************/
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
 	int m_iBaseFreeUnits;
@@ -1311,8 +1505,35 @@ protected:
 	bool m_bStrike;
 	bool m_bHuman;
 
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        09/01/07                            MRGENIE          */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	bool m_bDisableHuman;				// Set to true to disable isHuman() check
+/************************************************************************************************/
+/* AI_AUTO_PLAY_MOD                        END                                                  */
+/************************************************************************************************/
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/04/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int m_iFreeUnitCountdown;
 
+	int m_iStabilityIndex;
+	int m_iStabilityIndexAverage;
+	
+	bool m_bRebel;
+	int m_iMotherPlayer;
 
+	// Used for DynamicCivNames
+	CvWString m_szName;
+	CvWString m_szCivDesc;
+	CvWString m_szCivShort;
+	CvWString m_szCivAdj;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       12/07/09                             EmperorFool      */
 /*                                                                                              */
@@ -1349,7 +1570,7 @@ protected:
     bool m_bAgnostic;
     bool m_bAssimilation;
     bool m_bDeclaringWar;
-	bool m_bDisableHuman;				// Set to true to disable isHuman() check
+	//bool m_bDisableHuman;				// Set to true to disable isHuman() check
     bool m_bHideUnits;
     bool m_bIgnoreFood;
     bool m_bInsane;
@@ -1468,6 +1689,18 @@ protected:
 	CvTurnScoreMap m_mapPowerHistory;
 	CvTurnScoreMap m_mapCultureHistory;
 	CvTurnScoreMap m_mapEspionageHistory;
+
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         02/04/08                            Glider1        */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	// RevolutionDCM - revolution stability history
+	CvTurnScoreMap m_mapRevolutionStabilityHistory;
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         END                                 Glider1        */
+/************************************************************************************************/
+	
 
 	void doGold();
 	void doResearch();

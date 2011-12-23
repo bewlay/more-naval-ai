@@ -25,7 +25,15 @@ public:
 	CyGame(CvGameAI* pGame);			// Call from C++;
 	CvGame* getGame() { return m_pGame;	}	// Call from C++
 	bool isNone() { return (m_pGame==NULL); }
-
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+	bool isMultiplayer();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	void updateScore(bool bForce);
 	void cycleCities(bool bForward, bool bAdd);
 	void cycleSelectionGroups(bool bClear, bool bForward, bool bWorkers);
@@ -73,6 +81,15 @@ public:
 	int getImprovementUpgradeTime(int /* ImprovementTypes*/ eImprovement);
 	bool canTrainNukes();
 
+/************************************************************************************************/
+/* RevDCM	                  Start		 11/04/10                                phungus420     */
+/*                                                                                              */
+/* New World Logic                                                                              */
+/************************************************************************************************/
+	int /* EraTypes */ getHighestEra();
+/************************************************************************************************/
+/* New World Logic                 END                                                          */
+/************************************************************************************************/
 	int /* EraTypes */ getCurrentEra();
 
 	// Tholal AI
@@ -88,7 +105,16 @@ public:
 	bool isModem();
 	void setModem(bool bModem);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
 	void reviveActivePlayer();
+	void revivePlayer(int /*PlayerTypes*/ iPlayer);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	int getNumHumanPlayers();
 	int getGameTurn();
@@ -142,8 +168,20 @@ public:
 	int getInitTech() const;
 	int getInitWonders() const;
 
-	int getAIAutoPlay() const;
-	void setAIAutoPlay(int iNewValue);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+	int getAIAutoPlay(int iPlayer) const;
+	void setAIAutoPlay(int iPlayer, int iNewValue);
+
+	bool isForcedAIAutoPlay(int iPlayer) const;
+	int getForcedAIAutoPlay(int iPlayer) const;
+	void setForcedAIAutoPlay(int iPlayer, int iNewValue, bool bForced = false);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	bool isScoreDirty() const;
 	void setScoreDirty(bool bNewValue);
@@ -153,6 +191,15 @@ public:
 	void changeDiploVote(int /*VoteSourceTypes*/ eVoteSource, int iChange);
 	bool isDebugMode() const;
 	void toggleDebugMode();
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/18/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getChtLvl() const;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	int getPitbossTurnTime();
 	void setPitbossTurnTime(int iHours);
@@ -262,7 +309,19 @@ public:
 
 	void saveReplay(int iPlayer);
 
-	void addPlayer(int /*PlayerTypes*/ eNewPlayer, int /*LeaderHeadTypes*/ eLeader, int /*CivilizationTypes*/ eCiv);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+	void addPlayer(int /*PlayerTypes*/ eNewPlayer, int /*LeaderHeadTypes*/ eLeader, int /*CivilizationTypes*/ eCiv, bool bSetAlive );
+	void changeHumanPlayer( int /*PlayerTypes*/ eOldHuman , int /*PlayerTypes*/ eNewHuman );
+	void addReplayMessage(int /*ReplayMessageTypes*/ eType, int /*PlayerTypes*/ ePlayer, std::wstring pszText, int iPlotX, int iPlotY, int /*ColorTypes*/ eColor);
+	void log(TCHAR* str);
+	void logw(std::wstring str);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int getCultureThreshold(int /*CultureLevelTypes*/ eLevel);
 
 //FfH: Added by Kael 08/24/2007

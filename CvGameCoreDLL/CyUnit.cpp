@@ -129,6 +129,19 @@ bool CyUnit::canGift(bool bTestVisible)
 	return m_pUnit ? m_pUnit->canGift(bTestVisible) : false;
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CyUnit::gift()
+{
+	if( m_pUnit )
+		m_pUnit->gift();
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 bool CyUnit::canLoadUnit(CyUnit* pUnit, CyPlot* pPlot)
 {
 	return m_pUnit ? m_pUnit->canLoadUnit(pUnit->getUnit(), pPlot->getPlot()) : false;

@@ -1587,6 +1587,13 @@ void CvInitCore::setFlagDecal(PlayerTypes eID, const CvWString & szFlagDecal)
 
 CivilizationTypes CvInitCore::getCiv(PlayerTypes eID) const
 {
+	if (!m_aeCiv)
+	{
+		FAssertMsg(false, "something odd is going on");
+
+		return NO_CIVILIZATION;
+	}
+
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eID, "CvInitCore::getCiv");
 	if ( checkBounds(eID, 0, MAX_PLAYERS) )
 	{

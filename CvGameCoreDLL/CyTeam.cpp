@@ -15,6 +15,45 @@ CyTeam::CyTeam(CvTeam* pTeam) : m_pTeam(pTeam)
 {
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+bool CyTeam::isRebel()
+{
+	return m_pTeam ? m_pTeam->isRebel() : false;
+}
+
+bool CyTeam::isSingleCityTeam()
+{
+	return m_pTeam ? m_pTeam->isSingleCityTeam() : false;
+}
+
+bool CyTeam::isRebelAgainst( int iTeam )
+{
+	if (m_pTeam)
+		return m_pTeam->isRebelAgainst( (TeamTypes)iTeam );
+	else
+		return false;
+}
+
+void CyTeam::setRebelAgainst( int iTeam, bool bNewValue )
+{
+	if (m_pTeam)
+		m_pTeam->setRebelAgainst( (TeamTypes)iTeam, bNewValue );
+}
+
+int CyTeam::countRebelAgainst( )
+{
+	if (m_pTeam)
+		return m_pTeam->countRebelAgainst( );
+	else
+		return -1;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 void CyTeam::addTeam(int /*TeamTypes*/ eTeam)
 {
 	if (m_pTeam)
@@ -227,6 +266,36 @@ bool CyTeam::isMinorCiv()
 {
 	return m_pTeam ? m_pTeam->isMinorCiv() : false;
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/23/08                                jdog5000      */
+/*                                                                                              */
+/* For minor civs                                                                               */
+/************************************************************************************************/
+void CyTeam::setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck )
+{
+	if( m_pTeam )
+	{
+		for(int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+		{
+			if( GET_PLAYER((PlayerTypes)iI).getTeam() == m_pTeam->getID() )
+			{
+				if (GET_PLAYER((PlayerTypes)iI).getCivilizationType() < 0)
+				{
+					FAssertMsg(false, "GET_PLAYER((PlayerTypes)iI) of m_pTeam should have a civilizationType");
+#ifdef _DEBUG
+					throw new exception();
+#endif
+				}
+			}
+		}
+		
+		m_pTeam->setIsMinorCiv(bNewValue, bDoBarbCivCheck);
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int /*PlayerTypes*/ CyTeam::getLeaderID()
 {

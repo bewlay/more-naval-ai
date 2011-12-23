@@ -26,6 +26,186 @@ void CyCity::kill()
 		m_pCity->kill(true);
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/29/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CyCity::getRevolutionIndex()
+{
+	if( m_pCity )
+		return m_pCity->getRevolutionIndex();
+	else
+		return 0;
+}
+
+void CyCity::setRevolutionIndex( int iNewValue )
+{
+	if( m_pCity )
+		m_pCity->setRevolutionIndex(iNewValue);
+}
+
+void CyCity::changeRevolutionIndex( int iChange )
+{
+	if( m_pCity )
+		m_pCity->changeRevolutionIndex( iChange );
+}
+
+int CyCity::getLocalRevIndex()
+{
+	if( m_pCity )
+		return m_pCity->getLocalRevIndex();
+	else
+		return 0;
+}
+
+void CyCity::setLocalRevIndex( int iNewValue )
+{
+	if( m_pCity )
+		m_pCity->setLocalRevIndex( iNewValue );
+}
+
+void CyCity::changeLocalRevIndex( int iChange )
+{
+	if( m_pCity )
+		m_pCity->changeLocalRevIndex( iChange );
+}
+
+int CyCity::getRevIndexAverage() const
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexAverage();
+	else
+		return 0;
+}
+
+void CyCity::setRevIndexAverage( int iNewValue )
+{
+	if( m_pCity )
+		m_pCity->setRevIndexAverage( iNewValue );
+}
+
+void CyCity::updateRevIndexAverage( )
+{
+	if( m_pCity )
+		m_pCity->updateRevIndexAverage( );
+}
+
+int CyCity::getReinforcementCounter()
+{
+	if( m_pCity )
+		return m_pCity->getReinforcementCounter();
+	else
+		return 0;
+}
+
+void CyCity::setReinforcementCounter( int iNewValue )
+{
+	if( m_pCity )
+		m_pCity->setReinforcementCounter(iNewValue);
+}
+
+void CyCity::changeReinforcementCounter( int iChange )
+{
+	if( m_pCity )
+		m_pCity->changeReinforcementCounter( iChange );
+}
+
+int CyCity::getRevolutionCounter()
+{
+	if( m_pCity )
+		return m_pCity->getRevolutionCounter();
+	else
+		return 0;
+}
+
+void CyCity::setRevolutionCounter( int iNewValue )
+{
+	if( m_pCity )
+		m_pCity->setRevolutionCounter(iNewValue);
+}
+
+void CyCity::changeRevolutionCounter( int iChange )
+{
+	if( m_pCity )
+		m_pCity->changeRevolutionCounter( iChange );
+}
+
+int CyCity::getRevIndexHappinessVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexHappinessVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexDistanceVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexDistanceVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexColonyVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexColonyVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexReligionVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexReligionVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexNationalityVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexNationalityVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexHealthVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexHealthVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexGarrisonVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexGarrisonVal();
+	else
+		return 0;
+}
+
+int CyCity::getRevIndexDisorderVal()
+{
+	if( m_pCity )
+		return m_pCity->getRevIndexDisorderVal();
+	else
+		return 0;
+}
+
+bool CyCity::isRecentlyAcquired()
+{
+	if( m_pCity )
+		return m_pCity->isRecentlyAcquired();
+	else
+		return false;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 void CyCity::createGreatPeople(int /*UnitTypes*/ eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience)
 {
 	if (m_pCity)
@@ -509,6 +689,24 @@ int CyCity::getWarWearinessPercentAnger()
 {
 	return m_pCity ? m_pCity->getWarWearinessPercentAnger() : -1;
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/26/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CyCity::getRevRequestPercentAnger()
+{
+	return m_pCity ? m_pCity->getRevRequestPercentAnger() : -1;
+}
+
+int CyCity::getRevIndexPercentAnger()
+{
+	return m_pCity ? m_pCity->getRevIndexPercentAnger() : -1;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyCity::getLargestCityHappiness()
 {
@@ -1307,6 +1505,35 @@ void CyCity::changeHurryAngerTimer(int iChange)
 	if (m_pCity)
 		m_pCity->changeHurryAngerTimer(iChange);
 }
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CyCity::getRevRequestAngerTimer()
+{
+	return m_pCity ? m_pCity->getRevRequestAngerTimer() : -1;
+}
+
+void CyCity::changeRevRequestAngerTimer(int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeRevRequestAngerTimer(iChange);
+}
+
+int CyCity::getRevSuccessTimer()
+{
+	return m_pCity ? m_pCity->getRevSuccessTimer() : -1;
+}
+
+void CyCity::changeRevSuccessTimer(int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeRevSuccessTimer(iChange);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyCity::getConscriptAngerTimer()
 {
@@ -1994,6 +2221,24 @@ void CyCity::changeCultureTimes100(int /*PlayerTypes*/ eIndex, int iChange, bool
 	if (m_pCity)
 		m_pCity->changeCultureTimes100((PlayerTypes)eIndex, iChange, bPlots, true);
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CyCity::getNumRevolts(int playerIdx)
+{
+	return m_pCity ? m_pCity->getNumRevolts((PlayerTypes)playerIdx) : -1;
+}
+void CyCity::changeNumRevolts(int playerIdx, int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeNumRevolts((PlayerTypes)playerIdx,iChange);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 bool CyCity::isTradeRoute(int /*PlayerTypes*/ eIndex)
 {
@@ -2685,3 +2930,26 @@ const TCHAR* CyCity::getUnitArtStyleButton(int /*UnitTypes*/ eUnit) const
 	return m_pCity ? m_pCity->getUnitArtStyleButton((UnitTypes)eUnit) : TEXT("");
 }
 //<<<<Unofficial Bug Fix: End Add
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int /*UnitTypes*/ CyCity::AI_bestUnit()
+{
+	return (m_pCity ? m_pCity->AI_bestUnit() : -1);
+}
+
+int /*UnitTypes*/ CyCity::AI_bestUnitAI(int iUnitAIType)
+{
+	return (m_pCity ? m_pCity->AI_bestUnitAI((UnitAITypes)iUnitAIType) : -1);
+}
+
+int /*BuildingTypes*/ CyCity::AI_bestBuilding(int iFocusFlags)
+{
+	return (m_pCity ? m_pCity->AI_bestBuilding(iFocusFlags) : -1);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/

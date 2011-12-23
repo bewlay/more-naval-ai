@@ -37,6 +37,19 @@ CyGame::CyGame(CvGameAI* pGame) : m_pGame(pGame)
 
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+bool CyGame::isMultiplayer()
+{
+	return GC.getInitCore().getMultiplayer();
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+	
 void CyGame::updateScore(bool bForce)
 {
 	if (m_pGame)
@@ -235,6 +248,18 @@ bool CyGame::canTrainNukes()
 	return m_pGame ? m_pGame->canTrainNukes() : false;
 }
 
+/************************************************************************************************/
+/* RevDCM	                  Start		 11/04/10                                phungus420     */
+/*                                                                                              */
+/* New World Logic                                                                              */
+/************************************************************************************************/
+int CyGame::getHighestEra()
+{
+	return m_pGame ? (int) m_pGame->getHighestEra() : (int) NO_ERA;
+}
+/************************************************************************************************/
+/* New World Logic                 END                                                          */
+/************************************************************************************************/
 int CyGame::getCurrentEra()
 {
 	return m_pGame ? (int) m_pGame->getCurrentEra() : (int) NO_ERA;
@@ -276,11 +301,25 @@ void CyGame::setModem(bool bModem)
 		m_pGame->setModem(bModem);
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
 void CyGame::reviveActivePlayer()
 {
 	if (m_pGame)
 		m_pGame->reviveActivePlayer();
 }
+
+void CyGame::revivePlayer(int /*PlayerTypes*/ iPlayer)
+{
+	if (m_pGame)
+		m_pGame->reviveActivePlayer((PlayerTypes)iPlayer);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyGame::getNumHumanPlayers()
 {
@@ -543,16 +582,40 @@ int CyGame::getInitWonders() const
 	return (NULL != m_pGame ? m_pGame->getInitWonders() : 0);
 }
 
-int CyGame::getAIAutoPlay() const
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+int CyGame::getAIAutoPlay(int iPlayer) const
 {
-	return (NULL != m_pGame ? m_pGame->getAIAutoPlay() : 0);
+	return (NULL != m_pGame ? m_pGame->getAIAutoPlay((PlayerTypes)iPlayer) : 0);
 }
 
-void CyGame::setAIAutoPlay(int iNewValue)
+void CyGame::setAIAutoPlay(int iPlayer, int iNewValue)
 {
 	if (m_pGame)
-		m_pGame->setAIAutoPlay(iNewValue);
+		m_pGame->setAIAutoPlay((PlayerTypes)iPlayer, iNewValue);
 }
+
+bool CyGame::isForcedAIAutoPlay(int iPlayer) const
+{
+	return (NULL != m_pGame ? m_pGame->isForcedAIAutoPlay((PlayerTypes)iPlayer) : false);
+}
+
+int CyGame::getForcedAIAutoPlay(int iPlayer) const
+{
+	return (NULL != m_pGame ? m_pGame->getForcedAIAutoPlay((PlayerTypes)iPlayer) : 0);
+}
+
+void CyGame::setForcedAIAutoPlay(int iPlayer, int iNewValue, bool bForced)
+{
+	if (m_pGame)
+		m_pGame->setForcedAIAutoPlay((PlayerTypes)iPlayer, iNewValue, bForced);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 bool CyGame::isScoreDirty() const
 {
@@ -597,6 +660,19 @@ void CyGame::toggleDebugMode()
 	if (m_pGame)
 		m_pGame->toggleDebugMode();
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/18/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CyGame::getChtLvl() const
+{
+	return gDLL->getChtLvl();
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyGame::getPitbossTurnTime()
 {
@@ -1100,13 +1176,52 @@ void CyGame::saveReplay(int iPlayer)
 	}
 }
 
-void CyGame::addPlayer(int eNewPlayer, int eLeader, int eCiv)
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+void CyGame::addPlayer(int eNewPlayer, int eLeader, int eCiv, bool bSetAlive)
 {
 	if (m_pGame)
 	{
-		m_pGame->addPlayer((PlayerTypes)eNewPlayer, (LeaderHeadTypes)eLeader, (CivilizationTypes)eCiv);
+		m_pGame->addPlayer((PlayerTypes)eNewPlayer, (LeaderHeadTypes)eLeader, (CivilizationTypes)eCiv, bSetAlive);
 	}
 }
+
+void CyGame::changeHumanPlayer( int eOldHuman, int eNewHuman )
+{
+	if (m_pGame)
+	{
+		m_pGame->changeHumanPlayer((PlayerTypes)eOldHuman, (PlayerTypes)eNewHuman);
+	}
+}
+
+void CyGame::logw(std::wstring str)
+{
+	if(m_pGame)
+	{
+		m_pGame->logMsg((TCHAR*)(CvString(str) + "\n").c_str());
+	}
+}
+void CyGame::log(TCHAR* str)
+{
+	if(m_pGame)
+	{
+		m_pGame->logMsg(str);
+	}
+}
+
+void CyGame::addReplayMessage(int /*ReplayMessageTypes*/ eType, int /*PlayerTypes*/ ePlayer, std::wstring pszText, int iPlotX, int iPlotY, int /*ColorTypes*/ eColor)
+{
+	if(m_pGame)
+	{
+		m_pGame->addReplayMessage((ReplayMessageTypes)eType, (PlayerTypes)ePlayer, pszText, iPlotX, iPlotY, (ColorTypes)eColor);
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyGame::getCultureThreshold(int eLevel)
 {

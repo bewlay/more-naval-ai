@@ -65,12 +65,17 @@
 #define RANDPLOT_NOT_CITY											(0x00000040)
 
 #ifdef _USRDLL
-
-//FfH: Modified by Kael 09/27/2007
+/********************************************************************************/
+/**		REVOLUTION_MOD							1/1/08				jdog5000	*/
+/**																				*/
+/**																				*/
+/********************************************************************************/
 //#define MAX_CIV_PLAYERS												(18)
-#define MAX_CIV_PLAYERS												(35)
-//FfH: End Modify
-
+// Mod next line to change max number of players
+#define MAX_CIV_PLAYERS												(50)
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/	
 #else
 #define MAX_CIV_PLAYERS												(CvGlobals::getInstance().getMaxCivPlayers())
 #endif
@@ -184,5 +189,9 @@
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+// Revolutions Mod Components
+#define USE_DYNAMIC_CIV_NAMES							GC.isDYNAMIC_CIV_NAMES() // DYNAMIC_CIV_NAMES
+// End Revolutions
 
 #endif	// CVDEFINES_H

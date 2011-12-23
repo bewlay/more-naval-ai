@@ -44,6 +44,15 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("canAutomate", &CyUnit::canAutomate, "bool (int (AutomateTypes) eAutomate)")
 		.def("canScrap", &CyUnit::canScrap, "bool ()")
 		.def("canGift", &CyUnit::canGift, "bool (bool bTestVisible)")
+		/********************************************************************************/
+		/**		REVOLUTION_MOD							1/1/08				jdog5000	*/
+		/**																				*/
+		/**		 																		*/
+		/********************************************************************************/
+		.def("gift", &CyUnit::gift, "void ()")
+		/********************************************************************************/
+		/**		REVOLUTION_MOD							END								*/
+		/********************************************************************************/
 		.def("canLoadUnit", &CyUnit::canLoadUnit, "bool (CyUnit* pUnit, CyPlot* pPlot)")
 		.def("canLoad", &CyUnit::canLoad, "bool ()")
 		.def("canUnload", &CyUnit::canUnload, "bool ()")

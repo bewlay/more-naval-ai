@@ -48,6 +48,15 @@ public:
 	bool canAutomate(AutomateTypes eAutomate);
 	bool canScrap();
 	bool canGift(bool bTestVisible);
+	/********************************************************************************/
+	/**		REVOLUTION_MOD							1/1/08				jdog5000	*/
+	/**																				*/
+	/**		 																		*/
+	/********************************************************************************/
+	void gift();
+	/********************************************************************************/
+	/**		REVOLUTION_MOD							END								*/
+	/********************************************************************************/
 	bool canLoadUnit(CyUnit* pUnit, CyPlot* pPlot);
 	bool canLoad(CyPlot* pPlot);
 	bool canUnload();

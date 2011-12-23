@@ -25,6 +25,44 @@ public:
 	bool isNone() { return (m_pCity==NULL); }
 	void kill();
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/29/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevolutionIndex();
+	void setRevolutionIndex( int iNewValue );
+	void changeRevolutionIndex( int iChange );
+
+	int getLocalRevIndex();
+	void setLocalRevIndex( int iNewValue );
+	void changeLocalRevIndex( int iChange );
+
+	int getRevIndexAverage() const;
+	void setRevIndexAverage( int iNewValue );
+	void updateRevIndexAverage( );
+
+	int getRevolutionCounter();
+	void setRevolutionCounter( int iNewValue );
+	void changeRevolutionCounter( int iChange );
+
+	int getReinforcementCounter();
+	void setReinforcementCounter( int iNewValue );
+	void changeReinforcementCounter( int iChange );
+
+	int getRevIndexHappinessVal();
+	int getRevIndexDistanceVal();
+	int getRevIndexColonyVal();
+	int getRevIndexReligionVal();
+	int getRevIndexNationalityVal();
+	int getRevIndexHealthVal();
+	int getRevIndexGarrisonVal();
+	int getRevIndexDisorderVal();
+
+	bool isRecentlyAcquired();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	void createGreatPeople(int /*UnitTypes*/ eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience);
 
 	void doTask(int /*TaskTypes*/ eTask, int iData1, int iData2, bool bOption);
@@ -130,6 +168,16 @@ public:
 	int getCulturePercentAnger();
 	int getReligionPercentAnger();
 	int getWarWearinessPercentAnger();
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevRequestPercentAnger();
+	int getRevIndexPercentAnger();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int getLargestCityHappiness();
 	int unhappyLevel(int iExtra);
 	int happyLevel();
@@ -276,6 +324,18 @@ public:
 	void changeExtraHealth(int iChange);
 	int getHurryAngerTimer();
 	void changeHurryAngerTimer(int iChange);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevRequestAngerTimer();
+	void changeRevRequestAngerTimer(int iChange);
+	int getRevSuccessTimer();
+	void changeRevSuccessTimer(int iChange);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int getConscriptAngerTimer();
 	void changeConscriptAngerTimer(int iChange);
 	int getDefyResolutionAngerTimer();
@@ -428,6 +488,16 @@ public:
 	void changeCulture(int /*PlayerTypes*/ eIndex, int iChange, bool bPlots);
 	void changeCultureTimes100(int /*PlayerTypes*/ eIndex, int iChange, bool bPlots);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getNumRevolts(int playerIdx);
+	void changeNumRevolts(int playerIdx, int iChange);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	bool isTradeRoute(int /*PlayerTypes*/ eIndex);
 	bool isEverOwned(int /*PlayerTypes*/ eIndex);
 
@@ -572,6 +642,18 @@ public:
 	bool AI_isEmphasize(int iEmphasizeType);
 	int AI_countBestBuilds(CyArea* pArea);
 	int AI_cityValue();
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int /*UnitTypes*/ AI_bestUnit();
+	int /*UnitTypes*/ AI_bestUnitAI(int iUnitAIType);
+	int /*BuildingTypes*/ AI_bestBuilding(int iFocusFlags);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);

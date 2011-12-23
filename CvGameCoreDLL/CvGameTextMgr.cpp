@@ -749,7 +749,23 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 	{
 		szString.append(L", ");
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+/* original code
 		szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorR(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorG(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorB(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorA(), GET_PLAYER(pUnit->getOwnerINLINE()).getName());
+*/
+		// For minor civs, display civ name instead of player name ... to differentiate
+		// and help human recognize why they can't contact that player
+		if( GET_PLAYER(pUnit->getOwnerINLINE()).isMinorCiv() )
+			szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorR(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorG(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorB(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorA(), GET_PLAYER(pUnit->getOwnerINLINE()).getCivilizationDescription());
+		else
+			szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorR(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorG(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorB(), GET_PLAYER(pUnit->getOwnerINLINE()).getPlayerTextColorA(), GET_PLAYER(pUnit->getOwnerINLINE()).getName());
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		szString.append(szTempBuffer);
 	}
 
@@ -2853,7 +2869,23 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 						if (iJ != GC.getGameINLINE().getActivePlayer() && !GC.getUnitInfo((UnitTypes)iI).isAnimal() && !GC.getUnitInfo((UnitTypes)iI).isHiddenNationality())
 						{
 							szString.append(L", ");
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/08                                jdog5000      */
+/*                                                                                              */
+/* For BarbarianCiv and minor civs                                                              */
+/************************************************************************************************/
+/* original code
 							szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorR(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorG(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorB(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorA(), GET_PLAYER((PlayerTypes)iJ).getName()));
+*/
+							// For minor civs, display civ name instead of player name ... to differentiate
+							// and help human recognize why they can't contact that player
+							if( GET_PLAYER((PlayerTypes)iJ).isMinorCiv() )
+								szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorR(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorG(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorB(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorA(), GET_PLAYER((PlayerTypes)iJ).getCivilizationDescription()));
+							else
+								szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorR(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorG(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorB(), GET_PLAYER((PlayerTypes)iJ).getPlayerTextColorA(), GET_PLAYER((PlayerTypes)iJ).getName()));
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 						}
 					}
 				}
@@ -5075,6 +5107,21 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			PlayerTypes ePlayer = pPlot->getOwnerINLINE();
 			CvPlayerAI& kPlayer = GET_PLAYER(ePlayer);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/11/08                                jdog5000      */
+/*                                                                                              */
+/* DEBUG                                                                                        */
+/************************************************************************************************/
+			szString.append(CvWString::format(L"\n\nRevIndex:%d, ", pPlotCity->getRevolutionIndex()));
+			szString.append(CvWString::format(L"Avg:%d, ", pPlotCity->getRevIndexAverage()));
+			szString.append(CvWString::format(L"Local:%d, ", pPlotCity->getLocalRevIndex()));
+			szString.append(CvWString::format(L"Reinf:%d", pPlotCity->getReinforcementCounter()));
+			szString.append(CvWString::format(L"\nRevIdxAnger:%d, ", pPlotCity->getRevIndexPercentAnger()));
+			szString.append(CvWString::format(L"ReqAnger:%d, ", pPlotCity->getRevRequestPercentAnger()));
+			szString.append(CvWString::format(L"RevSucHappy:%d\n", pPlotCity->getRevSuccessHappiness()));
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 			int iCityDefenders = pPlot->plotCount(PUF_canDefendGroupHead, -1, -1, ePlayer, NO_TEAM, PUF_isCityAIType);
 			int iAttackGroups = pPlot->plotCount(PUF_isUnitAIType, UNITAI_ATTACK, -1, ePlayer);
 			szString.append(CvWString::format(L"\nDefenders [D+A]/N ([%d + %d] / %d)", iCityDefenders, iAttackGroups, pPlotCity->AI_neededDefenders()));
@@ -5679,6 +5726,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 				szString.append(CvWString::format(L"Culture:%d", pCity->findCommerceRateRank(COMMERCE_CULTURE)));
 			}
             szString.append(NEWLINE);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/11/08                                jdog5000      */
+/*                                                                                              */
+/* Debug                                                                                        */
+/************************************************************************************************/
+			szTempBuffer.Format(L"Stability Index: %d, Trend: %d",GET_PLAYER(pPlot->getOwner()).getStabilityIndex(),GET_PLAYER(pPlot->getOwner()).getStabilityIndex()-GET_PLAYER(pPlot->getOwner()).getStabilityIndexAverage());
+			szString.append(szTempBuffer);
+			szString.append(NEWLINE);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
             //AI strategies
             if (GET_PLAYER(pPlot->getOwner()).AI_isDoStrategy(AI_STRATEGY_DAGGER))
@@ -7229,6 +7287,24 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		}
 	}
 // BUG - Revolt Chance - end
+
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         08/09/09                            Glider1        */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		// RevolutionDCM start - Citybar revolution info
+		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		{
+			szString.append(NEWLINE);
+			szString.append(L"<img=Art/Interface/Buttons/revbtn.dds size=23></img>");
+			szString.append(CvWString::format(L":%d", pCity->getRevolutionIndex()));
+			szString.append(NEWLINE);
+		}
+		// RevolutionDCM end
+/************************************************************************************************/
+/* REVOLUTIONDCM_MOD                         END                                 Glider1        */
+/************************************************************************************************/
 
 //FfH: Added by Kael 12/02/2007
     szString.append(NEWLINE);
@@ -9899,6 +9975,196 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXPERIENCE_IN_BORDERS", GC.getCivicInfo(eCivic).getExpInBorderModifier()));
 	}
+	
+/************************************************************************************************/
+/* REVDCM                                 02/16/10                                phungus420    */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+/*
+	if (GC.getCivicInfo(eCivic).isUpgradeAnywhere())
+	{
+		szHelpText.append(NEWLINE);
+		szHelpText.append(gDLL->getText("TXT_KEY_CAN_UPGRADE_ANYWHERE"));	
+	}
+
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
+	{
+		if (GC.getCivicInfo(eCivic).isAllowInquisitions())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_ALLOW_INQUISITONS"));
+		}
+	}
+
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
+	{
+		if (GC.getCivicInfo(eCivic).isDisallowInquisitions())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
+		}
+	}
+*/
+
+	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	{
+		//  Revolution Local Civic Index Modifiers
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxLocal())
+		{
+			if ( GC.getCivicInfo(eCivic).getRevIdxLocal() > 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY", GC.getCivicInfo(eCivic).getRevIdxLocal()));
+			}
+			if ( GC.getCivicInfo(eCivic).getRevIdxLocal() < 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxLocal())));
+			}
+		}
+		
+		//  Revolution National Civic Index Modifiers
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxNational())
+		{
+			if ( GC.getCivicInfo(eCivic).getRevIdxNational() > 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", GC.getCivicInfo(eCivic).getRevIdxNational()));
+			}
+			if ( GC.getCivicInfo(eCivic).getRevIdxNational() < 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxNational())));
+			}
+		}
+		
+		//  Revolution City Distance Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxDistanceModifier())
+		{
+			if ( GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() < 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", GC.getCivicInfo(eCivic).getRevIdxDistanceModifier()));
+			}
+			if ( GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() > 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(GC.getCivicInfo(eCivic).getRevIdxDistanceModifier())));
+			}
+		}
+		
+		//  Revolution Good Holy City Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxHolyCityGood())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY", GC.getCivicInfo(eCivic).getRevIdxHolyCityGood()));
+		}
+		
+		//  Revolution Bad Holy City Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxHolyCityBad())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_HOLY_CITY", GC.getCivicInfo(eCivic).getRevIdxHolyCityBad()));
+		}
+		
+		//  Revolution Switch to Modifier
+		/*
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxSwitchTo())
+		{
+			if (GC.getCivicInfo(eCivic).getRevIdxSwitchTo() < 0)
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxSwitchTo())));
+			}
+			if (GC.getCivicInfo(eCivic).getRevIdxSwitchTo() > 0)
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", GC.getCivicInfo(eCivic).getRevIdxSwitchTo()));
+			}
+		}
+		*/
+		//  Revolution Nationality Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxNationalityMod())
+		{
+			if ( GC.getCivicInfo(eCivic).getRevIdxNationalityMod() < 0)
+			{
+				szHelpText.append(NEWLINE);
+				CvWString szTempBuffer;
+				szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxNationalityMod());
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_REDUCTION_MOD", szTempBuffer.GetCString()));
+			}
+			if ( GC.getCivicInfo(eCivic).getRevIdxNationalityMod() > 0)
+			{
+				szHelpText.append(NEWLINE);
+				CvWString szTempBuffer;
+				szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxNationalityMod());
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_INCREASE_MOD", szTempBuffer.GetCString()));
+			}
+		}
+		
+		//  Revolution Bad Religion Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxBadReligionMod())
+		{
+			szHelpText.append(NEWLINE);
+			CvWString szTempBuffer;
+			szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxBadReligionMod());
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_RELIGION_MOD", szTempBuffer.GetCString()));
+		}
+		
+		//  Revolution Good Religion Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod())
+		{
+			szHelpText.append(NEWLINE);
+			CvWString szTempBuffer;
+			szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod());
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_RELIGION_MOD", szTempBuffer.GetCString()));
+		}
+		
+		//  Revolution Religious Freedom Modifier
+		/*
+		if (0 != GC.getCivicInfo(eCivic).getRevReligiousFreedom())
+		{
+			if ( GC.getCivicInfo(eCivic).getRevReligiousFreedom() < 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_OPRESSION", GC.getCivicInfo(eCivic).getRevReligiousFreedom()));
+			}
+			if ( GC.getCivicInfo(eCivic).getRevReligiousFreedom() > 0 )
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_FREEDOM", GC.getCivicInfo(eCivic).getRevReligiousFreedom()));
+			}
+		}
+		*/
+		/*
+		//  Revolution Labor Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevLaborFreedom())
+		{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_LABOR", GC.getCivicInfo(eCivic).getRevLaborFreedom()));
+		}
+		*/
+		/*
+		//  Revolution Environment Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevEnvironmentalProtection())
+		{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_ENVIRONMENT", GC.getCivicInfo(eCivic).getRevEnvironmentalProtection()));
+		}
+		*/
+		/*
+		//  Revolution Democracy Modifier
+		if (0 != GC.getCivicInfo(eCivic).getRevDemocracyLevel())
+		{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_DEMOCRACY", GC.getCivicInfo(eCivic).getRevDemocracyLevel()));
+		}
+		*/
+	}
+/************************************************************************************************/
+/* REVDCM                                  END                                                  */
+/************************************************************************************************/
 
 	//	War Weariness
 	if (GC.getCivicInfo(eCivic).getWarWearinessModifier() != 0)
@@ -14900,6 +15166,35 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		iOldAngerPercent = iNewAngerPercent;
 		iOldAnger = iNewAnger;
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/26/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		iNewAngerPercent += city.getRevRequestPercentAnger();
+		iNewAnger += (((iNewAngerPercent * city.getPopulation()) / GC.getPERCENT_ANGER_DIVISOR()) - ((iOldAngerPercent * city.getPopulation()) / GC.getDefineINT("PERCENT_ANGER_DIVISOR")));
+		iAnger = ((iNewAnger - iOldAnger) + std::min(0, iOldAnger));
+		if (iAnger > 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_REV_REQUEST_ANGER", iAnger));
+			szBuffer.append(NEWLINE);
+		}
+		iOldAngerPercent = iNewAngerPercent;
+		iOldAnger = iNewAnger;
+
+		iNewAngerPercent += city.getRevIndexPercentAnger();
+		iNewAnger += (((iNewAngerPercent * city.getPopulation()) / GC.getPERCENT_ANGER_DIVISOR()) - ((iOldAngerPercent * city.getPopulation()) / GC.getDefineINT("PERCENT_ANGER_DIVISOR")));
+		iAnger = ((iNewAnger - iOldAnger) + std::min(0, iOldAnger));
+		if (iAnger > 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_REV_INDEX_ANGER", iAnger));
+			szBuffer.append(NEWLINE);
+		}
+		iOldAngerPercent = iNewAngerPercent;
+		iOldAnger = iNewAnger;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		iNewAngerPercent += city.getConscriptPercentAnger();
 		iNewAnger += (((iNewAngerPercent * city.getPopulation()) / GC.getPERCENT_ANGER_DIVISOR()) - ((iOldAngerPercent * city.getPopulation()) / GC.getDefineINT("PERCENT_ANGER_DIVISOR")));
 		iAnger = ((iNewAnger - iOldAnger) + std::min(0, iOldAnger));
@@ -15093,6 +15388,21 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	}
 	if (city.happyLevel() > 0)
 	{
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		iHappy = city.getRevSuccessHappiness();
+		if (iHappy > 0)
+		{
+			iTotalHappy += iHappy;
+			szBuffer.append(gDLL->getText("TXT_KEY_REV_SUCCESS_HAPPINESS", iHappy));
+			szBuffer.append(NEWLINE);
+		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		iHappy = city.getLargestCityHappiness();
 		if (iHappy > 0)
 		{

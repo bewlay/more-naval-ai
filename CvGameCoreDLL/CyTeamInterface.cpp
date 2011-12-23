@@ -13,6 +13,19 @@ void CyTeamPythonInterface()
 	python::class_<CyTeam>("CyTeam")
 		.def("isNone", &CyTeam::isNone, "bool () - is this instance valid?")
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("isRebel", &CyTeam::isRebel, "bool ()")
+		.def("isSingleCityTeam", &CyTeam::isSingleCityTeam, "bool ()")
+		.def("isRebelAgainst", &CyTeam::isRebelAgainst, "bool ( int iTeam )" )
+		.def("setRebelAgainst", &CyTeam::setRebelAgainst, "void ( int iTeam, bool bNewValue )" )
+		.def("countRebelAgainst", &CyTeam::countRebelAgainst, "int ( )" )
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		.def("addTeam", &CyTeam::addTeam, "void (int /*TeamTypes*/ eTeam)")
 
 		.def("canChangeWarPeace", &CyTeam::canChangeWarPeace, "bool (int /*TeamTypes*/ eTeam)")
@@ -64,6 +77,15 @@ void CyTeamPythonInterface()
 		.def("isHuman", &CyTeam::isHuman, "bool () - is human team?")
 		.def("isBarbarian", &CyTeam::isBarbarian, "bool () - is barbarian team?")
 		.def("isMinorCiv", &CyTeam::isMinorCiv)
+/********************************************************************************/
+/**		REVOLUTION_MOD							10/23/08			jdog5000	*/
+/**																				*/
+/**		For minor civs															*/
+/********************************************************************************/
+		.def("setIsMinorCiv", &CyTeam::setIsMinorCiv, "void( bool bNewValue, bool bDoBarbCivCheck )")
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/	
 		.def("getLeaderID", &CyTeam::getLeaderID, "int (PlayerTypes) ()")
 		.def("getSecretaryID", &CyTeam::getSecretaryID, "int (PlayerTypes) ()")
 		.def("getHandicapType", &CyTeam::getHandicapType, "int (HandicapTypes) ()")

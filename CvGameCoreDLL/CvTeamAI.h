@@ -93,6 +93,16 @@ public:
 
 	int AI_startWarVal(TeamTypes eTeam) const;
 	int AI_endWarVal(TeamTypes eTeam) const;
+/********************************************************************************/
+/**		REVOLUTION_MOD							6/9/08				jdog5000	*/
+/**																				*/
+/**		Revolution AI															*/
+/********************************************************************************/
+	int AI_minorKeepWarVal(TeamTypes eTeam) const;
+	int AI_getBarbarianCivWarVal(TeamTypes eTeam, int iMaxDistance = 10) const;
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
 
 	int AI_techTradeVal(TechTypes eTech, TeamTypes eTeam) const;
 	DenialTypes AI_techTrade(TechTypes eTech, TeamTypes eTeam) const;

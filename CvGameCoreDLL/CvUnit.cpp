@@ -30,6 +30,17 @@
 // BUG - start
 #include "CvBugOptions.h"
 // BUG - end
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      02/24/10                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 // Public Functions...
 
 
@@ -8546,6 +8557,21 @@ void CvUnit::upgrade(UnitTypes eUnit)
 // BUG - Upgrade Unit Event - start
 	CvEventReporter::getInstance().unitUpgraded(this, pUpgradeUnit, iPrice);
 // BUG - Upgrade Unit Event - end
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      02/24/10                                jdog5000      */
+/*                                                                                              */
+/* AI Logging                                                                                   */
+/************************************************************************************************/
+	if( gUnitLogLevel > 2 )
+	{
+		CvWString szString;
+		getUnitAIString(szString, AI_getUnitAIType());
+		logBBAI("    %S spends %d to upgrade %S to %S, unit AI %S", GET_PLAYER(getOwnerINLINE()).getCivilizationDescription(0), upgradePrice(eUnit), getName(0).GetCString(), pUpgradeUnit->getName(0).GetCString(), szString.GetCString());
+	}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 }
 
 
@@ -12945,6 +12971,13 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking)
 	{
 		if (bAttacking)
 		{
+			if( gUnitLogLevel > 0 ) 
+			{
+				logBBAI("*** KOMBAT!\n     ATTACKER: Player %d Unit %d (%S's %S), CombatStrength=%d\n     DEFENDER: Player %d Unit %d (%S's %S), CombatStrength=%d\n",
+						getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), currCombatStr(NULL, NULL),
+						pCombatUnit->getOwnerINLINE(), pCombatUnit->getID(), GET_PLAYER(pCombatUnit->getOwnerINLINE()).getNameKey(), pCombatUnit->getName().GetCString(), pCombatUnit->currCombatStr(pCombatUnit->plot(), this));
+			}
+			/*
 			if (GC.getLogging())
 			{
 				if (gDLL->getChtLvl() > 0)
@@ -12957,6 +12990,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking)
 					gDLL->messageControlLog(szOut);
 				}
 			}
+			*/
 
 			if (getDomainType() == DOMAIN_LAND
 				&& !m_pUnitInfo->isIgnoreBuildingDefense()

@@ -30,6 +30,15 @@
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLPythonIFaceBase.h"
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 // Public Functions...
 
 CvGame::CvGame()
@@ -577,8 +586,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	m_iInitLand = 0;
 	m_iInitTech = 0;
 	m_iInitWonders = 0;
-	m_iAIAutoPlay = 0;
-
 	m_uiInitialTime = 0;
 
 	m_bScoreDirty = false;
@@ -617,6 +624,17 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		m_aiRankPlayer[iI] = 0;
 		m_aiPlayerRank[iI] = 0;
 		m_aiPlayerScore[iI] = 0;
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                lemmy101       */
+/*                                                                               jdog5000       */
+/*                                                                                              */
+/************************************************************************************************/
+		m_iAIAutoPlay[iI] = 0;
+		m_iForcedAIAutoPlay[iI] = 0;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 	}
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
@@ -2317,7 +2335,15 @@ void CvGame::update()
 
 		testAlive();
 
-		if ((getAIAutoPlay() == 0) && !(gDLL->GetAutorun()) && GAMESTATE_EXTENDED != getGameState())
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+		if ((getAIAutoPlay(getActivePlayer()) <= 0) && !(gDLL->GetAutorun()) && GAMESTATE_EXTENDED != getGameState())
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		{
 			if (countHumanPlayersAlive() == 0)
 			{
@@ -3404,6 +3430,35 @@ bool CvGame::canTrainNukes() const
 	return false;
 }
 
+/************************************************************************************************/
+/* RevDCM	                  Start		 11/04/10                                phungus420     */
+/*                                                                                              */
+/* New World Logic                                                                              */
+/************************************************************************************************/
+EraTypes CvGame::getHighestEra() const
+{
+	int iI;
+	int iHighestEra = 0;
+	int iLoopEra;
+	
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			iLoopEra = GET_PLAYER((PlayerTypes)iI).getCurrentEra();
+
+			if(iLoopEra > iHighestEra)
+			{
+				iHighestEra = iLoopEra;
+			}
+		}
+	}
+
+	return EraTypes(iHighestEra);
+}
+/************************************************************************************************/
+/* NEW_WORLD               END                                                                  */
+/************************************************************************************************/
 
 // Tholal AI - something to replace Era checks for FFH2
 // Note: This function breaks when the Time victory condition is turned off, in which case we just default to getCurrentEra
@@ -3515,16 +3570,25 @@ void CvGame::setModem(bool bModem)
 
 	gDLL->SetModem(bModem);
 }
-
-
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
 void CvGame::reviveActivePlayer()
 {
 	if (!(GET_PLAYER(getActivePlayer()).isAlive()))
 	{
-		setAIAutoPlay(0);
+		if(isForcedAIAutoPlay(getActivePlayer()))
+		{
+			setForcedAIAutoPlay(getActivePlayer(), 0);
+		} else
+		{
+			setAIAutoPlay(getActivePlayer(), 0);
+		}
 
 		GC.getInitCore().setSlotStatus(getActivePlayer(), SS_TAKEN);
-
+		
 		// Let Python handle it
 		long lResult=0;
 		CyArgsList argsList;
@@ -3539,6 +3603,38 @@ void CvGame::reviveActivePlayer()
 		GET_PLAYER(getActivePlayer()).initUnit(((UnitTypes)0), 0, 0);
 	}
 }
+
+void CvGame::reviveActivePlayer(PlayerTypes iPlayer)
+{
+	if (!(GET_PLAYER(iPlayer).isAlive()))
+	{
+		if(isForcedAIAutoPlay(iPlayer))
+		{
+			setForcedAIAutoPlay(iPlayer, 0);
+		} else
+		{
+			setAIAutoPlay(iPlayer, 0);
+		}
+
+		GC.getInitCore().setSlotStatus(iPlayer, SS_TAKEN);
+		
+		// Let Python handle it
+		long lResult=0;
+		CyArgsList argsList;
+		argsList.add(iPlayer);
+
+		gDLL->getPythonIFace()->callFunction(PYGameModule, "doReviveActivePlayer", argsList.makeFunctionArgs(), &lResult);
+		if (lResult == 1)
+		{
+			return;
+		}
+
+		GET_PLAYER(iPlayer).initUnit(((UnitTypes)0), 0, 0);
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 
 int CvGame::getNumHumanPlayers()
@@ -4128,45 +4224,113 @@ void CvGame::initScoreCalculation()
 	m_iInitWonders = 0;
 }
 
-
-int CvGame::getAIAutoPlay()
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
+int CvGame::getAIAutoPlay(PlayerTypes iPlayer)
 {
-	return m_iAIAutoPlay;
+	return m_iAIAutoPlay[iPlayer];
 }
 
-
-void CvGame::setAIAutoPlay(int iNewValue)
+void CvGame::setAIAutoPlay(PlayerTypes iPlayer, int iNewValue, bool bForced)
 {
-	int iOldValue;
+	FAssert(iNewValue >= 0);
+	if(isForcedAIAutoPlay(iPlayer) && !bForced)
+	{
+		return;
+	}
 
-	iOldValue = getAIAutoPlay();
+	if (GC.getLogging() )
+	{
+			TCHAR szOut[1024];
+			sprintf(szOut, "setAutoPlay called for player %d - set to: %d\n", iPlayer, iNewValue);
+			gDLL->messageControlLog(szOut);
+	}
+
+	int iOldValue= getAIAutoPlay(iPlayer);
 
 	if (iOldValue != iNewValue)
 	{
-		m_iAIAutoPlay = std::max(0, iNewValue);
+		m_iAIAutoPlay[iPlayer] = std::max(0, iNewValue);
 
-//FfH: Modified by Kael 05/29/2008 (for jdog5000's AIAutoPlay)
-//		if ((iOldValue == 0) && (getAIAutoPlay() > 0))
-//		{
-//			GET_PLAYER(getActivePlayer()).killUnits();
-//			GET_PLAYER(getActivePlayer()).killCities();
-//		}
-		GET_PLAYER(getActivePlayer()).setDisableHuman((getAIAutoPlay() != 0));
-//FfH: End Modify
-
+		if (iNewValue > 0)
+		{
+			GET_PLAYER(iPlayer).setHumanDisabled(true);
+		} else
+		{
+			GET_PLAYER(iPlayer).setHumanDisabled(false);
+		}
 	}
 }
 
-
-void CvGame::changeAIAutoPlay(int iChange)
+void CvGame::changeAIAutoPlay(PlayerTypes iPlayer, int iChange)
 {
-	setAIAutoPlay(getAIAutoPlay() + iChange);
-
-//FfH: Added by Kael 05/29/2008 (for jdog5000's AIAutoPlay)
-	GET_PLAYER(getActivePlayer()).setDisableHuman((getAIAutoPlay() != 0));
-//FfH: End Add
-
+	setAIAutoPlay(iPlayer, (getAIAutoPlay(iPlayer) + iChange));
 }
+
+
+bool CvGame::isForcedAIAutoPlay(PlayerTypes iPlayer)
+{
+	FAssert(getForcedAIAutoPlay(iPlayer) >=0)
+
+	if(getForcedAIAutoPlay(iPlayer) > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+int CvGame::getForcedAIAutoPlay(PlayerTypes iPlayer)
+{
+	return m_iForcedAIAutoPlay[iPlayer];
+}
+
+void CvGame::setForcedAIAutoPlay(PlayerTypes iPlayer, int iNewValue, bool bForced)
+{
+	FAssert(iNewValue >= 0);
+
+	int iOldValue;
+	if(bForced = true)
+	{
+
+		iOldValue = getForcedAIAutoPlay(iPlayer);
+
+		if (iOldValue != iNewValue)
+		{
+			m_iForcedAIAutoPlay[iPlayer] = std::max(0, iNewValue);
+			setAIAutoPlay(iPlayer, iNewValue, true);
+		} else
+		{
+			setAIAutoPlay(iPlayer, iNewValue, true);
+		}
+	} else
+	{
+		m_iForcedAIAutoPlay[iPlayer] = 0;
+
+		iOldValue = m_iAIAutoPlay[iPlayer];
+		
+		if(iOldValue != iNewValue)
+		{
+			setAIAutoPlay(iPlayer, iNewValue);
+		}
+	}
+}
+
+void CvGame::changeForcedAIAutoPlay(PlayerTypes iPlayer, int iChange)
+{
+	if(isForcedAIAutoPlay(iPlayer))
+	{
+		setForcedAIAutoPlay(iPlayer, (getAIAutoPlay(iPlayer) + iChange), true);
+	} else
+	{
+		setForcedAIAutoPlay(iPlayer, (getAIAutoPlay(iPlayer) + iChange));
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 
 unsigned int CvGame::getInitialTime()
@@ -4949,8 +5113,15 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 				szBuffer = gDLL->getText("TXT_KEY_GAME_WON", GET_TEAM(getWinner()).getName().GetCString(), GC.getVictoryInfo(getVictory()).getTextKeyWide());
 				addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, GET_TEAM(getWinner()).getLeaderID(), szBuffer, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
 			}
-
-			if ((getAIAutoPlay() > 0) || gDLL->GetAutorun())
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+			if ((getAIAutoPlay(getActivePlayer()) > 0) || gDLL->GetAutorun())
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 			{
 				setGameState(GAMESTATE_EXTENDED);
 			}
@@ -6008,18 +6179,36 @@ void CvGame::doTurn()
 
 	doDiploVote();
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+	CvEventReporter::getInstance().preEndGameTurn(getGameTurn());
+
 	gDLL->getInterfaceIFace()->setEndTurnMessage(false);
 	gDLL->getInterfaceIFace()->setHasMovedUnit(false);
 
-	if (getAIAutoPlay() > 0)
+	for(int n=0; n < MAX_PLAYERS; n++)
 	{
-		changeAIAutoPlay(-1);
-
-		if (getAIAutoPlay() == 0)
+		if(isForcedAIAutoPlay((PlayerTypes)n))
 		{
-			reviveActivePlayer();
+			if (getForcedAIAutoPlay((PlayerTypes)n) > 0)
+			{
+				changeForcedAIAutoPlay((PlayerTypes)n, -1);
+			}
+		} else
+		{
+			if (getAIAutoPlay((PlayerTypes)n) > 0)
+			{
+				changeAIAutoPlay((PlayerTypes)n, -1);
+			}
 		}
 	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 
 	CvEventReporter::getInstance().endGameTurn(getGameTurn());
 
@@ -6680,9 +6869,24 @@ void CvGame::createBarbarianCities()
 		return;
 	}
 
-	if (getNumCivCities() < (countCivPlayersAlive() * 2))
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/09                                jdog5000      */
+/*                                                                                              */
+/* For BarbarianCiv, allows earlier barb cities                                                 */
+/************************************************************************************************/
+	if (isOption(GAMEOPTION_RAGING_BARBARIANS))
 	{
-		return;
+		if( getNumCivCities() <= (countCivPlayersAlive()))
+		{
+			return;
+		}
+	}
+	else
+	{
+		if (getNumCivCities() < (countCivPlayersAlive() * 2))
+		{
+			return;
+		}
 	}
 
 	if (getElapsedGameTurns() < (((GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationTurnsElapsed() * GC.getGameSpeedInfo(getGameSpeedType()).getBarbPercent()) / 100) / std::max(getStartEra() + 1, 1)))
@@ -6690,10 +6894,23 @@ void CvGame::createBarbarianCities()
 		return;
 	}
 
-	if (getSorenRandNum(100, "Barb City Creation") >= GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationProb())
+	int iRand = getSorenRandNum(100, "Barb City Creation");
+	if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+	{
+		if( countCivPlayersAlive() + GET_PLAYER(BARBARIAN_PLAYER).getNumCities() < GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getDefaultPlayers() )
+		{
+			iRand *= 2;
+			iRand /= 3;
+		}
+	}
+
+	if ( iRand >= GC.getHandicapInfo(getHandicapType()).getBarbarianCityCreationProb())
 	{
 		return;
 	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	iBestValue = 0;
 	pBestPlot = NULL;
@@ -6714,6 +6931,36 @@ void CvGame::createBarbarianCities()
 		}
 	}
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/* For BarbarianCiv, reduces emphasis on creating barb cities in                                */
+/* large, occupied areas, allows barbs more readily in unoccupied areas                         */
+/************************************************************************************************/
+	// New variable for emphaizing spawning cities on populated continents
+	int iOccupiedAreaMultiplier = 50;
+	int iOwnedPlots = 0;
+
+	if(isOption(GAMEOPTION_RAGING_BARBARIANS))
+	{
+		for( iI = 0; iI < GC.getMAX_PLAYERS(); iI++ )
+		{
+			iOwnedPlots += GET_PLAYER((PlayerTypes)iI).getTotalLand();
+		}
+	
+		// When map mostly open, emphasize areas with other civs
+		iOccupiedAreaMultiplier += 100 - (iOwnedPlots)/GC.getMapINLINE().getLandPlots();
+		
+		// If raging barbs is on, emphasize areas with other civs
+		if( isOption(GAMEOPTION_RAGING_BARBARIANS) )
+		{
+			iOccupiedAreaMultiplier *= 3;
+			iOccupiedAreaMultiplier /= 2;
+		}
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -6742,6 +6989,13 @@ void CvGame::createBarbarianCities()
 				if (pLoopPlot->area()->getCitiesPerPlayer(BARBARIAN_PLAYER) < iTargetCities)
 				{
 					iValue = GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"));
+				
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+/* original code
 					if (iTargetCitiesMultiplier > 100)
 					{
 						iValue *= pLoopPlot->area()->getNumOwnedTiles();
@@ -6749,6 +7003,38 @@ void CvGame::createBarbarianCities()
 
 					iValue += (100 + getSorenRandNum(50, "Barb City Found"));
 					iValue /= 100;
+*/
+					if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+					{
+						if( pLoopPlot->area()->getNumCities() == pLoopPlot->area()->getCitiesPerPlayer(BARBARIAN_PLAYER) )
+						{
+							// Counteracts the AI_foundValue emphasis on empty areas
+							iValue *= 2;
+							iValue /= 3;
+						}
+	
+						if( iTargetCitiesMultiplier > 100 )		// Either raging barbs is set or fewer barb cities than desired
+						{
+							// Emphasis on placing barb cities in populated areas
+							iValue += (iOccupiedAreaMultiplier*(pLoopPlot->area()->getNumCities() - pLoopPlot->area()->getCitiesPerPlayer(BARBARIAN_PLAYER)))/getNumCivCities();
+						}
+					}
+					else
+					{
+						if (iTargetCitiesMultiplier > 100)
+						{
+							iValue *= pLoopPlot->area()->getNumOwnedTiles();
+						}
+					}
+
+					if( pLoopPlot->isBestAdjacentFound(BARBARIAN_PLAYER) ) 
+					{
+						iValue *= 120 + getSorenRandNum(30, "Barb City Found");
+						iValue /= 100;
+					}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 					if (iValue > iBestValue)
 					{
@@ -7738,7 +8024,15 @@ void CvGame::testVictory()
 			{
 				if (!bEndScore)
 				{
-					if ((getAIAutoPlay() > 0) || gDLL->GetAutorun())
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+					if ((getAIAutoPlay(getActivePlayer()) > 0) || gDLL->GetAutorun())
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 					{
 						setGameState(GAMESTATE_EXTENDED);
 					}
@@ -7872,6 +8166,19 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 			FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 			CvPlayer& kPlayer = GET_PLAYER(kData.kVoteOption.ePlayer);
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gTeamLogLevel >= 1 )
+			{
+				logBBAI("  Vote for forcing peace against team %d (%S) passes", kPlayer.getTeam(), kPlayer.getCivilizationDescription(0) );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 			for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 			{
 				CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -7910,6 +8217,19 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 			FAssert(NO_PLAYER != kData.kVoteOption.ePlayer);
 			CvPlayer& kPlayer = GET_PLAYER(kData.kVoteOption.ePlayer);
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gTeamLogLevel >= 1 )
+			{
+				logBBAI("  Vote for war against team %d (%S) passes", kPlayer.getTeam(), kPlayer.getCivilizationDescription(0) );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 			for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 			{
 				CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -7935,6 +8255,18 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 			{
 				if (NO_PLAYER != kData.kVoteOption.eOtherPlayer && kData.kVoteOption.eOtherPlayer != pCity->getOwnerINLINE())
 				{
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+					if( gTeamLogLevel >= 1 )
+					{
+						logBBAI("  Vote for assigning %S to %d (%S) passes", pCity->getName().GetCString(), GET_PLAYER(kData.kVoteOption.eOtherPlayer).getTeam(), GET_PLAYER(kData.kVoteOption.eOtherPlayer).getCivilizationDescription(0) );
+					}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 					GET_PLAYER(kData.kVoteOption.eOtherPlayer).acquireCity(pCity, false, true, true);
 				}
 			}
@@ -8312,7 +8644,7 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iInitLand);
 	pStream->Read(&m_iInitTech);
 	pStream->Read(&m_iInitWonders);
-	pStream->Read(&m_iAIAutoPlay);
+
 	// m_uiInitialTime not saved
 
 	pStream->Read(&m_bScoreDirty);
@@ -8344,6 +8676,17 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(MAX_TEAMS, m_aiRankTeam);
 	pStream->Read(MAX_TEAMS, m_aiTeamRank);
 	pStream->Read(MAX_TEAMS, m_aiTeamScore);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+// Keep AIAutoPlay from continuing after reload
+//	pStream->Read(MAX_PLAYERS, m_iAIAutoPlay);
+	pStream->Read(MAX_PLAYERS, m_iForcedAIAutoPlay);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	pStream->Read(GC.getNumUnitInfos(), m_paiUnitCreatedCount);
 	pStream->Read(GC.getNumUnitClassInfos(), m_paiUnitClassCreatedCount);
@@ -8550,18 +8893,6 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(m_iInitLand);
 	pStream->Write(m_iInitTech);
 	pStream->Write(m_iInitWonders);
-/*************************************************************************************************/
-/**	Xienwolf Tweak							02/01/09											**/
-/**	ADDON (Autoplay improvement) merged Sephi 													**/
-/**							Stops AutoPlay after reloading a game								**/
-/*************************************************************************************************/
-/**								---- Start Original Code ----									**
-	pStream->Write(m_iAIAutoPlay);
-/**								----  End Original Code  ----									**/
-	pStream->Write((m_iAIAutoPlay ? 1 : 0));
-/*************************************************************************************************/
-/**	Tweak									END													**/
-/*************************************************************************************************/
 
 	// m_uiInitialTime not saved
 
@@ -8589,6 +8920,17 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(MAX_TEAMS, m_aiRankTeam);
 	pStream->Write(MAX_TEAMS, m_aiTeamRank);
 	pStream->Write(MAX_TEAMS, m_aiTeamScore);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+// Keep AIAutoPlay from continuing after reload
+//	pStream->Write(MAX_PLAYERS, m_iAIAutoPlay);
+	pStream->Write(MAX_PLAYERS, m_iForcedAIAutoPlay);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	pStream->Write(GC.getNumUnitInfos(), m_paiUnitCreatedCount);
 	pStream->Write(GC.getNumUnitClassInfos(), m_paiUnitClassCreatedCount);
@@ -8834,7 +9176,25 @@ bool CvGame::hasSkippedSaveChecksum() const
 	return gDLL->hasSkippedSaveChecksum();
 }
 
-void CvGame::addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, CivilizationTypes eCiv)
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 jdog5000      */
+/*                                                                                lemmy101      */
+/*                                                                                              */
+/************************************************************************************************/
+//
+// for logging
+//
+void CvGame::logMsg(char* format, ... )
+{
+	static char buf[2048];
+	_vsnprintf( buf, 2048-4, format, (char*)(&format+1) );
+	gDLL->logMsg("sdkDbg.log", buf);
+}
+
+//
+// 
+//
+void CvGame::addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, CivilizationTypes eCiv, bool bSetAlive)
 {
 	// UNOFFICIAL_PATCH Start
 	// * Fixed bug with colonies who occupy recycled player slots showing the old leader or civ names.
@@ -8902,9 +9262,43 @@ void CvGame::addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, Civiliza
 	GC.getInitCore().setCiv(eNewPlayer, eCiv);
 	GC.getInitCore().setSlotStatus(eNewPlayer, SS_COMPUTER);
 	GC.getInitCore().setColor(eNewPlayer, eColor);
-	GET_TEAM(eTeam).init(eTeam);
-	GET_PLAYER(eNewPlayer).init(eNewPlayer);
+	//GET_TEAM(eTeam).init(eTeam);
+	//GET_PLAYER(eNewPlayer).init(eNewPlayer);
+
+	// Team init now handled when appropriate by CvPlayer::initInGame
+	// Standard player init 
+	GET_PLAYER(eNewPlayer).initInGame(eNewPlayer, bSetAlive);
 }
+
+void CvGame::changeHumanPlayer( PlayerTypes eOldHuman, PlayerTypes eNewHuman )
+{
+	// It's a multiplayer game, eep!
+	if(GC.getInitCore().getMultiplayer())
+	{
+		int netID = GC.getInitCore().getNetID(eOldHuman);
+		GC.getInitCore().setNetID(eNewHuman, netID);
+		GC.getInitCore().setNetID(eOldHuman, -1);
+	}
+
+	GET_PLAYER(eNewHuman).setIsHuman(true);
+	if(getActivePlayer()==eOldHuman)
+	setActivePlayer(eNewHuman, false);
+	
+	for (int iI = 0; iI < NUM_PLAYEROPTION_TYPES; iI++)
+	{
+		GET_PLAYER(eNewHuman).setOption( (PlayerOptionTypes)iI, GET_PLAYER(eOldHuman).isOption((PlayerOptionTypes)iI) );
+	}
+
+	for (iI = 0; iI < NUM_PLAYEROPTION_TYPES; iI++)
+	{
+		gDLL->sendPlayerOption(((PlayerOptionTypes)iI), GET_PLAYER(eNewHuman).isOption((PlayerOptionTypes)iI));
+	}
+
+	GET_PLAYER(eOldHuman).setIsHuman(false);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 //FfH: Added by Kael 08/24/2007
 void CvGame::addPlayerAdvanced(PlayerTypes eNewPlayer, int iNewTeam, LeaderHeadTypes eLeader, CivilizationTypes eCiv)

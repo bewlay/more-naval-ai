@@ -20,6 +20,15 @@ void CyGlobalContextPythonInterface2(python::class_<CyGlobalContext>& x)
 
 	x
 		// global defines.xml
+/************************************************************************************************/
+/* Mod Globals    Start                          09/13/10                           phungus420  */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("isDYNAMIC_CIV_NAMES", &CyGlobalContext::isDYNAMIC_CIV_NAMES, "bool ()")
+/************************************************************************************************/
+/* Mod Globals                        END                                           phungus420  */
+/************************************************************************************************/
 		.def("getDefineINT", &CyGlobalContext::getDefineINT, "int ( string szName )" )
 		.def("getDefineFLOAT", &CyGlobalContext::getDefineFLOAT, "float ( string szName )" )
 		.def("getDefineSTRING", &CyGlobalContext::getDefineSTRING, "string getDefineSTRING( string szName )" )

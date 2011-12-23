@@ -8,6 +8,15 @@
 #include "CyCity.h"
 
 void CyCityPythonInterface1(python::class_<CyCity>& x);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/23/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CyCityPythonInterface2(python::class_<CyCity>& x);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 void CyPlotPythonInterface1(python::class_<CyPlot>& x);
 void CyPlayerPythonInterface1(python::class_<CyPlayer>& x);
 void CyPlayerPythonInterface2(python::class_<CyPlayer>& x);
@@ -62,6 +71,15 @@ DllExport void DLLPublishToPython()
 	//
 	python::class_<CyCity> city ("CyCity");		// define city class
 	CyCityPythonInterface1(city);				// publish it's methods
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	CyCityPythonInterface2(city);				// publish it's methods
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	python::class_<CyPlayer> player ("CyPlayer");	// define player class
 	CyPlayerPythonInterface1(player);				// publish it's methods

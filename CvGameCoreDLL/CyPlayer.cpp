@@ -25,6 +25,91 @@ CyPlayer::CyPlayer(CvPlayer* pPlayer) : m_pPlayer(pPlayer)
 {
 }
 
+/************************************************************************************************/
+/* CHANGE_PLAYER                         08/27/08                                 jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CyPlayer::changeLeader( int /*LeaderHeadTypes*/ eNewLeader )
+{
+	if( m_pPlayer )
+		m_pPlayer->changeLeader( (LeaderHeadTypes)eNewLeader );
+}
+
+void CyPlayer::changeCiv( int /*CivilizationTypes*/ eNewCiv )
+{
+	if( m_pPlayer )
+		m_pPlayer->changeCiv( (CivilizationTypes)eNewCiv );
+}
+void CyPlayer::setIsHuman( bool bNewValue )
+{
+	if( m_pPlayer )
+		m_pPlayer->setIsHuman( bNewValue );
+}
+/************************************************************************************************/
+/* CHANGE_PLAYER                          END                                                   */
+/************************************************************************************************/
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CyPlayer::setIsRebel( bool bNewValue )
+{
+	if( m_pPlayer )
+		m_pPlayer->setIsRebel( bNewValue );
+}
+
+bool CyPlayer::isRebel( )
+{
+	if( m_pPlayer )
+		return m_pPlayer->isRebel();
+	else
+		return false;
+}
+
+int CyPlayer::getStabilityIndex( )
+{
+	if( m_pPlayer )
+		return m_pPlayer->getStabilityIndex();
+	else
+		return -1;
+}
+
+void CyPlayer::setStabilityIndex( int iNewValue )
+{
+	if( m_pPlayer )
+		m_pPlayer->setStabilityIndex( iNewValue );
+}
+
+void CyPlayer::changeStabilityIndex( int iChange )
+{
+	if( m_pPlayer )
+		m_pPlayer->changeStabilityIndex( iChange );
+}
+
+int CyPlayer::getStabilityIndexAverage( )
+{
+	if( m_pPlayer )
+		return m_pPlayer->getStabilityIndexAverage();
+	else
+		return -1;
+}
+
+void CyPlayer::setStabilityIndexAverage( int iNewValue )
+{
+	if( m_pPlayer )
+		m_pPlayer->setStabilityIndexAverage( iNewValue );
+}
+
+void CyPlayer::updateStabilityIndexAverage( )
+{
+	if( m_pPlayer )
+		m_pPlayer->updateStabilityIndexAverage( );
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 int CyPlayer::startingPlotRange()
 {
 	return m_pPlayer ? m_pPlayer->startingPlotRange() : -1;
@@ -96,6 +181,19 @@ bool CyPlayer::isHuman()
 	return m_pPlayer ? m_pPlayer->isHuman() : false;
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+bool CyPlayer::isHumanDisabled()
+{
+	return m_pPlayer ? m_pPlayer->isHumanDisabled() : false;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 bool CyPlayer::isBarbarian()
 {
 	return m_pPlayer ? m_pPlayer->isBarbarian() : false;
@@ -106,6 +204,19 @@ std::wstring CyPlayer::getName()
 	return m_pPlayer ? m_pPlayer->getName() : std::wstring();
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* For dynamic civ names                                                                        */
+/************************************************************************************************/
+void CyPlayer::setName(std::wstring szNewValue)
+{
+	if( m_pPlayer )
+		m_pPlayer->setName( szNewValue );
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 std::wstring CyPlayer::getNameForm(int iForm)
 {
 	return m_pPlayer ? m_pPlayer->getName((uint)iForm) : std::wstring();
@@ -118,31 +229,126 @@ std::wstring CyPlayer::getNameKey()
 
 std::wstring CyPlayer::getCivilizationDescription(int iForm)
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+      	 	return std::wstring();
+		}
+	}
+
 	return m_pPlayer ? m_pPlayer->getCivilizationDescription((uint)iForm) : std::wstring();
 }
 
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* For dynamic civ names                                                                        */
+/************************************************************************************************/
+void CyPlayer::setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::wstring szNewAdj)
+{
+	if( m_pPlayer )
+	{
+#ifdef _DEBUG
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+		throw new exception();
+		}
+#endif
+		m_pPlayer->setCivName(szNewDesc, szNewShort, szNewAdj);
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 std::wstring CyPlayer::getCivilizationDescriptionKey()
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+      	 	return std::wstring();
+		}
+	}
+	
 	return m_pPlayer ? m_pPlayer->getCivilizationDescriptionKey() : std::wstring();
 }
 
 std::wstring CyPlayer::getCivilizationShortDescription(int iForm)
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+       		return std::wstring();
+		}
+	}
+
 	return m_pPlayer ? m_pPlayer->getCivilizationShortDescription((uint)iForm) : std::wstring();
 }
 
 std::wstring CyPlayer::getCivilizationShortDescriptionKey()
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+       		return std::wstring();
+		}
+	}
+
 	return m_pPlayer ? m_pPlayer->getCivilizationShortDescriptionKey() : std::wstring();
 }
 
 std::wstring CyPlayer::getCivilizationAdjective(int iForm)
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+       		return std::wstring();
+		}
+	}
+	
 	return m_pPlayer ? m_pPlayer->getCivilizationAdjective((uint)iForm) : std::wstring();
 }
 
 std::wstring CyPlayer::getCivilizationAdjectiveKey( )
 {
+	if (m_pPlayer)
+	{
+		if (m_pPlayer->getCivilizationType() < 0)
+		{
+		FAssertMsg(false, "m_pPlayer should have a civilizationType");
+#ifdef _DEBUG
+		throw new exception();
+#endif
+       		return std::wstring();
+		}
+	}
+
 	return m_pPlayer ? m_pPlayer->getCivilizationAdjectiveKey() : std::wstring();
 }
 
@@ -515,6 +721,25 @@ int CyPlayer::calculateInflatedCosts()
 {
 	return m_pPlayer ? m_pPlayer->calculateInflatedCosts() : -1;
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/04/09                                jdog5000      */
+/*                                                                                              */
+/* For rebels and BarbarianCiv                                                                  */
+/************************************************************************************************/
+int CyPlayer::getFreeUnitCountdown()
+{
+	return m_pPlayer ? m_pPlayer->getFreeUnitCountdown() : 0;
+}
+
+void CyPlayer::setFreeUnitCountdown( int iValue )
+{
+	if( m_pPlayer )
+		m_pPlayer->setFreeUnitCountdown(iValue);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CyPlayer::calculateGoldRate()
 {
@@ -1046,6 +1271,83 @@ int CyPlayer::getCityDefenseModifier()
 	return m_pPlayer ? m_pPlayer->getCityDefenseModifier() : -1;
 }
 
+/************************************************************************************************/
+/* LoR                                        11/03/10                          phungus420      */
+/*                                                                                              */
+/* Colonists                                                                                    */
+/************************************************************************************************/
+int CyPlayer::getBestUnitType(int /*UnitAITypes*/ eUnitAI) const
+{
+    return m_pPlayer ? (int) m_pPlayer->getBestUnitType(UnitAITypes(eUnitAI)) : -1;
+}
+/************************************************************************************************/
+/* LoR                            END                                                           */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* REVDCM                                 09/02/10                                phungus420    */
+/*                                                                                              */
+/* Player Functions                                                                             */
+/************************************************************************************************/
+bool CyPlayer::isNonStateReligionCommerce() const
+{
+    return m_pPlayer ? m_pPlayer->isNonStateReligionCommerce() : false;
+}
+
+bool CyPlayer::isUpgradeAnywhere() const
+{
+    return m_pPlayer ? m_pPlayer->isUpgradeAnywhere() : false;
+}
+
+int CyPlayer::getRevIdxLocal()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxLocal() : 0;
+}
+
+int CyPlayer::getRevIdxNational()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxNational() : 0;
+}
+
+int CyPlayer::getRevIdxDistanceModifier()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxDistanceModifier() : 0;
+}
+
+int CyPlayer::getRevIdxHolyCityGood()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxHolyCityGood() : 0;
+}
+
+int CyPlayer::getRevIdxHolyCityBad()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxHolyCityBad() : 0;
+}
+
+float CyPlayer::getRevIdxNationalityMod()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxNationalityMod() : 0;
+}
+
+float CyPlayer::getRevIdxBadReligionMod()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxBadReligionMod() : 0;
+}
+
+float CyPlayer::getRevIdxGoodReligionMod()
+{
+	return m_pPlayer ? m_pPlayer->getRevIdxGoodReligionMod() : 0;
+}
+/*
+int CyPlayer::getUnitUpgradePriceModifier()
+{
+	return m_pPlayer ? m_pPlayer->getUnitUpgradePriceModifier() : 0;
+}
+*/
+/************************************************************************************************/
+/* REVDCM                                  END                                                  */
+/************************************************************************************************/
+
 int CyPlayer::getNumNukeUnits()
 {
 	return m_pPlayer ? m_pPlayer->getNumNukeUnits() : -1;
@@ -1280,6 +1582,24 @@ int CyPlayer::getRevolutionTimer()
 {
 	return m_pPlayer ? m_pPlayer->getRevolutionTimer() : -1;
 }
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CyPlayer::setRevolutionTimer(int newTime)
+{
+	if (m_pPlayer)
+		m_pPlayer->setRevolutionTimer(newTime);
+}
+void CyPlayer::changeRevolutionTimer(int addTime)
+{
+	if (m_pPlayer)
+		m_pPlayer->changeRevolutionTimer(addTime);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 bool CyPlayer::isStateReligion()
 {
@@ -1408,6 +1728,43 @@ bool CyPlayer::isFoundedFirstCity()
 {
 	return m_pPlayer ? m_pPlayer->isFoundedFirstCity() : false;
 }
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* For dynamic civ names                                                                        */
+/************************************************************************************************/
+/*
+void CyPlayer::setFoundedFirstCity(bool bNewValue)
+{
+	if( m_pPlayer ) 
+		m_pPlayer->setFoundedFirstCity(bNewValue);
+	return;
+}
+
+void CyPlayer::setAlive(bool bNewValue)
+{
+	if( m_pPlayer ) 
+		m_pPlayer->setAlive(bNewValue);
+	return;
+}
+*/
+
+void CyPlayer::setNewPlayerAlive(bool bNewValue)
+{
+	if( m_pPlayer ) 
+		m_pPlayer->setNewPlayerAlive(bNewValue);
+	return;
+}
+
+void CyPlayer::changeTechScore(int iChange)
+{
+	if( m_pPlayer ) 
+		m_pPlayer->changeTechScore(iChange);
+}
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 bool CyPlayer::isStrike()
 {
@@ -2163,6 +2520,21 @@ int CyPlayer::getEspionageHistory(int iTurn) const
 	return (NULL != m_pPlayer ? m_pPlayer->getEspionageHistory(iTurn) : 0);
 }
 
+/****************************************************************************************/
+/* REVOLUTIONDCM				28/05/09						Glider1                 */
+/**																						*/
+/**																						*/
+/****************************************************************************************/
+// RevolutionDCM - revolution stability history start
+int CyPlayer::getRevolutionStabilityHistory(int iTurn) const
+{
+	return (NULL != m_pPlayer ? m_pPlayer->getRevolutionStabilityHistory(iTurn) : 0);
+}
+// RevolutionDCM end
+/****************************************************************************************/
+/* REVOLUTIONDCM				END     						Glider1                 */
+/****************************************************************************************/
+
 std::string CyPlayer::getScriptData() const
 {
 	return m_pPlayer ? m_pPlayer->getScriptData() : "";
@@ -2231,6 +2603,24 @@ bool CyPlayer::canSplitArea(int iAreaId) const
 
 	return false;
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         11/15/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+bool CyPlayer::assimilatePlayer( int iPlayer )
+{
+	if (m_pPlayer)
+	{
+		return m_pPlayer->assimilatePlayer( (PlayerTypes) iPlayer );
+	}
+
+	return false;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/20
 //*** Fix Basium empire can not receive Forge from Guild of Hammers.

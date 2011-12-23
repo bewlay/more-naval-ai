@@ -21,6 +21,27 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 	python::scope().attr("__doc__") = "Civilization IV Player Class"; 
 	x
 		.def("isNone", &CyPlayer::isNone, "checks for a null player")
+/********************************************************************************/
+/* 	CHANGE_PLAYER							08/27/08			jdog5000	*/
+/* 																			*/
+/* 	 																		*/
+/********************************************************************************/
+		.def( "changeLeader", &CyPlayer::changeLeader, "void ( int /*LeaderHeadTypes*/ eNewLeader ) - change leader of player")
+		.def( "changeCiv", &CyPlayer::changeCiv, "void ( int /*CivilizationTypes*/ eNewCiv ) - change civilization of player" )
+		.def( "setIsHuman", &CyPlayer::setIsHuman, "void ( bool bNewValue ) - set whether player is human" )
+/********************************************************************************/
+/* 	CHANGE_PLAYER							END								*/
+/********************************************************************************/
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def( "setIsRebel", &CyPlayer::setIsRebel, "void ( bool bNewValue ) - set whether the player is considered a rebel" )
+		.def( "isRebel", &CyPlayer::isRebel, "bool ( ) - true if player is a rebel" )
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		.def("startingPlotRange", &CyPlayer::startingPlotRange, "int ()")
 		.def("startingPlotWithinRange", &CyPlayer::startingPlotWithinRange, "bool (CyPlot *pPlot, int /*PlayerTypes*/ ePlayer, int iRange, int iPass)")
 
@@ -38,11 +59,40 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("killUnits", &CyPlayer::killUnits, "void ()")
 		.def("hasTrait", &CyPlayer::hasTrait, "bool hasTrait(int /*TraitTypes*/ iIndex) - returns True if player is the Trait Type.")
 		.def("isHuman", &CyPlayer::isHuman, "bool ()")
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("isHumanDisabled", &CyPlayer::isHumanDisabled, "bool ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 		.def("isBarbarian", &CyPlayer::isBarbarian, "bool () - returns True if player is a Barbarian")
 		.def("getName", &CyPlayer::getName, "str ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* For dynamic civ names                                                                        */
+/************************************************************************************************/
+		.def("setName", &CyPlayer::setName, "void(std::wstring szNewValue)" )																														// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		.def("getNameForm", &CyPlayer::getNameForm, "str ()")
 		.def("getNameKey", &CyPlayer::getNameKey, "str ()")
 		.def("getCivilizationDescription", &CyPlayer::getCivilizationDescription, "str() - returns the Civilization Description String")
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* For dynamic civ names                                                                        */
+/************************************************************************************************/
+		.def("setCivName", &CyPlayer::setCivName, "void(std::wstring szNewDesc, std::wstring szNewShort, std::wstring szNewAdj)" )																														// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		.def("getCivilizationShortDescription", &CyPlayer::getCivilizationShortDescription, "str() - returns the short Civilization Description")
 		.def("getCivilizationDescriptionKey", &CyPlayer::getCivilizationDescriptionKey, "str() - returns the Civilization Description String")
 		.def("getCivilizationShortDescriptionKey", &CyPlayer::getCivilizationShortDescriptionKey, "str() - returns the short Civilization Description")
@@ -125,6 +175,16 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("calculatePreInflatedCosts", &CyPlayer::calculatePreInflatedCosts, "int ()")
 		.def("calculateInflationRate", &CyPlayer::calculateInflationRate, "int ()")
 		.def("calculateInflatedCosts", &CyPlayer::calculateInflatedCosts, "int ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/04/09                                jdog5000      */
+/*                                                                                              */
+/* For rebels and BarbarianCiv                                                                  */
+/************************************************************************************************/
+		.def("getFreeUnitCountdown", &CyPlayer::getFreeUnitCountdown, "int ()")
+		.def("setFreeUnitCountdown", &CyPlayer::setFreeUnitCountdown, "void ( int iValue )")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 		.def("calculateGoldRate", &CyPlayer::calculateGoldRate, "int ()")
 		.def("calculateTotalCommerce", &CyPlayer::calculateTotalCommerce, "int ()")
 		.def("calculateResearchRate", &CyPlayer::calculateResearchRate, "int (int /*TechTypes*/ eTech)")
@@ -291,6 +351,16 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getTradeRoutes", &CyPlayer::getTradeRoutes, "int ()")
 		.def("getConversionTimer", &CyPlayer::getConversionTimer, "int ()")
 		.def("getRevolutionTimer", &CyPlayer::getRevolutionTimer, "int ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("setRevolutionTimer", &CyPlayer::setRevolutionTimer, "void (int newTime)" )
+		.def("changeRevolutionTimer", &CyPlayer::changeRevolutionTimer, "void (int addTime)" )
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		.def("isStateReligion", &CyPlayer::isStateReligion, "bool ()")
 		.def("isNoNonStateReligionSpread", &CyPlayer::isNoNonStateReligionSpread, "bool ()")

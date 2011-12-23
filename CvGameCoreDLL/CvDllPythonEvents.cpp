@@ -173,6 +173,24 @@ void CvDllPythonEvents::reportEndGameTurn(int iGameTurn)
 		postEvent(eventData);
 	}
 }
+/************************************************************************************************/
+/* RevolutionDCM MpFix                                                           lemmy101       */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CvDllPythonEvents::reportPreEndGameTurn(int iGameTurn)
+{
+	if (preEvent())
+	{
+		CyArgsList eventData;
+		eventData.add("PreEndGameTurn");				// add key to lookup python handler fxn
+		eventData.add(iGameTurn);
+		postEvent(eventData);
+	}
+}
+/************************************************************************************************/
+/* RevolutionDCM                           END                                                  */
+/************************************************************************************************/
 
 void CvDllPythonEvents::reportBeginPlayerTurn(int iGameTurn, PlayerTypes ePlayer)
 {

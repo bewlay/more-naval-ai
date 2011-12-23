@@ -18,6 +18,21 @@ public:
 
 	DllExport void init(TeamTypes eID);
 	DllExport void reset(TeamTypes eID = NO_TEAM, bool bConstructorCall = false);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void logMsg(char* format, ... );
+	bool isRebel() const;
+	bool isSingleCityTeam() const;
+	bool isRebelAgainst( TeamTypes eTeam ) const;
+	void setRebelAgainst( TeamTypes eTeam, bool bNewValue );
+	int countRebelAgainst( ) const;
+	int getNumMilitaryUnits( ) const;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 protected:
 
@@ -134,6 +149,16 @@ public:
 	bool isHuman() const;																																// Exposed to Python
 	bool isBarbarian() const;																														// Exposed to Python
 	bool isMinorCiv() const;																														// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/22/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	void setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck );																					// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 	PlayerTypes getLeaderID() const;																										// Exposed to Python
 	PlayerTypes getSecretaryID() const;																									// Exposed to Python
 	HandicapTypes getHandicapType() const;																							// Exposed to Python
@@ -249,6 +274,15 @@ public:
 	void changeExtraMoves(DomainTypes eIndex, int iChange);							// Exposed to Python
 
 	bool isHasMet(TeamTypes eIndex) const;																		// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/08                                jdog5000      */
+/*                                                                                              */
+/* For BarbarianCiv Mod and minor civs                                                                 */
+/************************************************************************************************/
+	void setHasMet( TeamTypes eIndex, bool bNewValue );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	void makeHasMet(TeamTypes eIndex, bool bNewDiplo);
 
 	DllExport bool isAtWar(TeamTypes eIndex) const;																			// Exposed to Python
@@ -473,6 +507,15 @@ protected:
 	bool* m_abVassal;
 	bool* m_abCanLaunch;
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	bool* m_abIsRebelAgainst;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int* m_paiRouteChange;
 	int* m_paiProjectCount;
 	int* m_paiProjectDefaultArtTypes;

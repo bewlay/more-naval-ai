@@ -7469,6 +7469,34 @@ m_iStateReligionUnitProductionModifier(0),
 m_iStateReligionBuildingProductionModifier(0),
 m_iStateReligionFreeExperience(0),
 m_iExpInBorderModifier(0),
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+m_bUpgradeAnywhere(false),
+m_bAllowInquisitions(false),
+m_bDisallowInquisitions(false),
+m_iRevIdxLocal(0),
+m_iRevIdxNational(0),
+m_iRevIdxDistanceModifier(0),
+m_iRevIdxHolyCityGood(0),
+m_iRevIdxHolyCityBad(0),
+m_iRevIdxSwitchTo(0),
+m_fRevIdxNationalityMod(0),
+m_fRevIdxGoodReligionMod(0),
+m_fRevIdxBadReligionMod(0),
+m_fRevViolentMod(0),
+m_iRevReligiousFreedom(0),
+m_iRevLaborFreedom(0),
+m_iRevEnvironmentalProtection(0),
+m_iRevDemocracyLevel(0),
+m_bCommunism(false),
+m_bFreeSpeech(false),
+m_bCanDoElection(false),
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 m_bMilitaryFoodProduction(false),
 m_bNoUnhealthyPopulation(false),
 m_bBuildingOnlyHealthy(false),
@@ -7721,6 +7749,113 @@ int CvCivicInfo::getExpInBorderModifier() const
 	return m_iExpInBorderModifier;
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+bool CvCivicInfo::isUpgradeAnywhere() const
+{
+	return m_bUpgradeAnywhere;
+}
+
+bool CvCivicInfo::isAllowInquisitions() const
+{
+	return m_bAllowInquisitions;
+}
+
+bool CvCivicInfo::isDisallowInquisitions() const
+{
+	return m_bDisallowInquisitions;
+}
+
+int CvCivicInfo::getRevIdxLocal() const
+{
+	return m_iRevIdxLocal;
+}
+
+int CvCivicInfo::getRevIdxNational() const
+{
+	return m_iRevIdxNational;
+}
+
+int CvCivicInfo::getRevIdxDistanceModifier() const
+{
+	return m_iRevIdxDistanceModifier;
+}
+
+int CvCivicInfo::getRevIdxHolyCityGood() const
+{
+	return m_iRevIdxHolyCityGood;
+}
+
+int CvCivicInfo::getRevIdxHolyCityBad() const
+{
+	return m_iRevIdxHolyCityBad;
+}
+
+int CvCivicInfo::getRevIdxSwitchTo() const
+{
+	return m_iRevIdxSwitchTo;
+}
+
+float CvCivicInfo::getRevIdxNationalityMod() const
+{
+	return m_fRevIdxNationalityMod;
+}
+
+float CvCivicInfo::getRevIdxBadReligionMod() const
+{
+	return m_fRevIdxBadReligionMod;
+}
+
+float CvCivicInfo::getRevIdxGoodReligionMod() const
+{
+	return m_fRevIdxGoodReligionMod;
+}
+
+float CvCivicInfo::getRevViolentMod() const
+{
+	return m_fRevViolentMod;
+}
+
+int CvCivicInfo::getRevReligiousFreedom() const
+{
+	return m_iRevReligiousFreedom;
+}
+
+int CvCivicInfo::getRevLaborFreedom() const
+{
+	return m_iRevLaborFreedom;
+}
+
+int CvCivicInfo::getRevEnvironmentalProtection() const
+{
+	return m_iRevEnvironmentalProtection;
+}
+
+int CvCivicInfo::getRevDemocracyLevel() const
+{
+	return m_iRevDemocracyLevel;
+}
+
+bool CvCivicInfo::isCommunism() const
+{
+	return m_bCommunism;
+}
+
+bool CvCivicInfo::isFreeSpeech() const
+{
+	return m_bFreeSpeech;
+}
+
+bool CvCivicInfo::isCanDoElection() const
+{
+	return m_bCanDoElection;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 bool CvCivicInfo::isMilitaryFoodProduction() const
 {
 	return m_bMilitaryFoodProduction;
@@ -7996,6 +8131,35 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iStateReligionBuildingProductionModifier);
 	stream->Read(&m_iStateReligionFreeExperience);
 	stream->Read(&m_iExpInBorderModifier);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+	stream->Read(&m_bUpgradeAnywhere);
+	stream->Read(&m_bAllowInquisitions);
+	stream->Read(&m_bDisallowInquisitions);
+	stream->Read(&m_iRevIdxLocal);
+	stream->Read(&m_iRevIdxNational);
+	stream->Read(&m_iRevIdxDistanceModifier);
+	stream->Read(&m_iRevIdxHolyCityGood);
+	stream->Read(&m_iRevIdxHolyCityBad);
+	stream->Read(&m_iRevIdxSwitchTo);
+	stream->Read(&m_fRevIdxNationalityMod);
+	stream->Read(&m_fRevIdxBadReligionMod);
+	stream->Read(&m_fRevIdxGoodReligionMod);
+	stream->Read(&m_fRevViolentMod);
+	stream->Read(&m_iRevReligiousFreedom);
+	stream->Read(&m_iRevLaborFreedom);
+	stream->Read(&m_iRevEnvironmentalProtection);
+	stream->Read(&m_iRevDemocracyLevel);
+
+	stream->Read(&m_bCommunism);
+	stream->Read(&m_bFreeSpeech);
+	stream->Read(&m_bCanDoElection);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	stream->Read(&m_bMilitaryFoodProduction);
 	stream->Read(&m_bNoUnhealthyPopulation);
@@ -8132,6 +8296,35 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iStateReligionBuildingProductionModifier);
 	stream->Write(m_iStateReligionFreeExperience);
 	stream->Write(m_iExpInBorderModifier);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+	stream->Write(&m_bUpgradeAnywhere);
+	stream->Write(&m_bAllowInquisitions);
+	stream->Write(&m_bDisallowInquisitions);
+	stream->Write(&m_iRevIdxLocal);
+	stream->Write(&m_iRevIdxNational);
+	stream->Write(&m_iRevIdxDistanceModifier);
+	stream->Write(&m_iRevIdxHolyCityGood);
+	stream->Write(&m_iRevIdxHolyCityBad);
+	stream->Write(&m_iRevIdxSwitchTo);
+	stream->Write(&m_fRevIdxNationalityMod);
+	stream->Write(&m_fRevIdxBadReligionMod);
+	stream->Write(&m_fRevIdxGoodReligionMod);
+	stream->Write(&m_fRevViolentMod);
+	stream->Write(&m_iRevReligiousFreedom);
+	stream->Write(&m_iRevLaborFreedom);
+	stream->Write(&m_iRevEnvironmentalProtection);
+	stream->Write(&m_iRevDemocracyLevel);
+
+	stream->Write(&m_bCommunism);
+	stream->Write(&m_bFreeSpeech);
+	stream->Write(&m_bCanDoElection);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	stream->Write(m_bMilitaryFoodProduction);
 	stream->Write(m_bNoUnhealthyPopulation);
@@ -8243,6 +8436,35 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iStateReligionBuildingProductionModifier, "iStateReligionBuildingProductionModifier");
 	pXML->GetChildXmlValByName(&m_iStateReligionFreeExperience, "iStateReligionFreeExperience");
 	pXML->GetChildXmlValByName(&m_iExpInBorderModifier, "iExpInBorderModifier");
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                                 01/01/08                        DPII          */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+	pXML->GetChildXmlValByName(&m_bUpgradeAnywhere, "bUpgradeAnywhere");
+	pXML->GetChildXmlValByName(&m_bAllowInquisitions, "bAllowInquisitions");
+	pXML->GetChildXmlValByName(&m_bDisallowInquisitions, "bDisallowInquisitions");
+	pXML->GetChildXmlValByName(&m_iRevIdxLocal, "iRevIdxLocal");
+	pXML->GetChildXmlValByName(&m_iRevIdxNational, "iRevIdxNational");
+	pXML->GetChildXmlValByName(&m_iRevIdxDistanceModifier, "iRevIdxDistanceModifier");
+	pXML->GetChildXmlValByName(&m_iRevIdxHolyCityGood, "iRevIdxHolyCityGood");
+	pXML->GetChildXmlValByName(&m_iRevIdxHolyCityBad, "iRevIdxHolyCityBad");
+	pXML->GetChildXmlValByName(&m_iRevIdxSwitchTo, "iRevIdxSwitchTo");
+	pXML->GetChildXmlValByName(&m_fRevIdxNationalityMod, "fRevIdxNationalityMod");
+	pXML->GetChildXmlValByName(&m_fRevIdxBadReligionMod, "fRevIdxBadReligionMod");
+	pXML->GetChildXmlValByName(&m_fRevIdxGoodReligionMod, "fRevIdxGoodReligionMod");
+	pXML->GetChildXmlValByName(&m_fRevViolentMod, "fRevViolentMod");
+	pXML->GetChildXmlValByName(&m_iRevReligiousFreedom, "iRevReligiousFreedom");
+	pXML->GetChildXmlValByName(&m_iRevLaborFreedom, "iRevLaborFreedom");
+	pXML->GetChildXmlValByName(&m_iRevEnvironmentalProtection, "iRevEnvironmentalProtection");
+	pXML->GetChildXmlValByName(&m_iRevDemocracyLevel, "iRevDemocracyLevel");
+	pXML->GetChildXmlValByName(&m_bCommunism, "bCommunism");
+	pXML->GetChildXmlValByName(&m_bFreeSpeech, "bFreeSpeech");
+	pXML->GetChildXmlValByName(&m_bCanDoElection, "bCanDoElection");
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"YieldModifiers"))
 	{
@@ -8763,6 +8985,20 @@ m_iDefenseModifier(0),
 m_iBombardDefenseModifier(0),
 m_iAllCityDefenseModifier(0),
 m_iEspionageDefenseModifier(0),
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+m_iUnitUpgradePriceModifier(0),
+m_iRevIdxLocal(0),
+m_iRevIdxNational(0),
+m_iRevIdxDistanceModifier(0),
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 m_iMissionType(NO_MISSION),
 m_iVoteSourceType(NO_VOTESOURCE),
 m_fVisibilityPriority(0.0f),
@@ -9370,6 +9606,34 @@ int CvBuildingInfo::getEspionageDefenseModifier() const
 {
 	return m_iEspionageDefenseModifier;
 }
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+int CvBuildingInfo::getUnitUpgradePriceModifier() const	
+{
+	return m_iUnitUpgradePriceModifier;
+}
+
+int CvBuildingInfo::getRevIdxLocal() const	
+{
+	return m_iRevIdxLocal;
+}
+
+int CvBuildingInfo::getRevIdxNational() const	
+{
+	return m_iRevIdxNational;
+}
+
+int CvBuildingInfo::getRevIdxDistanceModifier() const	
+{
+	return m_iRevIdxDistanceModifier;
+}
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
 
 int CvBuildingInfo::getMissionType() const
 {
@@ -10144,6 +10408,20 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iBombardDefenseModifier);
 	stream->Read(&m_iAllCityDefenseModifier);
 	stream->Read(&m_iEspionageDefenseModifier);
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+	stream->Read(&m_iUnitUpgradePriceModifier);
+	stream->Read(&m_iRevIdxLocal);
+	stream->Read(&m_iRevIdxNational);
+	stream->Read(&m_iRevIdxDistanceModifier);
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 	stream->Read(&m_iMissionType);
 	stream->Read(&m_iVoteSourceType);
 
@@ -10497,6 +10775,20 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iBombardDefenseModifier);
 	stream->Write(m_iAllCityDefenseModifier);
 	stream->Write(m_iEspionageDefenseModifier);
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+	stream->Write(m_iUnitUpgradePriceModifier);
+	stream->Write(m_iRevIdxLocal);
+	stream->Write(m_iRevIdxNational);
+	stream->Write(m_iRevIdxDistanceModifier);
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 	stream->Write(m_iMissionType);
 	stream->Write(m_iVoteSourceType);
 
@@ -10870,6 +11162,20 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iBombardDefenseModifier, "iBombardDefense");
 	pXML->GetChildXmlValByName(&m_iAllCityDefenseModifier, "iAllCityDefense");
 	pXML->GetChildXmlValByName(&m_iEspionageDefenseModifier, "iEspionageDefense");
+
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+	pXML->GetChildXmlValByName(&m_iUnitUpgradePriceModifier, "iUnitUpgradePriceModifier");
+	pXML->GetChildXmlValByName(&m_iRevIdxLocal, "iRevIdxLocal");
+	pXML->GetChildXmlValByName(&m_iRevIdxNational, "iRevIdxNational");
+	pXML->GetChildXmlValByName(&m_iRevIdxDistanceModifier, "iRevIdxDistanceModifier");
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 	pXML->GetChildXmlValByName(&m_iAssetValue, "iAsset");
 	pXML->GetChildXmlValByName(&m_iPowerValue, "iPower");
 	pXML->GetChildXmlValByName(&m_fVisibilityPriority, "fVisibilityPriority");

@@ -21,6 +21,24 @@
 #include "CvDLLPythonIFaceBase.h"
 #include "CyArgsList.h"
 #include "FProfiler.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/22/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+#include "CvInitCore.h"
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 // Public Functions...
 
@@ -45,6 +63,15 @@ CvTeam::CvTeam()
 	m_abVassal = new bool[MAX_TEAMS];
 	m_abCanLaunch = NULL;
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	m_abIsRebelAgainst = new bool[MAX_TEAMS];
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	m_paiRouteChange = NULL;
 	m_paiProjectCount = NULL;
 	m_paiProjectDefaultArtTypes = NULL;
@@ -87,6 +114,15 @@ CvTeam::~CvTeam()
 	SAFE_DELETE_ARRAY(m_abDefensivePact);
 	SAFE_DELETE_ARRAY(m_abForcePeace);
 	SAFE_DELETE_ARRAY(m_abVassal);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	SAFE_DELETE_ARRAY(m_abIsRebelAgainst);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 }
 
 
@@ -104,7 +140,7 @@ void CvTeam::init(TeamTypes eID)
 	AI_init();
 
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                         12/30/08                             jdog5000      */
+/* REVOLUTION_MOD                         05/30/08                                jdog5000      */
 /*                                                                                              */
 /*                                                                                              */
 /************************************************************************************************/
@@ -117,6 +153,8 @@ void CvTeam::init(TeamTypes eID)
 				if( GET_TEAM((TeamTypes)iI).isMinorCiv() )
 				{
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
+					GET_TEAM((TeamTypes)iI).setHasMet(getID(),false);
+					setHasMet((TeamTypes)iI,false);
 				}
 				if( GET_TEAM((TeamTypes)iI).isBarbarian() )
 				{
@@ -126,7 +164,7 @@ void CvTeam::init(TeamTypes eID)
 		}
 	}
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
+/* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 }
 
@@ -225,6 +263,15 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		m_abDefensivePact[iI] = false;
 		m_abForcePeace[iI] = false;
 		m_abVassal[iI] = false;
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		m_abIsRebelAgainst[iI] = false;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		if (!bConstructorCall && getID() != NO_TEAM)
 		{
@@ -364,11 +411,21 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	}
 }
 
-/********************************************************************************/
-/* 	BETTER_BTS_AI_MOD						12/30/08		jdog5000		*/
-/* 																			*/
-/* 	     																	*/
-/********************************************************************************/
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+//
+// for logging
+//
+void CvTeam::logMsg(char* format, ... )
+{
+	static char buf[2048];
+	_vsnprintf( buf, 2048-4, format, (char*)(&format+1) );
+	gDLL->logMsg("sdkDbg.log", buf);
+}
+
 //
 // for clearing data stored in plots and cities for this team
 //
@@ -394,9 +451,91 @@ void CvTeam::resetPlotAndCityData( )
 		}
 	}
 }
-/********************************************************************************/
-/* 	BETTER_BTS_AI_MOD						END								*/
-/********************************************************************************/
+
+bool CvTeam::isRebel() const
+{
+	bool bValid;
+	int iI;
+
+	bValid = false;
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isRebel())
+			{
+				bValid = true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	
+	return bValid;
+}
+
+bool CvTeam::isSingleCityTeam() const
+{
+	int iCities = 0;
+	int iI;
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+		if( (kPlayer.getTeam() == getID()) && kPlayer.isAlive() )
+		{
+			iCities += GET_PLAYER((PlayerTypes)iI).getNumCities();
+		}
+		if(iCities > 1)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool CvTeam::isRebelAgainst( TeamTypes eTeam ) const
+{
+	if( eTeam >= 0 && eTeam < MAX_TEAMS )
+		return m_abIsRebelAgainst[(int)eTeam];
+
+	return false;
+}
+
+void CvTeam::setRebelAgainst( TeamTypes eTeam, bool bNewValue )
+{
+	if( eTeam >= 0 && eTeam < MAX_TEAMS )
+		m_abIsRebelAgainst[(int)eTeam] = bNewValue;
+}
+
+int CvTeam::countRebelAgainst( ) const
+{
+	int count = 0;
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		if( isRebelAgainst( (TeamTypes)iI ) )
+			count++;
+	}
+	return count;
+}
+
+int CvTeam::getNumMilitaryUnits( ) const
+{
+	int count = 0;
+	for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+	{
+		if( GET_PLAYER((PlayerTypes)iI).getTeam() == getID() )
+			count += GET_PLAYER((PlayerTypes)iI).getNumMilitaryUnits();
+	}
+	return count;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 void CvTeam::addTeam(TeamTypes eTeam)
 {
@@ -1105,6 +1244,19 @@ bool CvTeam::canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal) const
 		return false;
 	}
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/08/08                                jdog5000      */
+/*                                                                                              */
+/* For minor civs                                                                               */
+/************************************************************************************************/
+	// No dealing with minor civs
+	if( isMinorCiv() || GET_TEAM(eTeam).isMinorCiv() )
+	{
+		return false;
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	for (int iLoopTeam = 0; iLoopTeam < MAX_CIV_TEAMS; ++iLoopTeam)
 	{
 		CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iLoopTeam);
@@ -1306,14 +1458,10 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			}
 		}
 //FfH: End Add
-		if (GC.getLogging())
+
+		if( gTeamLogLevel >= 1 )
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut,"  Team %d (%S) declares war on team %d \n", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), eTeam);
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("  Team %d (%S) declares war on team %d", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), eTeam);
 		}
 
 		for (pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
@@ -1367,16 +1515,28 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 
 		GET_TEAM(eTeam).AI_setWarPlan(getID(), ((isBarbarian() || isMinorCiv()) ? WARPLAN_ATTACKED : WARPLAN_ATTACKED_RECENT));
 
-		for (iI = 0; iI < MAX_TEAMS; iI++)
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/27/08                                jdog5000      */
+/*                                                                                              */
+/* For barbarian and minor civs                                                                 */
+/************************************************************************************************/
+		// Added check for barb, minor - jwd
+		if (!isBarbarian() && !isMinorCiv() && !GET_TEAM(eTeam).isMinorCiv() && !GET_TEAM(eTeam).isBarbarian())
 		{
-			if (GET_TEAM((TeamTypes)iI).isAlive())
+			for (iI = 0; iI < MAX_TEAMS; iI++)
 			{
-				if (!GET_TEAM(eTeam).isAtWar((TeamTypes)iI) && GET_TEAM(eTeam).AI_isChosenWar((TeamTypes)iI))
+				if (GET_TEAM((TeamTypes)iI).isAlive())
 				{
-					GET_TEAM(eTeam).AI_setWarPlan(((TeamTypes)iI), NO_WARPLAN);
+					if (!GET_TEAM(eTeam).isAtWar((TeamTypes)iI) && GET_TEAM(eTeam).AI_isChosenWar((TeamTypes)iI))
+					{
+						GET_TEAM(eTeam).AI_setWarPlan(((TeamTypes)iI), NO_WARPLAN);
+					}
 				}
 			}
 		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		if (NO_WARPLAN != eWarPlan)
 		{
@@ -1418,6 +1578,12 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/06/08                                jdog5000      */
+/*                                                                                              */
+/* For barbarian and minor civs                                                                 */
+/************************************************************************************************/
+/* original code
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
@@ -1465,6 +1631,62 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 				}
 			}
 		}
+*/
+		// Added check for barb, minor - jwd
+		if (!isBarbarian() && !(GET_TEAM(eTeam).isBarbarian()) &&
+				  !isMinorCiv() && !(GET_TEAM(eTeam).isMinorCiv()))
+		{
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					for (iJ = 0; iJ < MAX_PLAYERS; iJ++)
+					{
+						if (GET_PLAYER((PlayerTypes)iJ).isAlive())
+						{
+							if ((GET_PLAYER((PlayerTypes)iI).getTeam() == getID()) && (GET_PLAYER((PlayerTypes)iJ).getTeam() == eTeam))
+							{
+								GET_PLAYER((PlayerTypes)iI).AI_setFirstContact(((PlayerTypes)iJ), true);
+								GET_PLAYER((PlayerTypes)iJ).AI_setFirstContact(((PlayerTypes)iI), true);
+							}
+						}
+					}
+				}
+			}
+
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					for (iJ = 0; iJ < MAX_PLAYERS; iJ++)
+					{
+						if (GET_PLAYER((PlayerTypes)iJ).isAlive())
+						{
+							if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+							{
+								if (GET_PLAYER((PlayerTypes)iJ).getTeam() == eTeam)
+								{
+									GET_PLAYER((PlayerTypes)iJ).AI_changeMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR, 1);
+								}
+								else if (GET_PLAYER((PlayerTypes)iJ).getTeam() != getID())
+								{
+									if (GET_TEAM(GET_PLAYER((PlayerTypes)iJ).getTeam()).isHasMet(eTeam))
+									{
+										if ((GET_TEAM(GET_PLAYER((PlayerTypes)iJ).getTeam()).AI_getAttitude(eTeam) >= ATTITUDE_PLEASED) && !(GET_TEAM(GET_PLAYER((PlayerTypes)iJ).getTeam()).isAtWar(eTeam)))
+										{
+											GET_PLAYER((PlayerTypes)iJ).AI_changeMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR_ON_FRIEND, 1);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
@@ -1644,49 +1866,67 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 
 		CvEventReporter::getInstance().changeWar(true, getID(), eTeam);
 
-		cancelDefensivePacts();
-
-		for (iI = 0; iI < MAX_TEAMS; iI++)
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/06/08                                jdog5000      */
+/*                                                                                              */
+/* For barbarian and minor civs                                                                 */
+/************************************************************************************************/
+		// Added check for barb, minor - jwd
+		if (!isBarbarian() && !(GET_TEAM(eTeam).isBarbarian()) &&
+				  !isMinorCiv() && !(GET_TEAM(eTeam).isMinorCiv()))
 		{
-			if (GET_TEAM((TeamTypes)iI).isAlive())
-			{
-				if (GET_TEAM((TeamTypes)iI).isDefensivePact(eTeam))
-				{
-					GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE);
-				}
-			}
-		}
 
-		GET_TEAM(eTeam).cancelDefensivePacts();
+			cancelDefensivePacts();
 
-		for (iI = 0; iI < MAX_TEAMS; iI++)
-		{
-			if (iI != getID() && iI != eTeam)
+			for (iI = 0; iI < MAX_TEAMS; iI++)
 			{
-				if (GET_TEAM((TeamTypes)iI).isAlive())
+				if (iI != getID() && iI != eTeam && GET_TEAM((TeamTypes)iI).isAlive())
 				{
-					if (GET_TEAM((TeamTypes)iI).isVassal(eTeam) || GET_TEAM(eTeam).isVassal((TeamTypes)iI))
+					if (GET_TEAM((TeamTypes)iI).isDefensivePact(eTeam))
 					{
-						declareWar((TeamTypes)iI, bNewDiplo, AI_getWarPlan(eTeam));
+						GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE);
 					}
-					else if (GET_TEAM((TeamTypes)iI).isVassal(getID()) || isVassal((TeamTypes)iI))
+					else if( GET_TEAM((TeamTypes)iI).isDefensivePact(getID()))
 					{
-						GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE);
+						GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE);
 					}
 				}
 			}
-		}
 
-//FfH: Added by Kael 11/29/2007
-		for (iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
+			for (iI = 0; iI < MAX_TEAMS; iI++)
 			{
-				GET_PLAYER((PlayerTypes)iI).setDeclaringWar(false);
+				if (iI != getID() && iI != eTeam)
+				{
+					if (GET_TEAM((TeamTypes)iI).isAlive())
+					{
+						if (GET_TEAM((TeamTypes)iI).isVassal(eTeam) || GET_TEAM(eTeam).isVassal((TeamTypes)iI))
+						{
+							declareWar((TeamTypes)iI, bNewDiplo, AI_getWarPlan(eTeam));
+						}
+						else if (GET_TEAM((TeamTypes)iI).isVassal(getID()) || isVassal((TeamTypes)iI))
+						{
+							GET_TEAM((TeamTypes)iI).declareWar(eTeam, bNewDiplo, WARPLAN_DOGPILE);
+						}
+					}
+				}
+			}
+
+	//FfH: Added by Kael 11/29/2007
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+				{
+					GET_PLAYER((PlayerTypes)iI).setDeclaringWar(false);
+				}
 			}
 		}
-//FfH: End Add
-
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	}
 }
 
@@ -1700,6 +1940,11 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 
 	if (isAtWar(eTeam))
 	{
+		if( gTeamLogLevel >= 1 && isAlive() && GET_TEAM(eTeam).isAlive())
+		{
+			logBBAI("Team %d (%S) and team %d (%S) make peace", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), eTeam, GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getCivilizationDescription(0));
+		}
+
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			if ((GET_PLAYER((PlayerTypes)iI).getTeam() == getID()) || (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam))
@@ -1822,6 +2067,12 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+/* original code
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
@@ -1846,6 +2097,85 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 
 		szBuffer = gDLL->getText("TXT_KEY_MISC_SOMEONE_MADE_PEACE", getName().GetCString(), GET_TEAM(eTeam).getName().GetCString());
 		GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getLeaderID(), szBuffer, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+*/
+		// Silence announcement when one team has no units or cities
+		// Needed because civs are now set to peace with all when dieing since they keep at war state when being reborn
+		bool bHasUnitsOrCities  = (getNumCities() > 0);
+		bool bHasUnitsOrCities2 = (GET_TEAM(eTeam).getNumCities() > 0);
+
+		// Could be homeless rebel, must check
+		if( !bHasUnitsOrCities )
+		{
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+					{
+						if( GET_PLAYER((PlayerTypes)iI).getNumUnits() > 0 )
+						{
+							bHasUnitsOrCities = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		if( !bHasUnitsOrCities2 )
+		{
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					if (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam)
+					{
+						if( GET_PLAYER((PlayerTypes)iI).getNumUnits() > 0 )
+						{
+							bHasUnitsOrCities2 = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		
+
+		// Anounce only if neither is minor
+		if( !isMinorCiv() && !GET_TEAM(eTeam).isMinorCiv() )
+		{
+			// Announce if both are really alive
+			if( bHasUnitsOrCities && bHasUnitsOrCities2 ) 
+			{
+				for (iI = 0; iI < MAX_PLAYERS; iI++)
+				{
+					if (GET_PLAYER((PlayerTypes)iI).isAlive())
+					{
+						if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+						{
+							szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_MADE_PEACE_WITH", GET_TEAM(eTeam).getName().GetCString());
+							gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_MAKEPEACE", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+						}
+						else if (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam)
+						{
+							szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_MADE_PEACE_WITH", getName().GetCString());
+							gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_MAKEPEACE", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+						}
+						else if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHasMet(getID()) && GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHasMet(eTeam))
+						{
+							szBuffer = gDLL->getText("TXT_KEY_MISC_SOMEONE_MADE_PEACE", getName().GetCString(), GET_TEAM(eTeam).getName().GetCString());
+							gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_THEIRMAKEPEACE", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+						}
+					}
+				}
+
+				szBuffer = gDLL->getText("TXT_KEY_MISC_SOMEONE_MADE_PEACE", getName().GetCString(), GET_TEAM(eTeam).getName().GetCString());
+				GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getLeaderID(), szBuffer, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+			}
+		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		CvEventReporter::getInstance().changeWar(false, getID(), eTeam);
 
@@ -1907,6 +2237,18 @@ void CvTeam::meet(TeamTypes eTeam, bool bNewDiplo)
 	{
 		makeHasMet(eTeam, bNewDiplo);
 		GET_TEAM(eTeam).makeHasMet(getID(), bNewDiplo);
+
+		if( gTeamLogLevel >= 2 )
+		{
+			if( GC.getGameINLINE().isFinalInitialized() )
+			{
+				if( eTeam != getID() && isAlive() && GET_TEAM(eTeam).isAlive() )
+				{
+					logBBAI("    Team %d (%S) meets team %d (%S)", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), eTeam, GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getCivilizationDescription(0) );
+				}
+			}
+		}
+
 	}
 }
 
@@ -3041,6 +3383,291 @@ bool CvTeam::isMinorCiv() const
 	return bValid;
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         10/22/08                                jdog5000      */
+/*                                                                                              */
+/* For Minor Civs                                                                               */
+/************************************************************************************************/
+void CvTeam::setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck )
+{
+	int iI;
+	if( bNewValue != isMinorCiv() )
+	{
+		if( isAlive() )
+		{
+			if( bNewValue )
+			{
+				logMsg( "Switching team %d to minor", getID() );
+			}
+			else
+			{
+				logMsg( "Switching minor team %d to full", getID() );
+			}
+		}
+		else
+		{
+			if( bNewValue )
+			{
+				logMsg( "Setting non-alive team %d to minor", getID() );
+			}
+			else
+			{
+				logMsg( "Setting non-alive minor team %d to full", getID() );
+			}
+		}
+
+		bool abHasMet[MAX_TEAMS];
+		TeamTypes eBarbCivVictim = NO_TEAM;
+
+		// Have to check hasMet status first because of vassal states ... dow on master causes hasMet for vassal
+		for (iI = 0; iI < MAX_TEAMS; iI++)
+		{
+			abHasMet[iI] = isHasMet((TeamTypes)iI);
+		}
+
+		if( bDoBarbCivCheck && !bNewValue )
+		{	
+			int iMaxVal = 0;
+			for (int iJ = 0; iJ < MAX_CIV_TEAMS; iJ++)
+			{
+				if( iJ != getID() )
+				{
+					int iValue = GET_TEAM(getID()).AI_getBarbarianCivWarVal((TeamTypes)iJ, 12);
+					if( iValue > iMaxVal )
+					{
+						logMsg("    BarbCiv team %d is considering declaring war against victim Team %d", getID(), iJ);
+						CvCity* pCapital = GET_PLAYER(getLeaderID()).getCapitalCity();
+						if( pCapital == NULL || pCapital->plot()->isHasPathToPlayerCity(getID(),GET_TEAM((TeamTypes)iJ).getLeaderID()) )
+						{
+							iMaxVal = iValue;
+							eBarbCivVictim = (TeamTypes)iJ;
+						}
+					}
+				}
+			}
+
+			logMsg("    BarbCiv team %d will declare war against victim Team %d", getID(), eBarbCivVictim);
+		}
+
+/*		if( !(GC.getGameINLINE().isOption(GAMEOPTION_START_AS_MINORS)) )
+		{
+			logMsg("    Making peace with other players");
+			// Declare peace in either case, remove contact causes "Nice to meet you" diplo screens
+			for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
+			{
+				if( iI != getID() )
+				{
+					if( isAtWar((TeamTypes)iI) && !GET_TEAM((TeamTypes)iI).isBarbarian() && !GET_TEAM((TeamTypes)iI).isMinorCiv() )
+					{
+						makePeace((TeamTypes)iI, false);
+					}
+
+					setHasMet( (TeamTypes)iI, false );
+					setHasMet( getID(), false );
+				}
+			}
+		}
+*/
+
+		if( bNewValue )
+		{
+			// Convert all team members
+			for(iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+			{
+				if( GET_PLAYER((PlayerTypes)iI).getTeam() == getID() )
+				{
+					GC.getInitCore().setMinorNationCiv((PlayerTypes)iI, bNewValue);
+				}
+			}
+
+			// Declare war on all outside teams
+			for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
+			{
+				// Declare war on everyone except barbs, barbs always do their own declaring
+				if( iI != getID() && !isAtWar((TeamTypes)iI) )
+				{
+					declareWar((TeamTypes)iI, false, WARPLAN_LIMITED);
+					if( !abHasMet[iI] )
+					{
+						// Declaring war creates contacts, remove those the player didn't have already
+						setHasMet( (TeamTypes)iI, false );
+						GET_TEAM((TeamTypes)iI).setHasMet( getID(), false );
+					}
+				}
+
+				if( isAtWar((TeamTypes)iI) )
+				{
+					AI_setWarPlan((TeamTypes)iI, WARPLAN_LIMITED, true);
+					GET_TEAM((TeamTypes)iI).AI_setWarPlan(getID(), WARPLAN_LIMITED, true);
+				}
+			}
+		}
+		else
+		{
+			// Keep war againt those this team has met
+			for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
+			{
+				if( iI != getID() && !(GET_TEAM((TeamTypes)iI).isBarbarian()) && !(GET_TEAM((TeamTypes)iI).isMinorCiv()) )
+				{
+					if( abHasMet[iI] )
+					{
+						//if( GC.getGameINLINE().isOption(GAMEOPTION_START_AS_MINORS) )
+						if (1 > 2)
+						{
+							if( !isAtWar((TeamTypes)iI) )
+							{
+								declareWar((TeamTypes)iI, true, NO_WARPLAN);
+							}
+						}
+						else
+						{
+							// Does other player want to keep war with us?
+							bool bPeace = true;
+							bool bPlanWar = false;
+
+							CvPlayer& kPlayer = GET_PLAYER(GET_TEAM((TeamTypes)iI).getLeaderID());
+							int iLoop;
+							CvUnit* pLoopUnit = NULL;
+							int iCount = 0;
+							for (CvUnit* pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit; pLoopUnit = kPlayer.nextUnit(&iLoop))
+							{
+								if( pLoopUnit->plot()->getTeam() == getID() )
+								{
+									iCount++;
+								}
+							}
+							
+							if( GET_TEAM((TeamTypes)iI).isHuman() )
+							{
+								if( iCount > 2 )
+								{
+									bPeace = false;
+								}
+							}
+							else
+							{
+								if( !isAtWar((TeamTypes)iI) )
+								{
+									// Shouldn't happen
+									bPeace = false;
+								}
+								else if( GET_TEAM((TeamTypes)iI).AI_minorKeepWarVal(getID()) > 0 )
+								{
+									if( GET_TEAM((TeamTypes)iI).AI_endWarVal(getID()) < (GET_TEAM(getID()).AI_endWarVal((TeamTypes)iI))/2 )
+									{
+										if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") )
+										{
+											bPeace = false;
+										}
+										else
+										{
+											bPlanWar = true;
+										}
+									}
+								}
+							}
+
+							if( bPeace )
+							{
+								makePeace((TeamTypes)iI, false);
+						
+								setHasMet( (TeamTypes)iI, false );
+								GET_TEAM((TeamTypes)iI).setHasMet( getID(), false );
+
+								if( bPlanWar )
+								{
+									GET_TEAM((TeamTypes)iI).AI_setWarPlan(getID(),WARPLAN_LIMITED);
+									logMsg("    Team %d decides to plan war against ex-minor", iI);
+								}
+							}
+							else
+							{
+								logMsg("    Team %d decides to keep war against ex-minor", iI);
+							}
+						}
+					}
+					else
+					{
+						if( isAtWar((TeamTypes)iI) && !GET_TEAM((TeamTypes)iI).isBarbarian() && !GET_TEAM((TeamTypes)iI).isMinorCiv() )
+						{
+							makePeace((TeamTypes)iI, false);
+						
+							setHasMet( (TeamTypes)iI, false );
+							GET_TEAM((TeamTypes)iI).setHasMet( getID(), false );
+						}
+					}
+
+					if( isAtWar((TeamTypes)iI) )
+					{
+						AI_setWarPlan((TeamTypes)iI, WARPLAN_LIMITED, true);
+						GET_TEAM((TeamTypes)iI).AI_setWarPlan(getID(), WARPLAN_LIMITED, true);
+					}
+				}
+			}
+
+			if( eBarbCivVictim != NO_TEAM )
+			{
+				if( !isAtWar(eBarbCivVictim) )
+				{
+					if( getAnyWarPlanCount(true) == 0 )
+					{
+						int iLoop;
+						CvUnit* pLoopUnit = NULL;
+						int iCount = 0;
+						for (CvUnit* pLoopUnit = GET_PLAYER(getLeaderID()).firstUnit(&iLoop); pLoopUnit; pLoopUnit = GET_PLAYER(getLeaderID()).nextUnit(&iLoop))
+						{
+							if( pLoopUnit->plot()->getTeam() == eBarbCivVictim )
+							{
+								iCount++;
+							}
+						}
+
+						if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") )
+						{
+							logMsg("  Barb civ %d decides to keep war on victim Team %d", getID(), eBarbCivVictim);
+							declareWar((TeamTypes)iI, true, WARPLAN_TOTAL); 
+						}
+						else
+						{
+							logMsg("  Barb civ %d begins preparing for war on victim Team %d", getID(), eBarbCivVictim);
+							// Prepare for war with victim
+							AI_setWarPlan(eBarbCivVictim,WARPLAN_TOTAL);
+						}
+					}
+				}
+				else
+				{
+					AI_setWarPlan(eBarbCivVictim, WARPLAN_TOTAL, true);
+				}
+			}
+
+			// Convert all team members
+			for(iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+			{
+				if( GET_PLAYER((PlayerTypes)iI).getTeam() == getID() )
+				{
+					GC.getInitCore().setMinorNationCiv((PlayerTypes)iI, bNewValue);
+				}
+			}
+		}
+
+		// Update graphics to reflect changes
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
+	
+	}
+
+	return;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 PlayerTypes CvTeam::getLeaderID() const
 {
@@ -3733,6 +4360,23 @@ void CvTeam::changeWarWeariness(TeamTypes eOtherTeam, const CvPlot& kPlot, int i
 	{
 		iRatio = (100 * iTheirCulture) / (iOurCulture + iTheirCulture);
 	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/30/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	// Rebels don't feel as if they are fighting on foreign soil
+	if( isRebelAgainst(eOtherTeam) )
+	{
+		iRatio = std::min(40, iRatio);
+	}
+	else if( isRebel() )
+	{
+		iRatio = std::min(60,iRatio);
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	changeWarWeariness(eOtherTeam, iRatio * iFactor);
 }
@@ -3828,6 +4472,23 @@ bool CvTeam::isHasMet(TeamTypes eIndex)	const
 	return m_abHasMet[eIndex];
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/01/08                                jdog5000      */
+/*                                                                                              */
+/* For barbarian and minor civs                                                                 */
+/************************************************************************************************/
+void CvTeam::setHasMet( TeamTypes eIndex, bool bNewValue )
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	if( bNewValue != isHasMet(eIndex) )
+		m_abHasMet[eIndex] = bNewValue;
+	return;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 {
 	CvDiploParameters* pDiplo;
@@ -3882,9 +4543,32 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 			{
 				declareWar(eIndex, false, NO_WARPLAN);
 			}
+
+/********************************************************************************/
+/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
+/**																				*/
+/**		For BarbarianCiv and Start As Minors									*/
+/********************************************************************************/
+			// report event to Python, along with some other key state
+			CvEventReporter::getInstance().firstContact(getID(), eIndex);
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
 		}
 		else
 		{
+/********************************************************************************/
+/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
+/**																				*/
+/**		For BarbarianCiv and Start As Minors									*/
+/********************************************************************************/
+			// Move reporting to Python before diplo popup to all war declarations on first contact
+			// report event to Python, along with some other key state
+			CvEventReporter::getInstance().firstContact(getID(), eIndex);
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
+
 			if (GC.getGameINLINE().isFinalInitialized() && !(gDLL->GetWorldBuilderMode()))
 			{
 				if (bNewDiplo)
@@ -3919,8 +4603,19 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 			}
 		}
 
+/********************************************************************************/
+/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
+/**																				*/
+/**		For BarbarianCiv and Start As Minors									*/
+/********************************************************************************/
+		/*
 		// report event to Python, along with some other key state
 		CvEventReporter::getInstance().firstContact(getID(), eIndex);
+		*/
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
+
 	}
 }
 
@@ -5394,6 +6089,11 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 
 		if (isHasTech(eIndex))
 		{
+			if( gTeamLogLevel >= 2 )
+			{
+				logBBAI("    Team %d (%S) acquires tech %S", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), GC.getTechInfo(eIndex).getDescription() );
+			}
+
 			for (iI = 0; iI < MAX_PLAYERS; iI++)
 			{
 				if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
@@ -5827,10 +6527,20 @@ void CvTeam::doWarWeariness()
 		{
 			changeWarWeariness(((TeamTypes)iI), 100 * GC.getDefineINT("WW_DECAY_RATE"));
 
-			if (!(GET_TEAM((TeamTypes)iI).isAlive()) || !isAtWar((TeamTypes)iI) || GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_WAR) || GC.getGameINLINE().isOption(GAMEOPTION_NO_CHANGING_WAR_PEACE))
+/********************************************************************************/
+/**		REVOLUTION_MOD							6/22/08				jdog5000	*/
+/**																				*/
+/**																				*/
+/********************************************************************************/
+			//if (!(GET_TEAM((TeamTypes)iI).isAlive()) || !isAtWar((TeamTypes)iI) || GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_WAR) || GC.getGameINLINE().isOption(GAMEOPTION_NO_CHANGING_WAR_PEACE))
+			// War weariness decays faster when enemy can't fight, usually a rebel with just spies
+			if ( ( !(GET_TEAM((TeamTypes)iI).isAlive()) || GET_TEAM((TeamTypes)iI).getNumMilitaryUnits() == 0 ) || !isAtWar((TeamTypes)iI) || GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_WAR) || GC.getGameINLINE().isOption(GAMEOPTION_NO_CHANGING_WAR_PEACE))
 			{
 				setWarWeariness(((TeamTypes)iI), ((getWarWeariness((TeamTypes)iI) * GC.getDefineINT("WW_DECAY_PEACE_PERCENT")) / 100));
 			}
+/********************************************************************************/
+/**		REVOLUTION_MOD							END								*/
+/********************************************************************************/
 		}
 	}
 }
@@ -6592,6 +7302,15 @@ void CvTeam::read(FDataStreamBase* pStream)
 	pStream->Read(MAX_TEAMS, m_abVassal);
 	pStream->Read(GC.getNumVictoryInfos(), m_abCanLaunch);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Read(MAX_TEAMS, m_abIsRebelAgainst);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	pStream->Read(GC.getNumRouteInfos(), m_paiRouteChange);
 	pStream->Read(GC.getNumProjectInfos(), m_paiProjectCount);
 	pStream->Read(GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);
@@ -6697,6 +7416,15 @@ void CvTeam::write(FDataStreamBase* pStream)
 	pStream->Write(MAX_TEAMS, m_abVassal);
 	pStream->Write(GC.getNumVictoryInfos(), m_abCanLaunch);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Write(MAX_TEAMS, m_abIsRebelAgainst);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	pStream->Write(GC.getNumRouteInfos(), m_paiRouteChange);
 	pStream->Write(GC.getNumProjectInfos(), m_paiProjectCount);
 	pStream->Write(GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);

@@ -42,6 +42,19 @@ void CyMap::setAllPlotTypes(int /*PlotTypes*/ ePlotType)
 		m_pMap->setAllPlotTypes((PlotTypes) ePlotType);
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/29/08                                jdog5000      */
+/*                                                                                              */
+/* Used by Barbarian civ                                                                        */
+/************************************************************************************************/
+void CyMap::verifyUnitValidPlot()
+{
+	if( m_pMap )
+		m_pMap->verifyUnitValidPlot();
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 void CyMap::updateVisibility()
 {
 	if (m_pMap)

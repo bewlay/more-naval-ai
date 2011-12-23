@@ -99,6 +99,19 @@ void CvEventReporter::endGameTurn(int iGameTurn)
 	m_kPythonEventMgr.reportEndGameTurn(iGameTurn);
 }
 
+/************************************************************************************************/
+/* RevolutionDCM MpFix                                                           lemmy101       */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+void CvEventReporter::preEndGameTurn(int iGameTurn)
+{
+	m_kPythonEventMgr.reportPreEndGameTurn(iGameTurn);
+}
+/************************************************************************************************/
+/* RevolutionDCM                           END                                                  */
+/************************************************************************************************/
+
 void CvEventReporter::beginPlayerTurn(int iGameTurn, PlayerTypes ePlayer)
 {
 	m_kPythonEventMgr.reportBeginPlayerTurn(iGameTurn, ePlayer);

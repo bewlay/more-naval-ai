@@ -142,6 +142,15 @@ public:
 	int getImprovementUpgradeTime(ImprovementTypes eImprovement) const;		// Exposed to Python
 
 	bool canTrainNukes() const;																		// Exposed to Python
+/************************************************************************************************/
+/* RevDCM	                  Start		 11/04/10                                phungus420     */
+/*                                                                                              */
+/* New World Logic                                                                              */
+/************************************************************************************************/
+	EraTypes getHighestEra() const;											// Exposed to Python
+/************************************************************************************************/
+/* New World Logic                 END                                                          */
+/************************************************************************************************/
 	DllExport EraTypes getCurrentEra() const;											// Exposed to Python
 
 	DllExport TeamTypes getActiveTeam() const;																		// Exposed to Python
@@ -154,7 +163,16 @@ public:
 	bool isModem();
 	void setModem(bool bModem);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
 	DllExport void reviveActivePlayer();																		// Exposed to Python
+	DllExport void reviveActivePlayer(PlayerTypes iPlayer);																		// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	DllExport int getNumHumanPlayers();																			// Exposed to Python
 
@@ -246,9 +264,22 @@ public:
 	int getInitWonders() const;																		// Exposed to Python
 	DllExport void initScoreCalculation();
 
-	int getAIAutoPlay();																				// Exposed to Python
-	DllExport void setAIAutoPlay(int iNewValue);																// Exposed to Python
-	void changeAIAutoPlay(int iChange);
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                  lemmy101     */
+/*                                                                                 jdog5000     */
+/*                                                                                              */
+/************************************************************************************************/
+	int getAIAutoPlay(PlayerTypes iPlayer);																				// Exposed to Python
+	void setAIAutoPlay(PlayerTypes iPlayer, int iNewValue, bool bForced = false);																// Exposed to Python
+	void changeAIAutoPlay(PlayerTypes iPlayer, int iChange);
+	
+	bool isForcedAIAutoPlay(PlayerTypes iPlayer);																// Exposed to Python
+	int getForcedAIAutoPlay(PlayerTypes iPlayer);																// Exposed to Python
+	void setForcedAIAutoPlay(PlayerTypes iPlayer, int iNewValue, bool bForced = false);																// Exposed to Python
+	void changeForcedAIAutoPlay(PlayerTypes iPlayer, int iNewValue);	
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	DllExport unsigned int getInitialTime();
 	DllExport void setInitialTime(unsigned int uiNewValue);
@@ -473,8 +504,17 @@ public:
 	void saveReplay(PlayerTypes ePlayer);
 
 	bool hasSkippedSaveChecksum() const;
-
-	void addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, CivilizationTypes eCiv);   // Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 jdog5000      */
+/*                                                                                lemmy101      */
+/*                                                                                              */
+/************************************************************************************************/
+	void logMsg(char* format, ... );
+	void addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, CivilizationTypes eCiv, bool bSetAlive = true);   // Exposed to Python
+	void changeHumanPlayer( PlayerTypes eOldHuman, PlayerTypes eNewHuman );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 //FfH: Added by Kael 08/24/2007
 	void addPlayerAdvanced(PlayerTypes eNewPlayer, int iNewTeam, LeaderHeadTypes eLeader, CivilizationTypes eCiv);   // Exposed to Python
@@ -627,7 +667,16 @@ protected:
 	int m_iInitLand;
 	int m_iInitTech;
 	int m_iInitWonders;
-	int m_iAIAutoPlay;
+/************************************************************************************************/
+/* REVOLUTION_MOD                                                                 lemmy101      */
+/*                                                                                jdog5000      */
+/*                                                                                              */
+/************************************************************************************************/
+	int m_iAIAutoPlay[MAX_PLAYERS];
+	int m_iForcedAIAutoPlay[MAX_PLAYERS];
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	unsigned int m_uiInitialTime;
 

@@ -203,6 +203,19 @@ public:
 	void SetVariableListTagPair(int **ppiList, const TCHAR* szRootTagName,
 		int iInfoBaseSize, int iInfoBaseLength, int iDefaultListVal = 0);
 
+/************************************************************************************************/
+/* RevDCM  XMLloading                             05/05/10             phungus420               */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	// allocate and initialize a list from a tag pair in the xml by tag name
+	void SetVariableListTagPair(int **ppiList, const TCHAR* szRootTagName,
+		int iInfoBaseSize, int iInfoBaseLength,
+		const TCHAR* szValueTagName, int iValueInfoBaseLength, int iDefaultListVal = -1);
+/************************************************************************************************/
+/* RevDCM	                                 END                                                */
+/************************************************************************************************/
+
 	// allocate and initialize a list from a tag pair in the xml
 	void SetVariableListTagPair(bool **ppbList, const TCHAR* szRootTagName,
 		int iInfoBaseSize, int iInfoBaseLength, bool bDefaultListVal = false);

@@ -25,6 +25,16 @@
 #include "FAStarNode.h"
 #include "CvEventReporter.h"
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 #define DANGER_RANGE						(4)
 #define GREATER_FOUND_RANGE			(5)
 #define CIVIC_CHANGE_DELAY			(25)
@@ -207,12 +217,22 @@ void CvPlayerAI::AI_reset(bool bConstructor)
 	m_iReligionTimer = 0;
 	m_iExtraGoldTarget = 0;
 
-
-	for (iI = 0; iI < NUM_UNITAI_TYPES; iI++)
+/************************************************************************************************/
+/* CHANGE_PLAYER                         06/08/09                                 jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	if( bConstructor || getNumUnits() == 0 )
 	{
-		m_aiNumTrainAIUnits[iI] = 0;
-		m_aiNumAIUnits[iI] = 0;
+		for (iI = 0; iI < NUM_UNITAI_TYPES; iI++)
+		{
+			m_aiNumTrainAIUnits[iI] = 0;
+			m_aiNumAIUnits[iI] = 0;
+		}
 	}
+/************************************************************************************************/
+/* CHANGE_PLAYER                           END                                                  */
+/************************************************************************************************/
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -1667,10 +1687,18 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 			// Reasons to not raze
 			if( (getNumCities() <= 1) || (getNumCities() < 5 && iCloseness > 0) )
 			{
+				if( gPlayerLogLevel >= 1 )
+				{
+					logBBAI("    Player %d (%S) decides not to raze %S because they have few cities", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+				}
 			}
 			else if( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && GET_TEAM(getTeam()).AI_isPrimaryArea(pCity->area()) )
 			{
 				// Do not raze, going for domination
+				if( gPlayerLogLevel >= 1 )
+				{
+					logBBAI("    Player %d (%S) decides not to raze %S because they're going for domination", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+				}
 			}
 			else if( isBarbarian() )
 			{
@@ -1770,6 +1798,10 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 								iRazeValue *= (100 - (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier()));
 								iRazeValue /= 100;
 
+								if( (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier() > 0) && gPlayerLogLevel >= 1 )
+								{
+									logBBAI("      Reduction for upkeep modifier %d", (GC.getTraitInfo((TraitTypes)iI).getUpkeepModifier()) );
+								}
 							}
 						}
 					}
@@ -1785,11 +1817,19 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 							{
 								iRazeValue -= 50;
 
+								if( gPlayerLogLevel >= 1 )
+								{
+									logBBAI("      Reduction for state religion with shrine" );
+								}
 							}
 							else
 							{
 								iRazeValue -= 10;
 
+								if( gPlayerLogLevel >= 1 )
+								{
+									logBBAI("      Reduction for state religion" );
+								}
 							}
 						}
 					}
@@ -1800,6 +1840,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				{
 					if (pCity->isHolyCity((ReligionTypes)iI))
 					{
+						logBBAI("      Reduction for holy city" );
 						if( getStateReligion() == iI )
 						{
 							iRazeValue -= 150;
@@ -1836,20 +1877,42 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 					iTempValue *= (GET_TEAM(GET_PLAYER(pCity->getPreviousOwner()).getTeam()).getPower(true) - GET_TEAM(getTeam()).getPower(false));
 					iTempValue /= std::max( 100, GET_TEAM(getTeam()).getPower(false) );
 
+					logBBAI("      Low power, so boost raze odds by %d", std::min( 75, iTempValue ) );
+
 					iRazeValue += std::min( 75, iTempValue );
+				}
+				if( gPlayerLogLevel >= 1 )
+				{
+					if( bBarbCity ) logBBAI("      %S is a barb city", pCity->getName().GetCString() );
+					if( bPrevOwnerBarb ) logBBAI("      %S was last owned by barbs", pCity->getName().GetCString() );
+					logBBAI("      %S has area cities %d, closeness %d, bFinTrouble %d", pCity->getName().GetCString(), GET_TEAM(getTeam()).countNumCitiesByArea(pCity->area()), iCloseness, bFinancialTrouble );
 				}
 			}
 			
-			// Tholal AI - Tolerant leaders less likely to raze
+			// Tholal AI
+			// Tolerant leaders
 			if (isAssimilation())
 			{
 				iRazeValue /= 2;
 			}
-			// End Tholal AI
+
+			// cities on our borders
+			if (pCity->plot()->isAdjacentPlayer(getID(), true))
+			{
+				iRazeValue /= 2;
+			}
 
 			// armageddon counter
 			iRazeValue -= ((GC.getGameINLINE().getGlobalCounter() * pCity->getPopulation()) / 10);
-						
+			
+			// End Tholal AI
+
+
+			if( gPlayerLogLevel >= 1 )
+			{
+				logBBAI("    Player %d (%S) has odds %d to raze city %S", getID(), getCivilizationDescription(0), iRazeValue, pCity->getName().GetCString() );
+			}
+			
 			if (iRazeValue > 0)
 			{
 				if (GC.getGameINLINE().getSorenRandNum(100, "AI Raze City") < iRazeValue)
@@ -1870,6 +1933,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 
 	if( bRaze )
 	{
+		logBBAI("    Player %d (%S) decides to to raze city %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
 		pCity->doTask(TASK_RAZE);
 	}
 	else
@@ -4600,7 +4664,10 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 		}
 	}
 
-
+	if( gPlayerLogLevel >= 1 && eBestTech != NO_TECH )
+	{
+		logBBAI("  Player %d (%S) selects tech %S with value %d", getID(), getCivilizationDescription(0), GC.getTechInfo(eBestTech).getDescription(), iBestValue );
+	}
 
     SAFE_DELETE_ARRAY(paiBonusClassRevealed);
     SAFE_DELETE_ARRAY(paiBonusClassUnrevealed);
@@ -4741,7 +4808,19 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			{
 				iValue += 500;
 			}
-		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/30/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+			if( isMinorCiv())// && GC.getGame().isOption(GAMEOPTION_START_AS_MINORS) )
+			{
+				iValue += 250 + 120*iHasMetCount;
+			}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+		}	
 	}
 
 	if (GC.getTechInfo(eTech).isDefensivePactTrading())
@@ -7708,8 +7787,40 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 	iAttitude += AI_getAttitudeExtra(ePlayer);
 
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      09/03/09                       poyuzhe & jdog5000     */
+/* REVOLUTION_MOD                         05/18/08                                jdog5000      */
 /*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+	if( GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isRebelAgainst(getTeam()) )
+	{
+		iAttitude -= 5;
+	}
+	else if( GET_TEAM(getTeam()).isRebelAgainst(GET_PLAYER(ePlayer).getTeam()) )
+	{
+		iAttitude -= 3;
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* Afforess	                  Start		 06/01/10                                               */
+/* Ruthless AI: The Enemy of Our Enemy is our Friend!                                           */
+/************************************************************************************************/
+	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	if (1 < 2)
+	{
+		if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_getWorstEnemy() == GET_TEAM(getTeam()).AI_getWorstEnemy())
+		{
+			iAttitude += 2;
+		}
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      09/03/09                       poyuzhe & jdog5000     */
 /* Efficiency                                                                                   */
 /************************************************************************************************/
 	// From Sanguo Mod Performance, ie the CAR Mod
@@ -14065,6 +14176,17 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue += GC.getCivicInfo(eCivic).getAIWeight();
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/22/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+	iValue += ( AI_RevCalcCivicRelEffect(eCivic) );
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/	
+
+
 	if (iValue > 0)
 	{
 		if (ePrereqAlignment != NO_ALIGNMENT)
@@ -14110,6 +14232,170 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 }
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/30/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
+{
+	if (isBarbarian())
+		return 0;
+	if(!isAlive())
+		return 0;
+	if(getNumCities() == 0)
+		return 0;
+
+	int iTotalScore = 0;
+
+	if  ( GC.getCivicInfo(eCivic).isStateReligion() )
+	{
+		int iRelScore = 0;
+
+		float fRelGoodMod = GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod();
+		float fRelBadMod = GC.getCivicInfo(eCivic).getRevIdxBadReligionMod();
+		int iHolyCityGood = GC.getCivicInfo(eCivic).getRevIdxHolyCityGood();
+		int iHolyCityBad = GC.getCivicInfo(eCivic).getRevIdxHolyCityBad();
+
+		ReligionTypes eStateReligion = getStateReligion();
+
+		if( eStateReligion == NO_RELIGION )
+		{
+			eStateReligion = getLastStateReligion();
+		}
+		if( eStateReligion == NO_RELIGION )
+		{
+			eStateReligion = GET_PLAYER(getID()).AI_findHighestHasReligion();
+		}
+		if( eStateReligion == NO_RELIGION )
+		{
+			return 0;
+		}
+		
+		CvCity * pHolyCity = GC.getGame().getHolyCity(eStateReligion);
+
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			float fCityStateReligion = 0;
+			float fCityNonStateReligion = 0;
+			if (pLoopCity == NULL)
+			{
+				//logMsg("error pLoopCity is NULL");
+			}
+			if (pLoopCity->isHasReligion(eStateReligion))
+			{
+				fCityStateReligion += 4;
+			}
+			for ( int iI = 0; iI < GC.getNumReligionInfos(); iI++ )
+			{
+				if ((pLoopCity->isHasReligion((ReligionTypes)iI )) && !(eStateReligion == iI) )
+				{
+					if (fCityNonStateReligion <= 4 )
+					{
+						fCityNonStateReligion += 2.5;
+					}
+					else
+					{
+						fCityNonStateReligion += 1;
+					}
+				}
+			}
+			if (pLoopCity->isHolyCity())
+			{
+				if (pLoopCity->isHolyCity(eStateReligion))
+				{
+					fCityStateReligion += 5;
+				}
+				else
+				{
+					fCityNonStateReligion += 4;
+				}
+			}
+
+			// Tholal Note - HARDCODE!
+			int iLiberalism = GC.getInfoTypeForString("TECH_HONOR");
+			int iSciMethod = GC.getInfoTypeForString("TECH_MACHINERY");
+			bool bHeathens = false;
+			if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)iLiberalism)) && (pLoopCity->isHasReligion(eStateReligion)))
+			{
+				if (pHolyCity != NULL)
+				{
+					PlayerTypes eHolyCityOwnerID = pHolyCity->getOwner();
+					if (getID() == eHolyCityOwnerID)
+					{
+						fCityStateReligion += iHolyCityGood;
+					}
+					else
+					{
+						if (GET_PLAYER(eHolyCityOwnerID).getStateReligion() != eStateReligion)//heathens!
+						{
+							bHeathens = true;
+						}
+					}
+				}
+			}
+
+			int iRelBadEffect = (int)floor((fCityNonStateReligion * (1+fRelBadMod)) + .5);
+			int iRelGoodEffect = (int)floor((fCityStateReligion * (1+fRelGoodMod)) + .5);
+
+			if (GET_TEAM(getTeam()).getAtWarCount(true) > 0 )
+			{
+				iRelGoodEffect = (int)floor((iRelGoodEffect * 1.5) + .5);
+			}
+
+			int iNetCivicRelEffect = iRelBadEffect - iRelGoodEffect;
+			if (bHeathens)
+			{
+				iNetCivicRelEffect += iHolyCityBad;
+			}
+			
+			if (GET_TEAM(getTeam()).isHasTech((TechTypes)iSciMethod))
+			{
+				iNetCivicRelEffect /= 3;
+			}
+			else if (GET_TEAM(getTeam()).isHasTech((TechTypes)iLiberalism))
+			{
+				iNetCivicRelEffect /= 2;
+			}
+			int iRevIdx = pLoopCity->getRevolutionIndex();
+			iRevIdx = std::max(iRevIdx-300,100);
+			float fCityReligionScore = iNetCivicRelEffect*(((float)iRevIdx)/ 600);
+			iRelScore += (int)(floor(fCityReligionScore));
+		}//end of each city loop
+		
+		iRelScore *= 3;
+		iTotalScore -= iRelScore;
+	}//end of if eCivic isStateRel
+
+	if( GC.getCivicInfo(eCivic).getNonStateReligionHappiness() > 0 )
+	{
+		int iCivicScore = 0;
+
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			int iCityScore = GC.getCivicInfo(eCivic).getNonStateReligionHappiness()*pLoopCity->getReligionCount();
+
+			int iRevIdx = pLoopCity->getRevolutionIndex();
+			iRevIdx = std::max(iRevIdx-300,100);
+			
+			iCityScore *= iRevIdx;
+			iCityScore /= (pLoopCity->angryPopulation() > 0) ? 500 : 700;
+
+			iCivicScore += iCityScore;
+		}
+
+		iTotalScore += iCivicScore;
+	}
+	
+	return iTotalScore;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 
 
@@ -14345,6 +14631,37 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 
 	return iValue;
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/22/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+ReligionTypes CvPlayerAI::AI_findHighestHasReligion()
+{
+	int iValue;
+	int iBestValue;
+	int iI;
+	ReligionTypes eMostReligion = NO_RELIGION;
+
+	iBestValue = 0;
+
+	for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+	{
+		iValue = getHasReligionCount((ReligionTypes)iI);
+
+		if (iValue > iBestValue)
+		{
+			iBestValue = iValue;
+			eMostReligion = (ReligionTypes)iI;
+		}
+	}
+	return eMostReligion;
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/07/10                                jdog5000      */
@@ -19188,6 +19505,21 @@ bool CvPlayerAI::AI_disbandUnit(int iExpThreshold, bool bObsolete)
 
 	if (pBestUnit != NULL)
 	{
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      01/12/10                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+		if( gPlayerLogLevel >= 2 )
+		{
+			CvWString szString;
+			getUnitAIString(szString, pBestUnit->AI_getUnitAIType());
+
+			logBBAI("    Player %d (%S) disbanding %S with UNITAI %S to save cash", getID(), getCivilizationDescription(0), pBestUnit->getName().GetCString(), szString.GetCString());
+		}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		pBestUnit->kill(false);
 		return true;
 	}
@@ -20658,7 +20990,19 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 	
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/03/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI and for minor civs                                                             */
+/************************************************************************************************/
+/*
 	if (iAttackUnitCount <= 1)
+*/
+	// This strategy is less appropriate for minor civs or rebels since they are at war
+	if (iAttackUnitCount <= ((isMinorCiv() || isRebel()) ? 0 : 1))
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	{
 		m_iStrategyHash |= AI_STRATEGY_GET_BETTER_UNITS;
 	}
@@ -20693,6 +21037,19 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 
+	if( gPlayerLogLevel >= 2 )
+	{
+		if( (m_iStrategyHash & AI_STRATEGY_LAND_BLITZ) && !(iLastStrategyHash & AI_STRATEGY_LAND_BLITZ) )
+		{
+			logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_LAND_BLITZ on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+		}
+
+		if( (m_iStrategyHash & AI_STRATEGY_AIR_BLITZ) && !(iLastStrategyHash & AI_STRATEGY_AIR_BLITZ) )
+		{
+			logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_AIR_BLITZ on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+		}
+	}
+    
 	//missionary
 	{
 	    if (getStateReligion() != NO_RELIGION)
@@ -20803,6 +21160,18 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 
+	if( gPlayerLogLevel >= 2 )
+	{
+		if( (m_iStrategyHash & AI_STRATEGY_TURTLE) && !(iLastStrategyHash & AI_STRATEGY_TURTLE) )
+		{
+			logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_TURTLE on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+		}
+
+		if( !(m_iStrategyHash & AI_STRATEGY_TURTLE) && (iLastStrategyHash & AI_STRATEGY_TURTLE) )
+		{
+			logBBAI( "    Player %d (%S) stops strategy AI_STRATEGY_TURTLE on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+		}
+	}
 	
 	// Tholal AI - era fix - maybe not do it here?
 	//int iCurrentEra = getCurrentEra();
@@ -20842,6 +21211,10 @@ int CvPlayerAI::AI_getStrategyHash() const
 									//they are a snake
 									iTempParanoia += 50 + 50 * iWarMemory;
 
+									if( gPlayerLogLevel >= 2 )
+									{
+										logBBAI( "    Player %d (%S) wary of %S because of war memory %d", getID(), getCivilizationDescription(0), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription(0), iWarMemory);
+									}
 								}
 							}
 						}
@@ -20925,7 +21298,29 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 
+	if( gPlayerLogLevel >= 2 )
+	{
+		if( (m_iStrategyHash & AI_STRATEGY_ALERT1) && !(iLastStrategyHash & AI_STRATEGY_ALERT1) )
+		{
+			logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+		}
 
+		if( !(m_iStrategyHash & AI_STRATEGY_ALERT1) && (iLastStrategyHash & AI_STRATEGY_ALERT1) )
+		{
+			logBBAI( "    Player %d (%S) stops strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+		}
+
+		if( (m_iStrategyHash & AI_STRATEGY_ALERT2) && !(iLastStrategyHash & AI_STRATEGY_ALERT2) )
+		{
+			logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+		}
+
+		if( !(m_iStrategyHash & AI_STRATEGY_ALERT2) && (iLastStrategyHash & AI_STRATEGY_ALERT2) )
+		{
+			logBBAI( "    Player %d (%S) stops strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+		}
+	}
+	
 	// BBAI TODO: Integrate Dagger with new conquest victory strategy, have Dagger focus on early rushes
     //dagger
 	if( !(AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)) 
@@ -21037,6 +21432,18 @@ int CvPlayerAI::AI_getStrategyHash() const
         {
             iDagger += (iAttackUnitCount > 0) ? 40 : 20;
         }
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/22/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+		if( isRebel() )
+		{
+			iDagger += 30;
+		}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
         
         if (iDagger >= AI_DAGGER_THRESHOLD)
         {
@@ -21053,6 +21460,18 @@ int CvPlayerAI::AI_getStrategyHash() const
 			}
 		}
 
+		if( gPlayerLogLevel >= 2 )
+		{
+			if( (m_iStrategyHash & AI_STRATEGY_DAGGER) && !(iLastStrategyHash & AI_STRATEGY_DAGGER) )
+			{
+				logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iDagger);
+			}
+
+			if( !(m_iStrategyHash & AI_STRATEGY_DAGGER) && (iLastStrategyHash & AI_STRATEGY_DAGGER) )
+			{
+				logBBAI( "    Player %d (%S) stops strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iDagger);
+			}
+		}
 	}
 	
 	if( !(m_iStrategyHash & AI_STRATEGY_ALERT2) )
@@ -21123,6 +21542,18 @@ int CvPlayerAI::AI_getStrategyHash() const
 							}
 						}
 					}
+/************************************************************************************************/
+/* REVOLUTION_MOD                         05/18/08                                jdog5000      */
+/*                                                                                              */
+/* Revolution AI                                                                                */
+/************************************************************************************************/
+					if( GET_TEAM((TeamTypes)iI).isRebelAgainst(getTeam()) )
+					{
+						iCrushValue += 4;
+					}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 				}
 			}
 		}
@@ -21130,8 +21561,21 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			m_iStrategyHash |= AI_STRATEGY_CRUSH;
 		}
-	}
 
+		if( gPlayerLogLevel >= 2 )
+		{
+			if( (m_iStrategyHash & AI_STRATEGY_CRUSH) && !(iLastStrategyHash & AI_STRATEGY_CRUSH) )
+			{
+				logBBAI( "    Player %d (%S) starts strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iCrushValue);
+			}
+
+			if( !(m_iStrategyHash & AI_STRATEGY_CRUSH) && (iLastStrategyHash & AI_STRATEGY_CRUSH) )
+			{
+				logBBAI( "    Player %d (%S) stops strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iCrushValue);
+			}
+		}
+	}
+	
 	{
 		CvTeamAI& kTeam = GET_TEAM(getTeam());
 		int iOurVictoryCountdown = kTeam.AI_getLowestVictoryCountdown();

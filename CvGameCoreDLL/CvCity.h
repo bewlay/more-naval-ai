@@ -38,6 +38,45 @@ public:
 	void reset(int iID = 0, PlayerTypes eOwner = NO_PLAYER, int iX = 0, int iY = 0, bool bConstructorCall = false);
 	void setupGraphical();
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/29/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevolutionIndex() const;
+	void setRevolutionIndex( int iNewValue );
+	void changeRevolutionIndex( int iChange );
+
+	int getLocalRevIndex() const;
+	void setLocalRevIndex( int iNewValue );
+	void changeLocalRevIndex( int iChange );
+
+	int getRevIndexAverage() const;
+	void setRevIndexAverage( int iNewValue );
+	void updateRevIndexAverage( );
+
+	int getRevolutionCounter() const;
+	void setRevolutionCounter( int iNewValue );
+	void changeRevolutionCounter( int iChange );
+
+	int getReinforcementCounter() const;
+	void setReinforcementCounter( int iNewValue );
+	void changeReinforcementCounter( int iChange );
+
+	int getRevIndexHappinessVal();
+	int getRevIndexDistanceVal();
+	int getRevIndexColonyVal();
+	int getRevIndexReligionVal();
+	int getRevIndexNationalityVal();
+	int getRevIndexHealthVal();
+	int getRevIndexGarrisonVal();
+	int getRevIndexDisorderVal();
+
+	bool isRecentlyAcquired();
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 	void kill(bool bUpdatePlotGroups);																								// Exposed to Python
 
 	void doTurn();
@@ -194,6 +233,17 @@ public:
 	int getConscriptPercentAnger(int iExtra = 0) const;																		// Exposed to Python
 	int getDefyResolutionPercentAnger(int iExtra = 0) const;
 	int getWarWearinessPercentAnger() const;																// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevRequestPercentAnger(int iExtra = 0) const;																// Exposed to Python
+	int getRevIndexPercentAnger(int iExtra = 0) const;																// Exposed to Python
+	int getRevSuccessHappiness() const;																// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int getLargestCityHappiness() const;																		// Exposed to Python
 	int getVassalHappiness() const;																		// Exposed to Python
 	int getVassalUnhappiness() const;																		// Exposed to Python
@@ -493,6 +543,19 @@ public:
 	int getHurryAngerTimer() const;																				// Exposed to Python
 	void changeHurryAngerTimer(int iChange);												// Exposed to Python
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int getRevRequestAngerTimer() const;															// Exposed to Python
+	void changeRevRequestAngerTimer(int iChange);												// Exposed to Python
+	
+	int getRevSuccessTimer() const;															// Exposed to Python
+	void changeRevSuccessTimer(int iChange);												// Exposed to Python
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int getConscriptAngerTimer() const;																		// Exposed to Python
 	void changeConscriptAngerTimer(int iChange);										// Exposed to Python
 
@@ -1031,6 +1094,10 @@ public:
     int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
 //FfH: End Add
 
+// REVOLUTIONS
+	int getRevTrend();
+// End REVOLUTIONS
+
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
@@ -1194,6 +1261,16 @@ protected:
 	int m_iBonusGoodHealth;
 	int m_iBonusBadHealth;
 	int m_iHurryAngerTimer;
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int m_iRevRequestAngerTimer;
+	int m_iRevSuccessTimer;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int m_iConscriptAngerTimer;
 	int m_iDefyResolutionAngerTimer;
 	int m_iHappinessTimer;
@@ -1281,6 +1358,19 @@ protected:
     int m_iUnhappyProduction;
 //FfH: End Add
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/10/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	int m_iRevolutionIndex;
+	int m_iLocalRevIndex;
+	int m_iRevIndexAverage;
+	int m_iRevolutionCounter;
+	int m_iReinforcementCounter;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	int* m_aiSeaPlotYield;
 	int* m_aiRiverPlotYield;
 	int* m_aiBaseYieldRate;

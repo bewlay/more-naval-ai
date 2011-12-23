@@ -30,6 +30,16 @@
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvEventReporter.h"
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+#include "BetterBTSAI.h"
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 // Public Functions...
 
 CvCity::CvCity()
@@ -440,6 +450,16 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iBonusGoodHealth = 0;
 	m_iBonusBadHealth = 0;
 	m_iHurryAngerTimer = 0;
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	m_iRevRequestAngerTimer = 0;
+	m_iRevSuccessTimer = 0;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	m_iConscriptAngerTimer = 0;
 	m_iDefyResolutionAngerTimer = 0;
 	m_iHappinessTimer = 0;
@@ -527,6 +547,20 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
     m_iResistMagic = 0;
     m_iUnhappyProduction = 0;
 //FfH: End Add
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/10/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	m_iRevolutionIndex = 0;
+	m_iLocalRevIndex = -1;
+	m_iRevIndexAverage = 0;
+	m_iRevolutionCounter = 0;
+	m_iReinforcementCounter = 0;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -747,6 +781,202 @@ void CvCity::setupGraphical()
 	setInfoDirty(true);
 	setLayoutDirty(true);
 }
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         03/29/09                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CvCity::getRevolutionIndex() const
+{
+	return m_iRevolutionIndex;
+}
+
+void CvCity::setRevolutionIndex( int iNewValue )
+{
+	if( iNewValue < 0 )
+		iNewValue = 0;
+
+	m_iRevolutionIndex = iNewValue;
+}
+
+void CvCity::changeRevolutionIndex( int iChange )
+{
+	setRevolutionIndex( getRevolutionIndex() + iChange );
+}
+
+int CvCity::getLocalRevIndex() const
+{
+	return m_iLocalRevIndex;
+}
+
+void CvCity::setLocalRevIndex( int iNewValue )
+{
+	m_iLocalRevIndex = iNewValue;
+}
+
+void CvCity::changeLocalRevIndex( int iChange )
+{
+	setLocalRevIndex( getLocalRevIndex() + iChange );
+}
+
+int CvCity::getRevIndexAverage() const
+{
+	return m_iRevIndexAverage;
+}
+
+void CvCity::setRevIndexAverage( int iNewValue )
+{
+	m_iRevIndexAverage = range(iNewValue,0,3400);
+}
+
+void CvCity::updateRevIndexAverage( )
+{
+	setRevIndexAverage( (2*getRevIndexAverage() + getRevolutionIndex())/3 );
+}
+
+int CvCity::getRevolutionCounter() const
+{
+	return m_iRevolutionCounter;
+}
+
+void CvCity::setRevolutionCounter( int iNewValue )
+{
+	if( iNewValue < 0 )
+		iNewValue = 0;
+
+	m_iRevolutionCounter = iNewValue;
+}
+
+void CvCity::changeRevolutionCounter( int iChange )
+{
+	setRevolutionCounter( getRevolutionCounter() + iChange );
+}
+
+int CvCity::getReinforcementCounter() const
+{
+	return m_iReinforcementCounter;
+}
+
+void CvCity::setReinforcementCounter( int iNewValue )
+{
+	if( iNewValue < 0 )
+		iNewValue = 0;
+
+	m_iReinforcementCounter = iNewValue;
+}
+
+void CvCity::changeReinforcementCounter( int iChange )
+{
+	setReinforcementCounter( getReinforcementCounter() + iChange );
+}
+
+int CvCity::getRevIndexHappinessVal()
+{
+	int iVal = 0;
+	double fHappyMod = 1.0;
+
+	int iUnhappy = unhappyLevel(-1);
+	int iHappy = happyLevel();
+
+	if( iUnhappy > iHappy )
+	{
+		double unhappy = iUnhappy;
+
+		// Lower unhappiness from war weariness
+		if( getWarWearinessPercentAnger() > 0 )
+		{
+			unhappy -= (1.0 * getPopulation() * (getWarWearinessPercentAnger()/2)) / GC.getPERCENT_ANGER_DIVISOR();
+		}
+
+		// Lower unhappiness from Rev index (avoid spiral)
+		unhappy -= (1.0 * getPopulation() * getRevIndexPercentAnger()) / GC.getPERCENT_ANGER_DIVISOR();
+
+		unhappy -= iHappy;
+
+		if( unhappy > 0 )
+		{
+			// Lower unhappiness from espionage missions
+			if( getEspionageHappinessCounter() )
+			{
+				unhappy -= std::min( (-unhappy)/3.0, getEspionageHappinessCounter()/3.0 );
+			}
+
+			if( getOccupationTimer() > 0 )
+			{
+				unhappy = unhappy/3.0;
+			}
+			else if( isRecentlyAcquired() )
+			{
+				unhappy = unhappy/2.0;
+			}
+
+		}
+	}
+	else
+	{
+		
+	}
+
+	return iVal;
+}
+
+int CvCity::getRevIndexDistanceVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexColonyVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexReligionVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexNationalityVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexHealthVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexGarrisonVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+int CvCity::getRevIndexDisorderVal()
+{
+	int iVal = 0;
+
+	return iVal;
+}
+
+bool CvCity::isRecentlyAcquired()
+{
+	return ((GC.getGameINLINE().getGameTurn() - getGameTurnAcquired()) < (12*GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent())/100);
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 void CvCity::kill(bool bUpdatePlotGroups)
 {
@@ -1099,6 +1329,24 @@ void CvCity::doTurn()
 	{
 		changeHurryAngerTimer(-1);
 	}
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	if( getRevRequestAngerTimer() > 0 )
+	{
+		changeRevRequestAngerTimer(-1);
+	}
+
+	if (getRevSuccessTimer() > 0)
+	{
+		changeRevSuccessTimer(-1);
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	if (getConscriptAngerTimer() > 0)
 	{
@@ -3681,6 +3929,34 @@ void CvCity::hurry(HurryTypes eHurry)
 
 	changeHurryAngerTimer(iHurryAngerLength);
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+	if( gCityLogLevel >= 2 )
+	{
+		CvWStringBuffer szBuffer;
+		CvWString szString;
+		if (isProductionUnit())
+		{
+			szString = GC.getUnitInfo(getProductionUnit()).getDescription();
+		}
+		else if (isProductionBuilding())
+		{
+			szString = GC.getBuildingInfo(getProductionBuilding()).getDescription();
+		}
+		else if (isProductionProject())
+		{
+			szString = GC.getProjectInfo(getProductionProject()).getDescription();
+		}
+
+		logBBAI("    City %S hurrying production of %S at cost of %d pop, %d gold, %d anger length", getName().GetCString(), szString.GetCString(), iHurryPopulation, iHurryGold, iHurryAngerLength );
+	}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 	if ((getOwnerINLINE() == GC.getGameINLINE().getActivePlayer()) && isCitySelected())
 	{
 		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
@@ -3965,8 +4241,15 @@ void CvCity::conscript()
 		return;
 	}
 
-	changePopulation(-(getConscriptPopulation()));
-	changeConscriptAngerTimer(flatConscriptAngerLength());
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+	int iPopChange = -(getConscriptPopulation());
+	int iAngerLength = flatConscriptAngerLength();
+	changePopulation(iPopChange);
+	changeConscriptAngerTimer(iAngerLength);
 
 	setDrafted(true);
 
@@ -3981,6 +4264,13 @@ void CvCity::conscript()
 		{
 			gDLL->getInterfaceIFace()->selectUnit(pUnit, true, false, true);
 		}
+		if( gCityLogLevel >= 2 )
+		{
+			logBBAI("      City %S does conscript of a %S at cost of %d pop, %d anger", getName().GetCString(), pUnit->getName().GetCString(), iPopChange, iAngerLength );
+		}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 	}
 }
 
@@ -4769,6 +5059,66 @@ int CvCity::getWarWearinessPercentAnger() const
 	return iAnger;
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/26/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CvCity::getRevRequestPercentAnger(int iExtra) const
+{
+	if (getRevRequestAngerTimer() == 0)
+	{
+		return 0;
+	}
+
+	int iAnger, iAngerPercent;
+
+	iAnger = GC.getDefineINT("HURRY_ANGER_DIVISOR");
+	iAnger *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getHurryConscriptAngerPercent();
+	iAnger /= 100;
+
+	iAnger = std::max(1, iAnger);
+
+	iAngerPercent = 2*((((((getRevRequestAngerTimer() - 1) / iAnger) + 1) * GC.getDefineINT("HURRY_POP_ANGER") * GC.getPERCENT_ANGER_DIVISOR()) / std::max(1, getPopulation() + iExtra)) + 1);
+
+	return iAngerPercent;
+}
+
+int CvCity::getRevIndexPercentAnger(int iExtra) const
+{
+	int iAnger = 0;
+	int iLocalAdjust = std::min((getLocalRevIndex()*3)/4,getLocalRevIndex()/2);
+	iLocalAdjust = std::min(iLocalAdjust,10);
+
+	iAnger = (int)((12.5+iLocalAdjust)*(getRevolutionIndex() - 325))/750;
+	iAnger = std::max(0,iAnger);
+	iAnger = std::min(iAnger, 40);
+
+	return (GC.getPERCENT_ANGER_DIVISOR()/100)*iAnger;
+}
+
+int CvCity::getRevSuccessHappiness() const
+{
+	if (getRevSuccessTimer() == 0)
+	{
+		return 0;
+	}
+
+	int iHappy, iHappyPercent;
+
+	iHappy = GC.getDefineINT("HURRY_ANGER_DIVISOR");
+	iHappy *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getHurryConscriptAngerPercent();
+	iHappy /= 100;
+
+	iHappy = std::max(1, iHappy);
+
+	iHappyPercent = 2*((((((getRevSuccessTimer() - 1) / iHappy) + 1) * GC.getDefineINT("HURRY_POP_ANGER") * GC.getPERCENT_ANGER_DIVISOR()) / std::max(1, getPopulation())) + 1);
+
+	return (iHappyPercent*getPopulation())/GC.getPERCENT_ANGER_DIVISOR();
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CvCity::getLargestCityHappiness() const
 {
@@ -4837,6 +5187,16 @@ int CvCity::unhappyLevel(int iExtra) const
 		iAngerPercent += getConscriptPercentAnger(iExtra);
 		iAngerPercent += getDefyResolutionPercentAnger(iExtra);
 		iAngerPercent += getWarWearinessPercentAnger();
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/26/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		iAngerPercent += getRevRequestPercentAnger(iExtra);	
+		iAngerPercent += getRevIndexPercentAnger(iExtra);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
@@ -4872,6 +5232,15 @@ int CvCity::happyLevel() const
 
 	iHappiness = 0;
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	iHappiness += std::max(0, getRevSuccessHappiness());
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	iHappiness += std::max(0, getLargestCityHappiness());
 	iHappiness += std::max(0, getMilitaryHappiness());
 	iHappiness += std::max(0, getCurrentStateReligionHappiness());
@@ -6219,6 +6588,16 @@ void CvCity::updateMaintenance()
 	{
 		iNewMaintenance = (calculateBaseMaintenanceTimes100() * std::max(0, (getMaintenanceModifier() + 100))) / 100;
 	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/31/08                                jdog5000      */
+/*                                                                                              */
+/* Rebels pay less maintenance                                                                  */
+/************************************************************************************************/
+	if( GET_PLAYER(getOwnerINLINE()).isRebel() )
+		iNewMaintenance /= 2;
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	if (iOldMaintenance != iNewMaintenance)
 	{
@@ -7769,6 +8148,46 @@ void CvCity::changeHurryAngerTimer(int iChange)
 	}
 }
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/19/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+int CvCity::getRevRequestAngerTimer() const
+{
+	return m_iRevRequestAngerTimer;
+}
+
+
+void CvCity::changeRevRequestAngerTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iRevRequestAngerTimer = (m_iRevRequestAngerTimer + iChange);
+		FAssert(getRevRequestAngerTimer() >= 0);
+
+		AI_setAssignWorkDirty(true);
+	}
+}
+
+int CvCity::getRevSuccessTimer() const
+{
+	return m_iRevSuccessTimer;
+}
+
+void CvCity::changeRevSuccessTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iRevSuccessTimer = (m_iRevSuccessTimer + iChange);
+		FAssert(getRevSuccessTimer() >= 0);
+
+		AI_setAssignWorkDirty(true);
+	}
+}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 int CvCity::getConscriptAngerTimer() const
 {
@@ -8906,7 +9325,20 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 
 	CultureLevelTypes eCultureLevel = ((CultureLevelTypes)0);
 
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/08/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+// City borders don't collapse during a revolt, only during occupation right after capture
+/* original BTS
 	if (!isOccupation())
+*/
+	int iMaxOccupationTimer = GC.getDefineINT("BASE_OCCUPATION_TURNS") + ((getHighestPopulation() * GC.getDefineINT("OCCUPATION_TURNS_POPULATION_PERCENT")) / 100);
+	if( !isOccupation() || ((GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) && (GC.getGameINLINE().getGameTurn() - getGameTurnAcquired()) > iMaxOccupationTimer)) )
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	{
 		for (int iI = (GC.getNumCultureLevelInfos() - 1); iI > 0; iI--)
 		{
@@ -12732,6 +13164,20 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			bValid = true;
 			bBuildingUnit = true;
 			CvEventReporter::getInstance().cityBuildingUnit(this, (UnitTypes)iData1);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				CvWString szString;
+				getUnitAIString(szString, (UnitAITypes)iData2);
+				logBBAI("    City %S pushes production of unit %S with UNITAI %S", getName().GetCString(), GC.getUnitInfo((UnitTypes) iData1).getDescription(), szString.GetCString() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
     break;
 
@@ -12743,6 +13189,18 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			bValid = true;
 			bBuildingBuilding = true;
 			CvEventReporter::getInstance().cityBuildingBuilding(this, (BuildingTypes)iData1);
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				logBBAI("    City %S pushes production of building %S", getName().GetCString(), GC.getBuildingInfo((BuildingTypes)iData1).getDescription() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
 		break;
 
@@ -12755,6 +13213,18 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 // BUG - Project Started Event - start
 			CvEventReporter::getInstance().cityBuildingProject(this, (ProjectTypes)iData1);
 // BUG - Project Started Event - end
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				logBBAI("    City %S pushes production of project %S", getName().GetCString(), GC.getProjectInfo((ProjectTypes)iData1).getDescription() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
 		break;
 
@@ -12765,6 +13235,18 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 // BUG - Process Started Event - start
 			CvEventReporter::getInstance().cityBuildingProcess(this, (ProcessTypes)iData1);
 // BUG - Process Started Event - end
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				logBBAI("    City %S pushes production of process %S", getName().GetCString(), GC.getProcessInfo((ProcessTypes)iData1).getDescription() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
 		break;
 
@@ -12952,6 +13434,21 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 
 			CvEventReporter::getInstance().unitBuilt(this, pUnit);
 
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				CvWString szString;
+				getUnitAIString(szString, pUnit->AI_getUnitAIType());
+				logBBAI("    City %S finishes production of unit %S with UNITAI %S", getName().GetCString(), pUnit->getName(0).GetCString(), szString.GetCString() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+
 			if (GC.getUnitInfo(eTrainUnit).getDomainType() == DOMAIN_AIR)
 			{
 				if (plot()->countNumAirUnits(getTeam()) > getAirUnitCapacity(getTeam()))
@@ -13013,6 +13510,19 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			}
 
 			CvEventReporter::getInstance().buildingBuilt(this, eConstructBuilding);
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				logBBAI("    City %S finishes production of building %S", getName().GetCString(), GC.getBuildingInfo(eConstructBuilding).getDescription() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
 		break;
 
@@ -13108,6 +13618,19 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeGold(iProductionGold);
 			}
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
+/*                                                                                              */
+/* AI logging                                                                                   */
+/************************************************************************************************/
+			if( gCityLogLevel >= 1 )
+			{
+				logBBAI("    City %S finishes production of project %S", getName().GetCString(), GC.getProjectInfo(eCreateProject).getDescription() );
+			}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 		}
 		break;
 
@@ -14023,6 +14546,16 @@ void CvCity::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iBonusGoodHealth);
 	pStream->Read(&m_iBonusBadHealth);
 	pStream->Read(&m_iHurryAngerTimer);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Read(&m_iRevRequestAngerTimer);
+	pStream->Read(&m_iRevSuccessTimer);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	pStream->Read(&m_iConscriptAngerTimer);
 	pStream->Read(&m_iDefyResolutionAngerTimer);
 	pStream->Read(&m_iHappinessTimer);
@@ -14099,6 +14632,20 @@ void CvCity::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iResistMagic);
 	pStream->Read(&m_iUnhappyProduction);
 //FfH: End Add
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/10/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Read(&m_iRevolutionIndex);
+	pStream->Read(&m_iLocalRevIndex);
+	pStream->Read(&m_iRevIndexAverage);
+	pStream->Read(&m_iRevolutionCounter);
+	pStream->Read(&m_iReinforcementCounter);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	pStream->Read(NUM_YIELD_TYPES, m_aiSeaPlotYield);
 	pStream->Read(NUM_YIELD_TYPES, m_aiRiverPlotYield);
@@ -14275,6 +14822,16 @@ void CvCity::write(FDataStreamBase* pStream)
 	pStream->Write(m_iBonusGoodHealth);
 	pStream->Write(m_iBonusBadHealth);
 	pStream->Write(m_iHurryAngerTimer);
+/************************************************************************************************/
+/* REVOLUTION_MOD                         04/28/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Write(m_iRevRequestAngerTimer);
+	pStream->Write(m_iRevSuccessTimer);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 	pStream->Write(m_iConscriptAngerTimer);
 	pStream->Write(m_iDefyResolutionAngerTimer);
 	pStream->Write(m_iHappinessTimer);
@@ -14351,6 +14908,20 @@ void CvCity::write(FDataStreamBase* pStream)
 	pStream->Write(m_iResistMagic);
 	pStream->Write(m_iUnhappyProduction);
 //FfH: End Add
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         06/10/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+	pStream->Write(m_iRevolutionIndex);
+	pStream->Write(m_iLocalRevIndex);
+	pStream->Write(m_iRevIndexAverage);
+	pStream->Write(m_iRevolutionCounter);
+	pStream->Write(m_iReinforcementCounter);
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 	pStream->Write(NUM_YIELD_TYPES, m_aiSeaPlotYield);
 	pStream->Write(NUM_YIELD_TYPES, m_aiRiverPlotYield);
@@ -16571,3 +17142,19 @@ int CvCity::getAltarLevel()
     return 0;
 }
 // End Tholal AI
+
+// REVOLUTIONS Start - Afforess 12/7/09
+int CvCity::getRevTrend()
+{
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		return 0;
+		
+	//This is the value from python
+	int iRevInsigatorThreshold = 1000;
+	int iRevIndex = std::min(getRevolutionIndex(), iRevInsigatorThreshold);
+	int iDeltaTrend = iRevIndex - getRevIndexAverage();
+	if (iDeltaTrend != 0)
+		iDeltaTrend *= std::max(abs(iDeltaTrend), (iRevInsigatorThreshold / 100) + 1);
+	return iDeltaTrend;
+}
+// End REVOLUTIONS

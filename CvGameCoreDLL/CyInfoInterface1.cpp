@@ -468,6 +468,34 @@ void CyInfoPythonInterface1()
 		.def("getStateReligionBuildingProductionModifier", &CvCivicInfo::getStateReligionBuildingProductionModifier, "int ()")
 		.def("getStateReligionFreeExperience", &CvCivicInfo::getStateReligionFreeExperience, "int ()")
 		.def("getExpInBorderModifier", &CvCivicInfo::getExpInBorderModifier, "bool ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/*                                                                                              */
+/************************************************************************************************/
+		.def("isAllowInquisitions", &CvCivicInfo::isAllowInquisitions, "bool ()")
+		.def("isDisallowInquisitions", &CvCivicInfo::isDisallowInquisitions, "bool ()")
+		.def("getRevIdxLocal", &CvCivicInfo::getRevIdxLocal, "int ()")
+		.def("getRevIdxNational", &CvCivicInfo::getRevIdxNational, "int ()")
+		.def("getRevIdxDistanceModifier", &CvCivicInfo::getRevIdxDistanceModifier, "int ()")
+		.def("getRevIdxHolyCityGood", &CvCivicInfo::getRevIdxHolyCityGood, "int ()")
+		.def("getRevIdxHolyCityBad", &CvCivicInfo::getRevIdxHolyCityBad, "int ()")
+		.def("getRevIdxSwitchTo", &CvCivicInfo::getRevIdxSwitchTo, "int ()")
+		.def("getRevIdxNationalityMod", &CvCivicInfo::getRevIdxNationalityMod, "float ()")
+		.def("getRevIdxBadReligionMod", &CvCivicInfo::getRevIdxBadReligionMod, "float ()")
+		.def("getRevIdxGoodReligionMod", &CvCivicInfo::getRevIdxGoodReligionMod, "float ()")
+		.def("getRevViolentMod", &CvCivicInfo::getRevViolentMod, "float ()")
+		.def("getRevReligiousFreedom", &CvCivicInfo::getRevReligiousFreedom, "int ()")
+		.def("getRevLaborFreedom", &CvCivicInfo::getRevLaborFreedom, "int ()")
+		.def("getRevEnvironmentalProtection", &CvCivicInfo::getRevEnvironmentalProtection, "int ()")
+		.def("getRevDemocracyLevel", &CvCivicInfo::getRevDemocracyLevel, "int ()")
+
+		.def("isCommunism", &CvCivicInfo::isCommunism, "bool ()")
+		.def("isFreeSpeech", &CvCivicInfo::isFreeSpeech, "bool ()")
+		.def("isCanDoElection", &CvCivicInfo::isCanDoElection, "bool ()")
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
 
 		.def("isMilitaryFoodProduction", &CvCivicInfo::isMilitaryFoodProduction, "bool ()")
 		.def("isNoUnhealthyPopulation", &CvCivicInfo::isNoUnhealthyPopulation, "bool ()")
@@ -599,6 +627,19 @@ void CyInfoPythonInterface1()
 		.def("getBombardDefenseModifier", &CvBuildingInfo::getBombardDefenseModifier, "int ()")
 		.def("getAllCityDefenseModifier", &CvBuildingInfo::getAllCityDefenseModifier, "int ()")
 		.def("getEspionageDefenseModifier", &CvBuildingInfo::getEspionageDefenseModifier, "int ()")
+/********************************************************************************/
+/**		REVDCM									4/09/10				phungus420	*/
+/**																				*/
+/**		Building Effects														*/
+/********************************************************************************/
+		.def("getUnitUpgradePriceModifier", &CvBuildingInfo::getUnitUpgradePriceModifier, "int ()")
+		.def("getRevIdxLocal", &CvBuildingInfo::getRevIdxLocal, "int ()")
+		.def("getRevIdxNational", &CvBuildingInfo::getRevIdxNational, "int ()")
+		.def("getRevIdxDistanceModifier", &CvBuildingInfo::getRevIdxDistanceModifier, "int ()")
+/********************************************************************************/
+/**		REVDCM									END								*/
+/********************************************************************************/
+
 		.def("getMissionType", &CvBuildingInfo::getMissionType, "int ()")
 		.def("getVoteSourceType", &CvBuildingInfo::getVoteSourceType, "int ()")
 

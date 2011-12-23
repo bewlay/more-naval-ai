@@ -4598,9 +4598,39 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		return;
 	}
 
-	szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONTACT_LEADER", kPlayer.getNameKey(), kPlayer.getCivilizationShortDescription()));
+/************************************************************************************************/
+/* REVOLUTION_MOD                         02/10/08                                jdog5000      */
+/*                                                                                              */
+/* Minor Civs                                                                                   */
+/************************************************************************************************/
+	if( GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).isMinorCiv() )
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_REV_CONTACT_MINOR", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationDescription()));
+		return;
+	}
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* REVOLUTION_MOD                         01/01/08                                jdog5000      */
+/*                                                                                              */
+/* Dynamic Civ Names                                                                            */
+/************************************************************************************************/
+	// Make civs full name show up in Score board
+/* original BS
+	szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CONTACT_LEADER", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getNameKey(), GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationShortDescription()));
+*/
+	szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONTACT_LEADER", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getNameKey(), GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationDescription()));
+/************************************************************************************************/
+/* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
 	szBuffer.append(NEWLINE);
 	GAMETEXT.parsePlayerTraits(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+
+
+
 
 	if (!(kActiveTeam.isHasMet(eTeam)))
 	{
