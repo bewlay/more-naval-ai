@@ -11355,7 +11355,16 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 	{
 		if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 		{
+/*************************************************************************************************/
+/**	Forts Connect Resources									02/12/10				Xienwolf	**/
+/*************************************************************************************************/
+/* original code
 			if (GC.getImprovementInfo(pPlot->getImprovementType()).isImprovementBonusTrade(eNonObsoleteBonus))
+*/
+			if (GC.getImprovementInfo(pPlot->getImprovementType()).isImprovementBonusTrade(eNonObsoleteBonus) || GC.getImprovementInfo(pPlot->getImprovementType()).isActsAsCity())
+/*************************************************************************************************/
+/**	Forts Connect Resources					END													**/
+/*************************************************************************************************/
 			{
 				bHasBonusImprovement = true;
 			}
