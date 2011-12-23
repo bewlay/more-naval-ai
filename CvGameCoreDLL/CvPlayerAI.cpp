@@ -1646,7 +1646,7 @@ void CvPlayerAI::AI_makeProductionDirty()
 }
 
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/16/10                              jdog5000        */
+/* BETTER_BTS_AI_MOD                      07/05/10                              jdog5000        */
 /*                                                                                              */
 /* War tactics AI                                                                               */
 /************************************************************************************************/
@@ -1668,15 +1668,19 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 			int iLoop;
 			int iHighCultureCount = 1;
 
-			for( pLoopCity = GET_PLAYER(pCity->getPreviousOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(pCity->getPreviousOwner()).nextCity(&iLoop) )
+			if( GET_TEAM(getTeam()).AI_getEnemyPowerPercent(false) > 75 )
 			{
-				if( 2*pLoopCity->getCulture(pCity->getPreviousOwner()) > pLoopCity->getCultureThreshold(GC.getGameINLINE().culturalVictoryCultureLevel()) )
+				for( pLoopCity = GET_PLAYER(pCity->getPreviousOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(pCity->getPreviousOwner()).nextCity(&iLoop) )
 				{
-					iHighCultureCount++;
-					if( iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+					if( 2*pLoopCity->getCulture(pCity->getPreviousOwner()) > pLoopCity->getCultureThreshold(GC.getGameINLINE().culturalVictoryCultureLevel()) )
 					{
-						//Raze city enemy needs for cultural victory unless we greatly over power them
-						bRaze = true;
+						iHighCultureCount++;
+						if( iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+						{
+							//Raze city enemy needs for cultural victory unless we greatly over power them
+							logBBAI( "  Razing enemy cultural victory city" );
+							bRaze = true;
+						}
 					}
 				}
 			}
