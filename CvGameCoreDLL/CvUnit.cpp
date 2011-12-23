@@ -4753,6 +4753,21 @@ int CvUnit::healTurns(const CvPlot* pPlot) const
 
 	iHeal = healRate(pPlot);
 
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                       06/02/10                           LunarMongoose       */
+/*                                                                                               */
+/* Bugfix                                                                                        */
+/*************************************************************************************************/
+	// Mongoose FeatureDamageFix
+	FeatureTypes eFeature = pPlot->getFeatureType();
+	if (eFeature != NO_FEATURE)
+	{
+		iHeal -= GC.getFeatureInfo(eFeature).getTurnDamage();
+	}
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                         END                                                  */
+/*************************************************************************************************/
+
 	if (iHeal > 0)
 	{
 		iTurns = (getDamage() / iHeal);

@@ -7713,7 +7713,9 @@ void CvUnitAI::AI_exploreSeaMove()
 
 	if (getDamage() > 0)
 	{
-		if ((plot()->getFeatureType() == NO_FEATURE) || (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() == 0))
+		// Mongoose FeatureDamageFix BEGIN
+		if ((plot()->getFeatureType() == NO_FEATURE) || (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() <= 0))
+		// Mongoose FeatureDamageFix ÉND
 		{
 			getGroup()->pushMission(MISSION_HEAL);
 			return;
@@ -13426,7 +13428,9 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 
 	if (plot()->getFeatureType() != NO_FEATURE)
 	{
-		if (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() != 0)
+		// Mongoose FeatureDamageFix BEGIN
+		if (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() > 0)
+		// Mongoose FeatureDamageFix END
 		{
 			//Pass through
 			//(actively seeking a safe spot may result in unit getting stuck)
