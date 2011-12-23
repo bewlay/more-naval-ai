@@ -6672,7 +6672,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 /*************************************************************************************************/
 	}
 
-//FfH: Added by Kael 05/10/2008
+//FfH: Added by Kael 05/10/2008 - Check for minimum level requirement (ie, Circle of Brigit)
 	if (pPlot->getMinLevel() != 0)
 	{
 			szString.append(NEWLINE);
@@ -14876,7 +14876,8 @@ void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		{
 			eFeature = NO_FEATURE;
 
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			//for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < city.getNumCityPlots(); ++iI)
 			{
 				pLoopPlot = plotCity(city.getX_INLINE(), city.getY_INLINE(), iI);
 
@@ -14987,7 +14988,8 @@ void CvGameTextMgr::setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		{
 			eFeature = NO_FEATURE;
 
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			//for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < city.getNumCityPlots(); ++iI)
 			{
 				pLoopPlot = plotCity(city.getX_INLINE(), city.getY_INLINE(), iI);
 
@@ -18551,7 +18553,8 @@ void CvGameTextMgr::setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city)
 
 	// Worked Tiles
 	int iTileFood = 0;
-	for (i = 0; i < NUM_CITY_PLOTS; i++)
+	//for (i = 0; i < NUM_CITY_PLOTS; i++)
+	for (i = 0; i < city.getNumCityPlots(); i++)
 	{
 		if (city.isWorkingPlot(i))
 		{
