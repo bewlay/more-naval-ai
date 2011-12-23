@@ -2803,6 +2803,11 @@ bool CyPlayer::isSmugglingRing() const
 	return m_pPlayer ? m_pPlayer->isSmugglingRing() : false;
 }
 
+bool CyPlayer::isAgnostic() const
+{
+	return m_pPlayer ? m_pPlayer->isAgnostic() : false;
+}
+
 void CyPlayer::setAlive(bool bNewValue)
 {
 	if (m_pPlayer)

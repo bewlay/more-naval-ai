@@ -679,6 +679,7 @@ public:
 	bool isHasTech(int /*TechTypes*/ iTech) const;
 	bool isSlaveTrade() const;
 	bool isSmugglingRing() const;
+	bool isAgnostic() const;
 	void setAlive(bool bNewValue);
 	void setFoundedFirstCity(bool bNewValue);
 	void setGreatPeopleCreated(int iNewValue);
