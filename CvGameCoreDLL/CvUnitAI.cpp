@@ -14458,6 +14458,26 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 	CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
 
 	bool bNeedLeader = false;
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD & RevDCM                     09/03/10                        jdog5000      */
+/*                                                                                phungus420    */
+/* Great People AI, Unit AI                                                                     */
+/************************************************************************************************/
+	int iLoop;
+	bool bBestUnitLegend = false;
+	CvUnit* pLoopUnit = NULL;
+
+	CvUnit* pBestUnit = NULL;
+	CvPlot* pBestPlot = NULL;
+
+	// AI may use Warlords to create super-medic units
+	CvUnit* pBestStrUnit = NULL;
+	CvPlot* pBestStrPlot = NULL;
+
+	CvUnit* pBestHealUnit = NULL;
+	CvPlot* pBestHealPlot = NULL;
+
+	
 	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
 	{
 		CvTeamAI& kLoopTeam = GET_TEAM((TeamTypes)iI);
@@ -14471,44 +14491,47 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 		}
 	}
 
-	CvUnit* pBestUnit = NULL;
-	CvPlot* pBestPlot = NULL;
-
-	// AI may use Warlords to create super-medic units
-	CvUnit* pBestStrUnit = NULL;
-	CvPlot* pBestStrPlot = NULL;
-
-	CvUnit* pBestHealUnit = NULL;
-	CvPlot* pBestHealPlot = NULL;
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/14/10                                jdog5000      */
-/*                                                                                              */
-/* Great People AI, Unit AI                                                                     */
-/************************************************************************************************/
 	if (bNeedLeader)
 	{
 		int iBestStrength = 0;
 		int iBestHealing = 0;
-		int iLoop;
-		for (CvUnit* pLoopUnit = kOwner.firstUnit(&iLoop); pLoopUnit; pLoopUnit = kOwner.nextUnit(&iLoop))
-		{
-			bool bValid = isWorldUnitClass(pLoopUnit->getUnitClassType());
+		int iCombatStrength;
+		bool bValid;
+		bool bLegend;
 
-			if( !bValid )
+		for (pLoopUnit = kOwner.firstUnit(&iLoop); pLoopUnit; pLoopUnit = kOwner.nextUnit(&iLoop))
+		{
+			if(pLoopUnit != NULL)
 			{
-				for (uint iI = 0; iI < aeUnitAITypes.size(); iI++)
+				bValid = false;
+				bLegend = false;
+
+				if (GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances() > 0
+				&& GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances() < 7)
 				{
-					if (pLoopUnit->AI_getUnitAIType() == aeUnitAITypes[iI] || NO_UNITAI == aeUnitAITypes[iI])
+					if (canLead(pLoopUnit->plot(), pLoopUnit->getID()) > 0)
 					{
 						bValid = true;
-						break;
+						bLegend = true;
 					}
 				}
-			}
 
-			if( bValid )
-			{
-				if (canLead(pLoopUnit->plot(), pLoopUnit->getID()) > 0)
+				if( !bValid )
+				{
+					for (uint iI = 0; iI < aeUnitAITypes.size(); iI++)
+					{
+						if (pLoopUnit->AI_getUnitAIType() == aeUnitAITypes[iI] || NO_UNITAI == aeUnitAITypes[iI])
+						{
+							if (canLead(pLoopUnit->plot(), pLoopUnit->getID()) > 0)
+							{
+								bValid = true;
+								break;
+							}
+						}
+					}
+				}
+
+				if( bValid )
 				{
 					if (AI_plotValid(pLoopUnit->plot()))
 					{
@@ -14519,15 +14542,14 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 								if (generatePath(pLoopUnit->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true))
 								{
 									// pick the unit with the highest current strength
-									int iCombatStrength = pLoopUnit->currCombatStr(NULL, NULL);
+									iCombatStrength = pLoopUnit->currCombatStr(NULL, NULL);
+									iCombatStrength *= 10 + (pLoopUnit->getExperience() * 2);
+									iCombatStrength /= 15;
 
-									iCombatStrength *= 30 + pLoopUnit->getExperience();
-									iCombatStrength /= 30;
-
-									if( GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances() > -1 )
+									if(bLegend)
 									{
-										iCombatStrength *= 1 + GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances();
-										iCombatStrength /= std::max(1, GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances());
+										iCombatStrength *= 10 - GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances();
+										iCombatStrength /= 3;
 									}
 
 									if (iCombatStrength > iBestStrength)
@@ -14535,6 +14557,14 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 										iBestStrength = iCombatStrength;
 										pBestStrUnit = pLoopUnit;
 										pBestStrPlot = getPathEndTurnPlot();
+										if(bLegend)
+										{
+											bBestUnitLegend = true;
+										}
+										else
+										{
+											bBestUnitLegend = false;
+										}
 									}
 									
 									// or the unit with the best healing ability
