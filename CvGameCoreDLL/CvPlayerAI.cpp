@@ -3818,16 +3818,20 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 			{
 				iValue += 8;
 			}
+			
+			if (GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion() == iI)
+			{
+				iValue += 10;
+			}
 		}
 	}
-
 	if (pCity->isEverOwned(getID()))
 	{
-		iValue += 4;
+		iValue += 3;
 
 		if( pCity->getOriginalOwner() == getID() )
 		{
-			iValue += 2;
+			iValue += 3;
 		}
 	}
 
