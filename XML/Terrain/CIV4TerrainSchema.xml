@@ -50,6 +50,9 @@
 	<ElementType name="CivilizationYieldChange" content="eltOnly">
 		<element type="iYield" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="CivilizationYieldRiverChange" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
 	<ElementType name="TerrainInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>

@@ -923,6 +923,11 @@
 				<iYield>0</iYield>
 				<iYield>0</iYield>
 			</CivilizationYieldChange>
+			<CivilizationYieldRiverChange>
+				<iYield>0</iYield>
+				<iYield>0</iYield>
+				<iYield>1</iYield>
+			</CivilizationYieldRiverChange>
 		</TerrainInfo>
 		<TerrainInfo>
 			<Type>TERRAIN_BURNING_SANDS</Type>

@@ -16715,6 +16715,10 @@ CvTerrainInfo::~CvTerrainInfo()
 	SAFE_DELETE_ARRAY(m_piCivilizationYieldChange);
 //FfH: End Add
 
+//FfH Illians commerce on rivers fix: Added by Terkhen 6/12/2011
+	SAFE_DELETE_ARRAY(m_piCivilizationYieldRiverChange);
+//FfH: End Add
+
 }
 
 int CvTerrainInfo::getMovementCost() const
@@ -16797,6 +16801,13 @@ int CvTerrainInfo::getCivilizationYieldChange(int i) const
 {
 	return m_piCivilizationYieldChange ? m_piCivilizationYieldChange[i] : -1;
 }
+
+//FfH Illians commerce on rivers fix: Added by Terkhen 6/12/2011
+int CvTerrainInfo::getCivilizationRiverYieldChange(int i) const
+{
+	return m_piCivilizationYieldRiverChange ? m_piCivilizationYieldRiverChange[i] : -1;
+}
+//FfH end
 
 int CvTerrainInfo::getPlotCounterDown() const
 {
@@ -16926,6 +16937,16 @@ bool CvTerrainInfo::read(CvXMLLoadUtility* pXML)
 		pXML->InitList(&m_piCivilizationYieldChange, NUM_YIELD_TYPES);
 	}
 //FfH: End Add
+ 
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"CivilizationYieldRiverChange"))
+	{
+		pXML->SetYields(&m_piCivilizationYieldRiverChange);
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+	else
+	{
+		pXML->InitList(&m_piCivilizationYieldChange, NUM_YIELD_TYPES);
+	}
 
 	return true;
 }

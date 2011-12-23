@@ -6556,6 +6556,10 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
         if (GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldType())
         {
             iYield += GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldChange(eYield);
+			if (isRiver())
+			{
+				iYield += GC.getTerrainInfo(getTerrainType()).getCivilizationRiverYieldChange(eYield);
+			}
         }
     }
 //FfH: End Add

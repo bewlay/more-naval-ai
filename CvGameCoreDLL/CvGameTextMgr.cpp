@@ -8029,7 +8029,7 @@ void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes
                             szText = gDLL->getText("TXT_KEY_MISC_CIV_TERRAIN");
                             if (bDawnOfMan)
                             {
-                                szTempString.Format(L"%s:", szText.GetCString());
+                                szTempString.Format(L"%s:\n", szText.GetCString());
                                 szInfoText.append(szTempString);
                             }
                             else
@@ -8042,7 +8042,7 @@ void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes
                         szText = gDLL->getText("TXT_KEY_MISC_CIV_TERRAIN_MOD", GC.getTerrainInfo((TerrainTypes)iI).getCivilizationYieldChange(YieldTypes(iJ)), GC.getYieldInfo((YieldTypes) iJ).getChar(), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide());
                         if (bDawnOfMan)
                         {
-                            szBuffer.Format(L" %s\n", szText.GetCString());
+                            szBuffer.Format(L"    %s\n", szText.GetCString());
                             szInfoText.append(szBuffer);
                         }
                         else
@@ -8051,6 +8051,38 @@ void CvGameTextMgr::parseCivInfos(CvWStringBuffer &szInfoText, CivilizationTypes
                             szInfoText.append(szBuffer);
                         }
                     }
+
+					// River Yield changes
+					if (GC.getTerrainInfo((TerrainTypes)iI).getCivilizationRiverYieldChange(YieldTypes(iJ)) != 0)
+                    {
+                        if (bFirst)
+                        {
+                            szText = gDLL->getText("TXT_KEY_MISC_CIV_TERRAIN");
+                            if (bDawnOfMan)
+                            {
+                                szTempString.Format(L"%s:", szText.GetCString());
+                                szInfoText.append(szTempString);
+                            }
+                            else
+                            {
+                                szBuffer.Format(NEWLINE SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_ALT_HIGHLIGHT_TEXT"), gDLL->getText("TXT_KEY_MISC_CIV_TERRAIN").GetCString());
+                                szInfoText.append(szBuffer);
+                            }
+                            bFirst = false;
+                        }
+                        szText = gDLL->getText("TXT_KEY_MISC_CIV_TERRAIN_RIVER_MOD", GC.getTerrainInfo((TerrainTypes)iI).getCivilizationRiverYieldChange(YieldTypes(iJ)), GC.getYieldInfo((YieldTypes) iJ).getChar(), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide());
+                        if (bDawnOfMan)
+                        {
+                            szBuffer.Format(L"    %s\n", szText.GetCString());
+                            szInfoText.append(szBuffer);
+                        }
+                        else
+                        {
+                            szBuffer.Format(L"%s  %c%s", NEWLINE, gDLL->getSymbolID(BULLET_CHAR), szText.GetCString());
+                            szInfoText.append(szBuffer);
+                        }
+                    }
+					// End River Yield
                 }
             }
         }

@@ -4109,6 +4109,9 @@ public:
 	bool readPass3();
 //FfH: End Add
 
+	int getCivilizationRiverYieldChange(int i) const;
+
+
 	DllExport const TCHAR* getArtDefineTag() const;
 	void setArtDefineTag(const TCHAR* szTag);
 
@@ -4155,6 +4158,8 @@ protected:
 
 	int* m_piCivilizationYieldChange;
 //FfH: End Add
+
+	int* m_piCivilizationYieldRiverChange;
 
 	// Arrays
 
