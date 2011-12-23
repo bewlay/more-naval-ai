@@ -9320,6 +9320,16 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 /************************************************************************************************/
 			}
 		}
+
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       08/08/10                              EmperorFool     */
+/*                                                                                              */
+/* Bugfix, already called by AI_doTurn()                                                        */
+/************************************************************************************************/
+		AI_updateBestBuild();
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 	}
 }
 
@@ -13405,6 +13415,15 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				changeOverflowProduction(iOverflow, getProductionModifier(eTrainUnit));
 			}
 			setUnitProduction(eTrainUnit, 0);
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                       06/10/10                           EmperorFool         */
+/*                                                                                               */
+/* Bugfix                                                                                        */
+/*************************************************************************************************/
+			setUnitProductionTime(eTrainUnit, 0);
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                         END                                                  */
+/*************************************************************************************************/
 
 			// * Limited which production modifiers affect gold from production overflow. 1/3
 			iLostProduction *= getBaseYieldRateModifier(YIELD_PRODUCTION);
@@ -13507,6 +13526,15 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 				changeOverflowProduction(iOverflow, getProductionModifier(eConstructBuilding));
 			}
 			setBuildingProduction(eConstructBuilding, 0);
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                       06/10/10                           EmperorFool         */
+/*                                                                                               */
+/* Bugfix                                                                                        */
+/*************************************************************************************************/
+			setBuildingProductionTime(eConstructBuilding, 0);
+/*************************************************************************************************/
+/* UNOFFICIAL_PATCH                         END                                                  */
+/*************************************************************************************************/
 
 // BUG - Overflow Gold Fix - start
 			iLostProduction *= getBaseYieldRateModifier(YIELD_PRODUCTION);
@@ -14484,10 +14512,29 @@ void CvCity::doMeltdown()
 	{
 		if (getNumBuilding((BuildingTypes)iI) > 0)
 		{
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                                                               jdog5000      */
+/*                                                                                              */
+/* Gamespeed scaling                                                                            */
+/************************************************************************************************/
+/* original bts code
 			if (GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand() != 0)
 			{
 				if (GC.getGameINLINE().getSorenRandNum(GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand(), "Meltdown!!!") == 0)
 				{
+*/
+			int iOdds = GC.getBuildingInfo((BuildingTypes)iI).getNukeExplosionRand();
+
+			if( iOdds > 0 )
+			{
+				iOdds *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
+				iOdds /= 100;
+
+				if( GC.getGameINLINE().getSorenRandNum(iOdds, "Meltdown!!!") == 0)
+				{
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 					if (getNumRealBuilding((BuildingTypes)iI) > 0)
 					{
 						setNumRealBuilding(((BuildingTypes)iI), 0);

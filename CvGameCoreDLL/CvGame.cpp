@@ -6495,8 +6495,24 @@ void CvGame::doGlobalWarming()
 
 	for (int iI = 0; iI < iGlobalWarmingValue; iI++)
 	{
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                                                          LunarMongoose      */
+/*                                                                                              */
+/* Gamespeed scaling                                                                            */
+/************************************************************************************************/
+/* original bts code
 		if (getSorenRandNum(100, "Global Warming") + iGlobalWarmingDefense < GC.getDefineINT("GLOBAL_WARMING_PROB"))
 		{
+*/
+		int iOdds = GC.getDefineINT("GLOBAL_WARMING_PROB") - iGlobalWarmingDefense;
+		iOdds *= 100;
+		iOdds /= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
+
+		if (getSorenRandNum(100, "Global Warming") < iOdds)
+		{
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 			CvPlot* pPlot = GC.getMapINLINE().syncRandPlot(RANDPLOT_LAND | RANDPLOT_NOT_CITY);
 
 			if (pPlot != NULL)

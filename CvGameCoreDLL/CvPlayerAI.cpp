@@ -2926,8 +2926,21 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
             	bNeutralTerritory = false;
                 int iOurCulture = pLoopPlot->getCulture(getID());
                 int iOtherCulture = std::max(1, pLoopPlot->getCulture(pLoopPlot->getOwnerINLINE()));
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       04/25/10                          denev & Fuyu	    */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+/*original code
                 iCultureMultiplier = 100 * (iOurCulture + iClaimThreshold);
                 iCultureMultiplier /= (iOtherCulture + iClaimThreshold);
+
+*/
+                iCultureMultiplier = (100 * iOurCulture) + iClaimThreshold;
+                iCultureMultiplier /= (((100 * iOtherCulture) + iClaimThreshold) / 100);
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
                 iCultureMultiplier = std::min(100, iCultureMultiplier);
                 //The multiplier is basically normalized...
                 //100% means we own (or rightfully own) the tile.
@@ -24212,7 +24225,18 @@ void CvPlayerAI::AI_doEnemyUnitData()
 							}
 						}
 					}
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                       07/16/10                                Maniac        */
+/*                                                                                              */
+/* Bugfix                                                                                       */
+/************************************************************************************************/
+/* original bts code
 					else if (pLoopUnit->getOwnerINLINE() != getID())
+*/
+					else if (pLoopUnit->getTeam() != getTeam())
+/************************************************************************************************/
+/* UNOFFICIAL_PATCH                        END                                                  */
+/************************************************************************************************/
 					{
 						iUnitValue += pLoopUnit->canAttack() ? 4 : 1;
 						if (pLoopPlot->getCulture(getID()) > 0)
