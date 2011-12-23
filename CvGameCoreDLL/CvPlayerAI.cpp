@@ -18167,6 +18167,314 @@ void CvPlayerAI::AI_doDiplo()
 											}
 										}
 									}
+/************************************************************************************************/
+/* Afforess	                  Start		 06/01/10                                               */
+/* Ruthless AI: AI will purchase war allies                                                     */
+/************************************************************************************************/
+									//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+									if (1 < 2)
+									{
+										//Purchase War Ally
+										if (GET_PLAYER((PlayerTypes)iI).isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam())))
+										{
+											if ((AI_getMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR) == 0) && (AI_getMemoryCount(((PlayerTypes)iI), MEMORY_HIRED_WAR_ALLY) == 0))
+											{
+												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_JOIN_WAR) == 0)
+												{
+													if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_JOIN_WAR), "AI Diplo Trade War") == 0)
+													{
+														TeamTypes eBestWarTeam = AI_bestJoinWarTeam((PlayerTypes)iI);
+
+														if (eBestWarTeam != NO_TEAM)
+														{
+															if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
+															{
+																//if (GET_TEAM(eBestWarTeam).getPower(true) > (GET_TEAM(getTeam()).getPower(true) * 0.75))
+																{
+
+																	iBestValue = 0;
+																	eBestGiveTech = NO_TECH;
+
+																	for (iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+																	{
+																		setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
+
+																		if (canTradeItem(((PlayerTypes)iI), item, true))
+																		{
+																			iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Tech Trading #2"));
+
+																			if (iValue > iBestValue)
+																			{
+																				iBestValue = iValue;
+																					eBestGiveTech = ((TechTypes)iJ);
+																			}
+																		}
+																	}
+
+																	iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestWarTeam, GET_PLAYER((PlayerTypes)iI).getTeam());
+																	if (eBestGiveTech != NO_TECH)
+																	{
+																		iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+																	}
+																	else
+																	{
+																		iTheirValue = 0;
+																	}
+
+																	iReceiveGold = 0;
+																	iGiveGold = 0;
+
+																	if (iTheirValue > iOurValue)
+																	{
+																		iGoldWeight = iTheirValue - iOurValue;
+																		iGoldData = (iGoldWeight * 100) / iGoldValuePercent;
+																		if (iGoldWeight * 100 > iGoldData * iGoldValuePercent)
+																		{
+																			iGoldData++;															
+																		}
+
+																		iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+
+																		if (iGold > 0)
+																		{
+																			setTradeItem(&item, TRADE_GOLD, iGold);
+
+																			if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																			{
+																				iReceiveGold = iGold;
+																				iOurValue += (iGold * iGoldValuePercent) / 100;
+																			}
+																		}
+																	}
+																	else if (iOurValue > iTheirValue)
+																	{
+																		
+																		iGoldData = ((iOurValue - iTheirValue) * 100) / iGoldValuePercent;
+																		iGold = std::min(iGoldData, AI_maxGoldTrade((PlayerTypes)iI));
+
+																		if (iGold > 0)
+																		{
+																			setTradeItem(&item, TRADE_GOLD, iGold);
+
+																			if (canTradeItem(((PlayerTypes)iI), item, true))
+																			{
+																				iGiveGold = iGold;
+																				iTheirValue += (iGold * iGoldValuePercent) / 100;
+																			}
+																		}
+																	}
+
+																	if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+																	{
+																		if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
+																		{
+																			ourList.clear();
+																			theirList.clear();
+
+																			if (eBestGiveTech != NO_TECH)
+																			{
+																				setTradeItem(&item, TRADE_TECHNOLOGIES, eBestGiveTech);
+																				ourList.insertAtEnd(item);
+																			}
+
+																			setTradeItem(&item, TRADE_WAR, eBestWarTeam);
+																			theirList.insertAtEnd(item);
+
+																			if (iGiveGold != 0)
+																			{
+																				setTradeItem(&item, TRADE_GOLD, iGiveGold);
+																				ourList.insertAtEnd(item);
+																			}
+
+																			if (iReceiveGold != 0)
+																			{
+																				setTradeItem(&item, TRADE_GOLD, iReceiveGold);
+																				theirList.insertAtEnd(item);
+																			}
+
+																			if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																			{
+																				if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																				{
+																					AI_changeContactTimer(((PlayerTypes)iI), CONTACT_JOIN_WAR, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_JOIN_WAR));
+																					pDiplo = new CvDiploParameters(getID());
+																					FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
+																					pDiplo->setDiploComment((DiploCommentTypes)GC.getInfoTypeForString("AI_DIPLOCOMMENT_JOIN_WAR"), GET_PLAYER(GET_TEAM(eBestWarTeam).getLeaderID()).getCivilizationAdjectiveKey());
+																					pDiplo->setAIContact(true);
+																					pDiplo->setOurOfferList(theirList);
+																					pDiplo->setTheirOfferList(ourList);
+																					//AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
+																					gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
+																					abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																				}
+																			}
+																			else
+																			{
+																				if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
+																				{
+																					GC.getGameINLINE().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
+																					CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_HIRED_WAR_ALLY", getCivilizationAdjectiveKey(), GET_PLAYER((PlayerTypes)iI).getCivilizationAdjectiveKey());
+																					for (int i = 0; i < MAX_CIV_PLAYERS; i++)
+																					{
+																						if (GET_PLAYER((PlayerTypes)i).getTeam() == eBestWarTeam)
+																						{
+																							gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)i), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BUILD_BARRACKS", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"));
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+
+										//Purchase Trade Embargo
+										if (GET_PLAYER((PlayerTypes)iI).isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam())))
+										{
+											if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_STOP_TRADING) == 0)
+											{
+												if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_STOP_TRADING), "AI Diplo Trade War") == 0)
+												{
+													TeamTypes eBestStopTradeTeam = AI_bestStopTradeTeam((PlayerTypes)iI);
+
+													if (eBestStopTradeTeam != NO_TEAM)
+													{
+
+														iBestValue = 0;
+														eBestGiveTech = NO_TECH;
+
+														for (iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
+														{
+															setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
+
+															if (canTradeItem(((PlayerTypes)iI), item, true))
+															{
+																iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Tech Trading #2"));
+
+																if (iValue > iBestValue)
+																{
+																	iBestValue = iValue;
+																	eBestGiveTech = ((TechTypes)iJ);
+																}
+															}
+														}
+
+														iOurValue = AI_stopTradingTradeVal(eBestStopTradeTeam, ((PlayerTypes)iI));
+														if (eBestGiveTech != NO_TECH)
+														{
+															iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+														}
+														else
+														{
+															iTheirValue = 0;
+														}
+
+														iReceiveGold = 0;
+														iGiveGold = 0;
+
+														if (iTheirValue > iOurValue)
+														{
+															iGoldWeight = iTheirValue - iOurValue;
+															iGoldData = (iGoldWeight * 100) / iGoldValuePercent;
+															if (iGoldWeight * 100 > iGoldData * iGoldValuePercent)
+															{
+																iGoldData++;															
+															}
+																	
+															iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+
+															if (iGold > 0)
+															{
+																setTradeItem(&item, TRADE_GOLD, iGold);
+
+																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																{
+																	iReceiveGold = iGold;
+																	iOurValue += (iGold * iGoldValuePercent) / 100;
+																}
+															}
+														}
+														else if (iOurValue > iTheirValue)
+														{
+															iGoldData = ((iOurValue - iTheirValue) * 100) / iGoldValuePercent;
+															iGold = std::min(iGoldData, AI_maxGoldTrade((PlayerTypes)iI));
+
+															if (iGold > 0)
+															{
+																setTradeItem(&item, TRADE_GOLD, iGold);
+
+																if (canTradeItem(((PlayerTypes)iI), item, true))
+																{
+																	iGiveGold = iGold;
+																	iTheirValue += (iGold * iGoldValuePercent) / 100;
+																}
+															}
+														}
+
+														if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+														{
+															if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
+															{
+																ourList.clear();
+																theirList.clear();
+
+																if (eBestGiveTech != NO_TECH)
+																{
+																	setTradeItem(&item, TRADE_TECHNOLOGIES, eBestGiveTech);
+																	ourList.insertAtEnd(item);
+																}
+
+																setTradeItem(&item, TRADE_EMBARGO, eBestStopTradeTeam);
+																theirList.insertAtEnd(item);
+
+																if (iGiveGold != 0)
+																{
+																	setTradeItem(&item, TRADE_GOLD, iGiveGold);
+																	ourList.insertAtEnd(item);
+																}
+
+																if (iReceiveGold != 0)
+																{
+																	setTradeItem(&item, TRADE_GOLD, iReceiveGold);
+																	theirList.insertAtEnd(item);
+																}
+
+																if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																{
+																	if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																	{
+																		AI_changeContactTimer(((PlayerTypes)iI), CONTACT_STOP_TRADING, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_STOP_TRADING));
+																		pDiplo = new CvDiploParameters(getID());
+																		FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
+																		pDiplo->setDiploComment((DiploCommentTypes)GC.getInfoTypeForString("AI_DIPLOCOMMENT_OFFER_DEAL"));
+																		pDiplo->setAIContact(true);
+																		pDiplo->setOurOfferList(theirList);
+																		pDiplo->setTheirOfferList(ourList);
+																		//AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
+																		gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
+																		abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	}
+																}
+																else
+																{
+																	GC.getGameINLINE().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/									
+
 
 									if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_TRADE_BONUS) == 0)
 									{
@@ -25384,3 +25692,148 @@ int CvPlayerAI::AI_getMojoFactor() const
 }
 
 // End Tholal AI
+
+/************************************************************************************************/
+/* Afforess	                  Start		 06/01/10                                               */
+/* Ruthless AI                                                                                 */
+/************************************************************************************************/
+TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes ePlayer)
+{
+	int iValue = 0;
+	int iBestValue = 0;
+	TeamTypes eWarTeam = NO_TEAM;
+
+	for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()))
+			{
+				if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+				{
+					if (!GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) && !GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isDefensivePact(GET_PLAYER(ePlayer).getTeam()))
+					{
+						if (GET_PLAYER(ePlayer).isHuman() || 
+							(GET_PLAYER(ePlayer).AI_getAttitude(getID()) > GC.getLeaderHeadInfo(GET_PLAYER(ePlayer).getPersonalityType()).getDeclareWarRefuseAttitudeThreshold()))
+						{
+							if (GET_PLAYER(ePlayer).isHuman() || (GET_PLAYER(ePlayer).AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS))
+							{
+								iValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(GET_PLAYER((PlayerTypes)iI).getTeam(), GET_PLAYER(ePlayer).getTeam());
+								if (iBestValue < iValue)
+								{
+									iBestValue = iValue;
+									eWarTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return eWarTeam;
+}
+
+TeamTypes CvPlayerAI::AI_bestStopTradeTeam(PlayerTypes ePlayer)
+{
+	int iValue;
+	int iBestValue = 0;
+	TeamTypes eBestTeam = NO_TEAM;
+
+	TeamTypes eWorstEnemy = GET_TEAM(getTeam()).AI_getWorstEnemy();
+
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		TeamTypes eTeam = ((TeamTypes)iI);
+		bool bAtWar = atWar(eTeam, getTeam());
+		if ((getTeam() != eTeam) && (eTeam != GET_PLAYER(ePlayer).getTeam()))
+		{
+			if ((eWorstEnemy == eTeam) || bAtWar || 
+				((GET_TEAM(getTeam()).AI_getAttitude(eTeam) == ATTITUDE_FURIOUS) || (GET_TEAM(getTeam()).AI_getAttitude(eTeam) == ATTITUDE_ANNOYED)))
+			{
+				if (GET_PLAYER(ePlayer).getTeam() != eTeam)
+				{
+					if (GET_TEAM(eTeam).isAlive())
+					{
+						if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isHasMet(eTeam))
+						{
+							if (!atWar(GET_PLAYER(ePlayer).getTeam(), eTeam))
+							{
+								if (GET_TEAM(eTeam).isVassal(GET_PLAYER(ePlayer).getTeam()))
+								{
+									if (GET_PLAYER(ePlayer).canStopTradingWithTeam(eTeam))
+									{
+										if (GET_PLAYER(ePlayer).AI_stopTradingTrade(eTeam, getID()) == NO_DENIAL)
+										{
+											if ((bAtWar && GET_PLAYER(ePlayer).isTradingMilitaryBonus(GET_TEAM(eTeam).getLeaderID()))
+												|| !(GET_TEAM(GET_PLAYER(ePlayer).getTeam()).AI_getAttitude(eTeam) == ATTITUDE_FRIENDLY))
+											{
+												iValue = 0;
+
+												iValue = AI_stopTradingTradeVal(eTeam, ePlayer);
+												if ((iBestValue == 0) || (iValue < iBestValue))
+												{
+													iBestValue = iValue;
+													eBestTeam = eTeam;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return eBestTeam;
+}
+
+int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
+{
+	int iValue = 0;
+	int iHasOrBonusCount;
+	bool bFound = false;
+	UnitTypes eUnit = NO_UNIT;
+
+	for (int iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
+	{
+		eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI);
+
+		if (canTrain(eUnit))
+		{
+			if (GC.getUnitInfo(eUnit).getPrereqAndBonus() == eBonus)
+			{
+				iValue += 1000;
+			}
+
+			iHasOrBonusCount = 0;
+
+			bFound = false;
+
+			for (iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
+			{
+				if (GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI) == eBonus)
+				{
+					bFound = true;
+				}
+				else if (hasBonus((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)))
+				{
+					iHasOrBonusCount++;
+				}
+			}
+
+			if (bFound)
+			{
+				iValue += 300;
+				iValue /= iHasOrBonusCount;
+			}
+		}
+	}
+	return iValue;
+}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
