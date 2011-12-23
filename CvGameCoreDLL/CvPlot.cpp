@@ -5411,6 +5411,31 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 				gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 			}
 		}
+
+		
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      08/21/09                                jdog5000      */
+/*                                                                                              */
+/* Efficiency                                                                                   */
+/************************************************************************************************/
+		// Plot danger cache
+		CvPlot* pLoopPlot;
+		for (int iDX = -(DANGER_RANGE); iDX <= DANGER_RANGE; iDX++)
+		{
+			for (int iDY = -(DANGER_RANGE); iDY <= (DANGER_RANGE); iDY++)
+			{
+				pLoopPlot	= plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+
+				if (pLoopPlot != NULL)
+				{
+					pLoopPlot->invalidateIsTeamBorderCache();
+				}
+			}
+		}
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
+		
 		updateSymbols();
 	}
 }
@@ -9495,6 +9520,18 @@ void CvPlot::read(FDataStreamBase* pStream)
 	pStream->Read(&m_workingCityOverride.iID);
 
 	pStream->Read(NUM_YIELD_TYPES, m_aiYield);
+
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      08/21/09                                jdog5000      */
+/*                                                                                              */
+/* Efficiency                                                                                   */
+/************************************************************************************************/
+	// Plot danger cache
+	m_bIsActivePlayerNoDangerCache = false;
+	invalidateIsTeamBorderCache();
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                       END                                                  */
+/************************************************************************************************/
 
 //FfH: Added by Kael 08/15/2007
 	pStream->Read(&m_bMoveDisabledAI);
