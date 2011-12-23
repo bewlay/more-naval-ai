@@ -16194,6 +16194,7 @@ void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes
 			{
 				szBuffer.append(L", ");
 			}
+
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       08/28/09                             jdog5000         */
 /*                                                                                              */

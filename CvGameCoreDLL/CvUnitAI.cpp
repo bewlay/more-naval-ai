@@ -21902,6 +21902,7 @@ bool CvUnitAI::AI_pickupStranded(UnitAITypes eUnitAI, int iMaxPath)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_airOffensiveCity()
 {
@@ -25927,6 +25928,7 @@ void CvUnitAI::AI_feastingmove()
 
 	if (!isVampire() || !isAlive())
 	{
+		//TODO - change this to a choose groupflag call then return
 		if (AI_getUnitAIType() == UNITAI_FEASTING)
 		{
 			AI_setGroupflag(GROUPFLAG_CONQUEST);
@@ -25938,6 +25940,7 @@ void CvUnitAI::AI_feastingmove()
 	}
 
 	//int iNeededFeasters = (kPlayer.getNumCities() / 3);
+	// TODO: Change this to Feast odds - higher if in peactime, more angry/unhealthy, larger cities
 	int iNeededFeasters = std::max(1,(kPlayer.getNumCities() / 3));
 
 	if (AI_getGroupflag() == GROUPFLAG_CONQUEST || AI_getGroupflag() == GROUPFLAG_PATROL || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
@@ -25974,6 +25977,7 @@ void CvUnitAI::AI_feastingmove()
 	if (AI_getUnitAIType() == UNITAI_FEASTING)
 	{
 		// High-level Feasters should head into combat
+		// TODO - check for warplans
 		if (getLevel() > 8)
 		{
 			AI_setGroupflag(GROUPFLAG_CONQUEST);

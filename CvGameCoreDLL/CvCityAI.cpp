@@ -11818,6 +11818,7 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 					}
 
 //FfH: Added by Kael 05/12/2008
+					// Tholal Note: This is probably why the AI likes to build forts
                     if (pPlot->getRangeDefense(getTeam(), 0, true, false) > 0)
                     {
                         iValue += GC.getImprovementInfo(eFinalImprovement).getRange() * GC.getImprovementInfo(eFinalImprovement).getRangeDefenseModifier() * 50;

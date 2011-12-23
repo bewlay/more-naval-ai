@@ -4663,7 +4663,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
             }
 //FfH: End Modify
 
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
+			//	szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
 			}
 		}
 		else

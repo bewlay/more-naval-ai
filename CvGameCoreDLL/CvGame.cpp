@@ -5206,7 +5206,6 @@ EraTypes CvGame::getStartEra() const
 }
 
 
-
 CalendarTypes CvGame::getCalendar() const
 {
 	return GC.getInitCore().getCalendar();
@@ -5438,6 +5437,7 @@ bool CvGame::isUnitClassMaxedOut(UnitClassTypes eIndex, int iExtra)
 		return false;
 	}
 
+	// Tholal Note - Barnaxus is causing this assert error because he can be created many times - not sure an easy workaround is available
 //	FAssertMsg(getUnitClassCreatedCount(eIndex) <= GC.getUnitClassInfo(eIndex).getMaxGlobalInstances(), "Index is expected to be within maximum bounds (invalid Index)");
 
 	return ((getUnitClassCreatedCount(eIndex) + iExtra) >= GC.getUnitClassInfo(eIndex).getMaxGlobalInstances());
@@ -6965,6 +6965,7 @@ void CvGame::createBarbarianCities()
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
 		if (!(pLoopPlot->isWater()))
 		{
 			if (!(pLoopPlot->isVisibleToCivTeam()))
@@ -6975,9 +6976,9 @@ void CvGame::createBarbarianCities()
 				{
 					iTargetCities *= 3;
 				}
-
+								
 				int iUnownedTilesThreshold = GC.getHandicapInfo(getHandicapType()).getUnownedTilesPerBarbarianCity();
-
+				
 				if (pLoopPlot->area()->getNumTiles() < (iUnownedTilesThreshold / 3))
 				{
 					iTargetCities *= iTargetCitiesMultiplier;
@@ -7423,6 +7424,7 @@ void CvGame::createAnimals()
 
 	}
 }
+
 
 void CvGame::updateWar()
 {

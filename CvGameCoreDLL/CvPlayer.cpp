@@ -877,14 +877,16 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	// Puppet States
 	m_bPuppetState = false;
+	// End Puppet States
 
-// Sephi BETTER AI (New Functions Definition)
+	// Sephi AI (New Functions Definition)
     m_eFavoriteReligion = NO_RELIGION;
     m_iTowerVicFlag = 0;
 	m_bSumSuiMode = false;
+	// End Sephi AI
 
 
-//FfH: Added by Kael 04/11/2008
+	//FfH: Added by Kael 04/11/2008
 	m_bAdaptive = false;
 	m_bAgnostic = false;
 	m_bAssimilation = false;
@@ -4198,11 +4200,12 @@ void CvPlayer::doTurn()
 
 	doUpdateCacheOnTurn();
 
-//	Sephi BETTER AI (new Player::DoTurn Functions)
+	// Sephi AI (new Player::DoTurn Functions)
     if (!isHuman())
     {
         AI_doTowerMastery();
     }
+	// End Sephi AI
 
 	// Puppet States
 	if (isPuppetState())
@@ -4228,6 +4231,7 @@ void CvPlayer::doTurn()
 			findNewCapital();
 		}
 	}
+	// End Puppet States
 
 	GC.getGameINLINE().verifyDeals();
 	AI_doTurnPre();
@@ -6427,10 +6431,12 @@ void CvPlayer::findNewCapital()
 	int iBestValue;
 	int iLoop;
 
+	// Puppet States
 	if (isPuppetState())
 	{
 		return;
 	}
+	// End Puppet States
 	
 	eCapitalBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(GC.getDefineINT("CAPITAL_BUILDINGCLASS"))));
 
@@ -7328,12 +7334,11 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 {
 	PROFILE_FUNC();
 
-	UnitClassTypes eUnitClass;
+	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	UnitClassTypes eUnitClass = (UnitClassTypes)kUnit.getUnitClassType();
 	int iI;
 
-	eUnitClass = ((UnitClassTypes)(GC.getUnitInfo(eUnit).getUnitClassType()));
-
-//	FAssert(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) == eUnit); //modified Sephi
+	//FAssert(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) == eUnit);
 
 //FfH: Modified by Kael 05/09/2008
 //	if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) != eUnit)
@@ -7349,10 +7354,10 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 			return false;
 		}
 	}
-		
+
 	if (!bIgnoreCost)
 	{
-		if (GC.getUnitInfo(eUnit).getProductionCost() == -1)
+		if (kUnit.getProductionCost() == -1)
 		{
 			return false;
 		}
@@ -7360,7 +7365,7 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 	if (GC.getGameINLINE().isOption(GAMEOPTION_ONE_CITY_CHALLENGE) && isHuman())
 	{
-		if (GC.getUnitInfo(eUnit).isFound())
+		if (kUnit.isFound())
 		{
 			return false;
 		}
@@ -7368,31 +7373,31 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE))
 	{
-		if (GC.getUnitInfo(eUnit).isSpy() || GC.getUnitInfo(eUnit).getEspionagePoints() > 0)
+		if (kUnit.isSpy() || kUnit.getEspionagePoints() > 0)
 		{
 			return false;
 		}
 	}
 
-	if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getUnitInfo(eUnit).getPrereqAndTech()))))
+	if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(kUnit.getPrereqAndTech()))))
 	{
 		return false;
 	}
 
 	for (iI = 0; iI < GC.getNUM_UNIT_AND_TECH_PREREQS(); iI++)
 	{
-		if (GC.getUnitInfo(eUnit).getPrereqAndTechs(iI) != NO_TECH)
+		if (kUnit.getPrereqAndTechs(iI) != NO_TECH)
 		{
-			if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getUnitInfo(eUnit).getPrereqAndTechs(iI)))))
+			if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(kUnit.getPrereqAndTechs(iI)))))
 			{
 				return false;
 			}
 		}
 	}
 
-	if (GC.getUnitInfo(eUnit).getStateReligion() != NO_RELIGION)
+	if (kUnit.getStateReligion() != NO_RELIGION)
 	{
-		if (getStateReligion() != GC.getUnitInfo(eUnit).getStateReligion())
+		if (getStateReligion() != kUnit.getStateReligion())
 		{
 			return false;
 		}
@@ -7432,15 +7437,15 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 		if (GC.getGameINLINE().isNoNukes() || !GC.getGameINLINE().isNukesValid())
 		{
-			if (GC.getUnitInfo(eUnit).getNukeRange() != -1)
+			if (kUnit.getNukeRange() != -1)
 			{
 				return false;
 			}
 		}
 
-		if (GC.getUnitInfo(eUnit).getSpecialUnitType() != NO_SPECIALUNIT)
+		if (kUnit.getSpecialUnitType() != NO_SPECIALUNIT)
 		{
-			if (!(GC.getGameINLINE().isSpecialUnitValid((SpecialUnitTypes)(GC.getUnitInfo(eUnit).getSpecialUnitType()))))
+			if (!(GC.getGameINLINE().isSpecialUnitValid((SpecialUnitTypes)(kUnit.getSpecialUnitType()))))
 			{
 				return false;
 			}
@@ -7448,12 +7453,12 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	}
 
 //FfH Units: Added by Kael 08/04/2007
-	if (GC.getUnitInfo(eUnit).getPrereqCivic() != NO_CIVIC)
+	if (kUnit.getPrereqCivic() != NO_CIVIC)
 	{
 	    bool bValid = false;
         for (iI = 0; iI < GC.getDefineINT("MAX_CIVIC_OPTIONS"); iI++)
         {
-            if (getCivics((CivicOptionTypes)iI) == GC.getUnitInfo(eUnit).getPrereqCivic())
+            if (getCivics((CivicOptionTypes)iI) == kUnit.getPrereqCivic())
             {
                 bValid = true;
             }
@@ -7463,30 +7468,31 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
             return false;
         }
 	}
-	if (GC.getUnitInfo(eUnit).getPrereqGlobalCounter() != 0)
+	if (kUnit.getPrereqGlobalCounter() != 0)
 	{
-        if (GC.getGameINLINE().getGlobalCounter() < GC.getUnitInfo(eUnit).getPrereqGlobalCounter())
+        if (GC.getGameINLINE().getGlobalCounter() < kUnit.getPrereqGlobalCounter())
         {
             return false;
         }
 	}
-	if (GC.getUnitInfo(eUnit).getPrereqAlignment() != NO_ALIGNMENT)
+	if (kUnit.getPrereqAlignment() != NO_ALIGNMENT)
 	{
-        if (getAlignment() != GC.getUnitInfo(eUnit).getPrereqAlignment())
+        if (getAlignment() != kUnit.getPrereqAlignment())
         {
             return false;
         }
 	}
 
 	// Tholal AI - prereq civs
-	if (GC.getUnitInfo(eUnit).getPrereqCiv() != NO_CIVILIZATION)
+	if (kUnit.getPrereqCiv() != NO_CIVILIZATION)
 	{
-        if (getCivilizationType() != GC.getUnitInfo(eUnit).getPrereqCiv())
+        if (getCivilizationType() != kUnit.getPrereqCiv())
         {
             return false;
         }
-	}
 //FfH: End Add
+	}
+
 
 	return true;
 }
@@ -7498,7 +7504,9 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	int iI;
 	CvTeamAI& currentTeam = GET_TEAM(getTeam());
 
-	eBuildingClass = ((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType()));
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+
+	eBuildingClass = ((BuildingClassTypes)(kBuilding.getBuildingClassType()));
 
 //	FAssert(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass) == eBuilding); //modified Sephi
 
@@ -7509,29 +7517,29 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 //	}
 //FfH: End Modify
 
-	if (GC.getBuildingInfo(eBuilding).isCapital() && isPuppetState())
+	if (kBuilding.isCapital() && isPuppetState())
 	{
 		return false;
 	}
 
 	if (!bIgnoreCost)
 	{
-		if (GC.getBuildingInfo(eBuilding).getProductionCost() == -1)
+		if (kBuilding.getProductionCost() == -1)
 		{
 			return false;
 		}
 	}
 
-	if (!(currentTeam.isHasTech((TechTypes)(GC.getBuildingInfo(eBuilding).getPrereqAndTech()))))
+	if (!(currentTeam.isHasTech((TechTypes)(kBuilding.getPrereqAndTech()))))
 	{
 		return false;
 	}
 
 	for (iI = 0; iI < GC.getNUM_BUILDING_AND_TECH_PREREQS(); iI++)
 	{
-		if (GC.getBuildingInfo(eBuilding).getPrereqAndTechs(iI) != NO_TECH)
+		if (kBuilding.getPrereqAndTechs(iI) != NO_TECH)
 		{
-			if (!(currentTeam.isHasTech((TechTypes)(GC.getBuildingInfo(eBuilding).getPrereqAndTechs(iI)))))
+			if (!(currentTeam.isHasTech((TechTypes)(kBuilding.getPrereqAndTechs(iI)))))
 			{
 				return false;
 			}
@@ -7543,30 +7551,30 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 		return false;
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() != NO_SPECIALBUILDING)
+	if (kBuilding.getSpecialBuildingType() != NO_SPECIALBUILDING)
 	{
-		if (!(currentTeam.isHasTech((TechTypes)(GC.getSpecialBuildingInfo((SpecialBuildingTypes) GC.getBuildingInfo(eBuilding).getSpecialBuildingType()).getTechPrereq()))))
+		if (!(currentTeam.isHasTech((TechTypes)(GC.getSpecialBuildingInfo((SpecialBuildingTypes) kBuilding.getSpecialBuildingType()).getTechPrereq()))))
 		{
 			return false;
 		}
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getStateReligion() != NO_RELIGION)
+	if (kBuilding.getStateReligion() != NO_RELIGION)
 	{
-		if (getStateReligion() != GC.getBuildingInfo(eBuilding).getStateReligion())
+		if (getStateReligion() != kBuilding.getStateReligion())
 		{
 			return false;
 		}
 	}
 
-	if (GC.getGameINLINE().countCivTeamsEverAlive() < GC.getBuildingInfo(eBuilding).getNumTeamsPrereq())
+	if (GC.getGameINLINE().countCivTeamsEverAlive() < kBuilding.getNumTeamsPrereq())
 	{
 		return false;
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getVictoryPrereq() != NO_VICTORY)
+	if (kBuilding.getVictoryPrereq() != NO_VICTORY)
 	{
-		if (!(GC.getGameINLINE().isVictoryValid((VictoryTypes)(GC.getBuildingInfo(eBuilding).getVictoryPrereq()))))
+		if (!(GC.getGameINLINE().isVictoryValid((VictoryTypes)(kBuilding.getVictoryPrereq()))))
 		{
 			return false;
 		}
@@ -7576,15 +7584,15 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			return false;
 		}
 
-		if (currentTeam.getVictoryCountdown((VictoryTypes)GC.getBuildingInfo(eBuilding).getVictoryPrereq()) >= 0)
+		if (currentTeam.getVictoryCountdown((VictoryTypes)kBuilding.getVictoryPrereq()) >= 0)
 		{
 			return false;
 		}
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getMaxStartEra() != NO_ERA)
+	if (kBuilding.getMaxStartEra() != NO_ERA)
 	{
-		if (GC.getGameINLINE().getStartEra() > GC.getBuildingInfo(eBuilding).getMaxStartEra())
+		if (GC.getGameINLINE().getStartEra() > kBuilding.getMaxStartEra())
 		{
 			return false;
 		}
@@ -7639,7 +7647,7 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 
 		if (GC.getGameINLINE().isNoNukes())
 		{
-			if (GC.getBuildingInfo(eBuilding).isAllowsNukes())
+			if (kBuilding.isAllowsNukes())
 			{
 				for (iI = 0; iI < GC.getNumUnitInfos(); iI++)
 				{
@@ -7651,9 +7659,9 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			}
 		}
 
-		if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() != NO_SPECIALBUILDING)
+		if (kBuilding.getSpecialBuildingType() != NO_SPECIALBUILDING)
 		{
-			if (!(GC.getGameINLINE().isSpecialBuildingValid((SpecialBuildingTypes)(GC.getBuildingInfo(eBuilding).getSpecialBuildingType()))))
+			if (!(GC.getGameINLINE().isSpecialBuildingValid((SpecialBuildingTypes)(kBuilding.getSpecialBuildingType()))))
 			{
 				return false;
 			}
@@ -7666,7 +7674,7 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 /**								---- Start Original Code ----									**
 		if (getNumCities() < GC.getBuildingInfo(eBuilding).getNumCitiesPrereq())
 /**								----  End Original Code  ----									**/
-		if (getNumCities() < GC.getBuildingInfo(eBuilding).getNumCitiesPrereq() || (getMaxCities() != -1 && (getMaxCities() < GC.getBuildingInfo(eBuilding).getNumCitiesPrereq()) && (getNumCities() != getMaxCities())))
+		if (getNumCities() < kBuilding.getNumCitiesPrereq() || (getMaxCities() != -1 && (getMaxCities() < kBuilding.getNumCitiesPrereq()) && (getNumCities() != getMaxCities())))
 /*************************************************************************************************/
 /**	Tweak									END													**/
 /*************************************************************************************************/
@@ -7674,7 +7682,7 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 			return false;
 		}
 
-		if (getHighestUnitLevel() < GC.getBuildingInfo(eBuilding).getUnitLevelPrereq())
+		if (getHighestUnitLevel() < kBuilding.getUnitLevelPrereq())
 		{
 			return false;
 		}
@@ -7695,25 +7703,26 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
 	int iI;
+	CvProjectInfo& kProject = GC.getProjectInfo(eProject);
 
 	if (isBarbarian())
 	{
 		return false;
 	}
 
-	if (GC.getProjectInfo(eProject).getProductionCost() == -1)
+	if (kProject.getProductionCost() == -1)
 	{
 		return false;
 	}
 
-	if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getProjectInfo(eProject).getTechPrereq()))))
+	if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(kProject.getTechPrereq()))))
 	{
 		return false;
 	}
 
-	if (GC.getProjectInfo(eProject).getVictoryPrereq() != NO_VICTORY)
+	if (kProject.getVictoryPrereq() != NO_VICTORY)
 	{
-		if (!(GC.getGameINLINE().isVictoryValid((VictoryTypes)(GC.getProjectInfo(eProject).getVictoryPrereq()))))
+		if (!(GC.getGameINLINE().isVictoryValid((VictoryTypes)(kProject.getVictoryPrereq()))))
 		{
 			return false;
 		}
@@ -7723,7 +7732,7 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 			return false;
 		}
 
-		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)GC.getProjectInfo(eProject).getVictoryPrereq()) >= 0)
+		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)kProject.getVictoryPrereq()) >= 0)
 		{
 			return false;
 		}
@@ -7753,7 +7762,7 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 
 		if (GC.getGameINLINE().isNoNukes())
 		{
-			if (GC.getProjectInfo(eProject).isAllowsNukes())
+			if (kProject.isAllowsNukes())
 			{
 				for (iI = 0; iI < GC.getNumUnitInfos(); iI++)
 				{
@@ -7765,9 +7774,9 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 			}
 		}
 
-		if (GC.getProjectInfo(eProject).getAnyoneProjectPrereq() != NO_PROJECT)
+		if (kProject.getAnyoneProjectPrereq() != NO_PROJECT)
 		{
-			if (GC.getGameINLINE().getProjectCreatedCount((ProjectTypes)(GC.getProjectInfo(eProject).getAnyoneProjectPrereq())) == 0)
+			if (GC.getGameINLINE().getProjectCreatedCount((ProjectTypes)(kProject.getAnyoneProjectPrereq())) == 0)
 			{
 				return false;
 			}
@@ -7775,7 +7784,7 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 
 		for (iI = 0; iI < GC.getNumProjectInfos(); iI++)
 		{
-			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < GC.getProjectInfo(eProject).getProjectsNeeded(iI))
+			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < kProject.getProjectsNeeded(iI))
 			{
 				return false;
 			}
@@ -9008,7 +9017,7 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
     }
 //FfH: End Add
 
-	if(GC.getUSE_CANNOT_RESEARCH_CALLBACK())
+	if (GC.getUSE_CANNOT_RESEARCH_CALLBACK())
 	{
 		CyArgsList argsList;
 		argsList.add(getID());
@@ -9016,6 +9025,7 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 		argsList.add(false);
 		long lResult=0;
 		gDLL->getPythonIFace()->callFunction(PYGameModule, "cannotResearch", argsList.makeFunctionArgs(), &lResult);
+
 		if (lResult == 1)
 		{
 			return false;
@@ -9627,7 +9637,7 @@ void CvPlayer::convert(ReligionTypes eReligion)
 //FfH: End Add
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/20
-//*** Validate queued reserach requirements because some techs requires certain state religion.
+//*** Validate queued research requirements because some techs requires certain state religion.
 	for (CLLNode<TechTypes>* pResearchNode = headResearchQueueNode(); pResearchNode; pResearchNode = nextResearchQueueNode(pResearchNode))
 	{
 		if (!canEverResearch(pResearchNode->m_data))
@@ -19302,13 +19312,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 	// Puppet States
 	pStream->Read(&m_bPuppetState);
+	// End Puppet States
 
-// Sephi BETTER AI (New Functions Definition)
+	// Sephi AI (New Functions Definition)
     pStream->Read((int*)&m_eFavoriteReligion);
     pStream->Read(&m_iTowerVicFlag);
 	pStream->Read(&m_bSumSuiMode);
+	// End Sephi AI
 
-//FfH Traits: Added by Kael 08/02/2007
+	//FfH Traits: Added by Kael 08/02/2007
 	pStream->Read(&m_bAdaptive);
 	pStream->Read(&m_bAgnostic);
 	pStream->Read(&m_bAssimilation);
@@ -19892,13 +19904,15 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 	// Puppet States
 	pStream->Write(m_bPuppetState);
+	// End Puppet States
 
-// Sephi BETTER AI (New Functions Definition) Sephi
+	// Sephi AI (New Functions Definition) Sephi
     pStream->Write(m_eFavoriteReligion);
     pStream->Write(m_iTowerVicFlag);
 	pStream->Write(m_bSumSuiMode);
+	// End Sephi AI
 
-//FfH Traits: Added by Kael 08/02/2007
+	//FfH Traits: Added by Kael 08/02/2007
 	pStream->Write(m_bAdaptive);
 	pStream->Write(m_bAgnostic);
 	pStream->Write(m_bAssimilation);
@@ -26795,8 +26809,7 @@ void CvPlayer::setPuppetState(bool newvalue)
 // End Puppet State Functions
 
 /*************************************************************************************************/
-/** Skyre Mod                                                                                   **/
-/** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
+/** Sephi AI (Lanun Pirate Coves) (merged from Skyre Mod)                                       **/
 /** Rewritten by Kael 09/19/2009                                                                **/
 /*************************************************************************************************/
 bool CvPlayer::isPirate() const
@@ -26817,10 +26830,8 @@ bool CvPlayer::isPirate() const
 }
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions) Sephi                                 					        **/
+/**	Sephi AI (New Functions)                                 					        **/
 /*************************************************************************************************/
-
-
 ReligionTypes CvPlayer::getFavoriteReligion() const
 {
 	return (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
@@ -26885,6 +26896,7 @@ void CvPlayer::AI_doTowerMastery()
 	}
 	return;
 }
+// End Sephi AI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/29
 //*** Assimilated city produces a unit with original civilization artstyle.

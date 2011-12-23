@@ -2696,7 +2696,7 @@ void  CyPlayer::forcePeace(int iPlayer)
 		m_pPlayer->forcePeace((PlayerTypes)iPlayer);
 }
 
-//FfH Alignmenr: Added by Kael 08/09/2007
+//FfH functions: Added by Kael 08/09/2007
 bool CyPlayer::canSeeCivic(int iCivic) const
 {
     return m_pPlayer ? m_pPlayer->canSeeCivic(iCivic) : false;
@@ -2834,7 +2834,7 @@ void CyPlayer::setHasTrait(int /*TraitTypes*/ iIndex, bool bNewValue)
 //FfH: End Add
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
+/**	Sephi AI (New Functions Definition)  	                                 					**/
 /*************************************************************************************************/
 int CyPlayer::getFavoriteReligion() const
 {

@@ -1286,12 +1286,11 @@ public:
     void setGreatPeopleThresholdModifier(int iNewValue);
 //FfH: End Add
 
-// Skyre Mod
-// BETTER AI (Lanun Pirate Coves) merged Sephi
+// Sephi AI (Lanun Pirate Coves) (merged from Skyre Mod)
     bool isPirate() const;
-// End Skyre Mod
+// End Sephi AI
 
-// Sephi BETTER AI (New Functions Definition)
+// Sephi AI (New Functions Definition)
     ReligionTypes getFavoriteReligion() const;
     void setFavoriteReligion(ReligionTypes newvalue);
     int getArcaneTowerVictoryFlag() const;

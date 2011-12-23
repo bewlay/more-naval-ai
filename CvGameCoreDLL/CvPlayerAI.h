@@ -481,14 +481,11 @@ public:
     int AI_getGoldReserve() const;
 //FfH: End Add
 
-/*************************************************************************************************/
-/** BETTER AI (function definitions) Sephi                                                      **/
-/*************************************************************************************************/
-/** BETTER AI (better AI gold management) Sephi                                                 **/
+
+// Sephi BETTER AI (better AI gold management) Sephi                                                 **/
     int AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTrading, bool bReserve) const;
-/*************************************************************************************************/
-/** End																							**/
-/*************************************************************************************************/
+// Sephi Better AI - END
+
 //>>>>BUGFfH: Added by Denev 2009/09/29
 	UnitArtStyleTypes getUnitArtStyleType() const;
 //<<<<BUGFfH: End Add

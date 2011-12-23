@@ -334,7 +334,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1)
 		{
-			if (!GET_PLAYER(getOwnerINLINE()).isPuppetState())
+			if (!GET_PLAYER(getOwnerINLINE()).isPuppetState()) // Puppet States
 			{
 				for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 				{
@@ -2008,6 +2008,8 @@ UnitTypes CvCity::allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount) const
 	bool bUpgradeAvailable;
 	bool bUpgradeUnavailable;
 	int iI;
+	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
 
 	FAssertMsg(eUnit != NO_UNIT, "eUnit is expected to be assigned (not NO_UNIT)");
 
@@ -2024,9 +2026,9 @@ UnitTypes CvCity::allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount) const
 
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
-		if (GC.getUnitInfo(eUnit).getUpgradeUnitClass(iI))
+		if (kUnit.getUpgradeUnitClass(iI))
 		{
-			eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI);
+			eLoopUnit = (UnitTypes)kCivilization.getCivilizationUnits(iI);
 
 			if (eLoopUnit != NO_UNIT)
 			{
@@ -2329,6 +2331,8 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 
 	int iI;
 	CorporationTypes eCorporation;
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
 
 	if (eBuilding == NO_BUILDING)
 	{
@@ -2363,7 +2367,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 
-	if (GC.getBuildingInfo(eBuilding).isPrereqReligion())
+	if (kBuilding.isPrereqReligion())
 	{
 		if (getReligionCount() > 0)
 		{
@@ -2371,7 +2375,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		}
 	}
 
-	if (GC.getBuildingInfo(eBuilding).isStateReligion())
+	if (kBuilding.isStateReligion())
 	{
 		ReligionTypes eStateReligion = GET_PLAYER(getOwnerINLINE()).getStateReligion();
 		if (NO_RELIGION == eStateReligion || !isHasReligion(eStateReligion))
@@ -2380,15 +2384,15 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		}
 	}
 
-	if (GC.getBuildingInfo(eBuilding).getPrereqReligion() != NO_RELIGION)
+	if (kBuilding.getPrereqReligion() != NO_RELIGION)
 	{
-		if (!(isHasReligion((ReligionTypes)(GC.getBuildingInfo(eBuilding).getPrereqReligion()))))
+		if (!(isHasReligion((ReligionTypes)(kBuilding.getPrereqReligion()))))
 		{
 			return false;
 		}
 	}
 
-	eCorporation = (CorporationTypes)GC.getBuildingInfo(eBuilding).getPrereqCorporation();
+	eCorporation = (CorporationTypes)kBuilding.getPrereqCorporation();
 	if (eCorporation != NO_CORPORATION)
 	{
 		if (!isHasCorporation(eCorporation))
@@ -2397,7 +2401,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		}
 	}
 
-	eCorporation = (CorporationTypes)GC.getBuildingInfo(eBuilding).getFoundsCorporation();
+	eCorporation = (CorporationTypes)kBuilding.getFoundsCorporation();
 	if (eCorporation != NO_CORPORATION)
 	{
 		if (GC.getGameINLINE().isCorporationFounded(eCorporation))
@@ -2422,7 +2426,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 
-	if (GC.getBuildingInfo(eBuilding).isGovernmentCenter())
+	if (kBuilding.isGovernmentCenter())
 	{
 		if (isGovernmentCenter())
 		{
@@ -2440,23 +2444,23 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 			}
 		}
 
-		if (!(GC.getBuildingClassInfo((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())).isNoLimit()))
+		if (!(GC.getBuildingClassInfo((BuildingClassTypes)(kBuilding.getBuildingClassType())).isNoLimit()))
 		{
-			if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())))
+			if (isWorldWonderClass((BuildingClassTypes)(kBuilding.getBuildingClassType())))
 			{
 				if (isWorldWondersMaxed())
 				{
 					return false;
 				}
 			}
-			else if (isTeamWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())))
+			else if (isTeamWonderClass((BuildingClassTypes)(kBuilding.getBuildingClassType())))
 			{
 				if (isTeamWondersMaxed())
 				{
 					return false;
 				}
 			}
-			else if (isNationalWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType())))
+			else if (isNationalWonderClass((BuildingClassTypes)(kBuilding.getBuildingClassType())))
 			{
 				if (isNationalWondersMaxed())
 				{
@@ -2472,23 +2476,23 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 			}
 		}
 
-		if (GC.getBuildingInfo(eBuilding).getHolyCity() != NO_RELIGION)
+		if (kBuilding.getHolyCity() != NO_RELIGION)
 		{
-			if (!isHolyCity(((ReligionTypes)(GC.getBuildingInfo(eBuilding).getHolyCity()))))
+			if (!isHolyCity(((ReligionTypes)(kBuilding.getHolyCity()))))
 			{
 				return false;
 			}
 		}
 
-		if (GC.getBuildingInfo(eBuilding).getPrereqAndBonus() != NO_BONUS)
+		if (kBuilding.getPrereqAndBonus() != NO_BONUS)
 		{
-			if (!hasBonus((BonusTypes)GC.getBuildingInfo(eBuilding).getPrereqAndBonus()))
+			if (!hasBonus((BonusTypes)kBuilding.getPrereqAndBonus()))
 			{
 				return false;
 			}
 		}
 
-		eCorporation = (CorporationTypes)GC.getBuildingInfo(eBuilding).getFoundsCorporation();
+		eCorporation = (CorporationTypes)kBuilding.getFoundsCorporation();
 		if (eCorporation != NO_CORPORATION)
 		{
 			if (GC.getGameINLINE().isCorporationFounded(eCorporation))
@@ -2521,12 +2525,12 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 			}
 		}
 
-		if (plot()->getLatitude() > GC.getBuildingInfo(eBuilding).getMaxLatitude())
+		if (plot()->getLatitude() > kBuilding.getMaxLatitude())
 		{
 			return false;
 		}
 
-		if (plot()->getLatitude() < GC.getBuildingInfo(eBuilding).getMinLatitude())
+		if (plot()->getLatitude() < kBuilding.getMinLatitude())
 		{
 			return false;
 		}
@@ -2554,9 +2558,9 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 //		}
 		for (iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
 		{
-			if (GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+			if (kBuilding.getPrereqOrBonuses(iI) != NO_BONUS)
 			{
-				if (!hasBonus((BonusTypes)GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI)))
+				if (!hasBonus((BonusTypes)kBuilding.getPrereqOrBonuses(iI)))
 				{
                      return false;
 				}
@@ -2566,10 +2570,9 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 
 		for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 		{
-			if (GC.getBuildingInfo(eBuilding).isBuildingClassNeededInCity(iI))
+			if (kBuilding.isBuildingClassNeededInCity(iI))
 			{
-				ePrereqBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI)));
-
+				ePrereqBuilding = (BuildingTypes)(kCivilization.getCivilizationBuildings(iI));
 				if (ePrereqBuilding != NO_BUILDING)
 				{
 					if (0 == getNumBuilding(ePrereqBuilding) /* && (bContinue || (getFirstBuildingOrder(ePrereqBuilding) == -1))*/)
@@ -2583,30 +2586,31 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 
 //FfH: Added by Kael 08/04/2007
 
-	if (GC.getBuildingInfo(eBuilding).getPrereqCiv() != NO_CIVILIZATION)
+	if (kBuilding.getPrereqCiv() != NO_CIVILIZATION)
 	{
-	    if (GC.getBuildingInfo(eBuilding).getPrereqCiv() != getCivilizationType())
+	    if (kBuilding.getPrereqCiv() != getCivilizationType())
 	    {
 	        return false;
 	    }
 	}
 
-    if (GC.getBuildingInfo(eBuilding).getPrereqTrait() != NO_TRAIT)
+    if (kBuilding.getPrereqTrait() != NO_TRAIT)
     {
-        if (!hasTrait((TraitTypes)GC.getBuildingInfo(eBuilding).getPrereqTrait()))
+        if (!hasTrait((TraitTypes)kBuilding.getPrereqTrait()))
         {
             return false;
         }
     }
-    if (GC.getBuildingInfo(eBuilding).getPlotRadius() != 0)
+    if (kBuilding.getPlotRadius() != 0)
     {
-        if (GC.getBuildingInfo(eBuilding).getPlotRadius() == getPlotRadius())
+        if (kBuilding.getPlotRadius() == getPlotRadius())
         {
             return false;
         }
     }
-    BuildingClassTypes eBuildingClass = ((BuildingClassTypes)(GC.getBuildingInfo(eBuilding).getBuildingClassType()));
-    if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass) != eBuilding)
+    BuildingClassTypes eBuildingClass = ((BuildingClassTypes)kBuilding.getBuildingClassType());
+
+    if (kCivilization.getCivilizationBuildings(eBuildingClass) != eBuilding)
     {
         return false;
 	}
@@ -2973,6 +2977,7 @@ void CvCity::addProductionExperience(CvUnit* pUnit, bool bConscript)
 			}
 		}
 	}
+
 	pUnit->testPromotionReady();
 }
 
@@ -5850,10 +5855,11 @@ bool CvCity::hasActiveWorldWonder() const
 }
 
 /************************************************************************************************/
-/* UNOFFICIAL_PATCH                       03/04/10                                jdog5000      */
+/* UNOFFICIAL_PATCH                       03/04/10                     Mongoose & jdog5000      */
 /*                                                                                              */
 /* Bugfix                                                                                       */
 /************************************************************************************************/
+// From Mongoose SDK
 int CvCity::getNumActiveWorldWonders() const
 {
 	int iI;
@@ -9653,11 +9659,13 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 
 int CvCity::getYieldRate(YieldTypes eIndex) const
 {
+	// FFH - Unhappy Production
 	int iUnhappyProd = 0;
     if (isUnhappyProduction() && (eIndex == YIELD_PRODUCTION))
     {
         iUnhappyProd += unhappyLevel(0);
     }
+	// End FFH
 
 	return (((getBaseYieldRate(eIndex) + iUnhappyProd) * getBaseYieldRateModifier(eIndex)) / 100);
 }
@@ -17115,6 +17123,8 @@ const TCHAR* CvCity::getUnitArtStyleButton(UnitTypes eUnit) const
 
 // Tholal AI - new functions
 
+// Return the level of the Altar of the Lunnotar in this city (HARDCODE)
+// TODO: Make this dynamic
 int CvCity::getAltarLevel()
 {
 

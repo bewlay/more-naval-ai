@@ -14,17 +14,10 @@ class CvArea;
 class CvGenericBuilding;
 class CvArtInfoBuilding;
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      02/24/10                            EmperorFool       */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
-// From BUG
+// BUG - start
 void addGoodOrBad(int iValue, int& iGood, int& iBad);
 void subtractGoodOrBad(int iValue, int& iGood, int& iBad);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+// BUG - end
 
 class CvCity : public CvDLLEntity
 {

@@ -2403,6 +2403,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	bIsCoastal = pPlot->isCoastalLand(GC.getMIN_WATER_SIZE_FOR_OCEAN());
 
 	// Pirates want a coastal city for their capitol
+	// TODO - make sure this doesnt break them on all-land maps
     if (getNumCities() == 0)
     {
 		if (bPirate)
@@ -5122,7 +5123,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				
 				iImprovementValue += iNumTotalBonuses * 300;
 
-				// give extra boost for mana nodes so we research magic techs
+				// give extra boost for researching magic techs
 				if (kImprovement.getBonusConvert() != NO_BONUS)
 				{
 					iImprovementValue += AI_getMojoFactor() * 10;
@@ -20837,6 +20838,7 @@ int CvPlayerAI::AI_getStrategyRand() const
 	return m_iStrategyRand;
 }
 
+
 bool CvPlayerAI::AI_isDoStrategy(int iStrategy) const
 {
     if (isHuman())
@@ -23984,8 +23986,8 @@ void CvPlayerAI::AI_doEnemyUnitData()
 
 	int iOldTotal = 0;
 	int iNewTotal = 0;
-
-
+	
+	// Count enemy land and sea units visible to us
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
@@ -24039,7 +24041,8 @@ void CvPlayerAI::AI_doEnemyUnitData()
 							iUnitValue += pLoopUnit->canAttack() ? 4 : 1;
 						}
 					}
-
+					
+					// If we hadn't seen any of this class before
 					if (m_aiUnitClassWeights[pLoopUnit->getUnitClassType()] == 0)
 					{
 						iUnitValue *= 4;

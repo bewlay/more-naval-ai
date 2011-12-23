@@ -4254,7 +4254,6 @@ bool CvUnit::shouldLoadOnMove(const CvPlot* pPlot) const
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
-
 		break;
 	case DOMAIN_AIR:
 		if (!pPlot->isFriendlyCity(*this, true))
@@ -5627,6 +5626,8 @@ bool CvUnit::bombard()
     }
 //FfH: End Add
 
+	// TODO - Advanced Tactics - Bombard Experience
+
 	return true;
 }
 
@@ -6601,7 +6602,6 @@ bool CvUnit::canSpread(const CvPlot* pPlot, ReligionTypes eReligion, bool bTestV
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
-
 
 	return true;
 }
@@ -7719,10 +7719,12 @@ bool CvUnit::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisible)
 	{
 		return false;
 	}
+
 	if (!(GET_PLAYER(getOwnerINLINE()).canBuild(pPlot, eBuild, false, bTestVisible)))
 	{
 		return false;
 	}
+
 	if (!pPlot->isValidDomainForAction(*this))
 	{
 		return false;
@@ -7766,6 +7768,7 @@ bool CvUnit::build(BuildTypes eBuild)
 	GET_PLAYER(getOwnerINLINE()).changeGold(-(GET_PLAYER(getOwnerINLINE()).getBuildCost(plot(), eBuild)));
 
 	bFinished = plot()->changeBuildProgress(eBuild, workRate(false), getTeam());
+
 	finishMoves(); // needs to be at bottom because movesLeft() can affect workRate()...
 
 	if (bFinished)
@@ -10649,7 +10652,7 @@ void CvUnit::changeCargoSpace(int iChange)
 	if (iChange != 0)
 	{
 		m_iCargoCapacity += iChange;
-// Tholal AI - why is this assert here?!?
+// Tholal AI - ship crew promotions can cause a negative cargo value
 //		FAssert(m_iCargoCapacity >= 0);
 		setInfoBarDirty(true);
 	}
@@ -11385,6 +11388,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		setFortifyTurns(0);
 
 		pNewPlot->changeAdjacentSight(getTeam(), visibilityRange(), true, this, true); // needs to be here so that the square is considered visible when we move into it...
+
 		pNewPlot->addUnit(this, bUpdate && !hasCargo());
 
 		pNewPlot->area()->changeUnitsPerPlayer(getOwnerINLINE(), 1);
@@ -16277,75 +16281,78 @@ void CvUnit::castAddPromotion(int spell)
 								}
 							}
 
-							if (bResistable && !bAlreadyAffected)
-                            {
-                                if (!pLoopUnit->isResisted(this, spell))
-                                {
-                                    if (ePromotion1 != NO_PROMOTION)
-                                    {
-                                        if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                        {
-                                            if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                            {
-                                                pLoopUnit->setHasPromotion(ePromotion1, true);
-                                            }
-                                        }
-                                    }
-                                    if (ePromotion2 != NO_PROMOTION)
-                                    {
-                                        if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                        {
-                                            if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                            {
-                                                pLoopUnit->setHasPromotion(ePromotion2, true);
-                                            }
-                                        }
-                                    }
-                                    if (ePromotion3 != NO_PROMOTION)
-                                    {
-                                        if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                        {
-                                            if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                            {
-                                                pLoopUnit->setHasPromotion(ePromotion3, true);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (ePromotion1 != NO_PROMOTION)
-                                {
-                                    if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                    {
-                                        if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                        {
-                                            pLoopUnit->setHasPromotion(ePromotion1, true);
-                                        }
-                                    }
-                                }
-                                if (ePromotion2 != NO_PROMOTION)
-                                {
-                                    if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                    {
-                                        if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                        {
-                                            pLoopUnit->setHasPromotion(ePromotion2, true);
-                                        }
-                                    }
-                                }
-                                if (ePromotion3 != NO_PROMOTION)
-                                {
-                                    if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                                    {
-                                        if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                        {
-                                            pLoopUnit->setHasPromotion(ePromotion3, true);
-                                        }
-                                    }
-                                }
-                            }
+							if (!bAlreadyAffected)
+							{
+								if (bResistable)
+								{
+									if (!pLoopUnit->isResisted(this, spell))
+									{
+										if (ePromotion1 != NO_PROMOTION)
+										{
+											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+											{
+												if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
+												{
+													pLoopUnit->setHasPromotion(ePromotion1, true);
+												}
+											}
+										}
+										if (ePromotion2 != NO_PROMOTION)
+										{
+											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+											{
+												if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
+												{
+													pLoopUnit->setHasPromotion(ePromotion2, true);
+												}
+											}
+										}
+										if (ePromotion3 != NO_PROMOTION)
+										{
+											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+											{
+												if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
+												{
+													pLoopUnit->setHasPromotion(ePromotion3, true);
+												}
+											}
+										}
+									}
+								}
+								else
+								{
+									if (ePromotion1 != NO_PROMOTION)
+									{
+										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+										{
+											if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
+											{
+												pLoopUnit->setHasPromotion(ePromotion1, true);
+											}
+										}
+									}
+									if (ePromotion2 != NO_PROMOTION)
+									{
+										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+										{
+											if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
+											{
+												pLoopUnit->setHasPromotion(ePromotion2, true);
+											}
+										}
+									}
+									if (ePromotion3 != NO_PROMOTION)
+									{
+										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
+										{
+											if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
+											{
+												pLoopUnit->setHasPromotion(ePromotion3, true);
+											}
+										}
+									}
+								}
+							}
                         }
                     }
                 }
@@ -18002,24 +18009,20 @@ void CvUnit::doImmortalRebirth()
             }
 		}
 	}
+
 	if (!bFromProm)
 	{
         changeImmortal(-1);
 	}
+
     doEscape();
-/*************************************************************************************************/
-/**	BETTER AI (Immortal Units heal) Sephi                                      					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+
+	// Sephi AI (Immortal Units heal)
     if (!isHuman())
     {
         getGroup()->pushMission(MISSION_HEAL);
     }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
+	// Sephi AI End
 }
 
 void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)

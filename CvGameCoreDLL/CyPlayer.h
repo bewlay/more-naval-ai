@@ -687,9 +687,7 @@ public:
 //FfH: End Add
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
+/**	Sephi AI (New Functions Definition)                                 					**/
 /*************************************************************************************************/
     int getFavoriteReligion() const;
     void setFavoriteReligion(ReligionTypes newvalue);

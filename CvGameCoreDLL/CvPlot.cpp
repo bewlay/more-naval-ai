@@ -10517,8 +10517,10 @@ void CvPlot::applyEvent(EventTypes eEvent)
 bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 {
 	CvCity* pCity = getPlotCity();
+	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	int iI;
 
-	if (GC.getUnitInfo(eUnit).isPrereqReligion())
+	if (kUnit.isPrereqReligion())
 	{
 		if (NULL == pCity || pCity->getReligionCount() > 0)
 		{
@@ -10526,29 +10528,29 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 		}
 	}
 
-	if (GC.getUnitInfo(eUnit).getPrereqReligion() != NO_RELIGION)
+	if (kUnit.getPrereqReligion() != NO_RELIGION)
 	{
-		if (NULL == pCity || !pCity->isHasReligion((ReligionTypes)(GC.getUnitInfo(eUnit).getPrereqReligion())))
+		if (NULL == pCity || !pCity->isHasReligion((ReligionTypes)(kUnit.getPrereqReligion())))
 		{
 			return false;
 		}
 	}
 
-	if (GC.getUnitInfo(eUnit).getPrereqCorporation() != NO_CORPORATION)
+	if (kUnit.getPrereqCorporation() != NO_CORPORATION)
 	{
-		if (NULL == pCity || !pCity->isActiveCorporation((CorporationTypes)(GC.getUnitInfo(eUnit).getPrereqCorporation())))
+		if (NULL == pCity || !pCity->isActiveCorporation((CorporationTypes)(kUnit.getPrereqCorporation())))
 		{
 			return false;
 		}
 	}
 
-	if (GC.getUnitInfo(eUnit).isPrereqBonuses())
+	if (kUnit.isPrereqBonuses())
 	{
-		if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA)
+		if (kUnit.getDomainType() == DOMAIN_SEA)
 		{
 			bool bValid = false;
 
-			for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+			for (iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
 			{
 				CvPlot* pLoopPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
 
@@ -10581,16 +10583,16 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 
 	if (isCity())
 	{
-		if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA)
+		if (kUnit.getDomainType() == DOMAIN_SEA)
 		{
-			if (!isWater() && !isCoastalLand(GC.getUnitInfo(eUnit).getMinAreaSize()))
+			if (!isWater() && !isCoastalLand(kUnit.getMinAreaSize()))
 			{
 				return false;
 			}
 		}
 		else
 		{
-			if (area()->getNumTiles() < GC.getUnitInfo(eUnit).getMinAreaSize())
+			if (area()->getNumTiles() < kUnit.getMinAreaSize())
 			{
 				return false;
 			}
@@ -10598,19 +10600,19 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 	}
 	else
 	{
-		if (area()->getNumTiles() < GC.getUnitInfo(eUnit).getMinAreaSize())
+		if (area()->getNumTiles() < kUnit.getMinAreaSize())
 		{
 			return false;
 		}
 
-		if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA)
+		if (kUnit.getDomainType() == DOMAIN_SEA)
 		{
 			if (!isWater())
 			{
 				return false;
 			}
 		}
-		else if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_LAND)
+		else if (kUnit.getDomainType() == DOMAIN_LAND)
 		{
 			if (isWater())
 			{
@@ -10625,9 +10627,9 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 
 	if (!bTestVisible)
 	{
-		if (GC.getUnitInfo(eUnit).getHolyCity() != NO_RELIGION)
+		if (kUnit.getHolyCity() != NO_RELIGION)
 		{
-			if (NULL == pCity || !pCity->isHolyCity(((ReligionTypes)(GC.getUnitInfo(eUnit).getHolyCity()))))
+			if (NULL == pCity || !pCity->isHolyCity(((ReligionTypes)(kUnit.getHolyCity()))))
 			{
 				return false;
 			}
@@ -10675,13 +10677,13 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
         }
         if (bValid)
         {
-            if (GC.getUnitInfo(eUnit).getPrereqBuilding() != NO_BUILDING)
+            if (kUnit.getPrereqBuilding() != NO_BUILDING)
             {
                 if (NULL == pCity)
                 {
                     return false;
                 }
-                if (pCity->getNumBuilding((BuildingTypes)(GC.getUnitInfo(eUnit).getPrereqBuilding())) == 0)
+                if (pCity->getNumBuilding((BuildingTypes)(kUnit.getPrereqBuilding())) == 0)
                 {
                     SpecialBuildingTypes eSpecialBuilding = ((SpecialBuildingTypes)(GC.getBuildingInfo((BuildingTypes)(GC.getUnitInfo(eUnit).getPrereqBuilding())).getSpecialBuildingType()));
                     if ((eSpecialBuilding == NO_SPECIALBUILDING) || !(GET_PLAYER(getOwnerINLINE()).isSpecialBuildingNotRequired(eSpecialBuilding)))
@@ -10690,13 +10692,13 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
                     }
                 }
             }
-            if (GC.getUnitInfo(eUnit).getPrereqBuildingClass() != NO_BUILDINGCLASS)
+            if (kUnit.getPrereqBuildingClass() != NO_BUILDINGCLASS)
             {
                 if (NULL == pCity)
                 {
                     return false;
                 }
-                if (!pCity->isHasBuildingClass(GC.getUnitInfo(eUnit).getPrereqBuildingClass()))
+                if (!pCity->isHasBuildingClass(kUnit.getPrereqBuildingClass()))
                 {
                     return false;
                 }
@@ -10704,18 +10706,18 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 		}
 //FfH: End Modify
 
-		if (GC.getUnitInfo(eUnit).getPrereqAndBonus() != NO_BONUS)
+		if (kUnit.getPrereqAndBonus() != NO_BONUS)
 		{
 			if (NULL == pCity)
 			{
-				if (!isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()))
+				if (!isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)kUnit.getPrereqAndBonus()))
 				{
 					return false;
 				}
 			}
 			else
 			{
-				if (!pCity->hasBonus((BonusTypes)GC.getUnitInfo(eUnit).getPrereqAndBonus()))
+				if (!pCity->hasBonus((BonusTypes)kUnit.getPrereqAndBonus()))
 				{
 					return false;
 				}
@@ -10725,15 +10727,15 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 		bool bRequiresBonus = false;
 		bool bNeedsBonus = true;
 
-		for (int iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
+		for (iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
 		{
-			if (GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI) != NO_BONUS)
+			if (kUnit.getPrereqOrBonuses(iI) != NO_BONUS)
 			{
 				bRequiresBonus = true;
 
 				if (NULL == pCity)
 				{
-					if (isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)))
+					if (isPlotGroupConnectedBonus(getOwnerINLINE(), (BonusTypes)kUnit.getPrereqOrBonuses(iI)))
 					{
 						bNeedsBonus = false;
 						break;
@@ -10741,7 +10743,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 				}
 				else
 				{
-					if (pCity->hasBonus((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)))
+					if (pCity->hasBonus((BonusTypes)kUnit.getPrereqOrBonuses(iI)))
 					{
 						bNeedsBonus = false;
 						break;
