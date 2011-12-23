@@ -8538,10 +8538,12 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 	FAssertMsg(eBuilding < GC.getNumBuildingInfos(), "eBuilding expected to be < GC.getNumBuildingInfos()");
 
 	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-	int iDefense = std::max(getBuildingDefense() + kBuilding.getDefenseModifier(), getNaturalDefense()) + GET_PLAYER(getOwnerINLINE()).getCityDefenseModifier() + kBuilding.getAllCityDefenseModifier();
+	//int iDefense = std::max(getBuildingDefense() + kBuilding.getDefenseModifier(), getNaturalDefense()) + GET_PLAYER(getOwnerINLINE()).getCityDefenseModifier() + kBuilding.getAllCityDefenseModifier();
 
 	// doesn't take bombardment into account
-	return iDefense - getTotalDefense(false);
+	//return iDefense - getTotalDefense(false);
+	int iDefense = kBuilding.getDefenseModifier() + kBuilding.getAllCityDefenseModifier();
+	return iDefense;
 }
 // BUG - Building Additional Defense - end
 
