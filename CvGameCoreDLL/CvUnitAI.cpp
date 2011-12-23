@@ -7007,26 +7007,76 @@ void CvUnitAI::AI_attackSeaMove()
 /* Naval AI                                                                                     */
 /************************************************************************************************/
 	// BBAI TODO: Turn this into a function, have docked escort ships do it to
+
+	//Fuyu: search for more attackers, and when enough are found, always try to break through
 	CvCity* pCity = plot()->getPlotCity();
 
 	if( pCity != NULL )
 	{
 		if( pCity->isBlockaded() )
 		{
+			int iBlockadeRange = GC.getDefineINT("SHIP_BLOCKADE_RANGE");
 			// City under blockade
 			// Attacker has low odds since anyAttack checks above passed, try to break if sufficient numbers
 
 			int iAttackers = plot()->plotCount(PUF_isUnitAIType, UNITAI_ATTACK_SEA, -1, NO_PLAYER, getTeam(), PUF_isGroupHead, -1, -1);
-			int iBlockaders = GET_PLAYER(getOwnerINLINE()).AI_getWaterDanger(plot(), 4);
+			int iBlockaders = GET_PLAYER(getOwnerINLINE()).AI_getWaterDanger(plot(), (iBlockadeRange + 1));
+			//bool bBreakBlockade = (iAttackers > (iBlockaders + 2) || iAttackers >= 2*iBlockaders);
 
-			if( iAttackers > (iBlockaders + 2) )
+			if (true)
 			{
-				if( iAttackers > GC.getGameINLINE().getSorenRandNum(2*iBlockaders + 1, "AI - Break blockade") )
+				int iMaxRange = iBlockadeRange - 1;
+				if( gUnitLogLevel > 2 ) logBBAI("      Not enough attack fleet found in %S, searching for more in a %d-tile radius", pCity->getName().GetCString(), iMaxRange);
+
+				for (int iDX = -(iMaxRange); iDX <= iMaxRange; iDX++)
+				{
+					for (int iDY = -(iMaxRange); iDY <= iMaxRange; iDY++)
+					{
+						CvPlot* pLoopPlot = plotXY(plot()->getX_INLINE(), plot()->getY_INLINE(), iDX, iDY);
+							
+						if (pLoopPlot != NULL && pLoopPlot->isWater())
+						{
+							if (pLoopPlot->getBlockadedCount(getTeam()) > 0)
+							{
+								iAttackers += pLoopPlot->plotCount(PUF_isUnitAIType, UNITAI_ATTACK_SEA, -1, NO_PLAYER, getTeam(), PUF_isGroupHead, -1, -1);
+							}
+						}
+					}
+				}
+			}
+			//bBreakBlockade = (iAttackers > (iBlockaders + 2) || iAttackers >= 2*iBlockaders);
+
+			//if (bBreakBlockade)
+			if (iAttackers > (iBlockaders + 2) || iAttackers >= 2*iBlockaders)
+			{
+				if( gUnitLogLevel > 2 ) logBBAI("      Found %d attackers and %d blockaders, proceeding to break blockade", iAttackers, iBlockaders);
+				if(true) /* (iAttackers > GC.getGameINLINE().getSorenRandNum(2*iBlockaders + 1, "AI - Break blockade")) */
 				{
 					// BBAI TODO: Make odds scale by # of blockaders vs number of attackers
-					if (AI_anyAttack(1, 15))
+					if (baseMoves() >= iBlockadeRange)
 					{
-						return;
+						if (AI_anyAttack(1, 15))
+						{
+							return;
+						}
+					}
+					else
+					{
+						//Fuyu: Even slow ships should attack
+						//Assuming that every ship can reach a blockade with 2 moves
+						if (AI_anyAttack(2, 15))
+						{
+							return;
+						}
+					}
+					
+					//If no mission was pushed yet and we have a lot of ships, try again with even lower odds
+					if(iAttackers > 2*iBlockaders)
+					{
+						if (AI_anyAttack(1, 10))
+						{
+							return;
+						}
 					}
 				}
 			}
