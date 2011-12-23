@@ -2843,21 +2843,6 @@ public:
 	bool isMaintainFeatures(int i) const;
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (New Definitions) Sephi                                           				**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-    UnitClassTypes getBestDefender1() const;
-    UnitClassTypes getBestDefender2() const;
-    UnitClassTypes getBestDefender3() const;
-    UnitClassTypes getBestPatrol1() const;
-    UnitClassTypes getBestPatrol2() const;
-    UnitClassTypes getBestPatrol3() const;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	bool read(CvXMLLoadUtility* pXML);
 	DllExport bool readPass2(CvXMLLoadUtility* pXML);
 	DllExport void read(FDataStreamBase* stream);
@@ -2900,20 +2885,7 @@ protected:
 	int m_iHero;
 	bool* m_pbMaintainFeatures;
 //FfH: End Add
-/*************************************************************************************************/
-/**	BETTER AI (New Definitions) Sephi                                           				**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-    UnitClassTypes m_eBestDefender1;
-    UnitClassTypes m_eBestDefender2;
-    UnitClassTypes m_eBestDefender3;
-    UnitClassTypes m_eBestPatrol1;
-    UnitClassTypes m_eBestPatrol2;
-    UnitClassTypes m_eBestPatrol3;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
 	CvString* m_paszCityNames;
 
 	mutable std::vector<CvWString> m_aszShortDescription;

@@ -4199,15 +4199,6 @@ int CvActionInfo::getCommandData() const
 //FfH Spell System: Added by Kael 07/23/2007
 				|| (ACTIONSUBTYPE_SPELL == m_eSubType)
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (automatic Spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-                || (ACTIONSUBTYPE_AUTOMATE_SPELL == m_eSubType)
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 			)
 	{
 		return m_iOriginalIndex;
@@ -4420,18 +4411,6 @@ CvHotkeyInfo* CvActionInfo::getHotkeyInfo() const
 			return &GC.getSpellInfo((SpellTypes)getOriginalIndex());
 			break;
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (automatic spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-
-        case ACTIONSUBTYPE_AUTOMATE_SPELL:
-			return &GC.getSpellInfo((SpellTypes)getOriginalIndex());
-			break;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 		case ACTIONSUBTYPE_MISSION:
 			return &GC.getMissionInfo((MissionTypes)getOriginalIndex());
 			break;
@@ -6142,6 +6121,7 @@ void CvUnitInfo::updateArtDefineButton()
 {
 	m_szArtDefineButton = getArtInfo(0, NO_ERA, NO_UNIT_ARTSTYLE)->getButton();
 }
+
 
 const CvArtInfoUnit* CvUnitInfo::getArtInfo(int i, EraTypes eEra, UnitArtStyleTypes eStyle) const
 {
@@ -12049,21 +12029,6 @@ m_iHero(NO_UNIT),
 m_pbMaintainFeatures(NULL)
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (New Definitions) Sephi                                           				**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-,m_eBestDefender1(NO_UNITCLASS)
-,m_eBestDefender2(NO_UNITCLASS)
-,m_eBestDefender3(NO_UNITCLASS)
-,m_eBestPatrol1(NO_UNITCLASS)
-,m_eBestPatrol2(NO_UNITCLASS)
-,m_eBestPatrol3(NO_UNITCLASS)
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 {
 }
 
@@ -12242,44 +12207,7 @@ bool CvCivilizationInfo::isMaintainFeatures(int i) const
 }
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (New Definitions) Sephi                                           				**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-UnitClassTypes CvCivilizationInfo::getBestDefender1() const
-{
-    return m_eBestDefender1;
-}
 
-UnitClassTypes CvCivilizationInfo::getBestDefender2() const
-{
-    return m_eBestDefender2;
-}
-
-UnitClassTypes CvCivilizationInfo::getBestDefender3() const
-{
-    return m_eBestDefender3;
-}
-
-UnitClassTypes CvCivilizationInfo::getBestPatrol1() const
-{
-    return m_eBestPatrol1;
-}
-
-UnitClassTypes CvCivilizationInfo::getBestPatrol2() const
-{
-    return m_eBestPatrol2;
-}
-
-UnitClassTypes CvCivilizationInfo::getBestPatrol3() const
-{
-    return m_eBestPatrol3;
-}
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 // Arrays
 
 int CvCivilizationInfo::getCivilizationBuildings(int i) const
@@ -12695,28 +12623,6 @@ bool CvCivilizationInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_pbMaintainFeatures, "MaintainFeatures", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	BETTER AI (New Definitions) Sephi                                           				**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-	pXML->GetChildXmlValByName(szTextVal, "eBestDefender1", "UNITCLASS_ARCHER");
-	m_eBestDefender1 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-    pXML->GetChildXmlValByName(szTextVal, "eBestDefender2", "UNITCLASS_LONGBOWMAN");
-	m_eBestDefender2 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "eBestDefender3", "UNITCLASS_ARQUEBUS");
-	m_eBestDefender3 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-
-    pXML->GetChildXmlValByName(szTextVal, "eBestPatrol1", "UNITCLASS_HUNTER");
-	m_eBestPatrol1 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-    pXML->GetChildXmlValByName(szTextVal, "eBestPatrol2", "UNITCLASS_RANGER");
-	m_eBestPatrol2 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-	pXML->GetChildXmlValByName(szTextVal, "eBestPatrol3");
-	m_eBestPatrol3 = (UnitClassTypes)GC.getInfoTypeForString(szTextVal);
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 	return true;
 }
 

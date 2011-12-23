@@ -84,9 +84,6 @@ void CyInfoPythonInterface2()
 /**	                                                                 							**/
 /*************************************************************************************************/
         .def("getHero", &CvCivilizationInfo::getHero, "int ()")
-        .def("getBestDefender1", &CvCivilizationInfo::getBestDefender1, "int ()")
-        .def("getBestDefender2", &CvCivilizationInfo::getBestDefender2, "int ()")
-        .def("getBestDefender3", &CvCivilizationInfo::getBestDefender3, "int ()")
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
