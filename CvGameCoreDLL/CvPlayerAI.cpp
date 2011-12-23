@@ -14486,7 +14486,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	for (iI = 0; iI < GC.getNumHurryInfos(); iI++)
 	{
-		if (kCivic.isHurry(iI))
+		if (kCivic.isHurry(iI) && (!canHurry((HurryTypes)iI))) /* Fuyu: only add value if we can't already use this hurry type */
 		{
 			iTempValue = 0;
 
