@@ -3,7 +3,7 @@ from CvPythonExtensions import *
 import CvUtil
 import ScreenInput
 import CvScreenEnums
-#import BugUtil
+import BugUtil
 import math
 
 
@@ -285,7 +285,7 @@ class IconGrid_BUG:
 			if (inputClass.getButtonType() == WidgetTypes.WIDGET_GENERAL):
 				func = self.inputFunctionMap.get(inputClass.getData1(), None)
 				if func is not None:
-#					BugUtil.debug("calling %r", func)
+					BugUtil.debug("calling %r", func)
 					func()
 					return 1
 		
@@ -293,7 +293,7 @@ class IconGrid_BUG:
 			func = self.keyFunctionMap.get(inputClass.getData(), None)
 			if func:
 				if inputClass.getID():
-#					BugUtil.debug("calling %r", func)
+					BugUtil.debug("calling %r", func)
 					func()
 				return 1
 		

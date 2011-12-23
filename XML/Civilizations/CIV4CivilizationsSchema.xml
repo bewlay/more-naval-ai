@@ -25,7 +25,7 @@
 	<ElementType name="iConquestVictoryWeight" content="textOnly" dt:type="int"/>
 	<ElementType name="iDominationVictoryWeight" content="textOnly" dt:type="int"/>
 	<ElementType name="iDiplomacyVictoryWeight" content="textOnly" dt:type="int"/>
-	<!-- BBAI Victory Strategy --> 
+	<!-- BBAI Victory Strategy -->
 	<ElementType name="iMaxWarRand" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxWarNearbyPowerRatio" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxWarDistantPowerRatio" content="textOnly" dt:type="int"/>
@@ -226,6 +226,13 @@
 		<element type="iTechTradeKnownPercent"/>
 		<element type="iMaxGoldTradePercent"/>
 		<element type="iMaxGoldPerTurnTradePercent"/>
+		<!-- BBAI Victory Strategy -->
+		<element type="iCultureVictoryWeight" minOccurs="0"/>
+		<element type="iSpaceVictoryWeight" minOccurs="0"/>
+		<element type="iConquestVictoryWeight" minOccurs="0"/>
+		<element type="iDominationVictoryWeight" minOccurs="0"/>
+		<element type="iDiplomacyVictoryWeight" minOccurs="0"/>
+		<!-- BBAI Victory Strategy -->
 		<element type="iMaxWarRand"/>
 		<element type="iMaxWarNearbyPowerRatio"/>
 		<element type="iMaxWarDistantPowerRatio"/>
@@ -333,6 +340,18 @@
 	<ElementType name="iMaxGlobalBuildingProductionModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxTeamBuildingProductionModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxPlayerBuildingProductionModifier" content="textOnly" dt:type="int"/>
+	<!-- Phungus Rev Trait Effects -->
+	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>
+	<ElementType name="fRevIdxNationalityMod" content="textOnly"/>
+	<ElementType name="fRevIdxBadReligionMod" content="textOnly"/>
+	<ElementType name="fRevIdxGoodReligionMod" content="textOnly"/>
+	<ElementType name="bNonStateReligionCommerce" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bUpgradeAnywhere" content="textOnly" dt:type="boolean"/>
+	<!-- End Phungus Traits -->
 	<ElementType name="bAdaptive" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAgnostic" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAssimilation" content="textOnly" dt:type="boolean"/>
@@ -396,6 +415,18 @@
 		<element type="iMaxGlobalBuildingProductionModifier"/>
 		<element type="iMaxTeamBuildingProductionModifier"/>
 		<element type="iMaxPlayerBuildingProductionModifier"/>
+		<!-- Phungus Rev Trait Effects -->
+		<element type="iRevIdxLocal" minOccurs="0"/>
+		<element type="iRevIdxNational" minOccurs="0"/>
+		<element type="iRevIdxDistanceModifier" minOccurs="0"/>
+		<element type="iRevIdxHolyCityGood" minOccurs="0"/>
+		<element type="iRevIdxHolyCityBad" minOccurs="0"/>
+		<element type="fRevIdxNationalityMod" minOccurs="0"/>
+		<element type="fRevIdxBadReligionMod" minOccurs="0"/>
+		<element type="fRevIdxGoodReligionMod" minOccurs="0"/>
+		<element type="bNonStateReligionCommerce" minOccurs="0"/>
+		<element type="bUpgradeAnywhere" minOccurs="0"/>
+		<!-- End Phungus Traits -->
 		<element type="bAdaptive"/>
 		<element type="bAgnostic"/>
 		<element type="bAssimilation"/>
@@ -551,7 +582,7 @@
 		<element type="LeaderHeadInfos" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
 	<ElementType name="Civ4TraitInfos" content="eltOnly">
-		<element type="TraitInfos"/>
+		<element type="TraitInfos" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="Civ4CivilizationInfos" content="eltOnly">
 		<element type="CivilizationInfos" minOccurs="0" maxOccurs="*"/>

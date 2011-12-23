@@ -31,6 +31,10 @@
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLFAStarIFaceBase.h"
 #include "CvDLLPythonIFaceBase.h"
+// BUG - Ignore Harmless Barbarians - start
+#include "CvBugOptions.h"
+// BUG - Ignore Harmless Barbarians - end
+
 
 // Public Functions...
 
@@ -5481,7 +5485,10 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 
 	if (!szBuffer.empty())
 	{
-		gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getGoodyInfo(eGoody).getSound(), MESSAGE_TYPE_MINOR_EVENT, ARTFILEMGR.getImprovementArtInfo("ART_DEF_IMPROVEMENT_GOODY_HUT")->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
+// BUG - Goody Hut Log - start
+		// keep messages in event log forever
+		gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getGoodyInfo(eGoody).getSound(), MESSAGE_TYPE_MAJOR_EVENT, ARTFILEMGR.getImprovementArtInfo("ART_DEF_IMPROVEMENT_GOODY_HUT")->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
+// BUG - Goody Hut Log - end
 	}
 
 	iRange = GC.getGoodyInfo(eGoody).getMapRange();
@@ -8017,6 +8024,15 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 		return;
 	}
 
+// BUG - Revolution Event - start
+	CivicTypes* paeOldCivics = new CivicTypes[GC.getNumCivicOptionInfos()];
+
+	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	{
+		paeOldCivics[iI] = getCivics(((CivicOptionTypes)iI));
+	}
+// BUG - Revolution Event - end
+
 	iAnarchyLength = getCivicAnarchyLength(paeNewCivics);
 
 	if (iAnarchyLength > 0)
@@ -8042,6 +8058,11 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 	{
 		gDLL->getInterfaceIFace()->setDirty(Popup_DIRTY_BIT, true); // to force an update of the civic chooser popup
 	}
+
+// BUG - Revolution Event - start
+	CvEventReporter::getInstance().playerRevolution(getID(), iAnarchyLength, paeOldCivics, paeNewCivics);
+	delete [] paeOldCivics;
+// BUG - Revolution Event - end
 }
 
 
@@ -9348,12 +9369,16 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 
 	for (int iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
-		CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)kCiv.getCivilizationUnits(iI));
-
-		if (kUnit.getBuilds(eBuild))
+		UnitTypes kUnit = (UnitTypes)kCiv.getCivilizationUnits(iI);
+		if (kUnit != NO_UNIT)
 		{
-			iRate = kUnit.getWorkRate();
-			break;
+			CvUnitInfo& kUnitInfo = GC.getUnitInfo(kUnit);
+
+			if (kUnitInfo.getBuilds(eBuild))
+			{
+				iRate = kUnitInfo.getWorkRate();
+				break;
+			}
 		}
 	}
 
@@ -16874,6 +16899,11 @@ void CvPlayer::doWarnings()
 		gDLL->getEntityIFace()->updateEnemyGlow(pLoopUnit->getUnitEntity());
 	}
 
+// BUG - Ignore Harmless Barbarians - start
+	bool bCheckBarbarians = false;
+	bool bCheckBarbariansInitialized = !isHuman();
+// BUG - Ignore Harmless Barbarians - end
+
 	//update enemy units close to your territory
 	iMaxCount = range(((getNumCities() + 4) / 7), 2, 5);
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
@@ -16896,6 +16926,23 @@ void CvPlayer::doWarnings()
 					{
 						if (!pUnit->isAnimal())
 						{
+// BUG - Ignore Harmless Barbarians - start
+							if (!bCheckBarbariansInitialized && GC.getGameINLINE().getElapsedGameTurns() > 0)
+							{
+								bCheckBarbarians = getBugOptionBOOL("Actions__IgnoreHarmlessBarbarians", true, "BUG_IGNORE_HARMLESS_BARBARIANS");
+								bCheckBarbariansInitialized = true;
+							}
+							if (bCheckBarbarians && pUnit->isBarbarian() && pUnit->getDomainType() == DOMAIN_LAND)
+							{
+								CvArea* pArea = pUnit->area();
+								if (pArea && pArea->isBorderObstacle(getTeam()))
+								{
+									// don't show warning for land-based barbarians when player has Great Wall
+									continue;
+								}
+							}
+// BUG - Ignore Harmless Barbarians - end
+
 							pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), getID(), NO_TEAM, !(pLoopPlot->isWater()));
 
 							if (pNearestCity != NULL)
@@ -24550,3 +24597,11 @@ UnitArtStyleTypes CvPlayer::getUnitArtStyleType() const
 	return (UnitArtStyleTypes)iUnitArtStyle;
 }
 //<<<<Unofficial Bug Fix: End Add
+
+// BUG - Reminder Mod - start
+#include "CvMessageControl.h"
+void CvPlayer::addReminder(int iGameTurn, CvWString szMessage) const
+{
+	CvMessageControl::getInstance().sendAddReminder(getID(), iGameTurn, szMessage);
+}
+// BUG - Reminder Mod - end

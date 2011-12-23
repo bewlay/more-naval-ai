@@ -3690,6 +3690,78 @@ void CvCity::hurry(HurryTypes eHurry)
 	CvEventReporter::getInstance().cityHurry(this, eHurry);
 }
 
+// BUG - Hurry Assist - start
+bool CvCity::hurryOverflow(HurryTypes eHurry, int* iProduction, int* iGold, bool bCountThisTurn) const
+{
+	if (!canHurry(eHurry))
+	{
+		return false;
+	}
+
+	if (GC.getHurryInfo(eHurry).getProductionPerPopulation() == 0)
+	{
+		*iProduction = 0;
+		*iGold = 0;
+		return true;
+	}
+
+	int iTotal, iCurrent, iModifier, iGoldPercent;
+
+	if (isProductionUnit())
+	{
+		UnitTypes eUnit = getProductionUnit();
+		FAssertMsg(eUnit != NO_UNIT, "eUnit is expected to be assigned a valid unit type");
+		iTotal = getProductionNeeded(eUnit);
+		iCurrent = getUnitProduction(eUnit);
+		iModifier = getProductionModifier(eUnit);
+		iGoldPercent = GC.getDefineINT("MAXED_UNIT_GOLD_PERCENT");
+	}
+	else if (isProductionBuilding())
+	{
+		BuildingTypes eBuilding = getProductionBuilding();
+		FAssertMsg(eBuilding != NO_BUILDING, "eBuilding is expected to be assigned a valid building type");
+		iTotal = getProductionNeeded(eBuilding);
+		iCurrent = getBuildingProduction(eBuilding);
+		iModifier = getProductionModifier(eBuilding);
+		iGoldPercent = GC.getDefineINT("MAXED_BUILDING_GOLD_PERCENT");
+	}
+	else if (isProductionProject())
+	{
+		ProjectTypes eProject = getProductionProject();
+		FAssertMsg(eProject != NO_PROJECT, "eProject is expected to be assigned a valid project type");
+		iTotal = getProductionNeeded(eProject);
+		iCurrent = getProjectProduction(eProject);
+		iModifier = getProductionModifier(eProject);
+		iGoldPercent = GC.getDefineINT("MAXED_PROJECT_GOLD_PERCENT");
+	}
+	else
+	{
+		return false;
+	}
+
+	int iHurry = hurryProduction(eHurry);
+	int iOverflow = iCurrent + iHurry - iTotal;
+	if (bCountThisTurn)
+	{
+		// include chops and previous overflow here
+		iOverflow += getCurrentProductionDifference(false, true);
+	}
+	int iMaxOverflow = std::max(iTotal, getCurrentProductionDifference(false, false));
+	int iLostProduction = std::max(0, iOverflow - iMaxOverflow);
+	int iBaseModifier = getBaseYieldRateModifier(YIELD_PRODUCTION);
+	int iTotalModifier = getBaseYieldRateModifier(YIELD_PRODUCTION, iModifier);
+
+	iOverflow = std::min(iOverflow, iMaxOverflow);
+	iLostProduction *= iBaseModifier;
+	iLostProduction /= std::max(1, iTotalModifier);
+
+	*iProduction = (iBaseModifier * iOverflow) / std::max(1, iTotalModifier);
+	*iGold = ((iLostProduction * iGoldPercent) / 100);
+
+	return true;
+}
+// BUG - Hurry Assist - end
+
 
 UnitTypes CvCity::getConscriptUnit() const
 {
@@ -5985,6 +6057,7 @@ int CvCity::getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eBuildi
 }
 // BUG - Building Additional Great People - end
 
+
 // BUG - Specialist Additional Great People - start
 /*
  * Returns the total additional great people rate that changing the number of the given specialist will provide/remove.
@@ -6011,6 +6084,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateBySpecialist(SpecialistTypes eSpecia
 	return iChange * GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange();
 }
 // BUG - Specialist Additional Great People - end
+
 
 int CvCity::getNumWorldWonders() const
 {
@@ -6086,6 +6160,7 @@ void CvCity::changeGovernmentCenterCount(int iChange)
 		GET_PLAYER(getOwnerINLINE()).updateMaintenance();
 	}
 }
+
 
 // BUG - Building Saved Maintenance - start
 /*
@@ -6556,41 +6631,23 @@ int CvCity::getFeatureBadHealth() const
 }
 
 
+// BUG - Feature Health - start
+/*
+ * Recalculates the total percentage health effects from existing features
+ * and updates the values if they have changed.
+ *
+ * Bad health is stored as a negative value.
+ */
 void CvCity::updateFeatureHealth()
 {
-	CvPlot* pLoopPlot;
-	FeatureTypes eFeature;
 	int iNewGoodHealth;
 	int iNewBadHealth;
-	int iI;
 
 	iNewGoodHealth = 0;
 	iNewBadHealth = 0;
 
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
-//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
-	for (iI = 0; iI < getNumCityPlots(); iI++)
-//<<<<Unofficial Bug Fix: End Modify
-	{
-		pLoopPlot = getCityIndexPlot(iI);
-
-		if (pLoopPlot != NULL)
-		{
-			eFeature = pLoopPlot->getFeatureType();
-
-			if (eFeature != NO_FEATURE)
-			{
-				if (GC.getFeatureInfo(eFeature).getHealthPercent() > 0)
-				{
-					iNewGoodHealth += GC.getFeatureInfo(eFeature).getHealthPercent();
-				}
-				else
-				{
-					iNewBadHealth += GC.getFeatureInfo(eFeature).getHealthPercent();
-				}
-			}
-		}
-	}
+	calculateFeatureHealthPercent(iNewGoodHealth, iNewBadHealth);
+	iNewBadHealth = -iNewBadHealth;  // convert to "negative is bad"
 
 	iNewGoodHealth /= 100;
 	iNewBadHealth /= 100;
@@ -6610,6 +6667,167 @@ void CvCity::updateFeatureHealth()
 		}
 	}
 }
+
+/*
+ * Adds the total percentage health effects from existing features to iGood and iBad.
+ *
+ * Positive values for iBad mean an increase in unhealthiness.
+ */
+void CvCity::calculateFeatureHealthPercent(int& iGood, int& iBad) const
+{
+	CvPlot* pLoopPlot;
+	FeatureTypes eFeature;
+	int iI;
+
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
+	{
+		pLoopPlot = getCityIndexPlot(iI);
+
+		if (pLoopPlot != NULL)
+		{
+			eFeature = pLoopPlot->getFeatureType();
+
+			if (eFeature != NO_FEATURE)
+			{
+				int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+
+				if (iHealth > 0)
+				{
+					iGood += iHealth;
+				}
+				else
+				{
+					iBad -= iHealth;
+				}
+			}
+		}
+	}
+}
+
+/*
+ * Subtracts the total percentage health effects of features currently being removed to iGood and iBad.
+ * If pIgnorePlot is not NULL, it is not checked for feature removal.
+ * Checks only plots visible to this city's owner.
+ *
+ * Positive values for iBad mean an increase in unhealthiness.
+ */
+void CvCity::calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot) const
+{
+	CvPlot* pLoopPlot;
+	FeatureTypes eFeature;
+	int iI;
+
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (iI = 0; iI < getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
+	{
+		pLoopPlot = getCityIndexPlot(iI);
+
+		if (pLoopPlot != NULL && pLoopPlot != pIgnorePlot && pLoopPlot->isVisible(getTeam(), true))
+		{
+			eFeature = pLoopPlot->getFeatureType();
+
+			if (eFeature != NO_FEATURE)
+			{
+				int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+
+				if (iHealth != 0)
+				{
+					int iNumUnits = pLoopPlot->getNumUnits();
+
+					if (iNumUnits > 0)
+					{
+						CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode();
+						while (pUnitNode != NULL)
+						{
+							CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
+							pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
+							BuildTypes eBuild = pUnit->getBuildType();
+
+							if (eBuild != NO_BUILD)
+							{
+								CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
+
+								if (kBuild.isFeatureRemove(eFeature))
+								{
+									if (iHealth > 0)
+									{
+										iGood += iHealth;
+									}
+									else
+									{
+										iBad -= iHealth;
+									}
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/*
+ * Returns the total additional health that adding or removing iChange eFeatures will provide.
+ */
+int CvCity::getAdditionalHealthByFeature(FeatureTypes eFeature, int iChange) const
+{
+	int iGood = 0, iBad = 0;
+	return getAdditionalHealthByFeature(eFeature, iChange, iGood, iBad);
+}
+
+/*
+ * Returns the total additional health that adding or removing iChange eFeatures will provide
+ * and sets the good and bad levels individually.
+ *
+ * Doesn't reset iGood or iBad to zero.
+ * Positive values for iBad mean an increase in unhealthiness.
+ */
+int CvCity::getAdditionalHealthByFeature(FeatureTypes eFeature, int iChange, int& iGood, int& iBad) const
+{
+	FAssertMsg(eFeature >= 0, "eFeature expected to be >= 0");
+	FAssertMsg(eFeature < GC.getNumFeatureInfos(), "eFeature expected to be < GC.getNumFeatureInfos()");
+
+	CvFeatureInfo& kFeature = GC.getFeatureInfo(eFeature);
+	int iHealth = GC.getFeatureInfo(eFeature).getHealthPercent();
+
+	if (iHealth > 0)
+	{
+		return getAdditionalHealth(iChange * iHealth, 0, iGood, iBad);
+	}
+	else
+	{
+		return getAdditionalHealth(0, - iChange * iHealth, iGood, iBad);
+	}
+}
+
+/*
+ * Returns the total additional health that adding or removing a good or bad health percent will provide
+ * and sets the good and bad levels individually.
+ *
+ * Doesn't reset iGood or iBad to zero.
+ * Positive values for iBad and iBadPercent mean an increase in unhealthiness.
+ */
+int CvCity::getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, int& iBad) const
+{
+	int iStarting = iGood - iBad;
+
+	// Add current
+	calculateFeatureHealthPercent(iGoodPercent, iBadPercent);
+
+	// Delta
+	iGood += (iGoodPercent / 100) - getFeatureGoodHealth();
+	iBad += (iBadPercent / 100) + getFeatureBadHealth();		// bad health is stored as negative
+
+	return iGood - iBad - iStarting;
+}
+// BUG - Feature Health - end
 
 // BUG - Actual Effects - start
 /*
@@ -6669,6 +6887,7 @@ int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 	return 0;
 }
 // BUG - Actual Effects - start
+
 
 int CvCity::getBuildingGoodHealth() const
 {
@@ -7024,7 +7243,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding) const
 
 /*
  * Returns the total additional happiness that adding one of the given buildings will provide
- * and sets the good and bad levels individually.
+ * and sets the good and bad levels individually and any resulting additional angry population.
  *
  * Doesn't reset iGood or iBad to zero.
  * Doesn't check if the building can be constructed in this city.
@@ -7045,11 +7264,29 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	// Building Class
 	addGoodOrBad(getBuildingHappyChange((BuildingClassTypes)kBuilding.getBuildingClassType()), iGood, iBad);
 
+	// Other Building Classes
+	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
+	for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+	{
+		int iBuildingHappinessChanges = kBuilding.getBuildingHappinessChanges(iI);
+		if (iBuildingHappinessChanges != 0)
+		{
+			BuildingTypes eLoopBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings(iI);
+			if (eLoopBuilding != NO_BUILDING)
+			{
+				addGoodOrBad(iBuildingHappinessChanges * (getNumBuilding(eLoopBuilding) + (eBuilding == eLoopBuilding ? 1 : 0)), iGood, iBad);
+			}
+		}
+	}
+
 	// Player Building
 	addGoodOrBad(GET_PLAYER(getOwnerINLINE()).getExtraBuildingHappiness(eBuilding), iGood, iBad);
 
 	// Area
 	addGoodOrBad(kBuilding.getAreaHappiness(), iGood, iBad);
+
+	// Global
+	addGoodOrBad(kBuilding.getGlobalHappiness(), iGood, iBad);
 
 	// Religion
 	if (kBuilding.getReligionType() != NO_RELIGION && kBuilding.getReligionType() == GET_PLAYER(getOwnerINLINE()).getStateReligion())
@@ -7073,7 +7310,8 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	}
 
 	// War Weariness Modifier
-	if (kBuilding.getWarWearinessModifier() != 0)
+	int iWarWearinessModifier = kBuilding.getWarWearinessModifier() + kBuilding.getGlobalWarWearinessModifier();
+	if (iWarWearinessModifier != 0)
 	{
 		int iBaseAngerPercent = 0;
 
@@ -7093,7 +7331,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 		int iCurrentUnhappiness = iCurrentAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
 
 		int iNewWarAngerPercent = GET_PLAYER(getOwnerINLINE()).getWarWearinessPercentAnger();
-		iNewWarAngerPercent *= std::max(0, (kBuilding.getWarWearinessModifier() + getWarWearinessModifier() + GET_PLAYER(getOwnerINLINE()).getWarWearinessModifier() + 100));
+		iNewWarAngerPercent *= std::max(0, (iWarWearinessModifier + getWarWearinessModifier() + GET_PLAYER(getOwnerINLINE()).getWarWearinessModifier() + 100));
 		iNewWarAngerPercent /= 100;
 		int iNewAngerPercent = iBaseAngerPercent + iNewWarAngerPercent;
 		int iNewUnhappiness = iNewAngerPercent * getPopulation() / GC.getPERCENT_ANGER_DIVISOR();
@@ -7111,6 +7349,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 	return iGood - iBad - iStarting;
 }
 
+
 /*
  * Returns the total additional health that adding one of the given buildings will provide.
  *
@@ -7124,9 +7363,9 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding) const
 
 /*
  * Returns the total additional health that adding one of the given buildings will provide
- * and sets the good and bad levels individually.
+ * and sets the good and bad levels individually and any resulting additional spoiled food and starvation.
  *
- * Doesn't reset iGood or iBad to zero.
+ * Doesn't reset iGood, iBad, iSpoiledFood, iStarvation to zero.
  * Doesn't check if the building can be constructed in this city.
  */
 int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, int& iBad) const
@@ -7150,6 +7389,9 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	// Area
 	addGoodOrBad(kBuilding.getAreaHealth(), iGood, iBad);
+
+	// Global
+	addGoodOrBad(kBuilding.getGlobalHealth(), iGood, iBad);
 
 	// No Unhealthiness from Buildings
 	if (isBuildingOnlyHealthy())
@@ -7235,9 +7477,6 @@ void subtractGoodOrBad(int iValue, int& iGood, int& iBad)
 	}
 }
 // BUG - Building Additional Happiness - end
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
 
 
 int CvCity::getExtraBuildingGoodHealth() const
@@ -7881,6 +8120,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 }
 // BUG - Building Additional Defense - end
 
+
 int CvCity::getBuildingBombardDefense() const
 {
 	return m_iBuildingBombardDefense;
@@ -7909,6 +8149,7 @@ int CvCity::getAdditionalBombardDefenseByBuilding(BuildingTypes eBuilding) const
 	return std::min(kBuilding.getBombardDefenseModifier() + iBaseDefense, 100) - iBaseDefense;
 }
 // BUG - Building Additional Bombard Defense - end
+
 
 int CvCity::getFreeExperience() const
 {
@@ -8726,6 +8967,7 @@ void CvCity::changeRiverPlotYield(YieldTypes eIndex, int iChange)
 	}
 }
 
+
 // BUG - Building Additional Yield - start
 /*
  * Returns the total additional yield that adding one of the given buildings will provide.
@@ -8898,6 +9140,7 @@ int CvCity::getAdditionalYieldRateModifierByBuilding(YieldTypes eIndex, Building
 }
 // BUG - Building Additional Yield - end
 
+
 // BUG - Specialist Additional Yield - start
 /*
  * Returns the total additional yield that changing the number of given specialists will provide/remove.
@@ -8925,6 +9168,7 @@ int CvCity::getAdditionalBaseYieldRateBySpecialist(YieldTypes eIndex, Specialist
 	return iChange * (kSpecialist.getYieldChange(eIndex) + GET_PLAYER(getOwnerINLINE()).getSpecialistExtraYield(eSpecialist, eIndex));
 }
 // BUG - Specialist Additional Yield - end
+
 
 int CvCity::getBaseYieldRate(YieldTypes eIndex)	const
 {
@@ -9311,6 +9555,24 @@ void CvCity::calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& i
 		}
 	}
 }
+
+/*
+ * Returns the total trade yield.
+ *
+ * If Fractional Trade Routes is enabled or bBase is true, the yield value is left times 100.
+ * UNUSED
+ */
+int CvCity::calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer, bool bRound, bool bBase) const
+{
+	int iDomesticYield = 0;
+	int iDomesticRoutes = 0;
+	int iForeignYield = 0;
+	int iForeignRoutes = 0;
+	
+	calculateTradeTotals(eIndex, iDomesticYield, iDomesticRoutes, iForeignYield, iForeignRoutes, eWithPlayer, bRound, bBase);
+	return iDomesticYield + iForeignRoutes;
+}
+// BUG - Trade Totals - end
 
 
 void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
@@ -9776,6 +10038,7 @@ int CvCity::getAdditionalCommerceRateModifierByBuildingImpl(CommerceTypes eIndex
 }
 // BUG - Building Additional Commerce - end
 
+
 void CvCity::updateBuildingCommerce()
 {
 	int iNewBuildingCommerce;
@@ -9822,6 +10085,7 @@ void CvCity::changeSpecialistCommerce(CommerceTypes eIndex, int iChange)
 		updateCommerce(eIndex);
 	}
 }
+
 
 // BUG - Specialist Additional Commerce - start
 /*
@@ -9889,6 +10153,7 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialistImpl(CommerceTypes eIndex, 
 	return iChange * (kSpecialist.getCommerceChange(eIndex) + GET_PLAYER(getOwnerINLINE()).getSpecialistExtraCommerce(eIndex));
 }
 // BUG - Specialist Additional Commerce - end
+
 
 int CvCity::getReligionCommerce(CommerceTypes eIndex) const
 {
@@ -10927,7 +11192,43 @@ void CvCity::changeBuildingProductionTime(BuildingTypes eIndex, int iChange)
 }
 
 
-int CvCity::getProjectProduction(ProjectTypes eIndex) const
+// BUG - Production Decay - start
+/*
+ * Returns true if the given building will decay this turn.
+ */
+bool CvCity::isBuildingProductionDecay(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	return isHuman() && getProductionBuilding() != eIndex && getBuildingProduction(eIndex) > 0 
+			&& 100 * getBuildingProductionTime(eIndex) >= GC.getDefineINT("BUILDING_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent();
+}
+
+/*
+ * Returns the amount by which the given building will decay once it reaches the limit.
+ * Ignores whether or not the building will actually decay this turn.
+ */
+int CvCity::getBuildingProductionDecay(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	int iProduction = getBuildingProduction(eIndex);
+	return iProduction - ((iProduction * GC.getDefineINT("BUILDING_PRODUCTION_DECAY_PERCENT")) / 100);
+}
+
+/*
+ * Returns the number of turns left before the given building will decay.
+ */
+int CvCity::getBuildingProductionDecayTurns(BuildingTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumBuildingInfos(), "eIndex expected to be < GC.getNumBuildingInfos()");
+	return std::max(0, (GC.getDefineINT("BUILDING_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent() + 99) / 100 - getBuildingProductionTime(eIndex)) + 1;
+}
+// BUG - Production Decay - end
+
+
+int CvCity::getProjectProduction(ProjectTypes eIndex) const																 
 {
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	FAssertMsg(eIndex < GC.getNumProjectInfos(), "eIndex expected to be < GC.getNumProjectInfos()");
@@ -11042,7 +11343,43 @@ void CvCity::changeUnitProductionTime(UnitTypes eIndex, int iChange)
 }
 
 
-int CvCity::getGreatPeopleUnitRate(UnitTypes eIndex) const
+// BUG - Production Decay - start
+/*
+ * Returns true if the given unit will decay this turn.
+ */
+bool CvCity::isUnitProductionDecay(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	return isHuman() && getProductionUnit() != eIndex && getUnitProduction(eIndex) > 0 
+			&& 100 * getUnitProductionTime(eIndex) >= GC.getDefineINT("UNIT_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+}
+
+/*
+ * Returns the amount by which the given unit will decay once it reaches the limit.
+ * Ignores whether or not the unit will actually decay this turn.
+ */
+int CvCity::getUnitProductionDecay(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	int iProduction = getUnitProduction(eIndex);
+	return iProduction - ((iProduction * GC.getDefineINT("UNIT_PRODUCTION_DECAY_PERCENT")) / 100);
+}
+
+/*
+ * Returns the number of turns left before the given unit will decay.
+ */
+int CvCity::getUnitProductionDecayTurns(UnitTypes eIndex) const																			 
+{
+	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
+	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
+	return std::max(0, (GC.getDefineINT("UNIT_PRODUCTION_DECAY_TIME") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent() + 99) / 100 - getUnitProductionTime(eIndex)) + 1;
+}
+// BUG - Production Decay - end
+
+
+int CvCity::getGreatPeopleUnitRate(UnitTypes eIndex) const																 
 {
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	FAssertMsg(eIndex < GC.getNumUnitInfos(), "eIndex expected to be < GC.getNumUnitInfos()");
@@ -12415,6 +12752,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			GET_TEAM(getTeam()).changeProjectMaking(((ProjectTypes)iData1), 1);
 
 			bValid = true;
+// BUG - Project Started Event - start
+			CvEventReporter::getInstance().cityBuildingProject(this, (ProjectTypes)iData1);
+// BUG - Project Started Event - end
 		}
 		break;
 
@@ -12422,6 +12762,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		if (canMaintain((ProcessTypes)iData1) || bForce)
 		{
 			bValid = true;
+// BUG - Process Started Event - start
+			CvEventReporter::getInstance().cityBuildingProcess(this, (ProcessTypes)iData1);
+// BUG - Process Started Event - end
 		}
 		break;
 
@@ -12459,11 +12802,11 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 
 /*	if (bBuildingUnit)
 	{
-		gDLL->getEventReporterIFace()->cityBuildingUnit(this, (UnitTypes)iData1);
+		CvEventReporter::getInstance().cityBuildingUnit(this, (UnitTypes)iData1);
 	}
 	else if (bBuildingBuilding)
 	{
-		gDLL->getEventReporterIFace()->cityBuildingBuilding(this, (BuildingTypes)iData1);
+		CvEventReporter::getInstance().cityBuildingBuilding(this, (BuildingTypes)iData1);
 	}*/
 
 	if ((getTeam() == GC.getGameINLINE().getActiveTeam()) || GC.getGameINLINE().isDebugMode())
@@ -12561,8 +12904,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			// max overflow is the value of the item produced (to eliminate prebuild exploits)
 			iOverflow = getUnitProduction(eTrainUnit) - iProductionNeeded;
 			int iMaxOverflow = std::max(iProductionNeeded, getCurrentProductionDifference(false, false));
-			// UNOFFICIAL_PATCH Start
+// BUG - Overflow Gold Fix - start
 			int iLostProduction = std::max(0, iOverflow - iMaxOverflow);
+// BUG - Overflow Gold Fix - end
 			iOverflow = std::min(iMaxOverflow, iOverflow);
 			if (iOverflow > 0)
 			{
@@ -12647,8 +12991,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			// max overflow is the value of the item produced (to eliminate prebuild exploits)
 			int iOverflow = getBuildingProduction(eConstructBuilding) - iProductionNeeded;
 			int iMaxOverflow = std::max(iProductionNeeded, getCurrentProductionDifference(false, false));
-			// UNOFFICIAL_PATCH Start
+// BUG - Overflow Gold Fix - start
 			int iLostProduction = std::max(0, iOverflow - iMaxOverflow);
+// BUG - Overflow Gold Fix - end
 			iOverflow = std::min(iMaxOverflow, iOverflow);
 			if (iOverflow > 0)
 			{
@@ -12656,12 +13001,12 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			}
 			setBuildingProduction(eConstructBuilding, 0);
 
-			// * Limited which production modifiers affect gold from production overflow. 2/3
+// BUG - Overflow Gold Fix - start
 			iLostProduction *= getBaseYieldRateModifier(YIELD_PRODUCTION);
 			iLostProduction /= std::max(1, getBaseYieldRateModifier(YIELD_PRODUCTION, getProductionModifier(eConstructBuilding)));
 
 			int iProductionGold = ((iLostProduction * GC.getDefineINT("MAXED_BUILDING_GOLD_PERCENT")) / 100);
-			// UNOFFICIAL_PATCH End
+// BUG - Overflow Gold Fix - end
 			if (iProductionGold > 0)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeGold(iProductionGold);
@@ -12743,8 +13088,9 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			// max overflow is the value of the item produced (to eliminate prebuild exploits)
 			iOverflow = getProjectProduction(eCreateProject) - iProductionNeeded;
 			int iMaxOverflow = std::max(iProductionNeeded, getCurrentProductionDifference(false, false));
-			// UNOFFICIAL_PATCH Start
+// BUG - Overflow Gold Fix - start
 			int iLostProduction = std::max(0, iOverflow - iMaxOverflow);
+// BUG - Overflow Gold Fix - end
 			iOverflow = std::min(iMaxOverflow, iOverflow);
 			if (iOverflow > 0)
 			{
@@ -12752,13 +13098,12 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			}
 			setProjectProduction(eCreateProject, 0);
 
-
-			// * Limited which production modifiers affect gold from production overflow. 3/3
+// BUG - Overflow Gold Fix - start
 			iLostProduction *= getBaseYieldRateModifier(YIELD_PRODUCTION);
 			iLostProduction /= std::max(1, getBaseYieldRateModifier(YIELD_PRODUCTION, getProductionModifier(eCreateProject)));
 
 			int iProductionGold = ((iLostProduction * GC.getDefineINT("MAXED_PROJECT_GOLD_PERCENT")) / 100);
-			// UNOFFICIAL_PATCH End
+// BUG - Overflow Gold Fix - end
 			if (iProductionGold > 0)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeGold(iProductionGold);

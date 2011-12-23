@@ -224,6 +224,11 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getBuildingBadHealth", &CyCity::getBuildingBadHealth, "int ()")
 		.def("getFeatureGoodHealth", &CyCity::getFeatureGoodHealth, "int () - returns the good health provided by the feature this city is built on")
 		.def("getFeatureBadHealth", &CyCity::getFeatureBadHealth, "int () - returns the bad health provided by the feature this city is built on")
+// BUG - Feature Health - startn")
+		.def("getAdditionalHealthByFeature", &CyCity::getAdditionalHealthByFeature, "int (int /*FeatureTypes*/ eFeature, int iChange) - additional healthiness minus additional unhealthiness")
+		.def("getAdditionalGoodHealthByFeature", &CyCity::getAdditionalGoodHealthByFeature, "int (int /*FeatureTypes*/ eFeature, int iChange) - additional healthiness")
+		.def("getAdditionalBadHealthByFeature", &CyCity::getAdditionalBadHealthByFeature, "int (int /*FeatureTypes*/ eFeature, int iChange) - additional unhealthiness")
+// BUG - Feature Health - end
 		.def("getBuildingHealth", &CyCity::getBuildingHealth, "int (int eBuilding)")
 // BUG - Building Additional Health - start
 		.def("getAdditionalHealthByBuilding", &CyCity::getAdditionalHealthByBuilding, "int (int /*BuildingTypes*/ eBuilding) - additional healthiness minus additional unhealthiness")
@@ -431,11 +436,29 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getBuildingProductionTime", &CyCity::getBuildingProductionTime, "int (int eIndex)")
 		.def("setBuildingProductionTime", &CyCity::setBuildingProductionTime, "int (int eIndex, int iNewValue)")
 		.def("changeBuildingProductionTime", &CyCity::changeBuildingProductionTime, "int (int eIndex, int iChange)")
+// BUG - Production Decay - start
+		.def("isBuildingProductionDecay", &CyCity::isBuildingProductionDecay, "bool (int /*BuildingTypes*/ eIndex)")
+		.def("getBuildingProductionDecay", &CyCity::getBuildingProductionDecay, "int (int /*BuildingTypes*/ eIndex)")
+		.def("getBuildingProductionDecayTurns", &CyCity::getBuildingProductionDecayTurns, "int (int /*BuildingTypes*/ eIndex)")
+// BUG - Production Decay - end
 		.def("getBuildingOriginalOwner", &CyCity::getBuildingOriginalOwner, "int (BuildingType) - index of original building owner")
 		.def("getBuildingOriginalTime", &CyCity::getBuildingOriginalTime, "int (BuildingType) - original build date")
 		.def("getUnitProduction", &CyCity::getUnitProduction, "int (UnitID) - gets current production towards UnitID")
 		.def("setUnitProduction", &CyCity::setUnitProduction, "void (UnitID, iNewValue) - sets production towards UnitID as iNewValue")
 		.def("changeUnitProduction", &CyCity::changeUnitProduction, "void (UnitID, iChange) - adjusts production towards UnitID by iChange")
+// BUG - Production Decay - start
+		.def("getUnitProductionTime", &CyCity::getUnitProductionTime, "int (int /*UnitTypes*/ eIndex)")
+		.def("setUnitProductionTime", &CyCity::setUnitProductionTime, "int (int /*UnitTypes*/ eIndex, int iNewValue)")
+		.def("changeUnitProductionTime", &CyCity::changeUnitProductionTime, "int (int /*UnitTypes*/ eIndex, int iChange)")
+		.def("isUnitProductionDecay", &CyCity::isUnitProductionDecay, "bool (int /*UnitTypes*/ eIndex)")
+		.def("getUnitProductionDecay", &CyCity::getUnitProductionDecay, "int (int /*UnitTypes*/ eIndex)")
+		.def("getUnitProductionDecayTurns", &CyCity::getUnitProductionDecayTurns, "int (int /*UnitTypes*/ eIndex)")
+// BUG - Production Decay - end
+// BUG - Project Production - start
+		.def("getProjectProduction", &CyCity::getProjectProduction, "int (int /*ProjectTypes*/ eIndex)")
+		.def("setProjectProduction", &CyCity::setProjectProduction, "void (int /*ProjectTypes*/ eIndex, int iNewValue)")
+		.def("changeProjectProduction", &CyCity::changeProjectProduction, "void (int /*ProjectTypes*/ eIndex, int iChange)")
+// BUG - Project Production - end
 		.def("getGreatPeopleUnitRate", &CyCity::getGreatPeopleUnitRate, "int (int /*UnitTypes*/ iIndex)")
 		.def("getGreatPeopleUnitProgress", &CyCity::getGreatPeopleUnitProgress, "int (int /*UnitTypes*/ iIndex)")
 		.def("setGreatPeopleUnitProgress", &CyCity::setGreatPeopleUnitProgress, "int (int /*UnitTypes*/ iIndex, int iNewValue)")
@@ -460,57 +483,62 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getCurrentStateReligionHappiness", &CyCity::getCurrentStateReligionHappiness, "int ()")
 		.def("getStateReligionHappiness", &CyCity::getStateReligionHappiness, "int (int /*ReligionTypes*/ ReligionID)")
 		.def("changeStateReligionHappiness", &CyCity::changeStateReligionHappiness, "void (int /*ReligionTypes*/ ReligionID, iChange)")
+/************************************************************************************************/
+/* Afforess	                  Start		 07/30/10                                               */
+/*                                                                                              */
+/* Moved Into CyCityInterface2 to avoid module size limit                                       */
+/************************************************************************************************/
 
-		.def("getUnitCombatFreeExperience", &CyCity::getUnitCombatFreeExperience, "int (int /*UnitCombatTypes*/ eIndex)")
-		.def("getFreePromotionCount", &CyCity::getFreePromotionCount, "int (int /*PromotionTypes*/ eIndex)")
-		.def("isFreePromotion", &CyCity::isFreePromotion, "bool (int /*PromotionTypes*/ eIndex)")
-		.def("getSpecialistFreeExperience", &CyCity::getSpecialistFreeExperience, "int ()")
-		.def("getEspionageDefenseModifier", &CyCity::getEspionageDefenseModifier, "int ()")
+		// .def("getUnitCombatFreeExperience", &CyCity::getUnitCombatFreeExperience, "int (int /*UnitCombatTypes*/ eIndex)")
+		// .def("getFreePromotionCount", &CyCity::getFreePromotionCount, "int (int /*PromotionTypes*/ eIndex)")
+		// .def("isFreePromotion", &CyCity::isFreePromotion, "bool (int /*PromotionTypes*/ eIndex)")
+		// .def("getSpecialistFreeExperience", &CyCity::getSpecialistFreeExperience, "int ()")
+		// .def("getEspionageDefenseModifier", &CyCity::getEspionageDefenseModifier, "int ()")
 
-		.def("isWorkingPlotByIndex", &CyCity::isWorkingPlotByIndex, "bool (iIndex) - true if a worker is working this city's plot iIndex")
-		.def("isWorkingPlot", &CyCity::isWorkingPlot, "bool (iIndex) - true if a worker is working this city's pPlot")
-		.def("alterWorkingPlot", &CyCity::alterWorkingPlot, "void (iIndex)")
-		.def("getNumRealBuilding", &CyCity::getNumRealBuilding, "int (BuildingID) - get # real building of this type")
-		.def("setNumRealBuilding", &CyCity::setNumRealBuilding, "(BuildingID, iNum) - Sets number of buildings in this city of BuildingID type")
-		.def("getNumFreeBuilding", &CyCity::getNumFreeBuilding, "int (BuildingID) - # of free Building ID (ie: from a Wonder)")
-		.def("isHasReligion", &CyCity::isHasReligion, "bool (ReligionID) - does city have ReligionID?")
-		.def("setHasReligion", &CyCity::setHasReligion, "void (ReligionID, bool bNewValue, bool bAnnounce, bool bArrows) - religion begins to spread")
-		.def("isHasCorporation", &CyCity::isHasCorporation, "bool (CorporationID) - does city have CorporationID?")
-		.def("setHasCorporation", &CyCity::setHasCorporation, "void (CorporationID, bool bNewValue, bool bAnnounce, bool bArrows) - corporation begins to spread")
-		.def("isActiveCorporation", &CyCity::isActiveCorporation, "bool (CorporationID) - does city have active CorporationID?")
-		.def("getTradeCity", &CyCity::getTradeCity, python::return_value_policy<python::manage_new_object>(), "CyCity (int iIndex) - remove SpecialistType[iIndex]")
-		.def("getTradeRoutes", &CyCity::getTradeRoutes, "int ()")
+		// .def("isWorkingPlotByIndex", &CyCity::isWorkingPlotByIndex, "bool (iIndex) - true if a worker is working this city's plot iIndex")
+		// .def("isWorkingPlot", &CyCity::isWorkingPlot, "bool (iIndex) - true if a worker is working this city's pPlot")
+		// .def("alterWorkingPlot", &CyCity::alterWorkingPlot, "void (iIndex)")	
+		// .def("getNumRealBuilding", &CyCity::getNumRealBuilding, "int (BuildingID) - get # real building of this type")
+		// .def("setNumRealBuilding", &CyCity::setNumRealBuilding, "(BuildingID, iNum) - Sets number of buildings in this city of BuildingID type")
+		// .def("getNumFreeBuilding", &CyCity::getNumFreeBuilding, "int (BuildingID) - # of free Building ID (ie: from a Wonder)")
+		// .def("isHasReligion", &CyCity::isHasReligion, "bool (ReligionID) - does city have ReligionID?")
+		// .def("setHasReligion", &CyCity::setHasReligion, "void (ReligionID, bool bNewValue, bool bAnnounce, bool bArrows) - religion begins to spread")
+		// .def("isHasCorporation", &CyCity::isHasCorporation, "bool (CorporationID) - does city have CorporationID?")
+		// .def("setHasCorporation", &CyCity::setHasCorporation, "void (CorporationID, bool bNewValue, bool bAnnounce, bool bArrows) - corporation begins to spread")
+		// .def("isActiveCorporation", &CyCity::isActiveCorporation, "bool (CorporationID) - does city have active CorporationID?")
+		// .def("getTradeCity", &CyCity::getTradeCity, python::return_value_policy<python::manage_new_object>(), "CyCity (int iIndex) - remove SpecialistType[iIndex]")
+		// .def("getTradeRoutes", &CyCity::getTradeRoutes, "int ()")
 
-		.def("clearOrderQueue", &CyCity::clearOrderQueue, "void ()")
-		.def("pushOrder", &CyCity::pushOrder, "void (OrderTypes eOrder, int iData1, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce)")
-		.def("popOrder", &CyCity::popOrder, "int (int iNum, bool bFinish, bool bChoose)")
-		.def("getOrderQueueLength", &CyCity::getOrderQueueLength, "void ()")
-		.def("getOrderFromQueue", &CyCity::getOrderFromQueue, python::return_value_policy<python::manage_new_object>(), "OrderData* (int iIndex)")
+		// .def("clearOrderQueue", &CyCity::clearOrderQueue, "void ()")
+		// .def("pushOrder", &CyCity::pushOrder, "void (OrderTypes eOrder, int iData1, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce)")
+		// .def("popOrder", &CyCity::popOrder, "int (int iNum, bool bFinish, bool bChoose)")
+		// .def("getOrderQueueLength", &CyCity::getOrderQueueLength, "void ()")
+		// .def("getOrderFromQueue", &CyCity::getOrderFromQueue, python::return_value_policy<python::manage_new_object>(), "OrderData* (int iIndex)")
 
-		.def("setWallOverridePoints", &CyCity::setWallOverridePoints, "setWallOverridePoints(const python::tuple& kPoints)")
-		.def("getWallOverridePoints", &CyCity::getWallOverridePoints, "python::tuple getWallOverridePoints()")
+		// .def("setWallOverridePoints", &CyCity::setWallOverridePoints, "setWallOverridePoints(const python::tuple& kPoints)")
+		// .def("getWallOverridePoints", &CyCity::getWallOverridePoints, "python::tuple getWallOverridePoints()")
 
-		.def("AI_avoidGrowth", &CyCity::AI_avoidGrowth, "bool ()")
-		.def("AI_isEmphasize", &CyCity::AI_isEmphasize, "bool (int iEmphasizeType)")
-		.def("AI_countBestBuilds", &CyCity::AI_countBestBuilds, "int (CyArea* pArea)")
-		.def("AI_cityValue", &CyCity::AI_cityValue, "int ()")
+		// .def("AI_avoidGrowth", &CyCity::AI_avoidGrowth, "bool ()")
+		// .def("AI_isEmphasize", &CyCity::AI_isEmphasize, "bool (int iEmphasizeType)")
+		// .def("AI_countBestBuilds", &CyCity::AI_countBestBuilds, "int (CyArea* pArea)")
+		// .def("AI_cityValue", &CyCity::AI_cityValue, "int ()")
 
-		.def("getScriptData", &CyCity::getScriptData, "str () - Get stored custom data (via pickle)")
-		.def("setScriptData", &CyCity::setScriptData, "void (str) - Set stored custom data (via pickle)")
+		// .def("getScriptData", &CyCity::getScriptData, "str () - Get stored custom data (via pickle)")
+		// .def("setScriptData", &CyCity::setScriptData, "void (str) - Set stored custom data (via pickle)")
 
-		.def("visiblePopulation", &CyCity::visiblePopulation, "int ()")
+		// .def("visiblePopulation", &CyCity::visiblePopulation, "int ()")
 
-		.def("getBuildingYieldChange", &CyCity::getBuildingYieldChange, "int (int /*BuildingClassTypes*/ eBuildingClass, int /*YieldTypes*/ eYield)")
-		.def("setBuildingYieldChange", &CyCity::setBuildingYieldChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int /*YieldTypes*/ eYield, int iChange)")
-		.def("getBuildingCommerceChange", &CyCity::getBuildingCommerceChange, "int (int /*BuildingClassTypes*/ eBuildingClass, int /*CommerceTypes*/ eCommerce)")
-		.def("setBuildingCommerceChange", &CyCity::setBuildingCommerceChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int /*CommerceTypes*/ eCommerce, int iChange)")
-		.def("getBuildingHappyChange", &CyCity::getBuildingHappyChange, "int (int /*BuildingClassTypes*/ eBuildingClass)")
-		.def("setBuildingHappyChange", &CyCity::setBuildingHappyChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
-		.def("getBuildingHealthChange", &CyCity::getBuildingHealthChange, "int (int /*BuildingClassTypes*/ eBuildingClass)")
-		.def("setBuildingHealthChange", &CyCity::setBuildingHealthChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
+		// .def("getBuildingYieldChange", &CyCity::getBuildingYieldChange, "int (int /*BuildingClassTypes*/ eBuildingClass, int /*YieldTypes*/ eYield)")
+		// .def("setBuildingYieldChange", &CyCity::setBuildingYieldChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int /*YieldTypes*/ eYield, int iChange)")
+		// .def("getBuildingCommerceChange", &CyCity::getBuildingCommerceChange, "int (int /*BuildingClassTypes*/ eBuildingClass, int /*CommerceTypes*/ eCommerce)")
+		// .def("setBuildingCommerceChange", &CyCity::setBuildingCommerceChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int /*CommerceTypes*/ eCommerce, int iChange)")
+		// .def("getBuildingHappyChange", &CyCity::getBuildingHappyChange, "int (int /*BuildingClassTypes*/ eBuildingClass)")
+		// .def("setBuildingHappyChange", &CyCity::setBuildingHappyChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
+		// .def("getBuildingHealthChange", &CyCity::getBuildingHealthChange, "int (int /*BuildingClassTypes*/ eBuildingClass)")
+		// .def("setBuildingHealthChange", &CyCity::setBuildingHealthChange, "void (int /*BuildingClassTypes*/ eBuildingClass, int iChange)")
 
-		.def("getLiberationPlayer", &CyCity::getLiberationPlayer, "int ()")
-		.def("liberate", &CyCity::liberate, "void ()")
+		// .def("getLiberationPlayer", &CyCity::getLiberationPlayer, "int ()")
+		// .def("liberate", &CyCity::liberate, "void ()")
 
 //FfH: Added by Kael 10/18/2007
 		.def("applyBuildEffects", &CyCity::applyBuildEffects, "void (CyUnit* pUnit)")
@@ -535,5 +563,10 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 /**	END	                                        												**/
 /*************************************************************************************************/
 		.def("getAltarLevel", &CyCity::getAltarLevel, "int ()")
+		
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 		;
 }

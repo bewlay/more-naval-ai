@@ -277,80 +277,80 @@
 	<ElementType name="PrereqTrait" content="textOnly"/>
 	<ElementType name="EventTriggerInfo" content="eltOnly">
 		<element type="Type"/>
-		<element type="WorldNewsTexts"/>
-		<element type="TriggerTexts"/>
-		<element type="bSinglePlayer"/>
-		<element type="iPercentGamesActive"/>
-		<element type="iWeight"/>
-		<element type="bProbabilityUnitMultiply"/>
-		<element type="bProbabilityBuildingMultiply"/>
-		<element type="Civic"/>
-		<element type="iMinTreasury"/>
-		<element type="iMinPopulation"/>
-		<element type="iMaxPopulation"/>
-		<element type="iMinMapLandmass"/>
-		<element type="iMinOurLandmass"/>
-		<element type="iMaxOurLandmass"/>
-		<element type="MinDifficulty"/>
-		<element type="iAngry"/>
-		<element type="iUnhealthy"/>
-		<element type="UnitsRequired"/>
-		<element type="iNumUnits"/>
-		<element type="iNumUnitsGlobal"/>
-		<element type="iUnitDamagedWeight"/>
-		<element type="iUnitDistanceWeight"/>
-		<element type="iUnitExperienceWeight"/>
-		<element type="bUnitsOnPlot"/>
-		<element type="BuildingsRequired"/>
-		<element type="iNumBuildings"/>
-		<element type="iNumBuildingsGlobal"/>
-		<element type="iNumPlotsRequired"/>
-		<element type="bOwnPlot"/>
-		<element type="iPlotType"/>
-		<element type="FeaturesRequired"/>
-		<element type="TerrainsRequired"/>
-		<element type="ImprovementsRequired"/>
-		<element type="BonusesRequired"/>
-		<element type="RoutesRequired"/>
-		<element type="ReligionsRequired"/>
-		<element type="iNumReligions"/>
-		<element type="CorporationsRequired"/>
-		<element type="iNumCorporations"/>
-		<element type="bPickReligion"/>
-		<element type="bStateReligion"/>
-		<element type="bHolyCity"/>
-		<element type="bPickCorporation"/>
-		<element type="bHeadquarters"/>
-		<element type="Events"/>
-		<element type="PrereqEvents"/>
-		<element type="bPrereqEventPlot"/>
-		<element type="OrPreReqs"/>
-		<element type="AndPreReqs"/>
-		<element type="ObsoleteTechs"/>
-		<element type="bRecurring"/>
-		<element type="bTeam"/>
-		<element type="bGlobal"/>
-		<element type="bPickPlayer"/>
-		<element type="bOtherPlayerWar"/>
-		<element type="bOtherPlayerHasReligion"/>
-		<element type="bOtherPlayerHasOtherReligion"/>
-		<element type="bOtherPlayerAI"/>
-		<element type="iOtherPlayerShareBorders"/>
-		<element type="OtherPlayerHasTech"/>
-		<element type="bPickCity"/>
-		<element type="bPickOtherPlayerCity"/>
-		<element type="bShowPlot"/>
-		<element type="iCityFoodWeight"/>
-		<element type="PythonCanDo"/>
-		<element type="PythonCanDoCity"/>
-		<element type="PythonCanDoUnit"/>
-		<element type="PythonCallback"/>
-		<element type="iPrereqCrime"/>
-		<element type="iPrereqGlobalCounter"/>
-		<element type="PrereqAlignment"/>
-		<element type="PrereqCivilizationPleased"/>
-		<element type="PrereqLeader"/>
-		<element type="PrereqTrait"/>
+		<element type="WorldNewsTexts" minOccurs="0"/>
+		<element type="TriggerTexts" minOccurs="0"/>
+		<element type="bSinglePlayer" minOccurs="0"/>
+		<element type="iPercentGamesActive" minOccurs="0"/>
+		<element type="iWeight" minOccurs="0"/>
+		<element type="bProbabilityUnitMultiply" minOccurs="0"/>
+		<element type="bProbabilityBuildingMultiply" minOccurs="0"/>
+		<element type="Civic" minOccurs="0"/>
+		<element type="iMinTreasury" minOccurs="0"/>
+		<element type="iMinPopulation" minOccurs="0"/>
+		<element type="iMaxPopulation" minOccurs="0"/>
+		<element type="iMinMapLandmass" minOccurs="0"/>
+		<element type="iMinOurLandmass" minOccurs="0"/>
+		<element type="iMaxOurLandmass" minOccurs="0"/>
+		<element type="MinDifficulty" minOccurs="0"/>
+		<element type="iAngry" minOccurs="0"/>
+		<element type="iUnhealthy" minOccurs="0"/>
+		<element type="UnitsRequired" minOccurs="0"/>
+		<element type="iNumUnits" minOccurs="0"/>
+		<element type="iNumUnitsGlobal" minOccurs="0"/>
+		<element type="iUnitDamagedWeight" minOccurs="0"/>
+		<element type="iUnitDistanceWeight" minOccurs="0"/>
+		<element type="iUnitExperienceWeight" minOccurs="0"/>
+		<element type="bUnitsOnPlot" minOccurs="0"/>
+		<element type="BuildingsRequired" minOccurs="0"/>
+		<element type="iNumBuildings" minOccurs="0"/>
+		<element type="iNumBuildingsGlobal" minOccurs="0"/>
+		<element type="iNumPlotsRequired" minOccurs="0"/>
+		<element type="bOwnPlot" minOccurs="0"/>
+		<element type="iPlotType" minOccurs="0"/>
+		<element type="FeaturesRequired" minOccurs="0"/>
+		<element type="TerrainsRequired" minOccurs="0"/>
+		<element type="ImprovementsRequired" minOccurs="0"/>
+		<element type="BonusesRequired" minOccurs="0"/>
+		<element type="RoutesRequired" minOccurs="0"/>
+		<element type="ReligionsRequired" minOccurs="0"/>
+		<element type="iNumReligions" minOccurs="0"/>
+		<element type="CorporationsRequired" minOccurs="0"/>
+		<element type="iNumCorporations" minOccurs="0"/>
+		<element type="bPickReligion" minOccurs="0"/>
+		<element type="bStateReligion" minOccurs="0"/>
+		<element type="bHolyCity" minOccurs="0"/>
+		<element type="bPickCorporation" minOccurs="0"/>
+		<element type="bHeadquarters" minOccurs="0"/>
+		<element type="Events" minOccurs="0"/>
+		<element type="PrereqEvents" minOccurs="0"/>
+		<element type="bPrereqEventPlot" minOccurs="0"/>
+		<element type="OrPreReqs" minOccurs="0"/>
+		<element type="AndPreReqs" minOccurs="0"/>
+		<element type="ObsoleteTechs" minOccurs="0"/>
+		<element type="bRecurring" minOccurs="0"/>
+		<element type="bTeam" minOccurs="0"/>
+		<element type="bGlobal" minOccurs="0"/>
+		<element type="bPickPlayer" minOccurs="0"/>
+		<element type="bOtherPlayerWar" minOccurs="0"/>
+		<element type="bOtherPlayerHasReligion" minOccurs="0"/>
+		<element type="bOtherPlayerHasOtherReligion" minOccurs="0"/>
+		<element type="bOtherPlayerAI" minOccurs="0"/>
+		<element type="iOtherPlayerShareBorders" minOccurs="0"/>
+		<element type="OtherPlayerHasTech" minOccurs="0"/>
+		<element type="bPickCity" minOccurs="0"/>
+		<element type="bPickOtherPlayerCity" minOccurs="0"/>
+		<element type="bShowPlot" minOccurs="0"/>
+		<element type="iCityFoodWeight" minOccurs="0"/>
+		<element type="PythonCanDo" minOccurs="0"/>
+		<element type="PythonCanDoCity" minOccurs="0"/>
+		<element type="PythonCanDoUnit" minOccurs="0"/>
+		<element type="PythonCallback" minOccurs="0"/>
+		<element type="iPrereqCrime" minOccurs="0"/>
+		<element type="iPrereqGlobalCounter" minOccurs="0"/>
+		<element type="PrereqAlignment" minOccurs="0"/>
+		<element type="PrereqCivilizationPleased" minOccurs="0"/>
+		<element type="PrereqLeader" minOccurs="0"/>
+		<element type="PrereqTrait" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="EventTriggerInfos" content="eltOnly">
 		<element type="EventTriggerInfo" minOccurs="0" maxOccurs="*"/>
@@ -366,91 +366,91 @@
 	<ElementType name="PrereqStateReligion" content="textOnly"/>
 	<ElementType name="EventInfo" content="eltOnly">
 		<element type="Type"/>
-		<element type="Description"/>
-		<element type="LocalInfoText"/>
-		<element type="WorldNewsTexts"/>
-		<element type="OtherPlayerPopup"/>
-		<element type="QuestFailText"/>
-		<element type="bQuest"/>
-		<element type="bGlobal"/>
-		<element type="bTeam"/>
-		<element type="bPickCity"/>
-		<element type="bPickOtherPlayerCity"/>
-		<element type="bDeclareWar"/>
-		<element type="iGold"/>
-		<element type="bGoldToPlayer"/>
-		<element type="iRandomGold"/>
-		<element type="iCulture"/>
-		<element type="iEspionagePoints"/>
-		<element type="bGoldenAge"/>
-		<element type="iFreeUnitSupport"/>
-		<element type="iInflationMod"/>
-		<element type="iSpaceProductionMod"/>
-		<element type="Tech"/>
-		<element type="TechFlavors"/>
-		<element type="iTechPercent"/>
-		<element type="iTechCostPercent"/>
-		<element type="iTechMinTurnsLeft"/>
-		<element type="PrereqTech"/>
-		<element type="UnitClass"/>
-		<element type="iNumFreeUnits"/>
-		<element type="bDisbandUnit"/>
-		<element type="iUnitExperience"/>
-		<element type="iUnitImmobileTurns"/>
-		<element type="UnitPromotion"/>
-		<element type="UnitName"/>
-		<element type="UnitCombatPromotions"/>
-		<element type="UnitClassPromotions"/>
-		<element type="BuildingClass"/>
-		<element type="iBuildingChange"/>
-		<element type="BuildingExtraYields"/>
-		<element type="BuildingExtraCommerces"/>
-		<element type="BuildingExtraHappies"/>
-		<element type="BuildingExtraHealths"/>
-		<element type="iHappy"/>
-		<element type="iHealth"/>
-		<element type="iHurryAnger"/>
-		<element type="iHappyTurns"/>
-		<element type="iRevoltTurns"/>
-		<element type="iMinPillage"/>
-		<element type="iMaxPillage"/>
-		<element type="iFood"/>
-		<element type="iFoodPercent"/>
-		<element type="FreeSpecialistCounts"/>
-		<element type="FeatureType"/>
-		<element type="iFeatureChange"/>
-		<element type="ImprovementType"/>
-		<element type="iImprovementChange"/>
-		<element type="BonusType"/>
-		<element type="iBonusChange"/>
-		<element type="RouteType"/>
-		<element type="iRouteChange"/>
-		<element type="BonusRevealed"/>
-		<element type="BonusGift"/>
-		<element type="PlotExtraYields"/>
-		<element type="iConvertOwnCities"/>
-		<element type="iConvertOtherCities"/>
-		<element type="iMaxNumReligions"/>
-		<element type="iOurAttitudeModifier"/>
-		<element type="iAttitudeModifier"/>
-		<element type="iTheirEnemyAttitudeModifier"/>
-		<element type="iPopulationChange"/>
-		<element type="AdditionalEvents"/>
-		<element type="EventTimes"/>
-		<element type="ClearEvents"/>
-		<element type="PythonCallback"/>
-		<element type="PythonExpireCheck"/>
-		<element type="PythonCanDo"/>
-		<element type="PythonHelp"/>
-		<element type="Button"/>
-		<element type="iAIValue"/>
-		<element type="iCrime"/>
-		<element type="iGlobalCounter"/>
-		<element type="PrereqAlignment"/>
-		<element type="PrereqBonus"/>
-		<element type="PrereqCivilization"/>
-		<element type="PrereqReligion"/>
-		<element type="PrereqStateReligion"/>
+		<element type="Description" minOccurs="0"/>
+		<element type="LocalInfoText" minOccurs="0"/>
+		<element type="WorldNewsTexts" minOccurs="0"/>
+		<element type="OtherPlayerPopup" minOccurs="0"/>
+		<element type="QuestFailText" minOccurs="0"/>
+		<element type="bQuest" minOccurs="0"/>
+		<element type="bGlobal" minOccurs="0"/>
+		<element type="bTeam" minOccurs="0"/>
+		<element type="bPickCity" minOccurs="0"/>
+		<element type="bPickOtherPlayerCity" minOccurs="0"/>
+		<element type="bDeclareWar" minOccurs="0"/>
+		<element type="iGold" minOccurs="0"/>
+		<element type="bGoldToPlayer" minOccurs="0"/>
+		<element type="iRandomGold" minOccurs="0"/>
+		<element type="iCulture" minOccurs="0"/>
+		<element type="iEspionagePoints" minOccurs="0"/>
+		<element type="bGoldenAge" minOccurs="0"/>
+		<element type="iFreeUnitSupport" minOccurs="0"/>
+		<element type="iInflationMod" minOccurs="0"/>
+		<element type="iSpaceProductionMod" minOccurs="0"/>
+		<element type="Tech" minOccurs="0"/>
+		<element type="TechFlavors" minOccurs="0"/>
+		<element type="iTechPercent" minOccurs="0"/>
+		<element type="iTechCostPercent" minOccurs="0"/>
+		<element type="iTechMinTurnsLeft" minOccurs="0"/>
+		<element type="PrereqTech" minOccurs="0"/>
+		<element type="UnitClass" minOccurs="0"/>
+		<element type="iNumFreeUnits" minOccurs="0"/>
+		<element type="bDisbandUnit" minOccurs="0"/>
+		<element type="iUnitExperience" minOccurs="0"/>
+		<element type="iUnitImmobileTurns" minOccurs="0"/>
+		<element type="UnitPromotion" minOccurs="0"/>
+		<element type="UnitName" minOccurs="0"/>
+		<element type="UnitCombatPromotions" minOccurs="0"/>
+		<element type="UnitClassPromotions" minOccurs="0"/>
+		<element type="BuildingClass" minOccurs="0"/>
+		<element type="iBuildingChange" minOccurs="0"/>
+		<element type="BuildingExtraYields" minOccurs="0"/>
+		<element type="BuildingExtraCommerces" minOccurs="0"/>
+		<element type="BuildingExtraHappies" minOccurs="0"/>
+		<element type="BuildingExtraHealths" minOccurs="0"/>
+		<element type="iHappy" minOccurs="0"/>
+		<element type="iHealth" minOccurs="0"/>
+		<element type="iHurryAnger" minOccurs="0"/>
+		<element type="iHappyTurns" minOccurs="0"/>
+		<element type="iRevoltTurns" minOccurs="0"/>
+		<element type="iMinPillage" minOccurs="0"/>
+		<element type="iMaxPillage" minOccurs="0"/>
+		<element type="iFood" minOccurs="0"/>
+		<element type="iFoodPercent" minOccurs="0"/>
+		<element type="FreeSpecialistCounts" minOccurs="0"/>
+		<element type="FeatureType" minOccurs="0"/>
+		<element type="iFeatureChange" minOccurs="0"/>
+		<element type="ImprovementType" minOccurs="0"/>
+		<element type="iImprovementChange" minOccurs="0"/>
+		<element type="BonusType" minOccurs="0"/>
+		<element type="iBonusChange" minOccurs="0"/>
+		<element type="RouteType" minOccurs="0"/>
+		<element type="iRouteChange" minOccurs="0"/>
+		<element type="BonusRevealed" minOccurs="0"/>
+		<element type="BonusGift" minOccurs="0"/>
+		<element type="PlotExtraYields" minOccurs="0"/>
+		<element type="iConvertOwnCities" minOccurs="0"/>
+		<element type="iConvertOtherCities" minOccurs="0"/>
+		<element type="iMaxNumReligions" minOccurs="0"/>
+		<element type="iOurAttitudeModifier" minOccurs="0"/>
+		<element type="iAttitudeModifier" minOccurs="0"/>
+		<element type="iTheirEnemyAttitudeModifier" minOccurs="0"/>
+		<element type="iPopulationChange" minOccurs="0"/>
+		<element type="AdditionalEvents" minOccurs="0"/>
+		<element type="EventTimes" minOccurs="0"/>
+		<element type="ClearEvents" minOccurs="0"/>
+		<element type="PythonCallback" minOccurs="0"/>
+		<element type="PythonExpireCheck" minOccurs="0"/>
+		<element type="PythonCanDo" minOccurs="0"/>
+		<element type="PythonHelp" minOccurs="0"/>
+		<element type="Button" minOccurs="0"/>
+		<element type="iAIValue" minOccurs="0"/>
+		<element type="iCrime" minOccurs="0"/>
+		<element type="iGlobalCounter" minOccurs="0"/>
+		<element type="PrereqAlignment" minOccurs="0"/>
+		<element type="PrereqBonus" minOccurs="0"/>
+		<element type="PrereqCivilization" minOccurs="0"/>
+		<element type="PrereqReligion" minOccurs="0"/>
+		<element type="PrereqStateReligion" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="EventInfos" content="eltOnly">
 		<element type="EventInfo" minOccurs="0" maxOccurs="*"/>

@@ -27,6 +27,9 @@
 #include "CvPopupInfo.h"
 #include "CvArtFileMgr.h"
 
+// BUG - start
+#include "CvBugOptions.h"
+// BUG - end
 // Public Functions...
 
 
@@ -684,6 +687,15 @@ void CvUnit::convert(CvUnit* pUnit)
 	setExperience(std::max(0, (pUnit->getExperience() * iOurModifier) / iOldModifier));
 
 	setName(pUnit->getNameNoDesc());
+// BUG - Unit Name - start
+	if (pUnit->isDescInName() && getBugOptionBOOL("MiscHover__UpdateUnitNameOnUpgrade", true, "BUG_UPDATE_UNIT_NAME_ON_UPGRADE"))
+	{
+		CvWString szUnitType(pUnit->m_pUnitInfo->getDescription());
+
+		//szUnitType.Format(L"%s", pUnit->m_pUnitInfo->getDescription());
+		m_szName.replace(m_szName.find(szUnitType), szUnitType.length(), m_pUnitInfo->getDescription());
+	}
+// BUG - Unit Name - end
 	setLeaderUnitType(pUnit->getLeaderUnitType());
 
 /*************************************************************************************************/
@@ -982,6 +994,12 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
     int iRace = getRace();
 //FfH: End Modify
 
+// BUG - Unit Captured Event - start
+	PlayerTypes eFromPlayer = getOwner();
+	UnitTypes eCapturedUnitType = getUnitType();
+// BUG - Unit Captured Event - end
+
+
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	if (isAvatarOfCivLeader())
 	{
@@ -1032,6 +1050,10 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
 
 			if (pkCapturedUnit != NULL)
 			{
+// BUG - Unit Captured Event - start
+				CvEventReporter::getInstance().unitCaptured(eFromPlayer, eCapturedUnitType, pkCapturedUnit);
+// BUG - Unit Captured Event - end
+
 				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_CAPTURED_UNIT", GC.getUnitInfo(eCaptureUnitType).getTextKeyWide());
 				gDLL->getInterfaceIFace()->addMessage(eCapturingPlayer, true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pkCapturedUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
 
@@ -1727,7 +1749,9 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, CvBattleDefinition&
 					flankingStrikeCombat(pPlot, iAttackerStrength, iAttackerFirepower, iAttackerKillOdds, iDefenderDamage, pDefender);
 
 					changeExperience(GC.getDefineINT("EXPERIENCE_FROM_WITHDRAWL"), pDefender->maxXPValue(), true, pPlot->getOwnerINLINE() == getOwnerINLINE(), !pDefender->isBarbarian());
-
+// BUG - Combat Events - start
+					CvEventReporter::getInstance().combatRetreat(this, pDefender);
+// BUG - Combat Events - end
 //FfH Promotions: Added by Kael 08/12/2007
                     setFleeWithdrawl(true);
 //FfH: End Add
@@ -1792,7 +1816,9 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, CvBattleDefinition&
 				{
 					changeExperience(GC.getDefineINT("EXPERIENCE_FROM_WITHDRAWL"), pDefender->maxXPValue(), true, pPlot->getOwnerINLINE() == getOwnerINLINE(), !pDefender->isBarbarian());
 					pDefender->setDamage(combatLimit(), getOwnerINLINE());
-
+// BUG - Combat Events - start
+					CvEventReporter::getInstance().combatWithdrawal(this, pDefender);
+// BUG - Combat Events - end
 //FfH: Added by Kael 05/27/2008
                     setMadeAttack(true);
                     changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
@@ -2413,6 +2439,16 @@ bool CvUnit::isActionRecommended(int iAction)
 	{
 		pPlot = plot();
 	}
+
+// BUFFY - Don't Recommend Actions in Fog of War - start
+#ifdef _BUFFY
+	// from HOF Mod - Denniz
+	if (!pPlot->isVisible(GC.getGameINLINE().getActiveTeam(), false))
+	{
+		return false;
+	}
+#endif
+// BUFFY - Don't Recommend Actions in Fog of War - end
 
 	if (GC.getActionInfo(iAction).getMissionType() == MISSION_FORTIFY)
 	{
@@ -7847,6 +7883,10 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 		gDLL->getInterfaceIFace()->playGeneralSound(GC.getPromotionInfo(ePromotion).getSound());
 
 		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+
+// BUG - Update Plot List - start
+		gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+// BUG - Update Plot List - end
 	}
 	else
 	{
@@ -8449,7 +8489,10 @@ void CvUnit::upgrade(UnitTypes eUnit)
 		return;
 	}
 
-	GET_PLAYER(getOwnerINLINE()).changeGold(-(upgradePrice(eUnit)));
+// BUG - Upgrade Unit Event - start
+	int iPrice = upgradePrice(eUnit);
+	GET_PLAYER(getOwnerINLINE()).changeGold(-iPrice);
+// BUG - Upgrade Unit Event - end
 
 //FfH: Modified by Kael 04/18/2009
 //	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
@@ -8499,6 +8542,10 @@ void CvUnit::upgrade(UnitTypes eUnit)
 			pUpgradeUnit->setExperience(GC.getDefineINT("MAX_EXPERIENCE_AFTER_UPGRADE"));
 		}
 	}
+
+// BUG - Upgrade Unit Event - start
+	CvEventReporter::getInstance().unitUpgraded(this, pUpgradeUnit, iPrice);
+// BUG - Upgrade Unit Event - end
 }
 
 
@@ -10095,22 +10142,9 @@ int CvUnit::fortifyModifier() const
 
 int CvUnit::experienceNeeded() const
 {
-	// Use python to determine pillage amounts...
-	int iExperienceNeeded;
-	long lExperienceNeeded;
-
-	lExperienceNeeded = 0;
-	iExperienceNeeded = 0;
-
-	CyArgsList argsList;
-	argsList.add(getLevel());	// pass in the units level
-	argsList.add(getOwnerINLINE());	// pass in the units
-
-	gDLL->getPythonIFace()->callFunction(PYGameModule, "getExperienceNeeded", argsList.makeFunctionArgs(),&lExperienceNeeded);
-
-	iExperienceNeeded = (int)lExperienceNeeded;
-
-	return iExperienceNeeded;
+// BUG - Unit Experience - start
+	return calculateExperience(getLevel(), getOwnerINLINE());
+// BUG - Unit Experience - end
 }
 
 
@@ -13067,11 +13101,24 @@ const CvWString CvUnit::getName(uint uiForm) const
 	{
 		return m_pUnitInfo->getDescription(uiForm);
 	}
+// BUG - Unit Name - start
+	else if (isDescInName())
+	{
+		return m_szName;
+	}
+// BUG - Unit Name - end
 
 	szBuffer.Format(L"%s (%s)", m_szName.GetCString(), m_pUnitInfo->getDescription(uiForm));
 
 	return szBuffer;
 }
+
+// BUG - Unit Name - start
+bool CvUnit::isDescInName() const
+{
+	return (m_szName.find(m_pUnitInfo->getDescription()) != -1);
+}
+// BUG - Unit Name - end
 
 
 const wchar* CvUnit::getNameKey() const
@@ -13885,7 +13932,11 @@ void CvUnit::collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit)
 
 				if (pBestUnit->getDamage() != iUnitDamage)
 				{
+// BUG - Combat Events - start
+					int iDamageDone = iUnitDamage - pBestUnit->getDamage();
 					pBestUnit->setDamage(iUnitDamage, getOwnerINLINE());
+					CvEventReporter::getInstance().combatLogCollateral(this, pBestUnit, iDamageDone);
+// BUG - Combat Events - end
 					iDamageCount++;
 				}
 			}
@@ -13967,6 +14018,9 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 		int iIndexHit = GC.getGameINLINE().getSorenRandNum(listFlankedUnits.size(), "Pick Flanked Unit");
 		CvUnit* pUnit = listFlankedUnits[iIndexHit].first;
 		int iDamage = listFlankedUnits[iIndexHit].second;
+// BUG - Combat Events - start
+		int iDamageDone = iDamage - pUnit->getDamage();
+// BUG - Combat Events - end
 		pUnit->setDamage(iDamage, getOwnerINLINE());
 		if (pUnit->isDead())
 		{
@@ -13977,7 +14031,10 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 
 			pUnit->kill(false);
 		}
-
+// BUG - Combat Events - start
+		CvEventReporter::getInstance().combatLogFlanking(this, pUnit, iDamageDone);
+// BUG - Combat Events - end
+		
 		listFlankedUnits.erase(std::remove(listFlankedUnits.begin(), listFlankedUnits.end(), listFlankedUnits[iIndexHit]));
 	}
 

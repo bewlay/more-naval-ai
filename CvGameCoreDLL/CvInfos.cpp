@@ -5705,6 +5705,29 @@ int CvUnitInfo::getDamageTypeCombat(int i) const
 }
 //FfH: End Add
 
+
+// BUG - Unit Experience - start
+/*
+ * Returns true if this unit type is eligible to receive experience points.
+ */
+bool CvUnitInfo::canAcquireExperience() const
+{
+	if (m_iUnitCombatType != NO_UNITCOMBAT)
+	{
+		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+		{
+			if (GC.getPromotionInfo((PromotionTypes)iI).getUnitCombat(m_iUnitCombatType))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+// BUG - Unit Experience - end
+
+
 // Arrays
 
 int CvUnitInfo::getPrereqAndTechs(int i) const
@@ -15925,6 +15948,25 @@ bool CvFeatureInfo::isNukeImmune() const
 {
 	return m_bNukeImmune;
 }
+
+// BUG - City Plot Status - start
+bool CvFeatureInfo::isOnlyBad() const
+{
+	if (getHealthPercent() > 0 || isAddsFreshWater())
+	{
+		return false;
+	}
+	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	{
+		if (getYieldChange(iI) > 0)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+// BUG - City Plot Status - end
 
 const TCHAR* CvFeatureInfo::getOnUnitChangeTo() const
 {

@@ -72,7 +72,44 @@ EventForward=5
 EventKeyDown=6
 EventKeyUp=7
 
-# List of unreported Events
+
+# Event IDs
+BUG_FIRST_EVENT = 5050
+g_nextEventID = BUG_FIRST_EVENT
+g_bugEvents = {}
+def getNewEventID(name=None, silent=True):
+	"""
+	Defines a new event and returns its unique ID to be passed to BugEventManager.beginEvent(id).
+	If name is given, it is stored in a map for lookup by ID later for debugging.
+	"""
+	global g_nextEventID
+	id = g_nextEventID
+	g_nextEventID += 1
+	if name:
+		g_bugEvents[id] = name
+	if silent:
+		addSilentEvent(id)
+	return id
+
+def getEventName(id):
+	return g_bugEvents[id]
+
+def addSilentEvent(id):
+	if id not in SilentEvents:
+		SilentEvents.append(id)
+
+# Screen IDs
+BUG_FIRST_SCREEN = 1000
+g_nextScreenID = BUG_FIRST_SCREEN
+def getNewScreenID():
+	"""
+	Returns the next unique screen ID to be used with CyGInterfaceScreen.
+	"""
+	global g_nextScreenID
+	id = g_nextScreenID
+	g_nextScreenID += 1
+	return id
+# BUG - Core - end
 
 ## FfH Card Game: begin
 #SilentEvents = [EventEditCityName, EventEditUnitName, EventSetHasTrait, EventSelectSolmniumPlayer, EventSolmniumAcceptGame, EventSolmniumConcedeGame]
@@ -134,7 +171,10 @@ def myExceptHook(type, value, tb):
 		sys.stdout.write(total)
 
 def pyPrint(stuff):
-	stuff = 'PY:' + stuff + "\n"
+	# < Revolution Mod Start >
+	# Attempt to silence encoding errors for some city names after Python reload
+	stuff = 'PY:' + convertToStr(stuff) + "\n"
+	# < Revolution Mod End >
 	sys.stdout.write(stuff)
 
 def pyAssert(cond, msg):
@@ -353,11 +393,11 @@ def combatDetailMessageBuilder(cdUnit, ePlayer, iChange):
 def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
 	combatMessage = ""
 	if (cdAttacker.eOwner == cdAttacker.eVisualOwner):
-		combatMessage += "%s's" %(gc.getPlayer(cdAttacker.eOwner).getName(),)
-	combatMessage += " %s (%.2f)" %(cdAttacker.sUnitName,cdAttacker.iCurrCombatStr/100.0,)
+		combatMessage += "%s's " %(gc.getPlayer(cdAttacker.eOwner).getName(),)
+	combatMessage += "%s (%.2f)" %(cdAttacker.sUnitName,cdAttacker.iCurrCombatStr/100.0,)
 	combatMessage += " " + localText.getText("TXT_KEY_COMBAT_MESSAGE_VS", ()) + " "
 	if (cdDefender.eOwner == cdDefender.eVisualOwner):
-		combatMessage += "%s's" %(gc.getPlayer(cdDefender.eOwner).getName(),)
+		combatMessage += "%s's " %(gc.getPlayer(cdDefender.eOwner).getName(),)
 	combatMessage += "%s (%.2f)" %(cdDefender.sUnitName,cdDefender.iCurrCombatStr/100.0,)
 	CyInterface().addCombatMessage(cdAttacker.eOwner,combatMessage)
 	CyInterface().addCombatMessage(cdDefender.eOwner,combatMessage)

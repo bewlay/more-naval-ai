@@ -20,6 +20,18 @@
 #include "FProfiler.h"
 #include "CvMessageControl.h"
 
+// BUG - start
+// RevolutionDCM - BugMod included in CvGlobals.h
+//#include "BugMod.h"
+#include "CvBugOptions.h"
+// BUG - end
+
+// BUFFY - start
+#ifdef _BUFFY
+#include "Buffy.h"
+#endif
+// BUFFY - end
+
 CvDLLWidgetData* CvDLLWidgetData::m_pInst = NULL;
 
 CvDLLWidgetData& CvDLLWidgetData::getInstance()
@@ -135,6 +147,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseChangePercentHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Min/Max Commerce Rate - start
+	case WIDGET_SET_PERCENT:
+		parseSetPercentHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Min/Max Commerce Rate - end
+
 	case WIDGET_CITY_TAB:
 		{
 			CvWString szTemp;
@@ -154,7 +172,7 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_ZOOM_CITY:
 		szBuffer.append(gDLL->getText("TXT_KEY_ZOOM_CITY_HELP"));
 // BUG - Zoom City Details - start
-		// if (getBugOptionBOOL("MiscHover__CDAZoomCityDetails", true, "BUG_CDA_ZOOM_CITY_DETAILS"))
+		if (getBugOptionBOOL("MiscHover__CDAZoomCityDetails", true, "BUG_CDA_ZOOM_CITY_DETAILS"))
 		{
 			// only if the active player owns the city
 			if (GC.getGame().getActivePlayer() == widgetDataStruct.m_iData1) {
@@ -223,6 +241,9 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		break;
 
 	case WIDGET_HELP_DEFENSE:
+// BUG - Defense Hover - start
+		parseDefenseHelp(widgetDataStruct, szBuffer);
+// BUG - Defense Hover - end
 		break;
 
 	case WIDGET_HELP_HEALTH:
@@ -421,6 +442,20 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseFoundCorporationHelp(widgetDataStruct, szBuffer);
 		break;
 
+// BUG - Finance Advisor - start
+	case WIDGET_HELP_FINANCE_DOMESTIC_TRADE:
+		parseFinanceDomesticTrade(widgetDataStruct, szBuffer);
+		break;
+
+	case WIDGET_HELP_FINANCE_FOREIGN_TRADE:
+		parseFinanceForeignTrade(widgetDataStruct, szBuffer);
+		break;
+
+	case WIDGET_HELP_FINANCE_SPECIALISTS:
+		parseFinanceSpecialistGold(widgetDataStruct, szBuffer);
+		break;
+// BUG - Finance Advisor - end
+
 	case WIDGET_HELP_FINANCE_NUM_UNITS:
 		parseFinanceNumUnits(widgetDataStruct, szBuffer);
 		break;
@@ -585,6 +620,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_MINIMAP_HIGHLIGHT:
 		break;
 
+// BUG - Food Rate Hover - start
+	case WIDGET_FOOD_MOD_HELP:
+		parseFoodModHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Food Rate Hover - end
+
 	case WIDGET_PRODUCTION_MOD_HELP:
 		parseProductionModHelp(widgetDataStruct, szBuffer);
 		break;
@@ -592,6 +633,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 	case WIDGET_LEADERHEAD:
 		parseLeaderheadHelp(widgetDataStruct, szBuffer);
 		break;
+
+// BUG - Leaderhead Relations - start
+	case WIDGET_LEADERHEAD_RELATIONS:
+		parseLeaderheadRelationsHelp(widgetDataStruct, szBuffer);
+		break;
+// BUG - Leaderhead Relations - end
 
 	case WIDGET_LEADER_LINE:
 		parseLeaderLineHelp(widgetDataStruct, szBuffer);
@@ -606,6 +653,18 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseTradeRoutes(widgetDataStruct, szBuffer);
 		break;
 // BUG - Trade Hover - end
+/*************************************************************************************************/
+/**	FFHBUG denev																				**/
+/**	ADDON (FFHBUG) merged Sephi																	**/
+/**																								**/
+/*************************************************************************************************/
+	case WIDGET_PEDIA_JUMP_TO_TRAIT:
+	case WIDGET_HELP_TRAIT:
+		parseTraitHelp(widgetDataStruct, szBuffer);
+		break;
+/*************************************************************************************************/
+/**	END																							**/
+/*************************************************************************************************/
 
 //FfH: Added by Kael 07/23/2007
 	case WIDGET_PEDIA_JUMP_TO_SPELL:
@@ -719,6 +778,12 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 		doChangePercent(widgetDataStruct);
 		break;
 
+// BUG - Min/Max Commerce Rate - start
+	case WIDGET_SET_PERCENT:
+		doSetPercent(widgetDataStruct);
+		break;
+// BUG - Min/Max Commerce Rate - end
+
 	case WIDGET_CITY_TAB:
 		doCityTab(widgetDataStruct);
 		break;
@@ -813,6 +878,18 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 		doPediaSpellJump(widgetDataStruct);
 		break;
 //FfH: End Add
+
+/*************************************************************************************************/
+/**	FFHBUG denev																				**/
+/**	ADDON (FFHBUG) merged Sephi																	**/
+/**																								**/
+/*************************************************************************************************/
+	case WIDGET_PEDIA_JUMP_TO_TRAIT:
+		doPediaTraitJump(widgetDataStruct);
+		break;
+/*************************************************************************************************/
+/**	END																							**/
+/*************************************************************************************************/
 
 	case WIDGET_PEDIA_JUMP_TO_UNIT_COMBAT:
 		doPediaUnitCombatJump(widgetDataStruct);
@@ -1023,6 +1100,23 @@ bool CvDLLWidgetData::executeAltAction( CvWidgetDataStruct &widgetDataStruct )
 		doContactCiv(widgetDataStruct);
 		break;
 
+// BUG - Leaderhead Relations - start
+	case WIDGET_LEADERHEAD_RELATIONS:
+		doContactCiv(widgetDataStruct);
+		break;
+// BUG - Leaderhead Relations - end
+/*************************************************************************************************/
+/**	FFHBUG denev																				**/
+/**	ADDON (FFHBUG) merged Sephi																	**/
+/**																								**/
+/*************************************************************************************************/
+	case WIDGET_PEDIA_JUMP_TO_TRAIT:
+		doPediaTraitJump(widgetDataStruct);
+		break;
+/*************************************************************************************************/
+/**	END																							**/
+/*************************************************************************************************/
+
 //FfH: Added by Kael 07/23/2007
 	case WIDGET_PEDIA_JUMP_TO_SPELL:
 		doPediaSpellJump(widgetDataStruct);
@@ -1053,6 +1147,10 @@ bool CvDLLWidgetData::isLink(const CvWidgetDataStruct &widgetDataStruct) const
 //FfH: Added by Kael 07/23/2007
 	case WIDGET_PEDIA_JUMP_TO_SPELL:
 //FfH: End Add
+
+//>>>>BUGFfH: Added by Denev 2009/09/10
+	case WIDGET_PEDIA_JUMP_TO_TRAIT:
+//<<<<BUGFfH: End Add
 
 	case WIDGET_PEDIA_JUMP_TO_BONUS:
 	case WIDGET_PEDIA_JUMP_TO_IMPROVEMENT:
@@ -1341,6 +1439,13 @@ void CvDLLWidgetData::doChangePercent(CvWidgetDataStruct &widgetDataStruct)
 {
 	CvMessageControl::getInstance().sendPercentChange(((CommerceTypes)widgetDataStruct.m_iData1), widgetDataStruct.m_iData2);
 }
+
+// BUG - Min/Max Commerce Rate - start
+void CvDLLWidgetData::doSetPercent(CvWidgetDataStruct &widgetDataStruct)
+{
+	CvMessageControl::getInstance().sendPercentChange(((CommerceTypes)widgetDataStruct.m_iData1), widgetDataStruct.m_iData2 - GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCommercePercent((CommerceTypes)widgetDataStruct.m_iData1));
+}
+// BUG - Min/Max Commerce Rate - end
 
 void CvDLLWidgetData::doCityTab(CvWidgetDataStruct &widgetDataStruct)
 {
@@ -1933,6 +2038,36 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 			}
 		}
 
+// BUG - Hurry Overflow - start
+		if (getBugOptionBOOL("MiscHover__HurryOverflow", true, "BUG_HURRY_OVERFLOW_HOVER"))
+		{
+			int iOverflowProduction = 0;
+			int iOverflowGold = 0;
+			if (pHeadSelectedCity->hurryOverflow((HurryTypes)(widgetDataStruct.m_iData1), &iOverflowProduction, &iOverflowGold, getBugOptionBOOL("MiscHover__HurryOverflowIncludeCurrent", false, "BUG_HURRY_OVERFLOW_HOVER_INCLUDE_CURRENT")))
+			{
+				if (iOverflowProduction > 0 || iOverflowGold > 0)
+				{
+					bFirst = true;
+					CvWStringBuffer szOverflowBuffer;
+					if (iOverflowProduction > 0)
+					{
+						szTempBuffer.Format(L"%d%c", iOverflowProduction, GC.getYieldInfo(YIELD_PRODUCTION).getChar());
+						setListHelp(szOverflowBuffer, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+					if (iOverflowGold > 0)
+					{
+						szTempBuffer.Format(L"%d%c", iOverflowGold, GC.getCommerceInfo(COMMERCE_GOLD).getChar());
+						setListHelp(szOverflowBuffer, NULL, szTempBuffer, L", ", bFirst);
+						bFirst = false;
+					}
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_HURRY_OVERFLOW", szOverflowBuffer));
+				}
+			}
+		}
+// BUG - Hurry Overflow - end
+
 		iHurryAngerLength = pHeadSelectedCity->hurryAngerLength((HurryTypes)(widgetDataStruct.m_iData1));
 
 		if (iHurryAngerLength > 0)
@@ -1990,6 +2125,13 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 			CvWString szTemp;
 			szTemp.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_UNIT_TEXT"), GC.getUnitInfo(pHeadSelectedCity->getConscriptUnit()).getDescription());
 			szBuffer.assign(szTemp);
+		
+// BUG - Starting Experience - start
+			if (getBugOptionBOOL("MiscHover__ConscriptUnit", true, "BUG_CONSCRIPT_UNIT_HOVER"))
+			{
+				GAMETEXT.setBasicUnitHelpWithCity(szBuffer, pHeadSelectedCity->getConscriptUnit(), false, pHeadSelectedCity, true);
+			}
+// BUG - Starting Experience - end
 
 			iConscriptPopulation = pHeadSelectedCity->getConscriptPopulation();
 
@@ -2042,6 +2184,32 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 					szBuffer.append(ENDCOLR);
 				}
 			}
+// BUG - Conscript Limit - start
+			else if (getBugOptionBOOL("MiscHover__ConscriptLimit", true, "BUG_CONSCRIPT_LIMIT_HOVER"))
+			{
+				if (pHeadSelectedCity->isDrafted())
+				{
+					szBuffer.append(NEWLINE);
+					szBuffer.append(gDLL->getText("TXT_KEY_MISC_CITY_HAS_CONSCRIPTED"));
+				}
+				else
+				{
+					int iDraftUnits = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getConscriptCount();
+					int iMaxDraftUnits = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).getMaxConscript();
+
+					if (iDraftUnits >= iMaxDraftUnits)
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_NO_CONSCRIPT_UNITS_LEFT"));
+					}
+					else
+					{
+						szBuffer.append(NEWLINE);
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONSCRIPT_UNITS_LEFT", iMaxDraftUnits - iDraftUnits));
+					}
+				}
+			}
+// BUG - Conscript Limit - end
 		}
 	}
 }
@@ -3324,9 +3492,9 @@ void CvDLLWidgetData::parseChangeSpecialistHelp(CvWidgetDataStruct &widgetDataSt
 		}
 		else
 		{
+
 // BUG - Remove Specialist Hover - start
-			// if (getBugOptionBOOL("MiscHover__RemoveSpecialist", true, "BUG_CITY_SCREEN_REMOVE_SPECIALIST_HOVER"))
-			if (true)
+			if (getBugOptionBOOL("MiscHover__RemoveSpecialist", true, "BUG_CITY_SCREEN_REMOVE_SPECIALIST_HOVER"))
 			{
 				szBuffer.assign(gDLL->getText("TXT_KEY_MISC_REMOVE_SPECIALIST", L""));
 // BUG - Specialist Actual Effects - start
@@ -3399,6 +3567,13 @@ void CvDLLWidgetData::parseChangePercentHelp(CvWidgetDataStruct &widgetDataStruc
 		szBuffer.assign(gDLL->getText("TXT_KEY_MISC_DECREASE_RATE", GC.getCommerceInfo((CommerceTypes) widgetDataStruct.m_iData1).getTextKeyWide(), -(widgetDataStruct.m_iData2)));
 	}
 }
+
+// BUG - Min/Max Commerce Rate - start
+void CvDLLWidgetData::parseSetPercentHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	szBuffer.assign(gDLL->getText("TXT_KEY_MISC_SET_RATE", GC.getCommerceInfo((CommerceTypes) widgetDataStruct.m_iData1).getTextKeyWide(), widgetDataStruct.m_iData2));
+}
+// BUG - Min/Max Commerce Rate - end
 
 
 void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
@@ -4466,7 +4641,31 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			szBuffer.append(NEWLINE);
 			GAMETEXT.getEspionageString(szBuffer, ((PlayerTypes)widgetDataStruct.m_iData1), eActivePlayer);
 		}
+		if ( !((gDLL->altKey() || gDLL->ctrlKey()) && gDLL->getChtLvl() > 0) )
+		{
 
+// BUG - Deals in Scoreboard - start
+			if (gDLL->ctrlKey() && ePlayer != eActivePlayer)
+			{
+				GAMETEXT.getActiveDealsString(szBuffer, ePlayer, eActivePlayer);
+			}
+// BUG - Deals in Scoreboard - end
+
+			if (eTeam != eActiveTeam)
+			{
+// BUG - Relations in Scoreboard - start
+				GAMETEXT.getAllRelationsString(szBuffer, eTeam);
+// BUG - Relations in Scoreboard - end
+			}
+
+
+// BUG - start
+		// moved from above to organize the hover text
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
+// BUG - end
+		}
+		
 		if (eTeam != eActiveTeam )
 		{
 			// Show which civs this player is at war with
@@ -4527,10 +4726,9 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_MISC_CANNOT_DECLARE_WAR"));
 				}
-				/*
+
 				szBuffer.append(NEWLINE);
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_SHIFT_ALT_PREPARE_WAR"));
-				*/
 			}
 		}
 	}
@@ -5030,8 +5228,7 @@ void CvDLLWidgetData::parseMaintenanceHelp(CvWidgetDataStruct &widgetDataStruct,
 			}
 
 // BUG - Building Saved Maintenance - start
-			// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingSavedMaintenance", true, "BUG_BUILDING_SAVED_MAINTENANCE_HOVER"))
-			if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+			if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingSavedMaintenance", true, "BUG_BUILDING_SAVED_MAINTENANCE_HOVER"))
 			{
 				GAMETEXT.setBuildingSavedMaintenanceHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
 			}
@@ -5051,8 +5248,7 @@ void CvDLLWidgetData::parseHealthHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 		GAMETEXT.setGoodHealthHelp(szBuffer, *pHeadSelectedCity);
 
 // BUG - Building Additional Health - start
-		// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHealth", true, "BUG_BUILDING_ADDITIONAL_HEALTH_HOVER"))
-		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHealth", true, "BUG_BUILDING_ADDITIONAL_HEALTH_HOVER"))
 		{
 			GAMETEXT.setBuildingAdditionalHealthHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
 		}
@@ -5125,13 +5321,12 @@ void CvDLLWidgetData::parseHappinessHelp(CvWidgetDataStruct &widgetDataStruct, C
 		GAMETEXT.setHappyHelp(szBuffer, *pHeadSelectedCity);
 
 // BUG - Building Additional Happiness - start
-		// if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHappiness", true, "BUG_BUILDING_ADDITIONAL_HAPPINESS_HOVER"))
-		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer())
+		if (pHeadSelectedCity->getOwnerINLINE() == GC.getGame().getActivePlayer() && getBugOptionBOOL("MiscHover__BuildingAdditionalHappiness", true, "BUG_BUILDING_ADDITIONAL_HAPPINESS_HOVER"))
 		{
 			GAMETEXT.setBuildingAdditionalHappinessHelp(szBuffer, *pHeadSelectedCity, DOUBLE_SEPARATOR);
 		}
 // BUG - Building Additional Happiness - end
-		}
+	}
 }
 
 
@@ -5545,6 +5740,40 @@ void CvDLLWidgetData::parseFoundCorporationHelp(CvWidgetDataStruct &widgetDataSt
 {
 	GAMETEXT.buildFoundCorporationString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)), widgetDataStruct.m_iData2, true);
 }
+
+// BUG - Finance Advisor - start
+void CvDLLWidgetData::parseFinanceDomesticTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Domestic Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE"));
+	szBuffer.append(NEWLINE);
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildDomesticTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+
+void CvDLLWidgetData::parseFinanceForeignTrade(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Foreign Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE"));
+	szBuffer.append(NEWLINE);
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildForeignTradeString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+
+void CvDLLWidgetData::parseFinanceSpecialistGold(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+//	szBuffer = "The Total Commerce from Foreign Trade Routes";
+	szBuffer.assign(gDLL->getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS"));
+	if (widgetDataStruct.m_iData2 > 0)
+	{
+		GAMETEXT.buildFinanceSpecialistGoldString(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1);
+	}
+}
+// BUG - Finance Advisor - end
 
 void CvDLLWidgetData::parseFinanceNumUnits(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
@@ -5963,7 +6192,52 @@ void CvDLLWidgetData::parseKillDealHelp(CvWidgetDataStruct &widgetDataStruct, Cv
 		}
 	}
 
-	szBuffer.assign(szTemp);
+	szBuffer.append(szTemp);
+	
+// BUG - Kill Deal Info - start
+	if (pDeal != NULL)
+	{
+		szBuffer.append(NEWLINE);
+		GAMETEXT.getDealString(szBuffer, *pDeal, GC.getGameINLINE().getActivePlayer());
+
+		int iItem = widgetDataStruct.m_iData2;
+		if (iItem != -1)
+		{
+			const CLinkList<TradeData>* listTradeData = NULL;
+
+			if (iItem < pDeal->getLengthFirstTrades())
+			{
+				listTradeData = pDeal->getFirstTrades();
+			}
+			else
+			{
+				iItem -= pDeal->getLengthFirstTrades();
+				if (iItem < pDeal->getLengthSecondTrades())
+				{
+					listTradeData = pDeal->getSecondTrades();
+				}
+			}
+
+			if (listTradeData != NULL)
+			{
+				int iCount = 0;
+				for (CLLNode<TradeData>* pNode = listTradeData->head(); NULL != pNode; pNode = listTradeData->next(pNode))
+				{
+					if (iCount++ == iItem)
+					{
+						TradeData& kTradeData = pNode->m_data;
+						if (kTradeData.m_eItemType == TRADE_RESOURCES)
+						{
+							szBuffer.append(NEWLINE NEWLINE);
+							GAMETEXT.setBonusHelp(szBuffer, (BonusTypes)kTradeData.m_iData);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+// BUG - Kill Deal Info - end
 }
 
 
@@ -6003,6 +6277,17 @@ void CvDLLWidgetData::doRefreshMilitaryAdvisor(CvWidgetDataStruct &widgetDataStr
 	gDLL->getPythonIFace()->callFunction(PYScreensModule, "refreshMilitaryAdvisor", argsList.makeFunctionArgs());
 }
 
+// BUG - Food Rate Hover - start
+void CvDLLWidgetData::parseFoodModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (NULL != pCity)
+	{
+		GAMETEXT.setFoodHelp(szBuffer, *pCity);
+	}
+}
+// BUG - Food Rate Hover - end
+
 void CvDLLWidgetData::parseProductionModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
 	CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
@@ -6021,6 +6306,13 @@ void CvDLLWidgetData::parseLeaderLineHelp(CvWidgetDataStruct &widgetDataStruct, 
 {
 	GAMETEXT.parseLeaderLineHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
 }
+
+// BUG - Leaderhead Relations - start
+void CvDLLWidgetData::parseLeaderheadRelationsHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	GAMETEXT.parseLeaderHeadRelationsHelp(szBuffer, (PlayerTypes)widgetDataStruct.m_iData1, (PlayerTypes)widgetDataStruct.m_iData2);
+}
+// BUG - Leaderhead Relations - end
 
 void CvDLLWidgetData::parseCommerceModHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
@@ -6044,3 +6336,30 @@ void CvDLLWidgetData::parseTradeRoutes(CvWidgetDataStruct& widgetDataStruct, CvW
 }
 // BUG - Trade Hover - end
 
+// BUG - Defense Hover - start
+
+void CvDLLWidgetData::parseDefenseHelp(CvWidgetDataStruct& widgetDataStruct, CvWStringBuffer& szBuffer)
+{
+	CvCity* pHeadSelectedCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (NULL != pHeadSelectedCity)
+	{
+		GAMETEXT.setDefenseHelp(szBuffer, *pHeadSelectedCity);
+	}
+}
+// BUG - Defense Hover - end
+//>>>>BUGFfH: Added by Denev 2009/09/10
+void CvDLLWidgetData::doPediaTraitJump(CvWidgetDataStruct &widgetDataStruct)
+{
+	CyArgsList argsList;
+	argsList.add(widgetDataStruct.m_iData1);
+	gDLL->getPythonIFace()->callFunction(PYScreensModule, "pediaJumpToTrait", argsList.makeFunctionArgs());
+}
+
+void CvDLLWidgetData::parseTraitHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	if (widgetDataStruct.m_iData2 != 0)
+	{
+		GAMETEXT.parseTraits(szBuffer, (TraitTypes)widgetDataStruct.m_iData1);
+	}
+}
+//<<<<BUGFfH: End Add

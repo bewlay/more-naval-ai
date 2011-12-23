@@ -6121,7 +6121,7 @@
             <bNukeImmune>0</bNukeImmune>
             <bPrereqReligion>0</bPrereqReligion>
             <bCenterInCity>0</bCenterInCity>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>100</iAIWeight>
             <iCost>240</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -13192,6 +13192,12 @@
             <iBombardDefense>0</iBombardDefense>
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
+		<!-- RevolutionDCM Building Effects  -->
+		<iUnitUpgradePriceModifier>0</iUnitUpgradePriceModifier>
+		<iRevIdxLocal>0</iRevIdxLocal>
+		<iRevIdxNational>1</iRevIdxNational>
+		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+		<!-- RevolutionDCM End  -->
             <iAsset>8</iAsset>
             <iPower>0</iPower>
             <fVisibilityPriority>100</fVisibilityPriority>
@@ -22918,6 +22924,9 @@
             <SeaPlotYieldChanges>
             </SeaPlotYieldChanges>
             <RiverPlotYieldChanges>
+                <iYield>0</iYield>
+                <iYield>0</iYield>
+                <iYield>1</iYield>
             </RiverPlotYieldChanges>
             <GlobalSeaPlotYieldChanges>
             </GlobalSeaPlotYieldChanges>
@@ -23155,6 +23164,12 @@
             <iBombardDefense>0</iBombardDefense>
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
+		<!-- RevolutionDCM Building Effects  -->
+		<iUnitUpgradePriceModifier>0</iUnitUpgradePriceModifier>
+		<iRevIdxLocal>0</iRevIdxLocal>
+		<iRevIdxNational>4</iRevIdxNational>
+		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+		<!-- RevolutionDCM End  -->
             <iAsset>0</iAsset>
             <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>
@@ -23377,6 +23392,12 @@
             <iBombardDefense>0</iBombardDefense>
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
+		<!-- RevolutionDCM Building Effects  -->
+		<iUnitUpgradePriceModifier>0</iUnitUpgradePriceModifier>
+		<iRevIdxLocal>0</iRevIdxLocal>
+		<iRevIdxNational>-4</iRevIdxNational>
+		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+		<!-- RevolutionDCM End  -->
             <iAsset>0</iAsset>
             <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>
@@ -23599,6 +23620,12 @@
             <iBombardDefense>0</iBombardDefense>
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
+		<!-- RevolutionDCM Building Effects  -->
+		<iUnitUpgradePriceModifier>0</iUnitUpgradePriceModifier>
+		<iRevIdxLocal>0</iRevIdxLocal>
+		<iRevIdxNational>0</iRevIdxNational>
+		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+		<!-- RevolutionDCM End  -->
             <iAsset>0</iAsset>
             <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>
@@ -23821,6 +23848,12 @@
             <iBombardDefense>0</iBombardDefense>
             <iAllCityDefense>0</iAllCityDefense>
             <iEspionageDefense>0</iEspionageDefense>
+		<!-- RevolutionDCM Building Effects  -->
+		<iUnitUpgradePriceModifier>0</iUnitUpgradePriceModifier>
+		<iRevIdxLocal>0</iRevIdxLocal>
+		<iRevIdxNational>0</iRevIdxNational>
+		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+		<!-- RevolutionDCM End  -->
             <iAsset>0</iAsset>
             <iPower>0</iPower>
             <fVisibilityPriority>10000</fVisibilityPriority>

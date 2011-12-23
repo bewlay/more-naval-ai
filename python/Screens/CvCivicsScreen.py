@@ -9,6 +9,7 @@ import CvScreensInterface
 
 # globals
 gc = CyGlobalContext()
+game = gc.getGame()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -62,7 +63,7 @@ class CvCivicsScreen:
 		self.X_CANCEL = 552
 		self.Y_CANCEL = 726
 
-		self.X_SCREEN = 500
+		self.X_SCREEN = 600
 		self.Y_SCREEN = 396
 		self.W_SCREEN = 1024
 		self.H_SCREEN = 768
@@ -70,6 +71,15 @@ class CvCivicsScreen:
 		self.Y_TITLE = 8		
 		self.Z_TEXT = self.Z_SCREEN - 0.2
 
+		#RevolutionDCM start - revolutions screen adjustment
+		if (game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS)):
+			for l in range(gc.getNumCivicInfos()):
+				self.HEADINGS_HEIGHT = (((40 + self.BUTTON_SIZE + self.TEXT_MARGIN) * l/self.CIVICCATEGORIES)/5 * 2) + 260
+		else:
+			for l in range(gc.getNumCivicInfos()):
+				self.HEADINGS_HEIGHT = (((40 + self.BUTTON_SIZE + self.TEXT_MARGIN) * l/self.CIVICCATEGORIES)/5 * 2) + 160
+		#RevolutionDCM end
+		
 		self.CivicsScreenInputMap = {
 			self.BUTTON_NAME		: self.CivicsButton,
 			self.TEXT_NAME			: self.CivicsButton,

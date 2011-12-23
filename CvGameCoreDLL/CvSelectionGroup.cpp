@@ -23,6 +23,9 @@
 #include <set>
 #include "CvEventReporter.h"
 
+// BUG - start
+#include "CvBugOptions.h"
+// BUG - end
 
 // Public Functions...
 

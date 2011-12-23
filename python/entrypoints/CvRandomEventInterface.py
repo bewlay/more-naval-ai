@@ -5835,11 +5835,11 @@ def getGreedUnit(player, plot):
 		if -1 != iUnit and player.canTrain(iUnit, false, false) and (gc.getUnitInfo(iUnit).getDomainType() == DomainTypes.DOMAIN_LAND):
 			iValue = 0
 			if gc.getUnitInfo(iUnit).getPrereqAndBonus() == iBonus:
-				iValue = player.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, plot.area())
+				iValue = player.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, plot.area(), false)
 			else:
 				for j in range(gc.getNUM_UNIT_PREREQ_OR_BONUSES()):
 					if (gc.getUnitInfo(iUnit).getPrereqOrBonuses(j) == iBonus):
-						iValue = player.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, plot.area())
+						iValue = player.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, plot.area(), false)
 						break
 			if iValue > iBestValue:
 				iBestValue = iValue

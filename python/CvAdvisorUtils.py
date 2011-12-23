@@ -252,6 +252,25 @@ def endTurnFeats(iPlayer):
 						popupInfo.addPythonButton(localText.getText("TXT_KEY_FEAT_ACCOMPLISHED_MORE", ()), "")
 						popupInfo.addPopup(iPlayer)
 
+		if (not gc.getPlayer(iPlayer).isFeatAccomplished(FeatTypes.FEAT_IRON_CONNECTED)):
+		
+			iBonus = gc.getInfoTypeForString("BONUS_IRON")
+			if (iBonus != BonusTypes.NO_BONUS):
+				if (pCapitalCity.hasBonus(iBonus)):
+					gc.getPlayer(iPlayer).setFeatAccomplished(FeatTypes.FEAT_IRON_CONNECTED, True)
+					
+					if (featPopup(iPlayer) and (gc.getGame().getStartYear() == gc.getDefineINT("START_YEAR"))):
+						popupInfo = CyPopupInfo()
+						popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
+						popupInfo.setData1(FeatTypes.FEAT_IRON_CONNECTED)
+						popupInfo.setData2(pCapitalCity.getID())
+						popupInfo.setText(localText.getText("TXT_KEY_FEAT_IRON_CONNECTED", ()))
+						popupInfo.setOnClickedPythonCallback("featAccomplishedOnClickedCallback")
+						popupInfo.setOnFocusPythonCallback("featAccomplishedOnFocusCallback")
+						popupInfo.addPythonButton(localText.getText("TXT_KEY_FEAT_ACCOMPLISHED_OK", ()), "")
+						popupInfo.addPythonButton(localText.getText("TXT_KEY_FEAT_ACCOMPLISHED_MORE", ()), "")
+						popupInfo.addPopup(iPlayer)
+
 		if (not gc.getPlayer(iPlayer).isFeatAccomplished(FeatTypes.FEAT_LUXURY_CONNECTED)):
 			for iI in range(gc.getNumBonusInfos()):
 				if (gc.getBonusInfo(iI).getHappiness() > 0):
@@ -356,7 +375,7 @@ def cityAdvise(pCity, iPlayer):
 
 											if (pCity.getFirstUnitOrder(eLoopUnit) == -1):
 											
-												iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_SETTLE, pCity.area())
+												iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_SETTLE, pCity.area(), false)
 
 												if (iValue > iBestValue):
 												
@@ -399,7 +418,7 @@ def cityAdvise(pCity, iPlayer):
 
 											if (pCity.getFirstUnitOrder(eLoopUnit) == -1):
 											
-												iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_WORKER, pCity.area())
+												iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_WORKER, pCity.area(), false)
 
 												if (iValue > iBestValue):
 												
@@ -440,8 +459,8 @@ def cityAdvise(pCity, iPlayer):
 
 										if pCity.canTrain(eLoopUnit, False, False):
 
-											iValue = (gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_CITY_DEFENSE, pCity.area()) * 2)
-											iValue += gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_ATTACK, pCity.area())
+											iValue = (gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_CITY_DEFENSE, pCity.area(), false) * 2)
+											iValue += gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_ATTACK, pCity.area(), false)
 
 											if (iValue > iBestValue):
 											
@@ -488,7 +507,7 @@ def cityAdvise(pCity, iPlayer):
 											
 												if pCity.canTrain(eLoopUnit, False, False):
 
-													iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_MISSIONARY, pCity.area())
+													iValue = gc.getPlayer(iPlayer).AI_unitValue(eLoopUnit, UnitAITypes.UNITAI_MISSIONARY, pCity.area(), false)
 
 													if (iValue > iBestValue):
 													

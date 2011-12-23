@@ -233,6 +233,11 @@ public:
 	int getBuildingBadHealth();
 	int getFeatureGoodHealth();
 	int getFeatureBadHealth();
+// BUG - Feature Health - start
+	int getAdditionalHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange);
+	int getAdditionalGoodHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange);
+	int getAdditionalBadHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange);
+// BUG - Feature Health - end
 	int getBuildingHealth(int iBuilding);
 // BUG - Building Additional Health - start
 	int getAdditionalHealthByBuilding(int /*BuildingTypes*/ eBuilding);
@@ -445,11 +450,29 @@ public:
 	int getBuildingProductionTime(int /*BuildingTypes*/ eIndex);
 	void setBuildingProductionTime(int /*BuildingTypes*/ eIndex, int iNewValue);
 	void changeBuildingProductionTime(int /*BuildingTypes*/ eIndex, int iChange);
+// BUG - Production Decay - start
+	bool isBuildingProductionDecay(int /*BuildingTypes*/ eIndex);
+	int getBuildingProductionDecay(int /*BuildingTypes*/ eIndex);
+	int getBuildingProductionDecayTurns(int /*BuildingTypes*/ eIndex);
+// BUG - Production Decay - end
 	int getBuildingOriginalOwner(int /*BuildingTypes*/ iIndex);
 	int getBuildingOriginalTime(int /*BuildingTypes*/ iIndex);
 	int getUnitProduction(int iIndex);
 	void setUnitProduction(int iIndex, int iNewValue);
 	void changeUnitProduction(int /*UnitTypes*/ iIndex, int iChange);
+// BUG - Production Decay - start
+	int getUnitProductionTime(int /*UnitTypes*/ eIndex);
+	void setUnitProductionTime(int /*UnitTypes*/ eIndex, int iNewValue);
+	void changeUnitProductionTime(int /*UnitTypes*/ eIndex, int iChange);
+	bool isUnitProductionDecay(int /*UnitTypes*/ eIndex);
+	int getUnitProductionDecay(int /*UnitTypes*/ eIndex);
+	int getUnitProductionDecayTurns(int /*UnitTypes*/ eIndex);
+// BUG - Production Decay - end
+// BUG - Project Production - start
+	int getProjectProduction(int /*ProjectTypes*/ iIndex);
+	void setProjectProduction(int /*ProjectTypes*/ iIndex, int iNewValue);
+	void changeProjectProduction(int /*ProjectTypes*/ iIndex, int iChange);
+// BUG - Project Production - end
 	int getGreatPeopleUnitRate(int /*UnitTypes*/ iIndex);
 	int getGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex);
 	void setGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex, int iNewValue);

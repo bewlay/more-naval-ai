@@ -901,6 +901,28 @@ public:
 	DllExport int getNumGraphicLevels() const;
 	DllExport int getNumGlobeLayers() const;
 
+// BUG - DLL Info - start
+	bool isBull() const;
+	int getBullApiVersion() const;
+
+	const wchar* getBullName() const;
+	const wchar* getBullVersion() const;
+// BUG - DLL Info - end
+
+// BUG - BUG Info - start
+	void setIsBug(bool bIsBug);
+// BUG - BUG Info - end
+
+// BUFFY - DLL Info - start
+#ifdef _BUFFY
+	bool isBuffy() const;
+	int getBuffyApiVersion() const;
+
+	const wchar* getBuffyName() const;
+	const wchar* getBuffyVersion() const;
+#endif
+// BUFFY - DLL Info - end
+
 	void deleteInfoArrays();
 
 protected:
@@ -1296,5 +1318,41 @@ inline CvGlobals& CvGlobals::getInstance()
 #define NUM_GRAPHICLEVELS (GC.getNumGraphicLevels())
 #define NUM_GLOBE_LAYER_TYPES (GC.getNumGlobeLayers())
 #endif
+
+
+#endif
+
+/**********************************************************************
+
+File:		BugMod.h
+Author:		EmperorFool
+Created:	2009-01-22
+
+Defines common constants and functions for use throughout the BUG Mod.
+
+		Copyright (c) 2009 The BUG Mod. All rights reserved.
+
+**********************************************************************/
+
+#pragma once
+
+#ifndef BUG_MOD_H
+#define BUG_MOD_H
+
+// name of the Python module where all the BUG functions that the DLL calls must live
+// MUST BE A BUILT-IN MODULE IN THE ENTRYPOINTS FOLDER
+// currently CvAppInterface
+#define PYBugModule				PYCivModule
+
+// Increment this by 1 each time you commit new/changed functions/constants in the Python API.
+#define BUG_DLL_API_VERSION		6
+
+// Used to signal the BULL saved game format is used
+#define BUG_DLL_SAVE_FORMAT		64
+
+// These are display-only values, and the version should be changed for each release.
+#define BUG_DLL_NAME			L"BULL"
+#define BUG_DLL_VERSION			L"1.3"
+#define BUG_DLL_BUILD			L"219"
 
 #endif

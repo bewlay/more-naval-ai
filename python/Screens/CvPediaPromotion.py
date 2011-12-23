@@ -232,7 +232,7 @@ class CvPediaPromotion:
 		screen = self.top.getScreen()
 
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_SPELLS (or LEADS_TO)", ()), "", false, true,
+		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_SPELL (or LEADS_TO)", ()), "", false, true,
 				 self.X_SPELL_PANE, self.Y_SPELL_PANE, self.W_SPELL_PANE, self.H_SPELL_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
 		
 		screen.attachLabel(panelName, "", "  ")

@@ -4378,49 +4378,64 @@ bool CvPlot::at(int iX, int iY) const
 }
 
 
+// BUG - Lat/Long Coordinates - start
+#define MINUTES_PER_DEGREE	60
+#define MIN_LONGITUDE		-180
+#define MAX_LONGITUDE		180
+
+int CvPlot::calculateMinutes(int iPlotIndex, int iPlotCount, bool bWrap, int iDegreeMin, int iDegreeMax) const
+{
+	if (!bWrap)
+	{
+		iPlotCount--;
+	}
+	return iPlotIndex * (iDegreeMax - iDegreeMin) * MINUTES_PER_DEGREE / iPlotCount + iDegreeMin * MINUTES_PER_DEGREE;
+}
+
+int CvPlot::getLongitudeMinutes() const
+{
+	if (GC.getMapINLINE().isWrapXINLINE())
+	{
+		// normal and toroidal
+		return calculateMinutes(getX_INLINE(), GC.getMapINLINE().getGridWidthINLINE(), true, MIN_LONGITUDE, MAX_LONGITUDE);
+	}
+	else if (!GC.getMapINLINE().isWrapYINLINE())
+	{
+		// flat
+		return calculateMinutes(getX_INLINE(), GC.getMapINLINE().getGridWidthINLINE(), false, MIN_LONGITUDE, MAX_LONGITUDE);
+	}
+	else
+	{
+		// tilted axis
+		return calculateMinutes(getY_INLINE(), GC.getMapINLINE().getGridHeightINLINE(), true, MIN_LONGITUDE, MAX_LONGITUDE);
+	}
+}
+
+int CvPlot::getLatitudeMinutes() const
+{
+	if (GC.getMapINLINE().isWrapXINLINE())
+	{
+		// normal and toroidal
+		return calculateMinutes(getY_INLINE(), GC.getMapINLINE().getGridHeightINLINE(), GC.getMapINLINE().isWrapYINLINE(), GC.getMapINLINE().getBottomLatitude(), GC.getMapINLINE().getTopLatitude());
+	}
+	else if (!GC.getMapINLINE().isWrapYINLINE())
+	{
+		// flat
+		return calculateMinutes(getY_INLINE(), GC.getMapINLINE().getGridHeightINLINE(), false, GC.getMapINLINE().getBottomLatitude(), GC.getMapINLINE().getTopLatitude());
+	}
+	else
+	{
+		// tilted axis
+		return calculateMinutes(getX_INLINE(), GC.getMapINLINE().getGridWidthINLINE(), false, GC.getMapINLINE().getBottomLatitude(), GC.getMapINLINE().getTopLatitude());
+	}
+}
+
 int CvPlot::getLatitude() const
 {
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       07/12/09                       Temudjin & jdog5000    */
-/*                                                                                              */
-/* Bugfix                                                                                       */
-/************************************************************************************************/
-/* orginal bts code
-	int iLatitude;
-
-	if (GC.getMapINLINE().isWrapXINLINE() || !(GC.getMapINLINE().isWrapYINLINE()))
-	{
-		iLatitude = ((getY_INLINE() * 100) / GC.getMapINLINE().getGridHeightINLINE());
-	}
-	else
-	{
-		iLatitude = ((getX_INLINE() * 100) / GC.getMapINLINE().getGridWidthINLINE());
-	}
-
-	iLatitude = ((iLatitude * (GC.getMapINLINE().getTopLatitude() - GC.getMapINLINE().getBottomLatitude())) / 100);
-
-	return abs(iLatitude + GC.getMapINLINE().getBottomLatitude());
-*/
-	int iLatitude;
-	double fLatitude;
-
-	if (GC.getMapINLINE().isWrapXINLINE() || !(GC.getMapINLINE().isWrapYINLINE()))
-	{
-		fLatitude = ((getY_INLINE() * 1.0) / (GC.getMapINLINE().getGridHeightINLINE()-1));
-	}
-	else
-	{
-		fLatitude = ((getX_INLINE() * 1.0) / (GC.getMapINLINE().getGridWidthINLINE()-1));
-	}
-
-	fLatitude = fLatitude * (GC.getMapINLINE().getTopLatitude() - GC.getMapINLINE().getBottomLatitude());
-
-	iLatitude =(int)(fLatitude + 0.5);
-	return abs( (iLatitude + GC.getMapINLINE().getBottomLatitude()));
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/
+	return abs(getLatitudeMinutes() / MINUTES_PER_DEGREE);
 }
+// BUG - Lat/Long Coordinates - end
+
 
 
 int CvPlot::getFOWIndex() const

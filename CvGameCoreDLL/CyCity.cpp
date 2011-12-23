@@ -1000,10 +1000,129 @@ int CyCity::getFeatureBadHealth()
 	return m_pCity ? m_pCity->getFeatureBadHealth() : -1;
 }
 
+// BUG - Feature Health - start
+int CyCity::getAdditionalHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		return m_pCity->getAdditionalHealthByFeature((FeatureTypes)eFeature, iChange, iGood, iBad);
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalGoodHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		m_pCity->getAdditionalHealthByFeature((FeatureTypes)eFeature, iChange, iGood, iBad);
+		return iGood;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalBadHealthByFeature(int /*FeatureTypes*/ eFeature, int iChange)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		m_pCity->getAdditionalHealthByFeature((FeatureTypes)eFeature, iChange, iGood, iBad);
+		return iBad;
+	}
+	else
+	{
+		return -1;
+	}
+}
+// BUG - Feature Health - end
+
 int CyCity::getBuildingHealth(int /*BuildingTypes*/ eBuilding)
 {
 	return m_pCity ? m_pCity->getBuildingHealth((BuildingTypes)eBuilding) : -1;
 }
+
+// BUG - Building Additional Health - start
+int CyCity::getAdditionalHealthByBuilding(int /*BuildingTypes*/ eBuilding)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		return m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalGoodHealthByBuilding(int /*BuildingTypes*/ eBuilding)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
+		return iGood;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalBadHealthByBuilding(int /*BuildingTypes*/ eBuilding)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
+		return iBad;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalSpoiledFoodByBuilding(int /*BuildingTypes*/ eBuilding)
+{
+	if (m_pCity)
+	{
+		int iGood = 0, iBad = 0;
+
+		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
+		return m_pCity->getAdditionalSpoiledFood(iGood, iBad);
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+int CyCity::getAdditionalStarvationByBuilding(int /*BuildingTypes*/ eBuilding)
+{
+	if (m_pCity)
+	{
+		return m_pCity->getAdditionalStarvation(getAdditionalSpoiledFoodByBuilding(eBuilding));
+	}
+	else
+	{
+		return -1;
+	}
+}
+// BUG - Building Additional Health - end
 
 int CyCity::getPowerGoodHealth()
 {
@@ -1989,6 +2108,23 @@ void CyCity::changeBuildingProductionTime(int /*BuildingTypes*/ eIndex, int iCha
 		m_pCity->changeBuildingProductionTime((BuildingTypes) eIndex, iChange);
 }
 
+// BUG - Production Decay - start
+bool CyCity::isBuildingProductionDecay(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->isBuildingProductionDecay((BuildingTypes)eIndex) : false;
+}
+
+int CyCity::getBuildingProductionDecay(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getBuildingProductionDecay((BuildingTypes)eIndex) : 0;
+}
+
+int CyCity::getBuildingProductionDecayTurns(int /*BuildingTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getBuildingProductionDecayTurns((BuildingTypes)eIndex) : 0;
+}
+// BUG - Production Decay - end
+
 int CyCity::getBuildingOriginalOwner(int /*BuildingTypes*/ iIndex)
 {
 	return m_pCity ? m_pCity->getBuildingOriginalOwner((BuildingTypes) iIndex) : -1;
@@ -2015,6 +2151,59 @@ void CyCity::changeUnitProduction(int /*UnitTypes*/ iIndex, int iChange)
 	if (m_pCity)
 		m_pCity->changeUnitProduction((UnitTypes) iIndex, iChange);
 }
+
+// BUG - Production Decay - start
+int CyCity::getUnitProductionTime(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionTime((UnitTypes)eIndex) : -1;
+}
+
+void CyCity::setUnitProductionTime(int /*UnitTypes*/ eIndex, int iNewValue)
+{
+	if (m_pCity)
+		m_pCity->setUnitProductionTime((UnitTypes)eIndex, iNewValue);
+}
+
+void CyCity::changeUnitProductionTime(int /*UnitTypes*/ eIndex, int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeUnitProductionTime((UnitTypes) eIndex, iChange);
+}
+
+bool CyCity::isUnitProductionDecay(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->isUnitProductionDecay((UnitTypes)eIndex) : false;
+}
+
+int CyCity::getUnitProductionDecay(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionDecay((UnitTypes)eIndex) : 0;
+}
+
+int CyCity::getUnitProductionDecayTurns(int /*UnitTypes*/ eIndex)
+{
+	return m_pCity ? m_pCity->getUnitProductionDecayTurns((UnitTypes)eIndex) : 0;
+}
+// BUG - Production Decay - end
+
+// BUG - Project Production - start
+int CyCity::getProjectProduction(int /*ProjectTypes*/ iIndex)
+{
+	return m_pCity ? m_pCity->getProjectProduction((ProjectTypes) iIndex) : -1;
+}
+
+void CyCity::setProjectProduction(int /*ProjectTypes*/ iIndex, int iNewValue)
+{
+	if (m_pCity)
+		m_pCity->setProjectProduction((ProjectTypes) iIndex, iNewValue);
+}
+
+void CyCity::changeProjectProduction(int /*ProjectTypes*/ iIndex, int iChange)
+{
+	if (m_pCity)
+		m_pCity->changeProjectProduction((ProjectTypes) iIndex, iChange);
+}
+// BUG - Project Production - end
 
 int CyCity::getGreatPeopleUnitRate(int /*UnitTypes*/ iIndex)
 {
@@ -2385,79 +2574,6 @@ int CyCity::getBuildingHealthChange(int /*BuildingClassTypes*/ eBuildingClass) c
 {
 	return m_pCity ? m_pCity->getBuildingHealthChange((BuildingClassTypes)eBuildingClass) : 0;
 }
-
-// BUG - Building Additional Health - start
-int CyCity::getAdditionalHealthByBuilding(int /*BuildingTypes*/ eBuilding)
-{
-	if (m_pCity)
-	{
-		int iGood = 0, iBad = 0;
-
-		return m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-int CyCity::getAdditionalGoodHealthByBuilding(int /*BuildingTypes*/ eBuilding)
-{
-	if (m_pCity)
-	{
-		int iGood = 0, iBad = 0;
-
-		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
-		return iGood;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-int CyCity::getAdditionalBadHealthByBuilding(int /*BuildingTypes*/ eBuilding)
-{
-	if (m_pCity)
-	{
-		int iGood = 0, iBad = 0;
-
-		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
-		return iBad;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-int CyCity::getAdditionalSpoiledFoodByBuilding(int /*BuildingTypes*/ eBuilding)
-{
-	if (m_pCity)
-	{
-		int iGood = 0, iBad = 0;
-
-		m_pCity->getAdditionalHealthByBuilding((BuildingTypes)eBuilding, iGood, iBad);
-		return m_pCity->getAdditionalSpoiledFood(iGood, iBad);
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-int CyCity::getAdditionalStarvationByBuilding(int /*BuildingTypes*/ eBuilding)
-{
-	if (m_pCity)
-	{
-		return m_pCity->getAdditionalStarvation(getAdditionalSpoiledFoodByBuilding(eBuilding));
-	}
-	else
-	{
-		return -1;
-	}
-}
-// BUG - Building Additional Health - end
 
 void CyCity::setBuildingHealthChange(int /*BuildingClassTypes*/ eBuildingClass, int iChange)
 {

@@ -541,6 +541,16 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_GLOBELAYER_OPTION,
 	WIDGET_GLOBELAYER_TOGGLE,
 
+// BUG - Min/Max Commerce Rate - start
+	WIDGET_SET_PERCENT,
+// BUG - Min/Max Commerce Rate - end
+
+// BUG - Finance Advisor - start
+	WIDGET_HELP_FINANCE_DOMESTIC_TRADE,
+	WIDGET_HELP_FINANCE_FOREIGN_TRADE,
+	WIDGET_HELP_FINANCE_SPECIALISTS,
+// BUG - Finance Advisor - end
+
 // BUG - Trade Denial - start
 	WIDGET_PEDIA_JUMP_TO_BONUS_TRADE,
 	WIDGET_PEDIA_JUMP_TO_TECH_TRADE,
@@ -553,6 +563,15 @@ enum WidgetTypes					// Exposed to Python
 // BUG - Food Rate Hover - start
 	WIDGET_FOOD_MOD_HELP,
 // BUG - Food Rate Hover - end
+
+// BUG - Leaderhead Relations - start
+	WIDGET_LEADERHEAD_RELATIONS,
+// BUG - Leaderhead Relations - end
+
+//>>>>BUGFfH: Added by Denev 2009/09/10
+	WIDGET_PEDIA_JUMP_TO_TRAIT,
+	WIDGET_HELP_TRAIT,
+//<<<<BUGFfH: End Add
 //FfH: Added by Kael 07/23/2007
 	WIDGET_PEDIA_JUMP_TO_SPELL,
 	WIDGET_HELP_SPELL,
@@ -2686,6 +2705,9 @@ enum CivilopediaPageTypes		// Exposed to Python
 	CIVILOPEDIA_PAGE_UNIT_GROUP,
 	CIVILOPEDIA_PAGE_CIV,
 	CIVILOPEDIA_PAGE_LEADER,
+//>>>>BUGFfH: Added by Denev 2009/09/19
+	CIVILOPEDIA_PAGE_TRAIT,
+//<<<<BUGFfH: End Add
 	CIVILOPEDIA_PAGE_RELIGION,
 	CIVILOPEDIA_PAGE_CORPORATION,
 	CIVILOPEDIA_PAGE_CIVIC,
@@ -2829,6 +2851,10 @@ enum GameMessageTypes				// Exposed to Python
 	GAMEMESSAGE_ADVANCED_START_ACTION,
 	GAMEMESSAGE_FOUND_RELIGION,
 	GAMEMESSAGE_MOD_NET_MESSAGE
+// BUG - Reminder Mod - start
+	, GAMEMESSAGE_ADD_REMINDER
+	, GAMEMESSAGE_SET_GLOBAL_DEFINE
+// BUG - Reminder Mod - end
 };
 
 enum PopupControlLayout		// Exposed to Python

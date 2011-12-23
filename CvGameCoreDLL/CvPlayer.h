@@ -1133,6 +1133,10 @@ public:
 	UnitArtStyleTypes getUnitArtStyleType() const;
 //<<<<Unofficial Bug Fix: End Add
 
+// BUG - Reminder Mod - start
+	void addReminder(int iGameTurn, CvWString szMessage) const;
+// BUG - Reminder Mod - end
+
 	virtual void AI_init() = 0;
 	virtual void AI_reset(bool bConstructor) = 0;
 	virtual void AI_doTurnPre() = 0;

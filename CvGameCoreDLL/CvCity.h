@@ -142,6 +142,9 @@ public:
 
 	bool canHurry(HurryTypes eHurry, bool bTestVisible = false) const;		// Exposed to Python
 	void hurry(HurryTypes eHurry);																						// Exposed to Python
+// BUG - Hurry Assist - start
+	bool hurryOverflow(HurryTypes eHurry, int* iProduction, int* iGold, bool bCountThisTurn = false) const;
+// BUG - Hurry Assist - end
 
 	UnitTypes getConscriptUnit() const;																// Exposed to Python
 	CvUnit* initConscriptedUnit();
@@ -392,6 +395,13 @@ public:
 	int getFeatureGoodHealth() const;																			// Exposed to Python
 	int getFeatureBadHealth() const;														// Exposed to Python
 	void updateFeatureHealth();
+// BUG - Feature Health - start
+	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
+	void calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot = NULL) const;
+	int getAdditionalHealthByFeature(FeatureTypes eFeature, int iChange) const;									// Exposed to Python
+	int getAdditionalHealthByFeature(FeatureTypes eFeature, int iChange, int& iGood, int& iBad) const;
+	int getAdditionalHealth(int iGoodPercent, int iBadPercent, int& iGood, int& iBad) const;
+// BUG - Feature Health - end
 
 // BUG - Actual Effects - start
 	int getAdditionalAngryPopuplation(int iGood, int iBad) const;
@@ -705,6 +715,7 @@ public:
 	int calculateTradeYield(YieldTypes eIndex, int iTradeProfit) const;					// Exposed to Python
 // BUG - Trade Totals - start
 	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
+	int calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer = NO_PLAYER, bool bRound = false, bool bBase = false) const;
 // BUG - Trade Totals - end
 	void setTradeYield(YieldTypes eIndex, int iNewValue);
 
@@ -830,6 +841,11 @@ public:
 	int getBuildingProductionTime(BuildingTypes eIndex) const;										// Exposed to Python
 	void setBuildingProductionTime(BuildingTypes eIndex, int iNewValue);		// Exposed to Python
 	void changeBuildingProductionTime(BuildingTypes eIndex, int iChange);		// Exposed to Python
+// BUG - Production Decay - start
+	bool isBuildingProductionDecay(BuildingTypes eIndex) const;														// Exposed to Python
+	int getBuildingProductionDecay(BuildingTypes eIndex) const;														// Exposed to Python
+	int getBuildingProductionDecayTurns(BuildingTypes eIndex) const;												// Exposed to Python
+// BUG - Production Decay - end
 
 	int getProjectProduction(ProjectTypes eIndex) const;								// Exposed to Python
 	void setProjectProduction(ProjectTypes eIndex, int iNewValue);					// Exposed to Python
@@ -845,6 +861,11 @@ public:
 	int getUnitProductionTime(UnitTypes eIndex) const;														// Exposed to Python
 	void setUnitProductionTime(UnitTypes eIndex, int iNewValue);						// Exposed to Python
 	void changeUnitProductionTime(UnitTypes eIndex, int iChange);						// Exposed to Python
+// BUG - Production Decay - start
+	bool isUnitProductionDecay(UnitTypes eIndex) const;														// Exposed to Python
+	int getUnitProductionDecay(UnitTypes eIndex) const;														// Exposed to Python
+	int getUnitProductionDecayTurns(UnitTypes eIndex) const;												// Exposed to Python
+// BUG - Production Decay - end
 
 	int getGreatPeopleUnitRate(UnitTypes eIndex) const;														// Exposed to Python
 	void setGreatPeopleUnitRate(UnitTypes eIndex, int iNewValue);
@@ -1234,6 +1255,7 @@ protected:
 	bool m_bInfoDirty;
 	bool m_bLayoutDirty;
 	bool m_bPlundered;
+
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       12/07/09                         denev & jdog5000     */
 /*                                                                                              */

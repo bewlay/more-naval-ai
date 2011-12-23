@@ -351,6 +351,9 @@ void CyInfoPythonInterface1()
 		.def("getPrereqCiv", &CvUnitInfo::getPrereqCiv, "int ()")
 //FfH: End Add
 
+// BUG - Unit Experience - start
+		.def("canAcquireExperience", &CvUnitInfo::canAcquireExperience, "int ()")
+// BUG - Unit Experience - end
 		// Arrays
 
 		.def("getPrereqAndTechs", &CvUnitInfo::getPrereqAndTechs, "int (int i)")

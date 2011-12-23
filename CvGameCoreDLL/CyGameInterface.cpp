@@ -293,6 +293,25 @@ void CyGamePythonInterface()
         .def("testVictory", &CyGame::testVictory)
 //FfH: End Add
 
+// BUG - MapFinder - start
+		.def("canRegenerateMap", &CyGame::canRegenerateMap, "bool ()")
+		.def("regenerateMap", &CyGame::regenerateMap, "void ()")
+		
+		.def("saveGame", &CyGame::saveGame, "void saveGame(string filename)")
+		.def("takeJPEGScreenShot", &CyGame::takeJPEGScreenShot, "bool takeJPEGScreenShot(string filename)")
+// BUG - MapFinder - end
+
+// BUG - EXE/DLL Paths - start
+		.def("getDLLPath", &CyGame::getDLLPath, "string getDLLPath()")
+		.def("getExePath", &CyGame::getExePath, "string getExePath()")
+// BUG - EXE/DLL Paths - end
+
+// BUFFY - Security Checks - start
+#ifdef _BUFFY
+		.def("checkCRCs", &CyGame::checkCRCs, "checkCRCs (string, string, string, string, string, string)")
+		.def("getWarningStatus", &CyGame::getWarningStatus, "int getWarningStatus()")
+#endif
+// BUFFY - Security Checks - end
 		;
 
 	python::class_<CyDeal>("CyDeal")
@@ -306,5 +325,11 @@ void CyGamePythonInterface()
 		.def("getFirstTrade", &CyDeal::getFirstTrade, python::return_value_policy<python::reference_existing_object>())
 		.def("getSecondTrade", &CyDeal::getSecondTrade, python::return_value_policy<python::reference_existing_object>())
 		.def("kill", &CyDeal::kill)
+
+// BUG - Expose Deal Cancelability - start
+		.def("isCancelable", &CyDeal::isCancelable, "bool isCancelable(int /*PlayerTypes*/ eByPlayer, bool bIgnoreWaitingPeriod)")
+		.def("getCannotCancelReason", &CyDeal::getCannotCancelReason, "string getCannotCancelReason(int /*PlayerTypes*/ eByPlayer)")
+		.def("turnsToCancel", &CyDeal::turnsToCancel, "int turnsToCancel(int /*PlayerTypes*/ eByPlayer)")
+// BUG - Expose Deal Cancelability - end
 		;
 }

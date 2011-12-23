@@ -793,6 +793,28 @@
 	<ElementType name="ImprovementYieldChanges" content="eltOnly">
 		<element type="ImprovementYieldChange" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+<!--DPII < Revolution Mod Start > -->
+	<ElementType name="bUpgradeAnywhere" content= "textOnly" dt:type="boolean"/>
+	<ElementType name="bAllowInquisitions" content= "textOnly" dt:type="boolean"/>
+	<ElementType name="bDisallowInquisitions" content= "textOnly" dt:type="boolean"/>
+	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxSwitchTo" content="textOnly" dt:type="int"/>
+	<ElementType name="fRevIdxNationalityMod" content="textOnly"/>
+	<ElementType name="fRevIdxBadReligionMod" content="textOnly"/>
+	<ElementType name="fRevIdxGoodReligionMod" content="textOnly"/>
+	<ElementType name="fRevViolentMod" content="textOnly"/>
+	<ElementType name="iRevReligiousFreedom" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevLaborFreedom" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevEnvironmentalProtection" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevDemocracyLevel" content="textOnly" dt:type="int"/>
+	<ElementType name="bCommunism" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bFreeSpeech" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bCanDoElection" content="textOnly" dt:type="boolean"/>	
+<!--DPII < Revolution Mod End > -->
 	<ElementType name="WeLoveTheKing" content="textOnly"/>
 	<ElementType name="bNoDiplomacyWithEnemies" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPrereqWar" content="textOnly" dt:type="boolean"/>
@@ -867,6 +889,28 @@
 		<element type="BuildingHealthChanges"/>
 		<element type="FeatureHappinessChanges"/>
 		<element type="ImprovementYieldChanges"/>
+<!-- DPII < Revolution Mod Start > -->
+		<element type="bUpgradeAnywhere" minOccurs="0"/>
+		<element type="bAllowInquisitions" minOccurs="0"/>
+		<element type="bDisallowInquisitions" minOccurs="0"/>
+		<element type="iRevIdxLocal" minOccurs="0"/>
+		<element type="iRevIdxNational" minOccurs="0"/>
+		<element type="iRevIdxDistanceModifier" minOccurs="0"/>
+		<element type="iRevIdxHolyCityGood" minOccurs="0"/>
+		<element type="iRevIdxHolyCityBad" minOccurs="0"/>
+		<element type="iRevIdxSwitchTo" minOccurs="0"/>
+		<element type="fRevIdxNationalityMod" minOccurs="0"/>
+		<element type="fRevIdxBadReligionMod" minOccurs="0"/>
+		<element type="fRevIdxGoodReligionMod" minOccurs="0"/>
+		<element type="fRevViolentMod" minOccurs="0"/>
+		<element type="iRevReligiousFreedom" minOccurs="0"/>
+		<element type="iRevLaborFreedom" minOccurs="0"/>
+		<element type="iRevEnvironmentalProtection" minOccurs="0"/>
+		<element type="iRevDemocracyLevel" minOccurs="0"/>
+		<element type="bCommunism" minOccurs="0"/>
+		<element type="bFreeSpeech" minOccurs="0"/>
+		<element type="bCanDoElection" minOccurs="0"/>
+<!--DPII < Revolution Mod End > -->
 		<element type="WeLoveTheKing"/>
 		<element type="bHidden"/>
 		<element type="bNoDiplomacyWithEnemies"/>

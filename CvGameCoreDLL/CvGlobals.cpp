@@ -20,6 +20,23 @@
 #include "FVariableSystem.h"
 #include "CvInitCore.h"
 
+
+// BUG - start
+// RevolutionDCM - BugMod included in CvGlobals.h
+//#include "BugMod.h"
+// BUG - end
+
+// BUG - BUG Info - start
+#include "CvBugOptions.h"
+// BUG - BUG Info - end
+
+// BUFFY - DLL Info - start
+#ifdef _BUFFY
+#include "Buffy.h"
+#endif
+// BUFFY - DLL Info - end
+
+
 #define COPY(dst, src, typeName) \
 	{ \
 		int iNum = sizeof(src)/sizeof(typeName); \
@@ -3752,6 +3769,26 @@ void CvGlobals::setBorderFinder(FAStar* pVal) { m_borderFinder = pVal; }
 void CvGlobals::setAreaFinder(FAStar* pVal) { m_areaFinder = pVal; }
 void CvGlobals::setPlotGroupFinder(FAStar* pVal) { m_plotGroupFinder = pVal; }
 CvDLLUtilityIFaceBase* CvGlobals::getDLLIFaceNonInl() { return m_pDLL; }
+
+// BUG - DLL Info - start
+bool CvGlobals::isBull() const { return true; }
+int CvGlobals::getBullApiVersion() const { return BUG_DLL_API_VERSION; }
+const wchar* CvGlobals::getBullName() const { return BUG_DLL_NAME; }
+const wchar* CvGlobals::getBullVersion() const { return BUG_DLL_VERSION; }
+// BUG - DLL Info - end
+
+// BUG - BUG Info - start
+void CvGlobals::setIsBug(bool bIsBug) { ::setIsBug(bIsBug); }
+// BUG - BUG Info - end
+
+// BUFFY - DLL Info - start
+#ifdef _BUFFY
+bool CvGlobals::isBuffy() const { return true; }
+int CvGlobals::getBuffyApiVersion() const { return BUFFY_DLL_API_VERSION; }
+const wchar* CvGlobals::getBuffyName() const { return BUFFY_DLL_NAME; }
+const wchar* CvGlobals::getBuffyVersion() const { return BUFFY_DLL_VERSION; }
+#endif
+// BUFFY - DLL Info - end
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      02/21/10                                jdog5000      */

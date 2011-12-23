@@ -163,6 +163,7 @@ class CvGameUtils:
 				return True
 			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 				return True
+
 		if eTech == gc.getInfoTypeForString('TECH_WAY_OF_THE_EARTHMOTHER'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_3):
 				return True
@@ -441,13 +442,6 @@ class CvGameUtils:
 				if pPlayer.getNumCities() <= 3:
 					return True
 		
-		if pPlayer.isHuman() == False:
-			if pPlayer.getUnitClassCountPlusMaking(gc.getInfoTypeForString('UNITCLASS_WARRIOR')) <= 2:
-				if not eTeam.isHasTech(gc.getInfoTypeForString('TECH_BRONZE_WORKING')):
-					if not eTeam.isHasTech(gc.getInfoTypeForString('TECH_ARCHERY')):
-						return True
-			if pCity.getBaseYieldRate(1) <= 10:
-				return True
 		
 		return False
 
