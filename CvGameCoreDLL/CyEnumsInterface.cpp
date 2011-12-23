@@ -1920,15 +1920,6 @@ void CyEnumsPythonInterface()
 //FfH Spell System: Added by Kael 07/23/2007
 		.value("ACTIONSUBTYPE_SPELL", ACTIONSUBTYPE_SPELL)
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (automatic Spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-		.value("ACTIONSUBTYPE_AUTOMATE_SPELL", ACTIONSUBTYPE_AUTOMATE_SPELL)
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 		.value("NUM_ACTIONSUBTYPES", NUM_ACTIONSUBTYPES)
 		;
 
