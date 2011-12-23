@@ -1312,15 +1312,6 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 //FfH Spell System: Added by Kael 07/23/2007
 		GC.getNumSpellInfos() +
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (automatic Spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-        GC.getNumSpellInfos() +
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 		NUM_MISSION_TYPES;
 
 	int* piIndexList = new int[iNumActionInfos];
@@ -1436,22 +1427,6 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 	}
 //FfH: End Add
 
-/*************************************************************************************************/
-/**	ADDON (automatic Spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-	for (i=0;i<GC.getNumSpellInfos();i++)
-	{
-		piIndexList[iTotalActionInfoCount] = i;
-		piPriorityList[iTotalActionInfoCount] = GC.getSpellInfo((SpellTypes)i).getOrderPriority();
-		piActionInfoTypeList[iTotalActionInfoCount] = ACTIONSUBTYPE_AUTOMATE_SPELL;
-		iTotalActionInfoCount++;
-	}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 	SAFE_DELETE_ARRAY(piOrderedIndex);
 	piOrderedIndex = new int[iNumActionInfos];
 
@@ -1489,20 +1464,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 			GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).setHotKeyDescription(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getTextKeyWide(), GC.getCommandInfo((CommandTypes)(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getCommandType())).getTextKeyWide(), CreateHotKeyFromDescription(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getHotKey(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isShiftDown(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isAltDown(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isCtrlDown()));
 		}
 //FfH: End Add
-/*************************************************************************************************/
-/**	ADDON (automatic Spellcasting) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-		else if ((ActionSubTypes)piActionInfoTypeList[piOrderedIndex[i]] == ACTIONSUBTYPE_AUTOMATE_SPELL)
-		{
-			GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).setCommandType(FindInInfoClass("COMMAND_CAST"));
-			GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).setActionInfoIndex(i);
-			GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).setHotKeyDescription(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getTextKeyWide(), GC.getCommandInfo((CommandTypes)(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getCommandType())).getTextKeyWide(), CreateHotKeyFromDescription(GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).getHotKey(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isShiftDown(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isAltDown(), GC.getSpellInfo((SpellTypes)piIndexList[piOrderedIndex[i]]).isCtrlDown()));
-		}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+
 		else if ((ActionSubTypes)piActionInfoTypeList[piOrderedIndex[i]] == ACTIONSUBTYPE_UNIT)
 		{
 			GC.getUnitInfo((UnitTypes)piIndexList[piOrderedIndex[i]]).setCommandType(FindInInfoClass("COMMAND_UPGRADE"));
