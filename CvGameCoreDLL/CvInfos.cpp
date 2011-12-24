@@ -16945,7 +16945,7 @@ bool CvTerrainInfo::read(CvXMLLoadUtility* pXML)
 	}
 	else
 	{
-		pXML->InitList(&m_piCivilizationYieldChange, NUM_YIELD_TYPES);
+		pXML->InitList(&m_piCivilizationYieldRiverChange, NUM_YIELD_TYPES);
 	}
 
 	return true;
