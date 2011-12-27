@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XMLSPY 2004 Professional Ed. Release 2, Installed Multi + SMP for 3 users (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Game Text Infos -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_INQUISITIONS</Tag>
+		<English>No Inquisitions</English>
+		<French>Pas de Inquisitions</French>
+		<German>Keine Inquisitionen</German>
+		<Italian>Nessuno Inquisizioni</Italian>
+		<Spanish>No Inquisitiones</Spanish>
+		<Finnish>No Inquisitions</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_NO_INQUISITIONS_HELP</Tag>
+		<English>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</English>
+		<French>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</French>
+		<German>Beendet Inquisitionen. Es k&#246;nnen keine Inquisitoren ausgebildet werden und keine nicht-staatlichen Religionen zum Zweck der Reduzierung der Rebellionsgefahr ausgel&#246;scht werden.</German>
+		<Italian>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Italian>
+		<Spanish>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Spanish>
+		<Finnish>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Finnish>
+	</TEXT>	
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_UNIT_UPGRADE_COST_MOD</Tag>
+		<English>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] to Upgrade Units</English>
+		<French>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] pour moderniser les unit&#233;s militaires</French>
+		<German>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] um Einheiten zu modernisieren</German>
+		<Italian>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] per aggiornare le unit&#224; militari</Italian>
+		<Spanish>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] para modernizar las unidades militares</Spanish>
+		<Finnish>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] p&#228;ivitt&#228;minen Yksik&#246;t</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_COLLATERAL_DAMAGE_REVDCM</Tag>
+		<English>[ICON_BULLET]Causes Collateral Damage (Max %d1% to %d2 Units)</English>
+		<French>[ICON_BULLET]Provoquer des dommages collat&#233;raux (Max %d1% to %d2 Units)</French>
+		<German>[ICON_BULLET]Ursachen Collateral Damage (Max %d1% to %d2 Units)</German>
+		<Italian>[ICON_BULLET]Causano danni collaterali (Max da %d1% a %d2 Unit&#224;)</Italian>
+		<Spanish>[ICON_BULLET]Causa da&#241;o colateral (Max %d1% to %d2 Units)</Spanish>
+		<Finnish>[ICON_BULLET]Syyt Collateral Damage (Max %d1% to %d2 Units)</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_HIRED_WAR_ALLY</Tag>
+		<English>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
+		<French>Les sournois %s1_CivAdj ont convaincu les tra&#238;tres %s2_CivAdj de nous d&#233;clarer la Guerre!</French>
+		<German>Die b&#246;sartigen %s1_CivAdj haben die hinterh&#228;ltigen %s2_CivAdj davon &#252;berzeugt, uns den Krieg zu erkl&#228;ren!</German>
+		<Italian>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
+		<Spanish>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Spanish>
+		<Finnish>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Finnish>
+	</TEXT>
+	 <TEXT>
+        <Tag>TXT_KEY_GAME_OPTION_RUTHLESS_AI</Tag>
+        <English>Ruthless AI</English>
+        <French>IA Sans merci</French>
+        <German>Skrupellose KI</German>
+        <Italian>Ruthless AI</Italian>
+        <Spanish>Ruthless AI</Spanish>
+		<Finnish>Ruthless AI</Finnish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_GAME_OPTION_RUTHLESS_AI_HELP</Tag>
+        <English>Ruthless AI is a step up from Aggresive AI. The AI will be more backstabbing, less predictable, more ready to declare war on everyone, less likely to forgive past slights, and will trade with your worst enemies, just to spite you. Expect no mercy, for you shall receive none!</English>
+        <French>IA Sans merci est le niveau au-dessus de l'IA Aggressive. L'IA est plus sournoise, moins pr&#233;visible, pr&#234;te &#224; d&#233;clarer la Guerre &#224; tout moment, ne pardonne pas, et va commercer avec vos pires ennemis, juste pour vous d&#233;stabiliser. N'attendez aucune piti&#233;, vous n'en recevrez pas!</French>
+        <German>Skrupellose KI geht einen Schritt weiter als Agressive KI. Die KI wird hinterh&#228;ltiger sein, schlechter ausrechenbar, schneller Kriege erkl&#228;ren, fr&#252;here Vergehen weniger schnell vergessen, und wird mit Deinen schlimmsten Feinden handeln, nur aus Boshaftigkeit Dir gegen&#252;ber. Erwarte keine Gnade, denn es wird f&#252;r Dich keine geben!</German>
+        <Italian>Ruthless AI is a step up from Aggresive AI. The AI will be more backstabbing, less predictable, more ready to declare war on everyone, less likely to forgive past slights, and will trade with your worst enemies, just to spite you. Expect no mercy, for you shall receive none!</Italian>
+        <Spanish>Ruthless AI is a step up from Aggresive AI. The AI will be more backstabbing, less predictable, more ready to declare war on everyone, less likely to forgive past slights, and will trade with your worst enemies, just to spite you. Expect no mercy, for you shall receive none!</Spanish>
+		<Finnish>Ruthless AI is a step up from Aggresive AI. The AI will be more backstabbing, less predictable, more ready to declare war on everyone, less likely to forgive past slights, and will trade with your worst enemies, just to spite you. Expect no mercy, for you shall receive none!</Finnish>
+    </TEXT>
+</Civ4GameText>

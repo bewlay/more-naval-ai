@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- -->
+<!-- Game Text - Unit Upgrades for Civilopedia -->
+
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_SEVOPEDIA_TITLE</Tag>
+		<English>SEVOPEDIA</English>
+		<French>SEVOPEDIA</French>
+		<German>SEVOPEDIA</German>
+		<Italian>SEVOPEDIA</Italian>
+		<Spanish>SEVOPEDIA</Spanish>
+		<Finnish>SEVOPEDIA</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_SCREEN_INDEX</Tag>
+		<English>Index</English>
+		<French>Index</French>
+		<German>Index</German>
+		<Italian>[SPACE][SPACE][SPACE][SPACE][SPACE]Indice</Italian>
+		<Spanish>&#205;ndice</Spanish>
+		<Finnish>Hakemisto</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_SCREEN_CONTENTS</Tag>
+		<English>Contents</English>
+		<French>Mati&#232;res</French>
+		<German>Inhalt</German>
+		<Italian>Contenuto</Italian>
+		<Spanish>Contenido</Spanish>
+		<Finnish>Sis&#228;llys</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_UNIT_UPGRADES</Tag>
+		<English>Unit Upgrades</English>
+		<French>Am&#233;liorations des Unit&#233;s</French>
+		<German>Modernisierungs-[NEWLINE]baum</German>
+		<Italian>Avanzamenti</Italian>
+		<Spanish>Actualizaci&#243;n Unidades</Spanish>
+		<Finnish>Yksikk&#246;p&#228;ivitykset</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_PROMOTION_TREE</Tag>
+		<English>Promotion Tree</English>
+		<French>Arborescence des Promotions</French>
+		<German>Bef&#246;rderungsbaum</German>
+		<Italian>Albero Promoz.</Italian>
+		<Spanish>&#193;rbol de Ascensos</Spanish>
+		<Finnish>Ylennyskaavio</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_NATIONAL_WONDERS</Tag>
+		<English>National Wonders</English>
+		<French>Merveilles Nationales</French>
+		<German>Nationale Wunder</German>
+		<Italian>Merav. Naz.</Italian>
+		<Spanish>Maravillas Nacionales</Spanish>
+		<Finnish>Kansalliset ihmeet</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_GREAT_WONDERS</Tag>
+		<English>Great Wonders</English>
+		<French>Merveilles Mondiales</French>
+		<German>Weltwunder</German>
+		<Italian>Grandi Merav.</Italian>
+		<Spanish>Grandes Maravillas</Spanish>
+		<Finnish>Maailmanihmeet</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_CONCEPT_NEW</Tag>
+		<English>BTS Concepts</English>
+		<French>Conceptes BTS</French>
+		<German>Beyond the Sword-Konzepte</German>
+		<Italian>Concetti di BTS</Italian>
+		<Spanish>ConceptosBTS</Spanish>
+		<Finnish>BTS-konseptit</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIQUE_BUILDINGS</Tag>
+		<English>Unique Buildings</English>
+		<French>B&#226;timents Uniques</French>
+		<German>Einzigartige Geb&#228;ude</German>
+		<Italian>Edifici Unici</Italian>
+		<Spanish>Edificios &#218;nicos</Spanish>
+		<Finnish>Uniikit rakennukset</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_FAV_CIVIC_AND_RELIGION</Tag>
+		<English>Favorite Civic and Religion</English>
+		<French>Doctrine et Religion Pr&#233;f&#233;r&#233;e</French>
+		<German>Bevorzugte Staatsform und Religion</German>
+		<Italian>Forme di governo e Religioni preferite</Italian>
+		<Spanish>Principio y religi&#243;n favoritos</Spanish>
+		<Finnish>Suosikit</Finnish>
+	</TEXT>
+</Civ4GameText>

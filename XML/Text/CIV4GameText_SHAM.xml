@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Game Text Civilopedia CivLeaders -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_FIRST_IMPRESSION</Tag>
+		<English>%D1: "A first impression is a lasting one."</English>
+		<French>%D1: "A first impression is a lasting one."</French>
+		<German>%D1: "Der erste Eindruck ist entscheidend."</German>
+		<Italian>%D1: "La prima impressione &#232; quella che conta."</Italian>
+		<Spanish>%D1: "La primera impresion es la que cuenta."</Spanish>
+		<Finnish>%D1: "A first impression is a lasting one."</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_TEAM_SIZE</Tag>
+		<English>%D1: "We feel threatened by your alliances."</English>
+		<French>%D1: "We feel threatened by your alliances."</French>
+		<German>%D1: "Wir f&#252;hlen uns von Ihren Allianzen bedroht."</German>
+		<Italian>%D1: "Ci sentiamo minacciati dalle vostre alleanze."</Italian>
+		<Spanish>%D1: "Nos sentimos amenazados por tus alianzas."</Spanish>
+		<Finnish>%D1: "We feel threatened by your alliances."</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_BETTER_RANK</Tag>
+		<English>%D1: "Your small civilization is no threat to us."</English>
+		<French>%D1: "Your small civilization is no threat to us."</French>
+		<German>%D1: "Ihre kleine Zivilisation ist keine Bedrohung f&#252;r uns."</German>
+		<Italian>%D1: "La vostra piccola civilt&#224; non &#232; una minaccia per noi."</Italian>
+		<Spanish>%D1: "Su &#237;nfima Civilizaci&#243;n no supone ninguna amenaza para nosotros."</Spanish>
+		<Finnish>%D1: "Your small civilization is no threat to us."</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_WORSE_RANK</Tag>
+		<English>%D1: "We feel threatened by your large civilization."</English>
+		<French>%D1: "We feel threatened by your large civilization."</French>
+		<German>%D1: "Wir f&#252;hlen uns durch Ihre gro&#223;e Zivilisation bedroht."</German>
+		<Italian>%D1: "Ci sentiamo minacciati dalla vostra grande civilt&#224;."</Italian>
+		<Spanish>%D1: "Nos sentimos amenazados por su enorme civilizaci&#243;n."</Spanish>
+		<Finnish>%D1: "We feel threatened by your large civilization."</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_LOW_RANK</Tag>
+		<English>%D1: "Smaller nations should work together."</English>
+		<French>%D1: "Smaller nations should work together."</French>
+		<German>%D1: "Kleine Nationen sollten zusammenarbeiten."</German>
+		<Italian>%D1: "Le nazioni pi&#249; piccole dovrebbero lavorare insieme."</Italian>
+		<Spanish>%D1: "Las peque&#241;as naciones deber&#237;an trabajar juntas."</Spanish>
+		<Finnish>%D1: "Smaller nations should work together."</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ATTITUDE_LOST_WAR</Tag>
+		<English>%D1: "The war is not going well for us."</English>
+		<French>%D1: "The war is not going well for us."</French>
+		<German>%D1: "The Krieg l&#228;uft nicht gut f&#252;r uns."</German>
+		<Italian>%D1: "La guerra non sta andando bene per noi."</Italian>
+		<Spanish>%D1: "La guerra no nos est&#225; yendo bien."</Spanish>
+		<Finnish>%D1: "The war is not going well for us."</Finnish>
+	</TEXT>
+</Civ4GameText>

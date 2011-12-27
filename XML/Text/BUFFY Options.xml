@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	BUFFY
+	Options Game Text
+
+	Copyright (c) 2009 The BUG Mod.
+-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__ENABLED_TEXT</Tag>
+		<English>Enabled</English>
+		<French>Activ&#233;</French>
+		<German>Aktivieren</German>
+		<Italian>Attivato</Italian>
+		<Spanish>Activado</Spanish>
+		<Finnish>Enabled</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__ENABLED_HOVER</Tag>
+		<English>When checked, BUFFY is in operation.</English>
+		<French>When checked, BUFFY is in operation.</French>
+		<German>Aktiviert BUFFY</German>
+		<Italian>Quando &#232; selezionato, il BUFFY Mod &#232; attivo.</Italian>
+		<Spanish>Cuando se activa, BUFFY esta operativo.</Spanish>
+		<Finnish>When checked, BUFFY is in operation.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__WARNINGSDAWNOFMAN_TEXT</Tag>
+		<English>Warnings on Dawn of Man</English>
+		<French>Warnings on Dawn of Man</French>
+		<German>BUFFY-Warnungen bei Gr&#252;ndung der Zivilisation</German>
+		<Italian>Mostra gli avvertimenti in 'Dawn of Man'</Italian>
+		<Spanish>Advertencias en el 'Amanecer del Hombre'</Spanish>
+		<Finnish>Warnings on Dawn of Man</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__WARNINGSDAWNOFMAN_HOVER</Tag>
+		<English>When checked, BUFFY warnings are shown on the Dawn of Man screen.</English>
+		<French>When checked, BUFFY warnings are shown on the Dawn of Man screen.</French>
+		<German>Zeigt die BUFFY-Warnungen beim Bildschirm "Gr&#252;ndung der Zivilisation"</German>
+		<Italian>Quando &#232; selezionato, mostra gli avvenimenti del BUFFY Mod nella schermata 'Dawn of Man'.</Italian>
+		<Spanish>Cuando se activa, las advertencias de BUFFY se muestran en la pantalla 'Amanecer del Hombre'.</Spanish>
+		<Finnish>When checked, BUFFY warnings are shown on the Dawn of Man screen.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__WARNINGSSETTINGS_TEXT</Tag>
+		<English>Warnings on Settings tab</English>
+		<French>Warnings on Settings tab</French>
+		<German>BUFFY-Warnungen bei Einstellungen</German>
+		<Italian>Mostra gli avvertimenti nelle Impostazioni</Italian>
+		<Spanish>Advertencias en la Pesta&#209;a de Configuraci&#243;n</Spanish>
+		<Finnish>Warnings on Settings tab</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_BUFFY__WARNINGSSETTINGS_HOVER</Tag>
+		<English>When checked, BUFFY warnings are shown on the Settings tab of the Victory Screen.</English>
+		<French>When checked, BUFFY warnings are shown on the Settings tab of the Victory Screen.</French>
+		<German>Zeigt die BUFFY-Warnungen beim Bildschirm "Einstellungen"</German>
+		<Italian>Quando &#232; selezionato, mostra gli avvenimenti del BUFFY Mod nella schermata delle Impostazioni.</Italian>
+		<Spanish>Cuando se activa, las advertencias de BUFFY se muestran en la pantalla de Configuraci&#243;n en la Pantalla de Victoria.</Spanish>
+		<Finnish>When checked, BUFFY warnings are shown on the Settings tab of the Victory Screen.</Finnish>
+	</TEXT>
+</Civ4GameText>

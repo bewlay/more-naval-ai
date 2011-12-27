@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	BUG Main Interface
+	Options Game Text
+
+	Copyright (c) 2009 The BUG Mod.
+-->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__OPTIONSKEY_TEXT</Tag>
+		<English>Options Shortcut Reminder</English>
+		<French>Rappel du Raccourci des Options</French>
+		<German>Erinnerung an die BUG-Optionen</German>
+		<Italian>Promemoria della combinazione per accedere alle Opzioni del</Italian>
+		<Spanish>Recordatorio Acceso Opciones</Spanish>
+		<Finnish>Options Shortcut Reminder</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__OPTIONSKEY_HOVER</Tag>
+		<English>When checked, displays a message about Alt + Ctrl + O when a game is started or loaded.</English>
+		<French>En activant, en rappel sur l'utilisation de Alt + Ctrl + O est montr&#233; quand un jeu d&#233;marre ou est charg&#233;.</French>
+		<German>Zeigt nach dem Spielstart oder dem Laden eines Spielstands eine Meldung, die an die Tastenkombination [STRG + ALT + O] erinnert, mit der man die Optionen der "BUG Mod" aufrufen kann</German>
+		<Italian>Quando &#232; selezionato, mostra un messaggio che ricorda la combinazione di tasti per accedere al Men&#249; delle Opzioni del BUG Mod quando un gioco viene iniziato o caricato .</Italian>
+		<Spanish>Cuando se activa, muestra un mensaje sobre Alt + Ctrl + O cuando se empieza o se carga una partida.</Spanish>
+		<Finnish>When checked, displays a message about Alt + Ctrl + O when a game is started or loaded.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__OPTIONSBUTTON_TEXT</Tag>
+		<English>Options Button</English>
+		<French>Options Button</French>
+		<German>Optionsschaltfl&#228;che</German>
+		<Italian>Options Button</Italian>
+		<Spanish>Bot&#243;n de Opciones</Spanish>
+		<Finnish>Options Button</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__OPTIONSBUTTON_HOVER</Tag>
+		<English>When checked, shows the BUG Option Screen button.</English>
+		<French>When checked, shows the BUG Option Screen button.</French>
+		<German>Zeigt die Schaltfl&#228;che zum Aufruf des Optionensbildschirms der BUG Mod an</German>
+		<Italian>When checked, shows the BUG Option Screen button.</Italian>
+		<Spanish>Cuando se activa, muestra el bot&#243;n para acceder a las Opciones de Pantalla BUG.</Spanish>
+		<Finnish>When checked, shows the BUG Option Screen button.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GOLDRATEWARNING_TEXT</Tag>
+		<English>Gold Rate Warning</English>
+		<French>Gold Rate Warning</French>
+		<German>"Gold/Runde"-Warnung</German>
+		<Italian>Calo dell'Oro</Italian>
+		<Spanish>Aviso Tasa Oro</Spanish>
+		<Finnish>Gold Rate Warning</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GOLDRATEWARNING_HOVER</Tag>
+		<English>When checked, displays your gold rate in yellow if it is negative but not enough to drop your treasury below zero.</English>
+		<French>When checked, displays your gold rate in yellow if it is negative but not enough to drop your treasury below zero.</French>
+		<German>F&#228;rbt die Anzeige f&#252;r "Gold/Runde" Gelb ein, wenn dessen Wert zwar negativ ist, den Goldvorrat in der n&#228;chsten Runde aber nicht unter 0 senken wird</German>
+		<Italian>Quando &#232; selezionato, mostra il tasso di crescita dell'oro in giallo se &#232; negativo ma non abbastanza da mandarvi in rosso.</Italian>
+		<Spanish>Cuando se activa, muestra el porcentaje de oro en amarillo si este es negativo pero no lo suficiente como para disminuir tu tesoro por debajo de 0.</Spanish>
+		<Finnish>When checked, displays your gold rate in yellow if it is negative but not enough to drop your treasury below zero.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GPBAR_TEXT</Tag>
+		<English>Great Person</English>
+		<French>Personnages Illustres</French>
+		<German>Gro&#223;e Pers&#246;nlichkeiten</German>
+		<Italian>Grandi Personaggi</Italian>
+		<Spanish>Grandes Personajes</Spanish>
+		<Finnish>Great Person</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GPBAR_HOVER</Tag>
+		<English>When checked, displays the progress and city of the next Great Person.</English>
+		<French>En activant, montre la barre de progr&#232;s et la ville du prochain Personnage Illustre.</French>
+		<German>Zeigt einen Fortschrittsbalken an, um zu bestimmen, wann und in welcher Stadt die n&#228;chste Gro&#223;e Pers&#246;nlichkeit erscheinen wird</German>
+		<Italian>Quando &#232; selezionato, mostra il progresso e la citt&#224; del prossimo Grande Personaggio.</Italian>
+		<Spanish>Cuando se activa, muestra el progreso y la ciudad del pr&#243;ximo Gran Personaje.</Spanish>
+		<Finnish>When checked, displays the progress and city of the next Great Person.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GPBAR_TYPES_TEXT</Tag>
+		<English>GP Bar Types</English>
+		<French>Types de Barre PI</French>
+		<German>Anzeigemethode</German>
+		<Italian>Tipi di Grandi Personaggi</Italian>
+		<Spanish>Tipos de Barra de GP</Spanish>
+		<Finnish>GP Bar Types</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GPBAR_TYPES_HOVER</Tag>
+		<English>Determines how many GP types to display in the GP Progress Bar. The [COLOR_HIGHLIGHT_TEXT]Maximum[COLOR_REVERT] setting also displays the percent chance for each.</English>
+		<French>Determine combien de types de PI doivent &#234;tre montr&#233;s dans la Barre de Progr&#232;s. L'option [COLOR_HIGHLIGHT_TEXT]Maximum[COLOR_REVERT] montre aussi les chances de chacun.</French>
+		<German>Bestimmt die Anzahl der Typen von Gro&#223;en Pers&#246;nlichkeiten, die im Fortschrittsbalken angezeigt werden (die Einstellung [COLOR_HIGHLIGHT_TEXT]Maximal[COLOR_REVERT] zeigt zus&#228;tzlich die prozentuale Chance f&#252;r jede einzelne an)</German>
+		<Italian>Determina quanti tipi di Grandi Personaggi devono essere mostrati nella Barra dei Grandi Personaggi. L'impostazione [COLOR_HIGHLIGHT_TEXT]Massimo[COLOR_REVERT] mostra anche la possibilit&#224; percentuale di ognuna.</Italian>
+		<Spanish>Determina cuantos tipos de GP mostrar en la barra de progreso de GP. El Ajuste [COLOR_HIGHLIGHT_TEXT]M&#225;ximo[COLOR_REVERT] tambi&#233;n muestra el porcentaje para cada uno.</Spanish>
+		<Finnish>Determines how many GP types to display in the GP Progress Bar. The [COLOR_HIGHLIGHT_TEXT]Maximum[COLOR_REVERT] setting also displays the percent chance for each.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__GPBAR_TYPES_LIST</Tag>
+		<English>None|One|Maximum</English>
+		<French>Aucun|Un|Maximum</French>
+		<German>Keine|Eine|Maximal</German>
+		<Italian>Nessuno|Uno|Massimo</Italian>
+		<Spanish>Ninguno|Uno|M&#225;ximo</Spanish>
+		<Finnish>None|One|Maximum</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__COMBAT_COUNTER_TEXT</Tag>
+		<English>Great General</English>
+		<French>G&#233;n&#233;ral Illustre</French>
+		<German>Gro&#223;er General</German>
+		<Italian>Grande Generale</Italian>
+		<Spanish>Gran General</Spanish>
+		<Finnish>Great General</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__COMBAT_COUNTER_HOVER</Tag>
+		<English>When checked, displays a progress bar for the next Great General.</English>
+		<French>En activant, montre l'Exp&#233;rience au Combat n&#233;cessaire pour le prochain G&#233;n&#233;ral Illustre.</French>
+		<German>Zeigt die gesammelte Gefechtserfahrung an, um das Erscheinen des n&#228;chsten Gro&#223;en Generals zu bestimmen</German>
+		<Italian>Quando &#232; selezionato, mostra la barra di avanzamento per il prossimo Grande Generale.</Italian>
+		<Spanish>Cuando se activa, muestra el progreso del pr&#243;ximo Gran General.</Spanish>
+		<Finnish>When checked, displays a progress bar for the next Great General.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINMAX_COMMERCE_TEXT</Tag>
+		<English>Min/Max Commerce Buttons</English>
+		<French>Min/Max Commerce Buttons</French>
+		<German>Min/Max Investitionsanteile</German>
+		<Italian>Bottoni del Commercio minimo/massimo</Italian>
+		<Spanish>Min/Max Botones de Comercio</Spanish>
+		<Finnish>Min/Max Commerce Buttons</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINMAX_COMMERCE_HOVER</Tag>
+		<English>When checked, displays a second pair of +/- buttons for each commerce type that set the rate to 100% and 0% respectively.</English>
+		<French>When checked, displays a second pair of +/- buttons for each commerce type that set the rate to 100% and 0% respectively.</French>
+		<German>Zeigt ein zweites Paar "+/-"-Schaltfl&#228;chen f&#252;r jede Art Investitionsanteil an, die diese auf 100% beziehungsweise 0% setzen</German>
+		<Italian>Quando &#232; selezionato, mostra una seconda coppia di bottoni +/- per ogni tipo di commercio che impostano il valore rispettivamente al 100% ed allo 0%.</Italian>
+		<Spanish>Cuando se activa, muestra un segundo par de +/- botones para cada tipo de comercio que ajustan el porcentaje al 100% y 0% respectivamente.</Spanish>
+		<Finnish>When checked, displays a second pair of +/- buttons for each commerce type that set the rate to 100% and 0% respectively.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__CITYARROWS_TEXT</Tag>
+		<English>City Cycle Arrows</English>
+		<French>Fleches de Ville</French>
+		<German>St&#228;dtepfeile</German>
+		<Italian>Frecce di scorrimento cittadino</Italian>
+		<Spanish>Flechas Circular Ciudad</Spanish>
+		<Finnish>City Cycle Arrows</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__CITYARROWS_HOVER</Tag>
+		<English>When checked, displays arrows to cycle through cities above your civ's flag.</English>
+		<French>En activant, montre des fl&#232;ches pour cycler vos villes au-dessous du drapeau de votre civilisation.</French>
+		<German>Zeigt Pfeile &#252;ber der Flagge der eigenen Zivilisation an, mit denen durch die einzelnen St&#228;dte geschaltet werden kann</German>
+		<Italian>Quando &#232; selezionato, mostra sopra alla vostra bandiera le frecce per scorrere fra le Citt&#224;.</Italian>
+		<Spanish>Cuando se activa, muestra dos flechas encima de la bandera de la civilizaci&#243;n para circular entre las ciudades.</Spanish>
+		<Finnish>When checked, displays arrows to cycle through cities above your civ's flag.</Finnish>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_TEXT</Tag>
+		<English>Field of View</English>
+		<French>Field of View</French>
+		<German>Field of View (FOV)</German>
+		<Italian>Campo visuale</Italian>
+		<Spanish>Campo de Visi&#243;n</Spanish>
+		<Finnish>Field of View</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_HOVER</Tag>
+		<English>When checked, displays a slide bar which can be used to change the field of view.</English>
+		<French>When checked, displays a slide bar which can be used to change the field of view.</French>
+		<German>Zeigt im Hauptbildschirm einen Schieberegler an, mit dem das Sichtfeld (engl. "Field of View") eingestellt werden kann</German>
+		<Italian>Quando &#232; selezionato, visualizza un cursore che pu&#242; essere utilizzato per regolare il campo visuale.</Italian>
+		<Spanish>Cuando se activa, muestra una barra de desplazamiento que puede ser usada para cambiar la amplitud del Campo de Visi&#243;n.</Spanish>
+		<Finnish>When checked, displays a slide bar which can be used to change the field of view.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__PROGRESSBARSTICKMARKS_TEXT</Tag>
+		<English>Tick Marks</English>
+		<French>Tick Marks</French>
+		<German>Teilstriche</German>
+		<Italian>Trattini di avanzamento</Italian>
+		<Spanish>Tick Marks</Spanish>
+		<Finnish>Tick Marks</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__PROGRESSBARSTICKMARKS_HOVER</Tag>
+		<English>When checked, displays tick marks on selected progress bars that illustrate estimated future turn progress.</English>
+		<French>When checked, displays tick marks on selected progress bars that illustrate estimated future turn progress.</French>
+		<German>Zeigt Teilstriche auf ausgew&#228;hlten Fortschrittsbalken an, die deren voraussichtlichen Verlauf in zuk&#252;nftigen Runden darstellen</German>
+		<Italian>Visualizza sulle barre di avanzamento selezionate dei trattini che mostrano il progresso stimato per i turni successivi.</Italian>
+		<Spanish>Cuando se activa, muestra tick marks en las barras de progreso seleccionadas que indican el progreso estimado para los turnos futuros.</Spanish>
+		<Finnish>When checked, displays tick marks on selected progress bars that illustrate estimated future turn progress.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_REMEMBER_TEXT</Tag>
+		<English>Remember Field of View</English>
+		<French>Remember Field of View</French>
+		<German>FOV-Einstellung merken</German>
+		<Italian>Conseva il Campo visuale</Italian>
+		<Spanish>Recordar Campo de Visi&#243;n</Spanish>
+		<Finnish>Remember Field of View</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_REMEMBER_HOVER</Tag>
+		<English>When checked, the Field of View value is remembered from game to game.</English>
+		<French>When checked, the Field of View value is remembered from game to game.</French>
+		<German>Merkt sich die letzte gew&#228;hlte Einstellung f&#252;r das Sichtfeld (engl. "Field of View") f&#252;r weitere Partien</German>
+		<Italian>Quando &#232; selezionato, il valore assegnato al Campo visuale viene conservato.</Italian>
+		<Spanish>Cuando se activa, el valor del Campo de Visi&#243;n se recuerda de partida en partida.</Spanish>
+		<Finnish>When checked, the Field of View value is remembered from game to game.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_VALUE_TEXT</Tag>
+		<English>Field of View - Value</English>
+		<French>Field of View - Value</French>
+		<German>FOV-Wert</German>
+		<Italian>Valore del Campo visuale</Italian>
+		<Spanish>Valor Campo de Visi&#243;n</Spanish>
+		<Finnish>Field of View - Value</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__FIELDOFVIEW_VALUE_HOVER</Tag>
+		<English>Stores the Field of View value</English>
+		<French>Stores the Field of View value</French>
+		<German>Eingabem&#246;glichkeit f&#252;r die Einstellung des Sichtfeldes (engl. "Field of View")</German>
+		<Italian>Riporta il valore assegnato al Campo visuale</Italian>
+		<Spanish>Almacena el valor del Campo de Visi&#243;n</Spanish>
+		<Finnish>Stores the Field of View value</Finnish>
+	</TEXT>
+	
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__UNITMOVEMENTPOINTSFRACTION_TEXT</Tag>
+		<English>Fractional Movement Points</English>
+		<French>Fractional Movement Points</French>
+		<German>Gebrochene Bewegungspunkte</German>
+		<Italian>Punti movimento decimali</Italian>
+		<Spanish>Puntos de Movimiento Fraccionado</Spanish>
+		<Finnish>Fractional Movement Points</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__UNITMOVEMENTPOINTSFRACTION_HOVER</Tag>
+		<English>When checked, shows the Movement Points for a single unit as a fraction in the Info Pane.</English>
+		<French>When checked, shows the Movement Points for a single unit as a fraction in the Info Pane.</French>
+		<German>Zeigt die Bewegungspunkte einer einzelnen Einheit in der Detailanzeige mit Nachkommastellen an</German>
+		<Italian>Quando &#232; selezionato, mostra nel Pannello delle Informazioni i Punti Movimento di una Unit&#224; come un numero con una cifra decimale.</Italian>
+		<Spanish>Cuando se activa, muestra los Puntos de Movimiento de una &#250;nica unida de manera fraccionada en el Panel de Informaci&#243;n.</Spanish>
+		<Finnish>When checked, shows the Movement Points for a single unit as a fraction in the Info Pane.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKMOVEMENTPOINTS_TEXT</Tag>
+		<English>Stack Movement Points</English>
+		<French>Stack Movement Points</French>
+		<German>Einheitenverband-Bewegungspunkte</German>
+		<Italian>Punti Movimento di gruppo</Italian>
+		<Spanish>Apilar Puntos Movimiento</Spanish>
+		<Finnish>Stack Movement Points</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKMOVEMENTPOINTS_HOVER</Tag>
+		<English>When checked, shows the minimum and maximum Movement Points for all selected units in the Info Pane.</English>
+		<French>When checked, shows the minimum and maximum Movement Points for all selected units in the Info Pane.</French>
+		<German>Zeigt die minimalen und maximalen Bewegungspunkte aller ausgew&#228;hlten Einheiten in der Detailanzeige an</German>
+		<Italian>Quando &#232; selezionato, mostra nel Pannello delle Informazioni il valore minimo e quello massimo per i Punti Movimento del gruppo di Unit&#224; selezionate.</Italian>
+		<Spanish>Cuando se activa, muestra los m&#237;nimos y los m&#225;ximos Puntos de Movimientos para las unidades seleccionada en el Panel de Informaci&#243;n.</Spanish>
+		<Finnish>When checked, shows the minimum and maximum Movement Points for all selected units in the Info Pane.</Finnish>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONS_TEXT</Tag>
+		<English>Stack Promotions</English>
+		<French>Stack Promotions</French>
+		<German>Einheitenverband-Bef&#246;rderungen</German>
+		<Italian>Stack Promotions</Italian>
+		<Spanish>Stack Promotions</Spanish>
+		<Finnish>Stack Promotions</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONS_HOVER</Tag>
+		<English>When checked, shows the promotions possessed by at least one unit in the stack.</English>
+		<French>When checked, shows the promotions possessed by at least one unit in the stack.</French>
+		<German>Zeigt die Bef&#246;rderungen an, &#252;ber die mindestens eine Einheit in einem Einheitenverband verf&#252;gt</German>
+		<Italian>When checked, shows the promotions possessed by at least one unit in the stack.</Italian>
+		<Spanish>When checked, shows the promotions possessed by at least one unit in the stack.</Spanish>
+		<Finnish>When checked, shows the promotions possessed by at least one unit in the stack.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOUNTS_TEXT</Tag>
+		<English>Counts</English>
+		<French>Counts</French>
+		<German>Anzahl</German>
+		<Italian>Counts</Italian>
+		<Spanish>Counts</Spanish>
+		<Finnish>Counts</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOUNTS_HOVER</Tag>
+		<English>When checked, shows the number of units in a stack that possess each promotion if more than one.</English>
+		<French>When checked, shows the number of units in a stack that possess each promotion if more than one.</French>
+		<German>Zeigt die Anzahl der Einheiten in einem Einheitenverband an, die &#252;ber eine bestimmte Bef&#246;rderung verf&#252;gen, falls dies bei mehr als einer der Fall ist</German>
+		<Italian>When checked, shows the number of units in a stack that possess each promotion if more than one.</Italian>
+		<Spanish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Spanish>
+		<Finnish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOLOR_TEXT</Tag>
+		<English>Some</English>
+		<French>Some</French>
+		<German>Manche</German>
+		<Italian>Some</Italian>
+		<Spanish>Some</Spanish>
+		<Finnish>Some</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOLOR_HOVER</Tag>
+		<English>When checked, shows the number of units in a stack that possess each promotion if more than one.</English>
+		<French>When checked, shows the number of units in a stack that possess each promotion if more than one.</French>
+		<German>Zeigt die Anzahl der Einheiten in einem Einheitenverband an, die &#252;ber eine bestimmte Bef&#246;rderung verf&#252;gen, falls dies bei mehr als einer der Fall ist</German>
+		<Italian>When checked, shows the number of units in a stack that possess each promotion if more than one.</Italian>
+		<Spanish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Spanish>
+		<Finnish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOLORALL_TEXT</Tag>
+		<English>All</English>
+		<French>All</French>
+		<German>Alle</German>
+		<Italian>All</Italian>
+		<Spanish>All</Spanish>
+		<Finnish>All</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__STACKPROMOTIONCOLORALL_HOVER</Tag>
+		<English>When checked, shows the number of units in a stack that possess each promotion if more than one.</English>
+		<French>When checked, shows the number of units in a stack that possess each promotion if more than one.</French>
+		<German>Zeigt die Anzahl der Einheiten in einem Einheitenverband an, die &#252;ber eine bestimmte Bef&#246;rderung verf&#252;gen, falls dies bei mehr als einer der Fall ist</German>
+		<Italian>When checked, shows the number of units in a stack that possess each promotion if more than one.</Italian>
+		<Spanish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Spanish>
+		<Finnish>When checked, shows the number of units in a stack that possess each promotion if more than one.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__BUILDICONSIZE_TEXT</Tag>
+		<English>Build/Action Icon Size</English>
+		<French>Build/Action Icon Size</French>
+		<German>Gr&#246;&#223;e der Bau-/Befehlssymbole</German>
+		<Italian>Build/Action Icon Size</Italian>
+		<Spanish>Tama&#241;o Iconos Construir/Acci&#243;n</Spanish>
+		<Finnish>Build/Action Icon Size</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__BUILDICONSIZE_HOVER</Tag>
+		<English>Determines the size of the build and action buttons in the bottom center of the screen.</English>
+		<French>Determines the size of the build and action buttons in the bottom center of the screen.</French>
+		<German>Bestimmt die Gr&#246;&#223;e der Bau- und Befehlssymbole im Men&#252; am unteren Bildschirmrand</German>
+		<Italian>Determines the size of the build and action buttons in the bottom center of the screen.</Italian>
+		<Spanish>Determina el tama&#241;o de los botones Construir y Acci&#243;n en la zona inferior central de la pantalla.</Spanish>
+		<Finnish>Determines the size of the build and action buttons in the bottom center of the screen.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__BUILDICONSIZE_LIST</Tag>
+		<English>Small|Medium|Large</English>
+		<French>Small|Medium|Large</French>
+		<German>Klein|Mittel|Gro&#223;</German>
+		<Italian>Small|Medium|Large</Italian>
+		<Spanish>Peque&#241;o|Mediano|Grande</Spanish>
+		<Finnish>Small|Medium|Large</Finnish>
+	</TEXT>
+	
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__EVENTSWITHIMAGES_TEXT</Tag>
+		<English>Events with Images</English>
+		<French>Events with Images</French>
+		<German>Ereignisse mit Bildern</German>
+		<Italian>Events with Images</Italian>
+		<Spanish>Events with Images</Spanish>
+		<Finnish>Events with Images</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__EVENTSWITHIMAGES_HOVER</Tag>
+		<English>When checked and the required images are present, shows pictures on the random event screens.</English>
+		<French>When checked and the required images are present, shows pictures on the random event screens.</French>
+		<German>F&#252;gt den Nachrichten &#252;ber Zuf&#228;llige Ereignisse Bilder hinzu, sofern vorhanden.</German>
+		<Italian>When checked and the required images are present, shows pictures on the random event screens.</Italian>
+		<Spanish>When checked and the required images are present, shows pictures on the random event screens.</Spanish>
+		<Finnish>When checked and the required images are present, shows pictures on the random event screens.</Finnish>
+	</TEXT>
+</Civ4GameText>

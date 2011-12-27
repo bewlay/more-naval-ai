@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Game Text - New -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_LANGUAGE_5</Tag>
+		<English>Finnish</English>
+		<French>Finnois</French>
+		<German>Finnisch</German>
+		<Italian>Finlandese</Italian>
+		<Spanish>Finland&#233;s</Spanish>
+		<Finnish>Suomen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNTIL</Tag>
+		<English>Until</English>
+		<French>Jusqua</French>
+		<German>Bis</German>
+		<Italian>Fino</Italian>
+		<Spanish>Hasta</Spanish>
+		<Finnish>Asti</Finnish>
+	</TEXT>
+</Civ4GameText>

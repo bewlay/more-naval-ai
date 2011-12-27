@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!-- Sid Meier's Civilization 4 Beyond the Sword -->
+<!-- Modified by the World of Civilization Team -->
+<!-- Game Text -->
+<!-- -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_MOD_REVUTILS_CAPTURE</Tag>
+		<English>With your capture of %s, support for the rebellion in the city swells...</English>
+		<French>Avec votre capture de %s, le soutien de la r&#233;bellion dans la ville gonfle&#8230;</French>
+		<German>Mit Ihrer Eroberung von %s w&#228;chst die Unterst&#252;tzung f&#252;r die Rebellion in der Stadt</German>
+		<Italian>Con la tua conquista di %s, aumenta la spinta alla rivolta nella citt&#224;..</Italian>
+		<Spanish>Con vuestra captura de %s, el apoyo a la rebeli&#243;n en la ciudad se incrementa...</Spanish>
+		<Finnish>Kaapattuasi kaupungin %s on tuki vallankumoukselle kasvanut...</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_REVUTILS_CONTROL</Tag>
+		<English>The rebel %s have taken control of %s![NEWLINE]Support for the rebellion swells...</English>
+		<French>Le rebelle %s ont pris la commande de %s ! [NEWLINE] de la r&#233;bellion gonfle&#8230;</French>
+		<German>Die Aufr&#252;hrer %s haben %s &#252;bernommen! [NEWLINE] Die Unterst&#252;tzung f&#252;r den Aufstand w&#228;chst...</German>
+		<Italian>Il ribelle %s ha preso il controllo di %s! Aumenta [NEWLINE] la spinta alla rivolta  #8230;</Italian>
+		<Spanish>Los rebeldes %s han tomado el control de %s![NEWLINE]El apoyo a la rebeli&#243;n se incrementa...</Spanish>
+		<Finnish>Vallankumouksellinen %s on ottanut kaupugin %s haltuunsa![NEWLINE]Vallankumous laajenee edelleen...</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_REVUTILS_WARNING</Tag>
+		<English>WARNING: Passed an arealess plot!</English>
+		<French>AVERTISSEMENT : A pass&#233; une parcelle de terrain arealess !</French>
+		<German>WARNING: Passed an arealess plot!</German>
+		<Italian>ATTENZIONE: Superata una casella senza area (arealess)!</Italian>
+		<Spanish>&#161;Atenci&#243;n: superada una conspiraci&#243;n menor!</Spanish>
+		<Finnish>VAROITUS: annettu ruutu on tyhj&#228;!</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_REVUTILS_ERROR1</Tag>
+		<English>ERROR: Failure to set human flag in new player.[NEWLINE]You will probably need to reload a save.</English>
+		<French>ERREUR : Manque de placer le drapeau humain dans le nouveau joueur. [NEWLINE] vous devrez probablement recharger des &#233;conomies.</French>
+		<German>Fehler beim Setzen eines menschlichen Flags f&#252;r einen neuen Spieler. [NEWLINE] Sie m&#252;ssen vermutlich ein gespeichertes Spiel neu laden.</German>
+		<Italian>ERRORE: Impossibile settare flag "Umano" per un nuovo giocatore. [NEWLINE] Probabilimente &#232; necessario caricare una partita salvata.</Italian>
+		<Spanish>ERROR: Fallo para colocar al usuario en un nuevo jugador.[NEWLINE]Probablemente necesitar&#225;s cargar una partida guardada.</Spanish>
+		<Finnish>VIRHE: uutta pelaajaa ei voitu merkata ihmispelaajaksi.[NEWLINE]Joudut todenn&#228;k&#246;isesti lataamaan pelitallennuksen.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_REVUTILS_ERROR2</Tag>
+		<English>ERROR: Failure to unset human flag in old player.[NEWLINE]You will probably need to reload a save.</English>
+		<French>ERREUR : Manque de supprimer le drapeau humain dans le vieux joueur. [NEWLINE] vous devrez probablement recharger des &#233;conomies.</French>
+		<German>ST&#214;RUNG: Fehler beim Entfernen der menschlichen Flag bei einem alten Spieler. [NEWLINE] Sie m&#252;ssen vermutlich ein gespeichertes Spiel neu laden.</German>
+		<Italian>ERRORE: Impossibile togliere flag "Umano" per un giocatore. [NEWLINE] Probabilimente &#232; necessario caricare una partita salvata.</Italian>
+		<Spanish>ERROR: Fallo para colocar al usuario en un viejo jugador.[NEWLINE]Probablemente necesitar&#225;s cargar una partida guardada.</Spanish>
+		<Finnish>VIRHE: vanhaa pelaajaa ei voitu merkata tietokonepelaajaksi.[NEWLINE]Joudut todenn&#228;k&#246;isesti lataamaan pelitallennuksen.</Finnish>
+	</TEXT>
+</Civ4GameText>

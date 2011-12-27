@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- RevolutionDCM/LoR -->
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jesse Smith (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Game Text Infos -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REFUGEES</Tag>
+		<English>%s Refugees</English>
+		<French>%s Refugees</French>
+		<German>%s Fl&#252;chtlinge</German>
+		<Italian>%s Refugees</Italian>
+		<Spanish>%s Refugiados</Spanish>
+		<Finnish>Pakolaisten %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_LIBERATION_FRONT</Tag>
+		<English>%s Liberation Front</English>
+		<French>%s Liberation Front</French>
+		<German>%s Befreiungsfront</German>
+		<Italian>%s Liberation Front</Italian>
+		<Spanish>%s Frente de Liberaci&#243;n</Spanish>
+		<Finnish>Vapautusrintamain %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_GUERILLAS</Tag>
+		<English>%s Guerillas</English>
+		<French>%s Guerillas</French>
+		<German>%s Guerillas</German>
+		<Italian>%s Guerillas</Italian>
+		<Spanish>%s Guerrillas</Spanish>
+		<Finnish>Sissien %s</Finnish>
+	</TEXT>
+	<!-- Rebels of Rome-->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_THE_REBELS_OF</Tag>
+		<English>Rebels of %s</English>
+		<French>Rebels of %s</French>
+		<German>Rebellen von %s</German>
+		<Italian>Rebels of %s</Italian>
+		<Spanish>Rebeldes de %s</Spanish>
+		<Finnish>Kapinallinen %s</Finnish>
+	</TEXT>
+	<!-- French Rebels of Paris -->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REBELS_OF</Tag>
+		<English>%s Rebels of %s</English>
+		<French></French>
+		<German>%s Rebellen von %s</German>
+		<Italian></Italian>
+		<Spanish>Ej&#233;rcito rebelde %s de %s</Spanish>
+		<Finnish>Kapinallinen %s-%s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REBELS</Tag>
+		<English>%s Rebels</English>
+		<French>%s Rebels</French>
+		<German>%s Rebellen</German>
+		<Italian>%s Rebels</Italian>
+		<Spanish>Rebeldes %s</Spanish>
+		<Finnish>Kapinallisten %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_TRIBE</Tag>
+		<English>%s Tribe</English>
+		<French>%s Tribe</French>
+		<German>%s Stamm</German>
+		<Italian>%s Tribe</Italian>
+		<Spanish>Tribu del pueblo %s</Spanish>
+		<Finnish>Alku-%s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_CITY_STATE</Tag>
+		<English>%s City State</English>
+		<French>%s City State</French>
+		<German>%s Stadtstaat</German>
+		<Italian>%s City State</Italian>
+		<Spanish>Ciudad estado del pueblo %s</Spanish>
+		<Finnish>Kaupunkivaltio %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_NATION</Tag>
+		<English>%s Nation</English>
+		<French>%s Nation</French>
+		<German>%s Nation</German>
+		<Italian>%s Nation</Italian>
+		<Spanish>Naci&#243;n %s</Spanish>
+		<Finnish>Kansakunnan %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_HORDE</Tag>
+		<English>%s Horde</English>
+		<French>%s Horde</French>
+		<German>%s Horde</German>
+		<Italian>%s Horde</Italian>
+		<Spanish>Horda %s</Spanish>
+		<Finnish>%s orda</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_THE_WARRIORS_OF</Tag>
+		<English>Warriors of %s</English>
+		<French>Warriors of %s</French>
+		<German>Krieger von %s</German>
+		<Italian>Warriors of %s</Italian>
+		<Spanish>Guerreros de %s</Spanish>
+		<Finnish>Soturien %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_WARRIORS_OF</Tag>
+		<English>%s Warriors of %s</English>
+		<French>%s Warriors of %s</French>
+		<German>%s Krieger von %s</German>
+		<Italian>%s Warriors of %s</Italian>
+		<Spanish>Guerreros %s de %s</Spanish>
+		<Finnish>Soturien %s-%s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_WARRIOR_STATE</Tag>
+		<English>%s Warrior State</English>
+		<French>%s Warrior State</French>
+		<German>%s Kriegerstaat</German>
+		<Italian>%s Warrior State</Italian>
+		<Spanish>Estado de guerra %s</Spanish>
+		<Finnish>Soturivaltio %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_EMPIRE</Tag>
+		<English>%s Empire</English>
+		<French>%s Empire</French>
+		<German>%s Imperium</German>
+		<Italian>%s Empire</Italian>
+		<Spanish>Imperio %s</Spanish>
+		<Finnish>%s valtakunta</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_STATE</Tag>
+		<English>%s State</English>
+		<French>%s State</French>
+		<German>%s Staat</German>
+		<Italian>%s State</Italian>
+		<Spanish>Estado %s</Spanish>
+		<Finnish>%s valtio</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_ALLIANCE</Tag>
+		<English> Alliance</English>
+		<French> Alliance</French>
+		<German> Allianz</German>
+		<Italian> Alliance</Italian>
+		<Spanish> Alianza</Spanish>
+		<Finnish> Liitto</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_SOC_REP</Tag>
+		<English>Soc. Rep. of %s</English>
+		<French>Soc. Rep. of %s</French>
+		<German>Soz. Rep. von %s</German>
+		<Italian>Soc. Rep. of %s</Italian>
+		<Spanish>Rep&#250;blica Socialista de %s</Spanish>
+		<Finnish>Sosiaalivaltainen %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_PEOPLES_REP</Tag>
+		<English>People's Rep. of %s</English>
+		<French>People's Rep. of %s</French>
+		<German>Volksrep. von %s</German>
+		<Italian>People's Rep. of %s</Italian>
+		<Spanish>Rep&#250;blica del pueblo de %s</Spanish>
+		<Finnish>Kansanvaltainen %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_UNION</Tag>
+		<English>%s Union</English>
+		<French>%s Union</French>
+		<German>%s Union</German>
+		<Italian>%s Union</Italian>
+		<Spanish>Uni&#243;n %s</Spanish>
+		<Finnish>Yhdistynyt %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_SOVIET</Tag>
+		<English>Soviet</English>
+		<French>Soviet</French>
+		<German>Soviet</German>
+		<Italian>Soviet</Italian>
+		<Spanish>Soviet</Spanish>
+		<Finnish>Neuvosto</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_FREE_STATE</Tag>
+		<English>%s Free State</English>
+		<French>%s Free State</French>
+		<German>%s Freistaat</German>
+		<Italian>%s Free State</Italian>
+		<Spanish>Estado libre de  %s</Spanish>
+		<Finnish>Vapaa %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_THE_REPUBLIC_OF</Tag>
+		<English>Republic of %s</English>
+		<French>Republic of %s</French>
+		<German>Republik von %s</German>
+		<Italian>Republic of %s</Italian>
+		<Spanish>Rep&#250;blica de %s</Spanish>
+		<Finnish>Tasavaltainen %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REPUBLIC_OF</Tag>
+		<English>%s Rep. of %s</English>
+		<French>%s Rep. of %s</French>
+		<German>%s Rep. von %s</German>
+		<Italian>%s Rep. of %s</Italian>
+		<Spanish>Rep&#250;blica %s de %s</Spanish>
+		<Finnish>Tasavaltainen %s-%s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_FREE_REPUBLIC</Tag>
+		<English>%s Free Republic</English>
+		<French>%s Free Republic</French>
+		<German>%s Freie Republik</German>
+		<Italian>%s Free Republic</Italian>
+		<Spanish>Rep&#250;blica libre de %s</Spanish>
+		<Finnish>Vapaakansainen %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_NEW</Tag>
+		<English>New </English>
+		<French>New </French>
+		<German>Neu </German>
+		<Italian>New </Italian>
+		<Spanish>Nuevo </Spanish>
+		<Finnish>Uusi </Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REPUBLIC</Tag>
+		<English>%s Republic</English>
+		<French>%s Republic</French>
+		<German>%s Republik</German>
+		<Italian>%s Republic</Italian>
+		<Spanish>Rep&#250;blica de %s</Spanish>
+		<Finnish>Tasavallan %s</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_FREE</Tag>
+		<English>Free</English>
+		<French>Free</French>
+		<German>Frei</German>
+		<Italian>Free</Italian>
+		<Spanish>Libre</Spanish>
+		<Finnish>Vapaa</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_PLAIN_EMPIRE</Tag>
+		<English>Empire</English>
+		<French>Empire</French>
+		<German>Imperium</German>
+		<Italian>Empire</Italian>
+		<Spanish>Imperio</Spanish>
+		<Finnish>Imperialistinen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_REICH</Tag>
+		<English>Reich</English>
+		<French>Reich</French>
+		<German>Reich</German>
+		<Italian>Reich</Italian>
+		<Spanish>Reich</Spanish>
+		<Finnish>Valtiollinen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_FIEFDOM</Tag>
+		<English>Fiefdom</English>
+		<French>Fiefdom</French>
+		<German>Feudalstaat</German>
+		<Italian>Fiefdom</Italian>
+		<Spanish>Feudo</Spanish>
+		<Finnish>Feodaalinen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_PLAIN_CITY_STATE</Tag>
+		<English>City State</English>
+		<French>City State</French>
+		<German>Stadtstaat</German>
+		<Italian>City State</Italian>
+		<Spanish>Ciudad estado</Spanish>
+		<Finnish>Kaupunkivaltio</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_KINGDOM</Tag>
+		<English>Kingdom</English>
+		<French>Kingdom</French>
+		<German>K&#246;nigreich</German>
+		<Italian>Kingdom</Italian>
+		<Spanish>Reino</Spanish>
+		<Finnish>Kuninkaallinen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_DUCHY</Tag>
+		<English>Duchy</English>
+		<French>Duchy</French>
+		<German>Herzogtum</German>
+		<Italian>Duchy</Italian>
+		<Spanish>Ducado</Spanish>
+		<Finnish>Ruhtinaallinen</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_SULTANATE</Tag>
+		<English>Sultanate</English>
+		<French>Sultanate</French>
+		<German>Sultanat</German>
+		<Italian>Sultanate</Italian>
+		<Spanish>Sultanato</Spanish>
+		<Finnish>Sulttaanin</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_CALIPHATE</Tag>
+		<English>Caliphate</English>
+		<French>Caliphate</French>
+		<German>Kalifat</German>
+		<Italian>Caliphate</Italian>
+		<Spanish>Califato</Spanish>
+		<Finnish>Kalifaatin</Finnish>
+	</TEXT>
+	<!-- Kingdom of Rome-->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_THE_BLANK_OF</Tag>
+		<English>%s of %s</English>
+		<French>%s of %s</French>
+		<German>%s von %s</German>
+		<Italian>%s of %s</Italian>
+		<Spanish>%s de %s</Spanish>
+		<Finnish>%s %s</Finnish>
+	</TEXT>
+	<!-- French Kingdom of Paris-->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_BLANK_OF</Tag>
+		<English>%s %s of %s</English>
+		<French>%s %s of %s</French>
+		<German>%s %s von %s</German>
+		<Italian>%s %s of %s</Italian>
+		<Spanish>%s %s de %s</Spanish>
+		<Finnish>%s %s of %s</Finnish>
+	</TEXT>
+	<!-- Great French Kingdom-->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_GREAT_KINGDOM</Tag>
+		<English>Great %s %s</English>
+		<French>Great %s %s</French>
+		<German>Gro&#223;e %s %s</German>
+		<Italian>Great %s %s</Italian>
+		<Spanish>Gran %s %s</Spanish>
+		<Finnish>Mahtava %s %s</Finnish>
+	</TEXT>
+	<!-- Prefix for Holy French Kingdom -->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_HOLY</Tag>
+		<English>Holy</English>
+		<French>Holy</French>
+		<German>Heilige</German>
+		<Italian>Holy</Italian>
+		<Spanish>Santo</Spanish>
+		<Finnish>Pyh&#228;</Finnish>
+	</TEXT>
+	<!-- Match front of Roman Empire to avoid calling it Holy Roman Empire -->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_HOLY_HRE_MATCH</Tag>
+		<English>Roman</English>
+		<French>Roman</French>
+		<German>R&#246;mische</German>
+		<Italian>Roman</Italian>
+		<Spanish>Romano</Spanish>
+		<Finnish>roomalainen</Finnish>
+	</TEXT>
+	<!-- The following matching strings trigger special names for certain civs -->
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_RUSSIAN_MATCH</Tag>
+		<English>Russ</English>
+		<French>Russ</French>
+		<German>Russ</German>
+		<Italian>Russ</Italian>
+		<Spanish>Ruso</Spanish>
+		<Finnish>Ven&#228;</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_GERMAN_MATCH</Tag>
+		<English>German</English>
+		<French>German</French>
+		<German>Deutsche</German>
+		<Italian>German</Italian>
+		<Spanish>Alem&#225;n</Spanish>
+		<Finnish>Saksa</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_PERSIAN_MATCH</Tag>
+		<English>Persi</English>
+		<French>Persi</French>
+		<German>Persi</German>
+		<Italian>Persi</Italian>
+		<Spanish>Persa</Spanish>
+		<Finnish>Persi</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_OTTOMAN_MATCH</Tag>
+		<English>Ottom</English>
+		<French>Ottom</French>
+		<German>Ottom</German>
+		<Italian>Ottom</Italian>
+		<Spanish>Ot&#243;mano</Spanish>
+		<Finnish>Ottom</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_SUMERIAN_MATCH</Tag>
+		<English>Sumer</English>
+		<French>Sumer</French>
+		<German>Sumer</German>
+		<Italian>Sumer</Italian>
+		<Spanish>Sumerio</Spanish>
+		<Finnish>Sumer</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MOD_DCN_ARABIAN_MATCH</Tag>
+		<English>Arab</English>
+		<French>Arab</French>
+		<German>Arab</German>
+		<Italian>Arab</Italian>
+		<Spanish>&#193;rabe</Spanish>
+		<Finnish>Arab</Finnish>
+	</TEXT>
+</Civ4GameText>
