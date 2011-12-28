@@ -562,10 +562,10 @@ class CvMainInterface:
 		# FFH Mana - Mana Button
 		screen.setImageButton("RawManaButton1", "Art/Interface/Screens/RawManaButton.dds", 5, 298, 20, 20, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.hide( "RawManaButton1" )
-		screen.addPanel( "ManaToggleHelpTextPanel", u"", u"", True, True, 100, 88, 170, 30, PanelStyles.PANEL_STYLE_HUD_HELP )
+		screen.addPanel( "ManaToggleHelpTextPanel", u"", u"", True, True, 60, 298, 170, 30, PanelStyles.PANEL_STYLE_HUD_HELP )
 		screen.hide( "ManaToggleHelpTextPanel" )
 		szText = "<font=2>" + localText.getText("[COLOR_HIGHLIGHT_TEXT]Toggle Manabar Display[COLOR_REVERT]", ()) + "</font=2>"
-		screen.addMultilineText( "ManaToggleHelpText", szText, 102, 93, 167, 27, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText( "ManaToggleHelpText", szText, 62, 303, 167, 27, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		screen.hide( "ManaToggleHelpText" )
 		# End FFH
 
@@ -5865,6 +5865,7 @@ class CvMainInterface:
 # < BUG Button End >
 	# Will handle the input for this screen...
 	def handleInput (self, inputClass):
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
 # BUG - PLE - start
 		if  (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_ON) or \
 			(inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_OFF) or \
@@ -5960,11 +5961,11 @@ class CvMainInterface:
 # < BUG Button Mod End >
 
 		if ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_ON and inputClass.getFunctionName() == "RawManaButton"):
-			self.show("ManaToggleHelpText")
-			self.show("ManaToggleHelpTextPanel")
+			screen.show("ManaToggleHelpText")
+			screen.show("ManaToggleHelpTextPanel")
 		elif ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_OFF and inputClass.getFunctionName() == "RawManaButton"):
-			self.hide("ManaToggleHelpText")
-			self.hide("ManaToggleHelpTextPanel")
+			screen.hide("ManaToggleHelpText")
+			screen.hide("ManaToggleHelpTextPanel")
 
 		if(inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED and inputClass.getFunctionName() == "RawManaButton"):
 			if (bshowManaBar == 1):
