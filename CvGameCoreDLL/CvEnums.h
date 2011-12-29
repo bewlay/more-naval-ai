@@ -2156,7 +2156,7 @@ enum MemoryTypes							// Exposed to Python
 //FfH: End Add
 
 	/*** PUPPET STATES 4/21/08 by DPII ***/
-	MEMORY_MADE_PUPPET,
+//	MEMORY_MADE_PUPPET,
 	/*** PUPPET STATES END ***/
 
 	NUM_MEMORY_TYPES
