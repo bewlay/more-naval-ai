@@ -709,41 +709,6 @@ void CvUnit::convert(CvUnit* pUnit)
 // BUG - Unit Name - end
 	setLeaderUnitType(pUnit->getLeaderUnitType());
 
-/*************************************************************************************************/
-/**	BETTER AI (New UNITAI) Sephi                                 					            **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    AI_setGroupflag(pUnit->AI_getGroupflag());
-/**
-    switch(pUnit->AI_getUnitAIType())
-    {
-        case UNITAI_MAGE:
-            AI_setUnitAIType(UNITAI_MAGE);
-            break;
-
-        case UNITAI_TERRAFORMER:
-            AI_setUnitAIType(UNITAI_TERRAFORMER);
-            break;
-
-        case UNITAI_MANA_UPGRADE:
-            AI_setUnitAIType(UNITAI_MANA_UPGRADE);
-            break;
-
-        case UNITAI_WARWIZARD:
-            AI_setUnitAIType(UNITAI_WARWIZARD);
-            break;
-
-        default:
-            break;
-    }
-**/
-    AI_setUnitAIType(pUnit->AI_getUnitAIType());
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
 //FfH: Added by Kael 10/03/2008
 	if (!isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) && isWorldUnitClass((UnitClassTypes)(pUnit->getUnitClassType())))
 	{
