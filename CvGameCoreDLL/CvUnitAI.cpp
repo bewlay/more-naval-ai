@@ -28372,7 +28372,7 @@ bool CvUnitAI::AI_Lokimove()
                     {
 						if (AI_plotValid(pLoopPlot))
                         {
-                            if(pLoopPlot->isCity() && pLoopPlot->getTeam()!=getTeam())
+							if(pLoopPlot->isCity() && pLoopPlot->getTeam() != getTeam() && !GET_TEAM(pLoopPlot->getTeam()).isVassal(getTeam()))
                             {
                                 if (!GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
                                 {
