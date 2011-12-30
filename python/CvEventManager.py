@@ -38,6 +38,7 @@ import RevData
 import BugCore
 import RevEvents
 import RevUtils
+import RevDefs
 ## End Revolutions
 
 # globals
