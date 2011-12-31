@@ -221,6 +221,10 @@ class BuildUnitName(AbstractBuildUnitName):
 		or pUnit.isNone()):
 			return
 
+## Dont rename Heros
+		if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_HERO'):
+			return
+
 		#BUGPrint("onUnitBuild-B %s %s %s" % (iPlayer, CyGame().getActivePlayer(), UnitNamingOpt.isEnabled()))
 
 		if not (iPlayer == CyGame().getActivePlayer()

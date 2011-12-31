@@ -45,8 +45,12 @@
 			<option id="Combat_SIEGE" key="CombatSIEGE" 
 					type="string" default="DEFAULT"/>
       <!--RevolutionDCM - add new combat types here or get python isColor error-->
-      <option id="Combat_SPY" key="CombatSPY"
-					type="string" default="DEFAULT"/>      
+      			<option id="Combat_SPY" key="CombatSPY"
+					type="string" default="DEFAULT"/>    
+			<option id="Combat_DISCIPLE" key="CombatDISCIPLE" 
+					type="string" default="DEFAULT"/>
+			<option id="Combat_ADEPT" key="CombatADEPT" 
+					type="string" default="DEFAULT"/>	  
 			<accessor get="getByCombatType" set="setByCombatType" 
 					  args="combatType" id="Combat_%s"/>
 		</section>

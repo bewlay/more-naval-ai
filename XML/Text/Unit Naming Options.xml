@@ -258,4 +258,40 @@
 		<Spanish>Introduce la nomenclatura personal para la definici&#243;n de nombres para las unidades de combate 'ASEDIO'.</Spanish>
 		<Finnish>Enter the user defined naming convention for combat units 'SIEGE'.</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_DISCIPLE_TEXT</Tag>
+		<English>Naming Convention: Combat[DISCIPLE]</English>
+		<French>Convention des Noms: Combat[DISCIPLE]</French>
+		<German>Benennungsregel: Kampf[DISCIPLE]</German>
+		<Italian>- per le Unit&#224; di Combattimento da DISCIPLE</Italian>
+		<Spanish>Nomenclatura: Combat[DISCIPLE]</Spanish>
+		<Finnish>Naming Convention: Combat[DISCIPLE]</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_DISCIPLE_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'DISCIPLE'.</English>
+		<French>Entrez la convention des noms pour les unit&#233;s 'DISCIPLE'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel f&#252;r Belagerungswaffen</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unit&#224; di Combattimento da Assedio ('Combat[DISCIPLE]').</Italian>
+		<Spanish>Introduce la nomenclatura personal para la definici&#243;n de nombres para las unidades de combate 'DISCIPLE'.</Spanish>
+		<Finnish>Enter the user defined naming convention for combat units 'DISCIPLE'.</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_ADEPT_TEXT</Tag>
+		<English>Naming Convention: Combat[ADEPT]</English>
+		<French>Convention des Noms: Combat[ADEPT]</French>
+		<German>Benennungsregel: Kampf[ADEPT]</German>
+		<Italian>- per le Unit&#224; di Combattimento da ADEPT</Italian>
+		<Spanish>Nomenclatura: Combat[ADEPT]</Spanish>
+		<Finnish>Naming Convention: Combat[ADEPT]</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_ADEPT_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'ADEPT'.</English>
+		<French>Entrez la convention des noms pour les unit&#233;s 'ADEPT'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel f&#252;r Belagerungswaffen</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unit&#224; di Combattimento da Assedio ('Combat[ADEPT]').</Italian>
+		<Spanish>Introduce la nomenclatura personal para la definici&#243;n de nombres para las unidades de combate 'ADEPT'.</Spanish>
+		<Finnish>Enter the user defined naming convention for combat units 'ADEPT'.</Finnish>
+	</TEXT>
 </Civ4GameText>
