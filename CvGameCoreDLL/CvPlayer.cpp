@@ -12832,7 +12832,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 /************************************************************************************************/
 			if( gPlayerLogLevel > 0 ) 
 			{
-				logBBAI("Player %d (%S) setTurnActive for turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn() );
+				logBBAI("\n\n Player %d (%S) setTurnActive for turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn() );
 			
 				if( GC.getGameINLINE().getGameTurn() > 0 && (GC.getGameINLINE().getGameTurn() % 25) == 0 && !isBarbarian() )
 				{

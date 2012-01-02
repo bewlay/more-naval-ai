@@ -927,7 +927,7 @@ void CvUnitAI::AI_promote()
 	{
 		if( gUnitLogLevel >= 3 )
 		{
-			logBBAI("    %S (unit %d) choosing promotion %S (value: %d)", getName().GetCString(), getID(), GC.getPromotionInfo(eBestPromotion).getDescription(), iBestValue);
+			logBBAI("    %S (unit %d - %S) choosing promotion %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),GC.getPromotionInfo(eBestPromotion).getDescription(), iBestValue);
 		}
 
 		promote(eBestPromotion, -1);

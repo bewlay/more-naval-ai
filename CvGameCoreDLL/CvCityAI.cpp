@@ -2993,6 +2993,10 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
 			{
+				if( gCityLogLevel >= 2 )
+				{
+					logBBAI("      City %S uses choose Missionary_Sea", getName().GetCString());
+				}
 				return;
 			}
 		}
@@ -3149,6 +3153,8 @@ void CvCityAI::AI_chooseProduction()
 			invaderTypes.push_back(std::make_pair(UNITAI_COUNTER, 50));
 			invaderTypes.push_back(std::make_pair(UNITAI_ATTACK, 40));
 			invaderTypes.push_back(std::make_pair(UNITAI_PARADROP, (kPlayer.AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ) ? 30 : 20) / (bAssault ? 2 : 1)));
+
+			/*
 			if (!bAssault)
 			{
 				if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_PILLAGE) <= ((iNumCitiesInArea + 1) / 2))
@@ -3156,9 +3162,14 @@ void CvCityAI::AI_chooseProduction()
 					invaderTypes.push_back(std::make_pair(UNITAI_PILLAGE, 30));
 				}
 			}
+			*/
 
 			if (AI_chooseLeastRepresentedUnit(invaderTypes, iTrainInvaderChance))
 			{
+				if( gCityLogLevel >= 2 )
+				{
+					logBBAI("      City %S uses Train Invader", getName().GetCString());
+				}
 				return;
 			}
         }
@@ -3588,6 +3599,11 @@ void CvCityAI::AI_chooseProduction()
 	}
 	if (eBestBuilding != NO_BUILDING)
 	{
+		if( gCityLogLevel >= 2 )
+		{
+			logBBAI("      City %S uses NO PRODUCTION CHOSEN catch", getName().GetCString());
+		}
+
 		pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, false);
 		return;
 	}
