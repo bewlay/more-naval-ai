@@ -571,7 +571,16 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 	{
 		for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			pLoopUnit->AI_promote();
+/************************************************************************************************/
+/* Afforess	                  Start		 06/24/10                                               */
+/*                                                                                              */
+/* Afforess Speed Tweak                                                                         */
+/************************************************************************************************/
+			if (pLoopUnit->isPromotionReady())
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+				pLoopUnit->AI_promote();
 		}
 	}
 
@@ -2443,7 +2452,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 	}
 
-	//Explaination of city site adjustment:
+	//Explanation of city site adjustment:
 	//Any plot which is otherwise within the radius of a city site
 	//is basically treated as if it's within an existing city radius
 
@@ -4472,6 +4481,25 @@ int CvPlayerAI::AI_goldTarget() const
             iGold *= 3;
             iGold /= 2;
         }
+
+/************************************************************************************************/
+/* Afforess	                  Start		 02/01/10                                               */
+/*                                                                                              */
+/*  Don't bother saving gold if we can't trade it for anything                                  */
+/************************************************************************************************/
+	if (!GET_TEAM(getTeam()).isGoldTrading() || !(GET_TEAM(getTeam()).isTechTrading()) || (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING)))
+	{
+		iGold /= 3;
+	}
+	//Fuyu: Afforess says gold is also less useful without tech brokering, so why not add it
+	else if (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING))
+	{
+		iGold *= 3;
+		iGold /= 4;
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
         if (AI_avoidScience())
         {
@@ -23624,15 +23652,23 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 			return false;
 		}
 	}
-
-	if (pCity->getCultureLevel() <= 1)
+/************************************************************************************************/
+/* Afforess	                  Start		 06/07/10                                               */
+/************************************************************************************************/
+	//Only expand culture when we have lots to spare. Never expand for the capital, the palace works fine on it's own
+	if (pCity != getCapitalCity() && getAdvancedStartPoints() > getAdvancedStartCultureCost(true, pCity) * 50)
 	{
-		doAdvancedStartAction(ADVANCEDSTARTACTION_CULTURE, pPlot->getX(), pPlot->getY(), -1, true);
+		if (pCity->getCultureLevel() <= 1)
+		{
+			doAdvancedStartAction(ADVANCEDSTARTACTION_CULTURE, pPlot->getX(), pPlot->getY(), -1, true);
+			//to account for culture expansion.
+			pCity->AI_updateBestBuild();
+		}
 	}
-
-	//to account for culture expansion.
-	pCity->AI_updateBestBuild();
-
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/	
+	
 	int iPlotsImproved = 0;
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
 //	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
