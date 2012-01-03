@@ -2545,16 +2545,6 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 
-	// Tholal AI - make Elder Councils & Libraries
-	// ToDo - better numbers? Or find a change to the choose building function to cover this instead
-	if(!bLandWar && !bAssault)
-	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_RESEARCH, 10, (bFinancialTrouble ? 40 : 60), 75))
-		{
-			return;
-		}
-	}
-	// End Tholal AI
 
 	//opportunistic wonder build
 	if (!bDanger && (!hasActiveWorldWonder() || (iNumCities > 2)))
