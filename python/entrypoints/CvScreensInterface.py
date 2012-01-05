@@ -1158,7 +1158,9 @@ def reassignPlayer(argsList):
 	bOption2 = argsList[7]
 
 	if iButtonId == 0:
-		CyGame().reassignPlayerAdvanced(iOldPlayer, iNewPlayer, -1)
+#		CyGame().reassignPlayerAdvanced(iOldPlayer, iNewPlayer, -1)
+## OOS fix by Snarko
+		CyMessageControl().sendModNetMessage(2, iOldPlayer, iNewPlayer, 0, 0)
 
 #######################################################################################
 ## Handle Close Map
