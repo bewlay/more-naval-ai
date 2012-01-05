@@ -593,11 +593,37 @@ class CvVictoryScreen:
 							if (teamBuilding > bestBuilding):
 								bestBuilding = teamBuilding
 								iBestBuildingTeam = iLoopTeam	
-											
-				for i in range(gc.getNumBuildingClassInfos()):
-					if (gc.getBuildingClassInfo(i).getVictoryThreshold(iLoopVC) > 0):
+
+#Special Rules for Luonnotar Display
+				if (iLoopVC==gc.getInfoTypeForString("VICTORY_ALTAR_OF_THE_LUONNOTAR")):
+					iBestBuildingTeam = -1
+					bestBuilding = 1
+					for iLoopTeam in range(gc.getMAX_CIV_TEAMS()):
+						if (gc.getTeam(iLoopTeam).isAlive() and not gc.getTeam(iLoopTeam).isMinorCiv() and not gc.getTeam(iLoopTeam).isBarbarian()):
+							if (iLoopTeam != iActiveTeam and (activePlayer.getTeam().isHasMet(iLoopTeam) or gc.getGame().isDebugMode())):
+								iHighestAltar=self.getHighestAltarBuildByTeam(iLoopTeam)
+								if (iHighestAltar > bestBuilding):
+									bestBuilding = iHighestAltar
+									iBestBuildingTeam = iLoopTeam
+
+					for j in range(7):
+						if j==0:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR")
+						if j==1:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_ANOINTED")
+						if j==2:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_BLESSED")
+						if j==3:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_CONSECRATED")
+						if j==4:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")
+						if j==5:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED")
+						if j==6:
+							i=gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_FINAL")
+
 						iRow = screen.appendTableRow(szTable)
-						szNumber = unicode(gc.getBuildingClassInfo(i).getVictoryThreshold(iLoopVC))
+						szNumber = unicode(1)
 						screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, gc.getBuildingClassInfo(i).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 						screen.setTableText(szTable, 2, iRow, activePlayer.getTeam().getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 #						screen.setTableText(szTable, 3, iRow, activePlayer.getTeam().getBuildingClassCount(i), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
@@ -607,6 +633,21 @@ class CvVictoryScreen:
 #							screen.setTableText(szTable, 5, iRow, gc.getTeam(iBestBuildingTeam).getBuildingClassCount(i), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 							screen.setTableText(szTable, 5, iRow, str(gc.getTeam(iBestBuildingTeam).getBuildingClassCount(i)), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 						bEntriesFound = True
+
+				else:
+					for i in range(gc.getNumBuildingClassInfos()):
+						if (gc.getBuildingClassInfo(i).getVictoryThreshold(iLoopVC) > 0):
+							iRow = screen.appendTableRow(szTable)
+							szNumber = unicode(gc.getBuildingClassInfo(i).getVictoryThreshold(iLoopVC))
+							screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, gc.getBuildingClassInfo(i).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+							screen.setTableText(szTable, 2, iRow, activePlayer.getTeam().getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+	#						screen.setTableText(szTable, 3, iRow, activePlayer.getTeam().getBuildingClassCount(i), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+							screen.setTableText(szTable, 3, iRow, str(activePlayer.getTeam().getBuildingClassCount(i)), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+							if (iBestBuildingTeam != -1):
+								screen.setTableText(szTable, 4, iRow, gc.getTeam(iBestBuildingTeam).getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+	#							screen.setTableText(szTable, 5, iRow, gc.getTeam(iBestBuildingTeam).getBuildingClassCount(i), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								screen.setTableText(szTable, 5, iRow, str(gc.getTeam(iBestBuildingTeam).getBuildingClassCount(i)), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+							bEntriesFound = True
 						
 				iBestProjectTeam = -1
 				bestProject = 0
@@ -794,3 +835,22 @@ class CvVictoryScreen:
 
 	def update(self, fDelta):
 		return
+
+	def getHighestAltarBuildByTeam(self,iTeam):
+
+		eTeam = gc.getTeam(iTeam)
+
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_FINAL"))>0):
+			return 7
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED"))>0):
+			return 6
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE"))>0):
+			return 5
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_CONSECRATED"))>0):
+			return 4
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_BLESSED"))>0):
+			return 3
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_ANOINTED"))>0):
+			return 2
+		if(eTeam.getBuildingClassCount(gc.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR"))>0):
+			return 1
