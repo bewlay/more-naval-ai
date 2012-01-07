@@ -226,7 +226,7 @@ bool CvUnitAI::AI_update()
 //FfH: Added by Kael 10/26/2008
     if (!isBarbarian())
     {
-        if (getLevel() < 3)
+        if (getLevel() < (isAnimal() ? 6 : 3))
         {
             bool bDoesBuild = false;
             for (int iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
