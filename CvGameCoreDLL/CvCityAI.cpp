@@ -9014,7 +9014,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					{
 						bool bWait = true;
 
-						if( GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_LAST_STAND) )
+						if( GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_TURTLE) )
 						{
 							bWait = false;
 						}
@@ -9061,7 +9061,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 								bool bDanger = AI_isDanger();
 								bool bWait = true;
 
-								if( GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_LAST_STAND) )
+								if( GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_TURTLE) )
 								{
 									if( (bDanger ? 5 : 8)*iHurryGold < GET_PLAYER(getOwnerINLINE()).getGold() )
 									{
