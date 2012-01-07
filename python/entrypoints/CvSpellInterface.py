@@ -1395,16 +1395,16 @@ def reqGiftsOfNantosuelta(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.getNumCities() == 0:
 		return False
-	if pPlayer.isHuman() == False:
-		map = gc.getMap()
+#	if pPlayer.isHuman() == False:
+#		map = gc.getMap()
 		
-		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ONE_CITY_CHALLENGE) or gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_SETTLERS):
-			if pPlayer.getNumCities() > 0:
-				return True
-		if CyGame().getSorenRandNum(200, "Gifts") == 1:
-			return True
-		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
-			return False
+#		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ONE_CITY_CHALLENGE) or gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_SETTLERS):
+#			if pPlayer.getNumCities() > 0:
+#				return True
+#		if CyGame().getSorenRandNum(200, "Gifts") == 1:
+#			return True
+#		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
+#			return False
 	return True
 
 def spellGiftsOfNantosuelta(caster):
