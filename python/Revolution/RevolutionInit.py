@@ -24,7 +24,7 @@ import BarbarianCiv
 import AIAutoPlay
 import ChangePlayer
 import Revolution
-import Tester
+#import Tester
 import TechDiffusion
 import StartAsMinors
 import DynamicCivNames
@@ -122,9 +122,9 @@ class RevolutionInit :
 			if( not RevInstances.AIAutoPlayInst == None ) :
 				RevInstances.AIAutoPlayInst.removeEventHandlers()
 				RevInstances.AIAutoPlayInst = None
-			if( not RevInstances.TesterInst == None ) :
-				RevInstances.TesterInst.removeEventHandlers()
-				RevInstances.TesterInst = None
+#			if( not RevInstances.TesterInst == None ) :
+#				RevInstances.TesterInst.removeEventHandlers()
+#				RevInstances.TesterInst = None
 			if( not RevInstances.ChangePlayerInst == None ) :
 				RevInstances.ChangePlayerInst.removeEventHandlers()
 				RevInstances.ChangePlayerInst = None
@@ -137,7 +137,7 @@ class RevolutionInit :
 			RevInstances.bIsInitialized = True
 		
 		# This component mainly contains test and debug routines
-		if( bDoInit ) : RevInstances.TesterInst = Tester.Tester( self.customEM, self.RevOpt )
+#		if( bDoInit ) : RevInstances.TesterInst = Tester.Tester( self.customEM, self.RevOpt )
 
 		### RevolutionDCM start
 		bAIAutoPlay = RevOpt.isAIAutoPlayEnable()
