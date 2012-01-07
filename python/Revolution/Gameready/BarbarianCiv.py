@@ -356,6 +356,12 @@ class BarbarianCiv :
 		# Don't reincarnate as these types
 		iMinor = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLMinor)
 		iBarbarian = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLBarbarian)
+		
+		# lfgr
+		# TODO: use RevDefs.sXMLRandom or similar
+		iRandom = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_RANDOM')
+		# end lfgr
+		
 		# Civs not currently in the game
 		availableCivs = list()
 		# Civs with similar style to cultPlayer, if they exist
@@ -363,19 +369,24 @@ class BarbarianCiv :
 		for civType in range(0,gc.getNumCivilizationInfos()) :
 			if( not civType == iBarbarian ) :
 				if( not civType == iMinor ) :
-					taken = False
-					for i in range(0,gc.getMAX_CIV_PLAYERS()) :
-						if( not i == newPlayerIdx ) :
-							if( civType == gc.getPlayer(i).getCivilizationType() ) :
-								if( gc.getPlayer(i).isEverAlive() or SDTK.sdObjectExists('Revolution', gc.getPlayer(i)) ) :
-									taken = True
-									break
-					if( not taken ) :
-						availableCivs.append(civType)
-						if( not cultPlayer == None ) :
-							if( gc.getCivilizationInfo( cultPlayer.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
-								if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("  BC - Potential similar style civ: %s"%(gc.getCivilizationInfo(civType).getShortDescription(0)))
-								similarStyleCivs.append(civType)
+				# lfgr
+					if( not civType == iRandom ) :
+				# end lfgr
+					# lfgr indention
+						taken = False
+						for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+							if( not i == newPlayerIdx ) :
+								if( civType == gc.getPlayer(i).getCivilizationType() ) :
+									if( gc.getPlayer(i).isEverAlive() or SDTK.sdObjectExists('Revolution', gc.getPlayer(i)) ) :
+										taken = True
+										break
+						if( not taken ) :
+							availableCivs.append(civType)
+							if( not cultPlayer == None ) :
+								if( gc.getCivilizationInfo( cultPlayer.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
+									if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("  BC - Potential similar style civ: %s"%(gc.getCivilizationInfo(civType).getShortDescription(0)))
+									similarStyleCivs.append(civType)
+					# lfgr indention end
 
 		if( len(availableCivs) < 1 ) :
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  BC - ERROR: Unexpected lack of unused civ types")
