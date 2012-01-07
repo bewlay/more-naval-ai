@@ -174,14 +174,15 @@ class SevoPediaUnit:
 					bFirst = False
 				screen.attachImageButton(panelName, "", gc.getBonusInfo(eBonus).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
 		#phungus canTrain
-		bFirst = true
+#		bFirst = true
 		for j in range(gc.getNumCivicInfos()):
-			if (gc.getUnitInfo(self.iUnit).isPrereqOrCivics(j)):
-				if (not bFirst):
-					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
-				eCivic = CivicTypes(j)
+#			if (gc.getUnitInfo(self.iUnit).isPrereqOrCivics(j)):
+#				if (not bFirst):
+#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
+			eCivic = CivicTypes(j)
+			if (gc.getUnitInfo(self.iUnit).getPrereqCivic() == eCivic):
 				screen.attachImageButton(panelName, "", gc.getCivicInfo(eCivic).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, eCivic, -1, False)
-				bFirst = false
+#				bFirst = false
 		#phungus -end
 		if len(szRightDelimeter) > 0:
 			screen.attachLabel(panelName, "", szRightDelimeter)
@@ -197,33 +198,36 @@ class SevoPediaUnit:
 		else:
 			pCiv = None
 		for j in range(gc.getNumBuildingClassInfos()):
-			if (gc.getUnitInfo(self.iUnit).isPrereqBuildingClass(j)):
+#			if (gc.getUnitInfo(self.iUnit).isPrereqBuildingClass(j)):
+			if (gc.getUnitInfo(self.iUnit).getPrereqBuildingClass() == j):
+				iPrereq = -1
 				if (pCiv):
 					iPrereq = pCiv.getCivilizationBuildings(j)
-				else:
+#				else:
+				if iPrereq == -1:
 					iPrereq = gc.getBuildingClassInfo(j).getDefaultBuildingIndex()
-				bTechOverride = False
-				bEraOverride = False
-				for k in range(gc.getNumTechInfos()):
-					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideTech(j)):
-						iTech = k
-						bTechOverride = True
-						break
-				for k in range(gc.getNumEraInfos()):
-					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideEra(j)):
-						iEra = k
-						bEraOverride = True
-						break
+#				bTechOverride = False
+#				bEraOverride = False
+#				for k in range(gc.getNumTechInfos()):
+#					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideTech(j)):
+#						iTech = k
+#						bTechOverride = True
+#						break
+#				for k in range(gc.getNumEraInfos()):
+#					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideEra(j)):
+#						iEra = k
+#						bEraOverride = True
+#						break
 				screen.attachImageButton(panelName, "", gc.getBuildingInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iPrereq, -1, False)
-				if bTechOverride:
-					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
-					screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, -1, False)
-				if bEraOverride:
-					eraDescription = gc.getEraInfo(iEra).getDescription()
-					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
-					screen.attachLabel(panelName, "", " ")
-					screen.attachLabel(panelName, "", eraDescription)
-					screen.attachLabel(panelName, "", " Era")
+#				if bTechOverride:
+#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
+#					screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, -1, False)
+#				if bEraOverride:
+#					eraDescription = gc.getEraInfo(iEra).getDescription()
+#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
+#					screen.attachLabel(panelName, "", " ")
+#					screen.attachLabel(panelName, "", eraDescription)
+#					screen.attachLabel(panelName, "", " Era")
 
 
 	def placeUpgradesTo(self):
