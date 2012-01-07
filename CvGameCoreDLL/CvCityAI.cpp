@@ -1268,6 +1268,19 @@ void CvCityAI::AI_chooseProduction()
 
 	iProductionRank = findYieldRateRank(YIELD_PRODUCTION);
 
+	iBuildUnitProb += (3 * iFreeLandExperience);
+	
+	bool bRepelColonists = false;
+	if( area()->getNumCities() > area()->getCitiesPerPlayer(BARBARIAN_PLAYER) + 2 )
+	{
+		if( area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > area()->getNumCities()/3 )
+		{
+			// New world scenario with invading colonists ... fight back!
+			bRepelColonists = true;
+			iBuildUnitProb += 8*(area()->getNumCities() - area()->getCitiesPerPlayer(BARBARIAN_PLAYER));
+		}
+	}
+
 	if( gCityLogLevel >= 3 ) logBBAI("      City %S pop %d considering new production: iProdRank %d, iBuildUnitProb %d", getName().GetCString(), getPopulation(), iProductionRank, iBuildUnitProb);
 
 	// -------------------- BBAI Notes -------------------------
@@ -1309,18 +1322,6 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 		
-		iBuildUnitProb += (3 * iFreeLandExperience);
-		
-		bool bRepelColonists = false;
-		if( area()->getNumCities() > area()->getCitiesPerPlayer(BARBARIAN_PLAYER) + 2 )
-		{
-			if( area()->getCitiesPerPlayer(BARBARIAN_PLAYER) > area()->getNumCities()/3 )
-			{
-				// New world scenario with invading colonists ... fight back!
-				bRepelColonists = true;
-				iBuildUnitProb += 8*(area()->getNumCities() - area()->getCitiesPerPlayer(BARBARIAN_PLAYER));
-			}
-		}
 
 /* - Commented out by Tholal - Barbarians should be troop focused
 		bChooseUnit = false;
@@ -7100,8 +7101,19 @@ int CvCityAI::AI_clearFeatureValue(int iIndex)
 	if (kFeatureInfo.getHealthPercent() != 0)
 	{
 		int iHealth = goodHealth() - badHealth();
-
+		
+/************************************************************************************************/
+/* Afforess	                  Start		 06/17/10                                               */
+/************************************************************************************************/
+/*
 		iHealthValue += (6 * kFeatureInfo.getHealthPercent()) / std::max(3, 1 + iHealth);
+*/
+	//speed up Jungle Clearing
+		int iMultiplier = kFeatureInfo.getHealthPercent() > 0 ? 6 : 10;
+		iHealthValue += (iMultiplier * kFeatureInfo.getHealthPercent()) / std::max(3, 1 + iHealth);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 		if (iHealthValue > 0 && !pPlot->isBeingWorked())
 		{
 			iHealthValue *= 3;
@@ -11262,22 +11274,22 @@ int CvCityAI::AI_buildUnitProb()
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
 /************************************************************************************************/
 /* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Build more units                                                                                  */
+/* Ruthless AI: Build more units                                                                */
 /************************************************************************************************/
-		if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-		{
-			iProb *= 4;
-			iProb /= 3;
-		}
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	{
+		iProb *= 4;
+		iProb /= 3;
+	}
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
+
 /************************************************************************************************/
 /* REVOLUTION_MOD                         11/08/08                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
 /************************************************************************************************/
 	if( GET_PLAYER(getOwnerINLINE()).isRebel() )
 	{
@@ -11390,6 +11402,24 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 			{
 				bHasBonusImprovement = true;
 			}
+/********************************************************************************/
+/* 	Bonus Improvement: Wait for Upgrade							Fuyu		    */
+/********************************************************************************/
+			//Fuyu: patience. We can wait 10 turns for upgrade
+			else if (GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade() != NO_IMPROVEMENT)
+			{
+				if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade())).isImprovementBonusTrade(eNonObsoleteBonus)
+					|| GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade())).isActsAsCity())
+				{
+					if (pPlot->getUpgradeTimeLeft(pPlot->getImprovementType(), getOwner()) <= 1 + ((9 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getImprovementPercent() * GC.getEraInfo(GC.getGameINLINE().getStartEra()).getImprovementPercent())/10000))
+					{
+						bHasBonusImprovement = true;
+					}
+				}
+			}
+/********************************************************************************/
+/* 	Bonus Improvement: Wait for Upgrade							END			    */
+/********************************************************************************/
 		}
 	}
 
@@ -13318,28 +13348,41 @@ int CvCityAI::AI_cityThreat(bool bDangerPercent)
 						break;
 					}
 
-					// Beef up border security next to powerful rival
+/********************************************************************************/
+/*	RevDCM Better BUG AI changes	28.10.2010							Fuyu	*/
+/********************************************************************************/
+					// Beef up border security next to powerful rival, (Fuyu) just not too much if our units are weaker on average
 					if( GET_PLAYER((PlayerTypes)iI).getPower() > GET_PLAYER(getOwnerINLINE()).getPower() )
 					{
-						iTempValue *= std::min( 400, (100 * GET_PLAYER((PlayerTypes)iI).getPower())/std::max(1, GET_PLAYER(getOwnerINLINE()).getPower()) );
+						int iTempMultiplier = std::min( 400, (100 * GET_PLAYER((PlayerTypes)iI).getPower())/std::max(1, GET_PLAYER(getOwnerINLINE()).getPower()) );
+						iTempMultiplier += range(( (100 * GET_PLAYER((PlayerTypes)iI).getNumMilitaryUnits())/std::max(1, GET_PLAYER(getOwnerINLINE()).getNumMilitaryUnits()) ), 100, iTempMultiplier);
+						iTempMultiplier /= 2;
+						iTempValue *= iTempMultiplier;
 						iTempValue /= 100;
 					}
+/********************************************************************************/
+/*	RevDCM Better BUG AI changes	28.10.2010							END		*/
+/********************************************************************************/
 
-					if (bCrushStrategy)
-					{
+
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       01/04/09                                jdog5000      */
 /*                                                                                              */
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* orginal bts code
+					if (bCrushStrategy)
+					{
 						iValue /= 2;
+					}
 */
+					if (bCrushStrategy)
+					{
 						iTempValue /= 2;
+					}
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
-					}
 				}
 				iTempValue /= 100;
 				iValue += iTempValue;
