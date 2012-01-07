@@ -10592,7 +10592,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp * 25);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getMovesChange();
+//	iTemp = GC.getPromotionInfo(ePromotion).getMovesChange();
+	iTemp = 0;
 	if ((AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
 		(AI_getUnitAIType() == UNITAI_PIRATE_SEA) ||
 		  (AI_getUnitAIType() == UNITAI_RESERVE_SEA) ||
@@ -10602,6 +10603,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_SETTLER_SEA) ||
 			(AI_getUnitAIType() == UNITAI_PILLAGE) ||
 			(AI_getUnitAIType() == UNITAI_ATTACK) ||
+			(AI_getUnitAIType() == UNITAI_ATTACK_CITY) ||
+			(AI_getUnitAIType() == UNITAI_COUNTER) ||
 			(AI_getUnitAIType() == UNITAI_PARADROP) ||
 			(AI_getUnitAIType() == UNITAI_TERRAFORMER) ||
 			(AI_getUnitAIType() == UNITAI_EXPLORE) ||
@@ -10609,15 +10612,22 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(AI_getUnitAIType() == UNITAI_MISSIONARY) ||
 			(AI_getUnitAIType() == UNITAI_MANA_UPGRADE) ||
 			isInquisitor() ||
-			isWaterWalking() ||
-			isBlitz())
+			isWaterWalking())
 	{
-		iValue += ((iTemp * 26) - getMoves());
+		iTemp += 10;
+
+		if (m_pUnitInfo->getMoves() == 1)
+		{
+			iTemp += 40 + (iLevel * 5);
+		}
+
+		if (isBlitz())
+		{
+			iTemp+= 20;
+		}
 	}
-	else
-	{
-		iValue += (iTemp * 4);
-	}
+
+	iValue += iTemp * GC.getPromotionInfo(ePromotion).getMovesChange();
 
 	iTemp = GC.getPromotionInfo(ePromotion).getMoveDiscountChange();
 	if (AI_getUnitAIType() == UNITAI_PILLAGE)
