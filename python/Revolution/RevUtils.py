@@ -577,7 +577,10 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 										else :
 											spawnUnitID = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
 										spawnableUnits.append( spawnUnitID )
-										if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn from owner %s"%(PyInfo.UnitInfo(spawnUnitID).getDescription()))
+										
+										if spawnUnitID != -1:
+											if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn from owner %s"%(PyInfo.UnitInfo(spawnUnitID).getDescription()))
+											
 										if( unitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE ) :
 											if( unitTechInfo.getEra() == iOwnerEra ) :
 												if( spawnableUnits.count( spawnUnitID ) > 1 ) :
