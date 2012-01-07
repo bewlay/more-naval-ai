@@ -14881,6 +14881,10 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
+			if (getGroupSize() > 1)
+			{
+				joinGroup(NULL);
+			}
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_CONSTRUCT, pBestConstructPlot);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
