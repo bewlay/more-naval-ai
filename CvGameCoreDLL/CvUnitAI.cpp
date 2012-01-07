@@ -27355,12 +27355,15 @@ void CvUnitAI::ConquestMove()
 		    }
 		}
 
+		/*
 		if (plot()->getNumDefenders(getOwnerINLINE()) == getGroupSize())
 		{
 			getGroup()->pushMission(MISSION_SKIP);
 			return;
 		}
+		*/
     }
+
 
 	// Opportunistic attacks
 	if (getGroupSize() == 1)
@@ -27390,7 +27393,17 @@ void CvUnitAI::ConquestMove()
 			{
 				return;
 			}
-			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 10, false, true, false))
+			int iRange = 0;
+			if (plot()->getOwner() == getOwner())
+			{
+				iRange = 5;
+			}
+			else
+			{
+				iRange = 10;
+			}
+
+			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, iRange, false, true, false))
 			{
 				return;
 			}
@@ -27431,7 +27444,9 @@ void CvUnitAI::ConquestMove()
 	}
 
 	//ToDo - better incorporation of this section into rest of code
-	if (plot()->getOwnerINLINE() == getOwnerINLINE())
+	iValue = 0;
+	iBestValue = 0;
+	if (plot()->getOwnerINLINE() == getOwnerINLINE() && !isCargo())
     {
         iBestValue = getGroup()->getNumUnits();
         pBestUnit = NULL;
@@ -27444,7 +27459,7 @@ void CvUnitAI::ConquestMove()
                 {
                     if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST)
                     {
-                        if (pLoopSelectionGroup != getGroup())
+						if (pLoopSelectionGroup != getGroup() && !pLoopSelectionGroup->getHeadUnit()->isCargo())
                         {
                             pLoopPlot = pLoopSelectionGroup->getHeadUnit()->plot();
                             if (AI_plotValid(pLoopPlot))
@@ -27492,10 +27507,13 @@ void CvUnitAI::ConquestMove()
                 if (atPlot(pBestUnit->plot()))
                 {
                     joinGroup(pBestUnit->getGroup());
+
+					/*
                     if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
                     {
                         getGroup()->pushMission(MISSION_SKIP);
                     }
+					*/
                     return;
                 }
                 else
@@ -27515,7 +27533,7 @@ void CvUnitAI::ConquestMove()
                 {
                     if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag()==GROUPFLAG_CONQUEST)
                     {
-                        if (pLoopSelectionGroup!=getGroup())
+                        if (pLoopSelectionGroup != getGroup() && !pLoopSelectionGroup->getHeadUnit()->isCargo())
                         {
                             CvPlot* pPlot = pLoopSelectionGroup->getHeadUnit()->plot();
                             if (AI_plotValid(pPlot))
@@ -27553,10 +27571,12 @@ void CvUnitAI::ConquestMove()
                 {
 					getGroup()->mergeIntoGroup(pBestUnit->getGroup());
 					
+					/*
                     if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
                     {
                         getGroup()->pushMission(MISSION_SKIP);
                     }
+					*/
 					
                     return;
                 }
