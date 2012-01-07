@@ -2314,7 +2314,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 							bool bRagingBarbs = GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS);
 							bool bBarbWorld = GC.getGameINLINE().isOption(GAMEOPTION_BARBARIAN_WORLD);
 							bool bHero = pHeadUnit->AI_getUnitAIType() == UNITAI_HERO;
-							int iCaution = 1;
+							int iCaution = 2;
 							iCaution += pHeadUnit->AI_getBirthmark() % 7;
 							if (bHero)
 							{
@@ -2332,6 +2332,12 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 							{
 								iCaution -= 1;
 							}
+
+							if (!pHeadUnit->isAlive())
+							{
+								iCaution = 0;
+							}
+
 							iCaution = std::max(0, iCaution);
 							
 							szString.append(CvWString::format(L"Leadership: %d, Caution: %d", pHeadUnit->AI_getBarbLeadership(), iCaution));

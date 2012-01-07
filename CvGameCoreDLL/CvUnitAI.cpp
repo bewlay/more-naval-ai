@@ -2688,11 +2688,6 @@ void CvUnitAI::AI_barbAttackMove()
 	// larger stacks more likely to attack civs
 	iCaution -= (getGroup()->getNumUnits() - 1);
 
-	if (!isAlive())
-	{
-		iCaution = 0;
-	}
-
 	// more aggressive (attack cities earlier) when raging barbarians is on
 	if (bRagingBarbs)
 	{
@@ -2702,6 +2697,12 @@ void CvUnitAI::AI_barbAttackMove()
 	{
 		iCaution -= 1;
 	}
+
+	if (!isAlive())
+	{
+		iCaution = 0;
+	}
+
 	iCaution = std::max(0, iCaution);
 	
 	// how likely they are to attack against poor odds
