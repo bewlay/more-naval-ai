@@ -33,15 +33,18 @@ def getBuildingsRevIdxLocal( pCity ) :
 	for iBuilding in range(gc.getNumBuildingInfos()):
 		if ( pCity.getNumRealBuilding(iBuilding) > 0):
 			kBuilding = gc.getBuildingInfo(iBuilding)
-			buildingEffect = kBuilding.getRevIdxLocal()
-			if( buildingEffect > 0 ) :
-				negList.append( (buildingEffect, kBuilding.getDescription()) )
-			elif( buildingEffect < 0 ) :
-				posList.append( (buildingEffect, kBuilding.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(traitInfo.getDescription(),traitEffect))
-
-			localRevIdx += buildingEffect
+			
+			if (kBuilding.getPrereqCiv() == -1) or (kBuilding.getPrereqCiv() == gc.getGame().getActiveCivilizationType()):
+				if (kBuilding.getPrereqTrait() == -1) or (kBuilding.getPrereqTrait() == gc.getGame().getActiveCivilizationType()):
+					buildingEffect = kBuilding.getRevIdxLocal()
+					if( buildingEffect > 0 ) :
+						negList.append( (buildingEffect, kBuilding.getDescription()) )
+					elif( buildingEffect < 0 ) :
+						posList.append( (buildingEffect, kBuilding.getDescription()) )
+		
+					#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(traitInfo.getDescription(),traitEffect))
+		
+					localRevIdx += buildingEffect
 
 	return [localRevIdx,posList,negList]
 
@@ -59,21 +62,25 @@ def getBuildingsCivStabilityIndex( iPlayer ) :
 		
 	for iBuilding in range(0,gc.getNumBuildingInfos()):
 		kBuilding = gc.getBuildingInfo(iBuilding)
-		buildingEffect = -kBuilding.getRevIdxNational()
-
-		if ( buildingEffect != 0 ):
-			iBuildingClass = kBuilding.getBuildingClassType()
-			numBuildings = pPlayer.getBuildingClassCount(iBuildingClass)
-
-			buildingEffect *= numBuildings
-			if( buildingEffect > 0 ) :
-				posList.append( (buildingEffect, kBuilding.getDescription()) )
-			elif( buildingEffect < 0 ) :
-				negList.append( (buildingEffect, kBuilding.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kBuilding.getDescription(),buildingsEffect))
-
-			civStabilityIdx += buildingEffect
+		
+		if not kBuilding.isCapital():
+			if (kBuilding.getPrereqCiv() == -1) or (kBuilding.getPrereqCiv() == gc.getGame().getActiveCivilizationType()):
+				if (kBuilding.getPrereqTrait() == -1) or (kBuilding.getPrereqTrait() == gc.getGame().getActiveCivilizationType()):
+					buildingEffect = -kBuilding.getRevIdxNational()
+			
+					if ( buildingEffect != 0 ):
+						iBuildingClass = kBuilding.getBuildingClassType()
+						numBuildings = pPlayer.getBuildingClassCount(iBuildingClass)
+			
+						buildingEffect *= numBuildings
+						if( buildingEffect > 0 ) :
+							posList.append( (buildingEffect, kBuilding.getDescription()) )
+						elif( buildingEffect < 0 ) :
+							negList.append( (buildingEffect, kBuilding.getDescription()) )
+			
+						#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kBuilding.getDescription(),buildingsEffect))
+			
+						civStabilityIdx += buildingEffect
 
 	return [civStabilityIdx,posList,negList]
 
