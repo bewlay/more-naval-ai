@@ -17,6 +17,8 @@ import RevEvents
 import SdToolKitCustom
 #RevolutionDCM
 import CvScreensInterface
+# lfgr
+import RevCivUtils
 
 # lfgr: must load RebelTypes
 
@@ -39,6 +41,9 @@ PyInfo = PyHelpers.PyInfo
 game = CyGame()
 localText = CyTranslator()
 RevOpt = BugCore.game.Revolution
+# lfgr
+rcu = RevCivUtils.RevCivUtils()
+# lfgr end
 
 class Revolution :
 
@@ -3616,7 +3621,9 @@ class Revolution :
 						else :
 							giveRelType = None
 
-						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( revCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = True )
+						# lfgr: split empire when asking for leader change
+						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( revCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = True, bSplit = True )
+						# lfgr end
 
 						bodStr += ' ' + localText.getText("TXT_KEY_REV_CAP_RULE_DEMAND",())
 						if( not RevUtils.isCanDoElections( iPlayer ) ) :
@@ -3786,7 +3793,8 @@ class Revolution :
 		return
 
 
-	def chooseRevolutionCiv( self, cityList, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, pNotThisCiv = None, giveTechs = True, giveRelType = -1, bMatchCivics = False ) :
+	# lfgr: added parameter bSplit
+	def chooseRevolutionCiv( self, cityList, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, pNotThisCiv = None, giveTechs = True, giveRelType = -1, bMatchCivics = False, bSplit = False ) :
 		# All cities should have same owner
 
 		if( self.bRebelTypes ) :
@@ -3974,172 +3982,188 @@ class Revolution :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No available slots, spawning as Barbarians")
 				pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
 				return [pRevPlayer, bIsJoinWar]
-
-
-			# Create list of available civs and similar civ types
-			cultPlayer = None
-			if( pCity.countTotalCultureTimes100() > 50*100 ) :
-				cultPlayer = gc.getPlayer( pCity.findHighestCulture() )
-				if( cultPlayer.getID() == owner.getID() ) :
-					cultPlayer = None
-
-			# Don't incarnate as either of these
-			iMinor = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLMinor)
-			iBarbarian = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLBarbarian)
-		
-			# lfgr
-			# TODO: use RevDefs.sXMLRandom or similar
-			iRandom = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_RANDOM')
-			# end lfgr
-		
-			# Civs not currently in the game
-			availableCivs = list()
-			# Civs with similar style to cultOwner, if they exist
-			similarStyleCivs = list()
-			similarOwnerStyleCivs = list()
-			for civType in range(0,gc.getNumCivilizationInfos()) :
-				if( not civType == iBarbarian ) and (not civType == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')) and (not civType == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS')):
-					if( not civType == iMinor ) :
-					# lfgr
-						if( not civType == iRandom ) :
-							if( giveRelType == -1 or ( not self.bRebelTypes ) or ( not ( civType in RebelTypes.BlockedReligiousRebels[giveRelType] ) ) ) :
-					# end lfgr
-							# lfgr indention (x2)
-								taken = False
-								for i in range(0,gc.getMAX_CIV_PLAYERS()) :
-									if( civType == gc.getPlayer(i).getCivilizationType() ) :
-										# Switch in preparation for defining regions of the world for different rebel civ types
-										#if( gc.getPlayer(i).isAlive() or gc.getPlayer(i).isFoundedFirstCity() or gc.getPlayer(i).getCitiesLost() > 0 ) :
-										if( gc.getPlayer(i).isEverAlive() or RevData.revObjectExists(gc.getPlayer(i)) ) :
-											taken = True
-											break
-								if( not taken ) :
-									availableCivs.append(civType)
-									if( not cultPlayer == None ) :
-										if( gc.getCivilizationInfo( cultPlayer.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
-											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from culture: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
-											similarStyleCivs.append(civType)
-									if( gc.getCivilizationInfo( owner.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
-										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from owner: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
-										similarOwnerStyleCivs.append(civType)
-							# lfgr indention end
-
-			if( len(availableCivs) < 1 ) :
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No available civs, spawning as Barbarians")
+			
+			# lfgr: use RevCivUtils
+			iOldCivType = owner.getCivilizationType()
+			pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
+			if( pCultureOwner != None ) :
+				iCultureOwnerCivType = pCultureOwner.getCivilizationType()
+			else :
+				iCultureOwnerCivType = iOldCivType
+			newCivIdx, newLeaderIdx = rcu.chooseNewCivAndLeader( iOldCivType, iCultureOwnerCivType, bSplit, giveRelType )
+			
+			if( newLeaderIdx < 0 ) :
+				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - LeaderIdx < 0, spawning as Barbarians")
 				pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
 				return [pRevPlayer, bIsJoinWar]
-
-			newCivIdx = None
-			 
-
-			# If city has a revolutionary civ type, if that type is available choose it
-			if( RevData.getCityVal(pCity, 'RevolutionCiv') in availableCivs ) :
-				# City previously rebelled as available civ type
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Respawning previous rebel civ type for this city")
-				newCivIdx = RevData.getCityVal(pCity, 'RevolutionCiv')
-			else :
-				chosenCivs = list()
-				
-				# lfgr: check for religion specific rebels
-				# put this on top and generally prevent agnostic civs from being spawned when revolt is "religious"
-				#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking if revolution is religious")
-				#liReligionScores = list()
-				#for iReligion in xrange( gc.getNumReligionInfos() ) :
-				#	liReligionScores.append( 0 )
-				#
-				#for pCity in closeCityList :
-				#	for iReligion in xrange( gc.getNumReligionInfos() ) :
-				#		if( pCity.isHasReligion( iReligion ) ) :
-				#			liReligionScores[iReligion] += 1
-				#			if( pCity.isHolyCity() ) :
-				#				liReligionScores[iReligion] += 2
-				#
-				#iMinScore = len( closeCityList ) / 2
-				#iRebelReligion = -1
-				#iBestScore = 0
-				#for iReligion in xrange( gc.getNumReligionInfos() ) :
-				#	if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Religion %s has a %i points"%(gc.getReligionInfo(iReligion).getDescription(), liReligionScores[iReligion]))
-				#	if( liReligionScores[iReligion] >= iMinScore ) :
-				#		if( liReligionScores[iReligion] > iBestScore ) :
-				#			iBestScore = liReligionScores[iReligion]
-				#			iRebelReligion = iReligion
-				
-				if( giveRelType != -1 ) :
-					for iBlockedCiv in RebelTypes.BlockedReligiousRebels :
-						if( iBlockedCiv in availableCivs ) :
-							availableCivs.remove( iBlockedCiv )
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using religion %s for short list"%(gc.getReligionInfo(giveRelType).getDescription()))
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(giveRelType,len(RebelTypes.ReligiousRebels)))
-					rebList = RebelTypes.ReligiousRebels[giveRelType]
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this religion"%(len(rebList)))
-					for civType in rebList :
-						if( civType in availableCivs ) :
-							chosenCivs.append(civType)
-
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
-				
-				else :
-				# lfgr end
-				# lfgr indention
-					try :
-						if( not cultPlayer == None ) :
-							shortListType = cultPlayer.getCivilizationType()
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using cultural owner %s for short list"%(gc.getReligionInfo(shortListType).getDescription()))
-						else :
-							shortListType = owner.getCivilizationType()
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(shortListType,len(RebelTypes.RebelTypeList)))
-						rebList = RebelTypes.RebelTypeList[shortListType]
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this type"%(len(rebList)))
-						for civType in rebList :
-							if( civType in availableCivs ) :
-								chosenCivs.append(civType)
-
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
-					except :
-						pass
-				# lfgr indention end
-				
-				if( self.bRebelTypes and len(chosenCivs) > 0 ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a civ from short list")
-					availableCivs = chosenCivs
-				else :
-					if( self.bArtStyleTypes ) :
-						if( len(similarStyleCivs) > 0 ) :
-							# Create a civ using style of cultural owner of city
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to cultural owner %s"%(cultPlayer.getCivilizationDescription(0)))
-							availableCivs = similarStyleCivs
-						elif( len(similarOwnerStyleCivs) > 0 ) :
-							# Create a civ using style of owner of city
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to owner %s"%(owner.getCivilizationDescription(0)))
-							availableCivs = similarOwnerStyleCivs
-
-				newCivIdx = availableCivs[game.getSorenRandNum(len(availableCivs),'Revolution: pick unused civ type')]
-			
-			# lfgr minor rebel leaders
-			if( self.bRebelTypes ) :
-				bestLeaderList = RebelTypes.MinorLeaders[newCivIdx]
-			
-			if( len(bestLeaderList) > 0 ) :
-				newLeaderIdx = bestLeaderList[game.getSorenRandNum(len(bestLeaderList),'Revolution: pick leader from minor leader list')]
-			else :
 			# end lfgr
 
-				leaderList = list()
-				for leaderType in range(0,gc.getNumLeaderHeadInfos()) :
-					if( gc.getCivilizationInfo(newCivIdx).isLeaders(leaderType) or game.isOption( GameOptionTypes.GAMEOPTION_LEAD_ANY_CIV ) ) :
-						taken = False
-						for jdx in range(0,gc.getMAX_PLAYERS()) :
-							if( gc.getPlayer(jdx).getLeaderType() == leaderType and not newPlayerIdx == jdx  ) :
-								taken = True
-								break
-						if( not taken ) : leaderList.append(leaderType)
-
-				if( len(leaderList) < 1 ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Unexpected lack of possible leaders, spawning as Barbarians")
-					pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
-					return [pRevPlayer, bIsJoinWar]
-
-				newLeaderIdx = leaderList[game.getSorenRandNum(len(leaderList),'Revolution: pick leader')]
+			# lfgr: commented out
+#			# Create list of available civs and similar civ types
+#			cultPlayer = None
+#			if( pCity.countTotalCultureTimes100() > 50*100 ) :
+#				cultPlayer = gc.getPlayer( pCity.findHighestCulture() )
+#				if( cultPlayer.getID() == owner.getID() ) :
+#					cultPlayer = None
+#
+#			# Don't incarnate as either of these
+#			iMinor = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLMinor)
+#			iBarbarian = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLBarbarian)
+#		
+#			# lfgr
+#			# TODO: use RevDefs.sXMLRandom or similar
+#			iRandom = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_RANDOM')
+#			# end lfgr
+#		
+#			# Civs not currently in the game
+#			availableCivs = list()
+#			# Civs with similar style to cultOwner, if they exist
+#			similarStyleCivs = list()
+#			similarOwnerStyleCivs = list()
+#			for civType in range(0,gc.getNumCivilizationInfos()) :
+#				if( not civType == iBarbarian ) and (not civType == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')) and (not civType == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS')):
+#					if( not civType == iMinor ) :
+#					# lfgr
+#						if( not civType == iRandom ) :
+#							if( giveRelType == -1 or ( not self.bRebelTypes ) or ( not ( civType in RebelTypes.BlockedReligiousRebels[giveRelType] ) ) ) :
+#					# end lfgr
+#							# lfgr indention (x2)
+#								taken = False
+#								for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+#									if( civType == gc.getPlayer(i).getCivilizationType() ) :
+#										# Switch in preparation for defining regions of the world for different rebel civ types
+#										#if( gc.getPlayer(i).isAlive() or gc.getPlayer(i).isFoundedFirstCity() or gc.getPlayer(i).getCitiesLost() > 0 ) :
+#										if( gc.getPlayer(i).isEverAlive() or RevData.revObjectExists(gc.getPlayer(i)) ) :
+#											taken = True
+#											break
+#								if( not taken ) :
+#									availableCivs.append(civType)
+#									if( not cultPlayer == None ) :
+#										if( gc.getCivilizationInfo( cultPlayer.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
+#											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from culture: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
+#											similarStyleCivs.append(civType)
+#									if( gc.getCivilizationInfo( owner.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
+#										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from owner: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
+#										similarOwnerStyleCivs.append(civType)
+#							# lfgr indention end
+#
+#			if( len(availableCivs) < 1 ) :
+#				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No available civs, spawning as Barbarians")
+#				pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
+#				return [pRevPlayer, bIsJoinWar]
+#
+#			newCivIdx = None
+#			 
+#
+#			# If city has a revolutionary civ type, if that type is available choose it
+#			if( RevData.getCityVal(pCity, 'RevolutionCiv') in availableCivs ) :
+#				# City previously rebelled as available civ type
+#				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Respawning previous rebel civ type for this city")
+#				newCivIdx = RevData.getCityVal(pCity, 'RevolutionCiv')
+#			else :
+#				chosenCivs = list()
+#				
+#				# lfgr: check for religion specific rebels
+#				# put this on top and generally prevent agnostic civs from being spawned when revolt is "religious"
+#				#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking if revolution is religious")
+#				#liReligionScores = list()
+#				#for iReligion in xrange( gc.getNumReligionInfos() ) :
+#				#	liReligionScores.append( 0 )
+#				#
+#				#for pCity in closeCityList :
+#				#	for iReligion in xrange( gc.getNumReligionInfos() ) :
+#				#		if( pCity.isHasReligion( iReligion ) ) :
+#				#			liReligionScores[iReligion] += 1
+#				#			if( pCity.isHolyCity() ) :
+#				#				liReligionScores[iReligion] += 2
+#				#
+#				#iMinScore = len( closeCityList ) / 2
+#				#iRebelReligion = -1
+#				#iBestScore = 0
+#				#for iReligion in xrange( gc.getNumReligionInfos() ) :
+#				#	if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Religion %s has a %i points"%(gc.getReligionInfo(iReligion).getDescription(), liReligionScores[iReligion]))
+#				#	if( liReligionScores[iReligion] >= iMinScore ) :
+#				#		if( liReligionScores[iReligion] > iBestScore ) :
+#				#			iBestScore = liReligionScores[iReligion]
+#				#			iRebelReligion = iReligion
+#				
+#				if( giveRelType != -1 ) :
+#					for iBlockedCiv in RebelTypes.BlockedReligiousRebels :
+#						if( iBlockedCiv in availableCivs ) :
+#							availableCivs.remove( iBlockedCiv )
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using religion %s for short list"%(gc.getReligionInfo(giveRelType).getDescription()))
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(giveRelType,len(RebelTypes.ReligiousRebels)))
+#					rebList = RebelTypes.ReligiousRebels[giveRelType]
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this religion"%(len(rebList)))
+#					for civType in rebList :
+#						if( civType in availableCivs ) :
+#							chosenCivs.append(civType)
+#
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
+#				
+#				else :
+#				# lfgr end
+#				# lfgr indention
+#					try :
+#						if( not cultPlayer == None ) :
+#							shortListType = cultPlayer.getCivilizationType()
+#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using cultural owner %s for short list"%(gc.getReligionInfo(shortListType).getDescription()))
+#						else :
+#							shortListType = owner.getCivilizationType()
+#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(shortListType,len(RebelTypes.RebelTypeList)))
+#						rebList = RebelTypes.RebelTypeList[shortListType]
+#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this type"%(len(rebList)))
+#						for civType in rebList :
+#							if( civType in availableCivs ) :
+#								chosenCivs.append(civType)
+#
+#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
+#					except :
+#						pass
+#				# lfgr indention end
+#				
+#				if( self.bRebelTypes and len(chosenCivs) > 0 ) :
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a civ from short list")
+#					availableCivs = chosenCivs
+#				else :
+#					if( self.bArtStyleTypes ) :
+#						if( len(similarStyleCivs) > 0 ) :
+#							# Create a civ using style of cultural owner of city
+#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to cultural owner %s"%(cultPlayer.getCivilizationDescription(0)))
+#							availableCivs = similarStyleCivs
+#						elif( len(similarOwnerStyleCivs) > 0 ) :
+#							# Create a civ using style of owner of city
+#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to owner %s"%(owner.getCivilizationDescription(0)))
+#							availableCivs = similarOwnerStyleCivs
+#
+#				newCivIdx = availableCivs[game.getSorenRandNum(len(availableCivs),'Revolution: pick unused civ type')]
+#			
+#			# lfgr minor rebel leaders
+#			if( self.bRebelTypes ) :
+#				bestLeaderList = RebelTypes.MinorLeaders[newCivIdx]
+#			
+#			if( len(bestLeaderList) > 0 ) :
+#				newLeaderIdx = bestLeaderList[game.getSorenRandNum(len(bestLeaderList),'Revolution: pick leader from minor leader list')]
+#			else :
+#			# end lfgr
+#
+#				leaderList = list()
+#				for leaderType in range(0,gc.getNumLeaderHeadInfos()) :
+#					if( gc.getCivilizationInfo(newCivIdx).isLeaders(leaderType) or game.isOption( GameOptionTypes.GAMEOPTION_LEAD_ANY_CIV ) ) :
+#						taken = False
+#						for jdx in range(0,gc.getMAX_PLAYERS()) :
+#							if( gc.getPlayer(jdx).getLeaderType() == leaderType and not newPlayerIdx == jdx  ) :
+#								taken = True
+#								break
+#						if( not taken ) : leaderList.append(leaderType)
+#
+#				if( len(leaderList) < 1 ) :
+#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Unexpected lack of possible leaders, spawning as Barbarians")
+#					pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
+#					return [pRevPlayer, bIsJoinWar]
+#
+#				newLeaderIdx = leaderList[game.getSorenRandNum(len(leaderList),'Revolution: pick leader')]
+			# end lfgr
 
 			game.addPlayer( newPlayerIdx, newLeaderIdx, newCivIdx, false )
 #			gc.getPlayer(game.getActivePlayer()).initNewEmpire(newLeaderIdx, newPlayerIdx)
