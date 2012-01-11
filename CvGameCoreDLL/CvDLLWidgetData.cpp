@@ -4695,55 +4695,9 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_CTRL_TRADE"));
 // BUG - end
 		}
-		
-		if (eTeam != eActiveTeam )
+
+		if (eTeam != eActiveTeam)
 		{
-			// Show which civs this player is at war with
-			CvWStringBuffer szWarWithString;
-			CvWStringBuffer szWorstEnemyString;
-			bool bFirst = true;
-			bool bFirst2 = true;
-			for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
-			{
-				CvTeamAI& kTeam = GET_TEAM((TeamTypes) iTeam);
-				if (kTeam.isAlive() && !kTeam.isMinorCiv() && iTeam != eActiveTeam && iTeam != GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam())
-				{
-					if (kActiveTeam.isHasMet(kTeam.getID()))
-					{
-						if (::atWar((TeamTypes) iTeam, GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam()))
-						{
-							setListHelp(szWarWithString, L"", kTeam.getName().GetCString(), L", ", bFirst);
-							bFirst = false;
-						}
-
-						if (kTeam.AI_getWorstEnemy() == GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam())
-						{
-							setListHelp(szWorstEnemyString, L"", kTeam.getName().GetCString(), L", ", bFirst2);
-							bFirst2 = false;
-						}
-					}
-				}
-			}
-
-			if( !szWorstEnemyString.isEmpty() )
-			{
-				CvWString szTempBuffer;
-
-				szTempBuffer.assign(gDLL->getText(L"TXT_KEY_WORST_ENEMY_OF", szWorstEnemyString));
-
-				szBuffer.append(NEWLINE);
-				szBuffer.append(szTempBuffer);
-			}
-			if( !szWarWithString.isEmpty() )
-			{
-				CvWString szTempBuffer;
-
-				szTempBuffer.assign(gDLL->getText(L"TXT_KEY_AT_WAR_WITH", szWarWithString));
-
-				szBuffer.append(NEWLINE);
-				szBuffer.append(szTempBuffer);
-			}
-
 			if( !(kActiveTeam.isAtWar(eTeam)))
 			{
 				if (kActiveTeam.canDeclareWar(eTeam))
