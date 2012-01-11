@@ -358,7 +358,7 @@ class CvEventManager:
 # FfH Card Game: end
 
 ## OOS fix by Snarko
-		else: #iData1 is unused, to allow for a condition here. It must not be zero (would trigger somnium)
+		elif (iData1 == CvUtil.ChangeCiv): #iData1 is unused, to allow for a condition here. It must not be zero (would trigger somnium)
 			CyGame().reassignPlayerAdvanced(iData2, iData3, -1)
 			
 			

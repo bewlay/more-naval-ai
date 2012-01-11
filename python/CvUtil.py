@@ -118,6 +118,8 @@ SilentEvents = [EventEditCityName, EventEditUnitName, EventSelectSolmniumPlayer,
 # List of data1 ID for onModNetMessage
 Somnium = 0
 ## FfH Card Game: end
+#Snarko OOS fix
+ChangeCiv = 1
 
 # Popup defines (TODO: Expose these from C++)
 FONT_CENTER_JUSTIFY=1<<2
