@@ -675,6 +675,7 @@ void CyInfoPythonInterface1()
 //FfH: Added by Kael 12/18/2007
 		.def("isEquipment", &CvBuildingInfo::isEquipment, "bool ()")
 		.def("getPrereqCiv", &CvBuildingInfo::getPrereqCiv, "int ()")
+		.def("getPrereqTrait", &CvBuildingInfo::getPrereqTrait, "int ()")
 //FfH: End Add
 
 		// Arrays
