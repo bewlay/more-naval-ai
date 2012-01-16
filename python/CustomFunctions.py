@@ -1035,6 +1035,14 @@ class CustomFunctions:
 				i = iPlayer
 		return i
 
+	def getOpenPlayer(self):
+		i = -1
+		for iPlayer in range(gc.getMAX_PLAYERS()):
+			pPlayer = gc.getPlayer(iPlayer)
+			if (pPlayer.isEverAlive() == False and i == -1):
+				i = iPlayer
+		return i
+
 	def getUnholyVersion(self, pUnit):
 		iUnit = -1
 		if pUnit.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ADEPT'):
