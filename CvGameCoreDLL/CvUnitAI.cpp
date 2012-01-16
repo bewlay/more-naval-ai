@@ -10383,47 +10383,6 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += 100;
 	}
 
-	// Slaying
-	if (GC.getPromotionInfo(ePromotion).getPromotionCombatType() != NULL)
-	{
-		if ((AI_getUnitAIType() == UNITAI_CITY_COUNTER) || (AI_getUnitAIType() == UNITAI_COUNTER))
-		{
-			iValue += 30;
-		}
-		else
-		{
-			iValue += 20;
-		}
-
-		// prepare counters for the Favorite Unit Combats of whoever we have warplans against
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
-			if (kLoopPlayer.isAlive())
-			{
-				if (GET_TEAM(getTeam()).AI_getWarPlan(kLoopPlayer.getTeam()) != NO_WARPLAN)
-				{
-					if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() != NO_UNITCOMBAT)
-					{
-						if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() == GC.getPromotionInfo(ePromotion).getPromotionCombatType())
-						{
-							iValue += 20;
-						}
-					}
-				}
-			}
-		}
-
-	}
-
-	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
-	{
-		iValue += 20;
-		if (AI_getUnitAIType() == UNITAI_EXPLORE)
-		{
-			iValue += 25;
-		}
-	}
 
 	//Bounty Hunter
 	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (iLevel / (bFinancialTrouble ? 1: 2));
@@ -10593,6 +10552,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp * 25);
 	}
 
+	// mobility
 //	iTemp = GC.getPromotionInfo(ePromotion).getMovesChange();
 	iTemp = 0;
 	if ((AI_getUnitAIType() == UNITAI_ATTACK_SEA) ||
@@ -10619,7 +10579,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 		if (m_pUnitInfo->getMoves() == 1)
 		{
-			iTemp += 40 + (iLevel * 5);
+			iTemp += 20 + (iLevel * 5);
 		}
 
 		if (isBlitz())
@@ -11194,65 +11154,119 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-    int iOtherCombat = 0;
-    int iSameCombat = 0;
-
-    for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
-    {
-        if ((UnitCombatTypes)iI == getUnitCombatType())
-        {
-            iSameCombat += unitCombatModifier((UnitCombatTypes)iI);
-        }
-        else
-        {
-            iOtherCombat += unitCombatModifier((UnitCombatTypes)iI);
-        }
-    }
-
+	int iTempValue = 0;
 	for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+    {
+		int iPromoCombatValue = GC.getPromotionInfo(ePromotion).getUnitCombatModifierPercent(iI);
+		if (iPromoCombatValue > 0)
+		{
+			int iTempPromoValue = 0;
+
+			// prepare counters for the Favorite Unit Combats of whoever we have warplans against
+			for (int iK = 0; iK < MAX_PLAYERS; iK++)
+			{
+				CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iK);
+				if (kLoopPlayer.isAlive())
+				{
+					if (GET_TEAM(getTeam()).AI_getWarPlan(kLoopPlayer.getTeam()) != NO_WARPLAN)
+					{
+						if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() != NO_UNITCOMBAT)
+						{
+							if (GC.getLeaderHeadInfo(kLoopPlayer.getLeaderType()).getFavoriteUnitCombat() == iI)
+							{
+								iTempPromoValue += 5;
+							}
+						}
+					}
+				}
+			}
+
+			// extra value if we already have modifiers against this Unit Combat type
+			if (unitCombatModifier((UnitCombatTypes)iI) > 0)
+			{
+				iTempPromoValue += iPromoCombatValue * iLevel;
+			}
+			else // otherwise...
+			{
+				// first make sure we dont have a counter to a different combat type already
+				bool bHasOtherCombatCounter = false;
+				for (int iJ = 0; iJ < GC.getNumUnitCombatInfos(); iJ++)
+				{
+					if (iJ != iI)
+					{
+						if (unitCombatModifier((UnitCombatTypes)iJ) > 0)
+						{
+							bHasOtherCombatCounter = true;
+							break;
+						}
+					}
+				}
+
+				if (!bHasOtherCombatCounter)
+				{
+					iTempPromoValue += iPromoCombatValue;
+				}
+				else
+				{
+					iTempPromoValue = 0;
+				}
+			}
+
+			iTempValue += iTempPromoValue;
+		}
+	}
+
+	if ((AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
 	{
-		iTemp = GC.getPromotionInfo(ePromotion).getUnitCombatModifierPercent(iI);
-		int iCombatWeight = 0;
-        //Fighting their own kind
-        if ((UnitCombatTypes)iI == getUnitCombatType())
-        {
-            if (iSameCombat >= iOtherCombat)
-            {
-                iCombatWeight = 70;//"axeman takes formation"
-            }
-            else
-            {
-                iCombatWeight = 30;
-            }
-        }
-        else
-        {
-            //fighting other kinds
-            if (unitCombatModifier((UnitCombatTypes)iI) > 10)
-            {
-                iCombatWeight = 70;//"spearman takes formation"
-            }
-            else
-            {
-                iCombatWeight = 30;
-            }
-        }
-
-		iCombatWeight *= GET_PLAYER(getOwnerINLINE()).AI_getUnitCombatWeight((UnitCombatTypes)iI);
-		iCombatWeight /= 100;
-
-		if ((AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_CITY_COUNTER))
+		iValue += iTempValue * 2;
+	}
+	else if ((AI_getUnitAIType() == UNITAI_ATTACK) || (AI_getUnitAIType() == UNITAI_ATTACK_CITY))
+	{
+		if (AI_getBirthmark() % 2 == 0)
 		{
-		    iValue += (iTemp * iCombatWeight) / 10;
+			iValue += iTempValue;
 		}
-		else if ((AI_getUnitAIType() == UNITAI_ATTACK) ||
-			       (AI_getUnitAIType() == UNITAI_RESERVE))
+	}
+	else
+	{
+		iValue += iTempValue / 2;
+	}
+
+	// Slaying
+	if (GC.getPromotionInfo(ePromotion).getPromotionCombatType() != NULL)
+	{
+		// first make sure we dont have a counter to a different combat type already
+		// note - doesnt count PromoCombats :(
+		bool bHasOtherCombatCounter = false;
+		for (int iJ = 0; iJ < GC.getNumUnitCombatInfos(); iJ++)
 		{
-			iValue += (iTemp * iCombatWeight) / 20;
+			if (unitCombatModifier((UnitCombatTypes)iJ) > 10)
+			{
+				bHasOtherCombatCounter = true;
+				break;
+			}
 		}
-		else
+
+		if (!bHasOtherCombatCounter)
 		{
-			iValue += (iTemp * iCombatWeight) / 200;
+			if ((AI_getUnitAIType() == UNITAI_CITY_COUNTER) || (AI_getUnitAIType() == UNITAI_COUNTER) || (AI_getUnitAIType() == UNITAI_ATTACK))
+			{
+				iValue += 50;
+			}
+			else
+			{
+				iValue += 20;
+			}
+		}
+	}
+
+	// unit combat type captures (subdue animal)
+	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
+	{
+		iValue += 25;
+		if (unitCombatModifier(UnitCombatTypes(GC.getPromotionInfo(ePromotion).getCaptureUnitCombat())) > 0)
+		{
+			iValue += 15 * iLevel;
 		}
 	}
 
