@@ -5193,7 +5193,7 @@ class CvMainInterface:
 												if (ScoreOpt.isShowAttitude()):
 													if (not gc.getPlayer(ePlayer).isHuman() and (not gc.getPlayer(ePlayer).isHumanDisabled())):
 														iAtt = gc.getPlayer(ePlayer).AI_getAttitude(gc.getGame().getActivePlayer())
-														cAtt =  unichr(ord(unichr(CyGame().getSymbolID(FontSymbols.POWER_CHAR) + 4)) + iAtt)
+														cAtt =  unichr(ord(unichr(CyGame().getSymbolID(FontSymbols.POWER_CHAR) + 3)) + iAtt)
 														szBuffer += cAtt
 														if (bAlignIcons):
 															scores.setAttitude(cAtt)

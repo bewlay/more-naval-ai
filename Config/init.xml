@@ -76,7 +76,7 @@
 		</arg>
 	</init>
 	<event type="LanguageChanged" module="AttitudeUtil" function="initModifiers"/>
-	<symbol id="furious" name="ATTITUDE_FURIOUS" from="POWER" offset="4"/>
+	<symbol id="furious" name="ATTITUDE_FURIOUS" from="POWER" offset="3"/>
 	<symbol id="annoyed" name="ATTITUDE_ANNOYED"/>
 	<symbol id="cautious" name="ATTITUDE_CAUTIOUS"/>
 	<symbol id="pleased" name="ATTITUDE_PLEASED"/>
