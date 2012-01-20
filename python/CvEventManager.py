@@ -1292,7 +1292,7 @@ class CvEventManager:
 			newUnit3.setUnitAIType(gc.getInfoTypeForString('UNITAI_ATTACK_CITY'))
 
 #some AI help
-			if pPlayer.isHuman:
+			if pPlayer.isHuman():
 				newUnit1.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)			
 				newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)	
 				newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)
