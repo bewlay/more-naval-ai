@@ -5102,11 +5102,11 @@ class CvMainInterface:
 																break
 #FfH Alignment: Added by Kael 08/09/2007
 													if gc.getPlayer(ePlayer).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
-														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_EVIL", (), gc.getInfoTypeForString("COLOR_RED")) + ")"
+														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_EVIL", (), gc.getInfoTypeForString("COLOR_RED")) + ") "
 													if gc.getPlayer(ePlayer).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_NEUTRAL'):
-														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_NEUTRAL", (), gc.getInfoTypeForString("COLOR_GREY")) + ")"
+														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_NEUTRAL", (), gc.getInfoTypeForString("COLOR_GREY")) + ") "
 													if gc.getPlayer(ePlayer).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
-														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_GOOD", (), gc.getInfoTypeForString("COLOR_YELLOW")) + ")"
+														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_GOOD", (), gc.getInfoTypeForString("COLOR_YELLOW")) + ") "
 													#szBuffer = szBuffer + szTempBuffer
 													szPlayerName = szPlayerName + szTempBuffer
 													scores.setName(szPlayerName)
