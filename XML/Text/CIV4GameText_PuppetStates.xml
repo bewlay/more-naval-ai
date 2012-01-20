@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+<!-- Start Puppet States -->
+	<TEXT>
+		<Tag>TXT_KEY_MISC_ENABLES_PUPPET_STATES</Tag>
+		<English>[ICON_BULLET]Enables Puppet States</English>
+		<French>[ICON_BULLET]Enables Puppet States</French>
+		<German>[ICON_BULLET]Enables Puppet States</German>
+		<Italian>[ICON_BULLET]Enables Puppet States</Italian>
+		<Spanish>[ICON_BULLET]Enables Puppet States</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_CREATE_PUPPET_STATE</Tag>
+		<English>Form a pro-%s1 State in %s2_City</English>
+		<French>Form a pro-%s1 State in %s2_City</French>
+		<German>Form a pro-%s1 State in %s2_City</German>
+		<Italian>Form a pro-%s1 State in %s2_City</Italian>
+		<Spanish>Form a pro-%s1 State in %s2_City</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MEMORY_MADE_PUPPET</Tag>
+		<English>&quot;We owe our power to you.&quot;</English>
+		<French>&quot;We owe our power to you.&quot;</French>
+		<German>&quot;We owe our power to you.&quot;</German>
+		<Italian>&quot;We owe our power to you.&quot;</Italian>
+		<Spanish>&quot;We owe our power to you.&quot;</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_MAKE_PUPPET</Tag>
+		<English>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</English>
+		<French>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</French>
+		<German>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</German>
+		<Italian>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</Italian>
+		<Spanish>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_RETURN_PUPPET_CITY</Tag>
+		<English>No, hand control over to the %s1_CivName</English>
+		<French>Non, rendez-la aux %s1_CivName.</French>
+		<German>Nein, &#252;bergebt sie wieder an das %s1:2_CivName</German>
+		<Italian>No, restituisci il controllo all'%s1_CivName</Italian>
+		<Spanish>No, devolvedle el control al %s1_CivName</Spanish>
+	</TEXT>
+<!-- End Puppet States -->
+</Civ4GameText>
