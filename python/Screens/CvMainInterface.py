@@ -3325,7 +3325,7 @@ class CvMainInterface:
 				xCoord = 268 + (xResolution - 1024) / 2 + 100 + 7 + 380 / 2
 				yCoord = 30
 
-			screen.setText( "GreatPersonBarText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xCoord, yCoord, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
+			screen.setText( "GreatPersonBarText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xCoord, yCoord + 3, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
 			if (not pGPCity):
 				screen.setHitTest( "GreatPersonBarText", HitTestTypes.HITTEST_NOHIT )
 			screen.show( "GreatPersonBarText" )
@@ -3369,7 +3369,7 @@ class CvMainInterface:
 				xCoord = 268 + (xResolution - 1024) / 2 + 100 / 2
 				yCoord = 32
 
-			screen.setLabel( "GreatGeneralBarText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xCoord, yCoord, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
+			screen.setLabel( "GreatGeneralBarText", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xCoord, yCoord + 4, -0.4, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_GREAT_GENERAL, -1, -1 )
 			screen.show( "GreatGeneralBarText" )
 # BUG - Bars on single line for higher resolution screens - end
 
