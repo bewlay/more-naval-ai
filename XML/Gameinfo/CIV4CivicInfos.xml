@@ -82,28 +82,28 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-    		<!-- Revolution Mod Start -->
-		<bUpgradeAnywhere>0</bUpgradeAnywhere>
-		<bAllowInquisitions>0</bAllowInquisitions>
-		<bDisallowInquisitions>0</bDisallowInquisitions>
-		<iRevIdxLocal>4</iRevIdxLocal>
-		<iRevIdxNational>4</iRevIdxNational>
-		<iRevIdxDistanceModifier>50</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>-10</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+				    <!-- Revolution Mod Start -->
+						<bUpgradeAnywhere>0</bUpgradeAnywhere>
+						<bAllowInquisitions>0</bAllowInquisitions>
+						<bDisallowInquisitions>0</bDisallowInquisitions>
+						<iRevIdxLocal>4</iRevIdxLocal>
+						<iRevIdxNational>4</iRevIdxNational>
+						<iRevIdxDistanceModifier>50</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-10</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_DESPOT</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -196,25 +196,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>1</iRevIdxLocal>
-		<iRevIdxNational>3</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>-3</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>2</iRevIdxNational>
+						<iRevIdxDistanceModifier>25</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0.5</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -310,25 +310,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>2</iRevIdxNational>
+						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
+						<iRevLaborFreedom>-10</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-20</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -426,25 +426,25 @@
                     </ImprovementYields>
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>1</iRevIdxLocal>
-		<iRevIdxNational>3</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>-3</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>2</iRevIdxLocal>
+						<iRevIdxNational>3</iRevIdxNational>
+						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-10</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -538,26 +538,26 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<bAllowInquisitions>1</bAllowInquisitions>
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>2</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>5</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>60</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>2.0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>.5</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>-10</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<bAllowInquisitions>1</bAllowInquisitions>
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>4</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>4</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0.5</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0.5</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-10</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -650,25 +650,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>-2</iRevIdxLocal>
-		<iRevIdxNational>-2</iRevIdxNational>
-		<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-30</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>-.2</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>5</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>1</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>-2</iRevIdxLocal>
+						<iRevIdxNational>-2</iRevIdxNational>
+						<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-30</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>-.2</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>5</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>1</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -785,26 +785,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<bAllowInquisitions>1</bAllowInquisitions>
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>1</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>3</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>30</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>.5</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>-5</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>2</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>1</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>-5</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -894,26 +893,26 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<bDisallowInquisitions>1</bDisallowInquisitions>
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>5</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<bDisallowInquisitions>1</bDisallowInquisitions>
+						<iRevIdxLocal>-1</iRevIdxLocal>
+						<iRevIdxNational>-1</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>-0.5</fRevViolentMod>
+						<iRevReligiousFreedom>5</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1007,25 +1006,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>-1</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>-1</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1118,25 +1117,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>4</iRevIdxLocal>
-		<iRevIdxNational>2</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>10</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>2</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>10</fRevIdxGoodReligionMod>
-		<fRevViolentMod>2</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>4</iRevIdxLocal>
+						<iRevIdxNational>2</iRevIdxNational>
+						<iRevIdxDistanceModifier>50</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>5</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>200</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0.5</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>-10</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1234,25 +1233,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>-3</iRevIdxLocal>
-		<iRevIdxNational>3</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>-.3</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>-8</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>-3</iRevIdxLocal>
+						<iRevIdxNational>3</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>-.3</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-8</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1357,25 +1356,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1479,25 +1478,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1594,25 +1593,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>-1</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0.3</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>1</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>-1</iRevIdxLocal>
+						<iRevIdxNational>-1</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0.2</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0.3</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>10</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>10</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>1</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1702,25 +1701,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>-1</iRevIdxLocal>
-		<iRevIdxNational>-2</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>4</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>-1</iRevIdxLocal>
+						<iRevIdxNational>-2</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>-10</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>1</bNoDiplomacyWithEnemies>
@@ -1810,25 +1809,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>-5</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>-5</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1918,25 +1917,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2038,25 +2037,25 @@
                     </ImprovementYields>
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>3</iRevIdxLocal>
-		<iRevIdxNational>1</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>-10</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>3</iRevIdxLocal>
+						<iRevIdxNational>1</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0.5</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>-20</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2158,25 +2157,25 @@
                     </ImprovementYields>
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>-3</iRevIdxLocal>
-		<iRevIdxNational>-3</iRevIdxNational>
-		<iRevIdxDistanceModifier>-25</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>-.3</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>10</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>1</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>-2</iRevIdxNational>
+						<iRevIdxDistanceModifier>-25</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>1</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2273,25 +2272,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>-0.2</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>-0.3</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2388,25 +2387,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>1</iRevIdxLocal>
-		<iRevIdxNational>3</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>-3</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>1</iRevIdxLocal>
+						<iRevIdxNational>3</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>20</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>-3</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>-5</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2516,25 +2515,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>2</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>2</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2624,25 +2623,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>2</iRevIdxLocal>
+						<iRevIdxNational>3</iRevIdxNational>
+						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>40</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0.2</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0.5</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2740,25 +2739,25 @@
                     </ImprovementYields>
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>2</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2848,25 +2847,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>1</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>1</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2963,25 +2962,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>10</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -3074,25 +3073,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>0</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>-1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -3198,25 +3197,25 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-		<!-- Revolution Mod Start -->
-		<iRevIdxLocal>0</iRevIdxLocal>
-		<iRevIdxNational>0</iRevIdxNational>
-		<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-		<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-		<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-		<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-		<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-		<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-		<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
-		<fRevViolentMod>0</fRevViolentMod>
-		<iRevReligiousFreedom>0</iRevReligiousFreedom>
-		<iRevLaborFreedom>0</iRevLaborFreedom>
-		<iRevEnvironmentalProtection>10</iRevEnvironmentalProtection>
-		<iRevDemocracyLevel>0</iRevDemocracyLevel>
-		<bCommunism>0</bCommunism>
-		<bFreeSpeech>0</bFreeSpeech>
-		<bCanDoElection>0</bCanDoElection>
-		<!-- Revolution Mod End -->
+						<!-- Revolution Mod Start -->
+						<iRevIdxLocal>0</iRevIdxLocal>
+						<iRevIdxNational>-2</iRevIdxNational>
+						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
+						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
+						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
+						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
+						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
+						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<fRevViolentMod>0</fRevViolentMod>
+						<iRevReligiousFreedom>0</iRevReligiousFreedom>
+						<iRevLaborFreedom>0</iRevLaborFreedom>
+						<iRevEnvironmentalProtection>1</iRevEnvironmentalProtection>
+						<iRevDemocracyLevel>0</iRevDemocracyLevel>
+						<bCommunism>0</bCommunism>
+						<bFreeSpeech>0</bFreeSpeech>
+						<bCanDoElection>0</bCanDoElection>
+						<!-- Revolution Mod End -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
