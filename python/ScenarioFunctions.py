@@ -2179,7 +2179,7 @@ class ScenarioFunctions:
 	def openChest(self, caster, pPlot):
 		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_WB_GIFT_OF_KYLORIN):
 			if caster.getUnitType() != gc.getInfoTypeForString('UNIT_ARCHMAGE'):
-				cf.addPopup(CyTranslator().getText("TXT_KEY_WB_GIFT_OF_KYLORON_TREASURE_LOCKED",()),'art/interface/popups/Dain.dds')
+				cf.addPopup(CyTranslator().getText("TXT_KEY_WB_GIFT_OF_KYLORIN_TREASURE_LOCKED",()),'art/interface/popups/Dain.dds')
 				return False
 			if (pPlot.getX() == 20 and pPlot.getY() == 11):
 				cf.addPopup(CyTranslator().getText("TXT_KEY_WB_GIFT_OF_KYLORIN_TREASURE_SPRING",()),'art/interface/popups/Dain.dds')
