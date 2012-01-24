@@ -2370,7 +2370,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 /**	BETTER AI (Better City Placement) Sephi                                             		**/
 /**	adjust for Kuriotates																		**/
 /*************************************************************************************************/
-    int iNumCityPlots=21;
+    int iNumCityPlots = 21;
 
 	bool bSprawlingExpand = false;
 
@@ -2521,7 +2521,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 	}
 
-	if (bStartingLoc)
+	//if (bStartingLoc)
 	{
 		if (pPlot->isGoody())
 		{
@@ -2573,18 +2573,20 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 		if (iI != CITY_HOME_PLOT)
 		{
+			eFeature = pLoopPlot->getFeatureType();
 			if ((pLoopPlot == NULL) || pLoopPlot->isImpassable())
 			{
 				iBadTile += 2;
 			}
-			// avoid unhealthy terrain if we dont have the tech to deal with it
-			else if	(pLoopPlot->getFeatureType() != NO_FEATURE)
+			// avoid terrain that is both unhealthy and negative food yield if we dont have the tech to deal with it
+			else if	(eFeature != NO_FEATURE)
 			{
-				if (GC.getFeatureInfo((FeatureTypes)pLoopPlot->getFeatureType()).getHealthPercent() < 0)
+				if ((GC.getFeatureInfo((FeatureTypes)eFeature).getHealthPercent() < 0) &&
+					(GC.getFeatureInfo((FeatureTypes)eFeature).getYieldChange(YIELD_FOOD) < 0))
 				{
 					bCanWork = false;
 
-					if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
+					if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
 					{
 						bCanWork = true;
 					}
@@ -2598,7 +2600,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 								ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
 								if ( eImp != NO_IMPROVEMENT )
 								{
-									if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
+									if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
 									{
 										bCanWork = true;
 										break;
@@ -2645,7 +2647,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	iBadTile /= 2;
 
-	if (!bStartingLoc)
+//	if (!bStartingLoc)
 	{
 		if ((iBadTile > (iNumCityPlots / 2)) || (pArea->getNumTiles() <= 2))
 		{
@@ -2671,28 +2673,41 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 									bHasGoodBonus = true;
 
 									// check blocking features
-									if	(pLoopPlot->getFeatureType() != NO_FEATURE)
+									eFeature = pLoopPlot->getFeatureType();
+									if	(eFeature != NO_FEATURE)
 									{
 										bool bCanWork = false;
 
-										if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pLoopPlot->getFeatureType()))
+										if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
 										{
 											bCanWork = true;
 										}
 										else
 										{
-											for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+											// find the Improvement that matches this Bonus
+											for (int iImprovements = 0; iImprovements < GC.getNumImprovementInfos(); iImprovements++)
 											{
-												BuildTypes eBuild = ((BuildTypes)iJ);
-												if (eBuild != NO_BUILD)
+												ImprovementTypes eImprovement = ((ImprovementTypes)iI);
+												if ( eImprovement != NO_IMPROVEMENT )
 												{
-													ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
-													if ( eImp != NO_IMPROVEMENT )
+													if (GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(eBonus))
 													{
-														if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(pLoopPlot->getFeatureType())))
+														// find the Build for this Improvement
+														for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
 														{
-															bCanWork = true;
-															break;
+															BuildTypes eBuild = ((BuildTypes)iJ);
+															if (eBuild != NO_BUILD)
+															{
+																if (GC.getBuildInfo(eBuild).getImprovement() == eImprovement)
+																{
+																	// check feature tech
+																	if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+																	{
+																		bCanWork = true;
+																		break;
+																	}
+																}
+															}
 														}
 													}
 												}
@@ -2700,15 +2715,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 										}
 
 										if (!bCanWork)
-										{
-											bHasGoodBonus = false;
-										}
-									}
-
-									// make sure we can see the bonus (no cheating!)
-									if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
-									{
-										if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
 										{
 											bHasGoodBonus = false;
 										}
@@ -2877,56 +2883,63 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			iTempValue = 0;
 
 			eFeature = pLoopPlot->getFeatureType();
-			eBonus = pLoopPlot->getBonusType((bStartingLoc) ? NO_TEAM : getTeam());
+			//eBonus = pLoopPlot->getBonusType((bStartingLoc) ? NO_TEAM : getTeam());
+			// this call checks for tech reveal limitations
+			eBonus = pLoopPlot->getBonusType(getTeam());
 			eBonusImprovement = NO_IMPROVEMENT;
 
-			// dont value bonuses that have blocking features. working?
-			bool bCanWork = true;
-
-			if (eFeature != NO_FEATURE)
+			if (eBonus != NO_BONUS)
 			{
-				bCanWork = false;
+				// dont value bonuses that have blocking features. working?
+				bool bCanWork = true;
 
-				if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
+				if (eFeature != NO_FEATURE)
 				{
-					bCanWork = true;
-					iTempValue += 10;
-				}
-				else
-				{
-					for (int iBuilds = 0; iBuilds < GC.getNumBuildInfos(); iBuilds++)
+					bCanWork = false;
+
+					if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
 					{
-						BuildTypes eBuild = ((BuildTypes)iBuilds);
-						if (eBuild != NO_BUILD)
+						bCanWork = true;
+						iTempValue += 10;
+					}
+					else
+					{
+						// find the Improvement that matches this Bonus
+						for (int iImprovements = 0; iImprovements < GC.getNumImprovementInfos(); iImprovements++)
 						{
-							ImprovementTypes eImp = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
-							if ( eImp != NO_IMPROVEMENT )
+							ImprovementTypes eImprovement = ((ImprovementTypes)iI);
+							if ( eImprovement != NO_IMPROVEMENT )
 							{
-								if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+								if (GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(eBonus))
 								{
-									bCanWork = true;
+									// find the Build for this Improvement
+									for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+									{
+										BuildTypes eBuild = ((BuildTypes)iJ);
+										if (eBuild != NO_BUILD)
+										{
+											if (GC.getBuildInfo(eBuild).getImprovement() == eImprovement)
+											{
+												// check feature tech
+												if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+												{
+													bCanWork = true;
+													break;
+												}
+											}
+										}
+									}
 									break;
 								}
 							}
 						}
 					}
 				}
-			}
 
-			if (eBonus != NO_BONUS)
-			{
-				if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
+				if (!bCanWork)
 				{
-					if (!isHasTech(GC.getBonusInfo(eBonus).getTechReveal()))
-					{
-						bCanWork = false;
-					}
+					eBonus = NO_BONUS;
 				}
-			}
-
-			if (!bCanWork)
-			{
-				eBonus = NO_BONUS;
 			}
 
 			int iCultureMultiplier;
