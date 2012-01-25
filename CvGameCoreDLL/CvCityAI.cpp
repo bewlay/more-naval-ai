@@ -755,13 +755,18 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 
 					}
 				}
+
 				// Tholal AI - Make Prophets for the Altar - some HARDCODE - ToDo: make this more dynamic somehow in regards to victory buildings
-				if (getAltarLevel() > 0 || GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
+				if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_PROPHET)
 				{
-					if (GC.getUnitInfo(eGreatPeopleUnit).getDefaultUnitAIType() == UNITAI_PROPHET)
+					if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
 					{
 						bNeedProphet = true;
-						iBestSpreadValue += (50 * (getAltarLevel() + 1));
+						//iBestSpreadValue += (50 * (getAltarLevel() + 1));
+						if (getAltarLevel() <= 5)
+						{
+							iBestSpreadValue += (25 * getAltarLevel());
+						}
 					}
 				}
 			}
@@ -1874,7 +1879,7 @@ void CvCityAI::AI_chooseProduction()
 	
 	if (iProductionRank <= std::max(1, (iNumCities / 3)))
 	{
-		if (AI_chooseUnit(UNITAI_HERO))
+		if (AI_chooseUnit(UNITAI_HERO, (GET_TEAM(getTeam()).getTotalPopulation() * (iNumCities + 1))))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S BUILDING HERO", getName().GetCString());
 			return;
