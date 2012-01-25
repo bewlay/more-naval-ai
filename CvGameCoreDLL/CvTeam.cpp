@@ -4555,32 +4555,9 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 			{
 				declareWar(eIndex, false, NO_WARPLAN);
 			}
-
-/********************************************************************************/
-/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
-/**																				*/
-/**		For BarbarianCiv and Start As Minors									*/
-/********************************************************************************/
-			// report event to Python, along with some other key state
-			CvEventReporter::getInstance().firstContact(getID(), eIndex);
-/********************************************************************************/
-/**		REVOLUTION_MOD							END								*/
-/********************************************************************************/
 		}
 		else
 		{
-/********************************************************************************/
-/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
-/**																				*/
-/**		For BarbarianCiv and Start As Minors									*/
-/********************************************************************************/
-			// Move reporting to Python before diplo popup to all war declarations on first contact
-			// report event to Python, along with some other key state
-			CvEventReporter::getInstance().firstContact(getID(), eIndex);
-/********************************************************************************/
-/**		REVOLUTION_MOD							END								*/
-/********************************************************************************/
-
 			if (GC.getGameINLINE().isFinalInitialized() && !(gDLL->GetWorldBuilderMode()))
 			{
 				if (bNewDiplo)
@@ -4614,20 +4591,6 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 				}
 			}
 		}
-
-/********************************************************************************/
-/**		REVOLUTION_MOD							7/11/08				jdog5000	*/
-/**																				*/
-/**		For BarbarianCiv and Start As Minors									*/
-/********************************************************************************/
-		/*
-		// report event to Python, along with some other key state
-		CvEventReporter::getInstance().firstContact(getID(), eIndex);
-		*/
-/********************************************************************************/
-/**		REVOLUTION_MOD							END								*/
-/********************************************************************************/
-
 	}
 }
 
