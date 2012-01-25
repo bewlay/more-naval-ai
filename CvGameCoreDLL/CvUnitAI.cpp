@@ -525,7 +525,6 @@ bool CvUnitAI::AI_update()
                     return false;
                     break;
                 case GROUPFLAG_PERMDEFENSE:
-                    //PermDefenseMove();
 					AI_cityDefenseMove();
                     return false;
                     break;
@@ -26368,20 +26367,6 @@ void CvUnitAI::PermDefenseNewMove()
     }
     getGroup()->pushMission(MISSION_SKIP);
     return;
-}
-
-
-void CvUnitAI::PermDefenseMove()
-{
-    if (!plot()->isCity() || (plot()->getOwnerINLINE()!=getOwnerINLINE()))
-    {
-        AI_setGroupflag(GROUPFLAG_NONE);
-        getGroup()->pushMission(MISSION_SKIP);
-        return;
-    }
-
-	getGroup()->pushMission(MISSION_SKIP);
-	return;
 }
 
 void CvUnitAI::PatrolMove()

@@ -52,21 +52,16 @@ public:
 	void AI_setUnitAIType(UnitAITypes eNewValue);
 	int AI_sacrificeValue(const CvPlot* pPlot) const;
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+// Sephi AI (New Functions Definition)
     bool AI_groupheal(int iDamagePercent = 0, int iMaxPath = MAX_INT);
     void AI_feastingmove();
     void ConquestMove();
-    void PermDefenseMove();
     void PermDefenseNewMove();
     void PatrolMove();
     void HNgroupMove();
-	bool AI_exploreLairSea(int iRange = 0);
-	bool AI_exploreLair(int iRange = 0);
-	bool AI_pickupEquipment(int iRange = 0);
+	bool AI_exploreLairSea(int iRange = 0); // added by Tholal
+	bool AI_exploreLair(int iRange = 0); // added by Tholal
+	bool AI_pickupEquipment(int iRange = 0); // added by Tholal
     void AI_InquisitionMove();
 	void AI_SvartalfarKidnapMove();
 
@@ -76,7 +71,7 @@ public:
 
     bool isUnitAllowedPermDefense();
 
-// heroes
+	// heroes
     void AI_heromove();
     bool AI_Govannonmove();
     bool AI_Lokimove();
@@ -100,6 +95,7 @@ public:
     void setSuicideSummon(bool newvalue);
 	bool isPermanentSummon();
     void setPermanentSummon(bool newvalue);
+// End Sephi AI
 
 //FfH Spell System: Modified by Kael 07/23/2007
 	int AI_promotionValue(PromotionTypes ePromotion);
@@ -126,16 +122,12 @@ protected:
 
 	int m_iAutomatedAbortTurn;
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/*************************************************************************************************/
+// Sephi AI(New Functions Definition)
     int m_iGroupflag;
 	bool m_bSuicideSummon;
 	bool m_bPermanentSummon;
     bool m_bAllowedPermDefense;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+// End Sephi AI
 
 	void AI_animalMove();
 	void AI_settleMove();
@@ -188,9 +180,7 @@ protected:
 //FfH: End Add
 
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      04/01/10                                jdog5000      */
-/*                                                                                              */
-/* Unit AI                                                                                      */
+/* BETTER_BTS_AI_MOD  - Unit AI           04/01/10                                jdog5000      */
 /************************************************************************************************/
 /* original bts code
 	bool AI_shadow(UnitAITypes eUnitAI, int iMax = -1, int iMaxRatio = -1, bool bWithCargoOnly = true);
@@ -232,8 +222,6 @@ protected:
 	bool AI_paradrop(int iRange);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/01/09                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
 /************************************************************************************************/
 	bool AI_protect(int iOddsThreshold, int iMaxPathTurns = MAX_INT);
 /************************************************************************************************/
@@ -248,7 +236,6 @@ protected:
 	bool AI_exploreRange(int iRange);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/29/10                                jdog5000      */
-/*                                                                                              */
 /* War tactics AI                                                                               */
 /************************************************************************************************/
 	CvCity* AI_pickTargetCity(int iFlags = 0, int iMaxPath = MAX_INT, bool bHuntBarbs = false);
@@ -273,8 +260,6 @@ protected:
 	bool AI_assaultSeaTransport(bool bBarbarian = false);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/04/09                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
 /************************************************************************************************/
 	bool AI_assaultSeaReinforce(bool bBarbarian = false);
 /************************************************************************************************/
@@ -304,7 +289,6 @@ protected:
 	bool AI_retreatToCity(bool bPrimary = false, bool bAirlift = false, int iMaxPath = MAX_INT);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/15/09                                jdog5000      */
-/*                                                                                              */
 /* Naval AI                                                                                     */
 /************************************************************************************************/
 	bool AI_pickup(UnitAITypes eUnitAI, bool bCountProduction = false, int iMaxPath = MAX_INT);
@@ -319,7 +303,6 @@ protected:
 	bool AI_airStrike();
 /********************************************************************************/
 /* 	BETTER_BTS_AI_MOD						9/26/08				jdog5000	    */
-/* 																			    */
 /* 	Air AI																	    */
 /********************************************************************************/
 	int AI_airOffenseBaseValue( CvPlot* pPlot );
@@ -338,7 +321,6 @@ protected:
 	bool AI_reconSpy(int iRange);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/20/09                                jdog5000      */
-/*                                                                                              */
 /* Espionage AI                                                                                 */
 /************************************************************************************************/
 	bool AI_revoltCitySpy();
@@ -379,7 +361,6 @@ protected:
 	bool AI_poach();
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/31/10                              jdog5000        */
-/*                                                                                              */
 /* War tactics AI                                                                               */
 /************************************************************************************************/
 	bool AI_choke(int iRange = 1, bool bDefensive = false);
@@ -396,15 +377,9 @@ protected:
 	bool AI_canGroupWithAIType(UnitAITypes eUnitAI) const;
 	bool AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const;
 
-/*************************************************************************************************/
-/** Skyre Mod                                                                                   **/
-/** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
-/**						                                            							**/
-/*************************************************************************************************/
+// Sephi AI (Lanun Pirate Coves) merged from Skyre Mod
     bool AI_buildPirateCove();
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+// End Sephi AI
 
 	// added so under cheat mode we can call protected functions for testing
 	friend class CvGameTextMgr;
