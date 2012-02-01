@@ -709,6 +709,35 @@ class CvEventManager:
 		unitX = PyInfo.UnitInfo(pWinner.getUnitType())
 		playerY = PyPlayer(pLoser.getOwner())
 		unitY = PyInfo.UnitInfo(pLoser.getUnitType())
+
+## Advanced Tactics Start - ships and siege engines can be captured
+## adopted from mechaerik War Prize ModComp
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS):
+			pPlayer = gc.getPlayer(pWinner.getOwner())
+			pPlayerLoser = gc.getPlayer(pLoser.getOwner())        
+			if (unitX.getUnitCombatType() == gc.getInfoTypeForString("UNITCOMBAT_NAVAL")):
+				if (unitY.getUnitCombatType() == gc.getInfoTypeForString("UNITCOMBAT_NAVAL")):
+					if CyGame().getSorenRandNum(100, "WarPrizes Naval") <= 25:
+						iUnit = pLoser.getUnitType()
+						newUnit = pPlayer.initUnit(pLoser.getUnitType(), pWinner.getX(), pWinner.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+						newUnit.finishMoves()
+						newUnit.setDamage(25, pWinner.getOwner())
+						if (pPlayer.isHuman()):
+							CyInterface().addMessage(pWinner.getOwner(),false,20,CyTranslator().getText("TXT_KEY_WEHAVECAPTUREDSOMETHING",(pLoser.getName())),'',0,'Art/Interface/Buttons/General/warning_popup.dds',ColorTypes(gc.getInfoTypeForString("COLOR_GREEN")), pWinner.getX(), pWinner.getY(), True,True)
+						elif (pPlayerLoser.isHuman()):
+							CyInterface().addMessage(pLoser.getOwner(),false,20,CyTranslator().getText("TXT_KEY_WEHAVELOSTSOMETHING",(pLoser.getName())),'',0,'Art/Interface/Buttons/General/warning_popup.dds',ColorTypes(gc.getInfoTypeForString("COLOR_RED")), pLoser.getX(), pLoser.getY(), True,True)  
+			if (unitY.getUnitCombatType() == gc.getInfoTypeForString("UNITCOMBAT_SIEGE")):
+				if CyGame().getSorenRandNum(100, "WarPrizes Siege") <= 15:
+					iUnit = pLoser.getUnitType()
+					newUnit = pPlayer.initUnit(pLoser.getUnitType(), pWinner.getX(), pWinner.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					newUnit.finishMoves()
+					newUnit.setDamage(25, pWinner.getOwner())
+					if (pPlayer.isHuman()):
+						CyInterface().addMessage(pWinner.getOwner(),false,20,CyTranslator().getText("TXT_KEY_MISC_WARPRIZES_SUCCESS",(pLoser.getName(),)),'',0,'Art/Interface/Buttons/General/warning_popup.dds',ColorTypes(gc.getInfoTypeForString("COLOR_GREEN")), pWinner.getX(), pWinner.getY(), True,True)
+					elif (pPlayerLoser.isHuman()):
+						CyInterface().addMessage(pLoser.getOwner(),false,20,CyTranslator().getText("TXT_KEY_MISC_WARPRIZES_FAILURE",(pLoser.getName(),)),'',0,'Art/Interface/Buttons/General/warning_popup.dds',ColorTypes(gc.getInfoTypeForString("COLOR_RED")), pLoser.getX(), pLoser.getY(), True,True)
+## End Advanced Tactics 
+		
 		if (not self.__LOG_COMBAT):
 			return
 		if playerX and playerX and unitX and playerY:

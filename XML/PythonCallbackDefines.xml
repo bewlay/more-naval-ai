@@ -114,6 +114,6 @@
 	</Define>
 	<Define>
 		<DefineName>USE_COMBAT_RESULT_CALLBACK</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
+		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 </Civ4Defines>
