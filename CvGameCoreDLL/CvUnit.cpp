@@ -863,7 +863,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
             }
 	    }
 	}
-	if (isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) && GC.getGameINLINE().getUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) == 1)
+	if (isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) && GC.getGameINLINE().getUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) == 1
+		&& !m_pUnitInfo->isObject())
 	{
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
