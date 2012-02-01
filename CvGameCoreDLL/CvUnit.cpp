@@ -5792,7 +5792,7 @@ bool CvUnit::pillage()
 			if (iPillageGold > 0)
 			{
 
-//FfH Traits: Added by Kale 08/02/2007
+//FfH Traits: Added by Kael 08/02/2007
                 iPillageGold += (iPillageGold * GET_PLAYER(getOwnerINLINE()).getPillagingGold()) / 100;
 //FfH: End Add
 
@@ -13704,7 +13704,6 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		changeOnlyDefensive((GC.getPromotionInfo(eIndex).isOnlyDefensive()) ? iChange : 0);
 		changeResist(GC.getPromotionInfo(eIndex).getResistMagic() * iChange);
 		changeResistModify(GC.getPromotionInfo(eIndex).getCasterResistModify() * iChange);
-//		changeResistModify(GC.getPromotionInfo(eIndex).getCasterResistModify() * iChange);
 		changeSeeInvisible((GC.getPromotionInfo(eIndex).isSeeInvisible()) ? iChange : 0);
 		changeSpellCasterXP(GC.getPromotionInfo(eIndex).getSpellCasterXP() * iChange);
 		changeSpellDamageModify(GC.getPromotionInfo(eIndex).getSpellDamageModify() * iChange);
@@ -16069,14 +16068,9 @@ void CvUnit::cast(int spell)
 {
 	CvWString szBuffer;
 
-	if (GC.getLogging())
+	if( gUnitLogLevel > 2 )
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) casting %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("     Player %d Unit %d (%S's %S) casting %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
 	}
 
     if (GC.getSpellInfo((SpellTypes)spell).isHasCasted())
