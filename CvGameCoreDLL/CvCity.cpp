@@ -794,6 +794,10 @@ int CvCity::getRevolutionIndex() const
 
 void CvCity::setRevolutionIndex( int iNewValue )
 {
+	// lfgr
+	if( isSettlement() && ( getOriginalOwner() == getOwnerINLINE() )  )
+		return;
+	// end lfgr
 	if( iNewValue < 0 )
 		iNewValue = 0;
 
@@ -812,6 +816,10 @@ int CvCity::getLocalRevIndex() const
 
 void CvCity::setLocalRevIndex( int iNewValue )
 {
+	// lfgr
+	if( isSettlement() && ( getOriginalOwner() == getOwnerINLINE() )  )
+		return;
+	// end lfgr
 	m_iLocalRevIndex = iNewValue;
 }
 
