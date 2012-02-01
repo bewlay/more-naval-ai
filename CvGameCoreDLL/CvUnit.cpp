@@ -5596,7 +5596,18 @@ bool CvUnit::bombard()
 		iBombardModifier -= pBombardCity->getBuildingBombardDefense();
 	}
 
-	pBombardCity->changeDefenseModifier(-(bombardRate() * std::max(0, 100 + iBombardModifier)) / 100);
+	int iTotalBombard = (-(bombardRate() * std::max(0, 100 + iBombardModifier)) / 100);
+	pBombardCity->changeDefenseModifier(iTotalBombard);
+
+	// Start Advanced Tactics - Bombarding can grant experience
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		if ((iTotalBombard) > GC.getGameINLINE().getSorenRandNum(100, "Bombard Experience"))
+		{
+			changeExperience(1);
+		}
+	}
+	// End Advanced Tactics
 
 	setMadeAttack(true);
 	changeMoves(GC.getMOVE_DENOMINATOR());
@@ -5627,8 +5638,6 @@ bool CvUnit::bombard()
         kill(true);
     }
 //FfH: End Add
-
-	// TODO - Advanced Tactics - Bombard Experience
 
 	return true;
 }
