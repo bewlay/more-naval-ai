@@ -3945,3 +3945,10 @@ def voteFundDissidents():
 					if CyGame().getSorenRandNum(100, "Fund Dissidents") < 50:
 						pCity = pyCity.GetCy()
 						pCity.changeHurryAngerTimer(1 + CyGame().getSorenRandNum(3, "Fund Dissidents"))
+						
+def spellGreatGeneralSplit(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
+	iCommander = gc.getInfoTypeForString('UNIT_GREAT_GENERAL')
+	newUnit = pPlayer.initUnit(iCommander, caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+	newUnit.setHasCasted(True)
+	newUnit.setImmobileTimer(1)

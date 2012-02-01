@@ -147,7 +147,8 @@ class CvMilitaryAdvisor:
 		self.selectedUnitList = []
 		self.selectedPlayerList.append(self.iActivePlayer)
 
-		self.drawCombatExperience()
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS): ## Suppress display of Great General bar
+			self.drawCombatExperience()
 
 		self.refresh(true)
 		

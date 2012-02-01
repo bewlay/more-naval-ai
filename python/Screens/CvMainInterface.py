@@ -3298,7 +3298,8 @@ class CvMainInterface:
 # BUG - Great Person Bar - end
 
 # BUG - Great General Bar - start
-				self.updateGreatGeneralBar(screen)
+				if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS): ## Suppress display of Great General bar
+					self.updateGreatGeneralBar(screen)
 # BUG - Great General Bar - end
 					
 		return 0

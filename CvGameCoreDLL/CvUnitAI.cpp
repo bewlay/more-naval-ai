@@ -5982,6 +5982,7 @@ void CvUnitAI::AI_generalMove()
 	{
 		return;
 	}
+
 	if (AI_join(1))
 	{
 		return;
@@ -5992,7 +5993,7 @@ void CvUnitAI::AI_generalMove()
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
-	if (bOffenseWar && (AI_getBirthmark() % 2 == 0))
+	if ((bOffenseWar && (AI_getBirthmark() % 2 == 0)) || GC.getUnitInfo(getUnitType()).getLeaderPromotion() != NO_PROMOTION)
 	{
 		aeUnitAITypes.clear();
 		aeUnitAITypes.push_back(UNITAI_ATTACK_CITY);

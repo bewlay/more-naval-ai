@@ -48,7 +48,8 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckboxTextDropdown(screen, panel, panel, "MainInterface__GPBar", "MainInterface__GPBar_Types")
 		#self.addCheckbox(screen, panel, "MainInterface__GPBar")
 		#self.addTextDropdown(screen, panel, panel, "MainInterface__GPBar_Types", True)
-		self.addCheckbox(screen, panel, "MainInterface__Combat_Counter")
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS): ## Suppress display of Great General bar
+			self.addCheckbox(screen, panel, "MainInterface__Combat_Counter")
 		
 	def createLeaderheadPanel(self, screen, panel):
 		self.addLabel(screen, panel, "Leaderheads", "Leaderheads:")

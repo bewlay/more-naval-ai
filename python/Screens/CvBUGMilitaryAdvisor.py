@@ -830,7 +830,8 @@ class CvMilitaryAdvisor:
 		else:
 			self.UL_refresh(False, True)
 
-		self.drawCombatExperience()
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS): ## Suppress display of Great General bar
+			self.drawCombatExperience()
 		self.drawTabs()
 
 	def UL_initMinimap(self, screen):
