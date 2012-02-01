@@ -5809,6 +5809,16 @@ bool CvUnit::pillage()
 					}
 					// End Tholal AI
 
+					// Start Advanced Tactics - Pillaging can grant experience
+					if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+					{
+						if ((iPillageGold * 3) > GC.getGameINLINE().getSorenRandNum(100, "Pillage Experience"))
+						{
+							changeExperience(1);
+						}
+					}
+					// End Advanced Tactics
+
 					szBuffer = gDLL->getText("TXT_KEY_MISC_IMP_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameKey(), getVisualCivAdjective(pPlot->getTeam()));
 					gDLL->getInterfaceIFace()->addMessage(pPlot->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
 				}
