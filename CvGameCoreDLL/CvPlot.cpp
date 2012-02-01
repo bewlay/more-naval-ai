@@ -7469,10 +7469,12 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 					}
 				}
 
+				/* - Commented out by Tholal so that HN and Invisible units dont result in new civ contacts
 				if (getTeam() != NO_TEAM)
 				{
 					GET_TEAM(getTeam()).meet(eTeam, true);
 				}
+				*/
 			}
 
 			pCity = getPlotCity();

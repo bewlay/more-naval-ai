@@ -11464,8 +11464,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			load();
 		}
 
-		// objects shouldnt trigger contacts
-		if (!getUnitInfo().isObject())
+		if (!getUnitInfo().isObject() && !isHiddenNationality()) // Tholal AI - Objects and HN units shouldnt trigger contacts
 		{
 			for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 			{
