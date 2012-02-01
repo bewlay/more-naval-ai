@@ -2961,6 +2961,14 @@ void CvUnitAI::AI_attackMove()
 {
 	PROFILE_FUNC();
 
+	if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
+	{
+		if (AI_shadow(UNITAI_SETTLE, -1, -1, false, false, 5))
+			{
+				return;
+			}
+	}
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      05/14/10                                jdog5000      */
 /*                                                                                              */
@@ -11583,7 +11591,7 @@ bool CvUnitAI::AI_shadow(UnitAITypes eUnitAI, int iMax, int iMaxRatio, bool bWit
 					{
 						if (pLoopUnit->AI_getUnitAIType() == eUnitAI)
 						{
-							if (pLoopUnit->getGroup()->baseMoves() <= getGroup()->baseMoves())
+							if ((pLoopUnit->getGroup()->baseMoves() <= getGroup()->baseMoves()) || (eUnitAI == UNITAI_SETTLE))
 							{
 								if (!bWithCargoOnly || pLoopUnit->getGroup()->hasCargo())
 								{
