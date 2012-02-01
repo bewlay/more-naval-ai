@@ -61,7 +61,7 @@
 					type="boolean" default="True" 
 					get="isShowWHEOOH" set="setShowWHEOOH" dirtyBit="Score"/>
 			<option id="Cities" key="Number of Cities" 
-					type="boolean" default="False" dll="99999"
+					type="boolean" default="False"
 					get="isShowCountCities" set="setShowCountCities" dirtyBit="Score"/>
 			
 			<!-- Advanced Layout -->
