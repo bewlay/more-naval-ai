@@ -5196,12 +5196,13 @@ class CvMainInterface:
 # BUG - Power Rating - end
 # BUG - Attitude Icons - start
 												if (ScoreOpt.isShowAttitude()):
-													if (not gc.getPlayer(ePlayer).isHuman() and (not gc.getPlayer(ePlayer).isHumanDisabled())):
-														iAtt = gc.getPlayer(ePlayer).AI_getAttitude(gc.getGame().getActivePlayer())
-														cAtt =  unichr(ord(unichr(CyGame().getSymbolID(FontSymbols.POWER_CHAR) + 3)) + iAtt)
-														szBuffer += cAtt
-														if (bAlignIcons):
-															scores.setAttitude(cAtt)
+													if (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(gc.getPlayer(ePlayer).getTeam())): ## Dont display attitude for those we havent met
+														if (not gc.getPlayer(ePlayer).isHuman() and (not gc.getPlayer(ePlayer).isHumanDisabled())):
+															iAtt = gc.getPlayer(ePlayer).AI_getAttitude(gc.getGame().getActivePlayer())
+															cAtt =  unichr(ord(unichr(CyGame().getSymbolID(FontSymbols.POWER_CHAR) + 3)) + iAtt)
+															szBuffer += cAtt
+															if (bAlignIcons):
+																scores.setAttitude(cAtt)
 # BUG - Attitude Icons - end
 # BUG - Refuses to Talk - start
 												if (not DiplomacyUtil.isWillingToTalk(ePlayer, gc.getGame().getActivePlayer())):
