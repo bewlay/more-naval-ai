@@ -25909,6 +25909,26 @@ int CvPlayerAI::AI_getCivicShareAttitude(PlayerTypes ePlayer) const
 }
 //FfH: End Add
 
+// Puppet States
+int CvPlayerAI::AI_getPuppetAttitude(PlayerTypes ePlayer) const
+{
+	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+
+	if (!kPlayer.isPuppetState())
+	{
+		return 0;
+	}
+
+	// Pretenders to the throne
+	if (kPlayer.getCivilizationType() == getCivilizationType())
+	{
+		return -2;
+	}
+
+	return 0;
+}
+// End Puppet States
+
 // Attitude cache
 void CvPlayerAI::AI_invalidateAttitudeCache(PlayerTypes ePlayer)
 {

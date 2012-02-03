@@ -496,6 +496,9 @@ public:
     int AI_getGoldReserve() const;
 //FfH: End Add
 
+	// Puppet States
+	int AI_getPuppetAttitude(PlayerTypes ePlayer) const;
+	// End Puppet States
 
 // Sephi BETTER AI (better AI gold management) Sephi                                                 **/
     int AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTrading, bool bReserve) const;
