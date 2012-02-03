@@ -3936,6 +3936,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 			szBuffer.append(CvWString::format(L"FundedPercent: " SETCOLR L"%d" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), iFundedPercent));
 		}
 		szBuffer.append(NEWLINE);
+		szBuffer.append(CvWString::format(L"Great General Points: %d", kPlayer.getCombatExperience()));
+		szBuffer.append(NEWLINE);
 		szBuffer.append(NEWLINE);
 		
 		// Unit Costs
