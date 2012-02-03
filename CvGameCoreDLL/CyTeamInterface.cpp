@@ -212,6 +212,17 @@ void CyTeamPythonInterface()
 		.def("getImprovementYieldChange", &CyTeam::getImprovementYieldChange,	"int (int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2)")
 		.def("changeImprovementYieldChange", &CyTeam::changeImprovementYieldChange, "void (int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2, iChange)")
 
+/************************************************************************************************/
+/* Afforess	                  Start		 03/10/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+		.def("isHasEmbassy", &CyTeam::isHasEmbassy, "bool (TeamTypes)")
+		.def("isLimitedBorders", &CyTeam::isLimitedBorders, "bool (TeamTypes)")
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 		.def("getVictoryCountdown", &CyTeam::getVictoryCountdown, "int (int /*VictoryTypes*/)")
 		.def("getVictoryDelay", &CyTeam::getVictoryDelay, "int (int /*VictoryTypes*/)")
 		.def("canLaunch", &CyTeam::canLaunch, "bool ()")

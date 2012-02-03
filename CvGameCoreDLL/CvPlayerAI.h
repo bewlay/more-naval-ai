@@ -457,11 +457,14 @@ public:
 	bool AI_isFirstTech(TechTypes eTech) const;
 
 /************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-/* Afforess	                  Start		 06/01/10                                               */
-/*  Ruthless AI                                                                                 */
-/************************************************************************************************/
+  	int AI_getEmbassyAttitude(PlayerTypes ePlayer) const;
+	int AI_militaryUnitTradeVal(CvUnit* pUnit) const;
 	TeamTypes AI_bestJoinWarTeam(PlayerTypes ePlayer);
+	TeamTypes AI_bestMakePeaceTeam(PlayerTypes ePlayer);
 	TeamTypes AI_bestStopTradeTeam(PlayerTypes ePlayer);
 	int AI_militaryBonusVal(BonusTypes eBonus);
 /************************************************************************************************/

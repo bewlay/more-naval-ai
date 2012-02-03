@@ -222,7 +222,19 @@ public:
 	
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	int AI_embassyTradeVal(TeamTypes eTeam) const;
+	int AI_LimitedBordersTradeVal(TeamTypes eTeam) const;
+	
+	DenialTypes AI_embassyTrade(TeamTypes eTeam) const;
+	DenialTypes AI_LimitedBordersTrade(TeamTypes eTeam) const;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 protected:
 
 	static CvTeamAI* m_aTeams;

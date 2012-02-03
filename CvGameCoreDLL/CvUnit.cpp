@@ -3043,6 +3043,21 @@ bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage) cons
 		{
 			return true;
 		}
+/************************************************************************************************/
+/* Afforess	                  Start		 08/01/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+		if (GET_TEAM(getTeam()).isLimitedBorders(eTeam))
+		{
+			if (isOnlyDefensive() || !canFight())
+			{
+				return true;
+			}
+		}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	}
 
 //FfH: Added by Kael 09/02/2007 (so hidden nationality units can enter all territories)
@@ -19100,3 +19115,92 @@ void CvUnit::setAvatarOfCivLeader(bool bNewValue)
 	m_bAvatarOfCivLeader = bNewValue;
 }
 //<<<<Unofficial Bug Fix: End Add
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+bool CvUnit::canTradeUnit(PlayerTypes eReceivingPlayer)
+{
+	CvArea* pWaterArea = NULL;
+	CvCity* pCapitalCity;
+	int iLoop;
+	bool bShip = false;
+	bool bCoast = false;
+
+	pCapitalCity = GET_PLAYER(eReceivingPlayer).getCapitalCity();
+
+	if (eReceivingPlayer == NO_PLAYER || eReceivingPlayer > MAX_PLAYERS)
+	{
+		return false;
+	}
+	
+	if (getCargo() > 0)
+	{
+		return false;
+	}
+	
+	if (getDomainType() == DOMAIN_SEA)
+	{
+		bShip = true;
+		for (CvCity* pLoopCity = GET_PLAYER(eReceivingPlayer).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eReceivingPlayer).nextCity(&iLoop))
+		{
+			if (((pWaterArea = pLoopCity->waterArea()) != NULL && !pWaterArea->isLake()))
+			{
+				bCoast = true;
+			}
+		}
+	}
+	
+	if (bShip && !bCoast)
+	{
+		return false;
+	}
+
+	return true;
+}
+	
+void CvUnit::tradeUnit(PlayerTypes eReceivingPlayer)
+{
+	CvUnit* pTradeUnit;
+	CvWString szBuffer;
+	CvCity* pBestCity;
+	//CvArea* pWaterArea = NULL;
+	PlayerTypes eOwner;
+	int iLoop;
+	
+	eOwner = getOwnerINLINE();
+	
+	if (eReceivingPlayer != NO_PLAYER)
+	{
+		pBestCity = GET_PLAYER(eReceivingPlayer).getCapitalCity();
+		
+		if (getDomainType() == DOMAIN_SEA)
+		//Find the first coastal city, and put the ship there
+		{
+			for (CvCity* pLoopCity = GET_PLAYER(eReceivingPlayer).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(eReceivingPlayer).nextCity(&iLoop))
+			{
+				if (pLoopCity->isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
+				{
+					pBestCity = pLoopCity;
+					break;
+				}
+			}
+		}
+		
+		pTradeUnit = GET_PLAYER(eReceivingPlayer).initUnit(getUnitType(), pBestCity->getX_INLINE(), pBestCity->getY_INLINE(), AI_getUnitAIType());
+
+		pTradeUnit->convert(this);
+
+		pTradeUnit->setImmobileTimer(10);
+		
+		 szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_UNIT_TO_YOU", GET_PLAYER(eOwner).getNameKey(), pTradeUnit->getNameKey());
+		 gDLL->getInterfaceIFace()->addMessage(pTradeUnit->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITGIFTED", MESSAGE_TYPE_INFO, pTradeUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pTradeUnit->getX_INLINE(), pTradeUnit->getY_INLINE(), true, true);
+		 
+	 }
+}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/

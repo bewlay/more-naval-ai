@@ -90,6 +90,13 @@
 		<ContactType>CONTACT_TRADE_TECH</ContactType>
 		<ContactType>CONTACT_TRADE_BONUS</ContactType>
 		<ContactType>CONTACT_TRADE_MAP</ContactType>
+		<!--Afforess Advanced Diplomacy-->
+		<ContactType>CONTACT_PEACE_PRESSURE</ContactType>
+		<ContactType>CONTACT_EMBASSY</ContactType>
+		<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
+		<ContactType>CONTACT_TRADE_JOIN_WAR</ContactType>
+		<ContactType>CONTACT_TRADE_MILITARY_UNITS</ContactType>
+		<!--Afforess Advanced Diplomacy-->
 	</ContactTypes>
 	<DiplomacyPowerTypes>
 		<!--Changes must be reflected in CvEnums.h-->

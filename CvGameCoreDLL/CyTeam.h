@@ -252,6 +252,17 @@ public:
 	int AI_getAtPeaceCounter(int /*TeamTypes*/ eTeam) const;
 	int AI_getWarSuccess(int /*TeamTypes*/ eIndex) const;
 
+/************************************************************************************************/
+/* Afforess	                  Start		 03/10/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	bool isHasEmbassy(int /*TeamTypes*/ eIndex) const;
+	bool isLimitedBorders(int /*TeamTypes*/ eIndex) const;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 protected:
 
 	CvTeam* m_pTeam;

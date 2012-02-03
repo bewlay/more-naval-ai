@@ -139,6 +139,16 @@ class CvDiplomacy:
 			# Or reject them...
 			self.addUserComment("USER_DIPLOCOMMENT_NO_STOP_TRADING", -1, -1)
 
+		#Afforess Advanced Diplomacy Start
+		#If the AI is pressuring us to end a war with their friend
+		elif (self.isComment(eComment, "AI_DIPLOCOMMENT_MAKE_PEACE_WITH")):
+		
+			#We can accept their demands
+			self.addUserComment("USER_DIPLOCOMMENT_MAKE_PEACE_WITH", -1, -1)
+			#Or reject them...
+			self.addUserComment("USER_DIPLOCOMMENT_NO_MAKE_PEACE_WITH", -1, -1)
+		#Afforess Advanced Diplomacy End
+			
 		# If we are viewing our current deals or
 		elif (self.isComment(eComment, "AI_DIPLOCOMMENT_CURRENT_DEALS")):
 
@@ -355,6 +365,9 @@ class CvDiplomacy:
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_CIVIC_PRESSURE") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_JOIN_WAR") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_STOP_TRADING") or
+			  #Afforess Advanced Diplomacy Start
+			   eComment == self.getCommentID("AI_DIPLOCOMMENT_MAKE_PEACE_WITH") or
+			   #Afforess Advanced Diplomacy End
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_ASK_FOR_HELP") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_DEMAND_TRIBUTE") ):
 			self.diploScreen.performHeadAction( LeaderheadAction.LEADERANIM_GREETING ) 
@@ -647,6 +660,18 @@ class CvDiplomacy:
 			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_NO_STOP_TRADING, -1, -1)
 			self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_STOP_DENIED"))
 
+		#Afforess Advanced Diplomacy Start
+		#If we accept making peace with their ally
+		elif (self.isComment(eComment, "USER_DIPLOCOMMENT_MAKE_PEACE_WITH")):
+			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_MAKE_PEACE_WITH, diploScreen.getData(), -1)
+			self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_THANKS"))
+			
+		#If we refuse to make peace with their ally
+		elif (self.isComment(eComment, "USER_DIPLOCOMMENT_NO_MAKE_PEACE_WITH")):
+			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_NO_MAKE_PEACE_WITH, diploScreen.getData(), -1)
+			self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_MAKE_PEACE_DENIED"))
+		#Afforess Advanced Diplomacy End
+			
 		# If we want to go back to first screen
 		elif (self.isComment(eComment, "USER_DIPLOCOMMENT_NEVERMIND")):
 			self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_WELL"))

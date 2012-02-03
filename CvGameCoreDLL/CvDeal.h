@@ -70,6 +70,15 @@ public:
 	DllExport static TradeableItems getGoldItem();
 	DllExport static TradeableItems getGoldPerTurnItem();
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/17/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	bool isEmbassy();
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 

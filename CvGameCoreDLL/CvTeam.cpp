@@ -72,6 +72,18 @@ CvTeam::CvTeam()
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	m_abEmbassy = new bool[MAX_TEAMS];
+	m_abLimitedBorders = new bool[MAX_TEAMS];
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 	m_paiRouteChange = NULL;
 	m_paiProjectCount = NULL;
 	m_paiProjectDefaultArtTypes = NULL;
@@ -122,6 +134,17 @@ CvTeam::~CvTeam()
 	SAFE_DELETE_ARRAY(m_abIsRebelAgainst);
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
+/************************************************************************************************/
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	SAFE_DELETE_ARRAY(m_abEmbassy);
+	SAFE_DELETE_ARRAY(m_abLimitedBorders);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
 /************************************************************************************************/
 }
 
@@ -237,7 +260,16 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iEnemyWarWearinessModifier = 0;
 	m_iRiverTradeCount = 0;
 	m_iEspionagePointsEver = 0;
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	m_iEmbassyTradingCount = 0;
+	m_iLimitedBordersTradingCount = 0;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	m_bMapCentering = false;
 	m_bCapitulated = false;
 
@@ -273,6 +305,17 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+		m_abLimitedBorders[iI] = false;
+		m_abEmbassy[iI] = false;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 		if (!bConstructorCall && getID() != NO_TEAM)
 		{
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes) iI);
@@ -289,6 +332,16 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			kLoopTeam.m_abDefensivePact[getID()] = false;
 			kLoopTeam.m_abForcePeace[getID()] = false;
 			kLoopTeam.m_abVassal[getID()] = false;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+			kLoopTeam.m_abEmbassy[getID()] = false;
+			kLoopTeam.m_abLimitedBorders[getID()] = false;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 		}
 	}
 
@@ -4638,8 +4691,31 @@ bool CvTeam::isFreeTrade(TeamTypes eIndex) const
 	{
 		return false;
 	}
-
-	return (isOpenBorders(eIndex) || GC.getGameINLINE().isFreeTrade());
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	if (isOpenBorders(eIndex))
+	{ 
+		return true;
+	}
+	
+	//If the secretary general voted for open markets
+	if (GC.getGameINLINE().isFreeTrade())
+	{
+		return true;
+	}
+	
+	if (isLimitedBorders(eIndex))
+	{
+		return true;
+	}
+	
+	return false;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 }
 
 
@@ -6719,7 +6795,23 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 	{
 		changeOpenBordersTradingCount(iChange);
 	}
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	if (GC.getTechInfo(eTech).isLimitedBordersTrading())
+	{
+		changeLimitedBordersTradingCount(iChange);
+	}
+	
+	if (GC.getTechInfo(eTech).isEmbassyTrading())
+	{
+		changeEmbassyTradingCount(iChange);
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	if (GC.getTechInfo(eTech).isDefensivePactTrading())
 	{
 		changeDefensivePactTradingCount(iChange);
@@ -7327,6 +7419,19 @@ void CvTeam::read(FDataStreamBase* pStream)
 		pStream->Read((int*)&eBonus);
 		m_aeRevealedBonuses.push_back(eBonus);
 	}
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	pStream->Read(&m_iEmbassyTradingCount);
+	pStream->Read(&m_iLimitedBordersTradingCount);
+	
+	pStream->Read(MAX_TEAMS, m_abEmbassy);
+	pStream->Read(MAX_TEAMS, m_abLimitedBorders);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 }
 
 
@@ -7433,6 +7538,19 @@ void CvTeam::write(FDataStreamBase* pStream)
 	{
 		pStream->Write(*it);
 	}
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	pStream->Write(m_iEmbassyTradingCount);
+	pStream->Write(m_iLimitedBordersTradingCount);
+	
+	pStream->Write(MAX_TEAMS, m_abEmbassy);
+	pStream->Write(MAX_TEAMS, m_abLimitedBorders);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 }
 
 // CACHE: cache frequently used values
@@ -7518,3 +7636,174 @@ void CvTeam::setNoCivicAnger(bool bNewValue)
 	m_bNoCivicAnger = bNewValue;
 }
 //FfH: End Add
+
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeam::getLimitedBordersTradingCount() const
+{
+	return m_iLimitedBordersTradingCount;
+}
+
+bool CvTeam::isLimitedBordersTrading() const
+{
+	return (getLimitedBordersTradingCount() > 0);
+}
+
+void CvTeam::changeLimitedBordersTradingCount(int iChange)
+{
+	m_iLimitedBordersTradingCount = (m_iLimitedBordersTradingCount + iChange);
+	FAssert(getLimitedBordersTradingCount() >= 0);
+}
+
+void CvTeam::signLimitedBorders(TeamTypes eTeam)
+{
+	CLinkList<TradeData> ourList;
+	CLinkList<TradeData> theirList;
+	TradeData item;
+
+	FAssert(eTeam != NO_TEAM);
+	FAssert(eTeam != getID());
+
+	if (!isAtWar(eTeam) && (getID() != eTeam) && (!isOpenBorders(eTeam)))
+	{
+		setTradeItem(&item, TRADE_RIGHT_OF_PASSAGE);
+
+		if (GET_PLAYER(getLeaderID()).canTradeItem(GET_TEAM(eTeam).getLeaderID(), item) && GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).canTradeItem(getLeaderID(), item))
+		{
+			ourList.clear();
+			theirList.clear();
+
+			ourList.insertAtEnd(item);
+			theirList.insertAtEnd(item);
+
+			GC.getGameINLINE().implementDeal(getLeaderID(), (GET_TEAM(eTeam).getLeaderID()), &ourList, &theirList);
+		}
+	}
+}
+
+bool CvTeam::canSignOpenBorders(TeamTypes eTeam)
+{
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+	    if (!isHasEmbassy(eTeam))
+	    {
+	        return false;
+		}
+    }
+    return true;
+}
+
+void CvTeam::sendAmbassador(TeamTypes eTeam)
+{
+    CLinkList<TradeData> ourList;
+    CLinkList<TradeData> theirList;
+    TradeData item;
+
+    FAssert(eTeam != NO_TEAM);
+    FAssert(eTeam != getID());
+
+    if (!isAtWar(eTeam) && (getID() != eTeam))
+    {
+        setTradeItem(&item, TRADE_EMBASSY);
+
+        if (GET_PLAYER(getLeaderID()).canTradeItem(GET_TEAM(eTeam).getLeaderID(), item) && GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).canTradeItem(getLeaderID(), item))
+        {
+            ourList.clear();
+            theirList.clear();
+
+            ourList.insertAtEnd(item);
+            theirList.insertAtEnd(item);
+
+            GC.getGameINLINE().implementDeal(getLeaderID(), (GET_TEAM(eTeam).getLeaderID()), &ourList, &theirList);
+        }
+    }
+}
+
+
+bool CvTeam::isLimitedBorders(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_abLimitedBorders[eIndex];
+}
+
+
+void CvTeam::setLimitedBorders(TeamTypes eIndex, bool bNewValue)
+{
+	bool bOldFreeTrade;
+	int iI;
+
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+
+	if (isLimitedBorders(eIndex) != bNewValue)
+	{
+		bOldFreeTrade = isFreeTrade(eIndex);
+
+		m_abLimitedBorders[eIndex] = bNewValue;
+
+		GC.getMapINLINE().verifyUnitValidPlot();
+
+		if ((getID() == GC.getGameINLINE().getActiveTeam()) || (eIndex == GC.getGameINLINE().getActiveTeam()))
+		{
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		}
+
+		if (bOldFreeTrade != isFreeTrade(eIndex))
+		{
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+					{
+						GET_PLAYER((PlayerTypes)iI).updateTradeRoutes();
+					}
+				}
+			}
+		}
+	}
+}
+
+
+bool CvTeam::isHasEmbassy(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+    return m_abEmbassy[eIndex];
+}
+
+void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+    if (isHasEmbassy(eIndex) != bNewValue)
+    {
+		m_abEmbassy[eIndex] = bNewValue;
+    }
+}
+
+int CvTeam::getEmbassyTradingCount() const
+{
+    return m_iEmbassyTradingCount;
+}
+
+bool CvTeam::isEmbassyTrading() const
+{
+    return (getEmbassyTradingCount() > 0);
+}
+
+void CvTeam::changeEmbassyTradingCount(int iChange)
+{
+    if (iChange != 0)
+    {
+        m_iEmbassyTradingCount = (m_iEmbassyTradingCount + iChange);
+    }
+}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/

@@ -453,7 +453,31 @@ public:
 	virtual bool AI_isSneakAttackPreparing(TeamTypes eIndex) const = 0;
 	virtual bool AI_isSneakAttackReady(TeamTypes eIndex) const = 0;
 	virtual void AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar = true) = 0;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	int getEmbassyTradingCount() const;
+	bool isEmbassyTrading() const;
+	void changeEmbassyTradingCount(int iChange);
+	
+    bool isHasEmbassy(TeamTypes eIndex) const;
+    void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
+	
+	int getLimitedBordersTradingCount() const;	
+	bool isLimitedBordersTrading() const;
+	void changeLimitedBordersTradingCount(int iChange);
 
+	void signLimitedBorders(TeamTypes eTeam);	
+	bool canSignOpenBorders(TeamTypes eTeam);
+	void sendAmbassador(TeamTypes eTeam);
+	
+	bool isLimitedBorders(TeamTypes eIndex) const;
+	void setLimitedBorders(TeamTypes eIndex, bool bNewValue);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 protected:
 
 	int m_iNumMembers;
@@ -554,6 +578,18 @@ protected:
 
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	int m_iEmbassyTradingCount;
+	int m_iLimitedBordersTradingCount;
+	bool* m_abEmbassy;
+	bool* m_abLimitedBorders;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 };
 
 #endif

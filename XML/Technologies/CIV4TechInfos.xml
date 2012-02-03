@@ -1042,6 +1042,9 @@
             <bMapTrading>1</bMapTrading>
             <bTechTrading>0</bTechTrading>
             <bGoldTrading>0</bGoldTrading>
+            <!--Afforess Advanced Diplomacy-->
+            <bLimitedBordersTrading>1</bLimitedBordersTrading>
+            <!--Afforess Advanced Diplomacy-->
             <bOpenBordersTrading>1</bOpenBordersTrading>
             <bDefensivePactTrading>0</bDefensivePactTrading>
             <bPermanentAllianceTrading>0</bPermanentAllianceTrading>
@@ -6347,6 +6350,9 @@
             <bMapTrading>0</bMapTrading>
             <bTechTrading>0</bTechTrading>
             <bGoldTrading>0</bGoldTrading>
+            <!--Afforess Advanced Diplomacy-->
+            <bEmbassyTrading>1</bEmbassyTrading>
+            <!--Afforess Advanced Diplomacy-->
             <bOpenBordersTrading>0</bOpenBordersTrading>
             <bDefensivePactTrading>0</bDefensivePactTrading>
             <bPermanentAllianceTrading>0</bPermanentAllianceTrading>

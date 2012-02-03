@@ -84,6 +84,10 @@
 	<ElementType name="DefensivePactRefuseAttitudeThreshold" content="textOnly"/>
 	<ElementType name="PermanentAllianceRefuseAttitudeThreshold" content="textOnly"/>
 	<ElementType name="VassalRefuseAttitudeThreshold" content="textOnly"/>
+	<!-- Afforess Advanced Diplomacy -->
+	<ElementType name="MilitaryUnitRefuseAttitudeThreshold" content="textOnly"/>
+	<ElementType name="EmbassyRefuseAttitudeThreshold" content="textOnly"/>
+	<!-- Afforess Advanced Diplomacy -->
 	<ElementType name="iVassalPowerModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iFreedomAppreciation" content="textOnly" dt:type="int"/>
 	<ElementType name="FavoriteCivic" content="textOnly"/>
@@ -291,6 +295,10 @@
 		<element type="DefensivePactRefuseAttitudeThreshold"/>
 		<element type="PermanentAllianceRefuseAttitudeThreshold"/>
 		<element type="VassalRefuseAttitudeThreshold"/>
+		<!-- Afforess Advanced Diplomacy -->
+		<element type="MilitaryUnitRefuseAttitudeThreshold" minOccurs="0"/>
+		<element type="EmbassyRefuseAttitudeThreshold" minOccurs="0"/>
+		<!-- Afforess Advanced Diplomacy -->
 		<element type="iVassalPowerModifier"/>
 		<element type="iFreedomAppreciation"/>
 		<element type="FavoriteCivic"/>

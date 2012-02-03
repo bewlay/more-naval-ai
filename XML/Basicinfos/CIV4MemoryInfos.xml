@@ -150,5 +150,11 @@
 			<Type>MEMORY_SOMNIUM_DELAY</Type>
 			<Description>TXT_KEY_MEMORY_SOMNIUM</Description>
 		</MemoryInfo>
+		<!--Afforess Advanced Diplomacy-->
+		<!--Note to Mergers: This MUST BE IN EXACTLY THE SAME ORDER AS IN CvEnums.h!-->
+		<MemoryInfo>
+			<Type>MEMORY_RECALLED_AMBASSADOR</Type>
+			<Description>TXT_KEY_MEMORY_RECALLED_AMBASSADOR</Description>
+		</MemoryInfo>
 	</MemoryInfos>
 </Civ4MemoryInfos>

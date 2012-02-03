@@ -1065,3 +1065,22 @@ int CyTeam::AI_getWarSuccess(int /*TeamTypes*/ eIndex) const
 {
 	return m_pTeam ? m_pTeam->AI_getWarSuccess((TeamTypes)eIndex) : -1;
 }
+
+/************************************************************************************************/
+/* Afforess	                  Start		 03/10/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+bool CyTeam::isHasEmbassy(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam ? m_pTeam->isHasEmbassy((TeamTypes)eTeam) : false;
+}
+
+bool CyTeam::isLimitedBorders(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam ? m_pTeam->isLimitedBorders((TeamTypes)eTeam) : false;
+}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+

@@ -32,7 +32,7 @@ gc = CyGlobalContext()
 Z_DEPTH = -0.3
 
 # Columns IDs
-NUM_PARTS = 25
+NUM_PARTS = 26
 (
 	ALIVE,
 	WAR,
@@ -49,6 +49,7 @@ NUM_PARTS = 25
 	ESPIONAGE,
 	TRADE,
 	BORDERS,
+	EMBASSY,
 	PACT,
 	RELIGION,
 	ATTITUDE,
@@ -73,6 +74,9 @@ columnsByKey = {}
 
 TRADE_TYPES = (
 	TradeableItems.TRADE_OPEN_BORDERS,
+	#Afforess Advanced Diplomacy
+	TradeableItems.TRADE_EMBASSY,
+	#Afforess Advanced Diplomacy
 	TradeableItems.TRADE_DEFENSIVE_PACT,
 	TradeableItems.TRADE_PERMANENT_ALLIANCE,
 	TradeableItems.TRADE_PEACE_TREATY,
@@ -111,6 +115,9 @@ def init():
 	columns.append(Column('E', ESPIONAGE, FIXED, smallSymbol(FontSymbols.COMMERCE_ESPIONAGE_CHAR)))
 	columns.append(Column('N', TRADE, FIXED, smallSymbol(FontSymbols.TRADE_CHAR)))
 	columns.append(Column('B', BORDERS, FIXED, smallSymbol(FontSymbols.OPEN_BORDERS_CHAR)))
+	#Afforess Advanced Diplomacy
+	columns.append(Column('@', EMBASSY, FIXED, smallSymbol(FontSymbols.MAP_CHAR)))
+	#Afforess Advanced Diplomacy
 	columns.append(Column('D', PACT, FIXED, smallSymbol(FontSymbols.DEFENSIVE_PACT_CHAR)))
 	columns.append(Column('R', RELIGION, DYNAMIC))
 	columns.append(Column('A', ATTITUDE, DYNAMIC))
@@ -272,7 +279,10 @@ class Scoreboard:
 		
 	def setBorders(self):
 		self._set(BORDERS, True, self._getDealWidget(TradeableItems.TRADE_OPEN_BORDERS))
-		
+	#Afforess Advanced Diplomacy
+	def setEmbassy(self):
+		self._set(EMBASSY, True, self._getDealWidget(TradeableItems.TRADE_EMBASSY))
+	#Afforess Advanced Diplomacy
 	def setPact(self):
 		self._set(PACT, True, self._getDealWidget(TradeableItems.TRADE_DEFENSIVE_PACT))
 		
@@ -287,7 +297,6 @@ class Scoreboard:
 		
 	def setWorstEnemy(self):
 		self._set(WORST_ENEMY)
-		
 		
 	def setWaiting(self):
 		self._set(WAITING)

@@ -171,13 +171,48 @@ def canSignOpenBorders(fromTeam, toTeam):
 	if fromTeam.isOpenBorders(toTeam.getID()) or toTeam.isOpenBorders(fromTeam.getID()):
 		return False
 	return fromTeam.isOpenBordersTrading() or toTeam.isOpenBordersTrading()
+#Afforess Advanced Diplomacy
+def getLimitedBordersTradePartners(playerOrID):
+	"""
+	Returns a list of CyPlayers that can sign an Limited Borders agreement with <player>.
+	"""
+	return getTradePartnersByTeam(playerOrID, canSignLimitedBorders)
 
+def canSignLimitedBorders(fromTeam, toTeam):
+	"""
+	Returns True if the two CyTeams can sign an Limited Borders agreement. 
+	Limited Borders are enabled when Open Borders are, so the functions are identical.
+	"""
+	if fromTeam.isOpenBorders(toTeam.getID()) or toTeam.isOpenBorders(fromTeam.getID()):
+		return False
+	if not (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_DIPLOMACY)):
+		return False
+	return fromTeam.isOpenBordersTrading() or toTeam.isOpenBordersTrading()
+
+def getEmbassyTradePartners(playerOrID):
+	"""
+	Returns a list of CyPlayers that can sign an Limited Borders agreement with <player>.
+	"""
+	return getTradePartnersByTeam(playerOrID, canTradeEmbassy)
+
+def canTradeEmbassy(fromTeam, toTeam):
+	"""
+	Returns True if the two CyTeams can trade for an Embassy. 
+	Embassies are enabled when Open Borders are, so the functions are identical.
+	"""
+	if fromTeam.isOpenBorders(toTeam.getID()) or toTeam.isOpenBorders(fromTeam.getID()):
+		return False
+	if not (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_DIPLOMACY)):
+		return False
+	return fromTeam.isOpenBordersTrading() or toTeam.isOpenBordersTrading()
+
+#Afforess End
 def getDefensivePactTradePartners(playerOrID):
 	"""
 	Returns a list of CyPlayers that can sign a Defensive Pact with <player>.
 	"""
 	return getTradePartnersByTeam(playerOrID, canSignDefensivePact)
-	
+
 def canSignDefensivePact(fromTeam, toTeam):
 	"""
 	Returns True if the two CyTeams can sign a Defensive Pact.
@@ -546,7 +581,12 @@ def initTradeableItems():
 	addAppendingTrade("trade embargo", TradeableItems.TRADE_EMBARGO, "TXT_KEY_TRADE_STOP_TRADING_WITH", getTradePlayer, " %s")
 	addAppendingTrade("civic", TradeableItems.TRADE_CIVIC, "TXT_KEY_TRADE_ADOPT", getTradeCivic)
 	addAppendingTrade("religion", TradeableItems.TRADE_RELIGION, "TXT_KEY_TRADE_CONVERT", getTradeReligion)
-
+	#Afforess
+	addPlainTrade("limited borders", TradeableItems.TRADE_RIGHT_OF_PASSAGE, "TXT_KEY_TRADE_LIMITED_BORDERS_STRING")
+	addPlainTrade("embassy", TradeableItems.TRADE_EMBASSY, "TXT_KEY_TRADE_EMBASSY_STRING")
+	addComplexTrade("units", TradeableItems.TRADE_MILITARY_UNIT, getTradeUnits)
+	#Afforess End
+	
 def addPlainTrade(name, type, key):
 	"""Creates a trade using an unparameterized XML <text> tag."""
 	return addTrade(type, PlainTradeFormat(name, type, key))
@@ -601,7 +641,10 @@ def getTradePeaceDeal(player, trade):
 	BugUtil.debug("TradeUtil - peace treaty has iData %d", trade.iData)
 	return BugUtil.getText("TXT_KEY_TRADE_PEACE_TREATY_STRING", (gc.getDefineINT("PEACE_TREATY_LENGTH"),))
 
-
+#Afforess
+def getTradeUnits(player, trade):
+	return PlayerUtil.getPlayer(player).getUnit(trade.iData).getName()
+#Afforess End
 ## Classes for Formatting TradeData
 
 class BaseTradeFormat(object):

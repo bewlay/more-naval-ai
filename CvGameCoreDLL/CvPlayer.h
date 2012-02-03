@@ -558,16 +558,6 @@ public:
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
 
-/************************************************************************************************/
-/* Afforess	                  Start		 06/01/10                                               */
-/*            Ruthless AI                                                                       */
-/************************************************************************************************/
-	bool isTradingMilitaryBonus(PlayerTypes ePlayer) const;
-	int getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
-
 	int getNumNukeUnits() const;																																					// Exposed to Python
 	void changeNumNukeUnits(int iChange);
 
@@ -1373,6 +1363,19 @@ public:
 	virtual void AI_setExtraGoldTarget(int iNewValue) = 0;
 	virtual int AI_maxGoldPerTurnTrade(PlayerTypes ePlayer) const = 0;
 	virtual int AI_maxGoldTrade(PlayerTypes ePlayer) const = 0;
+	
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+ 	int getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const;
+	bool isTradingMilitaryBonus(PlayerTypes ePlayer) const;
+	DenialTypes AI_militaryUnitTrade(CvUnit* pUnit, PlayerTypes ePlayer) const;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 protected:
 

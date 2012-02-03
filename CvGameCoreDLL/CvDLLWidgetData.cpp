@@ -4890,7 +4890,15 @@ void CvDLLWidgetData::parseTradeItem(CvWidgetDataStruct &widgetDataStruct, CvWSt
 	PlayerTypes eWhoTo = NO_PLAYER;
 	DenialTypes eDenial;
 	PlayerTypes eWhoDenies;
-
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	CvUnit* pUnit = NULL;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	szBuffer.clear();
 
 	if (widgetDataStruct.m_bOption)
@@ -4989,6 +4997,25 @@ void CvDLLWidgetData::parseTradeItem(CvWidgetDataStruct &widgetDataStruct, CvWSt
 		case TRADE_PEACE_TREATY:
 			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_PEACE_TREATY", GC.getDefineINT("PEACE_TREATY_LENGTH")));
 			break;
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+		case TRADE_RIGHT_OF_PASSAGE:
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_LIMITED_BORDERS"));
+			break;
+		case TRADE_MILITARY_UNIT:
+			pUnit = GET_PLAYER(eWhoFrom).getUnit(widgetDataStruct.m_iData2);
+            GAMETEXT.setUnitHelp(szBuffer, pUnit, true);
+			eWhoDenies = (widgetDataStruct.m_bOption ? eWhoFrom : eWhoTo);
+			break;
+		case TRADE_EMBASSY:
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_EMBASSY", -25));
+			break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 		}
 
 		setTradeItem(&item, ((TradeableItems)(widgetDataStruct.m_iData1)), widgetDataStruct.m_iData2);

@@ -3192,7 +3192,21 @@ DenialTypes CvTeamAI::AI_makePeaceTrade(TeamTypes ePeaceTeam, TeamTypes eTeam) c
 	FAssertMsg(ePeaceTeam != getID(), "shouldn't call this function on ourselves");
 	FAssertMsg(GET_TEAM(ePeaceTeam).isAlive(), "GET_TEAM(ePeaceTeam).isAlive is expected to be true");
 	FAssertMsg(isAtWar(ePeaceTeam), "should be at war with ePeaceTeam");
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		if (isAtWar(eTeam))
+		{
+			return NO_DENIAL;
+		}
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	if (GET_TEAM(ePeaceTeam).isHuman())
 	{
 		return DENIAL_CONTACT_THEM;
@@ -5753,3 +5767,96 @@ bool CvTeamAI::AI_isWaterAreaRelevant(CvArea* pArea)
 }
 
 // Private Functions...
+
+
+/************************************************************************************************/
+/* Afforess	                  Start		 08/6/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+DenialTypes CvTeamAI::AI_embassyTrade(TeamTypes eTeam) const
+{
+	PROFILE_FUNC();
+
+	AttitudeTypes eAttitude;
+	
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+
+	if (AI_shareWar(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getMemoryCount(eTeam, MEMORY_RECALLED_AMBASSADOR) > 0 && AI_getAttitude(eTeam) < ATTITUDE_PLEASED)
+	{
+		return DENIAL_RECENT_CANCEL;
+	}
+
+	if (AI_getWorstEnemy() == eTeam)
+	{
+		return DENIAL_WORST_ENEMY;
+	}
+
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+
+		if (kLoopPlayer.isAlive() && GET_TEAM(kLoopPlayer.getTeam()).getID() == getID())
+		{
+			if (eAttitude <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getEmbassyRefuseAttitudeThreshold())
+			{
+				return DENIAL_ATTITUDE;
+			}
+		}
+	}
+
+	return NO_DENIAL;
+}
+
+
+DenialTypes CvTeamAI::AI_LimitedBordersTrade(TeamTypes eTeam) const
+{
+	PROFILE_FUNC();
+
+	return AI_openBordersTrade(eTeam);
+}
+
+
+int CvTeamAI::AI_embassyTradeVal(TeamTypes eTeam) const
+{
+	int iValue = 0;
+
+	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+
+	iValue *= 7;
+	iValue /= 5;
+
+	return std::max(0, iValue);
+}
+
+
+int CvTeamAI::AI_LimitedBordersTradeVal(TeamTypes eTeam) const
+{
+	int iValue = 0;
+
+	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+
+//	iValue *= 2;
+//	iValue /= 5;
+
+	return std::max(0, iValue);
+}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/

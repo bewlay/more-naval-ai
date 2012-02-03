@@ -1036,6 +1036,16 @@ m_iPreferredAlignment(NO_ALIGNMENT),
 m_iPrereqReligion(NO_RELIGION)
 //FfH: End Add
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+,m_bEmbassyTrading(false)
+,m_bLimitedBordersTrading(false)
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 {
 }
 
@@ -1323,7 +1333,22 @@ bool CvTechInfo::isTerrainTrade(int i) const
 {
 	return m_pbTerrainTrade ? m_pbTerrainTrade[i] : false;
 }
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+bool CvTechInfo::isEmbassyTrading() const
+{
+	return m_bEmbassyTrading;
+}
+bool CvTechInfo::isLimitedBordersTrading() const
+{
+	return m_bLimitedBordersTrading;
+}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 void CvTechInfo::read(FDataStreamBase* stream)
 {
 	CvInfoBase::read(stream);
@@ -1368,7 +1393,16 @@ void CvTechInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bRiverTrade);
 	stream->Read(&m_iGridX);
 	stream->Read(&m_iGridY);
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	stream->Read(&m_bEmbassyTrading);
+	stream->Read(&m_bLimitedBordersTrading);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	SAFE_DELETE_ARRAY(m_piDomainExtraMoves);
 	m_piDomainExtraMoves = new int[NUM_DOMAIN_TYPES];
 	stream->Read(NUM_DOMAIN_TYPES, m_piDomainExtraMoves);
@@ -1449,7 +1483,16 @@ void CvTechInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bRiverTrade);
 	stream->Write(m_iGridX);
 	stream->Write(m_iGridY);
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	stream->Write(m_bEmbassyTrading);
+	stream->Write(m_bLimitedBordersTrading);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	stream->Write(NUM_DOMAIN_TYPES, m_piDomainExtraMoves);
 	stream->Write(GC.getNumFlavorTypes(), m_piFlavorValue);
 	stream->Write(GC.getNUM_OR_TECH_PREREQS(), m_piPrereqOrTechs);
@@ -1552,6 +1595,17 @@ bool CvTechInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "PrereqReligion");
 	m_aszExtraXMLforPass3.push_back(szTextVal);
 //FfH: End Add
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	pXML->GetChildXmlValByName(&m_bEmbassyTrading, "bEmbassyTrading");
+	pXML->GetChildXmlValByName(&m_bLimitedBordersTrading, "bLimitedBordersTrading");
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	return true;
 }
@@ -17262,6 +17316,17 @@ m_piDiploPeaceMusicScriptIds(NULL),
 m_piDiploWarIntroMusicScriptIds(NULL),
 m_piDiploWarMusicScriptIds(NULL),
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+m_iMilitaryUnitRefuseAttitudeThreshold(ATTITUDE_CAUTIOUS),
+m_iEmbassyRefuseAttitudeThreshold(ATTITUDE_ANNOYED),
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 //FfH: Added by Kael 08/07/2007
 m_piReligionWeightModifier(NULL),
 m_bFemale(false),
@@ -17913,6 +17978,23 @@ const TCHAR* CvLeaderHeadInfo::getLeaderHead() const
 	}
 }
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvLeaderHeadInfo::getMilitaryUnitRefuseAttitudeThreshold() const
+{
+	return m_iMilitaryUnitRefuseAttitudeThreshold;
+}
+
+int CvLeaderHeadInfo::getEmbassyRefuseAttitudeThreshold() const
+{
+	return m_iEmbassyRefuseAttitudeThreshold;
+}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 void CvLeaderHeadInfo::read(FDataStreamBase* stream)
 {
 	CvInfoBase::read(stream);
@@ -18072,6 +18154,16 @@ void CvLeaderHeadInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_piDiploWarMusicScriptIds);
 	m_piDiploWarMusicScriptIds = new int[GC.getNumEraInfos()];
 	stream->Read(GC.getNumEraInfos(), m_piDiploWarMusicScriptIds);
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	stream->Read(&m_iMilitaryUnitRefuseAttitudeThreshold);
+	stream->Read(&m_iEmbassyRefuseAttitudeThreshold);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 }
 
 void CvLeaderHeadInfo::write(FDataStreamBase* stream)
@@ -18193,6 +18285,16 @@ void CvLeaderHeadInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumEraInfos(), m_piDiploPeaceMusicScriptIds);
 	stream->Write(GC.getNumEraInfos(), m_piDiploWarIntroMusicScriptIds);
 	stream->Write(GC.getNumEraInfos(), m_piDiploWarMusicScriptIds);
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	stream->Write(m_iMilitaryUnitRefuseAttitudeThreshold);
+	stream->Write(m_iEmbassyRefuseAttitudeThreshold);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 }
 
@@ -18376,6 +18478,20 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 	m_iPermanentTrait = pXML->FindInInfoClass(szTextVal);
 	pXML->SetVariableListTagPair(&m_piReligionWeightModifier, "ReligionWeightModifiers", sizeof(GC.getReligionInfo((ReligionTypes)0)), GC.getNumReligionInfos());
 //FfH: End Add
+
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	pXML->GetChildXmlValByName(szTextVal, "MilitaryUnitRefuseAttitudeThreshold");
+	m_iMilitaryUnitRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
+
+	pXML->GetChildXmlValByName(szTextVal, "EmbassyRefuseAttitudeThreshold");
+	m_iEmbassyRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	return true;
 }

@@ -371,7 +371,16 @@ public:
 
 	bool read(CvXMLLoadUtility* pXML);
 	bool readPass2(CvXMLLoadUtility* pXML);
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	bool isEmbassyTrading() const;
+	bool isLimitedBordersTrading() const;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 
 protected:
@@ -415,7 +424,16 @@ protected:
 	bool m_bIgnoreIrrigation;
 	bool m_bWaterWork;
 	bool m_bRiverTrade;
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	bool m_bEmbassyTrading;
+	bool m_bLimitedBordersTrading;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	CvString m_szQuoteKey;
 	CvString m_szSound;
 	CvString m_szSoundMP;
@@ -4369,6 +4387,20 @@ public:
 
 	// Other
 
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	int getMilitaryUnitRefuseAttitudeThreshold() const;
+	int getEmbassyRefuseAttitudeThreshold() const;
+protected:
+	int m_iMilitaryUnitRefuseAttitudeThreshold;
+	int m_iEmbassyRefuseAttitudeThreshold;
+public:
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	DllExport const CvArtInfoLeaderhead* getArtInfo() const;
 	const TCHAR* getLeaderHead() const;
 	const TCHAR* getButton() const;

@@ -5735,7 +5735,33 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 			pCity->area()->setTargetCity(getID(), pCity);
 		}
 		break;
-
+/************************************************************************************************/
+/* Afforess	                  Start		 08/01/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+   case DIPLOEVENT_MAKE_PEACE_WITH:
+		if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAtWar((TeamTypes)iData1))
+		{
+			if (AI_getMemoryCount(ePlayer, MEMORY_EVENT_GOOD_TO_US) < 3)
+			{
+				AI_changeMemoryCount(ePlayer, MEMORY_EVENT_GOOD_TO_US, 1);
+			}
+			GET_TEAM(GET_PLAYER(ePlayer).getTeam()).makePeace((TeamTypes)iData1);
+		}
+        break;
+    case DIPLOEVENT_NO_MAKE_PEACE_WITH:
+		if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAtWar((TeamTypes)iData1))
+		{
+			if (AI_getMemoryCount(ePlayer, MEMORY_REFUSED_HELP) < 3)
+			{
+				AI_changeMemoryCount(ePlayer, MEMORY_REFUSED_HELP, 1);
+			}
+		}
+        break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	default:
 		FAssert(false);
 		break;
@@ -5806,6 +5832,17 @@ bool CvPlayer::canReceiveTradeCity() const
 bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial) const
 {
 	CvCity *pOurCapitalCity;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    CvCity* pTheirCapitalCity;
+    CvCity* pTradingCity;
+    CvUnit* pUnitTraded;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	if (bTestDenial)
 	{
@@ -5914,7 +5951,55 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			}
 		}
 		break;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
 
+    case TRADE_MILITARY_UNIT:
+        {
+            pUnitTraded = getUnit(item.m_iData);
+            pTheirCapitalCity = GET_PLAYER(eWhoTo).getCapitalCity();
+			
+			if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+			{
+				if (GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam()))
+				{
+					if (pUnitTraded != NULL)
+					{
+						UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(GET_PLAYER(eWhoTo).getCivilizationType()).getCivilizationUnits(pUnitTraded->getUnitClassType());
+				//		if (GET_PLAYER(eWhoTo).canTrain(eUnit))
+				//		{
+							pTradingCity = pUnitTraded->plot()->getPlotCity();
+							if (GC.getUnitInfo(pUnitTraded->getUnitType()).isMechUnit() && pUnitTraded->canMove() && (pTradingCity != NULL) && (pTheirCapitalCity != NULL))
+							{
+								if (pTradingCity->getOwnerINLINE() == getID())
+								{
+									if (pTradingCity->isConnectedTo(pTheirCapitalCity))
+									{
+										if (pTradingCity->isRevealed(GET_PLAYER(eWhoTo).getTeam(), true))
+										{
+											if (!GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isUnitClassMaxedOut(pUnitTraded->getUnitClassType(), GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).getUnitClassMaking(pUnitTraded->getUnitClassType())))
+											{
+												if (!GET_PLAYER(eWhoTo).isUnitClassMaxedOut(pUnitTraded->getUnitClassType(), GET_PLAYER(eWhoTo).getUnitClassMaking(pUnitTraded->getUnitClassType())))
+												{
+													return true;
+												}
+											}
+										}
+									}
+								}
+							}
+						//}
+					}
+				}
+			}
+		}
+        break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	case TRADE_GOLD:
 		if (GET_TEAM(getTeam()).isGoldTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isGoldTrading())
 		{
@@ -5966,7 +6051,36 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			}
 		}
 		break;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    case TRADE_EMBASSY:
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+		{
+			if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
+			{
+				if (!atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
+				{
+					if (!(GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam())))
+					{
+						if (GET_TEAM(getTeam()).isEmbassyTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isEmbassyTrading())
+						{
+							if (getCapitalCity() != NULL && GET_PLAYER(eWhoTo).getCapitalCity() != NULL)
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		break;
 
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	case TRADE_PEACE:
 		if (!(GET_TEAM(getTeam()).isHuman()))
 		{
@@ -6075,12 +6189,44 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 				{
 					if (GET_TEAM(getTeam()).isOpenBordersTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isOpenBordersTrading())
 					{
-						return true;
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+						if (GET_TEAM(getTeam()).canSignOpenBorders(GET_PLAYER(eWhoTo).getTeam()))
+						{
+							return true;
+						}
 					}
 				}
 			}
 		}
 		break;
+	
+	case TRADE_RIGHT_OF_PASSAGE:
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+		{
+			if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
+			{
+				if (!atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
+				{
+					if (!(GET_TEAM(getTeam()).isOpenBorders(GET_PLAYER(eWhoTo).getTeam())) && !(GET_TEAM(getTeam()).isLimitedBorders(GET_PLAYER(eWhoTo).getTeam())))
+					{
+						if (GET_TEAM(getTeam()).isLimitedBordersTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isLimitedBordersTrading())
+						{
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	case TRADE_DEFENSIVE_PACT:
 		if (!(GET_TEAM(getTeam()).isAVassal()) && !(GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isAVassal()))
@@ -6209,6 +6355,30 @@ DenialTypes CvPlayer::getTradeDenial(PlayerTypes eWhoTo, TradeData item) const
 
 	case TRADE_PEACE_TREATY:
 		break;
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	case TRADE_RIGHT_OF_PASSAGE:
+		return GET_TEAM(getTeam()).AI_LimitedBordersTrade(GET_PLAYER(eWhoTo).getTeam());
+		break;
+	case TRADE_MILITARY_UNIT:
+		{
+			CvUnit* pUnit = getUnit(item.m_iData);
+			if (pUnit != NULL)
+			{
+				return AI_militaryUnitTrade(pUnit, eWhoTo);
+			}
+		}
+		break;
+	case TRADE_EMBASSY:
+		return GET_TEAM(getTeam()).AI_embassyTrade(GET_PLAYER(eWhoTo).getTeam());
+		break;
+/************************************************************************************************/
+/* Afforess		                 END                                                            */
+/************************************************************************************************/
+
 	}
 
 	return NO_DENIAL;
@@ -16890,7 +17060,22 @@ int CvPlayer::getEspionageMissionCostModifier(EspionageMissionTypes eMission, Pl
 		iModifier *= kTargetTeam.getCounterespionageModAgainstTeam(getTeam());
 		iModifier /= 100;
 	}
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    if (pCity != NULL)
+	{
+		if (pCity == GET_PLAYER(eTargetPlayer).getCapitalCity() && GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eTargetPlayer).getTeam()))
+		{
+			iModifier *= 100 - GC.getDefineINT("EMBASSY_ESPIONAGE_MISSION_COST_MODIFIER");
+			iModifier /= 100;
+		}
+	}
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	return iModifier;
 }
 
@@ -25318,6 +25503,28 @@ void CvPlayer::buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 	{
 		ourList.insertAtEnd(item);
 	}
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+     //Embassy
+    setTradeItem(&item, TRADE_EMBASSY, 0);
+    if (canTradeItem(eOtherPlayer, item))
+    {
+        ourList.insertAtEnd(item);
+    }
+	
+	//Right of Passage
+	setTradeItem(&item, TRADE_RIGHT_OF_PASSAGE);
+	if (canTradeItem(eOtherPlayer, item))
+	{
+		ourList.insertAtEnd(item);
+	}
+
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 
 	//	Open Borders
 	setTradeItem(&item, TRADE_OPEN_BORDERS);
@@ -25485,6 +25692,26 @@ void CvPlayer::buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 				}
 			}
 			break;
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+        case TRADE_MILITARY_UNIT:
+            for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+            {
+                setTradeItem(&item, TRADE_MILITARY_UNIT, pLoopUnit->getID());
+                if (canTradeItem(eOtherPlayer, item))
+                {
+                    bFoundItemUs = true;
+                    ourList.insertAtEnd(item);
+                }
+            }
+            break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 		}
 	}
 }
@@ -25506,7 +25733,17 @@ bool CvPlayer::getHeadingTradeString(PlayerTypes eOtherPlayer, TradeableItems eI
 	case TRADE_CITIES:
 		szString = gDLL->getText("TXT_KEY_TRADE_CITIES");
 		break;
-
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    case TRADE_MILITARY_UNIT:
+        szString = gDLL->getText("TXT_KEY_TRADE_MILITARY_UNIT");
+        break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	case TRADE_PEACE:
 		szString = gDLL->getText("TXT_KEY_TRADE_MAKE_PEACE_WITH");
 		break;
@@ -25526,6 +25763,17 @@ bool CvPlayer::getHeadingTradeString(PlayerTypes eOtherPlayer, TradeableItems eI
 	case TRADE_RELIGION:
 		szString = gDLL->getText("TXT_KEY_TRADE_CONVERT");
 		break;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	case TRADE_EMBASSY:
+		szString = gDLL->getText("TXT_KEY_TRADE_EMBASSY_STRING");
+		break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
 	default:
 		szString.clear();
 		return false;
@@ -25685,6 +25933,42 @@ bool CvPlayer::getItemTradeString(PlayerTypes eOtherPlayer, bool bOffer, bool bS
 		}
 		szIcon = GC.getReligionInfo((ReligionTypes)zTradeData.m_iData).getButton();
 		break;
+/************************************************************************************************/
+/* Afforess	                  Start		 06/16/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    case TRADE_MILITARY_UNIT:
+        {
+            CvUnit* pUnit = NULL;
+            if (bOffer)
+            {
+                pUnit = GET_PLAYER(eOtherPlayer).getUnit(zTradeData.m_iData);
+            }
+            else
+            {
+                pUnit = getUnit(zTradeData.m_iData);
+            }
+            if (pUnit != NULL)
+            {
+                CvWStringBuffer szTemp;
+                //GAMETEXT.setUnitHelp(szTemp, pUnit, true);
+                //szString = CvWString(szTemp.getCString());
+				szString.Format(L"%s", pUnit->getName().GetCString());
+				szIcon = GC.getUnitInfo((UnitTypes)pUnit->getUnitType()).getButton();
+            }
+        }
+        break;
+	case TRADE_RIGHT_OF_PASSAGE:
+		szString = gDLL->getText("TXT_KEY_TRADE_LIMITED_BORDERS_STRING");
+		break;
+	case TRADE_EMBASSY:
+        szString = gDLL->getText("TXT_KEY_TRADE_EMBASSY_STRING");
+        break;
+/************************************************************************************************/
+/* Afforess	                     END                                                            */
+/************************************************************************************************/
+
 	default:
 		szString.clear();
 		return false;
@@ -26936,9 +27220,11 @@ void CvPlayer::addReminder(int iGameTurn, CvWString szMessage) const
 // BUG - Reminder Mod - end
 
 /************************************************************************************************/
-/* Afforess	                  Start		 06/01/10                                               */
-/*Ruthless AI Helper Function                                                                   */
+/* Afforess	                  Start		 07/29/10                                               */
+/*                                                                                              */
+/* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
+
 bool CvPlayer::isTradingMilitaryBonus(PlayerTypes ePlayer) const
 {
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
@@ -26998,6 +27284,63 @@ int CvPlayer::getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) 
 
 	return iCount;
 }
+
+DenialTypes CvPlayer::AI_militaryUnitTrade(CvUnit* pUnit, PlayerTypes ePlayer) const
+{
+	
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (GET_PLAYER(ePlayer).getTeam() == getTeam())
+	{
+		return NO_DENIAL;
+	}
+	
+	if (GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isAtWar(getTeam()))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER(ePlayer).getTeam()))
+	{
+		return DENIAL_NO_GAIN;
+	}
+
+	if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0 && !GET_TEAM(getTeam()).AI_shareWar(GET_PLAYER(ePlayer).getTeam()))
+	{
+		return DENIAL_NO_GAIN;
+	}
+
+	if (GET_PLAYER(ePlayer).AI_isFinancialTrouble() && (GET_PLAYER(ePlayer).calculateUnitCost() > 0))
+	{
+		if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).getAtWarCount(true) == 0)
+		{
+			return DENIAL_NO_GAIN;
+		}
+	}
+
+	AttitudeTypes eAttitude = GET_PLAYER(getID()).AI_getAttitude(ePlayer);
+
+	if (pUnit->nukeRange() > 0 && GET_PLAYER(ePlayer).getNumNukeUnits() == 0)
+	{
+		return DENIAL_JOKING;
+	}
+
+	if (eAttitude <= GC.getLeaderHeadInfo(getPersonalityType()).getMilitaryUnitRefuseAttitudeThreshold())
+	{
+		return DENIAL_ATTITUDE;
+	}
+
+	return NO_DENIAL;
+}
+
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/

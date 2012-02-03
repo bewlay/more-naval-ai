@@ -35,6 +35,10 @@
 	<ElementType name="bMapTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bTechTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bGoldTrading" content="textOnly" dt:type="boolean"/>
+	<!-- Afforess Advanced Diplomacy--> 
+	<ElementType name="bLimitedBordersTrading" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bEmbassyTrading" content="textOnly" dt:type="boolean"/>	
+	<!-- Afforess Advanced Diplomacy--> 
 	<ElementType name="bOpenBordersTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDefensivePactTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPermanentAllianceTrading" content="textOnly" dt:type="boolean"/>
@@ -129,6 +133,10 @@
 		<element type="bMapTrading"/>
 		<element type="bTechTrading"/>
 		<element type="bGoldTrading"/>
+		<!-- Afforess Advanced Diplomacy--> 
+		<element type="bLimitedBordersTrading" minOccurs="0"/>
+		<element type="bEmbassyTrading" minOccurs="0"/>
+		<!-- Afforess Advanced Diplomacy--> 
 		<element type="bOpenBordersTrading"/>
 		<element type="bDefensivePactTrading"/>
 		<element type="bPermanentAllianceTrading"/>
