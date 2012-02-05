@@ -24447,6 +24447,13 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 		return 0;
 	}
 
+	// Advanced Tactics - pillage value is 0 for own plots
+	if (pPlot->getOwner() == getOwner())
+	{
+		return 0;
+	}
+	// End Advanced Tactics
+
 	iBonusValue = 0;
 	eNonObsoleteBonus = pPlot->getNonObsoleteBonusType(pPlot->getTeam());
 	if (eNonObsoleteBonus != NO_BONUS)
