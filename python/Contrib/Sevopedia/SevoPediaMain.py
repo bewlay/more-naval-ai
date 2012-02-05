@@ -610,29 +610,36 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 ##--------	BUGFfH: End Modify
 	
 	def getTraitList(self):
-		return self.getSortedList(gc.getNumTraitInfos(), gc.getTraitInfo, True)
+##--------	BUGFfH: Modified by Denev 2009/09/10
+#		return self.getSortedList(gc.getNumNewConceptInfos(), self.getTraitInfo, True)
+		return self.getSortedList(gc.getNumTraitInfos(), gc.getTraitInfo)
+##--------	BUGFfH: End Modify
 
-#	def getTraitInfo(self, id):
-#		info = gc.getNewConceptInfo(id)
-#		if self.isTraitInfo(info):
-#			
-#			class TraitInfo:
-#				def __init__(self, conceptInfo):
-#					self.conceptInfo = conceptInfo
-#					sKey = conceptInfo.getType()
-#					sKey = sKey[sKey.find("TRAIT_"):]
-#					self.eTrait = gc.getInfoTypeForString(sKey)
-#					self.traitInfo = gc.getTraitInfo(self.eTrait)
-#				def getDescription(self):
-#					return u"%c %s" % (TraitUtil.getIcon(self.eTrait), self.traitInfo.getDescription())
-#				def getButton(self):
-#					return self.traitInfo.getButton()
-#			
-#			return TraitInfo(info)
-#		return None
-	
-#	def isTraitInfo(self, info):
-#		return info.getType().find("_TRAIT_") != -1
+##--------	BUGFfH: Deleteed by Denev 2009/09/10
+		"""
+	def getTraitInfo(self, id):
+		info = gc.getNewConceptInfo(id)
+		if self.isTraitInfo(info):
+			
+			class TraitInfo:
+				def __init__(self, conceptInfo):
+					self.conceptInfo = conceptInfo
+					sKey = conceptInfo.getType()
+					sKey = sKey[sKey.find("TRAIT_"):]
+					self.eTrait = gc.getInfoTypeForString(sKey)
+					self.traitInfo = gc.getTraitInfo(self.eTrait)
+				def getDescription(self):
+					return u"%c %s" % (TraitUtil.getIcon(self.eTrait), self.traitInfo.getDescription())
+				def getButton(self):
+					return self.traitInfo.getButton()
+			
+			return TraitInfo(info)
+		return None
+		"""
+##--------	BUGFfH: End Delete
+
+	def isTraitInfo(self, info):
+		return info.getType().find("_TRAIT_") != -1
 
 
 	def placeCivics(self):
