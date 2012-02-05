@@ -222,7 +222,7 @@ class SevoPediaTech(CvPediaScreen.CvPediaScreen):
 		screen.addPanel(panelName, "", "", True, True,
 			self.X_QUOTE_PANE, self.Y_QUOTE_PANE, self.W_QUOTE_PANE, self.H_QUOTE_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		szQuote = gc.getTechInfo(self.iTech).getQuote()
-		szQuote += u"\n\n" + gc.getTechInfo(self.iTech).getCivilopedia()
+#		szQuote += u"\n\n" + gc.getTechInfo(self.iTech).getCivilopedia()
 		szQuoteTextWidget = self.top.getNextWidgetName()
 		screen.addMultilineText(szQuoteTextWidget, szQuote, self.X_QUOTE_PANE + 15, self.Y_QUOTE_PANE + 15,
 		    self.W_QUOTE_PANE - (15 * 2), self.H_QUOTE_PANE - (15 * 2), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
