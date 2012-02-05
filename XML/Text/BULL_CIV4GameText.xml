@@ -161,12 +161,12 @@
 
 	<TEXT>
 		<Tag>TXT_KEY_BUG_YEAR_BUILT</Tag>
-		<English>Built in %s1_year</English>
-		<French>Built in %s1_year</French>
-		<German>Errichtet im Jahr %s1_year</German>
-		<Italian>Built in %s1_year</Italian>
-		<Spanish>Built in %s1_year</Spanish>
-		<Finnish>Built in %s1_year</Finnish>
+		<English>Built on turn %d1</English>
+		<French>Built on turn %d1</French>
+		<German>Errichtet im Jahr %d1</German>
+		<Italian>Built on turn %d1</Italian>
+		<Spanish>Built on turn %d1</Spanish>
+		<Finnish>Built on turn %d1</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_DOUBLE_COMMERCE_NEXT_YEAR</Tag>
