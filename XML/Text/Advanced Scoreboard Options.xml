@@ -404,12 +404,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWER_HOVER</Tag>
-		<English>When checked, shows the ratio of your power rating to those of civilizations against whom you have accumulated enough espionage points.</English>
-		<French>En activant, montre le pro rata de votre pouvoir compar&#233; &#224; ceux des civilisation pour lesquelles vous avez accumul&#233; assez de points d'espionnage.</French>
-		<German>Zeigt die Machtverteilung zwischen der eigenen und den anderen Zivilisationen als Verh&#228;ltniswert an, falls genug Spionagepunkte investiert wurden</German>
-		<Italian>Quando &#232; selezionato, mostra il rapporto fra la tua Potenza e quella della Civilt&#224; verso cui hai accumulato abbastanza Punti Spionaggio.</Italian>
-		<Spanish>Cuando se activa, muestra la relaci&#243;n de poder entre t&#250; y aquellas Civ. contra las que has acumulado suficientes puntos de espionaje.</Spanish>
-		<Finnish>When checked, shows the ratio of your power rating to those of civilizations against whom you have accumulated enough espionage points.</Finnish>
+		<English>When checked, shows the ratio of your power rating to those of civilizations with whom you have an embassy (only available with the Advanced Tactics option).</English>
+		<French>Une fois vérifié, expositions le rapport de votre estimation de puissance à ceux des civilisations avec qui vous avez une ambassade (seulement disponible avec l'option Avancée de la Tactique).</French>
+		<German>Wenn Sie, Erscheinen das Verhältnis Ihrer Anschlusswerte zu denen der Zivilisationen überprüft werden, mit denen Sie eine Botschaft haben (nur vorhanden mit der vorgerückten Taktikwahl).</German>
+		<Italian>Una volta controllato, esposizioni il rapporto della vostra valutazione di potere a quelle delle civilizzazioni con quale avete un'ambasciata (soltanto disponibile con l'opzione Avanzata di Tattiche).</Italian>
+		<Spanish>Cuando está comprobado, demostraciones el cociente de su grado de energía a los de las civilizaciones con las cuales usted tiene una embajada (solamente disponible con la opción Avanzada de las Táctica).</Spanish>
+		<Finnish>When checked, shows the ratio of your power rating to those of civilizations with whom you have an embassy (only available with the Advanced Tactics option).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERFORMULA_TEXT</Tag>
