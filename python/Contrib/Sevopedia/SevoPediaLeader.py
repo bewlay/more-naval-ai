@@ -26,6 +26,10 @@ class SevoPediaLeader:
 		self.iLeader = -1
 		self.top = main
 
+##--------	BUGFfH: Modified by Denev 2009/10/04
+		X_MERGIN = self.top.X_MERGIN
+		Y_MERGIN = self.top.Y_MERGIN
+
 		self.X_LEADERHEAD_PANE = self.top.X_PEDIA_PAGE
 		self.Y_LEADERHEAD_PANE = self.top.Y_PEDIA_PAGE
 		self.W_LEADERHEAD_PANE = 240
@@ -39,26 +43,23 @@ class SevoPediaLeader:
 		self.W_CIV = 64
 		self.H_CIV = 64
 		self.X_CIV = self.X_LEADERHEAD_PANE + (self.W_LEADERHEAD_PANE - self.W_CIV) / 2
-		self.Y_CIV = self.Y_LEADERHEAD_PANE + self.H_LEADERHEAD_PANE + 10
-		self.W_CIVS = 240
-		self.H_CIVS = 110
-		self.X_CIVS = self.X_LEADERHEAD_PANE + (self.W_LEADERHEAD_PANE - self.W_CIVS) / 2
-		self.Y_CIVS = self.Y_LEADERHEAD_PANE + self.H_LEADERHEAD_PANE + 10
+		self.Y_CIV = self.Y_LEADERHEAD_PANE + self.H_LEADERHEAD_PANE + Y_MERGIN
 
-		self.X_CIVIC = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + 10
+		self.X_CIVIC = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + X_MERGIN
 		self.Y_CIVIC = self.Y_LEADERHEAD_PANE
 		self.W_CIVIC = self.top.R_PEDIA_PAGE - self.X_CIVIC
 		self.H_CIVIC = 80
 
-		self.X_TRAITS = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + 10
-		self.Y_TRAITS = self.Y_CIVIC + self.H_CIVIC + 10
+		self.X_TRAITS = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + X_MERGIN
+		self.Y_TRAITS = self.Y_CIVIC + self.H_CIVIC + Y_MERGIN
 		self.W_TRAITS = self.top.R_PEDIA_PAGE - self.X_TRAITS
-		self.H_TRAITS = self.Y_CIVS + self.H_CIVS - self.Y_TRAITS
+		self.H_TRAITS = self.Y_CIV + self.H_CIV - self.Y_TRAITS
 
 		self.X_HISTORY = self.X_LEADERHEAD_PANE
-		self.Y_HISTORY = self.Y_CIVS + self.H_CIVS + 10
+		self.Y_HISTORY = self.Y_CIV + self.H_CIV + Y_MERGIN
 		self.W_HISTORY = self.top.R_PEDIA_PAGE - self.X_HISTORY
 		self.H_HISTORY = self.top.B_PEDIA_PAGE - self.Y_HISTORY
+##--------	BUGFfH: End Modify
 
 
 
@@ -71,9 +72,18 @@ class SevoPediaLeader:
 		self.leaderWidget = self.top.getNextWidgetName()
 		screen.addLeaderheadGFC(self.leaderWidget, self.iLeader, AttitudeTypes.ATTITUDE_PLEASED, self.X_LEADERHEAD, self.Y_LEADERHEAD, self.W_LEADERHEAD, self.H_LEADERHEAD, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
+##--------	BUGFfH: Added by Denev 2009/08/16
+		# Header...
+		szHeader = u"<font=4b>" + gc.getLeaderHeadInfo(self.iLeader).getDescription() + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: End Add
+
 		self.placeHistory()
 		self.placeCivic()
-		self.placeReligion()
+##--------	BUGFfH: Deleted by Denev 2009/10/05
+#		self.placeReligion()
+##--------	BUGFfH: End Delete
 		self.placeCiv()
 		self.placeTraits()
 
@@ -81,22 +91,24 @@ class SevoPediaLeader:
 
 	def placeCiv(self):
 		screen = self.top.getScreen()
-		civLeaderList = []
+##--------	BUGFfH: Added by Denev 2009/08/16
+		lLeaderCivList = []
+##--------	BUGFfH: End Add
 		for iCiv in range(gc.getNumCivilizationInfos()):
 			civ = gc.getCivilizationInfo(iCiv)
-			if (civ.isLeaders(self.iLeader)):
-				civLeaderList.append((iCiv, civ))
-		if (len(civLeaderList) > 1):
-			panelName = self.top.getNextWidgetName()
-			screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_CATEGORY_CIV", ()), "", False, True, self.X_CIVS, self.Y_CIVS, self.W_CIVS, self.H_CIVS, PanelStyles.PANEL_STYLE_BLUE50 )
-			screen.attachLabel(panelName, "", "  ")
-			def placeCivIcon(iCiv, civ):
-				screen.attachImageButton(panelName, "", civ.getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iCiv, 1, False)
-		else:
-			def placeCivIcon(iCiv, civ):
-				screen.setImageButton(self.top.getNextWidgetName(), civ.getButton(), self.X_CIV, self.Y_CIV, self.W_CIV, self.H_CIV, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iCiv, -1)
-		for iCiv, civ in civLeaderList:
-			placeCivIcon(iCiv, civ)
+			if civ.isLeaders(self.iLeader):
+##--------	BUGFfH: Modified by Denev 2009/08/16
+#				screen.setImageButton(self.top.getNextWidgetName(), civ.getButton(), self.X_CIV, self.Y_CIV, self.W_CIV, self.H_CIV, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iCiv, 1)
+				lLeaderCivList.append( (iCiv, civ) )
+		if lLeaderCivList:
+			fEachMargin = float( self.W_LEADERHEAD_PANE / len(lLeaderCivList) )
+
+			fX = float( self.X_LEADERHEAD_PANE - (self.W_CIV + fEachMargin) / 2 )
+			for loopCiv in lLeaderCivList:
+				fX += fEachMargin
+				screen.setImageButton(self.top.getNextWidgetName(), loopCiv[1].getButton(), int(fX), self.Y_CIV, self.W_CIV, self.H_CIV, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, loopCiv[0], 1)
+##--------	BUGFfH: End Modify
+
 
 
 	def placeTraits(self):
@@ -113,25 +125,49 @@ class SevoPediaLeader:
 				iLeaderCiv = iCiv
 		if iNumCivs == 1:
 			szSpecialText = CyGameTextMgr().parseLeaderTraits(self.iLeader, iLeaderCiv, False, True)
-		else:		
+		else:
 			szSpecialText = CyGameTextMgr().parseLeaderTraits(self.iLeader, -1, False, True)
-		szSpecialText = szSpecialText[1:]
-		screen.addMultilineText(listName, szSpecialText, self.X_TRAITS+5, self.Y_TRAITS+30, self.W_TRAITS-10, self.H_TRAITS-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Modified by Denev 2009/10/05
+#		szSpecialText = szSpecialText[1:]
+		szSpecialText= szSpecialText.strip("\n")
+##--------	BUGFfH: End Modify
+
+##--------	BUGFfH: Modified by Denev 2009/08/16
+#		screen.addMultilineText(listName, szSpecialText, self.X_TRAITS+5, self.Y_TRAITS+30, self.W_TRAITS-10, self.H_TRAITS-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText(listName, szSpecialText, self.X_TRAITS+5, self.Y_TRAITS+30, self.W_TRAITS-5, self.H_TRAITS-32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 
-	def placeCivic(self):		
+	def placeCivic(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
+##--------	BUGFfH: Modified by Denev 2009/08/16
+		"""
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_FAV_CIVIC_AND_RELIGION", ()), "", True, True, self.X_CIVIC, self.Y_CIVIC, self.W_CIVIC, self.H_CIVIC, PanelStyles.PANEL_STYLE_BLUE50)
 		iCivic = gc.getLeaderHeadInfo(self.iLeader).getFavoriteCivic()
 		if (-1 != iCivic):
 			szCivicText = u"<link=literal>" + gc.getCivicInfo(iCivic).getDescription() + u"</link>"
 			listName = self.top.getNextWidgetName()
 			screen.addMultilineText(listName, szCivicText, self.X_CIVIC+5, self.Y_CIVIC+30, self.W_CIVIC-10, self.H_CIVIC-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		"""
+		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_FAV_CIVIC", ()), "", True, True, self.X_CIVIC, self.Y_CIVIC, self.W_CIVIC, self.H_CIVIC, PanelStyles.PANEL_STYLE_BLUE50)
+		iCivic = gc.getLeaderHeadInfo(self.iLeader).getFavoriteCivic()
+		if (-1 != iCivic):
+			szCivicText = u"<link=" + gc.getCivicInfo(iCivic).getType() + ">" + gc.getCivicInfo(iCivic).getDescription() + u"</link>"
+			szCivicText = localText.getText("TXT_KEY_MISC_FAVORITE_CIVIC", ()) + u" " + szCivicText
+		iWonder = gc.getLeaderHeadInfo(self.iLeader).getFavoriteWonder()
+		if (-1 != iWonder):
+			szWonderText = u"<link=" + gc.getBuildingInfo(iWonder).getType() + ">" + gc.getBuildingInfo(iWonder).getDescription() + u"</link>"
+			szCivicText += u"\n" + localText.getText("TXT_KEY_MISC_FAVORITE_WONDER", ()) + u" " + szWonderText
+			listName = self.top.getNextWidgetName()
+			screen.addMultilineText(listName, szCivicText, self.X_CIVIC + 5, self.Y_CIVIC + 30, self.W_CIVIC - 5, self.H_CIVIC - 32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
-	def placeReligion(self):		
+##--------	BUGFfH: Deleted by Denev 2009/10/05
+			"""
+	def placeReligion(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
 		iReligion = gc.getLeaderHeadInfo(self.iLeader).getFavoriteReligion()
@@ -139,6 +175,8 @@ class SevoPediaLeader:
 			szReligionText = u"<link=literal>" + gc.getReligionInfo(iReligion).getDescription() + u"</link>"
 			listName = self.top.getNextWidgetName()
 			screen.addMultilineText(listName, szReligionText, self.X_CIVIC+5, self.Y_CIVIC+50, self.W_CIVIC-10, self.H_CIVIC-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+			"""
+##--------	BUGFfH: End Delete
 
 
 
@@ -149,7 +187,10 @@ class SevoPediaLeader:
 		historyTextName = self.top.getNextWidgetName()
 		CivilopediaText = gc.getLeaderHeadInfo(self.iLeader).getCivilopedia()
 		CivilopediaText = u"<font=2>" + CivilopediaText + u"</font>"
-		screen.attachMultilineText(panelName, historyTextName, CivilopediaText, WidgetTypes.WIDGET_GENERAL,-1,-1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Modified by Denev 2009/08/16
+#		screen.attachMultilineText(panelName, historyTextName, CivilopediaText, WidgetTypes.WIDGET_GENERAL,-1,-1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText(historyTextName, CivilopediaText, self.X_HISTORY + 5, self.Y_HISTORY + 8, self.W_HISTORY - 5, self.H_HISTORY - 10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 

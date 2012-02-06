@@ -25,7 +25,11 @@ class SevoPediaProject:
 		self.iProject = -1
 		self.top = main
 
-		self.W_REQUIRES = 200
+##--------	BUGFfH: Modified by Denev 2009/10/04
+		X_MERGIN = self.top.X_MERGIN
+		Y_MERGIN = self.top.Y_MERGIN
+
+		self.W_REQUIRES = 240
 		self.X_REQUIRES = self.top.R_PEDIA_PAGE - self.W_REQUIRES
 		self.Y_REQUIRES = self.top.Y_PEDIA_PAGE
 		self.H_REQUIRES = 116
@@ -41,10 +45,10 @@ class SevoPediaProject:
 		self.Y_ICON = self.Y_MAIN_PANE + (self.H_MAIN_PANE - self.H_ICON) / 2
 		self.ICON_SIZE = 64
 
-		self.X_STATS_PANE = self.X_ICON + self.W_ICON
-		self.Y_STATS_PANE = 79
-		self.W_STATS_PANE = 200
-		self.H_STATS_PANE = 200
+		self.X_STATUS_PANE = self.X_ICON + self.W_ICON
+		self.Y_STATUS_PANE = 79
+		self.W_STATUS_PANE = 200
+		self.H_STATUS_PANE = 200
 
 		self.X_SPECIAL = self.X_MAIN_PANE
 		self.Y_SPECIAL = self.Y_MAIN_PANE + self.H_MAIN_PANE + 10
@@ -55,12 +59,20 @@ class SevoPediaProject:
 		self.Y_TEXT = self.Y_SPECIAL + self.H_SPECIAL + 10
 		self.W_TEXT = self.top.R_PEDIA_PAGE - self.X_MAIN_PANE
 		self.H_TEXT = self.top.B_PEDIA_PAGE - self.Y_TEXT
+##--------	BUGFfH: End Modify
 
 
 
 	def interfaceScreen(self, iProject):
 		self.iProject = iProject
 		screen = self.top.getScreen()
+
+#BUGFfH: Added by Denev 2009/08/16
+		# Header...
+		szHeader = u"<font=4b>" + gc.getProjectInfo(self.iProject).getDescription() + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#BUGFfH: End Add
 
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_MAIN_PANE, self.Y_MAIN_PANE, self.W_MAIN_PANE, self.H_MAIN_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
@@ -76,7 +88,7 @@ class SevoPediaProject:
 	def placeStats(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addListBoxGFC(panelName, "", self.X_STATS_PANE, self.Y_STATS_PANE, self.W_STATS_PANE, self.H_STATS_PANE, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addListBoxGFC(panelName, "", self.X_STATUS_PANE, self.Y_STATUS_PANE, self.W_STATUS_PANE, self.H_STATUS_PANE, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(panelName, False)
 		projectInfo = gc.getProjectInfo(self.iProject)
 
@@ -109,6 +121,13 @@ class SevoPediaProject:
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, self.X_REQUIRES, self.Y_REQUIRES, self.W_REQUIRES, self.H_REQUIRES, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.enableSelect(panelName, False)
 		screen.attachLabel(panelName, "", "  ")
+
+#BUGFfH: Added by Denev 2009/08/16
+		iPrereqCiv = gc.getProjectInfo(self.iProject).getPrereqCivilization()
+		if (iPrereqCiv >= 0):
+			screen.attachImageButton(panelName, "", gc.getCivilizationInfo(iPrereqCiv).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iPrereqCiv, 1, False)
+#BUGFfH: End Add
+
 		iPrereq = gc.getProjectInfo(self.iProject).getTechPrereq()
 		if (iPrereq >= 0):
 			screen.attachImageButton(panelName, "", gc.getTechInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iPrereq, 1, False)
@@ -121,7 +140,10 @@ class SevoPediaProject:
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_EFFECTS", ()), "", True, False, self.X_SPECIAL, self.Y_SPECIAL, self.W_SPECIAL, self.H_SPECIAL, PanelStyles.PANEL_STYLE_BLUE50)
 		listName = self.top.getNextWidgetName()
 		szSpecialText = CyGameTextMgr().getProjectHelp(self.iProject, True, None)[1:]
-		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL+5, self.Y_SPECIAL+30, self.W_SPECIAL-10, self.H_SPECIAL-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+#BUGFfH: Modified by Denev 2009/09/11
+#		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL+5, self.Y_SPECIAL+30, self.W_SPECIAL-10, self.H_SPECIAL-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL+5, self.Y_SPECIAL+30, self.W_SPECIAL-5, self.H_SPECIAL-32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+#BUGFfH: End Modify
 
 
 
@@ -130,9 +152,11 @@ class SevoPediaProject:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, "", "", True, True, self.X_TEXT, self.Y_TEXT, self.W_TEXT, self.H_TEXT, PanelStyles.PANEL_STYLE_BLUE50)
 		szText = gc.getProjectInfo(self.iProject).getCivilopedia()
-		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-
+#BUGFfH: Modified by Denev 2009/08/16
+#		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		textName = self.top.getNextWidgetName()
+		screen.addMultilineText( textName, szText, self.X_TEXT + 5, self.Y_TEXT + 8, self.W_TEXT - 5, self.H_TEXT - 10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+#BUGFfH: End Modify
 
 	def getProjectType(self, iProject):
 		if (isWorldProject(iProject)):

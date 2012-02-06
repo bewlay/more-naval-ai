@@ -26,9 +26,13 @@ class SevoPediaCivic:
 		self.iCivic = -1
 		self.top = main
 
+##--------	BUGFfH: Modified by Denev 2009/10/09
+		X_MERGIN = self.top.X_MERGIN
+		Y_MERGIN = self.top.Y_MERGIN
+
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
 		self.Y_MAIN_PANE = self.top.Y_PEDIA_PAGE
-		self.W_MAIN_PANE = 290
+		self.W_MAIN_PANE = 300
 		self.H_MAIN_PANE = 151
 
 		self.W_ICON = 125
@@ -42,26 +46,34 @@ class SevoPediaCivic:
 		self.W_STATS_PANE = 250
 		self.H_STATS_PANE = 200
 
-		self.X_REQUIRES = self.X_MAIN_PANE + self.W_MAIN_PANE + 10
+		self.X_REQUIRES = self.X_MAIN_PANE + self.W_MAIN_PANE + X_MERGIN
 		self.W_REQUIRES = self.top.R_PEDIA_PAGE - self.X_REQUIRES
 		self.H_REQUIRES = 110
 		self.Y_REQUIRES = self.Y_MAIN_PANE + self.H_MAIN_PANE - self.H_REQUIRES
 
 		self.X_SPECIAL = self.X_MAIN_PANE
-		self.Y_SPECIAL = self.Y_MAIN_PANE + self.H_MAIN_PANE + 10
+		self.Y_SPECIAL = self.Y_MAIN_PANE + self.H_MAIN_PANE + Y_MERGIN
 		self.W_SPECIAL = self.top.R_PEDIA_PAGE - self.X_SPECIAL
 		self.H_SPECIAL = 160
 
 		self.X_TEXT = self.X_MAIN_PANE
-		self.Y_TEXT = self.Y_SPECIAL + self.H_SPECIAL + 10
+		self.Y_TEXT = self.Y_SPECIAL + self.H_SPECIAL + Y_MERGIN
 		self.W_TEXT = self.top.R_PEDIA_PAGE - self.X_TEXT
 		self.H_TEXT = self.top.B_PEDIA_PAGE - self.Y_TEXT
+##--------	BUGFfH: End Modify
 
 
 
 	def interfaceScreen(self, iCivic):
 		self.iCivic = iCivic
 		screen = self.top.getScreen()
+
+##--------	BUGFfH: Added by Denev 2009/08/16
+		# Header...
+		szHeader = u"<font=4b>" + gc.getCivicInfo(self.iCivic).getDescription() + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: End Add
 
 		screen.addPanel( self.top.getNextWidgetName(), "", "", False, False, self.X_MAIN_PANE, self.Y_MAIN_PANE, self.W_MAIN_PANE, self.H_MAIN_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
@@ -94,9 +106,23 @@ class SevoPediaCivic:
 		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, self.X_REQUIRES, self.Y_REQUIRES, self.W_REQUIRES, self.H_REQUIRES, PanelStyles.PANEL_STYLE_BLUE50 )
 		screen.enableSelect(panelName, False)
 		screen.attachLabel(panelName, "", "  ")
+
+##--------	BUGFfH: Added by Denev 2009/08/16
+		iPrereqCiv = gc.getCivicInfo(self.iCivic).getPrereqCivilization()
+		if (iPrereqCiv != CivilizationTypes.NO_CIVILIZATION):
+			screen.attachImageButton( panelName, "", gc.getCivilizationInfo(iPrereqCiv).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iPrereqCiv, 1, False )
+##--------	BUGFfH: End Add
+
 		iTech = gc.getCivicInfo(self.iCivic).getTechPrereq()
 		if (iTech > -1):
 			screen.attachImageButton( panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 1, False )
+
+##--------	BUGFfH: Added by Denev 2009/10/08
+		#add religion buttons
+		iPrereqReligion = gc.getCivicInfo(self.iCivic).getPrereqReligion()
+		if iPrereqReligion != ReligionTypes.NO_RELIGION:
+			screen.attachImageButton(panelName, "", gc.getReligionInfo(iPrereqReligion).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereqReligion, 1, False)
+##--------	BUGFfH: End Add
 
 
 
