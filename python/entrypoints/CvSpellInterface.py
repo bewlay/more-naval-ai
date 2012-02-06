@@ -2489,7 +2489,7 @@ def spellRepair(caster,amount):
 def reqRessurection(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	
-	if pPlayer == gc.getPlayer(gc.getBARBARIAN_PLAYER()):
+	if caster.getOwner() == gc.getBARBARIAN_PLAYER():
 		return False
 		
 	iHero = cf.getHero(pPlayer)
