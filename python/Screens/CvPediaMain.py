@@ -24,6 +24,9 @@ import CvPediaProject
 import CvPediaReligion
 import CvPediaSpell
 import CvPediaCorporation
+##--------	BUGFfH: Added by Denev 2009/09/19
+import CvPediaTrait
+##--------	BUGFfH: End Add
 
 # globals
 gc = CyGlobalContext()
@@ -81,6 +84,19 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		self.Y_LINKS = 51
 		self.H_LINKS = 665
 		self.W_LINKS = 225
+
+##--------	BUGFfH: Added by Denev 2009/09/18
+		self.X_PEDIA_PAGE = 20
+		self.Y_PEDIA_PAGE = self.H_PANEL + 16
+		self.R_PEDIA_PAGE = self.X_LINKS - 16
+		self.B_PEDIA_PAGE = self.Y_LINKS + self.H_LINKS - 16
+		self.W_PEDIA_PAGE = self.R_PEDIA_PAGE - self.X_PEDIA_PAGE
+		self.H_PEDIA_PAGE = self.B_PEDIA_PAGE - self.Y_PEDIA_PAGE
+
+		self.X_MERGIN = 16
+		self.Y_MERGIN = 5
+##--------	BUGFfH: End Add
+
 		
 		self.nWidgetCount = 0
 		
@@ -98,6 +114,9 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		self.pediaCivic = CvPediaCivic.CvPediaCivic(self)
 		self.pediaCivilization = CvPediaCivilization.CvPediaCivilization(self)
 		self.pediaLeader = CvPediaLeader.CvPediaLeader(self)
+##--------	BUGFfH: Added by Denev 2009/09/18
+		self.pediaTraitScreen = CvPediaTrait.CvPediaTrait(self)
+##--------	BUGFfH: End Add
 		self.pediaSpecialist = CvPediaSpecialist.CvPediaSpecialist(self)
 		self.pediaProjectScreen = CvPediaProject.CvPediaProject(self)
 		self.pediaReligion = CvPediaReligion.CvPediaReligion(self)
@@ -143,6 +162,7 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 			CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW	: self.placeNewConcepts,
 			CivilopediaPageTypes.CIVILOPEDIA_PAGE_HINTS	: self.placeHints,
 #			CivilopediaPageTypes.CIVILOPEDIA_PAGE_SPELLS : self.placeSpells,
+			CivilopediaPageTypes.CIVILOPEDIA_PAGE_TRAIT			: self.placeTraits,
 			}
 		
 	def getScreen(self):
@@ -182,6 +202,7 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		self.szCategoryConcept = localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT", ())
 		self.szCategoryConceptNew = localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT_NEW", ())
 		self.szCategoryHints = localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
+		self.szCategoryTrait = localText.getText("TXT_KEY_PEDIA_TRAITS", ())
 		
 		self.listCategories = [ self.szCategoryTech, 
 								self.szCategoryUnit, 
@@ -204,8 +225,11 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 								self.szCategoryUnitCombat, 
 								self.szCategoryCiv, 
 								self.szCategoryLeader,
+##--------	BUGFfH: Added by Denev 2009/09/19
+								self.szCategoryTrait,
+##--------	BUGFfH: End Add
 								self.szCategoryReligion, 
-								self.szCategoryCorporation, 
+#								self.szCategoryCorporation, 
 								self.szCategoryCivic, 
 								self.szCategoryProject,  
 								self.szCategoryConcept,
@@ -630,9 +654,11 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 			iCounter += 1
 
 	def placeSpells(self):
+##--------	BUGFfH: Modified by Denev 2009/09/19
+		"""
 		screen = self.getScreen()
-		
-		# Create and place a tech pane									
+
+		# Create and place a tech pane
 		list = self.getSortedList( gc.getNumSpellInfos(), gc.getSpellInfo )
 
 		nColumns = 3
@@ -645,7 +671,7 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		screen.enableSelect(tableName, False)
 		for i in range(nColumns):
 			screen.setTableColumnHeader(tableName, i, "", self.W_ITEMS_PANE/nColumns)
-		
+
 		iCounter = 0
 		iNumRows = 0
 		for item in list:
@@ -654,9 +680,29 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 			if iRow >= iNumRows:
 				iNumRows += 1
 				screen.appendTableRow(tableName)
-			screen.setTableText(tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getSpellInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELLS, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
+			screen.setTableText(tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getSpellInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			iCounter += 1
-			
+		"""
+		nColumns = 3
+		iWidget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL
+
+		bAbility = false
+		lAbility = self.getSortedList( gc.getNumSpellInfos(), gc.getSpellInfo, bAbility, self.pediaSpellScreen.getSpellType )
+
+		self.placeItems(lAbility, gc.getSpellInfo, iWidget, nColumns)
+##--------	BUGFfH: End Modify
+
+##--------	BUGFfH: Added by Denev 2009/09/19
+	def placeAbilities(self):
+		nColumns = 3
+		iWidget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL
+
+		bSpellType = true
+		lAbility = self.getSortedList( gc.getNumSpellInfos(), gc.getSpellInfo, bSpellType, self.pediaSpellScreen.getSpellType )
+
+		self.placeItems(lAbility, gc.getSpellInfo, iWidget, nColumns)
+##--------	BUGFfH: End Add
+
 	def placeUnitGroups(self):
 		screen = self.getScreen()
 		
@@ -1123,6 +1169,10 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 			self.pediaCivilization.interfaceScreen(iEntry)	
 		elif (iScreen == CvScreenEnums.PEDIA_LEADER):
 			self.pediaLeader.interfaceScreen(iEntry)	
+##--------	BUGFfH: Added by Denev 2009/09/19
+		elif (iScreen == CvScreenEnums.PEDIA_TRAIT):
+			self.pediaTraitScreen.interfaceScreen(iEntry)
+##--------	BUGFfH: End Add
 		elif (iScreen == CvScreenEnums.PEDIA_SPECIALIST):
 			self.pediaSpecialist.interfaceScreen(iEntry)	
 		elif (iScreen == CvScreenEnums.PEDIA_PROJECT):
@@ -1132,7 +1182,7 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 #		elif (iScreen == CvScreenEnums.PEDIA_CORPORATION):
 #			self.pediaCorporation.interfaceScreen(iEntry)
 		elif (iScreen == CvScreenEnums.PEDIA_SPELL):
-			self.pediaSpell.interfaceScreen(iEntry)
+			self.pediaSpellScreen.interfaceScreen(iEntry)
 		elif (iScreen == CvScreenEnums.PEDIA_HISTORY):
 			self.pediaHistorical.interfaceScreen(iEntry)	
 
@@ -1188,7 +1238,11 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		if (szLink == "PEDIA_MAIN_CIV"):
 			return self.pediaJump(CvScreenEnums.PEDIA_MAIN, int(CivilopediaPageTypes.CIVILOPEDIA_PAGE_CIV), True)			
 		if (szLink == "PEDIA_MAIN_LEADER"):
-			return self.pediaJump(CvScreenEnums.PEDIA_MAIN, int(CivilopediaPageTypes.CIVILOPEDIA_PAGE_LEADER), True)			
+			return self.pediaJump(CvScreenEnums.PEDIA_MAIN, int(CivilopediaPageTypes.CIVILOPEDIA_PAGE_LEADER), True)
+##--------	BUGFfH: Added by Denev 2009/09/19
+		if (szLink == "PEDIA_MAIN_TRAIT"):
+			return self.pediaJump(CvScreenEnums.PEDIA_MAIN, int(CivilopediaPageTypes.CIVILOPEDIA_PAGE_TRAIT), True)
+##--------	BUGFfH: End Add
 		if (szLink == "PEDIA_MAIN_RELIGION"):
 			return self.pediaJump(CvScreenEnums.PEDIA_MAIN, int(CivilopediaPageTypes.CIVILOPEDIA_PAGE_RELIGION), True)			
 #		if (szLink == "PEDIA_MAIN_CORPORATION"):
@@ -1256,6 +1310,11 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 		for i in range(gc.getNumLeaderHeadInfos()):
 			if (gc.getLeaderHeadInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(CvScreenEnums.PEDIA_LEADER, i, True)
+##--------	BUGFfH: Added by Denev 2009/09/19
+		for i in range(gc.getNumTraitInfos()):
+			if (gc.getTraitInfo(i).isMatchForLink(szLink, False)):
+				return self.pediaJump(CvScreenEnums.PEDIA_TRAIT, i, True)
+##--------	BUGFfH: End Add
 		for i in range(gc.getNumSpecialistInfos()):
 			if (gc.getSpecialistInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(CvScreenEnums.PEDIA_SPECIALIST, i, True)
@@ -1305,6 +1364,10 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 			return self.pediaCivilization.handleInput(inputClass)
 		if (self.iLastScreen == CvScreenEnums.PEDIA_LEADER):
 			return self.pediaLeader.handleInput(inputClass)
+##--------	BUGFfH: Added by Denev 2009/09/19
+		if (self.iLastScreen == CvScreenEnums.PEDIA_TRAIT):
+			return self.pediaTraitScreen.handleInput(inputClass)
+##--------	BUGFfH: End Add
 		if (self.iLastScreen == CvScreenEnums.PEDIA_SPECIALIST):
 			return self.pediaSpecialist.handleInput(inputClass)
 		if (self.iLastScreen == CvScreenEnums.PEDIA_PROJECT):

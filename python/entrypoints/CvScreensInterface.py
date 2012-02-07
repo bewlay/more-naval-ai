@@ -484,7 +484,19 @@ def pediaJumpToSpecialist(argsList):
 		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_SPECIALISTS, argsList[0], True, False)
 	else:
 		pediaMainScreen.pediaJump(PEDIA_SPECIALIST, argsList[0], True)
-
+			
+def pediaJumpToSpell(argsList):
+	if (bUsingSevopedia):
+		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_SPELLS, argsList[0], True, False)
+	else:
+		pediaMainScreen.pediaJump(PEDIA_SPELL, argsList[0], True)
+	
+def pediaJumpToTrait(argsList):
+	if (bUsingSevopedia):
+		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_TRAITS, argsList[0], True, False)
+	else:
+		pediaMainScreen.pediaJump(PEDIA_TRAITS, argsList[0], True)
+	
 def pediaJumpToTerrain(argsList):
 	if (bUsingSevopedia):
 		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_TERRAINS, argsList[0], True, False)
@@ -1203,6 +1215,23 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					101:trophyHall,
 #FfH: End Add
 					
+					PEDIA_MAIN : pediaMainScreen,
+					PEDIA_TECH : pediaMainScreen,
+					PEDIA_UNIT : pediaMainScreen,
+					PEDIA_BUILDING : pediaMainScreen,
+					PEDIA_PROMOTION : pediaMainScreen,
+					PEDIA_PROJECT : pediaMainScreen,
+					PEDIA_UNIT_CHART : pediaMainScreen,
+					PEDIA_BONUS : pediaMainScreen,
+					PEDIA_IMPROVEMENT : pediaMainScreen,
+					PEDIA_TERRAIN : pediaMainScreen,
+					PEDIA_FEATURE : pediaMainScreen,
+					PEDIA_CIVIC : pediaMainScreen,
+					PEDIA_CIVILIZATION : pediaMainScreen,
+					PEDIA_LEADER : pediaMainScreen,
+					PEDIA_RELIGION : pediaMainScreen,
+#					PEDIA_CORPORATION : pediaMainScreen,
+					PEDIA_HISTORY : pediaMainScreen,
 					WORLDBUILDER_SCREEN : worldBuilderScreen,
 					WORLDBUILDER_DIPLOMACY_SCREEN : worldBuilderDiplomacyScreen,
 					
@@ -1217,9 +1246,28 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 #######################################################################################
 ## Handle Navigation Map
 #######################################################################################
-HandleNavigationMap = {}
-
-
+HandleNavigationMap = {
+					PEDIA_MAIN : pediaMainScreen,
+					PEDIA_TECH : pediaMainScreen,
+					PEDIA_UNIT : pediaMainScreen,
+					PEDIA_BUILDING : pediaMainScreen,
+					PEDIA_PROMOTION : pediaMainScreen,
+					PEDIA_PROJECT : pediaMainScreen,
+					PEDIA_UNIT_CHART : pediaMainScreen,
+					PEDIA_BONUS : pediaMainScreen,
+					PEDIA_IMPROVEMENT : pediaMainScreen,
+					PEDIA_TERRAIN : pediaMainScreen,
+					PEDIA_FEATURE : pediaMainScreen,
+					PEDIA_CIVIC : pediaMainScreen,
+					PEDIA_CIVILIZATION : pediaMainScreen,
+					PEDIA_LEADER : pediaMainScreen,
+					PEDIA_HISTORY : pediaMainScreen,
+					PEDIA_RELIGION : pediaMainScreen,
+#					PEDIA_CORPORATION : pediaMainScreen,
+				
+				# add new screens here
+					PEDIA_SPELL : pediaMainScreen
+				}
 # BUG - Options - start
 def init():
 	createDomesticAdvisor()
