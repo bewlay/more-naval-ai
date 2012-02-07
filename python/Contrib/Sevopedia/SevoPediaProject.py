@@ -159,17 +159,16 @@ class SevoPediaProject:
 #BUGFfH: End Modify
 
 	def getProjectType(self, iProject):
-		if (isWorldProject(iProject)):
-			return (3)
-		if (isTeamProject(iProject)):
-			return (2)
-		return (1)
+#		if (isWorldProject(iProject)):
+#			return SevoScreenEnums.TYPE_WORLD
+#		elif (isTeamProject(iProject)):
+#			return SevoScreenEnums.TYPE_TEAM
 
-
+		return SevoScreenEnums.TYPE_REGULAR
 
 	def getProjectSortedList(self):
 		listOfAllTypes = []
-		for iBuildingType in range(4):
+		for iBuildingType in range(10):
 			listBuildings = []
 			iCount = 0
 			for iBuilding in range(gc.getNumProjectInfos()):

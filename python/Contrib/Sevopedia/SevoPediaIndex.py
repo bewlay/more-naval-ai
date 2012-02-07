@@ -34,6 +34,15 @@ class SevoPediaIndex:
 		self.letterTextIDs = None
 
 	def interfaceScreen(self):
+
+##--------	BUGFfH: Added by Denev 2009/08/16
+		# Header...
+		screen = self.top.getScreen()
+		szHeader = u"<font=4b>" + localText.getText("TXT_KEY_SEVOPEDIA_TITLE", ()) + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: End Add
+
 		self.buildIndex()
 		self.placeIndex()
 
@@ -46,8 +55,12 @@ class SevoPediaIndex:
 		promotionList = self.top.getPromotionList()
 		
 		buildingList = self.top.getBuildingList()
+##--------	BUGFfH: Deleted by Denev 2009/10/09
+		"""
 		nationalWonderList = self.top.getNationalWonderList()
 		greatWonderList = self.top.getGreatWonderList()
+		"""
+##--------	BUGFfH: End Delete
 		projectList = self.top.getProjectList()
 		specialistList = self.top.getSpecialistList()
 		
@@ -68,6 +81,8 @@ class SevoPediaIndex:
 		newConceptList = self.top.getNewConceptList()
 		
 		list=[]
+##--------	BUGFfH: Modified by Denev 2009/10/09
+		"""
 		for item in techList:
 			if (item[0][0:4]=="The "):
 				list.append([item[0][4:]+","+item[0][0:3],"Tech",item])
@@ -144,6 +159,28 @@ class SevoPediaIndex:
 			list.append([item[0],"Concept",item])
 		for item in newConceptList:
 			list.append([item[0],"NewConcept",item])
+		"""
+		list = []
+		list += [(szIndexName,"Tech",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in techList]
+		list += [(szIndexName,"Unit",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in unitList]
+		list += [(szIndexName,"UnitCombat",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in unitCombatList]
+		list += [(szIndexName,"Promo",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in promotionList]
+		list += [(szIndexName,"Building",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in buildingList]
+		list += [(szIndexName,"Project",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in projectList]
+		list += [(szIndexName,"Specialist",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in specialistList]
+		list += [(szIndexName,"Terrain",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in terrainList]
+		list += [(szIndexName,"Feature",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in featureList]
+		list += [(szIndexName,"Bonus",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in bonusList]
+		list += [(szIndexName,"Improv",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in improvementList]
+		list += [(szIndexName,"Civ",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in civList]
+		list += [(szIndexName,"Leader",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in leaderList]
+		list += [(szIndexName,"Trait",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in traitList]
+		list += [(szIndexName,"Civic",		(szItemName, iItemID))	for szIndexName, iItemID, szItemName in civicList]
+		list += [(szIndexName,"Religion",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in religionList]
+		list += [(szIndexName,"Corporation",(szItemName, iItemID))	for szIndexName, iItemID, szItemName in corporationList]
+		list += [(szIndexName,"Concept",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in conceptList]
+	#	list += [(szIndexName,"NewConcept",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in newConceptList]
+##--------	BUGFfH: End Modify
 		
 		list.sort()
 		self.index = list
@@ -204,8 +241,12 @@ class SevoPediaIndex:
 			
 			elif (type == "Building"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Deleted by Denev 2009/10/09
+				"""
 			elif (type == "Wonder"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
+				"""
+##--------	BUGFfH: End Delete
 			elif (type == "Project"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getProjectInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Specialist"):

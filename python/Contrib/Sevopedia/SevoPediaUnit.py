@@ -24,7 +24,13 @@ class SevoPediaUnit:
 	def __init__(self, main):
 		self.iUnit = -1
 		self.top = main
-		
+
+##--------	BUGFfH: Added by Denev 2009/10/07
+		X_MERGIN = self.top.X_MERGIN
+		Y_MERGIN = self.top.Y_MERGIN
+##--------	BUGFfH: End Add
+
+##--------	BUGFfH: Modified by Denev 2009/10/07
 		self.X_UNIT_PANE = self.top.X_PEDIA_PAGE
 		self.Y_UNIT_PANE = self.top.Y_PEDIA_PAGE
 		self.W_UNIT_PANE = 325
@@ -38,13 +44,14 @@ class SevoPediaUnit:
 		self.ICON_SIZE = 64
 		self.BUTTON_SIZE = 64
 		self.PROMOTION_ICON_SIZE = 32
+		self.PROMOTION_ICON_SIZE_SMALL = 24
 
 		self.X_STATS_PANE = self.X_UNIT_PANE + 130
 		self.Y_STATS_PANE = self.Y_UNIT_PANE + 42
 		self.W_STATS_PANE = 250
 		self.H_STATS_PANE = 200
 
-		self.X_UNIT_ANIMATION = self.X_UNIT_PANE + self.W_UNIT_PANE + 10
+		self.X_UNIT_ANIMATION = self.X_UNIT_PANE + self.W_UNIT_PANE + X_MERGIN
 		self.W_UNIT_ANIMATION = self.top.R_PEDIA_PAGE - self.X_UNIT_ANIMATION
 		self.Y_UNIT_ANIMATION = self.Y_UNIT_PANE + 7
 		self.H_UNIT_ANIMATION = self.H_UNIT_PANE - 7
@@ -53,29 +60,30 @@ class SevoPediaUnit:
 		self.SCALE_ANIMATION = 1.0
 
 		self.X_PREREQ_PANE = self.X_UNIT_PANE
-		self.Y_PREREQ_PANE = self.Y_UNIT_PANE + self.H_UNIT_PANE + 10
-		self.W_PREREQ_PANE = 280
+		self.Y_PREREQ_PANE = self.Y_UNIT_PANE + self.H_UNIT_PANE + Y_MERGIN
+		self.W_PREREQ_PANE = self.top.W_PEDIA_PAGE / 2
 		self.H_PREREQ_PANE = 110
 
-		self.X_UPGRADES_TO_PANE = self.X_PREREQ_PANE + self.W_PREREQ_PANE + 10
+		self.X_UPGRADES_TO_PANE = self.X_PREREQ_PANE + self.W_PREREQ_PANE + X_MERGIN
 		self.Y_UPGRADES_TO_PANE = self.Y_PREREQ_PANE
 		self.W_UPGRADES_TO_PANE = self.top.R_PEDIA_PAGE - self.X_UPGRADES_TO_PANE
 		self.H_UPGRADES_TO_PANE = self.H_PREREQ_PANE
 
 		self.X_SPECIAL_PANE = self.X_UNIT_PANE
-		self.Y_SPECIAL_PANE = self.Y_PREREQ_PANE + self.H_PREREQ_PANE + 10
-		self.W_SPECIAL_PANE = 280
+		self.Y_SPECIAL_PANE = self.Y_PREREQ_PANE + self.H_PREREQ_PANE + Y_MERGIN
+		self.W_SPECIAL_PANE = (self.top.W_PEDIA_PAGE - X_MERGIN) * 3 / 5
 		self.H_SPECIAL_PANE = 175
 
-		self.X_PROMO_PANE = self.X_SPECIAL_PANE + self.W_SPECIAL_PANE + 10
+		self.X_PROMO_PANE = self.X_SPECIAL_PANE + self.W_SPECIAL_PANE + X_MERGIN
 		self.Y_PROMO_PANE = self.Y_SPECIAL_PANE
-		self.W_PROMO_PANE = self.W_UPGRADES_TO_PANE
+		self.W_PROMO_PANE = self.top.R_PEDIA_PAGE - self.X_PROMO_PANE
 		self.H_PROMO_PANE = self.H_SPECIAL_PANE
 
 		self.X_HISTORY_PANE = self.X_UNIT_PANE
-		self.Y_HISTORY_PANE = self.Y_SPECIAL_PANE + self.H_SPECIAL_PANE + 10
+		self.Y_HISTORY_PANE = self.Y_SPECIAL_PANE + self.H_SPECIAL_PANE + Y_MERGIN
 		self.W_HISTORY_PANE = self.top.R_PEDIA_PAGE - self.X_HISTORY_PANE
 		self.H_HISTORY_PANE = self.top.B_PEDIA_PAGE - self.Y_HISTORY_PANE
+##--------	BUGFfH: End Modify
 
 
 
@@ -83,10 +91,31 @@ class SevoPediaUnit:
 		self.iUnit = iUnit
 		screen = self.top.getScreen()
 
+##--------	BUGFfH: Added by Denev 2009/09/12
+		# Header...
+		szHeader = u"<font=4b>" + gc.getUnitInfo(self.iUnit).getDescription() + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		# Unit Icon with ArtStyle
+		szUnitIcon = gc.getUnitInfo(self.iUnit).getUnitButtonWithCivArtStyle(gc.getGame().getActiveCivilizationType())
+##--------	BUGFfH: End Add
+
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_UNIT_PANE, self.Y_UNIT_PANE, self.W_UNIT_PANE, self.H_UNIT_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(self.top.getNextWidgetName(), gc.getUnitInfo(self.iUnit).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: Modified by Denev 2009/09/12
+#		screen.addDDSGFC(self.top.getNextWidgetName(), gc.getUnitInfo(self.iUnit).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.addDDSGFC(self.top.getNextWidgetName(), szUnitIcon, self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: End Modify
 		screen.addUnitGraphicGFC(self.top.getNextWidgetName(), self.iUnit, self.X_UNIT_ANIMATION, self.Y_UNIT_ANIMATION, self.W_UNIT_ANIMATION, self.H_UNIT_ANIMATION, WidgetTypes.WIDGET_GENERAL, -1, -1, self.X_ROTATION_UNIT_ANIMATION, self.Z_ROTATION_UNIT_ANIMATION, self.SCALE_ANIMATION, True)
+
+##--------	BUGFfH: Added by Denev 2009/08/12
+		if self.getUnitType(iUnit):
+			szImage = str(gc.getUnitInfo(iUnit).getImage())
+			iHeight = self.W_UPGRADES_TO_PANE / 3
+			iPositionY = self.Y_UPGRADES_TO_PANE + self.H_UPGRADES_TO_PANE - iHeight
+			screen.addDDSGFC(self.top.getNextWidgetName(), szImage, self.X_UPGRADES_TO_PANE, iPositionY, self.W_UPGRADES_TO_PANE, iHeight, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+##--------	BUGFfH: End Add
 
 		self.placeStats()
 		self.placeUpgradesTo()
@@ -111,7 +140,15 @@ class SevoPediaUnit:
 		else:
 			iStrength = gc.getUnitInfo(self.iUnit).getCombat()
 		szName = self.top.getNextWidgetName()
-		szStrength = localText.getText("TXT_KEY_PEDIA_STRENGTH", (iStrength,))
+
+#BUGFfH Defense Str: Added by Denev 2009/08/12 (from CvPediaUnit.py by Kael)
+#		szStrength = localText.getText("TXT_KEY_PEDIA_STRENGTH", (iStrength,))
+		if iStrength == gc.getUnitInfo(self.iUnit).getCombatDefense():
+			szStrength = localText.getText("TXT_KEY_PEDIA_STRENGTH", ( iStrength, ) )
+		else:
+			szStrength = localText.getText("TXT_KEY_PEDIA_STRENGTH_DEFENSE", ( iStrength, gc.getUnitInfo(self.iUnit).getCombatDefense()) )
+##--------	BUGFfH: End Add
+
 		screen.appendListBoxStringNoUpdate(panelName, u"<font=4>" + szStrength.upper() + u"%c" % CyGame().getSymbolID(FontSymbols.STRENGTH_CHAR) + u"</font>", WidgetTypes.WIDGET_GENERAL, 0, 0, CvUtil.FONT_LEFT_JUSTIFY)
 		szName = self.top.getNextWidgetName()
 		szMovement = localText.getText("TXT_KEY_PEDIA_MOVEMENT", (gc.getUnitInfo(self.iUnit).getMoves(),))
@@ -150,6 +187,10 @@ class SevoPediaUnit:
 		if (iPrereq >= 0):
 			bFirst = False
 			screen.attachImageButton(panelName, "", gc.getBonusInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, -1, False)
+
+##--------	BUGFfH: Modified by Denev 2009/09/26
+		"Even if AND resource doesn't exist, bracket off OR resources"
+		"""
 		nOr = 0
 		for j in range(gc.getNUM_UNIT_PREREQ_OR_BONUSES()):
 			if (gc.getUnitInfo(self.iUnit).getPrereqOrBonuses(j) > -1):
@@ -173,75 +214,156 @@ class SevoPediaUnit:
 				else:
 					bFirst = False
 				screen.attachImageButton(panelName, "", gc.getBonusInfo(eBonus).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
-		#phungus canTrain
-#		bFirst = true
-		for j in range(gc.getNumCivicInfos()):
-#			if (gc.getUnitInfo(self.iUnit).isPrereqOrCivics(j)):
-#				if (not bFirst):
-#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
-			eCivic = CivicTypes(j)
-			if (gc.getUnitInfo(self.iUnit).getPrereqCivic() == eCivic):
-				screen.attachImageButton(panelName, "", gc.getCivicInfo(eCivic).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, eCivic, -1, False)
-#				bFirst = false
-		#phungus -end
 		if len(szRightDelimeter) > 0:
 			screen.attachLabel(panelName, "", szRightDelimeter)
+		"""
+		"list up all OR resources"
+		liBonusPrereq = []
+		for iIndex in range(gc.getNUM_UNIT_PREREQ_OR_BONUSES()):
+			iBonusPrereq = gc.getUnitInfo(self.iUnit).getPrereqOrBonuses(iIndex)
+			if (iBonusPrereq != BonusTypes.NO_BONUS):
+				liBonusPrereq.append(iBonusPrereq)
+
+		"place OR resources"
+		if not bFirst:
+			if len(liBonusPrereq) > 0:
+				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_AND", ()))
+		if len(liBonusPrereq) > 1:
+			screen.attachLabel(panelName, "", "(")
+
+		bFirst = true
+		for iBonusPrereq in liBonusPrereq:
+			if not bFirst:
+				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
+			screen.attachImageButton( panelName, "", gc.getBonusInfo(iBonusPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iBonusPrereq, -1, False )
+			bFirst = false
+
+		if len(liBonusPrereq) > 1:
+			screen.attachLabel(panelName, "", ")")
+##--------	BUGFfH: End Modify
+
+##--------	BUGFfH: Moved to below(*1) by Denev 2009/10/07
+		"""
 		iPrereq = gc.getUnitInfo(self.iUnit).getPrereqReligion()
 		if (iPrereq >= 0):
 			screen.attachImageButton(panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_RELIGION, iPrereq, -1, False)
+		"""
+##--------	BUGFfH: End Move
+
 		iPrereq = gc.getUnitInfo(self.iUnit).getPrereqBuilding()
 		if (iPrereq >= 0):
 			screen.attachImageButton(panelName, "", gc.getBuildingInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iPrereq, -1, False)
-		#Afforess
-		if (gc.getGame().getActivePlayer() >= 0):
-			pCiv = gc.getCivilizationInfo(gc.getActivePlayer().getCivilizationType())
+
+##--------	BUGFfH: Added by Denev 2009/10/07
+		iPrereq = gc.getUnitInfo(self.iUnit).getPrereqBuildingClass()
+		if (iPrereq >= 0):
+			liAvailableBuilding = self.top.getListTrainableBuilding(iPrereq, self.iUnit)
+			if len(liAvailableBuilding) == 1:
+				iPrereq = liAvailableBuilding[0]
+			elif self.top.iActiveCiv != CivilizationTypes.NO_CIVILIZATION\
+			 and gc.getCivilizationInfo(self.top.iActiveCiv).getCivilizationBuildings(iPrereq) in liAvailableBuilding:
+				iPrereq = gc.getCivilizationInfo(self.top.iActiveCiv).getCivilizationBuildings(iPrereq)
+			else:
+				iPrereq = gc.getBuildingClassInfo(iPrereq).getDefaultBuildingIndex()
+			screen.attachImageButton( panelName, "", gc.getBuildingInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iPrereq, -1, False )
+
+		iPrereq = gc.getUnitInfo(self.iUnit).getPrereqCivic()
+		if (iPrereq >= 0):
+			screen.attachImageButton( panelName, "", gc.getCivicInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iPrereq, -1, False )
+##--------	BUGFfH: End Add
+
+##--------	BUGFfH: Moved from above(*1) by Denev 2009/10/07
+		# add religion buttons
+		iPrereq = gc.getUnitInfo(self.iUnit).getStateReligion()
+		if (iPrereq != ReligionTypes.NO_RELIGION):
+			screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_STATE_RELIGION", ()) + u"</font>")
+			screen.attachImageButton( panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereq, -1, False )
+			screen.attachLabel(panelName, "", u"<font=3>)</font>")
 		else:
-			pCiv = None
-		for j in range(gc.getNumBuildingClassInfos()):
-#			if (gc.getUnitInfo(self.iUnit).isPrereqBuildingClass(j)):
-			if (gc.getUnitInfo(self.iUnit).getPrereqBuildingClass() == j):
-				iPrereq = -1
-				if (pCiv):
-					iPrereq = pCiv.getCivilizationBuildings(j)
-#				else:
-				if iPrereq == -1:
-					iPrereq = gc.getBuildingClassInfo(j).getDefaultBuildingIndex()
-#				bTechOverride = False
-#				bEraOverride = False
-#				for k in range(gc.getNumTechInfos()):
-#					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideTech(j)):
-#						iTech = k
-#						bTechOverride = True
-#						break
-#				for k in range(gc.getNumEraInfos()):
-#					if(k == gc.getUnitInfo(self.iUnit).getPrereqBuildingClassOverrideEra(j)):
-#						iEra = k
-#						bEraOverride = True
-#						break
-				screen.attachImageButton(panelName, "", gc.getBuildingInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iPrereq, -1, False)
-#				if bTechOverride:
-#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
-#					screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, -1, False)
-#				if bEraOverride:
-#					eraDescription = gc.getEraInfo(iEra).getDescription()
-#					screen.attachLabel(panelName, "", localText.getText("TXT_KEY_UNTIL", ()))
-#					screen.attachLabel(panelName, "", " ")
-#					screen.attachLabel(panelName, "", eraDescription)
-#					screen.attachLabel(panelName, "", " Era")
+			iPrereq = gc.getUnitInfo(self.iUnit).getPrereqReligion()
+			if (iPrereq != ReligionTypes.NO_RELIGION):
+				screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_CITY_HAS", ()) + u"</font>")
+				screen.attachImageButton( panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereq, -1, False )
+				screen.attachLabel(panelName, "", u"<font=3>)</font>")
+##--------	BUGFfH: End Move
+
+##--------	BUGFfH: Added by Denev 2009/10/07
+		# add spell buttons
+		if gc.getUnitInfo(self.iUnit).getProductionCost() < 0:
+			liSummining = []
+			liReincarnation = []
+			for iSpell in range(gc.getNumSpellInfos()):
+				if self.iUnit == gc.getSpellInfo(iSpell).getCreateUnitType():
+					liSummining.append(iSpell)
+				if self.iUnit == gc.getSpellInfo(iSpell).getConvertUnitType():
+					liReincarnation.append(iSpell)
+			for iSummining in liSummining:
+				screen.attachImageButton( panelName, "", gc.getSpellInfo(iSummining).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSummining, -1, False )
+			if len(liSummining) == 0:
+				for iReincarnation in liReincarnation:
+					screen.attachImageButton( panelName, "", gc.getSpellInfo(iReincarnation).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iReincarnation, -1, False )
+##--------	BUGFfH: End Add
+
 
 
 	def placeUpgradesTo(self):
-		screen = self.top.getScreen()
-		panelName = self.top.getNextWidgetName()
-		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_UPGRADES_TO", ()), "", False, True, self.X_UPGRADES_TO_PANE, self.Y_UPGRADES_TO_PANE, self.W_UPGRADES_TO_PANE, self.H_UPGRADES_TO_PANE, PanelStyles.PANEL_STYLE_BLUE50)
-		screen.attachLabel(panelName, "", "  ")
-		for k in range(gc.getNumUnitClassInfos()):
-			if self.top.iActivePlayer == -1:
-				eLoopUnit = gc.getUnitClassInfo(k).getDefaultUnitIndex()
-			else:
-				eLoopUnit = gc.getCivilizationInfo(gc.getGame().getActiveCivilizationType()).getCivilizationUnits(k)
-			if (eLoopUnit >= 0 and gc.getUnitInfo(self.iUnit).getUpgradeUnitClass(k)):
-				screen.attachImageButton(panelName, "", gc.getUnitInfo(eLoopUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, eLoopUnit, 1, False)
+
+##--------	BUGFfH: Added by Denev 2009/10/07
+		if not self.getUnitType(self.iUnit):
+##--------	BUGFfH: End Add
+
+			screen = self.top.getScreen()
+			panelName = self.top.getNextWidgetName()
+			screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_UPGRADES_TO", ()), "", False, True, self.X_UPGRADES_TO_PANE, self.Y_UPGRADES_TO_PANE, self.W_UPGRADES_TO_PANE, self.H_UPGRADES_TO_PANE, PanelStyles.PANEL_STYLE_BLUE50)
+			screen.attachLabel(panelName, "", "  ")
+##--------	BUGFfH: Modified by Denev 2009/10/07
+			"""
+			for k in range(gc.getNumUnitClassInfos()):
+				if self.top.iActivePlayer == -1:
+					eLoopUnit = gc.getUnitClassInfo(k).getDefaultUnitIndex()
+				else:
+					eLoopUnit = gc.getCivilizationInfo(gc.getGame().getActiveCivilizationType()).getCivilizationUnits(k)
+				if (eLoopUnit >= 0 and gc.getUnitInfo(self.iUnit).getUpgradeUnitClass(k)):
+					screen.attachImageButton(panelName, "", gc.getUnitInfo(eLoopUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, eLoopUnit, 1, False)
+			"""
+			#get available civilizations which can use the selected unit.
+			liAvailableCiv = self.top.getListUnitCivilization(self.iUnit)
+
+			#if active player's civilization can use the selected unit, adopt it only.
+			if self.top.iActiveCiv in liAvailableCiv:
+				liAvailableCiv = [self.top.iActiveCiv]
+
+			ltUpgradeUnit = []
+			for iUpgradeUnitClass in range(gc.getNumUnitClassInfos()):
+				ltUpgradeUnitTemp = []
+
+				#get UnitType (and icon) on each avilable civilization
+				for iAvailableCiv in liAvailableCiv:
+					iUpgradeUnit = gc.getCivilizationInfo(iAvailableCiv).getCivilizationUnits(iUpgradeUnitClass)
+
+					#does loop UnitClass match to the unit as upgrade target?
+					if iUpgradeUnit != UnitTypes.NO_UNIT\
+					and gc.getUnitInfo(self.iUnit).getUpgradeUnitClass(iUpgradeUnitClass)\
+					and not gc.getUnitInfo(iUpgradeUnit).isDisableUpgradeTo():
+						szUnitIcon = gc.getUnitInfo(iUpgradeUnit).getUnitButtonWithCivArtStyle(iAvailableCiv)
+						ltUpgradeUnitTemp.append( (iUpgradeUnit, szUnitIcon) )
+
+				#remove repeated items
+				ltUpgradeUnitTemp = sorted(set(ltUpgradeUnitTemp))
+
+				#if UnitType and icon can be selected uniquely, adopt it.
+				if len(ltUpgradeUnitTemp) == 1:
+					ltUpgradeUnit.append(ltUpgradeUnitTemp[0])
+				#if more than one kind of unit icon exists, adopt default.
+				elif len(ltUpgradeUnitTemp) > 1:
+					iUpgradeUnit = gc.getUnitClassInfo(iUpgradeUnitClass).getDefaultUnitIndex()
+					szUnitIcon = gc.getUnitInfo(iUpgradeUnit).getButton()
+					ltUpgradeUnit.append( (iUpgradeUnit, szUnitIcon) )
+
+			#place unit icons.
+			for iUpgradeUnit, szUpgradeUnitName in ltUpgradeUnit:
+				screen.attachImageButton(panelName, "", szUpgradeUnitName, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUpgradeUnit, 1, False)
+##--------	BUGFfH: End Modify
 
 
 
@@ -250,8 +372,15 @@ class SevoPediaUnit:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_SPECIAL_ABILITIES", ()), "", True, False, self.X_SPECIAL_PANE, self.Y_SPECIAL_PANE, self.W_SPECIAL_PANE, self.H_SPECIAL_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		listName = self.top.getNextWidgetName()
+##--------	BUGFfH: Modified by Denev 2009/10/07
+		"""
 		szSpecialText = CyGameTextMgr().getUnitHelp(self.iUnit, True, False, False, None)[1:]
 		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL_PANE+5, self.Y_SPECIAL_PANE+30, self.W_SPECIAL_PANE-10, self.H_SPECIAL_PANE-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		"""
+		szSpecialText = CyGameTextMgr().getUnitHelp( self.iUnit, True, False, False, None )
+		szSpecialText = szSpecialText.strip("\n")	#Trim empty line
+		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL_PANE + 5, self.Y_SPECIAL_PANE + 30, self.W_SPECIAL_PANE - 5, self.H_SPECIAL_PANE - 32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 
@@ -267,7 +396,10 @@ class SevoPediaUnit:
 			szText += u"\n\n"
 		szText += localText.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ())
 		szText += gc.getUnitInfo(self.iUnit).getCivilopedia()
-		screen.addMultilineText(textName, szText, self.X_HISTORY_PANE + 15, self.Y_HISTORY_PANE + 40, self.W_HISTORY_PANE - (15 * 2), self.H_HISTORY_PANE - (15 * 2) - 25, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Modified by Denev 2009/08/16
+#		screen.addMultilineText(textName, szText, self.X_HISTORY_PANE + 15, self.Y_HISTORY_PANE + 40, self.W_HISTORY_PANE - (15 * 2), self.H_HISTORY_PANE - (15 * 2) - 25, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText(textName, szText, self.X_HISTORY_PANE + 5, self.Y_HISTORY_PANE + 30, self.W_HISTORY_PANE - 5, self.H_HISTORY_PANE - 32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 
@@ -276,11 +408,43 @@ class SevoPediaUnit:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_CATEGORY_PROMOTION", ()), "", True, True, self.X_PROMO_PANE, self.Y_PROMO_PANE, self.W_PROMO_PANE, self.H_PROMO_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		rowListName = self.top.getNextWidgetName()
-		screen.addMultiListControlGFC(rowListName, "", self.X_PROMO_PANE+15, self.Y_PROMO_PANE+40, self.W_PROMO_PANE-20, self.H_PROMO_PANE-40, 1, self.PROMOTION_ICON_SIZE, self.PROMOTION_ICON_SIZE, TableStyles.TABLE_STYLE_STANDARD)
+##--------	BUGFfH: Added by Denev 2009/08/12 (from CvPediaUnit.py by Kael)
+#		screen.addMultiListControlGFC(rowListName, "", self.X_PROMO_PANE+15, self.Y_PROMO_PANE+40, self.W_PROMO_PANE-20, self.H_PROMO_PANE-40, 1, self.PROMOTION_ICON_SIZE, self.PROMOTION_ICON_SIZE, TableStyles.TABLE_STYLE_STANDARD)
+		iChanneling1 = gc.getInfoTypeForString('PROMOTION_CHANNELING1')
+		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')
+		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
+
+		liAvailablePromo = []
+##--------	BUGFfH: End Add
 		for k in range(gc.getNumPromotionInfos()):
 			if (isPromotionValid(k, self.iUnit, False) and not gc.getPromotionInfo(k).isGraphicalOnly()):
-				screen.appendMultiListButton(rowListName, gc.getPromotionInfo(k).getButton(), 0, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, k, -1, False)
+##--------	BUGFfH: Added by Denev 2009/08/12 (from CvPediaUnit.py by Kael)
+#				screen.appendMultiListButton(rowListName, gc.getPromotionInfo(k).getButton(), 0, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, k, -1, False)
+				if (gc.getPromotionInfo(k).getPromotionPrereqAnd() != iChanneling1 or gc.getUnitInfo(self.iUnit).getFreePromotions(iChanneling1)):
+					if (gc.getPromotionInfo(k).getPromotionPrereqAnd() != iChanneling2 or gc.getUnitInfo(self.iUnit).getFreePromotions(iChanneling2)):
+						if (gc.getPromotionInfo(k).getPromotionPrereqAnd() != iChanneling3 or gc.getUnitInfo(self.iUnit).getFreePromotions(iChanneling3)):
+							liAvailablePromo.append(k)
+		if len(liAvailablePromo) > 20:
+			iIconSize = self.PROMOTION_ICON_SIZE_SMALL
+		else:
+			iIconSize = self.PROMOTION_ICON_SIZE
+		screen.addMultiListControlGFC(rowListName, "", self.X_PROMO_PANE+5, self.Y_PROMO_PANE+30, self.W_PROMO_PANE-5, self.H_PROMO_PANE-30, 1, iIconSize, iIconSize, TableStyles.TABLE_STYLE_STANDARD)
 
+		for iAvailablePromo in liAvailablePromo:
+			screen.appendMultiListButton( rowListName, gc.getPromotionInfo(iAvailablePromo).getButton(), 0, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, iAvailablePromo, -1, false )
+##--------	BUGFfH: End Add
+
+	def getUnitType(self, iUnit):
+		if isWorldUnitClass(gc.getUnitInfo(iUnit).getUnitClassType()):
+			return SevoScreenEnums.TYPE_WORLDUNIT
+		bSummon=false
+		for i in range(gc.getNumSpellInfos()):
+			if gc.getSpellInfo(i).getCreateUnitType()==iUnit:
+				bSummon=true
+				break
+		if bSummon:
+			return SevoScreenEnums.TYPE_SUMMON
+		return SevoScreenEnums.TYPE_REGULAR
 
 
 	def handleInput (self, inputClass):

@@ -36,8 +36,9 @@ import SevoPediaHistory
 import SevoPediaProject
 import SevoPediaReligion
 #import SevoPediaCorporation
-import CvPediaSpell
+#import CvPediaSpell
 import SevoPediaIndex
+import SevoPediaSpell
 
 import UnitUpgradesGraph
 ##--------	BUGFfH: Deleted by Denev 2009/09/11
@@ -130,8 +131,16 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.X_EXIT = 994
 		self.Y_EXIT = 730
 
+##--------	BUGFfH: Added by Denev 2009/10/04
+		self.X_MERGIN = 10
+		self.Y_MERGIN = 5
+##--------	BUGFfH: End Add
+
 		self.tab = None
 		self.iActivePlayer = -1
+##--------	BUGFfH: Added by Denev 2009/09/12
+		self.iActiveCiv = CivilizationTypes.NO_CIVILIZATION
+##--------	BUGFfH: End Add
 		self.nWidgetCount = 0
 
 		self.categoryList = []
@@ -157,6 +166,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_TERRAINS		: self.placeTerrains,
 			SevoScreenEnums.PEDIA_FEATURES		: self.placeFeatures,
 			SevoScreenEnums.PEDIA_BONUSES		: self.placeBonuses,
+			SevoScreenEnums.PEDIA_MANA_NODES	: self.placeManaNodes,
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: self.placeImprovements,
 			SevoScreenEnums.PEDIA_CIVS		: self.placeCivs,
 			SevoScreenEnums.PEDIA_LEADERS		: self.placeLeaders,
@@ -165,6 +175,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_RELIGIONS		: self.placeReligions,
 #			SevoScreenEnums.PEDIA_CORPORATIONS	: self.placeCorporations,
 			SevoScreenEnums.PEDIA_SPELLS	: self.placeSpells,
+##--------	BUGFfH: Added by Denev 2009/10/05
+			SevoScreenEnums.PEDIA_ABILITIES		: self.placeAbilities,
+##--------	BUGFfH: End Add
 			SevoScreenEnums.PEDIA_CONCEPTS		: self.placeConcepts,
 			SevoScreenEnums.PEDIA_BTS_CONCEPTS	: self.placeBTSConcepts,
 			SevoScreenEnums.PEDIA_HINTS		: self.placeHints,
@@ -175,6 +188,17 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.pediaBuilding	= SevoPediaBuilding.SevoPediaBuilding(self)
 		self.pediaLeader	= SevoPediaLeader.SevoPediaLeader(self)
 		self.pediaIndex     = SevoPediaIndex.SevoPediaIndex(self)
+##--------	BUGFfH: Added by Denev 2009/08/12
+		self.pediaUnit		= SevoPediaUnit.SevoPediaUnit(self)
+		self.pediaTech      = SevoPediaTech.SevoPediaTech(self)
+		self.pediaPromotion	= SevoPediaPromotion.SevoPediaPromotion(self)
+		self.pediaProject	= SevoPediaProject.SevoPediaProject(self)
+		self.pediaBonus		= SevoPediaBonus.SevoPediaBonus(self)		
+		self.pediaImprovement	= SevoPediaImprovement.SevoPediaImprovement(self)
+##--------	BUGFfH: End Add
+##--------	BUGFfH: Added by Denev 2009/10/05
+		self.pediaSpell		= SevoPediaSpell.SevoPediaSpell(self)
+##--------	BUGFfH: End Add
 
 		self.mapScreenFunctions = {
 			SevoScreenEnums.PEDIA_TECHS		: SevoPediaTech.SevoPediaTech(self),
@@ -189,6 +213,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_TERRAINS		: SevoPediaTerrain.SevoPediaTerrain(self),
 			SevoScreenEnums.PEDIA_FEATURES		: SevoPediaFeature.SevoPediaFeature(self),
 			SevoScreenEnums.PEDIA_BONUSES		: SevoPediaBonus.SevoPediaBonus(self),
+			SevoScreenEnums.PEDIA_MANA_NODES	: SevoPediaBonus.SevoPediaBonus(self),			
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: SevoPediaImprovement.SevoPediaImprovement(self),
 			SevoScreenEnums.PEDIA_CIVS		: SevoPediaCivilization.SevoPediaCivilization(self),
 			SevoScreenEnums.PEDIA_LEADERS		: self.pediaLeader,
@@ -196,7 +221,10 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_CIVICS		: SevoPediaCivic.SevoPediaCivic(self),
 			SevoScreenEnums.PEDIA_RELIGIONS		: SevoPediaReligion.SevoPediaReligion(self),
 #			SevoScreenEnums.PEDIA_CORPORATIONS	: SevoPediaCorporation.SevoPediaCorporation(self),
-			SevoScreenEnums.PEDIA_SPELLS	: CvPediaSpell.CvPediaSpell(self),
+			SevoScreenEnums.PEDIA_SPELLS		: SevoPediaSpell.SevoPediaSpell(self),
+##--------	BUGFfH: Added by Denev 2009/10/05
+			SevoScreenEnums.PEDIA_ABILITIES		: SevoPediaSpell.SevoPediaSpell(self),
+##--------	BUGFfH: End Add
 			SevoScreenEnums.PEDIA_CONCEPTS		: SevoPediaHistory.SevoPediaHistory(self),
 			SevoScreenEnums.PEDIA_BTS_CONCEPTS	: SevoPediaHistory.SevoPediaHistory(self),
 			SevoScreenEnums.PEDIA_SHORTCUTS  	: SevoPediaHistory.SevoPediaHistory(self),
@@ -225,6 +253,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		"""
 ##--------	BUGFfH: End Delete
 		self.iActivePlayer = gc.getGame().getActivePlayer()
+##--------	BUGFfH: Added by Denev 2009/09/12
+		self.iActiveCivilization = gc.getGame().getActiveCivilizationType()
+##--------	BUGFfH: End Add
 		self.iCategory = -1
 		if (not self.pediaHistory):
 			self.pediaHistory.append((SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_TECHS))
@@ -261,6 +292,16 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 		if (iCategory == SevoScreenEnums.PEDIA_BUILDINGS):
 			iCategory += self.pediaBuilding.getBuildingType(iItem)
+		elif (iCategory == SevoScreenEnums.PEDIA_BONUSES):
+			iBonusType = self.pediaBonus.getBonusType(iItem)
+			if iBonusType == SevoScreenEnums.TYPE_BONUS_MANA:			
+				iCategory = SevoScreenEnums.PEDIA_MANA_NODES				
+##--------	BUGFfH: Added by Denev 2009/10/07
+		elif (iCategory == SevoScreenEnums.PEDIA_SPELLS):
+			bAbility = self.pediaSpell.getSpellType(iItem)
+			if bAbility:
+				iCategory = SevoScreenEnums.PEDIA_ABILITIES
+##--------	BUGFfH: End Add
 		elif (iCategory == SevoScreenEnums.PEDIA_BTS_CONCEPTS):
 			iCategory = self.determineNewConceptSubCategory(iItem)
 			BugUtil.debug("Switching to category %d" % iCategory)
@@ -364,6 +405,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryTerrains		= localText.getText("TXT_KEY_PEDIA_CATEGORY_TERRAIN", ())
 		self.szCategoryFeatures		= localText.getText("TXT_KEY_PEDIA_CATEGORY_FEATURE", ())
 		self.szCategoryBonuses		= localText.getText("TXT_KEY_PEDIA_CATEGORY_BONUS", ())
+		self.szCategoryManaNodes		= localText.getText("TXT_KEY_PEDIA_CATEGORY_MANANODES", ())
 		self.szCategoryImprovements	= localText.getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT", ())
 		self.szCategoryCivs			= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIV", ())
 		self.szCategoryLeaders		= localText.getText("TXT_KEY_PEDIA_CATEGORY_LEADER", ())
@@ -371,7 +413,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryCivics		= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIVIC", ())
 		self.szCategoryReligions	= localText.getText("TXT_KEY_PEDIA_CATEGORY_RELIGION", ())
 #		self.szCategoryCorporations	= localText.getText("TXT_KEY_CONCEPT_CORPORATIONS", ())
-		self.szCategorySpell = localText.getText("TXT_KEY_PEDIA_CATEGORY_SPELL", ())		
+		self.szCategorySpells = localText.getText("TXT_KEY_PEDIA_CATEGORY_SPELLS", ())
+		self.szCategoryAbilities	= localText.getText("TXT_KEY_PEDIA_CATEGORY_ABILITY", ())	
 		self.szCategoryConcepts		= localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT", ())
 		self.szCategoryConceptsNew	= localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT_NEW", ())
 		self.szCategoryHints		= localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
@@ -393,6 +436,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["TERRAINS",	self.szCategoryTerrains],
 			["TERRAINS",	self.szCategoryFeatures],
 			["TERRAINS",	self.szCategoryBonuses],
+			["TERRAINS",	self.szCategoryManaNodes],			
 			["TERRAINS",	self.szCategoryImprovements],
 			["CIVS",	self.szCategoryCivs],
 			["CIVS",	self.szCategoryLeaders],
@@ -400,7 +444,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["CIVICS",	self.szCategoryCivics],
 			["CIVICS",	self.szCategoryReligions],
 #			["CIVICS",	self.szCategoryCorporations],
-			["SPELLS",  self.szCategorySpell],
+			["SPELLS",  self.szCategorySpells],
+			["SPELLS",	self.szCategoryAbilities],
 			["HINTS",	self.szCategoryConcepts],
 			["HINTS",	self.szCategoryConceptsNew],
 			["HINTS",	self.szCategoryHints],
@@ -493,6 +538,19 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 	def getPromotionList(self):
 		return self.getSortedList(gc.getNumPromotionInfos(), gc.getPromotionInfo)
 
+##--------	BUGFfH: Added by Denev 2009/10/06
+	def placeSpells(self):
+		self.list = self.getSpellList(false)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, gc.getSpellInfo)
+
+	def placeAbilities(self):
+		self.list = self.getSpellList(true)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, gc.getSpellInfo)
+
+	def getSpellList(self, bAbility = None):
+		return self.getSortedList(gc.getNumSpellInfos(), gc.getSpellInfo, bAbility, self.pediaSpell.getSpellType)
+##--------	BUGFfH: End Add
+
 
 	def placePromotionTree(self):
 		screen = self.getScreen()
@@ -506,37 +564,63 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 
 	def placeBuildings(self):
-		self.list = self.getBuildingList()
+##--------	BUGFfH: Modified by Denev 2009/10/06
+#		self.list = self.getBuildingList()
+		self.list = self.getBuildingList(SevoScreenEnums.TYPE_REGULAR)
+##--------	BUGFfH: End Modify
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, gc.getBuildingInfo)
-	
+
+##--------	BUGFfH: Modified by Denev 2009/10/06
+	"""
 	def getBuildingList(self):
 		return self.pediaBuilding.getBuildingSortedList(0)
+	"""
+	def getBuildingList(self, iType = None):
+		return self.getSortedList(gc.getNumBuildingInfos(), gc.getBuildingInfo, iType, self.pediaBuilding.getBuildingType)
+##--------	BUGFfH: End Modify
 
 
 	def placeNationalWonders(self):
-		self.list = self.getNationalWonderList()
+##--------	BUGFfH: Modified by Denev 2009/10/06
+#		self.list = self.getNationalWonderList()
+		self.list = self.getBuildingList(SevoScreenEnums.TYPE_NATIONAL)
+##--------	BUGFfH: End Modify
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, gc.getBuildingInfo)
 	
+##--------	BUGFfH: Deleteed by Denev 2009/09/10
+		"""
 	def getNationalWonderList(self):
 		return self.pediaBuilding.getBuildingSortedList(1)
+		"""
+##--------	BUGFfH: End Delete
 
 
 	def placeGreatWonders(self):
-		self.list = self.getGreatWonderList()
+##--------	BUGFfH: Modified by Denev 2009/10/06
+#		self.list = self.getGreatWonderList()
+		self.list = self.getBuildingList(SevoScreenEnums.TYPE_WORLD)
+##--------	BUGFfH: End Modify
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, gc.getBuildingInfo)
-	
+
+##--------	BUGFfH: Deleteed by Denev 2009/09/10
+		"""
 	def getGreatWonderList(self):
 		return self.pediaBuilding.getBuildingSortedList(2)
+		"""
+##--------	BUGFfH: End Delete
 
 
 	def placeProjects(self):
-		self.list = self.getProjectList()
+		self.list = self.getProjectList(SevoScreenEnums.TYPE_REGULAR)
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, gc.getProjectInfo)
 	
 	def getProjectList(self):
 		return self.getSortedList(gc.getNumProjectInfos(), gc.getProjectInfo)
 
 
+	def getProjectList(self, iType = None):
+		return self.getSortedList(gc.getNumProjectInfos(), gc.getProjectInfo, iType, self.pediaProject.getProjectType)
+		
 	def placeSpecialists(self):
 		self.list = self.getSpecialistList()
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPECIALIST, gc.getSpecialistInfo)
@@ -562,19 +646,46 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 
 	def placeBonuses(self):
-		self.list = self.getBonusList()
+		self.list = self.getBonusList(SevoScreenEnums.TYPE_REGULAR)
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, gc.getBonusInfo)
 	
+	def placeManaNodes(self):
+		self.list = self.getBonusList(SevoScreenEnums.TYPE_BONUS_MANA)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, gc.getBonusInfo)
+	
+	"""
 	def getBonusList(self):
 		return self.getSortedList(gc.getNumBonusInfos(), gc.getBonusInfo)
-
-
-	def placeImprovements(self):
-		self.list = self.getImprovementList()
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, gc.getImprovementInfo)
+	"""
 	
+	def getBonusList(self, iBonus = None):
+		return self.getSortedList(gc.getNumBonusInfos(), gc.getBonusInfo, iBonus, self.pediaBonus.getBonusType)
+	
+	def placeImprovements(self):
+		self.list = self.getImprovementList(SevoScreenEnums.TYPE_REGULAR)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, gc.getImprovementInfo)
+
+	def placeUniqueFeatures(self):
+		self.list = self.getImprovementList(SevoScreenEnums.TYPE_UNIQUE_FEATURES)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, gc.getImprovementInfo)
+
+	def placeImprovementsPrimary(self):
+		self.list = self.getImprovementList(SevoScreenEnums.TYPE_PRIMARY)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, gc.getImprovementInfo)
+
+	def placeImprovementsSecondary(self):
+		self.list = self.getImprovementList(SevoScreenEnums.TYPE_SECONDARY)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, gc.getImprovementInfo)
+		
+		
+##--------	BUGFfH: Modified by Denev 2009/10/06
+	"""
 	def getImprovementList(self):
 		return self.getSortedList(gc.getNumImprovementInfos(), gc.getImprovementInfo)
+	"""
+	def getImprovementList(self, iImprovement = None):
+		return self.getSortedList(gc.getNumImprovementInfos(), gc.getImprovementInfo, iImprovement, self.pediaImprovement.getImprovementType)
+##--------	BUGFfH: End Modify
 
 
 	def placeCivs(self):
@@ -587,15 +698,6 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 	def placeLeaders(self):
 		self.list = self.getLeaderList()
-		list = self.list
-		listCopy = list[:]
-		for item in listCopy:
-			if item[1] == gc.getDefineINT("BARBARIAN_LEADER"):
-				list.remove(item)
-			elif gc.getDefineINT("CIVILOPEDIA_SHOW_ACTIVE_CIVS_ONLY") and gc.getGame().isFinalInitialized():
-				if not gc.getGame().isLeaderEverActive(item[1]):
-					list.remove(item)
-		self.list = list
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, gc.getLeaderHeadInfo)
 	
 	def getLeaderList(self):
@@ -665,12 +767,6 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 	def getCorporationList(self):
 		return self.getSortedList(gc.getNumCorporationInfos(), gc.getCorporationInfo)
 
-	def placeSpells(self):
-		self.list = self.getSpellList()
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, gc.getSpellInfo)
-	
-	def getSpellList(self):
-		return self.getSortedList(gc.getNumSpellInfos(), gc.getSpellInfo)
 
 	def placeConcepts(self):
 		self.list = self.getConceptList()
@@ -831,6 +927,10 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_SHORTCUTS, True, True)
 		elif (szLink == "PEDIA_MAIN_STRATEGY"):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_STRATEGY, True, True)
+##--------	BUGFfH: Added by Denev 2009/08/10
+		elif (szLink == "PEDIA_MAIN_SPELL"):
+			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_SPELLS, True, True)
+##--------	BUGFfH: End Add
 
 		for i in range(gc.getNumTechInfos()):
 			if (gc.getTechInfo(i).isMatchForLink(szLink, False)):
@@ -844,6 +944,11 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		for i in range(gc.getNumPromotionInfos()):
 			if (gc.getPromotionInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(SevoScreenEnums.PEDIA_PROMOTIONS, i, True, True)
+##--------	BUGFfH: Added by Denev 2009/08/10
+		for i in range(gc.getNumSpellInfos()):
+			if (gc.getSpellInfo(i).isMatchForLink(szLink, False)):
+				return self.pediaJump(SevoScreenEnums.PEDIA_SPELLS, i, True, True)
+##--------	BUGFfH: End Add
 		for i in range(gc.getNumBuildingInfos()):
 			if (gc.getBuildingInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(SevoScreenEnums.PEDIA_BUILDINGS, i, True, True)
@@ -885,9 +990,6 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 #		for i in range(gc.getNumCorporationInfos()):
 #			if (gc.getCorporationInfo(i).isMatchForLink(szLink, False)):
 #				return self.pediaJump(SevoScreenEnums.PEDIA_CORPORATIONS, i, True, True)
-		for i in range(gc.getNumSpellInfos()):
-			if (gc.getSpellInfo(i).isMatchForLink(szLink, False)):
-				return self.pediaJump(SevoScreenEnums.PEDIA_SPELLS, i, True, True)
 		for i in range(gc.getNumConceptInfos()):
 			if (gc.getConceptInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(SevoScreenEnums.PEDIA_CONCEPTS, i, True, True)
@@ -935,6 +1037,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 	def isSortLists(self):
 		return AdvisorOpt.SevopediaSortItemList()
 
+##--------	BUGFfH: Modified by Denev 2009/10/08
+		"""
 	def getSortedList(self, numInfos, getInfo, noSort=False):
 		list = []
 		for i in range(numInfos):
@@ -944,3 +1048,67 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		if self.isSortLists() and not noSort:
 			list.sort()
 		return list
+		"""
+	def getSortedList(self, numInfos, getInfo, iCategory = None, getCategory = None):
+		infoList = []
+		for iItemID in range(numInfos):
+			if getInfo(iItemID):
+				if ((None in (iCategory, getCategory) or getCategory(iItemID) == iCategory) and not getInfo(iItemID).isGraphicalOnly()):
+					if (not getInfo==gc.getBuildingInfo) or gc.getBuildingInfo(iItemID).getProductionCost()>0:	#added Sephi to block wrong buildings in Buildinglist
+						szDescription = getInfo(iItemID).getDescription()
+						if szDescription[0:4] == "The ":
+							infoList.append( (szDescription[4:], iItemID, szDescription) )
+						else:
+							infoList.append( (szDescription, iItemID, szDescription) )
+		if self.isSortLists():
+			infoList.sort()
+
+		return infoList
+##--------	BUGFfH: End Modify
+
+
+##--------	BUGFfH: Added by Denev 2009/10/07
+	def getListBuildingCivilization(self, iBuilding):
+		if iBuilding == BuildingTypes.NO_BUILDING:
+			return []
+
+		liAvailableCiv = []
+		if gc.getBuildingInfo(iBuilding).getPrereqCiv() != CivilizationTypes.NO_CIVILIZATION:
+			liAvailableCiv.append(gc.getBuildingInfo(iBuilding).getPrereqCiv())
+		else:
+			iBuildingClass = gc.getBuildingInfo(iBuilding).getBuildingClassType()
+			for iCiv in range(gc.getNumCivilizationInfos()):
+				iUniqueBuilding = gc.getCivilizationInfo(iCiv).getCivilizationBuildings(iBuildingClass)
+				if iUniqueBuilding == iBuilding:
+					liAvailableCiv.append(iCiv)
+
+		return liAvailableCiv
+
+
+	def getListUnitCivilization(self, iUnit):
+		if iUnit == UnitTypes.NO_UNIT:
+			return []
+
+		liAvailableCiv = []
+		if gc.getUnitInfo(iUnit).getPrereqCiv() != CivilizationTypes.NO_CIVILIZATION:
+			liAvailableCiv.append(gc.getUnitInfo(iUnit).getPrereqCiv())
+		else:
+			iUnitClass = gc.getUnitInfo(iUnit).getUnitClassType()
+			for iCiv in range(gc.getNumCivilizationInfos()):
+				iUniqueUnit = gc.getCivilizationInfo(iCiv).getCivilizationUnits(iUnitClass)
+				if iUniqueUnit == iUnit:
+					liAvailableCiv.append(iCiv)
+
+		return liAvailableCiv
+
+
+	def getListTrainableBuilding(self, iBuildingClass, iUnit):
+		liAvailableBuilding = []
+		if not iBuildingClass == BuildingClassTypes.NO_BUILDINGCLASS:
+			for iCiv in self.getListUnitCivilization(iUnit):
+				iAvailableBuilding = gc.getCivilizationInfo(iCiv).getCivilizationBuildings(iBuildingClass)
+				liAvailableBuilding.append(iAvailableBuilding)
+			liAvailableBuilding = sorted(set(liAvailableBuilding), key=liAvailableBuilding.index)	#remove repeated items
+
+		return liAvailableBuilding
+##--------	BUGFfH: End Added

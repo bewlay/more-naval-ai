@@ -24,23 +24,30 @@ class SevoPediaTrait:
 
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
 		self.Y_MAIN_PANE = self.top.Y_PEDIA_PAGE
-		self.W_MAIN_PANE = 200
+#		self.W_MAIN_PANE = 200
+		self.W_MAIN_PANE = 150
 
 		self.X_LEADERS = self.X_MAIN_PANE + self.W_MAIN_PANE + 10
 		self.Y_LEADERS = self.Y_MAIN_PANE
 		self.W_LEADERS = self.top.R_PEDIA_PAGE - self.X_LEADERS
-		self.H_LEADERS = 110
+#		self.H_LEADERS = 110
+		self.H_LEADERS = 116
 
 		# lines are 22 pixels high using WB font -- no idea about normal font
-		self.X_SPECIAL = self.X_MAIN_PANE + self.W_MAIN_PANE + 10
+#		self.X_SPECIAL = self.X_MAIN_PANE + self.W_MAIN_PANE + 10
+		self.X_SPECIAL = self.X_MAIN_PANE
 		self.Y_SPECIAL = self.Y_LEADERS + self.H_LEADERS + 10
 		self.W_SPECIAL = self.top.R_PEDIA_PAGE - self.X_SPECIAL
-		self.H_SPECIAL = 150
+#		self.H_SPECIAL = 150
+		self.H_SPECIAL = 250
 
-		self.H_MAIN_PANE = self.Y_SPECIAL + self.H_SPECIAL - self.Y_MAIN_PANE
+#		self.H_MAIN_PANE = self.Y_SPECIAL + self.H_SPECIAL - self.Y_MAIN_PANE
+		self.H_MAIN_PANE = self.H_LEADERS
 
-		self.W_ICON = 150
-		self.H_ICON = 150
+#		self.W_ICON = 150
+#		self.H_ICON = 150
+		self.W_ICON = 100
+		self.H_ICON = 100
 		self.X_ICON = self.X_MAIN_PANE + (self.W_MAIN_PANE - self.W_ICON) / 2
 		self.Y_ICON = self.Y_MAIN_PANE + (self.H_MAIN_PANE - self.H_ICON) / 2
 		self.ICON_SIZE = 64
@@ -131,7 +138,7 @@ class SevoPediaTrait:
 ##--------	BUGFfH: End Delete
 		
 #BUGFfH: Added by Denev 2009/09/10
-		szSpecial = CyGameTextMgr().parseTraits(self.iTrait, CivilizationTypes.NO_CIVILIZATION, false, true)	#bool bDawnOfMan, bool bCivilopediaText
+		szSpecial = CyGameTextMgr().parseTraits(self.iTrait, CivilizationTypes.NO_CIVILIZATION, false)	#bool bDawnOfMan, bool bCivilopediaText
 		szSpecial = szSpecial.strip("\n")
 
 		screen.addMultilineText(listName, szSpecial, self.X_SPECIAL+5, self.Y_SPECIAL+30, self.W_SPECIAL-5, self.H_SPECIAL-32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
