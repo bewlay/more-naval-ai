@@ -1,7 +1,7 @@
 #CvModName.py
 
 modName = "BUG Mod"
-displayName = "BUG Mod"
+displayName = "More Naval AI"
 modVersion = "2.0"
 
 civName = "BtS"
