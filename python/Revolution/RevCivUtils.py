@@ -4,30 +4,43 @@ from CvPythonExtensions import *
 import CvUtil
 import RevDefs
 import RevData
+import TerrainFlavorUtil
 
 # globals
 gc = CyGlobalContext()
 game = CyGame()
 
-# must both be < 0
+LOG_DEBUG = True
+
+#must both be < 0
 SCORE_NOT_AVAILABLE = -2
 SCORE_NOT_ALLOWED = -1
 
-# score addition if a split is forced and the civ type is the same as the old civ
-SCORE_SPLIT_CIV = 10
-# score addition if religion matches
+#score addition if a split is forced and the civ type is the same as the old civ
+SCORE_SPLIT_FORCED = 100
+#score addition if a split is allowed and the civ type is the same as the old civ
+SCORE_SPLIT_ALLOWED = 2
+#score addition if religion matches
 SCORE_RELIGION = 3
-# score addition if race equal
+#score addition if race equal
 SCORE_SAME_RACE = 2
-# score addition if race is good
+#score addition if race is good
 SCORE_GOOD_RACE = 1
+#factor for terrain score.
+TERRAIN_SCORE_FACTOR = 0.5
+
+# split types
+SPLIT_NOT_ALLOWED = 0
+SPLIT_ALLOWED = 1
+SPLIT_FORCED = 2
 
 
 class RevCivUtils :
 	def __init__( self ) :
 		self.rcd = RevCivDefines()
 	
-	def chooseNewCivAndLeader( self, iOldCivType, iCultureOwnerCivType, bSplit, iReligion ) :
+	def chooseNewCivAndLeader( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
+		if( LOG_DEBUG ) : print "RevCivUtils.chooseNewCivAndLeader( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
 		liNotAllowedCivs = list()
 		liGoodCivs = list()
 		liBestCivs = list()
@@ -36,37 +49,37 @@ class RevCivUtils :
 		iRace = self.rcd.lpCivRules[iCultureOwnerCivType].iRace
 		
 		for iCiv in xrange( gc.getNumCivilizationInfos() ) :
-			iScore = self.rcd.lpCivRules[iCiv].getScore( iOldCivType, iRace, bSplit, iReligion )
+			iScore = self.rcd.lpCivRules[iCiv].getScore( iOldCivType, iRace, iSplitType, iReligion, iPlotX, iPlotY )
 			if( iScore == SCORE_NOT_ALLOWED ) :
 				liNotAllowedCivs.append( iCiv )
-				print "RevCivUtils: Civ %d has not-allowed score(%d)" % ( iCiv, iScore )
+				if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has not-allowed score(%d)" % ( iCiv, iScore )
 			else :
 				if( iScore > iBestScore ) :
 					iBestScore = iScore
 					liGoodCivs.extend( liBestCivs )
 					liBestCivs = list()
 					liBestCivs.append( iCiv )
-					print "RevCivUtils: Civ %d has best score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has best score(%d)" % ( iCiv, iScore )
 				elif( iScore == iBestScore ) :
 					liBestCivs.append( iCiv )
-					print "RevCivUtils: Civ %d has good score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has good score(%d)" % ( iCiv, iScore )
 				elif( iScore >= 0 ) :
 					liGoodCivs.append( iCiv )
-					print "RevCivUtils: Civ %d has okay score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has okay score(%d)" % ( iCiv, iScore )
 				else :
-					print "RevCivUtils: Civ %d has bad score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has bad score(%d)" % ( iCiv, iScore )
 		
 		if( len( liBestCivs ) > 0 ) :
 			iNewCiv = liBestCivs[game.getSorenRandNum( len( liBestCivs ), 'RevCivUtils: pick civ from best civs list' )]
-			print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
+			if( LOG_DEBUG ) : print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
 		elif( len( liGoodCivs ) > 0 ) :
 			iNewCiv = liGoodCivs[game.getSorenRandNum( len( liGoodCivs ), 'RevCivUtils: pick civ from good civs list' )]
-			print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
+			if( LOG_DEBUG ) : print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
 		elif( len( liNotAllowedCivs ) > 0 ) :
 			iNewCiv = liNotAllowedCivs[game.getSorenRandNum( len( liNotAllowedCivs ), 'RevCivUtils: pick civ from not allowed civs list' )]
-			print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
+			if( LOG_DEBUG ) : print "RevCivUtils: Civ %i chosen" % ( iNewCiv )
 		else :
-			print 'RevCivUtils: No civ available, returning (-1, -1)'
+			if( LOG_DEBUG ) : print 'RevCivUtils: No civ available, returning (-1, -1)'
 			return ( -1, -1 )
 		
 		liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iReligion )
@@ -76,24 +89,24 @@ class RevCivUtils :
 			if( len( liLeaders ) == 0 ) :
 				raise Exception( "RevCivUtils: No Available leaders for chosen civ. That should have been checked before..." )
 		
-		print "available leaders: %s"%( str( liLeaders ) )
+		if( LOG_DEBUG ) : print "available leaders: %s" % ( str( liLeaders ) )
 		
 		# prefer minor leaders
 		liMinorLeaders = list()
 		for iLeader in liLeaders :
 			if( iLeader in self.rcd.liMinorLeaders[iNewCiv] ) :
-				print "leader %i is minor leader"%( iLeader )
+				if( LOG_DEBUG ) : print "leader %i is minor leader" % ( iLeader )
 				liMinorLeaders.append( iLeader )
 			else :
-				print "leader %i is major leader"%( iLeader )
+				if( LOG_DEBUG ) : print "leader %i is major leader" % ( iLeader )
 		
 		if( len( liMinorLeaders ) > 0 ) :
-			print "Choosing minor leader"
+			if( LOG_DEBUG ) : print "Choosing minor leader"
 			iNewLeader = liMinorLeaders[game.getSorenRandNum( len( liMinorLeaders ), 'RevCivUtils: pick leader from minor leaders list' )]
 		else :
-			print "Choosing major leader"
+			if( LOG_DEBUG ) : print "Choosing major leader"
 			iNewLeader = liLeaders[game.getSorenRandNum( len( liLeaders ), 'RevCivUtils: pick leader from leaders list' )]
-		print "RevCivUtils: Leader %i chosen" % ( iNewLeader )
+		if( LOG_DEBUG ) : print "RevCivUtils: Leader %i chosen" % ( iNewLeader )
 		
 		return ( iNewCiv, iNewLeader )
 
@@ -105,16 +118,18 @@ class RevCivRule :
 		
 		self.bNoRevolt = False
 		
+		# TODO: add religion points
 		self.liReligions = list()
 		self.liBlockedReligions = list()
 		
 		self.iRace = None
 		self.liGoodRaces = list()
 		
-		# TODO terrain
+		self.pCivTerrainPreference = TerrainFlavorUtil.CivTerrainPreference()
+		
 		# TODO check for religions present in cities
 	
-	def getScore( self, iOldCivilization, iCultureRace, bSplit, iReligion ) :
+	def getScore( self, iOldCivilization, iCultureRace, iSplitType, iReligion, iPlotX, iPlotY ) :
 		# check if any leaders are available
 		if( len( self.getLeaderList( -1 ) ) == 0 ) :
 			return SCORE_NOT_AVAILABLE
@@ -123,12 +138,17 @@ class RevCivRule :
 		if( self.bNoRevolt ) :
 			return SCORE_NOT_AVAILABLE
 		
-		# check if civ is already alive (only if it isn't a split empire revolution)
-		if( not bSplit ) :
-			for i in range(0,gc.getMAX_CIV_PLAYERS()) :
-				if( gc.getPlayer(i).getCivilizationType() == self.iCiv ) :
-					if( (gc.getPlayer(i).isAlive()) or (gc.getPlayer(i).isEverAlive()) or (RevData.revObjectExists(gc.getPlayer(i))) ) :
-						return SCORE_NOT_ALLOWED
+		# check if civ is same as parent and split is not allowed
+		if( iSplitType == SPLIT_NOT_ALLOWED and self.iCiv == iOldCivilization ) :
+			return SCORE_NOT_ALLOWED
+		
+		# check if civ is already alive (only if new civ would not be a splinter civ)ä
+		# TODO: maybe allow some civs with culture present
+		if( self.iCiv != iOldCivilization ) :
+			for i in range( 0, gc.getMAX_CIV_PLAYERS() ) :
+				if( gc.getPlayer( i ).getCivilizationType() == self.iCiv ) :
+					if( ( gc.getPlayer( i ).isAlive() ) or ( gc.getPlayer( i ).isEverAlive() ) or ( RevData.revObjectExists( gc.getPlayer( i ) ) ) ) :
+							return SCORE_NOT_ALLOWED
 		
 		# check if non-agnostic leaders are availble for a religious revolution
 		if( iReligion != -1 and len( self.getLeaderList( iReligion ) ) == 0 ) :
@@ -140,8 +160,10 @@ class RevCivRule :
 		
 		iScore = 0
 		
-		if( bSplit and self.iCiv == iOldCivilization ) :
-			iScore += SCORE_SPLIT_CIV
+		if( iSplitType == SPLIT_FORCED and self.iCiv == iOldCivilization ) :
+			iScore += SCORE_SPLIT_FORCED
+		elif( iSplitType == SPLIT_ALLOWED and self.iCiv == iOldCivilization ) :
+			iScore += SCORE_SPLIT_ALLOWED
 		
 		if( iReligion in self.liReligions ) :
 			iScore += SCORE_RELIGION
@@ -152,6 +174,14 @@ class RevCivRule :
 			
 		if( iCultureRace in self.liGoodRaces ) :
 			iScore += SCORE_GOOD_RACE
+		
+		iAreaRadius = 3
+		fTerrainScore = TerrainFlavorUtil.getPlotScore( self.iCiv, iPlotX, iPlotY, self.pCivTerrainPreference, iAreaRadius )
+		fTerrainScore *= TERRAIN_SCORE_FACTOR
+		if( fTerrainScore > 0 ) :
+			iScore += int( fTerrainScore + 0.5 )
+		else :
+			iScore += int( fTerrainScore - 0.5 )
 		
 		if( iScore >= 0 ) :
 			return iScore
@@ -283,6 +313,24 @@ class RevCivDefines :
 		self.iOrc = CvUtil.findInfoTypeNum( gc.getPromotionInfo, gc.getNumPromotionInfos(), 'PROMOTION_ORC' )
 		#self.iDemon = CvUtil.findInfoTypeNum( gc.getPromotionInfo, gc.getNumPromotionInfos(), 'PROMOTION_DEMON' )
 		
+		# terrain
+		
+		self.iDesert = CvUtil.findInfoTypeNum( gc.getTerrainInfo, gc.getNumTerrainInfos(), 'TERRAIN_DESERT' )
+		self.iTundra = CvUtil.findInfoTypeNum( gc.getTerrainInfo, gc.getNumTerrainInfos(), 'TERRAIN_TUNDRA' )
+		self.iSnow = CvUtil.findInfoTypeNum( gc.getTerrainInfo, gc.getNumTerrainInfos(), 'TERRAIN_SNOW' )
+		self.iGrass = CvUtil.findInfoTypeNum( gc.getTerrainInfo, gc.getNumTerrainInfos(), 'TERRAIN_GRASS' )
+		self.iPlains = CvUtil.findInfoTypeNum( gc.getTerrainInfo, gc.getNumTerrainInfos(), 'TERRAIN_PLAINS' )
+		
+		self.iJungle = CvUtil.findInfoTypeNum( gc.getFeatureInfo, gc.getNumFeatureInfos(), 'FEATURE_JUNGLE' )
+		self.iForest = CvUtil.findInfoTypeNum( gc.getFeatureInfo, gc.getNumFeatureInfos(), 'FEATURE_FOREST' )
+		
+		self.iHorse = CvUtil.findInfoTypeNum( gc.getBonusInfo, gc.getNumBonusInfos(), 'BONUS_HORSE' )
+		
+		self.iPeak = 0
+		self.iHills = 1
+		self.iLand = 2
+		self.iOcean = 3
+		
 		############################# rules
 		
 		self.lpCivRules = list()
@@ -309,6 +357,11 @@ class RevCivDefines :
 		self.lpCivRules[self.iDoviello].liBlockedReligions = [self.iOrder]
 		self.lpCivRules[self.iDoviello].iRace = self.iWinterborn
 		self.lpCivRules[self.iDoviello].liGoodRaces = [self.iHuman, self.iNomad]
+		self.lpCivRules[self.iDoviello].pCivTerrainPreference.afTerrainAffinity[self.iTundra] = 1.0
+		self.lpCivRules[self.iDoviello].pCivTerrainPreference.afFeatureAffinity[self.iForest] = 1.0
+		self.lpCivRules[self.iDoviello].pCivTerrainPreference.afTerrainAffinity[self.iSnow] = 0.5
+		self.lpCivRules[self.iDoviello].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = -0.5
+		self.lpCivRules[self.iDoviello].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.5
 		
 		self.lpCivRules[self.iElohim].liReligions = [self.iEmpyrean, self.iOrder]
 		self.lpCivRules[self.iElohim].liBlockedReligions = [self.iVeil]
@@ -321,13 +374,28 @@ class RevCivDefines :
 		
 		self.lpCivRules[self.iHippus].iRace = self.iHuman
 		self.lpCivRules[self.iHippus].liGoodRaces = [self.iNomad, self.iWinterborn]
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afPlotAffinity[self.iLand] = 2.0
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = 1.5
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afBonusAffinity[self.iHorse] = 1.5
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afTerrainAffinity[self.iTundra] = -0.25
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afTerrainAffinity[self.iSnow] = -0.25
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.5
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.0
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.afPlotAffinity[self.iPeak] = -1.0
+		self.lpCivRules[self.iLanun].pCivTerrainPreference.fCoastAffinity = -1.0
 		
 		self.lpCivRules[self.iIllians].liBlockedReligions = [self.iFellowship, self.iOrder, self.iOverlords, self.iKilmorph, self.iVeil, self.iEsus]
 		self.lpCivRules[self.iIllians].iRace = self.iWinterborn
 		self.lpCivRules[self.iIllians].liGoodRaces = [self.iHuman, self.iNomad]
+		self.lpCivRules[self.iIllians].pCivTerrainPreference.afTerrainAffinity[self.iSnow] = 1.5
+		self.lpCivRules[self.iIllians].pCivTerrainPreference.afTerrainAffinity[self.iTundra] = 1.0
+		self.lpCivRules[self.iIllians].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = -1.0
+		self.lpCivRules[self.iIllians].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.5
 		
 		self.lpCivRules[self.iKhazad].liReligions = [self.iKilmorph]
 		self.lpCivRules[self.iKhazad].iRace = self.iDwarf
+		self.lpCivRules[self.iKhazad].pCivTerrainPreference.afPlotAffinity[self.iHills] = 2.0
+		self.lpCivRules[self.iKhazad].pCivTerrainPreference.fCoastAffinity = -2.0
 		
 		self.lpCivRules[self.iKuriotates].iRace = None
 		self.lpCivRules[self.iKuriotates].liGoodRaces = [self.iNomad, self.iWinterborn, self.iDarkElf, self.iElf, self.iDwarf, self.iOrc]
@@ -335,17 +403,30 @@ class RevCivDefines :
 		self.lpCivRules[self.iLanun].liReligions = [self.iOverlords]
 		self.lpCivRules[self.iLanun].iRace = self.iHuman
 		self.lpCivRules[self.iLanun].liGoodRaces = [self.iNomad, self.iWinterborn]
+		self.lpCivRules[self.iLanun].pCivTerrainPreference.fCoastAffinity = 2.0
+		self.lpCivRules[self.iLanun].pCivTerrainPreference.afPlotAffinity[self.iLand] = 1.0
+		self.lpCivRules[self.iLanun].pCivTerrainPreference.afPlotAffinity[self.iHills] = -1.0
+		self.lpCivRules[self.iLanun].pCivTerrainPreference.afPlotAffinity[self.iPeak] = -2.0
 		
 		self.lpCivRules[self.iLjosalfar].liReligions = [self.iFellowship]
 		self.lpCivRules[self.iLjosalfar].iRace = self.iElf
 		self.lpCivRules[self.iLjosalfar].liGoodRaces = [self.iDarkElf]
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afFeatureAffinity[self.iForest] = 2.0
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = 0.5
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.5
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -2.0
 		
 		self.lpCivRules[self.iLuchuirp].liReligions = [self.iKilmorph]
 		self.lpCivRules[self.iLuchuirp].iRace = self.iDwarf
+		self.lpCivRules[self.iLuchuirp].pCivTerrainPreference.afPlotAffinity[self.iHills] = 2.0
+		self.lpCivRules[self.iLuchuirp].pCivTerrainPreference.fCoastAffinity = -2.0
 		
 		self.lpCivRules[self.iMalakim].liReligions = [self.iEmpyrean]
 		self.lpCivRules[self.iMalakim].iRace = self.iNomad
 		self.lpCivRules[self.iMalakim].liGoodRaces = [self.iHuman, self.iWinterborn]
+		self.lpCivRules[self.iMalakim].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = 2.0
+		self.lpCivRules[self.iMalakim].pCivTerrainPreference.afFeatureAffinity[self.iJungle] = -1.0
+		self.lpCivRules[self.iMalakim].pCivTerrainPreference.afFeatureAffinity[self.iForest] = -1.0
 		
 		self.lpCivRules[self.iSheaim].liReligions = [self.iVeil]
 		self.lpCivRules[self.iSheaim].iRace = None
@@ -356,6 +437,10 @@ class RevCivDefines :
 		self.lpCivRules[self.iSvartalfar].liReligions = [self.iEsus, self.iFellowship]
 		self.lpCivRules[self.iSvartalfar].iRace = self.iDarkElf
 		self.lpCivRules[self.iSvartalfar].liGoodRaces = [self.iElf]
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afFeatureAffinity[self.iForest] = 1.8
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = 0.3
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.3
+		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.8
 		
 		
 		self.lpCivRules[self.iInfernal].bNoRevolt = True

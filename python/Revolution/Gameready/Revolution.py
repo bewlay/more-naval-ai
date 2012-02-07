@@ -1152,6 +1152,13 @@ class Revolution :
 			except:
 				# already a CyCity object
 				pCity = city
+			
+			# lfgr: settlements do not get rev points unless there are a conquered city
+			if( pCity.isSettlement() and ( pCity.getOwner() == pCity.getOriginalOwner() ) ) :
+				cityString = '\n\n' + pCity.getName() + ": Settlements do not revolt"
+				totalString += cityString
+				continue
+			# lfgr
 
 			# Incase interturn stuff set out of range
 			if( pCity.getRevolutionIndex() < 0 ) :
@@ -1646,6 +1653,30 @@ class Revolution :
 
 			posList.extend( buildingPosList )
 			negList.extend( buildingNegList )
+			
+			# lfgr start
+			# Crime
+			iMinCityCrime = 20
+			iMaxCityCrime = 100
+			fCrimeFactor = 0.1
+			iCityCrime = pCity.getCrime()
+			if( iCityCrime >= iMinCityCrime ) :
+				if( iCityCrime > iMaxCityCrime ) :
+					iCityCrime = iMaxCityCrime
+				iRandCrime = game.getSorenRandNum( iMaxCityCrime - iMinCityCrime, "Rev/Crime" )
+				iCrimeFactor = 0
+				if( iRandCrime < iCityCrime ) :
+					iCrimeFactor = ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
+#					localRevIdx += ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
+					localRevIdx += iCrimeFactor
+				
+				iAverageRandCrime = ( iMaxCityCrime - iMinCityCrime ) / 2
+				iAverageRevIdxInc = ( pCity.getCrime() - iMinCityCrime - iAverageRandCrime ) * fCrimeFactor
+				
+#				negList.append( ( iAverageRevIdxInc, "Crime" ) )
+				if iCrimeFactor > 0:
+					negList.append( ( iCrimeFactor, "Crime" ) )
+			# lfgr end
 			
 			
 			# Adjust index accumulation for varying game speeds
@@ -2158,6 +2189,11 @@ class Revolution :
 
 		for city in cityList :
 			pCity = city.GetCy()
+			
+			# lfgr settlements
+			if( pCity.isSettlement() and ( pCity.getOwner() == pCity.getOriginalOwner() ) ) :
+				continue
+			# end lfgr
 
 			revIdx = pCity.getRevolutionIndex()
 			prevRevIdx = RevData.getCityVal(pCity, 'PrevRevIndex')
@@ -2772,8 +2808,11 @@ class Revolution :
 								giveRelType = None
 							else :
 								giveRelType = -1
-						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( cultCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = giveRelType )
+						# lfgr: form splinter civ of joinPlayer
 						joinPlayer = cultPlayer
+						# lfgr note: split allowed
+						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( cultCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = False, iSplitType = RevCivUtils.SPLIT_ALLOWED, iForcedCivilization = joinPlayer.getCivilizationType() )
+						# end lfgr
 
 					else :
 						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Cult player is dead, trying to reform")
@@ -2787,6 +2826,7 @@ class Revolution :
 					# demand to join other civ, if denied, fight!
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent, demanding to join the %s"%(cultPlayer.getCivilizationDescription(0)))
 
+					# lfgr note: that ist the same as above, only with joinPlayer(=cultPlayer) instead of cultPlayer
 					if( cultPlayer.isAlive() ) :
 						joinPlayer = cultPlayer
 						if( joinPlayer.isStateReligion() ) :
@@ -2796,7 +2836,10 @@ class Revolution :
 								giveRelType = None
 							else :
 								giveRelType = -1
-						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( cultCities, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType )
+						# lfgr: form splinter civ of joinPlayer
+						# lfgr note: split allowed
+						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( cultCities, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = False, iSplitType = RevCivUtils.SPLIT_ALLOWED, iForcedCivilization = joinPlayer.getCivilizationType() )
+						# end lfgr
 						if( joinPlayer.getID() == pRevPlayer.getID() ) :
 							joinPlayer = None
 						else :
@@ -3034,7 +3077,9 @@ class Revolution :
 					if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 					iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/12 + game.getSorenRandNum(50,'Rev')] )
 
-					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel, bMatchCivics = True )
+					# lfgr: split forced
+					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel, bMatchCivics = True, iSplitType = RevCivUtils.SPLIT_FORCED )
+					# lfgr end
 
 					vassalStyle = None
 					if( not pTeam.isAVassal() and pTeam.isVassalStateTrading() ) :
@@ -3099,7 +3144,9 @@ class Revolution :
 					bodStr += '  ' + localText.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(gc.getReligionInfo( pPlayer.getStateReligion() ).getDescription()) + localText.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
 					bodStr += '\n\n' + localText.getText("TXT_KEY_REV_REL_VIOLENT_IND",())
 
-					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel )
+					# lfgr: split forced
+					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel, bMatchCivics = False, iSplitType = RevCivUtils.SPLIT_FORCED )
+					# lfgr end
 
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution"%(len(indCities)))
 					assert( len(indCities) > 0 )
@@ -3622,7 +3669,7 @@ class Revolution :
 							giveRelType = None
 
 						# lfgr: split empire when asking for leader change
-						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( revCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = True, bSplit = True )
+						[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( revCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, giveRelType = giveRelType, bMatchCivics = True, iSplitType = RevCivUtils.SPLIT_FORCED )
 						# lfgr end
 
 						bodStr += ' ' + localText.getText("TXT_KEY_REV_CAP_RULE_DEMAND",())
@@ -3707,6 +3754,7 @@ class Revolution :
 					giveRelType = None
 				else :
 					giveRelType = -1
+			# lfgr note: split allowed
 			[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = True, giveRelType = giveRelType, bMatchCivics = True )
 			#iBuyOffCost = (100 + 20*pPlayer.getCurrentEra())*len(indCities) + game.getSorenRandNum(100+20*pPlayer.getCurrentEra(),'Rev')
 			totalRevIdx = 0
@@ -3760,6 +3808,7 @@ class Revolution :
 				bodStr += '\n\n' + localText.getText("TXT_KEY_REV_IND_PEACE_ACTION2",())
 
 		else :
+			# lfgr note: split allowed
 			[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False )
 			vassalStyle = None
 			if( self.allowSmallBarbRevs and len(indCities) == 1 ) :
@@ -3793,8 +3842,9 @@ class Revolution :
 		return
 
 
-	# lfgr: added parameter bSplit
-	def chooseRevolutionCiv( self, cityList, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, pNotThisCiv = None, giveTechs = True, giveRelType = -1, bMatchCivics = False, bSplit = False ) :
+	# lfgr: added parameter iSplitType
+	# TODO: Remove RebelType stuff
+	def chooseRevolutionCiv( self, cityList, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, pNotThisCiv = None, giveTechs = True, giveRelType = -1, bMatchCivics = False, iSplitType = RevCivUtils.SPLIT_ALLOWED, iForcedCivilization = -1 ) :
 		# All cities should have same owner
 
 		if( self.bRebelTypes ) :
@@ -3805,8 +3855,6 @@ class Revolution :
 
 		owner = gc.getPlayer( cityList[0].getOwner() )
 		ownerTeam = gc.getTeam( owner.getTeam() )
-
-
 
 		# TODO:  Turn into a pick best option as opposed to first option
 		# Attempt to find a worthy civ to reincarnate from these cities
@@ -3984,13 +4032,30 @@ class Revolution :
 				return [pRevPlayer, bIsJoinWar]
 			
 			# lfgr: use RevCivUtils
-			iOldCivType = owner.getCivilizationType()
+			
+			# capital should not form new civs
+			isCapital = False
+			for pCity in cityList :
+				if( pCity.isCapital() ) :
+					isCapital = True
+					break
+			
+			if( isCapital ) :
+				iSplitType = RevCivUtils.SPLIT_FORCED
+			if( ( not isCapital ) and iForcedCivilization != -1 ):#
+				print "force civ %i"%( iForcedCivilization )
+				iOldCivType = iForcedCivilization
+			else :
+				print "do not force civ %i (capital)"%( iForcedCivilization )
+				iOldCivType = owner.getCivilizationType()
+			# TODO: that seems not to work
 			pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
 			if( pCultureOwner != None ) :
 				iCultureOwnerCivType = pCultureOwner.getCivilizationType()
 			else :
 				iCultureOwnerCivType = iOldCivType
-			newCivIdx, newLeaderIdx = rcu.chooseNewCivAndLeader( iOldCivType, iCultureOwnerCivType, bSplit, giveRelType )
+			
+			newCivIdx, newLeaderIdx = rcu.chooseNewCivAndLeader( iOldCivType, iCultureOwnerCivType, iSplitType, giveRelType, instigator.plot().getX(), instigator.plot().getY() )
 			
 			if( newLeaderIdx < 0 ) :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - LeaderIdx < 0, spawning as Barbarians")
@@ -6499,7 +6564,7 @@ class Revolution :
 							mess += "<color=255,0,0,255>"
 							colorNum = 7
 
-						mess += localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + '!!!'
+						mess += localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + ' Empire!!!'
 						if( bJoinRev ) :
 							mess += "  " + localText.getText("TXT_KEY_REV_MESS_JOIN",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_JOIN2",())
 						else :
