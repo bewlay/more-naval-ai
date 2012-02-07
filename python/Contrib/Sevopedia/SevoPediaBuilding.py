@@ -25,60 +25,83 @@ class SevoPediaBuilding:
 		self.iBuilding = -1
 		self.top = main
 
-		self.BUTTON_SIZE = 46
+##--------	BUGFfH: Modified by Denev 2009/10/08
+		self.iBuildingClass = BuildingClassTypes.NO_BUILDINGCLASS
 
-		self.X_BUILDING_PANE = self.top.X_PEDIA_PAGE
-		self.Y_BUILDING_PANE = self.top.Y_PEDIA_PAGE
-		self.W_BUILDING_PANE = 323
-		self.H_BUILDING_PANE = 116
+		X_MERGIN = self.top.X_MERGIN
+		Y_MERGIN = self.top.Y_MERGIN
 
-		self.W_ICON = 100
-		self.H_ICON = 100
-		self.X_ICON = self.X_BUILDING_PANE + (self.H_BUILDING_PANE - self.H_ICON) / 2
-		self.Y_ICON = self.Y_BUILDING_PANE + (self.H_BUILDING_PANE - self.H_ICON) / 2
+		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
+		self.Y_MAIN_PANE = self.top.Y_PEDIA_PAGE
+		self.W_MAIN_PANE = 323
+		self.H_MAIN_PANE = 160
+
+		self.W_ICON = 120
+		self.H_ICON = 120
+		self.X_ICON = self.X_MAIN_PANE + 10
+		self.Y_ICON = self.Y_MAIN_PANE + (self.H_MAIN_PANE - self.H_ICON) / 2
 		self.ICON_SIZE = 64
 
-		self.X_STATS_PANE = self.X_BUILDING_PANE + 110
-		self.Y_STATS_PANE = self.Y_BUILDING_PANE + 17
-		self.W_STATS_PANE = 190
-		self.H_STATS_PANE = 110 - 20
+		self.X_STATUS = self.X_ICON + self.W_ICON
+		self.Y_STATUS = self.Y_ICON
+		self.W_STATUS = self.X_MAIN_PANE + self.W_MAIN_PANE - self.X_STATUS
+		self.H_STATUS = self.Y_MAIN_PANE + self.H_MAIN_PANE - self.Y_STATUS
 
-		self.X_PREREQ_PANE = self.X_BUILDING_PANE
-		self.W_PREREQ_PANE = self.W_BUILDING_PANE
-		self.Y_PREREQ_PANE = self.Y_BUILDING_PANE + self.H_BUILDING_PANE + 10
-		self.H_PREREQ_PANE = 110
-
-		self.X_BUILDING_ANIMATION = self.X_BUILDING_PANE + self.W_BUILDING_PANE + 10
-		self.Y_BUILDING_ANIMATION = self.Y_BUILDING_PANE + 7
+		self.X_BUILDING_ANIMATION = self.X_MAIN_PANE + self.W_MAIN_PANE + X_MERGIN
+		self.Y_BUILDING_ANIMATION = self.Y_MAIN_PANE + 7
 		self.W_BUILDING_ANIMATION = self.top.R_PEDIA_PAGE - self.X_BUILDING_ANIMATION
-		self.H_BUILDING_ANIMATION = self.Y_PREREQ_PANE + self.H_PREREQ_PANE - self.Y_BUILDING_ANIMATION
+		self.H_BUILDING_ANIMATION = self.Y_MAIN_PANE + self.H_MAIN_PANE - self.Y_BUILDING_ANIMATION
 		self.X_ROTATION_BUILDING_ANIMATION = -20
 		self.Z_ROTATION_BUILDING_ANIMATION = 30
 		self.SCALE_ANIMATION = 0.7
 
-		self.X_SPECIAL_PANE = self.X_BUILDING_PANE
-		self.Y_SPECIAL_PANE = self.Y_PREREQ_PANE + self.H_PREREQ_PANE + 10
-		self.W_SPECIAL_PANE = self.top.R_PEDIA_PAGE - self.X_SPECIAL_PANE
-		self.H_SPECIAL_PANE = 190
+		self.X_REQUIRES = self.X_MAIN_PANE
+		self.Y_REQUIRES = self.Y_MAIN_PANE + self.H_MAIN_PANE + Y_MERGIN
+		self.W_REQUIRES = (self.top.W_PEDIA_PAGE - X_MERGIN) / 2
+		self.H_REQUIRES = 110
 
-		self.X_HISTORY_PANE = self.X_SPECIAL_PANE
-		self.W_HISTORY_PANE = self.W_SPECIAL_PANE
-		self.Y_HISTORY_PANE = self.Y_SPECIAL_PANE + self.H_SPECIAL_PANE + 10
-		self.H_HISTORY_PANE = self.top.B_PEDIA_PAGE - self.Y_HISTORY_PANE
+		self.X_ALLOWS = self.X_REQUIRES + self.W_REQUIRES + X_MERGIN
+		self.Y_ALLOWS = self.Y_REQUIRES
+		self.W_ALLOWS = self.top.R_PEDIA_PAGE - self.X_ALLOWS
+		self.H_ALLOWS = self.H_REQUIRES
+
+		self.X_SPECIAL = self.X_REQUIRES
+		self.Y_SPECIAL = self.Y_REQUIRES + self.H_REQUIRES + Y_MERGIN
+		self.W_SPECIAL = self.top.W_PEDIA_PAGE
+		self.H_SPECIAL = 166
+
+		self.X_HISTORY = self.X_SPECIAL
+		self.Y_HISTORY = self.Y_SPECIAL + self.H_SPECIAL + Y_MERGIN
+		self.W_HISTORY = self.W_SPECIAL
+		self.H_HISTORY = self.top.B_PEDIA_PAGE - self.Y_HISTORY
+##--------	BUGFfH: End Modify
 
 
 
 	def interfaceScreen(self, iBuilding):
 		self.iBuilding = iBuilding
+##--------	BUGFfH: Added by Denev 2009/10/09
+		self.iBuildingClass = gc.getBuildingInfo(iBuilding).getBuildingClassType()
+##--------	BUGFfH: End Add
 		screen = self.top.getScreen()
 
-		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_BUILDING_PANE, self.Y_BUILDING_PANE, self.W_BUILDING_PANE, self.H_BUILDING_PANE, PanelStyles.PANEL_STYLE_BLUE50)
+##--------	BUGFfH: Added by Denev 2009/08/16
+		# Header...
+		szHeader = u"<font=4b>" + gc.getBuildingInfo(self.iBuilding).getDescription() + u"</font>"
+		szHeaderId = "PediaMainHeader"
+		screen.setText(szHeaderId, "Background", szHeader, CvUtil.FONT_CENTER_JUSTIFY, self.top.X_SCREEN, self.top.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##--------	BUGFfH: End Add
+
+		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_MAIN_PANE, self.Y_MAIN_PANE, self.W_MAIN_PANE, self.H_MAIN_PANE, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
 		screen.addDDSGFC(self.top.getNextWidgetName(), gc.getBuildingInfo(self.iBuilding).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.addBuildingGraphicGFC(self.top.getNextWidgetName(), self.iBuilding, self.X_BUILDING_ANIMATION, self.Y_BUILDING_ANIMATION, self.W_BUILDING_ANIMATION, self.H_BUILDING_ANIMATION, WidgetTypes.WIDGET_GENERAL, -1, -1, self.X_ROTATION_BUILDING_ANIMATION, self.Z_ROTATION_BUILDING_ANIMATION, self.SCALE_ANIMATION, True)
 
 		self.placeStats()
 		self.placeRequires()
+##--------	BUGFfH: Added by Denev 2009/10/08
+		self.placeAllows()
+##--------	BUGFfH: End Add
 		self.placeSpecial()
 		self.placeHistory()
 
@@ -88,7 +111,7 @@ class SevoPediaBuilding:
 		screen = self.top.getScreen()
 		buildingInfo = gc.getBuildingInfo(self.iBuilding)
 		panelName = self.top.getNextWidgetName()
-		screen.addListBoxGFC(panelName, "", self.X_STATS_PANE, self.Y_STATS_PANE, self.W_STATS_PANE, self.H_STATS_PANE, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addListBoxGFC(panelName, "", self.X_STATUS, self.Y_STATUS, self.W_STATUS, self.H_STATUS, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(panelName, False)
 
 		if (isWorldWonderClass(gc.getBuildingInfo(self.iBuilding).getBuildingClassType())):
@@ -177,7 +200,7 @@ class SevoPediaBuilding:
 	def placeRequires(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, self.X_PREREQ_PANE, self.Y_PREREQ_PANE, self.W_PREREQ_PANE, self.H_PREREQ_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
+		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, self.X_REQUIRES, self.Y_REQUIRES, self.W_REQUIRES, self.H_REQUIRES, PanelStyles.PANEL_STYLE_BLUE50 )
 		screen.attachLabel(panelName, "", "  ")
 
 		for iPrereq in range(gc.getNumTechInfos()):
@@ -205,26 +228,143 @@ class SevoPediaBuilding:
 						bFirst = False
 					screen.attachImageButton( panelName, "", gc.getBonusInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, iPrereq, -1, False )
 
+##--------	BUGFfH: Added by Denev 2009/10/08
+#		# add trait buttons
+#		iTrait = gc.getBuildingInfo(self.iBuilding).getPrereqTrait()
+#		if iTrait != TraitTypes.NO_TRAIT:
+#			screen.attachImageButton( panelName, "", gc.getTraitInfo(iTrait).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, iTrait, -1, False )
+
+		# add building buttons
+		for iBuildingClass in range(gc.getNumBuildingClassInfos()):
+			if gc.getBuildingInfo(self.iBuilding).isBuildingClassNeededInCity(iBuildingClass):
+				iBuilding = gc.getBuildingClassInfo(iBuildingClass).getDefaultBuildingIndex()
+				screen.attachImageButton( panelName, "", gc.getBuildingInfo(iBuilding).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuilding, -1, False )
+##--------	BUGFfH: End Add
+
+		# add religion button
+##--------	BUGFfH: Modified by Denev 2009/09/25
+		"""
 		iPrereq = gc.getBuildingInfo(self.iBuilding).getPrereqReligion()
 		if (iPrereq >= 0):
 			screen.attachImageButton( panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereq, -1, False )
+		"""
+		iPrereq = gc.getBuildingInfo(self.iBuilding).getStateReligion()
+		if (iPrereq != ReligionTypes.NO_RELIGION):
+			screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_STATE_RELIGION", ()) + u"</font>")
+			screen.attachImageButton( panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereq, -1, False )
+			screen.attachLabel(panelName, "", u")")
+		else:
+			iPrereq = gc.getBuildingInfo(self.iBuilding).getPrereqReligion()
+			if (iPrereq != ReligionTypes.NO_RELIGION):
+				screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_CITY_HAS", ()) + u"</font>")
+				screen.attachImageButton( panelName, "", gc.getReligionInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, iPrereq, -1, False )
+				screen.attachLabel(panelName, "", u")")
+##--------	BUGFfH: End Modify
+
+##--------	BUGFfH: Added by Denev 2009/09/24
+		if gc.getBuildingInfo(self.iBuilding).getProductionCost() < 0:
+			if not gc.getBuildingInfo(self.iBuilding).isEquipment():
+				# add unit buttons
+				liUnit = []
+				for iUnit in range(gc.getNumUnitInfos()):
+					if gc.getUnitInfo(iUnit).getBuildings(self.iBuilding):
+						liUnit.append(iUnit)
+				if len(liUnit) > 1:
+					screen.attachLabel(panelName, "", u"(")
+				bFirst = true
+				for iUnit in liUnit:
+					if not bFirst:
+						screen.attachLabel(panelName, "", localText.getText("TXT_KEY_OR", ()))
+					bFirst = false
+					screen.attachImageButton( panelName, "", gc.getUnitInfo(iUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, -1, False )
+				if len(liUnit) > 1:
+					screen.attachLabel(panelName, "", u")")
+
+				# add spell buttons
+				for iSpell in range(gc.getNumSpellInfos()):
+					if self.iBuilding == gc.getSpellInfo(iSpell).getCreateBuildingType():
+						screen.attachImageButton( panelName, "", gc.getSpellInfo(iSpell).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, -1, False )
+
+	# Place Allows
+	def placeAllows(self):
+		screen = self.top.getScreen()
+
+		panelName = self.top.getNextWidgetName()
+		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_ALLOWS", ()), "", false, true,
+						 self.X_ALLOWS, self.Y_ALLOWS, self.W_ALLOWS, self.H_ALLOWS, PanelStyles.PANEL_STYLE_BLUE50 )
+
+		screen.attachLabel(panelName, "", "  ")
+
+		# add unit buttons
+		"get available civilizations which can use the selected building"
+		liAvailableCiv = self.top.getListBuildingCivilization(self.iBuilding)
+
+		"if active player's civilization can use the selected building, adopt it only."
+		if self.top.iActiveCiv in liAvailableCiv:
+			liAvailableCiv = [self.top.iActiveCiv]
+
+		ltAllowUnit = []
+		for iAllowUnit in range(gc.getNumUnitInfos()):
+			"if loop unit has negative cost (can not be built), skip it"
+			if gc.getUnitInfo(iAllowUnit).getProductionCost() < 0:
+				continue
+
+			ltAllowUnitTemp = []
+			iUnitClass = gc.getUnitInfo(iAllowUnit).getUnitClassType()
+
+			"does loop UnitType match to the allow target?"
+			siAvailableCiv = set(liAvailableCiv) & set(self.top.getListUnitCivilization(iAllowUnit))
+			if siAvailableCiv != set([]):
+				if self.iBuilding == gc.getUnitInfo(iAllowUnit).getPrereqBuilding()\
+				or self.iBuildingClass == gc.getUnitInfo(iAllowUnit).getPrereqBuildingClass():
+					"get unit icon on each avilable civilization"
+					for iAvailableCiv in liAvailableCiv:
+						szUnitIcon = gc.getUnitInfo(iAllowUnit).getUnitButtonWithCivArtStyle(iAvailableCiv)
+						ltAllowUnitTemp.append( (iUnitClass, iAllowUnit, szUnitIcon) )
+					ltAllowUnitTemp = sorted(set(ltAllowUnitTemp))	#remove repeated items
+
+			if len(ltAllowUnitTemp) == 1:
+				"if UnitType and icon can be selected uniquely, adopt it"
+				ltAllowUnit.append(ltAllowUnitTemp[0])
+			elif len(ltAllowUnitTemp) > 1:
+				"if more than one kind of unit icon exists, adopt default"
+				szUnitIcon = gc.getUnitInfo(iAllowUnit).getButton()
+				ltAllowUnit.append( (iUnitClass, iAllowUnit, szUnitIcon) )
+
+		for tAllowUnit in ltAllowUnit:
+			screen.attachImageButton(panelName, "", tAllowUnit[2], GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, tAllowUnit[1], 1, False)
+
+		# add building buttons
+		for iBuilding in range(gc.getNumBuildingInfos()):
+			if gc.getBuildingInfo(iBuilding).isBuildingClassNeededInCity(self.iBuildingClass):
+				screen.attachImageButton( panelName, "", gc.getBuildingInfo(iBuilding).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuilding, -1, False )
+
+		# add spell buttons
+		for iSpell in range(gc.getNumSpellInfos()):
+			if self.iBuilding == gc.getSpellInfo(iSpell).getBuildingPrereq()\
+			or self.iBuildingClass == gc.getSpellInfo(iSpell).getBuildingClassOwnedPrereq():
+				screen.attachImageButton( panelName, "", gc.getSpellInfo(iSpell).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, -1, False )
+##--------	BUGFfH: End Add
 
 
 
 	def placeSpecial(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_SPECIAL_ABILITIES", ()), "", True, False, self.X_SPECIAL_PANE, self.Y_SPECIAL_PANE, self.W_SPECIAL_PANE, self.H_SPECIAL_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
+		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_SPECIAL_ABILITIES", ()), "", True, False, self.X_SPECIAL, self.Y_SPECIAL, self.W_SPECIAL, self.H_SPECIAL, PanelStyles.PANEL_STYLE_BLUE50 )
 		listName = self.top.getNextWidgetName()
 		szSpecialText = CyGameTextMgr().getBuildingHelp(self.iBuilding, True, False, False, None)[1:]
-		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL_PANE+5, self.Y_SPECIAL_PANE+30, self.W_SPECIAL_PANE-10, self.H_SPECIAL_PANE-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Modified by Denev 2009/09/11
+#		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL_PANE+5, self.Y_SPECIAL_PANE+30, self.W_SPECIAL_PANE-10, self.H_SPECIAL_PANE-35, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.addMultilineText(listName, szSpecialText, self.X_SPECIAL+5, self.Y_SPECIAL+30, self.W_SPECIAL-5, self.H_SPECIAL-32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 
 	def placeHistory(self):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel( panelName, localText.getText("TXT_KEY_CIVILOPEDIA_HISTORY", ()), "", True, True, self.X_HISTORY_PANE, self.Y_HISTORY_PANE, self.W_HISTORY_PANE, self.H_HISTORY_PANE, PanelStyles.PANEL_STYLE_BLUE50 )
+		screen.addPanel( panelName, localText.getText("TXT_KEY_CIVILOPEDIA_HISTORY", ()), "", True, True, self.X_HISTORY, self.Y_HISTORY, self.W_HISTORY, self.H_HISTORY, PanelStyles.PANEL_STYLE_BLUE50 )
 		textName = self.top.getNextWidgetName()
 		szText = u""
 		if len(gc.getBuildingInfo(self.iBuilding).getStrategy()) > 0:
@@ -233,10 +373,15 @@ class SevoPediaBuilding:
 			szText += u"\n\n"
 		szText += localText.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ())
 		szText += gc.getBuildingInfo(self.iBuilding).getCivilopedia()
-		screen.addMultilineText( textName, szText, self.X_HISTORY_PANE + 15, self.Y_HISTORY_PANE + 40, self.W_HISTORY_PANE - (15 * 2), self.H_HISTORY_PANE - (15 * 2) - 25, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: Modified by Denev 2009/08/16
+#		screen.addMultilineText( textName, szText, self.X_HISTORY_PANE + 15, self.Y_HISTORY_PANE + 40, self.W_HISTORY_PANE - (15 * 2), self.H_HISTORY_PANE - (15 * 2) - 25, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		screen.attachMultilineText(panelName, textName, szText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 
 
 
+##--------	BUGFfH: Modified by Denev 2009/10/08
+		"""
 	def getBuildingType(self, iBuilding):
 		if (isWorldWonderClass(gc.getBuildingInfo(iBuilding).getBuildingClassType())):
 			return 2
@@ -244,9 +389,24 @@ class SevoPediaBuilding:
 			return 1
 		else:
 			return 0
+		"""
+	def getBuildingType(self, iBuilding):
+		if (isWorldWonderClass(gc.getBuildingInfo(iBuilding).getBuildingClassType())):
+			return SevoScreenEnums.TYPE_WORLD
+
+		if (isTeamWonderClass(gc.getBuildingInfo(iBuilding).getBuildingClassType())):
+			return SevoScreenEnums.TYPE_TEAM
+
+		if (isNationalWonderClass(gc.getBuildingInfo(iBuilding).getBuildingClassType())):
+			return SevoScreenEnums.TYPE_NATIONAL
+
+		return SevoScreenEnums.TYPE_REGULAR
+##--------	BUGFfH: End Modify
 
 
 
+##--------	BUGFfH: Deleted by Denev 2009/10/08
+		"""
 	def getBuildingSortedList(self, iBuildingType):
 		list1 = []
 		numInfos = 0
@@ -262,6 +422,8 @@ class SevoPediaBuilding:
 		if self.top.isSortLists():
 			list2.sort()
 		return list2
+		"""
+##--------	BUGFfH: End Delete
 
 
 

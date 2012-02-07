@@ -274,22 +274,22 @@ class SevoPediaCivilization:
 
 		#terrain yield modifier
 		ltTerrainModifier = []
-#		for iTerrain in range(gc.getNumTerrainInfos()):
-#			if self.iCivilization == gc.getTerrainInfo(iTerrain).getCivilizationYieldType():
-#				szYield = u""
-#				bFirst = true
-#				for iYield in range(YieldTypes.NUM_YIELD_TYPES):
-#					iYieldChange = gc.getTerrainInfo(iTerrain).getCivilizationYieldChange(iYield)
-#					if (iYieldChange != 0):
-#						if not bFirst:
-#							szYield += ", "
-#						bFirst = false
-#
-#						szSign = "+"
-#						if szYield < 0:
-#							szSign = ""
-#						szYield += u"<font=3>%s%i%c</font>" % (szSign, iYieldChange, gc.getYieldInfo(iYield).getChar())
-#				ltTerrainModifier.append( (iTerrain, szYield) )
+		for iTerrain in range(gc.getNumTerrainInfos()):
+			if self.iCivilization == gc.getTerrainInfo(iTerrain).getCivilizationYieldType():
+				szYield = u""
+				bFirst = true
+				for iYield in range(YieldTypes.NUM_YIELD_TYPES):
+					iYieldChange = gc.getTerrainInfo(iTerrain).getCivilizationYieldChange(iYield)
+					if (iYieldChange != 0):
+						if not bFirst:
+							szYield += ", "
+						bFirst = false
+
+						szSign = "+"
+						if szYield < 0:
+							szSign = ""
+						szYield += u"<font=3>%s%i%c</font>" % (szSign, iYieldChange, gc.getYieldInfo(iYield).getChar())
+				ltTerrainModifier.append( (iTerrain, szYield) )
 
 		#place panel with variable title
 
