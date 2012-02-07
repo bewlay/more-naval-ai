@@ -16978,6 +16978,13 @@ void CvGameTextMgr::buildVassalStateString(CvWStringBuffer &szBuffer, TechTypes 
 			szBuffer.append(NEWLINE);
 		}
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_VASSAL_STATES"));
+
+		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		{
+			szBuffer.append(NEWLINE);
+
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_PUPPET_STATES"));
+		}
 	}
 }
 
