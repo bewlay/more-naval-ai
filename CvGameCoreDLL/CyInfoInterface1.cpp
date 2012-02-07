@@ -98,6 +98,9 @@ void CyInfoPythonInterface1()
 
 		.def("isCommerceFlexible", &CvTechInfo::isCommerceFlexible, "bool (int i)")
 		.def("isTerrainTrade", &CvTechInfo::isTerrainTrade, "bool (int i)")
+
+		// FFH
+		.def("getPrereqReligion", &CvTechInfo::getPrereqReligion, "int ()")
 		;
 
 	python::class_<CvPromotionInfo, python::bases<CvInfoBase> >("CvPromotionInfo")
@@ -528,6 +531,7 @@ void CyInfoPythonInterface1()
 
 //FfH: Added by Kael 07/03/2009
 		.def("getPrereqCivilization", &CvCivicInfo::getPrereqCivilization, "int ()")
+		.def("getPrereqReligion", &CvCivicInfo::getPrereqReligion, "int ()")
 //FfH: End Add
 
 
@@ -674,6 +678,8 @@ void CyInfoPythonInterface1()
 
 //FfH: Added by Kael 12/18/2007
 		.def("isEquipment", &CvBuildingInfo::isEquipment, "bool ()")
+		.def("getFreeBonus2", &CvBuildingInfo::getFreeBonus2, "int ()")
+		.def("getFreeBonus3", &CvBuildingInfo::getFreeBonus3, "int ()")
 		.def("getPrereqCiv", &CvBuildingInfo::getPrereqCiv, "int ()")
 		.def("getPrereqTrait", &CvBuildingInfo::getPrereqTrait, "int ()")
 //FfH: End Add

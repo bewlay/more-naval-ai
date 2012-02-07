@@ -40,6 +40,11 @@ void CyInfoPythonInterface3()
 		.def("isFoundCoast", &CvTerrainInfo::isFoundCoast, "bool ()")
 		.def("isFoundFreshWater", &CvTerrainInfo::isFoundFreshWater, "bool ()")
 
+		// FFH
+		.def("getTerrainDown", &CvTerrainInfo::getTerrainDown, "int ()")
+		.def("getTerrainUp", &CvTerrainInfo::getTerrainUp, "int ()")
+		.def("getCivilizationYieldType", &CvTerrainInfo::getCivilizationYieldType, "int (int i)")
+		.def("getCivilizationYieldChange", &CvTerrainInfo::getCivilizationYieldChange, "int (int i)")
 		// Arrays
 
 		.def("getYield", &CvTerrainInfo::getYield, "int (int i)")
@@ -612,6 +617,8 @@ void CyInfoPythonInterface3()
 		.def("getPyRequirement", &CvSpellInfo::getPyRequirement, "string ()")
 		.def("isGlobal", &CvSpellInfo::isGlobal, "bool ()")
 		.def("getCivilizationPrereq", &CvSpellInfo::getCivilizationPrereq, "int ()")
+
+		.def("isAllowAutomateTerrain", &CvSpellInfo::isAllowAutomateTerrain, "bool ()")
 
 //>>>>BUGFfH: Added by Denev 2009/10/03
 		.def("getDelay", &CvSpellInfo::getDelay, "int ()")

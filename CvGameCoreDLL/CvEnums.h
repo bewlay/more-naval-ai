@@ -2752,7 +2752,9 @@ enum CivilopediaPageTypes		// Exposed to Python
 //FfH: Added by Kael 07/23/2007
 	CIVILOPEDIA_PAGE_SPELL,
 //FfH: End Add
-
+//>>>>BUGFfH: Added by Denev 2009/09/19
+	CIVILOPEDIA_PAGE_ABILITY,
+//<<<<BUGFfH: End Add
 	CIVILOPEDIA_PAGE_UNIT_GROUP,
 	CIVILOPEDIA_PAGE_CIV,
 	CIVILOPEDIA_PAGE_LEADER,

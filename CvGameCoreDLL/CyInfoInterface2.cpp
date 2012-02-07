@@ -330,6 +330,7 @@ void CyInfoPythonInterface2()
 		.def("isUnique", &CvImprovementInfo::isUnique, "bool ()")
 		.def("getBonusConvert", &CvImprovementInfo::getBonusConvert, "int ()")
 		.def("isExploreTarget", &CvImprovementInfo::isExploreTarget, "bool ()")
+		.def("getPrereqCivilization", &CvImprovementInfo::getPrereqCivilization, "bool ()")
 		.def("getPythonAtRange", &CvImprovementInfo::getPythonAtRange, "string ()")
 		.def("getPythonOnMove", &CvImprovementInfo::getPythonOnMove, "string ()")
 		.def("getSpawnUnitType", &CvImprovementInfo::getSpawnUnitType, "string ()")
@@ -431,6 +432,9 @@ void CyInfoPythonInterface2()
 		.def("isNukeImmune", &CvFeatureInfo::isNukeImmune, "bool ()")
 
 //FfH: Added by Kael 09/27/2007
+		.def("isFlammable", &CvFeatureInfo::isFlammable, "bool ()")
+		.def("getFeatureUpgrade", &CvFeatureInfo::getFeatureUpgrade, "int ()")
+		.def("getPrereqStateReligion", &CvFeatureInfo::getPrereqStateReligion, "int ()")
 		.def("getPythonOnMove", &CvFeatureInfo::getPythonOnMove, "string ()")
 //FfH: End Add
 
