@@ -3937,6 +3937,21 @@ bool CvUnit::canAutomate(AutomateTypes eAutomate) const
 			return false;
 		}
 		break;
+/*************************************************************************************************/
+/**	ADDON (automatic terraforming) Sephi                                     					**/
+/**																								**/
+/**						                                            							**/
+/*************************************************************************************************/
+
+	case AUTOMATE_TERRAFORMING:
+		if (!isTerraformer())
+		{
+			return false;
+		}
+		break;
+/*************************************************************************************************/
+/**	END	                                        												**/
+/*************************************************************************************************/
 
 	default:
 		FAssert(false);
@@ -18636,7 +18651,38 @@ void CvUnit::updateTerraformer()
 
 bool CvUnit::isTerraformer() const
 {
-        return m_bTerraformer;
+    bool bTerraformer = false;
+    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+    {
+        if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAutomateTerrain())
+        {
+			//if (canCast(iSpell, false))
+			bTerraformer = true;
+
+			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+			{
+				if (!isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
+				{
+					bTerraformer = false;
+				}
+            }
+
+			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
+			{
+				if (!isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
+				{
+					bTerraformer = false;
+				}
+            }
+
+			if (bTerraformer)
+			{
+				break;
+			}
+        }
+    }
+
+	return bTerraformer;
 }
 
 bool CvUnit::withdrawlToNearestValidPlot()

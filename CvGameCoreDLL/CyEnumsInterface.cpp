@@ -1120,6 +1120,15 @@ void CyEnumsPythonInterface()
 		.value("AUTOMATE_CITY", AUTOMATE_CITY)
 		.value("AUTOMATE_EXPLORE", AUTOMATE_EXPLORE)
 		.value("AUTOMATE_RELIGION", AUTOMATE_RELIGION)
+/*************************************************************************************************/
+/**	ADDON (automatic terraforming) Sephi                                     					**/
+/**																								**/
+/**						                                            							**/
+/*************************************************************************************************/
+        .value("AUTOMATE_TERRAFORMING", AUTOMATE_TERRAFORMING)
+/*************************************************************************************************/
+/**	END	                                        												**/
+/*************************************************************************************************/
 		.value("NUM_AUTOMATE_TYPES", NUM_AUTOMATE_TYPES)
 		;
 

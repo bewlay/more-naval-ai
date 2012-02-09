@@ -111,6 +111,7 @@
 		<AutomateType>AUTOMATE_CITY</AutomateType>
 		<AutomateType>AUTOMATE_EXPLORE</AutomateType>
 		<AutomateType>AUTOMATE_RELIGION</AutomateType>
+		<AutomateType>AUTOMATE_TERRAFORMING</AutomateType>		
 	</AutomateTypes>
 	<DirectionTypes>
 		<!--Changes must be reflected in CvEnums.h-->

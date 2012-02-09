@@ -426,6 +426,19 @@ bool CvUnitAI::AI_update()
 			}
 			break;
 
+/*************************************************************************************************/
+/**	ADDON (automatic Terraforming) Sephi                                     					**/
+/**																								**/
+/**						                                            							**/
+/*************************************************************************************************/
+        case AUTOMATE_TERRAFORMING:
+            AI_setUnitAIType(UNITAI_TERRAFORMER);
+            AI_terraformerMove();
+            break;
+/*************************************************************************************************/
+/**	END	                                        												**/
+/*************************************************************************************************/
+
 		default:
 			FAssert(false);
 			break;
@@ -28914,7 +28927,11 @@ void CvUnitAI::AI_mageMove()
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 		return;
 	}
-	// Tholal AI
+
+	if (AI_retreatToCity())
+	{
+		return;
+	}
 
     getGroup()->pushMission(MISSION_FORTIFY);
 }
