@@ -768,6 +768,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
 	PlayerTypes eCapturingPlayer;
 	UnitTypes eCaptureUnitType;
 
+	bool bIsIllusion = isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION"));
+
 	pPlot = plot();
 	FAssertMsg(pPlot != NULL, "Plot is not assigned a valid value");
 
@@ -835,16 +837,18 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
 	}
 
 //FfH: Added by Kael 07/23/2008
-    if (isImmortal())
+    if (isImmortal() && !bIsIllusion)
     {
-        if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
-        {
-            m_bDeathDelay = false;
-            doImmortalRebirth();
-            return;
-        }
+		if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
+		{
+			m_bDeathDelay = false;
+			doImmortalRebirth();
+			return;
+		}
     }
+
     GC.getGameINLINE().changeGlobalCounter(-1 * m_pUnitInfo->getModifyGlobalCounter());
+
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 	    if (isHasPromotion((PromotionTypes)iI))
