@@ -1190,7 +1190,7 @@ void CvCityAI::AI_chooseProduction()
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = (kPlayer.AI_getMojoFactor() + iNumCities);
+	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + iNumCities);
 // End Tholal AI
 
     int iMaxSettlers = 0;
@@ -1871,7 +1871,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_VICTORY))
 		{
-			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_VICTORY 2", getName().GetCString());
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_VICTORY ALTAR", getName().GetCString());
 			return;
 		}
 	}
@@ -1909,6 +1909,11 @@ void CvCityAI::AI_chooseProduction()
 		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2))
 		{
 			iAttackNeeded++;
+
+			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+			{
+				iAttackNeeded++;
+			}
 		}
 	}
 
@@ -2129,6 +2134,7 @@ void CvCityAI::AI_chooseProduction()
 		defensiveTypes.push_back(std::make_pair(UNITAI_ATTACK, 100));
 		//defensiveTypes.push_back(std::make_pair(UNITAI_RESERVE, 60));
 		defensiveTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 60));
+		defensiveTypes.push_back(std::make_pair(UNITAI_MAGE, 60));
 		if ( bDanger || (iTotalFloatingDefenders < (5*iNeededFloatingDefenders)/(bGetBetterUnits ? 6 : 4)))
 		{
 			defensiveTypes.push_back(std::make_pair(UNITAI_CITY_DEFENSE, 200));
@@ -5148,6 +5154,18 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				
 				iValue += kBuilding.getResistMagic();
 				
+				// Revolutions
+				if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+				{
+					// Local RevIndex - positive numbers are bad
+					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxLocal() / 100));
+
+					// National RevIndex
+					iValue += (-(kOwner.getRevIdxNational() * kBuilding.getRevIdxNational()) / (isGovernmentCenter() ? 50 : 100));
+
+					// Crime
+					iValue += (-(getLocalRevIndex() * (getCrime() / 10)));
+				}
 				// End Tholal AI
 				
 				if (bCanPopRush)
