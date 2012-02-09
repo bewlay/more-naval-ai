@@ -335,7 +335,7 @@ def postCombatWolfRider(pCaster, pOpponent):
 		newUnit.convert(pCaster)
 
 def reqAddToFleshGolem(caster):
-	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL')):
+	if caster.isImmortal():
 		return False
 	if caster.isImmuneToMagic():
 		return False
