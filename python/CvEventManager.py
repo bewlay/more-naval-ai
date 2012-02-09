@@ -51,7 +51,8 @@ sf = ScenarioFunctions.ScenarioFunctions()
 game = gc.getGame()
 RevOpt = BugCore.game.Revolution
 endWarsOnDeath = RevOpt.isEndWarsOnDeath()
-LOG_DEBUG = RevOpt.isRevDebugMode()
+#LOG_DEBUG = RevOpt.isRevDebugMode()
+LOG_DEBUG = false;
 
 #FfH: Card Game: begin
 cs = CvCorporationScreen.cs
