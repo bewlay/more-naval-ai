@@ -5728,9 +5728,17 @@ bool CvUnit::canPillage(const CvPlot* pPlot) const
 	{
 		if (!potentialWarAction(pPlot))
 		{
-			if ((pPlot->getImprovementType() == NO_IMPROVEMENT) || (pPlot->getOwnerINLINE() != getOwnerINLINE()))
+			if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && pPlot->getOwnerINLINE() == getOwnerINLINE())
 			{
-				return false;
+				 //  Advanced Tactics - can pillage own plots
+				return true;
+			}
+			else
+			{
+				if ((pPlot->getImprovementType() == NO_IMPROVEMENT) || (pPlot->getOwnerINLINE() != getOwnerINLINE()))
+				{
+					return false;
+				}
 			}
 		}
 	}
@@ -5777,7 +5785,7 @@ bool CvUnit::pillage()
 		return false;
 	}
 
-	if (pPlot->isOwned())
+	if (pPlot->isOwned() && pPlot->getOwner() != getOwner())
 	{
 		// we should not be calling this without declaring war first, so do not declare war here
 		if (!isEnemy(pPlot->getTeam(), pPlot))
@@ -5804,6 +5812,38 @@ bool CvUnit::pillage()
 			return false;
 		}
 	}
+
+	// Advanced Tactics - Pillaging reduces Culture
+	for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kLoopPlayer.isAlive())
+		{
+			int iLoopPlayerPlotCulture = pPlot->getCulture((PlayerTypes)iPlayer);
+			if (iLoopPlayerPlotCulture > 0)
+			{
+				int iCultureChange = 100;// * pPlot->getImprovementDuration();
+
+				 // extra loss for pillaging unit's culture
+				if (getOwner() == iPlayer)
+				{
+					// unless it's Hidden Nationality
+					if (!isHiddenNationality())
+					{
+						iCultureChange *= 2;
+					}
+				}
+
+				if (iCultureChange > iLoopPlayerPlotCulture)
+				{
+					iCultureChange = iLoopPlayerPlotCulture;
+				}
+
+				pPlot->changeCulture((PlayerTypes)iPlayer, -iCultureChange, true);
+			}
+		}
+	}
+	// End Advanced Tactics
 
 	if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 	{
