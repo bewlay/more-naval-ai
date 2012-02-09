@@ -107,7 +107,7 @@ def init():
 	columns.append(Column('I', ID, DYNAMIC))
 	columns.append(Column('V', MASTER, DYNAMIC))
 	columns.append(Column('C', NAME, DYNAMIC))
-	columns.append(Column('?', NOT_MET, FIXED, smallText("?")))
+	columns.append(Column('?', NOT_MET, FIXED, smallText(" ? ")))
 	columns.append(Column('W', WAR, DYNAMIC))
 	columns.append(Column('P', POWER, DYNAMIC))
 	columns.append(Column('T', RESEARCH, SPECIAL))
