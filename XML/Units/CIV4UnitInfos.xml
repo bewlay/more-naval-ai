@@ -5473,6 +5473,10 @@
                     <UnitAIType>UNITAI_WORKER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </NotUnitAIs>
             <Builds>
                 <Build>
