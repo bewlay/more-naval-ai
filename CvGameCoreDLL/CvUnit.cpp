@@ -5208,6 +5208,11 @@ bool CvUnit::canRecon(const CvPlot* pPlot) const
 		return false;
 	}
 
+	if (getImmobileTimer() > 0)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -10561,7 +10566,14 @@ int CvUnit::withdrawalProbability() const
     }
 //FfH: End Add
 
-	return std::max(0, (m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal()));
+	// Advanced Tactics - all units have an inherent 10% withdrawal chance
+	int iWithDrawalBonus = 0;
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		iWithDrawalBonus += 10;
+	}
+
+	return std::max(0, (m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal() + iWithDrawalBonus));
 }
 
 
