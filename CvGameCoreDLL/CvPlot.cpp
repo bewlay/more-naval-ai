@@ -6561,6 +6561,17 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 				iYield += GC.getTerrainInfo(getTerrainType()).getCivilizationRiverYieldChange(eYield);
 			}
         }
+	}
+	else
+	{
+        if (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldType())
+        {
+            iYield += GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldChange(eYield);
+			if (isRiver())
+			{
+				iYield += GC.getTerrainInfo(getTerrainType()).getCivilizationRiverYieldChange(eYield);
+			}
+        }
     }
 //FfH: End Add
 
