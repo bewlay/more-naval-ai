@@ -832,7 +832,7 @@ class CvTechChooser:
 		if (self.sTechTabID == self.sTechSelectTab):
 			bTechName = True
 			sPanel = self.TabPanels[0]
-			self.BOX_INCREMENT_WIDTH = 27 # Used to be 33 #Should be a multiple of 3...
+			self.BOX_INCREMENT_WIDTH = 33 # Used to be 33 #Should be a multiple of 3...
 		else:
 			bTechName = False
 			sPanel = self.TabPanels[1]
