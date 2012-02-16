@@ -1869,10 +1869,10 @@ def spellMirror(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	newUnit = pPlayer.initUnit(caster.getUnitType(), caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 	for i in range(gc.getNumPromotionInfos()):
-		if ((not gc.getPromotionInfo(i).isLeader()) and (not gc.getPromotionInfo(i).isEquipment())):
+		if (not ( gc.getPromotionInfo(i).isLeader() or gc.getPromotionInfo(i).isEquipment() ) ):
 			newUnit.setHasPromotion(i, caster.isHasPromotion(i))
-#		if gc.getPromotionInfo(i).isEquipment():
-#			newUnit.setHasPromotion(i, False)
+		if gc.getPromotionInfo(i).isEquipment():
+			newUnit.setHasPromotion(i, False)
 	newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION'), True)
 	newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL'), False)
 	if newUnit.isImmortal():
