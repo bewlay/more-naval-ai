@@ -1410,7 +1410,7 @@ def reqGiftsOfNantosuelta(caster):
 def spellGiftsOfNantosuelta(caster):
 	iPlayer = caster.getOwner()
 	pPlayer = gc.getPlayer(iPlayer)
-	iGoldenHammer = gc.getInfoTypeForString('EQUIPMENT_GOLDEN_HAMMER')
+	iGoldenHammer = gc.getInfoTypeForString('EQUIPMENT_GOLDEN_HAMMER_NEW')
 	for pyCity in PyPlayer(iPlayer).getCityList() :
 		pCity = pyCity.GetCy()
 		newUnit = pPlayer.initUnit(iGoldenHammer, pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)

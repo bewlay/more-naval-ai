@@ -862,6 +862,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
                     {
                         GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iJ, getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
                         setHasPromotion((PromotionTypes)iI, false);
+						break;
                     }
                 }
             }
@@ -15297,10 +15298,10 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	// objects cant cast spells
 	if (getUnitInfo().isObject())
 	{
-		// moved this section here to account for objects that are supposed to cast spells such as the Golden Hammer
-		if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
+		// unless the spell is designed for that object (ie. Golden Hammer)
+		if (GC.getSpellInfo(eSpell).getUnitPrereq() != NO_UNIT)
 		{
-			if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != getUnitClassType())
+			if (GC.getSpellInfo(eSpell).getUnitPrereq() != getUnitType())
 			{
 				return false;
 			}
@@ -15435,13 +15436,18 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
+	/*
     if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
     {
-        if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != getUnitClassType())
-        {
-            return false;
-        }
+        if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != NO_UNITCLASS)
+		{
+			if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != getUnitClassType())
+	        {
+		        return false;
+			}
+		}
     }
+	*/
     if (GC.getSpellInfo(eSpell).getCasterMinLevel() != 0)
     {
         if (getLevel() < GC.getSpellInfo(eSpell).getCasterMinLevel())
