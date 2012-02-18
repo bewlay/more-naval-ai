@@ -2808,6 +2808,11 @@ bool CyPlayer::isAgnostic() const
 	return m_pPlayer ? m_pPlayer->isAgnostic() : false;
 }
 
+bool CyPlayer::isIgnoreFood() const
+{
+	return m_pPlayer ? m_pPlayer->isIgnoreFood() : false;
+}
+
 void CyPlayer::setAlive(bool bNewValue)
 {
 	if (m_pPlayer)

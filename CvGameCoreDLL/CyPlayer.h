@@ -680,6 +680,7 @@ public:
 	bool isSlaveTrade() const;
 	bool isSmugglingRing() const;
 	bool isAgnostic() const;
+	bool isIgnoreFood() const;
 	void setAlive(bool bNewValue);
 	void setFoundedFirstCity(bool bNewValue);
 	void setGreatPeopleCreated(int iNewValue);
