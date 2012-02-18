@@ -28773,14 +28773,9 @@ void CvUnitAI::AI_upgrademanaMove()
 
 					iValue = kPlayer.AI_bonusVal(eNewBonus);
 
-					if (GC.getLogging())
+					if( gUnitLogLevel >= 3 )
 					{
-						if (gDLL->getChtLvl() > 0)
-						{
-							char szOut[1024];
-							sprintf(szOut, "Player %d %S - %S mana value: %d\n", getOwnerINLINE(), GET_PLAYER(getOwnerINLINE()).getName(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
-							gDLL->messageControlLog(szOut);
-						}
+						logBBAI("       %S mana value: %d\n", GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
 					}
 
 
@@ -28792,32 +28787,22 @@ void CvUnitAI::AI_upgrademanaMove()
 				}
 			}
 
-			if (GC.getLogging())
-			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					char szOut[1024];
-					sprintf(szOut, "Player %d Unit %d (%S's %S) building mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
-					gDLL->messageControlLog(szOut);
-				}
-			}
-			
 			if (eBestBuild != NO_BUILD)
 			{
+				if( gUnitLogLevel >= 2 )
+				{
+					logBBAI("     Player %d Unit %d (%S's %S) %S with value of %d\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
+				}
+
 				getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, false, false, MISSIONAI_BUILD, plot());
 				return;
 			}
 		}
 		else
 		{
-			if (GC.getLogging())
+			if( gUnitLogLevel >= 3 )
 			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					char szOut[1024];
-					sprintf(szOut, "Player %d Unit %d (%S's %S) moving to mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
-					gDLL->messageControlLog(szOut);
-				}
+				logBBAI("     Player %d Unit %d (%S's %S) moving to mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
 			}
 
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
@@ -28825,9 +28810,7 @@ void CvUnitAI::AI_upgrademanaMove()
 		}
 	}
 	
-	/*
-
-    CyUnit* pyUnit1 = new CyUnit(this);
+	CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
     argsList1.add(gDLL->getPythonIFace()->makePythonObject(pyUnit1));	// pass in unit class
     long lResult=0;
@@ -28839,8 +28822,7 @@ void CvUnitAI::AI_upgrademanaMove()
 		getGroup()->pushMission(MISSION_SKIP);
         return;
     }
-	*/
-	
+		
 	if (AI_moveIntoCity(5))
 	{
 		return;
