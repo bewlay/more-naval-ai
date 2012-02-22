@@ -153,10 +153,10 @@ void CyInfoPythonInterface3()
 //FfH: Added by Kael 09/02/2007
 		.def("getFavoriteWonder", &CvLeaderHeadInfo::getFavoriteWonder, "int ()")
 		.def("getPermanentTrait", &CvLeaderHeadInfo::getPermanentTrait, "int ()")
-//FfH Card Game: Added by Sto 08/08/2008
+		//FfH Card Game: Added by Sto 08/08/2008
 		.def("getSomniumAggressiveness", &CvLeaderHeadInfo::getSomniumAggressiveness, "int ()")
 //FfH: End Add
-//FfH: End Add
+        .def("getReligionWeightModifier", &CvLeaderHeadInfo::getReligionWeightModifier, "int (int i)")
 
 		// Arrays
 
