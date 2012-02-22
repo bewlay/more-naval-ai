@@ -160,7 +160,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_UNIT_CATEGORIES	: self.placeUnitCategories,
 			SevoScreenEnums.PEDIA_PROMOTIONS		: self.placePromotions,
 			SevoScreenEnums.PEDIA_PROMOTION_TREE	: self.placePromotionTree,
+			SevoScreenEnums.PEDIA_EFFECTS		: self.placeEffects,
 			SevoScreenEnums.PEDIA_EQUIPMENTS	: self.placeEquipments,
+			SevoScreenEnums.PEDIA_RACES			: self.placeRaces,
 			SevoScreenEnums.PEDIA_BUILDINGS		: self.placeBuildings,
 			SevoScreenEnums.PEDIA_NATIONAL_WONDERS	: self.placeNationalWonders,
 			SevoScreenEnums.PEDIA_GREAT_WONDERS	: self.placeGreatWonders,
@@ -208,7 +210,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_UNITS		: SevoPediaUnit.SevoPediaUnit(self),
 			SevoScreenEnums.PEDIA_UNIT_CATEGORIES	: SevoPediaUnitChart.SevoPediaUnitChart(self),
 			SevoScreenEnums.PEDIA_PROMOTIONS		: SevoPediaPromotion.SevoPediaPromotion(self),
+			SevoScreenEnums.PEDIA_EFFECTS		: self.pediaPromotion,
 			SevoScreenEnums.PEDIA_EQUIPMENTS	: SevoPediaEquipment.SevoPediaEquipment(self),
+			SevoScreenEnums.PEDIA_RACES			: self.pediaPromotion,
 			SevoScreenEnums.PEDIA_BUILDINGS		: self.pediaBuilding,
 			SevoScreenEnums.PEDIA_NATIONAL_WONDERS	: SevoPediaBuilding.SevoPediaBuilding(self),
 			SevoScreenEnums.PEDIA_GREAT_WONDERS	: SevoPediaBuilding.SevoPediaBuilding(self),
@@ -434,7 +438,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryHints		= localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
 		self.szCategoryShortcuts	= localText.getText("TXT_KEY_PEDIA_CATEGORY_SHORTCUTS", ())
 		self.szCategoryStrategy   	= localText.getText("TXT_KEY_PEDIA_CATEGORY_STRATEGY", ())
+		self.szCategoryEffects		= localText.getText("TXT_KEY_PEDIA_CATEGORY_EFFECTS", ())
 		self.szCategoryEquipments	= localText.getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ())
+		self.szCategoryRaces		= localText.getText("TXT_KEY_PEDIA_CATEGORY_RACES", ())
 		
 		self.categoryList = [
 			["TECHS",	self.szCategoryTechs],
@@ -443,7 +449,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["UNITS",	self.szCategoryUnitCategories],
 			["PROMOTIONS",	self.szCategoryPromotions],
 			["PROMOTIONS",	self.szCategoryPromotionTree],
+			["PROMOTIONS",	self.szCategoryEffects],
 			["PROMOTIONS",	self.szCategoryEquipments],
+			["PROMOTIONS",	self.szCategoryRaces],
 			["BUILDINGS",	self.szCategoryBuildings],
 			["BUILDINGS",	self.szCategoryNationalWonders],
 			["BUILDINGS",	self.szCategoryGreatWonders],

@@ -193,7 +193,8 @@ class SevoPediaPromotion:
 			screen.attachLabel(panelName, "", ")")
 
 		eTech = gc.getPromotionInfo(self.iPromotion).getTechPrereq()
-		if (eTech != TechTypes.NO_TECH):
+#		if (eTech != TechTypes.NO_TECH):
+		if ((eTech > -1) and (eTech != gc.getInfoTypeForString('TECH_NEVER'))):
 			if not bFirst:
 				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_AND", ()))
 			screen.attachImageButton(panelName, "", gc.getTechInfo(eTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, eTech, 1, False)
