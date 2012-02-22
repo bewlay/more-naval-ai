@@ -27,15 +27,15 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_MAKE_PUPPET</Tag>
-		<English>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</English>
-		<French>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</French>
-		<German>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</German>
-		<Italian>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</Italian>
-		<Spanish>%s1_CivAdj forces in %s2_Civ have created the new government of %s3_Civ led by %s4_Leader.</Spanish>
+		<English>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</English>
+		<French>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</French>
+		<German>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</German>
+		<Italian>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</Italian>
+		<Spanish>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_RETURN_PUPPET_CITY</Tag>
-		<English>No, hand control over to the %s1_CivName</English>
+		<English>No, hand control over to our %s1_CivName allies</English>
 		<French>Non, rendez-la aux %s1_CivName.</French>
 		<German>Nein, &#252;bergebt sie wieder an das %s1:2_CivName</German>
 		<Italian>No, restituisci il controllo all'%s1_CivName</Italian>

@@ -24108,7 +24108,7 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 			return false;
 		}
 
-		CvWString szMessage = gDLL->getText("TXT_KEY_MISC_MAKE_PUPPET", getCivilizationAdjectiveKey(), GET_PLAYER(eSplitPlayer).getNameKey(), GC.getCivilizationInfo(eBestCiv).getShortDescriptionKey(), GC.getLeaderHeadInfo(eBestLeader).getTextKeyWide(), pVassalCapital->getNameKey());
+		CvWString szMessage = gDLL->getText("TXT_KEY_MISC_MAKE_PUPPET", getCivilizationAdjectiveKey(), pVassalCapital->getNameKey(), GC.getLeaderHeadInfo(eBestLeader).getTextKeyWide(), GC.getCivilizationInfo(eBestCiv).getShortDescriptionKey());
 		for (int i = 0; i < MAX_CIV_PLAYERS; ++i)
 		{
 			if (GET_PLAYER((PlayerTypes)i).isAlive())
