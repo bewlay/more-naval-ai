@@ -268,8 +268,8 @@ class SevoPediaPromotion:
 			return SevoScreenEnums.TYPE_RACE
 		elif (gc.getPromotionInfo(iPromotion).isEquipment()):
 			return SevoScreenEnums.TYPE_EQUIPMENT
-		elif (gc.getPromotionInfo(iPromotion).isGear()):
-			return SevoScreenEnums.TYPE_GEAR			
+#		elif (gc.getPromotionInfo(iPromotion).isGear()):
+#			return SevoScreenEnums.TYPE_GEAR			
 		elif (gc.getPromotionInfo(iPromotion).getMinLevel() < 0):
 			return SevoScreenEnums.TYPE_EFFECT
 		else:

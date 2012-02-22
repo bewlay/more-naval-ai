@@ -6079,7 +6079,10 @@ void CvDLLWidgetData::parseDescriptionHelp(CvWidgetDataStruct &widgetDataStruct,
 
 //FfH: Added by Kael 08/26/2008
 	case CIVILOPEDIA_PAGE_EFFECT:
-	case CIVILOPEDIA_PAGE_ITEM:
+//>>>>BUGFfH: Modified by Denev 2009/10/14
+//	case CIVILOPEDIA_PAGE_ITEM:
+	case CIVILOPEDIA_PAGE_EQUIPMENT:
+//>>>>BUGFfH: End Modifiy
 	case CIVILOPEDIA_PAGE_RACE:
 //FfH: End Add
 

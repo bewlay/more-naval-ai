@@ -2751,7 +2751,10 @@ enum CivilopediaPageTypes		// Exposed to Python
 
 //FfH: Added by Kael 08/27/2008
 	CIVILOPEDIA_PAGE_EFFECT,
-	CIVILOPEDIA_PAGE_ITEM,
+//>>>>BUGFfH: Added by Denev 2009/10/14
+//	CIVILOPEDIA_PAGE_ITEM,
+	CIVILOPEDIA_PAGE_EQUIPMENT,
+//FfH: End Modify
 	CIVILOPEDIA_PAGE_RACE,
 //FfH: End Add
 

@@ -38,6 +38,8 @@ import SevoPediaReligion
 #import SevoPediaCorporation
 #import CvPediaSpell
 import SevoPediaIndex
+##--------	BUGFfH: Added by Denev 2009/08/12
+import SevoPediaEquipment
 import SevoPediaSpell
 
 import UnitUpgradesGraph
@@ -158,6 +160,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_UNIT_CATEGORIES	: self.placeUnitCategories,
 			SevoScreenEnums.PEDIA_PROMOTIONS		: self.placePromotions,
 			SevoScreenEnums.PEDIA_PROMOTION_TREE	: self.placePromotionTree,
+			SevoScreenEnums.PEDIA_EQUIPMENTS	: self.placeEquipments,
 			SevoScreenEnums.PEDIA_BUILDINGS		: self.placeBuildings,
 			SevoScreenEnums.PEDIA_NATIONAL_WONDERS	: self.placeNationalWonders,
 			SevoScreenEnums.PEDIA_GREAT_WONDERS	: self.placeGreatWonders,
@@ -205,6 +208,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_UNITS		: SevoPediaUnit.SevoPediaUnit(self),
 			SevoScreenEnums.PEDIA_UNIT_CATEGORIES	: SevoPediaUnitChart.SevoPediaUnitChart(self),
 			SevoScreenEnums.PEDIA_PROMOTIONS		: SevoPediaPromotion.SevoPediaPromotion(self),
+			SevoScreenEnums.PEDIA_EQUIPMENTS	: SevoPediaEquipment.SevoPediaEquipment(self),
 			SevoScreenEnums.PEDIA_BUILDINGS		: self.pediaBuilding,
 			SevoScreenEnums.PEDIA_NATIONAL_WONDERS	: SevoPediaBuilding.SevoPediaBuilding(self),
 			SevoScreenEnums.PEDIA_GREAT_WONDERS	: SevoPediaBuilding.SevoPediaBuilding(self),
@@ -292,6 +296,16 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 		if (iCategory == SevoScreenEnums.PEDIA_BUILDINGS):
 			iCategory += self.pediaBuilding.getBuildingType(iItem)
+		elif (iCategory == SevoScreenEnums.PEDIA_PROMOTIONS):
+			iPromotionType = self.pediaPromotion.getPromotionType(iItem)
+			if iPromotionType == SevoScreenEnums.TYPE_EFFECT:
+				iCategory = SevoScreenEnums.PEDIA_EFFECTS
+			elif iPromotionType == SevoScreenEnums.TYPE_EQUIPMENT:
+				iCategory = SevoScreenEnums.PEDIA_EQUIPMENTS
+			elif iPromotionType == SevoScreenEnums.TYPE_GEAR:
+				iCategory = SevoScreenEnums.PEDIA_GEAR				
+			elif iPromotionType == SevoScreenEnums.TYPE_RACE:
+				iCategory = SevoScreenEnums.PEDIA_RACES
 		elif (iCategory == SevoScreenEnums.PEDIA_BONUSES):
 			iBonusType = self.pediaBonus.getBonusType(iItem)
 			if iBonusType == SevoScreenEnums.TYPE_BONUS_MANA:			
@@ -420,6 +434,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryHints		= localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
 		self.szCategoryShortcuts	= localText.getText("TXT_KEY_PEDIA_CATEGORY_SHORTCUTS", ())
 		self.szCategoryStrategy   	= localText.getText("TXT_KEY_PEDIA_CATEGORY_STRATEGY", ())
+		self.szCategoryEquipments	= localText.getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ())
 		
 		self.categoryList = [
 			["TECHS",	self.szCategoryTechs],
@@ -428,6 +443,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["UNITS",	self.szCategoryUnitCategories],
 			["PROMOTIONS",	self.szCategoryPromotions],
 			["PROMOTIONS",	self.szCategoryPromotionTree],
+			["PROMOTIONS",	self.szCategoryEquipments],
 			["BUILDINGS",	self.szCategoryBuildings],
 			["BUILDINGS",	self.szCategoryNationalWonders],
 			["BUILDINGS",	self.szCategoryGreatWonders],
@@ -532,11 +548,21 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 
 	def placePromotions(self):
-		self.list = self.getPromotionList()
+##--------	BUGFfH: Modified by Denev 2009/10/06
+#		self.list = self.getPromotionList()
+		self.list = self.getPromotionList(SevoScreenEnums.TYPE_REGULAR)
+##--------	BUGFfH: End Modify
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, gc.getPromotionInfo)
-	
+
+##--------	BUGFfH: Modified by Denev 2009/10/06
+	"""
 	def getPromotionList(self):
 		return self.getSortedList(gc.getNumPromotionInfos(), gc.getPromotionInfo)
+	"""
+	def getPromotionList(self, iType = None):
+		return self.getSortedList(gc.getNumPromotionInfos(), gc.getPromotionInfo, iType, self.pediaPromotion.getPromotionType)
+##--------	BUGFfH: End Modify
+
 
 ##--------	BUGFfH: Added by Denev 2009/10/06
 	def placeSpells(self):
@@ -766,6 +792,30 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 	
 	def getCorporationList(self):
 		return self.getSortedList(gc.getNumCorporationInfos(), gc.getCorporationInfo)
+
+
+##--------	BUGFfH: Added by Denev 2009/10/06
+	def placeHeroes(self):
+		self.list = self.getUnitList(SevoScreenEnums.TYPE_WORLDUNIT)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, gc.getUnitInfo)
+
+	def placeEffects(self):
+		self.list = self.getPromotionList(SevoScreenEnums.TYPE_EFFECT)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, gc.getPromotionInfo)
+
+	def placeEquipments(self):
+		self.list = self.getPromotionList(SevoScreenEnums.TYPE_EQUIPMENT)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, gc.getPromotionInfo)
+
+	def placeGear(self):
+		self.list = self.getPromotionList(SevoScreenEnums.TYPE_GEAR)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, gc.getPromotionInfo)
+		
+	def placeRaces(self):
+		self.list = self.getPromotionList(SevoScreenEnums.TYPE_RACE)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, gc.getPromotionInfo)
+
+##--------	BUGFfH: End Add
 
 
 	def placeConcepts(self):
