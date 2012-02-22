@@ -16748,8 +16748,25 @@ bool CvCity::canJoinPuppetState(PlayerTypes eOfPlayer) const
         if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(GET_PLAYER(eOfPlayer).getTeam()) && ((GET_PLAYER((PlayerTypes)iI).getParent() == getOwnerINLINE()) || GET_PLAYER((PlayerTypes)iI).getParent() == getPreviousOwner()))
         {
             bFound = true;
+			break;
         }
+		
+		// find those that are Puppets
+		if (GET_PLAYER((PlayerTypes)iI).isPuppetState())
+		{
+			// see if they are our Puppets
+			if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(GET_PLAYER((PlayerTypes)eOfPlayer).getTeam()))
+			{
+				// see if they match the civ-type of the current civ we're trying to Puppet
+				if (GET_PLAYER((PlayerTypes)iI).getCivilizationType() == GET_PLAYER((PlayerTypes)getPreviousOwner()).getCivilizationType())
+				{
+					bFound = true;
+					break;
+				}
+			}
+		}
     }
+
     return bFound;
 }
 /*** PUPPET STATES END 07/15/08 by DPII ***/

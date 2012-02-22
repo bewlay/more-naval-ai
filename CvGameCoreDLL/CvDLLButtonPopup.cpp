@@ -1535,14 +1535,18 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
     {
         for (iI = 0; iI < MAX_PLAYERS; iI++)
         {
-            if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(player.getTeam()) && (GET_PLAYER((PlayerTypes)iI).getParent() == pNewCity->getPreviousOwner()))
-            {
-                eReceivingPlayer = ((PlayerTypes)iI);
-                info.setData2(eReceivingPlayer);
-                bPuppet = false;
-                bPuppetGift = true;
-                break;
-            }
+            if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(player.getTeam()))
+			{
+				if ((GET_PLAYER((PlayerTypes)iI).getParent() == pNewCity->getPreviousOwner()) ||
+					(GET_PLAYER((PlayerTypes)iI).getCivilizationType() == GET_PLAYER((PlayerTypes)pNewCity->getPreviousOwner()).getCivilizationType()))
+				{
+					eReceivingPlayer = ((PlayerTypes)iI);
+					info.setData2(eReceivingPlayer);
+					bPuppet = false;
+					bPuppetGift = true;
+					break;
+				}
+			}
         }
     }
     /*** PUPPET STATES END ***/

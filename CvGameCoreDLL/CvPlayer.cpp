@@ -23933,6 +23933,33 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
         return false;
     }
 
+	bool bMatchingPuppetCiv = false;
+	// only one puppet per player per civ-type
+	// loop through all players
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+    {
+		//if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam())
+		// find those that are Puppets
+		if (GET_PLAYER((PlayerTypes)iI).isPuppetState())
+		{
+			// see if they are our Puppets
+			if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()))
+			{
+				// see if they match the civ-type of the current civ we're trying to Puppet
+				if (GET_PLAYER((PlayerTypes)iI).getCivilizationType() == GET_PLAYER((PlayerTypes)eFromPlayer).getCivilizationType())
+				{
+					bMatchingPuppetCiv = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if (bMatchingPuppetCiv)
+	{
+		return false;
+	}
+
     return true;
 }
 
