@@ -24146,7 +24146,11 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 		CvTeam& kNewTeam = GET_TEAM(GET_PLAYER(eNewPlayer).getTeam());
 		for (int i = 0; i < GC.getNumTechInfos(); ++i)
 		{
-			kNewTeam.setHasTech((TechTypes)i, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).isHasTech((TechTypes)i), eNewPlayer, false, false);
+			// only give free techs that both civs already have
+			if (GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).isHasTech((TechTypes)i) && GET_TEAM(getTeam()).isHasTech((TechTypes)i))
+			{
+				kNewTeam.setHasTech((TechTypes)i, true, eNewPlayer, false, false);
+			}
 		}
 
 		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
