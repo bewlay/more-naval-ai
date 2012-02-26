@@ -382,7 +382,7 @@ class RevCivDefines :
 		self.lpCivRules[self.iHippus].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.5
 		self.lpCivRules[self.iHippus].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.0
 		self.lpCivRules[self.iHippus].pCivTerrainPreference.afPlotAffinity[self.iPeak] = -1.0
-		self.lpCivRules[self.iLanun].pCivTerrainPreference.fCoastAffinity = -1.0
+		self.lpCivRules[self.iHippus].pCivTerrainPreference.fCoastAffinity = -1.0
 		
 		self.lpCivRules[self.iIllians].liBlockedReligions = [self.iFellowship, self.iOrder, self.iOverlords, self.iKilmorph, self.iVeil, self.iEsus]
 		self.lpCivRules[self.iIllians].iRace = self.iWinterborn
@@ -437,10 +437,10 @@ class RevCivDefines :
 		self.lpCivRules[self.iSvartalfar].liReligions = [self.iEsus, self.iFellowship]
 		self.lpCivRules[self.iSvartalfar].iRace = self.iDarkElf
 		self.lpCivRules[self.iSvartalfar].liGoodRaces = [self.iElf]
-		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afFeatureAffinity[self.iForest] = 1.8
-		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = 0.3
-		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.3
-		self.lpCivRules[self.iLjosalfar].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.8
+		self.lpCivRules[self.iSvartalfar].pCivTerrainPreference.afFeatureAffinity[self.iForest] = 1.8
+		self.lpCivRules[self.iSvartalfar].pCivTerrainPreference.afTerrainAffinity[self.iGrass] = 0.3
+		self.lpCivRules[self.iSvartalfar].pCivTerrainPreference.afPlotAffinity[self.iHills] = -0.3
+		self.lpCivRules[self.iSvartalfar].pCivTerrainPreference.afTerrainAffinity[self.iDesert] = -1.8
 		
 		
 		self.lpCivRules[self.iInfernal].bNoRevolt = True
