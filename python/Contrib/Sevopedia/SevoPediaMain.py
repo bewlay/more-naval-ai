@@ -437,7 +437,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryConceptsNew	= localText.getText("TXT_KEY_PEDIA_CATEGORY_CONCEPT_NEW", ())
 		self.szCategoryHints		= localText.getText("TXT_KEY_PEDIA_CATEGORY_HINTS", ())
 		self.szCategoryShortcuts	= localText.getText("TXT_KEY_PEDIA_CATEGORY_SHORTCUTS", ())
-		self.szCategoryStrategy   	= localText.getText("TXT_KEY_PEDIA_CATEGORY_STRATEGY", ())
+##--------	BUGFfH: Deleted by Denev 2009/08/12
+#		self.szCategoryStrategy   	= localText.getText("TXT_KEY_PEDIA_CATEGORY_STRATEGY", ())
+##--------	BUGFfH: End Delete
 		self.szCategoryEffects		= localText.getText("TXT_KEY_PEDIA_CATEGORY_EFFECTS", ())
 		self.szCategoryEquipments	= localText.getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ())
 		self.szCategoryRaces		= localText.getText("TXT_KEY_PEDIA_CATEGORY_RACES", ())
@@ -474,7 +476,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["HINTS",	self.szCategoryConceptsNew],
 			["HINTS",	self.szCategoryHints],
 			["HINTS",	self.szCategoryShortcuts],
-			["HINTS",	self.szCategoryStrategy],
+##--------	BUGFfH: Deleted by Denev 2009/08/12
+#			["HINTS",	self.szCategoryStrategy],
+##--------	BUGFfH: End Delete
 			]
 
 		self.categoryGraphics = {
