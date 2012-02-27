@@ -471,8 +471,6 @@ class CvTechChooser:
 		# Promotion Info
 		for j in range( gc.getNumPromotionInfos() ):
 			if ( gc.getPromotionInfo(j).getTechPrereq() == i ):
-#				if (gc.getPromotionInfo(j).getRequiredGameOption()==-1 or CyGame().isOption(gc.getPromotionInfo(j).getRequiredGameOption())):
-#					if(gc.getPromotionInfo(j).isPrereqCivilization(gc.getGame().getActiveCivilizationType()) or gc.getPromotionInfo(j).isPrereqCivilization(-1)):
 				szPromotionButton = self.getNextWidgetName("Promotion")
 				screen.addDDSGFCAt( szPromotionButton, szTechRecord, gc.getPromotionInfo(j).getButton(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, j, -1, False )
 				fX += X_INCREMENT
