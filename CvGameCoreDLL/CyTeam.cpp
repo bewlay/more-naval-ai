@@ -1076,6 +1076,12 @@ bool CyTeam::isHasEmbassy(int /*TeamTypes*/ eTeam) const
 	return m_pTeam ? m_pTeam->isHasEmbassy((TeamTypes)eTeam) : false;
 }
 
+void CyTeam::setHasEmbassy(int /*TeamTypes*/ eTeam, bool bNewValue) const
+{
+	if (m_pTeam)
+		m_pTeam->setHasEmbassy((TeamTypes)eTeam, bNewValue);
+}
+
 bool CyTeam::isLimitedBorders(int /*TeamTypes*/ eTeam) const
 {
 	return m_pTeam ? m_pTeam->isLimitedBorders((TeamTypes)eTeam) : false;
