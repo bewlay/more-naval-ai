@@ -9772,21 +9772,23 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	FAssert(GC.getGameINLINE().getActivePlayer() != NO_PLAYER || !bPlayerContext);
 
+	CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+
 	if (!bSkipName)
 	{
-		szHelpText.append(GC.getCivicInfo(eCivic).getDescription());
+		szHelpText.append(kCivic.getDescription());
 	}
 
 	if (!bCivilopediaText)
 	{
 		if (!bPlayerContext || !(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).canDoCivics(eCivic)))
 		{
-			if (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).isHasTech((TechTypes)(GC.getCivicInfo(eCivic).getTechPrereq()))))
+			if (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).isHasTech((TechTypes)(kCivic.getTechPrereq()))))
 			{
-				if (GC.getCivicInfo(eCivic).getTechPrereq() != NO_TECH)
+				if (kCivic.getTechPrereq() != NO_TECH)
 				{
 					szHelpText.append(NEWLINE);
-					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getTechInfo((TechTypes)GC.getCivicInfo(eCivic).getTechPrereq()).getTextKeyWide()));
+					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getTechInfo((TechTypes)kCivic.getTechPrereq()).getTextKeyWide()));
 				}
 			}
 		}
@@ -9795,7 +9797,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	// Special Building Not Required...
 	for (iI = 0; iI < GC.getNumSpecialBuildingInfos(); ++iI)
 	{
-		if (GC.getCivicInfo(eCivic).isSpecialBuildingNotRequired(iI))
+		if (kCivic.isSpecialBuildingNotRequired(iI))
 		{
 			// XXX "Missionaries"??? - Now in XML
 			szHelpText.append(NEWLINE);
@@ -9809,7 +9811,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 	{
-		if (GC.getCivicInfo(eCivic).isSpecialistValid(iI))
+		if (kCivic.isSpecialistValid(iI))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_UNLIMTED").c_str());
 			CvWString szSpecialist;
@@ -9820,44 +9822,44 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	Great People Modifier...
-	if (GC.getCivicInfo(eCivic).getGreatPeopleRateModifier() != 0)
+	if (kCivic.getGreatPeopleRateModifier() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD", GC.getCivicInfo(eCivic).getGreatPeopleRateModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD", kCivic.getGreatPeopleRateModifier()));
 	}
 
 	//	Great General Modifier...
-	if (GC.getCivicInfo(eCivic).getGreatGeneralRateModifier() != 0)
+	if (kCivic.getGreatGeneralRateModifier() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_GENERAL_MOD", GC.getCivicInfo(eCivic).getGreatGeneralRateModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_GENERAL_MOD", kCivic.getGreatGeneralRateModifier()));
 	}
 
-	if (GC.getCivicInfo(eCivic).getDomesticGreatGeneralRateModifier() != 0)
+	if (kCivic.getDomesticGreatGeneralRateModifier() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_DOMESTIC_GREAT_GENERAL_MODIFIER", GC.getCivicInfo(eCivic).getDomesticGreatGeneralRateModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_DOMESTIC_GREAT_GENERAL_MODIFIER", kCivic.getDomesticGreatGeneralRateModifier()));
 	}
 
 	//	State Religion Great People Modifier...
-	if (GC.getCivicInfo(eCivic).getStateReligionGreatPeopleRateModifier() != 0)
+	if (kCivic.getStateReligionGreatPeopleRateModifier() != 0)
 	{
 		if (bPlayerContext && (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != NO_RELIGION))
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD_RELIGION", GC.getCivicInfo(eCivic).getStateReligionGreatPeopleRateModifier(), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD_RELIGION", kCivic.getStateReligionGreatPeopleRateModifier(), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD_STATE_RELIGION", GC.getCivicInfo(eCivic).getStateReligionGreatPeopleRateModifier(), gDLL->getSymbolID(RELIGION_CHAR)));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_GREAT_PEOPLE_MOD_STATE_RELIGION", kCivic.getStateReligionGreatPeopleRateModifier(), gDLL->getSymbolID(RELIGION_CHAR)));
 		}
 	}
 
 	//	Distance Maintenance Modifer...
-	if (GC.getCivicInfo(eCivic).getDistanceMaintenanceModifier() != 0)
+	if (kCivic.getDistanceMaintenanceModifier() != 0)
 	{
-		if (GC.getCivicInfo(eCivic).getDistanceMaintenanceModifier() <= -100)
+		if (kCivic.getDistanceMaintenanceModifier() <= -100)
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISTANCE_MAINT"));
@@ -9865,14 +9867,14 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISTANCE_MAINT_MOD", GC.getCivicInfo(eCivic).getDistanceMaintenanceModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISTANCE_MAINT_MOD", kCivic.getDistanceMaintenanceModifier()));
 		}
 	}
 
 	//	Num Cities Maintenance Modifer...
-	if (GC.getCivicInfo(eCivic).getNumCitiesMaintenanceModifier() != 0)
+	if (kCivic.getNumCitiesMaintenanceModifier() != 0)
 	{
-		if (GC.getCivicInfo(eCivic).getNumCitiesMaintenanceModifier() <= -100)
+		if (kCivic.getNumCitiesMaintenanceModifier() <= -100)
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_NUM_CITIES"));
@@ -9880,14 +9882,14 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_NUM_CITIES_MOD", GC.getCivicInfo(eCivic).getNumCitiesMaintenanceModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_NUM_CITIES_MOD", kCivic.getNumCitiesMaintenanceModifier()));
 		}
 	}
 
 	//	Corporations Maintenance Modifer...
-	if (GC.getCivicInfo(eCivic).getCorporationMaintenanceModifier() != 0)
+	if (kCivic.getCorporationMaintenanceModifier() != 0)
 	{
-		if (GC.getCivicInfo(eCivic).getCorporationMaintenanceModifier() <= -100)
+		if (kCivic.getCorporationMaintenanceModifier() <= -100)
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_CORPORATION"));
@@ -9895,33 +9897,33 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_CORPORATION_MOD", GC.getCivicInfo(eCivic).getCorporationMaintenanceModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_MAINT_CORPORATION_MOD", kCivic.getCorporationMaintenanceModifier()));
 		}
 	}
 
 	//	Extra Health
-	if (GC.getCivicInfo(eCivic).getExtraHealth() != 0)
+	if (kCivic.getExtraHealth() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXTRA_HEALTH", abs(GC.getCivicInfo(eCivic).getExtraHealth()), ((GC.getCivicInfo(eCivic).getExtraHealth() > 0) ? gDLL->getSymbolID(HEALTHY_CHAR): gDLL->getSymbolID(UNHEALTHY_CHAR))));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXTRA_HEALTH", abs(kCivic.getExtraHealth()), ((kCivic.getExtraHealth() > 0) ? gDLL->getSymbolID(HEALTHY_CHAR): gDLL->getSymbolID(UNHEALTHY_CHAR))));
 	}
 
 	//	Free Experience
-	if (GC.getCivicInfo(eCivic).getFreeExperience() != 0)
+	if (kCivic.getFreeExperience() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_XP", GC.getCivicInfo(eCivic).getFreeExperience()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_XP", kCivic.getFreeExperience()));
 	}
 
 	//	Worker speed modifier
-	if (GC.getCivicInfo(eCivic).getWorkerSpeedModifier() != 0)
+	if (kCivic.getWorkerSpeedModifier() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_WORKER_SPEED", GC.getCivicInfo(eCivic).getWorkerSpeedModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_WORKER_SPEED", kCivic.getWorkerSpeedModifier()));
 	}
 
 	//	Improvement upgrade rate modifier
-	if (GC.getCivicInfo(eCivic).getImprovementUpgradeRateModifier() != 0)
+	if (kCivic.getImprovementUpgradeRateModifier() != 0)
 	{
 		bFirst = true;
 
@@ -9929,7 +9931,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		{
 			if (GC.getImprovementInfo((ImprovementTypes)iI).getImprovementUpgrade() != NO_IMPROVEMENT)
 			{
-				szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_UPGRADE", GC.getCivicInfo(eCivic).getImprovementUpgradeRateModifier()).c_str());
+				szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_UPGRADE", kCivic.getImprovementUpgradeRateModifier()).c_str());
 				CvWString szImprovement;
 				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iI).getDescription());
 				setListHelp(szHelpText, szFirstBuffer, szImprovement, L", ", bFirst);
@@ -9939,19 +9941,19 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	Military unit production modifier
-	if (GC.getCivicInfo(eCivic).getMilitaryProductionModifier() != 0)
+	if (kCivic.getMilitaryProductionModifier() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_MILITARY_PRODUCTION", GC.getCivicInfo(eCivic).getMilitaryProductionModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_MILITARY_PRODUCTION", kCivic.getMilitaryProductionModifier()));
 	}
 
 	//	Free units population percent
-	if ((GC.getCivicInfo(eCivic).getBaseFreeUnits() != 0) || (GC.getCivicInfo(eCivic).getFreeUnitsPopulationPercent() != 0))
+	if ((kCivic.getBaseFreeUnits() != 0) || (kCivic.getFreeUnitsPopulationPercent() != 0))
 	{
 		if (bPlayerContext)
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_UNITS", (GC.getCivicInfo(eCivic).getBaseFreeUnits() + ((GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getTotalPopulation() * GC.getCivicInfo(eCivic).getFreeUnitsPopulationPercent()) / 100))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_UNITS", (kCivic.getBaseFreeUnits() + ((GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getTotalPopulation() * kCivic.getFreeUnitsPopulationPercent()) / 100))));
 		}
 		else
 		{
@@ -9961,12 +9963,12 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	Free military units population percent
-	if ((GC.getCivicInfo(eCivic).getBaseFreeMilitaryUnits() != 0) || (GC.getCivicInfo(eCivic).getFreeMilitaryUnitsPopulationPercent() != 0))
+	if ((kCivic.getBaseFreeMilitaryUnits() != 0) || (kCivic.getFreeMilitaryUnitsPopulationPercent() != 0))
 	{
 		if (bPlayerContext)
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_MILITARY_UNITS", (GC.getCivicInfo(eCivic).getBaseFreeMilitaryUnits() + ((GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getTotalPopulation() * GC.getCivicInfo(eCivic).getFreeMilitaryUnitsPopulationPercent()) / 100))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_MILITARY_UNITS", (kCivic.getBaseFreeMilitaryUnits() + ((GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getTotalPopulation() * kCivic.getFreeMilitaryUnitsPopulationPercent()) / 100))));
 		}
 		else
 		{
@@ -9976,7 +9978,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	Happiness per military unit
-	if (GC.getCivicInfo(eCivic).getHappyPerMilitaryUnit() != 0)
+	if (kCivic.getHappyPerMilitaryUnit() != 0)
 	{
 		szHelpText.append(NEWLINE);
 /************************************************************************************************/
@@ -9985,18 +9987,18 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_UNIT_HAPPINESS", GC.getCivicInfo(eCivic).getHappyPerMilitaryUnit(), ((GC.getCivicInfo(eCivic).getHappyPerMilitaryUnit() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_UNIT_HAPPINESS", kCivic.getHappyPerMilitaryUnit(), ((kCivic.getHappyPerMilitaryUnit() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 
 */
 		// Use absolute value with unhappy face
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_UNIT_HAPPINESS", abs(GC.getCivicInfo(eCivic).getHappyPerMilitaryUnit()), ((GC.getCivicInfo(eCivic).getHappyPerMilitaryUnit() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_UNIT_HAPPINESS", abs(kCivic.getHappyPerMilitaryUnit()), ((kCivic.getHappyPerMilitaryUnit() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 	}
 
 	//	Military units produced with food
-	if (GC.getCivicInfo(eCivic).isMilitaryFoodProduction())
+	if (kCivic.isMilitaryFoodProduction())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_MILITARY_FOOD"));
@@ -10010,24 +10012,24 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	Population Unhealthiness
-	if (GC.getCivicInfo(eCivic).isNoUnhealthyPopulation())
+	if (kCivic.isNoUnhealthyPopulation())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_POP_UNHEALTHY"));
 	}
 
 	//	Building Unhealthiness
-	if (GC.getCivicInfo(eCivic).isBuildingOnlyHealthy())
+	if (kCivic.isBuildingOnlyHealthy())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_BUILDING_UNHEALTHY"));
 	}
 
 	//	Population Unhealthiness
-	if (0 != GC.getCivicInfo(eCivic).getExpInBorderModifier())
+	if (0 != kCivic.getExpInBorderModifier())
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXPERIENCE_IN_BORDERS", GC.getCivicInfo(eCivic).getExpInBorderModifier()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXPERIENCE_IN_BORDERS", kCivic.getExpInBorderModifier()));
 	}
 	
 /************************************************************************************************/
@@ -10036,7 +10038,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 /*
-	if (GC.getCivicInfo(eCivic).isUpgradeAnywhere())
+	if (kCivic.isUpgradeAnywhere())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CAN_UPGRADE_ANYWHERE"));	
@@ -10044,7 +10046,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
 	{
-		if (GC.getCivicInfo(eCivic).isAllowInquisitions())
+		if (kCivic.isAllowInquisitions())
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_ALLOW_INQUISITONS"));
@@ -10053,7 +10055,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
 	{
-		if (GC.getCivicInfo(eCivic).isDisallowInquisitions())
+		if (kCivic.isDisallowInquisitions())
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
@@ -10064,155 +10066,155 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
 	{
 		//  Revolution Local Civic Index Modifiers
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxLocal())
+		if (0 != kCivic.getRevIdxLocal())
 		{
-			if ( GC.getCivicInfo(eCivic).getRevIdxLocal() > 0 )
+			if ( kCivic.getRevIdxLocal() > 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY", GC.getCivicInfo(eCivic).getRevIdxLocal()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY", kCivic.getRevIdxLocal()));
 			}
-			if ( GC.getCivicInfo(eCivic).getRevIdxLocal() < 0 )
+			if ( kCivic.getRevIdxLocal() < 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxLocal())));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_BONUS", abs(kCivic.getRevIdxLocal())));
 			}
 		}
 		
 		//  Revolution National Civic Index Modifiers
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxNational())
+		if (0 != kCivic.getRevIdxNational())
 		{
-			if ( GC.getCivicInfo(eCivic).getRevIdxNational() > 0 )
+			if ( kCivic.getRevIdxNational() > 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", GC.getCivicInfo(eCivic).getRevIdxNational()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", kCivic.getRevIdxNational()));
 			}
-			if ( GC.getCivicInfo(eCivic).getRevIdxNational() < 0 )
+			if ( kCivic.getRevIdxNational() < 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxNational())));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(kCivic.getRevIdxNational())));
 			}
 		}
 		
 		//  Revolution City Distance Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxDistanceModifier())
+		if (0 != kCivic.getRevIdxDistanceModifier())
 		{
-			if ( GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() < 0 )
+			if ( kCivic.getRevIdxDistanceModifier() < 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", GC.getCivicInfo(eCivic).getRevIdxDistanceModifier()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", kCivic.getRevIdxDistanceModifier()));
 			}
-			if ( GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() > 0 )
+			if ( kCivic.getRevIdxDistanceModifier() > 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(GC.getCivicInfo(eCivic).getRevIdxDistanceModifier())));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(kCivic.getRevIdxDistanceModifier())));
 			}
 		}
 		
 		//  Revolution Good Holy City Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxHolyCityGood())
+		if (0 != kCivic.getRevIdxHolyCityGood())
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY", GC.getCivicInfo(eCivic).getRevIdxHolyCityGood()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY", kCivic.getRevIdxHolyCityGood()));
 		}
 		
 		//  Revolution Bad Holy City Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxHolyCityBad())
+		if (0 != kCivic.getRevIdxHolyCityBad())
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_HOLY_CITY", GC.getCivicInfo(eCivic).getRevIdxHolyCityBad()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_HOLY_CITY", kCivic.getRevIdxHolyCityBad()));
 		}
 		
 		//  Revolution Switch to Modifier
 		/*
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxSwitchTo())
+		if (0 != kCivic.getRevIdxSwitchTo())
 		{
-			if (GC.getCivicInfo(eCivic).getRevIdxSwitchTo() < 0)
+			if (kCivic.getRevIdxSwitchTo() < 0)
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS", abs(GC.getCivicInfo(eCivic).getRevIdxSwitchTo())));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS", abs(kCivic.getRevIdxSwitchTo())));
 			}
-			if (GC.getCivicInfo(eCivic).getRevIdxSwitchTo() > 0)
+			if (kCivic.getRevIdxSwitchTo() > 0)
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", GC.getCivicInfo(eCivic).getRevIdxSwitchTo()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", kCivic.getRevIdxSwitchTo()));
 			}
 		}
 		*/
 		//  Revolution Nationality Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxNationalityMod())
+		if (0 != kCivic.getRevIdxNationalityMod())
 		{
-			if ( GC.getCivicInfo(eCivic).getRevIdxNationalityMod() < 0)
+			if ( kCivic.getRevIdxNationalityMod() < 0)
 			{
 				szHelpText.append(NEWLINE);
 				CvWString szTempBuffer;
-				szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxNationalityMod());
+				szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxNationalityMod());
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_REDUCTION_MOD", szTempBuffer.GetCString()));
 			}
-			if ( GC.getCivicInfo(eCivic).getRevIdxNationalityMod() > 0)
+			if ( kCivic.getRevIdxNationalityMod() > 0)
 			{
 				szHelpText.append(NEWLINE);
 				CvWString szTempBuffer;
-				szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxNationalityMod());
+				szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxNationalityMod());
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_INCREASE_MOD", szTempBuffer.GetCString()));
 			}
 		}
 		
 		//  Revolution Bad Religion Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxBadReligionMod())
+		if (0 != kCivic.getRevIdxBadReligionMod())
 		{
 			szHelpText.append(NEWLINE);
 			CvWString szTempBuffer;
-			szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxBadReligionMod());
+			szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxBadReligionMod());
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_RELIGION_MOD", szTempBuffer.GetCString()));
 		}
 		
 		//  Revolution Good Religion Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod())
+		if (0 != kCivic.getRevIdxGoodReligionMod())
 		{
 			szHelpText.append(NEWLINE);
 			CvWString szTempBuffer;
-			szTempBuffer.Format(L"%.0f", 100 * GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod());
+			szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxGoodReligionMod());
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_RELIGION_MOD", szTempBuffer.GetCString()));
 		}
 		
 		//  Revolution Religious Freedom Modifier
 		/*
-		if (0 != GC.getCivicInfo(eCivic).getRevReligiousFreedom())
+		if (0 != kCivic.getRevReligiousFreedom())
 		{
-			if ( GC.getCivicInfo(eCivic).getRevReligiousFreedom() < 0 )
+			if ( kCivic.getRevReligiousFreedom() < 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_OPRESSION", GC.getCivicInfo(eCivic).getRevReligiousFreedom()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_OPRESSION", kCivic.getRevReligiousFreedom()));
 			}
-			if ( GC.getCivicInfo(eCivic).getRevReligiousFreedom() > 0 )
+			if ( kCivic.getRevReligiousFreedom() > 0 )
 			{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_FREEDOM", GC.getCivicInfo(eCivic).getRevReligiousFreedom()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_FREEDOM", kCivic.getRevReligiousFreedom()));
 			}
 		}
 		*/
 		/*
 		//  Revolution Labor Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevLaborFreedom())
+		if (0 != kCivic.getRevLaborFreedom())
 		{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_LABOR", GC.getCivicInfo(eCivic).getRevLaborFreedom()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_LABOR", kCivic.getRevLaborFreedom()));
 		}
 		*/
 		/*
 		//  Revolution Environment Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevEnvironmentalProtection())
+		if (0 != kCivic.getRevEnvironmentalProtection())
 		{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_ENVIRONMENT", GC.getCivicInfo(eCivic).getRevEnvironmentalProtection()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_ENVIRONMENT", kCivic.getRevEnvironmentalProtection()));
 		}
 		*/
 		/*
 		//  Revolution Democracy Modifier
-		if (0 != GC.getCivicInfo(eCivic).getRevDemocracyLevel())
+		if (0 != kCivic.getRevDemocracyLevel())
 		{
 				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_DEMOCRACY", GC.getCivicInfo(eCivic).getRevDemocracyLevel()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_DEMOCRACY", kCivic.getRevDemocracyLevel()));
 		}
 		*/
 	}
@@ -10221,9 +10223,9 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /************************************************************************************************/
 
 	//	War Weariness
-	if (GC.getCivicInfo(eCivic).getWarWearinessModifier() != 0)
+	if (kCivic.getWarWearinessModifier() != 0)
 	{
-		if (GC.getCivicInfo(eCivic).getWarWearinessModifier() <= -100)
+		if (kCivic.getWarWearinessModifier() <= -100)
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_WAR_WEARINESS"));
@@ -10231,59 +10233,59 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXTRA_WAR_WEARINESS", GC.getCivicInfo(eCivic).getWarWearinessModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXTRA_WAR_WEARINESS", kCivic.getWarWearinessModifier()));
 		}
 	}
 
 	//	Free specialists
-	if (GC.getCivicInfo(eCivic).getFreeSpecialist() != 0)
+	if (kCivic.getFreeSpecialist() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_SPECIALISTS", GC.getCivicInfo(eCivic).getFreeSpecialist()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREE_SPECIALISTS", kCivic.getFreeSpecialist()));
 	}
 
 	//	Trade routes
-	if (GC.getCivicInfo(eCivic).getTradeRoutes() != 0)
+	if (kCivic.getTradeRoutes() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_TRADE_ROUTES", GC.getCivicInfo(eCivic).getTradeRoutes()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_TRADE_ROUTES", kCivic.getTradeRoutes()));
 	}
 
 	//	No Foreign Trade
-	if (GC.getCivicInfo(eCivic).isNoForeignTrade())
+	if (kCivic.isNoForeignTrade())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_FOREIGN_TRADE"));
 	}
 
 	//	No Corporations
-	if (GC.getCivicInfo(eCivic).isNoCorporations())
+	if (kCivic.isNoCorporations())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_CORPORATIONS"));
 	}
 
 	//	No Foreign Corporations
-	if (GC.getCivicInfo(eCivic).isNoForeignCorporations())
+	if (kCivic.isNoForeignCorporations())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_FOREIGN_CORPORATIONS"));
 	}
 
 	//	Freedom Anger
-	if (GC.getCivicInfo(eCivic).getCivicPercentAnger() != 0)
+	if (kCivic.getCivicPercentAnger() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREEDOM_ANGER", GC.getCivicInfo(eCivic).getTextKeyWide()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FREEDOM_ANGER", kCivic.getTextKeyWide()));
 	}
 
-	if (!(GC.getCivicInfo(eCivic).isStateReligion()))
+	if (!(kCivic.isStateReligion()))
 	{
 		bFound = false;
 
 		for (iI = 0; iI < GC.getNumCivicInfos(); ++iI)
 		{
-			if ((GC.getCivicInfo((CivicTypes) iI).getCivicOptionType() == GC.getCivicInfo(eCivic).getCivicOptionType()) && (GC.getCivicInfo((CivicTypes) iI).isStateReligion()))
+			if ((GC.getCivicInfo((CivicTypes) iI).getCivicOptionType() == kCivic.getCivicOptionType()) && (GC.getCivicInfo((CivicTypes) iI).isStateReligion()))
 			{
 				bFound = true;
 			}
@@ -10296,21 +10298,21 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		}
 	}
 
-	if (GC.getCivicInfo(eCivic).getStateReligionHappiness() != 0)
+	if (kCivic.getStateReligionHappiness() != 0)
 	{
 		if (bPlayerContext && (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != NO_RELIGION))
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_RELIGION_HAPPINESS", abs(GC.getCivicInfo(eCivic).getStateReligionHappiness()), ((GC.getCivicInfo(eCivic).getStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_RELIGION_HAPPINESS", abs(kCivic.getStateReligionHappiness()), ((kCivic.getStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_RELIGION_HAPPINESS", abs(GC.getCivicInfo(eCivic).getStateReligionHappiness()), ((GC.getCivicInfo(eCivic).getStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_RELIGION_HAPPINESS", abs(kCivic.getStateReligionHappiness()), ((kCivic.getStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 		}
 	}
 
-	if (GC.getCivicInfo(eCivic).getNonStateReligionHappiness() != 0)
+	if (kCivic.getNonStateReligionHappiness() != 0)
 	{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       08/28/09                  EmperorFool & jdog5000      */
@@ -10318,7 +10320,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-		if (GC.getCivicInfo(eCivic).isStateReligion())
+		if (kCivic.isStateReligion())
 		{
 			szHelpText.append(NEWLINE);
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_NO_STATE"));
@@ -10326,18 +10328,18 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_WITH_STATE", abs(GC.getCivicInfo(eCivic).getNonStateReligionHappiness()), ((GC.getCivicInfo(eCivic).getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_WITH_STATE", abs(kCivic.getNonStateReligionHappiness()), ((kCivic.getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 		}
 */
-		if (!GC.getCivicInfo(eCivic).isStateReligion())
+		if (!kCivic.isStateReligion())
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_NO_STATE", abs(GC.getCivicInfo(eCivic).getNonStateReligionHappiness()), ((GC.getCivicInfo(eCivic).getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_NO_STATE", abs(kCivic.getNonStateReligionHappiness()), ((kCivic.getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_WITH_STATE", abs(GC.getCivicInfo(eCivic).getNonStateReligionHappiness()), ((GC.getCivicInfo(eCivic).getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NON_STATE_REL_HAPPINESS_WITH_STATE", abs(kCivic.getNonStateReligionHappiness()), ((kCivic.getNonStateReligionHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))));
 		}
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
@@ -10345,76 +10347,76 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 	//	State Religion Unit Production Modifier
-	if (GC.getCivicInfo(eCivic).getStateReligionUnitProductionModifier() != 0)
+	if (kCivic.getStateReligionUnitProductionModifier() != 0)
 	{
 		if (bPlayerContext && (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != NO_RELIGION))
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_TRAIN_BONUS", GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar(), GC.getCivicInfo(eCivic).getStateReligionUnitProductionModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_TRAIN_BONUS", GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar(), kCivic.getStateReligionUnitProductionModifier()));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_TRAIN_BONUS", GC.getCivicInfo(eCivic).getStateReligionUnitProductionModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_TRAIN_BONUS", kCivic.getStateReligionUnitProductionModifier()));
 		}
 	}
 
 	//	State Religion Building Production Modifier
-	if (GC.getCivicInfo(eCivic).getStateReligionBuildingProductionModifier() != 0)
+	if (kCivic.getStateReligionBuildingProductionModifier() != 0)
 	{
 		if (bPlayerContext && (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != NO_RELIGION))
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_BUILDING_BONUS", GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar(), GC.getCivicInfo(eCivic).getStateReligionBuildingProductionModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_BUILDING_BONUS", GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar(), kCivic.getStateReligionBuildingProductionModifier()));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_BUILDING_BONUS", GC.getCivicInfo(eCivic).getStateReligionBuildingProductionModifier()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_BUILDING_BONUS", kCivic.getStateReligionBuildingProductionModifier()));
 		}
 	}
 
 	//	State Religion Free Experience
-	if (GC.getCivicInfo(eCivic).getStateReligionFreeExperience() != 0)
+	if (kCivic.getStateReligionFreeExperience() != 0)
 	{
 		if (bPlayerContext && (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != NO_RELIGION))
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_FREE_XP", GC.getCivicInfo(eCivic).getStateReligionFreeExperience(), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REL_FREE_XP", kCivic.getStateReligionFreeExperience(), GC.getReligionInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion()).getChar()));
 		}
 		else
 		{
 			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_FREE_XP", GC.getCivicInfo(eCivic).getStateReligionFreeExperience()));
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_STATE_REL_FREE_XP", kCivic.getStateReligionFreeExperience()));
 		}
 	}
 
-	if (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread())
+	if (kCivic.isNoNonStateReligionSpread())
 	{
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_NON_STATE_SPREAD"));
 	}
 
 	//	Yield Modifiers
-	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_ALL_CITIES").GetCString(), GC.getCivicInfo(eCivic).getYieldModifierArray(), true);
+	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_ALL_CITIES").GetCString(), kCivic.getYieldModifierArray(), true);
 
 	//	Capital Yield Modifiers
-	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_CAPITAL").GetCString(), GC.getCivicInfo(eCivic).getCapitalYieldModifierArray(), true);
+	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_CAPITAL").GetCString(), kCivic.getCapitalYieldModifierArray(), true);
 
 	//	Trade Yield Modifiers
-	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_FROM_TRADE_ROUTES").GetCString(), GC.getCivicInfo(eCivic).getTradeYieldModifierArray(), true);
+	setYieldChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_FROM_TRADE_ROUTES").GetCString(), kCivic.getTradeYieldModifierArray(), true);
 
 	//	Commerce Modifier
-	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_ALL_CITIES").GetCString(), GC.getCivicInfo(eCivic).getCommerceModifierArray(), true);
+	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_ALL_CITIES").GetCString(), kCivic.getCommerceModifierArray(), true);
 
 	//	Capital Commerce Modifiers
-	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_CAPITAL").GetCString(), GC.getCivicInfo(eCivic).getCapitalCommerceModifierArray(), true);
+	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_IN_CAPITAL").GetCString(), kCivic.getCapitalCommerceModifierArray(), true);
 
 	//	Specialist Commerce
-	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PER_SPECIALIST").GetCString(), GC.getCivicInfo(eCivic).getSpecialistExtraCommerceArray());
+	setCommerceChangeHelp(szHelpText, L"", L"", gDLL->getText("TXT_KEY_CIVIC_PER_SPECIALIST").GetCString(), kCivic.getSpecialistExtraCommerceArray());
 
 	//	Largest City Happiness
-	if (GC.getCivicInfo(eCivic).getLargestCityHappiness() != 0)
+	if (kCivic.getLargestCityHappiness() != 0)
 	{
 		szHelpText.append(NEWLINE);
 /************************************************************************************************/
@@ -10423,10 +10425,10 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_LARGEST_CITIES_HAPPINESS", GC.getCivicInfo(eCivic).getLargestCityHappiness(), ((GC.getCivicInfo(eCivic).getLargestCityHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_LARGEST_CITIES_HAPPINESS", kCivic.getLargestCityHappiness(), ((kCivic.getLargestCityHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()));
 */
 		// Use absolute value with unhappy face
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_LARGEST_CITIES_HAPPINESS", abs(GC.getCivicInfo(eCivic).getLargestCityHappiness()), ((GC.getCivicInfo(eCivic).getLargestCityHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_LARGEST_CITIES_HAPPINESS", abs(kCivic.getLargestCityHappiness()), ((kCivic.getLargestCityHappiness() > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -10439,13 +10441,13 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 		for (iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
 		{
-			if (GC.getCivicInfo(eCivic).getImprovementYieldChanges(iJ, iI) != 0)
+			if (kCivic.getImprovementYieldChanges(iJ, iI) != 0)
 			{
-				szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_YIELD_CHANGE", GC.getCivicInfo(eCivic).getImprovementYieldChanges(iJ, iI), GC.getYieldInfo((YieldTypes)iI).getChar()).c_str());
+				szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_YIELD_CHANGE", kCivic.getImprovementYieldChanges(iJ, iI), GC.getYieldInfo((YieldTypes)iI).getChar()).c_str());
 				CvWString szImprovement;
 				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iJ).getDescription());
-				setListHelp(szHelpText, szFirstBuffer, szImprovement, L", ", (GC.getCivicInfo(eCivic).getImprovementYieldChanges(iJ, iI) != iLast));
-				iLast = GC.getCivicInfo(eCivic).getImprovementYieldChanges(iJ, iI);
+				setListHelp(szHelpText, szFirstBuffer, szImprovement, L", ", (kCivic.getImprovementYieldChanges(iJ, iI) != iLast));
+				iLast = kCivic.getImprovementYieldChanges(iJ, iI);
 			}
 		}
 	}
@@ -10453,7 +10455,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	//	Building Happiness
 	for (iI = 0; iI < GC.getNumBuildingClassInfos(); ++iI)
 	{
-		if (GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) != 0)
+		if (kCivic.getBuildingHappinessChanges(iI) != 0)
 		{
 			if (bPlayerContext && NO_PLAYER != GC.getGameINLINE().getActivePlayer())
 			{
@@ -10467,10 +10469,10 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI), ((GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
+					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", kCivic.getBuildingHappinessChanges(iI), ((kCivic.getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
 */
 					// Use absolute value with unhappy face
-					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI)), ((GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
+					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(kCivic.getBuildingHappinessChanges(iI)), ((kCivic.getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -10485,17 +10487,17 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI), ((GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", kCivic.getBuildingHappinessChanges(iI), ((kCivic.getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
 */
 				// Use absolute value with unhappy face
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI)), ((GC.getCivicInfo(eCivic).getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(kCivic.getBuildingHappinessChanges(iI)), ((kCivic.getBuildingHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 			}
 		}
 
-		if (GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) != 0)
+		if (kCivic.getBuildingHealthChanges(iI) != 0)
 		{
 			if (bPlayerContext && NO_PLAYER != GC.getGameINLINE().getActivePlayer())
 			{
@@ -10509,10 +10511,10 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI), ((GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
+					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", kCivic.getBuildingHealthChanges(iI), ((kCivic.getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
 */
 					// Use absolute value with unhealthy symbol
-					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI)), ((GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
+					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(kCivic.getBuildingHealthChanges(iI)), ((kCivic.getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingInfo(eBuilding).getTextKeyWide()));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -10527,10 +10529,10 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI), ((GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", kCivic.getBuildingHealthChanges(iI), ((kCivic.getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
 */
 				// Use absolute value with unhealthy symbol
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI)), ((GC.getCivicInfo(eCivic).getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BUILDING_HAPPINESS", abs(kCivic.getBuildingHealthChanges(iI)), ((kCivic.getBuildingHealthChanges(iI) > 0) ? gDLL->getSymbolID(HEALTHY_CHAR) : gDLL->getSymbolID(UNHEALTHY_CHAR)), GC.getBuildingClassInfo((BuildingClassTypes)iI).getTextKeyWide()));
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -10543,7 +10545,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); ++iI)
 	{
-		if (GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI) != 0)
+		if (kCivic.getFeatureHappinessChanges(iI) != 0)
 		{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       08/28/09                             jdog5000         */
@@ -10551,31 +10553,31 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_FEATURE_HAPPINESS", GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI), ((GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
+			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_FEATURE_HAPPINESS", kCivic.getFeatureHappinessChanges(iI), ((kCivic.getFeatureHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
 */
 			// Use absolute value with unhappy face
-			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_FEATURE_HAPPINESS", abs(GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI)), ((GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
+			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_CIVIC_FEATURE_HAPPINESS", abs(kCivic.getFeatureHappinessChanges(iI)), ((kCivic.getFeatureHappinessChanges(iI) > 0) ? gDLL->getSymbolID(HAPPY_CHAR) : gDLL->getSymbolID(UNHAPPY_CHAR))).c_str());
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 			CvWString szFeature;
 			szFeature.Format(L"<link=literal>%s</link>", GC.getFeatureInfo((FeatureTypes)iI).getDescription());
-			setListHelp(szHelpText, szFirstBuffer, szFeature, L", ", (GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI) != iLast));
-			iLast = GC.getCivicInfo(eCivic).getFeatureHappinessChanges(iI);
+			setListHelp(szHelpText, szFirstBuffer, szFeature, L", ", (kCivic.getFeatureHappinessChanges(iI) != iLast));
+			iLast = kCivic.getFeatureHappinessChanges(iI);
 		}
 	}
 
 	//	Hurry types
 	for (iI = 0; iI < GC.getNumHurryInfos(); ++iI)
 	{
-		if (GC.getCivicInfo(eCivic).isHurry(iI))
+		if (kCivic.isHurry(iI))
 		{
 			szHelpText.append(CvWString::format(L"%s%c%s", NEWLINE, gDLL->getSymbolID(BULLET_CHAR), GC.getHurryInfo((HurryTypes)iI).getDescription()));
 		}
 	}
 
 //FfH: Added by Kael 08/11/2007
-    if (GC.getCivicInfo(eCivic).isPrereqWar())
+    if (kCivic.isPrereqWar())
     {
         if (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).getAtWarCount(true) > 0))
         {
@@ -10583,77 +10585,77 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
             szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_PREREQ_WAR"));
         }
     }
-    if (GC.getCivicInfo(eCivic).getBlockAlignment() != NO_ALIGNMENT)
+    if (kCivic.getBlockAlignment() != NO_ALIGNMENT)
     {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() == GC.getCivicInfo(eCivic).getBlockAlignment())
+        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() == kCivic.getBlockAlignment())
         {
             szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BLOCKS", GC.getAlignmentInfo((AlignmentTypes)GC.getCivicInfo(eCivic).getBlockAlignment()).getDescription()));
+            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BLOCKS", GC.getAlignmentInfo((AlignmentTypes)kCivic.getBlockAlignment()).getDescription()));
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqAlignment() != NO_ALIGNMENT)
+    if (kCivic.getPrereqAlignment() != NO_ALIGNMENT)
     {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() != GC.getCivicInfo(eCivic).getPrereqAlignment())
+        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() != kCivic.getPrereqAlignment())
         {
             szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getAlignmentInfo((AlignmentTypes)GC.getCivicInfo(eCivic).getPrereqAlignment()).getDescription()));
+            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getAlignmentInfo((AlignmentTypes)kCivic.getPrereqAlignment()).getDescription()));
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqCivilization() != NO_CIVILIZATION)
+    if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
     {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() != GC.getCivicInfo(eCivic).getPrereqCivilization())
+        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() != kCivic.getPrereqCivilization())
         {
             szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getCivilizationInfo((CivilizationTypes)GC.getCivicInfo(eCivic).getPrereqCivilization()).getDescription()));
+            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getCivilizationInfo((CivilizationTypes)kCivic.getPrereqCivilization()).getDescription()));
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqReligion() != NO_RELIGION)
+    if (kCivic.getPrereqReligion() != NO_RELIGION)
     {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != GC.getCivicInfo(eCivic).getPrereqReligion())
+        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != kCivic.getPrereqReligion())
         {
             szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getReligionInfo((ReligionTypes)GC.getCivicInfo(eCivic).getPrereqReligion()).getDescription()));
+            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getReligionInfo((ReligionTypes)kCivic.getPrereqReligion()).getDescription()));
         }
     }
-    if (GC.getCivicInfo(eCivic).isNoDiplomacyWithEnemies())
+    if (kCivic.isNoDiplomacyWithEnemies())
     {
         szHelpText.append(NEWLINE);
         szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_NO_DIPLOMACY_WITH_ENEMIES"));
     }
-    if (GC.getCivicInfo(eCivic).getCoastalTradeRoutes() != 0)
+    if (kCivic.getCoastalTradeRoutes() != 0)
     {
         szHelpText.append(NEWLINE);
-        szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_COASTAL_TRADE_ROUTES", GC.getCivicInfo(eCivic).getCoastalTradeRoutes()));
+        szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_COASTAL_TRADE_ROUTES", kCivic.getCoastalTradeRoutes()));
     }
-    if (GC.getCivicInfo(eCivic).getEnslavementChance() != 0)
+    if (kCivic.getEnslavementChance() != 0)
     {
         szHelpText.append(NEWLINE);
-        szHelpText.append(gDLL->getText("TXT_KEY_UNIT_ENSLAVEMENT_CHANCE", GC.getCivicInfo(eCivic).getEnslavementChance()));
+        szHelpText.append(gDLL->getText("TXT_KEY_UNIT_ENSLAVEMENT_CHANCE", kCivic.getEnslavementChance()));
     }
-    if (GC.getCivicInfo(eCivic).getFoodConsumptionPerPopulation() != 0)
+    if (kCivic.getFoodConsumptionPerPopulation() != 0)
     {
         szHelpText.append(NEWLINE);
-        szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FOOD_CONSUMPTION_PER_POPULATION", GC.getCivicInfo(eCivic).getFoodConsumptionPerPopulation(), GC.getFOOD_CONSUMPTION_PER_POPULATION()));
+        szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_FOOD_CONSUMPTION_PER_POPULATION", kCivic.getFoodConsumptionPerPopulation(), GC.getFOOD_CONSUMPTION_PER_POPULATION()));
     }
 //FfH: End Add
 
 	//	Gold cost per unit
-	if (GC.getCivicInfo(eCivic).getGoldPerUnit() != 0)
+	if (kCivic.getGoldPerUnit() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_SUPPORT_COSTS", (GC.getCivicInfo(eCivic).getGoldPerUnit() > 0), GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_SUPPORT_COSTS", (kCivic.getGoldPerUnit() > 0), GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
 	}
 
 	//	Gold cost per military unit
-	if (GC.getCivicInfo(eCivic).getGoldPerMilitaryUnit() != 0)
+	if (kCivic.getGoldPerMilitaryUnit() != 0)
 	{
 		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_MILITARY_SUPPORT_COSTS", (GC.getCivicInfo(eCivic).getGoldPerMilitaryUnit() > 0), GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_MILITARY_SUPPORT_COSTS", (kCivic.getGoldPerMilitaryUnit() > 0), GC.getCommerceInfo(COMMERCE_GOLD).getChar()));
 	}
 
-	if (!CvWString(GC.getCivicInfo(eCivic).getHelp()).empty())
+	if (!CvWString(kCivic.getHelp()).empty())
 	{
-		szHelpText.append(CvWString::format(L"%s%s", NEWLINE, GC.getCivicInfo(eCivic).getHelp()).c_str());
+		szHelpText.append(CvWString::format(L"%s%s", NEWLINE, kCivic.getHelp()).c_str());
 	}
 }
 
