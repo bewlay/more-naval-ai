@@ -258,6 +258,7 @@ public:
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	bool isHasEmbassy(int /*TeamTypes*/ eIndex) const;
+	void setHasEmbassy(int /*TeamTypes*/ eIndex, bool bNewValue) const;
 	bool isLimitedBorders(int /*TeamTypes*/ eIndex) const;
 /************************************************************************************************/
 /* Afforess	                     END                                                            */

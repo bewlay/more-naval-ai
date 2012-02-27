@@ -218,6 +218,7 @@ void CyTeamPythonInterface()
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 		.def("isHasEmbassy", &CyTeam::isHasEmbassy, "bool (TeamTypes)")
+		.def("setHasEmbassy", &CyTeam::setHasEmbassy, "void (TeamTypes eIndex, bool bNewValue)")
 		.def("isLimitedBorders", &CyTeam::isLimitedBorders, "bool (TeamTypes)")
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
