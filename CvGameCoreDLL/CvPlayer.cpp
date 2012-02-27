@@ -24173,17 +24173,20 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 			}
 		}
 
-		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+		if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_ESPIONAGE))
 		{
-			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
-
-			if (kLoopTeam.isAlive())
+			for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
 			{
-				kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
-				kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(GET_PLAYER(eSplitPlayer).getTeam()));
+				CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iTeam);
+
+				if (kLoopTeam.isAlive())
+				{
+					kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
+					kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(GET_PLAYER(eSplitPlayer).getTeam()));
+				}
 			}
+			kNewTeam.setEspionagePointsEver(GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsEver());
 		}
-		kNewTeam.setEspionagePointsEver(GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsEver());
 
 		GET_TEAM(getTeam()).assignVassal(GET_PLAYER(eNewPlayer).getTeam(), false);
 		GET_PLAYER(eNewPlayer).setPuppetState(true);
