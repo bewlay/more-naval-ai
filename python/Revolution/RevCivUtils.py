@@ -24,15 +24,16 @@ SCORE_SPLIT_ALLOWED = 2
 SCORE_RELIGION = 3
 #score addition if race equal
 SCORE_SAME_RACE = 2
-#score addition if race is good
+#score addition if race is related
 SCORE_GOOD_RACE = 1
 #factor for terrain score.
 TERRAIN_SCORE_FACTOR = 0.5
 
 # split types
 SPLIT_NOT_ALLOWED = 0
-SPLIT_ALLOWED = 1
-SPLIT_FORCED = 2
+SPLIT_ALLOWED = 1 # Splinter civ is a bit more likely
+SPLIT_FORCED = 2 # Tries to split civ, but does not allow duplicate leaders
+SPLIT_PUPPET = 3
 
 
 class RevCivUtils :
@@ -82,10 +83,10 @@ class RevCivUtils :
 			if( LOG_DEBUG ) : print 'RevCivUtils: No civ available, returning (-1, -1)'
 			return ( -1, -1 )
 		
-		liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iReligion )
+		liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iSplitType, iReligion )
 		if( len( liLeaders ) == 0 ) :
 			# try without religion
-			liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( -1 )
+			liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iSplitType, -1 )
 			if( len( liLeaders ) == 0 ) :
 				raise Exception( "RevCivUtils: No Available leaders for chosen civ. That should have been checked before..." )
 		
@@ -131,7 +132,7 @@ class RevCivRule :
 	
 	def getScore( self, iOldCivilization, iCultureRace, iSplitType, iReligion, iPlotX, iPlotY ) :
 		# check if any leaders are available
-		if( len( self.getLeaderList( -1 ) ) == 0 ) :
+		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 ) :
 			return SCORE_NOT_AVAILABLE
 		
 		# check if civ is blocked as rebel
@@ -151,7 +152,7 @@ class RevCivRule :
 							return SCORE_NOT_ALLOWED
 		
 		# check if non-agnostic leaders are availble for a religious revolution
-		if( iReligion != -1 and len( self.getLeaderList( iReligion ) ) == 0 ) :
+		if( iReligion != -1 and len( self.getLeaderList( iSplitType, iReligion ) ) == 0 ) :
 			return SCORE_NOT_ALLOWED
 		
 		# check for blocked religions
@@ -160,7 +161,7 @@ class RevCivRule :
 		
 		iScore = 0
 		
-		if( iSplitType == SPLIT_FORCED and self.iCiv == iOldCivilization ) :
+		if( ( iSplitType == SPLIT_FORCED or iSplitType == SPLIT_PUPPET ) and self.iCiv == iOldCivilization ) :
 			iScore += SCORE_SPLIT_FORCED
 		elif( iSplitType == SPLIT_ALLOWED and self.iCiv == iOldCivilization ) :
 			iScore += SCORE_SPLIT_ALLOWED
@@ -188,15 +189,18 @@ class RevCivRule :
 		else :
 			return 0
 	
-	def getLeaderList( self, iReligion ) :
+	def getLeaderList( self, iSplitType, iReligion ) :
 		liResult = list()
 		liResult.extend( self.liLeaders )
+		
+		liBadLeaders = list()
 		
 		for iLeader in self.liLeaders :
 			# check if leader is used
 			for iPlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
 				if( iLeader == gc.getPlayer( iPlayer ).getLeaderType() ) :
 					liResult.remove( iLeader )
+					liBadLeaders.append( iLeader )
 					break
 			if( not iLeader in liResult ) :
 				continue
@@ -205,7 +209,11 @@ class RevCivRule :
 			if( iReligion != -1 ) :
 				if( gc.getLeaderHeadInfo( iLeader ).hasTrait( iAgnostic ) ) :
 					liResult.remove( iLeader )
+					liBadLeaders.append( iLeader )
 					continue
+		
+		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
+			liResult = liBadLeaders
 		
 		return liResult
 			

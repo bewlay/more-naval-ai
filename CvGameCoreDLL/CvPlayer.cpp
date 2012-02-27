@@ -24055,7 +24055,12 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
         LeaderHeadTypes eBestLeader = NO_LEADER;
         CivilizationTypes eBestCiv = NO_CIVILIZATION;
 
+/********************************************************************************/
+/* MinorPuppetLeaders	02/27/12										lfgr	*/
+/********************************************************************************/
+		/* OLD
 		eBestCiv = GET_PLAYER(pVassalCapital->getOriginalOwner()).getCivilizationType();
+
 
         for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
         {
@@ -24078,6 +24083,21 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 		}
 		
 		eBestLeader = (LeaderHeadTypes)iBestLeader;
+		*/
+
+		CyArgsList argsList;
+		argsList.add( this->getID() );
+		argsList.add( pVassalCapital->getOriginalOwner() );
+		argsList.add( pVassalCapital->getID() );
+		long lResult = 0;
+		gDLL->getPythonIFace()->callFunction( PYRevModule, "getPuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
+
+		eBestLeader = (LeaderHeadTypes) (lResult % GC.getNumLeaderHeadInfos());
+		eBestCiv = (CivilizationTypes) (lResult / GC.getNumLeaderHeadInfos());
+		
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
 
 		/*
         CivLeaderArray aLeaders;
