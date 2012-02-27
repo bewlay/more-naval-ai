@@ -2341,6 +2341,10 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseBuilding(BUILDINGFOCUS_CAPITAL, 15))
 				{
+					if( gCityLogLevel >= 2 )
+					{
+						logBBAI("      City %S uses BUILDINGFOCUS_CAPITAL", getName().GetCString());
+					}
 					return;
 				}
 			}
@@ -2468,7 +2472,7 @@ void CvCityAI::AI_chooseProduction()
 				{
 					if (AI_chooseUnit(UNITAI_SETTLE, bLandWar ? 50 : -1))
 					{
-						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1", getName().GetCString());
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses BUILD_SETTLER_1", getName().GetCString());
 						if (kPlayer.getNumMilitaryUnits() <= iNumCities + 1)
 						{
 							if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
@@ -2553,7 +2557,7 @@ void CvCityAI::AI_chooseProduction()
         
 	if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, 60, 10, ((bLandWar || bAssault) ? 30 : -1)))
 	{
-		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_FOOD 3", getName().GetCString());
+		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_FOOD 3 (happy - %d)", getName().GetCString(), (happyLevel() - unhappyLevel()));
 		return;
 	}
 
@@ -2584,7 +2588,7 @@ void CvCityAI::AI_chooseProduction()
 
 			if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
 			{
-				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses oppurtunistic wonder build 2", getName().GetCString());
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses opportunistic wonder build 2", getName().GetCString());
 				return;
 			}
 		}
@@ -2625,6 +2629,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseUnit(UNITAI_MISSIONARY,10))
 				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose Missionary - Religious Victory", getName().GetCString());
 					return;
 				}
 			}
@@ -2935,7 +2940,14 @@ void CvCityAI::AI_chooseProduction()
 				if( !bImportantCity && (iUnitsToTransport >= (iLocalTransports*iBestSeaAssaultCapacity)) )
 				{
 					// Have time to build barracks first
-					AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20);
+					if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20))
+					{
+						if( gCityLogLevel >= 2 )
+						{
+							logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE2", getName().GetCString());
+						}
+						return;
+					}
 				}
 				return;
 			}
@@ -3147,6 +3159,10 @@ void CvCityAI::AI_chooseProduction()
 
 			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20, 0, bDefenseWar ? 10 : 30))
 			{
+				if( gCityLogLevel >= 2 )
+				{
+					logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE3", getName().GetCString());
+				}
 				return;
 			}
 
@@ -3401,6 +3417,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30))
 		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_CULTURE due to zero culture rate", getName().GetCString());
 			return;
 		}
 	}
@@ -3417,6 +3434,10 @@ void CvCityAI::AI_chooseProduction()
 
 		if (AI_chooseBuilding(BUILDINGFOCUS_DEFENSE, 20, 0, bDanger ? -1 : 3*getPopulation()))
 		{
+				if( gCityLogLevel >= 2 )
+				{
+					logBBAI("      City %S uses BUILDINGFOCUS_DEFENSE", getName().GetCString());
+				}
 			return;
 		}
 		
@@ -3549,6 +3570,10 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (AI_chooseProject())
 		{
+			if( gCityLogLevel >= 2 )
+			{
+				logBBAI("      City %S uses PICK_ANY_PROJECT", getName().GetCString());
+			}
 			return;
 		}
 	}
@@ -3574,6 +3599,11 @@ void CvCityAI::AI_chooseProduction()
 
 	if (AI_chooseBuilding())
 	{
+		if( gCityLogLevel >= 2 )
+		{
+			logBBAI("      City %S uses PICK_ANY_BUILDING", getName().GetCString());
+		}
+
 		return;
 	}
 
@@ -3601,12 +3631,12 @@ void CvCityAI::AI_chooseProduction()
 	}
 	if (eBestBuilding != NO_BUILDING)
 	{
+		pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, false);
+		
 		if( gCityLogLevel >= 2 )
 		{
 			logBBAI("      City %S uses NO PRODUCTION CHOSEN catch", getName().GetCString());
 		}
-
-		pushOrder(ORDER_CONSTRUCT, eBestBuilding, -1, false, false, false);
 		return;
 	}
 
