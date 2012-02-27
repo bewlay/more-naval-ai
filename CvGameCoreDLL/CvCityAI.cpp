@@ -5519,26 +5519,29 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 			{
 				if (iFocusFlags & BUILDINGFOCUS_FOOD)
 				{
-
-					iValue += ((kBuilding.getFoodKept() * getPopulation()) / (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10 : 15));
-
-					if (kBuilding.getSeaPlotYieldChange(YIELD_FOOD) > 0)
+					// Tholal AI - try to avoid food buildings unless we have use for them
+					if ((happyLevel() > unhappyLevel()) || (healthRate() < 0) || bCanPopRush || isUnhappyProduction())
 					{
+						iValue += ((kBuilding.getFoodKept() * getPopulation()) / (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10 : 15));
 
-					    iTempValue = kBuilding.getSeaPlotYieldChange(YIELD_FOOD) * AI_buildingSpecialYieldChangeValue(eBuilding, YIELD_FOOD);
-					    if ((iTempValue < 8) && (getPopulation() > 3))
-					    {
-					        // don't bother
-					    }
-					    else
-					    {
-                            iValue += ((iTempValue * 4) / std::max(2, iFoodDifference));
-					    }
-					}
+						if (kBuilding.getSeaPlotYieldChange(YIELD_FOOD) > 0)
+						{
 
-					if (kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0)
-					{
-						iValue += (kBuilding.getRiverPlotYieldChange(YIELD_FOOD) * countNumRiverPlots() * 4);
+							iTempValue = kBuilding.getSeaPlotYieldChange(YIELD_FOOD) * AI_buildingSpecialYieldChangeValue(eBuilding, YIELD_FOOD);
+							if ((iTempValue < 8) && (getPopulation() > 3))
+							{
+								// don't bother
+							}
+							else
+							{
+								iValue += ((iTempValue * 4) / std::max(2, iFoodDifference));
+							}
+						}
+
+						if (kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0)
+						{
+							iValue += (kBuilding.getRiverPlotYieldChange(YIELD_FOOD) * countNumRiverPlots() * 4);
+						}
 					}
 				}
 
