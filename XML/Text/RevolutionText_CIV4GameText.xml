@@ -2425,6 +2425,24 @@
 		<Finnish>Revolt Instability</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_REV_INDEX_LOCAL_PENALTY</Tag>
+		<English>[ICON_BULLET]%D1 local instability penalty per turn</English>
+		<French>[ICON_BULLET]%D1 local instability penalty per turn</French>
+		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Malus</German>
+		<Italian>[ICON_BULLET]Penalit&#224; Instabilit&#224; Locale: %D1/turno</Italian>
+		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n a la inestabilidad local por turno</Spanish>
+		<Finnish>[ICON_BULLET]%D1 local instability penalty per turn</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_REV_INDEX_LOCAL_BONUS</Tag>
+		<English>[ICON_BULLET]%D1 local stability bonus per turn</English>
+		<French>[ICON_BULLET]%D1 local stability bonus per turn in each city</French>
+		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Bonus</German>
+		<Italian>[ICON_BULLET]Bonus Stabilit&#224; Locale: %D1/turno</Italian>
+		<Spanish>[ICON_BULLET]%D1 bonus a la estabilidad local por turno</Spanish>
+		<Finnish>[ICON_BULLET]%D1 local stability bonus per turn</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY</Tag>
 		<English>[ICON_BULLET]%D1 local instability penalty per turn in each city</English>
 		<French>[ICON_BULLET]%D1 local instability penalty per turn in each city</French>
@@ -2471,12 +2489,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD</Tag>
-		<English>[ICON_BULLET]+%D1% to city distance instability penalty</English>
-		<French>[ICON_BULLET]+%D1% to city distance instability penalty</French>
-		<German>[ICON_BULLET]+%D1% Stabilit&#228;ts-Malus wegen Entfernung der St&#228;dte</German>
-		<Italian>[ICON_BULLET]Variazione della penalit&#224; instabilit&#224; per distanza: +%D1%</Italian>
-		<Spanish>[ICON_BULLET]+%D1% to city distance instability penalty</Spanish>
-		<Finnish>[ICON_BULLET]+%D1% to city distance instability penalty</Finnish>
+		<English>[ICON_BULLET]%D1% to city distance instability penalty</English>
+		<French>[ICON_BULLET]%D1% to city distance instability penalty</French>
+		<German>[ICON_BULLET]%D1% Stabilit&#228;ts-Malus wegen Entfernung der St&#228;dte</German>
+		<Italian>[ICON_BULLET]Variazione della penalit&#224; instabilit&#224; per distanza: %D1%</Italian>
+		<Spanish>[ICON_BULLET]%D1% to city distance instability penalty</Spanish>
+		<Finnish>[ICON_BULLET]%D1% to city distance instability penalty</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY</Tag>

@@ -13424,6 +13424,58 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_HURRY_ANGER_MOD", kBuilding.getHurryAngerModifier()));
 	}
 
+// Start Revolutions
+	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	{
+		//  Revolution Local Index Modifiers
+		if (0 != kBuilding.getRevIdxLocal())
+		{
+			if ( kBuilding.getRevIdxLocal() > 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_REV_INDEX_LOCAL_PENALTY", kBuilding.getRevIdxLocal()));
+			}
+			if ( kBuilding.getRevIdxLocal() < 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_REV_INDEX_LOCAL_BONUS", abs(kBuilding.getRevIdxLocal())));
+			}
+		}
+		
+		//  Revolution National Index Modifiers
+		if (0 != kBuilding.getRevIdxNational())
+		{
+			if ( kBuilding.getRevIdxNational() > 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", kBuilding.getRevIdxNational()));
+			}
+			if ( kBuilding.getRevIdxNational() < 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(kBuilding.getRevIdxNational())));
+			}
+		}
+		
+		//  Revolution City Distance Modifier
+		if (0 != kBuilding.getRevIdxDistanceModifier())
+		{
+			if ( kBuilding.getRevIdxDistanceModifier() < 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", kBuilding.getRevIdxDistanceModifier()));
+			}
+			if ( kBuilding.getRevIdxDistanceModifier() > 0 )
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(kBuilding.getRevIdxDistanceModifier())));
+			}
+		}
+	}
+// End Revolutions
+
+
+
 	if (kBuilding.getWarWearinessModifier() != 0)
 	{
 		szBuffer.append(NEWLINE);
