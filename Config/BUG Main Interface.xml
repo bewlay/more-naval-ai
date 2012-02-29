@@ -98,7 +98,10 @@
 			<option id="StackPromotionColorAll" key="Stack Promotion Color All" 
 					type="color" default="COLOR_MAGENTA" 
 					get="getStackPromotionColorAll" dirtyBit="InfoPane"/>
-			
+			<!-- Unit Combat Icons -->
+			<option id="UnitCombatIcons" key="Unit Combat Icons" 
+					type="boolean" default="true" 
+					get="isShowUnitCombatIcons" dirtyBit="InfoPane"/>
 			<!-- Build/Action Icon Size by EmperorFool -->
 			<list   id="BuildIconSize" key="Build Icon Size" 
 					type="int" default="1" listType="string" 

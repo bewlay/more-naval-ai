@@ -388,4 +388,22 @@
 		<Spanish>When checked and the required images are present, shows pictures on the random event screens.</Spanish>
 		<Finnish>When checked and the required images are present, shows pictures on the random event screens.</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__UNITCOMBATICONS_TEXT</Tag>
+		<English>Unit Combat Icons</English>
+		<French>Unit Combat Icons</French>
+		<German>Unit Combat Icons</German>
+		<Italian>Unit Combat Icons</Italian>
+		<Spanish>Unit Combat Icons</Spanish>
+		<Finnish>Unit Combat Icons</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__UNITCOMBATICONS_HOVER</Tag>
+		<English>When checked, shows the Unit Combat icon in the Unit help display.</English>
+		<French>When checked, shows the Unit Combat icon in the Unit help display.</French>
+		<German>When checked, shows the Unit Combat icon in the Unit help display.</German>
+		<Italian>When checked, shows the Unit Combat icon in the Unit help display.</Italian>
+		<Spanish>When checked, shows the Unit Combat icon in the Unit help display.</Spanish>
+		<Finnish>When checked, shows the Unit Combat icon in the Unit help display.</Finnish>
+	</TEXT>
 </Civ4GameText>

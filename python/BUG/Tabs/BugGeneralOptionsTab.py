@@ -30,7 +30,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
-		self.createLeaderheadPanel(screen, left)
+		self.createMiscellaneousPanel(screen, left)
 		
 		self.createAutoSavePanel(screen, center)
 		self.addSpacer(screen, center, "General3")
@@ -38,7 +38,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 		self.createInfoPanePanel(screen, right)
 		self.addSpacer(screen, right, "General4")
-		self.createMiscellaneousPanel(screen, right)
+		self.createLeaderheadPanel(screen, right)
 		if Buffy.isEnabled():
 			self.addSpacer(screen, right, "General5")
 			self.createBuffyPanel(screen, right)
@@ -85,6 +85,7 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 	
 	def createInfoPanePanel(self, screen, panel):
 		self.addLabel(screen, panel, "InfoPane", "Unit/Stack Info:")
+		self.addCheckbox(screen, panel, "MainInterface__UnitCombatIcons")
 		self.addCheckbox(screen, panel, "MainInterface__UnitMovementPointsFraction")
 		self.addCheckbox(screen, panel, "MainInterface__StackMovementPoints")
 		self.addCheckbox(screen, panel, "MainInterface__StackPromotions")
