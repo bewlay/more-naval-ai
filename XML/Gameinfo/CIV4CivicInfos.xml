@@ -86,9 +86,9 @@
 						<bUpgradeAnywhere>0</bUpgradeAnywhere>
 						<bAllowInquisitions>0</bAllowInquisitions>
 						<bDisallowInquisitions>0</bDisallowInquisitions>
-						<iRevIdxLocal>4</iRevIdxLocal>
-						<iRevIdxNational>4</iRevIdxNational>
-						<iRevIdxDistanceModifier>50</iRevIdxDistanceModifier>
+						<iRevIdxLocal>2</iRevIdxLocal>
+						<iRevIdxNational>2</iRevIdxNational>
+						<iRevIdxDistanceModifier>25</iRevIdxDistanceModifier>
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
@@ -1118,9 +1118,9 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>4</iRevIdxLocal>
-						<iRevIdxNational>2</iRevIdxNational>
-						<iRevIdxDistanceModifier>50</iRevIdxDistanceModifier>
+						<iRevIdxLocal>2</iRevIdxLocal>
+						<iRevIdxNational>1</iRevIdxNational>
+						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
 						<iRevIdxHolyCityGood>5</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>200</iRevIdxSwitchTo>
@@ -1810,9 +1810,9 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
+						<iRevIdxLocal>-1</iRevIdxLocal>
+						<iRevIdxNational>1</iRevIdxNational>
+						<iRevIdxDistanceModifier>10</iRevIdxDistanceModifier>
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
