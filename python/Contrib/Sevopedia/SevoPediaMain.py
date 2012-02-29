@@ -170,6 +170,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_SPECIALISTS		: self.placeSpecialists,
 			SevoScreenEnums.PEDIA_TERRAINS		: self.placeTerrains,
 			SevoScreenEnums.PEDIA_FEATURES		: self.placeFeatures,
+##--------	BUGFfH: Added by Denev 2009/08/12
+			SevoScreenEnums.PEDIA_UNIQUE_FEATURES	: self.placeUniqueFeatures,
+##--------	BUGFfH: End Add
 			SevoScreenEnums.PEDIA_BONUSES		: self.placeBonuses,
 			SevoScreenEnums.PEDIA_MANA_NODES	: self.placeManaNodes,
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: self.placeImprovements,
@@ -220,6 +223,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_SPECIALISTS		: SevoPediaSpecialist.SevoPediaSpecialist(self),
 			SevoScreenEnums.PEDIA_TERRAINS		: SevoPediaTerrain.SevoPediaTerrain(self),
 			SevoScreenEnums.PEDIA_FEATURES		: SevoPediaFeature.SevoPediaFeature(self),
+##--------	BUGFfH: Added by Denev 2009/08/12
+			SevoScreenEnums.PEDIA_UNIQUE_FEATURES	: SevoPediaImprovement.SevoPediaImprovement(self),
+##--------	BUGFfH: End Add
 			SevoScreenEnums.PEDIA_BONUSES		: SevoPediaBonus.SevoPediaBonus(self),
 			SevoScreenEnums.PEDIA_MANA_NODES	: SevoPediaBonus.SevoPediaBonus(self),			
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: SevoPediaImprovement.SevoPediaImprovement(self),
@@ -314,6 +320,10 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			iBonusType = self.pediaBonus.getBonusType(iItem)
 			if iBonusType == SevoScreenEnums.TYPE_BONUS_MANA:			
 				iCategory = SevoScreenEnums.PEDIA_MANA_NODES				
+		elif (iCategory == SevoScreenEnums.PEDIA_IMPROVEMENTS):
+			iImprovementType = self.pediaImprovement.getImprovementType(iItem)
+			if iImprovementType == SevoScreenEnums.TYPE_UNIQUE_FEATURES:
+				iCategory = SevoScreenEnums.PEDIA_UNIQUE_FEATURES
 ##--------	BUGFfH: Added by Denev 2009/10/07
 		elif (iCategory == SevoScreenEnums.PEDIA_SPELLS):
 			bAbility = self.pediaSpell.getSpellType(iItem)
@@ -443,6 +453,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryEffects		= localText.getText("TXT_KEY_PEDIA_CATEGORY_EFFECTS", ())
 		self.szCategoryEquipments	= localText.getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ())
 		self.szCategoryRaces		= localText.getText("TXT_KEY_PEDIA_CATEGORY_RACES", ())
+		self.szCategoryUniqueFeatures	= localText.getText("TXT_KEY_PEDIA_CATEGORY_UNIQUE_FEATURE", ())
 		
 		self.categoryList = [
 			["TECHS",	self.szCategoryTechs],
@@ -461,6 +472,11 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["SPECIALISTS",	self.szCategorySpecialists],
 			["TERRAINS",	self.szCategoryTerrains],
 			["TERRAINS",	self.szCategoryFeatures],
+
+##--------	BUGFfH: Added by Denev 2009/08/12
+			["TERRAINS",	self.szCategoryUniqueFeatures],
+##--------	BUGFfH: End Add
+
 			["TERRAINS",	self.szCategoryBonuses],
 			["TERRAINS",	self.szCategoryManaNodes],			
 			["TERRAINS",	self.szCategoryImprovements],
