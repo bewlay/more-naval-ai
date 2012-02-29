@@ -4757,6 +4757,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	CvTeam& kTeam = GET_TEAM(getTeam());
 
+	bool bDom3 = AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3);
 	bool bWarPlan = (kTeam.getAnyWarPlanCount(true) > 0);
 	bool bCapitalAlone = (GC.getGameINLINE().getElapsedGameTurns() > 0) ? AI_isCapitalAreaAlone() : false;
 	bool bFinancialTrouble = AI_isFinancialTrouble();
@@ -4783,12 +4784,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iPathLength = findPathLength(eTech, false);
 	}
 
+	CvTechInfo& kTech = GC.getTechInfo(eTech);
+
 	if (GC.getLogging() && bDebugLog)
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "Tech %S \n", kTech.getDescription());
 			gDLL->messageControlLog(szOut);
@@ -4806,7 +4807,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	iValue += kTeam.getResearchProgress(eTech);
 
 	// Map stuff
-	if (GC.getTechInfo(eTech).isExtraWaterSeeFrom())
+	if (kTech.isExtraWaterSeeFrom())
 	{
 		if (iCoastalCities > 0)
 		{
@@ -4819,12 +4820,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).isMapCentering())
+	if (kTech.isMapCentering())
 	{
 		iValue += 100;
 	}
 
-	if (GC.getTechInfo(eTech).isMapVisible())
+	if (kTech.isMapVisible())
 	{
 		iValue += 100;
 
@@ -4835,7 +4836,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 	// Expand trading options
-	if (GC.getTechInfo(eTech).isMapTrading())
+	if (kTech.isMapTrading())
 	{
 		iValue += 100;
 
@@ -4845,14 +4846,14 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).isTechTrading() && !GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING))
+	if (kTech.isTechTrading() && !GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING))
 	{
 		iValue += 500;
 
 		iValue += 500 * iHasMetCount;
 	}
 
-	if (GC.getTechInfo(eTech).isGoldTrading())
+	if (kTech.isGoldTrading())
 	{
 		iValue += 200;
 
@@ -4862,7 +4863,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).isOpenBordersTrading())
+	if (kTech.isOpenBordersTrading())
 	{
 		if (iHasMetCount > 0)
 		{
@@ -4888,17 +4889,17 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}	
 	}
 
-	if (GC.getTechInfo(eTech).isDefensivePactTrading())
+	if (kTech.isDefensivePactTrading())
 	{
 		iValue += 400;
 	}
 
-	if (GC.getTechInfo(eTech).isPermanentAllianceTrading() && (GC.getGameINLINE().isOption(GAMEOPTION_PERMANENT_ALLIANCES)))
+	if (kTech.isPermanentAllianceTrading() && (GC.getGameINLINE().isOption(GAMEOPTION_PERMANENT_ALLIANCES)))
 	{
 		iValue += 200;
 	}
 
-	if (GC.getTechInfo(eTech).isVassalStateTrading() && !(GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES)))
+	if (kTech.isVassalStateTrading() && !(GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES)))
 	{
 		iValue += 200;
 		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
@@ -4909,17 +4910,17 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	// Tile improvement abilities
 	int iMaxTileAbilityValue = 0;
-	if (GC.getTechInfo(eTech).isBridgeBuilding())
+	if (kTech.isBridgeBuilding())
 	{
 		iMaxTileAbilityValue = std::max(200, iMaxTileAbilityValue);
 	}
 
-	if (GC.getTechInfo(eTech).isIrrigation())
+	if (kTech.isIrrigation())
 	{
 		iMaxTileAbilityValue = std::max(200, iMaxTileAbilityValue);
 	}
 
-	if (GC.getTechInfo(eTech).isIgnoreIrrigation())
+	if (kTech.isIgnoreIrrigation())
 	{
 		iMaxTileAbilityValue = std::max(500, iMaxTileAbilityValue);
 	}
@@ -4927,24 +4928,19 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	iValue += iMaxTileAbilityValue;
 
 
-	if (GC.getTechInfo(eTech).isWaterWork())
+	if (kTech.isWaterWork())
 	{
 		iValue += ((isPirate() ? 15000: 350) * iCoastalCities);
 	}
 
-	iValue += (GC.getTechInfo(eTech).getFeatureProductionModifier() * 2);
-	iValue += (GC.getTechInfo(eTech).getWorkerSpeedModifier() * 4);
-	iValue += (GC.getTechInfo(eTech).getTradeRoutes() * (std::max((iCityCount + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
+	iValue += (kTech.getFeatureProductionModifier() * 2);
+	iValue += (kTech.getWorkerSpeedModifier() * 4);
+	iValue += (kTech.getTradeRoutes() * (std::max((iCityCount + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
 
-	if ( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION4) )
-	{
-		iValue += (GC.getTechInfo(eTech).getHealth() * 350);
-	}
-	else
-	{
-		iValue += (GC.getTechInfo(eTech).getHealth() * 200);
-	}
+	iValue += (kTech.getHealth() * (bDom3 ? 350: 200));
 
+	iValue += (kTech.getHappiness() * (bDom3 ? 250: 100) * iCityCount);
+	
 	for (int iJ = 0; iJ < GC.getNumRouteInfos(); iJ++)
 	{
 		iValue += -(GC.getRouteInfo((RouteTypes)iJ).getTechMovementChange(eTech) * 100);
@@ -4952,12 +4948,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	for (int iJ = 0; iJ < NUM_DOMAIN_TYPES; iJ++)
 	{
-		iValue += (GC.getTechInfo(eTech).getDomainExtraMoves(iJ) * 200);
+		iValue += (kTech.getDomainExtraMoves(iJ) * 200);
 	}
 
 	for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 	{
-		if (GC.getTechInfo(eTech).isCommerceFlexible(iJ))
+		if (kTech.isCommerceFlexible(iJ))
 		{
 			iValue += 100;
 			if ((iJ == COMMERCE_CULTURE) && (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)))
@@ -4969,7 +4965,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	for (int iJ = 0; iJ < GC.getNumTerrainInfos(); iJ++)
 	{
-		if (GC.getTechInfo(eTech).isTerrainTrade(iJ))
+		if (kTech.isTerrainTrade(iJ))
 		{
 			if (GC.getTerrainInfo((TerrainTypes)iJ).isWater())
 			{
@@ -4992,7 +4988,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).isRiverTrade())
+	if (kTech.isRiverTrade())
 	{
 		iValue += 750;
 	}
@@ -5298,18 +5294,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue += iBuildValue;
 
-	if (GC.getLogging() && bDebugLog)
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
-			char szOut[1024];
-			sprintf(szOut, "   Pre-reveal value: %d \n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 	// does tech reveal bonus resources
 	int iBestRevealValue = 0;
 	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
@@ -5355,18 +5339,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 	iValue += iBestRevealValue;
 
-	if (GC.getLogging() && bDebugLog)
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
-			char szOut[1024];
-			sprintf(szOut, "   Post reveal value: %d \n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 
 	/* ------------------ Unit Value  ------------------ */
 	bool bEnablesUnitWonder;
@@ -5402,8 +5374,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "   Promotion value: %d \n", iPromotionValue);
 			gDLL->messageControlLog(szOut);
@@ -5507,8 +5477,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "   Pre process value: %d\n", iValue);
 			gDLL->messageControlLog(szOut);
@@ -5568,8 +5536,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "   Pre civic value: %d\n", iValue);
 			gDLL->messageControlLog(szOut);
@@ -5641,8 +5607,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			{
 				if (gDLL->getChtLvl() > 0)
 				{
-					CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 					char szOut[1024];
 					sprintf(szOut, "     Civic - %S : %d\n", GC.getCivicInfo(eNewCivic).getDescription(), iCivicTechValue);
 					gDLL->messageControlLog(szOut);
@@ -5713,7 +5677,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				const int iOverAlignmentLevel = std::max(iOverAlignmentBest, iOverAlignmentWorst);
 
 				const TechTypes eReligionTech = (TechTypes)GC.getReligionInfo(eReligion).getTechPrereq();
-				const ReligionTypes ePrereqReligion = (ReligionTypes)GC.getTechInfo(eTech).getPrereqReligion();
+				const ReligionTypes ePrereqReligion = (ReligionTypes)kTech.getPrereqReligion();
 
 				// Religion founding techs
 				if (eReligionTech == eTech)
@@ -5861,7 +5825,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				iValue += 1000;
 			}
 
-			iValue += (GC.getTechInfo(eTech).getFirstFreeTechs() * 200);//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
+			iValue += (kTech.getFirstFreeTechs() * 200);//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
 		}
 	}
 
@@ -5887,8 +5851,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		{
 			if (gDLL->getChtLvl() > 0)
 			{
-				CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 				char szOut[1024];
 				sprintf(szOut, "   Spell value: %d\n", iSpellValue);
 				gDLL->messageControlLog(szOut);
@@ -5902,15 +5864,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "   Pre weight value: %d\n", iValue);
 			gDLL->messageControlLog(szOut);
 		}
 	}
 
-	iValue += GC.getTechInfo(eTech).getAIWeight();
+	iValue += kTech.getAIWeight();
 
 //FfH: Added by Kael 06/17/2009
 	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech)
@@ -5936,7 +5896,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		for (int iJ = 0; iJ < GC.getNumFlavorTypes(); iJ++)
 		{
-			iValue += (AI_getFlavorValue((FlavorTypes)iJ) * GC.getTechInfo(eTech).getFlavorValue(iJ) * 20);
+			iValue += (AI_getFlavorValue((FlavorTypes)iJ) * kTech.getFlavorValue(iJ) * 20);
 		}
 	}
 */
@@ -5946,7 +5906,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		iTempValue = iValue;
 
-		iTempValue *= (AI_getFlavorValue((FlavorTypes)iFlavorType) + GC.getTechInfo(eTech).getFlavorValue(iFlavorType));
+		iTempValue *= (AI_getFlavorValue((FlavorTypes)iFlavorType) + kTech.getFlavorValue(iFlavorType));
 		iTempValue /= 100;
 
 		iFlavorValue += iTempValue;
@@ -5956,7 +5916,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	*/
 
 //>>>>Better AI: Modified by Denev 2010/03/15
-	const AlignmentTypes ePreferredAlignment = (AlignmentTypes)GC.getTechInfo(eTech).getPreferredAlignment();
+	const AlignmentTypes ePreferredAlignment = (AlignmentTypes)kTech.getPreferredAlignment();
 	if (ePreferredAlignment != NO_ALIGNMENT)
 	{
 		if (ePreferredAlignment  == getAlignment())
@@ -5988,7 +5948,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).getFirstFreeUnitClass() != NO_UNITCLASS)
+	if (kTech.getFirstFreeUnitClass() != NO_UNITCLASS)
 	{
 		if (bUnresearchedTech)
 		{
@@ -6009,7 +5969,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 	*/
 
-	if (GC.getTechInfo(eTech).isWater())
+	if (kTech.isWater())
 	{
 		if (iCoastalCities == 0)
 		{
@@ -6017,15 +5977,15 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getTechInfo(eTech).isRepeat())
+	if (kTech.isRepeat())
 	{
 		iValue /= 10;
 	}
 
 
-	if ((ReligionTypes)GC.getTechInfo(eTech).getPrereqReligion() != NO_RELIGION)
+	if ((ReligionTypes)kTech.getPrereqReligion() != NO_RELIGION)
 	{
-		if ((ReligionTypes)GC.getTechInfo(eTech).getPrereqReligion() != getStateReligion())
+		if ((ReligionTypes)kTech.getPrereqReligion() != getStateReligion())
 		{
 			iValue = 0;
 		}
@@ -6040,8 +6000,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "   Pre speed mod value: %d \n", iValue);
 			gDLL->messageControlLog(szOut);
@@ -6082,7 +6040,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/*
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING))
 	{
-		if (GC.getTechInfo(eTech).isTechTrading() || kTeam.isTechTrading())
+		if (kTech.isTechTrading() || kTeam.isTechTrading())
 		{
 			if (((bAsync) ? GC.getASyncRand().get(100, "AI Tech Whore ASYNC") : GC.getGameINLINE().getSorenRandNum(100, "AI Tech Whore")) < (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING) ? 20 : 10))
 			{
@@ -6132,8 +6090,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (gDLL->getChtLvl() > 0)
 		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 			char szOut[1024];
 			sprintf(szOut, "Final Value: %d (%d turns)\n \n", iValue, iTurnsLeft);
 			gDLL->messageControlLog(szOut);
