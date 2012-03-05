@@ -565,10 +565,10 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 						   u"%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR)),
 						   u"%c%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR),gc.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()),
 						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_GOVERNMENT"),
-						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LEGAL"),
+						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_CULTURAL_VALUES"),
 						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_LABOR"),
 						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_ECONOMY"),
-						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_ABBR_RELIGION"),
+						   BugUtil.getPlainText("TXT_KEY_CIVICOPTION_MEMBERSHIP"),
 						   "",
 						   fcHeaderText):
 			itemName = self.getNextWidgetName()

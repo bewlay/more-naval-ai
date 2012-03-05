@@ -1752,6 +1752,15 @@
 		<Spanish>Religi&#243;n</Spanish>
 		<Finnish>Uskonto</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIVICOPTION_ABBR_CULTURAL_VALUES</Tag>
+		<English>Values</English>
+		<French>Values</French>
+		<German>Values</German>
+		<Italian>Values</Italian>
+		<Spanish>Values</Spanish>
+		<Finnish>Values</Finnish>
+	</TEXT>
 	
 	<!-- Customizable Domestic Advisor -->
 	
