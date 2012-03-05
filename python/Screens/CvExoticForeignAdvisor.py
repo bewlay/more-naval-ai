@@ -496,11 +496,11 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 				szPlayerReligion = ""
 				
 				if (nPlayerReligion != -1):
-					
-					if (gc.getPlayer(iLoopPlayer).hasHolyCity (nPlayerReligion)):
-						szPlayerReligion = u"%c" %(objReligion.getHolyCityChar())
-					elif objReligion:
-						szPlayerReligion = u"%c" %(objReligion.getChar())
+					if playerActive.canSeeReligion(nPlayerReligion):
+						if (gc.getPlayer(iLoopPlayer).hasHolyCity (nPlayerReligion)):
+							szPlayerReligion = u"%c" %(objReligion.getHolyCityChar())
+						elif objReligion:
+							szPlayerReligion = u"%c" %(objReligion.getChar())
 
 				screen.attachTextGFC(infoPanelName, "", szPlayerReligion, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
@@ -616,6 +616,7 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 		iLoopTeam = objLoopPlayer.getTeam()
 		objLoopTeam = gc.getTeam(iLoopTeam)
 		bIsActivePlayer = (iLoopPlayer == self.iActiveLeader)
+		playerActive = gc.getPlayer(self.iActiveLeader)
 		if (objLoopPlayer.isAlive()
 			#and (self.objActiveTeam.isHasMet(iLoopTeam) or gc.getGame().isDebugMode())
 			and not objLoopPlayer.isBarbarian()
@@ -657,8 +658,11 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 			itemName = self.getNextWidgetName()
 			nReligion = objLoopPlayer.getStateReligion()
 			if (nReligion != -1):
+				if not playerActive.canSeeReligion(nReligion):
+					nReligion = -1
+				
+			if (nReligion != -1):
 				objReligion = gc.getReligionInfo (nReligion)
-
 				if (objLoopPlayer.hasHolyCity (nReligion)):
 					szPlayerReligion = u"%c" %(objReligion.getHolyCityChar())
 				elif objReligion:
