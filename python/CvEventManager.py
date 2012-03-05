@@ -1591,7 +1591,28 @@ class CvEventManager:
 		unit = argsList[1]
 		player = PyPlayer(city.getOwner())
 		pPlayer = gc.getPlayer(unit.getOwner())
-
+		
+		# Advanced Tactics - Diverse Grigori (idea and base code taken from FFH Tweakmod)
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS):
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_GRIGORI'):	
+				unit.setReligion(-1)
+				if unit.getRace() == -1:
+					iChance = 40
+					if CyGame().getSorenRandNum(100, "Grigori Racial Diversity") <= iChance:
+						race = CyGame().getSorenRandNum(3, "Bob")
+						if race == 0 and unit.isAlive():
+							unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), True)
+						elif race == 1 and unit.isAlive():
+							race = CyGame().getSorenRandNum(2, "Elvish division")
+							if race == 0:
+								unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ELF'), True)
+							elif race == 1:
+								unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DARK_ELF'), True)
+						elif race == 2:
+							if (unit.isAlive()):
+								unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DWARF'), True)
+		# End Advanced Tactics
+		
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_BEAST_OF_AGARES'):
 			if city.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				iPop = city.getPopulation() - 4
