@@ -8903,6 +8903,8 @@ void CvCityAI::AI_doDraft(bool bForce)
 {
 	PROFILE_FUNC();
 
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+
 	FAssert(!isHuman());
 	if (isBarbarian())
 	{
@@ -8927,7 +8929,7 @@ void CvCityAI::AI_doDraft(bool bForce)
             bool bDanger = (!AI_isDefended() && AI_isDanger());
 
 			// Don't go broke from drafting
-			if( !bDanger && GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble() )
+			if( !bDanger && kOwner.AI_isFinancialTrouble() )
 			{
 				return;
 			}
@@ -8946,7 +8948,7 @@ void CvCityAI::AI_doDraft(bool bForce)
             {
                 bool bWait = true;
 
-				if( bWait && GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_TURTLE) )
+				if( bWait && kOwner.AI_isDoStrategy(AI_STRATEGY_TURTLE) )
 				{
 					// Full out defensive
 					if( bDanger || (getPopulation() >= std::max(5, getHighestPopulation() - 1)) )
@@ -8963,7 +8965,7 @@ void CvCityAI::AI_doDraft(bool bForce)
 				{
 					// If city might be captured, don't hold back
 					int iOurDefense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(),0,true,false,true);
-					int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(plot(),2,false,false);
+					int iEnemyOffense = kOwner.AI_getEnemyPlotStrength(plot(),2,false,false);
 
 					if( (iOurDefense == 0) || (3*iEnemyOffense > 2*iOurDefense) )
 					{
