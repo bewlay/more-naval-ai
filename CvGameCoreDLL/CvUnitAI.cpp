@@ -900,6 +900,7 @@ void CvUnitAI::AI_upgrade()
 
 	if (eBestUnit != NO_UNIT)
 	{
+		logBBAI("    %S (unit %d - %S) upgrading to %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),GC.getUnitInfo(eBestUnit).getDescription(), iBestValue);
 		upgrade(eBestUnit);
 		doDelayedDeath();
 		return;

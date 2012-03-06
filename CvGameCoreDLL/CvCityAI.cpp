@@ -1751,6 +1751,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30))
 			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses zero culture build", getName().GetCString());
 				return;
 			}
 		}
@@ -1768,6 +1769,7 @@ void CvCityAI::AI_chooseProduction()
 					// Build workboat first since it doesn't stop growth
 					if (AI_chooseUnit(UNITAI_WORKER_SEA))
 					{
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker sea 1a", getName().GetCString());
 						return;
 					}
 				}
@@ -1777,6 +1779,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (!bChooseWorker && AI_chooseUnit(UNITAI_WORKER))
 				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker 1a", getName().GetCString());
 					return;
 				}
 				bChooseWorker = true;
@@ -2638,6 +2641,10 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, 60))
             {
+				if( gCityLogLevel >= 2 )
+				{
+					logBBAI("      City %S uses BUILDINGFOCUS_SPECIALIST", getName().GetCString());
+				}
                 return;
             }
 		}
