@@ -4769,15 +4769,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	int iNumMages = (getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + 
 						getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));
-	int iCityCount = getNumCities();
+	int iCityCount = AI_getNumRealCities();
 
-	if (isSprawling())
-	{
-		if (iCityCount >= getMaxCities())
-		{
-			iCityCount = getMaxCities();
-		}
-	}
 
 	if (iPathLength < 0)
 	{
@@ -6108,7 +6101,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 	bool bFinancialTrouble = AI_isFinancialTrouble();
 	int iTeamCityCount = GET_TEAM(getTeam()).getNumCities();
 	int iCoastalCities = countNumCoastalCities();
-	int iCityCount = getNumCities();
+	int iCityCount = AI_getNumRealCities();
 
 	BuildingTypes eLoopBuilding;
 	int iTempValue = 0;
@@ -6319,7 +6312,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				// palaces
 				if (kLoopBuilding.isGovernmentCenter())
 				{
-					iBuildingValue += getNumCities() * 10;
+					iBuildingValue += iCityCount * 10;
 				}
 
 				iBuildingValue += (kLoopBuilding.getHealth() * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 100 : 25));
@@ -10296,7 +10289,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			CvTeam& kTeam = GET_TEAM(getTeam());
 
 			CvCity* pCapital = getCapitalCity();
-			int iCityCount = getNumCities();
+			int iCityCount = AI_getNumRealCities();
 			int iCoastalCityCount = countNumCoastalCities();
 
 			// find the first coastal city
@@ -13867,6 +13860,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iValue;
 	int iTempValue;
 	int iI, iJ;
+	int iCities = AI_getNumRealCities();
 	bool bCultureVictory3 = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 	bool bCultureVictory2 = AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
 	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
@@ -13963,12 +13957,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		if( !bWarPlan )
 		{
-			if( iEnemyWarSuccess > std::min(getNumCities(), 4) * GC.getWAR_SUCCESS_CITY_CAPTURING() )
+			if( iEnemyWarSuccess > std::min(iCities, 4) * GC.getWAR_SUCCESS_CITY_CAPTURING() )
 			{
 				// Lots of fighting, so war is real
 				bWarPlan = true;
 			}
-			else if( iEnemyWarSuccess > std::min(getNumCities(), 2) * GC.getWAR_SUCCESS_CITY_CAPTURING() )
+			else if( iEnemyWarSuccess > std::min(iCities, 2) * GC.getWAR_SUCCESS_CITY_CAPTURING() )
 			{
 				if( kTeam.AI_getEnemyPowerPercent() > 120 )
 				{
@@ -14002,7 +13996,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue += (getCivicPercentAnger(eCivic) / 10);
 
-	iValue += -(GC.getCivicInfo(eCivic).getAnarchyLength() * getNumCities());
+	iValue += -(GC.getCivicInfo(eCivic).getAnarchyLength() * iCities);
 
 	iValue += -(getSingleCivicUpkeep(eCivic, true)*80)/100;
 
@@ -14048,8 +14042,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 
 //>>>>Better AI: Modified by Denev 2010/07/21
-	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
-	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (getNumCities() - 3))) / 8);
+	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (iCities - 3))) / 8);
+	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (iCities - 3))) / 8);
 /*
 	int iNumCitiesMaintenance = 0;
 	int iDistanceMaintenance = 0;
@@ -14093,7 +14087,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	// infrastructure bonuses
 	iValue += ((kCivic.getWorkerSpeedModifier() * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
-	iValue += ((kCivic.getImprovementUpgradeRateModifier() * getNumCities()) / 50);
+	iValue += ((kCivic.getImprovementUpgradeRateModifier() * iCities) / 50);
 
 	// military production bonuses
 	int iMilitaryTemp = kCivic.getMilitaryProductionModifier();
@@ -14189,7 +14183,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			int iCombatValue = AI_combatValue(eConscript);
 			if( iCombatValue > 33 )
 			{
-				iTempValue = getNumCities() + ((bWarPlan) ? 30 : 10);
+				iTempValue = iCities + ((bWarPlan) ? 30 : 10);
 
 				iTempValue *= range(kTeam.AI_getEnemyPowerPercent(), 50, 300);
 				iTempValue /= 100;
@@ -14221,9 +14215,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iValue += ((kCivic.getExpInBorderModifier() * getNumMilitaryUnits()) / 200);
 	}
 
-	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (getNumCities() * 3) : 0);
-	iValue += -((kCivic.getWarWearinessModifier() * getNumCities()) / ((bWarPlan) ? 25 : 50));
-	iValue += (kCivic.getFreeSpecialist() * getNumCities() * 12);
+	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (iCities * 3) : 0);
+	iValue += -((kCivic.getWarWearinessModifier() * iCities) / ((bWarPlan) ? 25 : 50));
+	iValue += (kCivic.getFreeSpecialist() * iCities * 12);
 	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2)));
 	
 	// ToDo: better way to calculate the value of coastal trade routes
@@ -14233,7 +14227,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	// coporation stuff
 	if (kCivic.isNoCorporations())
 	{
-		iValue -= countHeadquarters() * (40 + 3 * getNumCities());
+		iValue -= countHeadquarters() * (40 + 3 * iCities);
 	}
 	if (kCivic.isNoForeignCorporations())
 	{
@@ -14257,7 +14251,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			}
 			iCorpCount += countCorporations((CorporationTypes)iCorp);
 		}
-		iValue += (-kCivic.getCorporationMaintenanceModifier() * (iHQCount * (25 + getNumCities() * 2) + iCorpCount * 7)) / 25;
+		iValue += (-kCivic.getCorporationMaintenanceModifier() * (iHQCount * (25 + iCities * 2) + iCorpCount * 7)) / 25;
 
 	}
 
@@ -14296,7 +14290,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 		iValue += (getNumCities() * 6 * AI_getHealthWeight(isCivic(eCivic) ? -kCivic.getExtraHealth() : kCivic.getExtraHealth(), 1)) / 100;
 */
-		iValue += (getNumCities() * 6 * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
+		iValue += (iCities * 6 * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14313,7 +14307,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 		iValue += (getNumCities() * 9 * AI_getHappinessWeight(isCivic(eCivic) ? -iTempValue : iTempValue, 1)) / 100;
 */
-		iValue += (getNumCities() * 9 * AI_getHappinessWeight(iTempValue, 1)) / 100;
+		iValue += (iCities * 9 * AI_getHappinessWeight(iTempValue, 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14330,7 +14324,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 		iValue += (12 * std::min(getNumCities(), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()) * AI_getHappinessWeight(isCivic(eCivic) ? -iTempValue : iTempValue, 1)) / 100;
 */
-		iValue += (12 * std::min(getNumCities(), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()) * AI_getHappinessWeight(iTempValue, 1)) / 100;
+		iValue += (12 * std::min(iCities, GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getTargetNumCities()) * AI_getHappinessWeight(iTempValue, 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14352,7 +14346,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 			iValue += (11 * getNumCities() * AI_getHappinessWeight(isCivic(eCivic) ? -iTempValue : iTempValue, 1)) / 100;
 */
-			iValue += (11 * getNumCities() * AI_getHappinessWeight(iTempValue, 1)) / 100;
+			iValue += (11 * iCities * AI_getHappinessWeight(iTempValue, 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14368,7 +14362,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		{
 			iValue += iHighestReligionCount;
 
-			iValue += ((kCivic.isNoNonStateReligionSpread()) ? ((getNumCities() - iHighestReligionCount) * 2) : 0);
+			iValue += ((kCivic.isNoNonStateReligionSpread()) ? ((iCities - iHighestReligionCount) * 2) : 0);
 			iValue += (kCivic.getStateReligionHappiness() * iHighestReligionCount * 4);
 			iValue += ((kCivic.getStateReligionGreatPeopleRateModifier() * iHighestReligionCount) / 20);
 			iValue += (kCivic.getStateReligionGreatPeopleRateModifier() / 4);
@@ -14434,7 +14428,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{
 		iTempValue = 0;
 
-		iTempValue += ((kCivic.getYieldModifier(iI) * getNumCities()) / 2);
+		iTempValue += ((kCivic.getYieldModifier(iI) * iCities) / 2);
 		
 		if (pCapital) 
 		{
@@ -14442,11 +14436,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTemp = kCivic.getCapitalYieldModifier(iI) * pCapital->getYieldRate((YieldTypes)iI);
 			iTemp /= 100;
 			iTemp *= 3;
-			iTemp /= std::max(1, getNumCities());
+			iTemp /= std::max(1, iCities);
 
 			iTempValue += iTemp;
 		}
-		iTempValue += ((kCivic.getTradeYieldModifier(iI) * getNumCities()) / 11);
+		iTempValue += ((kCivic.getTradeYieldModifier(iI) * iCities) / 11);
 
 		for (iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
 		{
@@ -14483,7 +14477,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = 0;
 
 		// Consumption, Mercantilism, etc
-		iTempValue += ((kCivic.getCommerceModifier(iI) * getNumCities()) / 3);
+		iTempValue += ((kCivic.getCommerceModifier(iI) * iCities) / 3);
 
 		// God King
 		if (pCapital)
@@ -14492,7 +14486,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTemp /= 100;
 
 			iTemp *= 3;
-			iTemp /= std::max(1, getNumCities());
+			iTemp /= std::max(1, iCities);
 			
 			iTempValue += iTemp;
 		}
@@ -14558,7 +14552,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 			if (GC.getHurryInfo((HurryTypes)iI).getGoldPerProduction() > 0)
 			{
-				iTempValue += ((((AI_avoidScience()) ? 50 : 25) * getNumCities()) / GC.getHurryInfo((HurryTypes)iI).getGoldPerProduction());
+				iTempValue += ((((AI_avoidScience()) ? 50 : 25) * iCities) / GC.getHurryInfo((HurryTypes)iI).getGoldPerProduction());
 			}
 			if (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() > 0)
 			{
@@ -14566,7 +14560,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 				//iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
 				//iTempValue += iMaxGrowingSpace * getNumCities() * 10;
 				//iTempValue -= (iTotalFoodDifference * 2);
-				iTempValue += iTotalFoodDifference * (getNumCities() / 3);
+				iTempValue += iTotalFoodDifference * (iCities / 3);
 
 				if (GET_PLAYER(getID()).isMilitaryFoodProduction())
 				{
@@ -14581,7 +14575,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{
 		if (kCivic.isSpecialBuildingNotRequired(iI))
 		{
-			iValue += ((getNumCities() / 2) + 1); // XXX
+			iValue += ((iCities / 2) + 1); // XXX
 		}
 	}
 
@@ -14590,7 +14584,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = 0; 
 		if (kCivic.isSpecialistValid(iI)) 
 		{ 
-			iTempValue += ((getNumCities() *  (bCultureVictory3 ? 10 : 1)) + 6);
+			iTempValue += ((iCities *  (bCultureVictory3 ? 10 : 1)) + 6);
 		} 
 		iValue += (iTempValue / 2); 
 	} 
