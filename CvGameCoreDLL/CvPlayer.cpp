@@ -3012,6 +3012,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			CvEventReporter::getInstance().cityAcquiredAndKept(getID(), pNewCity);
 		}
 	}
+	// Tholal AI - not sure why this wasnt being called for traded cities - they are acquired and kept also...
+	else if (bTrade)
+	{
+		CvEventReporter::getInstance().cityAcquiredAndKept(getID(), pNewCity);
+	}
 
 	// Forcing events that deal with the old city not to expire just because we conquered that city
 	for (CvEventMap::iterator it = m_mapEventsOccured.begin(); it != m_mapEventsOccured.end(); ++it)
