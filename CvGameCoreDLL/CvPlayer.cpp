@@ -13602,14 +13602,17 @@ void CvPlayer::setLastStateReligion(ReligionTypes eNewValue)
 			{
 				if (getLastStateReligion() != NO_RELIGION)
 				{
-					for (iI = 0; iI < MAX_PLAYERS; iI++)
+					if (!GC.getReligionInfo((ReligionTypes)getLastStateReligion()).isHidden()) // suppress messages to other players for hidden religions
 					{
-						if (GET_PLAYER((PlayerTypes)iI).isAlive())
+						for (iI = 0; iI < MAX_PLAYERS; iI++)
 						{
-							if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
+							if (GET_PLAYER((PlayerTypes)iI).isAlive())
 							{
-								szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
-								gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_RELIGION_CONVERT", MESSAGE_TYPE_MAJOR_EVENT);
+								if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
+								{
+									szBuffer = gDLL->getText("TXT_KEY_MISC_PLAYER_CONVERT_RELIGION", getNameKey(), GC.getReligionInfo(getLastStateReligion()).getTextKeyWide());
+									gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_RELIGION_CONVERT", MESSAGE_TYPE_MAJOR_EVENT);
+								}
 							}
 						}
 					}
