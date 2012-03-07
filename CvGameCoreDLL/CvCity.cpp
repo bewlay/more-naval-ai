@@ -14349,6 +14349,11 @@ void CvCity::doReligion()
 	int iLoop;
 	int iI, iJ;
 
+	if (isBarbarian())
+	{
+		return;
+	}
+
 /*************************************************************************************************/
 /**	SPEEDTWEAK (Block Python) Sephi                                               	            **/
 /**																								**/
