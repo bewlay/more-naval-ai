@@ -26260,6 +26260,24 @@ int CvPlayerAI::AI_getMojoFactor() const
 	return iValue;
 }
 
+// City count that doesn't include Settlements
+int CvPlayerAI::AI_getNumRealCities() const
+{
+	int iTotalCities = getNumCities();
+	if (isSprawling())
+	{
+		int iMaxCities = getMaxCities();
+		{
+			if (iTotalCities > iMaxCities)
+			{
+				return iMaxCities;
+			}
+		}
+	}
+
+	return iTotalCities;
+}
+
 // End Tholal AI
 
 /************************************************************************************************/

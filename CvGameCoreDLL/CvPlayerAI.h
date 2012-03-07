@@ -371,6 +371,9 @@ public:
 
 	// Tholal AI - Magic factor
 	int AI_getMojoFactor() const;
+
+	// City count that doesnt include Settlements
+	int AI_getNumRealCities() const;
 	// End Tholal AI
 
 /************************************************************************************************/
