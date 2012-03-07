@@ -5089,41 +5089,15 @@ void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStr
 {
 	CvWString szTempBuffer;
 
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                      03/04/10                                jdog5000       */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
-	// Add string showing version number
-	szTempBuffer.Format(L"%S", "Unofficial 3.19 Patch v1.60");
-	szBuffer.append(szTempBuffer);
-	szBuffer.append(NEWLINE);
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       END                                                   */
-/************************************************************************************************/
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      07/04/10                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
-	// Add string showing version number
-	szTempBuffer.Format(L"%S", "Better BTS AI v1.02a");
-	szBuffer.append(szTempBuffer);
-	szBuffer.append(NEWLINE);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
 
-/************************************************************************************************/
-/* More Naval AI                      5/22/11                                 Tholal            */
-/************************************************************************************************/
+
+// More Naval AI version number
 	// Add string showing version number
 	szTempBuffer.Format(L"%S", "More Naval AI v2.0");
 	szBuffer.append(szTempBuffer);
 	szBuffer.append(NEWLINE);
-/************************************************************************************************/
-/* More Naval AI                           END                                                  */
-/************************************************************************************************/
+// End More Naval AI
+
 	szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getDescription());
 	szBuffer.append(szTempBuffer);
 	szBuffer.append(NEWLINE);
