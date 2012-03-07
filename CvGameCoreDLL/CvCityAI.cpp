@@ -8918,7 +8918,7 @@ void CvCityAI::AI_doDraft(bool bForce)
 /*                                                                                              */
 /* City AI, War Strategy AI                                                                     */
 /************************************************************************************************/
-	    if (GC.getGameINLINE().AI_combatValue(getConscriptUnit()) > 33)
+	   // if (GC.getGameINLINE().AI_combatValue(getConscriptUnit()) > 33)
         {
 			if (bForce)
 			{
