@@ -127,10 +127,11 @@ public:
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+	int AI_getWarSuccessRating() const; // K-Mod
+
 /************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/14/10                                jdog5000      */
-/*                                                                                              */
-/* War Strategy AI                                                                              */
+/* BETTER_BTS_AI_MOD - War Strategy AI    05/14/10                                jdog5000      */
 /************************************************************************************************/
 	int AI_getWarSuccessCapitulationRatio() const;
 	int AI_getEnemyPowerPercent( bool bConsiderOthers = false ) const;

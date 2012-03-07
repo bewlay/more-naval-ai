@@ -2586,6 +2586,47 @@ bool CvTeamAI::AI_isAnyMemberDoVictoryStrategyLevel3() const
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+// K-Mod. return a rating of our war success between -99 and 99.
+// -99 means we losing and have very little hope of surviving. 99 means we are soundly defeating our enemies. Zero is neutral (eg. no wars being fought).
+int CvTeamAI::AI_getWarSuccessRating() const
+{
+	PROFILE_FUNC();
+	// (Based on my code for Force Peace diplomacy voting.)
+
+	int iMilitaryUnits = 0;
+	for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+	{
+		const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (kLoopPlayer.getTeam() == getID())
+		{
+			iMilitaryUnits += kLoopPlayer.getNumMilitaryUnits();
+		}
+	}
+	int iSuccessScale = iMilitaryUnits * GC.getDefineINT("WAR_SUCCESS_ATTACKING") / 5;
+
+	int iThisTeamPower = getPower(true);
+	int iScore = 0;
+
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		const CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
+		if (iI != getID() && isAtWar((TeamTypes)iI) && kLoopTeam.isAlive() && !kLoopTeam.isAVassal())
+		{
+			int iThisTeamSuccess = AI_getWarSuccess((TeamTypes)iI);
+			int iOtherTeamSuccess = kLoopTeam.AI_getWarSuccess(getID());
+
+			int iOtherTeamPower = kLoopTeam.getPower(true);
+
+			iScore += (iThisTeamSuccess+iSuccessScale) * iThisTeamPower;
+			iScore -= (iOtherTeamSuccess+iSuccessScale) * iOtherTeamPower;
+		}
+	}
+	iScore = range((100*iScore)/std::max(1, iThisTeamPower*iSuccessScale*5), -99, 99);
+	return iScore;
+}
+// K-Mod end
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/20/10                                jdog5000      */
 /*                                                                                              */
