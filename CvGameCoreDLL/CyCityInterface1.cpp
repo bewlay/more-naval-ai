@@ -551,6 +551,14 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("setSettlement", &CyCity::setSettlement, "void (bool bNewValue) - sets city as a Settlement or not")
 //FfH: End Add
 
+/********************************************************************************/
+/* Expose FfH Functions	02/28/12										lfgr	*/
+/********************************************************************************/
+		.def("isUnhappyProduction", &CyCity::isUnhappyProduction, "bool ()")
+/********************************************************************************/
+/* Expose FfH Functions	End												lfgr	*/
+/********************************************************************************/
+
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/
 /**																								**/

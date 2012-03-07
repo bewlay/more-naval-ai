@@ -1066,23 +1066,23 @@ public:
 	DllExport void getBuildQueue(std::vector<std::string>& astrQueue) const;
 
 //FfH: Added by Kael 08/04/2007
-    void applyBuildEffects(CvUnit* pUnit);
+    void applyBuildEffects(CvUnit* pUnit);				// Exposed to Python
     int getTrueCivilizationType() const;
-	void setCivilizationType(int iNewValue);
-    bool isSettlement() const;
-    void setSettlement(bool bNewValue);
+	void setCivilizationType(int iNewValue);			// Exposed to Python
+    bool isSettlement() const;							// Exposed to Python
+    void setSettlement(bool bNewValue);					// Exposed to Python
     int getNumCityPlots() const;
     int getPlotRadius() const;
-    void setPlotRadius(int iNewValue);
-	bool isUnhappyProduction() const;
+    void setPlotRadius(int iNewValue);					// Exposed to Python
+	bool isUnhappyProduction() const;					// lfgr: Exposed to python
 	void changeUnhappyProduction(int iChange);
-	void changeCrime(int iChange);
-	int getCrime() const;
+	void changeCrime(int iChange);						// Exposed to Python
+	int getCrime() const;								// Exposed to Python
 	void changeMutateChance(int iChange);
 	int getMutateChance() const;
 	void changeResistMagic(int iChange);
 	int getResistMagic() const;
-    bool isHasBuildingClass(int iBuildingClass) const;
+    bool isHasBuildingClass(int iBuildingClass) const;	// Exposed to Python
     int getExtraSpecialistCommerce(CommerceTypes eIndex) const;
     int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
 //FfH: End Add
