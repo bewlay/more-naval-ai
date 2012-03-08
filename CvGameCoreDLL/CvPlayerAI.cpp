@@ -4867,6 +4867,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			{
 				iValue += 500;
 			}
+
+			if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
+			{
+				iValue += 1000;
+			}
 /************************************************************************************************/
 /* REVOLUTION_MOD                         05/30/08                                jdog5000      */
 /*                                                                                              */
@@ -5091,6 +5096,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iImprovementValue += iTempValue;
 				}
 
+				// Tholal - kind of a hack to get AI to pursue education earlier
+				iImprovementValue += (kImprovement.getPillageGold() * 50);
+
 				int iNumTotalBonuses = 0;
 				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 				{
@@ -5209,8 +5217,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 					if (gDLL->getChtLvl() > 0)
 					{
-						CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
 						char szOut[1024];
 						sprintf(szOut, "     IMPROVEMENT - %S : %d\n", kImprovement.getDescription(), iImprovementValue);
 						gDLL->messageControlLog(szOut);
