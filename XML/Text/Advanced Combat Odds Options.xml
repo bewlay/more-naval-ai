@@ -272,7 +272,7 @@
 		<Finnish>Select when to show the probability bars of each possible ending health for the attacker.</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_ACO__SHOWDEDENDERHEALTHBARS_TEXT</Tag>
+		<Tag>TXT_KEY_BUG_OPT_ACO__SHOWDEFENDERHEALTHBARS_TEXT</Tag>
 		<English>Defender Health Bars</English>
 		<French>Defender Health Bars</French>
 		<German>Gesundheitsbalken des Verteidigers</German>
@@ -281,7 +281,7 @@
 		<Finnish>Defender Health Bars</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_ACO__SHOWDEDENDERHEALTHBARS_HOVER</Tag>
+		<Tag>TXT_KEY_BUG_OPT_ACO__SHOWDEFENDERHEALTHBARS_HOVER</Tag>
 		<English>Select when to show the probability bars of each possible ending health for the defender.</English>
 		<French>Select when to show the probability bars of each possible ending health for the defender.</French>
 		<German>Bestimmt, wann die Wahrscheinlichkeitsbalken f&#252;r die jeweils erwartete Gesundheit des Verteidigers nach dem Kampf angezeigt werden</German>
