@@ -360,16 +360,17 @@ public:
 	int AI_getVictoryStrategyHash() const;
 	int AI_getStrategyRand() const;
 
-	// Tholal AI - Added victories for FFH2
+	// Tholal AI
+	// Added Victory Strategies for FFH2
 	int AI_getReligionVictoryStage() const;
 	int AI_getTowerMasteryVictoryStage() const;
 	int AI_getAltarVictoryStage() const;
 
-	// Tholal AI - Tower Mana
+	//Tower Mana
 	int AI_getTowerManaValue(BonusTypes eBonus) const;
 	bool AI_isNeededTowerMana(BonusTypes eBonus) const;
 
-	// Tholal AI - Magic factor
+	// Magic factor
 	int AI_getMojoFactor() const;
 
 	// City count that doesnt include Settlements
