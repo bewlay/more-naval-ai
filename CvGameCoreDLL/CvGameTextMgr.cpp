@@ -12640,7 +12640,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 			// ALN - debug info (production unit UnitAI)
 			if (GC.getGameINLINE().isDebugMode() && pCity->getProductionUnitAI() != NO_UNITAI)
 			{
-				szTempBuffer.Format(L"\n%s", GC.getUnitAIInfo(pCity->getProductionUnitAI()).getDescription());
+				szTempBuffer.Format(L"\n%s (value: %d)", GC.getUnitAIInfo(pCity->getProductionUnitAI()).getDescription(), GET_PLAYER(pCity->getOwner()).AI_unitValue(eUnit, pCity->getProductionUnitAI(), pCity->area()));
 				szBuffer.append(szTempBuffer);
 			}
 			// ALN End
