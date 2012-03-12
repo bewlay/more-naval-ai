@@ -27106,12 +27106,16 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 								{
 									if (iPathTurns <= iRange)
 									{
-										iValue = 20;
+										iValue = 20 + getLevel();
 										iValue /= (iPathTurns + 1);
 
 										if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isUnique())
 										{
-											iValue += 2 * getLevel();
+											// Tholal ToDo - make this less hardcoded and scale by game speed
+											if (GC.getGameINLINE().getElapsedGameTurns() > 20)
+											{
+												iValue += 2 * getLevel();
+											}
 
 											if (pLoopPlot->isOwned())
 											{
@@ -27139,10 +27143,6 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 												{
 													iValue = 0;
 												}
-											}
-											else
-											{
-												iValue *= 2;
 											}
 										}
 
