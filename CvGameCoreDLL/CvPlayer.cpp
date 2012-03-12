@@ -23910,6 +23910,11 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
         return false;
     }
 
+	if (GET_PLAYER((PlayerTypes)eFromPlayer).isBarbarian())
+	{
+		return false;
+	}
+
     if (GET_TEAM(getTeam()).isAVassal())
     {
         return false;
