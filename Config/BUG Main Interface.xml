@@ -46,7 +46,7 @@
 			
 			<!-- Great General Progress Bar by NeverMind -->
 			<option id="Combat_Counter" key="Combat Counter" 
-					type="boolean" default="False" 
+					type="boolean" default="True" 
 					get="isShowGGProgressBar" dirtyBit="GameData"/>
 			
 			<!-- Min/Max Commerce Buttons by codewarrior -->
