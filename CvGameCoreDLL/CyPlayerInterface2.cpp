@@ -71,6 +71,7 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		/*** PUPPET STATES 04/21/08 by DPII ***/
 		.def("makePuppet", &CyPlayer::makePuppet, "bool (int /*PlayerTypes*/ eSplitPlayer, int (CyCity* pVassalCapital)")
 		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int /*PlayerTypes*/ eFromPlayer)")
+		.def("isPuppetState", &CyPlayer::isPuppetState, "bool ()")
 		/*************************************/
 /************************************************************************************************/
 /* REVOLUTION_MOD                         11/15/08                                jdog5000      */
