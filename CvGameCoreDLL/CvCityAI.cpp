@@ -1019,8 +1019,9 @@ void CvCityAI::AI_chooseProduction()
 
 		clearOrderQueue();
 	}
-	
-	if (GET_PLAYER(getOwner()).isAnarchy())
+
+	//if (GET_PLAYER(getOwner()).isAnarchy()) // original bts code
+	if (isDisorder()) // K-Mod
 	{
 		return;
 	}
@@ -1067,6 +1068,7 @@ void CvCityAI::AI_chooseProduction()
 		bWaterDanger = kPlayer.AI_getWaterDanger(plot(), 4) > 0;
 	}
 
+	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bWasFoodProduction = isFoodProduction();
 	bHasMetOtherPlayer = (GET_TEAM(getTeam()).getHasMetCivCount(true) > 0);
 	bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
@@ -1627,7 +1629,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 
 		//essential economic builds
-		if (AI_chooseBuilding(iEconomyFlags, 10, 25))
+		if (AI_chooseBuilding(iEconomyFlags, 5, 25))
 		{
 			return;
 		}
@@ -1998,7 +2000,8 @@ void CvCityAI::AI_chooseProduction()
 
 				if( iOdds >= 0 )
 				{
-					if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_EXPLORE_SEA) == 0)
+					// if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_EXPLORE_SEA) == 0) // original code
+					if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_EXPLORE_SEA) == 0 && kPlayer.AI_neededExplorers(pWaterArea) > 0) // K-Mod!
 					{
 						if (AI_chooseUnit(UNITAI_EXPLORE_SEA, iOdds))
 						{
@@ -2237,7 +2240,8 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
-	if (!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2)))
+	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) ||
+		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)))
 	{
 		//Building city hunting stack.
 
@@ -2392,10 +2396,10 @@ void CvCityAI::AI_chooseProduction()
 	UnitTypes eBestSpreadUnit = NO_UNIT;
 	int iBestSpreadUnitValue = -1;
 	
-	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault)
+	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault && !bLandWar)
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
-		iSpreadUnitRoll += bLandWar ? 0 : 10;
+		//iSpreadUnitRoll += bLandWar ? 0 : 10;
 
 		if (AI_bestSpreadUnit(true, true, iSpreadUnitRoll, &eBestSpreadUnit, &iBestSpreadUnitValue))
 		{
@@ -2616,7 +2620,7 @@ void CvCityAI::AI_chooseProduction()
 	}
     
 	//essential economic builds
-	if (AI_chooseBuilding(iEconomyFlags, 10, 25 + iWarTroubleThreshold, (bLandWar ? 40 : -1)))
+	if (AI_chooseBuilding(iEconomyFlags, 5, 25 + iWarTroubleThreshold, (bLandWar ? 40 : -1)))
 	{
 		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose iEconomyFlags 1", getName().GetCString());
 		return;
@@ -2639,7 +2643,8 @@ void CvCityAI::AI_chooseProduction()
 
 		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1) || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 		{
-			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, 60))
+//			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, 60))
+			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 5 : 10, 33))
             {
 				if( gCityLogLevel >= 2 )
 				{
@@ -2671,19 +2676,19 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	int iMaxUnitSpending = (bAggressiveAI ? 6 : 3) + iBuildUnitProb / 3;
+	int iMaxUnitSpending = (bAggressiveAI ? 16 : 13) + iBuildUnitProb / 3;
 
 	if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4) )
 	{
-		iMaxUnitSpending += 7;
+		iMaxUnitSpending += 17;
 	}
 	else if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) )
 	{
-		iMaxUnitSpending += 3;
+		iMaxUnitSpending += 13;
 	}
 	else if( kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) )
 	{
-		iMaxUnitSpending += 1;
+		iMaxUnitSpending += 10;
 	}
 
     if (bAlwaysPeace)
@@ -3418,13 +3423,24 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-
 	if (getCommerceRateTimes100(COMMERCE_CULTURE) == 0)
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_CULTURE due to zero culture rate", getName().GetCString());
 			return;
+		}
+	}
+
+	if ((bWarPlan || bAtWar) && !bFinancialTrouble && (GC.getGameINLINE().getCurrentPeriod() > 1))
+	{
+		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * 5))
+		{
+			if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose unit ATTACK_CITY due to Warplan", getName().GetCString());
+				return;
+			}
 		}
 	}
 
@@ -3438,13 +3454,16 @@ void CvCityAI::AI_chooseProduction()
             }
 	    }
 
-		if (AI_chooseBuilding(BUILDINGFOCUS_DEFENSE, 20, 0, bDanger ? -1 : 3*getPopulation()))
+		if (bWarPlan)
 		{
+			if (AI_chooseBuilding(BUILDINGFOCUS_DEFENSE, 2*getPopulation(), 0, bDanger ? -1 : 3*getPopulation()))
+			{
 				if( gCityLogLevel >= 2 )
 				{
 					logBBAI("      City %S uses BUILDINGFOCUS_DEFENSE", getName().GetCString());
 				}
-			return;
+				return;
+			}
 		}
 		
 		if (bDanger)
@@ -3538,7 +3557,7 @@ void CvCityAI::AI_chooseProduction()
 		// Tholal AI - make Priests
 		if ((iNumPriests < iNeededPriests))
 		{
-			if (AI_chooseUnit(UNITAI_MEDIC, 50))
+			if (AI_chooseUnit(UNITAI_MEDIC, 80))
 			{
 				return;
 			}
@@ -3547,7 +3566,7 @@ void CvCityAI::AI_chooseProduction()
 		// Tholal AI - make Adepts
 		if ((iNumMages < iNeededMages))
 		{
-			if (AI_chooseUnit(UNITAI_MAGE, 50))
+			if (AI_chooseUnit(UNITAI_MAGE, 80))
 			{
 				return;
 			}
@@ -3584,11 +3603,13 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
+	/*
 	if (AI_chooseBuilding())
 	{
 		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose building by probability", getName().GetCString());
 		return;
 	}
+	*/
 
 	if (!bChooseUnit && !bFinancialTrouble && kPlayer.AI_isDoStrategy(AI_STRATEGY_FINAL_WAR))
 	{
@@ -3836,6 +3857,20 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 					}
 				}
 			}
+			// K-Mod
+			if (bLandWar && !bDefense && GET_TEAM(getTeam()).getWarPlanCount(WARPLAN_TOTAL, true))
+			{
+				// if we're winning, then focus on capturing cities.
+				int iSuccessRatio = GET_TEAM(getTeam()).AI_getWarSuccessRating();
+				if (iSuccessRatio > 0)
+				{
+					aiUnitAIVal[UNITAI_ATTACK] += iSuccessRatio * iMilitaryWeight / 1200;
+					aiUnitAIVal[UNITAI_ATTACK_CITY] += iSuccessRatio * iMilitaryWeight / 600;
+					aiUnitAIVal[UNITAI_COUNTER] += iSuccessRatio * iMilitaryWeight / 1200;
+					aiUnitAIVal[UNITAI_PARADROP] += iSuccessRatio * iMilitaryWeight / 600;
+				}
+			}
+			// K-Mod end
 		}
 	}
 
@@ -3894,6 +3929,22 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 	aiUnitAIVal[UNITAI_MEDIC] *= 20;
 // End Add
 
+	// K-Mod
+	if (GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_CRUSH))
+	{
+		aiUnitAIVal[UNITAI_ATTACK_CITY] *= 2;
+		aiUnitAIVal[UNITAI_ATTACK] *= 3;
+		aiUnitAIVal[UNITAI_ATTACK] /= 2;
+		aiUnitAIVal[UNITAI_ATTACK_AIR] *= 2;
+	}
+	if (GET_TEAM(getTeam()).AI_getRivalAirPower() <= 8 * GET_PLAYER(getOwner()).AI_totalAreaUnitAIs(area(), UNITAI_DEFENSE_AIR))
+	{
+		// unfortunately, I don't have an easy way to get the approximate power of our air defence units.
+		// So I'm just going to assume the power of each unit is around 12 - the power of a fighter plane.
+		aiUnitAIVal[UNITAI_DEFENSE_AIR] /= 4;
+	}
+	// K-Mod end
+	
 	for (iI = 0; iI < NUM_UNITAI_TYPES; iI++)
 	{
 		aiUnitAIVal[iI] *= std::max(0, (GC.getLeaderHeadInfo(getPersonalityType()).getUnitAIWeightModifier(iI) + 100));
