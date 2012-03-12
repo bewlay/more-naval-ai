@@ -1211,6 +1211,10 @@ class Revolution :
 					numUnhappy = min([numUnhappy/3.0,0.5])
 				elif( recentlyAcquired ) :
 					numUnhappy = min([numUnhappy/2.0,0.75])
+				# lfgr: UnhappyProduction
+				elif( pCity.isUnhappyProduction() ) :
+					numUnhappy = numUnhappy / 2.0
+				# lfgr end
 
 				happyIdx = int(math.floor( (15 + 15*(min([numUnhappy,pCity.getPopulation()])/min([pCity.getPopulation(),12])))*pow(numUnhappy, .8) + .5 ))
 
