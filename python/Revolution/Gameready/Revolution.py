@@ -1921,33 +1921,12 @@ class Revolution :
 
 		taxesIdx = 0
 		finIdx = 0
-		if( iNetCommerce > 20 and iFundedPercent > iThresholdPercent + 5 and not pPlayer.isMinorCiv() and not pPlayer.isAnarchy() ) :
-			# Great long-term financial situation
-			finIdx = min([((iFundedPercent - iThresholdPercent)/4 + cultPerc/5),4 + iEra])
-			if( bIsRevWatch ) :
-				posList.append( (finIdx, localText.getText("TXT_KEY_REV_WATCH_FINANCIAL_POS",())) )
-			if( self.LOG_DEBUG and (bVerbose or iGameTurn%25 == 0) ) : CvUtil.pyPrint("  Revolt - The %s is in a good long-term financial situation")
-
-		elif( iFundedPercent < iThresholdPercent ) :
-			iPercentShort = iThresholdPercent - iFundedPercent
-			finIdx = -min([20, 1+ iPercentShort/3])
-
-			if( iGoldRate > 2 + 5*iEra ) :
-				# Civ is making money
-				finIdx /=2
-			elif( iGold > 100 + 100*iEra ) :
-				# Civ has plenty of reserves
-				finIdx /=2
-			elif( goldPerc > 50 and iGold < (35 + 10*iEra) and iGoldRate < 0 ) :
-				# Civ in danger of running out of gold soon
-				finIdx *=2
-				if( self.LOG_DEBUG and (bVerbose or iGameTurn%25 == 0) ) : CvUtil.pyPrint("  Revolt - The %s is in serious financial trouble")
-
-			if( bIsRevWatch ) :
-				if(finIdx < 0):
-					negList.append( (finIdx, localText.getText("TXT_KEY_REV_WATCH_FINANCIAL_NEG",())) )
-
-			revIdxHistEvents += finIdx
+		if pPlayer.AI_isFinancialTrouble():
+			finIdx = -5
+		if( bIsRevWatch ) :
+			if(finIdx < 0):
+				negList.append( (finIdx, localText.getText("TXT_KEY_REV_WATCH_FINANCIAL_NEG",())) )
+		revIdxHistEvents += finIdx
 
 		civRevIdx -= finIdx
 		civStabilityIdx += finIdx
