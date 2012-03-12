@@ -10604,7 +10604,7 @@ int CvUnit::withdrawalProbability() const
 	int iWithDrawalBonus = 0;
 	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 	{
-		if (getDuration() == 0)
+		if ((getDuration() == 0) && !m_pUnitInfo->isObject())
 		{
 			iWithDrawalBonus += 10;
 		}
