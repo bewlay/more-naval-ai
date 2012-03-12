@@ -7919,13 +7919,6 @@ bool CvUnit::canPromote(PromotionTypes ePromotion, int iLeaderUnitId) const
 		return false;
 	}
 
-//FfH Units: Added by Kael 08/04/2007
-    if (getFreePromotionPick() > 0)
-    {
-        return true;
-    }
-//FfH: End Add
-
 	if (GC.getPromotionInfo(ePromotion).isLeader())
 	{
 		if (iLeaderUnitId >= 0)
@@ -12846,6 +12839,13 @@ void CvUnit::setMadeInterception(bool bNewValue)
 
 bool CvUnit::isPromotionReady() const
 {
+	//FfH - Free Promotions (Kael 08/04/2007)
+    if (getFreePromotionPick() > 0)
+    {
+        return true;
+    }
+	//End FfH
+
 	return m_bPromotionReady;
 }
 
