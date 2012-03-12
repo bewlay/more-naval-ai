@@ -96,7 +96,7 @@
 		<Finnish>Disables TechDiffusion: tech knowledge will not slowly diffuses to civs that are behind.</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_OPTION_DYNAMIC_CIV_NAMES</Tag>
+		<Tag>TXT_KEY_SCORE_OPTION_DYNAMIC_CIV_NAMES</Tag>
 		<English>DynamicCivNames Mod</English>
 		<French>Mod de DynamicCivNames</French>
 		<German>DynamicCivNames MOD</German>
@@ -105,7 +105,7 @@
 		<Finnish>DynamicCivNames Mod</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_OPTION_DYNAMIC_CIV_NAMES_HELP</Tag>
+		<Tag>TXT_KEY_SCORE_OPTION_DYNAMIC_CIV_NAMES_HELP</Tag>
 		<English>Enable the DynamicCivNames mod component: renames civs based on their civics and other properties.  Only works in English.</English>
 		<French>Permettez le composant de mod de DynamicCivNames : retitre des civs bas&#233;s sur leur &#233;ducation civique et d'autres propri&#233;t&#233;s.  Travaille seulement en anglais.</French>
 		<German>Aktivieren Sie den DynamicCivNames-MOD-Baustein: benennt Civs basierend auf ihre Staatsformen und sonstige Eigenschaften um.  Funktioniert nur auf englisch einwandfrei.</German>

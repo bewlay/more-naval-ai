@@ -41,6 +41,7 @@ game = CyGame()
 localText = CyTranslator()
 RevDCMOpt = BugCore.game.RevDCM
 RevOpt = BugCore.game.Revolution
+ScoreOpt = BugCore.game.Scores
 
 class RevolutionInit :
 
@@ -163,9 +164,11 @@ class RevolutionInit :
 #		if( game.isOption(GameOptionTypes.GAMEOPTION_START_AS_MINORS) ):
 #			if( bDoInit ) :
 #				StartAsMinors.init( self.customEM, self.RevOpt )
-#		if( RevDCMOpt.isDYNAMIC_CIV_NAMES() ):#self.config.getboolean("DynamicCivNames", "Enable", True) ) :
-#			if( bDoInit ) :
-#				RevInstances.DynamicCivNamesInst = DynamicCivNames.DynamicCivNames(self.customEM, self.RevOpt)
+	# lfgr enabled
+		if( ScoreOpt.isDYNAMIC_CIV_NAMES() ):#self.config.getboolean("DynamicCivNames", "Enable", True) ) :
+			if( bDoInit ) :
+				print "About to init DynamicCivNames"
+				RevInstances.DynamicCivNamesInst = DynamicCivNames.DynamicCivNames(self.customEM, self.RevOpt)
 		### RevolutionDCM end
 		
 		if( bShowPopup and self.bShowActivePopup ) :
@@ -224,7 +227,7 @@ class RevolutionInit :
 #		if( game.isOption(GameOptionTypes.GAMEOPTION_START_AS_MINORS) ):
 #			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_START_AS_MINORS",())
 #			anyOption = true
-		if RevDCMOpt.isDYNAMIC_CIV_NAMES():
+		if ScoreOpt.isDYNAMIC_CIV_NAMES():
 			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_DYNAMIC_CIV_NAMES",())
 			anyOption = true
 		if not anyOption:

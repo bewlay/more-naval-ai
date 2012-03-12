@@ -22,6 +22,7 @@ import BugUtil
 import Popup as PyPopup
 import CvUtil
 RevDCMOpt = BugCore.game.RevDCM
+ScoreOpt = BugCore.game.Scores
 
 class RevDCM:
 	def __init__(self, eventManager):
@@ -66,7 +67,7 @@ def changedHiddenAttitude(option, value):
 
 #Dynamic Civ Names
 def changedDYNAMIC_CIV_NAMES(option, value):
-	gc.setDefineINT("DYNAMIC_CIV_NAMES", RevDCMOpt.isDYNAMIC_CIV_NAMES())
+	gc.setDefineINT("DYNAMIC_CIV_NAMES", ScoreOpt.isDYNAMIC_CIV_NAMES())
 	
 
 def setXMLOptionsfromIniFile():
@@ -78,7 +79,7 @@ def setXMLOptionsfromIniFile():
 	#Hidden Attitude
 	gc.setDefineINT("SHOW_HIDDEN_ATTITUDE", RevDCMOpt.isHiddenAttitude())
 	#Dynamic Civ Names
-	gc.setDefineINT("DYNAMIC_CIV_NAMES", RevDCMOpt.isDYNAMIC_CIV_NAMES())
+	gc.setDefineINT("DYNAMIC_CIV_NAMES", ScoreOpt.isDYNAMIC_CIV_NAMES())
 
 
 def resetOptions():

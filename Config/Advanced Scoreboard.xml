@@ -126,6 +126,12 @@
 			<option id="PowerLowColor" key="Power Low Color" 
 					type="color" default="COLOR_RED" 
 					get="getLowPowerColor" set="setLowPowerColor" dirtyBit="Score"/>
+			<!-- Dynamic Civ Names -->
+			<option id="DYNAMIC_CIV_NAMES" key="DYNAMIC_CIV_NAMES"
+				type="boolean" default="False"
+				get="isDYNAMIC_CIV_NAMES" set="setDYNAMIC_CIV_NAMES">
+       				 <change module="RevDCM" function="changedDYNAMIC_CIV_NAMES"/>
+     			</option> 
 		</section>
 	</options>
 	
