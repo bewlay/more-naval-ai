@@ -899,7 +899,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_JOIN</Tag>
-		<English>The revolutionionaries join the</English>
+		<English>The revolutionionaries join forces with %s1_leader of the %s2_civ !</English>
 		<French>Les revolutionionaries joignent</French>
 		<German>Die Revolution&#228;re vereinigen sich mit</German>
 		<Italian>I ribelli si uniscono al/la </Italian>
@@ -907,17 +907,8 @@
 		<Finnish>The revolutionionaries join the</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_MESS_YOU_JOIN</Tag>
-		<English>in their war against you!</English>
-		<French>dans leur guerre contre vous!</French>
-		<German>in ihrem Krieg gegen Sie!</German>
-		<Italian>nella loro guerra contro di te!</Italian>
-		<Spanish>en su guerra contra t&#237;!</Spanish>
-		<Finnish>in their war against you!</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_YOU_RISEN</Tag>
-		<English>have risen up against you in revolution!</English>
+		<English>%s1_leader of the %s2_civ has risen up against you!</English>
 		<French>se sont lev&#233;s vers le haut contre vous en r&#233;volution!</French>
 		<German>haben sich in einer Revolution gegen Sie erhoben!</German>
 		<Italian>si sono sollevati in rivolta contro di te!</Italian>
@@ -943,17 +934,8 @@
 		<Finnish>Disorganized rebels have risen up as the region descends into civil war!</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_MESS_JOIN2</Tag>
-		<English>as war engulfs the region.</English>
-		<French>comme la guerre engloutit la r&#233;gion.</French>
-		<German>wie Krieg die Region &#252;berflutet.</German>
-		<Italian>e la guerra dilaga nella regione.</Italian>
-		<Spanish>y la guerra sacude la regi&#243;n.</Spanish>
-		<Finnish>as war engulfs the region.</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_RISEN</Tag>
-		<English>have risen up as the region descends into civil war!</English>
+		<English>The %s1_civ under the command of %s2_leader have taken up arms as war engulfs the region!</English>
 		<French>se sont lev&#233;s vers le haut pendant que la r&#233;gion descend dans la guerre civile !</French>
 		<German>haben sich erhoben, die Region versinkt im B&#252;rgerkrieg!</German>
 		<Italian>si &#232; sollevata, e la regione sprofonda nella guerra civile!</Italian>
@@ -971,16 +953,16 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REINFORCEMENTS</Tag>
-		<English>Rebel reinforcements spotted outside of</English>
-		<French>Renforts rebelles rep&#233;r&#233;s dehors de</French>
-		<German>Rebellenverst&#228;rkungen wurden gesichtet vor den Toren von</German>
-		<Italian>Rinforzi ribelli avvistati vicino </Italian>
-		<Spanish>&#161;Refuerzos rebeldes avistados en el exterior de</Spanish>
-		<Finnish>Rebel reinforcements spotted outside of</Finnish>
+		<English>Rebel reinforcements for %s1_leader spotted outside of %s2_city</English>
+		<French>Renforts rebelles for %s1_leader rep&#233;r&#233;s dehors de</French>
+		<German>Rebellenverst&#228;rkungen wurden gesichtet for %s1_leader vor den Toren von</German>
+		<Italian>Rinforzi ribelli for %s1_leader avvistati vicino </Italian>
+		<Spanish>&#161;Refuerzos rebeldes for %s1_leader avistados en el exterior de</Spanish>
+		<Finnish>Rebel reinforcements for %s1_leader spotted outside of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS</Tag>
-		<English>Reinforcements join your cause outside of</English>
+		<English>%s1_civ reinforcements join your cause outside of %s2_city</English>
 		<French>Les renforts joignent votre cause dehors de</French>
 		<German>Verst&#228;rkungen schlie&#223;en sich Ihrer Sache an, vor den Toren von</German>
 		<Italian>Rinforzi si uniscono al tuo esercito, nei pressi di </Italian>
@@ -1207,7 +1189,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_DEFECT</Tag>
-		<English>Defect and lead rebel armies!</English>
+		<English>Defect and lead rebel armies (NOT WORKING)!</English>
 		<French>Arm&#233;es rebelles de d&#233;faut et de fil!</French>
 		<German>Laufen Sie &#252;ber und f&#252;hren Sie die Rebellenarmee!</German>
 		<Italian>Diserta e prendi il comando dell'armata dei ribelli!</Italian>

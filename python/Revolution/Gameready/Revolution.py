@@ -884,13 +884,13 @@ class Revolution :
 		for iPlayer in range(0,gc.getMAX_CIV_PLAYERS()) :
 
 			if( ownerID == iPlayer ) :
-				mess = localText.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
+				mess = localText.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
 				CyInterface().addMessage(iPlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(7), ix, iy, True, True)
 			elif( pRevTeam.isAtWar(gc.getPlayer(iPlayer).getTeam()) and pRevPlayer.canContact(iPlayer) ) :
-				mess = localText.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
+				mess = localText.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
 				CyInterface().addMessage(iPlayer, false, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, ColorTypes(7), -1, -1, False, False)
 			elif( pRevPlayer.getID() == iPlayer ) :
-				mess = localText.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
+				mess = localText.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
 				CyInterface().addMessage(iPlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(8), ix, iy, True, True)
 
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Reinforcement strength %.2f, spawning %d reinforcements for city of size %d"%(revStrength,iNumUnits,pCity.getPopulation()))
@@ -6503,7 +6503,7 @@ class Revolution :
 
 				# Add replay message
 				mess = localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + '!'
-				mess += "  " + localText.getText("TXT_KEY_REV_BIG_THE",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_RISEN",())
+				mess += "  " + localText.getText("TXT_KEY_REV_MESS_RISEN",(pRevPlayer.getCivilizationDescription(0), pRevPlayer.getNameKey()))
 				game.addReplayMessage( ReplayMessageTypes.REPLAY_MESSAGE_MAJOR_EVENT, pRevPlayer.getID(), mess, cityList[0].getX(), cityList[0].getY(), gc.getInfoTypeForString("COLOR_WARNING_TEXT"))
 
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player alive")
@@ -6551,9 +6551,9 @@ class Revolution :
 						colorNum = 7
 						mess = "<color=255,0,0,255>"
 						if( bJoinRev ) :
-							mess += localText.getText("TXT_KEY_REV_MESS_JOIN",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_YOU_JOIN",())
+							mess += localText.getText("TXT_KEY_REV_MESS_JOIN",(pRevPlayer.getName(), pRevPlayer.getCivilizationDescription(0)))
 						else :
-							mess += localText.getText("TXT_KEY_REV_BIG_THE",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_YOU_RISEN",())
+							mess += localText.getText("TXT_KEY_REV_MESS_YOU_RISEN",(pRevPlayer.getNameKey(), pRevPlayer.getCivilizationDescription(0)))
 					else :
 						mess = ""
 
@@ -6564,11 +6564,11 @@ class Revolution :
 							mess += "<color=255,0,0,255>"
 							colorNum = 7
 
-						mess += localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + ' Empire!!!'
+						mess += localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + '!!!'
 						if( bJoinRev ) :
-							mess += "  " + localText.getText("TXT_KEY_REV_MESS_JOIN",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_JOIN2",())
+							mess += "  " + localText.getText("TXT_KEY_REV_MESS_JOIN",(pRevPlayer.getName(), pRevPlayer.getCivilizationDescription(0)))
 						else :
-							mess += "  " + localText.getText("TXT_KEY_REV_BIG_THE",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + localText.getText("TXT_KEY_REV_MESS_RISEN",())
+							mess += "  " + localText.getText("TXT_KEY_REV_MESS_RISEN",(pRevPlayer.getCivilizationDescription(0), pRevPlayer.getNameKey()))
 
 				if( iPlayer == pPlayer.getID() ) :
 					CyInterface().addMessage(iPlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
@@ -6926,7 +6926,7 @@ class Revolution :
 
 				for i in range(0,iNumUnits) :
 					newUnitID = spawnableUnits[game.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - In %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
+					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - In %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
 					newUnit = pRevPlayer.initUnit( newUnitID, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 					newUnitList.append( newUnit )
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - In %s, spawned %s   %d,%d   %d"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription(),ix, iy,newUnit.getID()))
