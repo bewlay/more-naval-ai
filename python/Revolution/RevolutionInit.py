@@ -20,13 +20,13 @@ import BugPath
 # --------- Revolution mod -------------
 import RevDefs
 import RevEvents
-import BarbarianCiv
+#import BarbarianCiv
 import AIAutoPlay
 import ChangePlayer
 import Revolution
 #import Tester
-import TechDiffusion
-import StartAsMinors
+#import TechDiffusion
+#import StartAsMinors
 import DynamicCivNames
 import RevInstances
 # --------- RevolutionDCM mod ----------
@@ -209,9 +209,9 @@ class RevolutionInit :
 		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_INIT",())
 		anyOption = false
 #		if( not game.isOption(GameOptionTypes.GAMEOPTION_NO_BARBARIAN_CIV) ):
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
-			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BARBARIAN_CIV",())
-			anyOption = true
+#		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
+#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BARBARIAN_CIV",())
+#			anyOption = true
 		if( game.isOption(GameOptionTypes.GAMEOPTION_BARBARIAN_WORLD) ):
 			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BARBARIAN_WORLD",())
 			anyOption = true  
@@ -230,85 +230,7 @@ class RevolutionInit :
 		if not anyOption:
 			revComponentsText += self.noneOptionFormat + revNoneText
  
-#		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_DCM_OPTIONS",())
-#		anyOption = false
-#		if RevDCMOpt.isDCM_BATTLE_EFFECTS():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BATTLE_EFFECTS",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_ARCHER_BOMBARD():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_ARCHER_BOMBARD",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_STACK_ATTACK():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_STACK_ATTACK",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_ATTACK_SUPPORT():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_ATTACK_SUPPORT",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_RANGE_BOMBARD():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_RANGE_BOMBARD",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_OPP_FIRE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_OPP_FIRE",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_AIR_BOMBING():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_AIR_BOMBING",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_ACTIVE_DEFENSE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_ACTIVE_DEFENSE",())
-#			anyOption = true
-#		if RevDCMOpt.isDCM_FIGHTER_ENGAGE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_FIGHTER_ENGAGE",())
-#			anyOption = true
-#		if not anyOption:
-#			revComponentsText += self.noneOptionFormat + revNoneText
-		
-#		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_IDW_OPTIONS",())
-#		anyOption = false
-#		if RevDCMOpt.isIDW_ENABLED():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_IDW_ENABLED",())
-#			anyOption = true
-#		if RevDCMOpt.isIDW_PILLAGE_INFLUENCE_ENABLED():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_PILLAGE_INFLUENCE",())
-#			anyOption = true
-#		if RevDCMOpt.isIDW_EMERGENCY_DRAFT_ENABLED() :
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_EMERGENCY_DRAFT",())
-#			anyOption = true
-#		if RevDCMOpt.isIDW_NO_BARBARIAN_INFLUENCE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_NO_BARBARIAN_INFLUENCE",())
-#			anyOption = true
-#		if RevDCMOpt.isIDW_NO_NAVAL_INFLUENCE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_NO_NAVAL_INFLUENCE",())
-#			anyOption = true
-#		if not anyOption:
-#			revComponentsText += self.noneOptionFormat + revNoneText
 
-#		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_RELIGION_OPTIONS",())
-#		anyOption = false
-#		if ( not game.isOption(GameOptionTypes.GAMEOPTION_NO_INQUISITIONS) ):
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_INQUISITIONS_ENABLED",())
-#			anyOption = true
-#		if ( not game.isOption(GameOptionTypes.GAMEOPTION_NO_INQUISITIONS) and RevDCMOpt.isOC_RESPAWN_HOLY_CITIES() ):
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_RESPAWN_HOLY_CITIES",())
-#			anyOption = true
-#		if ( game.isOption(GameOptionTypes.GAMEOPTION_LIMITED_RELIGIONS) ):
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_LIMITED_RELIGIONS",())
-#			anyOption = true
-#		if not anyOption:
-#			revComponentsText += self.noneOptionFormat + revNoneText
-	   	
-#		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_SS_OPTIONS",())
-#		anyOption = false
-#		if RevDCMOpt.isSS_ENABLED():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_SS_ENABLED",())
-#			anyOption = true
-#		if RevDCMOpt.isSS_BRIBE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_SS_BRIBE",())
-#			anyOption = true
-#		if RevDCMOpt.isSS_ASSASSINATE():
-#			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_SS_ASSASSINATE",())
-#			anyOption = true
-#		if not anyOption:
-#			revComponentsText += self.noneOptionFormat + revNoneText
 		
 		revHelpText = self.helpTextTitle
 		revHelpText += localText.getText("TXT_KEY_REV_MOD_INITIALIZING_GAME_SHORTCUTS",())
