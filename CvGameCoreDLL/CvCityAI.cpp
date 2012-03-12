@@ -5095,6 +5095,31 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 			if (iPass > 0)
 			{
+				// K-Mod. The value of golden age buildings. (This was not counted by the original AI.)
+				{
+					int iGoldenPercent = kBuilding.isGoldenAge() ? 100 : 0;
+
+					if (kBuilding.getGoldenAgeModifier() != 0)
+					{
+						iGoldenPercent *= kBuilding.getGoldenAgeModifier();
+						iGoldenPercent /= 100;
+						// It's difficult to estimate the value of the golden age modifier.
+						// Firstly, we don't know how many golden ages we are going to have; but that's a relatively minor problem. We can just guess that.
+						// A bigger problem is that the value of a golden age can change a lot depending on the state of the civilzation.
+						// The upshot is that the value here is going to be rough...
+						// Tholal AI - had to shoehorn in the '8' since FFH doesnt use Eras normally
+						iGoldenPercent += 3 * kBuilding.getGoldenAgeModifier() * (8 - GC.getGameINLINE().getCurrentPeriod()) / (GC.getNumEraInfos() + 1);
+					}
+					if (iGoldenPercent > 0)
+					{
+						// note, the value returned by AI_calculateGoldenAgeValue is roughly in units of commerce points;
+						// whereas, iValue in this function is roughly in units of 4 * commerce / turn.
+						// I'm just going to say 44 points of golden age commerce is roughly worth 1 commerce per turn. (so conversion is 4/44)
+						iValue += kOwner.AI_calculateGoldenAgeValue() * iGoldenPercent / (100 * 11);
+					}
+				}
+				// K-Mod end
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      02/24/10                       jdog5000 & Afforess    */
 /*                                                                                              */
@@ -5143,7 +5168,18 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				if (kBuilding.isGovernmentCenter())
 				{
 					FAssert(!(kBuilding.isCapital()));
-					iValue += ((calculateDistanceMaintenance() - 3) * iNumCitiesInArea);
+					/* original bts code
+					iValue += ((calculateDistanceMaintenance() - 3) * iNumCitiesInArea); */
+					// K-mod. More bonus for colonies, because it reduces that extra maintenance too.
+					int iTempValue = (calculateDistanceMaintenance() - 3) * iNumCitiesInArea;
+					const CvCity* pCapitalCity = kOwner.getCapitalCity();
+					if (pCapitalCity == NULL || pCapitalCity->area() != area())
+					{
+						iTempValue *= 2;
+					}
+					iValue += iTempValue;
+					// K-Mod end
+
 				}
 
 				if (kBuilding.isMapCentering())
@@ -5175,7 +5211,25 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 				if (kBuilding.getFreePromotion() != NO_PROMOTION)
 				{
-					iValue += ((iHasMetCount > 0) ? 100 : 40); // XXX some sort of promotion value???
+					/* original bts code
+					iValue += ((iHasMetCount > 0) ? 100 : 40); // XXX some sort of promotion value??? */
+					// K-Mod.
+					// Ideally, we'd use AI_promotionValue to work out what the promotion is worth
+					// but unfortunately, that function requires a target unit, and I can't think of a good
+					// way to choose a suitable unit for evaluation.
+					// So.. I'm just going to do a really basic kludge to stop the Dun from being worth more than Red Cross
+					const CvPromotionInfo& kInfo = GC.getPromotionInfo((PromotionTypes)kBuilding.getFreePromotion());
+					bool bAdvanced = kInfo.getPrereqPromotion() != NO_PROMOTION ||
+						kInfo.getPrereqOrPromotion1() != NO_PROMOTION || kInfo.getPrereqOrPromotion2() != NO_PROMOTION;
+					int iTemp = (bAdvanced ? 200 : 40);
+					int iProduction = getYieldRate(YIELD_PRODUCTION);
+					iTemp *= 2*iProduction;
+					iTemp /= 30 + iProduction;
+					iTemp *= getFreeExperience() + 1;
+					iTemp /= getFreeExperience() + 2;
+					iValue += iTemp;
+					// cf. iValue += (kBuilding.getFreeExperience() * ((iHasMetCount > 0) ? 12 : 6));
+					// K-Mod end
 				}
 
 				if (kBuilding.getCivicOption() != NO_CIVICOPTION)
@@ -5468,6 +5522,12 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				{
 					if (kBuilding.getVoteSourceType() == iI)
 					{
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      05/24/10                              jdog5000        */
+/*                                                                                              */
+/* City AI, Victory Strategy AI                                                                 */
+/************************************************************************************************/					
+						int iTempValue = 0;
 						if (kBuilding.isStateReligion())
 						{
 							int iShareReligionCount = 0;
