@@ -4049,7 +4049,9 @@ class Revolution :
 				print "do not force civ %i (capital)"%( iForcedCivilization )
 				iOldCivType = owner.getCivilizationType()
 			# TODO: that seems not to work
-			pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
+			pCultureOwner = None
+			if instigator != -1:
+				pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
 			if( pCultureOwner != None ) :
 				iCultureOwnerCivType = pCultureOwner.getCivilizationType()
 			else :
@@ -7047,10 +7049,11 @@ class Revolution :
 				newUnitList = list()
 				for i in range(0,iNumUnits) :
 					newUnitID = spawnableUnits[game.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
-					newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-					newUnitList.append( newUnit )
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawned %s   %d,%d   %d"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription(),revSpawnLoc[0], revSpawnLoc[1],newUnit.getID()))
+					if newUnitID != -1:
+						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
+						newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						newUnitList.append( newUnit )
+						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawned %s   %d,%d   %d"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription(),revSpawnLoc[0], revSpawnLoc[1],newUnit.getID()))
 
 				iOdds = 20 + 8*(min([len(cityList)-cityIdx-1,4])) + 5*min([pCity.getNumRevolts(pPlayer.getID()),5])
 				for [iNum,newUnit] in enumerate(newUnitList) :
