@@ -72,17 +72,17 @@ def init( newCustomEM, RevOptHandle ) :
 		centerPopups = RevOpt.isCenterPopups()
 
 		# Register events
-#		customEM.addEventHandler( 'EndGameTurn', onEndGameTurn )
-#		customEM.addEventHandler( 'BeginPlayerTurn', onBeginPlayerTurn )
-#		customEM.addEventHandler( 'EndPlayerTurn', onEndPlayerTurn )
-#		customEM.addEventHandler( "setPlayerAlive", onSetPlayerAlive )
-#		customEM.addEventHandler( "changeWar", onChangeWar )
-#		customEM.addEventHandler( "religionFounded", onReligionFounded )
+		customEM.addEventHandler( 'EndGameTurn', onEndGameTurn )
+		customEM.addEventHandler( 'BeginPlayerTurn', onBeginPlayerTurn )
+		customEM.addEventHandler( 'EndPlayerTurn', onEndPlayerTurn )
+		customEM.addEventHandler( "setPlayerAlive", onSetPlayerAlive )
+		customEM.addEventHandler( "changeWar", onChangeWar )
+		customEM.addEventHandler( "religionFounded", onReligionFounded )
 		
-#		customEM.addEventHandler( 'cityBuilt', onCityBuilt )
-#		customEM.addEventHandler( 'cityAcquired', onCityAcquired )
-#		customEM.addEventHandler( "cityLost", onCityLost )
-#		customEM.addEventHandler( "buildingBuilt", onBuildingBuilt )
+		customEM.addEventHandler( 'cityBuilt', onCityBuilt )
+		customEM.addEventHandler( 'cityAcquired', onCityAcquired )
+		customEM.addEventHandler( "cityLost", onCityLost )
+		customEM.addEventHandler( "buildingBuilt", onBuildingBuilt )
 
 		customEM.setPopupHandler( RevDefs.assimilationPopup, ["assimilationPopup", assimilateHandler, blankHandler] )
 		
@@ -92,17 +92,17 @@ def init( newCustomEM, RevOptHandle ) :
 def removeEventHandlers( ) :
 		print "Removing event handlers from RevEvents"
 		
-#		customEM.removeEventHandler( 'EndGameTurn', onEndGameTurn )
-#		customEM.removeEventHandler( 'BeginPlayerTurn', onBeginPlayerTurn )
-#		customEM.removeEventHandler( 'EndPlayerTurn', onEndPlayerTurn )
-#		customEM.removeEventHandler( "setPlayerAlive", onSetPlayerAlive )
-#		customEM.removeEventHandler( "changeWar", onChangeWar )
-#		customEM.removeEventHandler( "religionFounded", onReligionFounded )
+		customEM.removeEventHandler( 'EndGameTurn', onEndGameTurn )
+		customEM.removeEventHandler( 'BeginPlayerTurn', onBeginPlayerTurn )
+		customEM.removeEventHandler( 'EndPlayerTurn', onEndPlayerTurn )
+		customEM.removeEventHandler( "setPlayerAlive", onSetPlayerAlive )
+		customEM.removeEventHandler( "changeWar", onChangeWar )
+		customEM.removeEventHandler( "religionFounded", onReligionFounded )
 		
-#		customEM.removeEventHandler( 'cityBuilt', onCityBuilt )
-#		customEM.removeEventHandler( 'cityAcquired', onCityAcquired )
-#		customEM.removeEventHandler( "cityLost", onCityLost )
-#		customEM.removeEventHandler( "buildingBuilt", onBuildingBuilt )
+		customEM.removeEventHandler( 'cityBuilt', onCityBuilt )
+		customEM.removeEventHandler( 'cityAcquired', onCityAcquired )
+		customEM.removeEventHandler( "cityLost", onCityLost )
+		customEM.removeEventHandler( "buildingBuilt", onBuildingBuilt )
 
 		customEM.setPopupHandler( RevDefs.assimilationPopup, ["assimilationPopup", blankHandler, blankHandler] )
 
@@ -111,37 +111,323 @@ def blankHandler( playerID, netUserData, popupReturn ) :
 		# Dummy handler to take the second event for popup
 		return
 
+########################## Turn-based events ###############################
+
+def onEndGameTurn( argsList ) :
+
+	if( game.getGameTurn()%int(RevUtils.getGameSpeedMod()*10) == 0 ) :
+		updateAttitudeExtras()
+
+	removeFloatingRebellions()
+	
+	if( allowAssimilation ) :
+		checkForAssimilation( )
+	
+	for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+		playerI = gc.getPlayer(i)
+		if( playerI.isRebel() ) :
+			if( gc.getTeam(playerI.getTeam()).getAtWarCount(True) == 0 ) :
+				playerI.setIsRebel( False )
+				if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - %s (Player %d) is no longer a rebel due to no wars"%(playerI.getCivilizationDescription(0),i))
+			elif( gc.getTeam(playerI.getTeam()).countRebelAgainst() == 0 ) :
+				playerI.setIsRebel( False )
+				if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - %s (Player %d) is no longer a rebel due to no rebel against"%(playerI.getCivilizationDescription(0),i))
+			elif( playerI.getNumCities() > 3 and (game.getGameTurn() - playerI.getCapitalCity().getGameTurnAcquired() > 15) ) :
+				playerI.setIsRebel( False )
+				if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - %s (Player %d) is no longer a rebel by cities and capital ownership turns"%(playerI.getCivilizationDescription(0),i))
+			elif( playerI.getNumCities() > 0 and (game.getGameTurn() - playerI.getCapitalCity().getGameTurnAcquired() > 30) ) :
+				playerI.setIsRebel( False )
+				if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - %s (Player %d) is no longer a rebel by capital ownership turns"%(playerI.getCivilizationDescription(0),i))
+			elif( LOG_DEBUG ) :
+				teamString = ""
+				for j in range(0,gc.getMAX_CIV_TEAMS()) :
+					if( gc.getTeam(playerI.getTeam()).isRebelAgainst(j) ) :
+						teamString += "%d, "%(j)
+				CvUtil.pyPrint("Rev - %s (%d) is a rebel against teams %s"%(playerI.getCivilizationDescription(0),i,teamString))
+
+def onBeginPlayerTurn( argsList ) :
+	iGameTurn, iPlayer = argsList
+
+	#if( iPlayer == game.getActivePlayer() ) :
+	#	CvUtil.pyPrint("Rev - Recording civics for active player")
+	iNextPlayer = iPlayer + 1
+	while( iNextPlayer <= gc.getBARBARIAN_PLAYER() and not gc.getPlayer(iNextPlayer).isAlive() ) :
+		iNextPlayer += 1
+	
+	if( iNextPlayer > gc.getBARBARIAN_PLAYER() ) :
+		iNextPlayer = 0
+		while( iNextPlayer < iPlayer and not gc.getPlayer(iNextPlayer).isAlive() ) :
+			iNextPlayer += 1
+
+
+def onEndPlayerTurn( argsList ) :
+	
+	iGameTurn, iPlayer = argsList
+	bDoLaunchRev = False
+	
+	iNextPlayer = iPlayer + 1
+	while( iNextPlayer <= gc.getBARBARIAN_PLAYER() ) :
+		if( not gc.getPlayer(iNextPlayer).isAlive() ) :
+			iNextPlayer += 1
+		else :
+			break
+	
+	if( iNextPlayer > gc.getBARBARIAN_PLAYER() ) :
+		iGameTurn += 1
+		iNextPlayer = 0
+		while( iNextPlayer < iPlayer ) :
+			if( not gc.getPlayer(iNextPlayer).isAlive() ) :
+				iNextPlayer += 1
+			else :
+				break
+
+	# Stuff before next players turn 
+	#CvUtil.pyPrint("Rev - Recording civics for player %d"%(iNextPlayer))
+	recordCivics( iNextPlayer )
+	
+	if( bSmallRevolts and gc.getPlayer(iNextPlayer).isAlive() ) :
+		doSmallRevolts( iNextPlayer )
+
+########################## Diplomatic events ###############################
+
+def onSetPlayerAlive( argsList ) :
+
+	iPlayerID = argsList[0]
+	bNewValue = argsList[1]
+	
+	pPlayer = gc.getPlayer( iPlayerID )
+	
+	if( bNewValue == False ) :
+		
+		print 'Rev - %s are dead, %d cities lost, %d founded a city'%(pPlayer.getCivilizationDescription(0),pPlayer.getCitiesLost(),pPlayer.isFoundedFirstCity())
+		
+		# Check if this was a put down revolution
+		for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+			playerI = gc.getPlayer(i)
+			if( playerI.isAlive() and playerI.getNumCities() > 0 ) :
+				playerIPy = PyPlayer( i )
+				cityList = playerIPy.getCityList()
+				for city in cityList :
+					pCity = city.GetCy()
+					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
+					revTurn = RevData.getCityVal( pCity, "RevolutionTurn" )
+					if( revCiv == pPlayer.getCivilizationType() and revTurn > 0 ) :
+						if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - The dying %s are the rebel type for %s"%(pPlayer.getCivilizationDescription(0),pCity.getName()))
+						if( gc.getTeam(pPlayer.getTeam()).isAtWar(pCity.getOwner()) ) :
+							revIdx = pCity.getRevolutionIndex()
+							localIdx = pCity.getLocalRevIndex()
+							revCnt = pCity.getNumRevolts(pCity.getOwner())
+							if( pCity.getReinforcementCounter() > 0 ) :
+								# Put down while still fresh
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - Revolution put down while still actively revolting")
+								frac = .3
+								if( localIdx < 0 ) :
+									frac += .1
+								if( revIdx > RevOpt.getAlwaysViolentThreshold() ) :
+									frac += .1
+								if( revCnt > 2 ) :
+									# Hardened, stubborn populace
+									frac -= .08
+								changeRevIdx = -int(frac*revIdx)
+								pCity.changeRevolutionIndex( changeRevIdx )
+								pCity.setRevolutionIndex( min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]) )
+								revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+								revIdxHist['Events'][0] += changeRevIdx
+								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+								pCity.setReinforcementCounter( 0 )
+								pCity.setOccupationTimer(0)
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+							elif( game.getGameTurn() - revTurn < 30 ) :
+								# Put down after a while
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - Revolution put down after going dormant")
+								frac = .2
+								if( localIdx < 0 ) :
+									if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - Local conditions are improving")
+									frac += .1
+								if( revIdx > RevOpt.getAlwaysViolentThreshold() ) :
+									frac += .1
+								if( revCnt > 2 ) :
+									# Hardened, stubborn populace
+									frac -= .05
+								changeRevIdx = -int(frac*revIdx)
+								pCity.changeRevolutionIndex( changeRevIdx )
+								pCity.setRevolutionIndex( min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]) )
+								revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+								revIdxHist['Events'][0] += changeRevIdx
+								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+								pCity.setOccupationTimer(0)
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+
+
+		if( not pPlayer.isFoundedFirstCity() ) :
+			# Add +1 for this turn?
+			for turnID in range(0,game.getGameTurn()) :
+				if( pPlayer.getAgricultureHistory(turnID) > 0 ) :
+					print 'Rev - Setting founded city to true for failed reincarnation of rebel player %d'%(iPlayerID)
+					pPlayer.setFoundedFirstCity( True )
+					break
+
+		pTeam = gc.getTeam(pPlayer.getTeam())
+		if( endWarsOnDeath ) :
+			if( pTeam.getNumMembers() == 1 or not pTeam.isAlive() ) :
+				for idx in range(0,gc.getMAX_CIV_TEAMS()) :
+					if( not idx == pTeam.getID() and not gc.getTeam(idx).isMinorCiv() ) :
+						if( pTeam.isAtWar(idx) ) :
+							pTeam.makePeace(idx)
+		
+		if( pPlayer.isMinorCiv() ) :
+			print 'Rev - %s were minor civ'%(pPlayer.getCivilizationDescription(0))
+			pTeam.setIsMinorCiv(False, False)
+		
+		if( LOG_DEBUG and pPlayer.isRebel() ) : CvUtil.pyPrint("Rev - %s (%d) is no longer a rebel by death"%(pPlayer.getCivilizationDescription(0),pPlayer.getID()))
+		pPlayer.setIsRebel( False )
+#-------------------------------------------------------------------------------------------------
+# Lemmy101 RevolutionMP edit
+#-------------------------------------------------------------------------------------------------        
+		
+		# Appears to be too late, game is already ending before this popup can take effect
+		if( iPlayerID == game.getActivePlayer() and game.getAIAutoPlay(iPlayerID) == 0 ) :
+			try :
+				game.setAIAutoPlay(iPlayerID, 1)
+#-------------------------------------------------------------------------------------------------
+# END Lemmy101 RevolutionMP edit
+#-------------------------------------------------------------------------------------------------        
+				#ChangePlayer.changeHumanPopup( True )
+			except :
+				pass
+
+def onChangeWar( argsList ):
+		'War Status Changes'
+		bIsWar = argsList[0]
+		iTeam = argsList[1]
+		iRivalTeam = argsList[2]
+
+		if( False and LOG_DEBUG ) :
+			if (bIsWar):
+					strStatus = "declared war"
+			else:
+					strStatus = "declared peace"
+			CvUtil.pyPrint('Team %d has %s on Team %d'
+					%(iTeam, strStatus, iRivalTeam))
+
+		if( not bIsWar ) :
+			# Check if this is peaceful end to a revolution
+			onTeamList = list()
+			onTeamCivs = list()
+			onRivalTeamList = list()
+			onRivalTeamCivs = list()
+			for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+				pPlayer = gc.getPlayer(i)
+				if( pPlayer.getTeam() == iTeam and pPlayer.isAlive() ) :
+					# On team declaring peace
+					onTeamList.append(pPlayer)
+					onTeamCivs.append(pPlayer.getCivilizationType())
+
+				elif( pPlayer.getTeam() == iRivalTeam and pPlayer.isAlive() ) :
+					# On team accepting peace
+					onRivalTeamList.append(pPlayer)
+					onRivalTeamCivs.append(pPlayer.getCivilizationType())
+
+			for pPlayer in onTeamList :
+
+				playerPy = PyPlayer(pPlayer.getID())
+
+				cityList = playerPy.getCityList()
+				for city in cityList :
+					pCity = city.GetCy()
+					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
+					if( revCiv in onRivalTeamCivs ) :
+						if( not RevData.getCityVal( pCity, "RevolutionTurn" ) == None ) :
+							if( game.getGameTurn() - RevData.getCityVal( pCity, "RevolutionTurn" ) < 30 ) :
+								# City recently rebelled for civ now at peace
+								localIdx = pCity.getLocalRevIndex()
+								revIdx = pCity.getRevolutionIndex()
+								revCnt = pCity.getNumRevolts(pCity.getOwner())
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - Rebels in %s have agreed to peace (%d, %d, %d)"%(pCity.getName(),revIdx,localIdx,revCnt))
+								frac = .2
+								if( localIdx < 0 ) :
+									frac += .1
+								if( revIdx > RevOpt.getAlwaysViolentThreshold() ) :
+									frac += .1
+								if( revCnt > 2 ) :
+									# Hardened, stubborn populace
+									frac -= .05
+								changeRevIdx = -int(frac*revIdx)
+								pCity.changeRevolutionIndex( changeRevIdx )
+								pCity.setRevolutionIndex( min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]) )
+								revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+								revIdxHist['Events'][0] += changeRevIdx
+								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+								pCity.setOccupationTimer(0)
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+
+				gc.getTeam(pPlayer.getTeam()).setRebelAgainst( iRivalTeam, False )
+				
+			for pPlayer in onRivalTeamList :
+				playerPy = PyPlayer(pPlayer.getID())
+
+				cityList = playerPy.getCityList()
+				for city in cityList :
+					pCity = city.GetCy()
+					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
+					if( revCiv in onTeamCivs ) :
+						if( not RevData.getCityVal( pCity, "RevolutionTurn" ) == None ) :
+							if( game.getGameTurn() - RevData.getCityVal( pCity, "RevolutionTurn" ) < 30 ) :
+								# City recently rebelled for civ now at peace
+								localIdx = pCity.getLocalRevIndex()
+								revIdx = pCity.getRevolutionIndex()
+								revCnt = pCity.getNumRevolts(pCity.getOwner())
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - Rebels in %s have sued for peace"%(pCity.getName()))
+								frac = .2
+								if( localIdx < 0 ) :
+									frac += .1
+								if( revIdx > RevOpt.getAlwaysViolentThreshold() ) :
+									frac += .1
+								if( revCnt > 2 ) :
+									# Hardened, stubborn populace
+									frac -= .05
+								changeRevIdx = -int(frac*revIdx)
+								pCity.changeRevolutionIndex( changeRevIdx )
+								pCity.setRevolutionIndex( min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]) )
+								revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+								revIdxHist['Events'][0] += changeRevIdx
+								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+								pCity.setOccupationTimer(0)
+								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+
+				gc.getTeam(pPlayer.getTeam()).setRebelAgainst( iTeam, False )
+
 
 ########################## City-based events ###############################
 
-#def onCityBuilt( argsList ):
-#		'City Built'
-#		city = argsList[0]
-#
-#		RevData.initCity( city )
-#
-#		pPlayer = gc.getPlayer( city.getOwner() )
-#
-#		if( pPlayer.isBarbarian() ) :
-#			city.setRevolutionIndex( int(.4*RevOpt.getAlwaysViolentThreshold()) )
-#			city.setRevIndexAverage(city.getRevolutionIndex())
-#			return
-#
-#		if( not city.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
-#			city.setRevolutionIndex( int(.35*RevOpt.getInstigateRevolutionThreshold()) )
-#		else :
-#			city.setRevolutionIndex( int(.25*RevOpt.getInstigateRevolutionThreshold()) )
-#		city.setRevIndexAverage(city.getRevolutionIndex())
-#		
-#		revTurn = RevData.revObjectGetVal( pPlayer, 'RevolutionTurn' )
-#		if( not revTurn == None ) :
-#			if( pPlayer.getNumCities() < 4 and game.getGameTurn() - revTurn < 25 ) :
-#				relID = pPlayer.getStateReligion()
-#				if( relID >= 0 ) :
-#					if( LOG_DEBUG ) : CvUtil.pyPrint("Revolt - New rebel city %s given rebel religion"%(city.getName()))
-#					city.setHasReligion( relID, True, False, False )
+def onCityBuilt( argsList ):
+		'City Built'
+		city = argsList[0]
 
-def onRevCityAcquired( argsList ):
+		RevData.initCity( city )
+
+		pPlayer = gc.getPlayer( city.getOwner() )
+
+		if( pPlayer.isBarbarian() ) :
+			city.setRevolutionIndex( int(.4*RevOpt.getAlwaysViolentThreshold()) )
+			city.setRevIndexAverage(city.getRevolutionIndex())
+			return
+
+		if( not city.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
+			city.setRevolutionIndex( int(.35*RevOpt.getInstigateRevolutionThreshold()) )
+		else :
+			city.setRevolutionIndex( int(.25*RevOpt.getInstigateRevolutionThreshold()) )
+		city.setRevIndexAverage(city.getRevolutionIndex())
+		
+		revTurn = RevData.revObjectGetVal( pPlayer, 'RevolutionTurn' )
+		if( not revTurn == None ) :
+			if( pPlayer.getNumCities() < 4 and game.getGameTurn() - revTurn < 25 ) :
+				relID = pPlayer.getStateReligion()
+				if( relID >= 0 ) :
+					if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - New rebel city %s given rebel religion"%(city.getName()))
+					city.setHasReligion( relID, True, False, False )
+
+def onCityAcquired( argsList ):
 		'City Acquired'
 
 		owner,playerType,pCity,bConquest,bTrade = argsList
@@ -475,7 +761,58 @@ def playerCityLost( player, pCity, bConquest = True ) :
 			revIdxHist['Events'][0] += iRevIdxChange
 			RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 
+def onBuildingBuilt( argsList):
+		'Building Completed'
+		pCity, iBuildingType = argsList
+
+		buildingInfo = gc.getBuildingInfo(iBuildingType)
+		buildingClassInfo = gc.getBuildingClassInfo(buildingInfo.getBuildingClassType())
+
+		if( buildingClassInfo.getMaxGlobalInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10 ) :
+			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - World wonder %s build in %s"%(buildingInfo.getDescription(),pCity.getName()))
+			curRevIdx = pCity.getRevolutionIndex()
+			pCity.changeRevolutionIndex( -max([150,int(0.25*curRevIdx)]) )
+			for city in PyPlayer(pCity.getOwner()).getCityList() :
+				listCity = city.GetCy()
+				curRevIdx = listCity.getRevolutionIndex()
+				iRevIdxChange = -max([75,int(0.12*curRevIdx)])
+				listCity.changeRevolutionIndex( iRevIdxChange )
+				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+				revIdxHist['Events'][0] += iRevIdxChange
+				RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+
+		elif( buildingClassInfo.getMaxPlayerInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10 ) :
+			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - National wonder %s build in %s"%(buildingInfo.getDescription(),pCity.getName()))
+			curRevIdx = pCity.getRevolutionIndex()
+			pCity.changeRevolutionIndex( -max([80,int(0.12*curRevIdx)]) )
+			for city in PyPlayer(pCity.getOwner()).getCityList() :
+				listCity = city.GetCy()
+				curRevIdx = listCity.getRevolutionIndex()
+				iRevIdxChange = -max([50,int(0.07*curRevIdx)])
+				listCity.changeRevolutionIndex( iRevIdxChange )
+				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+				revIdxHist['Events'][0] += iRevIdxChange
+				RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+
+
 ########################## Religious events ###############################
+
+def onReligionFounded(argsList):
+		'Religion Founded'
+		iReligion, iFounder = argsList
+		pPlayer = gc.getPlayer(iFounder)
+		
+		#print "Player %d has founded religion %d"%(iFounder,iReligion)
+
+		if( pPlayer.getStateReligion() >= 0 and iReligion >= 0 ) :
+			if( not (pPlayer.getStateReligion() == iReligion) and not pPlayer.isAnarchy() ) :
+				pCity = gc.getGame().getHolyCity(iReligion)
+				if( pCity.getOwner() == iFounder ) :
+					curRevIdx = pCity.getRevolutionIndex()
+					pCity.setRevolutionIndex( max([int(.35*RevDefs.revInstigatorThreshold),curRevIdx+100]) )
+					if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s founded non-state religion, index of %s now %d ... state %d, new %d"%(pCity.getName(),pCity.getName(),pCity.getRevolutionIndex(),pPlayer.getStateReligion(),iReligion))
+
+
 
 def recordCivics( iPlayer ) :
 
