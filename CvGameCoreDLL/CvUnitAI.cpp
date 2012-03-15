@@ -28924,9 +28924,12 @@ void CvUnitAI::AI_mageMove()
 		return;
 	}
 
-	if (AI_retreatToCity())
+	if (plot()->getPlotCity() == NULL)
 	{
-		return;
+		if (AI_retreatToCity())
+		{
+			return;
+		}
 	}
 
     getGroup()->pushMission(MISSION_FORTIFY);
