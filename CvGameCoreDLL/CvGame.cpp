@@ -1384,7 +1384,7 @@ void CvGame::normalizeRemovePeaks()
 
 			if (pStartingPlot != NULL)
 			{
-				iRange = 3;
+				iRange = 1; // was 3
 
 				for (iDX = -(iRange); iDX <= iRange; iDX++)
 				{
@@ -1594,6 +1594,15 @@ void CvGame::normalizeRemoveBadTerrain()
                                 {
                                     iPlotFood = GC.getTerrainInfo(pLoopPlot->getTerrainType()).getYield(YIELD_FOOD);
                                     iPlotProduction = GC.getTerrainInfo(pLoopPlot->getTerrainType()).getYield(YIELD_PRODUCTION);
+//FlavourMod: Added by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
+						            if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
+						            {
+										{
+											iPlotFood += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
+											iPlotProduction += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_PRODUCTION);
+										}
+									}
+//FlavourMod: End Add
                                     if ((iPlotFood + iPlotProduction) <= 1)
                                     {
                                         iTargetFood = 1;
@@ -1618,9 +1627,17 @@ void CvGame::normalizeRemoveBadTerrain()
                                         {
                                             if (!(GC.getTerrainInfo((TerrainTypes)iK).isWater()))
                                             {
-                                                if ((GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD) >= iTargetFood) &&
-                                                    (GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD) + GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_PRODUCTION)) == iTargetTotal)
-                                                {
+//FlavourMod: Added by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
+												iPlotFood = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD);
+												iPlotProduction = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_PRODUCTION);
+												if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
+												{
+													iPlotFood +=  GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
+													iPlotProduction +=  GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_PRODUCTION);
+												}
+												if ((iPlotFood >= iTargetFood) && (iPlotFood + iPlotProduction == iTargetTotal))
+//FlavourMod: End Add
+												{
                                                     if ((pLoopPlot->getFeatureType() == NO_FEATURE) || GC.getFeatureInfo(pLoopPlot->getFeatureType()).isTerrain(iK))
                                                     {
 
@@ -1684,7 +1701,13 @@ void CvGame::normalizeAddFoodBonuses()
 									}
 									else
 									{
-										iFoodBonus += 3;
+										//iFoodBonus += 3;
+										// K-Mod. Bonus which only give 3 food with their improvement should not be worth 3 points. (ie. plains-cow should not be the only food resource.)
+										if (pLoopPlot->calculateMaxYield(YIELD_FOOD) >= 2 * GC.getFOOD_CONSUMPTION_PER_POPULATION()) // ie. >= 4
+											iFoodBonus += 3;
+										else
+											iFoodBonus += 2;
+										// K-Mod end
 									}
 								}
 							}
@@ -1767,6 +1790,9 @@ void CvGame::normalizeAddGoodTerrain()
 	int iGoodPlot;
 	int iI, iJ, iK;
 
+	int iPlotFood = 0;
+	int iPlotProduction = 0;
+
 	for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
@@ -1821,7 +1847,14 @@ void CvGame::normalizeAddGoodTerrain()
 											{
 												if (!(GC.getTerrainInfo((TerrainTypes)iK).isWater()))
 												{
-													if (GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD) >= GC.getFOOD_CONSUMPTION_PER_POPULATION())
+//FlavourMod: Changed by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
+													iPlotFood = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD);
+													if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
+													{
+														iPlotFood += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
+													}
+													if (iPlotFood >= GC.getFOOD_CONSUMPTION_PER_POPULATION())
+//FlavourMod: End Change
 													{
 														pLoopPlot->setTerrainType((TerrainTypes)iK);
 														bChanged = true;
