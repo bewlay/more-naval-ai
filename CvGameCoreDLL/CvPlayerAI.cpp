@@ -1946,8 +1946,16 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 
 	if( bRaze )
 	{
-		logBBAI("    Player %d (%S) decides to to raze city %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
-		pCity->doTask(TASK_RAZE);
+		if ((iRazeValue < 60) && canMakePuppet(pCity->getPreviousOwner()))
+		{
+			logBBAI("    Player %d (%S) decides to to create Puppet State in %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+			makePuppet(pCity->getPreviousOwner(), pCity);
+		}
+		else
+		{
+			logBBAI("    Player %d (%S) decides to to raze city %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+			pCity->doTask(TASK_RAZE);
+		}
 	}
 	else
 	{
