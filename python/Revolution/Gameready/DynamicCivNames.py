@@ -50,10 +50,6 @@ class DynamicCivNames :
 		
 		LeaderCivNames.setup()
 		
-		if( not game.isFinalInitialized or game.getGameTurn() == game.getStartTurn() ) :
-			for idx in range(0,gc.getMAX_CIV_PLAYERS()) :
-				self.onSetPlayerAlive( [idx, gc.getPlayer(idx).isAlive()] )
-		
 		# lfgr
 		# constants
 		self.iDespotism =		gc.getInfoTypeForString( "CIVIC_DESPOTISM" )
@@ -85,7 +81,15 @@ class DynamicCivNames :
 		
 		self.iGood = 			gc.getInfoTypeForString( "ALIGNMENT_GOOD" )
 		self.iEvil = 			gc.getInfoTypeForString( "ALIGNMENT_EVIL" )
+		
+		self.iCalabim = CvUtil.findInfoTypeNum( gc.getCivilizationInfo, gc.getNumCivilizationInfos(), 'CIVILIZATION_CALABIM' )
+		self.iClan = CvUtil.findInfoTypeNum( gc.getCivilizationInfo, gc.getNumCivilizationInfos(), 'CIVILIZATION_CLAN_OF_EMBERS' )
+		print "Names - constants initialized"
 		# lfgr end
+		
+		if( not game.isFinalInitialized or game.getGameTurn() == game.getStartTurn() ) :
+			for idx in range(0,gc.getMAX_CIV_PLAYERS()) :
+				self.onSetPlayerAlive( [idx, gc.getPlayer(idx).isAlive()] )
 
 	def removeEventHandlers( self ) :
 		print "Removing event handlers from DynamicCivNames"
@@ -181,6 +185,7 @@ class DynamicCivNames :
 	#		if( owner.getCapitalCity().getGameTurnAcquired() + 5 < game.getGameTurn() ) :
 	#			CvUtil.pyPrint("  Name - Checking for new name by number of cities")
 	#			self.setNewNameByCivics( owner.getID() )
+		# TODO: performance
 		if( owner.isAlive() and not owner.isBarbarian() ) :
 			CvUtil.pyPrint("  Name - Checking for new name by number of cities")
 			self.setNewNameByCivics( owner.getID() )
@@ -221,6 +226,7 @@ class DynamicCivNames :
 	def onPlayerRevolution( self, argsList ) :
 		ePlayer, iAnarchyTurns, leOldCivics, leNewCivics = argsList
 		
+		# TODO: performance
 		self.setNewNameByCivics( ePlayer )
 # lfgr end
 	
@@ -302,6 +308,11 @@ class DynamicCivNames :
 		curDesc = pPlayer.getCivilizationDescription(0)
 		curShort = pPlayer.getCivilizationShortDescription(0)
 		curAdj = pPlayer.getCivilizationAdjective(0)
+		
+		# lfgr
+		if( pPlayer.getCivilizationType() == self.iClan ) :
+			curAdj = "Orcish"
+		# lfgr end
 
 		civInfo = gc.getCivilizationInfo(pPlayer.getCivilizationType())
 		origDesc  = civInfo.getDescription()
@@ -431,33 +442,35 @@ class DynamicCivNames :
 		print "DCN - Player %i Picking new name by Civics" % ( iPlayer )
 		# lfgr end
 
-		pPlayer = gc.getPlayer(iPlayer)
-		capital = pPlayer.getCapitalCity()
+		pPlayer = gc.getPlayer( iPlayer )
+		pCapital = pPlayer.getCapitalCity()
 		playerEra = pPlayer.getCurrentEra()
-		pTeam = gc.getTeam(pPlayer.getTeam())
+		iTeam = pPlayer.getTeam()
+		pTeam = gc.getTeam( iTeam )
 		
-		cityString = None
-		if( not capital == None and not capital.isNone() ) :
+		sCpt = None
+		if( not pCapital == None and not pCapital.isNone() ) :
 			try :
 				# Silly game to force ascii encoding now
-				cityString =  pPlayer.getCivilizationDescription(0)
-				cityString += "&" + CvUtil.convertToStr(capital.getName())
-				cityString =  cityString.split('&',1)[-1]
+				sCpt =  pPlayer.getCivilizationDescription(0)
+				sCpt += "&" + CvUtil.convertToStr(pCapital.getName())
+				sCpt =  sCpt.split('&',1)[-1]
 			except :
 				pass
 
-		curDesc  = pPlayer.getCivilizationDescription(0)
-		curShort = pPlayer.getCivilizationShortDescription(0)
-		curAdj   = pPlayer.getCivilizationAdjective(0)
+		sDsc  = pPlayer.getCivilizationDescription(0)
+		sSrt = pPlayer.getCivilizationShortDescription(0)
+		sAdj   = pPlayer.getCivilizationAdjective(0)
 
-		civInfo = gc.getCivilizationInfo(pPlayer.getCivilizationType())
-		origDesc  = civInfo.getDescription()
+		iCiv = pPlayer.getCivilizationType()
+		pCiv = gc.getCivilizationInfo( iCiv )
+		sOrgDsc  = pCiv.getDescription()
 		
 		if( not game.isOption(GameOptionTypes.GAMEOPTION_LEAD_ANY_CIV) ) :
 			if( pPlayer.getLeaderType() in LeaderCivNames.LeaderCivNames.keys() ) :
-				[curDesc,curShort,curAdj] = LeaderCivNames.LeaderCivNames[pPlayer.getLeaderType()]
+				[sDsc,sSrt,sAdj] = LeaderCivNames.LeaderCivNames[pPlayer.getLeaderType()]
 
-		newName = curDesc
+		newName = sDsc
 		if( SDTK.sdObjectExists( "Revolution", pPlayer ) ) :
 			revTurn = SDTK.sdObjectGetVal( "Revolution", pPlayer, 'RevolutionTurn' )
 		else :
@@ -470,8 +483,8 @@ class DynamicCivNames :
 
 		if( not pPlayer.isAlive() ) :
 			if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("Names - player is not alive")
-			newName = localText.getText("TXT_KEY_MOD_DCN_REFUGEES", ())%(curAdj)
-			return [newName, curShort, curAdj]
+			newName = localText.getText("TXT_KEY_MOD_DCN_REFUGEES", ())%(sAdj)
+			return [newName, sSrt, sAdj]
 
 #########################################################################
 #			Rebel														#
@@ -483,7 +496,7 @@ class DynamicCivNames :
 			if( bForceUpdate ) :
 				return self.nameForNewPlayer(iPlayer)
 			else :
-				return [curDesc, curShort, curAdj]
+				return [sDsc, sSrt, sAdj]
 
 #########################################################################
 #			Teams/Permanent Alliances									#
@@ -493,27 +506,17 @@ class DynamicCivNames :
 		if( self.bTeamNaming and pTeam.getNumMembers() > 1 ) : # and pTeam.getPermanentAllianceTradingCount() > 0 ) :
 			if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("Names - Multiple players on team")
 			if( self.LOG_DEBUG and bVerbose and pTeam.getPermanentAllianceTradingCount() > 0 ) : CvUtil.pyPrint("Names - Player in Permanent Alliance")
-			if( pTeam.getNumMembers() == 2 ) :
-				iLeader = pTeam.getLeaderID()
-				newName = gc.getPlayer(iLeader).getCivilizationAdjective(0) + "-"
-				for idx in range(0,gc.getMAX_CIV_PLAYERS()):
-					if( not idx == iLeader and gc.getPlayer(idx).getTeam() == pTeam.getID() ) :
-						newName += gc.getPlayer(idx).getCivilizationAdjective(0)
-						break
-			# lfgr fix
-			# old
-			#	newName += localText.getText("TXT_KEY_MOD_DCN_ALLIANCE", ())
-				newName += " " + localText.getText("TXT_KEY_MOD_DCN_ALLIANCE", ())
-			# lfgr end
-				return [newName,curShort,curAdj]
-			else :
-				iLeader = pTeam.getLeaderID()
-				newName = gc.getPlayer(iLeader).getCivilizationAdjective(0)[0:4]
-				for idx in range(0,gc.getMAX_CIV_PLAYERS()):
-					if( not idx == iLeader and gc.getPlayer(idx).getTeam() == pTeam.getID() ) :
-						newName += gc.getPlayer(idx).getCivilizationAdjective(0)[0:3]
-				newName += localText.getText("TXT_KEY_MOD_DCN_ALLIANCE", ())
-				return [newName,curShort,curAdj]
+
+			iLeader = pTeam.getLeaderID()
+			sNewName = gc.getPlayer(iLeader).getCivilizationAdjective(0)
+			for iLoopPlayer in range( 0, gc.getMAX_CIV_PLAYERS() ) :
+				if( iLoopPlayer != iLeader and gc.getPlayer( iLoopPlayer ).getTeam() == pTeam.getID() ) :
+					sLoopAdj = gc.getPlayer( iLoopPlayer ).getCivilizationAdjective(0)
+					if( not sLoopAdj in sNewName ) : # prevent Luchuirp-Luchuirp Alliance
+						sNewName += "-" + sLoopAdj
+			
+			sNewName += " " + localText.getText("TXT_KEY_MOD_DCN_ALLIANCE", ())
+			return [sNewName,sSrt,sAdj]
 
 #########################################################################
 #			From Civics													#
@@ -525,9 +528,6 @@ class DynamicCivNames :
 		bFof = False # Force "of" (e.g. "PRE EMP of SRT", never "PRE ADJ EMP")
 		
 		# parameters
-		sSrt = curShort
-		sAdj = curAdj
-		sCpt = cityString
 		sLeaderName = pPlayer.getName()
 		iNumCities = pPlayer.getNumCities()
 		
@@ -577,7 +577,7 @@ class DynamicCivNames :
 		sPost = ""
 		if( iNumCities == 0 ) :
 			sEmp = "Tribe"
-			return ["%s %s"%( sAdj, sEmp ), curShort, curAdj]
+			return ["%s %s"%( sAdj, sEmp ), sSrt,sAdj]
 			
 		if bCharismatic:
 			sPre = "Beloved"
@@ -593,7 +593,7 @@ class DynamicCivNames :
 			# else: Default
 		elif( bCityStates ) :
 			if bMilitaryState:
-				return ["%s Hegemony"%( sAdj ), curShort, curAdj]
+				return ["%s Hegemony"%( sAdj ), sSrt,sAdj]
 			iMxc = 1
 			if( iNumCities == 1 ) :
 				sEmp = "City"
@@ -613,8 +613,19 @@ class DynamicCivNames :
 			sEmp = "Realm"
 		elif( bAristocracy ) :
 			iMxc = 3
-			sEmp = "Kingdom"
-			sPre = "Royal"
+			if bGuilds:
+				sEmp = "Imperium"
+			elif bSlavery:
+				sEmp = "Dynasty"
+				bFof = True
+			elif bMilitaryState:
+				sEmp = "Monarchy"
+			else:
+				sEmp = "Kingdom"
+			if bConquest:
+				sPre = "Imperial"
+			else:
+				sPre = "Royal"
 		elif( bTheocracy ) :
 			iMxc = 2
 			sEmp = "Divinity"
@@ -627,27 +638,27 @@ class DynamicCivNames :
     
 		if( bReligion ) :
 			if sPre == "":
-				sPre = "Sacred"
-			if( bGodKing and iNumCities <= iMxc ) :
 				sPre = "Holy"
+			if( bGodKing and iNumCities <= iMxc ) :
+				sPre = "Sacred"
 				sEmp = "See"
 			elif( bTheocracy):
 				sEmp = "Caliphate"
-				sPre = "Holy"
+				sPre = "Theocratic"
 				if ( bVeil ) :
 					if bHolyShrine:
-						return ["Chosen of Agares", curShort, curAdj]
+						return ["Chosen of Agares", sSrt,sAdj]
 					sPre = "The Ashen"
 				elif( bEmpyrean ) :
 					sPre = "Illuminated"
 				elif( bOrder ) :
 					sPre = "Righteous"
 		elif( bPacifism ) :
-			if sPre == "":
-				sPre = "Benevolent"
 			if( bCityStates and iNumCities > iMxc ) :
 				sEmp = "League of Peace"
 				bFof = True
+			elif sPre == "":
+				sPre = "Benevolent"
 		elif( bLiberty ) :
 			sPre = "Free"
 			if( bAristocracy ) :
@@ -681,6 +692,14 @@ class DynamicCivNames :
 			if bReligion or bTheocracy:
 				sEmp = "Diocese"
 			bFof = true
+
+		if pCapital != -1:
+			pCapitalPlot = pCapital.plot()
+			pCapitalLatitude = pCapitalPlot.getLatitude()
+			if pCapitalLatitude > 50:
+				sPre = "Northern"
+			elif pCapitalLatitude < -50:
+				sPre = "Southern"
     
 		if bArete:
 			sPre = "Golden"
@@ -693,16 +712,16 @@ class DynamicCivNames :
 			sPre += " "
 
 		if( sPost != "" ) :
-			return ["%s %s of %s %s"%(sPre, sEmp, sAdj, sPost), curShort, curAdj]
+			return ["%s %s of %s %s"%(sPre, sEmp, sAdj, sPost), sSrt,sAdj]
 		
 		if bGodKing:
-			return ["%s%s of %s"%( sPre, sEmp, sLeaderName ), curShort, curAdj]
+			return ["%s%s of %s"%( sPre, sEmp, sLeaderName ), sSrt,sAdj]
 		elif( iNumCities <= iMxc ) :
-			return ["%s%s of %s"%( sPre, sEmp, sCpt ), curShort, curAdj]
+			return ["%s%s of %s"%( sPre, sEmp, sCpt ), sSrt,sAdj]
 		elif( bFof or 50 > game.getSorenRandNum( 100, 'Rev: Naming' ) ) :
-			return ["%s%s of the %s"%( sPre, sEmp, sSrt ), curShort, curAdj]
+			return ["%s%s of the %s"%( sPre, sEmp, sSrt ), sSrt,sAdj]
 		else :
-			return ["%s%s %s"%( sPre, sAdj, sEmp ), curShort, curAdj]
+			return ["%s%s %s"%( sPre, sAdj, sEmp ), sSrt,sAdj]
 # lfgr end
 	
 	def resetName( self, iPlayer, bVerbose = True ) :
