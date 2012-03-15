@@ -7569,6 +7569,15 @@ void CvGame::updateMoves()
                             player.AI_setSummonSuicideMode(true);
                             for(CvUnit* pLoopUnit = player.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = player.nextUnit(&iLoop))
                             {
+								if (pLoopUnit->AI_getUnitAIType() == UNITAI_MANA_UPGRADE)
+								{
+									//keep Mana Upgraders from casting rather than building
+									// ToDo - make mana upgrading an action/mission
+									if (!pLoopUnit->plot()->isCity())
+									{
+										continue;
+									}
+								}
                                 int ispell=pLoopUnit->chooseSpell();
                                 if (ispell!=NO_SPELL)
                                 {
