@@ -153,12 +153,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_YOUR_CIV</Tag>
-		<English>your civ</English>
-		<French>votre civ</French>
-		<German>Ihre Civ</German>
-		<Italian>la tua civilt&#224;</Italian>
-		<Spanish>tu civilizaci&#243;n</Spanish>
-		<Finnish>your civ</Finnish>
+		<English>you</English>
+		<French>vous</French>
+		<German>Sie</German>
+		<Italian>voi</Italian>
+		<Spanish>usted</Spanish>
+		<Finnish>you</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_TURNS</Tag>
