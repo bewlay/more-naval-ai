@@ -16418,7 +16418,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("Player %d Unit %d (%S's %S) (groupsize: %d) targeting city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroupSize(), pBestCity->getName().GetCString());
+			logBBAI("     %S (unit %d) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), getGroupSize(), pBestCity->getName().GetCString());
 		}
 	}
 
