@@ -11688,6 +11688,16 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						bValid = true;
 					}
 
+					if (kUnitInfo.getMoves() > 1)
+					{
+						bValid = true;
+					}
+
+					if (kUnitInfo.getWeaponTier() > 1)
+					{
+						bValid = true;
+					}
+
 					if (!bValid)
 					{
 						for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
@@ -11796,6 +11806,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 								break;
 							}
 						}
+					}
+
+					if (kUnitInfo.getMoves() > 1)
+					{
+						bValid = true;
+						break;
 					}
 				}
 			}
@@ -12162,6 +12178,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		}
 		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
 		
+		if (iCombatValue < 3)
+		{
+			iValue /= 10;
+		}
+
 		break;
 
 	case UNITAI_ATTACK_CITY:
@@ -12194,6 +12215,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += ((iCombatValue * kUnitInfo.getMoves() * iFastMoverMultiplier) / 4);
 		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
 		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
+		
+		if (iCombatValue  < 3)
+		{
+			iValue /= 10;
+		}
 /*
 		if (!AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ))
 		{
@@ -12390,6 +12416,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			}
 		}
 
+		iValue += (kUnitInfo.getNumSeeInvisibleTypes() * 100);
 		iValue += ((iCombatValue * kUnitInfo.getMoves()) / 2);
 		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 25);
 /************************************************************************************************/
@@ -12406,6 +12433,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iTempValue /= 100;
 
 			iValue += iTempValue;
+		}
+
+		if ((iCombatValue + kUnitInfo.getWeaponTier()) < 4)
+		{
+			iValue /= 5;
 		}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
@@ -12463,6 +12495,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_PARADROP:
 		iValue += (iCombatValue / 2);
 		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 100);
+		iValue += (kUnitInfo.getNumSeeInvisibleTypes() * 100);
 		for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 		{
 			iValue += ((iCombatValue * kUnitInfo.getUnitClassAttackModifier(iI) * AI_getUnitClassWeight((UnitClassTypes)iI)) / 10000);
@@ -12487,6 +12520,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iTempValue /= 50;
 
 			iValue += iTempValue;
+		}
+
+		if ((iCombatValue + kUnitInfo.getWeaponTier()) < 4)
+		{
+			iValue /= 5;
 		}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
@@ -12760,18 +12798,19 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue *= (100 + iTraitMod);
 		iValue /= 100;
 
-		if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+
+		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 		{
-			if (pArea != NULL)
+			if (kUnitInfo.getFreePromotions(iI))
 			{
-				AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
-				if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
+				if (GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
 				{
-					for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+					if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
 					{
-						if (GC.getUnitInfo(eUnit).getFreePromotions(iI))
+						if (pArea != NULL)
 						{
-							if (GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
+							AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
+							if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
 							{
 								iValue *= 133;
 								iValue /= 100;
