@@ -25208,84 +25208,97 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 {
 	PROFILE_FUNC();
 
-	bool bNoDefensiveBonus = noDefensiveBonus();
-	if( getGroup()->getNumUnits() > 1 )
+	int iPercentDefensive;
 	{
+		int iDefCount = 0;
 		CLLNode<IDInfo>* pUnitNode = getGroup()->headUnitNode();
 		CvUnit* pLoopUnit = NULL;
 
-		while( pUnitNode != NULL )
+		while (pUnitNode != NULL)
 		{
 			pLoopUnit = ::getUnit(pUnitNode->m_data);
-			bNoDefensiveBonus = (bNoDefensiveBonus && pLoopUnit->noDefensiveBonus());
+			iDefCount += pLoopUnit->noDefensiveBonus() ? 0 : 1;
 
 			pUnitNode = getGroup()->nextUnitNode(pUnitNode);
 		}
+		iPercentDefensive = 100 * iDefCount / getGroup()->getNumUnits();
 	}
 
-	CvPlot* pBestPlot = NULL;
+	CvPlot* pBestPlot = 0;
+	CvPlot* pEndTurnPlot = 0;
 	int iBestValue = 0;
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
 		for (int iY = -iRange; iY <= iRange; iY++)
 		{
 			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
-			if (pLoopPlot != NULL)
+			if (pLoopPlot && isEnemy(pLoopPlot->getTeam()) && !pLoopPlot->isVisibleEnemyUnit(this))
 			{
-				if (isEnemy(pLoopPlot->getTeam()) && !(pLoopPlot->isVisibleEnemyUnit(this)))
+				int iPathTurns;
+				if (pLoopPlot->getWorkingCity() && generatePath(pLoopPlot, 0, true, &iPathTurns))
 				{
-					CvCity* pWorkingCity = pLoopPlot->getWorkingCity();
-					if ((pWorkingCity != NULL) && (pWorkingCity->getTeam() == pLoopPlot->getTeam()))
+					FAssert(pLoopPlot->getWorkingCity()->getTeam() == pLoopPlot->getTeam());
+					//int iValue = (bDefensive ? pLoopPlot->defenseModifier(getTeam(), false) : -15);
+					int iValue = bDefensive ? pLoopPlot->defenseModifier(getTeam(), false) - 15 : 0; // K-Mod
+					if (pLoopPlot->getBonusType(getTeam()) != NO_BONUS)
 					{
-						int iValue = (bDefensive ? pLoopPlot->defenseModifier(getTeam(), false) : -15);
-						if (pLoopPlot->getBonusType(getTeam()) != NO_BONUS)
+						iValue = GET_PLAYER(pLoopPlot->getOwnerINLINE()).AI_bonusVal(pLoopPlot->getBonusType(), 0);
+					}
+					
+					iValue += pLoopPlot->getYield(YIELD_PRODUCTION) * 9; // was 10
+					iValue += pLoopPlot->getYield(YIELD_FOOD) * 12; // was 10
+					iValue += pLoopPlot->getYield(YIELD_COMMERCE) * 5;
+
+					if (atPlot(pLoopPlot) && canPillage(pLoopPlot))
+					{
+						iValue += AI_pillageValue(pLoopPlot, 0) / (bDefensive ? 2 : 1);
+					}
+
+					if (iValue > 0)
+					{
+						iValue *= (bDefensive ? 25 : 50) + iPercentDefensive * pLoopPlot->defenseModifier(getTeam(), false) / 100;
+
+						if (bDefensive)
 						{
-							iValue += GET_PLAYER(pLoopPlot->getOwnerINLINE()).AI_bonusVal(pLoopPlot->getBonusType(), 0);
-						}
-						
-						iValue += pLoopPlot->getYield(YIELD_PRODUCTION) * 10;
-						iValue += pLoopPlot->getYield(YIELD_FOOD) * 10;
-						iValue += pLoopPlot->getYield(YIELD_COMMERCE) * 5;
-						
-						if (bNoDefensiveBonus)
-						{
-							iValue *= std::max(0, ((baseCombatStr() * 120) - GC.getGame().getBestLandUnitCombat()));
+							// for defensive, we care a lot about path turns
+							iValue *= 10;
+							iValue /= std::max(1, iPathTurns);
 						}
 						else
 						{
-							iValue *= pLoopPlot->defenseModifier(getTeam(), false);
+							// otherwise we just want to block as many tiles as possible
+							iValue *= 10;
+							iValue /= std::max(1, pLoopPlot->getNumDefenders(getOwnerINLINE()) + (pLoopPlot == plot() ? 0 : getGroup()->getNumUnits()));
 						}
-						
-						if (iValue > 0)
-						{
-							if( !bDefensive )
-							{
-								iValue *= 10;
-								iValue /= std::max(1, (pLoopPlot->getNumDefenders(getOwnerINLINE()) + ((pLoopPlot == plot()) ? 0 : getGroup()->getNumUnits())));
-							}
 
-							if (generatePath(pLoopPlot))
-							{
-								pBestPlot = getPathEndTurnPlot();
-								iBestValue = iValue;
-							}
+						if (iValue > iBestValue)
+						{
+							pBestPlot = pLoopPlot;
+							pEndTurnPlot = getPathEndTurnPlot();
+							iBestValue = iValue;
 						}
 					}
 				}
 			}
 		}
 	}
-	if (pBestPlot != NULL)
+	if (pBestPlot)
 	{
+		FAssert(pBestPlot->getWorkingCity());
+		CvPlot* pChokedCityPlot = pBestPlot->getWorkingCity()->plot();
 		if (atPlot(pBestPlot))
 		{
-			if(canPillage(plot())) getGroup()->pushMission(MISSION_PILLAGE);
-			getGroup()->pushMission(MISSION_SKIP);
+			FAssert(atPlot(pEndTurnPlot));
+			if (canPillage(plot()))
+				getGroup()->pushMission(MISSION_PILLAGE);
+			else
+				getGroup()->pushMission(MISSION_SKIP);
 			return true;
 		}
 		else
 		{
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY());
+			FAssert(!atPlot(pEndTurnPlot));
+			getGroup()->pushMission(MISSION_MOVE_TO, pEndTurnPlot->getX(), pEndTurnPlot->getY());
 			return true;
 		}
 	}
