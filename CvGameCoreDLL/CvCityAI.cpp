@@ -247,7 +247,8 @@ void CvCityAI::AI_doTurn()
 
 	AI_updateBestBuild();
 */
-	AI_updateBestBuild();
+	if (!isDisorder()) // K-Mod
+		AI_updateBestBuild();
 
 	AI_updateWorkersNeededHere();
 /************************************************************************************************/
