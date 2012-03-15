@@ -10600,7 +10600,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	*/
 	if (eUnitAI != UNITAI_CITY_DEFENSE && eUnitAI != UNITAI_CITY_COUNTER)
 	{
-		iTemp += 10;
+		iTemp += (isAlive() ? 10 : 20); //slight bonus for non-alive units since they cant be Hasted
 
 		if (m_pUnitInfo->getMoves() == 1)
 		{
