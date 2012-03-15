@@ -353,21 +353,22 @@ def reqAddToFleshGolem(caster):
 			if (caster.getOwner() == pUnit.getOwner() and pUnit.getUnitClassType() == iFleshGolem):
 				pFleshGolem = pUnit
 		if pFleshGolem != -1:
-			if caster.baseCombatStr() > pFleshGolem.baseCombatStr():
-				return True
-			if caster.baseCombatStrDefense() > pFleshGolem.baseCombatStrDefense():
-				return True
-			for iCount in range(gc.getNumPromotionInfos()):
-				if (caster.isHasPromotion(iCount)):
-					if not gc.getPromotionInfo(iCount).getExpireChance() > 0:
-						if not (pFleshGolem.isHasPromotion(iCount)):
-							if (iCount != iChanneling and iCount != iChanneling2 and iCount != iChanneling3 and iCount != iDivine):
-								if not gc.getPromotionInfo(iCount).isRace():
-									if gc.getPromotionInfo(iCount).getBonusPrereq() == -1:
-										if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling2:
-											if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling3:
-												if gc.getPromotionInfo(iCount).isEquipment() == False:
-													return True
+			if not caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_HERO')):
+				if caster.baseCombatStr() > pFleshGolem.baseCombatStr():
+					return True
+				if caster.baseCombatStrDefense() > pFleshGolem.baseCombatStrDefense():
+					return True
+				for iCount in range(gc.getNumPromotionInfos()):
+					if (caster.isHasPromotion(iCount)):
+						if not gc.getPromotionInfo(iCount).getExpireChance() > 0:
+							if not (pFleshGolem.isHasPromotion(iCount)):
+								if (iCount != iChanneling and iCount != iChanneling2 and iCount != iChanneling3 and iCount != iDivine):
+									if not gc.getPromotionInfo(iCount).isRace():
+										if gc.getPromotionInfo(iCount).getBonusPrereq() == -1:
+											if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling2:
+												if gc.getPromotionInfo(iCount).getPromotionPrereqAnd() != iChanneling3:
+													if gc.getPromotionInfo(iCount).isEquipment() == False:
+														return True
 		return False
 	return True
 
