@@ -12919,6 +12919,19 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 			{
 				aiCommerces[iI] = kBuilding.getCommerceChange(iI);
 				aiCommerces[iI] += kBuilding.getObsoleteSafeCommerceChange(iI);
+/*
+** K-Mod, 30/dec/10, karadoc
+** added relgious building bonus info
+*/
+				if (ePlayer != NO_PLAYER &&
+					kBuilding.getReligionType() != NO_RELIGION &&
+					kBuilding.getReligionType() == GET_PLAYER(ePlayer).getStateReligion())
+				{
+					aiCommerces[iI] += GET_PLAYER(ePlayer).getStateReligionBuildingCommerce((CommerceTypes)iI);
+				}
+/*
+** K-Mod end
+*/
 			}
 		}
 		setCommerceChangeHelp(szBuffer, L", ", L"", L"", aiCommerces, false, false);
@@ -13149,6 +13162,8 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
     {
         szBuffer.append(NEWLINE);
         szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_UNHAPPY_PRODUCTION"));
+		if(GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+			szBuffer.append(L", reduces Revolution Penalty from Unhappiness");
     }
     if (kBuilding.isRequiresCaster())
     {
@@ -20493,6 +20508,22 @@ void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvC
 				szBuffer.append(CvWString::format(L"%c", gDLL->getSymbolID(TRADE_CHAR)));
 			}
 		}
+
+// BUG - Airport Icon - start
+		if (getBugOptionBOOL("CityBar__AirportIcons", true, "BUG_CITYBAR_AIRPORT_ICONS"))
+		{
+			// Tholal ToDo - remove Hardcode and check getAirlift() instead
+			int eAirportClass = GC.getInfoTypeForString("BUILDINGCLASS_OBSIDIAN_GATE");
+			if (eAirportClass != -1)
+			{
+				int eAirport = GC.getCivilizationInfo(pCity->getCivilizationType()).getCivilizationBuildings(eAirportClass);
+				if (eAirport != -1 && pCity->getNumBuilding((BuildingTypes)eAirport) > 0)
+				{
+					szBuffer.append(CvWString::format(L"%c", gDLL->getSymbolID(AIRPORT_CHAR)));
+				}
+			}
+		}
+// BUG - Airport Icon - start
 	}
 
 	// religion icons
