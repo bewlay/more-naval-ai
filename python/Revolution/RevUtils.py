@@ -608,7 +608,7 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 											if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Outdated unit in Area %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
 											if( pCity.canTrain(ownerUnitType,False,False) ) :
 												spawnableUnits.append( spawnUnitID )
-												if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn outdated unit from Area buildable %s"%(PyInfo.UnitInfo(spawnUnitID).getDescription()))
+												if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn outdated unit from Area buildable %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
 
 											break
 
@@ -642,7 +642,7 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 						trainableUnits.append( spawnUnitID )
 						if( unitInfo.getCombat() > 15 ) :
 							trainableUnits.append( spawnUnitID )
-					if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can build %s"%(PyInfo.UnitInfo(spawnUnitID).getDescription()))
+					if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can build %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
 
 		if( len(spawnableUnits) < 1 ) :
 			spawnableUnits = trainableUnits
