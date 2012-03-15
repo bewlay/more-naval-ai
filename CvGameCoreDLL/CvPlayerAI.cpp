@@ -24491,6 +24491,12 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 							//Mildly maphackery but any smart human can see the terrain type of a tile.
 							pLoopPlot2->getTerrainType();
 							int iFoodYield = GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getYield(YIELD_FOOD);
+//FlavourMod: Added by Jean Elcard 03/18/2009 (Civilization Terrain Yield Changes)
+							if (GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getCivilizationYieldType() == getCivilizationType())
+							{
+								iFoodYield += GC.getTerrainInfo(pLoopPlot2->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
+							}
+//FlavourMod: End Add
 							if (pLoopPlot2->getFeatureType() != NO_FEATURE)
 							{
 								iFoodYield += GC.getFeatureInfo(pLoopPlot2->getFeatureType()).getYieldChange(YIELD_FOOD);
