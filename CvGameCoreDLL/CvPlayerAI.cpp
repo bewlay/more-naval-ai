@@ -22666,6 +22666,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 				}
 			}
 		}
+
+		if (AI_isFinancialTrouble())
+		{
+			iCrushValue -=2;
+		}
+
 		if ((iWarCount <= 1) && (iCrushValue >= ((iLastStrategyHash & AI_STRATEGY_CRUSH) ? 9 :10)))
 		{
 			m_iStrategyHash |= AI_STRATEGY_CRUSH;
