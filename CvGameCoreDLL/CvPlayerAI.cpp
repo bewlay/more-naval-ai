@@ -2754,7 +2754,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	iGreed = 100;
 	// K-Mod
 	// some trait information that will influence where we settle
-	bool bEasyCulture = false; // easy for us to pop the culture to the 2nd border
+	bool bEasyCulture = bStartingLoc; // easy for us to pop the culture to the 2nd border
 	bool bAmbitious = false; // expectation of taking foreign land, either by culture or by force
 	bool bFinancial = false; // more value for rivers
 	bool bDefensive = false; // more value for settlings on hills
