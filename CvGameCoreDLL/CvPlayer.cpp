@@ -12721,7 +12721,7 @@ void CvPlayer::setAlive(bool bNewValue)
 
 			if (GC.getGameINLINE().getElapsedGameTurns() > 0)
 			{
-				if (!isBarbarian())
+				if (!isBarbarian() && !isRebel())
 				{
 					szBuffer = gDLL->getText("TXT_KEY_MISC_CIV_DESTROYED", getCivilizationAdjectiveKey());
 
@@ -12732,7 +12732,6 @@ void CvPlayer::setAlive(bool bNewValue)
 							gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_CIVDESTROYED", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT"));
 						}
 					}
-
 					GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szBuffer, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT"));
 				}
 			}
