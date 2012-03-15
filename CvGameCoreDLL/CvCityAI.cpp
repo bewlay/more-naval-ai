@@ -4112,7 +4112,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                 {
                                     if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
                                     {
-                                        iPromotionValue += 15;
+                                        iPromotionValue += 10;
 
                                         break;
                                     }
@@ -4125,12 +4125,11 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                     {
                                         for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
                                         {
-                                            if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
+                                            if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iK))
                                             {
                                                 if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
                                                 {
-													// Tholal AI - increased value of free promotions from Civ traits
-                                                    iPromotionValue += 80;
+                                                    iPromotionValue += 10;
                                                     break;
                                                 }
                                             }
@@ -4138,8 +4137,9 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
                                     }
                                 }
 
-                                iValue *= (iPromotionValue + 100);
-                                iValue /= 100;
+                                //iValue *= (iPromotionValue + 100);
+                                //iValue /= 100;
+								iValue += iPromotionValue;
 
 								if (bAsync)
 								{
@@ -4193,17 +4193,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 								{
 									iValue *= (2 + 3 * iBestHappy);
 									iValue /= 100;
-								}
-
-								//account for Favorite Unit Combat tag
-								const UnitCombatTypes eFavoriteUnitCombat = (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat();
-								if (eFavoriteUnitCombat != NO_UNITCOMBAT)
-								{
-									if (eFavoriteUnitCombat == GC.getUnitInfo(eLoopUnit).getUnitCombatType())
-									{
-										iValue *= 3;
-										iValue /= 2;
-									}
 								}
 
 								// avoid building heroes in bad production cities
