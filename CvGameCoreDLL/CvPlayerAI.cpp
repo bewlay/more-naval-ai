@@ -14230,7 +14230,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		{
 			// Military State
 			int iCombatValue = AI_combatValue(eConscript);
-			if( iCombatValue > 33 )
+			//if( iCombatValue > 33 )
 			{
 				iTempValue = iCities + ((bWarPlan) ? 30 : 10);
 
@@ -14240,17 +14240,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 				iTempValue *= iCombatValue;
 				iTempValue /= 75;
 
-				int iWarSuccessRatio = GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio();
-				if( iWarSuccessRatio < -25 )
+				int iWarSuccessRating = kTeam.AI_getWarSuccessRating();
+				if( iWarSuccessRating < -25 )
 				{
-					iTempValue *= 75 + range(-iWarSuccessRatio, 25, 100);
+					iTempValue *= 75 + range(-iWarSuccessRating, 25, 100);
 					iTempValue /= 100;
 				}
-
-				if (!bAtWar)
-				{
-					iTempValue /= 10;
-				}
+				// K-Mod (maybe I'll do some more tweaking later)
+				// (NOTE: "conscript_population_per_cost" is actually "production_per_conscript_population". The developers didn't know what "per" means.)
+				int iConscriptPop = std::max(1, GC.getUnitInfo(eConscript).getProductionCost() / GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST"));
+				iTempValue *= GC.getUnitInfo(eConscript).getProductionCost();
+				iTempValue /= iConscriptPop * GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST");
+				iTempValue *= std::min(iCities, iTemp*3);
+				iTempValue /= iTemp*3;
+				// K-Mod end
 
 				iValue += iTempValue;
 			}
@@ -14484,7 +14487,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			// God King
 			iTemp = kCivic.getCapitalYieldModifier(iI) * pCapital->getYieldRate((YieldTypes)iI);
 			iTemp /= 100;
-			iTemp *= 3;
+			iTemp *= 4;
 			iTemp /= std::max(1, iCities);
 
 			iTempValue += iTemp;
@@ -14534,7 +14537,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iTemp = kCivic.getCapitalCommerceModifier(iI) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
 			iTemp /= 100;
 
-			iTemp *= 3;
+			iTemp *= 4;
 			iTemp /= std::max(1, iCities);
 			
 			iTempValue += iTemp;
