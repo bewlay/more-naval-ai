@@ -111,6 +111,6 @@
 		</section>
 	</options>
 	
-	<events module="Civ4lerts"/>
+	<events module="Civ4lerts" class="Civ4lerts"/>
 	
 </mod>
