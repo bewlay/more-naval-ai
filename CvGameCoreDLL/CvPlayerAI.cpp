@@ -5105,7 +5105,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 
 				// Tholal - kind of a hack to get AI to pursue education earlier
-				iImprovementValue += (kImprovement.getPillageGold() * 50);
+				iImprovementValue += (kImprovement.getPillageGold() * 75);
 
 				int iNumTotalBonuses = 0;
 				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
@@ -5587,7 +5587,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 			}
 			
-			iCivicTechValue += 200;
+			iCivicTechValue += 200  + (GC.getGameINLINE().getCurrentPeriod() * 50);
 
 			int iCivicOpt = (GC.getCivicInfo(eNewCivic).getCivicOptionType());
 			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)iCivicOpt);
@@ -5599,7 +5599,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					iCivicTechValue += std::min(2400, (100 * (iNewCivicValue - iCurrentCivicValue)));
+					iCivicTechValue += std::min(2400, (100 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+				}
+
+				if (GC.getCivicInfo(eCurrCivic).getAIWeight() < 0)
+				{
+					iCivicTechValue *= 3;
 				}
 			}
 			
@@ -5735,16 +5740,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (eReligion == eFavorite)
 						{
-							iReligionValue += (bHasReligion ? 1500 : 2000);
-							if (GC.getLogging() && bDebugLog)
-							{
-								if (gDLL->getChtLvl() > 0)
-								{
-									char szOut[1024];
-									sprintf(szOut, "     FAVORITE RELIGION\n");
-									gDLL->messageControlLog(szOut);
-								}
-							}
+							iReligionValue += (bHasReligion ? 1250 : 1500);
 						}
 					}
 				}
