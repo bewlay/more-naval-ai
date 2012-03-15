@@ -41,6 +41,8 @@ import SevoPediaIndex
 ##--------	BUGFfH: Added by Denev 2009/08/12
 import SevoPediaEquipment
 import SevoPediaSpell
+import random
+##--------	BUGFfH: End Add
 
 import UnitUpgradesGraph
 ##--------	BUGFfH: Deleted by Denev 2009/09/11
@@ -920,6 +922,8 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		screen.setStyle(self.ITEM_LIST_ID, "Table_StandardCiv_Style")
 		screen.setTableColumnHeader(self.ITEM_LIST_ID, 0, "", self.W_ITEMS)
 
+##--------	BUGFfH: Modified by Denev 2009/10/09
+		"""
 		i = 0
 		for item in self.list:
 			if (info == gc.getConceptInfo):
@@ -934,16 +938,61 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			elif (info == self.getStrategyInfo):
 				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
 				data2 = item[1]
-#			elif (info == self.getTraitInfo):
-#				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
-#				data2 = item[1]
+			elif (info == self.getTraitInfo):
+				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
+				data2 = item[1]
 			else:
 				data1 = item[1]
 				data2 = 1
 			screen.appendTableRow(self.ITEM_LIST_ID)
 			screen.setTableText(self.ITEM_LIST_ID, 0, i, u"<font=3>" + item[0] + u"</font>", info(item[1]).getButton(), widget, data1, data2, CvUtil.FONT_LEFT_JUSTIFY)
 			i += 1
+		"""
+		for szIndexName, iItemID, szItemName in self.list:
+			if (info == gc.getConceptInfo):
+				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT
+				data2 = iItemID
+#			elif (info == self.getWildmanaConceptInfo):
+#				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_WILDMANA
+#				data2 = iItemID
+#			elif (info == gc.getWildmanaGuideInfo):
+#				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_WILDMANA_GUIDE
+#				data2 = iItemID				
+			elif (info in (self.getNewConceptInfo, self.getShortcutInfo)):
+				data1 = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
+				data2 = iItemID
+				
+			elif (info == gc.getLeaderHeadInfo):
+				data1 = iItemID						#LeaderID
+				data2 = self.pickLeaderCiv(iItemID)	#CivilizationID which includes Leader
+			else:
+				data1 = iItemID
+				data2 = 1
+
+			iRow = screen.appendTableRow(self.ITEM_LIST_ID)
+			if (info == gc.getUnitInfo):				
+				szButton = gc.getUnitInfo(iItemID).getUnitButtonWithCivArtStyle(gc.getGame().getActiveCivilizationType())
+			else:
+				szButton = info(iItemID).getButton()
+			screen.setTableText(self.ITEM_LIST_ID, 0, iRow, u"<font=3>" + szItemName + u"</font>", szButton, widget, data1, data2, CvUtil.FONT_LEFT_JUSTIFY)
+##--------	BUGFfH: End Modify
 		#screen.updateListBox(self.ITEM_LIST_ID)
+
+
+
+##--------	BUGFfH: Added by Denev 2009/10/06
+	def pickLeaderCiv(self, iLeader):
+		liLeaderCiv = []
+		iLeaderCiv = CivilizationTypes.NO_CIVILIZATION
+		for iCiv in range(gc.getNumCivilizationInfos()):
+			pCiv = gc.getCivilizationInfo(iCiv)
+			if pCiv.isLeaders(iLeader):
+				liLeaderCiv.append(iCiv)
+		if len(liLeaderCiv) > 0:
+			iLeaderCiv = random.choice(liLeaderCiv)
+
+		return iLeaderCiv
+##--------	BUGFfH: End Add
 
 
 
