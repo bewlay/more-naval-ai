@@ -4003,6 +4003,7 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes eIgnoreAdvisor)
 {
 	UnitTypes eLoopUnit;
+	UnitTypes eAltLoopUnit;
 	UnitTypes eBestUnit;
 	int iValue;
 	int iBestValue;
@@ -4020,7 +4021,12 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 		// BBAI NOTE: This is where small city worker and settler production is blocked
 		if (kOwner.getNumCities() <= 2)
 		{
-			bGrowMore = ((getPopulation() < 3) && (AI_countGoodTiles(true, false, 100) >= getPopulation()));
+			/* original bts code
+			bGrowMore = ((getPopulation() < 3) && (AI_countGoodTiles(true, false, 100) >= getPopulation())); */
+			// K-Mod. We need to allow the starting city to build a worker at size 1.
+			bGrowMore = (eUnitAI != UNITAI_WORKER || GET_PLAYER(getOwner()).AI_totalAreaUnitAIs(area(), UNITAI_WORKER) > 0)
+				&& getPopulation() < 3 && AI_countGoodTiles(true, false, 100) >= getPopulation();
+			// K-Mod end
 		}
 		else
 		{
@@ -4037,6 +4043,13 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 				}
 			}
 		}
+		// K-Mod
+		else if (bGrowMore)
+		{
+			if (angryPopulation(1) > 0)
+				bGrowMore = false;
+		}
+		// K-Mod end
 	}
 	iBestOriginalValue = 0;
 
