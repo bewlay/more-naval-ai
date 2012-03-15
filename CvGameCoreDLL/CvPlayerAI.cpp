@@ -19726,10 +19726,11 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 			}
 			else if (iUnitValue == -1)
 			{
-				iUnitValue = 200; //Great Person?
+				iUnitValue = 2000; //Great Person?  // (was 200)
 			}
 
 			iUnitValue *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+			iUnitValue /= 100; // K-Mod
 			iValue += kEvent.getNumUnits() * iUnitValue;
 		}
 	}
@@ -19746,10 +19747,11 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 			}
 			else if (iUnitValue == -1)
 			{
-				iUnitValue = 200; //Great Person?
+				iUnitValue = 2000; //Great Person?  // (was 200)
 			}
 
 			iUnitValue *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+			iUnitValue /= 100; // K-Mod
 			iValue -= iUnitValue;
 		}
 	}
@@ -19882,7 +19884,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 		iCityTurnValue += aiCommerceYields[COMMERCE_RESEARCH] * 3;
 		iCityTurnValue += aiCommerceYields[COMMERCE_GOLD] * 3;
-		iCityTurnValue += aiCommerceYields[COMMERCE_CULTURE] * 1;
+		iCityTurnValue += aiCommerceYields[COMMERCE_CULTURE] * 2; // was 1
 		iCityTurnValue += aiCommerceYields[COMMERCE_ESPIONAGE] * 2;
 
 		iValue += (iCityTurnValue * 20 * iGameSpeedPercent) / 100;
@@ -20142,8 +20144,20 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 		if (kEvent.isDeclareWar())
 		{
-			int iWarValue = (GET_TEAM(getTeam()).getDefensivePower() - GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true));// / max(1, GET_TEAM(getTeam()).getDefensivePower());
-			iWarValue -= 30 * AI_getAttitudeVal(kTriggeredData.m_eOtherPlayer);
+			/* original bts code
+			int iWarValue = GET_TEAM(getTeam()).getDefensivePower(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam())
+				- GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true);// / std::max(1, GET_TEAM(getTeam()).getDefensivePower());
+			iWarValue -= 30 * AI_getAttitudeVal(kTriggeredData.m_eOtherPlayer); */
+
+			// K-Mod. Note: the original code doesn't touch iValue.
+			// So whatever I do here is completely new.
+			// TODO: if I ever get around to writing code for evalutating potential war targets, I should use that here!
+			int iOurPower = GET_TEAM(getTeam()).getDefensivePower();
+			int iTheirPower = GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).getPower(true);
+			int iWarValue = 300 * (iOurPower - iTheirPower) / std::max(1, iOurPower + iTheirPower) - 25;// / std::max(1, GET_TEAM(getTeam()).getDefensivePower())
+
+			iValue += iWarValue;
+			// K-Mod end
 		}
 
 		if (kEvent.getMaxPillage() > 0)
@@ -20153,6 +20167,8 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 			iPillageValue *= 25 - iOtherPlayerAttitudeWeight;
 			iPillageValue *= iGameSpeedPercent;
 			iPillageValue /= 12500;
+
+			iValue += iPillageValue; // K-Mod!
 		}
 
 		iValue += (iDiploValue * iGameSpeedPercent) / 100;
