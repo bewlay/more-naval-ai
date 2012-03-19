@@ -655,10 +655,11 @@ class DynamicCivNames :
 					sPre = "Righteous"
 		elif( bPacifism ) :
 			if( bCityStates and iNumCities > iMxc ) :
-				sEmp = "League of Peace"
+				sEmp = "Commune"
 				bFof = True
 			elif sPre == "":
 				sPre = "Benevolent"
+			sPre = "Peoples"
 		elif( bLiberty ) :
 			sPre = "Free"
 			if( bAristocracy ) :
@@ -697,9 +698,12 @@ class DynamicCivNames :
 			pCapitalPlot = pCapital.plot()
 			pCapitalLatitude = pCapitalPlot.getLatitude()
 			if pCapitalLatitude > 50:
-				sPre = "Northern"
-			elif pCapitalLatitude < -50:
-				sPre = "Southern"
+				map = CyMap()
+				iMapHeight = map.getGridHeight()
+				if pCapitalPlot.getY() < (iMapHeight / 2):
+					sPre = "Southern"
+				else:
+					sPre = "Northern"
     
 		if bArete:
 			sPre = "Golden"
