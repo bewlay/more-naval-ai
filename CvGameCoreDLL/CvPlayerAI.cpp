@@ -6709,7 +6709,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					}
 
 					// unique and replaced units
-					if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+					if (kLoopUnit.getPrereqCiv() == getCivilizationType())
 					{
 						iUnitValue += 1000;
 					}
@@ -6721,9 +6721,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					// favorite unit combat
 					if (eFavoriteUnitCombat != NO_UNITCOMBAT)
 					{
-						if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == eFavoriteUnitCombat)
+						if (kLoopUnit.getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 350;
+							iUnitValue += 500;
 
 							if (GC.getLogging() && bDebugLog)
 							{
@@ -6827,8 +6827,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 //>>>>Better AI: Modified by Denev 2010/07/10
 //						iUnitValue += ((getStateReligion() != NO_RELIGION) ? 600 : 300);
 						iUnitValue += ((getStateReligion() == NO_RELIGION || 
-							getStateReligion() == GC.getUnitInfo(eLoopUnit).getReligionType() || 
-							getFavoriteReligion() == GC.getUnitInfo(eLoopUnit).getReligionType()) ? 400 : 0);
+							getStateReligion() == kLoopUnit.getReligionType() || 
+							getFavoriteReligion() == kLoopUnit.getReligionType()) ? 400 : 0);
 //<<<<Better AI: End Modify
 						break;
 
@@ -7009,15 +7009,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 						for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 						{
-							if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
+							if (kLoopUnit.getFreePromotions(iJ))
 							{
 								iMilitaryValue += 10;
-								if (GC.getPromotionInfo((PromotionTypes)GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ)).getSpellCasterXP() > 0)
+								if (GC.getPromotionInfo((PromotionTypes)kLoopUnit.getFreePromotions(iJ)).getSpellCasterXP() > 0)
 								{
 									iMilitaryValue += 15;
 								}
 
-								if ((PromotionTypes)GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE"))
+								if ((PromotionTypes)kLoopUnit.getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE"))
 								{
 									iMilitaryValue += 25 * iTier;
 								}
@@ -7263,7 +7263,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					// account for traits
 					for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 					{
-						if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+						if ((kLoopUnit.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(kLoopUnit.getUnitCombatType()))
 						{
 							if (hasTrait((TraitTypes)iJ))
 							{
@@ -7324,22 +7324,22 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 					for (int iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
 					{
-						if (GC.getUnitInfo(eLoopUnit).getPrereqOrBonuses(iI) != NO_BONUS)
+						if (kLoopUnit.getPrereqOrBonuses(iI) != NO_BONUS)
 						{
 							bRequiresBonus = true;
 
-							if (hasBonus((BonusTypes)GC.getUnitInfo(eLoopUnit).getPrereqOrBonuses(iI)))
+							if (hasBonus((BonusTypes)kLoopUnit.getPrereqOrBonuses(iI)))
 							{
 								bHasRequiredBonus = true;
 							}
 						}
 					}
 
-					if (GC.getUnitInfo(eLoopUnit).getPrereqAndBonus() != NO_BONUS)
+					if (kLoopUnit.getPrereqAndBonus() != NO_BONUS)
 					{
 						bRequiresBonus = true;
 
-						if (hasBonus((BonusTypes)GC.getUnitInfo(eLoopUnit).getPrereqAndBonus()))
+						if (hasBonus((BonusTypes)kLoopUnit.getPrereqAndBonus()))
 						{
 							bHasRequiredBonus = true;
 						}
@@ -11499,11 +11499,13 @@ DenialTypes CvPlayerAI::AI_religionTrade(ReligionTypes eReligion, PlayerTypes eP
 int CvPlayerAI::AI_unitImpassableCount(UnitTypes eUnit) const
 {
 	int iCount = 0;
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
 	for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 	{
-		if (GC.getUnitInfo(eUnit).getTerrainImpassable(iI))
+		if (kUnitInfo.getTerrainImpassable(iI))
 		{
-			TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getTerrainPassableTech(iI);
+			TechTypes eTech = (TechTypes)kUnitInfo.getTerrainPassableTech(iI);
 			if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 			{
 				iCount++;
@@ -11513,9 +11515,9 @@ int CvPlayerAI::AI_unitImpassableCount(UnitTypes eUnit) const
 
 	for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
-		if (GC.getUnitInfo(eUnit).getFeatureImpassable(iI))
+		if (kUnitInfo.getFeatureImpassable(iI))
 		{
-			TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getFeaturePassableTech(iI);
+			TechTypes eTech = (TechTypes)kUnitInfo.getFeaturePassableTech(iI);
 			if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 			{
 				iCount++;
@@ -11542,6 +11544,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	FAssertMsg(eUnitAI != NO_UNITAI, "UnitAI is not assigned a valid value");
 
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+	int iCombat = kUnitInfo.getCombat();
 
 	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI))
 	{
@@ -11609,7 +11612,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_ATTACK:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11619,7 +11622,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_ATTACK_CITY:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11632,7 +11635,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_COLLATERAL:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11645,7 +11648,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_PILLAGE:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11669,7 +11672,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_RESERVE:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11679,7 +11682,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_COUNTER:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isOnlyDefensive()))
 				{
@@ -11688,7 +11691,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						bValid = true;
 					}
 
-					if (kUnitInfo.getMoves() > 1)
+					if ((kUnitInfo.getMoves() > 1) && (iCombat > 2))
 					{
 						bValid = true;
 					}
@@ -11760,7 +11763,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 		case UNITAI_CITY_DEFENSE:
 //>>>>Better AI: Modified by Denev 2010/06/20
-//			if (kUnitInfo.getCombat() > 0)
+//			if (iCombat > 0)
 			if (kUnitInfo.getCombatDefense() > 0)
 //<<<<Better AI: End Modify
 			{
@@ -11775,7 +11778,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_CITY_COUNTER:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 				if (!(kUnitInfo.isNoDefensiveBonus()))
 				{
@@ -11808,7 +11811,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						}
 					}
 
-					if (kUnitInfo.getMoves() > 1)
+					if ((kUnitInfo.getMoves() > 1) && (iCombat > 2))
 					{
 						bValid = true;
 						break;
@@ -11833,7 +11836,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
-			if (kUnitInfo.getCombat() > 0 && !(kUnitInfo.isNoRevealMap()))
+			if (iCombat > 0 && !(kUnitInfo.isNoRevealMap()))
 			{
 				if (0 == AI_unitImpassableCount(eUnit))
 				{
@@ -11950,7 +11953,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_ATTACK_SEA:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 
 //FfH: Modified by Kael 11/22/2008
@@ -11970,7 +11973,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_RESERVE_SEA:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 
 //FfH: Modified by Kael 11/22/2008
@@ -11985,7 +11988,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			break;
 
 		case UNITAI_ESCORT_SEA:
-			if (kUnitInfo.getCombat() > 0)
+			if (iCombat > 0)
 			{
 
 //FfH: Modified by Kael 11/22/2008
@@ -12242,31 +12245,33 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 					UnitTypes eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iII)));
 					if (eLoopUnit != NO_UNIT)
 					{
-						if (GC.getUnitInfo(eLoopUnit).getDomainType() == DOMAIN_LAND)
+						CvUnitInfo& kLoopUnitInfo = GC.getUnitInfo(eLoopUnit);
+
+						if (kLoopUnitInfo.getDomainType() == DOMAIN_LAND)
 						{
 							int iClassCount = getUnitClassCount((UnitClassTypes)iII);
-							int iBombardRate = GC.getUnitInfo(eLoopUnit).getBombardRate();
+							int iBombardRate = kLoopUnitInfo.getBombardRate();
 							
 							if (iBombardRate > 0)
 							{
-								iTotalBombard += ((iBombardRate * iClassCount * ((GC.getUnitInfo(eLoopUnit).isIgnoreBuildingDefense()) ? 3 : 2)) / 2);
+								iTotalBombard += ((iBombardRate * iClassCount * ((kLoopUnitInfo.isIgnoreBuildingDefense()) ? 3 : 2)) / 2);
 							}
 							
-							int iBombRate = GC.getUnitInfo(eLoopUnit).getBombRate();
+							int iBombRate = kLoopUnitInfo.getBombRate();
 							if (iBombRate > 0)
 							{
 								iTotalBombard += iBombRate * iClassCount;
 							}
 							
-							int iCollateralDamageMaxUnits = GC.getUnitInfo(eLoopUnit).getCollateralDamageMaxUnits();
-							if (iCollateralDamageMaxUnits > 0 && GC.getUnitInfo(eLoopUnit).getCollateralDamage() > 0)
+							int iCollateralDamageMaxUnits = kLoopUnitInfo.getCollateralDamageMaxUnits();
+							if (iCollateralDamageMaxUnits > 0 && kLoopUnitInfo.getCollateralDamage() > 0)
 							{
 								iTotalSiegeMaxUnits += iCollateralDamageMaxUnits * iClassCount;
 								iSiegeUnits += iClassCount;
 							}
 							else if (kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT)
 							{
-								if (GC.getUnitInfo(eLoopUnit).getUnitCombatCollateralImmune((UnitCombatTypes)kUnitInfo.getUnitCombatType()))
+								if (kLoopUnitInfo.getUnitCombatCollateralImmune((UnitCombatTypes)kUnitInfo.getUnitCombatType()))
 								{
 									iSiegeImmune+= iClassCount;
 								}
@@ -25868,23 +25873,26 @@ int CvPlayerAI::AI_getTrustAttitude(PlayerTypes ePlayer) const
 int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
 {
     int iI, iCombat = 0;
-	if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_AIR)
+
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
+	if (kUnitInfo.getDomainType() == DOMAIN_AIR)
 	{
-		iCombat = GC.getUnitInfo(eUnit).getAirCombat();
+		iCombat = kUnitInfo.getAirCombat();
 	}
 	else
 	{
-	    iCombat = GC.getUnitInfo(eUnit).getCombat();
+	    iCombat = kUnitInfo.getCombat();
 	}
     for (iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
     {
-        iCombat += GC.getUnitInfo(eUnit).getDamageTypeCombat((DamageTypes) iI);
+        iCombat += kUnitInfo.getDamageTypeCombat((DamageTypes) iI);
     }
     for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
     {
-        iCombat += GC.getUnitInfo(eUnit).getBonusAffinity((BonusTypes)iI) * getNumAvailableBonuses((BonusTypes)iI);
+        iCombat += kUnitInfo.getBonusAffinity((BonusTypes)iI) * getNumAvailableBonuses((BonusTypes)iI);
     }
-    if (GC.getUnitInfo(eUnit).getWeaponTier() > 0)
+    if (kUnitInfo.getWeaponTier() > 0)
     {
         int iCombatBonus = 0;
         if (GC.getDefineINT("WEAPON_PROMOTION_TIER1") != -1)
@@ -25896,14 +25904,14 @@ int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
         }
         if (GC.getDefineINT("WEAPON_PROMOTION_TIER2") != -1)
         {
-            if (GC.getUnitInfo(eUnit).getWeaponTier() > 1 && getNumAvailableBonuses((BonusTypes)GC.getDefineINT("WEAPON_REQ_BONUS_TIER2")) > 0)
+            if (kUnitInfo.getWeaponTier() > 1 && getNumAvailableBonuses((BonusTypes)GC.getDefineINT("WEAPON_REQ_BONUS_TIER2")) > 0)
             {
                 iCombatBonus = GC.getPromotionInfo((PromotionTypes)GC.getDefineINT("WEAPON_PROMOTION_TIER2")).getExtraCombatStr();
             }
         }
         if (GC.getDefineINT("WEAPON_PROMOTION_TIER3") != -1)
         {
-            if (GC.getUnitInfo(eUnit).getWeaponTier() > 2 && getNumAvailableBonuses((BonusTypes)GC.getDefineINT("WEAPON_REQ_BONUS_TIER3")) > 0)
+            if (kUnitInfo.getWeaponTier() > 2 && getNumAvailableBonuses((BonusTypes)GC.getDefineINT("WEAPON_REQ_BONUS_TIER3")) > 0)
             {
                 iCombatBonus = GC.getPromotionInfo((PromotionTypes)GC.getDefineINT("WEAPON_PROMOTION_TIER3")).getExtraCombatStr();
             }
@@ -25915,8 +25923,11 @@ int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
 
 int CvPlayerAI::AI_combatValue(UnitTypes eUnit) const
 {
+
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+	
 	int iValue = 100 * AI_trueCombatValue(eUnit);
-    iValue *= ((((GC.getUnitInfo(eUnit).getFirstStrikes() * 2) + GC.getUnitInfo(eUnit).getChanceFirstStrikes()) * (GC.getDefineINT("COMBAT_DAMAGE") / 5)) + 100);
+    iValue *= ((((kUnitInfo.getFirstStrikes() * 2) + kUnitInfo.getChanceFirstStrikes()) * (GC.getDefineINT("COMBAT_DAMAGE") / 5)) + 100);
     iValue /= 100;
 	iValue /= GC.getGameINLINE().getBestLandUnitCombat();
 	return iValue;
@@ -26392,21 +26403,9 @@ int CvPlayerAI::AI_militaryUnitTradeVal(CvUnit* pUnit) const
 		return 0;
 	}
 
-	/*
-	if (GC.getUnitInfo(eUnit).getProductionCost() > 0)
-	{
-		iValue = GC.getUnitInfo(eUnit).getProductionCost();
-	}
-	else
-	{
-		iValue = 200;
-	}
-	*/
-
 	iValue += AI_unitValue(eUnit, (UnitAITypes)GC.getUnitInfo(eUnit).getDefaultUnitAIType(), getCapitalCity()->area());
-
 	iValue /= 8;
-	//GC.getGameINLINE().logMsg("AI Unit Value For %s is %d", GC.getUnitInfo(eUnit).getDescription(), iValue);
+
 	return iValue;
 }
 
@@ -26547,7 +26546,9 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 
 		if (canTrain(eUnit))
 		{
-			if (GC.getUnitInfo(eUnit).getPrereqAndBonus() == eBonus)
+			CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
+			if (kUnitInfo.getPrereqAndBonus() == eBonus)
 			{
 				iValue += 1000;
 			}
@@ -26558,11 +26559,11 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 
 			for (iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
 			{
-				if (GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI) == eBonus)
+				if (kUnitInfo.getPrereqOrBonuses(iI) == eBonus)
 				{
 					bFound = true;
 				}
-				else if (hasBonus((BonusTypes)GC.getUnitInfo(eUnit).getPrereqOrBonuses(iI)))
+				else if (hasBonus((BonusTypes)kUnitInfo.getPrereqOrBonuses(iI)))
 				{
 					iHasOrBonusCount++;
 				}

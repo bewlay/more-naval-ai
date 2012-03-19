@@ -8273,19 +8273,21 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 		}
 	}
 
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
 //FfH Units: Added by Kael 05/24/2008
-    if (getLevel() < GC.getUnitInfo(eUnit).getMinLevel())
+    if (getLevel() < kUnitInfo.getMinLevel())
 	{
         if (isHuman() || !GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_MINIMUM_LEVEL))
         {
             return false;
         }
 	}
-    if (GC.getUnitInfo(eUnit).isDisableUpgradeTo())
+    if (kUnitInfo.isDisableUpgradeTo())
     {
         return false;
     }
-	if (GET_PLAYER(getOwnerINLINE()).isUnitClassMaxedOut((UnitClassTypes)(GC.getUnitInfo(eUnit).getUnitClassType())))
+	if (GET_PLAYER(getOwnerINLINE()).isUnitClassMaxedOut((UnitClassTypes)kUnitInfo.getUnitClassType()))
 	{
 		return false;
 	}

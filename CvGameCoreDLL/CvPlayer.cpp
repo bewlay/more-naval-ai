@@ -8231,8 +8231,9 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 {
 	int iMultiplier = 0;
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (GC.getUnitInfo(eUnit).isMilitaryProduction())
+	if (kUnitInfo.isMilitaryProduction())
 	{
 		iMultiplier += getMilitaryProductionModifier();
 	}
@@ -8241,11 +8242,11 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
-			iMultiplier += GC.getUnitInfo(eUnit).getProductionTraits(iI);
+			iMultiplier += kUnitInfo.getProductionTraits(iI);
 
-			if (GC.getUnitInfo(eUnit).getSpecialUnitType() != NO_SPECIALUNIT)
+			if (kUnitInfo.getSpecialUnitType() != NO_SPECIALUNIT)
 			{
-				iMultiplier += GC.getSpecialUnitInfo((SpecialUnitTypes) GC.getUnitInfo(eUnit).getSpecialUnitType()).getProductionTraits(iI);
+				iMultiplier += GC.getSpecialUnitInfo((SpecialUnitTypes) kUnitInfo.getSpecialUnitType()).getProductionTraits(iI);
 			}
 		}
 	}
@@ -18153,7 +18154,9 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 		return -1;
 	}
 
-	int iCost = (getProductionNeeded(eUnit) * GC.getUnitInfo(eUnit).getAdvancedStartCost()) / 100;
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
+	int iCost = (getProductionNeeded(eUnit) * kUnitInfo.getAdvancedStartCost()) / 100;
 	if (iCost < 0)
 	{
 		return -1;
@@ -18213,7 +18216,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 			int iMaxUnitsPerCity = GC.getDefineINT("ADVANCED_START_MAX_UNITS_PER_CITY");
 			if (iMaxUnitsPerCity >= 0)
 			{
-				if (GC.getUnitInfo(eUnit).isMilitarySupport() && getNumMilitaryUnits() >= iMaxUnitsPerCity * getNumCities())
+				if (kUnitInfo.isMilitarySupport() && getNumMilitaryUnits() >= iMaxUnitsPerCity * getNumCities())
 				{
 					return -1;
 				}
@@ -18233,16 +18236,16 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 					return -1;
 				}
 
-				if (pPlot->isImpassable() && !GC.getUnitInfo(eUnit).isCanMoveImpassable())
+				if (pPlot->isImpassable() && !kUnitInfo.isCanMoveImpassable())
 				{
 					return -1;
 				}
 
 				if (pPlot->getFeatureType() != NO_FEATURE)
 				{
-					if (GC.getUnitInfo(eUnit).getFeatureImpassable(pPlot->getFeatureType()))
+					if (kUnitInfo.getFeatureImpassable(pPlot->getFeatureType()))
 					{
-						TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getFeaturePassableTech(pPlot->getFeatureType());
+						TechTypes eTech = (TechTypes)kUnitInfo.getFeaturePassableTech(pPlot->getFeatureType());
 						if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 						{
 							return -1;
@@ -18251,9 +18254,9 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 				}
 				else
 				{
-					if (GC.getUnitInfo(eUnit).getTerrainImpassable(pPlot->getTerrainType()))
+					if (kUnitInfo.getTerrainImpassable(pPlot->getTerrainType()))
 					{
-						TechTypes eTech = (TechTypes)GC.getUnitInfo(eUnit).getTerrainPassableTech(pPlot->getTerrainType());
+						TechTypes eTech = (TechTypes)kUnitInfo.getTerrainPassableTech(pPlot->getTerrainType());
 						if (NO_TECH == eTech || !GET_TEAM(getTeam()).isHasTech(eTech))
 						{
 							return -1;
@@ -18287,7 +18290,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 	}
 
 	// Increase cost if the XML defines that additional units will cost more
-	if (0 != GC.getUnitInfo(eUnit).getAdvancedStartCostIncrease())
+	if (0 != kUnitInfo.getAdvancedStartCostIncrease())
 	{
 		for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
@@ -18304,7 +18307,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 
 		if (iNumUnitType > 0)
 		{
-			iCost *= 100 + GC.getUnitInfo(eUnit).getAdvancedStartCostIncrease() * iNumUnitType;
+			iCost *= 100 + kUnitInfo.getAdvancedStartCostIncrease() * iNumUnitType;
 			iCost /= 100;
 		}
 	}

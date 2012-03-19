@@ -9375,12 +9375,14 @@ void CvCityAI::AI_doHurry(bool bForce)
 
 			if (eProductionBuilding != NO_BUILDING)
 			{
-				if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo(eProductionBuilding).getBuildingClassType())))
+				CvBuildingInfo& kBuildingInfo = GC.getBuildingInfo(eProductionBuilding);
+
+				if (isWorldWonderClass((BuildingClassTypes)(kBuildingInfo.getBuildingClassType())))
 				{
 					iMinTurns = std::min(iMinTurns, 10);
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getDefenseModifier() > 0)
+				if (kBuildingInfo.getDefenseModifier() > 0)
 				{
 					if (bDanger)
 					{
@@ -9389,7 +9391,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getBombardDefenseModifier() > 0)
+				if (kBuildingInfo.getBombardDefenseModifier() > 0)
 				{
 					if (bDanger)
 					{
@@ -9398,7 +9400,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getYieldModifier(YIELD_PRODUCTION) > 0)
+				if (kBuildingInfo.getYieldModifier(YIELD_PRODUCTION) > 0)
 				{
 					if (getBaseYieldRate(YIELD_PRODUCTION) >= 6)
 					{
@@ -9407,8 +9409,8 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if ((GC.getBuildingInfo(eProductionBuilding).getCommerceChange(COMMERCE_CULTURE) > 0) ||
-						(GC.getBuildingInfo(eProductionBuilding).getObsoleteSafeCommerceChange(COMMERCE_CULTURE) > 0))
+				if ((kBuildingInfo.getCommerceChange(COMMERCE_CULTURE) > 0) ||
+						(kBuildingInfo.getObsoleteSafeCommerceChange(COMMERCE_CULTURE) > 0))
 				{
 					if ((getCommerceRateTimes100(COMMERCE_CULTURE) == 0) || (plot()->calculateCulturePercent(getOwnerINLINE()) < 40))
 					{
@@ -9425,7 +9427,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getHappiness() > 0)
+				if (kBuildingInfo.getHappiness() > 0)
 				{
 					if (angryPopulation() > 0)
 					{
@@ -9433,7 +9435,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getHealth() > 0)
+				if (kBuildingInfo.getHealth() > 0)
 				{
 					if (healthRate() < 0)
 					{
@@ -9441,7 +9443,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getSeaPlotYieldChange(YIELD_FOOD) > 0 || GC.getBuildingInfo(eProductionBuilding).getRiverPlotYieldChange(YIELD_FOOD) > 0)
+				if (kBuildingInfo.getSeaPlotYieldChange(YIELD_FOOD) > 0 || kBuildingInfo.getRiverPlotYieldChange(YIELD_FOOD) > 0)
 				{
 
 					iMinTurns = std::min(iMinTurns, 10);
@@ -9453,7 +9455,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getFreeExperience() > 0)
+				if (kBuildingInfo.getFreeExperience() > 0)
 				{
 					if (bDanger)
 					{
@@ -9462,7 +9464,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getMaintenanceModifier() < 0)
+				if (kBuildingInfo.getMaintenanceModifier() < 0)
 				{
 					if (getMaintenance() >= 10)
 					{
@@ -9477,7 +9479,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					{
 						for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
 						{
-							if (GC.getBuildingInfo(eProductionBuilding).getSpecialistCount(iJ) > 0)
+							if (kBuildingInfo.getSpecialistCount(iJ) > 0)
 							{
 								iMinTurns = std::min(iMinTurns, 10);
 								break;
@@ -9486,7 +9488,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getCommerceModifier(COMMERCE_GOLD) > 0)
+				if (kBuildingInfo.getCommerceModifier(COMMERCE_GOLD) > 0)
 				{
 					if (kOwner.AI_isFinancialTrouble())
 					{
@@ -9497,7 +9499,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getCommerceModifier(COMMERCE_RESEARCH) > 0)
+				if (kBuildingInfo.getCommerceModifier(COMMERCE_RESEARCH) > 0)
 				{
 					if (!(kOwner.AI_avoidScience()))
 					{
@@ -9508,7 +9510,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 					}
 				}
 
-				if (GC.getBuildingInfo(eProductionBuilding).getFoodKept() > 0)
+				if (kBuildingInfo.getFoodKept() > 0)
 				{
 					iMinTurns = std::min(iMinTurns, 5);
 					bEssential = true;

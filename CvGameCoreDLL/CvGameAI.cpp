@@ -76,18 +76,19 @@ void CvGameAI::AI_updateAssignWork()
 int CvGameAI::AI_combatValue(UnitTypes eUnit)
 {
 	int iValue;
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 	iValue = 100;
 
-	if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_AIR)
+	if (kUnitInfo.getDomainType() == DOMAIN_AIR)
 	{
-		iValue *= GC.getUnitInfo(eUnit).getAirCombat();
+		iValue *= kUnitInfo.getAirCombat();
 	}
 	else
 	{
-		iValue *= GC.getUnitInfo(eUnit).getCombat();
+		iValue *= kUnitInfo.getCombat();
 
-		iValue *= ((((GC.getUnitInfo(eUnit).getFirstStrikes() * 2) + GC.getUnitInfo(eUnit).getChanceFirstStrikes()) * (GC.getDefineINT("COMBAT_DAMAGE") / 5)) + 100);
+		iValue *= ((((kUnitInfo.getFirstStrikes() * 2) + kUnitInfo.getChanceFirstStrikes()) * (GC.getDefineINT("COMBAT_DAMAGE") / 5)) + 100);
 		iValue /= 100;
 	}
 
