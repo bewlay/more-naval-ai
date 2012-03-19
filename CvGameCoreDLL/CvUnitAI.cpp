@@ -27334,18 +27334,6 @@ void CvUnitAI::ConquestMove()
 	bool bHero = false;
 	bool bWizard = false;
 
-    if (isHiddenNationality() || isInvisibleFromPromotion())
-    {
-		if (!bHero && !bWizard)
-		{
-			AI_setGroupflag(GROUPFLAG_NONE);
-			joinGroup(NULL);
-			AI_setUnitAIType(UNITAI_ATTACK);
-			getGroup()->pushMission(MISSION_SKIP);
-			return;
-		}
-    }
-
     switch (AI_getUnitAIType())
     {
         case UNITAI_HERO:
@@ -27370,7 +27358,20 @@ void CvUnitAI::ConquestMove()
         default:
             break;
     }
-	
+
+
+    if (isHiddenNationality() || isInvisibleFromPromotion())
+    {
+		if (!bHero && !bWizard)
+		{
+			AI_setGroupflag(GROUPFLAG_NONE);
+			joinGroup(NULL);
+			AI_setUnitAIType(UNITAI_ATTACK);
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
+    }
+
 	if (AI_getGroupflag() != GROUPFLAG_CONQUEST)
 	{
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
