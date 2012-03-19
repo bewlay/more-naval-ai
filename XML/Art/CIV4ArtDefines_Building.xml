@@ -834,7 +834,7 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Breedingpit/Breedingpit.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Breeding Pit.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Breeding_Pit.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_GUARD_STATION</Type>
