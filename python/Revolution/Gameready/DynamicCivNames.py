@@ -692,7 +692,7 @@ class DynamicCivNames :
 				sEmp = "Province"
 			if bReligion or bTheocracy:
 				sEmp = "Diocese"
-			bFof = true
+			return ["%s %s"%( sAdj, sEmp ), sSrt,sAdj]
 
 		if pCapital != -1:
 			pCapitalPlot = pCapital.plot()
@@ -712,20 +712,18 @@ class DynamicCivNames :
 		elif bSacrifice:
 			sPre = "Demonic"
 			
-		if( sPre != "" ) :
-			sPre += " "
 
 		if( sPost != "" ) :
 			return ["%s %s of %s %s"%(sPre, sEmp, sAdj, sPost), sSrt,sAdj]
 		
 		if bGodKing:
-			return ["%s%s of %s"%( sPre, sEmp, sLeaderName ), sSrt,sAdj]
+			return ["%s %s of %s"%( sPre, sEmp, sLeaderName ), sSrt,sAdj]
 		elif( iNumCities <= iMxc ) :
-			return ["%s%s of %s"%( sPre, sEmp, sCpt ), sSrt,sAdj]
+			return ["%s %s of %s"%( sPre, sEmp, sCpt ), sSrt,sAdj]
 		elif( bFof or 50 > game.getSorenRandNum( 100, 'Rev: Naming' ) ) :
-			return ["%s%s of the %s"%( sPre, sEmp, sSrt ), sSrt,sAdj]
+			return ["%s %s of the %s"%( sPre, sEmp, sSrt ), sSrt,sAdj]
 		else :
-			return ["%s%s %s"%( sPre, sAdj, sEmp ), sSrt,sAdj]
+			return ["%s %s %s"%( sPre, sAdj, sEmp ), sSrt,sAdj]
 # lfgr end
 	
 	def resetName( self, iPlayer, bVerbose = True ) :
