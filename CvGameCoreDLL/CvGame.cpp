@@ -2690,6 +2690,8 @@ void CvGame::selectGroup(CvUnit* pUnit, bool bShift, bool bCtrl, bool bAlt) cons
 
 			if (pLoopUnit->getOwnerINLINE() == getActivePlayer())
 			{
+//>>>>Unofficial Bug Fix: Modified by Denev 2012/03/20
+/*
 				if (pLoopUnit->canMove())
 				{
 					if (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pLoopUnit->getLastMoveTurn() > GC.getDefineINT("MIN_TIMER_UNIT_DOUBLE_MOVES"))
@@ -2700,6 +2702,18 @@ void CvGame::selectGroup(CvUnit* pUnit, bool bShift, bool bCtrl, bool bAlt) cons
 						}
 					}
 				}
+*/
+				if (pUnit->canMove() == pLoopUnit->canMove())
+				{
+					if (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pLoopUnit->getLastMoveTurn() > GC.getDefineINT("MIN_TIMER_UNIT_DOUBLE_MOVES"))
+					{
+						if (bAlt && pLoopUnit->canJoinGroup(pUnitPlot, pUnit->getGroup()) || pLoopUnit->getUnitType() == pUnit->getUnitType())
+						{
+							gDLL->getInterfaceIFace()->insertIntoSelectionList(pLoopUnit, false, false, bGroup, false, true);
+						}
+					}
+				}
+//<<<<Unofficial Bug Fix: End Modify
 			}
 		}
 
