@@ -6800,7 +6800,7 @@ int CvCityAI::AI_neededDefenders()
 /*                                                                                              */
 /*                                                                                              */
 /************************************************************************************************/
-	if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
 	{
 		iDefenders += getRevolutionIndex() / 700;
 	}
