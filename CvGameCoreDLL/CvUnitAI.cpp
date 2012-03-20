@@ -10304,13 +10304,15 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
-	if (GC.getPromotionInfo(ePromotion).isLeader())
+	CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+
+	if (kPromotion.isLeader())
 	{
 		// Don't consume the leader as a regular promotion
 		return 0;
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isBlitz())
+	if (kPromotion.isBlitz())
 	{
 		if (baseMoves() > 1)
 		{
@@ -10341,7 +10343,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	// Tholal AI - account for new FFH promotion tags
 	// ToDo - add logic for tags that arent selectable but could be in mods (flying, Dispellable, Immortal, immunetofear, bImmuneToMagic, 
 
-	if (GC.getPromotionInfo(ePromotion).isIgnoreBuildingDefense())
+	if (kPromotion.isIgnoreBuildingDefense())
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
 		{
@@ -10349,7 +10351,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isSeeInvisible())
+	if (kPromotion.isSeeInvisible())
 	{
 		if (eUnitAI == UNITAI_CITY_DEFENSE)
 		{
@@ -10361,7 +10363,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isInvisible())
+	if (kPromotion.isInvisible())
 	{
 		if ((eUnitAI == UNITAI_ATTACK) || (eUnitAI == UNITAI_ATTACK_CITY) || (eUnitAI == UNITAI_COUNTER) || (eUnitAI == UNITAI_EXPLORE))
 		{
@@ -10369,7 +10371,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isTargetWeakestUnit())
+	if (kPromotion.isTargetWeakestUnit())
 	{
 		if ((eUnitAI == UNITAI_ATTACK) || (eUnitAI == UNITAI_ATTACK_CITY) || (eUnitAI == UNITAI_COUNTER))
 		{
@@ -10377,7 +10379,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isTargetWeakestUnitCounter())
+	if (kPromotion.isTargetWeakestUnitCounter())
 	{
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) || (eUnitAI == UNITAI_COUNTER) || (eUnitAI == UNITAI_CITY_COUNTER))
 		{
@@ -10385,7 +10387,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	int iCombatHeal = GC.getPromotionInfo(ePromotion).getCombatHealPercent();
+	int iCombatHeal = kPromotion.getCombatHealPercent();
 
 	if (iCombatHeal > 0)
 	{
@@ -10399,18 +10401,18 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iValue += (GC.getPromotionInfo(ePromotion).getCombatCapturePercent() * (iLevel + 2));
+	iValue += (kPromotion.getCombatCapturePercent() * (iLevel + 2));
 
-	if (GC.getPromotionInfo(ePromotion).isFear())
+	if (kPromotion.isFear())
 	{
 		iValue += 100;
 	}
 
 	//Bounty Hunter
-	iValue += GC.getPromotionInfo(ePromotion).getGoldFromCombat() * (iLevel / (bFinancialTrouble ? 1: 2));
+	iValue += kPromotion.getGoldFromCombat() * (iLevel / (bFinancialTrouble ? 1: 2));
 
 	//Twincast
-	if (GC.getPromotionInfo(ePromotion).isTwincast())
+	if (kPromotion.isTwincast())
 	{
 		if (isSummoner())
 		{
@@ -10465,7 +10467,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	// End Tholal AI
 
 
-	if (GC.getPromotionInfo(ePromotion).isAmphib())
+	if (kPromotion.isAmphib())
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
 			  (eUnitAI == UNITAI_ATTACK_CITY))
@@ -10478,7 +10480,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isRiver())
+	if (kPromotion.isRiver())
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
 			  (eUnitAI == UNITAI_ATTACK_CITY))
@@ -10491,7 +10493,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isEnemyRoute())
+	if (kPromotion.isEnemyRoute())
 	{
 		if (eUnitAI == UNITAI_PILLAGE || isBlitz())
 		{
@@ -10512,7 +10514,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isAlwaysHeal())
+	if (kPromotion.isAlwaysHeal())
 	{
 		if ((eUnitAI == UNITAI_ATTACK) ||
 			  (eUnitAI == UNITAI_ATTACK_CITY) ||
@@ -10532,7 +10534,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isHillsDoubleMove())
+	if (kPromotion.isHillsDoubleMove())
 	{
 		if (eUnitAI == UNITAI_EXPLORE)
 		{
@@ -10544,7 +10546,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isImmuneToFirstStrikes()
+	if (kPromotion.isImmuneToFirstStrikes()
 		&& !immuneToFirstStrikes())
 	{
 		if ((eUnitAI == UNITAI_ATTACK_CITY))
@@ -10561,7 +10563,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getVisibilityChange();
+	iTemp = kPromotion.getVisibilityChange();
 	if ((eUnitAI == UNITAI_EXPLORE_SEA) ||
 		(eUnitAI == UNITAI_EXPLORE))
 	{
@@ -10573,7 +10575,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// mobility
-//	iTemp = GC.getPromotionInfo(ePromotion).getMovesChange();
+//	iTemp = kPromotion.getMovesChange();
 	iTemp = 0;
 	/*
 	if ((eUnitAI == UNITAI_ATTACK_SEA) ||
@@ -10613,9 +10615,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iValue += iTemp * GC.getPromotionInfo(ePromotion).getMovesChange();
+	iValue += iTemp * kPromotion.getMovesChange();
 
-	iTemp = GC.getPromotionInfo(ePromotion).getMoveDiscountChange();
+	iTemp = kPromotion.getMoveDiscountChange();
 	if (eUnitAI == UNITAI_PILLAGE)
 	{
 		iValue += (iTemp * 10);
@@ -10625,7 +10627,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp * 2);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getAirRangeChange();
+	iTemp = kPromotion.getAirRangeChange();
 	if (eUnitAI == UNITAI_ATTACK_AIR ||
 		eUnitAI == UNITAI_CARRIER_AIR)
 	{
@@ -10636,7 +10638,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp * 10);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getInterceptChange();
+	iTemp = kPromotion.getInterceptChange();
 	if (eUnitAI == UNITAI_DEFENSE_AIR)
 	{
 		iValue += (iTemp * 3);
@@ -10650,7 +10652,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 10);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getEvasionChange();
+	iTemp = kPromotion.getEvasionChange();
 	if (eUnitAI == UNITAI_ATTACK_AIR || eUnitAI == UNITAI_CARRIER_AIR)
 	{
 		iValue += (iTemp * 3);
@@ -10660,8 +10662,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 10);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getFirstStrikesChange() * 2;
-	iTemp += GC.getPromotionInfo(ePromotion).getChanceFirstStrikesChange();
+	iTemp = kPromotion.getFirstStrikesChange() * 2;
+	iTemp += kPromotion.getChanceFirstStrikesChange();
 	if ((eUnitAI == UNITAI_RESERVE) ||
 		  (eUnitAI == UNITAI_COUNTER) ||
 			(eUnitAI == UNITAI_CITY_DEFENSE) ||
@@ -10682,7 +10684,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 
-	iTemp = GC.getPromotionInfo(ePromotion).getWithdrawalChange();
+	iTemp = kPromotion.getWithdrawalChange();
 	if (iTemp != 0)
 	{
 		iExtra = (m_pUnitInfo->getWithdrawalProbability() + (getExtraWithdrawal() * 4));
@@ -10707,7 +10709,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getCollateralDamageChange();
+	iTemp = kPromotion.getCollateralDamageChange();
 	if (iTemp != 0)
 	{
 		iExtra = (getExtraCollateralDamage());//collateral has no strong synergy (not like retreat)
@@ -10728,7 +10730,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getBombardRateChange();
+	iTemp = kPromotion.getBombardRateChange();
 	if (eUnitAI == UNITAI_ATTACK_CITY)
 	{
 		iValue += (iTemp * 2);
@@ -10743,7 +10745,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
-	iTemp = GC.getPromotionInfo(ePromotion).getEnemyHealChange();	
+	iTemp = kPromotion.getEnemyHealChange();	
 	if ((eUnitAI == UNITAI_ATTACK) ||
 		(eUnitAI == UNITAI_ATTACK_CITY) ||
 		(eUnitAI == UNITAI_PILLAGE) ||
@@ -10762,10 +10764,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 2);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getNeutralHealChange();
+	iTemp = kPromotion.getNeutralHealChange();
 	iValue += (iTemp / 2);
 
-	iTemp = GC.getPromotionInfo(ePromotion).getFriendlyHealChange();
+	iTemp = kPromotion.getFriendlyHealChange();
 	if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
 		  (eUnitAI == UNITAI_CITY_COUNTER) ||
 		  (eUnitAI == UNITAI_CITY_SPECIAL))
@@ -10791,7 +10793,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-        iTemp = GC.getPromotionInfo(ePromotion).getSameTileHealChange() + getSameTileHeal();
+        iTemp = kPromotion.getSameTileHealChange() + getSameTileHeal();
         iExtra = getSameTileHeal();
 
         iTemp *= (100 + iExtra * 5);
@@ -10809,7 +10811,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
             }
         }
 
-        iTemp = GC.getPromotionInfo(ePromotion).getAdjacentTileHealChange();
+        iTemp = kPromotion.getAdjacentTileHealChange();
         iExtra = getAdjacentTileHeal();
         iTemp *= (100 + iExtra * 5);
         iTemp /= 100;
@@ -10831,7 +10833,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 //FfH: Modified by Kael 11/14/2009 0.41k
 	// try to use Warlords to create super-medic units
-//	if (GC.getPromotionInfo(ePromotion).getAdjacentTileHealChange() > 0 || GC.getPromotionInfo(ePromotion).getSameTileHealChange() > 0)
+//	if (kPromotion.getAdjacentTileHealChange() > 0 || kPromotion.getSameTileHealChange() > 0)
 //	{
 //		PromotionTypes eLeader = NO_PROMOTION;
 //		for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
@@ -10844,12 +10846,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 //
 //		if (isHasPromotion(eLeader) && eLeader != NO_PROMOTION)
 //		{
-//			iValue += GC.getPromotionInfo(ePromotion).getAdjacentTileHealChange() + GC.getPromotionInfo(ePromotion).getSameTileHealChange();
+//			iValue += kPromotion.getAdjacentTileHealChange() + kPromotion.getSameTileHealChange();
 //		}
 //	}
 //FfH: End Modify
 
-	iTemp = GC.getPromotionInfo(ePromotion).getCombatPercent();
+	iTemp = kPromotion.getCombatPercent();
 	if ((eUnitAI == UNITAI_ATTACK) ||
 		(eUnitAI == UNITAI_COUNTER) ||
 		(eUnitAI == UNITAI_CITY_COUNTER) ||
@@ -10875,10 +10877,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	if (isDirectDamageCaster())
 	{
-		iValue += GC.getPromotionInfo(ePromotion).getSpellDamageModify() * 4;
+		iValue += kPromotion.getSpellDamageModify() * 4;
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getCityAttackPercent();
+	iTemp = kPromotion.getCityAttackPercent();
 	if (iTemp != 0)
 	{
 		if (m_pUnitInfo->getUnitAIType(UNITAI_ATTACK) || m_pUnitInfo->getUnitAIType(UNITAI_ATTACK_CITY) || m_pUnitInfo->getUnitAIType(UNITAI_ATTACK_CITY_LEMMING))
@@ -10897,7 +10899,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isImmuneToDefensiveStrike())
+	if (kPromotion.isImmuneToDefensiveStrike())
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
 		{
@@ -10906,7 +10908,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 
-	iTemp = GC.getPromotionInfo(ePromotion).getCityDefensePercent();
+	iTemp = kPromotion.getCityDefensePercent();
 	if (iTemp != 0)
 	{
 		if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
@@ -10921,7 +10923,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).isDoubleFortifyBonus())
+	if (kPromotion.isDoubleFortifyBonus())
 	{
 		if (eUnitAI == UNITAI_CITY_DEFENSE)
 		{
@@ -10929,7 +10931,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getHillsAttackPercent();
+	iTemp = kPromotion.getHillsAttackPercent();
 	if (iTemp != 0)
 	{
 		iExtra = getExtraHillsAttackPercent();
@@ -10946,7 +10948,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getHillsDefensePercent();
+	iTemp = kPromotion.getHillsDefensePercent();
 	if (iTemp != 0)
 	{
 		iExtra = (m_pUnitInfo->getHillsDefenseModifier() + (getExtraHillsDefensePercent() * 2));
@@ -10976,7 +10978,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getRevoltProtection();
+	iTemp = kPromotion.getRevoltProtection();
 	if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
 		(eUnitAI == UNITAI_CITY_COUNTER) ||
 		(eUnitAI == UNITAI_CITY_SPECIAL))
@@ -10991,7 +10993,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		}
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getCollateralDamageProtection();
+	iTemp = kPromotion.getCollateralDamageProtection();
 	if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
 		(eUnitAI == UNITAI_CITY_COUNTER) ||
 		(eUnitAI == UNITAI_CITY_SPECIAL))
@@ -11008,7 +11010,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 8);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getPillageChange();
+	iTemp = kPromotion.getPillageChange();
 	if (eUnitAI == UNITAI_PILLAGE ||
 		eUnitAI == UNITAI_ATTACK_SEA ||
 		eUnitAI == UNITAI_PIRATE_SEA)
@@ -11020,10 +11022,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 16);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getUpgradeDiscount();
+	iTemp = kPromotion.getUpgradeDiscount();
 	iValue += (iTemp / 16);
 
-	iTemp = GC.getPromotionInfo(ePromotion).getExperiencePercent();
+	iTemp = kPromotion.getExperiencePercent();
 	if ((eUnitAI == UNITAI_ATTACK) ||
 		(eUnitAI == UNITAI_ATTACK_SEA) ||
 		(eUnitAI == UNITAI_PIRATE_SEA) ||
@@ -11039,7 +11041,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iValue += (iTemp / 2);
 	}
 
-	iTemp = GC.getPromotionInfo(ePromotion).getKamikazePercent();
+	iTemp = kPromotion.getKamikazePercent();
 	if (eUnitAI == UNITAI_ATTACK_CITY)
 	{
 		iValue += (iTemp / 16);
@@ -11050,7 +11052,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 //>>>>Better AI: Added by Denev 2010/03/25
-	iTemp = GC.getPromotionInfo(ePromotion).getCargoChange();
+	iTemp = kPromotion.getCargoChange();
 	if (eUnitAI == UNITAI_ASSAULT_SEA || eUnitAI == UNITAI_SETTLER_SEA)
 	{
 		iValue += (iTemp * 24);
@@ -11059,7 +11061,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 	{
-		iTemp = GC.getPromotionInfo(ePromotion).getTerrainAttackPercent(iI);
+		iTemp = kPromotion.getTerrainAttackPercent(iI);
 		if (iTemp != 0)
 		{
 			iExtra = getExtraTerrainAttackPercent((TerrainTypes)iI);
@@ -11076,7 +11078,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 
-		iTemp = GC.getPromotionInfo(ePromotion).getTerrainDefensePercent(iI);
+		iTemp = kPromotion.getTerrainDefensePercent(iI);
 		if (iTemp != 0)
 		{
 			iExtra =  getExtraTerrainDefensePercent((TerrainTypes)iI);
@@ -11099,7 +11101,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 
-		if (GC.getPromotionInfo(ePromotion).getTerrainDoubleMove(iI))
+		if (kPromotion.getTerrainDoubleMove(iI))
 		{
 			if (eUnitAI == UNITAI_EXPLORE)
 			{
@@ -11118,7 +11120,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
-		iTemp = GC.getPromotionInfo(ePromotion).getFeatureAttackPercent(iI);
+		iTemp = kPromotion.getFeatureAttackPercent(iI);
 		if (iTemp != 0)
 		{
 			iExtra = getExtraFeatureAttackPercent((FeatureTypes)iI);
@@ -11135,7 +11137,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 
-		iTemp = GC.getPromotionInfo(ePromotion).getFeatureDefensePercent(iI);
+		iTemp = kPromotion.getFeatureDefensePercent(iI);
 		if (iTemp != 0)
 		{
 			iExtra = getExtraFeatureDefensePercent((FeatureTypes)iI);
@@ -11162,7 +11164,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 
-		if (GC.getPromotionInfo(ePromotion).getFeatureDoubleMove(iI))
+		if (kPromotion.getFeatureDoubleMove(iI))
 		{
 			if (eUnitAI == UNITAI_EXPLORE)
 			{
@@ -11182,7 +11184,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	int iTempValue = 0;
 	for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
     {
-		int iPromoCombatValue = GC.getPromotionInfo(ePromotion).getUnitCombatModifierPercent(iI);
+		int iPromoCombatValue = kPromotion.getUnitCombatModifierPercent(iI);
 		if (iPromoCombatValue > 0)
 		{
 			int iTempPromoValue = 0;
@@ -11258,7 +11260,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// Slaying
-	if (GC.getPromotionInfo(ePromotion).getPromotionCombatType() != NULL)
+	if (kPromotion.getPromotionCombatType() != NULL)
 	{
 		// first make sure we dont have a counter to a different combat type already
 		// note - doesnt count PromoCombats :(
@@ -11286,10 +11288,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// unit combat type captures (subdue animal)
-	if (GC.getPromotionInfo(ePromotion).getCaptureUnitCombat() != NO_UNITCOMBAT)
+	if (kPromotion.getCaptureUnitCombat() != NO_UNITCOMBAT)
 	{
 		iValue += 25;
-		if (unitCombatModifier(UnitCombatTypes(GC.getPromotionInfo(ePromotion).getCaptureUnitCombat())) > 0)
+		if (unitCombatModifier(UnitCombatTypes(kPromotion.getCaptureUnitCombat())) > 0)
 		{
 			iValue += 15 * iLevel;
 		}
@@ -11298,8 +11300,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
 		//WTF? why float and cast to int?
-		//iTemp = ((int)((GC.getPromotionInfo(ePromotion).getDomainModifierPercent(iI) + getExtraDomainModifier((DomainTypes)iI)) * 100.0f));
-		iTemp = GC.getPromotionInfo(ePromotion).getDomainModifierPercent(iI);
+		//iTemp = ((int)((kPromotion.getDomainModifierPercent(iI) + getExtraDomainModifier((DomainTypes)iI)) * 100.0f));
+		iTemp = kPromotion.getDomainModifierPercent(iI);
 		if (eUnitAI == UNITAI_COUNTER)
 		{
 			iValue += (iTemp * 1);
@@ -11316,7 +11318,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 //FfH: Added by Kael 07/30/2007
-	iTemp = GC.getPromotionInfo(ePromotion).getDefensiveStrikeChance() + GC.getPromotionInfo(ePromotion).getDefensiveStrikeDamage();
+	iTemp = kPromotion.getDefensiveStrikeChance() + kPromotion.getDefensiveStrikeDamage();
 	iTemp /= 2;
 	if ((eUnitAI == UNITAI_CITY_DEFENSE) ||
 		(eUnitAI == UNITAI_CITY_COUNTER) ||
@@ -11350,7 +11352,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		*/
 
 		// summoners like promotions that give bonuses to their summons
-		if (GC.getPromotionInfo(ePromotion).getPromotionSummonPerk() != NO_PROMOTION)
+		if (kPromotion.getPromotionSummonPerk() != NO_PROMOTION)
 		{
 			if (isSummoner())
 			{
@@ -11563,7 +11565,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 				}
 			}
 		}
-		iValue += ((GC.getPromotionInfo(ePromotion).getAIWeight() / 10) * (getChannelingLevel() +1));
+		iValue += ((kPromotion.getAIWeight() / 10) * (getChannelingLevel() +1));
 	}
 	// End Tholal AI
 
