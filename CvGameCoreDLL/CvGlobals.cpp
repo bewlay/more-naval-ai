@@ -2225,10 +2225,12 @@ CvSpecialistInfo& CvGlobals::getSpecialistInfo(SpecialistTypes eSpecialistNum)
 	return *(m_paSpecialistInfo[eSpecialistNum]);
 }
 
+#ifdef USE_OLD_CODE
 int CvGlobals::getNumCivicOptionInfos()
 {
 	return (int)m_paCivicOptionInfo.size();
 }
+#endif
 
 std::vector<CvCivicOptionInfo*>& CvGlobals::getCivicOptionInfo()	// For Moose - XML Load Util, CvInfos
 {
@@ -3464,7 +3466,11 @@ void CvGlobals::writeEventTriggerInfoArray(FDataStreamBase* pStream)
 int CvGlobals::getTypesEnum(const char* szType) const
 {
 	FAssertMsg(szType, "null type string");
+#ifdef USE_OLD_CODE
 	TypesMap::const_iterator it = m_typesMap.find(szType);
+#else
+	TypesMap::const_iterator it = m_typesMap.find(CvStaticString(szType)); //*lol:speedup*szType);
+#endif
 	if (it!=m_typesMap.end())
 	{
 		return it->second;
@@ -3478,7 +3484,7 @@ void CvGlobals::setTypesEnum(const char* szType, int iEnum)
 {
 	FAssertMsg(szType, "null type string");
 	FAssertMsg(m_typesMap.find(szType)==m_typesMap.end(), "types entry already exists");
-	m_typesMap[szType] = iEnum;
+	m_typesMap[CvStaticString(szType)] = iEnum;//*lol:speedup*szType] = iEnum;
 }
 
 
@@ -3674,9 +3680,13 @@ void CvGlobals::deleteInfoArrays()
 //
 
 int CvGlobals::getInfoTypeForString(const char* szType, bool hideAssert) const
-	{
+{
 	FAssertMsg(szType, "null info type string");
+#ifdef USE_OLD_CODE
 	InfosMap::const_iterator it = m_infosMap.find(szType);
+#else
+	InfosMap::const_iterator it = m_infosMap.find(CvStaticString(szType)); //*lol:speedup*szType);
+#endif
 	if (it!=m_infosMap.end())
 	{
 		return it->second;
@@ -3701,7 +3711,12 @@ void CvGlobals::setInfoTypeFromString(const char* szType, int idx)
 	int iExisting = (it!=m_infosMap.end()) ? it->second : -1;
 	FAssertMsg(iExisting==-1 || iExisting==idx || strcmp(szType, "ERROR")==0, CvString::format("xml info type entry %s already exists", szType).c_str());
 #endif
+#ifdef USE_OLD_CODE
 	m_infosMap[szType] = idx;
+#else
+	m_infosMap[CvStaticString(szType)] = idx; //*lol:speedup*szType] = idx;
+#endif
+	
 }
 
 void CvGlobals::infoTypeFromStringReset()

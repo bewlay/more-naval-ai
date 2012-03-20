@@ -23,12 +23,18 @@ static const int kBufSize = 2048;
 //
 // for logging
 //
+#ifdef _DEBUG
 void CvXMLLoadUtility::logMsg(char* format, ... )
 {
-	static char buf[kBufSize];
-	_vsnprintf( buf, kBufSize-4, format, (char*)(&format+1) );
-	gDLL->logMsg("xml.log", buf);
+	{
+		static char buf[kBufSize];
+		_vsnprintf( buf, kBufSize-4, format, (char*)(&format+1) );
+		gDLL->logMsg("xml.log", buf);
+	}
 }
+#else
+inline void CvXMLLoadUtility::logMsg(char* format, ... ) { }
+#endif
 
 bool CvXMLLoadUtility::CreateFXml()
 {
@@ -347,14 +353,15 @@ int CvXMLLoadUtility::FindInInfoClass(const TCHAR* pszVal, bool hideAssert)
 //------------------------------------------------------------------------------------------------------
 bool CvXMLLoadUtility::LoadCivXml(FXml* pFXml, const TCHAR* szFilename)
 {
-	char szLog[256];
+	/*char szLog[256];
 	sprintf(szLog, "LoadCivXml (%s)", szFilename);
 	PROFILE(szLog);
 	OutputDebugString(szLog);
-	OutputDebugString("\n");
+	OutputDebugString("\n");*/
+	PROFILE_FUNC()
 
 	CvString szPath = szFilename;
-	CvString fsFilename = szFilename;
+	//*lol*CvString fsFilename = szFilename;
 
 	if (!gDLL->fileManagerEnabled())
 	{
@@ -381,13 +388,15 @@ bool CvXMLLoadUtility::LoadCivXml(FXml* pFXml, const TCHAR* szFilename)
 //  PURPOSE :   create a hot key from a description and return it
 //
 //------------------------------------------------------------------------------------------------------
-CvWString CvXMLLoadUtility::CreateHotKeyFromDescription(const TCHAR* pszHotKey, bool bShift, bool bAlt, bool bCtrl)
-{
-	// Delete <COLOR:140,255,40,255>Shift+Delete</COLOR>
+CvWString
+CvXMLLoadUtility::CreateHotKeyFromDescription(const TCHAR* pszHotKey, bool bShift, bool bAlt, bool bCtrl)
+{ // lol: called too many
+	// Delete <COLOR:140,255,40,255><Shift+Delete></COLOR>
 	CvWString szHotKey;
 
 	if (pszHotKey && strcmp(pszHotKey,"") != 0)
 	{
+		szHotKey.reserve(55); // *lol*
 		szHotKey += L" <color=140,255,40,255>";
 		szHotKey += L"&lt;";
 
@@ -406,7 +415,8 @@ CvWString CvXMLLoadUtility::CreateHotKeyFromDescription(const TCHAR* pszHotKey, 
 			szHotKey += gDLL->getText("TXT_KEY_CTRL");
 		}
 
-		szHotKey = szHotKey + CreateKeyStringFromKBCode(pszHotKey);
+		//szHotKey += CreateKeyStringFromKBCode(pszHotKey);
+		szHotKey += gCvKeyBoardMapping.getKeyString(pszHotKey);
 		szHotKey += L">";
 		szHotKey += L"</color>";
 	}
@@ -415,7 +425,7 @@ CvWString CvXMLLoadUtility::CreateHotKeyFromDescription(const TCHAR* pszHotKey, 
 }
 
 bool CvXMLLoadUtility::SetStringList(CvString** ppszStringArray, int* piSize)
-{
+{ // lol: called too many
 	int i;
 	CvString* pszStringArray;
 
@@ -450,10 +460,10 @@ bool CvXMLLoadUtility::SetStringList(CvString** ppszStringArray, int* piSize)
 //  PURPOSE :   Create a keyboard string from a KB code, Delete would be returned for KB_DELETE
 //
 //------------------------------------------------------------------------------------------------------
-CvWString CvXMLLoadUtility::CreateKeyStringFromKBCode(const TCHAR* pszHotKey)
-{
+const CvWString& CvXMLLoadUtility::CreateKeyStringFromKBCode(const TCHAR* pszHotKey)
+{ // lol: called many
 	// SPEEDUP
-	PROFILE("CreateKeyStringFromKBCode");
+	/*PROFILE("CreateKeyStringFromKBCode");
 
 	int i;
 
@@ -478,7 +488,7 @@ CvWString CvXMLLoadUtility::CreateKeyStringFromKBCode(const TCHAR* pszHotKey)
 		{"KB_7","7"},
 		{"KB_8","8"},
 		{"KB_9","9"},
-		{"KB_MINUS","-"},	    /* - on main keyboard */
+		{"KB_MINUS","-"},	    // - on main keyboard
 		{"KB_A","A"},
 		{"KB_B","B"},
 		{"KB_C","C"},
@@ -510,11 +520,11 @@ CvWString CvXMLLoadUtility::CreateKeyStringFromKBCode(const TCHAR* pszHotKey)
 		{"KB_TAB","TAB"},
 		{"KB_LBRACKET","["},
 		{"KB_RBRACKET","]"},
-		{"KB_RETURN",gDLL->getText("TXT_KEY_KEYBOARD_ENTER")},		/* Enter on main keyboard */
+		{"KB_RETURN",gDLL->getText("TXT_KEY_KEYBOARD_ENTER")},		// Enter on main keyboard
 		{"KB_LCONTROL",gDLL->getText("TXT_KEY_KEYBOARD_LEFT_CONTROL_KEY")},
 		{"KB_SEMICOLON",";"},
 		{"KB_APOSTROPHE","'"},
-		{"KB_GRAVE","`"},		/* accent grave */
+		{"KB_GRAVE","`"},		// accent grave
 		{"KB_LSHIFT",gDLL->getText("TXT_KEY_KEYBOARD_LEFT_SHIFT_KEY")},
 		{"KB_BACKSLASH","\\"},
 		{"KB_COMMA",","},
@@ -584,8 +594,9 @@ CvWString CvXMLLoadUtility::CreateKeyStringFromKBCode(const TCHAR* pszHotKey)
 			return asCvKeyBoardMapping[i].szKeyString;
 		}
 	}
-
-	return "";
+	return EmptyWS;
+	*/
+	return gCvKeyBoardMapping.getKeyString(pszHotKey);
 }
 
 //

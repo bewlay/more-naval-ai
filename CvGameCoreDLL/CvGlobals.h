@@ -566,7 +566,11 @@ public:
 	std::vector<CvSpecialistInfo*>& getSpecialistInfo();
 	CvSpecialistInfo& getSpecialistInfo(SpecialistTypes eSpecialistNum);
 
+#ifdef USE_OLD_CODE
 	int getNumCivicOptionInfos();
+#else
+	int getNumCivicOptionInfos() { return (int)m_paCivicOptionInfo.size(); }
+#endif
 	std::vector<CvCivicOptionInfo*>& getCivicOptionInfo();
 	CvCivicOptionInfo& getCivicOptionInfo(CivicOptionTypes eCivicOptionNum);
 

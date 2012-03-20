@@ -657,6 +657,9 @@ public:
 	void setCapturingPlayer(PlayerTypes eNewValue);
 
 	DllExport const UnitTypes getUnitType() const;																					// Exposed to Python
+#ifndef USE_OLD_CODE
+	const UnitTypes getUnitTypeINLINE() const { return m_eUnitType; }
+#endif
 	CvUnitInfo &getUnitInfo() const;
 	UnitClassTypes getUnitClassType() const;	// Exposed to Python
 

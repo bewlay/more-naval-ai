@@ -1229,6 +1229,8 @@ int CvXMLLoadUtility::GetHotKeyInt(const TCHAR* pszHotKeyVal)
 {
 	// SPEEDUP
 	PROFILE("GetHotKeyInt");
+	/* rewrite by lol for performance
+
 	int i;
 
 	struct CvKeyBoardMapping
@@ -1252,7 +1254,7 @@ int CvXMLLoadUtility::GetHotKeyInt(const TCHAR* pszHotKeyVal)
 		{"KB_7",FInputDevice::KB_7},
 		{"KB_8",FInputDevice::KB_8},
 		{"KB_9",FInputDevice::KB_9},
-		{"KB_MINUS",FInputDevice::KB_MINUS},	    /* - on main keyboard */	
+		{"KB_MINUS",FInputDevice::KB_MINUS},	    // - on main keyboard
 		{"KB_A",FInputDevice::KB_A},
 		{"KB_B",FInputDevice::KB_B},
 		{"KB_C",FInputDevice::KB_C},
@@ -1284,11 +1286,11 @@ int CvXMLLoadUtility::GetHotKeyInt(const TCHAR* pszHotKeyVal)
 		{"KB_TAB",FInputDevice::KB_TAB},
 		{"KB_LBRACKET",FInputDevice::KB_LBRACKET},
 		{"KB_RBRACKET",FInputDevice::KB_RBRACKET},
-		{"KB_RETURN",FInputDevice::KB_RETURN},		/* Enter on main keyboard */
+		{"KB_RETURN",FInputDevice::KB_RETURN},		// Enter on main keyboard
 		{"KB_LCONTROL",FInputDevice::KB_LCONTROL},
 		{"KB_SEMICOLON",FInputDevice::KB_SEMICOLON},
 		{"KB_APOSTROPHE",FInputDevice::KB_APOSTROPHE},
-		{"KB_GRAVE",FInputDevice::KB_GRAVE},		/* accent grave */
+		{"KB_GRAVE",FInputDevice::KB_GRAVE},		// accent grave
 		{"KB_LSHIFT",FInputDevice::KB_LSHIFT},
 		{"KB_BACKSLASH",FInputDevice::KB_BACKSLASH},
 		{"KB_COMMA",FInputDevice::KB_COMMA},
@@ -1360,5 +1362,154 @@ int CvXMLLoadUtility::GetHotKeyInt(const TCHAR* pszHotKeyVal)
 	}
 
 	return -1;
+	*/
+	return gCvKeyBoardMapping.getKeyInt(pszHotKeyVal);
 }
 
+
+//
+// lol for performance
+// 
+
+CvKeyBoardMapping gCvKeyBoardMapping;	// global single instance
+
+CvKeyBoardMapping::Data *
+CvKeyBoardMapping::bin_search(Data *v[], int begin, int end, const char *value) {
+	int position;
+	int cond = 0;
+	while(begin <= end) {
+		position = (begin + end) / 2;
+		if((cond = ::strcmp(v[position]->pszKey, value)) == 0)
+			return v[position];
+		else if(cond < 0)
+			begin = position + 1;
+		else
+			end = position - 1;
+	}
+	return NULL;
+}
+
+void CvKeyBoardMapping::endInsert()
+{
+	sort( _vec.begin(), _vec.end(), this->lesser );
+	_b_filled = true;
+}
+
+void CvKeyBoardMapping::generateTable( )
+{
+	// 108
+	if(_vec.size() != 0) return;
+
+	_vec.reserve(108);
+
+	insert("KB_ESCAPE", FInputDevice::KB_ESCAPE, gDLL->getText("TXT_KEY_KEYBOARD_ESCAPE"));
+	insert("KB_0", FInputDevice::KB_0, L"0");
+	insert("KB_1", FInputDevice::KB_1, L"1");
+	insert("KB_2", FInputDevice::KB_2, L"2");
+	insert("KB_3", FInputDevice::KB_3, L"3");
+	insert("KB_4", FInputDevice::KB_4, L"4");
+	insert("KB_5", FInputDevice::KB_5, L"5");
+	insert("KB_6", FInputDevice::KB_6, L"6");
+	insert("KB_7", FInputDevice::KB_7, L"7");
+	insert("KB_8", FInputDevice::KB_8, L"8");
+	insert("KB_9", FInputDevice::KB_9, L"9");
+	insert("KB_MINUS", FInputDevice::KB_MINUS, L"-");	    /* - on main keyboard */
+	insert("KB_A", FInputDevice::KB_A, L"A");
+	insert("KB_B", FInputDevice::KB_B, L"B");
+	insert("KB_C", FInputDevice::KB_C, L"C");
+	insert("KB_D", FInputDevice::KB_D, L"D");
+	insert("KB_E", FInputDevice::KB_E, L"E");
+	insert("KB_F", FInputDevice::KB_F, L"F");
+	insert("KB_G", FInputDevice::KB_G, L"G");
+	insert("KB_H", FInputDevice::KB_H, L"H");
+	insert("KB_I", FInputDevice::KB_I, L"I");
+	insert("KB_J", FInputDevice::KB_J, L"J");
+	insert("KB_K", FInputDevice::KB_K, L"K");
+	insert("KB_L", FInputDevice::KB_L, L"L");
+	insert("KB_M", FInputDevice::KB_M, L"M");
+	insert("KB_N", FInputDevice::KB_N, L"N");
+	insert("KB_O", FInputDevice::KB_O, L"O");
+	insert("KB_P", FInputDevice::KB_P, L"P");
+	insert("KB_Q", FInputDevice::KB_Q, L"Q");
+	insert("KB_R", FInputDevice::KB_R, L"R");
+	insert("KB_S", FInputDevice::KB_S, L"S");
+	insert("KB_T", FInputDevice::KB_T, L"T");
+	insert("KB_U", FInputDevice::KB_U, L"U");
+	insert("KB_V", FInputDevice::KB_V, L"V");
+	insert("KB_W", FInputDevice::KB_W, L"W");
+	insert("KB_X", FInputDevice::KB_X, L"X");
+	insert("KB_Y", FInputDevice::KB_Y, L"Y");
+	insert("KB_Z", FInputDevice::KB_Z, L"Z");
+	insert("KB_EQUALS", FInputDevice::KB_EQUALS, L"=");
+	insert("KB_BACKSPACE", FInputDevice::KB_BACKSPACE, gDLL->getText("TXT_KEY_KEYBOARD_BACKSPACE"));
+	insert("KB_TAB", FInputDevice::KB_TAB, L"TAB");
+	insert("KB_LBRACKET", FInputDevice::KB_LBRACKET, L"[");
+	insert("KB_RBRACKET", FInputDevice::KB_RBRACKET, L"]");
+	insert("KB_RETURN", FInputDevice::KB_RETURN, gDLL->getText("TXT_KEY_KEYBOARD_ENTER"));		/* Enter on main keyboard */
+	insert("KB_LCONTROL", FInputDevice::KB_LCONTROL, gDLL->getText("TXT_KEY_KEYBOARD_LEFT_CONTROL_KEY"));
+	insert("KB_SEMICOLON", FInputDevice::KB_SEMICOLON, L";");
+	insert("KB_APOSTROPHE", FInputDevice::KB_APOSTROPHE, L"'");
+	insert("KB_GRAVE", FInputDevice::KB_GRAVE, L"`");		/* accent grave */
+	insert("KB_LSHIFT", FInputDevice::KB_LSHIFT, gDLL->getText("TXT_KEY_KEYBOARD_LEFT_SHIFT_KEY"));
+	insert("KB_BACKSLASH", FInputDevice::KB_BACKSLASH, L"\\");
+	insert("KB_COMMA", FInputDevice::KB_COMMA, L",");
+	insert("KB_PERIOD", FInputDevice::KB_PERIOD, L".");
+	insert("KB_SLASH", FInputDevice::KB_SLASH, L"/");
+	insert("KB_RSHIFT", FInputDevice::KB_RSHIFT, gDLL->getText("TXT_KEY_KEYBOARD_RIGHT_SHIFT_KEY"));
+	insert("KB_NUMPADSTAR", FInputDevice::KB_NUMPADSTAR, gDLL->getText("TXT_KEY_KEYBOARD_NUM_PAD_STAR"));
+	insert("KB_LALT", FInputDevice::KB_LALT, gDLL->getText("TXT_KEY_KEYBOARD_LEFT_ALT_KEY"));
+	insert("KB_SPACE", FInputDevice::KB_SPACE, gDLL->getText("TXT_KEY_KEYBOARD_SPACE_KEY"));
+	insert("KB_CAPSLOCK", FInputDevice::KB_CAPSLOCK, gDLL->getText("TXT_KEY_KEYBOARD_CAPS_LOCK"));
+	insert("KB_F1", FInputDevice::KB_F1, L"F1");
+	insert("KB_F2", FInputDevice::KB_F2, L"F2");
+	insert("KB_F3", FInputDevice::KB_F3, L"F3");
+	insert("KB_F4", FInputDevice::KB_F4, L"F4");
+	insert("KB_F5", FInputDevice::KB_F5, L"F5");
+	insert("KB_F6", FInputDevice::KB_F6, L"F6");
+	insert("KB_F7", FInputDevice::KB_F7, L"F7");
+	insert("KB_F8", FInputDevice::KB_F8, L"F8");
+	insert("KB_F9", FInputDevice::KB_F9, L"F9");
+	insert("KB_F10", FInputDevice::KB_F10, L"F10");
+	insert("KB_NUMLOCK", FInputDevice::KB_NUMLOCK, gDLL->getText("TXT_KEY_KEYBOARD_NUM_LOCK"));
+	insert("KB_SCROLL", FInputDevice::KB_SCROLL, gDLL->getText("TXT_KEY_KEYBOARD_SCROLL_KEY"));
+	insert("KB_NUMPAD7", FInputDevice::KB_NUMPAD7, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 7));
+	insert("KB_NUMPAD8", FInputDevice::KB_NUMPAD8, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 8));
+	insert("KB_NUMPAD9", FInputDevice::KB_NUMPAD9, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 9));
+	insert("KB_NUMPADMINUS", FInputDevice::KB_NUMPADMINUS, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_MINUS"));
+	insert("KB_NUMPAD4", FInputDevice::KB_NUMPAD4, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 4));
+	insert("KB_NUMPAD5", FInputDevice::KB_NUMPAD5, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 5));
+	insert("KB_NUMPAD6", FInputDevice::KB_NUMPAD6, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 6));
+	insert("KB_NUMPADPLUS", FInputDevice::KB_NUMPADPLUS, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_PLUS"));
+	insert("KB_NUMPAD1", FInputDevice::KB_NUMPAD1, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 1));
+	insert("KB_NUMPAD2", FInputDevice::KB_NUMPAD2, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 2));
+	insert("KB_NUMPAD3", FInputDevice::KB_NUMPAD3, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 3));
+	insert("KB_NUMPAD0", FInputDevice::KB_NUMPAD0, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_NUMBER", 0));
+	insert("KB_NUMPADPERIOD", FInputDevice::KB_NUMPADPERIOD, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_PERIOD"));
+	insert("KB_F11", FInputDevice::KB_F11, L"F11");
+	insert("KB_F12", FInputDevice::KB_F12, L"F12");
+	insert("KB_NUMPADEQUALS", FInputDevice::KB_NUMPADEQUALS, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_EQUALS"));
+	insert("KB_AT", FInputDevice::KB_AT, L"@");
+	insert("KB_UNDERLINE", FInputDevice::KB_UNDERLINE, L"_");
+	insert("KB_COLON", FInputDevice::KB_COLON, L":");
+	insert("KB_NUMPADENTER", FInputDevice::KB_NUMPADENTER, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_ENTER_KEY"));
+	insert("KB_RCONTROL", FInputDevice::KB_RCONTROL, gDLL->getText("TXT_KEY_KEYBOARD_RIGHT_CONTROL_KEY"));
+	insert("KB_VOLUMEDOWN", FInputDevice::KB_VOLUMEDOWN, gDLL->getText("TXT_KEY_KEYBOARD_VOLUME_DOWN"));
+	insert("KB_VOLUMEUP", FInputDevice::KB_VOLUMEUP, gDLL->getText("TXT_KEY_KEYBOARD_VOLUME_UP"));
+	insert("KB_NUMPADCOMMA", FInputDevice::KB_NUMPADCOMMA, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_COMMA"));
+	insert("KB_NUMPADSLASH", FInputDevice::KB_NUMPADSLASH, gDLL->getText("TXT_KEY_KEYBOARD_NUMPAD_SLASH"));
+	insert("KB_SYSRQ", FInputDevice::KB_SYSRQ, gDLL->getText("TXT_KEY_KEYBOARD_SYSRQ"));
+	insert("KB_RALT", FInputDevice::KB_RALT, gDLL->getText("TXT_KEY_KEYBOARD_RIGHT_ALT_KEY"));
+	insert("KB_PAUSE", FInputDevice::KB_PAUSE, gDLL->getText("TXT_KEY_KEYBOARD_PAUSE_KEY"));
+	insert("KB_HOME", FInputDevice::KB_HOME, gDLL->getText("TXT_KEY_KEYBOARD_HOME_KEY"));
+	insert("KB_UP", FInputDevice::KB_UP, gDLL->getText("TXT_KEY_KEYBOARD_UP_ARROW"));
+	insert("KB_PGUP", FInputDevice::KB_PGUP, gDLL->getText("TXT_KEY_KEYBOARD_PAGE_UP"));
+	insert("KB_LEFT", FInputDevice::KB_LEFT, gDLL->getText("TXT_KEY_KEYBOARD_LEFT_ARROW"));
+	insert("KB_RIGHT", FInputDevice::KB_RIGHT, gDLL->getText("TXT_KEY_KEYBOARD_RIGHT_ARROW"));
+	insert("KB_END", FInputDevice::KB_END, gDLL->getText("TXT_KEY_KEYBOARD_END_KEY"));
+	insert("KB_DOWN", FInputDevice::KB_DOWN, gDLL->getText("TXT_KEY_KEYBOARD_DOWN_ARROW"));
+	insert("KB_PGDN", FInputDevice::KB_PGDN, gDLL->getText("TXT_KEY_KEYBOARD_PAGE_DOWN"));
+	insert("KB_INSERT", FInputDevice::KB_INSERT, gDLL->getText("TXT_KEY_KEYBOARD_INSERT_KEY"));
+	insert("KB_DELETE", FInputDevice::KB_DELETE, gDLL->getText("TXT_KEY_KEYBOARD_DELETE_KEY"));
+	
+	endInsert();
+}

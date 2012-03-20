@@ -5602,10 +5602,12 @@ int CvUnitInfo::getDefensiveStrikeDamage() const
 	return m_iDefensiveStrikeDamage;
 }
 
+#ifdef USE_OLD_CODE
 int CvUnitInfo::getDiploVoteType() const
 {
 	return m_iDiploVoteType;
 }
+#endif
 
 int CvUnitInfo::getDurationFromCombat() const
 {
@@ -23134,8 +23136,8 @@ void CvGameText::setNumLanguages(int iNum)
 }
 
 CvGameText::CvGameText() :
-	m_szGender("N"),
-	m_szPlural("false")
+	m_szGender(1, L'N'),
+	m_szPlural(L"false", 5)
 {
 }
 
@@ -23149,9 +23151,21 @@ void CvGameText::setText(const wchar* szText)
 	m_szText = szText;
 }
 
+void CvGameText::init()
+{
+	//m_szText.erase();
+	m_szGender.assign(1, L'N');
+	m_szPlural.assign(L"false", 5);
+}
+
 bool CvGameText::read(CvXMLLoadUtility* pXML)
 {
-	CvString szTextVal;
+	return read(pXML, GAMETEXT.getCurrentLanguage());
+}
+
+bool CvGameText::read(CvXMLLoadUtility* pXML, int iCurrentLanguage)
+{
+	//*lol*CvString szTextVal;
 	CvWString wszTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -23174,18 +23188,13 @@ bool CvGameText::read(CvXMLLoadUtility* pXML)
 			NUM_LANGUAGES = j;
 			break;
 		}
-		if (j == GAMETEXT.getCurrentLanguage()) // Only add appropriate language Text
+		if (j == iCurrentLanguage)//lol GAMETEXT.getCurrentLanguage()) // Only add appropriate language Text
 		{
 			// TEXT
-			if (pXML->GetChildXmlValByName(wszTextVal, "Text"))
+			if (! pXML->GetChildXmlValByName(m_szText, "Text"))
 			{
-				setText(wszTextVal);
-			}
-			else
-			{
-				pXML->GetXmlVal(wszTextVal);
-				setText(wszTextVal);
-				if (NUM_LANGUAGES > 0)
+				pXML->GetXmlVal(m_szText);
+				if (NUM_LANGUAGES > 0) //*lol* i know total languages, so complete reading
 				{
 					break;
 				}

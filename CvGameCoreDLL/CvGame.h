@@ -763,7 +763,44 @@ protected:
 
 	std::vector<PlotExtraYield> m_aPlotExtraYields;
 	std::vector<PlotExtraCost> m_aPlotExtraCosts;
+#if 1 //defined(USE_OLD_CODE)
 	stdext::hash_map<VoteSourceTypes, ReligionTypes> m_mapVoteSourceReligions;
+#else
+	class CvVoteSourceMap : public std::vector<ReligionTypes>
+	{
+		typedef std::vector<ReligionTypes> baseType;
+		int _mapSize;
+	public:
+		const static ReligionTypes  NO_ASSIGN	= ReligionTypes(NO_RELIGION - 1);
+		const static size_type		MAP_SIZE	= 256;
+
+		CvVoteSourceMap()
+		{
+			resize(MAP_SIZE, NO_ASSIGN);
+		}
+		void clear() {
+			std::fill_n(begin(), MAP_SIZE, NO_ASSIGN);
+			_mapSize = 0;
+		}
+		size_t size() { return _mapSize; }
+		const_iterator find(VoteSourceTypes v) const
+		{
+			const_iterator it = begin() + v;
+			return ( *it == NO_ASSIGN ) ? end() : it;
+		}
+		reference operator[](size_type _Pos)
+		{	// subscript mutable sequence
+			reference r = *(&(baseType::operator[](0)) + _Pos);
+			if( r == NO_ASSIGN )
+			{
+				r = NO_RELIGION;
+				++ _mapSize;
+			}
+			return r;
+		}
+	};
+	CvVoteSourceMap m_mapVoteSourceReligions;
+#endif
 	std::vector<EventTriggerTypes> m_aeInactiveTriggers;
 
 	// CACHE: cache frequently used values

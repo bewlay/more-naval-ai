@@ -1326,7 +1326,11 @@ public:
 	int getDefensiveStrikeChance() const;
 	int getDefensiveStrikeDamage() const;
 	int getDamageTypeCombat(int i) const;
+#ifdef USE_OLD_CODE
 	int getDiploVoteType() const;
+#else
+	int getDiploVoteType() const { return m_iDiploVoteType; }
+#endif
 	int getDurationFromCombat() const;
 	int getEnslavementChance() const;
 	int getFreePromotionPick() const;
@@ -6438,7 +6442,12 @@ public:
 	DllExport int getNumLanguages() const; // not static for Python access
 	DllExport void setNumLanguages(int iNum); // not static for Python access
 
+	//lol
+	void init();
+	void setTextINLINE(const CvWString& szText) { m_szText = szText; }
 	bool read(CvXMLLoadUtility* pXML);
+	bool read(CvXMLLoadUtility* pXML, int iCurrentLanguage);
+	//End lol
 
 protected:
 
@@ -7397,6 +7406,9 @@ public:
 	int getVoteInterval() const;					// Exposed to Python
 	int getFreeSpecialist() const;					// Exposed to Python
 	int getCivic() const;					// Exposed to Python
+#if !defined(USE_OLD_CODE)
+	int getCivicINLINE() const { return m_iCivic; }
+#endif
 	const CvWString getPopupText() const;
 	const CvWString getSecretaryGeneralText() const;
 	std::wstring pyGetSecretaryGeneralText() { return getSecretaryGeneralText(); }						// Exposed to Python

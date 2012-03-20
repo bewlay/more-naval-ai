@@ -526,27 +526,27 @@ void CvEventReporter::getPlayerStatistics(PlayerTypes ePlayer, std::vector<CvSta
 		CvString strKey;
 		for (int j = 0; j < GC.getNumUnitInfos(); ++j)
 		{
-			strKey.format("unit_%d_built", j);
+			strKey.Format("unit_%d_built", j);
 			aStats.push_back(new CvStatInt(strKey, pRecord->getNumUnitsBuilt(j)));
 
-			strKey.format("unit_%d_killed", j);
+			strKey.Format("unit_%d_killed", j);
 			aStats.push_back(new CvStatInt(strKey, pRecord->getNumUnitsKilled(j)));
 
-			strKey.format("unit_%d_lost", j);
+			strKey.Format("unit_%d_lost", j);
 			aStats.push_back(new CvStatInt(strKey, pRecord->getNumUnitsWasKilled(j)));
 		}
 
 		// Buildings by type
 		for (int j = 0; j < GC.getNumBuildingInfos(); ++j)
 		{
-			strKey.format("building_%d_built", j);
+			strKey.Format("building_%d_built", j);
 			aStats.push_back(new CvStatInt(strKey, pRecord->getNumBuildingsBuilt((BuildingTypes)j)));
 		}
 
 		// Religions by type
 		for (int j = 0; j < GC.getNumReligionInfos(); ++j)
 		{
-			strKey.format("religion_%d_founded", j);
+			strKey.Format("religion_%d_founded", j);
 			aStats.push_back(new CvStatInt(strKey, pRecord->getReligionFounded((ReligionTypes)j)));
 		}
 	}

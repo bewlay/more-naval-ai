@@ -563,7 +563,9 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 //	bool bValid;
 //FfH: End Modify
 
+#ifdef USE_OLD_CODE
 	int iPass;
+#endif
 	int iLoop;
 
 	// auto promotes for player
@@ -740,6 +742,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
     }
     else
     {
+#ifdef USE_OLD_CODE
 		bool bValid;
 		for (iPass = 0; iPass < 3; iPass++)
 		{
@@ -777,8 +780,40 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 				}
 			}
 		}
+#else
+		//
+		// CvUnit::hasUpgrade() method is heavy routine, so that condition must be checked late than the others to speed up.
+		// After changing the orders, this AI_doTurnUnitsPost speed up to 2x.
+		//
+		//int iUnitValue;
+		// pass 0
+		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+		{
+			pUnitPlot = pLoopUnit->plot();
+			if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
+				&& pLoopUnit->hasUpgrade())
+			{
+				pLoopUnit->AI_upgrade();
+			}
+		}
+		// pass 1
+		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+		{
+			if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
+			{
+				pLoopUnit->AI_upgrade();
+			}
+		}
+		// pass 2
+		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+		{
+			if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
+			{
+				pLoopUnit->AI_upgrade();
+			}
+		}
+#endif
     }
-
 	// do AI promotions after upgrade
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{

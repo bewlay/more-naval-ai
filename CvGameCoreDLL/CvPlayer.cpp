@@ -3752,7 +3752,11 @@ void CvPlayer::updateHuman()
 
 bool CvPlayer::isBarbarian() const
 {
+#ifdef USE_OLD_CODE
 	return (getID() == BARBARIAN_PLAYER);
+#else
+	return (getIDINLINE() == BARBARIAN_PLAYER);
+#endif
 }
 
 
@@ -6410,9 +6414,6 @@ bool CvPlayer::canTradeNetworkWith(PlayerTypes ePlayer) const
 
 int CvPlayer::getNumAvailableBonuses(BonusTypes eBonus) const
 {
-	CvPlotGroup* pPlotGroup;
-
-	pPlotGroup = ((getCapitalCity() != NULL) ? getCapitalCity()->plot()->getOwnerPlotGroup() : NULL);
 
 //FfH: Added by Kael 11/14/2007
     if (isFullMember((VoteSourceTypes)0))
@@ -6423,6 +6424,10 @@ int CvPlayer::getNumAvailableBonuses(BonusTypes eBonus) const
         }
     }
 //FfH: End Add
+
+	CvPlotGroup* pPlotGroup;
+	CvCity* pCity = getCapitalCity();
+	pPlotGroup = ((pCity) ? pCity->plot()->getOwnerPlotGroup() : NULL);
 
 	if (pPlotGroup != NULL)
 	{
@@ -9429,6 +9434,7 @@ int CvPlayer::getResearchTurnsLeftTimes100(TechTypes eTech, bool bOverflow) cons
 
 bool CvPlayer::isCivic(CivicTypes eCivic) const
 {
+#ifdef USE_OLD_CODE
 	int iI;
 
 	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
@@ -9440,6 +9446,12 @@ bool CvPlayer::isCivic(CivicTypes eCivic) const
 	}
 
 	return false;
+#else
+	for(int i=0; i< GC.getNumCivicOptionInfos(); ++i)
+		if( m_paeCivics[i] == eCivic )
+			return true;
+	return false;
+#endif
 }
 
 
@@ -12983,7 +12995,8 @@ void CvPlayer::setTurnActiveForPbem(bool bActive)
 
 
 void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
-{
+{// LOL: consume long-time
+	PROFILE_FUNC()
 	int iI;
 	if (isTurnActive() != bNewValue)
 	{
@@ -13066,7 +13079,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 				if( GET_TEAM(getTeam()).getVassalCount() > 0 )
 				{
-					szBuffer.append(CvWString::format(L";  vassals: "));
+					szBuffer.append(L";  vassals: ");
 
 					for( int iI = 0; iI < MAX_CIV_TEAMS; iI++ )
 					{
@@ -13082,7 +13095,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 				if( GET_TEAM(getTeam()).getAtWarCount(false) > 0 )
 				{
-					szBuffer.append(CvWString::format(L";  at war with: "));
+					szBuffer.append(L";  at war with: ");
 
 					for( int iI = 0; iI < MAX_CIV_TEAMS; iI++ )
 					{
@@ -13098,7 +13111,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 				if( GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0 )
 				{
-					szBuffer.append(CvWString::format(L";  planning war with: "));
+					szBuffer.append(L";  planning war with: ");
 
 					for( int iI = 0; iI < MAX_CIV_TEAMS; iI++ )
 					{
@@ -24801,6 +24814,43 @@ void CvPlayer::processVoteSourceBonus(VoteSourceTypes eVoteSource, bool bActive)
 	}
 }
 
+#if !defined(USE_OLD_CODE)
+bool CvPlayer::hasVotes(ReligionTypes eReligion) const
+{
+	if (NO_RELIGION != eReligion)
+	{
+		// iVotes = getReligionPopulation(eReligion);
+		int iLoop;
+		for (CvCity* pCity = firstCity(&iLoop); NULL != pCity; pCity = nextCity(&iLoop))
+		{
+			if (pCity->isHasReligion(eReligion) && pCity->getPopulation() > 0)
+			{
+				return true;
+			}
+		}
+	}
+	else
+	{
+		// iVotes = getTotalPopulation();
+		if( m_iTotalPopulation > 0 )
+			return true;
+	}
+
+//FfH: Added by Kael 11/14/2007
+	int iLoop;
+	for(CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+	{
+		if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() != NO_VOTESOURCE)
+		{
+		    return true;
+		}
+	}
+//FfH: End Add
+
+	return false;
+}
+#endif
+
 int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 {
 	int iVotes = 0;
@@ -24877,7 +24927,11 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 	int iLoop;
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
+#ifdef USE_OLD_CODE
 		if (GC.getUnitInfo(pLoopUnit->getUnitType()).getDiploVoteType() != NO_VOTESOURCE)
+#else
+		if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() != NO_VOTESOURCE)
+#endif
 		{
 		    iVotes += 1;
 		}
@@ -25141,7 +25195,8 @@ void CvPlayer::setEndorsedResolution(VoteSourceTypes eVoteSource, const VoteSele
 }
 
 bool CvPlayer::isFullMember(VoteSourceTypes eVoteSource) const
-{
+{PROFILE_FUNC()
+#if defined(USE_OLD_CODE)
 	if (NO_RELIGION != GC.getGameINLINE().getVoteSourceReligion(eVoteSource))
 	{
 		if (getStateReligion() != GC.getGameINLINE().getVoteSourceReligion(eVoteSource))
@@ -25164,6 +25219,32 @@ bool CvPlayer::isFullMember(VoteSourceTypes eVoteSource) const
 	}
 
 	return isVotingMember(eVoteSource);
+#else
+	ReligionTypes eReligionType = GC.getGameINLINE().getVoteSourceReligion(eVoteSource);
+	if (NO_RELIGION != eReligionType)
+	{
+		if (getStateReligion() != eReligionType)
+		{ 
+			return false;
+		}
+	}
+	// duplicate check
+	const CvVoteSourceInfo &kVoteSourceInfo = GC.getVoteSourceInfo(eVoteSource);
+	if (NO_CIVIC != kVoteSourceInfo.getCivicINLINE())
+	{
+		if (!isCivic((CivicTypes)kVoteSourceInfo.getCivicINLINE()))
+		{
+			return false;
+		}
+	}
+
+	if (!isLoyalMember(eVoteSource))
+	{
+		return false;
+	}
+
+	return hasVotes(eReligionType);
+#endif
 }
 
 bool CvPlayer::isVotingMember(VoteSourceTypes eVoteSource) const
@@ -25179,8 +25260,29 @@ bool CvPlayer::isVotingMember(VoteSourceTypes eVoteSource) const
 	}
 //FfH: End Add
 
+#if defined(USE_OLD_CODE)
 	return (getVotes(NO_VOTE, eVoteSource) > 0);
+#else
+	return hasVotes(GC.getGameINLINE().getVoteSourceReligion(eVoteSource));
+#endif
 }
+
+#if 0 // !defined(USE_OLD_CODE)
+bool CvPlayer::isVotingMember(const CvVoteSourceInfo &kVoteSourceInfo, VoteSourceTypes eVoteSource) const
+{
+//FfH: Added by Kael 11/15/2007
+	if (kVoteSourceInfo.getCivicINLINE() != NO_CIVIC)
+	{
+		if (!isCivic((CivicTypes)kVoteSourceInfo.getCivicINLINE()))
+		{
+			return false;
+		}
+	}
+//FfH: End Add
+
+	return hasVotes(GC.getGameINLINE().getVoteSourceReligion(eVoteSource));
+}
+#endif
 
 PlayerTypes CvPlayer::pickConqueredCityOwner(const CvCity& kCity) const
 {

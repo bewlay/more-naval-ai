@@ -307,7 +307,7 @@ private:
 	void SetGameText(const char* szTextGroup, const char* szTagName);
 
 	// create a keyboard string from a KB code, Delete would be returned for KB_DELETE
-	CvWString CreateKeyStringFromKBCode(const TCHAR* pszHotKey);
+	const CvWString &CreateKeyStringFromKBCode(const TCHAR* pszHotKey);
 
 	void orderHotkeyInfo(int** ppiSortedIndex, int* pHotkeyIndex, int iLength);
 	void logMsg(char* format, ... );
@@ -364,6 +364,67 @@ int CvXMLLoadUtility::SetCommerce(T** ppbCommerce)
 
 	return iNumSibs;
 }
+
+//
+// lol for performance
+//
+class CvKeyBoardMapping
+{
+	struct Data
+	{
+	public:
+		Data(const char *k, int n, const CvWString &s) : pszKey(k), intValue(n), strValue(s) { }
+
+		const char *pszKey;
+		int intValue;
+		CvWString strValue;
+	};
+	std::vector<Data *> _vec;
+	bool _b_filled;
+public:
+
+	CvKeyBoardMapping() : _vec(), _b_filled(false) { }
+	~CvKeyBoardMapping()
+	{
+		for(int i=0; i<(int)_vec.size(); ++i) delete _vec[i];
+		_vec.clear();
+	}
+
+	const CvWString& getKeyString(const char* pszKey)
+	{
+		if( !_b_filled ) generateTable();
+
+		Data *v = bin_search(&_vec[0], 0, _vec.size() - 1, pszKey);
+		if( v )
+			return v->strValue;
+		else
+			return EmptyWS;
+	}
+	const int getKeyInt(const char* pszKey)
+	{
+		if( !_b_filled ) generateTable();
+
+		Data *v = bin_search(&_vec[0], 0, _vec.size() - 1, pszKey);
+		if( v )
+			return v->intValue;
+		else
+			return -1;
+	}
+
+protected:
+	void insert(const char *key, int nVal, const CvWString& sVal)
+	{
+		_vec.push_back( new Data(key, nVal, sVal) );
+	}
+	void endInsert();
+	void generateTable();
+
+	static bool lesser(const Data *A, const Data *B) { return (::strcmp(A->pszKey, B->pszKey) < 0); }
+	static Data* bin_search(Data *d[], int begin, int end, const char *value);
+};
+
+extern CvKeyBoardMapping gCvKeyBoardMapping;
+
 #endif
 
 #endif	// XML_LOAD_UTILITY_H

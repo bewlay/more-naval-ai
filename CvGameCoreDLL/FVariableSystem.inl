@@ -141,11 +141,12 @@ inline void FVariableSystem::Read(FDataStreamBase *pStream)
 	int i, iSize;
 	pStream->Read(&iSize);
 
+	std::string szKey;
 	// read and add vars
 	for(i=0;i<iSize;i++)
 	{
 		// read key
-		std::string szKey;
+		//std::string szKey;
 		pStream->ReadString(szKey);
 
 		// read var
@@ -154,6 +155,8 @@ inline void FVariableSystem::Read(FDataStreamBase *pStream)
 
 		// insert
 		m_mapVariableMap[szKey] = pkVariable;
+
+		szKey.erase(0, szKey.length()); // maybe for next read key
 	}
 	m_iVariableIterator = m_mapVariableMap.begin();
 }
@@ -175,7 +178,8 @@ inline void FVariableSystem::Write(FDataStreamBase *pStream) const
 	while ( iIterator != m_mapVariableMap.end())
 	{
 		// write key
-		std::string szKey = iIterator->first;
+		//*lol*std::string szKey = iIterator->first;
+		const std::string &szKey = iIterator->first;
 		pStream->WriteString(szKey);
 
 		// write vars
@@ -197,7 +201,7 @@ inline void FVariableSystem::Write(FDataStreamBase *pStream) const
 //! \param bValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, bool & bValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, bool & bValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -220,7 +224,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, bool & bValue ) 
 //! \param cValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, char & cValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, char & cValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -243,7 +247,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, char & cValue ) 
 //! \param ucValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, byte & ucValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, byte & ucValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -266,7 +270,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, byte & ucValue )
 //! \param wValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, short & wValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, short & wValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -289,7 +293,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, short & wValue )
 //! \param uwValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, word & uwValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, word & uwValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -312,7 +316,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, word & uwValue )
 //! \param iValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, int & iValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, int & iValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -335,7 +339,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, int & iValue ) c
 //! \param uiValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, uint & uiValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, uint & uiValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -358,7 +362,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, uint & uiValue )
 //! \param fValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, float & fValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, float & fValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -413,7 +417,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, float & fValue )
 //! \param dValue Contains the value of the variable if the function succeeds
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, double & dValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, double & dValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -468,7 +472,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, double & dValue 
 //! \param pszValue Contains the value of the variable if the function succeeds (do not modify the return value).
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, const char * & pszValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, const char * & pszValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -491,7 +495,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, const char * & p
 //! \param pwszValue Contains the value of the variable if the function succeeds (do not modify the return value).
 //! \retval true if the variable value was retrieved, false otherwise (value will be unchanged from input).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::GetValue( const char * szVariable, const wchar * & pwszValue ) const
+inline bool FVariableSystem::GetValue( const /*char */std::string& szVariable, const wchar * & pwszValue ) const
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator;
@@ -513,7 +517,7 @@ inline bool FVariableSystem::GetValue( const char * szVariable, const wchar * & 
 //! \param szVariable The name of the variable to obtain
 //! \retval Pointer to the requested FVariable, or NULL if the variable does not exist
 //---------------------------------------------------------------------------------------
-inline const FVariable * FVariableSystem::GetVariable( const char * szVariable ) const
+inline const FVariable * FVariableSystem::GetVariable( const /*char */std::string& szVariable ) const
 {
 	VSIteratorC iIterator;
 	iIterator = m_mapVariableMap.find ( szVariable );
@@ -528,7 +532,7 @@ inline const FVariable * FVariableSystem::GetVariable( const char * szVariable )
 //! \param szVariable The name of the variable to obtain
 //! \retval Pointer to the requested FVariable, or NULL if the variable does not exist
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, bool bValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, bool bValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -550,7 +554,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, bool bValue )
 //! \param szVariable The name of the variable to create
 //! \param cValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, char cValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, char cValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -572,7 +576,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, char cValue )
 //! \param szVariable The name of the variable to create
 //! \param ucValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, byte ucValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, byte ucValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -594,7 +598,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, byte ucValue )
 //! \param szVariable The name of the variable to create
 //! \param wValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, short wValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, short wValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -616,7 +620,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, short wValue )
 //! \param szVariable The name of the variable to create
 //! \param uwValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, word uwValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, word uwValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -638,7 +642,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, word uwValue )
 //! \param szVariable The name of the variable to create
 //! \param iValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, int iValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, int iValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -660,7 +664,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, int iValue )
 //! \param szVariable The name of the variable to create
 //! \param uiValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, uint uiValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, uint uiValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -682,7 +686,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, uint uiValue )
 //! \param szVariable The name of the variable to create
 //! \param uiValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, float fValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, float fValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -704,7 +708,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, float fValue )
 //! \param szVariable The name of the variable to create
 //! \param uiValue The value that the variable should take on
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, double dValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, double dValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -726,7 +730,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, double dValue )
 //! \param szVariable The name of the variable to create
 //! \param szValue The value that the variable should take on (string is copied).
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, const char * szValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, const char * szValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -748,7 +752,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, const char * szV
 //! \param szVariable The name of the variable to create
 //! \param wszValue The value that the variable should take on (string is copied).
 //---------------------------------------------------------------------------------------
-inline void FVariableSystem::SetValue( const char * szVariable, const wchar * wszValue )
+inline void FVariableSystem::SetValue( const /*char */std::string& szVariable, const wchar * wszValue )
 {
 	FVariable * pkVariable;
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable ); 
@@ -770,7 +774,7 @@ inline void FVariableSystem::SetValue( const char * szVariable, const wchar * ws
 //! \param szVariable The name of the variable to remove
 //! \retval true if the variable was removed, false otherwise (probably DNE).
 //---------------------------------------------------------------------------------------
-inline bool FVariableSystem::RemValue( const char * szVariable )
+inline bool FVariableSystem::RemValue( const /*char */std::string& szVariable )
 {
 	VSIteratorC iIterator = m_mapVariableMap.find( szVariable );
 	if ( iIterator != m_mapVariableMap.end() ) delete iIterator->second;
@@ -785,13 +789,17 @@ inline bool FVariableSystem::RemValue( const char * szVariable )
 //! \brief Gets the name of the "first" variable in the system
 //! \retval The name of the variable or an empty string if there are no variables
 //---------------------------------------------------------------------------------------
-inline std::string FVariableSystem::GetFirstVariableName( )
+// lol
+//inline std::string FVariableSystem::GetFirstVariableName( )
+inline const std::string& FVariableSystem::GetFirstVariableName( )
 {
 	m_iVariableIterator = m_mapVariableMap.begin();
 	if (m_iVariableIterator != m_mapVariableMap.end())
 		return (*m_iVariableIterator).first;
 	else
-		return "";
+		// lol
+		// return ""
+		return EmptySS;
 }
 
 //---------------------------------------------------------------------------------------
@@ -800,7 +808,9 @@ inline std::string FVariableSystem::GetFirstVariableName( )
 //! \brief Gets the name of the "next" variable in the system (use after GetFirstVariableName)
 //! \retval The name of the variable, or an empty string if there are no more variables
 //------------------------------------------------------------------------------------------------
-inline std::string FVariableSystem::GetNextVariableName( )
+// lol
+//inline std::string FVariableSystem::GetNextVariableName( )
+inline const std::string& FVariableSystem::GetNextVariableName( )
 {
 	if ( m_iVariableIterator != m_mapVariableMap.end())
 		m_iVariableIterator++;
@@ -808,5 +818,7 @@ inline std::string FVariableSystem::GetNextVariableName( )
 	if ( m_iVariableIterator != m_mapVariableMap.end())
 		return (*m_iVariableIterator).first;
 	else
-		return "";
+		// lol
+		// return "";
+		return EmptySS;
 }

@@ -797,6 +797,9 @@ public:
 	void setStrike(bool bNewValue);
 
 	DllExport PlayerTypes getID() const;																												// Exposed to Python
+#ifndef USE_OLD_CODE
+	PlayerTypes getIDINLINE() const { return m_eID; }
+#endif
 
 	DllExport HandicapTypes getHandicapType() const;																									// Exposed to Python
 
@@ -1152,6 +1155,9 @@ public:
 
 	bool hasShrine(ReligionTypes eReligion);
 	int getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const;   // Exposed to Python
+#ifndef USE_OLD_CODE
+	bool hasVotes(ReligionTypes eReligion) const;
+#endif
 	void processVoteSourceBonus(VoteSourceTypes eVoteSource, bool bActive);
 	bool canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const;
 	bool canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const;
@@ -1159,6 +1165,9 @@ public:
 	void setEndorsedResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData);
 	bool isFullMember(VoteSourceTypes eVoteSource) const;    // Exposed to Python
 	bool isVotingMember(VoteSourceTypes eVoteSource) const;    // Exposed to Python
+#if 0 // !defined(USE_OLD_CODE)
+	bool isVotingMember(const CvVoteSourceInfo &kVoteSourceInfo, VoteSourceTypes eVoteSource) const;
+#endif
 
 	void invalidatePopulationRankCache();
 	void invalidateYieldRankCache(YieldTypes eYield = NO_YIELD);

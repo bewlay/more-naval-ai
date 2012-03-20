@@ -9071,11 +9071,22 @@ void CvGame::write(FDataStreamBase* pStream)
 	}
 
 	pStream->Write(m_mapVoteSourceReligions.size());
+#if 1 //defined(USE_OLD_CODE)
 	for (stdext::hash_map<VoteSourceTypes, ReligionTypes>::iterator it = m_mapVoteSourceReligions.begin(); it != m_mapVoteSourceReligions.end(); ++it)
 	{
 		pStream->Write(it->first);
 		pStream->Write(it->second);
 	}
+#else
+	for (size_t i = 0; i < m_mapVoteSourceReligions.MAP_SIZE; ++i)
+	{
+		if( m_mapVoteSourceReligions[i] != CvVoteSourceMap::NO_ASSIGN )
+		{
+			pStream->Write((VoteSourceTypes)i);
+			pStream->Write(m_mapVoteSourceReligions[i]);
+		}
+	}
+#endif
 
 	pStream->Write(m_aeInactiveTriggers.size());
 	for (std::vector<EventTriggerTypes>::iterator it = m_aeInactiveTriggers.begin(); it != m_aeInactiveTriggers.end(); ++it)
@@ -9587,6 +9598,7 @@ void CvGame::removePlotExtraCost(int iX, int iY)
 
 ReligionTypes CvGame::getVoteSourceReligion(VoteSourceTypes eVoteSource) const
 {
+#if 1 //defined(USE_OLD_CODE)
 	stdext::hash_map<VoteSourceTypes, ReligionTypes>::const_iterator it;
 
 	it = m_mapVoteSourceReligions.find(eVoteSource);
@@ -9596,6 +9608,14 @@ ReligionTypes CvGame::getVoteSourceReligion(VoteSourceTypes eVoteSource) const
 	}
 
 	return it->second;
+#else
+	CvVoteSourceMap::const_iterator it = m_mapVoteSourceReligions.find(eVoteSource);
+	if( it == m_mapVoteSourceReligions.end() )
+	{
+		return NO_RELIGION;
+	}
+	return *it;
+#endif
 }
 
 void CvGame::setVoteSourceReligion(VoteSourceTypes eVoteSource, ReligionTypes eReligion, bool bAnnounce)

@@ -245,13 +245,37 @@ bool CvInitCore::getPitboss() const
 
 bool CvInitCore::getHotseat() const
 {
+#ifdef _USE_OLD_CODE
 	return ( (getType() == GAME_HOTSEAT_NEW) || (getType() == GAME_HOTSEAT_SCENARIO) || (getType() == GAME_HOTSEAT_LOAD) );
+#else
+	switch(getType())
+	{
+	case GAME_HOTSEAT_NEW:
+	case GAME_HOTSEAT_SCENARIO:
+	case GAME_HOTSEAT_LOAD:
+		return true;
+	default:
+		return false;
+	}
+#endif
 }
 
 
 bool CvInitCore::getPbem() const
 {
+#ifdef _USE_OLD_CODE
 	return ( (getType() == GAME_PBEM_NEW) || (getType() == GAME_PBEM_SCENARIO) || (getType() == GAME_PBEM_LOAD) );
+#else
+	switch(getType())
+	{
+	case GAME_PBEM_NEW:
+	case GAME_PBEM_SCENARIO:
+	case GAME_PBEM_LOAD:
+		return true;
+	default:
+		return false;
+	}
+#endif
 }
 
 

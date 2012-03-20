@@ -102,13 +102,18 @@ class FVariableSystem
 		// Number of variables in the system
 		uint GetSize() const;
 
+		/******************************************************************************
+		// *lol*
+
 		// Variable accessors
 		bool GetValue( const char * szVariable, bool & bValue ) const;
 		bool GetValue( const char * szVariable, char & cValue ) const;
 		bool GetValue( const char * szVariable, byte & ucValue ) const;
 		bool GetValue( const char * szVariable, short & wValue ) const;
 		bool GetValue( const char * szVariable, word & uwValue ) const;
-		bool GetValue( const char * szVariable, int & iValue ) const;
+		// bool GetValue( const char * szVariable, int & iValue ) const;
+		// changed by lol :: Performance
+		bool GetValue( const CvString &szVariable, int & iValue ) const;
 		bool GetValue( const char * szVariable, uint & uiValue ) const;
 		bool GetValue( const char * szVariable, float & fValue ) const;
 		bool GetValue( const char * szVariable, double & dValue ) const;
@@ -130,11 +135,82 @@ class FVariableSystem
 		void SetValue( const char * szVariable, const wchar * wszValue );
 
 		// Variable removal
-		bool RemValue( const char * szVariable );
+		//bool RemValue( const char * szVariable );
 
 		// Iteration
 		std::string GetFirstVariableName( );
 		std::string GetNextVariableName( );
+		*/
+
+		//=====================================================================
+		// * modification by lol
+		// Changed to use GetValue(const std::string& ...) method
+		// 
+
+		bool GetValue( const char * k, bool & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, char & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, byte & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, short & v ) const	{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, word & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, int & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, uint & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, float & v ) const	{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, double & v ) const	{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, const char * & v ) const		{ return GetValue(CvStaticString(k), v); }
+		bool GetValue( const char * k, const wchar * & v ) const	{ return GetValue(CvStaticString(k), v); }
+		const FVariable * GetVariable( const char * k ) const		{ return GetVariable(CvStaticString(k)); }
+
+		void SetValue( const char *k, bool v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, char v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, byte v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, short v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, word v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, int v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, uint v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, float v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, double v )		{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, const char * v )	{ return SetValue(CvStaticString(k), v); }
+		void SetValue( const char *k, const wchar * v )	{ return SetValue(CvStaticString(k), v); }
+
+		bool RemValue( const char * k ) { return RemValue(CvStaticString(k)); }
+
+		//
+		// To increase performance
+		//
+
+		bool GetValue( const std::string& szVariable, bool & bValue ) const;
+		bool GetValue( const std::string& szVariable, char & cValue ) const;
+		bool GetValue( const std::string& szVariable, byte & ucValue ) const;
+		bool GetValue( const std::string& szVariable, short & wValue ) const;
+		bool GetValue( const std::string& szVariable, word & uwValue ) const;
+		bool GetValue( const std::string& szVariable, int & iValue ) const;
+		bool GetValue( const std::string& szVariable, uint & uiValue ) const;
+		bool GetValue( const std::string& szVariable, float & fValue ) const;
+		bool GetValue( const std::string& szVariable, double & dValue ) const;
+		bool GetValue( const std::string& szVariable, const char * & pszValue ) const;
+		bool GetValue( const std::string& szVariable, const wchar * & pszValue ) const;
+		const FVariable * GetVariable( const std::string& szVariable ) const;
+
+		void SetValue( const std::string& szVariable, bool bValue );
+		void SetValue( const std::string& szVariable, char cValue );
+		void SetValue( const std::string& szVariable, byte ucValue );
+		void SetValue( const std::string& szVariable, short wValue );
+		void SetValue( const std::string& szVariable, word uwValue );
+		void SetValue( const std::string& szVariable, int iValue );
+		void SetValue( const std::string& szVariable, uint uiValue );
+		void SetValue( const std::string& szVariable, float fValue );
+		void SetValue( const std::string& szVariable, double dValue );
+		void SetValue( const std::string& szVariable, const char * szValue );
+		void SetValue( const std::string& szVariable, const wchar * wszValue );
+
+		// Variable removal
+		bool RemValue( const std::string& szVariable );
+
+		// Iteration
+		const std::string& GetFirstVariableName( );
+		const std::string& GetNextVariableName( );
+		//
+		// END lol ============================================================
 
 		void Read(FDataStreamBase *);
 		void Write(FDataStreamBase *) const;
