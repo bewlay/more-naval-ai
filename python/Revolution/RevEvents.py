@@ -713,7 +713,11 @@ def playerCityLost( player, pCity, bConquest = True ) :
 
 		iPlayer = player.getID()
 		capital = player.getCapitalCity()
-		capitalArea = capital.area().getID()
+		
+		if not capital.isNone():
+			capitalArea = capital.area().getID()
+		else:
+			capitalArea = -1
 
 		iRevIdxChange = 0
 
