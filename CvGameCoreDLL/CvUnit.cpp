@@ -637,7 +637,11 @@ void CvUnit::convert(CvUnit* pUnit)
             }
             if (GC.getPromotionInfo((PromotionTypes)iI).isValidate())
             {
-                if (!GC.getPromotionInfo((PromotionTypes)iI).getUnitCombat(getUnitCombatType()))
+				if (getUnitCombatType() == NO_UNITCOMBAT)
+				{
+                    setHasPromotion(((PromotionTypes)iI), false);
+				}
+                else if (!GC.getPromotionInfo((PromotionTypes)iI).getUnitCombat(getUnitCombatType()))
                 {
                     setHasPromotion(((PromotionTypes)iI), false);
                 }
