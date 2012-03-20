@@ -5622,7 +5622,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 			}
 			
-			iCivicTechValue += 200  + (GC.getGameINLINE().getCurrentPeriod() * 50);
+			iCivicTechValue += 200;//  + (GC.getGameINLINE().getCurrentPeriod() * 50);
 
 			int iCivicOpt = (GC.getCivicInfo(eNewCivic).getCivicOptionType());
 			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)iCivicOpt);
@@ -5634,12 +5634,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					iCivicTechValue += std::min(2400, (100 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+					iCivicTechValue += std::min(2000, (100 * (iNewCivicValue - (iCurrentCivicValue - 1))));
 				}
 
 				if (GC.getCivicInfo(eCurrCivic).getAIWeight() < 0)
 				{
-					iCivicTechValue *= 3;
+					iCivicTechValue *= 2;
 				}
 			}
 			
@@ -5775,7 +5775,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (eReligion == eFavorite)
 						{
-							iReligionValue += (bHasReligion ? 1250 : 1500);
+							iReligionValue += (bHasReligion ? 1250 : 1600);
 						}
 					}
 				}
@@ -14081,7 +14081,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iWarmongerPercent = 25000 / std::max(100, (100 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand())); 
 
 	//iValue = (getNumCities() * 6);
-	iValue = 1;
+	iValue = 1 + AI_getNumRealCities();
+	//iValue = 1;
 
 	iValue += (getCivicPercentAnger(eCivic) / 10);
 
@@ -14131,8 +14132,41 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 
 //>>>>Better AI: Modified by Denev 2010/07/21
+	/* original bts code
 	iValue += -((kCivic.getDistanceMaintenanceModifier() * std::max(0, (iCities - 3))) / 8);
-	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (iCities - 3))) / 8);
+	iValue += -((kCivic.getNumCitiesMaintenanceModifier() * std::max(0, (iCities - 3))) / 8); */
+	// K-Mod. After looking at a couple of examples, it's plain to see that the above maintenance estimates are far too big.
+	// Surprisingly, it actually doesn't take much time to calculate the precise magnitude of the maintenance change. So that's what I'll do!
+	if (kCivic.getNumCitiesMaintenanceModifier() != 0)
+	{
+		PROFILE("civicValue: NumCitiesMaintenance");
+		int iTemp = 0;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			iTemp += pLoopCity->calculateNumCitiesMaintenanceTimes100() * (pLoopCity->getMaintenanceModifier() + 100) / 100;
+		}
+		iTemp *= 100;
+		iTemp /= std::max(1, getNumCitiesMaintenanceModifier() + 100);
+
+		iValue -= iTemp * kCivic.getNumCitiesMaintenanceModifier() / 10000;
+	}
+	if (kCivic.getDistanceMaintenanceModifier() != 0)
+	{
+		PROFILE("civicValue: DistanceMaintenance");
+		int iTemp = 0;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			iTemp += pLoopCity->calculateDistanceMaintenanceTimes100() * (pLoopCity->getMaintenanceModifier() + 100) / 100;
+		}
+		iTemp *= 100;
+		iTemp /= std::max(1, getDistanceMaintenanceModifier() + 100);
+
+		iValue -= iTemp * kCivic.getDistanceMaintenanceModifier() / 10000;
+	}
+	// K-Mod end
+
 /*
 	int iNumCitiesMaintenance = 0;
 	int iDistanceMaintenance = 0;
@@ -14262,8 +14296,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 //FfH: End Add
 
-	iTemp = getWorldSizeMaxConscript(eCivic);
-	if( iTemp > 0 && (pCapital != NULL) )
+	int iMaxConscript = getWorldSizeMaxConscript(eCivic);
+	if( iMaxConscript > 0 && (pCapital != NULL) )
 	{
 		UnitTypes eConscript = pCapital->getConscriptUnit();
 		if( eConscript != NO_UNIT )
@@ -14291,8 +14325,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 				int iConscriptPop = std::max(1, GC.getUnitInfo(eConscript).getProductionCost() / GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST"));
 				iTempValue *= GC.getUnitInfo(eConscript).getProductionCost();
 				iTempValue /= iConscriptPop * GC.getDefineINT("CONSCRIPT_POPULATION_PER_COST");
-				iTempValue *= std::min(iCities, iTemp*3);
-				iTempValue /= iTemp*3;
+				iTempValue *= std::min(iCities, iMaxConscript*3);
+				iTempValue /= iMaxConscript*3;
 				// K-Mod end
 
 				iValue += iTempValue;
@@ -14310,7 +14344,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (iCities * 3) : 0);
 	iValue += -((kCivic.getWarWearinessModifier() * iCities) / ((bWarPlan) ? 25 : 50));
 	iValue += (kCivic.getFreeSpecialist() * iCities * 12);
-	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (getNumCities() * 2)));
+	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (iCities * 2)));
 	
 	// ToDo: better way to calculate the value of coastal trade routes
 	iValue += kCivic.getCoastalTradeRoutes() * countNumCoastalCities();
@@ -14525,19 +14559,22 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		if (pCapital) 
 		{
 			// God King
-			iTemp = kCivic.getCapitalYieldModifier(iI) * pCapital->getYieldRate((YieldTypes)iI);
-			iTemp /= 100;
-			iTemp *= 4;
-			iTemp /= std::max(1, iCities);
-
-			iTempValue += iTemp;
+			if (kCivic.getCapitalYieldModifier(iI) != 0)
+			{
+				iTemp = (kCivic.getCapitalYieldModifier(iI)) * pCapital->getBaseYieldRate((YieldTypes)iI);
+				iTemp /= (iCities * 25);
+				iTempValue += iTemp;
+			}
+			//iTemp *= 4;
+			//iTemp /= std::max(1, iCities);
 		}
 		iTempValue += ((kCivic.getTradeYieldModifier(iI) * iCities) / 11);
 
 		for (iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
 		{
 			// Aristocracy, Arete, Agrarianism
-			iTempValue += (AI_averageYieldMultiplier((YieldTypes)iI) * (kCivic.getImprovementYieldChanges(iJ, iI) * (getImprovementCount((ImprovementTypes)iJ) + getNumCities()/2))) / 100;
+			// Tholal ToDo - find way to evaluate potential future improvements (ie, Aristocracy)
+			iTempValue += (AI_averageYieldMultiplier((YieldTypes)iI) * (kCivic.getImprovementYieldChanges(iJ, iI) * (getImprovementCount((ImprovementTypes)iJ) + iCities/2))) / 100;
 		}
 
 		if (iI == YIELD_FOOD) 
@@ -14557,7 +14594,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		} 
 		else if (iI == YIELD_COMMERCE) 
 		{ 
-			iTempValue *= ((AI_avoidScience()) ? 2 : 4);
+			iTempValue *= ((AI_avoidScience()) ? 2 : 5);
 			iTempValue /= 2;
 		} 
 
@@ -14574,13 +14611,16 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		// God King
 		if (pCapital)
 		{
-			iTemp = kCivic.getCapitalCommerceModifier(iI) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
-			iTemp /= 100;
-
-			iTemp *= 4;
-			iTemp /= std::max(1, iCities);
+			if (kCivic.getCapitalCommerceModifier(iI) != 0)
+			{
+				iTemp = (kCivic.getCapitalCommerceModifier(iI)) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
+				iTemp /= (iCities * 25);
+	
+				//iTemp *= 4;
+				//iTemp /= std::max(1, iCities);
 			
-			iTempValue += iTemp;
+				iTempValue += iTemp;
+			}
 		}
 
 		if (iI == COMMERCE_ESPIONAGE)
@@ -14632,7 +14672,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		if (iHappiness != 0)
 		{
-			iValue += (iHappiness * countCityFeatures((FeatureTypes)iI) * 2);
+			iValue += (iHappiness * countCityFeatures((FeatureTypes)iI) * 5);
 		}
 	}
 
@@ -14747,7 +14787,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		}
 	}
 
-	return iValue;
+	return std::max(0, iValue);
 }
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
@@ -16782,37 +16822,24 @@ void CvPlayerAI::AI_doCommerce()
 	verifyGoldCommercePercent();
 }
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      07/19/09                                jdog5000      */
-/*                                                                                              */
-/* Civic AI                                                                                     */
-/************************************************************************************************/
+// K-Mod. I've rewriten most of this function, based on edits from BBAI. I don't know what's original bts code and what's not.
+// (the BBAI implementation had some bugs)
 void CvPlayerAI::AI_doCivics()
 {
-	CivicTypes* paeBestCivic;
-	int iCurCivicsValue = 0;
-	int iBestCivicsValue = 0;
-	int iI;
-
 	FAssertMsg(!isHuman(), "isHuman did not return false as expected");
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      07/20/09                                jdog5000      */
-/*                                                                                              */
-/* Barbarian AI, efficiency                                                                     */
-/************************************************************************************************/
 	if( isBarbarian() )
 	{
 		return;
 	}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
 
 	if (AI_getCivicTimer() > 0)
 	{
 		AI_changeCivicTimer(-1);
-		return;
+		if (getGoldenAgeTurns() != 1) // K-Mod. If its the last turn of a golden age, consider switching civics anyway.
+		{
+			return;
+		}
 	}
 
 	if (!canRevolution(NULL))
@@ -16820,56 +16847,100 @@ void CvPlayerAI::AI_doCivics()
 		return;
 	}
 
-	FAssertMsg(AI_getCivicTimer() == 0, "AI Civic timer is expected to be 0");
+	// FAssertMsg(AI_getCivicTimer() == 0, "AI Civic timer is expected to be 0"); // Disabled by K-Mod
+	if (gPlayerLogLevel > 0) logBBAI("%S checking civics...", getCivilizationDescription(0));
 
-	paeBestCivic = new CivicTypes[GC.getNumCivicOptionInfos()];
+	std::vector<CivicTypes> aeBestCivic(GC.getNumCivicOptionInfos());
+	std::vector<int> aiCurrentValue(GC.getNumCivicOptionInfos());
 
-	// Threshold to make AI hold off on civics changes, threshold is percentage to add to
-	// value of current civics
-	int iThreshold = 7;
-
-	if( (getAnarchyTurns() > 0) && !isGoldenAge() )
+	for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 	{
-		iThreshold += 13;
+		aeBestCivic[iI] = getCivics((CivicOptionTypes)iI);
+		aiCurrentValue[iI] = AI_civicValue(aeBestCivic[iI]);
 	}
 
-	int iCurValue;
-	int iBestValue;
-	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+	int iAnarchyLength = 0;
+	bool bWillSwitch;
+	bool bWantSwitch;
+	bool bFirstPass = true;
+	do
 	{
-		paeBestCivic[iI] = AI_bestCivic((CivicOptionTypes)iI, &iBestValue);
-		iCurValue = AI_civicValue( getCivics((CivicOptionTypes)iI) );
-		
-		iCurValue += (iCurValue * iThreshold) / 100;
-
-		if ( paeBestCivic[iI] == NO_CIVIC || iBestValue < iCurValue )
+		bWillSwitch = false;
+		bWantSwitch = false;
+		for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
 		{
-			paeBestCivic[iI] = getCivics((CivicOptionTypes)iI);
-			iBestValue = iCurValue;
+			int iBestValue;
+			CivicTypes eNewCivic = AI_bestCivic((CivicOptionTypes)iI, &iBestValue);
+
+			int iTestAnarchy = getCivicAnarchyLength(&aeBestCivic[0]);
+			// using 20 percent as a rough estimate of revolution cost, and 2 percent just for a bit of inertia.
+			// reduced threshold if we are already going to have a revolution.
+			int iThreshold = (iTestAnarchy > iAnarchyLength ? (!bFirstPass | bWantSwitch ? 14 : 24) : 2);
+
+			if (100*iBestValue > (100+iThreshold)*aiCurrentValue[iI])
+			{
+				FAssert(aeBestCivic[iI] != NO_CIVIC);
+				if (gPlayerLogLevel > 0) logBBAI("    ...switching to %S from %S (value: %d vs %d%S)", GC.getCivicInfo(eNewCivic).getDescription(0), GC.getCivicInfo(aeBestCivic[iI]).getDescription(0), iBestValue, aiCurrentValue[iI], bFirstPass?"" :", on recheck");
+				iAnarchyLength = iTestAnarchy;
+				aeBestCivic[iI] = eNewCivic;
+				aiCurrentValue[iI] = iBestValue;
+				bWillSwitch = true;
+			}
+			else
+			{
+				if (100*iBestValue > 114*aiCurrentValue[iI])
+					bWantSwitch = true;
+			}
 		}
+		bFirstPass = false;
+	} while (bWillSwitch && bWantSwitch);
+	// Recheck, just in case we can switch another good civic without adding more anarchy.
 
-		iCurCivicsValue += iCurValue;
-		iBestCivicsValue += iBestValue;
-	}
 
-	// XXX AI skips revolution???
-	if (canRevolution(paeBestCivic))
+	// finally, if our current research would give us a new civic, consider waiting for that.
+	if (iAnarchyLength > 0 && bWillSwitch)
 	{
-		revolution(paeBestCivic);
+		TechTypes eResearch = getCurrentResearch();
+		int iResearchTurns;
+		if (eResearch != NO_TECH && (iResearchTurns = getResearchTurnsLeft(eResearch, true)) < 2*CIVIC_CHANGE_DELAY/3)
+		{
+			for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+			{
+				const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)iI);
+				if (kCivic.getTechPrereq() == eResearch && !canDoCivics((CivicTypes)iI))
+				{
+					int iValue = AI_civicValue((CivicTypes)iI);
+					if (100 * iValue > (114+2*iResearchTurns) * aiCurrentValue[kCivic.getCivicOptionType()])
+					{
+						CivicTypes eOtherCivic = aeBestCivic[kCivic.getCivicOptionType()];
+						aeBestCivic[kCivic.getCivicOptionType()] = (CivicTypes)iI;
+						if (getCivicAnarchyLength(&aeBestCivic[0]) <= iAnarchyLength)
+						{
+							if (gPlayerLogLevel > 0)
+								logBBAI("    %S delays revolution to wait for %S (value: %d vs %d)", getCivilizationDescription(0), kCivic.getDescription(0), iValue, aiCurrentValue[kCivic.getCivicOptionType()]);
+							AI_setCivicTimer(iResearchTurns*2/3);
+							return;
+						}
+						aeBestCivic[kCivic.getCivicOptionType()] = eOtherCivic;
+					}
+				}
+			}
+		}
+	}
+	//
+
+	if (canRevolution(&aeBestCivic[0]))
+	{
+		revolution(&aeBestCivic[0]);
 		AI_setCivicTimer((getMaxAnarchyTurns() == 0) ? (GC.getDefineINT("MIN_REVOLUTION_TURNS") * 2) : CIVIC_CHANGE_DELAY);
 	}
-
-	SAFE_DELETE_ARRAY(paeBestCivic);
 }
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-
 
 void CvPlayerAI::AI_doReligion()
 {
 	ReligionTypes eBestReligion;
 
+	FAssertMsg(!isHuman(), "isHuman did not return false as expected");
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      07/20/09                                jdog5000      */
 /*                                                                                              */
@@ -16882,8 +16953,6 @@ void CvPlayerAI::AI_doReligion()
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-
-	FAssertMsg(!isHuman(), "isHuman did not return false as expected");
 
 	if (AI_getReligionTimer() > 0)
 	{
@@ -16907,6 +16976,11 @@ void CvPlayerAI::AI_doReligion()
 
 	if (canConvert(eBestReligion))
 	{
+		if (gPlayerLogLevel > 0)
+		{
+			logBBAI("    %S decides to convert to %S (value: %d vs %d)", getCivilizationDescription(0), GC.getReligionInfo(eBestReligion).getDescription(0),
+				eBestReligion == NO_RELIGION ? 0 : AI_religionValue(eBestReligion), getStateReligion() == NO_RELIGION ? 0 : AI_religionValue(getStateReligion()));
+		}
 		convert(eBestReligion);
 		AI_setReligionTimer((getMaxAnarchyTurns() == 0) ? (GC.getDefineINT("MIN_CONVERSION_TURNS") * 2) : RELIGION_CHANGE_DELAY);
 	}
