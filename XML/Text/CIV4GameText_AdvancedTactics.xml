@@ -43,6 +43,14 @@
 		<Italian>Detach Great General</Italian>
 		<Spanish>Detach Great General</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_GENERAL_KILLED</Tag>
+		<English>A Great General has been killed!</English>
+		<French>A Great General has been killed!</French>
+		<German>A Great General has been killed!</German>
+		<Italian>A Great General has been killed!</Italian>
+		<Spanish>A Great General has been killed!</Spanish>
+	</TEXT>
 <!-- End Great Generals -->
 <!-- Start Advanced Diplomacy -->
 	<TEXT>
