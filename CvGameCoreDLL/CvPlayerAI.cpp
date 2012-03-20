@@ -1200,7 +1200,8 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc) const
 	{
 		if (!isBarbarian())
 		{
-			AI_invalidateCitySites(AI_getMinFoundValue());
+			//AI_invalidateCitySites(AI_getMinFoundValue());
+			AI_invalidateCitySites(-1);
 		}
 		for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 		{
@@ -3067,6 +3068,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 						aiYield[eYield] = std::max(aiYield[eYield], GC.getYieldInfo(eYield).getMinCity());
 					}
 
+					/*
 					if (eBonusImprovement != NO_IMPROVEMENT)
 					{
 						iBasePlotYield += GC.getImprovementInfo(eBonusImprovement).getImprovementBonusYield(eBonus, eYield);
@@ -3080,6 +3082,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 							aiYield[eYield] += aiYield[eYield] - iBasePlotYield;
 						}
 					}
+					*/
 				}
 			}
 
@@ -3381,7 +3384,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (pPlot->isRiver())
 	{
-		iValue += 60;
+		iValue += (bFinancial ? 75 : 60);
 	}
 
 	if (pPlot->isFreshWater())
@@ -4984,7 +4987,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	
 	for (int iJ = 0; iJ < GC.getNumRouteInfos(); iJ++)
 	{
-		iValue += -(GC.getRouteInfo((RouteTypes)iJ).getTechMovementChange(eTech) * 100);
+		iValue += -(GC.getRouteInfo((RouteTypes)iJ).getTechMovementChange(eTech) * (bWarPlan ? 200 : 100));
 	}
 
 	for (int iJ = 0; iJ < NUM_DOMAIN_TYPES; iJ++)
@@ -24926,6 +24929,27 @@ int CvPlayerAI::AI_getMinFoundValue() const
 		iValue *= 2;
 	}
 
+	// K-Mod. # of cities maintenance cost increase...
+	int iNumCitiesPercent = 100;
+	//iNumCitiesPercent *= (getAveragePopulation() + 17);
+	//iNumCitiesPercent /= 18;
+
+	iNumCitiesPercent *= GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getNumCitiesMaintenancePercent();
+	iNumCitiesPercent /= 100;
+
+	iNumCitiesPercent *= GC.getHandicapInfo(getHandicapType()).getNumCitiesMaintenancePercent();
+	iNumCitiesPercent /= 100;
+
+	//iNumCitiesPercent *= std::max(0, getNumCitiesMaintenanceModifier() + 100);
+	//iNumCitiesPercent /= 100;
+
+	// The marginal cost increase is roughly equal to double the cost of a current city...
+	// But we're really going to have to fudge it anyway, because the city value is in arbitrary units
+	// lets just say each gold per turn is worth roughly 60 'value points'.
+	// In the future, this could be AI flavour based.
+	iValue += iNumCitiesPercent * getNumCities() * 60 / 100;
+	// K-Mod end
+	
 	return iValue;
 }
 

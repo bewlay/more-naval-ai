@@ -1874,14 +1874,14 @@ void CvUnitAI::AI_settleMove()
             iSearchRange = 6;
             int iRange = 6;
 
-            iBestValue = 0;
-            pBestPlot = NULL;
+			iBestValue = plot()->getFoundValue(getOwnerINLINE());
+            pBestPlot = plot();
 
             for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
             {
                 for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
                 {
-                    pLoopPlot	= plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+                    pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
 
                     if (pLoopPlot != NULL)
                     {
