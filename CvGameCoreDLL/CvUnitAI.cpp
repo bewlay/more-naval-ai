@@ -8774,7 +8774,7 @@ void CvUnitAI::AI_settlerSeaMove()
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/	
-	
+	/*
 	if ((GC.getGame().getGameTurn() - getGameTurnCreated()) < 8)
 	{
 		if ((plot()->getPlotCity() == NULL) || GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_SETTLE) == 0)
@@ -8785,6 +8785,7 @@ void CvUnitAI::AI_settlerSeaMove()
 			}
 		}
 	}
+	*/
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/18/09                                jdog5000      */
 /*                                                                                              */
