@@ -4088,12 +4088,15 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 	{
 		eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
-		if (kOwner.isAssimilation() && getOriginalOwner() != getOwner())
+		if (kOwner.isAssimilation())// && getPreviousOwner() != getOwner())
 		{
-			eAltLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(GET_PLAYER(getOriginalOwner()).getCivilizationType()).getCivilizationUnits(iI)));
-			if (eAltLoopUnit != NO_UNIT)
+			if (getPreviousOwner() != NO_PLAYER)
 			{
-				eLoopUnit = eAltLoopUnit;
+				eAltLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(GET_PLAYER(getPreviousOwner()).getCivilizationType()).getCivilizationUnits(iI)));
+				if (eAltLoopUnit != NO_UNIT)
+				{
+					eLoopUnit = eAltLoopUnit;
+				}
 			}
 		}
 
