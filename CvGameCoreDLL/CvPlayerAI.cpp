@@ -6704,8 +6704,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					}
 				}
 
-				// HARDCODE - figure out better way to devalue this unit - war elephants cant be built
-				if (GC.getUnitInfo(eLoopUnit).getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_WAR_ELEPHANT"))
+				// dont value units that can't be built (ie, War Elephants)
+				if (kLoopUnit.getProductionCost() == -1)
 				{
 					continue;
 				}
