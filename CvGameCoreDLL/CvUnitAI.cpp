@@ -5305,16 +5305,9 @@ void CvUnitAI::AI_exploreMove()
 
 	if (getDamage() > 0)
 	{
-		if (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot()))
+		if ((plot()->getFeatureType() == NO_FEATURE) || (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() <= 0))
 		{
-			if (AI_retreatToCity(false, false, 6))
-			{
-				return;
-			}
-		}
-
-		if (AI_heal())
-		{
+			getGroup()->pushMission(MISSION_HEAL);
 			return;
 		}
 	}
