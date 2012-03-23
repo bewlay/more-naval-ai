@@ -13751,7 +13751,8 @@ bool CvUnitAI::AI_goldenAge()
 bool CvUnitAI::AI_spreadReligion()
 {
 	PROFILE_FUNC();
-
+	
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	CvCity* pLoopCity;
 	CvPlot* pBestPlot;
 	CvPlot* pBestSpreadPlot;
@@ -13763,25 +13764,16 @@ bool CvUnitAI::AI_spreadReligion()
 	int iLoop;
 	int iI;
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      03/08/10                                jdog5000      */
-/*                                                                                              */
-/* Victory Strategy AI                                                                          */
-/************************************************************************************************/
-	bool bCultureVictory = GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-	eReligion = NO_RELIGION;
+	bool bCultureVictory = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
 
 	// BBAI TODO: Unnecessary with changes below ...
 	if (eReligion == NO_RELIGION)
 	{
-		if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != NO_RELIGION)
+		if (kOwner.getStateReligion() != NO_RELIGION)
 		{
-			if (m_pUnitInfo->getReligionSpreads(GET_PLAYER(getOwnerINLINE()).getStateReligion()) > 0)
+			if (m_pUnitInfo->getReligionSpreads(kOwner.getStateReligion()) > 0)
 			{
-				eReligion = GET_PLAYER(getOwnerINLINE()).getStateReligion();
+				eReligion = kOwner.getStateReligion();
 			}
 		}
 	}
@@ -13837,7 +13829,7 @@ bool CvUnitAI::AI_spreadReligion()
 				if (bHasHolyCity)
 				{
 					iPlayerMultiplierPercent = 100;
-					if (!bCultureVictory || ((eReligion == GET_PLAYER(getOwnerINLINE()).getStateReligion()) && bHasHolyCity))
+					if (!bCultureVictory || ((eReligion == kOwner.getStateReligion()) && bHasHolyCity))
 					{
 						if (GET_PLAYER((PlayerTypes)iI).getStateReligion() == NO_RELIGION)
 						{
@@ -13863,7 +13855,7 @@ bool CvUnitAI::AI_spreadReligion()
 						}
 
 						int iReligionCount = GET_PLAYER((PlayerTypes)iI).countTotalHasReligion();
-						int iCityCount = GET_PLAYER(getOwnerINLINE()).getNumCities();
+						int iCityCount = kOwner.getNumCities();
 						//magic formula to produce normalized adjustment factor based on religious infusion
 						int iAdjustment = (100 * (iCityCount + 1));
 						iAdjustment /= ((iCityCount + 1) + iReligionCount);
@@ -13898,7 +13890,7 @@ bool CvUnitAI::AI_spreadReligion()
 						{
 							if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
 							{
-								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_SPREAD, getGroup()) == 0)
+								if (kOwner.AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_SPREAD, getGroup()) == 0)
 								{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      04/03/09                                jdog5000      */
