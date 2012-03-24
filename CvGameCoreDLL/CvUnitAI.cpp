@@ -13753,7 +13753,7 @@ bool CvUnitAI::AI_spreadReligion()
 	PROFILE_FUNC();
 	
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
-	CvCity* pLoopCity;
+//	CvCity* pLoopCity;
 	CvPlot* pBestPlot;
 	CvPlot* pBestSpreadPlot;
 	ReligionTypes eReligion;
@@ -13766,15 +13766,13 @@ bool CvUnitAI::AI_spreadReligion()
 
 	bool bCultureVictory = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
 
-	// BBAI TODO: Unnecessary with changes below ...
-	if (eReligion == NO_RELIGION)
+	eReligion = NO_RELIGION;
+
+	if (kOwner.getStateReligion() != NO_RELIGION)
 	{
-		if (kOwner.getStateReligion() != NO_RELIGION)
+		if (m_pUnitInfo->getReligionSpreads(kOwner.getStateReligion()) > 0)
 		{
-			if (m_pUnitInfo->getReligionSpreads(kOwner.getStateReligion()) > 0)
-			{
-				eReligion = kOwner.getStateReligion();
-			}
+			eReligion = kOwner.getStateReligion();
 		}
 	}
 
@@ -13814,37 +13812,33 @@ bool CvUnitAI::AI_spreadReligion()
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive() && !GET_PLAYER((PlayerTypes)iI).isBarbarian())
+		const CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+
+		if (kLoopPlayer.isAlive() && !kLoopPlayer.isBarbarian())
 		{
 		    iPlayerMultiplierPercent = 0;
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      11/28/09                                jdog5000      */
-/*                                                                                              */
-/* Unit AI, Efficiency                                                                          */
-/************************************************************************************************/
-			//if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam())
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam() && canEnterTerritory(GET_PLAYER((PlayerTypes)iI).getTeam()))
+			if (kLoopPlayer.getTeam() != getTeam() && canEnterTerritory(kLoopPlayer.getTeam()))
 			{
 				if (bHasHolyCity)
 				{
 					iPlayerMultiplierPercent = 100;
-					if (!bCultureVictory || ((eReligion == kOwner.getStateReligion()) && bHasHolyCity))
+					if (!bCultureVictory || (eReligion == kOwner.getStateReligion()))
 					{
-						if (GET_PLAYER((PlayerTypes)iI).getStateReligion() == NO_RELIGION)
+						if (kLoopPlayer.getStateReligion() == NO_RELIGION)
 						{
-							if (0 == (GET_PLAYER((PlayerTypes)iI).getNonStateReligionHappiness()))
+							if (0 == (kLoopPlayer.getNonStateReligionHappiness()))
 							{
 								iPlayerMultiplierPercent += 600;
 							}
 						}
-						else if (GET_PLAYER((PlayerTypes)iI).getStateReligion() == eReligion)
+						else if (kLoopPlayer.getStateReligion() == eReligion)
 						{
 							iPlayerMultiplierPercent += 300;
 						}
 						else
 						{
-							if (GET_PLAYER((PlayerTypes)iI).hasHolyCity(GET_PLAYER((PlayerTypes)iI).getStateReligion()))
+							if (kLoopPlayer.hasHolyCity(kLoopPlayer.getStateReligion()))
 							{
 								iPlayerMultiplierPercent += 50;
 							}
@@ -13853,9 +13847,10 @@ bool CvUnitAI::AI_spreadReligion()
 								iPlayerMultiplierPercent += 300;
 							}
 						}
-
-						int iReligionCount = GET_PLAYER((PlayerTypes)iI).countTotalHasReligion();
-						int iCityCount = kOwner.getNumCities();
+						
+						int iReligionCount = kLoopPlayer.countTotalHasReligion();
+						//int iCityCount = kOwner.getNumCities();
+						int iCityCount = kLoopPlayer.getNumCities(); // K-Mod!
 						//magic formula to produce normalized adjustment factor based on religious infusion
 						int iAdjustment = (100 * (iCityCount + 1));
 						iAdjustment /= ((iCityCount + 1) + iReligionCount);
@@ -13872,7 +13867,7 @@ bool CvUnitAI::AI_spreadReligion()
 			{
 				iPlayerMultiplierPercent = 100;
 			}
-			else if (bHasHolyCity && GET_PLAYER((PlayerTypes)iI).getTeam() == getTeam())
+			else if (bHasHolyCity && kLoopPlayer.getTeam() == getTeam())
 			{
 				iPlayerMultiplierPercent = 80;
 			}
@@ -13882,7 +13877,7 @@ bool CvUnitAI::AI_spreadReligion()
 			
 			if (iPlayerMultiplierPercent > 0)
 			{
-				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
+				for (CvCity* pLoopCity = kLoopPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kLoopPlayer.nextCity(&iLoop))
 				{
 					if (AI_plotValid(pLoopCity->plot()) && pLoopCity->area() == area() && (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam())))
 					{
