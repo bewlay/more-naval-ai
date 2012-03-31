@@ -48,6 +48,8 @@ def setup( ) :
 		iSheaim		  = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_SHEAIM')
 		iSidar		  = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_SIDAR')
 		iSvartalfar		  = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_SVARTALFAR')
+		iCalabim = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_CALABIM')
+
 
 		# Format is:
 		# RebelTypeList[iHomeland] = [iRebel1, iRebel2, iRebel3]
@@ -86,8 +88,6 @@ def setup( ) :
 			MinorLeaders.append( list() )
 		
 		try :
-			iCalabim = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_CALABIM')
-			
 			iAnaganios = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'LEADER_ANAGANTIOS')
 			iAverax = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'LEADER_AVERAX')
 			iBraeden = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'LEADER_BRAEDEN')
