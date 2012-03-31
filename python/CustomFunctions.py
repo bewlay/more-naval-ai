@@ -223,7 +223,7 @@ class CustomFunctions:
 		if sGoody == 'ENRAGED':
 			caster.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENRAGED'), True)
 			CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_ENRAGED", ()),'',1,'Art/Interface/Buttons/Promotions/Enraged.dds',ColorTypes(7),pPlot.getX(),pPlot.getY(),True,True)
-			return 80		
+			return 80
 		if sGoody == 'PLAGUED':
 			caster.setHasPromotion(gc.getInfoTypeForString('PROMOTION_PLAGUED'), True)
 			CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_PLAGUED", ()),'',1,'Art/Interface/Buttons/Promotions/Plagued.dds',ColorTypes(7),pPlot.getX(),pPlot.getY(),True,True)
@@ -281,7 +281,7 @@ class CustomFunctions:
 		if caster.isAlive():
 			if not caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_MUTATED')):
 				lList = lList + ['MUTATED']
-		
+
 		sGoody = lList[CyGame().getSorenRandNum(len(lList), "Pick Goody")-1]
 		if sGoody == 'CAGE':
 			pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_CAGE'))
@@ -416,22 +416,22 @@ class CustomFunctions:
 			return 100
 		if sGoody == 'PRISONER_DISCIPLE_ASHEN':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_ASHEN'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_DISCIPLE_EMPYREAN':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_EMPYREAN'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_DISCIPLE_LEAVES':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_LEAVES'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_DISCIPLE_OVERLORDS':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_OVERLORDS'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_DISCIPLE_RUNES':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_RUNES'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_DISCIPLE_ORDER':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_DISCIPLE_ORDER'), caster)
-			return 100			
+			return 100
 		if sGoody == 'SHIELD_OF_FAITH':
 			caster.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SHIELD_OF_FAITH'), True)
 			CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_SHIELD_OF_FAITH",()),'',1,'Art/Interface/Buttons/Promotions/ShieldOfFaith.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
@@ -485,7 +485,7 @@ class CustomFunctions:
 
 		if sGoody == 'TREASURE_VAULT':
 			pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_TREASURE_VAULT'), caster)
-			return 100	
+			return 100
 		if sGoody == 'BONUS_CLAM':
 			pPlot.setBonusType(gc.getInfoTypeForString('BONUS_CLAM'))
 			CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_BONUS_CLAM",()),'',1,'Art/Interface/Buttons/WorldBuilder/Clam.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
@@ -533,10 +533,10 @@ class CustomFunctions:
 			return 100
 		if sGoody == 'PRISONER_ADVENTURER':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_ADVENTURER'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_ANGEL':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_ANGEL'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_ARTIST':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_ARTIST'), caster)
 			return 100
@@ -548,32 +548,32 @@ class CustomFunctions:
 			return 100
 		if sGoody == 'PRISONER_COMMANDER':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_COMMANDER'), caster)
-			return 100	
+			return 100
 		if sGoody == 'PRISONER_ENGINEER':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_ENGINEER'), caster)
-			return 100	
+			return 100
 		if sGoody == 'PRISONER_MAGE':
 			pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_MAGE'), caster)
 			return 100
 		if sGoody == 'PRISONER_MERCHANT':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_MERCHANT'), caster)
-			return 100	
+			return 100
 		if sGoody == 'PRISONER_MONK':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_MONK'), caster)
-			return 100			
+			return 100
 		if sGoody == 'PRISONER_PROPHET':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_PROPHET'), caster)
-			return 100	
+			return 100
 		if sGoody == 'PRISONER_SEA_SERPENT':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_SEA_SERPENT'), caster)
-			return 100	
+			return 100
 		if sGoody == 'PRISONER_SCIENTIST':
 			pPlayer.receiveGoody(pPlot,gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_PRISONER_SCIENTIST'), caster)
 			return 100
 		if sGoody == 'TECH':
 			pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_TECH'), caster)
 			return 100
-		return 100		
+		return 100
 
 	def formEmpire(self, iCiv, iLeader, iTeam, pCity, iAlignment, pFromPlayer):
 		iPlayer = pFromPlayer.initNewEmpire(iLeader, iCiv)
@@ -707,18 +707,17 @@ class CustomFunctions:
 				if (iBonus == iCorn or iBonus == iRice or iBonus == iWheat):
 					pPlot.setBonusType(-1)
 					pPlot.setImprovementType(iSnakePillar)
-					
+
 #				if (iFeature == iForest or iFeature == iAForest or iFeature == iJungle):
 #					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Burnt Forest")
 #					if iRandom < 10:
 #						pPlot.setFeatureType(iBForest, 0)
-				
 #				if pPlot.isPeak() == True:
 #					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Volcanos")
 #					if iRandom < 2:
 #						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_VOLCANO_CREATION')
 #						triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
-				
+
 			if iPlotCount < 10:
 				if iBonus == iToad:
 					if CyGame().getSorenRandNum(100, "Hell Convert") < 50:
@@ -755,10 +754,7 @@ class CustomFunctions:
 			if iTerrain == iBurningSands:
 				if pPlot.isCity() == False:
 					if pPlot.isPeak() == False:
-##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#						if CyGame().getSorenRandNum(100, "Flames") <= iFlamesSpreadChance:
 						if CyGame().getSorenRandNum(100, "Flames") < iFlamesSpreadChance:
-##--------		Unofficial Bug Fix: End Modify			--------##
 							pPlot.setFeatureType(iFlames, 0)
 
 	def doTurnKhazad(self, iPlayer):
@@ -925,11 +921,11 @@ class CustomFunctions:
 					pPlot.setTerrainType(iGrass,True,True)
 				if (iTerrain == iGrass and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
 					pPlot.setFeatureType(iForest, 0)
-				iTemp = pPlot.getFeatureType()	
+				iTemp = pPlot.getFeatureType()
 				pPlot.changePlotCounter(-100)
 				if iTemp!=-1:
 					pPlot.setFeatureType(iTemp, 0)
-					
+
 	def snowgenesis(self, iPlayer):
 		iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 		iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
@@ -1335,105 +1331,105 @@ class CustomFunctions:
 			lEpithet = lEpithet + ["fallen","diseased","infernal","profane","corrupt"]
 			lSchema = lSchema + ["CPME[ the ]CX"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS'):
-			lPre = lPre + ["cth","cht","shu","az","ts","dag","hy","gla","gh","rh","x","ll"]		
-			lMid = lMid + ["ul","tha","on","ug","st","oi"]	
+			lPre = lPre + ["cth","cht","shu","az","ts","dag","hy","gla","gh","rh","x","ll"]
+			lMid = lMid + ["ul","tha","on","ug","st","oi"]
 			lEnd = lEnd + ["hu","on", "ha","ua","oa","uth","oth","ath","thua", "thoa","ur","ll","og","hua"]
 			lEpithet = lEpithet + ["nameless","webbed","deep","watery"]
 			lNoun = lNoun + ["tentacle","wind","wave","sea","ocean","dark","crab","abyss","island"]
 			lSchema = lSchema + ["CPMME","CPDMME","CPAMAME","CPMAME","CPAMAMEDCPAMAE"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_THE_ORDER'):
-			lPre = lPre + ["ph","v","j"]		
-			lMid = lMid + ["an","al","un"]	
+			lPre = lPre + ["ph","v","j"]
+			lMid = lMid + ["an","al","un"]
 			lEnd = lEnd + ["uel","in","il"]
 			lEpithet = lEpithet + ["confessor","crusader", "faithful","obedient","good"]
 			lNoun = lNoun + ["order", "faith", "heaven","law"]
 			lSchema = lSchema + ["CPESCPME","CPMESCPE","CPMESCPME", "CPESCPE"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'):
-			lPre = lPre + ["ki","ky","yv"]		
-			lMid = lMid + ["th","ri"]	
+			lPre = lPre + ["ki","ky","yv"]
+			lMid = lMid + ["th","ri"]
 			lEnd = lEnd + ["ra","el","ain"]
 			lEpithet = lEpithet + ["green"]
 			lNoun = lNoun + ["tree","bush","wood","berry","elm","willow","oak","leaf","flower","blossom"]
-			lSchema = lSchema + ["CPESCN","CPMESCNN","CPMESCXN"]		
+			lSchema = lSchema + ["CPESCN","CPMESCNN","CPMESCXN"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH'):
-			lPre = lPre + ["bam","ar","khel","ki"]		
-			lMid = lMid + ["th","b","en"]	
+			lPre = lPre + ["bam","ar","khel","ki"]
+			lMid = lMid + ["th","b","en"]
 			lEnd = lEnd + ["ur","dain","ain","don"]
 			lEpithet = lEpithet + ["deep","guard","miner"]
 			lNoun = lNoun + ["rune","flint","slate","stone","rock","iron","copper","mithril","thane","umber"]
-			lSchema = lSchema + ["CPME","CPMME"]	
+			lSchema = lSchema + ["CPME","CPMME"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN'):
 			lEpithet = lEpithet + ["radiant","holy"]
 			lNoun = lNoun + ["honor"]
 		if pReligion == gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS'):
 			lEpithet = lEpithet + ["hidden","dark"]
 			lNoun = lNoun + ["cloak","shadow","mask"]
-			lSchema = lSchema + ["CPME","CPMME"]	
+			lSchema = lSchema + ["CPME","CPMME"]
 
 		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_ENRAGED')) == True:
 			# I have left this as a copy of the Barbarian, see how it goes, this might do the trick. I plan to use it when there is a chance a unit will go Barbarian anyway.
 			lPre = lPre + ["gru","bra","no","os","dir","ka","z"]
 			lMid = lMid + ["g","ck","gg","sh","b","bh","aa"]
 			lEnd = lEnd + ["al","e","ek","esh","ol","olg","alg"]
-			lNoun = lNoun + ["death", "hate", "rage", "mad","insane","berserk"]		
+			lNoun = lNoun + ["death", "hate", "rage", "mad","insane","berserk"]
 			lEpithet = lEpithet + ["smasher", "breaker", "mangle","monger"]
 
 		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_CRAZED')) == True:
 			# might want to tone this down, because I plan to use it as possession/driven to madness, less than madcap zaniness.
 			lPre = lPre + ["mad","pim","zi","zo","fli","mum","dum","odd","slur"]
 			lMid = lMid + ["bl","pl","gg","ug","bl","b","zz","abb","odd"]
-			lEnd = lEnd + ["ad","ap","izzle","onk","ing","er","po","eep","oggle","y"]	
-		
+			lEnd = lEnd + ["ad","ap","izzle","onk","ing","er","po","eep","oggle","y"]
+
 		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_VAMPIRE')) == True:
 			lPre = lPre + ["dra","al","nos","vam","vla","tep","bat","bar","cor","lil","ray","zar","stra","le"]
 			lMid = lMid + ["cul","u","car","fer","pir","or","na","ov","sta"]
-			lEnd = lEnd + ["a","d","u","e","es","y","bas","vin","ith","ne","ak","ich","hd","t"]	
+			lEnd = lEnd + ["a","d","u","e","es","y","bas","vin","ith","ne","ak","ich","hd","t"]
 
 		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_DEMON')) == True:
 			lPre = lPre + ["aa","ab","adr","ah","al","de","ba","cro","da","be","eu","el","ha","ib","me","she","sth","z"]
 			lMid = lMid + ["rax","lia","ri","al","as","b","bh","aa","al","ze","phi","sto","phe","cc","ee"]
 			lEnd = lEnd + ["tor","tan","ept","lu","res","ah","mon","gon","bul","gul","lis","les","uz"]
-			lSchema = ["CPMMME","CPMACME", "CPKMAUAPUE", "CPMMME[ the ]CNX"]				
-		
+			lSchema = ["CPMMME","CPMACME", "CPKMAUAPUE", "CPMMME[ the ]CNX"]
+
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_HILL_GIANT'):
 			lPre = lPre + ["gor","gra","gar","gi","gol"]
 			lMid = lMid + ["gan","li","ri","go"]
 			lEnd = lEnd + ["tus","tan","ath","tha"]
-			lSchema = lSchema +["CXNSCNN","CPESCNE", "CPMME[ the ]CX"]		
-			lEpithet = lEpithet + ["large","huge","collossal","brutal","basher","smasher","crasher","crusher"]		
+			lSchema = lSchema +["CXNSCNN","CPESCNE", "CPMME[ the ]CX"]
+			lEpithet = lEpithet + ["large","huge","collossal","brutal","basher","smasher","crasher","crusher"]
 			lNoun = lNoun + ["fist","tor","hill","brute","stomp"]
 
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_LIZARDMAN'):
 			lPre = lPre + ["ss","s","th","sth","hss"]
 			lEnd = lEnd + ["ess","iss","ath","tha"]
-			lEpithet = lEpithet + ["cold"]			
+			lEpithet = lEpithet + ["cold"]
 			lNoun = lNoun + ["hiss","tongue","slither","scale","tail","ruin"]
-			lSchema = lSchema + ["CPAECPAE","CPAKECPAU","CPAMMAE"]		
+			lSchema = lSchema + ["CPAECPAE","CPAKECPAU","CPAMMAE"]
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_FIRE_ELEMENTAL') or unit.getUnitType() == gc.getInfoTypeForString('UNIT_AZER'):
 			lPre = lPre + ["ss","cra","th","sth","hss","roa"]
-			lMid = lMid + ["ss","ck","rr","oa","iss","tt"]		
+			lMid = lMid + ["ss","ck","rr","oa","iss","tt"]
 			lEnd = lEnd + ["le","iss","st","r","er"]
-			lNoun = lNoun + ["hot", "burn","scald","roast","flame","scorch","char","sear","singe","fire","spit"]			
+			lNoun = lNoun + ["hot", "burn","scald","roast","flame","scorch","char","sear","singe","fire","spit"]
 			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_WATER_ELEMENTAL'):
 			lPre = lPre + ["who","spl","dr","sl","spr","sw","b"]
-			lMid = lMid + ["o","a","i","ub","ib"]		
+			lMid = lMid + ["o","a","i","ub","ib"]
 			lEnd = lEnd + ["sh","p","ter","ble"]
-			lNoun = lNoun + ["wave","lap","sea","lake","water","tide","surf","spray","wet","damp","soak","gurgle","bubble"]			
-			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]	
+			lNoun = lNoun + ["wave","lap","sea","lake","water","tide","surf","spray","wet","damp","soak","gurgle","bubble"]
+			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_AIR_ELEMENTAL'):
 			lPre = lPre + ["ff","ph","th","ff","ph","th"]
-			lMid = lMid + ["oo","aa","ee","ah","oh"]		
+			lMid = lMid + ["oo","aa","ee","ah","oh"]
 			lEnd = lEnd + ["ff","ph","th","ff","ph","th"]
-			lNoun = lNoun + ["wind","air","zephyr","breeze","gust","blast","blow"]			
-			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]	
+			lNoun = lNoun + ["wind","air","zephyr","breeze","gust","blast","blow"]
+			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_EARTH_ELEMENTAL'):
 			lPre = lPre + ["gra","gro","kro","ff","ph","th"]
-			lMid = lMid + ["o","a","u"]		
+			lMid = lMid + ["o","a","u"]
 			lEnd = lEnd + ["ck","g","k"]
-			lNoun = lNoun + ["rock","stone","boulder","slate","granite","rumble","quake"]			
-			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]	
-	
+			lNoun = lNoun + ["rock","stone","boulder","slate","granite","rumble","quake"]
+			lSchema = ["CNN","CNX","CPME","CPME[ the ]CNX","CPMME","CNNSCPME"]
+
 		# SEA BASED
 		# Check for ships - special schemas
 		if unit.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_NAVAL'):
@@ -1441,7 +1437,7 @@ class CustomFunctions:
 			lNoun = lNoun + ["lady","jolly","keel","bow","stern", "mast","sail","deck","hull","reef","wave"]
 			lEpithet = lEpithet + ["sea", "red", "blue","grand","barnacle","gull"]
 			lSchema = ["[The ]CNN", "[The ]CXN", "[The ]CNX","[The ]CNSCN", "[The ]CNSCX","CPME['s ]CN","[The ]CPME", "[The ]CNX","CNX","CN['s ]CN"]
-	
+
 		# # #
 		# Pick a Schema
 		sSchema = lSchema[CyGame().getSorenRandNum(len(lSchema), "Name Gen")-1]
@@ -1450,7 +1446,7 @@ class CustomFunctions:
 		iUpper = 0
 		iKeep = 0
 		iSkip = 0
-	
+
 		# Run through each character in schema to generate name
 		for iCount in range (0,len(sSchema)):
 			sAdd=""
@@ -1461,14 +1457,14 @@ class CustomFunctions:
 					iSkip = 0
 				else:
 					sAdd = sAction
-					iDone = 1		
+					iDone = 1
 			else:					# MAIN SECTION
 				if sAction == "P": 	# Pre 	: beginnings of names
 					sAdd = lPre[CyGame().getSorenRandNum(len(lPre), "Name Gen")-1]
 					iDone = 1
 				if sAction == "M":	# Mid 	: middle syllables
-					sAdd = lMid[CyGame().getSorenRandNum(len(lMid), "Name Gen")-1]	
-					iDone = 1	
+					sAdd = lMid[CyGame().getSorenRandNum(len(lMid), "Name Gen")-1]
+					iDone = 1
 				if sAction == "E":	# End	: end of names
 					sAdd = lEnd[CyGame().getSorenRandNum(len(lEnd), "Name Gen")-1]
 					iDone = 1
@@ -1478,16 +1474,16 @@ class CustomFunctions:
 					iDone = 1
 				if sAction == "N":	# Noun	: noun word part
 					#noun
-					sAdd = lNoun[CyGame().getSorenRandNum(len(lNoun), "Name Gen")-1]	
+					sAdd = lNoun[CyGame().getSorenRandNum(len(lNoun), "Name Gen")-1]
 					iDone = 1
 				if sAction == "S":	# Space	: a space character. (Introduced before [ ] was possible )
 					sAdd =  " "
 					iDone = 1
-				if sAction == "D":	# Dash	: a - character. Thought to be common and useful enough to warrant inclusion : Introduced before [-] was possible 
+				if sAction == "D":	# Dash	: a - character. Thought to be common and useful enough to warrant inclusion : Introduced before [-] was possible
 					sAdd =  "-"
 					iDone = 1
 				if sAction == "A":	# '		: a ' character - as for -, introduced early
-					sAdd = "'" 
+					sAdd = "'"
 					iDone = 1
 				if sAction == "C":	# Caps	: capitalizes first letter of next phrase generated. No effect on non-letters.
 					iUpper = 1
@@ -1498,11 +1494,11 @@ class CustomFunctions:
 					iDone = 1
 				if sAction == "[":	# Print	: anything between [] is added to the final phrase "as is". Useful for [ the ] and [ of ] among others.
 					iSkip = 1
-			# capitalizes phrase once.	
+			# capitalizes phrase once.
 			if iUpper == 1 and iDone == 1:
 				sAdd = sAdd.capitalize()
 				iUpper = 0
-			# stores the next phrase generated.	
+			# stores the next phrase generated.
 			if iKeep == 1 and iDone == 1:
 				sKeep = sAdd
 				iKeep = 0
@@ -1510,9 +1506,9 @@ class CustomFunctions:
 			if iDone == 1:
 				sFull = sFull + sAdd
 
-		# trim name length			
+		# trim name length
 		if len(sFull) > 25:
-			sFull = sFull[:25]		
+			sFull = sFull[:25]
 		#CyInterface().addMessage(caster.getOwner(),True,25,"NAME : "+sFull,'AS2D_POSITIVE_DINK',1,'Art/Interface/Buttons/Spells/Rob Grave.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
 
 		return sFull

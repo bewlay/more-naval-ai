@@ -21,7 +21,7 @@ def setup( ) :
 	#print "Setting up rebel type list"
 
 	global RebelTypeList
-	
+
 	RebelTypeList = list()
 
 	for idx in range(0,gc.getNumCivilizationInfos()) :
@@ -129,25 +129,25 @@ def setup( ) :
 			MinorLeaders[iSheaim] = [iAverax, iGosea, iMalchavic]
 			MinorLeaders[iSidar] = [iShekinah]
 			MinorLeaders[iSvartalfar] = [iVolanna, iRivanna]
-		
+
 		except:
 			print "Error!  Minor leaders not found, no short lists available"
-		
+
 		# religious rebels
 		global ReligiousRebels
-	
+
 		ReligiousRebels = list()
-		
+
 		for idx in range(0,gc.getNumReligionInfos()) :
 			ReligiousRebels.append( list() )
-		
+
 		global BlockedReligiousRebels
-	
+
 		BlockedReligiousRebels = list()
-		
+
 		for idx in range(0,gc.getNumReligionInfos()) :
 			BlockedReligiousRebels.append( list() )
-		
+
 		try :
 			iFellowship = CvUtil.findInfoTypeNum(gc.getReligionInfo,gc.getNumReligionInfos(),'RELIGION_FELLOWSHIP_OF_LEAVES')
 			iOrder = CvUtil.findInfoTypeNum(gc.getReligionInfo,gc.getNumReligionInfos(),'RELIGION_THE_ORDER')
