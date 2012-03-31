@@ -53,8 +53,10 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 	def createBuildingActualEffectsPanel(self, screen, panel):
 		self.addLabel(screen, panel, "BuildingEffects", "Building Actual Effects in Hovers:")
-		left, right = self.addTwoColumnLayout(screen, panel, "BuildingEffects", False)
-		self.addCheckbox(screen, left, "MiscHover__BuildingActualEffects")
+#		left, right = self.addTwoColumnLayout(screen, panel, "BuildingEffects", False)
+		self.addCheckbox(screen, panel, "MiscHover__BuildingActualEffects")
+		left, right = self.addTwoColumnLayout(screen, panel, "BuildingSuggestions", False)
+		self.addLabel(screen, left, "BuildingSuggestions", "Building Suggestions in Hovers:")
 		self.addCheckbox(screen, left, "MiscHover__BuildingAdditionalFood")
 		self.addCheckbox(screen, left, "MiscHover__BuildingAdditionalProduction")
 		self.addCheckbox(screen, left, "MiscHover__BuildingAdditionalCommerce")
