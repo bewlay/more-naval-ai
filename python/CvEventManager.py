@@ -2312,11 +2312,10 @@ class CvEventManager:
 				if pUnit != -1:
 					newUnit = pPlayer.initUnit(pUnit.getUnitType(), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 					newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION'), True)
-					
+
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
 # Copy not only unit type, but also unit artstyle.
-# - Commented out by Tholal. This is throwing errors for some reason
-#					newUnit.setUnitArtStyleType(pUnit.getUnitArtStyleType())
+					newUnit.setUnitArtStyleType(pUnit.getUnitArtStyleType())
 ##--------		Unofficial Bug Fix: End Modify			--------##
 
 					if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_SUMMONER')):

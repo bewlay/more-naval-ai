@@ -718,6 +718,15 @@ void CvUnit::convert(CvUnit* pUnit)
 	{
 	    setName(pUnit->getName());
 	}
+
+	// lfgr UnitArtstyle
+	if( pUnit->getUnitArtStyleType() != NO_UNIT_ARTSTYLE )
+		setUnitArtStyleType( pUnit->getUnitArtStyleType() );
+	else
+		setUnitArtStyleType( GC.getCivilizationInfo( GET_PLAYER( pUnit->getOwnerINLINE() ).getCivilizationType() ).getUnitArtStyleType() );
+	reloadEntity();
+	// lfgr end
+
 //FfH: End Add
 
 	CvUnit* pTransportUnit = pUnit->getTransportUnit();

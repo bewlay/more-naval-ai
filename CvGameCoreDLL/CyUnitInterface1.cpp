@@ -440,6 +440,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("setDuration", &CyUnit::setDuration, "void (int i)")
 		.def("setFortifyTurns", &CyUnit::setFortifyTurns, "void (int iNewValue)")
 		.def("setHasCasted", &CyUnit::setHasCasted, "void (bool bNewValue)")
+		.def("getUnitArtStyleType", &CyUnit::getUnitArtStyleType, "void ()")
 		.def("setUnitArtStyleType", &CyUnit::setUnitArtStyleType, "void (int iStyle)")
 		.def("setWeapons", &CyUnit::setWeapons, "void ()")
 
