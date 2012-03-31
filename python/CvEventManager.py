@@ -2297,6 +2297,7 @@ class CvEventManager:
 		if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_HALL_OF_MIRRORS')) > 0:
 			if CyGame().getSorenRandNum(100, "Hall of Mirrors") < 100:
 				pUnit = -1
+				iBestValue = -1
 				iX = pCity.getX()
 				iY = pCity.getY()
 				eTeam = gc.getTeam(pPlayer.getTeam())
@@ -2308,7 +2309,10 @@ class CvEventManager:
 								for i in range(pLoopPlot.getNumUnits()):
 									pUnit2 = pLoopPlot.getUnit(i)
 									if eTeam.isAtWar(pUnit2.getTeam()):
-										pUnit = pUnit2
+										iValue = CyGame().getSorenRandNum(100, "Hall of Mirrors")
+										if (iValue > iBestValue):
+											iBestValue = iValue										
+											pUnit = pUnit2
 				if pUnit != -1:
 					newUnit = pPlayer.initUnit(pUnit.getUnitType(), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 					newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION'), True)
