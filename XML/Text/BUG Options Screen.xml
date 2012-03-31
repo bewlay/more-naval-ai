@@ -386,6 +386,15 @@
 		<Finnish>Building Actual Effects:</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPTLABEL_BUILDINGSUGGESTIONS</Tag>
+		<English>Building Suggestions:</English>
+		<French>Building Actual Effects:</French>
+		<German>Effektive Geb&#228;udeertr&#228;ge:</German>
+		<Italian>Effetti degli Edifici:</Italian>
+		<Spanish>Efectos del Edificio:</Spanish>
+		<Finnish>Building Actual Effects:</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPTLABEL_PRODUCTIONQUEUE</Tag>
 		<English>Production Queue:</English>
 		<French>Production Queue:</French>
