@@ -28325,7 +28325,7 @@ void CvUnitAI::AI_heromove()
 bool CvUnitAI::AI_Govannonmove()
 {
 
-    if (1<2)
+	if (GC.getDefineINT("SPELL_TEACH_SPELLCASTING") != -1)
     {
         if (canCast(GC.getDefineINT("SPELL_TEACH_SPELLCASTING"),false))
             cast(GC.getDefineINT("SPELL_TEACH_SPELLCASTING"));
