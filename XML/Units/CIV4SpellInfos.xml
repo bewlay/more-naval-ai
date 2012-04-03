@@ -52,6 +52,7 @@
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_DARK_ELF</PromotionPrereq1>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
+            <BuildingPrereq>BUILDING_FREAK_SHOW</BuildingPrereq>
             <CivilizationPrereq>CIVILIZATION_BALSERAPHS</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
@@ -74,6 +75,7 @@
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_DWARF</PromotionPrereq1>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
+            <BuildingPrereq>BUILDING_FREAK_SHOW</BuildingPrereq>
             <CivilizationPrereq>CIVILIZATION_BALSERAPHS</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
@@ -96,6 +98,7 @@
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_ELF</PromotionPrereq1>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
+            <BuildingPrereq>BUILDING_FREAK_SHOW</BuildingPrereq>
             <CivilizationPrereq>CIVILIZATION_BALSERAPHS</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
@@ -117,6 +120,7 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
+            <BuildingPrereq>BUILDING_FREAK_SHOW</BuildingPrereq>
             <CivilizationPrereq>CIVILIZATION_BALSERAPHS</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
@@ -140,6 +144,7 @@
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_ORC</PromotionPrereq1>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
+            <BuildingPrereq>BUILDING_FREAK_SHOW</BuildingPrereq>
             <CivilizationPrereq>CIVILIZATION_BALSERAPHS</CivilizationPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
