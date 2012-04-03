@@ -14016,6 +14016,18 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		}
 	}
 
+	for (iI = 0; iI < GC.getNumSpellInfos(); ++iI)
+	{
+		if (GC.getSpellInfo((SpellTypes)iI).getBuildingPrereq() != NO_BUILDING)
+		{
+			if (GC.getSpellInfo((SpellTypes)iI).getBuildingPrereq() == eBuilding)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_ALLOWS_SPELL", GC.getSpellInfo((SpellTypes)iI).getDescription()));
+			}
+		}
+	}
+
 	if (bCivilopediaText)
 	{
 		// Trait
@@ -17810,6 +17822,19 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENT_UNIQUE"));
 	}
+
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		if (GC.getBonusInfo((BonusTypes)iI).getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_RAWMANA"))
+		{
+			if (info.isImprovementBonusMakesValid(iI))
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_PEDIA_IMPROVEMENT_BONUS", GC.getBonusInfo((BonusTypes)iI).getTextKeyWide()));
+			}
+		}
+	}
+	
 	if (info.getPrereqCivilization() != NO_CIVILIZATION)
 	{
 		szBuffer.append(NEWLINE);
@@ -18446,6 +18471,11 @@ void CvGameTextMgr::setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeat
 	if (feature.isNoImprovement())
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_FEATURE_NO_IMPROVEMENT"));
+	}
+
+	if (feature.isFlammable())
+	{
+		szBuffer.append(gDLL->getText("TXT_KEY_FEATURE_FLAMMABLE"));
 	}
 
 }

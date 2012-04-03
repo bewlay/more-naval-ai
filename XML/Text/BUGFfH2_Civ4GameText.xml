@@ -102,6 +102,14 @@
 		<Italian>[ICON_BULLET]%d1 Unit&#224; di %s2_unit</Italian>
 		<Spanish>[ICON_BULLET]%d1 [NUM1:Unidad:Unidades] de %s2_unit</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_IMPROVEMENT_BONUS</Tag>
+		<English>[ICON_BULLET] Provides [LINK=literal]%s1_mana[\LINK]</English>
+		<French>[ICON_BULLET] Provides %s1_mana</French>
+		<German>[ICON_BULLET] Provides %s1_mana</German>
+		<Italian>[ICON_BULLET] Provides %s1_mana</Italian>
+		<Spanish>[ICON_BULLET] Provides %s1_mana</Spanish>
+	</TEXT>
 	<!-- Civilopedia (Project) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_DOUBLE_SPEED</Tag>
@@ -314,18 +322,18 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_FEATURE_FLAMMABLE</Tag>
-		<English>[ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</English>
-		<French>[ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</French>
-		<German>[ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</German>
-		<Italian>[ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Italian>
-		<Spanish>[ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Spanish>
+		<English>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</English>
+		<French>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</French>
+		<German>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</German>
+		<Italian>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Italian>
+		<Spanish>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_MANANODES</Tag>
-		<English>Mana Nodes</English>
-		<French>Mana Nodes</French>
-		<German>Mana Nodes</German>
-		<Italian>Mana Nodes</Italian>
-		<Spanish>Mana Nodes</Spanish>
+		<English>Mana</English>
+		<French>Mana</French>
+		<German>Mana</German>
+		<Italian>Mana</Italian>
+		<Spanish>Mana</Spanish>
 	</TEXT>	
 </Civ4GameText>
