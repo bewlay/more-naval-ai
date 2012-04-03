@@ -1797,6 +1797,12 @@ int CvUnitAI::AI_sacrificeValue(const CvPlot* pPlot) const
 /************************************************************************************************/
 	}
 
+	// summoned units make good sacrifices since they can be resummoned
+	if (getSummoner() != -1)
+	{
+		iValue *= 10;
+	}
+
     return iValue;
 }
 
