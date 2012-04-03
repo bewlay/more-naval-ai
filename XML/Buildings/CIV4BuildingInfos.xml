@@ -2883,7 +2883,7 @@
             <Description>TXT_KEY_BUILDING_ASYLUM</Description>
             <Civilopedia>TXT_KEY_BUILDING_ASYLUM_PEDIA</Civilopedia>
             <Strategy></Strategy>
-            <Help></Help>
+            <Help>TXT_KEY_BUILDING_ASYLUM_HELP</Help>
             <Advisor>ADVISOR_SCIENCE</Advisor>
             <ArtDefineTag>ART_DEF_BUILDING_ASYLUM</ArtDefineTag>
             <MovieDefineTag>NONE</MovieDefineTag>
@@ -7441,7 +7441,7 @@
             <SpecialBuildingType>NONE</SpecialBuildingType>
             <Description>TXT_KEY_BUILDING_HALL_OF_MIRRORS</Description>
             <Civilopedia>TXT_KEY_BUILDING_PLACEHOLDER_PEDIA</Civilopedia>
-            <Strategy></Strategy>
+            <Strategy>TXT_KEY_BUILDING_HALL_OF_MIRRORS_STRATEGY</Strategy>
             <Help></Help>
             <Advisor>ADVISOR_MILITARY</Advisor>
             <ArtDefineTag>ART_DEF_BUILDING_HALL_OF_MIRRORS</ArtDefineTag>
