@@ -24773,7 +24773,7 @@ int CvUnitAI::AI_finalOddsThreshold(CvPlot* pPlot, int iOddsThreshold)
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 // Tholal AI - encourage attack when attackers have a numbers advantage
-	if (getGroup()->getNumUnits() > (iDefenders * 4))
+	if (getGroup()->getNumUnits() >= (iDefenders * 4))
 	{
 		iFinalOddsThreshold /= 2;
 	}
@@ -27727,6 +27727,18 @@ void CvUnitAI::ConquestMove()
 					}
 				}
 			}
+		}
+	}
+
+	if (bReadyToAttack)
+	{
+		if (AI_cityAttack(1, 80))
+		{
+			if( gUnitLogLevel >= 3 )
+			{
+				logBBAI("      Stack (led by %d, size %d) making opportunistic city attack", getID(), getGroupSize());
+			}
+			return;
 		}
 	}
 
