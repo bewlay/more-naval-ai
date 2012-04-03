@@ -212,6 +212,7 @@ void CyTeamPythonInterface()
 		.def("getImprovementYieldChange", &CyTeam::getImprovementYieldChange,	"int (int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2)")
 		.def("changeImprovementYieldChange", &CyTeam::changeImprovementYieldChange, "void (int /*ImprovementTypes*/ eIndex1, int /*YieldTypes*/ eIndex2, iChange)")
 
+		.def("isBarbarianAlly", &CyTeam::isBarbarianAlly, "bool ()")
 /************************************************************************************************/
 /* Afforess	                  Start		 03/10/10                                               */
 /*                                                                                              */

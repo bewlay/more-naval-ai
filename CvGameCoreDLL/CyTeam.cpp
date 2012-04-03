@@ -1066,6 +1066,13 @@ int CyTeam::AI_getWarSuccess(int /*TeamTypes*/ eIndex) const
 	return m_pTeam ? m_pTeam->AI_getWarSuccess((TeamTypes)eIndex) : -1;
 }
 
+// FFH - Barbarian Allies
+int CyTeam::isBarbarianAlly() const
+{
+	return m_pTeam ? m_pTeam->isBarbarianAlly() : false;
+}
+// End FFH
+
 /************************************************************************************************/
 /* Afforess	                  Start		 03/10/10                                               */
 /*                                                                                              */

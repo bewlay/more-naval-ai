@@ -252,6 +252,10 @@ public:
 	int AI_getAtPeaceCounter(int /*TeamTypes*/ eTeam) const;
 	int AI_getWarSuccess(int /*TeamTypes*/ eIndex) const;
 
+	// FFH
+	int isBarbarianAlly() const;
+	// End FFH
+
 /************************************************************************************************/
 /* Afforess	                  Start		 03/10/10                                               */
 /*                                                                                              */
