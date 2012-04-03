@@ -6037,16 +6037,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	iValue /= 100;
 	int iTurnsLeft = 0;
 
-	if (GC.getLogging() && bDebugLog)
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "   Pre speed mod value: %d \n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 	if (bIgnoreCost)
 	{
 		iValue *= (1 + (getResearchTurnsLeft((eTech), false)));

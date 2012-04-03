@@ -27871,6 +27871,11 @@ void CvUnitAI::ConquestMove()
 
 				if( AI_choke(1) )
 				{
+					if( gUnitLogLevel >= 3 )
+					{
+						logBBAI("      Stack (led by %d, size %d) choking %S ", getID(), getGroupSize(), pTargetCity->getName().GetCString());
+					}
+
 					return;
 				}
 			}
@@ -28068,11 +28073,9 @@ void CvUnitAI::ConquestMove()
 
 									if (GC.getLogging())
 									{
-										if (gDLL->getChtLvl() > 0)
+										if( gUnitLogLevel >= 3 )
 										{
-											char szOut[1024];
-											sprintf(szOut, "Player %d Unit %d (%S's %S) waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits(), iNeedUpgradeCount);
-											gDLL->messageControlLog(szOut);
+											logBBAI("      Player %d Unit %d (%S's %S) waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits(), iNeedUpgradeCount);
 										}
 									}
 
