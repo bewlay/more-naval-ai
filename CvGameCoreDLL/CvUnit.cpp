@@ -6958,6 +6958,11 @@ bool CvUnit::spreadCorporation(CorporationTypes eCorporation)
 
 bool CvUnit::canJoin(const CvPlot* pPlot, SpecialistTypes eSpecialist) const
 {
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
+	{
+		return false;
+	}
+
 	CvCity* pCity;
 
 	if (eSpecialist == NO_SPECIALIST)
@@ -7035,6 +7040,11 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 	CvCity* pCity;
 
 	if (eBuilding == NO_BUILDING)
+	{
+		return false;
+	}
+
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
 	{
 		return false;
 	}
@@ -7237,6 +7247,11 @@ int CvUnit::getHurryProduction(const CvPlot* pPlot) const
 
 bool CvUnit::canHurry(const CvPlot* pPlot, bool bTestVisible) const
 {
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
+	{
+		return false;
+	}
+
 	if (isDelayedDeath())
 	{
 		return false;
@@ -7408,6 +7423,11 @@ int CvUnit::getGreatWorkCulture(const CvPlot* pPlot) const
 
 bool CvUnit::canGreatWork(const CvPlot* pPlot) const
 {
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
+	{
+		return false;
+	}
+
 	if (isDelayedDeath())
 	{
 		return false;
@@ -7793,6 +7813,11 @@ bool CvUnit::canGoldenAge(const CvPlot* pPlot, bool bTestVisible) const
 		return false;
 	}
 
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
+	{
+		return false;
+	}
+
 	if (!bTestVisible)
 	{
 		if (GET_PLAYER(getOwnerINLINE()).unitsRequiredForGoldenAge() > GET_PLAYER(getOwnerINLINE()).unitsGoldenAgeReady())
@@ -8065,6 +8090,11 @@ bool CvUnit::lead(int iUnitId)
 int CvUnit::canLead(const CvPlot* pPlot, int iUnitId) const
 {
 	PROFILE_FUNC();
+
+	if (isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION")))
+	{
+		return false;
+	}
 
 	if (isDelayedDeath())
 	{
