@@ -816,14 +816,19 @@ bool CvUnitAI::AI_update()
 // Returns true if took an action or should wait to move later...
 bool CvUnitAI::AI_follow()
 {
+	bool bCanAllMove = getGroup()->canAllMove();
+
 	if (AI_followBombard())
 	{
 		return true;
 	}
-
-	if (AI_cityAttack(1, 65, true))
+	
+	if (bCanAllMove)
 	{
-		return true;
+		if (AI_cityAttack(1, 65, true))
+		{
+			return true;
+		}
 	}
 
 	if (isEnemy(plot()->getTeam()))
@@ -835,9 +840,12 @@ bool CvUnitAI::AI_follow()
 		}
 	}
 
-	if (AI_anyAttack(1, 70, 2, true))
+	if (bCanAllMove)
 	{
-		return true;
+		if (AI_anyAttack(1, 70, 2, true, true))
+		{
+			return true;
+		}
 	}
 
 	if (isFound())
