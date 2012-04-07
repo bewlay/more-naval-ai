@@ -47,7 +47,7 @@
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_ADD_TO_FREAK_SHOW_DARK_ELF</Type>
-            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW</Description>
+            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_ELF</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_DARK_ELF</PromotionPrereq1>
@@ -70,7 +70,7 @@
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_ADD_TO_FREAK_SHOW_DWARF</Type>
-            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW</Description>
+            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_DWARF</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_DWARF</PromotionPrereq1>
@@ -93,7 +93,7 @@
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_ADD_TO_FREAK_SHOW_ELF</Type>
-            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW</Description>
+            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_ELF</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_ELF</PromotionPrereq1>
@@ -116,7 +116,7 @@
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_ADD_TO_FREAK_SHOW_HUMAN</Type>
-            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW</Description>
+            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HUMAN</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <UnitClassPrereq>UNITCLASS_SLAVE</UnitClassPrereq>
@@ -139,7 +139,7 @@
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_ADD_TO_FREAK_SHOW_ORC</Type>
-            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW</Description>
+            <Description>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_ORC</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_ADD_TO_FREAK_SHOW_HELP</Help>
             <PromotionPrereq1>PROMOTION_ORC</PromotionPrereq1>
