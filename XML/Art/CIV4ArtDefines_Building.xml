@@ -114,7 +114,7 @@
 			<fInterfaceScale>0.53</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/GlobeTheater/GlobeTheater.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Theatre of Dreams.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Theatre_of_Dreams.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_PILLAR_OF_CHAINS</Type>
