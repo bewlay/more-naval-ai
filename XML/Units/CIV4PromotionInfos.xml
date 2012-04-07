@@ -7481,6 +7481,10 @@
 							<bUnitCombat>1</bUnitCombat>
 						</UnitCombat>
 						<UnitCombat>
+							<UnitCombatType>UNITCOMBAT_ADEPT</UnitCombatType>
+							<bUnitCombat>1</bUnitCombat>
+						</UnitCombat>
+						<UnitCombat>
 							<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 							<bUnitCombat>1</bUnitCombat>
 						</UnitCombat>
