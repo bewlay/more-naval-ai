@@ -1681,7 +1681,7 @@
         </PromotionInfo>
         <PromotionInfo>
             <Type>PROMOTION_DARK_ELF</Type>
-            <Description>TXT_KEY_PROMOTION_ELF</Description>
+            <Description>TXT_KEY_PROMOTION_DARK_ELF</Description>
             <Sound>AS2D_IF_LEVELUP</Sound>
             <TechPrereq>TECH_NEVER</TechPrereq>
             <FeatureAttacks>
