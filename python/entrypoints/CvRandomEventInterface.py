@@ -2006,20 +2006,39 @@ def doTraitInsane(argsList):
 	kTriggeredData = argsList[1]
 	iPlayer = kTriggeredData.ePlayer
 	pPlayer = gc.getPlayer(iPlayer)
+	pCivilization = gc.getCivilizationInfo(pPlayer.getCivilizationType())
+	iTraitCount = 0
 	for i in range(gc.getNumTraitInfos()):
 		if (pPlayer.hasTrait(i) and i != gc.getInfoTypeForString('TRAIT_INSANE')):
-			pPlayer.setHasTrait(i, False)
+			if (i != pCivilization.getCivTrait()):
+				pPlayer.setHasTrait(i, False)
+				iTraitCount = iTraitCount + 1
+				
 	Traits = [ 'TRAIT_AGGRESSIVE','TRAIT_ARCANE','TRAIT_CHARISMATIC','TRAIT_CREATIVE','TRAIT_EXPANSIVE','TRAIT_FINANCIAL','TRAIT_INDUSTRIOUS','TRAIT_ORGANIZED','TRAIT_PHILOSOPHICAL','TRAIT_RAIDERS','TRAIT_SPIRITUAL' ]
-	iRnd1 = CyGame().getSorenRandNum(len(Traits), "Insane")
-	iRnd2 = CyGame().getSorenRandNum(len(Traits), "Insane")
-	while iRnd2 == iRnd1:
-		iRnd2 = CyGame().getSorenRandNum(len(Traits), "Insane")
-	iRnd3 = CyGame().getSorenRandNum(len(Traits), "Insane")
-	while iRnd3 == iRnd1 or iRnd3 == iRnd2:
-		iRnd3 = CyGame().getSorenRandNum(len(Traits), "Insane")
-	pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd1]),True)
-	pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd2]),True)
-	pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd3]),True)
+
+	if (iTraitCount > 0):
+		iRnd1 = CyGame().getSorenRandNum(len(Traits), "Insane Trait 1")
+		pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd1]),True)
+	if (iTraitCount > 1):
+		iRnd2 = CyGame().getSorenRandNum(len(Traits), "Insane Trait 2")
+		while iRnd2 == iRnd1:
+			iRnd2 = CyGame().getSorenRandNum(len(Traits), "Insane Trait 2 - retry")
+		pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd2]),True)
+	if (iTraitCount > 2):
+		iRnd3 = CyGame().getSorenRandNum(len(Traits), "Insane Trait 3")
+		while iRnd3 == iRnd1 or iRnd3 == iRnd2:
+			iRnd3 = CyGame().getSorenRandNum(len(Traits), "Insane Trait 3 - retry")
+		pPlayer.setHasTrait(gc.getInfoTypeForString(Traits[iRnd3]),True)
+
+# code from MagisterMod
+	iRnd = (CyGame().getSorenRandNum(6, "Insane Attitude Change") - 3)
+	for iLoopPlayer in range(gc.getMAX_CIV_PLAYERS()):
+		loopPlayer = gc.getPlayer(iLoopPlayer)
+		if loopPlayer.isAlive():
+			if loopPlayer.getTeam() != pPlayer.getTeam():
+				pPlayer.AI_changeAttitudeExtra(iLoopPlayer, iRnd)
+
+
 
 def canApplyTraitOrganized(argsList):
 	iEvent = argsList[0]
