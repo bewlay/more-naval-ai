@@ -1058,7 +1058,7 @@
 			<CivilizationSelectionSound>AS3D_EGYPT_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_EGYPT_ORDER</CivilizationActionSound>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<CivTrait>NONE</CivTrait>
+			<CivTrait>TRAIT_TOLERANT</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
 			<Help>TXT_KEY_CIV_ELOHIM_HELP</Help>
 			<Hero>UNIT_CORLINDALE</Hero>

@@ -16661,10 +16661,6 @@
 					<TraitType>TRAIT_PHILOSOPHICAL</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
-				 <Trait>
-					<TraitType>TRAIT_TOLERANT</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
 			</Traits>
 			<Flavors>
 				 <Flavor>
@@ -17383,10 +17379,6 @@
 				 </Trait>
 				 <Trait>
 					<TraitType>TRAIT_DEFENDER</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
-					<TraitType>TRAIT_TOLERANT</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
 			</Traits>
