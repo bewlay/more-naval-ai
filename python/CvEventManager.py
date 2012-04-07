@@ -1807,6 +1807,10 @@ class CvEventManager:
 									for iPromotion in liPromotions:
 										pNewUnit.setHasPromotion(iPromotion, True)
 
+							if (game.isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS)):
+								pFounderTeam.setHasEmbassy(iInfernalTeam, True)
+								pInfernalTeam.setHasEmbassy(iFounderTeam, True)
+
 							pFounderTeam.signOpenBorders(iInfernalTeam)
 							pInfernalTeam.signOpenBorders(iFounderTeam)
 							for iPlotIndex in range(CyMap().numPlots()):
