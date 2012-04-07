@@ -120,6 +120,8 @@ Somnium = 0
 ## FfH Card Game: end
 #Snarko OOS fix
 ChangeCiv = 1
+#Declare war to Barbarians
+BarbarianWar = 2
 
 # Popup defines (TODO: Expose these from C++)
 FONT_CENTER_JUSTIFY=1<<2

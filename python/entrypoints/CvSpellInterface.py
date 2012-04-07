@@ -3947,10 +3947,46 @@ def voteFundDissidents():
 					if CyGame().getSorenRandNum(100, "Fund Dissidents") < 50:
 						pCity = pyCity.GetCy()
 						pCity.changeHurryAngerTimer(1 + CyGame().getSorenRandNum(3, "Fund Dissidents"))
-						
+
 def spellGreatGeneralSplit(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	iCommander = gc.getInfoTypeForString('UNIT_GREAT_GENERAL')
 	newUnit = pPlayer.initUnit(iCommander, caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 	newUnit.setHasCasted(True)
 	newUnit.setImmobileTimer(1)
+
+def reqDeclareBarbs(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
+	eTeam = gc.getTeam(gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam())
+	iTeam = pPlayer.getTeam()
+	if eTeam.isAtWar(iTeam) == False:
+		return True
+	return False
+
+def spellDeclareBarbs(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
+	iBarb = gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam()
+	iTeam = pPlayer.getTeam()
+	eTeam = gc.getTeam(iBarb)
+	if eTeam.isAtWar(iTeam) == False:
+		if pPlayer.isHuman():
+			popupInfo = CyPopupInfo()
+			popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON)
+			popupInfo.setText(CyTranslator().getText("TXT_KEY_POPUP_DECLARE_BARBS",()))
+			popupInfo.setData1(iBarb)
+			popupInfo.setData2(iTeam)
+			popupInfo.addPythonButton(CyTranslator().getText("TXT_KEY_POPUP_YES", ()), "")
+			popupInfo.addPythonButton(CyTranslator().getText("TXT_KEY_POPUP_NO", ()), "")
+			popupInfo.setOnClickedPythonCallback("applyDeclareBarbs")
+			popupInfo.setPythonModule("CvSpellInterface")
+			popupInfo.addPopup(caster.getOwner())
+		else:
+			eTeam.declareWar(iTeam, false, WarPlanTypes.WARPLAN_TOTAL)
+			cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_BARBARIAN_DECLARE_WAR",()), 'art/interface/popups/Barbarian.dds')
+
+def applyDeclareBarbs(argsList):
+	iButtonId, iBarb, iTeam, iData3, iFlags, szText, bOption1, bOption2 = argsList
+	if iButtonId == 0:
+		CyMessageControl().sendModNetMessage(CvUtil.BarbarianWar, iBarb, iTeam, 0, 0)
+#		gc.getTeam(iBarb).declareWar(iTeam, false, WarPlanTypes.WARPLAN_TOTAL)
+		cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_BARBARIAN_DECLARE_WAR",()), 'art/interface/popups/Barbarian.dds')

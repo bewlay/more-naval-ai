@@ -349,6 +349,9 @@ class CvEventManager:
 ## OOS fix by Snarko
 		elif (iData1 == CvUtil.ChangeCiv): #iData1 is unused, to allow for a condition here. It must not be zero (would trigger somnium)
 			CyGame().reassignPlayerAdvanced(iData2, iData3, -1)
+## Declare war to Barbarians.
+		elif (iData1 == CvUtil.BarbarianWar):
+			gc.getTeam(iData2).declareWar(iData3, false, WarPlanTypes.WARPLAN_TOTAL)
 
 
 	def onInit(self, argsList):

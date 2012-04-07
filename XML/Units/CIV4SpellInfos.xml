@@ -804,6 +804,17 @@
             <Button>Art/Interface/Buttons/Promotions/Danceofblades.dds</Button>
         </SpellInfo>
         <SpellInfo>
+            <Type>SPELL_DECLARE_WAR_BARBS</Type>
+            <Description>TXT_KEY_SPELL_DECLARE_BARBS</Description>
+            <Civilopedia>TXT_KEY_SPELL_DECLARE_BARBS_HELP</Civilopedia>
+            <bDisplayWhenDisabled>0</bDisplayWhenDisabled>
+            <bIgnoreHasCasted>1</bIgnoreHasCasted>
+            <bAbility>1</bAbility>
+            <PyResult>spellDeclareBarbs(pCaster)</PyResult>
+            <PyRequirement>reqDeclareBarbs(pCaster)</PyRequirement>
+            <Button>Art/Interface/Buttons/Civilizations/Barbarian.dds</Button>
+        </SpellInfo>
+        <SpellInfo>
             <Type>SPELL_DECLARE_NATIONALITY</Type>
             <Description>TXT_KEY_SPELL_DECLARE_NATIONALITY</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
