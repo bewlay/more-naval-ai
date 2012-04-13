@@ -2406,6 +2406,12 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (iBestSpreadUnitValue > iSpreadUnitThreshold)
 			{
+				if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSIONARY) > iNumCities)
+				{
+					if (AI_chooseUnit(UNITAI_MISSIONARY_SEA, 75))
+					return;
+				}
+
 				if (AI_chooseUnit(eBestSpreadUnit, UNITAI_MISSIONARY))
 				{
 					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose missionary 1", getName().GetCString());
@@ -3015,7 +3021,12 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 
-		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) < iMissionarySeaNeeded)
+		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY) > iNumCities)
+		{
+			iMissionarySeaNeeded++;
+		}
+
+		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= iMissionarySeaNeeded)
 		{
 			if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
 			{
