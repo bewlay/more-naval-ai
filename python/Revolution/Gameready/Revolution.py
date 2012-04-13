@@ -4035,8 +4035,9 @@ class Revolution :
 				iOldCivType = owner.getCivilizationType()
 			# TODO: that seems not to work
 			pCultureOwner = None
-			if instigator != -1:
-				pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
+			if instigator != None:
+				if instigator.findHighestCulture() != -1:
+					pCultureOwner = gc.getPlayer( instigator.findHighestCulture() )
 			if( pCultureOwner != None ) :
 				iCultureOwnerCivType = pCultureOwner.getCivilizationType()
 			else :
