@@ -1253,7 +1253,7 @@ void CvSelectionGroup::startMission()
 					pLoopUnit = ::getUnit(pUnitNode->m_data);
 					pUnitNode = nextUnitNode(pUnitNode);
 
-					if( pLoopUnit->canMove() && pLoopUnit->canPillage(plot()) )
+					if( pLoopUnit->canMove() && pLoopUnit->canPillage(pLoopUnit->plot()) )
 					{
 						int iMovesLeft = pLoopUnit->movesLeft();
 						if( pLoopUnit->bombardRate() > 0 )
@@ -3431,7 +3431,7 @@ CvPlot* CvSelectionGroup::plot() const
 
 	if (pHeadUnit != NULL)
 	{
-		return getHeadUnit()->plot();
+		return pHeadUnit->plot();
 	}
 	else
 	{
