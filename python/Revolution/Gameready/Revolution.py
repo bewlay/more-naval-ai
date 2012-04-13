@@ -1739,8 +1739,6 @@ class Revolution :
 
 			# RevolutionDCM - city advisor text conditioning
 			cityString = '\n\n' + pCity.getName()# + " \t"
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
-				cityString += "%d"%(revIdx)
 			if( revIdx >= self.alwaysViolentThreshold ) :
 				cityString += ':  ' + "<color=230,0,0,255>"   + localText.getText("TXT_KEY_REV_WATCH_DANGER",()) + " " + "<color=255,255,255,255>"
 			elif( revIdx >= self.revInstigatorThreshold ) :
@@ -1751,10 +1749,13 @@ class Revolution :
 			else :
 				#RevolutionDCM - city advisor text conditioning
 				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
-			#RevolutionDCM - city advisor text conditioning
-			#cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
 			if( self.showRevIndexInPopup or game.isDebugMode() ) :
-				cityString += "%d "%((revIdx - revIdxAvg))
+				cityString += " (%d)"%(revIdx)
+				
+			#RevolutionDCM - city advisor text conditioning
+			cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
+			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+				cityString += " (%d) "%((revIdx - revIdxAvg))
 			if( (revIdx - revIdxAvg) <= -self.showTrend ) :
 				cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
 			elif( (revIdx - revIdxAvg) > self.showTrend ) :
@@ -1762,7 +1763,7 @@ class Revolution :
 			else :
 				cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 			if( self.showRevIndexInPopup or game.isDebugMode() ) :
-				cityString += "  %d, %d"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
+				cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
 
 			# Enable only for debugging rev index histories
 			if( False ) :
@@ -1780,13 +1781,13 @@ class Revolution :
 						cityString += ', '
 
 					if( pos[0] < -10 ) :
-						cityString += "<color=255,255,255,255>"
+						cityString += "<color=20,230,20,255>"
 					elif( pos[0] < -5 ) :
-						cityString += "<color=210,210,210,255>"
+						cityString += "<color=50,230,50,255>"
 					elif( pos[0] < -2 ) :
-						cityString += "<color=170,170,170,255>"
+						cityString += "<color=100,230,100,255>"
 					else :
-						cityString += "<color=130,130,130,255>"
+						cityString += "<color=150,230,150,255>"
 					cityString += pos[1]
 					if( self.showRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(pos[0])
@@ -1801,15 +1802,15 @@ class Revolution :
 						cityString += ', '
 
 					if( neg[0] > 20 ) :
-						cityString += "<color=255,255,255,255>"
+						cityString += "<color=255,10,10,255>"
 					elif( neg[0] > 10 ) :
-						cityString += "<color=225,225,225,255>"
+						cityString += "<color=225,50,50,255>"
 					elif( neg[0] > 5 ) :
-						cityString += "<color=190,190,190,255>"
+						cityString += "<color=225,75,75,255>"
 					elif( neg[0] > 2 ) :
-						cityString += "<color=160,160,160,255>"
+						cityString += "<color=225,100,100,255>"
 					else :
-						cityString += "<color=130,130,130,255>"
+						cityString += "<color=225,150,150,255>"
 					cityString += neg[1]
 					if( self.showRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(neg[0])
@@ -2027,7 +2028,7 @@ class Revolution :
 			civString += localText.getText("TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE",())
 
 		if( self.showRevIndexInPopup or game.isDebugMode() ) :
-			civString += " %d  Net: %d"%(iStablity,civStabilityIdx)
+			civString += " (%d)  Net: %d"%(iStablity,civStabilityIdx)
 		#RevolutionDCM - text conditioning
 		civString += "  "
 		#civString += "  " + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + " "
@@ -2039,7 +2040,7 @@ class Revolution :
 			civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 
 		if( self.showRevIndexInPopup or game.isDebugMode() ) :
-			civString += " %d"%(iStablity - pPlayer.getStabilityIndexAverage())
+			civString += " (%d)"%(iStablity - pPlayer.getStabilityIndexAverage())
 
 		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
 		posList.sort()
@@ -2051,13 +2052,13 @@ class Revolution :
 				civString += ', '
 
 			if( pos[0] > 10 ) :
-				civString += "<color=255,255,255,255>"
+				civString += "<color=20,230,20,255>"
 			elif( pos[0] > 5 ) :
-				civString += "<color=200,200,200,255>"
+				civString += "<color=50,230,50,255>"
 			elif( pos[0] > 2 ) :
-				civString += "<color=150,150,150,255>"
+				civString += "<color=100,230,100,255>"
 			else :
-				civString += "<color=100,100,100,255>"
+				civString += "<color=150,230,150,255>"
 			civString += pos[1]
 			if( self.showRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(pos[0])
@@ -2071,15 +2072,15 @@ class Revolution :
 				civString += ', '
 
 			if( neg[0] < -20 ) :
-				civString += "<color=255,255,255,255>"
+				civString += "<color=255,10,10,255>"
 			elif( neg[0] < -10 ) :
-				civString += "<color=210,210,210,255>"
+				civString += "<color=255,50,50,255>"
 			elif( neg[0] < -5 ) :
-				civString += "<color=175,175,175,255>"
+				civString += "<color=255,75,75,255>"
 			elif( neg[0] < -2 ) :
-				civString += "<color=140,140,140,255>"
+				civString += "<color=255,100,100,255>"
 			else :
-				civString += "<color=100,100,100,255>"
+				civString += "<color=255,150,150,255>"
 			civString += neg[1]
 			if( self.showRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(neg[0])
