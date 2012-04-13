@@ -9960,10 +9960,6 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 			}
 //FfH: End Add
 
-			// Tholal AI - ToDo - Flavored religion founding
-
-		//	if (eReligion == GC.getInfoTypeForString("RELIGION_OCTOPUS_OVERLORDS")) && pLoopCity->getPlot
-
 			iValue = std::max(1, iValue);
 
 			if (iValue > iBestValue)
@@ -23925,7 +23921,7 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
         return false;
     }
 
-	if (GET_PLAYER((PlayerTypes)eFromPlayer).isBarbarian())
+	if (isBarbarian() || GET_PLAYER((PlayerTypes)eFromPlayer).isBarbarian())
 	{
 		return false;
 	}
