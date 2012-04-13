@@ -12498,6 +12498,13 @@ int CvUnit::getExtraWithdrawal() const
 void CvUnit::changeExtraWithdrawal(int iChange)
 {
 	m_iExtraWithdrawal += iChange;
+
+	// make sure we don't end up with a negative withdrawal rate due to promotions
+	if (m_iExtraWithdrawal < 0)
+	{
+		m_iExtraWithdrawal = 0;
+	}
+
 	FAssert(getExtraWithdrawal() >= 0);
 }
 
