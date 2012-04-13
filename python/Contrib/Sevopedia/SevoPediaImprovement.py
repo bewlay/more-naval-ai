@@ -218,9 +218,6 @@ class SevoPediaImprovement:
 				szYield += (u"%s: %s%i%c" % (gc.getYieldInfo(k).getDescription(), sign, iYieldChange, gc.getYieldInfo(k).getChar()))
 				screen.appendListBoxString( listName, szYield, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
-# Tholal ToDo - display mana yield from mana improvements
-#		if not gc.getImprovementInfo(iImprovement).getBonusConvert() == BonusTypes.NO_BONUS:
-
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
 			iYieldChange = gc.getImprovementInfo(self.iImprovement).getIrrigatedYieldChange(k)
 			if (iYieldChange != 0):
