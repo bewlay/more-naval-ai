@@ -1245,6 +1245,13 @@ void CvUnit::doTurn()
 	        {
 	            changeImmortal(-1);
 	        }
+
+			// summoned transport units unload cargo when they expire
+			if (getCargo() > 0)
+			{
+				unloadAll();
+			}
+
             kill(true);
 	    }
 	}
