@@ -265,6 +265,11 @@ int CyGame::getCurrentEra()
 	return m_pGame ? (int) m_pGame->getCurrentEra() : (int) NO_ERA;
 }
 
+int CyGame::getCurrentPeriod()
+{
+	return m_pGame ? (int) m_pGame->getCurrentPeriod() : 0;
+}
+
 int CyGame::getActiveTeam()
 {
 	return m_pGame ? (int) m_pGame->getActiveTeam() : (int) NO_TEAM;

@@ -83,6 +83,8 @@ void CyGamePythonInterface()
 /************************************************************************************************/
 		.def("getCurrentEra", &CyGame::getCurrentEra, "int /*EratTypes*/ ()")
 
+		.def ("getCurrentPeriod", &CyGame::getCurrentPeriod, "int ()")
+
 		.def("getActiveTeam", &CyGame::getActiveTeam, "int () - returns ID for the group")
 		.def("getActiveCivilizationType", &CyGame::getActiveCivilizationType, "int () - returns CivilizationID" )
 		.def("isNetworkMultiPlayer", &CyGame::isNetworkMultiPlayer, "bool () - NetworkMultiplayer()? ")
