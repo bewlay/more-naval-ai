@@ -8319,6 +8319,15 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
+	// no cross-religion upgrades for religious units
+	if (m_pUnitInfo->getReligionType() != NO_RELIGION)
+	{
+		if (m_pUnitInfo->getReligionType() != kUnitInfo.getReligionType())
+		{
+			return false;
+		}
+	}
+
 //FfH Units: Added by Kael 05/24/2008
     if (getLevel() < kUnitInfo.getMinLevel())
 	{
