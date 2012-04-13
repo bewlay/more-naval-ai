@@ -11,6 +11,8 @@
 #include "FProfiler.h"
 #include "CVInfos.h"
 
+// Logging
+#include "BetterBTSAI.h"
 // Public Functions...
 
 CvSelectionGroupAI::CvSelectionGroupAI()
@@ -242,14 +244,12 @@ bool CvSelectionGroupAI::AI_update()
 			CvUnit* pHeadUnit = getHeadUnit();
 			if (NULL != pHeadUnit)
 			{
-				if (GC.getLogging())
+				if( gUnitLogLevel >= 1 )
 				{
-					TCHAR szOut[1024];
 					CvWString szTempString;
 					getUnitAIString(szTempString, pHeadUnit->AI_getUnitAIType());
-					sprintf(szOut, "Unit stuck in loop: %S(%S)[%d, %d] (%S - %d)\n", pHeadUnit->getName().GetCString(), GET_PLAYER(pHeadUnit->getOwnerINLINE()).getName(),
+					logBBAI("Unit stuck in loop: %S(%S)[%d, %d] (%S - %d)\n", pHeadUnit->getName().GetCString(), GET_PLAYER(pHeadUnit->getOwnerINLINE()).getName(),
 						pHeadUnit->getX_INLINE(), pHeadUnit->getY_INLINE(), szTempString.GetCString(), pHeadUnit->getID());
-					gDLL->messageControlLog(szOut);
 				}
 
 				pHeadUnit->finishMoves();

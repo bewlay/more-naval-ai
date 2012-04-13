@@ -167,14 +167,9 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	//--------------------------------
 	// Log this event
-	if (GC.getLogging())
+	if( gCityLogLevel >= 3 )
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			TCHAR szOut[1024];
-			sprintf(szOut, "Player %d City %d built at %d:%d\n", eOwner, iID, iX, iY);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("    Player %d City %d built at %d:%d", eOwner, iID, iX, iY );
 	}
 
 	//--------------------------------

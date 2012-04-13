@@ -4969,16 +4969,6 @@ void CvUnitAI::AI_cityDefenseMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) starting city defense move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      09/18/09                                jdog5000      */
 /*                                                                                              */
@@ -26438,16 +26428,6 @@ void CvUnitAI::PatrolMove()
 
 	bool bInCity = plot()->isCity();
 
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) starting patrol move (groupsize: %d) \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
 	{
@@ -27205,16 +27185,6 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 	int iPathTurns;
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
 
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) looking for equipment\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 
 	// First, look for our equipment and treasure
 	for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
@@ -27239,14 +27209,9 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 	if (pBestUnit != NULL)
 	{
 
-		if (GC.getLogging())
+		if( gUnitLogLevel >= 3 )
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "Player %d Unit %d (%S's %S) picking up %S\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestUnit->getName().GetCString());
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("Player %d Unit %d (%S's %S) picking up %S\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestUnit->getName().GetCString());
 		}
 
 		pBestPlot = pBestUnit->plot();
