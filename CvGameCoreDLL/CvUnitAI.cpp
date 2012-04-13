@@ -2217,12 +2217,11 @@ void CvUnitAI::AI_workerMove()
 	bCanRoute = canBuildRoute();
 	bNextCity = false;
 
-	// ALN !!ToDo!! - why always reserve, what units does this apply to?
 	// Tholal AI - Catch for upgraded worker units
 	if (m_pUnitInfo->getWorkRate() == 0)
 	{
-		AI_setUnitAIType(UNITAI_RESERVE);
-		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		AI_setUnitAIType((UnitAITypes)m_pUnitInfo->getDefaultUnitAIType());
+		AI_setGroupflag(GROUPFLAG_NONE);
 	}
 
 	// XXX could be trouble...
