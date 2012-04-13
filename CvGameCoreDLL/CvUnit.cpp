@@ -8679,16 +8679,6 @@ void CvUnit::upgrade(UnitTypes eUnit)
 	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), eUnitAI);
 //FfH: End Modify
 
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) level %d upgrading to %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getLevel(),  GC.getUnitInfo((UnitTypes)eUnit).getDescription());
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
 	FAssertMsg(pUpgradeUnit != NULL, "UpgradeUnit is not assigned a valid value");
 
 	pUpgradeUnit->joinGroup(getGroup());
@@ -18371,10 +18361,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	{
 		if (getDuration() == 0 && pLoser->isAlive() && !pLoser->isAnimal() && iUnit == NO_UNIT)
 		{
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/14
-//			if (GC.getGameINLINE().getSorenRandNum(100, "Enslavement") <= (m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()))
 			if (GC.getGameINLINE().getSorenRandNum(100, "Enslavement") < (m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()))
-//<<<<Unofficial Bug Fix: End Modify
 			{
 				iUnit = GC.getDefineINT("SLAVE_UNIT");
 			}
@@ -18412,10 +18399,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	{
 		if (isAlive() && getDamage() > 0)
 		{
-//>>>>Unofficial Bug Fix:  Modified by Denev 2010/01/07
-//			if (GC.getGameINLINE().getSorenRandNum(100, "Poisoned") >= getDamageTypeResist(DAMAGE_POISON))
 			if (GC.getGameINLINE().getSorenRandNum(100, "Poisoned") >= getDamageTypeResist((DamageTypes)GC.getInfoTypeForString("DAMAGE_POISON")))
-//<<<<Unofficial Bug Fix:  End Modify
 			{
 				setHasPromotion((PromotionTypes)GC.getDefineINT("POISONED_PROMOTION"), true);
 			}
@@ -18425,10 +18409,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	{
 		if (!pLoser->isImmuneToCapture() && pLoser->isAlive() && GC.getUnitInfo((UnitTypes)pLoser->getUnitType()).getEquipmentPromotion() == NO_PROMOTION)
 		{
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/14
-//			if (GC.getGameINLINE().getSorenRandNum(100, "Create Unit from Combat") <= m_pUnitInfo->getUnitCreateFromCombatChance())
 			if (GC.getGameINLINE().getSorenRandNum(100, "Create Unit from Combat") < m_pUnitInfo->getUnitCreateFromCombatChance())
-//<<<<Unofficial Bug Fix: End Modify
 			{
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
 //*** spawned unit is pushed out if enemy unit exists in the same tile.

@@ -182,44 +182,47 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	//--------------------------------
 	// Init other game data
-	setName(GET_PLAYER(getOwnerINLINE()).getNewCityName());
+	//PlayerTypes eOwner = getOwnerINLINE();
+	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
 
-	setEverOwned(getOwnerINLINE(), true);
+	setName(kPlayer.getNewCityName());
+
+	setEverOwned(eOwner, true);
 
 	updateCultureLevel(false);
 
 //FfH: Added by Kael 11/07/2007
-	if (GET_PLAYER(getOwnerINLINE()).getMaxCities() != -1)
+	if (kPlayer.getMaxCities() != -1)
 	{
-		if (GET_PLAYER(getOwnerINLINE()).getNumCities() - GET_PLAYER(getOwnerINLINE()).getNumSettlements() - 1 >= GET_PLAYER(getOwnerINLINE()).getMaxCities())
+		if ((kPlayer.getNumCities() - kPlayer.getNumSettlements() - 1) >= kPlayer.getMaxCities())
 		{
 			setSettlement(true);
 		}
 		else
 		{
-			if (!GET_PLAYER(getOwnerINLINE()).isHuman() || GET_PLAYER(getOwnerINLINE()).getNumCities() == 1 || GC.getGameINLINE().isGameMultiPlayer())
+			if (!kPlayer.isHuman() || kPlayer.getNumCities() == 1 || GC.getGameINLINE().isGameMultiPlayer())
 			{
 				setPlotRadius(3);
 			}
 			else
 			{
-				if (GET_PLAYER(getOwnerINLINE()).isHuman() && GET_PLAYER(getOwnerINLINE()).getNumCities() != 1)
+				if (kPlayer.isHuman() && kPlayer.getNumCities() != 1)
 				{
 					CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRMSETTLEMENT);
 					pInfo->setData1(getID());
-					gDLL->getInterfaceIFace()->addPopup(pInfo, GET_PLAYER(getOwnerINLINE()).getID());
+					gDLL->getInterfaceIFace()->addPopup(pInfo, kPlayer.getID());
 				}
 			}
 		}
 	}
-	setCivilizationType(GET_PLAYER(getOwnerINLINE()).getCivilizationType());
+	setCivilizationType(kPlayer.getCivilizationType());
 //FfH: End Add
 
-	if (pPlot->getCulture(getOwnerINLINE()) < GC.getDefineINT("FREE_CITY_CULTURE"))
+	if (pPlot->getCulture(eOwner) < GC.getDefineINT("FREE_CITY_CULTURE"))
 	{
-		pPlot->setCulture(getOwnerINLINE(), GC.getDefineINT("FREE_CITY_CULTURE"), bBumpUnits, false);
+		pPlot->setCulture(eOwner, GC.getDefineINT("FREE_CITY_CULTURE"), bBumpUnits, false);
 	}
-	pPlot->setOwner(getOwnerINLINE(), bBumpUnits, false);
+	pPlot->setOwner(eOwner, bBumpUnits, false);
 	pPlot->setPlotCity(this);
 
 	for (iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
@@ -228,9 +231,9 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 		if (pAdjacentPlot != NULL)
 		{
-			if (pAdjacentPlot->getCulture(getOwnerINLINE()) < GC.getDefineINT("FREE_CITY_ADJACENT_CULTURE"))
+			if (pAdjacentPlot->getCulture(eOwner) < GC.getDefineINT("FREE_CITY_ADJACENT_CULTURE"))
 			{
-				pAdjacentPlot->setCulture(getOwnerINLINE(), GC.getDefineINT("FREE_CITY_ADJACENT_CULTURE"), bBumpUnits, false);
+				pAdjacentPlot->setCulture(eOwner, GC.getDefineINT("FREE_CITY_ADJACENT_CULTURE"), bBumpUnits, false);
 			}
 			pAdjacentPlot->updateCulture(bBumpUnits, false);
 		}
@@ -296,13 +299,13 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		if (GET_PLAYER(getOwnerINLINE()).isBuildingFree((BuildingTypes)iI))
+		if (kPlayer.isBuildingFree((BuildingTypes)iI))
 		{
 			setNumFreeBuilding(((BuildingTypes)iI), 1);
 		}
 	}
 
-	area()->changeCitiesPerPlayer(getOwnerINLINE(), 1);
+	area()->changeCitiesPerPlayer(eOwner, 1);
 
 	GET_TEAM(getTeam()).changeNumCities(1);
 
@@ -320,16 +323,16 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	updateFeatureHappiness();
 	updatePowerHealth();
 
-	GET_PLAYER(getOwnerINLINE()).updateMaintenance();
+	kPlayer.updateMaintenance();
 	GC.getMapINLINE().updateWorkingCity();
 	GC.getGameINLINE().AI_makeAssignWorkDirty();
-	GET_PLAYER(getOwnerINLINE()).setFoundedFirstCity(true);
+	kPlayer.setFoundedFirstCity(true);
 
 	if (GC.getGameINLINE().isFinalInitialized())
 	{
-		if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1)
+		if (kPlayer.getNumCities() == 1)
 		{
-			if (!GET_PLAYER(getOwnerINLINE()).isPuppetState()) // Puppet States
+			if (!kPlayer.isPuppetState()) // Puppet States
 			{
 				for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 				{

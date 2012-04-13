@@ -1861,21 +1861,24 @@ void CvUnitAI::AI_animalMove()
 void CvUnitAI::AI_settleMove()
 {
 	PROFILE_FUNC();
+	
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+		
 /*************************************************************************************************/
 /**	BETTER AI (UNITAI_SETTLE move) Sephi                        	                            **/
 /*************************************************************************************************/
 
     //reset values after first city is build
-	if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1 && getGroup()->getNumUnits()==1)
+	if (kOwner.getNumCities() == 1 && getGroup()->getNumUnits()==1)
 	{
         GET_PLAYER(getOwnerINLINE()).AI_updateFoundValues(false);
 	}
 
-	if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
+	if (kOwner.getNumCities() == 0)
 	{
 	    if (GC.getGameINLINE().getGameTurn()==0)
 	    {
-            GET_PLAYER(getOwnerINLINE()).AI_updateFoundValues(false);
+            kOwner.AI_updateFoundValues(false);
 
             CvPlot* pLoopPlot;
             CvPlot* pBestPlot;
@@ -1940,7 +1943,7 @@ void CvUnitAI::AI_settleMove()
 					{
 						if (plotDistance(plot()->getX_INLINE(), plot()->getY_INLINE(), pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE()) <= 3)
 						{
-							GET_PLAYER(getOwnerINLINE()).AI_updateFoundValues(false);
+							kOwner.AI_updateFoundValues(false);
 
 							int iNewCityPlotValue = pBestPlot->getFoundValue(getOwnerINLINE());
 
@@ -1971,7 +1974,7 @@ void CvUnitAI::AI_settleMove()
     }
 
 	// Tholal AI - modified from BBAI
-	int iDanger = GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 2);
+	int iDanger = kOwner.AI_getPlotDanger(plot(), 2);
 	int iNeededSettleDefenders = (GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS) ? 4 : 3);
 
 	if (GET_TEAM(getTeam()).isBarbarianAlly() && GET_TEAM(getTeam()).getAtWarCount(true) == 0)
@@ -2024,9 +2027,9 @@ void CvUnitAI::AI_settleMove()
 	int iAreaBestFoundValue = 0;
 	int iOtherBestFoundValue = 0;
 
-	for (int iI = 0; iI < GET_PLAYER(getOwnerINLINE()).AI_getNumCitySites(); iI++)
+	for (int iI = 0; iI < kOwner.AI_getNumCitySites(); iI++)
 	{
-		CvPlot* pCitySitePlot = GET_PLAYER(getOwnerINLINE()).AI_getCitySite(iI);
+		CvPlot* pCitySitePlot = kOwner.AI_getCitySite(iI);
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       01/10/09                                jdog5000      */
 /*                                                                                              */
@@ -2071,7 +2074,7 @@ void CvUnitAI::AI_settleMove()
 	// No new settling of colonies when AI is in financial trouble
 	if( plot()->isCity() && (plot()->getOwnerINLINE() == getOwnerINLINE()) )
 	{
-		if( GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble() )
+		if( kOwner.AI_isFinancialTrouble() )
 		{
 			iOtherBestFoundValue = 0;
 		}
@@ -2121,7 +2124,7 @@ void CvUnitAI::AI_settleMove()
 /* Unit AI, Efficiency                                                                          */
 /************************************************************************************************/
 		//if ((GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot()) > 0) 
-		if ((GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot())) 
+		if (kOwner.AI_getAnyPlotDanger(plot())
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -8543,6 +8546,7 @@ void CvUnitAI::AI_assaultSeaMove()
 void CvUnitAI::AI_settlerSeaMove()
 {
 	PROFILE_FUNC();
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	
 	bool bEmpty = !getGroup()->hasCargo();
 
@@ -8554,7 +8558,7 @@ void CvUnitAI::AI_settlerSeaMove()
 	if (plot()->isCity(true))
 	{
 		int iOurDefense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(),0,true,false,true);
-		int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(plot(),2,false,false);
+		int iEnemyOffense = kOwner.AI_getEnemyPlotStrength(plot(),2,false,false);
 
 		if( getDamage() > 0 )	// extra risk to leaving when wounded
 		{
@@ -8665,7 +8669,7 @@ void CvUnitAI::AI_settlerSeaMove()
 
 	if ((iSettlerCount > 0) && (isFull() ||
 			((getUnitAICargo(UNITAI_CITY_DEFENSE) > 0) &&
-			 (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) == 0))))
+			 (kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) == 0))))
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -8700,9 +8704,9 @@ void CvUnitAI::AI_settlerSeaMove()
 			FAssert(pWaterArea != NULL);
 			if (pWaterArea != NULL)
 			{
-				if (GET_PLAYER(getOwnerINLINE()).AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_SETTLER_SEA) > 1)
+				if (kOwner.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_SETTLER_SEA) > 1)
 				{
-					if (GET_PLAYER(getOwnerINLINE()).AI_unitValue(getUnitType(), UNITAI_ASSAULT_SEA, pWaterArea) > 0)
+					if (kOwner.AI_unitValue(getUnitType(), UNITAI_ASSAULT_SEA, pWaterArea) > 0)
 					{
 						AI_setUnitAIType(UNITAI_ASSAULT_SEA);
 						AI_assaultSeaMove();
@@ -8714,7 +8718,7 @@ void CvUnitAI::AI_settlerSeaMove()
 	}
 	
 	if ((iWorkerCount > 0)
-		&& GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) == 0)
+		&& kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) == 0)
 	{
 		if (isFull() || (iSettlerCount == 0))
 		{
@@ -8746,7 +8750,7 @@ void CvUnitAI::AI_settlerSeaMove()
 
 	if( !(getGroup()->isFull()) )
 	{
-		if( GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) > 0 )
+		if( kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_SETTLER) > 0 )
 		{
 			// Wait for units on the way
 			getGroup()->pushMission(MISSION_SKIP);
