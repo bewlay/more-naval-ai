@@ -18375,7 +18375,8 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	}
 	if ((m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()) > 0)
 	{
-		if (getDuration() == 0 && pLoser->isAlive() && !pLoser->isAnimal() && iUnit == NO_UNIT)
+		// Summons, non-Alive units, Animals and World class units cannot become slaves
+		if (getDuration() == 0 && pLoser->isAlive() && !pLoser->isAnimal() && iUnit == NO_UNIT && !isWorldUnitClass((UnitClassTypes)pLoser->getUnitClassType()))
 		{
 			if (GC.getGameINLINE().getSorenRandNum(100, "Enslavement") < (m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()))
 			{
