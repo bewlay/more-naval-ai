@@ -18169,20 +18169,24 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 /*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-		iAttitudeChange = GET_PLAYER(ePlayer).AI_getEmbassyAttitude(eTargetPlayer);
-		if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 		{
-			if (iAttitudeChange > 0)
+			// Tholal ToDo - dont call this function on teammates - it throws asserts
+			iAttitudeChange = GET_PLAYER(ePlayer).AI_getEmbassyAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
 			{
-				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_BONUS", iAttitudeChange).GetCString());
-				szBuffer.append(NEWLINE);
-				szBuffer.append(szTempBuffer);
-			}
-			else if (iAttitudeChange < 0)
-			{
-				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_MALUS", iAttitudeChange).GetCString());
-				szBuffer.append(NEWLINE);
-				szBuffer.append(szTempBuffer);
+				if (iAttitudeChange > 0)
+				{
+					szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_BONUS", iAttitudeChange).GetCString());
+					szBuffer.append(NEWLINE);
+					szBuffer.append(szTempBuffer);
+				}
+				else if (iAttitudeChange < 0)
+				{
+					szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_MALUS", iAttitudeChange).GetCString());
+					szBuffer.append(NEWLINE);
+					szBuffer.append(szTempBuffer);
+				}
 			}
 		}
 /************************************************************************************************/
