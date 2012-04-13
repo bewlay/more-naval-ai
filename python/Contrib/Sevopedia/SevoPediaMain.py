@@ -1180,7 +1180,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		infoList = []
 		for iItemID in range(numInfos):
 			if getInfo(iItemID):
-				if ((None in (iCategory, getCategory) or getCategory(iItemID) == iCategory) and not getInfo(iItemID).isGraphicalOnly()):
+				if ((None in (iCategory, getCategory) or getCategory(iItemID) == iCategory)): # and not getInfo(iItemID).isGraphicalOnly()):
 #					if (not getInfo==gc.getBuildingInfo) or gc.getBuildingInfo(iItemID).getProductionCost()>0:	#added Sephi to block wrong buildings in Buildinglist
 					szDescription = getInfo(iItemID).getDescription()
 					if szDescription[0:4] == "The ":
