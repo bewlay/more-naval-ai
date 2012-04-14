@@ -5853,26 +5853,42 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 			}
 
-			if (getTechFreeUnit(eTech) != NO_UNIT)
+			if (AI_isFirstTech(eTech))
 			{
-				/*
-				int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
-				iValue += iGreatPeopleRandom;
-				
-				iRandomMax += 3200;
-				iRandomFactor += iGreatPeopleRandom;
-				*/
-
-				if (bCapitalAlone)
+				if (getTechFreeUnit(eTech) != NO_UNIT)
 				{
-					iValue += 400;
+					int iFreeUnitValue = 0;
+					/*
+					int iGreatPeopleRandom = ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Great People ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Great People"));
+					iValue += iGreatPeopleRandom;
+					
+					iRandomMax += 3200;
+					iRandomFactor += iGreatPeopleRandom;
+
+
+					if (bCapitalAlone)
+					{
+						iValue += 400;
+					}
+					*/
+					//iValue += 200;
+					CvUnitInfo& kUnitInfo = GC.getUnitInfo(getTechFreeUnit(eTech));
+
+					if (kUnitInfo.isGoldenAge())
+					{
+						iFreeUnitValue += 3500;
+					}
+					
+					if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
+					{
+						iFreeUnitValue += kUnitInfo.getGreatWorkCulture();
+					}
+
+					iValue += 1500;
 				}
 
-				//iValue += 200;
-				iValue += 1000;
+				iValue += (kTech.getFirstFreeTechs() * (bCapitalAlone ? 3000 : 2000));//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
 			}
-
-			iValue += (kTech.getFirstFreeTechs() * 200);//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
 		}
 	}
 
