@@ -12502,6 +12502,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_CITY_DEFENSE:
 		iValue += ((iCombatValue * 2) / 3);
 		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 75);
+		iValue += kUnitInfo.getWeaponTier() * 10;
 		if (!kUnitInfo.isMilitaryHappiness())
 		{
 			iValue /= 4;
