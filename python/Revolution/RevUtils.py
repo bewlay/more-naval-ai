@@ -1096,8 +1096,13 @@ def computeCivSize( iPlayer ) :
 	expCivPlots = CyMap().getLandPlots() / ( gc.getWorldInfo(gc.getMap().getWorldSize()).getDefaultPlayers() * 1.0)
 
 	# TODO:  use CyGame::getCurrentEra to get average era instead of per player?  Would hurt most players
-	civSizeEraMod = max( [0, 0.85-0.20*gc.getPlayer(iPlayer).getCurrentEra()] )
-	civSizeValue  = ( gc.getPlayer(iPlayer).getTotalLand() / (1.0*expCivPlots) ) + civSizeEraMod
+#	civSizeEraMod = max( [0, 0.85-0.20*gc.getPlayer(iPlayer).getCurrentEra()] )
+#	civSizeEraMod = max( [0, 0.85-0.20*gc.getGame().getCurrentPeriod()] )
+#	civSizeValue  = ( gc.getPlayer(iPlayer).getTotalLand() / (1.0*expCivPlots) ) + civSizeEraMod
+
+	map = gc.getMap()
+	civSizeValue = gc.getPlayer(iPlayer).getNumCities() / gc.getWorldInfo(map.getWorldSize()).getTargetNumCities()
+	
 	iCivEffRadius = pow((.5*gc.getPlayer(iPlayer).getTotalLand() + .5*expCivPlots)/3.4, .5)
 
 	return [civSizeValue,iCivEffRadius]
