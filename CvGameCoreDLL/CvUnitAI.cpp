@@ -16949,11 +16949,8 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 							{
 								if (!atPlot(pLoopPlot) && ((bFollow) ? canMoveInto(pLoopPlot, true) : (generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))))
 								{
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**	Allows the Function to Check for Summoned Units                    							**/
-/*************************************************************************************************/
+
+									// Sephi AI - Allows the Function to Check for Summoned Units
 									bool bOnlySummons=true;
 									CLLNode<IDInfo>* pUnitNode;
 									CvUnit* pLoopUnit;
@@ -16971,7 +16968,8 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 											break;
 										}
 									}
-									if(!bOnlySummons)
+
+									if (!bOnlySummons)
 									{
 										iValue = getGroup()->AI_attackOdds(pLoopPlot, true);
 
@@ -16986,9 +16984,7 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 										}
 
 									}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+									// End Sephi AI
 								}
 							}	
 						}

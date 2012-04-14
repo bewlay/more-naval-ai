@@ -806,6 +806,7 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 
 	case WIDGET_REVOLUTION:
 		// handled in Python
+		// Tholal ToDo - move this to DLL?
 		break;
 
 	case WIDGET_AUTOMATE_CITIZENS:
