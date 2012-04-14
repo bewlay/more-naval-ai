@@ -486,13 +486,9 @@ def spellArcaneLacuna(caster):
 	for pUnit in py.getUnitList():
 		if pUnit.getUnitCombatType() == iAdept:
 			pUnit.changeExperience(iCount, -1, False, False, False)
-	iDelay = 20
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_QUICK'):
-		iDelay = 14
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_EPIC'):
-		iDelay = 30
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_MARATHON'):
-		iDelay = 60
+	iBaseDelay = 20
+	iDelay = (iBaseDelay * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
+
 	for iPlayer2 in range(gc.getMAX_PLAYERS()):
 		pPlayer2 = gc.getPlayer(iPlayer2)
 		if pPlayer2.isAlive():
@@ -2843,7 +2839,10 @@ def spellSanctuary(caster):
 	iPlayer = caster.getOwner()
 	iTeam = caster.getTeam()
 	pPlayer = gc.getPlayer(iPlayer)
-	pPlayer.changeSanctuaryTimer(30)
+	iBaseDelay = 30
+	iDelay = (iBaseDelay * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
+
+	pPlayer.changeSanctuaryTimer(iDelay)
 	for i in range (CyMap().numPlots()):
 		pPlot = CyMap().plotByIndex(i)
 		if pPlot.isOwned():
@@ -3062,14 +3061,10 @@ def reqStasis(caster):
 
 def spellStasis(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
-	iDelay = 20
+	iBaseDelay = 20
+	iDelay = (iBaseDelay * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
 	iTeam = pPlayer.getTeam()
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_QUICK'):
-		iDelay = 14
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_EPIC'):
-		iDelay = 30
-	if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_MARATHON'):
-		iDelay = 60
+	
 	for iPlayer2 in range(gc.getMAX_PLAYERS()):
 		pPlayer2 = gc.getPlayer(iPlayer2)
 		if pPlayer2.isAlive():
