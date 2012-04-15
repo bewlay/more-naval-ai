@@ -572,13 +572,9 @@ class CvEventManager:
 				triggerData = pPlayer.initTriggeredData(iEvent, true, -1, -1, -1, iPlayer, -1, -1, -1, -1, -1)
 
 		if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_ADAPTIVE')):
-			iCycle = 100
-			if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_QUICK'):
-				iCycle = 75
-			if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_EPIC'):
-				iCycle = 150
-			if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_MARATHON'):
-				iCycle = 300
+			iBaseCycle = 100
+			iCycle = (iBaseCycle * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
+			
 			for i in range(10):
 				if (i * iCycle) - 5 == iGameTurn:
 					iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(),'EVENTTRIGGER_TRAIT_ADAPTIVE')
