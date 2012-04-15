@@ -173,24 +173,26 @@ class SevoPediaCivilization:
 		screen.addPanel(panelName, localText.getText("TXT_KEY_FREE_UNITS", ()), "", False, True, self.X_UNITS, self.Y_UNITS, self.W_UNITS, self.H_UNITS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
 		for iUnit in range(gc.getNumUnitClassInfos()):
+			iHero = gc.getCivilizationInfo(self.iCivilization).getHero()
 			iUniqueUnit = gc.getCivilizationInfo(self.iCivilization).getCivilizationUnits(iUnit)
 			iDefaultUnit = gc.getUnitClassInfo(iUnit).getDefaultUnitIndex()
-			if (iDefaultUnit > -1 and iUniqueUnit > -1 and iDefaultUnit != iUniqueUnit):
+			if iDefaultUnit != iHero:
+				if (iDefaultUnit > -1 and iUniqueUnit > -1 and iDefaultUnit != iUniqueUnit):
 ##--------	BUGFfH: Modified by Denev 2009/09/05
 #				screen.attachImageButton(panelName, "", gc.getUnitInfo(iUniqueUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUniqueUnit, 1, False)
-				szUnitButton = gc.getUnitInfo(iUniqueUnit).getUnitButtonWithCivArtStyle(self.iCivilization)
-				screen.attachImageButton(panelName, "", szUnitButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUniqueUnit, 1, False)
-				continue
+					szUnitButton = gc.getUnitInfo(iUniqueUnit).getUnitButtonWithCivArtStyle(self.iCivilization)
+					screen.attachImageButton(panelName, "", szUnitButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUniqueUnit, 1, False)
+					continue
 ##--------	BUGFfH: End Modify
 
 ##--------	BUGFfH: Added by Denev 2009/10/08
-			if iUniqueUnit == UnitTypes.NO_UNIT:
-				continue
+				if iUniqueUnit == UnitTypes.NO_UNIT:
+					continue
 
-			iUniqueCiv = gc.getUnitInfo(iUniqueUnit).getPrereqCiv()
-			if iUniqueCiv == self.iCivilization:
-				szButton = gc.getUnitInfo(iUniqueUnit).getUnitButtonWithCivArtStyle(iUniqueCiv)
-				screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUniqueUnit, 1, False)
+				iUniqueCiv = gc.getUnitInfo(iUniqueUnit).getPrereqCiv()
+				if iUniqueCiv == self.iCivilization:
+					szButton = gc.getUnitInfo(iUniqueUnit).getUnitButtonWithCivArtStyle(iUniqueCiv)
+					screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUniqueUnit, 1, False)
 ##--------	BUGFfH: End Add
 
 
