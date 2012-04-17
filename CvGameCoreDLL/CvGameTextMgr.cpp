@@ -5114,7 +5114,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			int iPlotDanger = GET_PLAYER(pPlot->getOwnerINLINE()).AI_getPlotDanger(pPlot, 2);
 			if (iPlotDanger > 0)
 			{
-				szString.append(CvWString::format(L"\nPlot Danger = %d", iPlotDanger));
+				szString.append(CvWString::format(L"Plot Danger = %d \n", iPlotDanger));
 			}
 		}
 
@@ -5129,13 +5129,16 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 /*                                                                                              */
 /* DEBUG                                                                                        */
 /************************************************************************************************/
-			szString.append(CvWString::format(L"\n\nRevIndex:%d, ", pPlotCity->getRevolutionIndex()));
-			szString.append(CvWString::format(L"Avg:%d, ", pPlotCity->getRevIndexAverage()));
-			szString.append(CvWString::format(L"Local:%d, ", pPlotCity->getLocalRevIndex()));
-			szString.append(CvWString::format(L"Reinf:%d", pPlotCity->getReinforcementCounter()));
-			szString.append(CvWString::format(L"\nRevIdxAnger:%d, ", pPlotCity->getRevIndexPercentAnger()));
-			szString.append(CvWString::format(L"ReqAnger:%d, ", pPlotCity->getRevRequestPercentAnger()));
-			szString.append(CvWString::format(L"RevSucHappy:%d\n", pPlotCity->getRevSuccessHappiness()));
+			if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+			{
+				szString.append(CvWString::format(L"\n\nRevIndex:%d, ", pPlotCity->getRevolutionIndex()));
+				szString.append(CvWString::format(L"Avg:%d, ", pPlotCity->getRevIndexAverage()));
+				szString.append(CvWString::format(L"Local:%d, ", pPlotCity->getLocalRevIndex()));
+				szString.append(CvWString::format(L"Reinf:%d", pPlotCity->getReinforcementCounter()));
+				szString.append(CvWString::format(L"\nRevIdxAnger:%d, ", pPlotCity->getRevIndexPercentAnger()));
+				szString.append(CvWString::format(L"ReqAnger:%d, ", pPlotCity->getRevRequestPercentAnger()));
+				szString.append(CvWString::format(L"RevSucHappy:%d\n", pPlotCity->getRevSuccessHappiness()));
+			}
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
