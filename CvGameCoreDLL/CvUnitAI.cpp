@@ -1995,7 +1995,7 @@ void CvUnitAI::AI_settleMove()
 
 	if (iDanger > 0)
 	{
-		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > 2))
+		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroupSize()))
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
@@ -2007,7 +2007,7 @@ void CvUnitAI::AI_settleMove()
 				{
 					return;
 				}
-				getGroup()->pushMission(MISSION_SKIP);
+				//getGroup()->pushMission(MISSION_SKIP);
 			}
 		}
 	}
@@ -2022,7 +2022,7 @@ void CvUnitAI::AI_settleMove()
 				return;
 			}
 
-			if (getGroup()->getNumUnits() > iNeededSettleDefenders + 2)
+			if (getGroup()->getNumUnits() > iNeededSettleDefenders + 1)
 			{
 				joinGroup(NULL, true);
 				return;
@@ -26509,9 +26509,12 @@ void CvUnitAI::PatrolMove()
 
 	if (!bHero && (GET_TEAM(getTeam()).getAtWarCount(false) == 0))
 	{
-		if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
+		if (!bDanger || !bInCity)
 		{
-			return;
+			if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
+			{
+				return;
+			}
 		}
 	}
 
