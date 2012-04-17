@@ -27190,6 +27190,10 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 	int iPathTurns;
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
 
+	if (getMoves() > 1)
+	{
+		iRange ++;
+	}
 
 	// First, look for our equipment and treasure
 	for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
