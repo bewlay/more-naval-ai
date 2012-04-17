@@ -429,34 +429,36 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupAttacker(const CvPlot* pPlot, bool bP
 						iOdds = pLoopUnit->AI_attackOdds(pPlot, bPotentialEnemy);
 
 						iValue = iOdds;
-/*************************************************************************************************/
-/**	BETTER AI (Block some Units from attacking at low odds) Sephi              					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+						int iLevel = pLoopUnit->getLevel();
+
+						// Sephi AI - Block some Units from attacking at low odds)
                         if (!GET_PLAYER(pLoopUnit->getOwnerINLINE()).isHuman())
                         {
                             if (pLoopUnit->getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
                             {
-                                if (iOdds<95)
+                                if (iOdds < (95 + iLevel))
                                 {
-                                    iValue=1;	//Need to put the min to 1 to prevent WoC
+                                    iValue = 1;	//Need to put the min to 1 to prevent WoC (tholal note: true?)
                                 }
                             }
 
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_HERO)
+                            if (pLoopUnit->AI_getUnitAIType() == UNITAI_HERO)
                             {
-                                if (iOdds<85)
+								if (iOdds < (85 + iLevel))
                                 {
-                                    iValue=0;
+                                    iValue = 0;
                                 }
                             }
-							if (pLoopUnit->getLevel()>4 && iOdds<95)
+							else if (iLevel > 4)
 							{
-								iValue/=2;
+								if (iOdds < (std::min(95, (70 + (iLevel * 3))))) //(tholal note: need better formula?)
+								{
+									iValue /= 2;
+								}
 							}
                         }
-						iValue=std::max(1,iValue);
+
+						iValue = std::max(1,iValue);
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
@@ -469,6 +471,18 @@ CvUnit* CvSelectionGroupAI::AI_getBestGroupAttacker(const CvPlot* pPlot, bool bP
 							if (iPossibleTargets > 0)
 							{
 								iValue *= (100 + ((pLoopUnit->collateralDamage() * iPossibleTargets) / 5));
+								iValue /= 100;
+							}
+						}
+
+						// exploding units
+						if (GC.getUnitInfo(pLoopUnit->getUnitType()).isExplodeInCombat())
+						{
+							iPossibleTargets = (pPlot->getNumVisibleEnemyDefenders(pLoopUnit) - 1);
+
+							if (iPossibleTargets > 0)
+							{
+								iValue *= (100 + ((100 * iPossibleTargets) / 5));
 								iValue /= 100;
 							}
 						}
