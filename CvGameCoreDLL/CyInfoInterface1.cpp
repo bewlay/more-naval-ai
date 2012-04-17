@@ -350,6 +350,7 @@ void CyInfoPythonInterface1()
 		.def("getTier", &CvUnitInfo::getTier, "int ()")
 		.def("getWeaponTier", &CvUnitInfo::getWeaponTier, "int ()")
 		.def("isAbandon", &CvUnitInfo::isAbandon, "bool ()")
+		.def("isObject", &CvUnitInfo::isObject, "bool ()")
 		.def("isDisableUpgradeTo", &CvUnitInfo::isDisableUpgradeTo, "bool ()")
 		.def("getPrereqCiv", &CvUnitInfo::getPrereqCiv, "int ()")
 //FfH: End Add
