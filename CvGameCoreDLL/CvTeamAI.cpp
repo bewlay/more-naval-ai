@@ -726,6 +726,33 @@ int CvTeamAI::AI_calculateBonusWarValue(TeamTypes eTeam) const
 
 	int iValue = 0;
 
+	// Tholal AI - add value for previously owned cities
+	for (int iJ = 0; iJ < MAX_PLAYERS; iJ++)
+	{
+		if (GET_PLAYER((PlayerTypes)iJ).getTeam() == eTeam)
+		{
+			CvCity* pLoopCity;
+			int iLoop;
+			for (pLoopCity = GET_PLAYER((PlayerTypes)iJ).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iJ).nextCity(&iLoop))
+			{
+				if (pLoopCity->getOriginalOwner() != iJ)
+				{
+					for (int iK = 0; iK < MAX_PLAYERS; iK++)
+					{
+						if (GET_PLAYER((PlayerTypes)iK).getTeam() == getID())
+						{
+							if (pLoopCity->getOriginalOwner() == iK)
+							{
+								iValue += pLoopCity->getPopulation() * 5;
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
@@ -1287,6 +1314,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	}
 	
 	// If occupied or conquest inclined and early/not strong, value weak opponents
+	/*
 	if( getAnyWarPlanCount(true) > 0 || 
 		(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST2) && !(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST3))) )
 	{
@@ -1295,6 +1323,19 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		iValue *= range(iMultiplier, 50, 400);
 		iValue /= 100;
 	}
+	*/
+
+	// assaults on weak opponents
+	if (getPower(true) > (GET_TEAM(eTeam).getDefensivePower() * 2))
+	{
+		if (GC.getGameINLINE().getCurrentPeriod() <= 2 ||
+			AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST1) ||
+			GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+		{
+			iValue *= 10;
+		}
+	}
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
