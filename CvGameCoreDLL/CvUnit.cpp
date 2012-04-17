@@ -15348,6 +15348,7 @@ int CvUnit::getSelectionSoundScript() const
 bool CvUnit::canCast(int spell, bool bTestVisible)
 {
     SpellTypes eSpell = (SpellTypes)spell;
+	CvSpellInfo& kSpell = GC.getSpellInfo(eSpell);
     CvPlot* pPlot = plot();
     CvUnit* pLoopUnit;
     CLLNode<IDInfo>* pUnitNode;
@@ -15361,9 +15362,9 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	if (getUnitInfo().isObject())
 	{
 		// unless the spell is designed for that object (ie. Golden Hammer)
-		if (GC.getSpellInfo(eSpell).getUnitPrereq() != NO_UNIT)
+		if (kSpell.getUnitPrereq() != NO_UNIT)
 		{
-			if (GC.getSpellInfo(eSpell).getUnitPrereq() != getUnitType())
+			if (kSpell.getUnitPrereq() != getUnitType())
 			{
 				return false;
 			}
@@ -15374,113 +15375,113 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 
-    if (GC.getSpellInfo(eSpell).getPromotionPrereq1() != NO_PROMOTION)
+    if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
     {
-        if (!isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionPrereq1()))
+        if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq1()))
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getPromotionPrereq2() != NO_PROMOTION)
+    if (kSpell.getPromotionPrereq2() != NO_PROMOTION)
     {
-        if (!isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionPrereq2()))
+        if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq2()))
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != NO_UNITCLASS)
+    if (kSpell.getUnitClassPrereq() != NO_UNITCLASS)
     {
-        if (getUnitClassType() != (UnitClassTypes)GC.getSpellInfo(eSpell).getUnitClassPrereq())
+        if (getUnitClassType() != (UnitClassTypes)kSpell.getUnitClassPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getUnitPrereq() != NO_UNIT)
+    if (kSpell.getUnitPrereq() != NO_UNIT)
     {
-        if (getUnitType() != (UnitTypes)GC.getSpellInfo(eSpell).getUnitPrereq())
+        if (getUnitType() != (UnitTypes)kSpell.getUnitPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getUnitCombatPrereq() != NO_UNITCOMBAT)
+    if (kSpell.getUnitCombatPrereq() != NO_UNITCOMBAT)
     {
-        if (getUnitCombatType() != (UnitCombatTypes)GC.getSpellInfo(eSpell).getUnitCombatPrereq())
+        if (getUnitCombatType() != (UnitCombatTypes)kSpell.getUnitCombatPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getBuildingPrereq() != NO_BUILDING)
-    {
-        if (!pPlot->isCity())
-        {
-            return false;
-        }
-        if (pPlot->getPlotCity()->getNumBuilding((BuildingTypes)GC.getSpellInfo(eSpell).getBuildingPrereq()) == 0)
-        {
-            return false;
-        }
-    }
-    if (GC.getSpellInfo(eSpell).getBuildingClassOwnedPrereq() != NO_BUILDINGCLASS)
-    {
-        if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)GC.getSpellInfo(eSpell).getBuildingClassOwnedPrereq())  == 0)
-        {
-            return false;
-        }
-    }
-    if (GC.getSpellInfo(eSpell).getCivilizationPrereq() != NO_CIVILIZATION)
-    {
-        if (getCivilizationType() != (CivilizationTypes)GC.getSpellInfo(eSpell).getCivilizationPrereq())
-        {
-            return false;
-        }
-    }
-    if (GC.getSpellInfo(eSpell).getCorporationPrereq() != NO_CORPORATION)
+    if (kSpell.getBuildingPrereq() != NO_BUILDING)
     {
         if (!pPlot->isCity())
         {
             return false;
         }
-        if (!pPlot->getPlotCity()->isHasCorporation((CorporationTypes)GC.getSpellInfo(eSpell).getCorporationPrereq()))
+        if (pPlot->getPlotCity()->getNumBuilding((BuildingTypes)kSpell.getBuildingPrereq()) == 0)
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getImprovementPrereq() != NO_IMPROVEMENT)
+    if (kSpell.getBuildingClassOwnedPrereq() != NO_BUILDINGCLASS)
     {
-        if (pPlot->getImprovementType() != GC.getSpellInfo(eSpell).getImprovementPrereq())
+        if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq())  == 0)
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getReligionPrereq() != NO_RELIGION)
+    if (kSpell.getCivilizationPrereq() != NO_CIVILIZATION)
     {
-        if (getReligion() != (ReligionTypes)GC.getSpellInfo(eSpell).getReligionPrereq())
+        if (getCivilizationType() != (CivilizationTypes)kSpell.getCivilizationPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getStateReligionPrereq() != NO_RELIGION)
+    if (kSpell.getCorporationPrereq() != NO_CORPORATION)
     {
-        if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != (ReligionTypes)GC.getSpellInfo(eSpell).getStateReligionPrereq())
+        if (!pPlot->isCity())
+        {
+            return false;
+        }
+        if (!pPlot->getPlotCity()->isHasCorporation((CorporationTypes)kSpell.getCorporationPrereq()))
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getTechPrereq() != NO_TECH)
+    if (kSpell.getImprovementPrereq() != NO_IMPROVEMENT)
     {
-        if (!GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getSpellInfo(eSpell).getTechPrereq()))
+        if (pPlot->getImprovementType() != kSpell.getImprovementPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getConvertUnitType() != NO_UNIT)
+    if (kSpell.getReligionPrereq() != NO_RELIGION)
     {
-        if (getUnitType() == (UnitTypes)GC.getSpellInfo(eSpell).getConvertUnitType())
+        if (getReligion() != (ReligionTypes)kSpell.getReligionPrereq())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).isGlobal())
+    if (kSpell.getStateReligionPrereq() != NO_RELIGION)
+    {
+        if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != (ReligionTypes)kSpell.getStateReligionPrereq())
+        {
+            return false;
+        }
+    }
+    if (kSpell.getTechPrereq() != NO_TECH)
+    {
+        if (!GET_TEAM(getTeam()).isHasTech((TechTypes)kSpell.getTechPrereq()))
+        {
+            return false;
+        }
+    }
+    if (kSpell.getConvertUnitType() != NO_UNIT)
+    {
+        if (getUnitType() == (UnitTypes)kSpell.getConvertUnitType())
+        {
+            return false;
+        }
+    }
+    if (kSpell.isGlobal())
     {
         if (GC.getGameINLINE().isOption(GAMEOPTION_NO_WORLD_SPELLS))
         {
@@ -15491,7 +15492,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).isPrereqSlaveTrade())
+    if (kSpell.isPrereqSlaveTrade())
     {
         if (!GET_PLAYER(getOwnerINLINE()).isSlaveTrade())
         {
@@ -15501,30 +15502,30 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	/*
     if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
     {
-        if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != NO_UNITCLASS)
+        if (kSpell.getUnitClassPrereq() != NO_UNITCLASS)
 		{
-			if (GC.getSpellInfo(eSpell).getUnitClassPrereq() != getUnitClassType())
+			if (kSpell.getUnitClassPrereq() != getUnitClassType())
 	        {
 		        return false;
 			}
 		}
     }
 	*/
-    if (GC.getSpellInfo(eSpell).getCasterMinLevel() != 0)
+    if (kSpell.getCasterMinLevel() != 0)
     {
-        if (getLevel() < GC.getSpellInfo(eSpell).getCasterMinLevel())
+        if (getLevel() < kSpell.getCasterMinLevel())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).isCasterMustBeAlive())
+    if (kSpell.isCasterMustBeAlive())
     {
         if (!isAlive())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).isCasterNoDuration())
+    if (kSpell.isCasterNoDuration())
     {
         if (getDuration() != 0)
         {
@@ -15533,14 +15534,14 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     }
     if (GET_PLAYER(getOwnerINLINE()).getDisableSpellcasting() > 0)
     {
-        if (!GC.getSpellInfo(eSpell).isAbility())
+        if (!kSpell.isAbility())
         {
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getPromotionInStackPrereq() != NO_PROMOTION)
+    if (kSpell.getPromotionInStackPrereq() != NO_PROMOTION)
     {
-        if (isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionInStackPrereq()))
+        if (isHasPromotion((PromotionTypes)kSpell.getPromotionInStackPrereq()))
         {
             return false;
         }
@@ -15550,7 +15551,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         {
             pLoopUnit = ::getUnit(pUnitNode->m_data);
             pUnitNode = pPlot->nextUnitNode(pUnitNode);
-            if (pLoopUnit->isHasPromotion((PromotionTypes)GC.getSpellInfo(eSpell).getPromotionInStackPrereq()))
+            if (pLoopUnit->isHasPromotion((PromotionTypes)kSpell.getPromotionInStackPrereq()))
             {
                 if (getOwner() == pLoopUnit->getOwner())
                 {
@@ -15563,9 +15564,9 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
-    if (GC.getSpellInfo(eSpell).getUnitInStackPrereq() != NO_UNIT)
+    if (kSpell.getUnitInStackPrereq() != NO_UNIT)
     {
-        if (getUnitType() == GC.getSpellInfo(eSpell).getUnitInStackPrereq())
+        if (getUnitType() == kSpell.getUnitInStackPrereq())
         {
             return false;
         }
@@ -15575,7 +15576,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         {
             pLoopUnit = ::getUnit(pUnitNode->m_data);
             pUnitNode = pPlot->nextUnitNode(pUnitNode);
-            if (pLoopUnit->getUnitType() == (UnitTypes)GC.getSpellInfo(eSpell).getUnitInStackPrereq())
+            if (pLoopUnit->getUnitType() == (UnitTypes)kSpell.getUnitInStackPrereq())
             {
                 if (getOwner() == pLoopUnit->getOwner())
                 {
@@ -15594,64 +15595,64 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	}
 	if (bTestVisible)
 	{
-		if (GC.getSpellInfo(eSpell).isDisplayWhenDisabled())
+		if (kSpell.isDisplayWhenDisabled())
 		{
 			return true;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).getFeatureOrPrereq1() != NO_FEATURE)
+	if (kSpell.getFeatureOrPrereq1() != NO_FEATURE)
 	{
-		if (pPlot->getFeatureType() != GC.getSpellInfo(eSpell).getFeatureOrPrereq1())
+		if (pPlot->getFeatureType() != kSpell.getFeatureOrPrereq1())
 		{
-			if (GC.getSpellInfo(eSpell).getFeatureOrPrereq2() == NO_FEATURE || pPlot->getFeatureType() != GC.getSpellInfo(eSpell).getFeatureOrPrereq2())
+			if (kSpell.getFeatureOrPrereq2() == NO_FEATURE || pPlot->getFeatureType() != kSpell.getFeatureOrPrereq2())
 			{
 				return false;
 			}
 		}
 	}
-	if (!GC.getSpellInfo(eSpell).isIgnoreHasCasted())
+	if (!kSpell.isIgnoreHasCasted())
 	{
 		if (isHasCasted())
 		{
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).isAdjacentToWaterOnly())
+	if (kSpell.isAdjacentToWaterOnly())
 	{
 		if (!pPlot->isAdjacentToWater())
 		{
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).isInBordersOnly())
+	if (kSpell.isInBordersOnly())
 	{
 		if (pPlot->getOwner() != getOwner())
 		{
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).isInCityOnly())
+	if (kSpell.isInCityOnly())
 	{
 		if (!pPlot->isCity())
 		{
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).getChangePopulation() != 0)
+	if (kSpell.getChangePopulation() != 0)
 	{
 		if (!pPlot->isCity())
 		{
 			return false;
 		}
-		if (pPlot->getPlotCity()->getPopulation() <= (-1 * GC.getSpellInfo(eSpell).getChangePopulation()))
+		if (pPlot->getPlotCity()->getPopulation() <= (-1 * kSpell.getChangePopulation()))
 		{
 			return false;
 		}
 	}
-	int iCost = GC.getSpellInfo(eSpell).getCost();
+	int iCost = kSpell.getCost();
 	if (iCost != 0)
 	{
-		if (GC.getSpellInfo(eSpell).getConvertUnitType() != NO_UNIT)
+		if (kSpell.getConvertUnitType() != NO_UNIT)
 		{
 			iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
 		}
@@ -15660,7 +15661,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).isRemoveHasCasted())
+	if (kSpell.isRemoveHasCasted())
 	{
 		if (!isHasCasted())
 		{
@@ -15674,9 +15675,9 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 
 //>>>>Unofficial Bug Fix: Added by Denev 2009/12/03
 //*** Team Unit or National Unit is limited.
-	if (GC.getSpellInfo(eSpell).getConvertUnitType() != NO_UNIT)
+	if (kSpell.getConvertUnitType() != NO_UNIT)
 	{
-		const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getConvertUnitType()).getUnitClassType();
+		const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo((UnitTypes)kSpell.getConvertUnitType()).getUnitClassType();
 		const int iTeamLimit	= GC.getUnitClassInfo(eUnitClass).getMaxTeamInstances();
 		const int iPlayerLimit	= GC.getUnitClassInfo(eUnitClass).getMaxPlayerInstances();
 		if (iTeamLimit != -1)
@@ -15695,21 +15696,21 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 //<<<<Unofficial Bug Fix: End Add
-	if (GC.getSpellInfo(eSpell).getCreateUnitType() != NO_UNIT)
+	if (kSpell.getCreateUnitType() != NO_UNIT)
 	{
 		if (!canCreateUnit(spell))
 		{
 			return false;
 		}
 	}
-	if (GC.getSpellInfo(eSpell).getCreateBuildingType() != NO_BUILDING)
+	if (kSpell.getCreateBuildingType() != NO_BUILDING)
 	{
 		if (!canCreateBuilding(spell))
 		{
 			return false;
 		}
 	}
-	if (!CvString(GC.getSpellInfo(eSpell).getPyRequirement()).empty())
+	if (!CvString(kSpell.getPyRequirement()).empty())
     {
         CyUnit* pyUnit = new CyUnit(this);
         CyArgsList argsList;
@@ -15724,90 +15725,90 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         }
         return true;
     }
-    if (GC.getSpellInfo(eSpell).isRemoveHasCasted())
+    if (kSpell.isRemoveHasCasted())
     {
         if (isHasCasted())
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getAddPromotionType1() != NO_PROMOTION)
+    if (kSpell.getAddPromotionType1() != NO_PROMOTION)
     {
         if (canAddPromotion(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getRemovePromotionType1() != NO_PROMOTION)
+    if (kSpell.getRemovePromotionType1() != NO_PROMOTION)
     {
         if (canRemovePromotion(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getConvertUnitType() != NO_UNIT)
+    if (kSpell.getConvertUnitType() != NO_UNIT)
     {
         return true;
     }
-    if (GC.getSpellInfo(eSpell).getCreateFeatureType() != NO_FEATURE)
+    if (kSpell.getCreateFeatureType() != NO_FEATURE)
     {
         if (canCreateFeature(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getCreateImprovementType() != NO_IMPROVEMENT)
+    if (kSpell.getCreateImprovementType() != NO_IMPROVEMENT)
     {
         if (canCreateImprovement(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getSpreadReligion() != NO_RELIGION)
+    if (kSpell.getSpreadReligion() != NO_RELIGION)
     {
         if (canSpreadReligion(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getCreateBuildingType() != NO_BUILDING)
+    if (kSpell.getCreateBuildingType() != NO_BUILDING)
     {
         return true;
     }
-    if (GC.getSpellInfo(eSpell).getCreateUnitType() != NO_UNIT)
+    if (kSpell.getCreateUnitType() != NO_UNIT)
     {
         return true;
     }
-    if (GC.getSpellInfo(eSpell).getDamage() != 0)
+    if (kSpell.getDamage() != 0)
     {
         return true;
     }
-    if (GC.getSpellInfo(eSpell).isDispel())
+    if (kSpell.isDispel())
     {
         if (canDispel(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getImmobileTurns() > 0)
+    if (kSpell.getImmobileTurns() > 0)
     {
         if (canImmobile(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).isPush())
+    if (kSpell.isPush())
     {
         if (canPush(spell))
         {
             return true;
         }
     }
-    if (GC.getSpellInfo(eSpell).getChangePopulation() > 0)
+    if (kSpell.getChangePopulation() > 0)
     {
         return true;
     }
-	if (!CvString(GC.getSpellInfo(eSpell).getPyResult()).empty())
+	if (!CvString(kSpell.getPyResult()).empty())
     {
         return true;
     }
