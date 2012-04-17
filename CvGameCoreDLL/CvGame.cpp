@@ -5402,14 +5402,16 @@ bool CvGame::isOption(GameOptionTypes eIndex) const
 {
 
 //FfH: Added by Kael 07/12/2008 (locked options)
-	if (eIndex == GAMEOPTION_NO_ESPIONAGE)
+	if ((eIndex == GAMEOPTION_NO_ESPIONAGE) && (GC.getGameOptionInfo(eIndex).getDefault() == false))
 	{
 	    return true;
 	}
+	
 	if (eIndex == GAMEOPTION_RANDOM_PERSONALITIES)
 	{
 	    return false;
 	}
+	
 	if (eIndex == GAMEOPTION_PICK_RELIGION)
 	{
 	    return false;
