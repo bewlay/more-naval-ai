@@ -3080,6 +3080,25 @@ bool CvUnit::canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage) cons
 			{
 				return true;
 			}
+
+			// disciples
+			for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+			{
+				if (m_pUnitInfo->getReligionSpreads((ReligionTypes)iI) > 0)
+				{
+					return true;
+				}
+			}
+
+			// scouts
+			if (m_pUnitInfo->getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_RECON"))
+			{
+				if (m_pUnitInfo->getTier() == 1)
+				{
+					return true;
+				}
+			}
+
 		}
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
