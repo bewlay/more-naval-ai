@@ -5193,7 +5193,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 						// doesnt include bonuses we cant use due to blocking features
 						// TODO - this isnt counting mana from buildings - need a better check
-						iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
+						iNumBonuses = getNumAvailableBonuses((BonusTypes)iK);
+						//iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
 
 						// used for debugging
 						int iTotalBonuses = getNumAvailableBonuses((BonusTypes)iK);
