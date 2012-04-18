@@ -16560,6 +16560,7 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 						iValue *= 1000;
 
 						iValue /= (iPathTurns + 1);
+						iValue /= (1 + pLoopCity->plot()->getNumVisiblePotentialEnemyDefenders(this));
 
 						if (iValue > iBestValue)
 						{
@@ -16574,15 +16575,9 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 
 	if (pBestCity != NULL)
 	{
-
-		if (GC.getLogging())
+		if( gUnitLogLevel >= 2 )
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "Player %d Unit %d (%S's %S) targeting barb city %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestCity->getName().GetCString());
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("     %S (unit %d) (groupsize: %d) targeting Barb city %S \n", getName().GetCString(), getID(), getGroupSize(), pBestCity->getName().GetCString());
 		}
 
 		iBestValue = 0;
