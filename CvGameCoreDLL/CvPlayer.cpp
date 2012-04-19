@@ -5780,6 +5780,11 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 {
+	if (GET_PLAYER(eWhoTo).getNumCities() == 0)
+	{
+		return false;
+	}
+
 	if (atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
 	{
 		return true;
