@@ -55442,8 +55442,12 @@
             <PrereqTech>TECH_FANATICISM</PrereqTech>
             <TechTypes>
             </TechTypes>
-            <BonusType>BONUS_COPPER</BonusType>
+            <BonusType>NONE</BonusType>
             <PrereqBonuses>
+                    <BonusType>BONUS_COPPER</BonusType>
+                    <BonusType>BONUS_IRON</BonusType>
+                    <BonusType>BONUS_MITHRIL</BonusType>
+                    <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <ProductionTraits>
             </ProductionTraits>
