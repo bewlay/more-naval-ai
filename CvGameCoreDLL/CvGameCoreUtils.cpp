@@ -425,6 +425,15 @@ ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCou
 
 	if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
 	{
+		// dont count civilization improvements (ie Enclaves)
+		if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != NO_CIVILIZATION)
+		{
+			if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != GET_PLAYER((PlayerTypes)GC.getGameINLINE().getActivePlayer()).getCivilizationType())
+			{
+				return eImprovement;
+			}
+		}
+
 		return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1));
 	}
 	else
