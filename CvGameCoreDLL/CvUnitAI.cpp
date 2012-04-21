@@ -17966,7 +17966,8 @@ bool CvUnitAI::AI_pillageRange(int iRange, int iBonusValueThreshold)
                                                 if (iValue > iBestValue)
                                                 {
                                                     iBestValue = iValue;
-                                                    pBestPlot = getPathEndTurnPlot();
+                                                    //pBestPlot = getPathEndTurnPlot();
+													pBestPlot = pLoopPlot;
                                                     pBestPillagePlot = pLoopPlot;
                                                 }
                                             }
