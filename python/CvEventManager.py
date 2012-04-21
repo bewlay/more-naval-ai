@@ -2341,13 +2341,14 @@ class CvEventManager:
 				for iTech in range(gc.getNumTechInfos()):
 					if (iTech != iArete and iTech != iMindStapling and iTech != iHiddenPaths and iTech != iInfernalPact and iTech != iSeafaring):
 						if eTeam.isHasTech(iTech) == False:
-							iCount = 0
-							for i in range(len(listTeams)):
-								if listTeams[i].isHasTech(iTech):
-									iCount = iCount + 1
-							if iCount >= 3:
-								eTeam.setHasTech(iTech, True, iPlayer, False, True)
-								CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EYES_AND_EARS_NETWORK_FREE_TECH",()),'AS2D_TECH_DING',1,'Art/Interface/Buttons/Buildings/Eyesandearsnetwork.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
+							if pPlayer.canResearch(iTech, False):
+								iCount = 0
+								for i in range(len(listTeams)):
+									if listTeams[i].isHasTech(iTech):
+										iCount = iCount + 1
+								if iCount >= 3:
+									eTeam.setHasTech(iTech, True, iPlayer, False, True)
+									CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EYES_AND_EARS_NETWORK_FREE_TECH",()),'AS2D_TECH_DING',1,'Art/Interface/Buttons/Buildings/Eyesandearsnetwork.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
 
 		if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_PLANAR_GATE')) > 0:
 			iMax = 1
