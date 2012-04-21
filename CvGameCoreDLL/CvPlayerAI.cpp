@@ -22863,6 +22863,8 @@ int CvPlayerAI::AI_getStrategyHash() const
 			}
 		}
 
+		iCrushValue += (getSanctuaryTimer() / 4);
+
 		if (AI_isFinancialTrouble())
 		{
 			iCrushValue -=2;
