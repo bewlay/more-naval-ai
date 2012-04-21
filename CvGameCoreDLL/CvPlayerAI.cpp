@@ -14097,6 +14097,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iHighestReligionCount = ((eBestReligion == NO_RELIGION) ? 0 : getHasReligionCount(eBestReligion));
 	iWarmongerPercent = 25000 / std::max(100, (100 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand())); 
 
+	int iMaintenanceFactor =  AI_commerceWeight(COMMERCE_GOLD) * std::max(0, calculateInflationRate() + 100) / 100; // K-Mod
+
 	//iValue = (getNumCities() * 6);
 	iValue = 1 + AI_getNumRealCities();
 	//iValue = 1;
@@ -14120,18 +14122,6 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{
 		// calculate how many Great Person points we're generating
 		iGreatPeopleTotalDelta += pLoopCity->getBaseGreatPeopleRate();
-		/*
-		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); iSpecialist++)
-		{
-			int iGreatPeopleRateChange = GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getGreatPeopleRateChange();
-
-			int iSpecialistCount = 0;
-			iSpecialistCount += pLoopCity->getSpecialistCount((SpecialistTypes)iSpecialist);
-			iSpecialistCount += pLoopCity->getFreeSpecialistCount((SpecialistTypes)iSpecialist);
-
-			iGreatPeopleTotalDelta += iSpecialistCount * iGreatPeopleRateChange;
-		}
-		*/
 
 		// calculate food and growth potential for use later in the function
 		iTotalFoodDifference += pLoopCity->foodDifference();
@@ -14139,10 +14129,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iMaxGrowingSpace += iTotalGrowingSpace;
 	}
 
-	iValue += ((kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta) / ((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 10 : 25));
+	iValue += ((kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta) / (((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 10 : 25) + iCities));
 //<<<<Better AI: End Modify
 	
-	if ( bWarPlan )
+	if ( bWarPlan && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 	{
 		iValue += ((kCivic.getGreatGeneralRateModifier() * getNumMilitaryUnits()) / 50);
 		iValue += ((kCivic.getDomesticGreatGeneralRateModifier() * getNumMilitaryUnits()) / 100);
@@ -14166,6 +14156,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTemp *= 100;
 		iTemp /= std::max(1, getNumCitiesMaintenanceModifier() + 100);
 
+		iTemp *= iMaintenanceFactor;
+		iTemp /= 100;
+
 		iValue -= iTemp * kCivic.getNumCitiesMaintenanceModifier() / 10000;
 	}
 	if (kCivic.getDistanceMaintenanceModifier() != 0)
@@ -14180,34 +14173,12 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTemp *= 100;
 		iTemp /= std::max(1, getDistanceMaintenanceModifier() + 100);
 
+		iTemp *= iMaintenanceFactor;
+		iTemp /= 100;
+
 		iValue -= iTemp * kCivic.getDistanceMaintenanceModifier() / 10000;
 	}
 	// K-Mod end
-
-/*
-	int iNumCitiesMaintenance = 0;
-	int iDistanceMaintenance = 0;
-	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
-	{
-		iNumCitiesMaintenance += pLoopCity->calculateNumCitiesMaintenanceTimes100();
-		iDistanceMaintenance += pLoopCity->calculateDistanceMaintenanceTimes100();
-	}
-
-	int iBaseNumCitiesMaintenance = iNumCitiesMaintenance;
-	iBaseNumCitiesMaintenance *= 100;
-	iBaseNumCitiesMaintenance /= std::max(0, (getNumCitiesMaintenanceModifier() + 100));
-
-	int iBaseDistanceMaintenance = iDistanceMaintenance;
-	iBaseDistanceMaintenance *= 100;
-	iBaseDistanceMaintenance /= std::max(0, (getDistanceMaintenanceModifier() + 100));
-
-	int iMaintenanceDelta = 0;
-	iMaintenanceDelta += kCivic.getNumCitiesMaintenanceModifier() * iBaseNumCitiesMaintenance;
-	iMaintenanceDelta += kCivic.getDistanceMaintenanceModifier() * iBaseDistanceMaintenance;
-
-	iValue -= iMaintenanceDelta / 5000;	// (iMaintenanceDelta * 2 / 100 / 100)
-	*/
-//<<<<Better AI: End Modify
 
 	iTemp = kCivic.getFreeExperience();
 	if( iTemp > 0 )
@@ -14216,7 +14187,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = (iTemp * getTotalPopulation() * (bWarPlan ? 30 : 12))/100;
 //>>>>Better AI: Added by Denev 2010/07/08
 //*** FfH2 promotions are more valuable than unmodded BtS.
-		iTempValue *= (bAtWar ? 4 : 2);
+		//iTempValue *= (bAtWar ? 4 : 2);
 //<<<<Better AI: End Add
 		iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
 		iTempValue /= 100;
@@ -14226,46 +14197,65 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	}
 
 	// infrastructure bonuses
-	iValue += ((kCivic.getWorkerSpeedModifier() * AI_getNumAIUnits(UNITAI_WORKER)) / 15);
+	if (kCivic.getWorkerSpeedModifier() != 0)
+	{
+		int iWorkers = 0;
+		int iLoop;
+		for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+		{
+			iWorkers += 2 * pLoopCity->AI_getWorkersNeeded();
+		}
+		iWorkers -= AI_getNumAIUnits(UNITAI_WORKER);
+		if (iWorkers > 0)
+		{
+			iValue += kCivic.getWorkerSpeedModifier() * iWorkers / 15;
+		}
+	}
+	
 	iValue += ((kCivic.getImprovementUpgradeRateModifier() * iCities) / 50);
 
-	// military production bonuses
-	int iMilitaryTemp = kCivic.getMilitaryProductionModifier();
-	iMilitaryTemp /= (bWarPlan ? 1 : 5);
-	iMilitaryTemp *= iWarmongerPercent;
-	iMilitaryTemp /= (bWarPlan ? 100 : 200);
-
-	iValue += iMilitaryTemp * (bAtWar ? getNumCities() : 1);
-
-	//>>>>Better AI: Added by Denev 2010/07/08
-	int iFreeUnits;
-	int iFreeMilitaryUnits;
-	int iPaidUnits;
-	int iPaidMilitaryUnits;
-	int iMilitaryCost;
-	int iBaseUnitCost;
-	int iExtraCost;
-	int iUnitCost = calculateUnitCost(iFreeUnits, iFreeMilitaryUnits, iPaidUnits, iPaidMilitaryUnits, iBaseUnitCost, iMilitaryCost, iExtraCost);
-
-	/*
-	if (iPaidUnits <= 0)
+	// value for kCivic.getMilitaryProductionModifier() has been moved
+	if (kCivic.getBaseFreeUnits() || kCivic.getBaseFreeMilitaryUnits() ||
+		kCivic.getFreeUnitsPopulationPercent() || kCivic.getFreeMilitaryUnitsPopulationPercent() ||
+		kCivic.getGoldPerUnit() || kCivic.getGoldPerMilitaryUnit())
 	{
-		iValue += (kCivic.getMilitaryProductionModifier() * getNumCities() * iWarmongerPercent) / 300;
+		int iFreeUnits = 0;
+		int iFreeMilitaryUnits = 0;
+		int iUnits = getNumUnits();
+		int iMilitaryUnits = getNumMilitaryUnits();
+		int iPaidUnits = iUnits;
+		int iPaidMilitaryUnits = iMilitaryUnits;
+		int iMilitaryCost = 0;
+		int iUnitCost = 0;
+		int iExtraCost = 0; // unused
+		calculateUnitCost(iFreeUnits, iFreeMilitaryUnits, iPaidUnits, iPaidMilitaryUnits, iUnitCost, iMilitaryCost, iExtraCost);
+
+		int iTempValue = 0;
+
+		// units costs
+		int iCostPerUnit = getGoldPerUnit() + kCivic.getGoldPerUnit();//) * getUnitCostMultiplier() / 100;
+		int iFreeUnitDelta = std::min(iUnits, iFreeUnits + (kCivic.getBaseFreeUnits() + kCivic.getFreeUnitsPopulationPercent() * getTotalPopulation()/100)) - std::min(iUnits, iFreeUnits);
+		FAssert(iFreeUnitDelta >= 0);
+		iTempValue += iFreeUnitDelta * iCostPerUnit * iMaintenanceFactor / 10000;
+		iTempValue -= (iPaidUnits-iFreeUnitDelta) * kCivic.getGoldPerUnit() * iMaintenanceFactor / 10000;
+
+		// military
+		iCostPerUnit = getGoldPerMilitaryUnit() + kCivic.getGoldPerMilitaryUnit();
+		iFreeUnitDelta = std::min(iMilitaryUnits, iFreeMilitaryUnits + (kCivic.getBaseFreeMilitaryUnits() + kCivic.getFreeMilitaryUnitsPopulationPercent() * getTotalPopulation()/100)) - std::min(iMilitaryUnits, iFreeMilitaryUnits);
+		FAssert(iFreeUnitDelta >= 0);
+		iTempValue += iFreeUnitDelta * iCostPerUnit * iMaintenanceFactor / 10000;
+		iTempValue -= (iPaidMilitaryUnits-iFreeUnitDelta) * kCivic.getGoldPerMilitaryUnit() * iMaintenanceFactor / 10000;
+
+		// adjust based on future expectations
+		if (iTempValue < 0)
+		{
+			iTempValue *= 100 + iWarmongerPercent / (bWarPlan ? 3 : 6);
+			iTempValue /= 100;
+		}
+		iValue += iTempValue;
 	}
-	*/
-//<<<<Better AI: End Add
-	iValue += (kCivic.getBaseFreeUnits() / 2);
-	iValue += (kCivic.getBaseFreeMilitaryUnits() / 2);
-	iValue += ((kCivic.getFreeUnitsPopulationPercent() * getTotalPopulation()) / 200);
-	iValue += ((kCivic.getFreeMilitaryUnitsPopulationPercent() * getTotalPopulation()) / 300);
-	iValue += -(kCivic.getGoldPerUnit() * getNumUnits());
-	iValue += -(kCivic.getGoldPerMilitaryUnit() * getNumMilitaryUnits() * iWarmongerPercent) / 200;
-//>>>>Better AI: Added by Denev 2010/07/21
-	/*
-	if (!isIgnoreFood())
-		iValue += kCivic.getFoodConsumptionPerPopulation() * getTotalPopulation();
-	*/
-//<<<<Better AI: End Add
+	// K-Mod end
+
 
 	// value Theocracy during religion victory push
 	if (kCivic.isNoNonStateReligionSpread())
@@ -14360,7 +14350,20 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	iValue += ((kCivic.isBuildingOnlyHealthy()) ? (iCities * 3) : 0);
 	iValue += -((kCivic.getWarWearinessModifier() * iCities) / ((bWarPlan) ? 25 : 50));
-	iValue += (kCivic.getFreeSpecialist() * iCities * 12);
+	//iValue += (kCivic.getFreeSpecialist() * iCities * 12);
+	// K-Mod. A rough approximation is ok, but perhaps not quite /that/ rough.
+	// Here's some code that I wrote for specialists in AI_buildingValue. (note. building value uses 4x commerce; but here we just use 1x commerce)
+	if (kCivic.getFreeSpecialist() != 0)
+	{
+		int iSpecialistValue = 5 * 100; // rough base value
+		// additional bonuses
+		for (CommerceTypes i = (CommerceTypes)0; i < NUM_COMMERCE_TYPES; i = (CommerceTypes)(i+1))
+		{
+			iSpecialistValue += (getSpecialistExtraCommerce(i) + kCivic.getSpecialistExtraCommerce(i)) * AI_commerceWeight(i);
+		}
+		iValue += iCities * iSpecialistValue / 100;
+	}
+	// K-Mod end
 	iValue += (kCivic.getTradeRoutes() * (std::max(0, iConnectedForeignCities - getNumCities() * 3) * 6 + (iCities * 2)));
 	
 	// ToDo: better way to calculate the value of coastal trade routes
@@ -14433,7 +14436,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 		iValue += (getNumCities() * 6 * AI_getHealthWeight(isCivic(eCivic) ? -kCivic.getExtraHealth() : kCivic.getExtraHealth(), 1)) / 100;
 */
-		iValue += (iCities * 6 * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
+		iValue += (iCities * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10: 6) * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14719,6 +14722,61 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue += iTempValue;
 		}
 	}
+
+	// K-Mod. Experience and production modifiers
+	{
+		// Roughly speaking these are the approximations used in this section:
+		// each population produces 1 hammer.
+		// percentage of hammers spent on units is BuildUnitProb + 40 if at war
+		// experience points are worth a production boost of 8% each, multiplied by the warmonger factor, and componded with actual production multipliers
+		int iProductionShareUnits = GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb();
+		if (bWarPlan)
+			iProductionShareUnits = (100 + iProductionShareUnits)/2;
+//		else if (AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
+//			iProductionShareUnits /= 2;
+
+		int iProductionShareBuildings = 100 - iProductionShareUnits;
+
+		int iTempValue = getTotalPopulation() * kCivic.getMilitaryProductionModifier();// + iBestReligionPopulation * kCivic.getStateReligionUnitProductionModifier();
+
+		/*
+		int iExperience = getTotalPopulation() * kCivic.getFreeExperience();// + iBestReligionPopulation * kCivic.getStateReligionFreeExperience();
+		if (iExperience)
+		{
+			iExperience *= 8 * iWarmongerPercent;
+			iExperience /= 100;
+			iExperience *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
+			iExperience /= 100;
+
+			iTempValue += iExperience;
+		}
+		*/
+
+		iTempValue *= iProductionShareUnits;
+		iTempValue /= 100;
+
+//		iTempValue += iBestReligionPopulation * kCivic.getStateReligionBuildingProductionModifier() * iProductionShareBuildings / 100;
+		iTempValue *= AI_yieldWeight(YIELD_PRODUCTION);
+		iTempValue /= 100;
+		iValue += iTempValue / 100;
+
+		/* old modifiers, (just for reference)
+		iValue += (kCivic.getMilitaryProductionModifier() * iCities * iWarmongerFactor) / (bWarPlan ? 300 : 500 );
+		if (kCivic.getFreeExperience() > 0)
+		{
+			// Free experience increases value of hammers spent on units, population is an okay measure of base hammer production
+			int iTempValue = (kCivic.getFreeExperience() * getTotalPopulation() * (bWarPlan ? 30 : 12))/100;
+			iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
+			iTempValue /= 100;
+			iTempValue *= iWarmongerFactor;
+			iTempValue /= 100;
+			iValue += iTempValue;
+		}
+		iValue += ((kCivic.getStateReligionUnitProductionModifier() * iBestReligionCities) / 4);
+		iValue += ((kCivic.getStateReligionBuildingProductionModifier() * iBestReligionCities) / 3);
+		iValue += (kCivic.getStateReligionFreeExperience() * iBestReligionCities * ((bWarPlan) ? 6 : 2)); */
+	}
+	// K-Mod end
 
 	for (iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
 	{
