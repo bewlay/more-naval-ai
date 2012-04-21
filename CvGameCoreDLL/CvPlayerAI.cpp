@@ -21007,46 +21007,8 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
     }
 
-	// Note: this tag is currently not being used in Leaderheadinfos.xml - this tag is from BBAI
-	// ToDo - add some base weights to the xml
-    //iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
-
-	iValue += getNumCities();
-
-	iValue += iHighCultureCount * 10;
-	iValue += iCloseToLegendaryCount * 20;
-	iValue += iLegendaryCount * 50;
-
-	// account for traits which give free culture
-	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
-	{
-		if (hasTrait((TraitTypes)iJ))
-		{
-			iValue += (GC.getTraitInfo((TraitTypes)iJ).getCommerceChange(COMMERCE_CULTURE) * 3);
-		}
-	}
-
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE))
-	{
-    	iValue += 30;
-	}
-	
-	iValue += (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? -20 : 0);
-	
-	if( iValue > 20 && getNumCities() >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
-	{
-		iValue += 10*countHolyCities();
-	}
-
 	int iNonsense = AI_getStrategyRand() + 10;
-	iValue += (iNonsense % 100);
-
-	if (iValue < 100)
-	{
-		return 0;
-	}
-    
-	// Tholal ToDo: Era fix
+	// Tholal: Era fix
     //if (getCurrentEra() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
 	if (GC.getGameINLINE().getCurrentPeriod() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
     {
@@ -21089,7 +21051,52 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	{
 	    return 2;
 	}
-        
+
+	if (iHighCultureCount > 0)
+	{
+		return 1;
+	}
+
+	{
+		// Note: this tag is currently not being used in Leaderheadinfos.xml - this tag is from BBAI
+		// ToDo - add some base weights to the xml
+		//iValue = GC.getLeaderHeadInfo(getPersonalityType()).getCultureVictoryWeight();
+
+		iValue += getNumCities();
+
+		iValue += iHighCultureCount * 10;
+		iValue += iCloseToLegendaryCount * 20;
+		iValue += iLegendaryCount * 50;
+
+		// account for traits which give free culture
+		for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+		{
+			if (hasTrait((TraitTypes)iJ))
+			{
+				iValue += (GC.getTraitInfo((TraitTypes)iJ).getCommerceChange(COMMERCE_CULTURE) * 3);
+			}
+		}
+
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE))
+		{
+    		iValue += 30;
+		}
+		
+		iValue += (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? -20 : 0);
+		
+		if( iValue > 20 && getNumCities() >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
+		{
+			iValue += 10*countHolyCities();
+		}
+
+		iValue += (iNonsense % 100);
+
+		if (iValue < 100)
+		{
+			return 0;
+		}
+	}
+
 	return 1;
 }
 
