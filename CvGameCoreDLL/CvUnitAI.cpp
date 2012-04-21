@@ -27110,7 +27110,7 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 										if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isUnique())
 										{
 											// Tholal ToDo - make this less hardcoded and scale by game speed
-											if (GC.getGameINLINE().getElapsedGameTurns() > 20)
+											if (GC.getGameINLINE().getElapsedGameTurns() > ((20 * 100) / GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAITrainPercent()))
 											{
 												iValue += 2 * getLevel();
 											}
