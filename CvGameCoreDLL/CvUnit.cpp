@@ -18488,7 +18488,16 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
 //*** captured or enslaved  unit is pushed out if enemy unit exists in the same tile.
 //			pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, plot()->getX_INLINE(), plot()->getY_INLINE());
-			pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, plot()->getX_INLINE(), plot()->getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, false);
+			if (isBoarding())
+			{
+				// boarded ships stay in their plot
+				pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, pLoser->plot()->getX_INLINE(), pLoser->plot()->getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, true);
+				pUnit->load();
+			}
+			else
+			{
+				pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, plot()->getX_INLINE(), plot()->getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, false);
+			}
 //<<<<Unofficial Bug Fix: End Modify
 			if (getDuration() != 0)
 			{
