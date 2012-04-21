@@ -198,7 +198,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 	GET_PLAYER(getOwnerINLINE()).changeAssets(m_pUnitInfo->getAssetValue());
 
-	GET_PLAYER(getOwnerINLINE()).changePower(m_pUnitInfo->getPowerValue());
+	//GET_PLAYER(getOwnerINLINE()).changePower(m_pUnitInfo->getPowerValue());
+	GET_PLAYER(getOwnerINLINE()).changePower(getTruePower());
 
 	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
@@ -973,7 +974,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
 
 	GET_PLAYER(getOwnerINLINE()).changeAssets(-(m_pUnitInfo->getAssetValue()));
 
-	GET_PLAYER(getOwnerINLINE()).changePower(-(m_pUnitInfo->getPowerValue()));
+	//GET_PLAYER(getOwnerINLINE()).changePower(-(m_pUnitInfo->getPowerValue()));
+	GET_PLAYER(getOwnerINLINE()).changePower(-(getTruePower()));
 
 	GET_PLAYER(getOwnerINLINE()).AI_changeNumAIUnits(AI_getUnitAIType(), -1);
 
@@ -11433,7 +11435,8 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		pOldPlot->changeAdjacentSight(getTeam(), visibilityRange(), false, this, true);
 
 		pOldPlot->area()->changeUnitsPerPlayer(getOwnerINLINE(), -1);
-		pOldPlot->area()->changePower(getOwnerINLINE(), -(m_pUnitInfo->getPowerValue()));
+		//pOldPlot->area()->changePower(getOwnerINLINE(), -(m_pUnitInfo->getPowerValue()));
+		pOldPlot->area()->changePower(getOwnerINLINE(), -(getTruePower()));
 
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
@@ -11588,7 +11591,8 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		pNewPlot->addUnit(this, bUpdate && !hasCargo());
 
 		pNewPlot->area()->changeUnitsPerPlayer(getOwnerINLINE(), 1);
-		pNewPlot->area()->changePower(getOwnerINLINE(), m_pUnitInfo->getPowerValue());
+		//pNewPlot->area()->changePower(getOwnerINLINE(), m_pUnitInfo->getPowerValue());
+		pNewPlot->area()->changePower(getOwnerINLINE(), getTruePower());
 
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
@@ -12177,6 +12181,9 @@ void CvUnit::setLevel(int iNewValue)
 		m_iLevel = iNewValue;
 		FAssert(getLevel() >= 0);
 
+		GET_PLAYER(getOwnerINLINE()).changePower(iNewValue);
+		area()->changePower(getOwnerINLINE(), iNewValue);
+
 		if (getLevel() > GET_PLAYER(getOwnerINLINE()).getHighestUnitLevel())
 		{
 			GET_PLAYER(getOwnerINLINE()).setHighestUnitLevel(getLevel());
@@ -12192,6 +12199,10 @@ void CvUnit::setLevel(int iNewValue)
 void CvUnit::changeLevel(int iChange)
 {
 	setLevel(getLevel() + iChange);
+
+	// True Power calculations
+	area()->changePower(getOwnerINLINE(), iChange);
+	GET_PLAYER(getOwnerINLINE()).changePower(iChange);
 }
 
 int CvUnit::getCargo() const
@@ -19386,3 +19397,8 @@ void CvUnit::tradeUnit(PlayerTypes eReceivingPlayer)
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
+
+int CvUnit::getTruePower() const
+{
+	return (m_pUnitInfo->getPowerValue() + getLevel());
+}

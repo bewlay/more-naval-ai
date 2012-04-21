@@ -2984,7 +2984,8 @@ int CvPlot::getUnitPower(PlayerTypes eOwner) const
 
 		if ((eOwner == NO_PLAYER) || (pLoopUnit->getOwnerINLINE() == eOwner))
 		{
-			iCount += pLoopUnit->getUnitInfo().getPowerValue();
+			//iCount += pLoopUnit->getUnitInfo().getPowerValue();
+			iCount += pLoopUnit->getTruePower();
 		}
 	}
 

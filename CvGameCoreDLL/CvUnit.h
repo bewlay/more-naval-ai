@@ -790,7 +790,7 @@ public:
 
     virtual bool isUnitAllowedPermDefense() = 0;
 
-    int getPower();
+    virtual int getTruePower() const;
     bool AI_canJoinGroup(CvSelectionGroup* pSelectionGroup) const;
 /** BETTER AI End **/
 /*********************************************************************/
