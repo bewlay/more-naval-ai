@@ -309,6 +309,10 @@ bool CvUnitAI::AI_update()
         }
         else if(isAIControl())
         {
+			if (AI_anyAttack(getMoves(), 0))
+            {
+                return false;
+            }
             if (AI_anyAttack(3, 0))
             {
                 return false;
