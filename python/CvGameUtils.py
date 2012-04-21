@@ -1029,8 +1029,10 @@ class CvGameUtils:
 										if (pPlot2.getFeatureType() == -1):
 											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):										
 												if not pPlot2.isCity():
-													if ((pPlot2.getImprovementType()==-1 and pPlot2.getBonusType(-1)==-1)or treesimpb):										
-														pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)							
+													if ((pPlot2.getImprovementType()==-1 and pPlot2.getBonusType(-1)==-1)or treesimpb):
+														pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+														if pUnit.plot() == pPlot2:
+															pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
 														return 1											
 			
 #Nothing to do, lets move on to another City!
