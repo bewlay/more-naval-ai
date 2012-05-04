@@ -49972,7 +49972,7 @@
             </BonusProductionModifiers>
             <iBombRate>0</iBombRate>
             <iBombardRate>20</iBombardRate>
-            <SpecialCargo>NONE</SpecialCargo>
+            <SpecialCargo>SPECIALUNIT_BIRD</SpecialCargo>
             <DomainCargo>DOMAIN_LAND</DomainCargo>
             <iCargo>0</iCargo>
             <iConscription>0</iConscription>
