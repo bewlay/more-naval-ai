@@ -728,6 +728,12 @@ void CvUnit::convert(CvUnit* pUnit)
 	reloadEntity();
 	// lfgr end
 
+	// Avatars
+	if (pUnit->isAvatarOfCivLeader())
+	{
+		setAvatarOfCivLeader(true);
+	}
+
 //FfH: End Add
 
 	CvUnit* pTransportUnit = pUnit->getTransportUnit();
