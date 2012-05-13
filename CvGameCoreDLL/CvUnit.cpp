@@ -775,7 +775,7 @@ void CvUnit::convert(CvUnit* pUnit)
 }
 
 
-void CvUnit::kill(bool bDelay, PlayerTypes ePlayer)
+void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 {
 	PROFILE_FUNC();
 	

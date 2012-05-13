@@ -31,10 +31,10 @@ void CyUnit::convert(CyUnit* pUnit)
 		m_pUnit->convert(pUnit->getUnit());
 }
 
-void CyUnit::kill(bool bDelay, int /*PlayerTypes*/ ePlayer)
+void CyUnit::kill(bool bDelay, int /*PlayerTypes*/ ePlayer, bool bConvert)
 {
 	if (m_pUnit)
-		m_pUnit->kill(bDelay, (PlayerTypes)ePlayer);
+		m_pUnit->kill(bDelay, (PlayerTypes)ePlayer, bConvert);
 }
 
 void CyUnit::NotifyEntity(int /*MissionTypes*/ eEvent)

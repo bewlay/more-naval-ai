@@ -24,7 +24,7 @@ public:
 	const CvUnit* getUnit() const { return m_pUnit;	};	// Call from C++
 	bool isNone() { return (m_pUnit==NULL); }
 	void convert(CyUnit* pUnit);
-	void kill(bool bDelay, int /*PlayerTypes*/ ePlayer);
+	void kill(bool bDelay, int /*PlayerTypes*/ ePlayer, bool bConvert = false);
 
 	void NotifyEntity(int /*MissionTypes*/ eMission);
 

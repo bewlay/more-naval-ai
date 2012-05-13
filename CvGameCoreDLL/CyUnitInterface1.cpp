@@ -6,7 +6,10 @@
 #include "CySelectionGroup.h"
 #include "CyArtFileMgr.h"
 #include "CvInfos.h"
+# include <boost/python/overloads.hpp>
+using namespace boost::python;
 
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(CyUnit_kill_overloads, CyUnit::kill, 2, 3)
 //# include <boost/python/manage_new_object.hpp>
 //# include <boost/python/return_value_policy.hpp>
 
@@ -21,7 +24,8 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 	x
 		.def("isNone", &CyUnit::isNone, "bool () - Is this a valid unit instance?")
 		.def("convert", &CyUnit::convert, "void (CyUnit* pUnit)")
-		.def("kill", &CyUnit::kill, "void (bool bDelay, int /*PlayerTypes*/ ePlayer)")
+//		.def("kill", &CyUnit::kill, "void (bool bDelay, int /*PlayerTypes*/ ePlayer, bool bConvert = false)")
+		.def("kill", &CyUnit::kill, CyUnit_kill_overloads( args("bDelay", "ePlayer", "bConvert"), "kill unit"))
 		.def("NotifyEntity", &CyUnit::NotifyEntity, "void (int EntityEventType)")
 
 		.def("isActionRecommended", &CyUnit::isActionRecommended, "int (int i)")
