@@ -16297,6 +16297,8 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	int iLoop;
 	int iI;
 
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	
 	iBestValue = 0;
 	pBestCity = NULL;
 
@@ -16350,7 +16352,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											}
 											*/
 
-											if( GET_PLAYER(getOwnerINLINE()).AI_cityTargetUnitsByPath(pLoopCity, getGroup(), iPathTurns) > std::max( 6, 3 * pLoopCity->plot()->getNumVisibleEnemyDefenders(this) ) )
+											if( kOwner.AI_cityTargetUnitsByPath(pLoopCity, getGroup(), iPathTurns) > std::max( 6, 3 * pLoopCity->plot()->getNumVisibleEnemyDefenders(this) ) )
 											{
 												continue;
 											}
@@ -16359,11 +16361,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 										iValue = 0;
 										if (AI_getUnitAIType() == UNITAI_ATTACK_CITY) //lemming?
 										{
-											iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, false, false);
+											iValue = kOwner.AI_targetCityValue(pLoopCity, false, false);
 										}
 										else
 										{
-											iValue = GET_PLAYER(getOwnerINLINE()).AI_targetCityValue(pLoopCity, true, true);
+											iValue = kOwner.AI_targetCityValue(pLoopCity, true, true);
 										}
 
 										if( pLoopCity == pTargetCity )

@@ -1233,6 +1233,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	PROFILE_FUNC();
 
 	int iValue;
+	CvTeamAI& kTeam = GET_TEAM(eTeam);
 
 	iValue = AI_calculatePlotWarValue(eTeam);
 
@@ -1263,7 +1264,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	iValue += AI_calculateBonusWarValue(eTeam);
 	
 	// Target other teams close to victory
-	if( GET_TEAM(eTeam).AI_isAnyMemberDoVictoryStrategyLevel3() )
+	if( kTeam.AI_isAnyMemberDoVictoryStrategyLevel3() )
 	{
 		iValue += 10;
 
@@ -1277,9 +1278,9 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 			iValue /= 2;
 		}
 
-		if( GET_TEAM(eTeam).AI_isAnyMemberDoVictoryStrategyLevel4() )
+		if( kTeam.AI_isAnyMemberDoVictoryStrategyLevel4() )
 		{
-			if( GET_TEAM(eTeam).AI_getLowestVictoryCountdown() >= 0 )
+			if( kTeam.AI_getLowestVictoryCountdown() >= 0 )
 			{
 				iValue += 50;
 			}
@@ -1307,7 +1308,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	// boost for declaring war on other religious leaders when pursuing a religious victory
 	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION3))
 	{
-		if (GET_TEAM(eTeam).AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION1))
+		if (kTeam.AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION1))
 		{
 			iValue *= 2;
 		}
@@ -1326,7 +1327,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	*/
 
 	// assaults on weak opponents
-	if (getPower(true) > (GET_TEAM(eTeam).getDefensivePower() * 2))
+	if (getPower(true) > kTeam.getDefensivePower() * 2))
 	{
 		if (GC.getGameINLINE().getCurrentPeriod() <= 2 ||
 			AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST1) ||

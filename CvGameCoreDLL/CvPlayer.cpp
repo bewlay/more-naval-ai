@@ -5780,9 +5780,15 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 {
-	if (GET_PLAYER(eWhoTo).getNumCities() == 0)
+	CvTeam& kOurTeam = GET_TEAM(getTeam());
+	CvTeam& kTheirTeam = GET_TEAM(GET_PLAYER(eWhoTo).getTeam());
+
+	if (kTheirTeam.getNumCities() == 0)
 	{
-		return false;
+		if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
+		{
+			return false;
+		}
 	}
 
 	if (atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
@@ -5790,17 +5796,17 @@ bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isTechTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isTechTrading())
+	if (kOurTeam.isTechTrading() || kTheirTeam.isTechTrading())
 	{
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isGoldTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isGoldTrading())
+	if (kOurTeam.isGoldTrading() || kTheirTeam.isGoldTrading())
 	{
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isMapTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isMapTrading())
+	if (kOurTeam.isMapTrading() || kTheirTeam.isMapTrading())
 	{
 		return true;
 	}
@@ -5810,22 +5816,22 @@ bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isOpenBordersTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isOpenBordersTrading())
+	if (kOurTeam.isOpenBordersTrading() || kTheirTeam.isOpenBordersTrading())
 	{
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isDefensivePactTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isDefensivePactTrading())
+	if (kOurTeam.isDefensivePactTrading() || kTheirTeam.isDefensivePactTrading())
 	{
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isPermanentAllianceTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isPermanentAllianceTrading())
+	if (kOurTeam.isPermanentAllianceTrading() || kTheirTeam.isPermanentAllianceTrading())
 	{
 		return true;
 	}
 
-	if (GET_TEAM(getTeam()).isVassalStateTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isVassalStateTrading())
+	if (kOurTeam.isVassalStateTrading() || kTheirTeam.isVassalStateTrading())
 	{
 		return true;
 	}
