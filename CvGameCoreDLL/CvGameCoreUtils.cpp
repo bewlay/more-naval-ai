@@ -273,6 +273,21 @@ bool isPromotionValid(PromotionTypes ePromotion, UnitTypes eUnit, bool bLeader)
 		return false;
 	}
 
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		if (kUnit.getFreePromotions(iI))
+		{
+			if (GC.getPromotionInfo((PromotionTypes)iI).isNotAlive())
+			{
+				if (kPromotion.isPrereqAlive())
+				{
+					//break;
+					return false;
+				}
+			}
+		}
+	}
+
 	if (!bLeader && kPromotion.isLeader())
 	{
 		return false;
