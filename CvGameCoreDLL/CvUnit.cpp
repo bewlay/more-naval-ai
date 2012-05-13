@@ -19352,6 +19352,11 @@ bool CvUnit::canTradeUnit(PlayerTypes eReceivingPlayer)
 	{
 		return false;
 	}
+
+	if (isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())))
+	{
+		return false;
+	}
 	
 	if (getCargo() > 0)
 	{
