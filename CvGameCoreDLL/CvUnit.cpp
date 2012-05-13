@@ -771,7 +771,7 @@ void CvUnit::convert(CvUnit* pUnit)
 /************************************************************************************************/
 	}
 
-	pUnit->kill(true);
+	pUnit->kill(true, NO_PLAYER, true);
 }
 
 
@@ -1007,23 +1007,29 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	if (isAvatarOfCivLeader())
 	{
-		CvLeaderHeadInfo& kLeaderHeadInfo = GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType());
-		const TraitTypes eCivTrait = (TraitTypes)GC.getCivilizationInfo(GET_PLAYER(getOwnerINLINE()).getCivilizationType()).getCivTrait();
-
-		for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+		if (!bConvert)
 		{
-			if (kLeaderHeadInfo.hasTrait(iTrait))
+			CvLeaderHeadInfo& kLeaderHeadInfo = GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getLeaderType());
+			const TraitTypes eCivTrait = (TraitTypes)GC.getCivilizationInfo(GET_PLAYER(getOwnerINLINE()).getCivilizationType()).getCivTrait();
+
+			for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
 			{
-				if (iTrait != eCivTrait)
+				if (kLeaderHeadInfo.hasTrait(iTrait))
 				{
-					GET_PLAYER(getOwnerINLINE()).setHasTrait((TraitTypes)iTrait, false);
+					if (iTrait != eCivTrait)
+					{
+						GET_PLAYER(getOwnerINLINE()).setHasTrait((TraitTypes)iTrait, false);
+					}
 				}
 			}
 		}
 	}
 //<<<<Unofficial Bug Fix: End Add
 
-	CvEventReporter::getInstance().unitLost(this);
+	if (!bConvert)
+	{
+		CvEventReporter::getInstance().unitLost(this);
+	}
 	
 	joinGroup(NULL, false, false);
 	
