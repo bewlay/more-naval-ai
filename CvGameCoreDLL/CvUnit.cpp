@@ -13742,6 +13742,11 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion) const
 
 	CvPromotionInfo& promotionInfo = GC.getPromotionInfo(ePromotion);
 
+	if (promotionInfo.isPrereqAlive() && !isAlive())
+	{
+		return false;
+	}
+
 //FfH: Modified by Kael 10/28/2008
 //	if (promotionInfo.getWithdrawalChange() + m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal() > GC.getDefineINT("MAX_WITHDRAWAL_PROBABILITY"))
 //	{
