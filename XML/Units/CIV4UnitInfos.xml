@@ -5783,7 +5783,7 @@
                     <iFlavor>8</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>100</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>90</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -6075,7 +6075,7 @@
                     <iFlavor>8</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>100</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>90</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -6381,7 +6381,7 @@
                     <iFlavor>8</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>100</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>90</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
