@@ -87,6 +87,7 @@ public:
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+	bool canPillage(const CvPlot* pPlot) const;
 
 	void unloadAll();
 	bool alwaysInvisible() const;																																							// Exposed to Python

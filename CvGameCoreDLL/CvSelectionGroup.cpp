@@ -3213,6 +3213,29 @@ bool CvSelectionGroup::canMoveAllTerrain() const
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+bool CvSelectionGroup::canPillage(const CvPlot* pPlot) const
+{
+	PROFILE_FUNC();
+
+	CLLNode<IDInfo>* pUnitNode;
+	CvUnit* pLoopUnit;
+
+	pUnitNode = headUnitNode();
+
+	while (pUnitNode != NULL)
+	{
+		pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = nextUnitNode(pUnitNode);
+
+		if (pLoopUnit->canPillage(pPlot))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void CvSelectionGroup::unloadAll()
 {
 	CLLNode<IDInfo>* pUnitNode = headUnitNode();
