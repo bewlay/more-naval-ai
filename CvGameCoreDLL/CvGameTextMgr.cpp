@@ -9371,6 +9371,11 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_WORK_RATE_MODIFY", GC.getPromotionInfo(ePromotion).getWorkRateModify()));
     }
+	if (GC.getPromotionInfo(ePromotion).isPrereqAlive())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_PREREQ_ALIVE"));
+    }
 //FfH: End Add
 
 	if (wcslen(GC.getPromotionInfo(ePromotion).getHelp()) > 0)
