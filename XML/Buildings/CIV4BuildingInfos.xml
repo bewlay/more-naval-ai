@@ -910,7 +910,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -1164,7 +1164,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -1418,7 +1418,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -1673,7 +1673,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -1928,7 +1928,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -2183,7 +2183,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -10861,7 +10861,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -11296,7 +11296,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -11512,7 +11512,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -11731,7 +11731,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -11947,7 +11947,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -12166,7 +12166,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -12382,7 +12382,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -12832,7 +12832,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -14456,7 +14456,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -17766,7 +17766,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>1</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -17985,7 +17985,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -19100,7 +19100,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -19779,7 +19779,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -22310,7 +22310,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -35771,7 +35771,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -38238,7 +38238,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -38454,7 +38454,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
@@ -39140,7 +39140,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <bApplyFreePromotionOnMove>0</bApplyFreePromotionOnMove>
             <bEquipment>0</bEquipment>
