@@ -1999,7 +1999,7 @@ void CvUnitAI::AI_settleMove()
 
 	if (iDanger > 0)
 	{
-		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroupSize()))
+		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroup()->getNumUnits()))
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
@@ -14921,7 +14921,7 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
-			if (getGroupSize() > 1)
+			if (getGroup()->getNumUnits() > 1)
 			{
 				joinGroup(NULL);
 			}
@@ -16395,7 +16395,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 										// dont start new wars unless we have a seemingly overwhelming force
 										if (!GET_TEAM(getTeam()).isAtWar(pLoopCity->getTeam()))
 										{
-											if (getGroupSize() < (2 * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
+											if (getGroup()->getNumUnits() < (2 * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
 											{
 												iValue = 0;
 											}
@@ -16420,7 +16420,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("     %S (unit %d) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), getGroupSize(), pBestCity->getName().GetCString());
+			logBBAI("     %S (unit %d) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
 		}
 	}
 
@@ -16583,7 +16583,7 @@ bool CvUnitAI::AI_goToTargetBarbCity(int iMaxPathTurns)
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("     %S (unit %d) (groupsize: %d) targeting Barb city %S \n", getName().GetCString(), getID(), getGroupSize(), pBestCity->getName().GetCString());
+			logBBAI("     %S (unit %d) (groupsize: %d) targeting Barb city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
 		}
 
 		iBestValue = 0;
@@ -26496,7 +26496,7 @@ void CvUnitAI::PatrolMove()
 	}
 
 	// check for easy targets in the area
-	if (getGroupSize() == 1 && !bAtWar)
+	if (getGroup()->getNumUnits() == 1 && !bAtWar)
 	{
 		if (AI_anyAttack(1, (bInCity ? 60 : 80)))
 		{
@@ -27389,7 +27389,7 @@ void CvUnitAI::ConquestMove()
 
 
 	// Opportunistic attacks
-	if (getGroupSize() == 1)
+	if (getGroup()->getNumUnits() == 1 && !bHero && !bWizard)
 	{
 		if (AI_anyAttack(1, 80))
 		{
@@ -27721,7 +27721,7 @@ void CvUnitAI::ConquestMove()
 		{
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("      Stack (led by %d, size %d) making opportunistic city attack", getID(), getGroupSize());
+				logBBAI("      Stack (led by %d, size %d) making opportunistic city attack", getID(), getGroup()->getNumUnits());
 			}
 			return;
 		}
