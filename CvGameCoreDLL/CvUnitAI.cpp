@@ -27281,16 +27281,18 @@ void CvUnitAI::ConquestMove()
     int iBestValue;
     int iSearchRange;
     bool bFollow=false;
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
 
 	AreaAITypes eAreaAIType = area()->getAreaAIType(getTeam());
     bool bLandWar = !isBarbarian() && ((eAreaAIType == AREAAI_OFFENSIVE) || (eAreaAIType == AREAAI_DEFENSIVE) || (eAreaAIType == AREAAI_MASSING));
 	bool bAssault = !isBarbarian() && ((eAreaAIType == AREAAI_ASSAULT) || (eAreaAIType == AREAAI_ASSAULT_ASSIST) || (eAreaAIType == AREAAI_ASSAULT_MASSING));
 
-	bool bTurtle = GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_TURTLE);
-	bool bAlert1 = GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_ALERT1);
+	bool bTurtle = kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE);
+	bool bAlert1 = kPlayer.AI_isDoStrategy(AI_STRATEGY_ALERT1);
 	bool bIgnoreFaster = false;
-	if (GET_PLAYER(getOwnerINLINE()).AI_isDoStrategy(AI_STRATEGY_LAND_BLITZ))
+
+	if (kPlayer.AI_isDoStrategy(AI_STRATEGY_LAND_BLITZ))
 	{
 		if (!bAssault && area()->getCitiesPerPlayer(getOwnerINLINE()) > 0)
 		{
@@ -27298,7 +27300,7 @@ void CvUnitAI::ConquestMove()
 		}
 	}
 	
-	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
+	bool bFinancialTrouble = kPlayer.AI_isFinancialTrouble();
 
 	/*
 	if( gUnitLogLevel >= 3 )
@@ -27326,7 +27328,7 @@ void CvUnitAI::ConquestMove()
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			break;
 		case UNITAI_ATTACK:
-			if ((getLevel() > 4) || ((GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_ATTACK_CITY) < GET_PLAYER(getOwnerINLINE()).getNumCities())))
+			if ((getLevel() > 4) || ((kPlayer.AI_getNumAIUnits(UNITAI_ATTACK_CITY) < kPlayer.getNumCities())))
 			{
 				AI_setUnitAIType(UNITAI_ATTACK_CITY);
 				break;
@@ -27459,7 +27461,6 @@ void CvUnitAI::ConquestMove()
 	{
 		bReadyToAttack = ((getGroup()->getNumUnits() >= ((bHuntBarbs) ? 3 : AI_stackOfDoomExtra())));
 	}
-
 	
 	if (AI_guardCity(false, false))
 	{
@@ -27476,7 +27477,7 @@ void CvUnitAI::ConquestMove()
 
         if (getGroup()->getNumUnits() == 1)
         {
-            for(pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).nextSelectionGroup(&iLoop))
+            for(pLoopSelectionGroup = kPlayer.firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = kPlayer.nextSelectionGroup(&iLoop))
             {
                 if (pLoopSelectionGroup->getHeadUnit() != NULL)
                 {
@@ -27505,7 +27506,7 @@ void CvUnitAI::ConquestMove()
 													iValue /= (iPathTurns + 1);
 
 													// Tholal AI - trying to give the AI some sense of when a group is too big - obsolete?
-													if (pLoopSelectionGroup->getNumUnits() > (GET_PLAYER(getOwnerINLINE()).getNumCities() * 8))
+													if (pLoopSelectionGroup->getNumUnits() > (kPlayer.getNumCities() * 8))
 													{
 														iValue = 0;
 													}
@@ -27550,7 +27551,7 @@ void CvUnitAI::ConquestMove()
         {
 			bool bMerge = false;
 			pBestUnit = NULL;
-            for(pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = GET_PLAYER(getOwnerINLINE()).nextSelectionGroup(&iLoop))
+            for(pLoopSelectionGroup = kPlayer.firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = kPlayer.nextSelectionGroup(&iLoop))
             {
                 if (pLoopSelectionGroup->getHeadUnit() != NULL)
                 {
@@ -27615,7 +27616,7 @@ void CvUnitAI::ConquestMove()
 	bool bAtWar = isEnemy(plot()->getTeam());
 
 	// Look for local threats - mainly meant to deal with early barbarian or HN threats
-	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3, false));
+	bool bDanger = (kPlayer.AI_getAnyPlotDanger(plot(), 3, false));
 
 	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
     {
@@ -27645,7 +27646,7 @@ void CvUnitAI::ConquestMove()
 									if (pLoopPlot->getNumVisibleEnemyDefenders(this) > 0)//= iMinStack)
 									{
 										int iOurStrength=getGroup()->AI_GroupPower(pLoopPlot,false);
-										int iTheirStrength=GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(pLoopPlot,0,true,false);
+										int iTheirStrength=kPlayer.AI_getEnemyPlotStrength(pLoopPlot,0,true,false);
 										if (iOurStrength>(iTheirStrength*1.2))
 										{
 											iValue = AI_attackOdds(pLoopPlot, true);
@@ -27779,7 +27780,7 @@ void CvUnitAI::ConquestMove()
 				}
 
 				int iOurOffense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(),1,false,false,true);
-				int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(pTargetCity->plot(),2,false,false);
+				int iEnemyOffense = kPlayer.AI_getEnemyPlotStrength(pTargetCity->plot(),2,false,false);
 
 				// If in danger, seek defensive ground
 				if( 4*iOurOffense < 3*iEnemyOffense)
@@ -27964,7 +27965,7 @@ void CvUnitAI::ConquestMove()
 		{
 			// Wait for units about to join our group
 			MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-			int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
+			int iJoiners = kPlayer.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
 			
 			if( (iJoiners*5) > getGroup()->getNumUnits() )
 			{
@@ -27991,11 +27992,11 @@ void CvUnitAI::ConquestMove()
 				}
 			}
 
-			int iTargetCount = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP);
+			int iTargetCount = kPlayer.AI_unitTargetMissionAIs(this, MISSIONAI_GROUP);
 			if ((iTargetCount * 5) > getGroup()->getNumUnits())
 			{
 				MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-				int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
+				int iJoiners = kPlayer.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
 				
 				if( (iJoiners*5) > getGroup()->getNumUnits() )
 				{
@@ -28056,7 +28057,7 @@ void CvUnitAI::ConquestMove()
 			// Before heading out, check whether to wait to allow unit upgrades
 			if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
 			{
-				if( !(GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble()) )
+				if( !(kPlayer.AI_isFinancialTrouble()) )
 				{
 					// Check if stack has units which can upgrade
 					int iNeedUpgradeCount = 0;
@@ -28073,14 +28074,14 @@ void CvUnitAI::ConquestMove()
 
 							if( (3 * iNeedUpgradeCount) > getGroup()->getNumUnits()) // was 8
 							{
-								if (getGroup()->getNumUnits() < (GET_PLAYER(getOwnerINLINE()).getNumCities() * 8))
+								if (getGroup()->getNumUnits() < (kPlayer.getNumCities() * 8))
 								{
 
 									if (GC.getLogging())
 									{
 										if( gUnitLogLevel >= 3 )
 										{
-											logBBAI("      Player %d Unit %d (%S's %S) waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits(), iNeedUpgradeCount);
+											logBBAI("      Player %d Unit %d (%S's %S) waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits(), iNeedUpgradeCount);
 										}
 									}
 
@@ -28143,7 +28144,7 @@ void CvUnitAI::ConquestMove()
 						if (gDLL->getChtLvl() > 0)
 						{
 							char szOut[1024];
-							sprintf(szOut, "Player %d Unit %d (%S's %S) BLOCKAGE PROBLEM\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+							sprintf(szOut, "Player %d Unit %d (%S's %S) BLOCKAGE PROBLEM\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString());
 							gDLL->messageControlLog(szOut);
 						}
 					}
@@ -28158,11 +28159,11 @@ void CvUnitAI::ConquestMove()
 	}
 	else
 	{
-		int iTargetCount = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP);
+		int iTargetCount = kPlayer.AI_unitTargetMissionAIs(this, MISSIONAI_GROUP);
 		if( ((iTargetCount * 4) > getGroup()->getNumUnits()) || ((getGroup()->getNumUnits() + iTargetCount) >= (bHuntBarbs ? 5 : AI_stackOfDoomExtra())) )
 		{
 			MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-			int iJoiners = GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
+			int iJoiners = kPlayer.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 2);
 			
 			if( (iJoiners*6) > getGroup()->getNumUnits() )
 			{
@@ -28246,7 +28247,7 @@ void CvUnitAI::ConquestMove()
 			return;
 		}
 
-		if( !isHuman() && plot()->isCoastalLand() && GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_PICKUP) > 0 )
+		if( !isHuman() && plot()->isCoastalLand() && kPlayer.AI_unitTargetMissionAIs(this, MISSIONAI_PICKUP) > 0 )
 		{
 			// If no other desireable actions, wait for pickup
 			getGroup()->pushMission(MISSION_SKIP);
