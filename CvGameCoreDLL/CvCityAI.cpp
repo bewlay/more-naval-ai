@@ -2547,6 +2547,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseUnit(UNITAI_EXPLORE))
 				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_EXPLORE 1", getName().GetCString());
 					return;
 				}
 			}
@@ -2570,7 +2571,7 @@ void CvCityAI::AI_chooseProduction()
         
 	if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, 60, 10, ((bLandWar || bAssault) ? 30 : -1)))
 	{
-		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_FOOD 3 (happy - %d)", getName().GetCString(), (happyLevel() - unhappyLevel()));
+		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_FOOD 3 (happy: %d, health: %d)", getName().GetCString(), (happyLevel() - unhappyLevel()), healthRate());
 		return;
 	}
 
@@ -3448,6 +3449,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * 5))
 		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S trying for ATTACK_CITY due to Warplan", getName().GetCString());
 			if (AI_chooseUnit(UNITAI_ATTACK_CITY))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose unit ATTACK_CITY due to Warplan", getName().GetCString());
@@ -3580,6 +3582,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (AI_chooseUnit(UNITAI_MAGE, 80))
 			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose mage unit to fill Mage needs", getName().GetCString());
 				return;
 			}
 		}

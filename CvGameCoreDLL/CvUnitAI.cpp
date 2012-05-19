@@ -21432,6 +21432,10 @@ bool CvUnitAI::AI_travelToUpgradeCity()
 		{
 			FAssert(!atPlot(pThisTurnPlot));
 			getGroup()->pushMission(MISSION_MOVE_TO, pThisTurnPlot->getX_INLINE(), pThisTurnPlot->getY_INLINE());
+			if( gUnitLogLevel >= 3 )
+			{
+				logBBAI("     %S (unit %d) (groupsize: %d) traveling to upgrade city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
+			}
 			return true;
 		}
 
@@ -21477,6 +21481,10 @@ bool CvUnitAI::AI_travelToUpgradeCity()
 		{
 			FAssert(!atPlot(pThisTurnPlot));
 			getGroup()->pushMission(MISSION_MOVE_TO, pThisTurnPlot->getX_INLINE(), pThisTurnPlot->getY_INLINE());
+			if( gUnitLogLevel >= 3 )
+			{
+				logBBAI("     %S (unit %d) (groupsize: %d) traveling to upgrade city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
+			}
 			return true;
 		}
 	}
@@ -25179,6 +25187,10 @@ bool CvUnitAI::AI_poach()
 
 	if (pBestPoachPlot != NULL)
 	{
+			if( gUnitLogLevel >= 3 )
+			{
+				logBBAI("      Stack (led by %d, size %d) poaching (%d, %d)", getID(), getGroup()->getNumUnits(), pBestPoachPlot->getX(), pBestPoachPlot->getY());
+			}
 		//No war roll.
 		if (!GET_TEAM(getTeam()).AI_performNoWarRolls(eBestPoachTeam))
 		{
@@ -27852,6 +27864,7 @@ void CvUnitAI::ConquestMove()
 				// If not strong enough, pillage around target city without exposing ourselves
 				if( AI_pillageRange(0) )
 				{
+					logBBAI("Player %d Unit %d (%S's %S) pillaging (groupsize: %d))\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
 					return;
 				}
 								
@@ -27868,11 +27881,13 @@ void CvUnitAI::ConquestMove()
 				// Pillage around enemy city
 				if( AI_pillageAroundCity(pTargetCity, 11, 3) )
 				{
+					logBBAI("Player %d Unit %d (%S's %S) pillage around city 1 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
 					return;
 				}
 
 				if( AI_pillageAroundCity(pTargetCity, 0, 5) )
 				{
+					logBBAI("Player %d Unit %d (%S's %S) pillage around city 2 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
 					return;
 				}
 
@@ -27880,7 +27895,7 @@ void CvUnitAI::ConquestMove()
 				{
 					if( gUnitLogLevel >= 3 )
 					{
-						logBBAI("      Stack (led by %d, size %d) choking %S ", getID(), getGroupSize(), pTargetCity->getName().GetCString());
+						logBBAI("      Stack (led by %d, size %d) choking %S ", getID(), getGroup()->getNumUnits(), pTargetCity->getName().GetCString());
 					}
 
 					return;
@@ -27933,11 +27948,13 @@ void CvUnitAI::ConquestMove()
 	{
 		if (AI_pillageRange(3, 11))
 		{
+			logBBAI("Player %d Unit %d (%S's %S) pillage3 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
 			return;
 		}
 
 		if (AI_pillageRange(1))
 		{
+			logBBAI("Player %d Unit %d (%S's %S) pillage 4 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
 			return;
 		}
 	}
