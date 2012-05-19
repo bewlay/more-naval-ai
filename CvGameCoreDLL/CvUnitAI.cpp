@@ -14722,7 +14722,7 @@ bool CvUnitAI::AI_join(int iMaxCount)
 		{
 			if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
 			{
-				if (generatePath(pLoopCity->plot(), MOVE_SAFE_TERRITORY, true))
+				if (generatePath(pLoopCity->plot(), MOVE_SAFE_TERRITORY, true) || (plot() == pLoopCity->plot()))
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
