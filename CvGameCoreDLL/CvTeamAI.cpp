@@ -1327,15 +1327,24 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	*/
 
 	// assaults on weak opponents
-	if (getPower(true) > kTeam.getDefensivePower() * 2))
+	int iEnemyPowerPercent = kTeam.AI_getEnemyPowerPercent(true);
+
+	if (AI_calculateAdjacentLandPlots(eTeam) > (getNumCities() * 2))
+	{
+		iEnemyPowerPercent *= 8;
+		iEnemyPowerPercent /= 10;
+	}
+
+	if (iEnemyPowerPercent < 75)
 	{
 		if (GC.getGameINLINE().getCurrentPeriod() <= 2 ||
 			AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST1) ||
 			GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
 		{
-			iValue *= 10;
+			iValue *= ((iEnemyPowerPercent < 50) ? 10 : 7);
 		}
 	}
+
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
