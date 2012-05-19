@@ -437,6 +437,7 @@ public:
 	int AI_getNumCitySites() const;
 	CvPlot* AI_getCitySite(int iIndex) const;
 
+	bool AI_deduceCitySite(CvCity* pCity) const; // K-Mod
 	int AI_bestAreaUnitAIValue(UnitAITypes eUnitAI, CvArea* pArea, UnitTypes* peBestUnitType = NULL) const;
 	int AI_bestCityUnitAIValue(UnitAITypes eUnitAI, CvCity* pCity, UnitTypes* peBestUnitType = NULL) const;
 

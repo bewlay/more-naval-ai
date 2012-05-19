@@ -25159,6 +25159,43 @@ CvPlot* CvPlayerAI::AI_getCitySite(int iIndex) const
 	return GC.getMapINLINE().plotByIndex(m_aiAICitySites[iIndex]);
 }
 
+// K-Mod
+// return true if is fair enough for the AI to know there is a city here
+bool CvPlayerAI::AI_deduceCitySite(CvCity* pCity) const
+{
+	PROFILE_FUNC();
+
+	if (pCity->isRevealed(getTeam(), false) || pCity->plot()->isAdjacentRevealed(getTeam()))
+		return true;
+
+	// The rule is this:
+	// if we can see more than n plots of the nth culture ring, we can deduce where the city is.
+
+	int iPoints = 0;
+	int iLevel = pCity->getCultureLevel();
+
+	for (int iDX = -iLevel; iDX <= iLevel; iDX++)
+	{
+		for (int iDY = -iLevel; iDY <= iLevel; iDY++)
+		{
+			int iDist = pCity->cultureDistance(iDX, iDY);
+			if (iDist > iLevel)
+				continue;
+
+			CvPlot* pLoopPlot = plotXY(pCity->getX_INLINE(), pCity->getY_INLINE(), iDX, iDY);
+
+			if (pLoopPlot && pLoopPlot->getRevealedOwner(getTeam(), false) == pCity->getOwnerINLINE())
+			{
+				// if multiple cities have their plot in their range, then that will make it harder to deduce the precise city location.
+				iPoints += 1 + std::max(0, iLevel - iDist - pLoopPlot->getNumCultureRangeCities(pCity->getOwnerINLINE())+1);
+
+				if (iPoints > iLevel)
+					return true;
+			}
+		}
+	}
+	return false;
+}
 int CvPlayerAI::AI_bestAreaUnitAIValue(UnitAITypes eUnitAI, CvArea* pArea, UnitTypes* peBestUnitType) const
 {
 

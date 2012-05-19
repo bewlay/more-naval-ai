@@ -16327,7 +16327,8 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 				{
 					// BBAI efficiency: check area for land units before generating path
-					if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
+					//if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
+					if (kOwner.AI_deduceCitySite(pLoopCity))
 					{
 						if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()))
 						{
