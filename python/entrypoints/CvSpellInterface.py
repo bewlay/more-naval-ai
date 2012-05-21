@@ -3215,6 +3215,12 @@ def reqTakeEquipmentUnit(caster,unit):
 				pHolder = pUnit
 	if pHolder == -1:
 		return False
+	pPlayer = gc.getPlayer(iPlayer)
+	
+## AI
+	if pPlayer.isHuman() == False:
+		if pHolder.getUnitType() == gc.getInfoTypeForString('EQUIPMENT_GOLDEN_HAMMER_NEW'):
+			return False
 	return True
 
 def spellTakeEquipmentUnit(caster,unit):
@@ -3229,6 +3235,7 @@ def spellTakeEquipmentUnit(caster,unit):
 			if pUnit.isDelayedDeath() == False:
 				pHolder = pUnit
 	if pHolder != -1:
+		pHolder.setHasCasted(True)
 		pHolder.kill(True, PlayerTypes.NO_PLAYER)
 
 def reqTaunt(caster):
