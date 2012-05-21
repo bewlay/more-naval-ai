@@ -4238,7 +4238,8 @@ class Revolution :
 		if( not giveRelType == None and not pRevPlayer.isAlive() and not pRevPlayer.isBarbarian() and not pRevPlayer.isAgnostic()) :
 			if( giveRelType >= 0 ) :
 				# Give specified religion
-				pRevPlayer.setLastStateReligion( giveRelType )
+#				pRevPlayer.setLastStateReligion( giveRelType )
+				pRevPlayer.convert( giveRelType )
 				if( self.LOG_DEBUG ) :
 					#CvUtil.pyPrint("  Revolt - Setting revolutionary's religion to %d"%(giveRelType))
 					religionDesc = gc.getReligionInfo(giveRelType).getDescription()
