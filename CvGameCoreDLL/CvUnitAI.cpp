@@ -1007,6 +1007,10 @@ int CvUnitAI::AI_groupFirstVal()
 		{
 			return 15;
 		}
+		else if (!m_pUnitInfo->isPillage())
+		{
+			return 10;
+		}
 		else
 		{
 			return 13;
@@ -1025,6 +1029,10 @@ int CvUnitAI::AI_groupFirstVal()
 		else if (withdrawalProbability() > 0)
 		{
 			return 16;
+		}
+		else if (!m_pUnitInfo->isPillage())
+		{
+			return 10;
 		}
 		else
 		{
@@ -16669,7 +16677,7 @@ bool CvUnitAI::AI_pillageAroundCity(CvCity* pTargetCity, int iBonusValueThreshol
 			{
 				if (potentialWarAction(pLoopPlot) && (pLoopPlot->getTeam() == pTargetCity->getTeam()))
 				{
-                    if (canPillage(pLoopPlot))
+					if (getGroup()->canPillage(pLoopPlot))//canPillage(pLoopPlot))
                     {
                         if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                         {
@@ -17934,7 +17942,7 @@ bool CvUnitAI::AI_pillageRange(int iRange, int iBonusValueThreshold)
 
                         if (pWorkingCity != NULL)
                         {
-                            if (!(pWorkingCity == area()->getTargetCity(getOwnerINLINE())) && canPillage(pLoopPlot))
+                            if (!(pWorkingCity == area()->getTargetCity(getOwnerINLINE())) && getGroup()->canPillage(pLoopPlot))
                             {
                                 if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                                 {
@@ -24453,7 +24461,7 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 	int iBonusValue;
 	int iI;
 
-	FAssert(canPillage(pPlot) || canAirBombAt(plot(), pPlot->getX_INLINE(), pPlot->getY_INLINE()) || (getGroup()->getCargo() > 0));
+	FAssert(getGroup()->canPillage(pPlot) || canAirBombAt(plot(), pPlot->getX_INLINE(), pPlot->getY_INLINE()) || (getGroup()->getCargo() > 0));
 
 	if (!(pPlot->isOwned()))
 	{
@@ -25252,7 +25260,7 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 					iValue += pLoopPlot->getYield(YIELD_FOOD) * 12; // was 10
 					iValue += pLoopPlot->getYield(YIELD_COMMERCE) * 5;
 
-					if (atPlot(pLoopPlot) && canPillage(pLoopPlot))
+					if (atPlot(pLoopPlot) && getGroup()->canPillage(pLoopPlot))
 					{
 						iValue += AI_pillageValue(pLoopPlot, 0) / (bDefensive ? 2 : 1);
 					}
@@ -25292,7 +25300,7 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 		if (atPlot(pBestPlot))
 		{
 			FAssert(atPlot(pEndTurnPlot));
-			if (canPillage(plot()))
+			if (getGroup()->canPillage(plot()))
 				getGroup()->pushMission(MISSION_PILLAGE);
 			else
 				getGroup()->pushMission(MISSION_SKIP);
