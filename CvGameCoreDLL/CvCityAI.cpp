@@ -13886,17 +13886,6 @@ void CvCityAI::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iWorkersHave);
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-
-    pStream->Read(NUM_PERMDEFENDER_TYPES,m_aiPermdefenderNeeded);
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-/*************************************************************************************************/
 /**	New Tag Defs	(CityAIInfos)			11/15/08								Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/
 /**									Read Data from Save Files									**/
@@ -13946,17 +13935,7 @@ void CvCityAI::write(FDataStreamBase* pStream)
 	pStream->Write(m_iNeededFloatingDefendersCacheTurn);
 	pStream->Write(m_iWorkersNeeded);
 	pStream->Write(m_iWorkersHave);
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
 
-    pStream->Write(NUM_PERMDEFENDER_TYPES,m_aiPermdefenderNeeded);
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 /*************************************************************************************************/
 /**	New Tag Defs	(CityAIInfos)			11/15/08								Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/
