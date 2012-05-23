@@ -4880,10 +4880,39 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
 						if (eLoopUnit != NO_UNIT)
 						{
-							if (GC.getUnitInfo(eLoopUnit).getPrereqBuilding() == eBuilding || GC.getUnitInfo(eLoopUnit).getPrereqBuildingClass() == eBuildingClass)
+							CvUnitInfo& kUnitInfo = GC.getUnitInfo(eLoopUnit);
+
+							if (kUnitInfo.getPrereqBuilding() == eBuilding || kUnitInfo.getPrereqBuildingClass() == eBuildingClass)
 							{
 								if (kOwner.canTrain(eLoopUnit))
 								{
+									// check bonus requirements
+									if (kUnitInfo.getPrereqAndBonus() != NO_BONUS)
+									{
+										if (!hasBonus((BonusTypes)kUnitInfo.getPrereqAndBonus()))
+										{
+											continue;
+										}
+									}
+
+									bool bNeedsBonus = false;
+									for (int iBonus = 0; iBonus < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iBonus)
+									{
+										if (kUnitInfo.getPrereqOrBonuses(iBonus) != NO_BONUS)
+										{
+											if (!hasBonus((BonusTypes)kUnitInfo.getPrereqOrBonuses(iBonus)))
+											{
+												bNeedsBonus = true;
+												break;
+											}
+										}
+									}
+
+									if (bNeedsBonus)
+									{
+										continue;
+									}
+
 									iTotalUnits++;
 									int iCombatValue = kOwner.AI_combatValue(eLoopUnit);
 
