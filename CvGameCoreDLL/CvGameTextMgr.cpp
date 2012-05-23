@@ -18179,21 +18179,24 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 /************************************************************************************************/
 		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 		{
-			// Tholal ToDo - dont call this function on teammates - it throws asserts
-			iAttitudeChange = GET_PLAYER(ePlayer).AI_getEmbassyAttitude(eTargetPlayer);
-			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			// dont call this function on teammates - it throws asserts
+			if (GET_PLAYER(ePlayer).getTeam() != GET_PLAYER(eTargetPlayer).getTeam())
 			{
-				if (iAttitudeChange > 0)
+				iAttitudeChange = GET_PLAYER(ePlayer).AI_getEmbassyAttitude(eTargetPlayer);
+				if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
 				{
-					szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_BONUS", iAttitudeChange).GetCString());
-					szBuffer.append(NEWLINE);
-					szBuffer.append(szTempBuffer);
-				}
-				else if (iAttitudeChange < 0)
-				{
-					szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_MALUS", iAttitudeChange).GetCString());
-					szBuffer.append(NEWLINE);
-					szBuffer.append(szTempBuffer);
+					if (iAttitudeChange > 0)
+					{
+						szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_BONUS", iAttitudeChange).GetCString());
+						szBuffer.append(NEWLINE);
+						szBuffer.append(szTempBuffer);
+					}
+					else if (iAttitudeChange < 0)
+					{
+						szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_EMBASSY_DIPLOMACY_MALUS", iAttitudeChange).GetCString());
+						szBuffer.append(NEWLINE);
+						szBuffer.append(szTempBuffer);
+					}
 				}
 			}
 		}
