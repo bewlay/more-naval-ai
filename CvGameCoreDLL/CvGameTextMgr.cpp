@@ -23238,9 +23238,6 @@ const wchar* CvGameTextMgr::getGroupflagName(int iGroupflag) const
 	case GROUPFLAG_PERMDEFENSE:
 		return L"GROUPFLAG_PERMDEFENSE";
 
-	case GROUPFLAG_PERMDEFENSE_NEW:
-		return L"GROUPFLAG_PERMDEFENSE_NEW";
-
 	case GROUPFLAG_PATROL:
 		return L"GROUPFLAG_PATROL";
 

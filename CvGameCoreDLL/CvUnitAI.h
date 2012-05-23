@@ -56,7 +56,6 @@ public:
     bool AI_groupheal(int iDamagePercent = 0, int iMaxPath = MAX_INT);
     void AI_feastingmove();
     void ConquestMove();
-    void PermDefenseNewMove();
     void PatrolMove();
     void HNgroupMove();
 	bool AI_exploreLairSea(int iRange = 0); // added by Tholal

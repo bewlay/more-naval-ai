@@ -545,10 +545,6 @@ bool CvUnitAI::AI_update()
 					AI_cityDefenseMove();
                     return false;
                     break;
-                case GROUPFLAG_PERMDEFENSE_NEW:
-                    PermDefenseNewMove();
-                    return false;
-                    break;
                 case GROUPFLAG_PATROL:
                     PatrolMove();
                     return false;
@@ -25873,7 +25869,7 @@ void CvUnitAI::AI_chooseGroupflag()
     switch (AI_getUnitAIType())
     {
         case UNITAI_MAGE:
-            AI_setGroupflag(GROUPFLAG_PERMDEFENSE_NEW);
+            AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
             return;
             break;
         case UNITAI_HERO:
@@ -26138,7 +26134,7 @@ void CvUnitAI::AI_feastingmove()
 	// TODO: Change this to Feast odds - higher if in peactime, more angry/unhealthy, larger cities
 	int iNeededFeasters = std::max(1,(kPlayer.getNumCities() / 3));
 
-	if (AI_getGroupflag() == GROUPFLAG_CONQUEST || AI_getGroupflag() == GROUPFLAG_PATROL || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE_NEW)
+	if (AI_getGroupflag() == GROUPFLAG_CONQUEST || AI_getGroupflag() == GROUPFLAG_PATROL)
 	{
 		if (kPlayer.AI_totalUnitAIs(UNITAI_FEASTING) < iNeededFeasters)
 		{
@@ -26274,149 +26270,6 @@ void CvUnitAI::AI_feastingmove()
 
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
-}
-
-void CvUnitAI::PermDefenseNewMove()
-{
-    if (AI_getGroupflag()!=GROUPFLAG_PERMDEFENSE_NEW)
-    {
-        return;
-    }
-
-    //Unit in a City that needs Defense?
-    if (plot()->isCity() && plot()->getOwnerINLINE()==getOwnerINLINE())
-    {
-        bool bvalid=false;
-        if (AI_getUnitAIType()==UNITAI_CITY_DEFENSE && plot()->getPlotCity()->AI_neededPermDefense(0)>0)
-        {
-            bvalid=true;
-        }
-
-        if (AI_getUnitAIType()==UNITAI_CITY_COUNTER && plot()->getPlotCity()->AI_neededPermDefense(1)>0)
-        {
-            bvalid=true;
-        }
-
-        if (AI_getUnitAIType()==UNITAI_MAGE && plot()->getPlotCity()->AI_neededPermDefense(2)>0)
-        {
-            bvalid=true;
-        }
-
-        if (AI_getUnitAIType()==UNITAI_MEDIC && plot()->getPlotCity()->AI_neededPermDefense(3)>0)
-        {
-            bvalid=true;
-        }
-
-        if (bvalid)
-        {
-            CLLNode<IDInfo>* pUnitNode;
-            CvUnit* pLoopUnit;
-            pUnitNode = plot()->headUnitNode();
-
-            while (pUnitNode != NULL)
-            {
-                pLoopUnit = ::getUnit(pUnitNode->m_data);
-                pUnitNode = plot()->nextUnitNode(pUnitNode);
-                if (pLoopUnit)
-                {
-                    if (pLoopUnit->AI_getGroupflag()==GROUPFLAG_PERMDEFENSE)
-                    {
-                        AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
-                        joinGroup(pLoopUnit->getGroup());
-                        getGroup()->pushMission(MISSION_SKIP);
-                        plot()->getPlotCity()->AI_calculateNeededPermDefense(); //recalculate City Defense
-                        return;
-                    }
-                }
-            }
-            AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
-            getGroup()->pushMission(MISSION_SKIP);
-            plot()->getPlotCity()->AI_calculateNeededPermDefense(); //recalculate City Defense
-            return;
-        }
-    }
-
-	bool bAtWar = (GET_TEAM(getTeam()).getAtWarCount(false) > 0);
-	if (AI_guardCityAirlift())
-	{
-		return;
-	}
-
-//Look for Cities around that need DefHelp
-    int iSearchRange=10;
-    int iDX,iDY;
-    CvPlot* pLoopPlot;
-    CvPlot* pBestPlot=NULL;
-    int iValue;
-    int iMod=1;
-    int iBestValue=0;
-    int iPathTurns;
-
-	for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-	{
-		for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-		{
-			pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
-
-			if (pLoopPlot != NULL)
-			{
-			    if(pLoopPlot->isCity())
-			    {
-                    if(pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
-                    {
-                        bool bvalid=false;
-                        if (AI_getUnitAIType()==UNITAI_CITY_DEFENSE && pLoopPlot->getPlotCity()->AI_neededPermDefense(0)>0)
-                        {
-                            bvalid=true;
-                            iMod=pLoopPlot->getPlotCity()->AI_neededPermDefense(0);
-                        }
-
-                        if (AI_getUnitAIType()==UNITAI_CITY_COUNTER && pLoopPlot->getPlotCity()->AI_neededPermDefense(1)>0)
-                        {
-                            bvalid=true;
-                            iMod=pLoopPlot->getPlotCity()->AI_neededPermDefense(1);
-                        }
-
-                        if (AI_getUnitAIType()==UNITAI_MAGE && pLoopPlot->getPlotCity()->AI_neededPermDefense(2)>0)
-                        {
-                            bvalid=true;
-                            iMod=pLoopPlot->getPlotCity()->AI_neededPermDefense(2);
-                        }
-
-                        if (AI_getUnitAIType()==UNITAI_MEDIC && pLoopPlot->getPlotCity()->AI_neededPermDefense(3)>0)
-                        {
-                            bvalid=true;
-                            iMod=pLoopPlot->getPlotCity()->AI_neededPermDefense(3);
-                        }
-                        if (bvalid)
-                        {
-                            if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                            {
-                                iValue=(iMod*100)/iPathTurns;
-                                if (iValue>iBestValue)
-                                {
-                                    pBestPlot=pLoopPlot;
-                                    iBestValue=iValue;
-                                }
-                            }
-                        }
-                    }
-			    }
-			}
-		}
-	}
-    if (pBestPlot!=NULL)
-    {
-        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bAtWar) ? MOVE_AVOID_ENEMY_WEIGHT_2 : MOVE_DIRECT_ATTACK));
-        return;
-    }
-    AI_setGroupflag(GROUPFLAG_NONE);
-    if (AI_getUnitAIType() == UNITAI_MAGE)
-    {
-        AI_setUnitAIType(UNITAI_WARWIZARD);
-    }
-    getGroup()->pushMission(MISSION_SKIP);
-    return;
 }
 
 void CvUnitAI::PatrolMove()
@@ -26579,7 +26432,6 @@ void CvUnitAI::PatrolMove()
 	// switch to PermDefense if needed
 	if (plot()->isCity() && plot()->getOwnerINLINE() == getOwnerINLINE())
 	{
-		//if (plot()->getPlotCity()->AI_neededPermDefense(0)>0)
 		if (plot()->getPlotCity()->AI_neededDefenders() > plot()->getNumDefenders(getOwnerINLINE()))
 	    {
 			if (isUnitAllowedPermDefense())

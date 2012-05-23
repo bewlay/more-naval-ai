@@ -2910,11 +2910,6 @@ bool CyCity::isUnhappyProduction() const
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-int CyCity::AI_neededPermDefense(int flag)
-{
-    return m_pCity ? m_pCity->AI_neededPermDefense(flag) : -1;
-}
-
 bool CyCity::AI_stopGrowth()
 {
 	return m_pCity ? m_pCity->AI_stopGrowth() : false;

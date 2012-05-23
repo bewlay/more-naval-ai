@@ -169,22 +169,6 @@ void CvCityAI::AI_reset()
 
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-
-	for (iI = 0; iI < NUM_PERMDEFENDER_TYPES; iI++)
-	{
-		m_aiPermdefenderNeeded[iI] = 0;
-	}
-
-
-/*************************************************************************************************/
-/**	END                                                                  						**/
-/*************************************************************************************************/
-
-/*************************************************************************************************/
 /**	New Tag Defs	(CityAIInfos)			11/15/08								Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/
 /**										Initial Values											**/
@@ -13865,109 +13849,6 @@ BuildingTypes CvCityAI::AI_bestAdvancedStartBuilding(int iPass)
 	return AI_bestBuildingThreshold(iFocusFlags, 0, std::max(0, 20 - iPass * 5));
 }
 
-/*************************************************************************************************/
-/**	BETTER AI (new Functions) Sephi                                     						**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-// runs once every turn in CvPlayer::doTurn
-void CvCityAI::AI_calculateNeededPermDefense()
-{
-    for (int iFlag=0;iFlag<NUM_PERMDEFENDER_TYPES;iFlag++)
-    {
-        int neededdefenders;
-        switch(iFlag)
-        {
-            case 0: //CITY_DEFENSE
-				neededdefenders = AI_neededDefenders();
-                //neededdefenders=std::max(3,neededdefenders);
-
-				/*
-                if (GET_TEAM(getTeam()).isBarbarianAlly())
-                {
-                    neededdefenders -= 1;
-                }
-				*/
-
-                break;
-            case 1: //CITY_COUNTER
-                neededdefenders=1;
-                break;
-            case 2: //CITY_MAGE
-                neededdefenders=std::max(1,neededdefenders);
-                break;
-            case 3: //CITY_MEDIC
-                neededdefenders=1;
-                break;
-            default:
-                neededdefenders=1;
-                break;
-        }
-        int countdefenders=0;
-
-        CLLNode<IDInfo>* pUnitNode;
-        CvUnit* pLoopUnit;
-        pUnitNode = plot()->headUnitNode();
-        while (pUnitNode != NULL)
-        {
-            pLoopUnit = ::getUnit(pUnitNode->m_data);
-            pUnitNode = plot()->nextUnitNode(pUnitNode);
-            if (pLoopUnit!=NULL)
-            {
-                if(pLoopUnit->AI_getGroupflag()==GROUPFLAG_PERMDEFENSE)
-                {
-                    switch (iFlag)
-                    {
-                        case 0:
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_CITY_DEFENSE)
-                            {
-                                countdefenders++;
-                            }
-                            break;
-                        case 1:
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_CITY_COUNTER)
-                            {
-                                countdefenders++;
-                            }
-                            break;
-                        case 2:
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_MAGE)
-                            {
-                                countdefenders++;
-                            }
-                            break;
-                        case 3:
-                            if (pLoopUnit->AI_getUnitAIType()==UNITAI_MEDIC)
-                            {
-                                countdefenders++;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-
-        m_aiPermdefenderNeeded[iFlag]=std::max(0,(neededdefenders-countdefenders));
-    }
-}
-
-// returns the Number of Permanent Defenders a City needs
-int CvCityAI::AI_neededPermDefense(int flag)
-{
-	FAssertMsg(flag<NUM_PERMDEFENDER_TYPES, "AI_neededPermDefense() flag is wrong");
-	FAssertMsg(flag>=0, "AI_neededPermDefense() flag is wrong");
-
-	return m_aiPermdefenderNeeded[flag];
-}
-
-/*************************************************************************************************/
-/**	END                                                                  						**/
-/*************************************************************************************************/
-//
-//
-//
 void CvCityAI::read(FDataStreamBase* pStream)
 {
 	CvCity::read(pStream);

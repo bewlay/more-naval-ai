@@ -151,15 +151,6 @@ public:
 	BuildingTypes AI_bestAdvancedStartBuilding(int iPass);
 
 /*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/*************************************************************************************************/
-    // functions used to cache some vars to avoid OOS
-    void AI_calculateNeededPermDefense();
-    int AI_neededPermDefense(int flag);
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-/*************************************************************************************************/
 /**	New Tag Defs	(EmphasizeInfos)				11/15/08						Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/
 /**								Defines Function for Use in .cpp								**/
@@ -207,17 +198,6 @@ protected:
 	int m_iWorkersNeeded;
 	int m_iWorkersHave;
 
-/*************************************************************************************************/
-/**	BETTER AI (New Functions Definition) Sephi                                 					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-    // used for caching
-	int m_aiPermdefenderNeeded[NUM_PERMDEFENDER_TYPES]; //array for Specialization of City Defenders
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
 /*************************************************************************************************/
 /**	New Tag Defs	(EmphasizeInfos)				11/15/08						Jean Elcard	**/
 /**	ADDON (GrowthControl) merged Sephi															**/

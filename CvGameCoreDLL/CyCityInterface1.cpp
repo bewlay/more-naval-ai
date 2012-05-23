@@ -564,7 +564,6 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-        .def("AI_neededPermDefense", &CyCity::AI_neededPermDefense, "int (int flag)")
 		.def("AI_stopGrowth", &CyCity::AI_stopGrowth, "bool ()")
 		.def("AI_neededSeaWorkers", &CyCity::AI_neededSeaWorkers, "int ()")
 /*************************************************************************************************/

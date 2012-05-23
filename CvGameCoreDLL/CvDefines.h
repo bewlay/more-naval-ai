@@ -35,7 +35,7 @@
 /*************************************************************************************************/
 #define GROUPFLAG_NONE													(1)
 #define GROUPFLAG_PERMDEFENSE											(2)
-#define GROUPFLAG_PERMDEFENSE_NEW										(3)
+
 #define GROUPFLAG_PATROL    											(4)
 #define GROUPFLAG_PATROL_NEW    										(5)
 
@@ -49,8 +49,6 @@
 #define GROUPFLAG_SVARTALFAR_KIDNAP										(41)
 
 #define GROUPFLAG_SUICIDE_SUMMON                                        (43)
-
-#define NUM_PERMDEFENDER_TYPES                                          (5) //how many different Types of a permanent city Defender Specialization exist
 
 /*************************************************************************************************/
 /**	END	                                        												**/
