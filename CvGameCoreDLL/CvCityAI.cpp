@@ -1750,7 +1750,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
 		{	
-			if (!bWaterDanger && (getPopulation() < 3) && (iNeededSeaWorkers > 0))
+			if (!bWaterDanger && ((getPopulation() < 3) || kPlayer.isPirate()) && (iNeededSeaWorkers > 0))
 			{
 				if (iExistingSeaWorkers == 0)
 				{
