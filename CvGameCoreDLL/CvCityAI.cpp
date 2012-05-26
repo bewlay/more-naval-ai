@@ -4052,7 +4052,6 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 	}
 	iBestOriginalValue = 0;
 
-	
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
 		eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
@@ -4113,58 +4112,61 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 
 							if ((iValue > ((iBestOriginalValue * 2) / 3)) && ((eUnitAI != UNITAI_EXPLORE) || (iValue >= iBestOriginalValue)))
 							{
-								iValue *= (getProductionExperience(eLoopUnit) + 10);
-								iValue /= 10;
+								if (GC.getUnitInfo(eLoopUnit).getUnitAIType(eUnitAI))
+								{
+									iValue *= (getProductionExperience(eLoopUnit) + 10);
+									iValue /= 10;
 
-                                //free promotions. slow?
-                                //only 1 promotion per source is counted (ie protective isn't counted twice)
-                                int iPromotionValue = 0;
-                                //buildings
-                                for (iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
-                                {
-                                    if (isFreePromotion((PromotionTypes)iJ) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iJ))
-                                    {
-                                        if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getPromotionInfo((PromotionTypes)iJ).getUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
-                                        {
-                                            iPromotionValue += 15;
-                                            break;
-                                        }
-                                    }
-                                }
+									//free promotions. slow?
+									//only 1 promotion per source is counted (ie protective isn't counted twice)
+									int iPromotionValue = 0;
+									//buildings
+									for (iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
+									{
+										if (isFreePromotion((PromotionTypes)iJ) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iJ))
+										{
+											if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getPromotionInfo((PromotionTypes)iJ).getUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+											{
+												iPromotionValue += 15;
+												break;
+											}
+										}
+									}
 
-                                //special to the unit
-                                for (iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
-                                {
-                                    if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
-                                    {
-                                        iPromotionValue += 10;
+									//special to the unit
+									for (iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
+									{
+										if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
+										{
+											iPromotionValue += 10;
 
-                                        break;
-                                    }
-                                }
+											break;
+										}
+									}
 
-                                //traits
-                                for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
-                                {
-                                    if (hasTrait((TraitTypes)iJ))
-                                    {
-                                        for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
-                                        {
-                                            if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iK))
-                                            {
-                                                if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
-                                                {
-                                                    iPromotionValue += 10;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+									//traits
+									for (iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+									{
+										if (hasTrait((TraitTypes)iJ))
+										{
+											for (iK = 0; iK < GC.getNumPromotionInfos(); iK++)
+											{
+												if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iK))
+												{
+													if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+													{
+														iPromotionValue += 10;
+														break;
+													}
+												}
+											}
+										}
+									}
 
-                                //iValue *= (iPromotionValue + 100);
-                                //iValue /= 100;
-								iValue += iPromotionValue;
+									//iValue *= (iPromotionValue + 100);
+									//iValue /= 100;
+									iValue += iPromotionValue;
+								}
 
 								if (bAsync)
 								{
