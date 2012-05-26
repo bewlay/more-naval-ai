@@ -16338,7 +16338,6 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 						{
 							if (AI_potentialEnemy(GET_PLAYER((PlayerTypes)iI).getTeam(), pLoopCity->plot()))
 							{
-
 								if (!atPlot(pLoopCity->plot()) && generatePath(pLoopCity->plot(), iFlags, true, &iPathTurns))
 								{
 									if( iPathTurns <= iMaxPathTurns )
@@ -21438,7 +21437,7 @@ bool CvUnitAI::AI_travelToUpgradeCity()
 			getGroup()->pushMission(MISSION_MOVE_TO, pThisTurnPlot->getX_INLINE(), pThisTurnPlot->getY_INLINE());
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("     %S (unit %d) (groupsize: %d) traveling to upgrade city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
+				logBBAI("     %S (unit %d - %S) (groupsize: %d) traveling to upgrade city %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
 			}
 			return true;
 		}
@@ -21487,7 +21486,7 @@ bool CvUnitAI::AI_travelToUpgradeCity()
 			getGroup()->pushMission(MISSION_MOVE_TO, pThisTurnPlot->getX_INLINE(), pThisTurnPlot->getY_INLINE());
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("     %S (unit %d) (groupsize: %d) traveling to upgrade city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
+				logBBAI("     %S (unit %d - %S) (groupsize: %d) traveling to upgrade city (2) %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pUpgradeCity->getName().GetCString());
 			}
 			return true;
 		}

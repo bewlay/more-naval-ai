@@ -2604,17 +2604,10 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 
-		if (pLoopPlot == NULL)
+		if (pLoopPlot == NULL || (pLoopPlot->isOwned() && pLoopPlot->getTeam() != getTeam()))
 		{
 			iOwnedTiles++;
 		}
-		else if (pLoopPlot->isOwned())
-        {
-            if (pLoopPlot->getTeam() != getTeam())
-            {
-                iOwnedTiles++;
-            }
-        }
 	}
 
 	if (iOwnedTiles > (iNumCityPlots / 3))
@@ -4560,16 +4553,16 @@ int CvPlayerAI::AI_goldTarget() const
 /*                                                                                              */
 /*  Don't bother saving gold if we can't trade it for anything                                  */
 /************************************************************************************************/
-	if (!GET_TEAM(getTeam()).isGoldTrading() || !(GET_TEAM(getTeam()).isTechTrading()) || (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING)))
-	{
-		iGold /= 3;
-	}
-	//Fuyu: Afforess says gold is also less useful without tech brokering, so why not add it
-	else if (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING))
-	{
-		iGold *= 3;
-		iGold /= 4;
-	}
+		if (!GET_TEAM(getTeam()).isGoldTrading() || !(GET_TEAM(getTeam()).isTechTrading()) || (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_TRADING)))
+		{
+			iGold /= 3;
+		}
+		//Fuyu: Afforess says gold is also less useful without tech brokering, so why not add it
+		else if (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING))
+		{
+			iGold *= 3;
+			iGold /= 4;
+		}
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
@@ -14870,7 +14863,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iValue /= 3;
 		}
 
-		if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) && (GC.getCivicInfo(eCivic).isNoNonStateReligionSpread()))
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) && (kCivic.isNoNonStateReligionSpread()))
 		{
 			iValue /= 10;	    
 		}
@@ -22183,7 +22176,9 @@ int CvPlayerAI::AI_getStrategyHash() const
     {
         return m_iStrategyHash;        
     }
-    
+
+	const CvTeamAI& kTeam = GET_TEAM(getTeam());
+	    
     const FlavorTypes AI_FLAVOR_MILITARY = (FlavorTypes)0;
 	const FlavorTypes AI_FLAVOR_RELIGION = (FlavorTypes)1;
     const FlavorTypes AI_FLAVOR_PRODUCTION = (FlavorTypes)2;
@@ -22212,7 +22207,7 @@ int CvPlayerAI::AI_getStrategyHash() const
     
     int iNonsense = AI_getStrategyRand();
     
-	int iMetCount = GET_TEAM(getTeam()).getHasMetCivCount(true);
+	int iMetCount = kTeam.getHasMetCivCount(true);
     
     //Unit Analysis
     int iBestSlowUnitCombat = -1;
@@ -22396,9 +22391,9 @@ int CvPlayerAI::AI_getStrategyHash() const
                 {
 					if (iI != getID())
                     {
-						if (GET_PLAYER((PlayerTypes)iI).isAlive() && GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
+						if (GET_PLAYER((PlayerTypes)iI).isAlive() && kTeam.isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
 						{
-                            if (GET_TEAM(getTeam()).isOpenBorders(GET_PLAYER((PlayerTypes)iI).getTeam()))
+                            if (kTeam.isOpenBorders(GET_PLAYER((PlayerTypes)iI).getTeam()))
                             {
 								if ((GET_PLAYER((PlayerTypes)iI).getStateReligion() == getStateReligion()))
 								{
@@ -22455,7 +22450,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 	}
     
 	// Turtle strategy
-	if( GET_TEAM(getTeam()).getAtWarCount(true) > 0 && getNumCities() > 0 )
+	if( kTeam.getAtWarCount(true) > 0 && getNumCities() > 0 )
 	{
 		int iMaxWarCounter = 0;
 		for( int iTeam = 0; iTeam < MAX_CIV_TEAMS; iTeam++ )
@@ -22464,7 +22459,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 			{
 				if( GET_TEAM((TeamTypes)iTeam).isAlive() && !GET_TEAM((TeamTypes)iTeam).isMinorCiv() )
 				{
-					iMaxWarCounter = std::max( iMaxWarCounter, GET_TEAM(getTeam()).AI_getAtWarCounter((TeamTypes)iTeam) );
+					iMaxWarCounter = std::max( iMaxWarCounter, kTeam.AI_getAtWarCounter((TeamTypes)iTeam) );
 				}
 			}
 		}
@@ -22473,7 +22468,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		//if( GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio() < -50 || iMaxWarCounter < 10 )
 		if( kTeam.AI_getWarSuccessRating() < -50 || iMaxWarCounter < 10 )
 		{
-			if( GET_TEAM(getTeam()).AI_getEnemyPowerPercent(true) > std::max(150, GC.getDefineINT("BBAI_TURTLE_ENEMY_POWER_RATIO")) )
+			if( kTeam.AI_getEnemyPowerPercent(true) > std::max(150, GC.getDefineINT("BBAI_TURTLE_ENEMY_POWER_RATIO")) )
 			{
 				m_iStrategyHash |= AI_STRATEGY_TURTLE;
 			}
@@ -22498,17 +22493,19 @@ int CvPlayerAI::AI_getStrategyHash() const
 	int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
 	int iParanoia = 0;
 	int iCloseTargets = 0;
-	int iOurDefensivePower = GET_TEAM(getTeam()).getDefensivePower();
+	int iOurDefensivePower = kTeam.getDefensivePower();
 
     for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
     {
-		if( GET_PLAYER((PlayerTypes)iI).isAlive() && !GET_PLAYER((PlayerTypes)iI).isMinorCiv() && !GET_PLAYER((PlayerTypes)iI).isBarbarian() )
+		const CvPlayerAI& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		const CvTeamAI& kLoopTeam = GET_TEAM(kLoopPlayer.getTeam());
+		if (kLoopPlayer.isAlive() && !kLoopPlayer.isMinorCiv())
 		{
-    		if ((GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam()) && GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()) )
+			if (kLoopPlayer.getTeam() != getTeam() && kTeam.isHasMet(kLoopPlayer.getTeam()))
 			{
-				if (!GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isAVassal() && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
+				if (!kLoopTeam.isAVassal() && !kTeam.isVassal(kLoopPlayer.getTeam()))
     			{
-					if( GET_TEAM(getTeam()).AI_getWarPlan(GET_PLAYER((PlayerTypes)iI).getTeam()) != NO_WARPLAN )
+					if (kTeam.AI_getWarPlan(kLoopPlayer.getTeam()) != NO_WARPLAN)
 					{
 						iCloseTargets++;
 					}
@@ -22517,10 +22514,10 @@ int CvPlayerAI::AI_getStrategyHash() const
 						// Are they a threat?
 						int iTempParanoia = 0;
 
-						int iTheirPower = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getPower(true);
-						if( 4*iTheirPower > 3*iOurDefensivePower )
+						int iTheirPower = kLoopTeam.getPower(true);
+						if (4*iTheirPower > 3*iOurDefensivePower)
 						{
-							if( GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getAtWarCount(true) == 0 || GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_getEnemyPowerPercent(false) < 140 )
+							if (kLoopTeam.getAtWarCount(true) == 0 || kLoopTeam.AI_getEnemyPowerPercent(false) < 140 )
 							{
 								// Memory of them declaring on us and our friends
 								int iWarMemory = AI_getMemoryCount((PlayerTypes)iI, MEMORY_DECLARED_WAR);
@@ -22570,15 +22567,15 @@ int CvPlayerAI::AI_getStrategyHash() const
 						}
 
 						// Do they look like they're going for militaristic victory?
-						if( GET_PLAYER((PlayerTypes)iI).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4) )
+						if( kLoopPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4) )
 						{
 							iTempParanoia += 200;
 						}
-						else if( GET_PLAYER((PlayerTypes)iI).AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) )
+						else if( kLoopPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) )
 						{
 							iTempParanoia += 100;
 						}
-						else if( GET_PLAYER((PlayerTypes)iI).AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) )
+						else if( kLoopPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) )
 						{
 							iTempParanoia += 50;
 						}
@@ -22684,7 +22681,7 @@ int CvPlayerAI::AI_getStrategyHash() const
                         {
                             if (GC.getTechInfo((TechTypes)(GC.getUnitInfo(eLoopUnit).getPrereqAndTech())).getEra() <= (iCurrentEra + 1))
                             {
-                                if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getUnitInfo(eLoopUnit).getPrereqAndTech()))
+                                if (kTeam.isHasTech((TechTypes)GC.getUnitInfo(eLoopUnit).getPrereqAndTech()))
                                 {
                                 	//we have the tech but can't train the unit, dejection.
                                     iDagger += 10;
@@ -22817,26 +22814,26 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			if ((GET_TEAM((TeamTypes)iI).isAlive()) && (iI != getTeam()))
 			{
-				if (GET_TEAM(getTeam()).AI_getWarPlan((TeamTypes)iI) != NO_WARPLAN)
+				if (kTeam.AI_getWarPlan((TeamTypes)iI) != NO_WARPLAN)
 				{
 					if (!GET_TEAM((TeamTypes)iI).isAVassal())
 					{
-						if (GET_TEAM(getTeam()).AI_teamCloseness((TeamTypes)iI) > 0)
+						if (kTeam.AI_teamCloseness((TeamTypes)iI) > 0)
 						{
 							iWarCount++;
 						}
 					}
-					
-					if (GET_TEAM(getTeam()).AI_getWarPlan((TeamTypes)iI) == WARPLAN_PREPARING_TOTAL)
+
+					if (kTeam.AI_getWarPlan((TeamTypes)iI) == WARPLAN_PREPARING_TOTAL)
 					{
-						iCrushValue += 6;					
+						iCrushValue += 6;
 					}
-					else if ((GET_TEAM(getTeam()).AI_getWarPlan((TeamTypes)iI) == WARPLAN_TOTAL) && (GET_TEAM(getTeam()).AI_getWarPlanStateCounter((TeamTypes)iI) < 20))
+					else if ((kTeam.AI_getWarPlan((TeamTypes)iI) == WARPLAN_TOTAL) && (kTeam.AI_getWarPlanStateCounter((TeamTypes)iI) < 20))
 					{
-						iCrushValue += 6;						
+						iCrushValue += 6;
 					}
 					
-					if ((GET_TEAM(getTeam()).AI_getWarPlan((TeamTypes)iI) == WARPLAN_DOGPILE) && (GET_TEAM(getTeam()).AI_getWarPlanStateCounter((TeamTypes)iI) < 20))
+					if ((kTeam.AI_getWarPlan((TeamTypes)iI) == WARPLAN_DOGPILE) && (kTeam.AI_getWarPlanStateCounter((TeamTypes)iI) < 20))
 					{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       02/14/10                             jdog5000         */
@@ -22905,7 +22902,6 @@ int CvPlayerAI::AI_getStrategyHash() const
 	}
 	
 	{
-		CvTeamAI& kTeam = GET_TEAM(getTeam());
 		int iOurVictoryCountdown = kTeam.AI_getLowestVictoryCountdown();
 
 		int iTheirVictoryCountdown = MAX_INT;
@@ -22995,7 +22991,6 @@ int CvPlayerAI::AI_getStrategyHash() const
 		
 		int iThreshold = std::max(1, (GC.getGame().countCivTeamsAlive() + 1) / 4);
 		
-		CvTeamAI& kTeam = GET_TEAM(getTeam());
 		for (int iVictory = 0; iVictory < GC.getNumVictoryInfos(); iVictory++)
 		{
 			CvVictoryInfo& kVictory = GC.getVictoryInfo((VictoryTypes)iVictory);
@@ -23028,7 +23023,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 							}
 						}
 					}
-						
+
 					if (iHigherCount > 0)
 					{
 						if (IWeakerCount == iHigherCount)
@@ -23097,7 +23092,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 				}
 			}
 		}
-		
+
 		if (iAchieveVictories == 0)
 		{
 			if (iWarVictories > 0)

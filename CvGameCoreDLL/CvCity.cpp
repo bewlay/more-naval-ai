@@ -13489,7 +13489,7 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 			{
 				CvWString szString;
 				getUnitAIString(szString, pUnit->AI_getUnitAIType());
-				logBBAI("    City %S finishes production of unit %S with UNITAI %S", getName().GetCString(), pUnit->getName(0).GetCString(), szString.GetCString() );
+				logBBAI("    City %S finishes production of unit %S (%d) with UNITAI %S", getName().GetCString(), pUnit->getName(0).GetCString(), pUnit->getID(), szString.GetCString() );
 			}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
