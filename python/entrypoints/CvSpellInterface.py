@@ -500,7 +500,7 @@ def reqArdor(caster):
 	if pPlayer.getGreatPeopleCreated() == 0:
 		return False
 	if pPlayer.isHuman() == False:
-		if pPlayer.getGreatPeopleCreated() < 5:
+		if pPlayer.getGreatPeopleCreated() < 6:
 			return False
 	return True
 
@@ -2641,6 +2641,12 @@ def reqRiverOfBlood(caster):
 		return False
 	if pPlayer.isHuman() == False:
 		map = gc.getMap()
+		if pPlayer.getNumCities() == 1:
+			pCasterCapital = pPlayer.getCapitalCity()
+			if not pCasterCapital.isNone():
+				if pCasterCapital.getPopulation() > 2:
+					if ((pCasterCapital.happyLevel() - pCasterCapital.unhappyLevel(0)) > 1):
+						return True
 		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
 			return False
 	return True
