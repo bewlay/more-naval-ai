@@ -2136,7 +2136,7 @@ void CvCityAI::AI_chooseProduction()
 		int iOdds = iBuildUnitProb;
 		if( iWarSuccessRatio < -50 )
 		{
-			iOdds += abs(iWarSuccessRatio/3);
+			iOdds += abs(iWarSuccessRatio / 2);
 		}
 		if( bDanger )
 		{
@@ -2429,7 +2429,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	if( !(bDefenseWar && iWarSuccessRatio < -50) )
+	if( !(bDefenseWar && iWarSuccessRatio < -25) )
 	{
 		if ((iAreaBestFoundValue > iMinFoundValue) || (iWaterAreaBestFoundValue > iMinFoundValue))
 		{
@@ -2530,7 +2530,7 @@ void CvCityAI::AI_chooseProduction()
         {
 			if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_EXPLORE) < (kPlayer.AI_neededExplorers(pArea)))
 			{
-				if (AI_chooseUnit(UNITAI_EXPLORE))
+				if (AI_chooseUnit(UNITAI_EXPLORE, 25))
 				{
 					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_EXPLORE 1", getName().GetCString());
 					return;
@@ -3430,9 +3430,9 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if ((bWarPlan || bAtWar) && !bFinancialTrouble && (GC.getGameINLINE().getCurrentPeriod() > 1))
+	if ((bWarPlan || bAtWar) && !bFinancialTrouble)// && (GC.getGameINLINE().getCurrentPeriod() > 1))
 	{
-		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * 5))
+		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * (kPlayer.AI_getFundedPercent() / 6)))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S trying for ATTACK_CITY due to Warplan", getName().GetCString());
 			if (AI_chooseUnit(UNITAI_ATTACK_CITY))
