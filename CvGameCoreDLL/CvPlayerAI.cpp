@@ -1723,9 +1723,12 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 						iHighCultureCount++;
 						if( iHighCultureCount >= GC.getGameINLINE().culturalVictoryNumCultureCities() )
 						{
-							//Raze city enemy needs for cultural victory unless we greatly over power them
-							logBBAI( "  Razing enemy cultural victory city" );
-							bRaze = true;
+							if (GET_PLAYER(pCity->getPreviousOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3))
+							{
+								//Raze city enemy needs for cultural victory unless we greatly over power them
+								logBBAI( "  Razing enemy cultural victory city" );
+								bRaze = true;
+							}
 						}
 					}
 				}
@@ -1740,6 +1743,16 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				if( gPlayerLogLevel >= 1 )
 				{
 					logBBAI("    Player %d (%S) decides not to raze %S because they have few cities", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+				}
+			}
+			else if (getFavoriteReligion() != NO_RELIGION)
+			{
+				if	(pCity->isHolyCity(getFavoriteReligion()))
+				{
+					if( gPlayerLogLevel >= 1 )
+					{
+						logBBAI("    Player %d (%S) decides not to raze %S because it's the Holy City for their favorite religion", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+					}
 				}
 			}
 			else if( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && GET_TEAM(getTeam()).AI_isPrimaryArea(pCity->area()) )
