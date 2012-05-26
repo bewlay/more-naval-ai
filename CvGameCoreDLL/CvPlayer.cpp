@@ -7019,14 +7019,6 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 		szBuffer += gDLL->getText("TXT_KEY_MISC_RECEIVED_GOLD", iGold);
 	}
 
-	if (!szBuffer.empty())
-	{
-// BUG - Goody Hut Log - start
-		// keep messages in event log forever
-		gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getGoodyInfo(eGoody).getSound(), MESSAGE_TYPE_MAJOR_EVENT, ARTFILEMGR.getImprovementArtInfo("ART_DEF_IMPROVEMENT_GOODY_HUT")->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
-// BUG - Goody Hut Log - end
-	}
-
 	iRange = GC.getGoodyInfo(eGoody).getMapRange();
 
 	if (iRange > 0)
@@ -7132,7 +7124,18 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 
 		GET_TEAM(getTeam()).setHasTech(eBestTech, true, getID(), true, true);
 		GET_TEAM(getTeam()).setNoTradeTech(eBestTech, true);
+
+		szBuffer = gDLL->getText("TXT_KEY_GOODY_TECH", GC.getTechInfo((TechTypes)eBestTech).getDescription());
 	}
+
+	if (!szBuffer.empty())
+	{
+// BUG - Goody Hut Log - start
+		// keep messages in event log forever
+		gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getGoodyInfo(eGoody).getSound(), MESSAGE_TYPE_MAJOR_EVENT, ARTFILEMGR.getImprovementArtInfo("ART_DEF_IMPROVEMENT_GOODY_HUT")->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
+// BUG - Goody Hut Log - end
+	}
+
 
 	if (GC.getGoodyInfo(eGoody).getUnitClassType() != NO_UNITCLASS)
 	{
