@@ -27668,6 +27668,14 @@ void CvUnitAI::ConquestMove()
 
 			if (iStepDistToTarget == 1)
 			{
+				// temp hack - Tholal ToDo: need to figure out why the AI is reluctant to attack empty cities
+				logBBAI("Player %d Unit %d (%S's %S) next to target city (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+				if (pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) == 0)
+				{
+					logBBAI("Player %d Unit %d (%S's %S) has empty target city (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+					getGroup()->pushMission(MISSION_MOVE_TO, pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), MOVE_DIRECT_ATTACK);
+					return;
+				}
 				// If next to target city and we would attack after bombarding down defenses,
 				// or if defenses have crept up past half
 				if( (iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) )
@@ -27698,7 +27706,8 @@ void CvUnitAI::ConquestMove()
 					if (getGroup()->getNumUnits() > 1)
 					{ 
 						// BBAI TODO: What is right ratio?
-						if (AI_stackAttackCity(1, iAttackRatio, true))
+						//if (AI_stackAttackCity(1, iAttackRatio, true))
+						if (AI_cityAttack(1, iAttackRatio, true))
 						{
 							return;
 						}
@@ -27768,6 +27777,18 @@ void CvUnitAI::ConquestMove()
 				{
 					return;
 				}
+			}
+		}
+		
+		if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
+		{
+			if( AI_goToTargetCity(MOVE_THROUGH_ENEMY, 10 ,pTargetCity) )
+			{
+				if( gUnitLogLevel >= 3 )
+				{
+					logBBAI("      Stack (led by %d, size %d) moving to attack %S ", getID(), getGroup()->getNumUnits(), pTargetCity->getName().GetCString());
+				}
+				return;
 			}
 		}
 	}
