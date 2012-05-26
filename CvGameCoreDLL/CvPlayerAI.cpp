@@ -11776,6 +11776,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						bValid = true;
 					}
 
+					if (kUnitInfo.getFirstStrikes() > 0)
+					{
+						bValid = true;
+					}
+
 					if (!bValid)
 					{
 						for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
@@ -12195,8 +12200,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	}
 
 //FfH: Modified by Kael 05/07/2008
-//	iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit);
-	iCombatValue = AI_combatValue(eUnit) * 3;
+	iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit) + kUnitInfo.getWeaponTier();
+//	iCombatValue = AI_combatValue(eUnit) * 3;
 //FfH: End Modify
 	
 	if (kUnitInfo.isExplodeInCombat())
@@ -12245,7 +12250,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iFastMoverMultiplier = AI_isDoStrategy(AI_STRATEGY_FASTMOVERS) ? 3 : 1;
 		
 		iValue += iCombatValue;
-		iValue += ((iCombatValue * kUnitInfo.getMoves() * iFastMoverMultiplier) / 3);
+		iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 3);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -12286,13 +12291,13 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			iValue += (iTempValue * 8) / 100;
 		}		
-		iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 75);
+		iValue += ((iCombatValue * kUnitInfo.getCityAttackModifier()) / 25);
 /* Collateral Damage valuation moved to bombard part
 		iValue += ((iCombatValue * kUnitInfo.getCollateralDamage()) / 400);
 */
-		iValue += ((iCombatValue * kUnitInfo.getMoves() * iFastMoverMultiplier) / 4);
+		//iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 4);
 		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
-		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
+		//iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
 		
 		if (iCombatValue  < 3)
 		{
@@ -12498,7 +12503,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 		iValue += (kUnitInfo.getNumSeeInvisibleTypes() * 100);
 		iValue += ((iCombatValue * kUnitInfo.getMoves()) / 2);
-		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 25);
+		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 50);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/20/10                                jdog5000      */
 /*                                                                                              */
@@ -12528,6 +12533,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue += ((iCombatValue * 2) / 3);
 		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 75);
 		iValue += kUnitInfo.getWeaponTier() * 10;
+		iValue += kUnitInfo.getFirstStrikes() * 5;
 		if (!kUnitInfo.isMilitaryHappiness())
 		{
 			iValue /= 4;
@@ -12855,7 +12861,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	}
 
 
-	if (iCombatValue > 0)
+	if (iCombatValue > 0 && kUnitInfo.getUnitAIType(eUnitAI))
 	{
 		//traits
 		int iTraitMod = 0;
