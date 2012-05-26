@@ -7996,6 +7996,10 @@
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -8214,6 +8218,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -8442,6 +8450,10 @@
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -8668,6 +8680,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -71540,6 +71556,10 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -71757,6 +71777,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -71976,6 +72000,10 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
