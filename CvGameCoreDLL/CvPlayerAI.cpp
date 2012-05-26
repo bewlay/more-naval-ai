@@ -2685,13 +2685,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
             else if (pLoopPlot->isOwned())
             {
-                if (pLoopPlot->getTeam() == getTeam())
+				if (pLoopPlot->getTeam() != getTeam() || pLoopPlot->isBeingWorked())
+				{
+					iBadTile++;
+				}
+				else if (pLoopPlot->isCityRadius() || abCitySiteRadius[iI])
                 {
-                    if (pLoopPlot->isCityRadius() || abCitySiteRadius[iI])
-                    {
-                        iBadTile += bAdvancedStart ? 2 : 1;
-                    }
-                }
+					iBadTile += bAdvancedStart ? 2 : 1;
+				}
             }
 		}
 	}
@@ -3187,7 +3188,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			if (pLoopPlot->isRiver())
 			{
 				//iTempValue += 10;
-				iTempValue += (bFinancial ? 20 : 10);
+				iTempValue += ((bFinancial || bStartingLoc) ? 20 : 10);
 				iTempValue += (pPlot->isRiver() ? 15 : 0);
 			}
 
