@@ -13169,7 +13169,7 @@
 			<iMaxWarRand>50</iMaxWarRand>
 			<iMaxWarNearbyPowerRatio>130</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>40</iMaxWarDistantPowerRatio>
-			<iMaxWarMinAdjacentLandPercent>2</iMaxWarMinAdjacentLandPercent>
+			<iMaxWarMinAdjacentLandPercent>1</iMaxWarMinAdjacentLandPercent>
 			<iLimitedWarRand>60</iLimitedWarRand>
 			<iLimitedWarPowerRatio>60</iLimitedWarPowerRatio>
 			<iDogpileWarRand>10</iDogpileWarRand>
