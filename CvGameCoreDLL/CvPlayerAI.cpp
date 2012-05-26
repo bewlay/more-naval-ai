@@ -21024,10 +21024,12 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		return 0;
 	}
 
+	/*
 	if (GC.getGame().getStartEra() > 1)
     {
     	return 0;
     }
+	*/
 
 	if (getCapitalCity()->getGameTurnFounded() > (10 + GC.getGameINLINE().getStartTurn()))
     {
@@ -21071,8 +21073,9 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
     }
 
-	// cancel any low level culture strategy if we're already getting somewhere with religion
-	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	// cancel any low level culture strategy if we're already doing better with another victory
+	// religion victory is special cased since Inquisition and Culture victories dont really go together
+	if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) || AI_isDoVictoryStrategyLevel3())
 	{
 		return 0;
 	}
