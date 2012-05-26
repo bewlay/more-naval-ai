@@ -497,7 +497,8 @@ AreaAITypes CvTeamAI::AI_calculateAreaAIType(CvArea* pArea, bool bPreparingTotal
 				int iPower = countPowerByArea(pArea);
 				int iEnemyPower = countEnemyPowerByArea(pArea);
 				
-				if( AI_isPrimaryArea(pArea) && AI_getWarSuccessCapitulationRatio() < -50 )
+				//if( AI_isPrimaryArea(pArea) && AI_getWarSuccessCapitulationRatio() < -50 )
+				if( AI_isPrimaryArea(pArea) && AI_getWarSuccessRating() < -50 )
 				{
 					// Use defensive stance if enemy has strong presence, we've been losing badly
 					if( iPower < iEnemyPower )
@@ -2976,7 +2977,8 @@ bool CvTeamAI::AI_acceptSurrender( TeamTypes eSurrenderTeam )
 		return true;
 	}
 
-	int iOurWarSuccessRatio = AI_getWarSuccessCapitulationRatio();
+	//int iOurWarSuccessRatio = AI_getWarSuccessCapitulationRatio();
+	int iOurWarSuccessRatio = AI_getWarSuccessRating();
 	if( iOurWarSuccessRatio < -30 )
 	{
 		// We're doing badly overall, need to be done with this war and gain an ally

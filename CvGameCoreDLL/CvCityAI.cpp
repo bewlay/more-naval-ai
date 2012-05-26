@@ -1070,7 +1070,8 @@ void CvCityAI::AI_chooseProduction()
 	int iCultureRateRank = findCommerceRateRank(COMMERCE_CULTURE);
     int iCulturalVictoryNumCultureCities = GC.getGameINLINE().culturalVictoryNumCultureCities();
 
-	int iWarSuccessRatio = GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio();
+	//int iWarSuccessRatio = GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio();
+	int iWarSuccessRatio = GET_TEAM(getTeam()).AI_getWarSuccessRating();
 	int iEnemyPowerPerc = GET_TEAM(getTeam()).AI_getEnemyPowerPercent(true);
 	int iWarTroubleThreshold = 0;
 
