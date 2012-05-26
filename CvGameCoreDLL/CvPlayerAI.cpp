@@ -4606,6 +4606,23 @@ int CvPlayerAI::AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTradin
     int iGold = 0;
     int iAdjustment = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent();
 
+	//Victory is Close
+    if (canHurry(HURRY_GOLD))
+    {
+        if (bVictoryHurry)
+        {
+            for (int i=0; i<GC.getNumBuildingInfos(); i++)
+            {
+                if (GC.getBuildingInfo((BuildingTypes)i).isVictoryBuilding())
+                {
+                    if (getBuildingClassMaking((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes)i).getBuildingClassType()) > 0)
+                    {
+                        iGold += 10000;
+                    }
+                }
+            }
+        }
+	}
 
 	//save up some gold for only trading
 	if (bTrading)
