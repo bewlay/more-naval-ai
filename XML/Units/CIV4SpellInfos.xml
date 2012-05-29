@@ -2147,7 +2147,7 @@
             <Help>TXT_KEY_SPELL_PIRATE_COVE_HELP</Help>
             <UnitPrereq>UNIT_WORKBOAT</UnitPrereq>
             <CivilizationPrereq>CIVILIZATION_LANUN</CivilizationPrereq>
-            <bAllowAI>1</bAllowAI>
+            <bAllowAI>0</bAllowAI>
             <iAIWeight>300</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <CreateImprovementType>IMPROVEMENT_PIRATE_COVE</CreateImprovementType>

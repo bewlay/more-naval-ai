@@ -29643,22 +29643,30 @@ bool CvUnitAI::AI_buildPirateCove()
                 continue;
             }
 
-            int iDistance = 0;
+			// Tholal AI (by Red Key) - smarter cove placement
+			int idX = std::abs(pLoopPlot->getX() - pLoopPlot->getWorkingCity()->getX());
+			int idY = std::abs(pLoopPlot->getY() - pLoopPlot->getWorkingCity()->getY());
+			int iPlotValue = std::max(idX,idY) * 10 + std::min(idX,idY); 
+			iPlotValue -= pLoopPlot->getNumCultureRangeCities(getOwner());
 
-            for (int iX = -5; iX <= 5; iX++)
+			int iValueModifier = 1;
+			for (int iX = -3; iX <= 3; iX++)
             {
-                for (int iY = -5; iY <= 5; iY++)
+                for (int iY = -3; iY <= 3; iY++)
                 {
-                    CvPlot* pSearchPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
+					if(std::abs(iX) != 3 || std::abs(iY) != 3)
+					{
+						CvPlot* pSearchPlot = plotXY(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), iX, iY);
 
-                    if (pSearchPlot != NULL && pSearchPlot->isPirateCove())
-                    {
-                        iDistance = std::min(iDistance, std::max(std::abs(iX), std::abs(iY)) * 10 + std::min(std::abs(iX), std::abs(iY)));
-                    }
+						if (pSearchPlot != NULL && pSearchPlot->isPirateCove())
+						{
+							iValueModifier++;
+						}
+					}
                 }
             }
-
-            int iPlotValue = (iDistance > 0) ? (100 - iDistance) : 70;
+			iPlotValue *= iValueModifier;
+			// End Tholal AI
 
             if (iPlotValue > iBestPlotValue)
             {
