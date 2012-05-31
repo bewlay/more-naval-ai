@@ -22178,10 +22178,12 @@ int CvPlayerAI::AI_getStrategyRand() const
 
 bool CvPlayerAI::AI_isDoStrategy(int iStrategy) const
 {
+	/*
     if (isHuman())
     {
         return false;
     }
+	*/
 
 	if( isBarbarian() || isMinorCiv() || !isAlive() )
 	{
