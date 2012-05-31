@@ -25106,10 +25106,12 @@ bool CvUnitAI::AI_poach()
 	CvPlot* pBestPoachPlot = NULL;
 	TeamTypes eBestPoachTeam = NO_TEAM;
 
+	/*
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
 	{
 		return false;
 	}
+	*/
 
 	if (GET_TEAM(getTeam()).getNumMembers() > 1)
 	{
@@ -26456,6 +26458,14 @@ void CvUnitAI::PatrolMove()
 	if (AI_guardCity(true))
 	{
 		return;
+	}
+
+	if (GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getMaxWarRand() < 75)
+	{
+		if (AI_poach())
+		{
+			return;
+		}
 	}
 
 	if( !(plot()->isOwned()) )
