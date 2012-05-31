@@ -2065,7 +2065,7 @@ void CvCityAI::AI_chooseProduction()
 	//if (!bDanger && ((kPlayer.getCurrentEra() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (kPlayer.getCurrentEra() > (GC.getNumEraInfos() / 2)))
 	if (!bDanger && ((GC.getGameINLINE().getCurrentPeriod() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (GC.getGameINLINE().getCurrentPeriod() > (GC.getNumEraInfos() / 2)))
 	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20 - iWarTroubleThreshold, 15, ((bLandWar || bAssault) ? 25 : -1)))
+		if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20 - iWarTroubleThreshold, (15 * (kPlayer.AI_isDoStrategy(AI_STRATEGY_PRODUCTION) ? 2 : 1)), ((bLandWar || bAssault) ? 25 : -1)))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_PRODUCTION 1", getName().GetCString());
 			return;	
@@ -3474,7 +3474,7 @@ void CvCityAI::AI_chooseProduction()
 	    }
 	}
 
-	if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20, 4))
+	if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20, (4 * (kPlayer.AI_isDoStrategy(AI_STRATEGY_PRODUCTION) ? 2 : 1))))
 	{
 		if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_PRODUCTION 2", getName().GetCString());
 		return;
@@ -3522,7 +3522,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 
-		if (getBaseYieldRate(YIELD_PRODUCTION) >= 8)
+		if (getBaseYieldRate(YIELD_PRODUCTION) >= (kPlayer.AI_isDoStrategy(AI_STRATEGY_PRODUCTION) ? 5 : 8))
 		{
 			if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 80))
 			{
