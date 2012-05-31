@@ -1853,7 +1853,7 @@ void CvUnitAI::AI_animalMove()
 
 	if (GC.getGameINLINE().getSorenRandNum(100, "Animal Attack") < GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAnimalAttackProb())
 	{
-		if (AI_anyAttack(1, 0))
+		if (AI_anyAttack(1, 0, 0, false))
 		{
 			return;
 		}
@@ -15538,7 +15538,7 @@ bool CvUnitAI::AI_patrol()
 
 						if (isBarbarian())
 						{
-							if (isAnimal()) // keep animals out of owned territory
+							if (isAnimal() || AI_getUnitAIType() == UNITAI_ANIMAL) // keep animals out of owned territory
 							{
 								if (!(pAdjacentPlot->isOwned()))
 								{
