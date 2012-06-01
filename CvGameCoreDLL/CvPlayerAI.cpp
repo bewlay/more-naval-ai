@@ -10349,28 +10349,39 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		int iValue = 0;
 		int iTempValue;
 		int iI, iJ;
-
-		bool bMana = (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
+		
+		CvBonusInfo& kBonusInfo = GC.getBonusInfo(eBonus);
+		bool bMana = (kBonusInfo.getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
 
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
-			iValue += (GC.getBonusInfo(eBonus).getHappiness() * (bDemon ? 0 : 100));
-			iValue += (GC.getBonusInfo(eBonus).getHealth() * (bDemon ? 0 : 100));
+			iValue += (kBonusInfo.getHappiness() * (bDemon ? 0 : 100));
+			iValue += (kBonusInfo.getHealth() * (bDemon ? 0 : 100));
+
+			// Tholal ToDo - better valuation of yield changes
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				if (kBonusInfo.getYieldChange((YieldTypes)iJ) > 0)
+				{
+					iValue += kBonusInfo.getYieldChange((YieldTypes)iJ) * (iJ == YIELD_COMMERCE ? 200 : 100);
+
+				}
+			}
 
 			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) || AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 			{
-				iValue += (50 * GC.getBonusInfo(eBonus).getGreatPeopleRateModifier());
+				iValue += (50 * kBonusInfo.getGreatPeopleRateModifier());
 			}
 
 			// new FFH tags
-			iValue += (GC.getBonusInfo(eBonus).getHealChange() * (bAtWar ? 10 : 5));
-			iValue += (GC.getBonusInfo(eBonus).getHealChangeEnemy() * (bAtWar ? -20 : -10));
-			iValue -= (GC.getBonusInfo(eBonus).getMaintenanceModifier() * getNumCities());
-			if (GC.getBonusInfo(eBonus).getFreePromotion() != NO_PROMOTION)
+			iValue += (kBonusInfo.getHealChange() * (bAtWar ? 10 : 5));
+			iValue += (kBonusInfo.getHealChangeEnemy() * (bAtWar ? -20 : -10));
+			iValue -= (kBonusInfo.getMaintenanceModifier() * getNumCities());
+			if (kBonusInfo.getFreePromotion() != NO_PROMOTION)
 			{
 				iValue += 100;
 			}
-			iValue += (GC.getBonusInfo(eBonus).getResearchModifier() * 25);
+			iValue += (kBonusInfo.getResearchModifier() * 25);
 
 			CvTeam& kTeam = GET_TEAM(getTeam());
 
@@ -10739,7 +10750,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_BALSERAPHS"))
 				{
-					iValue += (GC.getBonusInfo(eBonus).getMutateChance() * 25);
+					iValue += (kBonusInfo.getMutateChance() * 25);
 				}
 
 				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_FIRE"))
@@ -10783,14 +10794,14 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					}
 				}
 
-				iValue += (GC.getBonusInfo(eBonus).getDiscoverRandModifier() * (bKhazad ? 5 : 2));
+				iValue += (kBonusInfo.getDiscoverRandModifier() * (bKhazad ? 5 : 2));
 
 				iValue += 100 * AI_getTowerManaValue(eBonus);
 
 				int iNumBonuses = countOwnedBonuses(eBonus);
 				if (iNumBonuses > 0)
 				{
-					if (!GC.getBonusInfo(eBonus).isModifierPerBonus() && !bStack)
+					if (!kBonusInfo.isModifierPerBonus() && !bStack)
 					{
 						iValue /= 3;
 					}
