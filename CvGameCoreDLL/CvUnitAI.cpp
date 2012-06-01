@@ -16326,7 +16326,8 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 	if (pBestCity == NULL)
 	{
-		for (iI = 0; iI < (bHuntBarbs ? MAX_PLAYERS : MAX_CIV_PLAYERS); iI++)
+		//for (iI = 0; iI < (bHuntBarbs ? MAX_PLAYERS : MAX_CIV_PLAYERS); iI++)
+		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
 			if (GET_PLAYER((PlayerTypes)iI).isAlive() && ::isPotentialEnemy(getTeam(), GET_PLAYER((PlayerTypes)iI).getTeam()))
 			{
@@ -16387,8 +16388,13 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 										iValue *= 1000;
 
-										// If city is minor civ, less interesting - Tholal AI: removed barbarian cities from this value decrease
+										// If city is minor civ, less interesting
 										if( GET_PLAYER(pLoopCity->getOwnerINLINE()).isMinorCiv() )
+										{
+											iValue /= 2;
+										}
+
+										if (GET_PLAYER(pLoopCity->getOwnerINLINE()).isBarbarian() && !bHuntBarbs)
 										{
 											iValue /= 2;
 										}
