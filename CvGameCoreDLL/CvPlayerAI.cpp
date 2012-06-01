@@ -14768,7 +14768,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		int iProductionShareBuildings = 100 - iProductionShareUnits;
 
-		int iTempValue = getTotalPopulation() * kCivic.getMilitaryProductionModifier();// + iBestReligionPopulation * kCivic.getStateReligionUnitProductionModifier();
+		int iTempValue = getTotalPopulation() * (kCivic.getMilitaryProductionModifier() * (bWarPlan ? 2: 1));// + iBestReligionPopulation * kCivic.getStateReligionUnitProductionModifier();
 
 		/*
 		int iExperience = getTotalPopulation() * kCivic.getFreeExperience();// + iBestReligionPopulation * kCivic.getStateReligionFreeExperience();
