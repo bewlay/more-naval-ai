@@ -12532,7 +12532,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	case UNITAI_CITY_DEFENSE:
 		iValue += ((iCombatValue * 2) / 3);
-		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 75);
+		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 25);
 		iValue += kUnitInfo.getWeaponTier() * 10;
 		iValue += kUnitInfo.getFirstStrikes() * 5;
 		if (!kUnitInfo.isMilitaryHappiness())
@@ -12913,7 +12913,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	if (kUnitInfo.getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
 	{
-		iValue *= 125;
+		iValue *= 150;
 		iValue /= 100;
 	}
 
