@@ -22224,10 +22224,11 @@ int CvPlayerAI::AI_getStrategyHash() const
     m_iStrategyHash = AI_DEFAULT_STRATEGY;
     m_iStrategyHashCacheTurn = GC.getGameINLINE().getGameTurn();
     
-	if (AI_getFlavorValue(AI_FLAVOR_PRODUCTION) >= 2) // 0, 2, 5 or 10 in default xml [augustus 5, frederick 10, huayna 2, jc 2, chinese leader 2, qin 5, ramsess 2, roosevelt 5, stalin 2]
+	/* original bts code
+	if (AI_getFlavorValue(FLAVOR_PRODUCTION) >= 2) // 0, 2, 5 or 10 in default xml [augustus 5, frederick 10, huayna 2, jc 2, chinese leader 2, qin 5, ramsess 2, roosevelt 5, stalin 2]
 	{
 		m_iStrategyHash |= AI_STRATEGY_PRODUCTION;
-	}
+	} */ // K-Mod. This strategy is now set later on, with new conditions.
 	
 	if (getCapitalCity() == NULL)
     {
@@ -22262,7 +22263,7 @@ int CvPlayerAI::AI_getStrategyHash() const
                 CvUnitInfo& kLoopUnit = GC.getUnitInfo(eLoopUnit);
                 bool bIsUU = (GC.getUnitClassInfo((UnitClassTypes)iI).getDefaultUnitIndex()) != (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI));
                 if (kLoopUnit.getUnitAIType(UNITAI_RESERVE) || kLoopUnit.getUnitAIType(UNITAI_ATTACK_CITY)
-				  || kLoopUnit.getUnitAIType(UNITAI_COUNTER) || kLoopUnit.getUnitAIType(UNITAI_PILLAGE))
+				  || kLoopUnit.getUnitAIType(UNITAI_COUNTER) || kLoopUnit.getUnitAIType(UNITAI_ATTACK))
                 {
 					iAttackUnitCount++;
 						//UU love
@@ -22534,11 +22535,13 @@ int CvPlayerAI::AI_getStrategyHash() const
 			{
 				if (!kLoopTeam.isAVassal() && !kTeam.isVassal(kLoopPlayer.getTeam()))
     			{
+					bool bCitiesInPrime = kTeam.AI_hasCitiesInPrimaryArea(kLoopPlayer.getTeam()); // K-Mod
+
 					if (kTeam.AI_getWarPlan(kLoopPlayer.getTeam()) != NO_WARPLAN)
 					{
 						iCloseTargets++;
 					}
-					else if( !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()) )
+					else
 					{
 						// Are they a threat?
 						int iTempParanoia = 0;
@@ -22567,9 +22570,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 						// Do we think our relations are bad?
 						int iCloseness = AI_playerCloseness((PlayerTypes)iI, DEFAULT_PLAYER_CLOSENESS);
-						if (iCloseness > 0)
+						// if (iCloseness > 0)
+						if (iCloseness > 0 || bCitiesInPrime) // K-Mod
 						{
 							int iAttitudeWarProb = 100 - GC.getLeaderHeadInfo(getPersonalityType()).getNoWarAttitudeProb(AI_getAttitude((PlayerTypes)iI));
+							/* original BBAI code
 							if( iAttitudeWarProb > 10 )
 							{
 								if( 4*iTheirPower > 3*iOurDefensivePower )
@@ -22578,7 +22583,14 @@ int CvPlayerAI::AI_getStrategyHash() const
 								}
 
 								iCloseTargets++;
+							} */
+							// K-Mod. Paranoia gets scaled by relative power anyway...
+							iTempParanoia += std::max(0, iAttitudeWarProb/2);
+							if (iAttitudeWarProb > 10 && iCloseness > 0)
+							{
+								iCloseTargets++;
 							}
+							// K-Mod end
 
 							if( iTheirPower > 2*iOurDefensivePower )
 							{
@@ -22593,6 +22605,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 						{
 							iTempParanoia *= iTheirPower;
 							iTempParanoia /= std::max(1, iOurDefensivePower);
+							// K-Mod
+							if (kLoopTeam.AI_getWorstEnemy() == getTeam())
+							{
+								iTempParanoia *= 2;
+							}
+							// K-Mod end
 						}
 
 						// Do they look like they're going for militaristic victory?
@@ -22631,8 +22649,15 @@ int CvPlayerAI::AI_getStrategyHash() const
 	}
 
 	// Scale paranoia in later eras/larger games
-	
-	iParanoia -= (100*(iCurrentEra + 1)) / std::max(1, GC.getNumEraInfos());
+	//iParanoia -= (100*(iCurrentEra + 1)) / std::max(1, GC.getNumEraInfos());
+
+	// K-Mod. You call that scaling for "later eras/larger games"? It isn't scaling, and it doesn't use the map size.
+	// Lets try something else. Rough and ad hoc, but hopefully a bit better.
+	iParanoia *= (3*GC.getNumEraInfos() - 2*iCurrentEra);
+	iParanoia /= 3*(std::max(1, GC.getNumEraInfos()));
+	// That starts as a factor of 1, and drop to 1/3.  And now for game size...
+	iParanoia *= 14;
+	iParanoia /= (7+std::max(kTeam.getHasMetCivCount(true), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getDefaultPlayers()));
 
 	// Alert strategy
 	if( iParanoia >= 200 )
@@ -22820,13 +22845,26 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 	
-	if( !(m_iStrategyHash & AI_STRATEGY_ALERT2) )
+	if (!(m_iStrategyHash & AI_STRATEGY_ALERT2) && !(m_iStrategyHash & AI_STRATEGY_TURTLE))
 	{//Crush
 		int iWarCount = 0;
 		int iCrushValue = 0;
+		
 
-		iCrushValue += (iNonsense % 4);
-
+	// K-Mod. (experimental)
+		//iCrushValue += (iNonsense % 4);
+		// A leader dependant value. (MaxWarRand is roughly between 50 and 200. Gandi is 400.)
+		//iCrushValue += (iNonsense % 3000) / (400+GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand());
+	// On second thought, lets try this
+		iCrushValue += iNonsense % (4 + AI_getFlavorValue(AI_FLAVOR_MILITARY)/2);
+		iCrushValue += std::min(0, kTeam.AI_getWarSuccessRating()/15);
+		// note: flavor military is between 0 and 10
+		// K-Mod end
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+		{
+			iCrushValue += 1;
+		}
+		
 		if (m_iStrategyHash & AI_STRATEGY_DAGGER)
 		{
 			iCrushValue += 3;
@@ -22835,10 +22873,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			iCrushValue += 3;
 		}
-		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
-		{
-			iCrushValue += 1;
-		}
+
 		for (iI = 0; iI < MAX_CIV_TEAMS; iI++)
 		{
 			if ((GET_TEAM((TeamTypes)iI).isAlive()) && (iI != getTeam()))
@@ -22929,6 +22964,59 @@ int CvPlayerAI::AI_getStrategyHash() const
 			}
 		}
 	}
+
+	// K-Mod
+	{//production
+		int iProductionValue = iNonsense % (5 + AI_getFlavorValue(AI_FLAVOR_PRODUCTION)/2);
+		iProductionValue += (iLastStrategyHash & AI_STRATEGY_PRODUCTION) ? 1 : 0;
+		iProductionValue += AI_getFlavorValue(AI_FLAVOR_PRODUCTION) > 0 ? 1 : 0;
+		iProductionValue += (m_iStrategyHash & AI_STRATEGY_DAGGER) ? 1 : 0;
+		iProductionValue += (m_iStrategyHash & AI_STRATEGY_CRUSH) ? 1 : 0;
+		iProductionValue += AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4 | AI_VICTORY_SPACE4) ? 3 : 0;
+		// warplans. (done manually rather than using getWarPlanCount, so that we only have to do the loop once.)
+		bool bAnyWarPlans = false;
+		bool bTotalWar = false;
+		for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+		{
+			const CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
+			if (kLoopTeam.isAlive() && !kLoopTeam.isMinorCiv())
+			{
+				switch (kTeam.AI_getWarPlan((TeamTypes)iI))
+				{
+				case NO_WARPLAN:
+					break;
+				case WARPLAN_PREPARING_TOTAL:
+				case WARPLAN_TOTAL:
+					bTotalWar = true;
+				default:
+					bAnyWarPlans = true;
+					break;
+				}
+			}
+		}
+		iProductionValue += bAnyWarPlans ? 1 : 0;
+		iProductionValue += bTotalWar ? 3 : 0;
+
+		if (iProductionValue >= 10)
+		{
+			m_iStrategyHash |= AI_STRATEGY_PRODUCTION;
+		}
+		
+		if( gPlayerLogLevel >= 2 )
+		{
+			if( (m_iStrategyHash & AI_STRATEGY_PRODUCTION) && !(iLastStrategyHash & AI_STRATEGY_PRODUCTION) )
+			{
+				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iProductionValue);
+			}
+
+			if( !(m_iStrategyHash & AI_STRATEGY_PRODUCTION) && (iLastStrategyHash & AI_STRATEGY_PRODUCTION) )
+			{
+				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iProductionValue);
+			}
+		}
+	}
+	// K-Mod end
+
 	
 	{
 		int iOurVictoryCountdown = kTeam.AI_getLowestVictoryCountdown();
