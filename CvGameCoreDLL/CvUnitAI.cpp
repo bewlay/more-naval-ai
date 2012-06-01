@@ -27186,12 +27186,9 @@ void CvUnitAI::ConquestMove()
 	
 	bool bFinancialTrouble = kPlayer.AI_isFinancialTrouble();
 
-	/*
-	if( gUnitLogLevel >= 3 )
-	{
-		logBBAI("Player %d Unit %d (%S's %S) starting conquest move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-	}
-	*/
+	int bStackSize = getGroup()->getNumUnits();
+	bool bLargeGroup = (bStackSize > (kPlayer.getNumCities() *6));
+
 
 	bool bHero = false;
 	bool bWizard = false;
@@ -27256,7 +27253,13 @@ void CvUnitAI::ConquestMove()
 			// BBAI TODO: split out slow units ... will need to test to make sure this doesn't cause loops
 		}
 
-		if ((eAreaAIType == AREAAI_ASSAULT) || (eAreaAIType == AREAAI_ASSAULT_ASSIST))
+		if (AI_guardCity(false)) // note. this will eject a unit to defend the city rather then using the whole group
+		{
+			return;
+		}
+
+		//if ((eAreaAIType == AREAAI_ASSAULT) || (eAreaAIType == AREAAI_ASSAULT_ASSIST))
+		if (bAssault)
 		{
 		    if (AI_offensiveAirlift())
 		    {
