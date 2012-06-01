@@ -6799,7 +6799,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (kLoopUnit.getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 500;
+							iUnitValue += 950;
 
 							if (GC.getLogging() && bDebugLog)
 							{
