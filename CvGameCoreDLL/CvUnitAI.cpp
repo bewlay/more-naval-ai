@@ -13588,7 +13588,10 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 	    if (getDamage() > 0)
         {
 
-            if (plot()->isCity() || (healTurns(plot()) == 1))
+            if (plot()->isCity() || (healTurns(plot()) == 1)
+				// Tholal AI (by Red Key) - allow barbarian animals to heal
+				|| (isBarbarian() && isAnimal()))
+				// End Tholal AI
             {
                 if (!(isAlwaysHeal()))
                 {

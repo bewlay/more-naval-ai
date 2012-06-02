@@ -3395,7 +3395,10 @@ bool CvUnit::canMoveInto(const CvPlot* pPlot, bool bAttack, bool bDeclareWar, bo
 
 //FfH: Modified by Kael 08/04/2007 (So owned animals dont have limited movement)
 //	if (isAnimal())
-	if (isAnimal() && isBarbarian())
+	if (isAnimal() && isBarbarian()
+		// Tholal AI (by Red Key) - allow Barbarian animals to move out of Barbarian territory
+		&& (!pPlot->isBarbarian() || pPlot->isCity()))
+		// End Tholal AI
 //FfH: End Add
 
 	{
