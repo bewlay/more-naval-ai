@@ -1004,7 +1004,8 @@ def computeBribeCosts( pCity, bSilent = True ) :
 
 	iMed = iModifier*(iBaseCost + iRevCost + iExtra)
 	iSmall = (2*iMed)/3 + iRand%10
-	iLarge = (5*iMed)/3 + iRand%(1+int(iMed/14))
+#	iLarge = (5*iMed)/3 + iRand%(1+int(iMed/14))
+	iLarge = (5*iMed)/3 + iRand%15
 	iMed += iRand%15
 
 	iSmall = int(max([iSmall,21]))
