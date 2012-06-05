@@ -5216,10 +5216,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue += iTempValue;
 						}
 
-						// doesnt include bonuses we cant use due to blocking features
-						// TODO - this isnt counting mana from buildings - need a better check
-						iNumBonuses = getNumAvailableBonuses((BonusTypes)iK);
-						//iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
+						//iNumBonuses = getNumAvailableBonuses((BonusTypes)iK);
+						iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
 
 						// used for debugging
 						int iTotalBonuses = getNumAvailableBonuses((BonusTypes)iK);
@@ -5232,7 +5230,14 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue /= 2;
 
 							// make sure AI develops its starting resources
-							iBonusValue *= 3;
+							if (GC.getBonusInfo((BonusTypes)iK).getYieldChange(YIELD_COMMERCE) > 1)
+							{
+								iBonusValue *= 2;
+							}
+							else
+							{
+								//iBonusValue *= 2;
+							}
 							iBonusValue /= std::min(2, iCityCount);
 						}
 						else
