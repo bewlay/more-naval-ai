@@ -2787,9 +2787,12 @@ void CvUnitAI::AI_barbAttackMove()
 	// Heros shouldn't be guarding cities or goodies
 	if (!bHero && ((!bAttackCity || !bAttack) && iCaution > 4))
 	{
-		if (AI_guardCity(false, true, 1))
+		if (getDomainType() == DOMAIN_LAND)
 		{
-			return;
+			if (AI_guardCity(false, true, 1))
+			{
+				return;
+			}
 		}
 
 		if (plot()->isGoody())
