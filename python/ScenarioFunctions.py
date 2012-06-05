@@ -197,7 +197,7 @@ class ScenarioFunctions:
 						CyInterface().setDirty(InterfaceDirtyBits.Score_DIRTY_BIT, True)
 
 		pPlot = CyMap().plot(16,2)
-		if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVMENT_JUNGLE_ALTAR'):
+		if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_JUNGLE_ALTAR'):
 			iChance = gc.getHandicapInfo(gc.getGame().getHandicapType()).getLairSpawnRate()
 			if gc.getGame().getSorenRandNum(100, "Fall of Cuantine") < iChance:
 				iRnd = gc.getGame().getSorenRandNum(100, "Fall of Cuantine")
