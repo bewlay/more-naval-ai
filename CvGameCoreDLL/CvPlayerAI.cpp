@@ -14756,7 +14756,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() > 0)
 			{
 				//iTempValue += (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() * getTotalPopulation() * 2) / 100;
-				iTempValue += (GC.getGameINLINE.getProductionPerPopulation((HurryTypes)iI) * getTotalPopulation() * 2) / 100;
+				iTempValue += (GC.getGameINLINE().getProductionPerPopulation((HurryTypes)iI) * getTotalPopulation() * 2) / 100;
 				//iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
 				//iTempValue += iMaxGrowingSpace * getNumCities() * 10;
 				//iTempValue -= (iTotalFoodDifference * 2);
