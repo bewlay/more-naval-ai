@@ -22959,7 +22959,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 		if (AI_isFinancialTrouble())
 		{
-			iCrushValue -=2;
+			iCrushValue -= 5;
 		}
 
 		if ((iWarCount <= 1) && (iCrushValue >= ((iLastStrategyHash & AI_STRATEGY_CRUSH) ? 9 :10)))
