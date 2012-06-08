@@ -856,7 +856,8 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_ALWAYS_RAZE,
 //FfH: End Modify
 // New Game Options from Tholal
-	GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS,
+	GAMEOPTION_PUPPET_STATES,
+	GAMEOPTION_REVOLUTIONS,
 	GAMEOPTION_ADVANCED_TACTICS,
 // End New Game Options
 

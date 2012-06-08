@@ -5129,7 +5129,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 /*                                                                                              */
 /* DEBUG                                                                                        */
 /************************************************************************************************/
-			if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+			if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 			{
 				szString.append(CvWString::format(L"\n\nRevIndex:%d, ", pPlotCity->getRevolutionIndex()));
 				szString.append(CvWString::format(L"Avg:%d, ", pPlotCity->getRevIndexAverage()));
@@ -7330,7 +7330,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 /*                                                                                              */
 /************************************************************************************************/
 		// RevolutionDCM start - Citybar revolution info
-		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 		{
 			szString.append(NEWLINE);
 			szString.append(L"<img=Art/Interface/Buttons/revbtn.dds size=23></img>");
@@ -10082,7 +10082,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 */
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 	{
 		//  Revolution Local Civic Index Modifiers
 		if (0 != kCivic.getRevIdxLocal())
@@ -13174,7 +13174,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
     {
         szBuffer.append(NEWLINE);
         szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_UNHAPPY_PRODUCTION"));
-		if(GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		if(GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 			szBuffer.append(L", reduces Revolution Penalty from Unhappiness");
     }
     if (kBuilding.isRequiresCaster())
@@ -13463,7 +13463,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 	}
 
 // Start Revolutions
-	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 	{
 		//  Revolution Local Index Modifiers
 		if (0 != kBuilding.getRevIdxLocal())
@@ -17083,7 +17083,7 @@ void CvGameTextMgr::buildVassalStateString(CvWStringBuffer &szBuffer, TechTypes 
 		}
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_VASSAL_STATES"));
 
-		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES))
 		{
 			szBuffer.append(NEWLINE);
 

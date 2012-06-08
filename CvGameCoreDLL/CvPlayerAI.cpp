@@ -5311,7 +5311,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				iBuildValue += ((getBestRoute() == NO_ROUTE) ? 1000 : 200) * (iCityCount + (bAdvancedStart ? 4 : 0));
 
 				// more value for roads if playing Revolutions - unconnected cities get a large revolution penalty
-				if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+				if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 				{
 					iBuildValue += 250 * iCityCount;
 				}

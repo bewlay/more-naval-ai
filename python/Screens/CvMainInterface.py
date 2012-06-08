@@ -603,7 +603,7 @@ class CvMainInterface:
 #FfH: End Add
 
 		# < Revolution Mod Start >
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
+		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):
 			iBtnX += iBtnAdvance
 			
 			# Appears name must have a one at the end to register mouseover events ...
@@ -1659,7 +1659,7 @@ class CvMainInterface:
 
 			screen.show( "EspionageAdvisorButton" )
 			# < Revolution Mod Start >
-			if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
+			if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
 			# < Revolution Mod Start >
 			screen.show( "DomesticAdvisorButton" )
 			screen.show( "ForeignAdvisorButton" )
@@ -1690,7 +1690,7 @@ class CvMainInterface:
 
 			screen.moveToFront( "TurnLogButton" )
 			# < Revolution Mod Start >
-			if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
+			if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
 			# < Revolution Mod Start >
 			
 #FfH: Added by Kael 09/24/2008
@@ -1764,7 +1764,7 @@ class CvMainInterface:
 
 			screen.show( "EspionageAdvisorButton" )
 			# < Revolution Mod Start >
-			if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
+			if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
 			# < Revolution Mod Start >
 			screen.show( "DomesticAdvisorButton" )
 			screen.show( "ForeignAdvisorButton" )
@@ -1812,7 +1812,7 @@ class CvMainInterface:
 			screen.moveToFront("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
 # < Revolution Mod Start >
-			if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
+			if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
 # < Revolution Mod Start >
 		else:
 			screen.show( "InterfaceLeftBackgroundWidget" )
@@ -1833,7 +1833,7 @@ class CvMainInterface:
 
 			screen.show( "EspionageAdvisorButton" )
 			# < Revolution Mod Start >
-			if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
+			if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.show( "RevWatchButton1" )
 			# < Revolution Mod Start >
 			screen.show( "DomesticAdvisorButton" )
 			screen.show( "ForeignAdvisorButton" )
@@ -1895,7 +1895,7 @@ class CvMainInterface:
 			screen.moveToFront("BUGOptionsScreenWidget")
 # BUG - BUG Option Button - End
 # < Revolution Mod Start >
-			if( not game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
+			if( not game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) : screen.moveToFront( "RevWatchButton1" )
 # < Revolution Mod Start >
 		screen.updateMinimapVisibility()
 
@@ -3885,7 +3885,7 @@ class CvMainInterface:
 				iCount = 0
 
 				# < Revolution Mod Start >
-				if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ) :
+				if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ) :
 					screen.addTableControlGFC( "BuildingListTable", 3, 10, 317, 238, yResolution - 565, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 				else :
 					screen.addTableControlGFC( "BuildingListTable", 3, 10, 317, 238, yResolution - 541, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
@@ -4304,7 +4304,7 @@ class CvMainInterface:
 				screen.show( "NationalityBar" )
 
 # < Revolution Mod Start >
-				if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) :
+				if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) :
 					RevInstances.RevolutionInst.updateLocalRevIndices( CyGame().getGameTurn(), pHeadSelectedCity.getOwner(), subCityList = [pHeadSelectedCity], bIsRevWatch = True)
 
 					divisor = RevInstances.RevolutionInst.revInstigatorThreshold
@@ -5936,7 +5936,7 @@ class CvMainInterface:
 
 # < Revolution Mod Start >
 		#CyInterface().addImmediateMessage( "Handling input from %s, type %d"%(inputClass.getFunctionName(),inputClass.getNotifyCode()),"")
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) :
+		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) :
 			if ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_ON and inputClass.getFunctionName() == "RevWatchButton"):
 				self.showRevWatchInfoPane()
 			elif ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_OFF and inputClass.getFunctionName() == "RevWatchButton"):

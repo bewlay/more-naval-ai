@@ -9370,7 +9370,7 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 	if (!isOccupation())
 */
 	int iMaxOccupationTimer = GC.getDefineINT("BASE_OCCUPATION_TURNS") + ((getHighestPopulation() * GC.getDefineINT("OCCUPATION_TURNS_POPULATION_PERCENT")) / 100);
-	if( !isOccupation() || ((GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) && (GC.getGameINLINE().getGameTurn() - getGameTurnAcquired()) > iMaxOccupationTimer)) )
+	if( !isOccupation() || ((GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS) && (GC.getGameINLINE().getGameTurn() - getGameTurnAcquired()) > iMaxOccupationTimer)) )
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
@@ -17244,7 +17244,7 @@ int CvCity::getAltarLevel()
 // REVOLUTIONS Start - Afforess 12/7/09
 int CvCity::getRevTrend()
 {
-	if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 		return 0;
 		
 	//This is the value from python

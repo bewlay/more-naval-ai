@@ -544,7 +544,7 @@ bool CvCityAI::AI_avoidGrowth()
 /*                                                                                              */
 /* Revolution AI                                                                                */
 /************************************************************************************************/
-		if(!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+		if(!GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 		{
 			iHappinessLevel -= std::min(getRevolutionIndex()/600, 2);
 		}
@@ -5343,7 +5343,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				iValue += kBuilding.getResistMagic();
 				
 				// Revolutions
-				if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+				if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 				{
 					// Local RevIndex - positive numbers are bad
 					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxLocal() / 100));
@@ -6830,7 +6830,7 @@ int CvCityAI::AI_neededDefenders()
 /*                                                                                              */
 /*                                                                                              */
 /************************************************************************************************/
-	if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 	{
 		iDefenders += getRevolutionIndex() / 700;
 	}

@@ -72,7 +72,7 @@ class CvCivicsScreen:
 		self.Z_TEXT = self.Z_SCREEN - 0.2
 
 		#RevolutionDCM start - revolutions screen adjustment
-		if (game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS)):
+		if (game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS)):
 			for l in range(gc.getNumCivicInfos()):
 				self.HEADINGS_HEIGHT = (((40 + self.BUTTON_SIZE + self.TEXT_MARGIN) * l/self.CIVICCATEGORIES)/5 * 2) + 260
 		else:

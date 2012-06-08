@@ -2996,7 +2996,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	else if (!bTrade)
 */
 	// Silences double ask for accepting new city from Revolution mod
-	else if (!bTrade && (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS)) )
+	else if (!bTrade && (!GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS)) )
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
@@ -3114,7 +3114,7 @@ void CvPlayer::getCivilizationCityName(CvWString& szBuffer, CivilizationTypes eC
 */
 	iRandOffset = 0;
 
-	if( GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))// || !GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS) )
+	if( GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))// || !GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS) )
 	{
 		if( isBarbarian() )
 		{
@@ -23935,7 +23935,7 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
         return false;
     }
 
-    if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS))
+    if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES))
     {
         return false;
     }

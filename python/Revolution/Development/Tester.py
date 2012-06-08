@@ -623,7 +623,7 @@ class Tester :
 		
 		bodStr = ""
 		#if( not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_BARBARIAN_CIV) ) :
-		if( gc.getGame().isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ) :
+		if( gc.getGame().isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ) :
 			bodStr += "BarbCiv is enabled"
 			
 	def showSpawnListPopup( self ) :

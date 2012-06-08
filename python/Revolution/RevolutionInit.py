@@ -52,7 +52,7 @@ class RevolutionInit :
 		self.EventKeyDown = 6
 		self.customEM = customEM
 		self.RevOpt = RevOpt
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
+		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):
 			self.bShowActivePopup = RevOpt.isActivePopup()
 		else:
 			self.bShowActivePopup = False
@@ -146,14 +146,14 @@ class RevolutionInit :
 			if( bDoInit ) :
 				RevInstances.AIAutoPlayInst = AIAutoPlay.AIAutoPlay(self.customEM, self.RevOpt)
 #		if( not game.isOption(GameOptionTypes.GAMEOPTION_NO_BARBARIAN_CIV) ):#self.config.getboolean("BarbarianCiv", "Enable", True) ) :
-#		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):#self.config.getboolean("BarbarianCiv", "Enable", True) ) :
+#		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):#self.config.getboolean("BarbarianCiv", "Enable", True) ) :
 #			if( bDoInit ) :
 #				RevInstances.BarbarianCivInst = BarbarianCiv.BarbarianCiv(self.customEM, self.RevOpt)
 		bChangePlayer = RevOpt.isChangePlayerEnable()
 		if( bChangePlayer ) :
 			if( bDoInit ) :
 				RevInstances.ChangePlayerInst = ChangePlayer.ChangePlayer(self.customEM, self.RevOpt)
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):#self.config.getboolean("Revolution", "Enable", True) ) :
+		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):#self.config.getboolean("Revolution", "Enable", True) ) :
 			if( bDoInit ) : 
 				# RevEvents needs to service beginPlayerTurn events before Revolution
 				RevEvents.init( self.customEM, self.RevOpt )
@@ -212,13 +212,13 @@ class RevolutionInit :
 		revComponentsText += self.sectionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_INIT",())
 		anyOption = false
 #		if( not game.isOption(GameOptionTypes.GAMEOPTION_NO_BARBARIAN_CIV) ):
-#		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
+#		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):
 #			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BARBARIAN_CIV",())
 #			anyOption = true
 		if( game.isOption(GameOptionTypes.GAMEOPTION_BARBARIAN_WORLD) ):
 			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_BARBARIAN_WORLD",())
 			anyOption = true  
-		if( game.isOption(GameOptionTypes.GAMEOPTION_PUPPET_STATES_AND_REVOLUTIONS) ):
+		if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) ):
 			revComponentsText += self.optionFormat + localText.getText("TXT_KEY_REV_MOD_INITIALIZING_REVOLUTION",())
 			anyOption = true
 #		if( not game.isOption(GameOptionTypes.GAMEOPTION_NO_TECH_DIFFUSION) ):
