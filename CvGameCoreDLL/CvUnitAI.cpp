@@ -2973,7 +2973,7 @@ void CvUnitAI::AI_barbAttackMove()
 		return;
 	}
     
-	if (!bHero)
+	if (!bHero && (getDomainType() == DOMAIN_LAND))
     {
         if (AI_guardCity(false, true, 2))
         {
