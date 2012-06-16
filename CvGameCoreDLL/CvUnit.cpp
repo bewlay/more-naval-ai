@@ -8867,10 +8867,11 @@ InvisibleTypes CvUnit::getInvisibleType() const
 int CvUnit::getNumSeeInvisibleTypes() const
 {
 
-//FfH: Added by Kael 12/07/2008
+//FfH: Added by Kael 12/07/2008 (Modified by Red Key 2012)
     if (isSeeInvisible())
     {
-        return 1;
+		return GC.getNumInvisibleInfos();
+		//return 1;
     }
 //FfH: End Add
 
@@ -8880,10 +8881,13 @@ int CvUnit::getNumSeeInvisibleTypes() const
 InvisibleTypes CvUnit::getSeeInvisibleType(int i) const
 {
 
-//FfH: Added by Kael 12/07/2008
+//FfH: Added by Kael 12/07/2008 (Modified by Red Key 2012)
     if (isSeeInvisible())
     {
-        return ((InvisibleTypes)GC.getDefineINT("INVISIBLE_TYPE"));
+		FAssertMsg(i >= 0, "i is expected to be non-negative (invalid Index)");
+		FAssertMsg(i < GC.getNumInvisibleInfos(), "i is expected to be within maximum bounds (invalid Index)");
+        return (InvisibleTypes)i;
+		//return ((InvisibleTypes)GC.getDefineINT("INVISIBLE_TYPE"));
     }
 //FfH: End Add
 
@@ -10611,13 +10615,14 @@ bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
                     return false;
                 }
             }
-            if (plot()->getTeam() == getTeam())
+            /* Redundant Code removed by Red Key... see also CvUnit::getInvisibleType
+			if (plot()->getTeam() == getTeam())
             {
                 if (GET_PLAYER(plot()->getOwnerINLINE()).isHideUnits() && !isIgnoreHide())
                 {
                     return true;
                 }
-            }
+            }*/
         }
     }
 //FfH: End Add
@@ -17433,7 +17438,13 @@ void CvUnit::changeSeeInvisible(int iNewValue)
 {
     if (iNewValue != 0)
     {
+		// Tholal AI - Bugfix for seeInvisible promotions (by Red Key)
+		plot()->changeAdjacentSight(getTeam(), visibilityRange(), false, this, true);
+
         m_iSeeInvisible += iNewValue;
+
+		plot()->changeAdjacentSight(getTeam(), visibilityRange(), true, this, true);
+		// End Tholal AI
     }
 }
 
