@@ -3778,6 +3778,9 @@ public:
     int getResearchModifier() const;
 	bool readPass3();
 //FfH: End Add
+	// Tholal AI begin
+	bool isMana() const;
+	// Tholal AI end
 
 	// Arrays
 
@@ -3849,6 +3852,9 @@ protected:
 	int m_iMutateChance;
 	int m_iResearchModifier;
 //FfH: End Add
+	// Tholal AI begin
+	bool m_bMana;
+	// Tholal AI end
 
 	// Arrays
 

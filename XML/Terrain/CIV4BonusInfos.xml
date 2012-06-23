@@ -103,6 +103,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_GUNPOWDER</Type>
@@ -177,6 +178,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_COPPER</Type>
@@ -267,6 +269,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_HORSE</Type>
@@ -337,6 +340,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_IRON</Type>
@@ -427,6 +431,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MARBLE</Type>
@@ -501,6 +506,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_DEATH</Type>
@@ -559,6 +565,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_DEATH</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_NIGHTMARE</Type>
@@ -625,6 +632,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>PROMOTION_NIGHTMARE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_FIRE</Type>
@@ -683,6 +691,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_FIRE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_BANANA</Type>
@@ -749,6 +758,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_CLAM</Type>
@@ -811,6 +821,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_CORN</Type>
@@ -874,6 +885,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_COW</Type>
@@ -940,6 +952,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_CRAB</Type>
@@ -1002,6 +1015,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_DEER</Type>
@@ -1072,6 +1086,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_FISH</Type>
@@ -1138,6 +1153,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_PIG</Type>
@@ -1208,6 +1224,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_RICE</Type>
@@ -1278,6 +1295,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_SHEEP</Type>
@@ -1344,6 +1362,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_WHEAT</Type>
@@ -1407,6 +1426,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_DYE</Type>
@@ -1477,6 +1497,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_FUR</Type>
@@ -1555,6 +1576,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_GEMS</Type>
@@ -1625,6 +1647,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_GOLD</Type>
@@ -1699,6 +1722,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_INCENSE</Type>
@@ -1773,6 +1797,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_IVORY</Type>
@@ -1843,6 +1868,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_SILK</Type>
@@ -1914,6 +1940,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MITHRIL</Type>
@@ -1996,6 +2023,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_REAGENTS</Type>
@@ -2078,6 +2106,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_SUGAR</Type>
@@ -2144,6 +2173,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_WINE</Type>
@@ -2211,6 +2241,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_WHALE</Type>
@@ -2273,6 +2304,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_FRUIT_OF_YGGDRASIL</Type>
@@ -2331,6 +2363,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_SHEUT_STONE</Type>
@@ -2393,6 +2426,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>PROMOTION_SHEUT_STONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_TOAD</Type>
@@ -2459,6 +2493,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_PEARL</Type>
@@ -2525,6 +2560,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_AIR</Type>
@@ -2583,6 +2619,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_LIGHTNING</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_BODY</Type>
@@ -2641,6 +2678,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_CHAOS</Type>
@@ -2699,6 +2737,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_EARTH</Type>
@@ -2757,6 +2796,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_ENCHANTMENT</Type>
@@ -2815,6 +2855,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_ENTROPY</Type>
@@ -2873,6 +2914,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_UNHOLY</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_ICE</Type>
@@ -2931,6 +2973,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_COLD</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_LAW</Type>
@@ -2989,6 +3032,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_LIFE</Type>
@@ -3047,6 +3091,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_METAMAGIC</Type>
@@ -3105,6 +3150,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_MIND</Type>
@@ -3163,6 +3209,7 @@
             <iResearchModifier>3</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_NATURE</Type>
@@ -3221,6 +3268,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_SPIRIT</Type>
@@ -3279,6 +3327,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_WATER</Type>
@@ -3337,6 +3386,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_COLD</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_SUN</Type>
@@ -3395,6 +3445,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>DAMAGE_FIRE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_MANA_SHADOW</Type>
@@ -3453,6 +3504,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>1</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_COTTON</Type>
@@ -3519,6 +3571,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_GULAGARM</Type>
@@ -3585,6 +3638,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_ALE</Type>
@@ -3643,6 +3697,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_FINE_CLOTHES</Type>
@@ -3701,6 +3756,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_JEWELS</Type>
@@ -3759,6 +3815,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
         <BonusInfo>
             <Type>BONUS_RAZORWEED</Type>
@@ -3829,6 +3886,7 @@
             <iResearchModifier>0</iResearchModifier>
             <DamageType>NONE</DamageType>
             <FreePromotion>NONE</FreePromotion>
+			<bMana>0</bMana>
         </BonusInfo>
     </BonusInfos>
 </Civ4BonusInfos>

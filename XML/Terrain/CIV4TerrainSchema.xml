@@ -276,6 +276,7 @@
 	<ElementType name="iResearchModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="DamageType" content="textOnly"/>
 	<ElementType name="FreePromotion" content="textOnly"/>
+	<ElementType name="bMana" content="textOnly" dt:type="boolean"/>
 	<ElementType name="BonusInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -323,6 +324,7 @@
 		<element type="iResearchModifier"/>
 		<element type="DamageType"/>
 		<element type="FreePromotion"/>
+		<element type="bMana"/>
 	</ElementType>
 	<ElementType name="BonusInfos" content="eltOnly">
 		<element type="BonusInfo" maxOccurs="*"/>

@@ -15512,9 +15512,11 @@ m_iHealChange(0),
 m_iHealChangeEnemy(0),
 m_iMaintenanceModifier(0),
 m_iMutateChance(0),
-m_iResearchModifier(0)
+m_iResearchModifier(0),
 //FfH: End Add
-
+// Tholal AI begin
+m_bMana(false)
+// Tholal AI end
 {
 }
 
@@ -15750,6 +15752,12 @@ int CvBonusInfo::getResearchModifier() const
 	return m_iResearchModifier;
 }
 //FfH: End Add
+// Tholal AI begin
+bool CvBonusInfo::isMana() const
+{
+	return m_bMana;
+}
+// Tholal AI end
 
 // Arrays
 
@@ -15860,6 +15868,9 @@ void CvBonusInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iMutateChance);
 	stream->Read(&m_iResearchModifier);
 //FfH: End Add
+	// Tholal AI begin
+	stream->Read(&m_bMana);
+	// Tholal AI end
 
 	// Arrays
 
@@ -15937,6 +15948,9 @@ void CvBonusInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iMutateChance);
 	stream->Write(m_iResearchModifier);
 //FfH: End Add
+	// Tholal AI begin
+	stream->Write(m_bMana);
+	// Tholal AI end
 
 	// Arrays
 
@@ -16033,6 +16047,9 @@ bool CvBonusInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName( szTextVal, "DamageType");
 	m_iDamageType = pXML->FindInInfoClass(szTextVal);
 //FfH: End Add
+	// Tholal AI begin
+	pXML->GetChildXmlValByName(&m_bMana, "bMana");
+	// Tholal AI end
 
 	return true;
 }
