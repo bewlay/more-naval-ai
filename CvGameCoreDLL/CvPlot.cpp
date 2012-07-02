@@ -6563,17 +6563,6 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 			}
         }
 	}
-	else
-	{
-        if (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldType())
-        {
-            iYield += GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldChange(eYield);
-			if (isRiver())
-			{
-				iYield += GC.getTerrainInfo(getTerrainType()).getCivilizationRiverYieldChange(eYield);
-			}
-        }
-    }
 //FfH: End Add
 
 	return std::max(0, iYield);
