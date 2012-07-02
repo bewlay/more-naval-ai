@@ -16414,14 +16414,14 @@ void CvPlayerAI::AI_doCounter()
 						}
 */
 						int iGameSpeedPercent = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
-						int iDenominator = iGameSpeedPercent * GC.getLeaderHeadInfo(getPersonalityType()).getMemoryDecayRand(iJ);
-						int iNumerator = 100;
+						int iDecayChance = iGameSpeedPercent * GC.getLeaderHeadInfo(getPersonalityType()).getMemoryDecayRand(iJ);
+						iDecayChance /= 100;
 
-						int iDecrementalCount = iNumerator / iDenominator;
-						iNumerator -= iDecrementalCount * iDenominator;
+						//int iDecrementalCount = iNumerator / iDenominator;
+						//iNumerator -= iDecrementalCount * iDenominator;
 
-						int iReciprocal = iDenominator / iNumerator;
-						if (GC.getGameINLINE().getSorenRandNum(iReciprocal, "Memory Decay") == 0)
+						//int iReciprocal = iDenominator / iNumerator;
+						if (GC.getGameINLINE().getSorenRandNum(iDecayChance, "Memory Decay") == 0)
 						{
 							AI_changeMemoryCount(((PlayerTypes)iI), ((MemoryTypes)iJ), -1);
 						}
