@@ -4752,11 +4752,11 @@ It is fine for a human player mouse-over (which is what it is used for).
 			}
 			
 //FfH Promotions: Added by Kael 0813/2007
-            for (int iJ=0;iJ<GC.getNumPromotionInfos();iJ++)
+            for (int iJ=0; iJ < GC.getNumPromotionInfos(); iJ++)
             {
-                if (pDefender->isHasPromotion((PromotionTypes)iJ) && GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatMod()>0)
+                if (pAttacker->isHasPromotion((PromotionTypes)iJ) && GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatMod()>0)
                 {
-                    if (pAttacker->isHasPromotion((PromotionTypes)GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatType()))
+                    if (pDefender->isHasPromotion((PromotionTypes)GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatType()))
                     {
                         szString.append(NEWLINE);
                         szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatMod(), GC.getPromotionInfo((PromotionTypes)GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatType()).getTextKeyWide()));
@@ -4904,6 +4904,18 @@ It is fine for a human player mouse-over (which is what it is used for).
 				szString.append(NEWLINE);
 				szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", iModifier, GC.getDomainInfo(pAttacker->getDomainType()).getTextKeyWide()));
 			}
+
+			for (int iJ=0; iJ < GC.getNumPromotionInfos(); iJ++)
+            {
+                if (pDefender->isHasPromotion((PromotionTypes)iJ) && GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatMod()>0)
+                {
+                    if (pAttacker->isHasPromotion((PromotionTypes)GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatType()))
+                    {
+                        szString.append(NEWLINE);
+                        szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_MOD_VS_TYPE", GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatMod(), GC.getPromotionInfo((PromotionTypes)GC.getPromotionInfo((PromotionTypes)iJ).getPromotionCombatType()).getTextKeyWide()));
+                    }
+                }
+            }
 
 			if (!(pDefender->noDefensiveBonus()))
 			{
