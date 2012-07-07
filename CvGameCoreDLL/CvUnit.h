@@ -170,6 +170,7 @@ public:
 	bool airBomb(int iX, int iY);
 
 	CvCity* bombardTarget(const CvPlot* pPlot) const;																							// Exposed to Python
+	CvPlot* bombardImprovementTarget(const CvPlot* pPlot) const; 	// Super Forts *bombard*
 	bool canBombard(const CvPlot* pPlot) const;																										// Exposed to Python
 	bool bombard();
 
