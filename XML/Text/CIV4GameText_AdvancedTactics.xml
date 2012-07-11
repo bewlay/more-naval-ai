@@ -183,11 +183,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HIRED_WAR_ALLY</Tag>
-		<English>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
+		<English>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
 		<French>Les sournois %s1_CivAdj ont convaincu les traîtres %s2_CivAdj de nous déclarer la Guerre!</French>
 		<German>Die b&#246;sartigen %s1_CivAdj haben die hinterh&#228;ltigen %s2_CivAdj davon &#252;berzeugt, uns den Krieg zu erkl&#228;ren!</German>
-		<Italian>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
-		<Spanish>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Spanish>
+		<Italian>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
+		<Spanish>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_WITH_1</Tag>
