@@ -3519,8 +3519,9 @@ It is fine for a human player mouse-over (which is what it is used for).
                     }//for
                     //DefenderKillOdds = 1.0f - (AttackerKillOdds + RetreatOdds + PullOutOdds);//this gives slight negative numbers sometimes, I think
 
-
-
+					szString.append(gDLL->getText("TXT_KEY_BUG_ACO__HEADER", pAttacker->getName().GetCString(), pDefender->getName().GetCString()));
+					szString.append(NEWLINE);
+					
                     if (iView & getBugOptionINT("ACO__ShowSurvivalOdds", 3, "ACO_SHOW_SURVIVAL_ODDS"))
                     {
                         szTempBuffer.Format(L"%.2f%%",100.0f*(AttackerKillOdds+RetreatOdds+PullOutOdds));

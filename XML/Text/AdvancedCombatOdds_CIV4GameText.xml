@@ -203,4 +203,13 @@
 		<Spanish>&#x0D7;</Spanish>
 		<Finnish>&#x0D7;</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_ACO__HEADER</Tag>
+		<English>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</English>
+		<French>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</French>
+		<German>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</German>
+		<Italian>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Spanish>
+		<Finnish>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Finnish>
+	</TEXT>
 </Civ4GameText>
