@@ -11637,6 +11637,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 	int iCombat = kUnitInfo.getCombat();
+	bool bisLimitedUnit = (GC.getUnitClassInfo((UnitClassTypes)kUnitInfo.getUnitClassType()).getMaxPlayerInstances() != -1);
 
 	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI))
 	{
@@ -11937,7 +11938,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				if (0 == AI_unitImpassableCount(eUnit))
 				{
-					bValid = true;
+					// dont use important units for exploration
+					if ((kUnitInfo.getTier() < 3) && !bisLimitedUnit)
+					{
+						bValid = true;
+					}
 				}
 			}
 /************************************************************************************************/
