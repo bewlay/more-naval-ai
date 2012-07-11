@@ -1671,9 +1671,12 @@ void CvSelectionGroup::continueMission(int iSteps)
 					{
 						if (plot()->getBestDefender(getOwnerINLINE())->getGroup() == this)
 						{
-							bAction = false;
-							bDone = true;
-							break;
+							if (getHeadUnit()->AI_getGroupflag() != GROUPFLAG_CONQUEST)
+							{
+								bAction = false;
+								bDone = true;
+								break;
+							}
 						}
 					}
 					pTargetUnit = GET_PLAYER((PlayerTypes)headMissionQueueNode()->m_data.iData1).getUnit(headMissionQueueNode()->m_data.iData2);
