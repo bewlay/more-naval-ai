@@ -3672,6 +3672,7 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
         if (pDestPlot->isCity() && GET_TEAM(getTeam()).isAtWar(pDestPlot->getTeam()))
         {
             int iBombarbTurns=getBombardTurns(pDestPlot->getPlotCity());
+			bool bHasBombard = false;
             if (iBombarbTurns>0 && iBombarbTurns<8)
             {
                 CLLNode<IDInfo>* pEntityNode = headUnitNode();
@@ -3686,13 +3687,17 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
                         if (pLoopUnit->canBombard(plot()))
                         {
                             pLoopUnit->bombard();
+							bHasBombard = true;
                         }
                     }
                 }
-
-                //Bombard some more turns
-                getHeadUnit()->finishMoves();
-                return true;
+				
+				if (bHasBombard)
+				{
+					//Bombard some more turns
+					getHeadUnit()->finishMoves();
+					return true;
+				}
             }
 		}
 	}
