@@ -480,12 +480,12 @@ void CvPlot::doTurn()
 		changeImprovementDuration(1);
 
 //FfH Improvements: Added by Kael 08/07/2007
-		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
-		if (eImprovementUpdrade != NO_IMPROVEMENT)
+		ImprovementTypes eImprovementUpgrade = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+		if (eImprovementUpgrade != NO_IMPROVEMENT)
 		{
             if (!isBeingWorked())
             {
-                if (GC.getImprovementInfo(eImprovementUpdrade).isOutsideBorders())
+                if (GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders())
                 {
                     doImprovementUpgrade();
                 }
@@ -692,18 +692,18 @@ void CvPlot::doImprovementUpgrade()
 {
 	if (getImprovementType() != NO_IMPROVEMENT)
 	{
-		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
-		if (eImprovementUpdrade != NO_IMPROVEMENT)
+		ImprovementTypes eImprovementUpgrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
+		if (eImprovementUpgrade != NO_IMPROVEMENT)
 		{
-			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpdrade).isOutsideBorders())
+			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders())
 			{
 
 //FfH: Modified by Kael 05/12/2008
 //				changeUpgradeProgress(GET_PLAYER(getOwnerINLINE()).getImprovementUpgradeRate());
                 if (isOwned())
                 {
-                    if (GC.getImprovementInfo(eImprovementUpdrade).getPrereqCivilization() == NO_CIVILIZATION ||
-                      GC.getImprovementInfo(eImprovementUpdrade).getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
+                    if (GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == NO_CIVILIZATION ||
+                      GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
                     {
                         changeUpgradeProgress(GET_PLAYER(getOwnerINLINE()).getImprovementUpgradeRate());
                     }
@@ -715,7 +715,7 @@ void CvPlot::doImprovementUpgrade()
                 }
                 else
                 {
-                    if (GC.getImprovementInfo(eImprovementUpdrade).getPrereqCivilization() == NO_CIVILIZATION)
+                    if (GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == NO_CIVILIZATION)
                     {
                         changeUpgradeProgress(1);
                     }
@@ -735,7 +735,7 @@ void CvPlot::doImprovementUpgrade()
 /**	END	                                        												**/
 /*************************************************************************************************/
 				{
-					setImprovementType(eImprovementUpdrade);
+					setImprovementType(eImprovementUpgrade);
 				}
 			}
 		}
