@@ -27853,9 +27853,10 @@ void CvUnitAI::ConquestMove()
 		}
 	}
 
+	CvCity* pTargetCity = NULL;
 	if (bReadyToAttack)
 	{
-		if (AI_cityAttack(1, 80))
+		if (AI_cityAttack(1, 80, true))
 		{
 			if( gUnitLogLevel >= 3 )
 			{
@@ -27884,12 +27885,13 @@ void CvUnitAI::ConquestMove()
 		return;
 	}
 	
-	CvCity* pTargetCity = NULL;
 	// BBAI TODO: Find some way of reliably targetting nearby cities with less defense ...
 	pTargetCity = AI_pickTargetCity(0, MAX_INT, bHuntBarbs);
 	
-	if( pTargetCity != NULL )
+	if( pTargetCity != NULL && (getGroup()->getNumUnits() > 1))
 	{
+		if( gUnitLogLevel >= 3 ) logBBAI("      %S, %d trying to assault target city", getName().GetCString(), getID());
+
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
 
@@ -28215,7 +28217,7 @@ void CvUnitAI::ConquestMove()
 				return;
 			}
 		}
-		else if (bLandWar && pTargetCity != NULL)
+		else if (bLandWar && pTargetCity != NULL && (getGroup()->getNumUnits() > 1))
 		{
 			// Before heading out, check whether to wait to allow unit upgrades
 			if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
@@ -28301,16 +28303,7 @@ void CvUnitAI::ConquestMove()
 
 				if (pTargetCity != NULL)
 				{
-
-					if (GC.getLogging())
-					{
-						if (gDLL->getChtLvl() > 0)
-						{
-							char szOut[1024];
-							sprintf(szOut, "Player %d Unit %d (%S's %S) BLOCKAGE PROBLEM\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString());
-							gDLL->messageControlLog(szOut);
-						}
-					}
+					if( gUnitLogLevel >= 3 ) logBBAI("      %S, %d blockage problem", getName().GetCString(), getID());
 
 					if (AI_solveBlockageProblem(pTargetCity->plot(), (GET_TEAM(getTeam()).getAtWarCount(true) == 0)))
 					{
