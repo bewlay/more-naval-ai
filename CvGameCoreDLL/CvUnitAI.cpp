@@ -5356,6 +5356,7 @@ void CvUnitAI::AI_exploreMove()
 		}
 	}
 
+	/*
 	if (getDamage() > 0)
 	{
 		if ((plot()->getFeatureType() == NO_FEATURE) || (GC.getFeatureInfo(plot()->getFeatureType()).getTurnDamage() <= 0))
@@ -5363,6 +5364,12 @@ void CvUnitAI::AI_exploreMove()
 			getGroup()->pushMission(MISSION_HEAL);
 			return;
 		}
+	}
+	*/
+
+	if (AI_heal())
+	{
+		return;
 	}
 
 	if (!isHuman())
