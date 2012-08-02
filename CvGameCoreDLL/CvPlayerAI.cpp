@@ -23793,16 +23793,18 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 
 		if (bValid)
 		{
-			if (pLoopUnit->plot()->isCity())
+			CvPlot* pUnitPlot = pLoopUnit->plot();
+
+			if (pUnitPlot->isCity())
 			{
-				if (pLoopUnit->plot()->getPlotCity()->getOwner() == getID())
+				if (pUnitPlot->getPlotCity()->getOwner() == getID())
 				{
-					if (pLoopUnit->plot()->getPlotCity()->isDisorder())
+					if (pUnitPlot->getPlotCity()->isDisorder())
 					{
 						bValid = false;
 					}
 
-					if (pLoopUnit->plot()->getBestDefender(getID()) == pLoopUnit)
+					if (pUnitPlot->getBestDefender(getID()) == pLoopUnit)
 					{
 						bValid = false;
 					}
@@ -23810,10 +23812,17 @@ void CvPlayerAI::AI_convertUnitAITypesForCrush()
 					// dont convert city defenders who need to stay and defend
 					if (pLoopUnit->AI_getUnitAIType() == UNITAI_CITY_DEFENSE)
 					{
-						if (pLoopUnit->plot()->getNumDefenders(pLoopUnit->getOwner()) <= pLoopUnit->plot()->getPlotCity()->AI_neededDefenders())
+						if (pUnitPlot->getNumDefenders(pLoopUnit->getOwner()) <= pUnitPlot->getPlotCity()->AI_neededDefenders())
 						{
 							bValid = false;
 						}
+					}
+				}
+				else // dont convert units guarding a fort
+				{
+					if (pUnitPlot->getNumDefenders(pLoopUnit->getOwner()) == 1)
+					{
+						bValid = false;
 					}
 				}
 			}
