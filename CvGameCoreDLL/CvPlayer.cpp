@@ -19542,6 +19542,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 /* AI_AUTO_PLAY                            END                                                  */
 /************************************************************************************************/
 
+	// tech bug fix
+	pStream->Read(&m_bChoosingFreeTech);
+
 	// Puppet States
 	pStream->Read(&m_bPuppetState);
 	// End Puppet States
@@ -20133,6 +20136,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 /************************************************************************************************/
 /* AI_AUTO_PLAY                            END                                                  */
 /************************************************************************************************/
+
+	// Tech bug fix
+	pStream->Write(m_bChoosingFreeTech);
 
 	// Puppet States
 	pStream->Write(m_bPuppetState);
