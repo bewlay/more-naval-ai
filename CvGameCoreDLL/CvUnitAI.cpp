@@ -20891,7 +20891,8 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 					else if(!isHuman() || !GET_PLAYER(getOwnerINLINE()).hasBonus(eNonObsoleteBonus))
 					{
 						CvCity* pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), getOwnerINLINE(), NO_TEAM, false);
-						if (pNearestCity != NULL)
+						int iPathTurns;
+						if ((pNearestCity != NULL) && generatePath(pLoopPlot, 0, true, &iPathTurns))
 						{
 							int iDistanceModifier = 1;
 							if(GET_PLAYER(getOwnerINLINE()).hasBonus(eNonObsoleteBonus))
@@ -20902,6 +20903,11 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 							if((plotDistance(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE())*iDistanceModifier) <= GC.getDefineINT("AI_WORKER_MAX_DISTANCE_FROM_CITY_OUT_BORDERS"))
 							{
 								bCloseEnough = true;
+							}
+
+							if (iPathTurns > (GC.getDefineINT("AI_WORKER_MAX_DISTANCE_FROM_CITY_OUT_BORDERS") / 2))
+							{
+								bCloseEnough = false;
 							}
 						}
 					}
