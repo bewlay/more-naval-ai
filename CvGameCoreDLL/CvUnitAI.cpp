@@ -20922,6 +20922,12 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
                         {
                         	bDoImprove = false;
                         }
+						// Super Forts begin *AI_worker* (No need to loop through builds if the improvement is permanent)
+						else if (GC.getImprovementInfo(eImprovement).isPermanent())
+						{
+							bDoImprove = false;
+						}
+						// Super Forts end
                         else if (eImprovement == (ImprovementTypes)(GC.getDefineINT("RUINS_IMPROVEMENT")))
                         {
                             bDoImprove = true;
@@ -21005,6 +21011,12 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
                         {
                         	bDoImprove = false;
                         }
+						// Super Forts begin *AI_worker* (if not building an improvement and you don't own the plot then continue so the AI doesn't consider building a route)
+						if(!bDoImprove && pLoopPlot->getOwnerINLINE() != getOwnerINLINE())
+						{
+							continue;
+						}
+						// Super Forts end
 
                         if ((eBestTempBuild != NO_BUILD) || (bCanRoute && !bIsConnected))
                         {
