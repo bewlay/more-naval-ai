@@ -2904,7 +2904,7 @@ void CvUnitAI::AI_barbAttackMove()
 			}
 		}
 
-		if (AI_cityAttack(2, std::max(5, 10 + iRecklessness)))
+		if (AI_cityAttack(2, std::max(5, 10 + iRecklessness), true))
 		{
 			return;
 		}
