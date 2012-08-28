@@ -30181,3 +30181,54 @@ bool CvUnitAI::AI_seekLair(int iRange)
 
 	return false;
 }
+
+// A function to help the AI find nearby defensive ground
+// iRange: range in which to search; bIncludeHealing: include any healing bonuses from the plot when calculating defensive advantage
+// ToDo - use iRange as a path distance rather than a literal distance
+bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
+{
+	logBBAI("    %S (unit %d - %S) seeking defensive ground", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription());
+
+	CvPlot* pBestDefensivePlot = NULL;
+	CvPlot* pLoopPlot;
+	int iBestPlotValue = 0;
+	int iValue = 0;
+	int iDX, iDY;
+	for (iDX = -(iRange); iDX <= iRange; iDX++)
+	{
+		for (iDY = -(iRange); iDY <= iRange; iDY++)
+		{
+			pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+			if (pLoopPlot != NULL)
+			{
+				if (canMoveInto(pLoopPlot))
+				{
+					if (pLoopPlot->getNumVisibleEnemyDefenders(this) == 0)
+					{
+						iValue = pLoopPlot->defenseModifier(getTeam(), false);
+
+						if (bIncludeHealing)
+						{
+							iValue += healRate(pLoopPlot);
+						}
+
+						if (iValue > iBestPlotValue)
+						{
+							iBestPlotValue = iValue;
+							pBestDefensivePlot = pLoopPlot;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (pBestDefensivePlot != NULL)
+	{
+		getGroup()->pushMission(MISSION_MOVE_TO, pBestDefensivePlot->getX_INLINE(), pBestDefensivePlot->getY_INLINE());
+		logBBAI("    %S (unit %d - %S) moving to defensive ground (%d, %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), pBestDefensivePlot->getX_INLINE(), pBestDefensivePlot->getY_INLINE());
+		return true;
+	}
+
+	return false;
+}

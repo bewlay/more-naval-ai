@@ -106,9 +106,11 @@ public:
     bool isDivine();
 	bool isVampire();
 	int getChannelingLevel();
-	// End Tholal AI
+
 	void AI_lairGuardianMove();
 	bool AI_seekLair(int iRange);
+	bool AI_seekDefensiveGround(int iRange, bool bIncludeHealing);
+	// End Tholal AI
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
