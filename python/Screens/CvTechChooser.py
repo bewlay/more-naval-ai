@@ -343,9 +343,8 @@ class CvTechChooser:
 			elif ( gc.getPlayer(self.iCivSelected).isResearchingTech(i) ):
 				screen.setPanelColor(szTechRecord, 104, 158, 165)
 				self.aiCurrentState.append(CIV_IS_RESEARCHING)
-			elif (not gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
-				#screen.setPanelColor(szTechRecord, 100, 104, 160)
-				screen.setPanelColor(szTechRecord, 0, 0, 0)
+			elif ( gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
+				screen.setPanelColor(szTechRecord, 100, 104, 160)
 				self.aiCurrentState.append(CIV_NO_RESEARCH)
 			else:
 				screen.setPanelColor(szTechRecord, 206, 65, 69)
@@ -862,7 +861,7 @@ class CvTechChooser:
 					self.aiCurrentState[i] = CIV_IS_RESEARCHING
 					abChanged[i] = 1
 					bAnyChanged = 1
-			elif (not gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
+			elif ( gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
 				if ( self.aiCurrentState[i] != CIV_NO_RESEARCH ):
 					self.aiCurrentState[i] = CIV_NO_RESEARCH
 					abChanged[i] = 1
@@ -902,9 +901,8 @@ class CvTechChooser:
 					screen.setPanelColor(szTechRecord, 104, 158, 165)
 				elif ( gc.getPlayer(self.iCivSelected).isResearchingTech(i) ):
 					screen.setPanelColor(szTechRecord, 104, 158, 165)
-				elif (not gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
-					#screen.setPanelColor(szTechRecord, 100, 104, 160)
-					screen.setPanelColor(szTechRecord, 0, 0, 0)
+				elif ( gc.getPlayer(self.iCivSelected).canEverResearch(i) ):
+					screen.setPanelColor(szTechRecord, 100, 104, 160)
 				else:
 					screen.setPanelColor(szTechRecord, 206, 65, 69)
 
