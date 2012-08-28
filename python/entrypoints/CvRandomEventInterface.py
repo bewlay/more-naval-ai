@@ -88,7 +88,7 @@ def doArmageddonBlight(argsList):
 		for pyCity in py.getCityList():
 			pCity = pyCity.GetCy()
 			i = CyGame().getSorenRandNum(15, "Blight")
-			i = 10
+#			i = 10
 			i += pCity.getPopulation()
 			i -= pCity.totalGoodBuildingHealth()
 			if i > 0:
