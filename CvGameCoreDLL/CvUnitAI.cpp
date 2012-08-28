@@ -13718,16 +13718,16 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 	    iDamagePercent = 10;
 	}
 
-	bRetreat = false;
+	bRetreat = false; // Tholal Note: This variable is never used
 
     if (getGroup()->getNumUnits() == 1)
 	{
 	    if (getDamage() > 0)
         {
-
             if (plot()->isCity() || (healTurns(plot()) == 1)
 				// Tholal AI (by Red Key) - allow barbarian animals to heal
-				|| (isBarbarian() && isAnimal()))
+				|| (isBarbarian() && isAnimal())
+				|| (plot()->defenseModifier(getTeam(), false) > 0)) // units on defensive terrain should also try to heal
 				// End Tholal AI
             {
                 if (!(isAlwaysHeal()))
@@ -13736,6 +13736,13 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
                     return true;
                 }
             }
+			else
+			{
+				if (AI_seekDefensiveGround(1, true))
+				{
+					return true;
+				}
+			}
         }
         return false;
 	}
