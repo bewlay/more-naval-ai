@@ -3151,271 +3151,272 @@ class Revolution :
 					return
 
 # --------------- Special options for homeland revolutions
-		if( instigator.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
-			# Revolution in homeland
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revolution in homeland")
-
-			if( bPeaceful and not gc.getTeam(pPlayer.getTeam()).isHasTech(self.iNationalismTech) ) :
-				[goodEffect,badEffect] = RevUtils.getCivicsHolyCityEffects( iPlayer )
-				if( badEffect > 0 ) :
-					stateRel = pPlayer.getStateReligion()
-					if( pPlayer.isStateReligion() and stateRel >= 0 ) :
-						# Check for ask for crusade
-						stateHolyCity = game.getHolyCity( stateRel )
-						stateHolyCityOwner = gc.getPlayer( stateHolyCity.getOwner() )
-						if( not stateHolyCityOwner == None ) :
-							if( instigator.isHasReligion(stateRel) and not stateHolyCityOwner.getID() == iPlayer ) :
-								if( pTeam.canDeclareWar( stateHolyCityOwner.getTeam() ) and not pTeam.isAVassal() ) :
-
-									if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Holy city for %s (%d) is %s, owner %s practices %d"%(gc.getReligionInfo(stateRel).getDescription(),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion()))
-
-									relCities = list()
-									for city in revCities :
-										if( city.isHasReligion(stateRel) ) :
-											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s has state religion"%(city.getName()))
-											relCities.append(city)
-
-									bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
-
-									if( not stateHolyCityOwner.getStateReligion() == stateRel ) :
-										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Ask for Crusade against %s!"%(stateHolyCityOwner.getCivilizationDescription(0)))
-
-										bodStr += " " + localText.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
-										bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_RECLAIM",()) + " %s, "%(stateHolyCity.getName()) + localText.getText("TXT_KEY_REV_HL_HOLY_HEATHENS",())
-										bodStr += "\n\n" + localText.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
-
-										assert( len(relCities) > 0 )
-
-										specialDataDict = { 'iRevPlayer' : stateHolyCityOwner.getID() }
-										cityIdxs = list()
-										for pCity in relCities :
-											cityIdxs.append( pCity.getID() )
-										revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'war', bPeaceful, specialDataDict )
-
-										revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
-										iRevoltIdx = len(revoltDict.keys())
-										revoltDict[iRevoltIdx] = revData
-										RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-										self.makeRevolutionDecision( pPlayer, iRevoltIdx, relCities, 'war', bPeaceful, bodStr )
-
-										return
-
-									if( pPlayer.AI_getAttitude(stateHolyCityOwner.getID()) == AttitudeTypes.ATTITUDE_FURIOUS or pPlayer.AI_getAttitude(stateHolyCityOwner.getID()) == AttitudeTypes.ATTITUDE_ANNOYED ) :
-										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Ask for crusade against fellow believer, %s!"%(stateHolyCityOwner.getCivilizationDescription(0)))
-
-										bodStr += " " + localText.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
-										bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + localText.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(gc.getReligionInfo(stateRel).getDescription()) + localText.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
-										bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_DEVOTION",()) + " %s "%(stateHolyCity.getName()) + localText.getText("TXT_KEY_REV_HL_HOLY_UNWORTHY",())
-										bodStr += "\n\n" + localText.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
-
-										assert( len(relCities) > 0 )
-										specialDataDict = { 'iRevPlayer' : stateHolyCityOwner.getID() }
-										cityIdxs = list()
-										for pCity in relCities :
-											cityIdxs.append( pCity.getID() )
-										revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'war', bPeaceful, specialDataDict )
-
-										revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
-										iRevoltIdx = len(revoltDict.keys())
-										revoltDict[iRevoltIdx] = revData
-										RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-										self.makeRevolutionDecision( pPlayer, iRevoltIdx, relCities, 'war', bPeaceful, bodStr )
-
-										return
-
-
-			if( self.civicRevolution ) :
-				[laborLevel,optionType] = RevUtils.getLaborFreedom( iPlayer )
-				[newLaborLevel,newCivic] = RevUtils.getBestLaborFreedom( iPlayer, optionType )
-				if( bPeaceful and laborLevel < 0 and newLaborLevel > 5 and not newCivic == None ) :
-					if( (10*abs(laborLevel) > game.getSorenRandNum(100, 'Revolt - emancipation request')) ):
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to emancipation, %d"%(newCivic))
-
-						bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
-
-						#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
-						totalRevIdx = 0
-						for pCity in revCities :
-							totalRevIdx += pCity.getRevolutionIndex()
-						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
-						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
-						iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(gc.getCivicInfo(newCivic).getDescription()) + localText.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
-						bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
-
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
-						assert( len(revCities) > 0 )
-
-						specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
-						cityIdxs = list()
-						for pCity in revCities :
-							cityIdxs.append( pCity.getID() )
-						revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
-
-						revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
-						iRevoltIdx = len(revoltDict.keys())
-						revoltDict[iRevoltIdx] = revData
-						RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-						self.makeRevolutionDecision( pPlayer, iRevoltIdx, revCities, 'civics', bPeaceful, bodStr )
-
-						return
-
-				if( laborLevel < -5 and newLaborLevel > (laborLevel + 2) and not newCivic == None ) :
-					if( not bPeaceful and 50 > game.getSorenRandNum( 100, 'Revolt - do slave rebellion' ) ) :
-						if( not instigator.area().isBorderObstacle(pPlayer.getTeam()) ) :
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Slave rebellion!!!, %d"%(newCivic))
-
-							slaveCities = list()
+		if instigator != None:
+			if( instigator.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
+				# Revolution in homeland
+				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revolution in homeland")
+	
+				if( bPeaceful and not gc.getTeam(pPlayer.getTeam()).isHasTech(self.iNationalismTech) ) :
+					[goodEffect,badEffect] = RevUtils.getCivicsHolyCityEffects( iPlayer )
+					if( badEffect > 0 ) :
+						stateRel = pPlayer.getStateReligion()
+						if( pPlayer.isStateReligion() and stateRel >= 0 ) :
+							# Check for ask for crusade
+							stateHolyCity = game.getHolyCity( stateRel )
+							stateHolyCityOwner = gc.getPlayer( stateHolyCity.getOwner() )
+							if( not stateHolyCityOwner == None ) :
+								if( instigator.isHasReligion(stateRel) and not stateHolyCityOwner.getID() == iPlayer ) :
+									if( pTeam.canDeclareWar( stateHolyCityOwner.getTeam() ) and not pTeam.isAVassal() ) :
+	
+										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Holy city for %s (%d) is %s, owner %s practices %d"%(gc.getReligionInfo(stateRel).getDescription(),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion()))
+	
+										relCities = list()
+										for city in revCities :
+											if( city.isHasReligion(stateRel) ) :
+												if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s has state religion"%(city.getName()))
+												relCities.append(city)
+	
+										bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
+	
+										if( not stateHolyCityOwner.getStateReligion() == stateRel ) :
+											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Ask for Crusade against %s!"%(stateHolyCityOwner.getCivilizationDescription(0)))
+	
+											bodStr += " " + localText.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
+											bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_RECLAIM",()) + " %s, "%(stateHolyCity.getName()) + localText.getText("TXT_KEY_REV_HL_HOLY_HEATHENS",())
+											bodStr += "\n\n" + localText.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
+	
+											assert( len(relCities) > 0 )
+	
+											specialDataDict = { 'iRevPlayer' : stateHolyCityOwner.getID() }
+											cityIdxs = list()
+											for pCity in relCities :
+												cityIdxs.append( pCity.getID() )
+											revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'war', bPeaceful, specialDataDict )
+	
+											revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
+											iRevoltIdx = len(revoltDict.keys())
+											revoltDict[iRevoltIdx] = revData
+											RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
+	
+											self.makeRevolutionDecision( pPlayer, iRevoltIdx, relCities, 'war', bPeaceful, bodStr )
+	
+											return
+	
+										if( pPlayer.AI_getAttitude(stateHolyCityOwner.getID()) == AttitudeTypes.ATTITUDE_FURIOUS or pPlayer.AI_getAttitude(stateHolyCityOwner.getID()) == AttitudeTypes.ATTITUDE_ANNOYED ) :
+											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Ask for crusade against fellow believer, %s!"%(stateHolyCityOwner.getCivilizationDescription(0)))
+	
+											bodStr += " " + localText.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
+											bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + localText.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(gc.getReligionInfo(stateRel).getDescription()) + localText.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
+											bodStr += "   " + localText.getText("TXT_KEY_REV_HL_HOLY_DEVOTION",()) + " %s "%(stateHolyCity.getName()) + localText.getText("TXT_KEY_REV_HL_HOLY_UNWORTHY",())
+											bodStr += "\n\n" + localText.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
+	
+											assert( len(relCities) > 0 )
+											specialDataDict = { 'iRevPlayer' : stateHolyCityOwner.getID() }
+											cityIdxs = list()
+											for pCity in relCities :
+												cityIdxs.append( pCity.getID() )
+											revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'war', bPeaceful, specialDataDict )
+	
+											revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
+											iRevoltIdx = len(revoltDict.keys())
+											revoltDict[iRevoltIdx] = revData
+											RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
+	
+											self.makeRevolutionDecision( pPlayer, iRevoltIdx, relCities, 'war', bPeaceful, bodStr )
+	
+											return
+	
+	
+				if( self.civicRevolution ) :
+					[laborLevel,optionType] = RevUtils.getLaborFreedom( iPlayer )
+					[newLaborLevel,newCivic] = RevUtils.getBestLaborFreedom( iPlayer, optionType )
+					if( bPeaceful and laborLevel < 0 and newLaborLevel > 5 and not newCivic == None ) :
+						if( (10*abs(laborLevel) > game.getSorenRandNum(100, 'Revolt - emancipation request')) ):
+							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to emancipation, %d"%(newCivic))
+	
+							bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
+	
+							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							totalRevIdx = 0
 							for pCity in revCities :
-								# Add only cities near instigator in first pass
-								cityDist = plotDistance( pCity.getX(), pCity.getY(), instigator.getX(), instigator.getY() )
-								if( cityDist <= self.closeRadius ) :
-									if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is close enough to instigator to join in slave revolt"%(pCity.getName()))
-									slaveCities.append(pCity)
-
-							for pCity in revCities :
-								if( not pCity in slaveCities ) :
-									# Add cities a little further away that are also near another rebelling city
-									cityDist = plotDistance( pCity.getX(), pCity.getY(), instigator.getX(), instigator.getY() )
-									if( cityDist <= 2.0*self.closeRadius ) :
-										for iCity in slaveCities :
-											cityDist = min([cityDist, plotDistance( pCity.getX(), pCity.getY(), iCity.getX(), iCity.getY() )])
-
-										if( cityDist <= 0.8*self.closeRadius ) :
-											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is close enough to another rebellin city to join in slave revolt"%(pCity.getName()))
-											slaveCities.append(pCity)
-
-							bodStr = localText.getText("TXT_KEY_REV_HL_SLAVE_REBELLION",())
-							bodStr += getCityTextList(slaveCities) + '!'
-
-							bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_SLAVE_DEMAND",())
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to %s"%(gc.getCivicInfo(newCivic).getDescription()))
-							bodStr += ' %s '%(gc.getCivicInfo(newCivic).getDescription())
-
-							bodStr += localText.getText("TXT_KEY_REV_HL_SLAVE_DENY",())
-
-							# Slaves always rise up as barbarians
-							pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
-							assert(len(slaveCities) > 0)
-							specialDataDict = { 'iNewCivic' : newCivic, 'iRevPlayer' : pRevPlayer.getID() }
+								totalRevIdx += pCity.getRevolutionIndex()
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
+							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
+							bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(gc.getCivicInfo(newCivic).getDescription()) + localText.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
+							bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
+	
+							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
+							assert( len(revCities) > 0 )
+	
+							specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
 							cityIdxs = list()
-							for pCity in slaveCities :
+							for pCity in revCities :
 								cityIdxs.append( pCity.getID() )
 							revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
-
+	
 							revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
 							iRevoltIdx = len(revoltDict.keys())
 							revoltDict[iRevoltIdx] = revData
 							RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-							self.makeRevolutionDecision( pPlayer, iRevoltIdx, slaveCities, 'civics', bPeaceful, bodStr )
-
+	
+							self.makeRevolutionDecision( pPlayer, iRevoltIdx, revCities, 'civics', bPeaceful, bodStr )
+	
 							return
-
-				[enviroLevel,optionType] = RevUtils.getEnvironmentalProtection( iPlayer )
-				[newEnviroLevel,newCivic] = RevUtils.getBestEnvironmentalProtection( iPlayer, optionType )
-				if( bPeaceful and newEnviroLevel > enviroLevel + 2 and not newCivic == None ) :
-					if( 30 > game.getSorenRandNum(100, 'Revolt - environmentalism request') ):
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to %s, %d (environment)"%(gc.getCivicInfo(newCivic).getDescription(),newCivic))
-
-						bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
-
-						#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
-						totalRevIdx = 0
-						for pCity in revCities :
-							totalRevIdx += pCity.getRevolutionIndex()
-						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
-						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
-						iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(gc.getCivicInfo(newCivic).getDescription())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_ENV_GREEN",())
-						bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_ENV_SMOG",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
-
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
-						assert( len(revCities) > 0 )
-						specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
-						cityIdxs = list()
-						for pCity in revCities :
-							cityIdxs.append( pCity.getID() )
-						revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
-
-						revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
-						iRevoltIdx = len(revoltDict.keys())
-						revoltDict[iRevoltIdx] = revData
-						RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-						self.makeRevolutionDecision( pPlayer, iRevoltIdx, revCities, 'civics', bPeaceful, bodStr )
-
-						return
-
-
-# -------------------- Special options for colonial revolutions
-		else :
-			# Revolution based in other area
-			# These are special requests peaceful colonists may make
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revolution in colony")
-
-			foreignCities = list()
-			capitalArea = pPlayer.getCapitalCity().area().getID()
-			for pCity in revCities :
-				if( not pCity.area().getID() == capitalArea ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is colony"%(pCity.getName()))
-					foreignCities.append( pCity )
-
-			bodStr = getCityTextList(foreignCities, bPreCity = True, bPostIs = True)
-
-			if( bPeaceful and self.civicRevolution ) :
-				# Sufferage or representation
-				[demoLevel,optionType] = RevUtils.getDemocracyLevel( iPlayer )
-				[newDemoLevel,newCivic] = RevUtils.getBestDemocracyLevel( iPlayer, optionType )
-				if( demoLevel < 0 and newDemoLevel > 0 and not newCivic == None ) :
-
-						bodStr += ' ' + localText.getText("TXT_KEY_REV_COL_GOVT_REQUEST",())
-						if( newDemoLevel > 9 ) :
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to universal sufferage")
-							bodStr += "  " + localText.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(gc.getCivicInfo(newCivic).getDescription())
-						else :
-							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to representation")
-							bodStr += "  " + localText.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(gc.getCivicInfo(newCivic).getDescription()) +localText.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
-
-						#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
-						totalRevIdx = 0
-						for pCity in foreignCities :
-							totalRevIdx += pCity.getRevolutionIndex()
-						iBuyOffCost = totalRevIdx/(15-pPlayer.getCurrentEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
-						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
-						iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
-						bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_COL_GOVT_PRACTICES",())
-						bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
-
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
-						assert( len(revCities) > 0 )
-						specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
-						cityIdxs = list()
-						for pCity in foreignCities :
-							cityIdxs.append( pCity.getID() )
-						revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
-
-						revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
-						iRevoltIdx = len(revoltDict.keys())
-						revoltDict[iRevoltIdx] = revData
-						RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
-
-						self.makeRevolutionDecision( pPlayer, iRevoltIdx, foreignCities, 'civics', bPeaceful, bodStr )
-
-						return
-
-			#if( bPeaceful and self.vassalRevolution ) :
-				# Ask to become vassal
-				# Trim down cities to only those close to instigator
+	
+					if( laborLevel < -5 and newLaborLevel > (laborLevel + 2) and not newCivic == None ) :
+						if( not bPeaceful and 50 > game.getSorenRandNum( 100, 'Revolt - do slave rebellion' ) ) :
+							if( not instigator.area().isBorderObstacle(pPlayer.getTeam()) ) :
+								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Slave rebellion!!!, %d"%(newCivic))
+	
+								slaveCities = list()
+								for pCity in revCities :
+									# Add only cities near instigator in first pass
+									cityDist = plotDistance( pCity.getX(), pCity.getY(), instigator.getX(), instigator.getY() )
+									if( cityDist <= self.closeRadius ) :
+										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is close enough to instigator to join in slave revolt"%(pCity.getName()))
+										slaveCities.append(pCity)
+	
+								for pCity in revCities :
+									if( not pCity in slaveCities ) :
+										# Add cities a little further away that are also near another rebelling city
+										cityDist = plotDistance( pCity.getX(), pCity.getY(), instigator.getX(), instigator.getY() )
+										if( cityDist <= 2.0*self.closeRadius ) :
+											for iCity in slaveCities :
+												cityDist = min([cityDist, plotDistance( pCity.getX(), pCity.getY(), iCity.getX(), iCity.getY() )])
+	
+											if( cityDist <= 0.8*self.closeRadius ) :
+												if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is close enough to another rebellin city to join in slave revolt"%(pCity.getName()))
+												slaveCities.append(pCity)
+	
+								bodStr = localText.getText("TXT_KEY_REV_HL_SLAVE_REBELLION",())
+								bodStr += getCityTextList(slaveCities) + '!'
+	
+								bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_SLAVE_DEMAND",())
+								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to %s"%(gc.getCivicInfo(newCivic).getDescription()))
+								bodStr += ' %s '%(gc.getCivicInfo(newCivic).getDescription())
+	
+								bodStr += localText.getText("TXT_KEY_REV_HL_SLAVE_DENY",())
+	
+								# Slaves always rise up as barbarians
+								pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
+								assert(len(slaveCities) > 0)
+								specialDataDict = { 'iNewCivic' : newCivic, 'iRevPlayer' : pRevPlayer.getID() }
+								cityIdxs = list()
+								for pCity in slaveCities :
+									cityIdxs.append( pCity.getID() )
+								revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
+	
+								revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
+								iRevoltIdx = len(revoltDict.keys())
+								revoltDict[iRevoltIdx] = revData
+								RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
+	
+								self.makeRevolutionDecision( pPlayer, iRevoltIdx, slaveCities, 'civics', bPeaceful, bodStr )
+	
+								return
+	
+					[enviroLevel,optionType] = RevUtils.getEnvironmentalProtection( iPlayer )
+					[newEnviroLevel,newCivic] = RevUtils.getBestEnvironmentalProtection( iPlayer, optionType )
+					if( bPeaceful and newEnviroLevel > enviroLevel + 2 and not newCivic == None ) :
+						if( 30 > game.getSorenRandNum(100, 'Revolt - environmentalism request') ):
+							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to %s, %d (environment)"%(gc.getCivicInfo(newCivic).getDescription(),newCivic))
+	
+							bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
+	
+							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							totalRevIdx = 0
+							for pCity in revCities :
+								totalRevIdx += pCity.getRevolutionIndex()
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
+							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
+							bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(gc.getCivicInfo(newCivic).getDescription())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_ENV_GREEN",())
+							bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_HL_ENV_SMOG",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
+	
+							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
+							assert( len(revCities) > 0 )
+							specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
+							cityIdxs = list()
+							for pCity in revCities :
+								cityIdxs.append( pCity.getID() )
+							revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
+	
+							revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
+							iRevoltIdx = len(revoltDict.keys())
+							revoltDict[iRevoltIdx] = revData
+							RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
+	
+							self.makeRevolutionDecision( pPlayer, iRevoltIdx, revCities, 'civics', bPeaceful, bodStr )
+	
+							return
+	
+	
+	# -------------------- Special options for colonial revolutions
+			else :
+				# Revolution based in other area
+				# These are special requests peaceful colonists may make
+				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revolution in colony")
+	
+				foreignCities = list()
+				capitalArea = pPlayer.getCapitalCity().area().getID()
+				for pCity in revCities :
+					if( not pCity.area().getID() == capitalArea ) :
+						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s is colony"%(pCity.getName()))
+						foreignCities.append( pCity )
+	
+				bodStr = getCityTextList(foreignCities, bPreCity = True, bPostIs = True)
+	
+				if( bPeaceful and self.civicRevolution ) :
+					# Sufferage or representation
+					[demoLevel,optionType] = RevUtils.getDemocracyLevel( iPlayer )
+					[newDemoLevel,newCivic] = RevUtils.getBestDemocracyLevel( iPlayer, optionType )
+					if( demoLevel < 0 and newDemoLevel > 0 and not newCivic == None ) :
+	
+							bodStr += ' ' + localText.getText("TXT_KEY_REV_COL_GOVT_REQUEST",())
+							if( newDemoLevel > 9 ) :
+								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to universal sufferage")
+								bodStr += "  " + localText.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(gc.getCivicInfo(newCivic).getDescription())
+							else :
+								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to representation")
+								bodStr += "  " + localText.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(gc.getCivicInfo(newCivic).getDescription()) +localText.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
+	
+							#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+							totalRevIdx = 0
+							for pCity in foreignCities :
+								totalRevIdx += pCity.getRevolutionIndex()
+							iBuyOffCost = totalRevIdx/(15-pPlayer.getCurrentEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
+							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
+							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
+							bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_COL_GOVT_PRACTICES",())
+							bodStr += '  ' + localText.getText("TXT_KEY_REV_BRIBE",())
+	
+							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost))
+							assert( len(revCities) > 0 )
+							specialDataDict = { 'iNewCivic' : newCivic, 'iBuyOffCost' : iBuyOffCost }
+							cityIdxs = list()
+							for pCity in foreignCities :
+								cityIdxs.append( pCity.getID() )
+							revData = RevDefs.RevoltData( pPlayer.getID(), game.getGameTurn(), cityIdxs, 'civics', bPeaceful, specialDataDict )
+	
+							revoltDict = RevData.revObjectGetVal( pPlayer, 'RevoltDict' )
+							iRevoltIdx = len(revoltDict.keys())
+							revoltDict[iRevoltIdx] = revData
+							RevData.revObjectUpdateVal( pPlayer, 'RevoltDict', revoltDict )
+	
+							self.makeRevolutionDecision( pPlayer, iRevoltIdx, foreignCities, 'civics', bPeaceful, bodStr )
+	
+							return
+	
+				#if( bPeaceful and self.vassalRevolution ) :
+					# Ask to become vassal
+					# Trim down cities to only those close to instigator
 
 
 #-------- If capital or majority of cities,
