@@ -890,7 +890,9 @@ class Revolution :
 				mess = localText.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
 				CyInterface().addMessage(iPlayer, false, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, ColorTypes(7), -1, -1, False, False)
 			elif( pRevPlayer.getID() == iPlayer ) :
-				mess = localText.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
+#				mess = localText.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",(pRevPlayer.getNameKey(), pCity.getName()))
+				mess = localText.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",(getCivilizationDescription(0), pCity.getName()))
+				
 				CyInterface().addMessage(iPlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(8), ix, iy, True, True)
 
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Reinforcement strength %.2f, spawning %d reinforcements for city of size %d"%(revStrength,iNumUnits,pCity.getPopulation()))
