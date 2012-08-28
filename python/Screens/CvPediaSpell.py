@@ -351,9 +351,9 @@ class CvPediaSpell( CvPediaScreen.CvPediaScreen ):
 		listSpells = []
 		iCount = 0
 		for iSpell in range(gc.getNumSpellInfos()):
-			if not gc.getSpellInfo(iSpell).isGraphicalOnly():
-				listSpells.append(iSpell)
-				iCount += 1
+#			if not gc.getSpellInfo(iSpell).isGraphicalOnly():
+			listSpells.append(iSpell)
+			iCount += 1
 
 		listSorted = [(0,0)] * iCount
 		iI = 0
@@ -365,22 +365,22 @@ class CvPediaSpell( CvPediaScreen.CvPediaScreen ):
 		i = 0
 		iSelected = 0
 		for iI in range(len(listSorted)):
-			if (not gc.getSpellInfo(iI).isGraphicalOnly()):
-				if bRedraw:
-					screen.appendListBoxString( self.top.LIST_ID, listSorted[iI][0], WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, listSorted[iI][1], 0, CvUtil.FONT_LEFT_JUSTIFY )
-				if listSorted[iI][1] == self.iSpell:
-					iSelected = i
-				i += 1
+#			if (not gc.getSpellInfo(iI).isGraphicalOnly()):
+			if bRedraw:
+				screen.appendListBoxString( self.top.LIST_ID, listSorted[iI][0], WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, listSorted[iI][1], 0, CvUtil.FONT_LEFT_JUSTIFY )
+			if listSorted[iI][1] == self.iSpell:
+				iSelected = i
+			i += 1
 		"""
 		listSorted = self.getSortedList( gc.getNumSpellInfos(), gc.getSpellInfo, self.getSpellType(self.iSpell), self.getSpellType )
 
 		iSelected = 0
 		for iIndex, (szDescription, iSpell) in enumerate(listSorted):
-			if (not gc.getSpellInfo(iSpell).isGraphicalOnly()):
-				if bRedraw:
-					screen.appendListBoxString(self.top.LIST_ID, szDescription, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, 0, CvUtil.FONT_LEFT_JUSTIFY)
-				if iSpell == self.iSpell:
-					iSelected = iIndex
+#			if (not gc.getSpellInfo(iSpell).isGraphicalOnly()):
+			if bRedraw:
+				screen.appendListBoxString(self.top.LIST_ID, szDescription, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, 0, CvUtil.FONT_LEFT_JUSTIFY)
+			if iSpell == self.iSpell:
+				iSelected = iIndex
 ##--------	BUGFfH: End Modify
 
 		screen.setSelectedListBoxStringGFC(self.top.LIST_ID, iSelected)
