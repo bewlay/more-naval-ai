@@ -65,7 +65,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DISPEL_MAGIC</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Add to Freak Show.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -88,7 +88,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DISPEL_MAGIC</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Add to Freak Show.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -111,7 +111,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DISPEL_MAGIC</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Add to Freak Show.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -134,7 +134,7 @@
             <PyRequirement>reqAddToFreakShowHuman(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DISPEL_MAGIC</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Add to Freak Show.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -157,7 +157,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DISPEL_MAGIC</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Add to Freak Show.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -177,7 +177,7 @@
             <PyRequirement>reqAddToWolfPack(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_TRAIN</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Wolf.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -343,7 +343,7 @@
 	    <bAbility>1</bAbility>
             <Effect>EFFECT_BURNING_BLOOD</Effect>
             <Sound>AS3D_SPELL_BURNING_BLOOD</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Promotions/Burningblood.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -376,7 +376,7 @@
             <PyRequirement>reqCallBlizzard(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CONTAGION</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/TerrainFeatures/Blizzard.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -549,7 +549,7 @@
             <PyRequirement>reqConvertCityRantine(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_DOMINATION</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Convertcity.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -651,7 +651,7 @@
             <bCopyCastersPromotions>1</bCopyCastersPromotions>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CREATE_PUPPET</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Puppet.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -672,7 +672,7 @@
             <PyRequirement>reqCrewBuccaneers(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CREW</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Promotions/Buccaneers.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -693,7 +693,7 @@
             <PyRequirement>reqCrewLongshoremen(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CREW</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Promotions/Longshoremen.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -711,7 +711,7 @@
             <PyRequirement>reqCrewNormalCrew(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CREW</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Normalcrew.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -732,7 +732,7 @@
             <PyRequirement>reqCrewSkeletonCrew(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CREW</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Promotions/Skeletoncrew.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1384,7 +1384,7 @@
             <PyRequirement>reqFormWolfPack(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_TRAIN</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Wolf Pack.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1402,7 +1402,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Templekilmorph.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1420,7 +1420,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Templeleaves.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1438,7 +1438,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Temple of the Empyrean.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1456,7 +1456,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Templeorder.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1474,7 +1474,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Templeoverlords.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1492,7 +1492,7 @@
             <bSacrificeCaster>1</bSacrificeCaster>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_FOUND_TEMPLE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Buildings/Templeashen.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1546,7 +1546,7 @@
             <PyResult>spellGiveHammerToCraftsman(pCaster)</PyResult>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_TRAIN</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/greatengineer.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1693,7 +1693,7 @@
             <PyRequirement>reqHireScorpionClan(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_HOPE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Archer Scorpion Clan.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1709,7 +1709,7 @@
             <PyRequirement>reqHireScorpionClan(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_HOPE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Chariot Scorpion Clan.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1724,7 +1724,7 @@
             <PyRequirement>reqHireScorpionClan(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_HOPE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Goblin Scorpion Clan.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -1754,7 +1754,7 @@
             <PyRequirement>reqHireScorpionClan(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_HOPE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Units/Wolf Rider Scorpion Clan.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -2120,7 +2120,7 @@
             <PyRequirement>reqPeaceSevenPines(pCaster)</PyRequirement>
             <Effect>EFFECT_CREATION</Effect>
             <Sound>AS3D_SPELL_CURE_DISEASE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Peace.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -2457,7 +2457,7 @@
             <PyResult>spellRessurectionGraveyard(pCaster)</PyResult>
             <Effect>EFFECT_RESSURECTION</Effect>
             <Sound>AS3D_SPELL_CURE_DISEASE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Ressurection.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -2636,7 +2636,7 @@
             <PyResult>spellSacrificePyre(pCaster)</PyResult>
             <Effect>EFFECT_SACRIFICE</Effect>
             <Sound>AS3D_SPELL_SACRIFICE</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Sacrifice.dds</Button>
         </SpellInfo>
         <SpellInfo>
@@ -2848,7 +2848,7 @@
             <PyResult>spellSnowfallGreator(pCaster)</PyResult>
             <Effect>EFFECT_SNOWFALL_GREATOR</Effect>
             <Sound>AS3D_SPELL_SPRING</Sound>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Spells/Snowfall.dds</Button>
         </SpellInfo>
         <SpellInfo>
