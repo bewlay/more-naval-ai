@@ -448,7 +448,7 @@ def canCityBuildUnit(unitInfo, city, eAskingTeam, checkBonuses=True):
 				return False
 	# holy city
 	eReligion = unitInfo.getHolyCity()
-	if eReligion != -1 and not (city and city.isHolyCity(eReligion)):
+	if eReligion != -1 and not (city and city.isHolyCityByType(eReligion)):
 		return False
 	# building
 	eBuilding = unitInfo.getPrereqBuilding()
