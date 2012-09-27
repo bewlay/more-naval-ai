@@ -3675,7 +3675,10 @@ void CvUnitAI::AI_attackCityMove()
 		}
 	}
 
-	bool bInCity = plot()->isCity();
+	// Super Forts begin *AI_offense* - allow stack to split after capturing a fort in addition to cities
+	bool bInCity = plot()->isCity(true);
+	//bool bInCity = plot()->isCity(); // Original Code
+	// Super Forts end
 
 	if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
 	{
@@ -3692,7 +3695,10 @@ void CvUnitAI::AI_attackCityMove()
 			// BBAI TODO: split out slow units ... will need to test to make sure this doesn't cause loops
 		}
 
-		if ((GC.getGame().getGameTurn() - plot()->getPlotCity()->getGameTurnAcquired()) <= 1)
+		// Super Forts begin *AI_offense* - allow stack to split after capturing a fort in addition to cities
+		if (plot()->getOwnershipDuration() <= 1)
+		//if ((GC.getGame().getGameTurn() - plot()->getPlotCity()->getGameTurnAcquired()) <= 1) // Original Code
+		// Super Forts end
 		{
 			CvSelectionGroup* pOldGroup = getGroup();
 

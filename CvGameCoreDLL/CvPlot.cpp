@@ -9559,7 +9559,7 @@ void CvPlot::doCulture()
 	if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && eImprovement != NO_IMPROVEMENT)
 	{
 		// Check for a fort culture flip
-		if(GC.getImprovementInfo(eImprovement).isActsAsCity())
+		if(GC.getImprovementInfo(eImprovement).isActsAsCity() && (getOwnershipDuration() > GC.getDefineINT("SUPER_FORTS_DURATION_BEFORE_REVOLT")))
 		{
 			eCulturalOwner = calculateCulturalOwner();
 			if(eCulturalOwner != NO_PLAYER)
