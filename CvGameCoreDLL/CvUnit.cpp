@@ -875,7 +875,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	    if (isHasPromotion((PromotionTypes)iI))
 	    {
             GC.getGameINLINE().changeGlobalCounter(-1 * GC.getPromotionInfo((PromotionTypes)iI).getModifyGlobalCounter());
-            if (GC.getPromotionInfo((PromotionTypes)iI).isEquipment())
+            if (GC.getPromotionInfo((PromotionTypes)iI).isEquipment() && !isIllusion())
             {
                 for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
                 {
