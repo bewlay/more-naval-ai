@@ -105,6 +105,7 @@ public:
     bool isChanneler();
     bool isDivine();
 	bool isVampire();
+	bool isIllusion();
 	int getChannelingLevel();
 
 	void AI_lairGuardianMove();

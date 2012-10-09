@@ -10661,6 +10661,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		isWaterWalking())
 	{
 	*/
+	iTemp += 20;
+
 	if (eUnitAI != UNITAI_CITY_DEFENSE && eUnitAI != UNITAI_CITY_COUNTER)
 	{
 		iTemp += (isAlive() ? 10 : 20); //slight bonus for non-alive units since they cant be Hasted
@@ -10670,7 +10672,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			iTemp += 20 + (iLevel * 6);
 		}
 
-		if (isBlitz())
+		if (isBlitz() || eUnitAI == UNITAI_PILLAGE)
 		{
 			iTemp+= 20;
 		}
@@ -10752,6 +10754,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iTemp *= (100 + iExtra);
 		iTemp /= 100;
 		if ((eUnitAI == UNITAI_ATTACK_CITY) ||
+			(eUnitAI == UNITAI_ATTACK) ||
 			(eUnitAI == UNITAI_ATTACK_SEA) ||
 			(eUnitAI == UNITAI_HERO))
 		{
@@ -11418,6 +11421,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			if (isSummoner())
 			{
 				iValue += 35;
+				
+				// mobility is especially valuable
+				if (GC.getPromotionInfo((PromotionTypes)kPromotion.getPromotionSummonPerk()).getMovesChange() > 0)
+				{
+					iValue += 25;
+				}
 			}
 		}
 
@@ -30055,6 +30064,14 @@ bool CvUnitAI::isDivine()
 bool CvUnitAI::isVampire()
 {
 	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_VAMPIRE")))
+		return true;
+
+	return false;
+}
+
+bool CvUnitAI::isIllusion()
+{
+	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ILLUSION")))
 		return true;
 
 	return false;

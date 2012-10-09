@@ -801,6 +801,7 @@ public:
 	virtual bool isChanneler() = 0;
 	virtual bool isDivine() = 0;
 	virtual bool isVampire() = 0;
+	virtual bool isIllusion() = 0;
 	int getChannelingLevel();
 // End Tholal AI
 
