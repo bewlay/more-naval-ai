@@ -154,6 +154,7 @@ void CyInfoPythonInterface1()
 		.def("getSound", &CvPromotionInfo::getSound, "string ()")
 
 //FfH: Added by Kael 08/17/2007
+		.def("getPromotionSummonPerk", &CvPromotionInfo::getPromotionSummonPerk, "int ()") // added by Tholal
 		.def("getBonusPrereq", &CvPromotionInfo::getBonusPrereq, "int ()")
 		.def("getMinLevel", &CvPromotionInfo::getMinLevel, "int ()")
 		.def("getPromotionPrereqAnd", &CvPromotionInfo::getPromotionPrereqAnd, "int ()")
