@@ -13095,7 +13095,7 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 		ImprovementTypes eImprovement = plot()->getImprovementType();
 		if (eImprovement != NO_IMPROVEMENT)
 		{
-			if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+			if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 			{
 				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= 1)
 				{
@@ -13126,7 +13126,7 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 				ImprovementTypes eImprovement = pLoopPlot->getImprovementType();
 				if (eImprovement != NO_IMPROVEMENT)
 				{
-					if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+					if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 					{
 						if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 						{

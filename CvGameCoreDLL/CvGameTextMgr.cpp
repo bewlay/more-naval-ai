@@ -6506,20 +6506,29 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
                  GC.getGameINLINE().getActivePlayer() == NO_PLAYER ||
                  GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
                 {
-                    if ((pPlot->getUpgradeProgress() > 0) || pPlot->isBeingWorked())
+                    // Super Forts begin *text* *upgrade*
+					if ((pPlot->getUpgradeProgress() > 0) || (pPlot->isBeingWorked() && !GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify()))
+					// if ((pPlot->getUpgradeProgress() > 0) || pPlot->isBeingWorked()) - Original Code
+					// Super Forts end
                     {
                         iTurns = pPlot->getUpgradeTimeLeft(eImprovement, eRevealOwner);
                         szString.append(gDLL->getText("TXT_KEY_PLOT_IMP_UPGRADE", iTurns, GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
                     }
                     else
                     {
-                        if (GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization() == NO_CIVILIZATION)
+                        if (GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization() != NO_CIVILIZATION)
                         {
-                            szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+							szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE_PREREQ_CIV", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide(), GC.getCivilizationInfo((CivilizationTypes)GC.getImprovementInfo((ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization()).getDescription()));
                         }
+						// Super Forts begin *text* *upgrade*
+						else if (GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
+						{
+							szString.append(gDLL->getText("TXT_KEY_PLOT_FORTIFY_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+						}
+						// Super Forts end
                         else
                         {
-                            szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE_PREREQ_CIV", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide(), GC.getCivilizationInfo((CivilizationTypes)GC.getImprovementInfo((ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization()).getDescription()));
+							szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
                         }
                     }
                 }
@@ -17777,7 +17786,13 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
             szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENT_EVOLVES_PREREQ_CIV", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide(), iTurns, GC.getCivilizationInfo((CivilizationTypes)GC.getImprovementInfo((ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization()).getDescription()));
         }
 //FfH: End Modify
-
+		// Super Forts begin *text* *upgrade*
+		if (info.isUpgradeRequiresFortify())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENT_FORTIFY_TO_UPGRADE"));
+		}
+		// Super Forts end
 	}
 
 	int iLast = -1;

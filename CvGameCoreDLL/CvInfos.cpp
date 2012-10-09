@@ -14466,6 +14466,7 @@ m_iSeeFrom(0),
 m_iUniqueRange(0),
 m_bSuperFort(false),
 m_bBombardable(false),
+m_bUpgradeRequiresFortify(false),
 // Super Forts end
 m_bActsAsCity(true),
 m_bHillsMakesValid(false),
@@ -14658,6 +14659,12 @@ bool CvImprovementInfo::isSuperFort() const
 bool CvImprovementInfo::isBombardable() const
 {
 	return m_bBombardable;
+}
+
+bool CvImprovementInfo::isUpgradeRequiresFortify() const
+{
+	// Super Forts *custom* *upgrade*
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_bUpgradeRequiresFortify : false;
 }
 // Super Forts end
 
@@ -15002,6 +15009,7 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iUniqueRange);
 	stream->Read(&m_bSuperFort);
 	stream->Read(&m_bBombardable);
+	stream->Read(&m_bUpgradeRequiresFortify);
 	// Super Forts end
 
 	stream->Read(&m_bActsAsCity);
@@ -15138,6 +15146,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iUniqueRange);
 	stream->Write(m_bSuperFort);
 	stream->Write(m_bBombardable);
+	stream->Write(m_bUpgradeRequiresFortify);
 	// Super Forts end
 
 	stream->Write(m_bActsAsCity);
@@ -15301,6 +15310,7 @@ bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iUniqueRange, "iUnique");
 	pXML->GetChildXmlValByName(&m_bSuperFort, "bSuperFort");
 	pXML->GetChildXmlValByName(&m_bBombardable, "bBombardable");
+	pXML->GetChildXmlValByName(&m_bUpgradeRequiresFortify, "bUpgradeRequiresFortify");
 	// Super Forts end
 
 	pXML->SetVariableListTagPair(&m_pbTerrainMakesValid, "TerrainMakesValids", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());

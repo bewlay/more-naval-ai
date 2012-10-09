@@ -681,6 +681,7 @@
 			<iUnique>2</iUnique>
 			<bSuperFort>1</bSuperFort>
 			<bBombardable>1</bBombardable>
+			<bUpgradeRequiresFortify>1</bUpgradeRequiresFortify>
         </ImprovementInfo>
         <ImprovementInfo>
             <Type>IMPROVEMENT_CITADEL</Type>
@@ -1562,6 +1563,7 @@
 			<iUnique>2</iUnique>
 			<bSuperFort>1</bSuperFort>
 			<bBombardable>1</bBombardable>
+			<bUpgradeRequiresFortify>1</bUpgradeRequiresFortify>
         </ImprovementInfo>
         <ImprovementInfo>
             <Type>IMPROVEMENT_GOBLIN_FORT</Type>

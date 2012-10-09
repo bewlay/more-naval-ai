@@ -485,7 +485,10 @@ void CvPlot::doTurn()
 		{
             if (!isBeingWorked())
             {
-                if (GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders())
+                if (GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders()
+					// Super Forts begin *upgrade*
+					|| GC.getImprovementInfo(eImprovementUpgrade).isUpgradeRequiresFortify())
+					// Super Forts end
                 {
                     doImprovementUpgrade();
                 }
@@ -695,7 +698,11 @@ void CvPlot::doImprovementUpgrade()
 		ImprovementTypes eImprovementUpgrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
 		if (eImprovementUpgrade != NO_IMPROVEMENT)
 		{
-			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders())
+			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpgrade).isOutsideBorders()
+				// Super Forts begin *upgrade*
+				|| GC.getImprovementInfo(getImprovementType()).isUpgradeRequiresFortify()
+				// Super Forts end
+				)
 			{
 
 //FfH: Modified by Kael 05/12/2008
@@ -705,7 +712,43 @@ void CvPlot::doImprovementUpgrade()
                     if (GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == NO_CIVILIZATION ||
                       GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
                     {
-                        changeUpgradeProgress(GET_PLAYER(getOwnerINLINE()).getImprovementUpgradeRate());
+						// Super Forts begin *upgrade* - added if-else statement
+						if(GC.getImprovementInfo(getImprovementType()).isUpgradeRequiresFortify())
+						{
+							bool bDefenderFound = false;
+							CLinkList<IDInfo> oldUnits;
+							CLLNode<IDInfo>* pUnitNode = headUnitNode();
+							CvUnit* pLoopUnit;
+
+							while (pUnitNode != NULL)
+							{
+								oldUnits.insertAtEnd(pUnitNode->m_data);
+								pUnitNode = nextUnitNode(pUnitNode);
+							}
+
+							pUnitNode = oldUnits.head();
+
+							while (pUnitNode != NULL)
+							{
+								pLoopUnit = ::getUnit(pUnitNode->m_data);
+								pUnitNode = nextUnitNode(pUnitNode);
+								if(pLoopUnit->getFortifyTurns() > 0)
+								{
+									if(pLoopUnit->getOwner() == getOwnerINLINE())
+									{
+										bDefenderFound = true;
+										break;
+									}
+								}
+							}
+							if(bDefenderFound)
+							{
+								changeUpgradeProgress(GET_PLAYER(getOwnerINLINE()).getImprovementUpgradeRate());
+							}
+						}
+						else
+						// Super Forts end
+							changeUpgradeProgress(GET_PLAYER(getOwnerINLINE()).getImprovementUpgradeRate());
                     }
                     if (GC.getImprovementInfo(getImprovementType()).getPrereqCivilization() != NO_CIVILIZATION &&
                       GC.getImprovementInfo(getImprovementType()).getPrereqCivilization() != GET_PLAYER(getOwnerINLINE()).getCivilizationType())
@@ -715,7 +758,11 @@ void CvPlot::doImprovementUpgrade()
                 }
                 else
                 {
-                    if (GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == NO_CIVILIZATION)
+                    if (GC.getImprovementInfo(eImprovementUpgrade).getPrereqCivilization() == NO_CIVILIZATION
+						// Super Forts begin *upgrade*
+						&& !GC.getImprovementInfo(getImprovementType()).isUpgradeRequiresFortify()
+						// Super Forts end
+						)
                     {
                         changeUpgradeProgress(1);
                     }

@@ -3540,6 +3540,7 @@ public:
 	int getUniqueRange() const;
 	bool isSuperFort() const;
 	bool isBombardable() const;
+	bool isUpgradeRequiresFortify() const;
 	// Super Forts end
 
 	bool isActsAsCity() const;				// Exposed to Python
@@ -3641,6 +3642,7 @@ protected:
 	int m_iUniqueRange;
 	bool m_bSuperFort;
 	bool m_bBombardable;
+	bool m_bUpgradeRequiresFortify;
 	// Super Forts end
 
 	bool m_bActsAsCity;

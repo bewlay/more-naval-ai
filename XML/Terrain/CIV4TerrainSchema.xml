@@ -470,6 +470,7 @@
 	<ElementType name="iCultureRange" content="textOnly" dt:type="int"/>
 	<ElementType name="bSuperFort" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bBombardable" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bUpgradeRequiresFortify" content="textOnly" dt:type="boolean"/>
 <!-- Super Forts end -->
 	<ElementType name="bRequiresPeak" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bUnique" content="textOnly" dt:type="boolean"/>
@@ -535,6 +536,7 @@
 		<element type="iUnique" minOccurs="0"/>
 		<element type="bSuperFort" minOccurs="0"/>
 		<element type="bBombardable" minOccurs="0"/>
+		<element type="bUpgradeRequiresFortify" minOccurs="0"/>
 <!-- Super Forts end -->
 		<element type="bRequiresPeak"/>
 		<element type="bUnique"/>
