@@ -30069,10 +30069,20 @@ bool CvUnitAI::isVampire()
 	return false;
 }
 
-bool CvUnitAI::isIllusion()
+bool CvUnitAI::isIllusionary()
 {
-	if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_ILLUSION")))
-		return true;
+	int iI;
+
+	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		if (isHasPromotion((PromotionTypes)iI))
+		{
+			if (GC.getPromotionInfo((PromotionTypes)iI).isRace() && GC.getPromotionInfo((PromotionTypes)iI).getCombatHealPercent() == 100)
+			{
+				return true;
+			}
+		}
+	}
 
 	return false;
 }

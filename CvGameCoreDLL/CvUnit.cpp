@@ -788,7 +788,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	PlayerTypes eCapturingPlayer;
 	UnitTypes eCaptureUnitType;
 
-	bool bIsIllusion = isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION"));
+	//bool bIsIllusion = isHasPromotion((PromotionTypes) GC.getInfoTypeForString("PROMOTION_ILLUSION"));
+	bool bIllusion = isIllusionary();
 
 	pPlot = plot();
 	FAssertMsg(pPlot != NULL, "Plot is not assigned a valid value");
@@ -858,7 +859,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	}
 
 //FfH: Added by Kael 07/23/2008
-    if (isImmortal() && !bIsIllusion)
+    if (isImmortal() && !bIllusion)
     {
 		if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
 		{
@@ -875,7 +876,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	    if (isHasPromotion((PromotionTypes)iI))
 	    {
             GC.getGameINLINE().changeGlobalCounter(-1 * GC.getPromotionInfo((PromotionTypes)iI).getModifyGlobalCounter());
-            if (GC.getPromotionInfo((PromotionTypes)iI).isEquipment() && !isIllusion())
+            if (GC.getPromotionInfo((PromotionTypes)iI).isEquipment() && !bIllusion)
             {
                 for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
                 {
