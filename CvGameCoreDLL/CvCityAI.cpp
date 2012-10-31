@@ -2225,6 +2225,14 @@ void CvCityAI::AI_chooseProduction()
 		iMinFoundValue /= 2;
 	}
 
+	if (bGetBetterUnits)
+	{
+		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 10, 33))
+		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE GetBetterUnits", getName().GetCString());
+			return;
+		}
+	}
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
 	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) ||
 		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)))
