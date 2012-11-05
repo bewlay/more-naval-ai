@@ -13009,7 +13009,8 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= AI_getPlotDefendersNeeded(plot(), 0))
+				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= ((GET_PLAYER(getOwner()).AI_getPlotDanger(plot()) > 0) ? 2: 1))
+				//if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= AI_getPlotDefendersNeeded(plot(), 0))
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
