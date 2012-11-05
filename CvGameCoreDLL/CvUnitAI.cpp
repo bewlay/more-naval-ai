@@ -13106,7 +13106,7 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= 1)
+				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= ((GET_PLAYER(getOwner()).AI_getPlotDanger(plot()) > 0) ? 2: 1))
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
@@ -13121,6 +13121,7 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 	}
 
 	int iBestValue = 0;
+	int iNeededDefense = 1;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestGuardPlot = NULL;
 
@@ -13139,9 +13140,14 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 					{
 						if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 						{
-							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
+							if (GET_PLAYER(getOwner()).AI_getPlotDanger(pLoopPlot) > 0)
 							{
-								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) == 0)
+								iNeededDefense++;
+							}
+							
+							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) < iNeededDefense)
+							{
+								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) < iNeededDefense)
 								{
 									int iPathTurns;
 									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
