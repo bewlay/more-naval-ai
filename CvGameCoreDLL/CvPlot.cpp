@@ -11050,7 +11050,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 
 	if (kUnit.getPrereqReligion() != NO_RELIGION)
 	{
-		if (NULL == pCity || !pCity->isHasReligion((ReligionTypes)(kUnit.getPrereqReligion())))
+		if (NULL == pCity || isBarbarian() || !pCity->isHasReligion((ReligionTypes)(kUnit.getPrereqReligion())))
 		{
 			return false;
 		}
