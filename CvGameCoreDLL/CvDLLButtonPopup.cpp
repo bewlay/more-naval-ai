@@ -1523,7 +1523,7 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 		&& ((player.getTeam() == GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(player.getTeam()).isOpenBorders(GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(GET_PLAYER(eReceivingPlayer).getTeam()).isVassal(player.getTeam())));
 	bool bPuppet = (player.canMakePuppet(pNewCity->getPreviousOwner()) && 
 		!pNewCity->canJoinPuppetState(player.getID()) && 
-		!GET_PLAYER(pNewCity->getOriginalOwner()).isBarbarian());
+		!GET_PLAYER(pNewCity->getPreviousOwner()).isBarbarian());
 	bool bPuppetGift = false;
 
 	if (bPuppet)
