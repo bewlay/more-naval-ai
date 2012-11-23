@@ -1141,10 +1141,10 @@ class CustomFunctions:
 									CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_ADD_MANES",()),'AS2D_UNIT_FALLS',1,'Art/Interface/Buttons/Promotions/Demon.dds',ColorTypes(7),pPlot.getX(),pPlot.getY(),True,True)
 								if iUnit == iAngel:
 									CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_ADD_ANGEL",()),'AS2D_UNIT_FALLS',1,'Art/Interface/Buttons/Promotions/Angel.dds',ColorTypes(7),pPlot.getX(),pPlot.getY(),True,True)
-							if (pPlayer.isHuman() == False and iUnit == iManes and pCity != -1):
-								if CyGame().getSorenRandNum(100, "Manes") < (100 - (pCity.getPopulation() * 5)):
-									pCity.changePopulation(1)
-									newUnit.kill(True, PlayerTypes.NO_PLAYER)
+#							if (pPlayer.isHuman() == False and iUnit == iManes and pCity != -1):
+#								if CyGame().getSorenRandNum(100, "Manes") < (100 - (pCity.getPopulation() * 5)):
+#									pCity.changePopulation(1)
+#									newUnit.kill(True, PlayerTypes.NO_PLAYER)
 			if bValid:
 				if iUnit == iManes:
 					CyInterface().addMessage(iFromPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_UNIT_FALLS",()),'AS2D_UNIT_FALLS',1,'Art/Interface/Buttons/Promotions/Demon.dds',ColorTypes(7),pFromPlot.getX(),pFromPlot.getY(),True,True)
