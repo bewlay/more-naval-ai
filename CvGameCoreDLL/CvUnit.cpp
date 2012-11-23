@@ -5951,32 +5951,35 @@ bool CvUnit::pillage()
 	}
 
 	// Advanced Tactics - Pillaging reduces Culture
-	for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 	{
-		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (kLoopPlayer.isAlive())
+		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 		{
-			int iLoopPlayerPlotCulture = pPlot->getCulture((PlayerTypes)iPlayer);
-			if (iLoopPlayerPlotCulture > 0)
+			CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (kLoopPlayer.isAlive())
 			{
-				int iCultureChange = 100;// * pPlot->getImprovementDuration();
-
-				 // extra loss for pillaging unit's culture
-				if (getOwner() == iPlayer)
+				int iLoopPlayerPlotCulture = pPlot->getCulture((PlayerTypes)iPlayer);
+				if (iLoopPlayerPlotCulture > 0)
 				{
-					// unless it's Hidden Nationality
-					if (!isHiddenNationality())
+					int iCultureChange = 100;// * pPlot->getImprovementDuration();
+
+					 // extra loss for pillaging unit's culture
+					if (getOwner() == iPlayer)
 					{
-						iCultureChange *= 2;
+						// unless it's Hidden Nationality
+						if (!isHiddenNationality())
+						{
+							iCultureChange *= 2;
+						}
 					}
-				}
 
-				if (iCultureChange > iLoopPlayerPlotCulture)
-				{
-					iCultureChange = iLoopPlayerPlotCulture;
-				}
+					if (iCultureChange > iLoopPlayerPlotCulture)
+					{
+						iCultureChange = iLoopPlayerPlotCulture;
+					}
 
-				pPlot->changeCulture((PlayerTypes)iPlayer, -iCultureChange, true);
+					pPlot->changeCulture((PlayerTypes)iPlayer, -iCultureChange, true);
+				}
 			}
 		}
 	}

@@ -29140,16 +29140,16 @@ void CvUnitAI::AI_terraformerMove()
 		return;
 	}
 
-	if (GC.getLogging())
+	if( gUnitLogLevel >= 3)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) starting terraformer move (group size: %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getGroup()->getNumUnits());
-			gDLL->messageControlLog(szOut);
-		}
+			logBBAI("Player %d Unit %d (%S's %S) starting terraformer move (%d, %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getX_INLINE(), getY_INLINE());
 	}
 
+	if (plot()->isCity() && (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3)))
+	{
+        getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
 	// ToDo - try and move some of the terraformer python function into the DLL
 	// loop through spells
 	// if is allowautomateterrain()
