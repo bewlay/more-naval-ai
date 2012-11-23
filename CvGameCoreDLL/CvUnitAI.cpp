@@ -134,6 +134,8 @@ bool CvUnitAI::AI_update()
 		if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
 		{
 			AI_setGroupflag(GROUPFLAG_NONE);
+			//AI_setUnitAIType(UNITAI_CITY_DEFENSE);
+			joinGroup(NULL);
 			if (AI_join())
 			{
 				return false;

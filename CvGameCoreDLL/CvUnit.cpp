@@ -17075,6 +17075,12 @@ void CvUnit::castConvertUnit(int spell)
             }
         }
     }
+	if (pUnit->getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
+	{
+		pUnit->joinGroup(NULL);
+		pUnit->AI_setGroupflag(GROUPFLAG_NONE);
+	}
+
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
