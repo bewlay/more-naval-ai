@@ -13,7 +13,7 @@
             <BonusClassType>BONUSCLASS_RAWMANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>TECH_NEVER</TechCityTrade>
+            <TechCityTrade>NONE</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
