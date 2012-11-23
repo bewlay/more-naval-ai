@@ -1195,13 +1195,6 @@ void CvCityAI::AI_chooseProduction()
 		{
 			iMaxSettlers = 1;
 		}
-
-		// Tholal AI - don't build settlers if you dont have extra defenders
-		if ((iNumCitiesInArea < 3) &&  (AI_neededDefenders() > (plot()->getNumDefenders(getOwnerINLINE()) - 1 )))
-		{
-			iMaxSettlers = 0;
-		}
-		// End Add
     }
 
 	bool bCrushStrategy = kPlayer.AI_isDoStrategy(AI_STRATEGY_CRUSH);
@@ -1274,7 +1267,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if( gCityLogLevel >= 3 ) logBBAI("      City %S pop %d considering new production: iProdRank %d, iBuildUnitProb %d", getName().GetCString(), getPopulation(), iProductionRank, iBuildUnitProb);
+	if( gCityLogLevel >= 3 ) logBBAI("      City %S pop %d considering new production: iProdRank %d, iBuildUnitProb %d, Workers H/N (%d / %d)", getName().GetCString(), getPopulation(), iProductionRank, iBuildUnitProb, iExistingWorkers, iNeededWorkers);
 
 	// -------------------- BBAI Notes -------------------------
 	// Start special circumstances
@@ -1702,6 +1695,7 @@ void CvCityAI::AI_chooseProduction()
 	int iPlotCityDefenderCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
 	// Tholal AI - Era fix
 	//if( kPlayer.getCurrentEra() == 0 )
+	
 	if (GC.getGameINLINE().getCurrentPeriod() <= 1)
 	{
 		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= iNumCities)
@@ -1712,11 +1706,24 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
-
+	
+	
+	if (iNumCities > 1 || bDanger)
+	{
+		if (iPlotCityDefenderCount < AI_neededDefenders())
+		{
+			if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses bring defense up to par", getName().GetCString());
+				return;
+			}
+		}
+	}
+	
 	//minimal defense.
 	if (!bLandWar && !bCrushStrategy)
 	{
-		if (iPlotCityDefenderCount <= (iPlotSettlerCount * 4))
+		if (iPlotCityDefenderCount <= (iPlotSettlerCount * 5))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S needs escort for existing settler", getName().GetCString());
 			if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
@@ -1780,7 +1787,8 @@ void CvCityAI::AI_chooseProduction()
 		if ((iExistingWorkers == 0))
 		{
 			int iLandBonuses = AI_countNumImprovableBonuses(true, kPlayer.getCurrentResearch());
-			if ((iLandBonuses > 1) || (getPopulation() > 3 && iNeededWorkers > 0))
+			//if ((iLandBonuses > 1) || (getPopulation() > 3 && iNeededWorkers > 0))
+			if ((iLandBonuses > 1) || (iNeededWorkers > 0))
 			{
 				if (!bChooseWorker && AI_chooseUnit(UNITAI_WORKER))
 				{
@@ -1788,15 +1796,6 @@ void CvCityAI::AI_chooseProduction()
 					return;
 				}
 				bChooseWorker = true;
-			}
-
-			if (!bWaterDanger && (iNeededSeaWorkers > iExistingSeaWorkers) && (getPopulation() < 3))
-			{
-				if (AI_chooseUnit(UNITAI_WORKER_SEA))
-				{
-					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker sea 1", getName().GetCString());
-					return;
-				}
 			}
 
 			if (iLandBonuses >= 1  && getPopulation() > 1)
@@ -1808,6 +1807,18 @@ void CvCityAI::AI_chooseProduction()
 				}
 				bChooseWorker = true;
     		}
+		}
+	}
+
+	if( (!(bDefenseWar && iWarSuccessRatio < -50) && !bDanger ) || kPlayer.isPirate())
+	{
+		if (!bWaterDanger && (iNeededSeaWorkers > iExistingSeaWorkers))// && (getPopulation() < 3))
+		{
+			if (AI_chooseUnit(UNITAI_WORKER_SEA))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker sea 1", getName().GetCString());
+				return;
+			}
 		}
 	}
 
@@ -1872,7 +1883,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (AI_chooseUnit(UNITAI_HERO, (GET_TEAM(getTeam()).getTotalPopulation() * (iNumCities + 1))))
 		{
-			if( gCityLogLevel >= 2 ) logBBAI("      City %S BUILDING HERO", getName().GetCString());
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_HERO", getName().GetCString());
 			return;
 		}
 	}
@@ -1972,7 +1983,8 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 		
-			if (NULL != pWaterArea)
+			if ((NULL != pWaterArea) &&
+				!bDanger && !bWaterDanger)
 			{
 				int iOdds = -1;
 				if (iAreaBestFoundValue == 0 || iWaterAreaBestFoundValue > iAreaBestFoundValue)
@@ -2088,6 +2100,18 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
+	if (!bDanger)
+	{
+		if (iExistingWorkers < iNumCities)
+		{
+			if (AI_chooseUnit(UNITAI_WORKER))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose worker 3-A", getName().GetCString());
+				return;
+			}
+		}
+	}
+
 	if (bAssault && (pWaterArea != NULL))
 	{
 		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < kPlayer.countNumCoastalCitiesByArea(pWaterArea))
@@ -3020,7 +3044,7 @@ void CvCityAI::AI_chooseProduction()
 			iMissionarySeaNeeded++;
 		}
 
-		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= iMissionarySeaNeeded)
+		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= (bLandWar ? 0 : iMissionarySeaNeeded))
 		{
 			if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
 			{
@@ -3411,20 +3435,6 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses cultural pressure/cultural victory 3", getName().GetCString());
 				return;
-			}
-		}
-
-		if (pWaterArea != NULL && bFinancialTrouble)
-		{
-			if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSIONARY) > 0)
-			{
-				if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_MISSIONARY_SEA) == 0)
-				{
-					if (AI_chooseUnit(UNITAI_MISSIONARY_SEA))
-					{
-						return;
-					}
-				}
 			}
 		}
 	}
@@ -4142,6 +4152,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									}
 
 									//special to the unit
+									// Tholal todo - dont count racial promotions
 									for (iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 									{
 										if (GC.getUnitInfo(eLoopUnit).getFreePromotions(iJ))
@@ -4239,6 +4250,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 									}
 								}
 
+								iValue -= getUnitProductionTime(eLoopUnit) * 10;
 
 								iValue = std::max(1, iValue);
 
@@ -4911,11 +4923,13 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 									{
 										if (kUnitInfo.getPrereqOrBonuses(iBonus) != NO_BONUS)
 										{
-											if (!hasBonus((BonusTypes)kUnitInfo.getPrereqOrBonuses(iBonus)))
+											if (hasBonus((BonusTypes)kUnitInfo.getPrereqOrBonuses(iBonus)))
 											{
-												bNeedsBonus = true;
+												bNeedsBonus = false;
 												break;
 											}
+
+											bNeedsBonus = true;
 										}
 									}
 
@@ -4958,7 +4972,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 										iUnitTempValue += GC.getUnitInfo(eLoopUnit).getCombatDefense() * 2;
 									}
 
-									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier();
+									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier() * 3;
 									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getWeaponTier();
 
 									if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
@@ -4971,7 +4985,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
 									{
-										iUnitTempValue *= 2;
+										iUnitTempValue *= 5;
 									}
 
 									if (iNumBuildings == 0) // should have at least one of each type training building
@@ -5449,7 +5463,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 				iValue += (kBuilding.getGlobalPopulationChange() * iNumCities * 4);
 
-				iValue += (kBuilding.getFreeTechs() * 100);
+				iValue += (kBuilding.getFreeTechs() * 500);
 
 				iValue += kBuilding.getEnemyWarWearinessModifier() / 2;
 
