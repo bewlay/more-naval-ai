@@ -6348,21 +6348,22 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	int iValue;
 	int iI;
 
+	CvProjectInfo& kProject = GC.getProjectInfo(eProject);
 	iValue = 0;
 
-	if (GC.getProjectInfo(eProject).getNukeInterception() > 0)
+	if (kProject.getNukeInterception() > 0)
 	{
 		if (GC.getGameINLINE().canTrainNukes())
 		{
-			iValue += (GC.getProjectInfo(eProject).getNukeInterception() / 10);
+			iValue += (kProject.getNukeInterception() / 10);
 		}
 	}
 
-	if (GC.getProjectInfo(eProject).getTechShare() > 0)
+	if (kProject.getTechShare() > 0)
 	{
-		if (GC.getProjectInfo(eProject).getTechShare() < GET_TEAM(getTeam()).getHasMetCivCount(true))
+		if (kProject.getTechShare() < GET_TEAM(getTeam()).getHasMetCivCount(true))
 		{
-			iValue += (20 / GC.getProjectInfo(eProject).getTechShare());
+			iValue += (20 / kProject.getTechShare());
 		}
 	}
 
@@ -6370,7 +6371,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 	{
 		if (GC.getGameINLINE().isVictoryValid((VictoryTypes)iI))
 		{
-			iValue += (std::max(0, (GC.getProjectInfo(eProject).getVictoryThreshold(iI) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 20);
+			iValue += (std::max(0, (kProject.getVictoryThreshold(iI) - GET_TEAM(getTeam()).getProjectCount(eProject))) * 20);
 		}
 	}
 
@@ -6393,29 +6394,29 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 
 		if (!bReverse)
 		{
-			iValue += (GC.getProjectInfo(eProject).getModifyGlobalCounter() * (GC.getGameINLINE().getGlobalCounter() / 10) * -1);
+			iValue += (kProject.getModifyGlobalCounter() * (GC.getGameINLINE().getGlobalCounter() / 10) * -1);
 		}
 		else
 		{
-			iValue += GC.getProjectInfo(eProject).getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 4);
+			iValue += kProject.getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 4);
 		}
 	}
 
 //FfH: Added by Kael 09/26/2008
-    iValue += GC.getProjectInfo(eProject).getAIWeight();
+    iValue += kProject.getAIWeight();
 //FfH: End Add
 
 	// bonus value for civ-specific projects
-    if (GC.getProjectInfo(eProject).getPrereqCivilization() != NO_CIVILIZATION)
+    if (kProject.getPrereqCivilization() != NO_CIVILIZATION)
     {
-        if (GC.getProjectInfo(eProject).getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
+        if (kProject.getPrereqCivilization() == GET_PLAYER(getOwnerINLINE()).getCivilizationType())
         {
 			iValue *= 2;
 		}
 	}
 
 	// repeatable projects are less valuable
-	if (GC.getProjectInfo(eProject).getMaxGlobalInstances() == -1)
+	if (kProject.getMaxGlobalInstances() == -1)
 	{
 		iValue /= 4;
 	}
