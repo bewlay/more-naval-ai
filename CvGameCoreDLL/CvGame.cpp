@@ -6939,9 +6939,9 @@ void CvGame::createBarbarianCities()
 /*                                                                                              */
 /* For BarbarianCiv, allows earlier barb cities                                                 */
 /************************************************************************************************/
-	if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+	if (isOption(GAMEOPTION_RAGING_BARBARIANS) || isOption(GAMEOPTION_NO_SETTLERS))
 	{
-		if( getNumCivCities() <= (countCivPlayersAlive()))
+		if( getNumCivCities() <= (countCivPlayersAlive() * 2))
 		{
 			return;
 		}
