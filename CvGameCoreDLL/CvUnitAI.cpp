@@ -16565,9 +16565,16 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											iValue /= 2;
 										}
 
-										if (GET_PLAYER(pLoopCity->getOwnerINLINE()).isBarbarian() && !bHuntBarbs)
+										if (GET_PLAYER(pLoopCity->getOwnerINLINE()).isBarbarian())// && !bHuntBarbs)
 										{
-											iValue /= 2;
+											if (!bHuntBarbs)
+											{
+												iValue /= 2;
+											}
+											if (pLoopCity->getCultureLevel() > 0)
+											{
+												iValue /= 10;
+											}
 										}
 
 										// If stack has poor bombard, direct towards lower defense cities
