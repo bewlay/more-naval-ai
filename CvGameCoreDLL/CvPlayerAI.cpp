@@ -4170,11 +4170,14 @@ bool CvPlayerAI::AI_getAnyPlotDanger(CvPlot* pPlot, int iRange, bool bTestMoves)
 
 						if (pLoopUnit->isEnemy(eTeam))
 						{
-							if (pLoopUnit->canAttack() && !pLoopUnit->isHeld())
+							//if (pLoopUnit->canAttack() && !pLoopUnit->isHeld())
+							if (!pLoopUnit->isOnlyDefensive() && !pLoopUnit->isHeld())
 							{
 								if (!(pLoopUnit->isInvisible(eTeam, false)))
 								{
-								    if (pLoopUnit->canMoveOrAttackInto(pPlot))
+								    //if (pLoopUnit->canMoveOrAttackInto(pPlot))
+									//if (pLoopUnit->is
+									if (pPlot->isValidDomainForLocation(*pLoopUnit))
 								    {
                                         if (!bTestMoves)
                                         {
@@ -4301,7 +4304,8 @@ int CvPlayerAI::AI_getPlotDanger(CvPlot* pPlot, int iRange, bool bTestMoves) con
 							{
 								if (!(pLoopUnit->isInvisible(eTeam, false)))
 								{
-								    if (pLoopUnit->canMoveOrAttackInto(pPlot))
+								    //if (pLoopUnit->canMoveOrAttackInto(pPlot))
+									if (pPlot->isValidDomainForLocation(*pLoopUnit))
 								    {
                                         if (!bTestMoves)
                                         {
