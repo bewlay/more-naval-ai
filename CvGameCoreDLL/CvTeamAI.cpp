@@ -1330,19 +1330,25 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	// assaults on weak opponents
 	int iEnemyPowerPercent = kTeam.AI_getEnemyPowerPercent(true);
 
-	if (AI_calculateAdjacentLandPlots(eTeam) > (getNumCities() * 2))
-	{
-		iEnemyPowerPercent *= 8;
-		iEnemyPowerPercent /= 10;
-	}
-
 	if (iEnemyPowerPercent < 75)
 	{
 		if (GC.getGameINLINE().getCurrentPeriod() <= 2 ||
 			AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST1) ||
 			GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
 		{
-			iValue *= ((iEnemyPowerPercent < 50) ? 10 : 7);
+			int iModValue = 0;
+
+			// extra value for targeting neighbors
+			if (AI_calculateAdjacentLandPlots(eTeam) > (getNumCities() * 2))
+			{
+				iModValue += 2;
+			}
+
+			iModValue += ((iEnemyPowerPercent < 50) ? 8 : 5);
+			iModValue *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIDeclareWarProb();
+			iModValue /= 100;
+
+			iValue *= iModValue;
 		}
 	}
 
