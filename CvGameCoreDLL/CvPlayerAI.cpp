@@ -4854,14 +4854,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	CvTechInfo& kTech = GC.getTechInfo(eTech);
 
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Tech %S \n", kTech.getDescription());
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("Tech %S \n", kTech.getDescription());
 	}
 
 	iValue = 1;
@@ -5066,17 +5061,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		iValue += 750;
 	}
 
-
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			CvTechInfo& kTech = GC.getTechInfo((TechTypes)eTech);
-
-			char szOut[1024];
-			sprintf(szOut, "   Pre build value: %d\n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("   Pre build value: %d\n", iValue);
 	}
 
 	/* ------------------ Tile Improvement Value  ------------------ */
@@ -5249,14 +5236,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							iBonusValue = 0;
 						}
 
-						if (GC.getLogging() && bDebugLog)
+						if ((gPlayerLogLevel > 3) && bDebugLog)
 						{
-							if (gDLL->getChtLvl() > 0)
-							{
-								char szOut[1024];
-								sprintf(szOut, "     BONUS - %S: %d (%d - %d)\n", GC.getBonusInfo((BonusTypes)iK).getDescription(), iBonusValue, iNumBonuses, iTotalBonuses);
-								gDLL->messageControlLog(szOut);
-							}
+							logBBAI("     BONUS - %S: %d (%d - %d)\n", GC.getBonusInfo((BonusTypes)iK).getDescription(), iBonusValue, iNumBonuses, iTotalBonuses);
 						}
 
 						iImprovementValue += iBonusValue;
@@ -5294,14 +5276,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				iImprovementValue *= (200 + GC.getLeaderHeadInfo(getPersonalityType()).getImprovementWeightModifier(eImprovement));
 				iImprovementValue /= 200;
 
-				if (GC.getLogging() && bDebugLog)
+				if ((gPlayerLogLevel > 3) && bDebugLog)
 				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						char szOut[1024];
-						sprintf(szOut, "     IMPROVEMENT - %S : %d\n", kImprovement.getDescription(), iImprovementValue);
-						gDLL->messageControlLog(szOut);
-					}
+					logBBAI("     IMPROVEMENT - %S : %d\n", kImprovement.getDescription(), iImprovementValue);
 				}
 
 				iBuildValue += iImprovementValue;
@@ -5378,6 +5355,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
         }
     }
 
+	if ((gPlayerLogLevel > 3) && bDebugLog && (iBuildValue > 0))
+	{
+		logBBAI("     Build Value: %d", iBuildValue);
+	}
 	iValue += iBuildValue;
 
 	// does tech reveal bonus resources
@@ -5456,14 +5437,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getLogging() && iPromotionValue > 0 && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog && (iPromotionValue > 0))
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "   Promotion value: %d \n", iPromotionValue);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("   Promotion value: %d \n", iPromotionValue);
 	}
 
 	iValue += iPromotionValue;
@@ -5559,14 +5535,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 	*/
 
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "   Pre process value: %d\n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("   Pre process value: %d\n", iValue);
 	}
 
 	/* ------------------ Process Value  ------------------ */
@@ -5618,14 +5589,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		}
 	}
 
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "   Pre civic value: %d\n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("   Pre civic value: %d\n", iValue);
 	}
 
 	/* ------------------ Civic Value  ------------------ */
@@ -5694,16 +5660,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			}
 			*/
 			
-			if (GC.getLogging() && bDebugLog)
+			if ((gPlayerLogLevel > 3) && bDebugLog)
 			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					char szOut[1024];
-					sprintf(szOut, "     Civic - %S : %d\n", GC.getCivicInfo(eNewCivic).getDescription(), iCivicTechValue);
-					gDLL->messageControlLog(szOut);
-				}
+				logBBAI("     Civic - %S : %d\n", GC.getCivicInfo(eNewCivic).getDescription(), iCivicTechValue);
 			}
-			
+
 			m_iBestCivicTechValue[iCivicOpt] = std::max(iCivicTechValue, m_iBestCivicTechValue[iCivicOpt]);
 		}
 	}
@@ -5856,22 +5817,21 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 					iReligionValue *= (1 + GC.getGameINLINE().getCurrentPeriod());
 					iReligionValue /= 2;
-
+					if ((gPlayerLogLevel > 3) && bDebugLog)
+					{
+						logBBAI("      RELIGION (pre-mod) - %S: %d\n", GC.getReligionInfo(eReligion).getDescription(), iReligionValue);
+					}
 					// each leader's certain favorite modifier
 					iReligionValue *= (100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion));
 					iReligionValue /= 100;
 
-					if (GC.getLogging() && bDebugLog)
+					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
-						if (gDLL->getChtLvl() > 0)
-						{
-							char szOut[1024];
-							sprintf(szOut, "     RELIGION - %S: %d\n", GC.getReligionInfo(eReligion).getDescription(), iReligionValue);
-							gDLL->messageControlLog(szOut);
-						}
+						logBBAI("     RELIGION - %S: %d\n", GC.getReligionInfo(eReligion).getDescription(), iReligionValue);
 					}
+					
+					iValue += iReligionValue;
 				}
-				iValue += iReligionValue;
 			}
 		}
 
@@ -5920,9 +5880,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					}
 
 					iValue += 1500;
-				}
+					if ((gPlayerLogLevel > 3) && bDebugLog)
+					{
+						logBBAI("    Free Unit (%S) - %d\n", kUnitInfo.getDescription(), iFreeUnitValue);
+					}
 
 				iValue += (kTech.getFirstFreeTechs() * (bCapitalAlone ? 3000 : 2000));//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
+				}
 			}
 		}
 	}
@@ -5945,27 +5909,17 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if (iSpellValue > 0)
 	{
-		if (GC.getLogging() && bDebugLog)
+		if ((gPlayerLogLevel > 3) && bDebugLog)
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "   Spell value: %d\n", iSpellValue);
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("   Spell value: %d\n", iSpellValue);
 		}
 	}
 
 	iValue += iSpellValue;
 
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "   Pre weight value: %d\n", iValue);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("   Pre weight value: %d\n", iValue);
 	}
 
 	iValue += kTech.getAIWeight();
@@ -5973,14 +5927,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 //FfH: Added by Kael 06/17/2009
 	if (GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech)
 	{
-		if (GC.getLogging() && bDebugLog)
+		if ((gPlayerLogLevel > 3) && bDebugLog)
 		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "     FAVORITE TECH\n");
-				gDLL->messageControlLog(szOut);
-			}
+			logBBAI("     FAVORITE TECH\n");
 		}
 		iValue *= 10;
 		iValue /= 9;
@@ -6174,14 +6123,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	iValue = std::max(1, iValue);
 
-	if (GC.getLogging() && bDebugLog)
+	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Final Value: %d (%d turns)\n \n", iValue, iTurnsLeft);
-			gDLL->messageControlLog(szOut);
-		}
+		logBBAI("Final Value: %d (%d turns)\n \n", iValue, iTurnsLeft);
 	}
 
 
@@ -6614,14 +6558,9 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				}
 
 
-				if (GC.getLogging() && bDebugLog)
+				if ((gPlayerLogLevel > 3) && bDebugLog)
 				{
-					if (gDLL->getChtLvl() > 0)
-					{
-						char szOut[1024];
-						sprintf(szOut, "     BUILDING - %S : %d\n", GC.getBuildingInfo(eLoopBuilding).getDescription(), iBuildingValue);
-						gDLL->messageControlLog(szOut);
-					}
+					logBBAI("     BUILDING - %S : %d\n", GC.getBuildingInfo(eLoopBuilding).getDescription(), iBuildingValue);
 				}
 
 
@@ -6783,14 +6722,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 				if (kLoopUnit.getPrereqAndTech() == eTech)
 				{
-					if (GC.getLogging() && bDebugLog)
+					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
-						if (gDLL->getChtLvl() > 0)
-						{
-							char szOut[1024];
-							sprintf(szOut, "     %S:\n", GC.getUnitInfo(eLoopUnit).getDescription());
-							gDLL->messageControlLog(szOut);
-						}
+						logBBAI("     %S:\n", GC.getUnitInfo(eLoopUnit).getDescription());
 					}
 
 					// unique and replaced units
@@ -7332,14 +7266,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iMilitaryValue /= 3;
 						}
 
-						if (GC.getLogging() && bDebugLog)
+						if ((gPlayerLogLevel > 3) && bDebugLog)
 						{
-							if (gDLL->getChtLvl() > 0)
-							{
-								char szOut[1024];
-								sprintf(szOut, "       Military value: %d\n", iMilitaryValue);
-								gDLL->messageControlLog(szOut);
-							}
+							logBBAI("       Military value: %d\n", iMilitaryValue);
 						}
 
 						iUnitValue += iMilitaryValue;
@@ -7433,14 +7362,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 					if (bRequiresBonus && !bHasRequiredBonus)
 					{
-						if (GC.getLogging() && bDebugLog)
+						if ((gPlayerLogLevel > 3) && bDebugLog)
 						{
-							if (gDLL->getChtLvl() > 0)
-							{
-								char szOut[1024];
-								sprintf(szOut, "       MISSING BONUS\n");
-								gDLL->messageControlLog(szOut);
-							}
+							logBBAI("       MISSING BONUS\n");
 						}
 						iUnitValue /= 4;
 					}
@@ -7450,21 +7374,19 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iUnitValue /= 2;
 					}
 
-					if (GC.getLogging() && bDebugLog)
+					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
-						if (gDLL->getChtLvl() > 0)
-						{
-							char szOut[1024];
-							sprintf(szOut, "       Final Unit value: %d\n", iUnitValue);
-							gDLL->messageControlLog(szOut);
-						}
+						logBBAI("       Final Unit value: %d\n", iUnitValue);
 					}
-
-
+					
+					iValue += iUnitValue;
+					
+					/*
 					if (iUnitValue > iValue)
 					{
 						iValue = iUnitValue;
 					}
+					*/
 
 				}
 

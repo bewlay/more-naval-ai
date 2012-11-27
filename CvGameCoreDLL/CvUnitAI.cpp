@@ -5057,6 +5057,7 @@ void CvUnitAI::AI_cityDefenseMove()
 	// Super Forts begin *AI_defense*
 	if (AI_guardFortMinDefender(true))
 	{
+		logBBAI("Unit guard fort min defender 1: %S (%d) [%d, %d]\n", getName().GetCString(), getID(), getX_INLINE(), getY_INLINE());
 		return;
 	}
 	// Super Forts end
@@ -5269,6 +5270,7 @@ void CvUnitAI::AI_cityDefenseExtraMove()
 	// Super Forts begin *AI_defense*
 	if (AI_guardFortMinDefender(true))
 	{
+		logBBAI("Unit guard fort min defender 2: %S (%d) [%d, %d]\n", getName().GetCString(), getID(), getX_INLINE(), getY_INLINE());
 		return;
 	}
 
@@ -12941,6 +12943,7 @@ bool CvUnitAI::AI_guardBonus(int iMinValue)
 
 int CvUnitAI::AI_getPlotDefendersNeeded(CvPlot* pPlot, int iExtra)
 {
+	// Tholal ToDo - add in section for Forts
 	int iNeeded = iExtra;
 	BonusTypes eNonObsoleteBonus = pPlot->getNonObsoleteBonusType(getTeam());
 	if (eNonObsoleteBonus != NO_BONUS)
