@@ -4091,9 +4091,27 @@ void CvUnit::scrap()
 bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 {
 
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
 //FfH: Added by Kael 04/22/2008 (to disable gifting)
-    return false;
+		return false;
 //FfH: End Add
+	}
+
+	if (isAvatarOfCivLeader())
+	{
+		return false;
+	}
+
+	if (m_pUnitInfo->isAbandon())
+	{
+		return false;
+	}
+
+	if (isLimitedUnitClass(getUnitClassType()))
+	{
+		return false;
+	}
 
 	CvPlot* pPlot = plot();
 	CvUnit* pTransport = getTransportUnit();
@@ -4162,6 +4180,15 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
     {
         return false;
     }
+
+	if (m_pUnitInfo->getPrereqCiv() != NO_CIVILIZATION)
+	{
+		if (m_pUnitInfo->getPrereqCiv() != GET_PLAYER(pPlot->getOwner()).getCivilizationType())
+		{
+			return false;
+		}
+	}
+
 //FfH: End Add
 
 	return !atWar(pPlot->getTeam(), getTeam());
@@ -18090,6 +18117,7 @@ int CvUnit::chooseSpell()
 				}
 				
 				// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
+				// some spells buff only this unit, some team units, some also include allied units - add code to sort that out here
 
 				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
 				{
