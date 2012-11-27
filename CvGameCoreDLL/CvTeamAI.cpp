@@ -1439,6 +1439,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	iValue += GET_TEAM(eTeam).getTotalPopulation();
 
 	iValue += (GET_TEAM(eTeam).AI_getWarSuccess(getID()) * 30);
+	iValue -= AI_getWarSuccess(eTeam) * 30;
 
 	int iOurPower = std::max(1, getPower(true));
 	int iTheirPower = std::max(1, GET_TEAM(eTeam).getDefensivePower());
@@ -1448,9 +1449,10 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 //FfH: Modified by Kael 04/23/2009
 //	iValue /= std::max(1, iOurPower + iTheirPower + 10);
 	iValue /= std::max(1, iOurPower + 10);
-	if ((iOurPower * 100) > (iTheirPower * 120))
+	if ((iOurPower * 100) > (iTheirPower * 150))
 	{
-	    iValue /= 5;
+		iValue *= 8;
+	    iValue /= 10;
 	}
 //FfH: End Modify
 
