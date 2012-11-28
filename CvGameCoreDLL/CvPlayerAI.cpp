@@ -23944,6 +23944,12 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 		}
 	}
 
+	// Advanced Tactics - Super forts: Build a few extra floating defenders for occupying forts
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		iDefenders += iAreaCities / 2;
+	}
+
 	return iDefenders;
 }
 
