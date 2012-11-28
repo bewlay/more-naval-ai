@@ -26677,6 +26677,11 @@ int CvPlayerAI::AI_getMojoFactor() const
 		iValue += 2;
 	}
 
+	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
+	{
+		iValue /= 2;
+	}
+
 	return iValue;
 }
 
