@@ -18196,7 +18196,7 @@ int CvUnit::chooseSpell()
 				}
 				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster()) // TODO - add a check for financial trouble and/or overabundance of troops
 				{
-					iValue -= getLevel() * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+					iValue -= (getLevel() * 20) GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
 				}
 				if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
 				{
