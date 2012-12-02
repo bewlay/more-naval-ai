@@ -10383,7 +10383,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		int iI, iJ;
 		
 		CvBonusInfo& kBonusInfo = GC.getBonusInfo(eBonus);
-		bool bMana = (kBonusInfo.getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
+		//bool bMana = (kBonusInfo.getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
+		bool bMana = kBonusInfo.isMana();
 
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
@@ -10395,8 +10396,10 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			{
 				if (kBonusInfo.getYieldChange((YieldTypes)iJ) > 0)
 				{
-					iValue += kBonusInfo.getYieldChange((YieldTypes)iJ) * (iJ == YIELD_COMMERCE ? 200 : 100);
-
+					if (!(iJ == YIELD_FOOD && isIgnoreFood()))
+					{
+						iValue += kBonusInfo.getYieldChange((YieldTypes)iJ) * (iJ == YIELD_COMMERCE ? 200 : 100);
+					}
 				}
 			}
 
@@ -10715,7 +10718,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			// Note: we could loop through spells, find which ones require this mana and then value those spells. Too much? Probably the best way to do it in the long run
 			// value spells that provide promotions for favorite unitcombat
 			// NOTE: make sure the values add up to the appropriate range
-
+			// TODO: Add valuation for unit affinities?
 
 			if (bMana)
 			{
