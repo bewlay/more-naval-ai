@@ -4930,17 +4930,17 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (iHasMetCount > 0)
 		{
-			iValue += iCityCount * 100;
-			iValue += iCoastalCities * 25;
+			iValue += iCityCount * 100 * iHasMetCount;
+			iValue += iCoastalCities * 25 * iHasMetCount;
 
 			if (bFinancialTrouble)
 			{
-				iValue += 500;
+				iValue += 500 * iHasMetCount;
 			}
 
 			if (AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
 			{
-				iValue += 1000;
+				iValue += 1000 * iHasMetCount;
 			}
 /************************************************************************************************/
 /* REVOLUTION_MOD                         05/30/08                                jdog5000      */
@@ -4960,6 +4960,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	if (kTech.isDefensivePactTrading())
 	{
 		iValue += 400;
+		//Todo - more value if at war and have close allies
 	}
 
 	if (kTech.isPermanentAllianceTrading() && (GC.getGameINLINE().isOption(GAMEOPTION_PERMANENT_ALLIANCES)))
@@ -5005,7 +5006,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	iValue += (kTech.getWorkerSpeedModifier() * 4);
 	iValue += (kTech.getTradeRoutes() * (std::max((iCityCount + 2), iConnectedForeignCities) + 1) * ((bFinancialTrouble) ? 200 : 100));
 
-	iValue += (kTech.getHealth() * (bDom3 ? 350: 200));
+	if (!isIgnoreFood())
+	{
+		iValue += (kTech.getHealth() * (bDom3 ? 350: 200));
+	}
 
 	iValue += (kTech.getHappiness() * (bDom3 ? 250: 100) * iCityCount);
 	
@@ -5078,6 +5082,19 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iTempValue *= AI_yieldWeight((YieldTypes)iK);
 			iTempValue /= 100;
 
+			if (iK == YIELD_FOOD) // ie, Sanitation
+			{
+				if (isSprawling() || AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) || isMilitaryFoodProduction())
+				{
+					iTempValue *= 4;
+				}
+
+				if (isIgnoreFood())
+				{
+					iTempValue = 0;
+				}
+			}
+
 			iValue += iTempValue;
 		}
 	}
@@ -5134,7 +5151,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					// food yield is more valuable
 					if (iK == YIELD_FOOD)// && !kImprovement.isWater())
 					{
-						iTempValue *= 2;
+						iTempValue *= (isSprawling() ? 5: 2);
+
+						if (getNumCities() == 1)
+						{
+							iTempValue *= 5;
+						}
 					}
 					
 					// high commerce yields are very valuable
@@ -5142,8 +5164,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (kImprovement.getYieldChange(iK) > 3)
 						{
-							iTempValue *= 5;
-							iTempValue /= 2;
+							iTempValue *= 3;
+							//iTempValue /= 2;
 						}
 
 						if (bFinancialTrouble)
@@ -5159,7 +5181,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 
 				// Tholal - kind of a hack to get AI to pursue education earlier
-				iImprovementValue += (kImprovement.getPillageGold() * 75);
+				iImprovementValue += (kImprovement.getPillageGold() * (40 * getNumCities()));
 
 				int iNumTotalBonuses = 0;
 				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
@@ -5181,7 +5203,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							// food and commerce bonuses are more valuable
 							if (iL == YIELD_FOOD)
 							{
-								iTempValue *= 2;
+								iTempValue *= ((getNumCities() == 1) ? 5: 2);
 							}
 							else if (iL == YIELD_COMMERCE)
 							{
@@ -5604,6 +5626,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	for (int iJ = 0; iJ < GC.getNumCivicInfos(); iJ++)
 	{
 		CivicTypes eNewCivic = ((CivicTypes)iJ);
+		// kNewCivic = GC.getCivicInfo(eNewCivic);
+		//CvCivicInfo& kNewCivic = GC.getCivicInfo(eNewCivic);
 		if (GC.getCivicInfo(eNewCivic).getTechPrereq() == eTech)
 		{
 			iCivicTechValue = 0;
@@ -5614,6 +5638,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 					continue;
 				}
+				else
+				{
+					iCivicTechValue += 1000;
+				}
 			}
 
 			if (GC.getCivicInfo(eNewCivic).getPrereqCivilization() != NO_CIVILIZATION)
@@ -5622,13 +5650,26 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 					continue;
 				}
+				else
+				{
+					iCivicTechValue += 2000;
+				}
 			}
 
+			
 			if (GC.getCivicInfo(eNewCivic).getPrereqReligion() != NO_RELIGION)
 			{
 				if (GC.getCivicInfo(eNewCivic).getPrereqReligion() != getStateReligion())
 				{
-					continue;
+					// do nothing - (was continue);
+				}
+				else
+				{
+					iCivicTechValue += 4000;
+					if (getStateReligion() == getFavoriteReligion())
+					{
+						iCivicTechValue += 4000;
+					}
 				}
 			}
 			
@@ -5644,7 +5685,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					iCivicTechValue += std::min(2000, (100 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+					//iCivicTechValue += std::min((4000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+					iCivicTechValue += std::min((5000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
 				}
 
 				if (GC.getCivicInfo(eCurrCivic).getAIWeight() < 0)
@@ -5674,7 +5716,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 	/* ------------------ Religion Value  ------------------ */
-	if (iPathLength <= 3)
+	// Tholal ToDo - seems like it would be more elegant to simply use AI_religionValue() here instead and clean up that function if need be
+	if (iPathLength <= 4)
 	{
 		if (!isAgnostic())
 		{
@@ -5719,7 +5762,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 			for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); iReligion++)
 			{
-				int iReligionValue = 500;	// religion base value
+				int iReligionValue = 0;	// religion base value
 
 				ReligionTypes eReligion = (ReligionTypes)iReligion;
 				CvReligionInfo& kReligionInfo = GC.getReligionInfo(eReligion);
@@ -5736,8 +5779,40 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				{
 
 					iReligionValue += 500;
+
+					if (!bHasReligion)// || (isSpiritual)
+					{
+						iReligionValue += 1500;
+					}
+
+					// add value if this religion is already in our cities
+					iReligionValue += getReligionPopulation(eReligion) * 50;
+
+					// make sure we're always interested in our favorite religions
+					if (eFavorite != NO_RELIGION)
+					{
+						if (eReligion == eFavorite)
+						{
+							if ((gPlayerLogLevel > 3) && bDebugLog)
+							{
+								logBBAI("     FAVORITE RELIGION");
+							}
+							iReligionValue += 3500 * getNumCities();
+						}
+					}
 					
+					if (!GC.getGameINLINE().isReligionFounded(eReligion))
+					{
+						if ((gPlayerLogLevel > 3) && bDebugLog)
+						{
+							logBBAI("     RELIGION - %S: SLOT OPEN", GC.getReligionInfo(eReligion).getDescription());
+						}
+						iReligionValue += (GC.getGameINLINE().getCurrentPeriod() + 1) * 2500;
+						iReligionValue += getNumCities() * (bHasReligion ? 500 : 1000);
+					}
+
 					// every civ should want some sort of religion
+					/*
 					if (!bHasReligion)
 					{
 						iReligionValue += 1700;
@@ -5745,7 +5820,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					
 					if (!GC.getGameINLINE().isReligionSlotTaken(eReligion))
 					{
-						if ((!bHaveMyReligion) || (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1)))
+						if ((!bHaveMyReligion) || (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1)) || hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SPIRITUAL")))
 						{
 							iReligionValue *= 3;
 						}
@@ -5755,11 +5830,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						}
 						else if (!bHaveMyHolyCity)
 						{
-							iReligionValue *= 1;
+							iReligionValue *= 2;
 						}
 						else
 						{
-							iReligionValue *= 0;
+							iReligionValue *= 1; //ToDo - more value for spiritual leaders
 						}
 					}
 
@@ -5780,9 +5855,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (eReligion == eFavorite)
 						{
-							iReligionValue += (bHasReligion ? 1250 : 1600);
+							iReligionValue += (bHasReligion ? 1250 : 1750);
 						}
 					}
+					*/
 				}
 				else if ((ePrereqReligion == eReligion) && (getStateReligion() == ePrereqReligion))
 				{
@@ -5795,19 +5871,23 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iReligionValue *= 0;
 				}
 
+				// ToDo - use this section for lower difficulties
 				if (iReligionValue > 0)
 				{
 					// all leaders don't like changing nature alignment.
+					/*
 					if (iOverAlignmentLevel > 0)
 					{
 						iReligionValue /= (1 << iOverAlignmentLevel);
 					}
+
 					// good leader hates evil religion, vice versa.
 					if (abs(eAlignment - kReligionInfo.getAlignment()) > 1)
 					{
 						iReligionValue *= 2;
 						iReligionValue /= 3;
 					}
+					*/
 
 					if (iPathLength <= 1)
 					{
@@ -5815,8 +5895,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						iReligionValue /= 2;
 					}
 
-					iReligionValue *= (1 + GC.getGameINLINE().getCurrentPeriod());
-					iReligionValue /= 2;
+					//iReligionValue *= (1 + GC.getGameINLINE().getCurrentPeriod());
+					//iReligionValue /= 2;
 					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
 						logBBAI("      RELIGION (pre-mod) - %S: %d\n", GC.getReligionInfo(eReligion).getDescription(), iReligionValue);
@@ -5879,7 +5959,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						iFreeUnitValue += kUnitInfo.getGreatWorkCulture();
 					}
 
-					iValue += 1500;
+					iValue += 1500 + iFreeUnitValue;
 					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
 						logBBAI("    Free Unit (%S) - %d\n", kUnitInfo.getDescription(), iFreeUnitValue);
@@ -5963,6 +6043,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	*/
 
 //>>>>Better AI: Modified by Denev 2010/03/15
+	/* - ToDo - blah
 	const AlignmentTypes ePreferredAlignment = (AlignmentTypes)kTech.getPreferredAlignment();
 	if (ePreferredAlignment != NO_ALIGNMENT)
 	{
@@ -5977,6 +6058,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			iValue /= 3;
 		}
 	}
+	*/
 //<<<<Better AI: End Modify
 
 	// give a bump to techs that offer a free Great Person as long as they havent already been researched
@@ -6030,17 +6112,26 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 
 
+/*
 	if ((ReligionTypes)kTech.getPrereqReligion() != NO_RELIGION)
 	{
 		if ((ReligionTypes)kTech.getPrereqReligion() != getStateReligion())
 		{
 			iValue = 0;
 		}
+		else
+		{
+			iValue *= 2;
+		}
 	}
+*/
 
 	// enforce a little more discretion with picking techs at longer path lengths
+	/*
 	iValue *= 100 - (5 * std::max(0, iPathLength - 1));
 	iValue /= 100;
+	*/
+
 	int iTurnsLeft = 0;
 
 	if (bIgnoreCost)
