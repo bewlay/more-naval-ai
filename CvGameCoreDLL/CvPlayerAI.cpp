@@ -6445,7 +6445,21 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += iCityCount * 10;
 				}
 
-				iBuildingValue += (kLoopBuilding.getHealth() * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 100 : 25));
+				// free techs (ie, Grimoire)
+				iBuildingValue += kLoopBuilding.getFreeTechs() * 3000;
+
+				if (!isIgnoreFood())
+				{
+					iBuildingValue += (kLoopBuilding.getHealth() * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 100 : 25));
+					
+					// if we're close to pop domination, we love medicine!
+					// don't adjust for negative modifiers to prevent ignoring assembly line, etc.
+					if ( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && kLoopBuilding.getHealth() > 0)
+					{
+						iBuildingValue += kLoopBuilding.getHealth() * 150;
+					}
+				}
+
 				iBuildingValue += (kLoopBuilding.getHealRateChange() * (bWarPlan ? 5 : 2));
 
 				if (kLoopBuilding.isApplyFreePromotionOnMove())
@@ -6501,12 +6515,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += kLoopBuilding.getCommerceModifier(COMMERCE_GOLD) * 15;
 				}
 
-				// if we're close to pop domination, we love medicine!
-				// don't adjust for negative modifiers to prevent ignoring assembly line, etc.
-				if ( AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3) && kLoopBuilding.getHealth() > 0)
-				{
-					iBuildingValue += kLoopBuilding.getHealth() * 150;
-				}
+
 				// if this is a religious building, its not as useful
 				if (isWorldWonderClass((BuildingClassTypes)iJ))
 				{
@@ -6711,7 +6720,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 */
 //<<<<Better AI: End Delete
 
-	return iValue;
+	return std::max(0, iValue);
 }
 
 
@@ -6833,7 +6842,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (kLoopUnit.getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 950;
+							iUnitValue += 1050;
 
 							if (GC.getLogging() && bDebugLog)
 							{
@@ -7075,19 +7084,26 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					case UNITAI_HERO:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
 						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 600 : 0);
-						iUnitValue += 350 * iTier;
+						iUnitValue += 300 * iTier;
 						break;
 
 					case UNITAI_MEDIC:
-						iMilitaryValue += (bWarPlan ? 600 : 300);
+						iMilitaryValue += (bWarPlan ? 600 : 500);
 						iMilitaryValue += (AI_isDoStrategy(AI_STRATEGY_DAGGER ) ? 600 : 0);
-						iUnitValue += 250 * iTier;
+						iUnitValue += 350 * (iTier * getNumCities());
+						if (getFavoriteReligion() != NULL)
+						{
+							if (getStateReligion() == getFavoriteReligion())
+							{
+								iUnitValue *= 2;
+							}
+						}
 						break;
 
 					case UNITAI_MAGE:
 						iMilitaryValue += (bWarPlan ? 600 : 300);
 						iMilitaryValue += 25 * AI_getMojoFactor();
-						iUnitValue += 10 * AI_getMojoFactor();
+						iUnitValue += 20 * AI_getMojoFactor() * (iTier * getNumCities());
 						break;
 
 					case UNITAI_FEASTING:
@@ -7135,21 +7151,15 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						}
 
 						iMilitaryValue += iCombatValue * 150;
-						iMilitaryValue += kLoopUnit.getWeaponTier() * 100;
-						iMilitaryValue += iTier * 100;
+						iMilitaryValue += kLoopUnit.getWeaponTier() * 150;
+						//iMilitaryValue += iTier * 100;
+						iMilitaryValue *= iTier;
 
-						/*
+						
 						if (kLoopUnit.isMechUnit())
 						{
 							iMilitaryValue *= 2;
 							iMilitaryValue /= 3;
-						}
-						*/
-
-						if (kLoopUnit.getMoves() > 2)
-						{
-							iMilitaryValue += 500;
-							iMilitaryValue += (kLoopUnit.getWithdrawalProbability() * 2);
 						}
 
 						if (kLoopUnit.isExplodeInCombat())
