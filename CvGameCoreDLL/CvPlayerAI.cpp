@@ -22940,9 +22940,13 @@ int CvPlayerAI::AI_getStrategyHash() const
 		// A leader dependant value. (MaxWarRand is roughly between 50 and 200. Gandi is 400.)
 		//iCrushValue += (iNonsense % 3000) / (400+GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand());
 	// On second thought, lets try this
-		iCrushValue += iNonsense % (4 + AI_getFlavorValue(AI_FLAVOR_MILITARY)/2);
+		//iCrushValue += iNonsense % (4 + AI_getFlavorValue(AI_FLAVOR_MILITARY)/2);
+		if ((AI_getNumRealCities() > 1) || GC.getGameINLINE().isOption(GAMEOPTION_ONE_CITY_CHALLENGE) || hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_AGGRESSIVE")))
+		{
+			iCrushValue += AI_getFlavorValue(AI_FLAVOR_MILITARY)/10;
+		}
 		iCrushValue += std::min(0, kTeam.AI_getWarSuccessRating()/15);
-		// note: flavor military is between 0 and 10
+		// note: flavor military is between 0 and 45
 		// K-Mod end
 		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
 		{
