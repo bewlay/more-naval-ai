@@ -14110,6 +14110,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		}
 	}
 
+	/* - Commenting this out - religion can be changed, so dont automatically zero out religious civics
 	if (kCivic.getPrereqReligion() != NO_RELIGION)
 	{
 		if (kCivic.getPrereqReligion() != getStateReligion())
@@ -14117,6 +14118,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			return 0;
 		}
 	}
+	*/
 
 	bWarPlan = (kTeam.getAnyWarPlanCount(true) > 0);
 	if( bWarPlan )
@@ -14189,6 +14191,23 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue = 1 + AI_getNumRealCities();
 	//iValue = 1;
 
+	// account for civic-specfic units with the <bAbandon> tag
+	// loop through units
+	CvUnit* pLoopUnit;
+	int iUnitLoop;
+	for (pLoopUnit = firstUnit(&iUnitLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iUnitLoop))
+	{
+		CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)pLoopUnit->getUnitType());
+		if (kUnitInfo.isAbandon())
+		{
+			if (kUnitInfo.getPrereqCivic() == eCivic)
+			{
+				iValue += pLoopUnit->getLevel();
+			}
+		}
+	}
+
+
 	iValue += (getCivicPercentAnger(eCivic) / 10);
 
 	iValue += -(GC.getCivicInfo(eCivic).getAnarchyLength() * iCities);
@@ -14204,6 +14223,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iTotalFoodDifference = 0;
 	int iTotalGrowingSpace = 0;
 	int iMaxGrowingSpace = 0;
+	int iFreeCitizens = 0;
 	for (CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
 		// calculate how many Great Person points we're generating
@@ -14213,9 +14233,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTotalFoodDifference += pLoopCity->foodDifference();
 		iTotalGrowingSpace += std::max(0, pLoopCity->AI_getTargetSize() - pLoopCity->getPopulation());
 		iMaxGrowingSpace += iTotalGrowingSpace;
+		iFreeCitizens += pLoopCity->getSpecialistCount((SpecialistTypes)(GC.getDefineINT("DEFAULT_SPECIALIST")));
 	}
 
-	iValue += ((kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta) / (((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 10 : 25) + iCities));
+	iValue += ((kCivic.getGreatPeopleRateModifier() * iGreatPeopleTotalDelta) / (((AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2 || AI_VICTORY_CULTURE2)) ? 10 : 50) + iCities));
 //<<<<Better AI: End Modify
 	
 	if ( bWarPlan && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
@@ -14274,6 +14295,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 //>>>>Better AI: Added by Denev 2010/07/08
 //*** FfH2 promotions are more valuable than unmodded BtS.
 		//iTempValue *= (bAtWar ? 4 : 2);
+		iTempValue *= ((bWarPlan || AI_isDoStrategy(AI_STRATEGY_GET_BETTER_UNITS) || AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2)) ? 3 : 2);
 //<<<<Better AI: End Add
 		iTempValue *= AI_averageYieldMultiplier(YIELD_PRODUCTION);
 		iTempValue /= 100;
@@ -14367,10 +14389,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = 0;
 		if ((kCivic.getFoodConsumptionPerPopulation() > 0) && !(isIgnoreFood()))
 		{
-			iTempValue += (getTotalPopulation() * 2 ) / kCivic.getFoodConsumptionPerPopulation();
+			iTempValue += (getTotalPopulation() * 5 ) / kCivic.getFoodConsumptionPerPopulation();
 			//TempValue += iMaxGrowingSpace * getNumCities() * 10;
 			//iTempValue -= (iTotalFoodDifference * 2);
-			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
+			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2) || isMilitaryFoodProduction())
 			{
 				iTempValue *= 2;
 			}
@@ -14379,9 +14401,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		if (kCivic.isMilitaryFoodProduction())
 		{
 			iTempValue += bWarPlan ? iTotalFoodDifference : 0;
-			iTempValue /= GET_PLAYER(getID()).canPopRush() ? 2 : 1;
 			iTempValue -= iTotalGrowingSpace;
 			iTempValue -= iMaxGrowingSpace * 2;
+			iTempValue /= GET_PLAYER(getID()).canPopRush() ? 2 : 1;
 		}
 
 		iValue += iTempValue;
@@ -14522,7 +14544,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /* orginal bts code
 		iValue += (getNumCities() * 6 * AI_getHealthWeight(isCivic(eCivic) ? -kCivic.getExtraHealth() : kCivic.getExtraHealth(), 1)) / 100;
 */
-		iValue += (iCities * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10: 6) * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
+	// Tholal ToDo - this should evaluate how much unhealth bothers us - if we're whipping pop, or at a slow growth rate, not so much
+		iValue += (iCities * (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2) ? 10: 6) * AI_getHealthWeight(kCivic.getExtraHealth(), 1)) / 100;
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -14668,7 +14691,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (kCivic.getCapitalYieldModifier(iI) != 0)
 			{
 				iTemp = (kCivic.getCapitalYieldModifier(iI)) * pCapital->getBaseYieldRate((YieldTypes)iI);
-				iTemp /= (iCities * 25);
+				iTemp /= (iCities * 35);
 				iTempValue += iTemp;
 			}
 			//iTemp *= 4;
@@ -14720,7 +14743,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (kCivic.getCapitalCommerceModifier(iI) != 0)
 			{
 				iTemp = (kCivic.getCapitalCommerceModifier(iI)) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
-				iTemp /= (iCities * 25);
+				iTemp /= (iCities * 35);
 	
 				//iTemp *= 4;
 				//iTemp /= std::max(1, iCities);
@@ -14795,7 +14818,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() > 0)
 			{
 				//iTempValue += (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() * getTotalPopulation() * 2) / 100;
-				iTempValue += (GC.getGameINLINE().getProductionPerPopulation((HurryTypes)iI) * getTotalPopulation() * 2) / 100;
+				iTempValue += (GC.getGameINLINE().getProductionPerPopulation((HurryTypes)iI) * getTotalPopulation()) / 100;
 				//iTempValue += getTotalPopulation() * kCivic.getFoodConsumptionPerPopulation();
 				//iTempValue += iMaxGrowingSpace * getNumCities() * 10;
 				//iTempValue -= (iTotalFoodDifference * 2);
@@ -14878,7 +14901,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		iTempValue = 0; 
 		if (kCivic.isSpecialistValid(iI)) 
 		{ 
+			// Tholal Todo - more value for priest specialists when running Altar vic.; more for Bards when running culture vic.
 			iTempValue += ((iCities *  (bCultureVictory3 ? 10 : 1)) + 6);
+			iTempValue += (iFreeCitizens * iFreeCitizens) / 2;
 		} 
 		iValue += (iTempValue / 2); 
 	} 
