@@ -325,6 +325,9 @@ def postCombatSplit(pCaster, pOpponent):
 			newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WEAK'), True)
 		newUnit.setDuration(pCaster.getDuration())
 		newUnit2.setDuration(pCaster.getDuration())
+		if pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION')):
+			newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION'), True)
+			newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ILLUSION'), True)
 		CyInterface().addMessage(pCaster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_SPLIT", ()),'',1,gc.getUnitInfo(iUnit).getButton(),ColorTypes(7),pCaster.getX(),pCaster.getY(),True,True)
 
 def postCombatWolfRider(pCaster, pOpponent):
