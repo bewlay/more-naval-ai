@@ -104,7 +104,6 @@ BeginTeam
 	AtWar=0
 	AtWar=2
 	AtWar=4
-	AtWar=7
 	RevealMap=0
 EndTeam
 BeginTeam
@@ -191,7 +190,6 @@ BeginTeam
 	AtWar=0
 	AtWar=2
 	AtWar=4
-	AtWar=7
 	RevealMap=0
 EndTeam
 BeginTeam
@@ -280,7 +278,6 @@ BeginTeam
 	AtWar=0
 	AtWar=2
 	AtWar=4
-	AtWar=7
 	RevealMap=0
 EndTeam
 BeginTeam
@@ -326,46 +323,11 @@ BeginTeam
 	AtWar=0
 	AtWar=2
 	AtWar=4
-	AtWar=7
 	RevealMap=0
 EndTeam
 BeginTeam
 	TeamID=7
-	Tech=TECH_AGRICULTURE
-	Tech=TECH_ANCIENT_CHANTS
-	Tech=TECH_ANIMAL_HUSBANDRY
-	Tech=TECH_ARCHERY
-	Tech=TECH_BRONZE_WORKING
-	Tech=TECH_CALENDAR
-	Tech=TECH_CARTOGRAPHY
-	Tech=TECH_CODE_OF_LAWS
-	Tech=TECH_CONSTRUCTION
-	Tech=TECH_CRAFTING
-	Tech=TECH_EDUCATION
-	Tech=TECH_EXPLORATION
-	Tech=TECH_FESTIVALS
-	Tech=TECH_FISHING
-	Tech=TECH_HONOR
-	Tech=TECH_HORSEBACK_RIDING
-	Tech=TECH_HUNTING
-	Tech=TECH_KNOWLEDGE_OF_THE_ETHER
-	Tech=TECH_MASONRY
-	Tech=TECH_MINING
-	Tech=TECH_MYSTICISM
-	Tech=TECH_PHILOSOPHY
-	Tech=TECH_SAILING
-	Tech=TECH_TRADE
-	Tech=TECH_WAY_OF_THE_WISE
-	Tech=TECH_WRITING
-	ContactWithTeam=1
-	ContactWithTeam=3
-	ContactWithTeam=5
-	ContactWithTeam=6
 	ContactWithTeam=7
-	AtWar=1
-	AtWar=3
-	AtWar=5
-	AtWar=6
 	RevealMap=0
 EndTeam
 BeginTeam
