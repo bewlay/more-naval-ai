@@ -516,9 +516,12 @@ def getHandoverUnitTypes( city, pPlayer, compPlayer = None, bSilent = False ) :
 		if( iAttack == UnitTypes.NO_UNIT ) : iAttack = iCounter
 
 		if( LOG_DEBUG and not bSilent ) :
-				CvUtil.pyPrint("Revolt - Best defender set to %s"%(PyInfo.UnitInfo(iBestDefender).getDescription()))
-				CvUtil.pyPrint("Revolt - Best counter unit set to %s"%(PyInfo.UnitInfo(iCounter).getDescription()))
-				CvUtil.pyPrint("Revolt - Best attack set to %s"%(PyInfo.UnitInfo(iAttack).getDescription()))
+				if iBestDefender != UnitTypes.NO_UNIT:
+					CvUtil.pyPrint("Revolt - Best defender set to %s"%(PyInfo.UnitInfo(iBestDefender).getDescription()))
+				if iCounter != UnitTypes.NO_UNIT:
+					CvUtil.pyPrint("Revolt - Best counter unit set to %s"%(PyInfo.UnitInfo(iCounter).getDescription()))
+				if iAttack != UnitTypes.NO_UNIT:
+					CvUtil.pyPrint("Revolt - Best attack set to %s"%(PyInfo.UnitInfo(iAttack).getDescription()))
 
 		return [iWorker,iBestDefender,iCounter,iAttack]
 
