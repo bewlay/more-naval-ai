@@ -605,7 +605,10 @@ class DynamicCivNames :
 			if bForeignTrade:
 				sEmp = "Confederation"
 			elif bDecentralization:
-				sEmp = "Independent Alliance"
+				if iNumCities == 1:
+					sEmp = "Independent State"
+				else:
+					sEmp = "Independent Alliance"
 		elif( bGodKing ) :
 			iMxc = 4
 			if bReligion:
