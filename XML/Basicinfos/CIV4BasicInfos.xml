@@ -121,5 +121,15 @@
 			<Description>TXT_KEY_CONCEPT_WORLD_SPELLS</Description>
 			<Civilopedia>TXT_KEY_CONCEPT_WORLD_SPELLS_PEDIA</Civilopedia>
 		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_REVOLUTIONS</Type>
+			<Description>TXT_KEY_CONCEPT_REVOLUTIONS</Description>
+			<Civilopedia>TXT_KEY_CONCEPT_REVOLUTIONS_PEDIA</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
+			<Type>CONCEPT_PUPPET_STATES</Type>
+			<Description>TXT_KEY_CONCEPT_PUPPET_STATES</Description>
+			<Civilopedia>TXT_KEY_CONCEPT_PUPPET_STATES_PEDIA</Civilopedia>
+		</ConceptInfo>
 	</ConceptInfos>
 </Civ4BasicInfos>
