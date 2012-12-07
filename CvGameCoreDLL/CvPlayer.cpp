@@ -21764,6 +21764,8 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		return;
 	}
 
+	logBBAI("    Event result - %S", GC.getEventInfo((EventTypes)eEvent).getDescription() );
+
 	if (bUpdateTrigger)
 	{
 		setTriggerFired(*pTriggeredData, true);
