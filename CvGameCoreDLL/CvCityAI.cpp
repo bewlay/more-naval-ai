@@ -2257,6 +2257,24 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 	}
+
+	//opportunistic wonder build (1)
+	if (!bDanger && (!hasActiveWorldWonder()) && (kPlayer.AI_getNumRealCities() <= 3))
+	{
+		// For small civ at war, don't build wonders unless winning
+		if( !bLandWar || (iWarSuccessRatio > 30) )
+		{
+			int iWonderTime = GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getWonderConstructRand(), "Wonder Construction Rand");
+			iWonderTime /= 5;
+			iWonderTime += 7;
+			if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses oppurtunistic wonder build 1", getName().GetCString());
+				return;
+			}
+		}
+	}
+
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
 	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) ||
 		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)))
@@ -2339,23 +2357,6 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	//opportunistic wonder build (1)
-	if (!bDanger && (!hasActiveWorldWonder()) && (iNumCities <= 3))
-	{
-		// For small civ at war, don't build wonders unless winning
-		if( !bLandWar || (iWarSuccessRatio > 30) )
-		{
-			int iWonderTime = GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getWonderConstructRand(), "Wonder Construction Rand");
-			iWonderTime /= 5;
-			iWonderTime += 7;
-			if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
-			{
-				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses oppurtunistic wonder build 1", getName().GetCString());
-				return;
-			}
-		}
-	}
-	
 	if (!bDanger && !bIsCapitalArea && area()->getCitiesPerPlayer(getOwnerINLINE()) > iNumCapitalAreaCities)
 	{
 		// BBAI TODO:  This check should be done by player, not by city and optimize placement
@@ -2417,6 +2418,10 @@ void CvCityAI::AI_chooseProduction()
 	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault && !bLandWar)
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
+		if (kPlayer.getStateReligion() != NO_RELIGION)
+		{
+			iSpreadUnitRoll -= (kPlayer.AI_neededMissionaries(pArea, (ReligionTypes)kPlayer.getStateReligion())*5);
+		}
 		//iSpreadUnitRoll += bLandWar ? 0 : 10;
 
 		if (AI_bestSpreadUnit(true, true, iSpreadUnitRoll, &eBestSpreadUnit, &iBestSpreadUnitValue))
