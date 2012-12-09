@@ -6646,6 +6646,18 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				if (GC.getBuildingInfo(eLoopBuilding).isVictoryBuilding())
 				{
 					iBuildingValue += 1000;
+					if (iProphetSpecialist > 0) // probably an altar building - semi-hardcode
+					{
+						if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
+						{
+							iBuildingValue += 5000;
+							if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3))
+							{
+								iBuildingValue += 10000;
+							}
+						}
+					}
+
 				}
 
 				if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() != NO_CIVILIZATION)
