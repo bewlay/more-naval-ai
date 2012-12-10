@@ -465,6 +465,21 @@ class CvGameUtils:
 		return TechTypes.NO_TECH
 
 	def AI_chooseProduction(self,argsList):
+		pCity = argsList[0]
+		ePlayer = pCity.getOwner()
+		pPlayer = gc.getPlayer(ePlayer)
+		
+		if not pPlayer.isHuman():
+			## AI catch for Illians - make sure we build our best projects
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+				if pCity.findYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 3:
+					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'), true, true):
+						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'),-1, False, False, False, False)
+						return 1
+					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_ASCENSION'), true, true):
+						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_ASCENSION'),-1, False, False, False, False)
+						return 1
+		
 		return False
 
 	def AI_unitUpdate(self,argsList):
