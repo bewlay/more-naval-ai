@@ -14405,6 +14405,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		if ((kCivic.getFoodConsumptionPerPopulation() > 0) && !(isIgnoreFood()))
 		{
 			iTempValue += (getTotalPopulation() * 5 ) / kCivic.getFoodConsumptionPerPopulation();
+			iTempValue += iMaxGrowingSpace * 10; // more value if we have lots of open specialist slots?
 			//TempValue += iMaxGrowingSpace * getNumCities() * 10;
 			//iTempValue -= (iTotalFoodDifference * 2);
 			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2) || isMilitaryFoodProduction())
