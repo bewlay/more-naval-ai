@@ -12361,7 +12361,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 */
 		//iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 4);
 		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
-		//iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
+		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
 		
 		if (iCombatValue  < 3)
 		{
