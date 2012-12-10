@@ -17989,13 +17989,15 @@ int CvUnit::chooseSpell()
         iValue = 0;
         if (canCast(iSpell, false))
         {
-			if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAI())
+			CvSpellInfo& kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
+
+			if (kSpellInfo.isAllowAI())
 			{
-				iRange = GC.getSpellInfo((SpellTypes)iSpell).getRange();
-				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
+				iRange = kSpellInfo.getRange();
+				if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 				{
-					int iMoveRange = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getMoves() + getExtraSpellMove();
-					bool bPermSummon = GC.getSpellInfo((SpellTypes)iSpell).isPermanentUnitCreate();
+					int iMoveRange = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getMoves() + getExtraSpellMove();
+					bool bPermSummon = kSpellInfo.isPermanentUnitCreate();
 					bool bEnemy = false;
 					for (int i = -iMoveRange; i <= iMoveRange; ++i)
 					{
@@ -18013,16 +18015,16 @@ int CvUnit::chooseSpell()
 					}
 					if (bEnemy || bPermSummon)
 					{
-						iTempValue = GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCombat();
+						iTempValue = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCombat();
 						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
 						{
-							iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getDamageTypeCombat(iI);
+							iTempValue += GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getDamageTypeCombat(iI);
 						}
 
-						iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getCollateralDamage() / 10);
+						iTempValue += (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCollateralDamage() / 10);
 
 						iTempValue *= 100;
-						iTempValue *= GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitNum();
+						iTempValue *= kSpellInfo.getCreateUnitNum();
 
 						if (bPermSummon)
 						{
@@ -18037,20 +18039,20 @@ int CvUnit::chooseSpell()
 						iValue += iTempValue;
 					}
 					// Severed Souls & Floating Eyes
-					if ((GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getInvisibleType() != NO_INVISIBLE) ||
-						(GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0))
+					if ((GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getInvisibleType() != NO_INVISIBLE) ||
+						(GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getNumSeeInvisibleTypes() > 0))
 					{
 						iValue += 25;
 					}
 				}
 
 				// extra code for Tsunami since all of its effects are hidden in python
-				bool bIsCoastalSpell = GC.getSpellInfo((SpellTypes)iSpell).isAdjacentToWaterOnly();
+				bool bIsCoastalSpell = kSpellInfo.isAdjacentToWaterOnly();
 
-				if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
+				if (kSpellInfo.getDamage() != 0 || (bIsCoastalSpell))// && !bPermSummon))
 				{
-					int iDmg = GC.getSpellInfo((SpellTypes)iSpell).getDamage();
-					int iDmgLimit = GC.getSpellInfo((SpellTypes)iSpell).getDamageLimit();
+					int iDmg = kSpellInfo.getDamage();
+					int iDmgLimit = kSpellInfo.getDamageLimit();
 
 					if (bIsCoastalSpell)
 					{
@@ -18119,62 +18121,62 @@ int CvUnit::chooseSpell()
 				// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
 				// some spells buff only this unit, some team units, some also include allied units - add code to sort that out here
 
-				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+				if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 				{
-					if (GC.getSpellInfo((SpellTypes)iSpell).isImmuneTeam())
+					if (kSpellInfo.isImmuneTeam())
 					{
-						iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType1());
 					}
 					else
 					{
-						iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1());
+						iValue += AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType1());
 					}
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+				if (kSpellInfo.getAddPromotionType2() != NO_PROMOTION)
 				{
-					iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2());
+					iValue += AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType2());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+				if (kSpellInfo.getAddPromotionType3() != NO_PROMOTION)
 				{
-					iValue += AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3());
+					iValue += AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType3());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1() != NO_PROMOTION)
+				if (kSpellInfo.getRemovePromotionType1() != NO_PROMOTION)
 				{
-					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType1());
+					iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType1());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2() != NO_PROMOTION)
+				if (kSpellInfo.getRemovePromotionType2() != NO_PROMOTION)
 				{
-					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType2());
+					iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3() != NO_PROMOTION)
+				if (kSpellInfo.getRemovePromotionType3() != NO_PROMOTION)
 				{
-					iValue -= AI_promotionValue((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getRemovePromotionType3());
+					iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType3());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType() != NO_UNIT)
+				if (kSpellInfo.getConvertUnitType() != NO_UNIT)
 				{
-					iValue += GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)GC.getSpellInfo((SpellTypes)iSpell).getConvertUnitType(), UNITAI_ATTACK, area());
+					iValue += GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)kSpellInfo.getConvertUnitType(), UNITAI_ATTACK, area());
 					iValue -= GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
+				if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
 				{
-					iValue += plot()->getPlotCity()->AI_buildingValue((BuildingTypes)GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType());
+					iValue += plot()->getPlotCity()->AI_buildingValue((BuildingTypes)kSpellInfo.getCreateBuildingType());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateFeatureType() != NO_FEATURE)
-				{
-					iValue += 10;
-				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getCreateImprovementType() != NO_IMPROVEMENT)
+				if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
 				{
 					iValue += 10;
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).isDispel())
+				if (kSpellInfo.getCreateImprovementType() != NO_IMPROVEMENT)
+				{
+					iValue += 10;
+				}
+				if (kSpellInfo.isDispel())
 				{
 					if (AI_getUnitAIType() != UNITAI_MANA_UPGRADE)
 					{
 						iValue += 25 * (iRange + 1) * (iRange + 1);
 					}
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).isPush())
+				if (kSpellInfo.isPush())
 				{
 					iValue += 20 * (iRange + 1) * (iRange + 1);
 					if (plot()->isCity())
@@ -18182,27 +18184,29 @@ int CvUnit::chooseSpell()
 						iValue *= 3;
 					}
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation() != 0)
+				if (kSpellInfo.getChangePopulation() != 0)
 				{
-					iValue += 50 * GC.getSpellInfo((SpellTypes)iSpell).getChangePopulation();
+					// ToDo - make this actually look at the city and see if it needs population
+					// also need to make sure we dont break spells that reduce pop
+					iValue += 500 * kSpellInfo.getChangePopulation();
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getCost() != 0)
+				if (kSpellInfo.getCost() != 0)
 				{
-					iValue -= 4 * GC.getSpellInfo((SpellTypes)iSpell).getCost();
+					iValue -= 4 * kSpellInfo.getCost();
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() != 0)
+				if (kSpellInfo.getImmobileTurns() != 0)
 				{
-					iValue += 20 * GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() * (iRange + 1) * (iRange + 1);
+					iValue += 20 * kSpellInfo.getImmobileTurns() * (iRange + 1) * (iRange + 1);
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster()) // TODO - add a check for financial trouble and/or overabundance of troops
+				if (kSpellInfo.isSacrificeCaster()) // TODO - add a check for financial trouble and/or overabundance of troops
 				{
 					iValue -= (getLevel() * 20) * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
 				}
-				if (GC.getSpellInfo((SpellTypes)iSpell).isResistable())
+				if (kSpellInfo.isResistable())
 				{
 					iValue /= 2;
 				}
-				iValue += GC.getSpellInfo((SpellTypes)iSpell).getAIWeight();
+				iValue += kSpellInfo.getAIWeight();
 
 				if (iValue > iBestSpellValue)
 				{
