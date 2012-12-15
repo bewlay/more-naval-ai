@@ -10757,25 +10757,26 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
 				for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
 				{
+					CvSpellInfo &kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
 					// convoluted, but its the only way to connect the spell with the bonus
-					if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
+					if (kSpellInfo.getPromotionPrereq1() != NO_PROMOTION)
 					{
-						if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()).getBonusPrereq() == eBonus)
+						if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getPromotionPrereq1()).getBonusPrereq() == eBonus)
 						{
 							iValue += 25;
 							
 							// summons
-							if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
+							if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 							{
-								iValue += (bSummoner ? 50 : 25);
+								iValue += (bSummoner ? 50 : 25);// ToDo - extract some info about the unit and how useful it will be to us
 							}
 							
 
 							// buffs and debuffs
-							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1() != NO_PROMOTION)
+							if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 							{
 								iValue =+ 10;
-								if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType1()).getMovesChange() > 0)
+								if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getAddPromotionType1()).getMovesChange() > 0)
 								{
 									if (!bDemon)
 									{
@@ -10783,19 +10784,19 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 									}
 								}
 							}
-							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType2() != NO_PROMOTION)
+							if (kSpellInfo.getAddPromotionType2() != NO_PROMOTION)
 							{
 								iValue += 10;
 							}
-							if (GC.getSpellInfo((SpellTypes)iSpell).getAddPromotionType3() != NO_PROMOTION)
+							if (kSpellInfo.getAddPromotionType3() != NO_PROMOTION)
 							{
 								iValue += 10;
 							}
 
 							// city spells
-							if (GC.getSpellInfo((SpellTypes)iSpell).getCreateBuildingType() != NO_BUILDING)
+							if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
 							{
-								iValue += 10;
+								iValue += 10; // ToDo - extract some info about the building and how useful it will be to us
 							}
 						}
 					}
