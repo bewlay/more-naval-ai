@@ -7594,16 +7594,23 @@ void CvGame::updateMoves()
 										continue;
 									}
 								}
-                                int ispell=pLoopUnit->chooseSpell();
-                                if (ispell!=NO_SPELL)
+                                int iSpell = pLoopUnit->chooseSpell();
+                                if (iSpell != NO_SPELL)
                                 {
-                                    pLoopUnit->cast(ispell);
+                                    pLoopUnit->cast(iSpell);
+
+									//break if casting the spell killed the unit
+									if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
+									{
+										continue;
+									}
 								}
-								//break if casting a spell killed the unit
+								
 								if (pLoopUnit->isDelayedDeath())
 								{
 									continue;
                                 }
+								//ToDo - this section below is all redundant. Units should be able to pick out appropriate spells via chooseSpell()
                                 if (pLoopUnit->isBuffer())
                                 {
                                     pLoopUnit->AI_BuffCast();

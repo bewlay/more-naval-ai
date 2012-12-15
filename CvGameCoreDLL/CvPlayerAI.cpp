@@ -789,6 +789,16 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		// pass 0
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
+            int iSpell = pLoopUnit->chooseSpell();
+            if (iSpell != NO_SPELL)
+            {
+                pLoopUnit->cast(iSpell);
+				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
+				{
+					continue;
+				}
+			}
+
 			pUnitPlot = pLoopUnit->plot();
 			if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
 				&& pLoopUnit->hasUpgrade())

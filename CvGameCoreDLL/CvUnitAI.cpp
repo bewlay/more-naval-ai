@@ -30031,7 +30031,7 @@ bool CvUnitAI::AI_buildPirateCove()
                 cast(eCoveSpell);
             }
 
-            getGroup()->pushMission(MISSION_SKIP);
+            //getGroup()->pushMission(MISSION_SKIP);
         }
 
         return true;

@@ -16600,7 +16600,7 @@ void CvUnit::cast(int spell)
     gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
     if (GC.getSpellInfo((SpellTypes)spell).isSacrificeCaster())
     {
-        kill(true);
+        kill(false);
     }
 }
 
