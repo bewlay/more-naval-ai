@@ -144,7 +144,7 @@
 			<fInterfaceScale>0.52</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/Dies Diei/whitetower.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/Buildings/Dies Diei.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/Dies_Diei.dds</Button>
 		</BuildingArtInfo>
 		<BuildingArtInfo>
 			<Type>ART_DEF_BUILDING_NOX_NOCTIS</Type>
