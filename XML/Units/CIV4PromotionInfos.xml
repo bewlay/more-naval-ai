@@ -2766,7 +2766,6 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Extension1.dds</Button>
-            <iAIWeight>50</iAIWeight>
             <PromotionSummonPerk>PROMOTION_MOBILITY1</PromotionSummonPerk>
             <PromotionNextLevel>PROMOTION_EXTENSION2</PromotionNextLevel>
         </PromotionInfo>
@@ -2783,7 +2782,6 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Extension2.dds</Button>
-            <iAIWeight>100</iAIWeight>
             <PromotionSummonPerk>PROMOTION_MOBILITY2</PromotionSummonPerk>
         </PromotionInfo>
         <PromotionInfo>
