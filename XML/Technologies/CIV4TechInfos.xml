@@ -2955,7 +2955,7 @@
             <Help></Help>
             <Strategy></Strategy>
             <Advisor>ADVISOR_RELIGION</Advisor>
-            <iAIWeight>0</iAIWeight>
+            <iAIWeight>2500</iAIWeight>
             <iAITradeModifier>0</iAITradeModifier>
             <iCost>1200</iCost>
             <iAdvancedStartCost>-1</iAdvancedStartCost>
