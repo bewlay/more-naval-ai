@@ -12275,7 +12275,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	}
 
 //FfH: Modified by Kael 05/07/2008
-	iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit) + kUnitInfo.getWeaponTier();
+	//iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit) + kUnitInfo.getWeaponTier();
+	iCombatValue = AI_combatValue(eUnit);
 //	iCombatValue = AI_combatValue(eUnit) * 3;
 //FfH: End Modify
 	
@@ -12334,9 +12335,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			iValue -= (iCombatValue * (125 - kUnitInfo.getCombatLimit())) / 100;
 		}
-		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
 		
-		if (iCombatValue < 3)
+		if (AI_trueCombatValue(eUnit) < 3)
 		{
 			iValue /= 10;
 		}
@@ -12372,9 +12372,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 */
 		//iValue += ((iCombatValue * (kUnitInfo.getMoves() - 1) * iFastMoverMultiplier) / 4);
 		iValue += ((iCombatValue * kUnitInfo.getWithdrawalProbability()) / 100);
-		iValue += ((iCombatValue * kUnitInfo.getWeaponTier()) / 2);
 		
-		if (iCombatValue  < 3)
+		if (AI_trueCombatValue(eUnit) < 3)
 		{
 			iValue /= 10;
 		}
@@ -12595,7 +12594,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += iTempValue;
 		}
 
-		if ((iCombatValue + kUnitInfo.getWeaponTier()) < 4)
+		if (AI_trueCombatValue < 3)
 		{
 			iValue /= 5;
 		}
@@ -12605,9 +12604,9 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		break;
 
 	case UNITAI_CITY_DEFENSE:
+		iCombatValue = kUnitInfo.getCombatDefense();
 		iValue += ((iCombatValue * 2) / 3);
 		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 25);
-		iValue += kUnitInfo.getWeaponTier() * 10;
 		iValue += kUnitInfo.getFirstStrikes() * 5;
 		if (!kUnitInfo.isMilitaryHappiness())
 		{
@@ -12684,7 +12683,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += iTempValue;
 		}
 
-		if ((iCombatValue + kUnitInfo.getWeaponTier()) < 4)
+		if (AI_trueCombatValue < 3)
 		{
 			iValue /= 5;
 		}
