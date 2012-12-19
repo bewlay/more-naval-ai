@@ -26422,6 +26422,27 @@ int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
         }
         iCombat += iCombatBonus;
     }
+
+	for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
+	{
+		if (hasTrait((TraitTypes)iJ))
+		{
+			for (int iK = 0; iK < GC.getNumPromotionInfos(); iK++)
+			{
+				if (GC.getTraitInfo((TraitTypes)iJ).isFreePromotion(iK))
+				{
+					if (GC.getPromotionInfo((PromotionTypes)iK).getExtraCombatStr() != 0)
+					{
+						if ((GC.getUnitInfo(eUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eUnit).getUnitCombatType()))
+						{
+							iCombat += GC.getPromotionInfo((PromotionTypes)iK).getExtraCombatStr();
+						}
+					}
+				}
+			}
+		}
+	}
+
 	return iCombat;
 }
 
