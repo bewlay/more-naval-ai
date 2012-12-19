@@ -11434,49 +11434,52 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			}
 		}
 
-		SpellTypes eSpell;
 
 	    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
 		{
-			eSpell = (SpellTypes)iSpell;
+			CvSpellInfo &kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
 
-			if (GC.getSpellInfo(eSpell).getPromotionPrereq1() != NO_PROMOTION)
+			if (kSpellInfo.getPromotionPrereq1() != NO_PROMOTION)
 			{
-				if (GC.getSpellInfo(eSpell).getPromotionPrereq1() == ePromotion)
+				if (kSpellInfo.getPromotionPrereq1() == ePromotion)
 				{
 					iValue += GC.getGameINLINE().getSorenRandNum(10, "AI Spell Promote") + GET_PLAYER(getOwnerINLINE()).AI_getMojoFactor(); // added this to try and get a better distribution of spells
 
-					if (!isDirectDamageCaster() && AI_getGroupflag() == GROUPFLAG_CONQUEST)
+					if (!isDirectDamageCaster()) // if we dont already have a damage spell
 					{
-						iValue += GC.getSpellInfo(eSpell).getDamage() * GC.getSpellInfo(eSpell).getRange(); 
-						iValue += GC.getSpellInfo(eSpell).getDamageLimit() / 5;
+						if (AI_getUnitAIType() == UNITAI_WARWIZARD || 
+							AI_getUnitAIType() == UNITAI_MAGE)
+						{
+							iValue += kSpellInfo.getDamage() * kSpellInfo.getRange(); 
+							iValue += kSpellInfo.getDamageLimit() / 5;
+						}
 					}
 
-					if (GC.getSpellInfo(eSpell).getCreateUnitType() != NO_UNIT)
+					if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 					{
-						int iTempValue = (GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getCombat());
+						int iTempValue = (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCombat());
 						
-						if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
+						if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
 						{
 							iTempValue += 2;
 						}
 
-						if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getBombardRate() > 0)
+						if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getBombardRate() > 0)
 						{
 							iTempValue += 2;
 						}
 
 						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
 						{
-						    iTempValue += (GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getDamageTypeCombat(iI) * 2);
+						    iTempValue += (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getDamageTypeCombat(iI) * 2);
 						}
 
-						iTempValue += GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getTier();
+						iTempValue += GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getTier();
 
 						// account for Bonus Affinities
 						for (int iBonuses = 0; iBonuses < GC.getNumBonusInfos(); iBonuses++)
 						{
-							if (GC.getUnitInfo((UnitTypes)GC.getSpellInfo(eSpell).getCreateUnitType()).getBonusAffinity((BonusTypes)iBonuses) != 0)
+							if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getBonusAffinity((BonusTypes)iBonuses) != 0)
 							{
 								iTempValue += GET_PLAYER(getOwnerINLINE()).countOwnedBonuses((BonusTypes)iBonuses);
 							}
@@ -11499,7 +11502,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						iValue += (iTempValue * (4 + iModValue));
 					}
 
-					if (GC.getSpellInfo(eSpell).getAddPromotionType1() != NO_PROMOTION)
+					if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 					{
 						if (AI_getGroupflag()==GROUPFLAG_CONQUEST)// && !isBuffer())
 						{
@@ -11512,7 +11515,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 						// extra value for haste if we can use enemy roads
 						// ToDo - use this format to pull other tidbits about the promotion
-						if (GC.getPromotionInfo((PromotionTypes)GC.getSpellInfo(eSpell).getAddPromotionType1()).getMovesChange() > 0)
+						if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getAddPromotionType1()).getMovesChange() > 0)
 						{
 							if (isEnemyRoute())
 							{
@@ -11546,9 +11549,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 					*/
-					if (GC.getSpellInfo(eSpell).getRemovePromotionType1() != NO_PROMOTION)
+					if (kSpellInfo.getRemovePromotionType1() != NO_PROMOTION)
 					{
-						if (GC.getSpellInfo(eSpell).isResistable())
+						if (kSpellInfo.isResistable())
 						{
 							if (AI_getGroupflag()==GROUPFLAG_CONQUEST)
 							{
@@ -11569,7 +11572,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					}
 
 
-					if (GC.getSpellInfo(eSpell).getCreateBuildingType() != NO_BUILDING)
+					if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
 					{
 						if (eUnitAI == UNITAI_MAGE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
 						{
@@ -11578,7 +11581,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					}
 
 					// Bloom - not currently used for any selectable spell promotions in base FFH
-					if (GC.getSpellInfo(eSpell).getCreateFeatureType() != NO_FEATURE)
+					if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
 					{
 						if (eUnitAI == UNITAI_TERRAFORMER)
 						{
@@ -11591,7 +11594,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					}
 
 					// Blaze
-					if (GC.getSpellInfo(eSpell).getCreateImprovementType() != NO_IMPROVEMENT)
+					if (kSpellInfo.getCreateImprovementType() != NO_IMPROVEMENT)
 					{
 						if (AI_getGroupflag()==GROUPFLAG_CONQUEST || eUnitAI == UNITAI_TERRAFORMER)
 						{
@@ -11603,21 +11606,21 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 
-					if (GC.getSpellInfo(eSpell).isDispel())
+					if (kSpellInfo.isDispel())
 					{
 						iValue += 25;
 					}
 
-					if (GC.getSpellInfo(eSpell).isPush())
+					if (kSpellInfo.isPush())
 					{
 						iValue += 20;
 					}
-					if (GC.getSpellInfo((SpellTypes)iSpell).getImmobileTurns() != 0)
+					if (kSpellInfo.getImmobileTurns() != 0)
 					{
-						iValue += 30 * GC.getSpellInfo(eSpell).getImmobileTurns();
+						iValue += 30 * kSpellInfo.getImmobileTurns();
 					}
 
-					if (GC.getSpellInfo(eSpell).isAllowAutomateTerrain())
+					if (kSpellInfo.isAllowAutomateTerrain())
 					{
 						if (eUnitAI == UNITAI_TERRAFORMER)
 						{
@@ -11629,7 +11632,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 
-					if (GC.getSpellInfo(eSpell).isResistable())
+					if (kSpellInfo.isResistable())
 					{
 						if (eUnitAI != UNITAI_WARWIZARD && eUnitAI != UNITAI_HERO)
 						{
@@ -11639,7 +11642,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 				}
 			}
 		}
-		iValue += ((kPromotion.getAIWeight() / 10) * (getChannelingLevel() +1));
+		iValue += ((kPromotion.getAIWeight() / 10) * (getChannelingLevel() + 1));
 	}
 	// End Tholal AI
 
