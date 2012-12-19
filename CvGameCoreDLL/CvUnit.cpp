@@ -16426,12 +16426,14 @@ void CvUnit::cast(int spell)
 {
 	CvWString szBuffer;
 
+	CvSpellInfo &kSpellInfo = GC.getSpellInfo((SpellTypes)spell);
+
 	if( gUnitLogLevel > 2 )
 	{
-		logBBAI("     Player %d Unit %d (%S's %S) casting %S \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
+		logBBAI("     Player %d Unit %d casting %S \n", getOwnerINLINE(), getID(), kSpellInfo.getDescription());
 	}
 
-    if (GC.getSpellInfo((SpellTypes)spell).isHasCasted())
+    if (kSpellInfo.isHasCasted())
     {
         setHasCasted(true);
     }
@@ -16445,23 +16447,23 @@ void CvUnit::cast(int spell)
             }
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).isGlobal())
+    if (kSpellInfo.isGlobal())
     {
         GET_PLAYER(getOwnerINLINE()).setFeatAccomplished(FEAT_GLOBAL_SPELL, true);
 		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 		{
 		    if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
 		    {
-                gDLL->getInterfaceIFace()->addMessage((PlayerTypes)iPlayer, false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_GLOBAL_SPELL", GC.getSpellInfo((SpellTypes)spell).getDescription()), "AS2D_CIVIC_ADOPT", MESSAGE_TYPE_MINOR_EVENT);
+                gDLL->getInterfaceIFace()->addMessage((PlayerTypes)iPlayer, false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_GLOBAL_SPELL", kSpellInfo.getDescription()), "AS2D_CIVIC_ADOPT", MESSAGE_TYPE_MINOR_EVENT);
 		    }
 		}
     }
-    int iMiscastChance = GC.getSpellInfo((SpellTypes)spell).getMiscastChance() + m_pUnitInfo->getMiscastChance();
+    int iMiscastChance = kSpellInfo.getMiscastChance() + m_pUnitInfo->getMiscastChance();
     if (iMiscastChance > 0)
     {
         if (GC.getGameINLINE().getSorenRandNum(100, "Miscast") < iMiscastChance)
         {
-            if (!CvString(GC.getSpellInfo((SpellTypes)spell).getPyMiscast()).empty())
+            if (!CvString(kSpellInfo.getPyMiscast()).empty())
             {
                 CyUnit* pyUnit = new CyUnit(this);
                 CyArgsList argsList;
@@ -16475,11 +16477,11 @@ void CvUnit::cast(int spell)
             return;
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getDelay() > 0)
+    if (kSpellInfo.getDelay() > 0)
     {
         if (getDelayedSpell() == NO_SPELL)
         {
-            changeImmobileTimer(GC.getSpellInfo((SpellTypes)spell).getDelay());
+            changeImmobileTimer(kSpellInfo.getDelay());
             setDelayedSpell(spell);
             gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
             gDLL->getInterfaceIFace()->changeCycleSelectionCounter((GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_QUICK_MOVES)) ? 1 : 2);
@@ -16487,9 +16489,9 @@ void CvUnit::cast(int spell)
         }
         setDelayedSpell(NO_SPELL);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getCreateUnitType() != -1)
+    if (kSpellInfo.getCreateUnitType() != -1)
     {
-        int iUnitNum = GC.getSpellInfo((SpellTypes)spell).getCreateUnitNum();
+        int iUnitNum = kSpellInfo.getCreateUnitNum();
         if (isTwincast())
         {
             iUnitNum *= 2;
@@ -16499,96 +16501,96 @@ void CvUnit::cast(int spell)
             castCreateUnit(spell);
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getAddPromotionType1() != -1)
+    if (kSpellInfo.getAddPromotionType1() != -1)
     {
         castAddPromotion(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getRemovePromotionType1() != -1)
+    if (kSpellInfo.getRemovePromotionType1() != -1)
     {
         castRemovePromotion(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getConvertUnitType() != NO_UNIT)
+    if (kSpellInfo.getConvertUnitType() != NO_UNIT)
     {
         castConvertUnit(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getCreateBuildingType() != NO_BUILDING)
+    if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
     {
         if (canCreateBuilding(spell))
         {
-            plot()->getPlotCity()->setNumRealBuilding((BuildingTypes)GC.getSpellInfo((SpellTypes)spell).getCreateBuildingType(), true);
+            plot()->getPlotCity()->setNumRealBuilding((BuildingTypes)kSpellInfo.getCreateBuildingType(), true);
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getCreateFeatureType() != NO_FEATURE)
+    if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
     {
         if (canCreateFeature(spell))
         {
-            plot()->setFeatureType((FeatureTypes)GC.getSpellInfo((SpellTypes)spell).getCreateFeatureType(), -1);
+            plot()->setFeatureType((FeatureTypes)kSpellInfo.getCreateFeatureType(), -1);
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getCreateImprovementType() != NO_IMPROVEMENT)
+    if (kSpellInfo.getCreateImprovementType() != NO_IMPROVEMENT)
     {
         if (canCreateImprovement(spell))
         {
-            plot()->setImprovementType((ImprovementTypes)GC.getSpellInfo((SpellTypes)spell).getCreateImprovementType());
+            plot()->setImprovementType((ImprovementTypes)kSpellInfo.getCreateImprovementType());
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getSpreadReligion() != NO_RELIGION)
+    if (kSpellInfo.getSpreadReligion() != NO_RELIGION)
     {
         if (canSpreadReligion(spell))
         {
-            plot()->getPlotCity()->setHasReligion((ReligionTypes)GC.getSpellInfo((SpellTypes)spell).getSpreadReligion(), true, true, true);
+            plot()->getPlotCity()->setHasReligion((ReligionTypes)kSpellInfo.getSpreadReligion(), true, true, true);
         }
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getDamage() != 0)
+    if (kSpellInfo.getDamage() != 0)
     {
         castDamage(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getImmobileTurns() != 0)
+    if (kSpellInfo.getImmobileTurns() != 0)
     {
         castImmobile(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).isPush())
+    if (kSpellInfo.isPush())
     {
         castPush(spell);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).isRemoveHasCasted())
+    if (kSpellInfo.isRemoveHasCasted())
     {
         if (getDuration() == 0)
         {
             setHasCasted(false);
         }
     }
-    int iCost = GC.getSpellInfo((SpellTypes)spell).getCost();
+    int iCost = kSpellInfo.getCost();
     if (iCost != 0)
     {
-        if (GC.getSpellInfo((SpellTypes)spell).getConvertUnitType() != NO_UNIT)
+        if (kSpellInfo.getConvertUnitType() != NO_UNIT)
         {
             iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
         }
         GET_PLAYER(getOwnerINLINE()).changeGold(-1 * iCost);
     }
-    if (GC.getSpellInfo((SpellTypes)spell).getChangePopulation() != 0)
+    if (kSpellInfo.getChangePopulation() != 0)
     {
-        plot()->getPlotCity()->changePopulation(GC.getSpellInfo((SpellTypes)spell).getChangePopulation());
+        plot()->getPlotCity()->changePopulation(kSpellInfo.getChangePopulation());
     }
-    if (GC.getSpellInfo((SpellTypes)spell).isDispel())
+    if (kSpellInfo.isDispel())
     {
         castDispel(spell);
     }
     if (plot()->isVisibleToWatchingHuman())
     {
-        if (GC.getSpellInfo((SpellTypes)spell).getEffect() != -1)
+        if (kSpellInfo.getEffect() != -1)
         {
-            gDLL->getEngineIFace()->TriggerEffect(GC.getSpellInfo((SpellTypes)spell).getEffect(), plot()->getPoint(), (float)(GC.getASyncRand().get(360)));
+            gDLL->getEngineIFace()->TriggerEffect(kSpellInfo.getEffect(), plot()->getPoint(), (float)(GC.getASyncRand().get(360)));
         }
-        if (GC.getSpellInfo((SpellTypes)spell).getSound() != NULL)
+        if (kSpellInfo.getSound() != NULL)
         {
-            gDLL->getInterfaceIFace()->playGeneralSound(GC.getSpellInfo((SpellTypes)spell).getSound(), plot()->getPoint());
+            gDLL->getInterfaceIFace()->playGeneralSound(kSpellInfo.getSound(), plot()->getPoint());
         }
-		szBuffer = gDLL->getText("TXT_KEY_MESSAGE_SPELL_CAST", getName().GetCString(), GC.getSpellInfo((SpellTypes)spell).getDescription());
-        gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, GC.getSpellInfo((SpellTypes)spell).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"), getX_INLINE(), getY_INLINE(), true, true);
+		szBuffer = gDLL->getText("TXT_KEY_MESSAGE_SPELL_CAST", getName().GetCString(), kSpellInfo.getDescription());
+        gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, kSpellInfo.getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"), getX_INLINE(), getY_INLINE(), true, true);
     }
-	if (!CvString(GC.getSpellInfo((SpellTypes)spell).getPyResult()).empty())
+	if (!CvString(kSpellInfo.getPyResult()).empty())
     {
         CyUnit* pyUnit = new CyUnit(this);
         CyArgsList argsList;
@@ -16598,7 +16600,7 @@ void CvUnit::cast(int spell)
         delete pyUnit; // python fxn must not hold on to this pointer
     }
     gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-    if (GC.getSpellInfo((SpellTypes)spell).isSacrificeCaster())
+    if (kSpellInfo.isSacrificeCaster())
     {
         kill(false);
     }
@@ -18216,6 +18218,12 @@ int CvUnit::chooseSpell()
 			}
         }
     }
+	
+	if( gUnitLogLevel > 2 && (iBestSpell != -1))
+	{
+		logBBAI("     Player %d Unit %d (%S's %S) Best Spell - %S (value: %d) \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)iBestSpell).getDescription(), iBestSpellValue);
+	}
+
     return iBestSpell;
 }
 
