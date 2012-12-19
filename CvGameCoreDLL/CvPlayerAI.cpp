@@ -12594,7 +12594,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += iTempValue;
 		}
 
-		if (AI_trueCombatValue < 3)
+		if (AI_trueCombatValue(eUnit) < 3)
 		{
 			iValue /= 5;
 		}
@@ -12683,7 +12683,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			iValue += iTempValue;
 		}
 
-		if (AI_trueCombatValue < 3)
+		if (AI_trueCombatValue(eUnit) < 3)
 		{
 			iValue /= 5;
 		}
