@@ -5290,11 +5290,11 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				// give extra boost for researching magic techs
 				if (kImprovement.getBonusConvert() != NO_BONUS)
 				{
-					// if we have adepts to build nodes
-					if (iNumMages > 0)
+					iImprovementValue += AI_getMojoFactor() * ((iNumMages > 0) ? 30 : 10);
+					// if not losing a war, bump up the value of mana techs for our unimproved mana nodes
+					if (GET_TEAM(getTeam()).AI_getWarSuccessRating() > -25)
 					{
-						iImprovementValue += AI_getMojoFactor() * 10;
-						iImprovementValue += (countOwnedBonuses((BonusTypes)GC.getInfoTypeForString("BONUS_MANA")) * (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 500 : 250));
+						iImprovementValue += (countOwnedBonuses((BonusTypes)GC.getDefineINT("BONUSCLASS_MANA_RAW")) * (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 1000 : 500));
 					}
 				}
 
@@ -7134,8 +7134,13 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iMilitaryValue += (bWarPlan ? 600 : 300);
 						iMilitaryValue += 25 * AI_getMojoFactor();
 						iUnitValue += 20 * AI_getMojoFactor() * (iTier * getNumCities());
+
+						// if we have unimproved mana nodes sitting around, we need some mage units to upgrade them
+						iUnitValue += (countOwnedBonuses((BonusTypes)GC.getInfoTypeForString("BONUS_MANA")) * 1000);
 						break;
 
+					// NOTE: none of the following are currently used as default AIs, nor does the AI seek to build units with these AIs
+					// assignment of these AI types is done via Python and in some hardcoding throughout this DLL
 					case UNITAI_FEASTING:
 					case UNITAI_TERRAFORMER:
 					case UNITAI_MANA_UPGRADE:
@@ -10853,7 +10858,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_DEATH"))
 				{
-					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM"))
+					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
+						countOwnedBonuses(eBonus) > 0)
 					{
 						bStack = true;
 						iValue += 100;
@@ -26854,7 +26860,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 		}
 		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA_RAW")))
 		{
-			iValue += countOwnedBonuses((BonusTypes)iK);
+			iValue += countOwnedBonuses((BonusTypes)iK) * 5; // we overvalue rawmana to encourage the AI to pursue techs and units to help it convert the mana
 		}
 	}
 

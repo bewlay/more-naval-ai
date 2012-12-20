@@ -1441,8 +1441,12 @@ class CvEventManager:
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_NECROMANCY')):
 					canupgrademana=true		
 			
+
+				if numbermanaupgrade == 0:
+					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
+					bHasAI = true
 				if canupgrademana:
-					if numbermanaupgrade == 0:
+					if (pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA'), False) > (numbermanaupgrade * 2)):
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
 						bHasAI = true
 			

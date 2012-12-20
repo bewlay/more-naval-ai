@@ -2390,7 +2390,15 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal ToDo - maybe add in some functions to produce mages for specific tasks. IE, terraforming, mana upgrade?
 	if (iNumMages < iNumCities)
 	{
-		if (AI_chooseUnit(UNITAI_MAGE, kPlayer.AI_getMojoFactor() * ((bLandWar || bAssault) ? 4 : 2)))
+		if (iNumMages == 0)
+		{
+			if (AI_chooseUnit(UNITAI_MAGE))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S choosing NO MAGES", getName().GetCString());
+				return;
+			}
+		}
+		else if (AI_chooseUnit(UNITAI_MAGE, kPlayer.AI_getMojoFactor() * ((bLandWar || bAssault) ? 4 : 2)))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S choosing EARLY MAGE", getName().GetCString());
 			return;
