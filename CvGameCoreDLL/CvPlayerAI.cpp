@@ -3193,6 +3193,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	                    iTempValue +=100;
 					}
                 }
+
+				if (isSprawling())
+				{
+					iTempValue -= 100;
+				}
 			}
 
 			if (pLoopPlot->isRiver())
