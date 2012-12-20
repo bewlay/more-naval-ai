@@ -4644,6 +4644,9 @@ int CvPlayerAI::AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTradin
         }
 	}
 
+	//HARDCODE
+	iGold += getUnitClassCount((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADVENTURER")) * 50;
+
 	//save up some gold for only trading
 	if (bTrading)
 	{
@@ -11729,11 +11732,6 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				break;
 			}
-			// adventurers
-			if (kUnitInfo.isOnlyDefensive())
-			{
-				return 1;
-			}
 			bValid = true;
 			break;
 
@@ -12303,6 +12301,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		break;
 
 	case UNITAI_HERO:
+		// adventurers
+		if (kUnitInfo.isOnlyDefensive() && bUpgrade)
+		{
+			return 1;
+		}
 		iValue += (iCombatValue * 5);
 		break;
 
