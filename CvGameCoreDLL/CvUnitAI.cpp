@@ -5087,10 +5087,12 @@ void CvUnitAI::AI_cityDefenseMove()
 			}
 		}
 
+		/*
 		if (AI_travelToUpgradeCity())
 		{
 			return;
 		}
+		*/
 	}
 
 	AreaAITypes eAreaAI = area()->getAreaAIType(getTeam());
@@ -26768,6 +26770,11 @@ void CvUnitAI::PatrolMove()
 
 	// Guard a city we're in if it needs it
 	if (AI_guardCity(true))
+	{
+		return;
+	}
+
+	if (AI_cityAttack(3, 65))
 	{
 		return;
 	}
