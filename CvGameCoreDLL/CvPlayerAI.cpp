@@ -5199,7 +5199,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 
 				// Tholal - kind of a hack to get AI to pursue education earlier
-				iImprovementValue += (kImprovement.getPillageGold() * (40 * getNumCities()));
+				iImprovementValue += (kImprovement.getPillageGold() * (50 * getNumCities()));
 
 				int iNumTotalBonuses = 0;
 				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
@@ -5815,7 +5815,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							{
 								logBBAI("     FAVORITE RELIGION");
 							}
-							iReligionValue += 3500 * getNumCities();
+							iReligionValue += 3000 * (getNumCities() / 2);
 						}
 					}
 					
@@ -13221,10 +13221,16 @@ int CvPlayerAI::AI_neededMissionaries(CvArea* pArea, ReligionTypes eReligion) co
         iCount = std::max(iCount, (pArea->getCitiesPerPlayer(getID()) - pArea->countHasReligion(eReligion, getID())));
         if (iCount > 0)
         {
-            if (!bCultureVictory)
+            if (!bState && !bHoly && !bFavorite)
 			{
                 iCount = std::max(1, iCount / (bHoly ? 2 : 4));
             }
+
+			if (bState || bFavorite)
+			{
+				iCount++;
+			}
+
             return iCount;
         }
 	}

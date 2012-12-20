@@ -2423,12 +2423,12 @@ void CvCityAI::AI_chooseProduction()
 	UnitTypes eBestSpreadUnit = NO_UNIT;
 	int iBestSpreadUnitValue = -1;
 	
-	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault && !bLandWar)
+	if( !bDanger && !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) && !bAssault)// && !bLandWar)
 	{
 		int iSpreadUnitRoll = (100 - iBuildUnitProb) / 3;
 		if (kPlayer.getStateReligion() != NO_RELIGION)
 		{
-			iSpreadUnitRoll -= (kPlayer.AI_neededMissionaries(pArea, (ReligionTypes)kPlayer.getStateReligion())*5);
+			iSpreadUnitRoll += (kPlayer.AI_neededMissionaries(pArea, (ReligionTypes)kPlayer.getStateReligion())*5);
 		}
 		//iSpreadUnitRoll += bLandWar ? 0 : 10;
 
