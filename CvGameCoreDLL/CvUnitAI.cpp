@@ -10642,35 +10642,11 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// mobility
-//	iTemp = kPromotion.getMovesChange();
 	iTemp = 0;
-	/*
-	if ((eUnitAI == UNITAI_ATTACK_SEA) ||
-		(eUnitAI == UNITAI_PIRATE_SEA) ||
-		(eUnitAI == UNITAI_RESERVE_SEA) ||
-		(eUnitAI == UNITAI_ESCORT_SEA) ||
-		(eUnitAI == UNITAI_EXPLORE_SEA) ||
-		(eUnitAI == UNITAI_ASSAULT_SEA) ||
-		(eUnitAI == UNITAI_SETTLER_SEA) ||
-		(eUnitAI == UNITAI_PILLAGE) ||
-		(eUnitAI == UNITAI_ATTACK) ||
-		(eUnitAI == UNITAI_ATTACK_CITY) ||
-		(eUnitAI == UNITAI_COUNTER) ||
-		(eUnitAI == UNITAI_PARADROP) ||
-		(eUnitAI == UNITAI_TERRAFORMER) ||
-		(eUnitAI == UNITAI_EXPLORE) ||
-		(eUnitAI == UNITAI_HERO) ||
-		(eUnitAI == UNITAI_MISSIONARY) ||
-		(eUnitAI == UNITAI_MANA_UPGRADE) ||
-		(eUnitAI == UNITAI_MEDIC) ||
-		isInquisitor() ||
-		isWaterWalking())
-	{
-	*/
-	iTemp += 20;
 
-	if (eUnitAI != UNITAI_CITY_DEFENSE && eUnitAI != UNITAI_CITY_COUNTER)
+	if (eUnitAI != UNITAI_CITY_DEFENSE && eUnitAI != UNITAI_CITY_COUNTER && eUnitAI != UNITAI_CITY_SPECIAL && eUnitAI != UNITAI_MAGE)
 	{
+		iTemp += 20;
 		iTemp += (isAlive() ? 10 : 20); //slight bonus for non-alive units since they cant be Hasted
 
 		if (m_pUnitInfo->getMoves() == 1)
@@ -10678,7 +10654,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			iTemp += 20 + (iLevel * 6);
 		}
 
-		if (isBlitz() || eUnitAI == UNITAI_PILLAGE)
+		if (isBlitz() || eUnitAI == UNITAI_PILLAGE || isWaterWalking())
 		{
 			iTemp+= 20;
 		}
@@ -10935,7 +10911,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			(eUnitAI == UNITAI_CARRIER_SEA) ||
 			(eUnitAI == UNITAI_ATTACK_AIR) ||
 			(eUnitAI == UNITAI_CARRIER_AIR) ||
-			(eUnitAI == UNITAI_WARWIZARD) ||
+			isSummoner() ||
 			(eUnitAI == UNITAI_HERO))
 	{
 		iValue += (iTemp * 2);
