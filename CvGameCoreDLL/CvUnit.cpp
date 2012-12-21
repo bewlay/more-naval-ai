@@ -18202,7 +18202,10 @@ int CvUnit::chooseSpell()
 				}
 				if (kSpellInfo.isSacrificeCaster()) // TODO - add a check for financial trouble and/or overabundance of troops
 				{
-					iValue -= (getLevel() * 20) * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+					if (kSpellInfo.getChangePopulation() == 0) // Tholal AI - temporary gate to make sure Manes use the Add to City ability
+					{
+						iValue -= (getLevel() * 20) * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+					}
 				}
 				if (kSpellInfo.isResistable())
 				{
