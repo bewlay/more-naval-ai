@@ -4117,7 +4117,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 	{
 		eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
 
-		if (kOwner.isAssimilation())// && getPreviousOwner() != getOwner())
+		if (kOwner.isAssimilation() && getPreviousOwner() != BARBARIAN_PLAYER)
 		{
 			if (getPreviousOwner() != NO_PLAYER)
 			{
