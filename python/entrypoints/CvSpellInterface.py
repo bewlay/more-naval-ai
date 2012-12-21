@@ -1605,8 +1605,8 @@ def spellHireWolfRider(caster):
 	pPlayer.initUnit(gc.getInfoTypeForString('UNIT_WOLF_RIDER_SCORPION_CLAN'), caster.getX(), caster.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 def reqHyboremsWhisper(caster):
-	if gc.getGame().isNetworkMultiPlayer():
-		return False
+#	if gc.getGame().isNetworkMultiPlayer():
+#		return False
 	lpVeilCities = cf.getAshenVeilCities(caster.getOwner(), caster.getID(), 1)
 	if len(lpVeilCities) == 0:
 		return False
