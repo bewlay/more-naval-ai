@@ -173,6 +173,31 @@ BeginTeam
 EndTeam
 BeginTeam
 	TeamID=3
+	Tech=TECH_AGRICULTURE
+	Tech=TECH_ANCIENT_CHANTS
+	Tech=TECH_ANIMAL_HUSBANDRY
+	Tech=TECH_ARCHERY
+	Tech=TECH_BRONZE_WORKING
+	Tech=TECH_CALENDAR
+	Tech=TECH_CARTOGRAPHY
+	Tech=TECH_CODE_OF_LAWS
+	Tech=TECH_CONSTRUCTION
+	Tech=TECH_CRAFTING
+	Tech=TECH_EDUCATION
+	Tech=TECH_EXPLORATION
+	Tech=TECH_FESTIVALS
+	Tech=TECH_FISHING
+	Tech=TECH_HORSEBACK_RIDING
+	Tech=TECH_HUNTING
+	Tech=TECH_KNOWLEDGE_OF_THE_ETHER
+	Tech=TECH_MASONRY
+	Tech=TECH_MESSAGE_FROM_THE_DEEP
+	Tech=TECH_MINING
+	Tech=TECH_MYSTICISM
+	Tech=TECH_PHILOSOPHY
+	Tech=TECH_SAILING
+	Tech=TECH_WARFARE
+	Tech=TECH_WRITING
 	ContactWithTeam=3
 	ContactWithTeam=5
 	ContactWithTeam=6
@@ -676,6 +701,81 @@ BeginTeam
 	ContactWithTeam=34
 	RevealMap=0
 EndTeam
+BeginTeam
+	TeamID=35
+	ContactWithTeam=35
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=36
+	ContactWithTeam=36
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=37
+	ContactWithTeam=37
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=38
+	ContactWithTeam=38
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=39
+	ContactWithTeam=39
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=40
+	ContactWithTeam=40
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=41
+	ContactWithTeam=41
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=42
+	ContactWithTeam=42
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=43
+	ContactWithTeam=43
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=44
+	ContactWithTeam=44
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=45
+	ContactWithTeam=45
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=46
+	ContactWithTeam=46
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=47
+	ContactWithTeam=47
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=48
+	ContactWithTeam=48
+	RevealMap=0
+EndTeam
+BeginTeam
+	TeamID=49
+	ContactWithTeam=49
+	RevealMap=0
+EndTeam
 BeginPlayer
 	Team=0
 	LeaderType=LEADER_VARN
@@ -756,10 +856,28 @@ BeginPlayer
 EndPlayer
 BeginPlayer
 	Team=3
-	LeaderType=NONE
-	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
+	LeaderType=LEADER_EINION
+	LeaderName=TXT_KEY_LEADER_EINION
+	CivDesc=TXT_KEY_CIV_ELOHIM_DESC
+	CivShortDesc=TXT_KEY_CIV_ELOHIM_SHORT_DESC
+	CivAdjective=TXT_KEY_CIV_ELOHIM_ADJECTIVE
+	FlagDecal=Art/Interface/TeamColor/Elohimflag.dds
+	WhiteFlag=0
+	CivType=CIVILIZATION_ELOHIM
+	Color=PLAYERCOLOR_ELOHIM
+	ArtStyle=ARTSTYLE_ELOHIM
+	PlayableCiv=1
+	MinorNationStatus=0
+	StartingGold=10
+	StartingX=35, StartingY=7
+	StateReligion=
+	StartingEra=ERA_ANCIENT
+	RandomStartLocation=false
+	CivicOption=CIVICOPTION_GOVERNMENT, Civic=CIVIC_DESPOTISM
+	CivicOption=CIVICOPTION_CULTURAL_VALUES, Civic=CIVIC_PACIFISM
+	CivicOption=CIVICOPTION_LABOR, Civic=CIVIC_TRIBALISM
+	CivicOption=CIVICOPTION_ECONOMY, Civic=CIVIC_DECENTRALIZATION
+	CivicOption=CIVICOPTION_MEMBERSHIP, Civic=CIVIC_NO_MEMBERSHIP
 	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
@@ -968,185 +1086,191 @@ BeginPlayer
 	Team=12
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=13
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=14
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=15
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=16
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=17
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=18
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=19
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=20
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=21
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=22
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=23
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=24
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=25
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=26
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=27
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=28
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=29
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=30
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=31
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=32
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=33
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
 EndPlayer
 BeginPlayer
 	Team=34
 	LeaderType=NONE
 	CivType=NONE
-	Color=NONE
-	ArtStyle=NONE
-	Handicap=HANDICAP_NOBLE
+EndPlayer
+BeginPlayer
+	Team=35
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=36
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=37
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=38
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=39
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=40
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=41
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=42
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=43
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=44
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=45
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=46
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=47
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=48
+	LeaderType=NONE
+	CivType=NONE
+EndPlayer
+BeginPlayer
+	Team=49
+	LeaderType=NONE
+	CivType=NONE
 EndPlayer
 BeginMap
 	grid width=84
@@ -2530,7 +2654,6 @@ BeginPlot
 		Damage=0
 		Level=1, Experience=0
 		PromotionType=PROMOTION_NOMAD
-		PromotionType=PROMOTION_STARTING_SETTLER
 		FacingDirection=4
 		Sleep
 		UnitAIType=UNITAI_SETTLE
@@ -4676,6 +4799,47 @@ BeginPlot
 	x=13,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
+	BeginUnit
+		UnitType=UNIT_GALLEON, UnitOwner=1
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_SKELETON_CREW
+		FacingDirection=4
+		UnitAIType=UNITAI_SETTLER_SEA
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_ARCHER, UnitOwner=1
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_GUARDSMAN
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_CITY_DEFENSE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_WORKER, UnitOwner=1
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_WORKER
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SETTLER, UnitOwner=1
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SETTLE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SUPPLIES, UnitOwner=1
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SCIENTIST
+	EndUnit
 EndPlot
 BeginPlot
 	x=13,y=3
@@ -6295,48 +6459,6 @@ BeginPlot
 	x=19,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
-	BeginUnit
-		UnitType=UNIT_GALLEON, UnitOwner=1
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_SKELETON_CREW
-		FacingDirection=4
-		UnitAIType=UNITAI_SETTLER_SEA
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_ARCHER, UnitOwner=1
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_GUARDSMAN
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_CITY_DEFENSE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_WORKER, UnitOwner=1
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_WORKER
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SETTLER, UnitOwner=1
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_STARTING_SETTLER
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SETTLE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SUPPLIES, UnitOwner=1
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SCIENTIST
-	EndUnit
 EndPlot
 BeginPlot
 	x=19,y=3
@@ -7730,6 +7852,46 @@ BeginPlot
 	x=24,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
+	BeginUnit
+		UnitType=UNIT_GALLEON, UnitOwner=2
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_SKELETON_CREW
+		FacingDirection=4
+		UnitAIType=UNITAI_SETTLER_SEA
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_ARCHER, UnitOwner=2
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_CITY_DEFENSE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_WORKER, UnitOwner=2
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_WORKER
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SETTLER, UnitOwner=2
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SETTLE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SUPPLIES, UnitOwner=2
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SCIENTIST
+	EndUnit
 EndPlot
 BeginPlot
 	x=24,y=3
@@ -10180,47 +10342,6 @@ BeginPlot
 	x=33,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
-	BeginUnit
-		UnitType=UNIT_GALLEON, UnitOwner=2
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_SKELETON_CREW
-		FacingDirection=4
-		UnitAIType=UNITAI_SETTLER_SEA
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_ARCHER, UnitOwner=2
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_CITY_DEFENSE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_WORKER, UnitOwner=2
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_WORKER
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SETTLER, UnitOwner=2
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_STARTING_SETTLER
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SETTLE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SUPPLIES, UnitOwner=2
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SCIENTIST
-	EndUnit
 EndPlot
 BeginPlot
 	x=33,y=3
@@ -10490,6 +10611,46 @@ BeginPlot
 	x=34,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
+	BeginUnit
+		UnitType=UNIT_GALLEON, UnitOwner=3
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_SKELETON_CREW
+		FacingDirection=4
+		UnitAIType=UNITAI_SETTLER_SEA
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_ARCHER, UnitOwner=3
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_CITY_DEFENSE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_WORKER, UnitOwner=3
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_WORKER
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SETTLER, UnitOwner=3
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SETTLE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SUPPLIES, UnitOwner=3
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SCIENTIST
+	EndUnit
 EndPlot
 BeginPlot
 	x=34,y=3
@@ -12614,49 +12775,6 @@ BeginPlot
 	x=42,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
-	BeginUnit
-		UnitType=UNIT_GALLEON, UnitOwner=4
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_SKELETON_CREW
-		FacingDirection=4
-		UnitAIType=UNITAI_SETTLER_SEA
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_ARCHER, UnitOwner=4
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_COMBAT1
-		PromotionType=PROMOTION_COMMANDO
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_CITY_DEFENSE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_WORKER, UnitOwner=4
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_WORKER
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SETTLER, UnitOwner=4
-		Damage=0
-		Level=1, Experience=0
-		PromotionType=PROMOTION_STARTING_SETTLER
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SETTLE
-	EndUnit
-	BeginUnit
-		UnitType=UNIT_SUPPLIES, UnitOwner=4
-		Damage=0
-		Level=1, Experience=0
-		FacingDirection=4
-		Sleep
-		UnitAIType=UNITAI_SCIENTIST
-	EndUnit
 EndPlot
 BeginPlot
 	x=42,y=3
@@ -12930,6 +13048,48 @@ BeginPlot
 	x=43,y=2
 	TerrainType=TERRAIN_OCEAN
 	PlotType=3
+	BeginUnit
+		UnitType=UNIT_GALLEON, UnitOwner=4
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_SKELETON_CREW
+		FacingDirection=4
+		UnitAIType=UNITAI_SETTLER_SEA
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_ARCHER, UnitOwner=4
+		Damage=0
+		Level=1, Experience=0
+		PromotionType=PROMOTION_COMBAT1
+		PromotionType=PROMOTION_COMMANDO
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_CITY_DEFENSE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_WORKER, UnitOwner=4
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_WORKER
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SETTLER, UnitOwner=4
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SETTLE
+	EndUnit
+	BeginUnit
+		UnitType=UNIT_SUPPLIES, UnitOwner=4
+		Damage=0
+		Level=1, Experience=0
+		FacingDirection=4
+		Sleep
+		UnitAIType=UNITAI_SCIENTIST
+	EndUnit
 EndPlot
 BeginPlot
 	x=43,y=3
