@@ -3035,7 +3035,10 @@ void CvUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
 		}
 	}
 
-	getGroup()->doDelayedDeath();
+	if (isDelayedDeath())
+	{
+		getGroup()->doDelayedDeath();
+	}
 }
 
 
