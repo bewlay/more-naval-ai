@@ -12296,7 +12296,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	
 	iValue = 1;
 
-	iValue += kUnitInfo.getAIWeight();
+	if (!bUpgrade)
+	{
+		iValue += kUnitInfo.getAIWeight();
+	}
 
 	int iFastMoverMultiplier;
 
