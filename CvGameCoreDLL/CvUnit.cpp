@@ -15581,6 +15581,20 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 
+	// Illusions cannot pickup or take equipment; they also cannot Add to Flesh Golem or Wolf Pack
+	if (isIllusionary())
+	{
+		if (kSpell.getUnitInStackPrereq() != NO_UNIT)
+		{
+			return false;
+		}
+
+		if (kSpell.getPromotionInStackPrereq() != NO_PROMOTION)
+		{
+			return false;
+		}
+	}
+
     if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
     {
         if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq1()))
