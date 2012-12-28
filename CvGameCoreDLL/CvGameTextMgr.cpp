@@ -11245,8 +11245,16 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		{
 			if (kUnitInfo.getCombat() > 0)
 			{
-				szTempBuffer.Format(L"%d%c, ", kUnitInfo.getCombat(), gDLL->getSymbolID(STRENGTH_CHAR));
-				szBuffer.append(szTempBuffer);
+				if (kUnitInfo.getCombat() == kUnitInfo.getCombatDefense())
+				{
+					szTempBuffer.Format(L"%d%c, ", kUnitInfo.getCombat(), gDLL->getSymbolID(STRENGTH_CHAR));
+					szBuffer.append(szTempBuffer);
+				}
+				else
+				{
+					szTempBuffer.Format(L"%d/%d%c, ", kUnitInfo.getCombat(), kUnitInfo.getCombatDefense(), gDLL->getSymbolID(STRENGTH_CHAR));
+					szBuffer.append(szTempBuffer);
+				}
 			}
 		}
 
