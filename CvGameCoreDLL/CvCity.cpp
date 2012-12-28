@@ -16932,7 +16932,7 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 			}
 		}
 	}
-	if (pUnit->isAlive())
+	if (pUnit->isAlive() && !pUnit->isAnimal()) // Tholal AI - Animals shouldnt be assigned a religion
 	{
 //>>>>Unofficial Bug Fix: Added by Denev 2009/12/23
 //*** Each religion has equal chance of adopting.

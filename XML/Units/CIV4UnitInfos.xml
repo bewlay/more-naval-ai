@@ -36086,7 +36086,7 @@
             <Civilopedia>TXT_KEY_UNIT_HAWK_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_HAWK_STRATEGY</Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
-            <bAnimal>0</bAnimal>
+            <bAnimal>1</bAnimal>
             <bFood>0</bFood>
             <bNoBadGoodies>0</bNoBadGoodies>
             <bOnlyDefensive>0</bOnlyDefensive>
