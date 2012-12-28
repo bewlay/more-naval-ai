@@ -4896,7 +4896,10 @@ class Revolution :
 					iOdds -= 20
 				if( pPlayer.hasTrait(iAggressive) ) :
 					iOdds -= 10
-				if( not cityList[0].area().getID() == pPlayer.getCapitalCity().area().getID() ) :
+				# lfgr fix
+				#if( not cityList[0].area().getID() == pPlayer.getCapitalCity().area().getID() ) :
+				if( cityList[0].area() != None and pPlayer.getCapitalCity().area() != None and cityList[0].area().getID() != pPlayer.getCapitalCity().area().getID() ) :
+				# lfgr fix end
 					iOdds += 20
 				if( pTeam.getAtWarCount(True) > 1 ) :
 					iOdds += 10
