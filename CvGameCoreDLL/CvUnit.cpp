@@ -4116,6 +4116,16 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 		return false;
 	}
 
+	if (getDuration() > 0)
+	{
+		return false;
+	}
+
+	if (isHiddenNationality())
+	{
+		return false;
+	}
+
 	CvPlot* pPlot = plot();
 	CvUnit* pTransport = getTransportUnit();
 
