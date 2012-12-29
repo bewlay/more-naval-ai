@@ -27979,10 +27979,10 @@ void CvUnitAI::ConquestMove()
 			if (iStepDistToTarget == 1)
 			{
 				// temp hack - Tholal ToDo: need to figure out why the AI is reluctant to attack empty cities
-				logBBAI("Player %d Unit %d (%S's %S) next to target city (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+				logBBAI("       ...next to target city...\n");
 				if (pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) == 0)
 				{
-					logBBAI("Player %d Unit %d (%S's %S) has empty target city (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+					logBBAI("       ...target city is empty!\n");
 					getGroup()->pushMission(MISSION_MOVE_TO, pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					return;
 				}
@@ -28061,13 +28061,13 @@ void CvUnitAI::ConquestMove()
 				// Pillage around enemy city
 				if( AI_pillageAroundCity(pTargetCity, 11, 3) )
 				{
-					logBBAI("Player %d Unit %d (%S's %S) pillage around city 1 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+					logBBAI("       ...pillage around city 1\n");
 					return;
 				}
 
 				if( AI_pillageAroundCity(pTargetCity, 0, 5) )
 				{
-					logBBAI("Player %d Unit %d (%S's %S) pillage around city 2 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+					logBBAI("       ...pillage around city 2\n");
 					return;
 				}
 
@@ -28075,7 +28075,7 @@ void CvUnitAI::ConquestMove()
 				{
 					if( gUnitLogLevel >= 3 )
 					{
-						logBBAI("      Stack (led by %d, size %d) choking %S ", getID(), getGroup()->getNumUnits(), pTargetCity->getName().GetCString());
+						logBBAI("       ...choking %S ", pTargetCity->getName().GetCString());
 					}
 
 					return;

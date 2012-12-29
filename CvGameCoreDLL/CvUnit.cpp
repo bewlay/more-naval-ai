@@ -16447,7 +16447,7 @@ void CvUnit::cast(int spell)
 
 	if( gUnitLogLevel > 2 )
 	{
-		logBBAI("     Player %d Unit %d casting %S \n", getOwnerINLINE(), getID(), kSpellInfo.getDescription());
+		logBBAI("     %S casting %S \n",  getName().GetCString(), kSpellInfo.getDescription());
 	}
 
     if (kSpellInfo.isHasCasted())
@@ -18241,7 +18241,7 @@ int CvUnit::chooseSpell()
 	
 	if( gUnitLogLevel > 2 && (iBestSpell != -1))
 	{
-		logBBAI("     Player %d Unit %d (%S's %S) Best Spell - %S (value: %d) \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getSpellInfo((SpellTypes)iBestSpell).getDescription(), iBestSpellValue);
+		logBBAI("     %S (Unit %d - %S) Best Spell - %S (value: %d) \n",  getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), GC.getSpellInfo((SpellTypes)iBestSpell).getDescription(), iBestSpellValue);
 	}
 
     return iBestSpell;
