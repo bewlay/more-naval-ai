@@ -12684,7 +12684,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 			// ALN - debug info (production unit UnitAI)
 			if (GC.getGameINLINE().isDebugMode() && pCity->getProductionUnitAI() != NO_UNITAI)
 			{
-				szTempBuffer.Format(L"\n%s (value: %d)", GC.getUnitAIInfo(pCity->getProductionUnitAI()).getDescription(), GET_PLAYER(pCity->getOwner()).AI_unitValue(eUnit, pCity->getProductionUnitAI(), pCity->area()));
+				szTempBuffer.Format(L"\n%s (value: %d (MCV: %d)(TCV: %d)", GC.getUnitAIInfo(pCity->getProductionUnitAI()).getDescription(), GET_PLAYER(pCity->getOwner()).AI_unitValue(eUnit, pCity->getProductionUnitAI(), pCity->area()), GET_PLAYER(pCity->getOwner()).AI_magicCombatValue(eUnit), GET_PLAYER(pCity->getOwner()).AI_combatValue(eUnit));
 				szBuffer.append(szTempBuffer);
 			}
 			// ALN End
