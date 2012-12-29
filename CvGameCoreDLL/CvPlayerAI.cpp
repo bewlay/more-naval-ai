@@ -12621,7 +12621,8 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		break;
 
 	case UNITAI_CITY_DEFENSE:
-		iCombatValue = kUnitInfo.getCombatDefense();
+		//iCombatValue = kUnitInfo.getCombatDefense();
+		iCombatValue += (kUnitInfo.getCombatDefense() * 2);
 		iValue += ((iCombatValue * 2) / 3);
 		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 25);
 		iValue += kUnitInfo.getFirstStrikes() * 5;
@@ -12966,7 +12967,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 					{
 						if ((kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iI).isFreePromotionUnitCombat(kUnitInfo.getUnitCombatType()))
 						{
-							iTraitMod += 20;
+							iTraitMod += 10;
 						}
 					}
 				}
@@ -12977,11 +12978,14 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		iValue /= 100;
 
 
+		int iPromotionMod = 0;
 		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 		{
 			if (kUnitInfo.getFreePromotions(iI))
 			{
-				if (GC.getPromotionInfo((PromotionTypes)iI).isAmphib())
+				CvPromotionInfo& kPromotionInfo = GC.getPromotionInfo((PromotionTypes)iI);
+
+				if (kPromotionInfo.isAmphib())
 				{
 					if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
 					{
@@ -12997,8 +13001,32 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 						}
 					}
 				}
+
+				if (eUnitAI == UNITAI_CITY_DEFENSE || eUnitAI == UNITAI_CITY_COUNTER || eUnitAI == UNITAI_COUNTER)
+				{
+					iPromotionMod += (kPromotionInfo.getBetterDefenderThanPercent() / 5);
+					if (kPromotionInfo.isTargetWeakestUnitCounter())
+					{
+						iPromotionMod += 20;
+					}
+					iPromotionMod += kPromotionInfo.getFriendlyHealChange();
+				}
+
+				if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_COUNTER)
+				{
+					iPromotionMod += kPromotionInfo.getEnemyHealChange();
+					iPromotionMod += kPromotionInfo.getNeutralHealChange();
+					iPromotionMod += kPromotionInfo.getCombatPercent();
+					if (kPromotionInfo.isBlitz() || kPromotionInfo.isWaterWalking() || kPromotionInfo.isTargetWeakestUnit())
+					{
+						iPromotionMod += (kUnitInfo.getMoves() * 10);
+					}
+				}
 			}
 		}
+		
+		iValue *= (100 + iPromotionMod);
+		iValue /= 100;
 	}
 
 	if (kUnitInfo.getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
