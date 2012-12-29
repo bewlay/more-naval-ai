@@ -19634,3 +19634,29 @@ int CvUnit::getTruePower() const
 {
 	return (m_pUnitInfo->getPowerValue() + getLevel());
 }
+
+bool CvUnit::isRangedCollateral()
+{
+    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+    {
+        if (canCast(iSpell, false))
+        {
+			CvSpellInfo kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
+			{
+				if (kSpellInfo.getDamage() > 0 && kSpellInfo.getRange() > 0)
+				{
+					return true;
+				}
+
+				if (kSpellInfo.getCreateUnitType() != NO_UNIT)
+				{
+					if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCollateralDamage() > 0)
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}

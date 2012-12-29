@@ -26397,6 +26397,97 @@ int CvPlayerAI::AI_getTrustAttitude(PlayerTypes ePlayer) const
 	return iAttitude;
 }
 
+int CvPlayerAI::AI_magicCombatValue(UnitTypes eUnit) const
+{
+	int iMagicCombat = 0;
+
+	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		if (kUnitInfo.getFreePromotions(iI))
+		{
+			CvPromotionInfo& kPromotionInfo = GC.getPromotionInfo((PromotionTypes)iI);
+
+			iMagicCombat += -(kPromotionInfo.getCasterResistModify()); // (20 to -50)negative numbers are better
+			iMagicCombat += kPromotionInfo.getSpellCasterXP(); // (10 to 40)
+			iMagicCombat += kPromotionInfo.getSpellDamageModify(); //(-10 to 10) mostly 5
+			iMagicCombat += (kPromotionInfo.isTwincast() ? 50 : 0);
+		}
+	} // max bonus of 150
+
+
+	//loop through spells and find which ones this unit can cast as soon as created - value summons and damage spells (others?)
+	// have to check all prereqs - what a pain!
+	int iSpellBonus = 0;
+
+	for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+	{
+		CvSpellInfo& kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
+
+		if (kSpellInfo.getPromotionPrereq1() != NO_PROMOTION)
+		{
+			if (!kUnitInfo.getFreePromotions(kSpellInfo.getPromotionPrereq1()))
+			{
+				continue;
+			}
+		}
+		if (kSpellInfo.getPromotionPrereq2() != NO_PROMOTION)
+		{
+			if (!kUnitInfo.getFreePromotions(kSpellInfo.getPromotionPrereq1()))
+			{
+				continue;
+			}
+		}
+		if (kSpellInfo.getUnitCombatPrereq() != NO_UNITCOMBAT)
+		{
+			if (kUnitInfo.getUnitCombatType() != kSpellInfo.getUnitCombatPrereq())
+			{
+				continue;
+			}
+		}
+		if (kSpellInfo.getCivilizationPrereq() != NO_CIVILIZATION)
+		{
+			if (getCivilizationType() != kSpellInfo.getCivilizationPrereq())
+			{
+				continue;
+			}
+		}
+		if (kSpellInfo.getReligionPrereq() != NO_RELIGION)
+		{
+			if (kUnitInfo.getReligionType() != kSpellInfo.getReligionPrereq())
+			{
+				continue;
+			}
+		}
+
+		// ok, we're now past the prereqs, so now we have to find out if this spell is useful in combat
+
+		iSpellBonus += kSpellInfo.getDamage();
+		if (kSpellInfo.getCreateUnitType() != NO_UNIT)
+		{
+			int iTempValue = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCombat();
+			for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
+			{
+				iTempValue += GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getDamageTypeCombat(iI);
+			}
+
+			iTempValue += (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCollateralDamage() / 10);
+
+			iSpellBonus += iTempValue * 5;
+		}
+
+		iSpellBonus += kSpellInfo.getImmobileTurns() * 20;
+	}
+	//iMagicCombat += iSpellBonus / 10;
+
+	// divide by something
+	iMagicCombat /= 20;
+
+	return iMagicCombat;
+
+}
+
 int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
 {
     int iI, iCombat = 0;

@@ -803,6 +803,7 @@ public:
 	virtual bool isVampire() = 0;
 	virtual bool isIllusionary() = 0;
 	int getChannelingLevel();
+	bool isRangedCollateral();
 // End Tholal AI
 
 	DllExport bool shouldShowEnemyGlow(TeamTypes eForTeam) const;

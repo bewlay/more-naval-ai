@@ -496,6 +496,7 @@ public:
     int AI_getGenderAttitude(PlayerTypes ePlayer) const;
     int AI_getTrustAttitude(PlayerTypes ePlayer) const;
     int AI_getCivicShareAttitude(PlayerTypes ePlayer) const;
+	int AI_magicCombatValue(UnitTypes eUnit) const; // added by Tholal
     int AI_trueCombatValue(UnitTypes eUnit) const;
     int AI_combatValue(UnitTypes eUnit) const;
     int AI_getGoldReserve() const;
