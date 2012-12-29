@@ -9,7 +9,7 @@
         <French>Merveille mondiale</French>
         <German>Weltwunder</German>
         <Italian>Grande Meraviglia</Italian>
-        <Spanish>Maravilla del mundo</Spanish>
+        <Spanish>Maravillas del mundo</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CATEGORY_EQUIPMENTS</Tag>
@@ -17,7 +17,7 @@
         <French>Equipments</French>
         <German>Equipments</German>
         <Italian>Equipments</Italian>
-        <Spanish>Equipments</Spanish>
+        <Spanish>Equipo</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CATEGORY_SPELLS</Tag>
@@ -25,7 +25,7 @@
         <French>Spells</French>
         <German>Spells</German>
         <Italian>Spells</Italian>
-        <Spanish>Spells</Spanish>
+        <Spanish>Hechizos</Spanish>
     </TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_ABILITY</Tag>
@@ -33,7 +33,7 @@
 		<French>Special Abilities</French>
 		<German>Special Abilities</German>
 		<Italian>Special Abilities</Italian>
-		<Spanish>Special Abilities</Spanish>
+		<Spanish>Habilidades Especiales</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Resources) -->
 	<TEXT>
@@ -42,7 +42,7 @@
         <French>Producing Buildings</French>
         <German>Producing Buildings</German>
         <Italian>Producing Buildings</Italian>
-        <Spanish>Producing Buildings</Spanish>
+        <Spanish>Edificios Productores</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Buildings) -->
 	<TEXT>
@@ -51,7 +51,7 @@
         <French>State[ICON_RELIGION] is</French>
         <German>State[ICON_RELIGION] is</German>
         <Italian>State[ICON_RELIGION] is</Italian>
-        <Spanish>State[ICON_RELIGION] is</Spanish>
+        <Spanish>[ICON_RELIGION]Estatal es</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_REQ_CITY_HAS</Tag>
@@ -59,7 +59,7 @@
         <French>City Has</French>
         <German>City Has</German>
         <Italian>City Has</Italian>
-        <Spanish>City Has</Spanish>
+        <Spanish>La Ciudad Tiene</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Improvements) -->
 	<TEXT>
@@ -68,7 +68,7 @@
 		<French>Base Yields</French>
 		<German>Base Yields</German>
 		<Italian>Base Yields</Italian>
-		<Spanish>Base Yields</Spanish>
+		<Spanish>Beneficios Base</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_IMPROVEMENT_COST_TITLE</Tag>
@@ -76,7 +76,7 @@
 		<French>Coût de la Construction: %d1_worker_turns</French>
 		<German>Bauen Sie Kosten:</German>
 		<Italian>Costruisca Costo:</Italian>
-		<Spanish>Costo de la figura:</Spanish>
+		<Spanish>Coste:</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_IMPROVEMENT_COST</Tag>
@@ -84,7 +84,7 @@
 		<French>[ICON_BULLET]%d1 [NUM1:Turn:Turns] par %s2_improvement</French>
 		<German>[ICON_BULLET]%d1 [NUM1:Turn:Turns] von %s2_improvement</German>
 		<Italian>[ICON_BULLET]%d1 [NUM1:Turn:Turns] da %s2_improvement</Italian>
-		<Spanish>[ICON_BULLET]%d1 [NUM1:Turn:Turns] por %s2_improvement</Spanish>
+		<Spanish>[ICON_BULLET]%d1 [NUM1:Turno:Turnos] por %s2_improvement</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_IMPROVEMENT_COST_KILL</Tag>
@@ -108,7 +108,7 @@
 		<French>[ICON_BULLET] Provides %s1_mana</French>
 		<German>[ICON_BULLET] Provides %s1_mana</German>
 		<Italian>[ICON_BULLET] Provides %s1_mana</Italian>
-		<Spanish>[ICON_BULLET] Provides %s1_mana</Spanish>
+		<Spanish>[ICON_BULLET] Provee de [LINK=literal]%s1_mana[\LINK].</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Project) -->
 	<TEXT>
@@ -117,7 +117,7 @@
 		<French>Double Speed Production with</French>
 		<German>Double Speed Production with</German>
 		<Italian>Double Speed Production with</Italian>
-		<Spanish>Double Speed Production with</Spanish>
+		<Spanish>Velocidad de Producción Duplicada con</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Promotions) -->
     <TEXT>
@@ -126,7 +126,7 @@
         <French>Requires of Player</French>
         <German>Requires of Player</German>
         <Italian>Requires of Player</Italian>
-        <Spanish>Requires of Player</Spanish>
+        <Spanish>Requiere del Jugador</Spanish>
     </TEXT>
 	<!-- Civilopedia (Religions) -->
 	<TEXT>
@@ -143,7 +143,7 @@
         <French>Heroes or Wonders Enabled</French>
         <German>Heroes or Wonders Enabled</German>
         <Italian>Heroes or Wonders Enabled</Italian>
-        <Spanish>Heroes or Wonders Enabled</Spanish>
+        <Spanish>Héroes o Maravillas Habilitadas</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_ENABLED_WITHOUT_STATE</Tag>
@@ -151,7 +151,7 @@
         <French>Enabled without State Religion</French>
         <German>Enabled without State Religion</German>
         <Italian>Enabled without State Religion</Italian>
-        <Spanish>Enabled without State Religion</Spanish>
+        <Spanish>Habilitado sin Religión Estatal</Spanish>
     </TEXT>
 	<!-- Civilopedia (Spells) -->
     <TEXT>
@@ -160,7 +160,7 @@
         <French>Gain: %d1_Num</French>
         <German>Gain: %d1_Num</German>
         <Italian>Gain: %d1_Num</Italian>
-        <Spanish>Gain: %d1_Num</Spanish>
+        <Spanish>Gana: %d1_Num</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_DELAY</Tag>
@@ -168,7 +168,7 @@
         <French>Delay: %d1_turns [NUM1:Turn:Turns]</French>
         <German>Delay: %d1_turns [NUM1:Turn:Turns]</German>
         <Italian>Delay: %d1_turns [NUM1:Turn:Turns]</Italian>
-        <Spanish>Delay: %d1_turns [NUM1:Turn:Turns]</Spanish>
+        <Spanish>Retraso: %d1_turns [NUM1:Turno:Turnos]</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CASTER_PREREQ</Tag>
@@ -176,7 +176,7 @@
         <French>Requires of Caster</French>
         <German>Requires of Caster</German>
         <Italian>Requires of Caster</Italian>
-        <Spanish>Requires of Caster</Spanish>
+        <Spanish>Requiere de Lanzador</Spanish>
     </TEXT>
 	<!-- Civilopedia (Techs) -->
     <TEXT>
@@ -185,7 +185,7 @@
         <French>Others Enabled</French>
         <German>Others Enabled</German>
         <Italian>Others Enabled</Italian>
-        <Spanish>Others Enabled</Spanish>
+        <Spanish>Otros</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_UNRESEARCHABLE</Tag>
@@ -193,7 +193,7 @@
         <French>Can not be Researched</French>
         <German>Can not be Researched</German>
         <Italian>Can not be Researched</Italian>
-        <Spanish>Can not be Researched</Spanish>
+        <Spanish>No puede ser Investigada</Spanish>
     </TEXT>
 	<!-- Civilopedia (Terrain) -->
     <TEXT>
@@ -202,7 +202,7 @@
         <French>Earthly Terrain</French>
         <German>Earthly Terrain</German>
         <Italian>Earthly Terrain</Italian>
-        <Spanish>Earthly Terrain</Spanish>
+        <Spanish>Terreno Normal</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_TERRAIN_HELL</Tag>
@@ -210,7 +210,7 @@
         <French>Hell Terrain</French>
         <German>Hell Terrain</German>
         <Italian>Hell Terrain</Italian>
-        <Spanish>Hell Terrain</Spanish>
+        <Spanish>Terreno Infernal</Spanish>
     </TEXT>
 	<!-- Resource Help -->
 	<TEXT>
@@ -219,7 +219,7 @@
         <French>Tile Modifier:</French>
         <German>Tile Modifier:</German>
         <Italian>Tile Modifier:</Italian>
-        <Spanish>Tile Modifier:</Spanish>
+        <Spanish>Modificador de Casilla:</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_FREE_PROMOTION</Tag>
@@ -227,7 +227,7 @@
         <French>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</French>
         <German>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</German>
         <Italian>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</Italian>
-        <Spanish>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</Spanish>
+        <Spanish>[ICON_BULLET]%s1_promotion gratis para las nuevas unidades pertenecientes a la categoría disponible en la ciudad</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_FREE_PROMOTION_CHANCE</Tag>
@@ -235,7 +235,7 @@
         <French>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</French>
         <German>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</German>
         <Italian>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</Italian>
-        <Spanish>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</Spanish>
+        <Spanish>[ICON_BULLET]%D1_chance% de probabilidades de obtener %s2_promotion gratis para las nuevas unidades pertenecientes a la categoría disponible en la ciudad</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_FORBIDDEN_MANA_PENALTY</Tag>
@@ -326,7 +326,7 @@
 		<French>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</French>
 		<German>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</German>
 		<Italian>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Italian>
-		<Spanish>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Spanish>
+		<Spanish>[NEWLINE][ICON_BULLET]Puede prenderse [LINK=IMPROVEMENT_SMOKE]Fuego[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_MANANODES</Tag>
@@ -334,6 +334,6 @@
 		<French>Mana</French>
 		<German>Mana</German>
 		<Italian>Mana</Italian>
-		<Spanish>Mana</Spanish>
+		<Spanish>Maná</Spanish>
 	</TEXT>	
 </Civ4GameText>
