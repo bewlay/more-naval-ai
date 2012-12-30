@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_MISC_SOMEONE_CREATED_UNIT</Tag>
+		<English>%s1_PlyrName has created %s2_UnitName!</English>
+		<French>%s1_PlyrName a cr&#233;&#233; 1 %s2_UnitName !</French>
+		<German>%s1_PlyrName hat die Einheit %s2_UnitName erschaffen!</German>
+		<Italian>%s1_PlyrName ha creato l'unit&#224; %s2_UnitName!</Italian>
+		<Spanish>%s1_PlyrName ha creado [NUM2:un:una:unos:unas] %s2_UnitName.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_RELIGION_SPREAD</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] has spread in your lands!</English>
+		<French>Une religion ([COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT]) se propage sur vos terres !</French>
+		<German>Die Religion [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] hat sich in Eurem Land ausgebreitet!</German>
+		<Italian>%s1_RelName si &#232; diffuso nel tuo territorio!</Italian>
+		<Spanish>¡[NUM1:El:La:Los:Las] [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] se [NUM1:ha:ha:han:han] propagado por vuestras tierras!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_REL_FOUNDED</Tag>
+		<English>%s1_RelName has been founded in %s2_CityName!</English>
+		<French>La religion (%s1_RelName) a &#233;t&#233; fond&#233;e &#224; %s2_CityName !</French>
+		<German>Die Religion %s1_RelName wurde in %s2_CityName entdeckt!</German>
+		<Italian>%s1_RelName &#232; [NUM1:stato fondato:stata fondata] a %s2_CityName!</Italian>
+		<Spanish>Se [NUM1:ha:ha:han:han] fundado [NUM1:el:la:los:las] %s1_RelName en %s2_CityName.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_REL_FOUNDED_UNKNOWN</Tag>
+		<English>%s1_RelName has been founded in a distant land!</English>
+		<French>La religion (%s1_RelName) a &#233;t&#233; fond&#233;e dans un pays lointain !</French>
+		<German>Die Religion %s1_RelName wurde in einem fernen Land entdeckt!</German>
+		<Italian>%s1_RelName &#232; [NUM1:stato fondato:stata fondata] in una terra lontana!</Italian>
+		<Spanish>Se [NUM1:ha:ha:han:han] fundado [NUM1:el:la:los:las] %s1_RelName en una tierra lejana.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_REL_IS_FOUNDED</Tag>
+		<English>%F1_RelIcon is founded in %s2_CityName</English>
+		<French>Religion (%F1_RelIcon) fond&#233;e &#224; %s2_CityName</French>
+		<German>Die Religion %F1_RelIcon h&#228;lt in der Stadt %s2_CityName Einzug</German>
+		<Italian>%F1_RelIcon &#232; stata fondata a %s2_CityName</Italian>
+		<Spanish>Se [NUM1:ha:ha:han:han] fundado [NUM1:el:la:los:las] %F1_RelIcon en %s2_CityName</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_REL_FOUNDED_MOVIE</Tag>
+		<English>You have founded %s1_religion</English>
+		<French>Vous avez fond&#233; : %s1_religion</French>
+		<German>Ihr habt die Religion %s1_religion gegr&#252;ndet</German>
+		<Italian>Hai fondato la religione %s1_religion</Italian>
+		<Spanish>Has fundado [NUM1:el:la:los:las] %s1_religion</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_PLAYER_CONVERT_RELIGION</Tag>
+		<English>%s1_PlyrName converts to [COLOR_HIGHLIGHT_TEXT]%s2_RelName[COLOR_REVERT]!</English>
+		<French>%s1_PlyrName se convertit &#224; la religion : [COLOR_HIGHLIGHT_TEXT]%s2_RelName[COLOR_REVERT] !</French>
+		<German>%s1_PlyrName konvertiert zur Religion [COLOR_HIGHLIGHT_TEXT]%s2_RelName[COLOR_REVERT]!</German>
+		<Italian>%s1_PlyrName si converte alla religione [COLOR_HIGHLIGHT_TEXT]%s2:2_RelName[COLOR_REVERT]!</Italian>
+		<Spanish>%s1_PlyrName se ha convertido [NUM2:al:a la:a los:a las] [COLOR_HIGHLIGHT_TEXT]%s2_RelName[COLOR_REVERT].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CONVERT_TO_REL</Tag>
+		<English>Convert to %s1_RelName</English>
+		<French>Conversion : %s1_RelName</French>
+		<German>Zur Religion %s1_RelName konvertieren</German>
+		<Italian>Converti alla religione %s1:2_RelName</Italian>
+		<Spanish>Convertir [NUM1:al:a la:a los:a las] %s1_RelName</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CANNOT_CONVERT_TO</Tag>
+		<English>Cannot Convert to [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT]</English>
+		<French>Conversion impossible : [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT]</French>
+		<German>Kann nicht zur Religion [COLOR_HIGHLIGHT_TEXT]%s1_RelName konvertieren[COLOR_REVERT]</German>
+		<Italian>Impossibile convertirsi a: [COLOR_HIGHLIGHT_TEXT]%s1:2_RelName[COLOR_REVERT]</Italian>
+		<Spanish>No se puede convertir [NUM1:al:a la:a los:a las] [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_RELIGION_SPREAD</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] has spread in %s2_CityName.</English>
+		<French>Cette religion ([COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT]) s'est propag&#233;e jusqu'&#224; %s2_CityName</French>
+		<German>Die Religion [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] wurde in %s2_CityName verbreitet.</German>
+		<Italian>[COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] si &#232; [NUM1:diffuso:diffusa] a %s2_CityName.</Italian>
+		<Spanish>[NUM1:El:La:Los:Las] [COLOR_HIGHLIGHT_TEXT]%s1_RelName[COLOR_REVERT] se [NUM1:ha:ha:han:han] propagado por %s2_CityName.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIV_BARBARIAN_DESC</Tag>
+		<English>Barbarian State</English>
+		<French>
+			<Text>Empire barbare</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</French>
+		<German>
+			<Text>Barbarenreich:Barbarenreich:Barbarenreich</Text>
+			<Gender>Neuter:Neuter:Neuter</Gender>
+			<Plural>0:0:0</Plural>
+		</German>
+		<Italian>
+			<Text>Territorio Barbaro</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Bárbaros</Text>
+			<Gender>Male</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_EXPANSIVE</Tag>
+		<English>Expansive</English>
+		<French>
+			<Text>Accessible:Accessible:Accessibles:Accessibles</Text>
+			<Gender>Male:Female:Male:Female</Gender>
+			<Plural>0:0:1:1</Plural>
+		</French>
+		<German>
+			<Text>Expansiv:expansives</Text>
+			<Gender>Male:Neuter</Gender>
+			<Plural>0:0</Plural>
+		</German>
+		<Italian>
+			<Text>Espansionista:Espansionista</Text>
+			<Gender>Male:Female</Gender>
+			<Plural>0</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Expansionista:Expansionista</Text>
+			<Gender>Male:Female</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_EXPANSIVE_SHORT</Tag>
+		<English>Exp</English>
+		<French>Acc</French>
+		<German>Exp</German>
+		<Italian>Esp</Italian>
+		<Spanish>Exp</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_TRAITS</Tag>
+		<English>Traits</English>
+		<French>Traits de caract&#232;re</French>
+		<German>Merkmale</German>
+		<Italian>Punti di forza</Italian>
+		<Spanish>Habilidades</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_DECLARED_WAR_ON_YOU</Tag>
+		<English>%s1_PlyrName has declared war on you!</English>
+		<French>%s1_PlyrName vous a d&#233;clar&#233; la guerre !</French>
+		<German>%s1_PlyrName hat Euch den Krieg erkl&#228;rt!</German>
+		<Italian>%s1_PlyrName ti ha dichiarato guerra!</Italian>
+		<Spanish>%s1_PlyrName os ha declarado la guerra.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_PROMOTIONS</Tag>
+		<English>Promotions</English>
+		<French>
+			<Text>Promotions</Text>
+			<Gender>Female</Gender>
+			<Plural>1</Plural>
+		</French>
+		<German>
+			<Text>Bef&#246;rderungen</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Italian>
+			<Text>Promozioni</Text>
+			<Gender>Female</Gender>
+			<Plural>1</Plural>
+		</Italian>
+		<Spanish>
+			<Text>Promociones</Text>
+			<Gender>Male</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PROMOTIONS</Tag>
+		<English>Promotions</English>
+		<French>Promotions</French>
+		<German>Bef&#246;rderungen</German>
+		<Italian>Promozioni</Italian>
+		<Spanish>Promociones</Spanish>
+	</TEXT>
+</Civ4GameText>
