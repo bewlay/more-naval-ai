@@ -26,6 +26,4 @@
 	<init module="Buffy"/>
 	<init module="GameSetUpCheck"/>
 	
-	<export module="Buffy" function="canTriggerTheVedicAryans" to="CvRandomEventInterface"/>
-	
 </mod>
