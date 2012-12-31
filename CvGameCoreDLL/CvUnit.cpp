@@ -18489,28 +18489,34 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	CvUnit* pUnit = NULL;
 //<<<<Unofficial Bug Fix: End Modify
 
+	// set this to True if the losing unit is auto-captured (ie Worker or Settler for example)
+	// we use this to make sure we dont get double units from enslavement or other capture effects
+	bool bUnitAutoCapture = (pLoser->getCaptureUnitType(GET_PLAYER(getOwnerINLINE()).getCivilizationType()) != NO_UNIT);
+
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
+		CvPromotionInfo& kPromotionInfo = GC.getPromotionInfo((PromotionTypes)iI);
+
 		if (isHasPromotion((PromotionTypes)iI))
 		{
-			if (GC.getPromotionInfo((PromotionTypes)iI).getFreeXPFromCombat() != 0)
+			if (kPromotionInfo.getFreeXPFromCombat() != 0)
 			{
-				changeExperience(GC.getPromotionInfo((PromotionTypes)iI).getFreeXPFromCombat(), -1, false, false, false);
+				changeExperience(kPromotionInfo.getFreeXPFromCombat(), -1, false, false, false);
 			}
-			if (GC.getPromotionInfo((PromotionTypes)iI).getModifyGlobalCounterOnCombat() != 0)
+			if (kPromotionInfo.getModifyGlobalCounterOnCombat() != 0)
 			{
 				if (pLoser->isAlive())
 				{
-					GC.getGameINLINE().changeGlobalCounter(GC.getPromotionInfo((PromotionTypes)iI).getModifyGlobalCounterOnCombat());
+					GC.getGameINLINE().changeGlobalCounter(kPromotionInfo.getModifyGlobalCounterOnCombat());
 				}
 			}
-			if (GC.getPromotionInfo((PromotionTypes)iI).isRemovedByCombat())
+			if (kPromotionInfo.isRemovedByCombat())
 			{
 				setHasPromotion(((PromotionTypes)iI), false);
 			}
-			if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionCombatApply() != NO_PROMOTION)
+			if (kPromotionInfo.getPromotionCombatApply() != NO_PROMOTION)
 			{
-				ePromotion = (PromotionTypes)GC.getPromotionInfo((PromotionTypes)iI).getPromotionCombatApply();
+				ePromotion = (PromotionTypes)kPromotionInfo.getPromotionCombatApply();
 				pPlot = pLoser->plot();
 				pUnitNode = pPlot->headUnitNode();
 				while (pUnitNode != NULL)
@@ -18540,13 +18546,13 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 					}
 				}
 			}
-			if (GC.getPromotionInfo((PromotionTypes)iI).getCombatCapturePercent() != 0)
+			if (kPromotionInfo.getCombatCapturePercent() != 0 && !bUnitAutoCapture)
 			{
 				if (iUnit == NO_UNIT && pLoser->isAlive())
 				{
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/14
-//					if (GC.getGameINLINE().getSorenRandNum(100, "Combat Capture") <= GC.getPromotionInfo((PromotionTypes)iI).getCombatCapturePercent())
-					if (GC.getGameINLINE().getSorenRandNum(100, "Combat Capture") < GC.getPromotionInfo((PromotionTypes)iI).getCombatCapturePercent())
+//					if (GC.getGameINLINE().getSorenRandNum(100, "Combat Capture") <= kPromotionInfo.getCombatCapturePercent())
+					if (GC.getGameINLINE().getSorenRandNum(100, "Combat Capture") < kPromotionInfo.getCombatCapturePercent())
 //<<<<Unofficial Bug Fix: End Modify
 					{
 						iUnit = pLoser->getUnitType();
@@ -18554,9 +18560,9 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 					}
 				}
 			}
-			if (GC.getPromotionInfo((PromotionTypes)iI).getCaptureUnitCombat() != NO_UNITCOMBAT)
+			if (kPromotionInfo.getCaptureUnitCombat() != NO_UNITCOMBAT && !bUnitAutoCapture)
 			{
-				if (iUnit == NO_UNIT && pLoser->getUnitCombatType() == GC.getPromotionInfo((PromotionTypes)iI).getCaptureUnitCombat())
+				if (iUnit == NO_UNIT && pLoser->getUnitCombatType() == kPromotionInfo.getCaptureUnitCombat())
 				{
 					iUnit = pLoser->getUnitType();
 					bConvert = true;
@@ -18565,9 +18571,9 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 		}
 		if (pLoser->isHasPromotion((PromotionTypes)iI))
 		{
-			if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionCombatApply() != NO_PROMOTION)
+			if (kPromotionInfo.getPromotionCombatApply() != NO_PROMOTION)
 			{
-				ePromotion = (PromotionTypes)GC.getPromotionInfo((PromotionTypes)iI).getPromotionCombatApply();
+				ePromotion = (PromotionTypes)kPromotionInfo.getPromotionCombatApply();
 				if (isHasPromotion(ePromotion) == false)
 				{
 					if (isAlive() || !GC.getPromotionInfo(ePromotion).isPrereqAlive())
@@ -18632,14 +18638,17 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 			gDLL->getInterfaceIFace()->playGeneralSound("AS3D_UN_GRENADE_EXPLODE", plot()->getPoint());
 		}
 	}
-	if ((m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()) > 0)
+	if (!bUnitAutoCapture) // Tholal Bugfix - we dont also get slaves from units we capture
 	{
-		// Summons, non-Alive units, Animals and World class units cannot become slaves
-		if (getDuration() == 0 && pLoser->isAlive() && !pLoser->isAnimal() && iUnit == NO_UNIT && !isWorldUnitClass((UnitClassTypes)pLoser->getUnitClassType()))
+		if ((m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()) > 0)
 		{
-			if (GC.getGameINLINE().getSorenRandNum(100, "Enslavement") < (m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()))
+			// Summons, non-Alive units, Animals and World class units cannot become slaves
+			if (getDuration() == 0 && pLoser->isAlive() && !pLoser->isAnimal() && iUnit == NO_UNIT && !isWorldUnitClass((UnitClassTypes)pLoser->getUnitClassType()))
 			{
-				iUnit = GC.getDefineINT("SLAVE_UNIT");
+				if (GC.getGameINLINE().getSorenRandNum(100, "Enslavement") < (m_pUnitInfo->getEnslavementChance() + GET_PLAYER(getOwnerINLINE()).getEnslavementChance()))
+				{
+					iUnit = GC.getDefineINT("SLAVE_UNIT");
+				}
 			}
 		}
 	}
