@@ -464,6 +464,8 @@ void CvPlot::doTurn()
 {
 	PROFILE_FUNC();
 
+	bool bRagingBarbs = GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS);
+
 	if (getForceUnownedTimer() > 0)
 	{
 		changeForceUnownedTimer(-1);
@@ -507,6 +509,12 @@ void CvPlot::doTurn()
                     {
                         iTiles *= 2;
                     }
+					// Tholal - put more rage into Raging Barbarians
+					else if (bRagingBarbs)
+					{
+						iTiles /= 2;
+					}
+
                     if (pArea->getUnitsPerPlayer((PlayerTypes)BARBARIAN_PLAYER) == 0 || (pArea->getNumUnownedTiles() / pArea->getUnitsPerPlayer((PlayerTypes)BARBARIAN_PLAYER)) > iTiles)
                     {
                         int iChance = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getLairSpawnRate();
@@ -517,10 +525,12 @@ void CvPlot::doTurn()
 						bool bDefended = iDefenders > (bGoblinFort ? 1 : 0);
 						
                         iChance *= 10000;
-						if (iDefenders == 0)
+
+						if (iDefenders == 0 || bRagingBarbs) // Tholal - put more rage into Raging Barbarians
 						{
 							iChance *= 2;
 						}
+
                         iChance /= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
 						
 						// ALN - reduce 'bear den' overspawning
