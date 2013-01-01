@@ -6896,6 +6896,8 @@ void CvGame::createBarbarianCities()
 	int iBestValue;
 	int iI;
 
+	bool bRagingBarbs = GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS);
+
 	if (getMaxCityElimination() > 0)
 	{
 		return;
@@ -6939,7 +6941,7 @@ void CvGame::createBarbarianCities()
 /*                                                                                              */
 /* For BarbarianCiv, allows earlier barb cities                                                 */
 /************************************************************************************************/
-	if (isOption(GAMEOPTION_RAGING_BARBARIANS) || isOption(GAMEOPTION_NO_SETTLERS))
+	if (bRagingBarbs || isOption(GAMEOPTION_NO_SETTLERS))
 	{
 		if( getNumCivCities() <= (countCivPlayersAlive() * 2))
 		{
@@ -6960,7 +6962,7 @@ void CvGame::createBarbarianCities()
 	}
 
 	int iRand = getSorenRandNum(100, "Barb City Creation");
-	if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+	if (bRagingBarbs)
 	{
 		if( countCivPlayersAlive() + GET_PLAYER(BARBARIAN_PLAYER).getNumCities() < GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getDefaultPlayers() )
 		{
@@ -6989,7 +6991,7 @@ void CvGame::createBarbarianCities()
 			iTargetCitiesMultiplier += (300 * (iTargetBarbCities - iBarbCities)) / iTargetBarbCities;
 		}
 
-		if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+		if (bRagingBarbs)
 		{
 			iTargetCitiesMultiplier *= 3;
 			iTargetCitiesMultiplier /= 2;
@@ -7006,7 +7008,7 @@ void CvGame::createBarbarianCities()
 	int iOccupiedAreaMultiplier = 50;
 	int iOwnedPlots = 0;
 
-	if(isOption(GAMEOPTION_RAGING_BARBARIANS))
+	if(bRagingBarbs)
 	{
 		for( iI = 0; iI < GC.getMAX_PLAYERS(); iI++ )
 		{
@@ -7017,7 +7019,7 @@ void CvGame::createBarbarianCities()
 		iOccupiedAreaMultiplier += 100 - (iOwnedPlots)/GC.getMapINLINE().getLandPlots();
 		
 		// If raging barbs is on, emphasize areas with other civs
-		if( isOption(GAMEOPTION_RAGING_BARBARIANS) )
+		if( bRagingBarbs )
 		{
 			iOccupiedAreaMultiplier *= 3;
 			iOccupiedAreaMultiplier /= 2;
@@ -7070,7 +7072,7 @@ void CvGame::createBarbarianCities()
 					iValue += (100 + getSorenRandNum(50, "Barb City Found"));
 					iValue /= 100;
 */
-					if (isOption(GAMEOPTION_RAGING_BARBARIANS))
+					if (bRagingBarbs)
 					{
 						if( pLoopPlot->area()->getNumCities() == pLoopPlot->area()->getCitiesPerPlayer(BARBARIAN_PLAYER) )
 						{
