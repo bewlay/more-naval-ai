@@ -4966,12 +4966,10 @@ bool CvUnit::canAirliftAt(const CvPlot* pPlot, int iX, int iY) const
 
 	pTargetPlot = GC.getMapINLINE().plotINLINE(iX, iY);
 
-/*  Commented out by Tholal - hopefully allows Nexus gating into any owned city
 	if (!canMoveInto(pTargetPlot))
 	{
 		return false;
 	}
-*/
 
 	pTargetCity = pTargetPlot->getPlotCity();
 
