@@ -609,6 +609,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
     }
 
 /**	BETTER AI (Spellcasting UNITAI_MAGE) Sephi                                 					**/
+	/*
     for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
     {
  		if ((pLoopUnit->AI_getUnitAIType() == UNITAI_MAGE) && (pLoopUnit->AI_getGroupflag()==GROUPFLAG_PERMDEFENSE))
@@ -616,6 +617,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 			pLoopUnit->AI_mageCast();
 		}
     }
+	*/
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/

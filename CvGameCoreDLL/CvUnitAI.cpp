@@ -435,18 +435,12 @@ bool CvUnitAI::AI_update()
 			}
 			break;
 
-/*************************************************************************************************/
-/**	ADDON (automatic Terraforming) Sephi                                     					**/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+		// Start Sephi Code - Automatic Terraforming
         case AUTOMATE_TERRAFORMING:
             AI_setUnitAIType(UNITAI_TERRAFORMER);
             AI_terraformerMove();
             break;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+		// End Sephi Code
 
 		default:
 			FAssert(false);
@@ -461,10 +455,9 @@ bool CvUnitAI::AI_update()
 
 /*************************************************************************************************/
 /**	BETTER AI (UnitAI::AI_update) Sephi                                 	    				**/
-/**																								**/
-/**						                                            							**/
 /*************************************************************************************************/
 
+		// Tholal ToDo - this section is kind of hacky. Figure out a way to remove it entirely and move the functionality to appropriate spots
         if (!isBarbarian())
 	    {
 			if (getExperience() > 99)
