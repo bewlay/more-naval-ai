@@ -11727,7 +11727,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		ImprovementTypes eImprovement = pNewPlot->getImprovementType();
 		if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && eImprovement != NO_IMPROVEMENT)
 		{
-			if(GC.getImprovementInfo(eImprovement).isActsAsCity() && !isHiddenNationality())
+			if(GC.getImprovementInfo(eImprovement).isActsAsCity() && !isNoCapture())
 			{
 				if(pNewPlot->getOwner() != NO_PLAYER)
 				{
