@@ -15,6 +15,7 @@ import SdToolKitCustom as SDTK
 import RevUtils
 import LeaderCivNames
 import BugCore
+import random
 
 # globals
 gc = CyGlobalContext()
@@ -78,6 +79,7 @@ class DynamicCivNames :
 		self.iOrder =			CvUtil.findInfoTypeNum( gc.getReligionInfo, gc.getNumReligionInfos(), 'RELIGION_THE_ORDER' )
 		self.iVeil =			CvUtil.findInfoTypeNum( gc.getReligionInfo, gc.getNumReligionInfos(), 'RELIGION_THE_ASHEN_VEIL' )
 		self.iEmpyrean =		CvUtil.findInfoTypeNum( gc.getReligionInfo, gc.getNumReligionInfos(), 'RELIGION_THE_EMPYREAN' )
+		self.iKilmorph =		CvUtil.findInfoTypeNum( gc.getReligionInfo, gc.getNumReligionInfos(), 'RELIGION_RUNES_OF_KILMORPH' )
 		
 		self.iGood = 			gc.getInfoTypeForString( "ALIGNMENT_GOOD" )
 		self.iEvil = 			gc.getInfoTypeForString( "ALIGNMENT_EVIL" )
@@ -438,9 +440,7 @@ class DynamicCivNames :
 	def newNameByCivics( self, iPlayer, bVerbose = True, bForceUpdate = False ) :
 		# Assigns a new name to a player based on their civics choices
 		
-		# lfgr debug
-		print "DCN - Player %i Picking new name by Civics" % ( iPlayer )
-		# lfgr end
+		# TODO: performance
 
 		pPlayer = gc.getPlayer( iPlayer )
 		pCapital = pPlayer.getCapitalCity()
@@ -522,14 +522,25 @@ class DynamicCivNames :
 #			From Civics													#
 #########################################################################
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint("Names - Start computing name")
-		iMxc = 0 # (e.g. "ADJ EMP of CAPITAL" when NumCities <= iMxc)
-		sEmp = "Empire"
-		sPre = "" # Prefix
-		bFof = False # Force "of" (e.g. "PRE EMP of SRT", never "PRE ADJ EMP")
 		
 		# parameters
 		sLeaderName = pPlayer.getName()
 		iNumCities = pPlayer.getNumCities()
+		# Eras dont work this same way in FFH2
+#		bAncient = ( playerEra == 1 ) 
+		
+		iMxc = 0 # (e.g. "ADJ EMP of CAPITAL" when NumCities <= iMxc)
+
+		if (iNumCities == 1):
+			sEmp = "Lands"
+			sAltEmp = "Stronghold"
+		else:
+			sEmp = "Empire"
+			sAltEmp = "Territories"
+		sPre = "" # Prefix
+		sAltPre = ""
+		bBof = False # Block "of" (e.g. never "PRE EMP of SRT", but "PRE ADJ EMP")
+		bFof = False # Force "of" (e.g. never "PRE ADJ EMP", but "PRE EMP of SRT")
 		
 		bGood = pPlayer.getAlignment() == self.iGood
 		bEvil = pPlayer.getAlignment() == self.iEvil
@@ -573,10 +584,21 @@ class DynamicCivNames :
 		bVeil = pPlayer.getStateReligion() == self.iVeil
 		bEmpyrean = pPlayer.getStateReligion() == self.iEmpyrean
 		bOrder = pPlayer.getStateReligion() == self.iOrder
+		bKilmorph = pPlayer.getStateReligion() == self.iKilmorph
+		
+		bCalabim = iCiv == self.iCalabim
+		bClan = iCiv == self.iClan
+		
+		if( bClan ) :
+			sSrt = "Embers"
+			sAdj = "Orcish"
+		
+		bNoShuffle = False
 		
 		sPost = ""
 		if( iNumCities == 0 ) :
 			sEmp = "Tribe"
+			sAltEmp = "Peoples" #Note: Never used due to next line
 			return ["%s %s"%( sAdj, sEmp ), sSrt,sAdj]
 			
 		if bCharismatic:
@@ -586,23 +608,35 @@ class DynamicCivNames :
 		
 		if( bDespotism ) :
 			iMxc = 2
-			if( bGood ) :
-				sEmp = "Autocracy"
-			elif( bEvil ) :
-				sEmp = "Tyranny"
-			# else: Default
+			if( bClan ) :
+				sEmp = "Clan"
+				sAltEmp = "Clan"
+#			elif( bAncient ) :
+#				sEmp = "Chiefdom"
+#				sAltEmp = "Empire"
+			else :
+				sAltEmp = "Chiefdom"
+				if( bGood ) :
+					sEmp = "Autocracy"
+				elif( bEvil ) :
+					sEmp = "Tyranny"
+				# else: Default
 		elif( bCityStates ) :
 			if bMilitaryState:
-				return ["%s Hegemony"%( sAdj ), sSrt,sAdj]
+				sEmp = "Hegemony"
+				sAltEmp = "Hegemony"
 			iMxc = 1
 			if( iNumCities == 1 ) :
 				sEmp = "City"
+				sAltEmp = "City State"
 			else :
-				sEmp = "League"
+				sEmp = "Federation"
+				sAltEmp = "League"
 				sPost = "City States"
 			if bSlavery:
 				sPost = "Slavers"
 			if bForeignTrade:
+				sPre = ""
 				sEmp = "Confederation"
 			elif bDecentralization:
 				if iNumCities == 1:
@@ -613,9 +647,21 @@ class DynamicCivNames :
 			iMxc = 4
 			if bReligion:
 				sEmp = "Cult"
-			sEmp = "Realm"
+				sAltEmp = "Followers"
+				bFof = True
+			elif bPacifism:
+				sPre = "Benevolent"
+			else:
+				sEmp = "Monarchy"
+				sAltEmp = "Sovereignty"
+			if( bClan ) :
+				sEmp = "Clan"
+				sAltEmp = "Clan"
 		elif( bAristocracy ) :
 			iMxc = 3
+			if( bCalabim ) :
+				sEmp = "Principalities"
+				sAltEmp = "Kingdom"
 			if bGuilds:
 				sEmp = "Imperium"
 			elif bSlavery:
@@ -625,29 +671,40 @@ class DynamicCivNames :
 				sEmp = "Monarchy"
 			else:
 				sEmp = "Kingdom"
+				sAltEmp = "Realm"
 			if bConquest:
 				sPre = "Imperial"
+				sAltPre = "Majestic"
+			elif bArete:
+				sEmp = "Plutocracy"
+				sAltEmp = "Plutocracy"
 			else:
 				sPre = "Royal"
+				sAltPre = "Noble"
 		elif( bTheocracy ) :
 			iMxc = 2
-			sEmp = "Divinity"
+			sPre = "Divine"
+			sAltPre = "Chosen"
+#			sEmp = "Divinity"
 		elif( bRepublic ) :
 			iMxc = 1
+			sAltPre = "Democratic"
 			if( bEvil ) :
 				sEmp = "Ochlocracy"
+				sAltEmp = "Republic"
 			else :
 				sEmp = "Republic"
     
 		if( bReligion ) :
 			if sPre == "":
-				sPre = "Holy"
+				sPre = "Sacred"
+				sAltPre = "Holy"
 			if( bGodKing and iNumCities <= iMxc ) :
 				sPre = "Sacred"
 				sEmp = "See"
 			elif( bTheocracy):
 				sEmp = "Caliphate"
-				sPre = "Theocratic"
+				sAltPre = "Theocratic"
 				if ( bVeil ) :
 					if bHolyShrine:
 						return ["Chosen of Agares", sSrt,sAdj]
@@ -660,20 +717,21 @@ class DynamicCivNames :
 			if( bCityStates and iNumCities > iMxc ) :
 				sEmp = "Commune"
 				bFof = True
-			elif sPre == "":
-				sPre = "Benevolent"
-			sPre = "Peoples"
 		elif( bLiberty ) :
 			sPre = "Free"
+			sAltPre = "Liberated"
 			if( bAristocracy ) :
+				bNoShuffle = True
 				sEmp = "Imperial Estates"
-		elif( bTribalism ) :
+				bFof = True
+		elif( bTribalism and bDespotism ) :
 			sPre = "Tribal"
-			if( bDespotism ) :
-				sEmp = "Chiefdom"
-				
+			# even if era not ancient
+			sAltEmp = "Chiefdom"
+
 		if bCrusade:
 			sPre = "Righteous"
+			sAltPre = "Righteous"
 		elif bGuilds:
 			sPre = "Technocratic"
 			
@@ -688,13 +746,20 @@ class DynamicCivNames :
 				sEmp = "Regime"
     
 		if bPuppet:
+			iMxc = 5 # TODO: puppet states have no capital
+			sPre = ""
+			sAltPre = ""
 			sEmp = "Satrapy"
+			sAltEmp = "Satrapy"
 			if bMilitaryState:
 				sEmp = "Prefecture"
+				sAltEmp = "Prefecture"
 			if bAristocracy:
 				sEmp = "Province"
+				sAltEmp = "Province"
 			if bReligion or bTheocracy:
 				sEmp = "Diocese"
+				sAltEmp = "Diocese"
 			return ["%s %s"%( sAdj, sEmp ), sSrt,sAdj]
 
 		if pCapital != -1:
@@ -708,26 +773,138 @@ class DynamicCivNames :
 				else:
 					sPre = "Northern"
     
-		if bArete:
+		if (bArete and bHolyShrine):
 			sPre = "Golden"
+			sAltPre = "Golden"
 		elif bGuardian:
 			sEmp = "Fellowship"
+			sAltEmp = "Fellowship"
 		elif bSacrifice:
 			sPre = "Demonic"
-			
+			sAltPre = "Demonic"
 
 		if( sPost != "" ) :
 			return ["%s %s of %s %s"%(sPre, sEmp, sAdj, sPost), sSrt,sAdj]
+		if( sPre != "" ) :
+			sPre += " "
 		
-		if bGodKing:
-			return ["%s %s of %s"%( sPre, sEmp, sLeaderName ), sSrt,sAdj]
-		elif( iNumCities <= iMxc ) :
-			return ["%s %s of %s"%( sPre, sEmp, sCpt ), sSrt,sAdj]
-		elif( bFof or 50 > game.getSorenRandNum( 100, 'Rev: Naming' ) ) :
-			return ["%s %s of the %s"%( sPre, sEmp, sSrt ), sSrt,sAdj]
-		else :
-			return ["%s %s %s"%( sPre, sAdj, sEmp ), sSrt,sAdj]
+		if( sAltPre != "" ) :
+			sAltPre += " "
+		
+		sTheSrt = sSrt
+		
+		if( not bClan ) :
+			sTheSrt = "the " + sTheSrt
+		
+#		if( not bNoShuffle ) :
+#			if( game.getSorenRandNum( 100, "DCN Shuffle" ) >= 50 ) :
+#				sTmp = sPre
+#				sPre = sAltPre
+ #				sAltPre = sTmp
+#			if( game.getSorenRandNum( 100, "DCN Shuffle" ) >= 50 ) :
+#				sTmp = sEmp
+#				sEmp = sAltEmp
+#				sAltEmp = sEmp
+		
+		lsDescs = list()
+		
+		if( not bBof and iNumCities <= iMxc and sEmp != "Clan" and sCpt != None ) : # Sacred Empire of Golden Lane
+			sNewDesc = "%s%s of %s"%( sPre, sEmp, sCpt )
+			lsDescs.append( sNewDesc )
+		
+		if( not bFof and sEmp != "Clan" ) :
+			sNewDesc = "%s%s %s"%( sPre, sAdj, sEmp ) # Sacred Malakim Empire
+			lsDescs.append( sNewDesc )
+		
+		if( not bBof ) :
+			sNewDesc = "%s%s of %s"%( sPre, sEmp, sTheSrt ) # Sacred Empire of the Malakim
+			lsDescs.append( sNewDesc )
+		
+		if ( bGodKing ) :
+			sNewDesc = "%s%s of %s"%( sPre, sEmp, sLeaderName ) # Holy Cult of Tholal
+			lsDescs.append( sNewDesc )
+		
+		# try alternate prefix
+		
+		if( not bBof and iNumCities <= iMxc and sEmp != "Clan" and sCpt != None ) : # Holy Empire of Golden Lane
+			sNewDesc = "%s%s of %s"%( sAltPre, sEmp, sCpt )
+			lsDescs.append( sNewDesc )
+		
+		if( not bFof and sEmp != "Clan" ) :
+			sNewDesc = "%s%s %s"%( sAltPre, sAdj, sEmp ) # Holy Malakim Empire
+			lsDescs.append( sNewDesc )
+		
+		if( not bBof ) :
+			sNewDesc = "%s%s of %s"%( sAltPre, sEmp, sTheSrt ) # Holy Empire of the Malakim
+			lsDescs.append( sNewDesc )
+		
+		if ( bGodKing ) :
+			sNewDesc = "%s%s of %s"%( sAltPre, sEmp, sLeaderName ) # Sovereignty of Tholal
+			lsDescs.append( sNewDesc )
+		
+		# try alternate empire
+		
+		if( not bBof and iNumCities <= iMxc and sAltEmp != "Clan" and sCpt != None ) : # Sacred Realm of Golden Lane
+			sNewDesc = "%s%s of %s"%( sPre, sAltEmp, sCpt )
+			lsDescs.append( sNewDesc )
+		
+		if( not bFof and sAltEmp != "Clan" ) :
+			sNewDesc = "%s%s %s"%( sPre, sAdj, sAltEmp ) # Sacred Malakim Realm
+			lsDescs.append( sNewDesc )
+		
+		if( not bBof ) :
+			sNewDesc = "%s%s of %s"%( sPre, sAltEmp, sTheSrt ) # Sacred Realm of the Malakim
+			lsDescs.append( sNewDesc )
+
+		if ( bGodKing ) :
+			sNewDesc = "%s%s of %s"%( sPre, sAltEmp, sLeaderName ) # Sovereignty of Tholal
+			lsDescs.append( sNewDesc )
+		
+		# try alternate prefix and empire
+		
+		if( not bBof and iNumCities <= iMxc and sAltEmp != "Clan" and sCpt != None ) : # Holy Realm of Golden Lane
+			sNewDesc = "%s%s of %s"%( sAltPre, sAltEmp, sCpt )
+			lsDescs.append( sNewDesc )
+		
+		if( not bFof and sAltEmp != "Clan" ) :
+			sNewDesc = "%s%s %s"%( sAltPre, sAdj, sAltEmp ) # Holy Malakim Realm
+			lsDescs.append( sNewDesc )
+		
+		if( not bBof ) :
+			sNewDesc = "%s%s of %s"%( sAltPre, sAltEmp, sTheSrt ) # Holy Realm of the Malakim
+			lsDescs.append( sNewDesc )
+		
+		if ( bGodKing ) :
+			sNewDesc = "%s%s of %s"%( sAltPre, sAltEmp, sLeaderName ) # Sovereignty of Tholal
+			lsDescs.append( sNewDesc )
+		
+		if( self.LOG_DEBUG ) :
+			CvUtil.pyPrint( "  Names - WARNING: No unused Names for Player #%d!"%( iPlayer ) )
+		
+#		if( sDsc in lsDescs ) :
+#			print "MODIFIED DCN - Keeping name \"%s\"" % ( sDsc )
+#			return [sDsc, sSrt, sAdj]
+		
+		random.shuffle(lsDescs) # shuffle the name options so we dont end up all using the same style
+		
+		for sNewDesc in lsDescs :
+			if( self.isUnused( iPlayer, sNewDesc ) ) :
+				print "MODIFIED DCN - Old name: \"%s\", New name: \"%s\"" % ( sDsc, sNewDesc )
+				return [sNewDesc, sSrt, sAdj]
+			else :
+				print "MODIFIED DCN - Name \"%s\" already used!" % ( sDsc )
+		
+		return ["%s%s %s"%( sPre, sAdj, sEmp ),sSrt,sAdj] # keep current name
+	
+	def isUnused( self, iPlayer, sDesc ) :
+		for iLoopPlayer in range( gc.getMAX_PLAYERS() ) :
+			if( gc.getPlayer( iLoopPlayer ).isEverAlive() ) :
+				if( iLoopPlayer != iPlayer ) :
+					if( gc.getPlayer( iLoopPlayer ).getCivilizationDescription(0) == sDesc ) :
+						return False
+		return True
 # lfgr end
+
 	
 	def resetName( self, iPlayer, bVerbose = True ) :
 		
