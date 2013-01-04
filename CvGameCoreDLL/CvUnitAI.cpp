@@ -26210,16 +26210,19 @@ void CvUnitAI::AI_chooseGroupflag()
         }
     }
 
-	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0) || bWarPlan)
+	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0) || bWarPlan || isRangedCollateral())
 	{
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 
-		int iAttackCityCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
-		int iAttackCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
-
-		if (iAttackCount > iAttackCityCount)
+		if (AI_getUnitAIType() != UNITAI_MEDIC)
 		{
-			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			int iAttackCityCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
+			int iAttackCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
+
+			if (iAttackCount > iAttackCityCount)
+			{
+				AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			}
 		}
 
 		return;
