@@ -677,7 +677,6 @@ class DynamicCivNames :
 				sAltPre = "Majestic"
 			elif bArete:
 				sEmp = "Plutocracy"
-				sAltEmp = "Plutocracy"
 			else:
 				sPre = "Royal"
 				sAltPre = "Noble"
