@@ -448,7 +448,7 @@ bool CvUnitAI::AI_update()
 		}
 
 		// if no longer automated, then we want to bail
-		return !getGroup()->isAutomated();
+		//return !getGroup()->isAutomated();
 	}
 	else
 	{
