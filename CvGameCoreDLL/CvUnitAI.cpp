@@ -11527,16 +11527,16 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					{
 						if (kSpellInfo.isResistable())
 						{
-							if (AI_getGroupflag()==GROUPFLAG_CONQUEST)
+							if (AI_getGroupflag()==GROUPFLAG_CONQUEST || eUnitAI == UNITAI_MAGE)
 							{
-								iValue += 35;
+								iValue += 25;
 							}
 						}
 						else // if its not resistable, that means its a spell you cast on your own troops
 						{
-							if (isBuffer() || eUnitAI == UNITAI_MAGE || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
+							if (isBuffer() || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
 							{
-								iValue += 35;
+								iValue += 25;
 							}
 							else
 							{
@@ -11545,6 +11545,49 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						}
 					}
 
+					if (kSpellInfo.getRemovePromotionType2() != NO_PROMOTION)
+					{
+						if (kSpellInfo.isResistable())
+						{
+							if (AI_getGroupflag()==GROUPFLAG_CONQUEST || eUnitAI == UNITAI_MAGE)
+							{
+								iValue += 25;
+							}
+						}
+						else // if its not resistable, that means its a spell you cast on your own troops
+						{
+							if (isBuffer() || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
+							{
+								iValue += 25;
+							}
+							else
+							{
+								iValue += 15;
+							}
+						}
+					}
+
+					if (kSpellInfo.getRemovePromotionType3() != NO_PROMOTION)
+					{
+						if (kSpellInfo.isResistable())
+						{
+							if (AI_getGroupflag()==GROUPFLAG_CONQUEST || eUnitAI == UNITAI_MAGE)
+							{
+								iValue += 25;
+							}
+						}
+						else // if its not resistable, that means its a spell you cast on your own troops
+						{
+							if (isBuffer() || AI_getGroupflag() == GROUPFLAG_PERMDEFENSE)
+							{
+								iValue += 25;
+							}
+							else
+							{
+								iValue += 15;
+							}
+						}
+					}
 
 					if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
 					{
