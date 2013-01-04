@@ -566,244 +566,247 @@ bool CvUnitAI::AI_update()
 /**	END	                                        												**/
 /*************************************************************************************************/
 
-		switch (AI_getUnitAIType())
+		if (canMove()) // Tholal AI - make sure we dont try to move if we can't (ie, due to spell/ability usage earlier in this function)
 		{
-		case UNITAI_UNKNOWN:
-			getGroup()->pushMission(MISSION_SKIP);
-			break;
-
-		case UNITAI_ANIMAL:
-			AI_animalMove();
-			break;
-
-		case UNITAI_SETTLE:
-			AI_settleMove();
-			break;
-
-		case UNITAI_WORKER:
-			AI_workerMove();
-			break;
-
-		case UNITAI_ATTACK:
-
-//Added by Kael 09/19/2007
-            if (getDuration() > 0)
-            {
-                AI_summonAttackMove();
-                break;
-            }
-//FfH: End Add
-
-			if (isBarbarian())
+			switch (AI_getUnitAIType())
 			{
-				AI_barbAttackMove();
+			case UNITAI_UNKNOWN:
+				getGroup()->pushMission(MISSION_SKIP);
+				break;
+
+			case UNITAI_ANIMAL:
+				AI_animalMove();
+				break;
+
+			case UNITAI_SETTLE:
+				AI_settleMove();
+				break;
+
+			case UNITAI_WORKER:
+				AI_workerMove();
+				break;
+
+			case UNITAI_ATTACK:
+
+	//Added by Kael 09/19/2007
+				if (getDuration() > 0)
+				{
+					AI_summonAttackMove();
+					break;
+				}
+	//FfH: End Add
+
+				if (isBarbarian())
+				{
+					AI_barbAttackMove();
+				}
+				else
+				{
+					AI_attackMove();
+				}
+				break;
+
+	/*************************************************************************************************/
+	/**	BETTER AI (New UNITAI) Sephi                                 					            **/
+	/**																								**/
+	/**						                                            							**/
+	/*************************************************************************************************/
+			case UNITAI_HERO:
+				if (isBarbarian())
+				{
+					AI_barbAttackMove();
+				}
+				else
+				{
+					AI_heromove();
+				}
+				break;
+			case UNITAI_INQUISITOR:
+				AI_InquisitionMove();
+				break;
+			case UNITAI_FEASTING:
+				AI_feastingmove();
+				break;
+			case UNITAI_MANA_UPGRADE:
+				AI_upgrademanaMove();
+				break;
+			case UNITAI_MAGE:
+				AI_mageMove();
+				break;
+			case UNITAI_WARWIZARD:
+				ConquestMove();
+				break;
+			case UNITAI_TERRAFORMER:
+				AI_terraformerMove();
+				break;
+			case UNITAI_ATTACK_CITY:
+				if (isBarbarian())
+				{
+					AI_barbAttackMove();
+				}
+				else
+				{
+					AI_attackCityMove();
+				}
+				break;
+	/*************************************************************************************************/
+	/**	END	                                        												**/
+	/*************************************************************************************************/
+
+			case UNITAI_COLLATERAL:
+				AI_collateralMove();
+				break;
+
+			case UNITAI_PILLAGE:
+				AI_pillageMove();
+				break;
+
+			case UNITAI_RESERVE:
+				AI_reserveMove();
+				break;
+
+			case UNITAI_MEDIC:
+			case UNITAI_COUNTER:
+				AI_counterMove();
+				break;
+
+			case UNITAI_PARADROP:
+				AI_paratrooperMove();
+				break;
+
+			case UNITAI_CITY_DEFENSE:
+				AI_cityDefenseMove();
+				break;
+
+			case UNITAI_CITY_COUNTER:
+			case UNITAI_CITY_SPECIAL:
+				AI_cityDefenseExtraMove();
+				break;
+
+			case UNITAI_EXPLORE:
+				AI_exploreMove();
+				break;
+
+			case UNITAI_MISSIONARY:
+				AI_missionaryMove();
+				break;
+
+			case UNITAI_PROPHET:
+				AI_prophetMove();
+				break;
+
+			case UNITAI_ARTIST:
+				AI_artistMove();
+				break;
+
+			case UNITAI_SCIENTIST:
+				AI_scientistMove();
+				break;
+
+			case UNITAI_GENERAL:
+				AI_generalMove();
+				break;
+
+			case UNITAI_MERCHANT:
+				AI_merchantMove();
+				break;
+
+			case UNITAI_ENGINEER:
+				AI_engineerMove();
+				break;
+
+			case UNITAI_SPY:
+				AI_spyMove();
+				break;
+
+			case UNITAI_ICBM:
+				AI_ICBMMove();
+				break;
+
+			case UNITAI_WORKER_SEA:
+				AI_workerSeaMove();
+				break;
+
+			case UNITAI_ATTACK_SEA:
+				if (isBarbarian())
+				{
+					AI_barbAttackSeaMove();
+				}
+				else
+				{
+					AI_attackSeaMove();
+				}
+				break;
+
+			case UNITAI_RESERVE_SEA:
+				AI_reserveSeaMove();
+				break;
+
+			case UNITAI_ESCORT_SEA:
+				AI_escortSeaMove();
+				break;
+
+			case UNITAI_EXPLORE_SEA:
+				AI_exploreSeaMove();
+				break;
+
+			case UNITAI_ASSAULT_SEA:
+				AI_assaultSeaMove();
+				break;
+
+			case UNITAI_SETTLER_SEA:
+				AI_settlerSeaMove();
+				break;
+
+			case UNITAI_MISSIONARY_SEA:
+				AI_missionarySeaMove();
+				break;
+
+			case UNITAI_SPY_SEA:
+				AI_spySeaMove();
+				break;
+
+			case UNITAI_CARRIER_SEA:
+				AI_carrierSeaMove();
+				break;
+
+			case UNITAI_MISSILE_CARRIER_SEA:
+				AI_missileCarrierSeaMove();
+				break;
+
+			case UNITAI_PIRATE_SEA:
+				AI_pirateSeaMove();
+				break;
+
+			case UNITAI_ATTACK_AIR:
+				AI_attackAirMove();
+				break;
+
+			case UNITAI_DEFENSE_AIR:
+				AI_defenseAirMove();
+				break;
+
+			case UNITAI_CARRIER_AIR:
+				AI_carrierAirMove();
+				break;
+
+			case UNITAI_MISSILE_AIR:
+				AI_missileAirMove();
+				break;
+
+			case UNITAI_ATTACK_CITY_LEMMING:
+				AI_attackCityLemmingMove();
+				break;
+
+			case UNITAI_LAIRGUARDIAN:
+				AI_lairGuardianMove();
+				break;
+
+				
+			default:
+				FAssert(false);
+				break;
 			}
-			else
-			{
-				AI_attackMove();
-			}
-			break;
-
-/*************************************************************************************************/
-/**	BETTER AI (New UNITAI) Sephi                                 					            **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-        case UNITAI_HERO:
-			if (isBarbarian())
-			{
-				AI_barbAttackMove();
-			}
-			else
-			{
-                AI_heromove();
-			}
-            break;
-		case UNITAI_INQUISITOR:
-			AI_InquisitionMove();
-			break;
-        case UNITAI_FEASTING:
-            AI_feastingmove();
-			break;
-        case UNITAI_MANA_UPGRADE:
-            AI_upgrademanaMove();
-            break;
-		case UNITAI_MAGE:
-			AI_mageMove();
-			break;
-		case UNITAI_WARWIZARD:
-			ConquestMove();
-			break;
-		case UNITAI_TERRAFORMER:
-            AI_terraformerMove();
-            break;
-		case UNITAI_ATTACK_CITY:
-			if (isBarbarian())
-			{
-				AI_barbAttackMove();
-			}
-			else
-			{
-                AI_attackCityMove();
-			}
-			break;
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
-		case UNITAI_COLLATERAL:
-			AI_collateralMove();
-			break;
-
-		case UNITAI_PILLAGE:
-			AI_pillageMove();
-			break;
-
-		case UNITAI_RESERVE:
-			AI_reserveMove();
-			break;
-
-        case UNITAI_MEDIC:
-		case UNITAI_COUNTER:
-			AI_counterMove();
-			break;
-
-		case UNITAI_PARADROP:
-			AI_paratrooperMove();
-			break;
-
-		case UNITAI_CITY_DEFENSE:
-			AI_cityDefenseMove();
-			break;
-
-		case UNITAI_CITY_COUNTER:
-		case UNITAI_CITY_SPECIAL:
-			AI_cityDefenseExtraMove();
-			break;
-
-		case UNITAI_EXPLORE:
-			AI_exploreMove();
-			break;
-
-		case UNITAI_MISSIONARY:
-			AI_missionaryMove();
-			break;
-
-		case UNITAI_PROPHET:
-			AI_prophetMove();
-			break;
-
-		case UNITAI_ARTIST:
-			AI_artistMove();
-			break;
-
-		case UNITAI_SCIENTIST:
-			AI_scientistMove();
-			break;
-
-		case UNITAI_GENERAL:
-			AI_generalMove();
-			break;
-
-		case UNITAI_MERCHANT:
-			AI_merchantMove();
-			break;
-
-		case UNITAI_ENGINEER:
-			AI_engineerMove();
-			break;
-
-		case UNITAI_SPY:
-			AI_spyMove();
-			break;
-
-		case UNITAI_ICBM:
-			AI_ICBMMove();
-			break;
-
-		case UNITAI_WORKER_SEA:
-			AI_workerSeaMove();
-			break;
-
-		case UNITAI_ATTACK_SEA:
-			if (isBarbarian())
-			{
-				AI_barbAttackSeaMove();
-			}
-			else
-			{
-				AI_attackSeaMove();
-			}
-			break;
-
-		case UNITAI_RESERVE_SEA:
-			AI_reserveSeaMove();
-			break;
-
-		case UNITAI_ESCORT_SEA:
-			AI_escortSeaMove();
-			break;
-
-		case UNITAI_EXPLORE_SEA:
-			AI_exploreSeaMove();
-			break;
-
-		case UNITAI_ASSAULT_SEA:
-			AI_assaultSeaMove();
-			break;
-
-		case UNITAI_SETTLER_SEA:
-			AI_settlerSeaMove();
-			break;
-
-		case UNITAI_MISSIONARY_SEA:
-			AI_missionarySeaMove();
-			break;
-
-		case UNITAI_SPY_SEA:
-			AI_spySeaMove();
-			break;
-
-		case UNITAI_CARRIER_SEA:
-			AI_carrierSeaMove();
-			break;
-
-		case UNITAI_MISSILE_CARRIER_SEA:
-			AI_missileCarrierSeaMove();
-			break;
-
-		case UNITAI_PIRATE_SEA:
-			AI_pirateSeaMove();
-			break;
-
-		case UNITAI_ATTACK_AIR:
-			AI_attackAirMove();
-			break;
-
-		case UNITAI_DEFENSE_AIR:
-			AI_defenseAirMove();
-			break;
-
-		case UNITAI_CARRIER_AIR:
-			AI_carrierAirMove();
-			break;
-
-		case UNITAI_MISSILE_AIR:
-			AI_missileAirMove();
-			break;
-
-		case UNITAI_ATTACK_CITY_LEMMING:
-			AI_attackCityLemmingMove();
-			break;
-
-		case UNITAI_LAIRGUARDIAN:
-			AI_lairGuardianMove();
-			break;
-
-			
-		default:
-			FAssert(false);
-			break;
 		}
 	}
 
