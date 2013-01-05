@@ -458,7 +458,8 @@ bool CvCityAI::AI_stopGrowth()
 			return true;
 		}
 
-		if (getFoodTurnsLeft() == 1)  // sephi Orig == 1
+//		if (getFoodTurnsLeft() == 1)
+        if (getFoodTurnsLeft() == 1 || getFood()>=growthThreshold())
 		{
 			int iHappyFacesLeft = happyLevel() - unhappyLevel();
 
@@ -476,7 +477,8 @@ bool CvCityAI::AI_stopGrowth()
 			return true;
 		}
 
-		if (getFoodTurnsLeft() == 1)
+//		if (getFoodTurnsLeft() == 1)
+        if (getFoodTurnsLeft() == 1 || getFood()>=growthThreshold())
 		{
 			int iHealthyFacesLeft = goodHealth() - badHealth();
 

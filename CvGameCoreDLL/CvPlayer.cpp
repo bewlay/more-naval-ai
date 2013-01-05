@@ -7512,6 +7512,12 @@ void CvPlayer::found(int iX, int iY)
 		}
 	}
 
+	// lfgr: merged from MoM
+	// Sephi default value for avoid angry Citizens	
+	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
+		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	// lfgr end
+
 	if (isHuman() && getAdvancedStartPoints() < 0)
 	{
 		pCity->chooseProduction();
