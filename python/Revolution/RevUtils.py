@@ -835,21 +835,24 @@ def giveTechs( toPlayer, fromPlayer, expensiveVars = [1,3], doTakeAway = True ) 
 		toPlayerTeam = gc.getTeam( toPlayer.getTeam() )
 
 		for techID in range(0,gc.getNumTechInfos()) :
-			if( fromPlayerTeam.isHasTech( techID ) ) :
+			if gc.getCivilizationInfo(toPlayer.getCivilizationType()).isCivilizationFreeTechs(techID):
 				knownTechs.append( techID )
-				if( gc.getTechInfo( techID ).getResearchCost() > minMostExpensive ) :
-					if( len(mostExpensive) < numMostExpensive ) :
-						mostExpensive.append( techID )
-					else :
-						for j in range(0,len(mostExpensive)) :
-							if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() == minMostExpensive ) :
-								mostExpensive.remove( mostExpensive[j] )
-								break
-						mostExpensive.append( techID )
-						minMostExpensive = gc.getTechInfo( mostExpensive[0] ).getResearchCost()
-						for j in range(0,len(mostExpensive)) :
-							if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() < minMostExpensive ) :
-								minMostExpensive = gc.getTechInfo( mostExpensive[j] ).getResearchCost()
+			elif toPlayer.canEverResearch( techID):
+				if( fromPlayerTeam.isHasTech( techID ) ) :
+					knownTechs.append( techID )
+					if( gc.getTechInfo( techID ).getResearchCost() > minMostExpensive ) :
+						if( len(mostExpensive) < numMostExpensive ) :
+							mostExpensive.append( techID )
+						else :
+							for j in range(0,len(mostExpensive)) :
+								if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() == minMostExpensive ) :
+									mostExpensive.remove( mostExpensive[j] )
+									break
+							mostExpensive.append( techID )
+							minMostExpensive = gc.getTechInfo( mostExpensive[0] ).getResearchCost()
+							for j in range(0,len(mostExpensive)) :
+								if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() < minMostExpensive ) :
+									minMostExpensive = gc.getTechInfo( mostExpensive[j] ).getResearchCost()
 
 			if( doTakeAway and toPlayerTeam.isHasTech(techID) and toPlayerTeam.getNumMembers() == 1 ) :
 				# take away all techs
