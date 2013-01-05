@@ -6,6 +6,38 @@
 <!-- Game Text Infos -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_REVOLUTIONS</Tag>
+		<English>Revolutions</English>
+		<French>Revolutions</French>
+		<German>Revolutions</German>
+		<Italian>Revolutions</Italian>
+		<Spanish>Revoluciones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_REVOLUTIONS_HELP</Tag>
+		<English>Allows the possibility of Revolutions</English>
+		<French>Allows the possibility of Revolutions</French>
+		<German>Allows the possibility of Revolutions</German>
+		<Italian>Allows the possibility of Revolutions</Italian>
+		<Spanish>Permite la posibilidad de Revoluciones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_REVOLUTIONS</Tag>
+		<English>Revolutions</English>
+		<French>Sorts Mondiaux</French>
+		<German>Weltzauber</German>
+		<Italian>World Spells</Italian>
+		<Spanish>Revoluciones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_REVOLUTIONS_PEDIA</Tag>
+		<English>[H1]Revolutions[\H1][PARAGRAPH:2]This game option allows sections of disgruntled empires to rise up together and demand changes or attempt to break away from the motherland. No matter what the source of the complaint, you will be given an option to either ignore the complaint or accept the cities demands. If their demands go unmet and situations deteriorate, the cities may give you an ultimatum and take up arms if you do not comply![PARAGRAPH:2]HOW IT WORKS:[PARAGRAPH:2]This component is intended to add realistic dynamics to the game, making keeping your cities and regions happy more important and challenging. Each city in your empire will have factors that make it want to stay and factors that make it want to rebel. If you cannot find a balance that keeps each of your cities happy, you will face revolts! Revolts come in many different styles, including requests to change civics, requests to change state religion, and demands for independence. No matter what the scenario, you will always be given choices when confronted with a rebellious city.</English>
+		<French>[H1]Revolutions[\H1][PARAGRAPH:2]This game option allows sections of disgruntled empires to rise up together and demand changes or attempt to break away from the motherland. No matter what the source of the complaint, you will be given an option to either ignore the complaint or accept the cities demands. If their demands go unmet and situations deteriorate, the cities may give you an ultimatum and take up arms if you do not comply![PARAGRAPH:2]HOW IT WORKS:[PARAGRAPH:2]This component is intended to add realistic dynamics to the game, making keeping your cities and regions happy more important and challenging. Each city in your empire will have factors that make it want to stay and factors that make it want to rebel. If you cannot find a balance that keeps each of your cities happy, you will face revolts! Revolts come in many different styles, including requests to change civics, requests to change state religion, and demands for independence. No matter what the scenario, you will always be given choices when confronted with a rebellious city.</French>
+		<German>[H1]Revolutions[\H1][PARAGRAPH:2]This game option allows sections of disgruntled empires to rise up together and demand changes or attempt to break away from the motherland. No matter what the source of the complaint, you will be given an option to either ignore the complaint or accept the cities demands. If their demands go unmet and situations deteriorate, the cities may give you an ultimatum and take up arms if you do not comply![PARAGRAPH:2]HOW IT WORKS:[PARAGRAPH:2]This component is intended to add realistic dynamics to the game, making keeping your cities and regions happy more important and challenging. Each city in your empire will have factors that make it want to stay and factors that make it want to rebel. If you cannot find a balance that keeps each of your cities happy, you will face revolts! Revolts come in many different styles, including requests to change civics, requests to change state religion, and demands for independence. No matter what the scenario, you will always be given choices when confronted with a rebellious city.</German>
+		<Italian>[H1]Revolutions[\H1][PARAGRAPH:2]This game option allows sections of disgruntled empires to rise up together and demand changes or attempt to break away from the motherland. No matter what the source of the complaint, you will be given an option to either ignore the complaint or accept the cities demands. If their demands go unmet and situations deteriorate, the cities may give you an ultimatum and take up arms if you do not comply![PARAGRAPH:2]HOW IT WORKS:[PARAGRAPH:2]This component is intended to add realistic dynamics to the game, making keeping your cities and regions happy more important and challenging. Each city in your empire will have factors that make it want to stay and factors that make it want to rebel. If you cannot find a balance that keeps each of your cities happy, you will face revolts! Revolts come in many different styles, including requests to change civics, requests to change state religion, and demands for independence. No matter what the scenario, you will always be given choices when confronted with a rebellious city.</Italian>
+		<Spanish>[H1]Revolutions[\H1][PARAGRAPH:2]This game option allows sections of disgruntled empires to rise up together and demand changes or attempt to break away from the motherland. No matter what the source of the complaint, you will be given an option to either ignore the complaint or accept the cities demands. If their demands go unmet and situations deteriorate, the cities may give you an ultimatum and take up arms if you do not comply![PARAGRAPH:2]HOW IT WORKS:[PARAGRAPH:2]This component is intended to add realistic dynamics to the game, making keeping your cities and regions happy more important and challenging. Each city in your empire will have factors that make it want to stay and factors that make it want to rebel. If you cannot find a balance that keeps each of your cities happy, you will face revolts! Revolts come in many different styles, including requests to change civics, requests to change state religion, and demands for independence. No matter what the scenario, you will always be given choices when confronted with a rebellious city.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_REV_CONTACT_MINOR</Tag>
 		<English>Diplomacy is not possible with the minor %s1_CivName</English>
 		<French>La diplomatie n'est pas possible avec le mineur %s1_CivName</French>

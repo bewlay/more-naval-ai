@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_TACTICS</Tag>
+		<English>Advanced Tactics</English>
+		<French>Advanced Tactics</French>
+		<German>Advanced Tactics</German>
+		<Italian>Advanced Tactics</Italian>
+		<Spanish>Tácticas Avanzadas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_TACTICS_HELP</Tag>
+		<English>Adds new Combat Results, Diplomacy Options and Great Generals</English>
+		<French>Ajoute de nouveaux résultats de combat, options de diplomatie et grands généraux</French>
+		<German>Addiert neue Kampf-Resultate, Diplomatie-Wahlen und große Generäle</German>
+		<Italian>Aggiunge i nuovi risultati di combattimento, le opzioni di diplomazia ed i grandi General</Italian>
+		<Spanish>Agrega nuevos resultados del combate, opciones de diplomacia y a los Grandes Generales.</Spanish>
+	</TEXT>
 <!-- Start War Prizes -->
 	<TEXT>
 		<Tag>TXT_KEY_WEHAVECAPTUREDSOMETHING</Tag>

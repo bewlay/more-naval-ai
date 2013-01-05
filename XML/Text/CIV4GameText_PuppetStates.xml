@@ -2,6 +2,38 @@
 <Civ4GameText xmlns="http://www.firaxis.com">
 <!-- Start Puppet States -->
 	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_PUPPET_STATES</Tag>
+		<English>Puppet States</English>
+		<French>Puppet States</French>
+		<German>Puppet States</German>
+		<Italian>Puppet States</Italian>
+		<Spanish>Estados Marioneta</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_PUPPET_STATES_HELP</Tag>
+		<English>Allows the creation of Puppet States</English>
+		<French>Allows the creation of Puppet States</French>
+		<German>Allows the creation of Puppet States</German>
+		<Italian>Allows the creation of Puppet States</Italian>
+		<Spanish>Permite la creación de Estados Marioneta</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_PUPPET_STATES</Tag>
+		<English>Puppet States</English>
+		<French>Sorts Mondiaux</French>
+		<German>Weltzauber</German>
+		<Italian>World Spells</Italian>
+		<Spanish>Estados Marioneta</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_PUPPET_STATES_PEDIA</Tag>
+		<English>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</English>
+		<French>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</French>
+		<German>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</German>
+		<Italian>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</Italian>
+		<Spanish>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_PUPPET_STATES</Tag>
 		<English>[ICON_BULLET]Enables Puppet States</English>
 		<French>[ICON_BULLET]Enables Puppet States</French>
