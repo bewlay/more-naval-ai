@@ -4116,7 +4116,7 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 		return false;
 	}
 
-	if (getDuration() > 0)
+	if (getDuration() > 0 || isPermanentSummon())
 	{
 		return false;
 	}
@@ -4241,14 +4241,17 @@ void CvUnit::gift(bool bTestTransport)
 /* General AI                                                                                   */
 /************************************************************************************************/
 	//GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost() / 5));
-	if( pGiftUnit->isCombat() )
+	//if( pGiftUnit->isCombat() )
+	if (pGiftUnit->canDefend())
 	{
-		GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost() * 3 * GC.getGameINLINE().AI_combatValue(pGiftUnit->getUnitType()))/100);
+		//GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost() * 3 * GC.getGameINLINE().AI_combatValue(pGiftUnit->getUnitType()))/100);
+		GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (3 * GET_PLAYER(plot()->getOwnerINLINE()).AI_trueCombatValue(pGiftUnit->getUnitType()))/100);
 	}
 	else
 	{
 		GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost()));
 	}
+	//Todo - add debug message here
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
