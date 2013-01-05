@@ -7341,10 +7341,22 @@ int CvPlot::countTotalCulture() const
 
 	for (iI = 0; iI < MAX_PLAYERS; ++iI)
 	{
+
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                      11/01/12                                lfgr        */
+/*                                                                                              */
+/* Original by Chronis                                                                          */
+/************************************************************************************************/
+/*
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
 			iTotalCulture += getCulture((PlayerTypes)iI);
 		}
+*/
+	iTotalCulture += getCulture((PlayerTypes)iI);
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                     END                                                  */
+/************************************************************************************************/
 	}
 
 	return iTotalCulture;

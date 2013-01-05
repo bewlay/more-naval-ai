@@ -5268,8 +5268,18 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 	{
 		for (iI = 0; iI < MAX_PLAYERS; iI++)
 		{
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                      11/01/12                                lfgr        */
+/*                                                                                              */
+/* Original by Chronis                                                                          */
+/************************************************************************************************/
+/*
 			if (GET_PLAYER((PlayerTypes)iI).isAlive())
 			{
+*/
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                     END                                                  */
+/************************************************************************************************/
 				iCulturePercent = pHeadSelectedCity->plot()->calculateCulturePercent((PlayerTypes)iI);
 
 				if (iCulturePercent > 0)
@@ -5277,7 +5287,17 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 					swprintf(szTempBuffer, L"\n%d%% " SETCOLR L"%s" ENDCOLR, iCulturePercent, GET_PLAYER((PlayerTypes)iI).getPlayerTextColorR(), GET_PLAYER((PlayerTypes)iI).getPlayerTextColorG(), GET_PLAYER((PlayerTypes)iI).getPlayerTextColorB(), GET_PLAYER((PlayerTypes)iI).getPlayerTextColorA(), GET_PLAYER((PlayerTypes)iI).getCivilizationAdjective());
 					szBuffer.append(szTempBuffer);
 				}
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                      11/01/12                                lfgr        */
+/*                                                                                              */
+/* Original by Chronis                                                                          */
+/************************************************************************************************/
+/*
 			}
+*/
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                     END                                                  */
+/************************************************************************************************/
 		}
 
 		eCulturalOwner = pHeadSelectedCity->plot()->calculateCulturalOwner();

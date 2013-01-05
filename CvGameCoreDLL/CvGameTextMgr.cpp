@@ -6266,7 +6266,18 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 					if (iPlayer != eRevealOwner)
 					{
 						CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                      11/01/12                                lfgr        */
+/*                                                                                              */
+/* Original by Chronis                                                                          */
+/************************************************************************************************/
+/*
 						if (kPlayer.isAlive() && pPlot->getCulture((PlayerTypes)iPlayer) > 0)
+*/
+						if (pPlot->getCulture((PlayerTypes)iPlayer) > 0)
+/************************************************************************************************/
+/* DEAD_PLAYER_CULTURE                     END                                                  */
+/************************************************************************************************/
 						{
 							szTempBuffer.Format(L"%d%% " SETCOLR L"%s" ENDCOLR, pPlot->calculateCulturePercent((PlayerTypes)iPlayer), kPlayer.getPlayerTextColorR(), kPlayer.getPlayerTextColorG(), kPlayer.getPlayerTextColorB(), kPlayer.getPlayerTextColorA(), kPlayer.getCivilizationAdjective());
 							szString.append(szTempBuffer);
