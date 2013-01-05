@@ -23879,7 +23879,11 @@ PlayerTypes CvPlayer::initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationType
 		CvTeam& kNewTeam = GET_TEAM(GET_PLAYER(eNewPlayer).getTeam());
 		for (int i = 0; i < GC.getNumTechInfos(); ++i)
 		{
-			if (GET_TEAM(getTeam()).isHasTech((TechTypes)i))
+			if ((GC.getCivilizationInfo(eNewCiv).isCivilizationFreeTechs((TechTypes)i)))
+			{
+				kNewTeam.setHasTech((TechTypes)i, true, eNewPlayer, false, false);
+			}
+			else if (GET_TEAM(getTeam()).isHasTech((TechTypes)i) && GET_PLAYER(eNewPlayer).canEverResearch((TechTypes)i))
 			{
 				kNewTeam.setHasTech((TechTypes)i, true, eNewPlayer, false, false);
 				if (GET_TEAM(getTeam()).isNoTradeTech((TechTypes)i) || GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING))

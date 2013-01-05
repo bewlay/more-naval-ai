@@ -1741,12 +1741,13 @@ class CvEventManager:
 
 		if not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_HYBOREM_OR_BASIUM):
 			if (iTechType == gc.getInfoTypeForString('TECH_INFERNAL_PACT') and iPlayer != -1):
-				iCount = 0
-				for iTeam in range(gc.getMAX_TEAMS()):
-					pTeam = gc.getTeam(iTeam)
-					if pTeam.isHasTech(gc.getInfoTypeForString('TECH_INFERNAL_PACT')):
-						iCount = iCount + 1
-				if iCount == 1:
+				#iCount = 0
+				#for iTeam in range(gc.getMAX_TEAMS()):
+					#pTeam = gc.getTeam(iTeam)
+					#if pTeam.isHasTech(gc.getInfoTypeForString('TECH_INFERNAL_PACT')):
+						#iCount = iCount + 1
+				#if iCount == 1:
+				if not CyGame().isCivEverActive(gc.getInfoTypeForString('CIVILIZATION_INFERNAL')):
 					iInfernalPlayer = pPlayer.initNewEmpire(gc.getInfoTypeForString('LEADER_HYBOREM'), gc.getInfoTypeForString('CIVILIZATION_INFERNAL'))
 					if iInfernalPlayer != PlayerTypes.NO_PLAYER:
 						pInfernalPlayer = gc.getPlayer(iInfernalPlayer)
