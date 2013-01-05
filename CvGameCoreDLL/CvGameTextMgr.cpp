@@ -5574,6 +5574,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 	{
 		szString.append(GC.getTerrainInfo(pPlot->getTerrainType()).getDescription());
 
+		if (pPlot->getTempTerrainTimer() > 0)
+		{
+			szString.append(CvWString::format(L" (temp terrain (%d turns left))", pPlot->getTempTerrainTimer()));
+		}
+
 		FAssert((0 < GC.getNumBonusInfos()) && "GC.getNumBonusInfos() is not greater than zero but an array is being allocated in CvInterface::updateHelpStrings");
 		for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 		{

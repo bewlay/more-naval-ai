@@ -4,6 +4,11 @@
 #include "CyArea.h"
 #include "CyUnit.h"
 #include "CvPlot.h"
+# include <boost/python/overloads.hpp>
+using namespace boost::python;
+
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(CyPlot_setTerrainType_overloads, CyPlot::setTerrainType, 3, 4)
+
 //# include <boost/python/manage_new_object.hpp>
 //# include <boost/python/return_value_policy.hpp>
 
@@ -175,7 +180,8 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("isPeak", &CyPlot::isPeak, "bool ()")
 		.def("setPlotType", &CyPlot::setPlotType, "void (PlotTypes eNewValue, bool bRecalculate, bool bRebuildGraphics)")
 		.def("getTerrainType", &CyPlot::getTerrainType, "int ()")
-		.def("setTerrainType", &CyPlot::setTerrainType, "void (TerrainTypes eNewValue, bool bRecalculate, bool bRebuildGraphics)")
+		//.def("setTerrainType", &CyPlot::setTerrainType, "void (TerrainTypes eNewValue, bool bRecalculate, bool bRebuildGraphics, bool bTemp)")
+		.def("setTerrainType", &CyPlot::setTerrainType, CyPlot_setTerrainType_overloads( args("eNewValue", "bRecalculate", "bRebuildGraphics", "bTemp"),"set Terrain Type"))
 		.def("getFeatureType", &CyPlot::getFeatureType, "int ()")
 		.def("setFeatureType", &CyPlot::setFeatureType, "void (int /*FeatureTypes*/ eNewValue, int iVariety)")
 		.def("setFeatureDummyVisibility", &CyPlot::setFeatureDummyVisibility, "void (string dummyTag, bool show)")

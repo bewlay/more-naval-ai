@@ -658,7 +658,7 @@ int /*TerrainTypes*/ CyPlot::getTerrainType()
 	return m_pPlot ? m_pPlot->getTerrainType() : -1;
 }
 
-void CyPlot::setTerrainType(int /*TerrainTypes*/ eNewValue, bool bRecalculate, bool bRebuildGraphics)
+void CyPlot::setTerrainType(int /*TerrainTypes*/ eNewValue, bool bRecalculate, bool bRebuildGraphics, bool bTemp)
 {
 	if (m_pPlot)
 		m_pPlot->setTerrainType((TerrainTypes)eNewValue, bRecalculate, bRebuildGraphics);

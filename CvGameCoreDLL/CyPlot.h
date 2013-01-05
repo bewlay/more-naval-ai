@@ -180,7 +180,7 @@ public:
 
 	void setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGraphics);
 	int /*TerrainTypes*/ getTerrainType();
-	void setTerrainType(int /*TerrainTypes*/ eNewValue, bool bRecalculate, bool bRebuildGraphics);
+	void setTerrainType(int /*TerrainTypes*/ eNewValue, bool bRecalculate, bool bRebuildGraphics, bool bTemp = false);
 	int /*FeatureTypes*/ getFeatureType();
 	void setFeatureType(int /*FeatureTypes*/ eNewValue, int iVariety);
 	void setFeatureDummyVisibility(std::string dummyTag, bool show);

@@ -6110,7 +6110,7 @@ TerrainTypes CvPlot::getTerrainType() const
 }
 
 
-void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bRebuildGraphics)
+void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bRebuildGraphics, bool bTemp)
 {
 	bool bUpdateSight;
 
@@ -6154,6 +6154,15 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 		if (GC.getTerrainInfo(getTerrainType()).isWater() != isWater())
 		{
 			setPlotType(((GC.getTerrainInfo(getTerrainType()).isWater()) ? PLOT_OCEAN : PLOT_LAND), bRecalculate, bRebuildGraphics);
+		}
+	}
+	
+	// Tholal bugfix - permanent terrain changes should override any temporary terrain changes
+	if (!bTemp)
+	{
+		if (getTempTerrainTimer() > 0)
+		{
+			changeTempTerrainTimer(getTempTerrainTimer() * -1);
 		}
 	}
 }
