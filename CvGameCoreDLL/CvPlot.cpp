@@ -11825,7 +11825,7 @@ void CvPlot::setTempTerrainType(TerrainTypes eNewValue, int iTimer)
 			setRealTerrainType(getTerrainType());
 		}
 		changeTempTerrainTimer(iTimer);
-		setTerrainType(eNewValue, true, true);
+		setTerrainType(eNewValue, true, true, true);
 	}
 }
 
