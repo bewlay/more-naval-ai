@@ -1458,7 +1458,9 @@ class CvEventManager:
 							
 				if bHasAI == false:			
 					pPlot = unit.plot()
-					if pPlot.area().getAreaAIType(pPlayer.getTeam()) == AreaAITypes.AREAAI_DEFENSIVE:
+					if (pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_MAGE')) < pPlayer.getNumCities()):
+						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
+					elif pPlot.area().getAreaAIType(pPlayer.getTeam()) == AreaAITypes.AREAAI_DEFENSIVE:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
 					else:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_WARWIZARD'))
