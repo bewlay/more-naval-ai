@@ -2396,17 +2396,41 @@ class CvMainInterface:
 				screen.setStyle( szButtonID, szStyle )
 				screen.hide( szButtonID )
 				
+# FlavourMod: Added by Jean Elcard 09/03/2009 (growth control buttons)
+				i+=1
+				szButtonID = "Emphasize" + str(i)
+				screen.addCheckBoxGFC( szButtonID, "", "", xResolution - 260 - iBtnWa, iCityCenterRow2Y, iBtnWa, iBtnHa, WidgetTypes.WIDGET_EMPHASIZE, i, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+				szStyle = "Button_CityB" + str(i) + "_Style"
+				screen.setStyle( szButtonID, szStyle )
+				screen.hide( szButtonID )
+
+				i+=1
+				szButtonID = "Emphasize" + str(i)
+				screen.addCheckBoxGFC( szButtonID, "", "", xResolution - 260 - iBtnWa, iCityCenterRow1Y, iBtnWa, iBtnHa, WidgetTypes.WIDGET_EMPHASIZE, i, -1, ButtonStyles.BUTTON_STYLE_LABEL )
+				szStyle = "Button_CityB" + str(i-1) + "_Style"
+				screen.setStyle( szButtonID, szStyle )
+				screen.hide( szButtonID )
+# FlavourMod: End Add
+
 				g_pSelectedUnit = 0
 				screen.setState( "AutomateCitizens", pHeadSelectedCity.isCitizensAutomated() )
 				screen.setState( "AutomateProduction", pHeadSelectedCity.isProductionAutomated() )
 				
+# FlavourMod: Added by Jean Elcard 09/03/2009 (growth control buttons)
+				iNumCustomEmphasizeInfos = 2
+# FlavourMod: End Add
+
 				for i in range (g_NumEmphasizeInfos):
-					szButtonID = "Emphasize" + str(i)
-					screen.show( szButtonID )
-					if ( pHeadSelectedCity.AI_isEmphasize(i) ):
-						screen.setState( szButtonID, True )
-					else:
-						screen.setState( szButtonID, False )
+# FlavourMod: Added by Jean Elcard 09/03/2009 (growth control buttons)
+# -> Don't show the buttons, if complete city screen isn't up.
+					if (i < g_NumEmphasizeInfos - iNumCustomEmphasizeInfos) or CyInterface().isCityScreenUp():
+# FlavourMod: End Add (block below indented)
+						szButtonID = "Emphasize" + str(i)
+						screen.show( szButtonID )
+						if ( pHeadSelectedCity.AI_isEmphasize(i) ):
+							screen.setState( szButtonID, True )
+						else:
+							screen.setState( szButtonID, False )
 
 				# City Tabs
 				for i in range( g_NumCityTabTypes ):
@@ -3651,9 +3675,17 @@ class CvMainInterface:
 				if (not gc.getPlayer(pHeadSelectedCity.getOwner()).isIgnoreFood()):
 	# BUG - Food Assist - start
 					if ( CityUtil.willGrowThisTurn(pHeadSelectedCity) or (iFoodDifference != 0) or not (pHeadSelectedCity.isFoodProduction() ) ):
+						
+# FlavourMod: Changed by Jean Elcard 09/03/2009 (growth control buttons)
+						'''
+						if (iFoodDifference > 0):
+						'''
+						if pHeadSelectedCity.AI_stopGrowth():
+							szBuffer = localText.getText("INTERFACE_CITY_STAGNANT_GROWTH_CONTROL", ())
 						if (CityUtil.willGrowThisTurn(pHeadSelectedCity)):
 							szBuffer = localText.getText("INTERFACE_CITY_GROWTH", ())
 						elif (iFoodDifference > 0):
+# FlavourMod: End Change
 							szBuffer = localText.getText("INTERFACE_CITY_GROWING", (pHeadSelectedCity.getFoodTurnsLeft(), ))	
 						elif (iFoodDifference < 0):
 							if (CityScreenOpt.isShowFoodAssist()):
