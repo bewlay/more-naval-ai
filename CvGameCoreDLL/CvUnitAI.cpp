@@ -5832,11 +5832,6 @@ void CvUnitAI::AI_artistMove()
 		return;
 	}
 
-	if (AI_greatWork())
-	{
-		return;
-	}
-
 	int iGoldenAgeValue = (GET_PLAYER(getOwnerINLINE()).AI_calculateGoldenAgeValue() / (GET_PLAYER(getOwnerINLINE()).unitsRequiredForGoldenAge()));
 	int iDiscoverValue = std::max(1, getDiscoverResearch(NO_TECH));
 
@@ -5891,6 +5886,11 @@ void CvUnitAI::AI_artistMove()
 		{
 			return;
 		}
+	}
+
+	if (AI_greatWork())
+	{
+		return;
 	}
 
 	if (AI_retreatToCity())
