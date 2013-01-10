@@ -11931,7 +11931,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 			{
 				if (!(kUnitInfo.isNoDefensiveBonus()))
 				{
-					if (kUnitInfo.getCityDefenseModifier() >= 0)
+					if (kUnitInfo.getCityDefenseModifier() > 0)
 					{
 						bValid = true;
 					}
