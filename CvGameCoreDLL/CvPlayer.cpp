@@ -1872,7 +1872,11 @@ void CvPlayer::initFreeUnits()
 			{
 				iFreeCount = GC.getCivilizationInfo(getCivilizationType()).getCivilizationFreeUnitsClass(iI);
 
-				iFreeCount *= (GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingUnitMultiplier() + ((!isHuman()) ? GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIStartingUnitMultiplier() : 0));
+				// dont increase unit count if it's a World Unit (ie Lucian)
+				if  (!isWorldUnitClass((UnitClassTypes)GC.getUnitInfo((UnitTypes)eLoopUnit).getUnitClassType()))
+				{
+					iFreeCount *= (GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingUnitMultiplier() + ((!isHuman()) ? GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIStartingUnitMultiplier() : 0));
+				}
 
 				for (iJ = 0; iJ < iFreeCount; iJ++)
 				{
