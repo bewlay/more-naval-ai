@@ -215,7 +215,8 @@ void CvGame::init(HandicapTypes eHandicap)
                         {
                             for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
                             {
-                                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader))
+                                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader) ||
+									(isOption(GAMEOPTION_LEAD_ANY_CIV) && !GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).isGraphicalOnly()) )
                                 {
                                     if (iAlignment == -1 || GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment() == iAlignment)
                                     {
