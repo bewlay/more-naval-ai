@@ -748,7 +748,7 @@ void CvPlot::doImprovementUpgrade()
 								pUnitNode = nextUnitNode(pUnitNode);
 								if (pLoopUnit->getFortifyTurns() > 0)
 								{
-									if (pLoopUnit->getOwner() == getOwnerINLINE() && pLoopUnit->canDefend())
+									if (pLoopUnit->getTeam() == getTeam() && pLoopUnit->canDefend())
 									{
 										bDefenderFound = true;
 										break;
