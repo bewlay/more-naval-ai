@@ -203,6 +203,10 @@ class SevoPediaBuilding:
 		screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_REQUIRES", ()), "", False, True, self.X_REQUIRES, self.Y_REQUIRES, self.W_REQUIRES, self.H_REQUIRES, PanelStyles.PANEL_STYLE_BLUE50 )
 		screen.attachLabel(panelName, "", "  ")
 
+		iPrereqCiv = gc.getBuildingInfo(self.iBuilding).getPrereqCiv()
+		if (iPrereqCiv != CivilizationTypes.NO_CIVILIZATION):
+			screen.attachImageButton( panelName, "", gc.getCivilizationInfo(iPrereqCiv).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, iPrereqCiv, 1, False )
+
 		for iPrereq in range(gc.getNumTechInfos()):
 			if isTechRequiredForBuilding(iPrereq, self.iBuilding):
 				screen.attachImageButton( panelName, "", gc.getTechInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iPrereq, 1, False )

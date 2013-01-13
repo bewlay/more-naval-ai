@@ -1182,12 +1182,13 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			if getInfo(iItemID):
 				if ((None in (iCategory, getCategory) or getCategory(iItemID) == iCategory) and not getInfo(iItemID).isGraphicalOnly()):
 #					if (not getInfo==gc.getBuildingInfo) or gc.getBuildingInfo(iItemID).getProductionCost()>0:	#added Sephi to block wrong buildings in Buildinglist
-					if (not getInfo==gc.getUnitInfo) or not gc.getUnitInfo(iItemID).isObject(): #do not display Objects in regular unit list
-						szDescription = getInfo(iItemID).getDescription()
-						if szDescription[0:4] == "The ":
-							infoList.append( (szDescription[4:], iItemID, szDescription) )
-						else:
-							infoList.append( (szDescription, iItemID, szDescription) )
+					if (not getInfo==gc.getTechInfo) or not gc.getTechInfo(iItemID).isDisable(): #don't display disabled techs
+						if (not getInfo==gc.getUnitInfo) or not gc.getUnitInfo(iItemID).isObject(): #do not display Objects in regular unit list
+							szDescription = getInfo(iItemID).getDescription()
+							if szDescription[0:4] == "The ":
+								infoList.append( (szDescription[4:], iItemID, szDescription) )
+							else:
+								infoList.append( (szDescription, iItemID, szDescription) )
 		if self.isSortLists():
 			infoList.sort()
 
