@@ -1332,9 +1332,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 
 	if (iEnemyPowerPercent < 75)
 	{
-		if (GC.getGameINLINE().getCurrentPeriod() <= 2 ||
-			AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST1) ||
-			GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+		if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
 		{
 			int iModValue = 0;
 
