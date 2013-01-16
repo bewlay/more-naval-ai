@@ -9778,6 +9778,9 @@ void CvGameTextMgr::parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell,
     int iCost = kSpellInfo.getCost();
     if (iCost != 0)
     {
+		// scale costs by gamespeed
+		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+		iCost /= 100;
 
         if (kSpellInfo.getConvertUnitType() != NO_UNIT)
         {

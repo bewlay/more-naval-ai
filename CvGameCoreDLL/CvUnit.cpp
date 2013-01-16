@@ -15883,6 +15883,10 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 	int iCost = kSpell.getCost();
 	if (iCost != 0)
 	{
+		// scale costs by gamespeed
+		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+		iCost /= 100;
+
 		if (kSpell.getConvertUnitType() != NO_UNIT)
 		{
 			iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
@@ -16591,6 +16595,10 @@ void CvUnit::cast(int spell)
     int iCost = kSpellInfo.getCost();
     if (iCost != 0)
     {
+		// scale costs by gamespeed
+		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
+		iCost /= 100;
+
         if (kSpellInfo.getConvertUnitType() != NO_UNIT)
         {
             iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
