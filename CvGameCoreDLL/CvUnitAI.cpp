@@ -11432,28 +11432,30 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 					{
 						int iTempValue = (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCombat());
+
+						CvUnitInfo &kCreateUnitInfo = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType());
 						
-						if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getNumSeeInvisibleTypes() > 0)
+						if (kCreateUnitInfo.getNumSeeInvisibleTypes() > 0)
 						{
 							iTempValue += 2;
 						}
 
-						if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getBombardRate() > 0)
+						if (kCreateUnitInfo.getBombardRate() > 0)
 						{
 							iTempValue += 2;
 						}
 
 						for (int iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
 						{
-						    iTempValue += (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getDamageTypeCombat(iI) * 2);
+						    iTempValue += (kCreateUnitInfo.getDamageTypeCombat(iI) * 2);
 						}
 
-						iTempValue += GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getTier();
+						iTempValue += kCreateUnitInfo.getTier();
 
 						// account for Bonus Affinities
 						for (int iBonuses = 0; iBonuses < GC.getNumBonusInfos(); iBonuses++)
 						{
-							if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getBonusAffinity((BonusTypes)iBonuses) != 0)
+							if (kCreateUnitInfo.getBonusAffinity((BonusTypes)iBonuses) != 0)
 							{
 								iTempValue += GET_PLAYER(getOwnerINLINE()).countOwnedBonuses((BonusTypes)iBonuses);
 							}
