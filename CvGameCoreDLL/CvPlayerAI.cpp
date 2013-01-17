@@ -5186,7 +5186,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						iTempValue *= (isSprawling() ? 5: 2);
 
-						if (getNumCities() == 1)
+						if (iCityCount == 1)
 						{
 							iTempValue *= 5;
 						}
@@ -5236,7 +5236,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							// food and commerce bonuses are more valuable
 							if (iL == YIELD_FOOD)
 							{
-								iTempValue *= ((getNumCities() == 1) ? 5: 2);
+								iTempValue *= ((iCityCount == 1) ? 5: 2);
 							}
 							else if (iL == YIELD_COMMERCE)
 							{
@@ -5401,7 +5401,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
                 ((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
             {
 				iBuildValue += 200;
-                iBuildValue += 40 * (countCityFeatures((FeatureTypes)iJ) * 10);
+				iBuildValue += 40 * (countCityFeatures((FeatureTypes)iJ) * (iCityCount == 1 ? 35: 10));
             }
 			else
 			{
