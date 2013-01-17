@@ -9765,10 +9765,14 @@ bool CvPlayer::canDoReligion(ReligionTypes eReligion) const
     {
         return false;
     }
-    if (GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion) <= -100)
-    {
-        return false;
-    }
+
+	if (!isHuman())
+	{
+		if (GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion) <= -100)
+		{
+			return false;
+		}
+	}
 //FfH: End Add
 
 	return true;
