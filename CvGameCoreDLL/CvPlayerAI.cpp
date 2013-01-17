@@ -27007,23 +27007,26 @@ int CvPlayerAI::AI_getMojoFactor() const
 		}
 	}
 
-	// HARDCODE
-	// ToDo - figure out how to value traits dynamically
-	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER")))
+	// value traits that give us magic-related promotions
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
 	{
-		iValue += 2;
-	}
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+			{
+				if (GC.getTraitInfo((TraitTypes)iTrait).isFreePromotion(iPromotion))
+				{
+					if (GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionSummonPerk() != NO_PROMOTION)
+					{
+						iValue += 2;
+					}
 
-	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED")))
-	{
-		iValue += 2;
-	}
-
-	if (hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE")))
-	{
-		iValue += 2;
-	}
-
+					iValue += (GC.getPromotionInfo((PromotionTypes)iPromotion).getSpellCasterXP() / 10);
+					
+				}
+			}
+		}
+	// ToDo - remove this hardcode
 	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
 	{
 		iValue /= 2;
