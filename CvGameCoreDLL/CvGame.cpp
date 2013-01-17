@@ -6410,7 +6410,7 @@ void CvGame::doTurn()
 /**								---- Start Original Code ----									**
         if (getIncreasingDifficultyCounter() >= 50)
 /**								----  End Original Code  ----									**/
-        if (getIncreasingDifficultyCounter() >= 50 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
+        if (getIncreasingDifficultyCounter() >= 75 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
 /*************************************************************************************************/
 /**	Tweak									END													**/
 /*************************************************************************************************/
@@ -6445,7 +6445,7 @@ void CvGame::doTurn()
 /**								---- Start Original Code ----									**
             if (getFlexibleDifficultyCounter() >= 20)
 /**								----  End Original Code  ----									**/
-            if (getFlexibleDifficultyCounter() >= 20 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
+            if (getFlexibleDifficultyCounter() >= 50 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
 /*************************************************************************************************/
 /**	Tweak									END													**/
 /*************************************************************************************************/
