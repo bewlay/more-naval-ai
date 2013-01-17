@@ -4203,6 +4203,21 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 		}
 	}
 
+	if (m_pUnitInfo->getStateReligion() != NO_RELIGION)
+	{
+		if (m_pUnitInfo->getStateReligion() != GET_PLAYER(pPlot->getOwner()).getStateReligion())
+		{
+			return false;
+		}
+	}
+
+	if (m_pUnitInfo->getPrereqAlignment() != NO_ALIGNMENT)
+	{
+		if (m_pUnitInfo->getStateReligion() != GET_PLAYER(pPlot->getOwner()).getAlignment())
+		{
+			return false;
+		}
+	}
 //FfH: End Add
 
 	return !atWar(pPlot->getTeam(), getTeam());
