@@ -731,6 +731,7 @@ void CvUnit::convert(CvUnit* pUnit)
 	// Avatars
 	if (pUnit->isAvatarOfCivLeader())
 	{
+		pUnit->setAvatarOfCivLeader(false);
 		setAvatarOfCivLeader(true);
 	}
 
