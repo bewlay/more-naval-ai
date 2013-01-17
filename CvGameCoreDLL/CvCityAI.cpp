@@ -9100,7 +9100,7 @@ void CvCityAI::AI_doDraft(bool bForce)
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 
 	FAssert(!isHuman());
-	if (isBarbarian())
+	if (isBarbarian() || kOwner.isIgnoreFood())
 	{
 		return;
 	}
