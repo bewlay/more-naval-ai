@@ -788,40 +788,50 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		// After changing the orders, this AI_doTurnUnitsPost speed up to 2x.
 		//
 		//int iUnitValue;
-		// pass 0
+
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
             int iSpell = pLoopUnit->chooseSpell();
             if (iSpell != NO_SPELL)
             {
                 pLoopUnit->cast(iSpell);
-				if (GC.getSpellInfo((SpellTypes)iSpell).isSacrificeCaster())
-				{
-					continue;
-				}
 			}
+		}
 
-			pUnitPlot = pLoopUnit->plot();
-			if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
-				&& pLoopUnit->hasUpgrade())
+		// Tholal ToDo - arrange units in a sorted list then try and upgrade rather than running through whole list three times
+		// pass 0
+		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+		{
+			if (!pLoopUnit->isDelayedDeath())
 			{
-				pLoopUnit->AI_upgrade();
+				pUnitPlot = pLoopUnit->plot();
+				if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
+					&& pLoopUnit->hasUpgrade())
+				{
+					pLoopUnit->AI_upgrade();
+				}
 			}
 		}
 		// pass 1
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
+			if (!pLoopUnit->isDelayedDeath())
 			{
-				pLoopUnit->AI_upgrade();
+				if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
+				{
+					pLoopUnit->AI_upgrade();
+				}
 			}
 		}
 		// pass 2
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
+			if (!pLoopUnit->isDelayedDeath())
 			{
-				pLoopUnit->AI_upgrade();
+				if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
+				{
+					pLoopUnit->AI_upgrade();
+				}
 			}
 		}
 #endif
@@ -829,7 +839,10 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 	// do AI promotions after upgrade
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
-		pLoopUnit->AI_promote();
+		if (!pLoopUnit->isDelayedDeath())
+		{
+			pLoopUnit->AI_promote();
+		}
 	}
 //FfH: End Modify
 
