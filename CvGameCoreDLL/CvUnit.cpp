@@ -8526,6 +8526,27 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 		}
 	}
 
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	{
+		if (kUnitInfo.getFreePromotions(iI))
+		{
+			if (GC.getPromotionInfo((PromotionTypes)iI).isRace())
+			{
+				if (getRace() == NO_PROMOTION)
+				{
+					return false;
+				}
+				else
+				{
+					if (getRace() != iI)
+					{
+						return false;
+					}
+				}
+			}
+		}
+	}
+
 //FfH Units: Added by Kael 05/24/2008
     if (getLevel() < kUnitInfo.getMinLevel())
 	{
