@@ -151,26 +151,6 @@ bool CvUnitAI::AI_update()
 			}
 		}
 
-		// Ships choose crews
-		if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
-		{
-			int ispell = chooseSpell();
-			if (ispell != NO_SPELL)
-			{
-				cast(ispell);
-			}
-		}
-
-		// Upgrade to Liches - HARDCODE - figure out why normal spell cast check isnt working
-		if (isHasPromotion((PromotionTypes)GC.getInfoTypeForString("PROMOTION_DEATH3")))
-		{
-			int ispell = chooseSpell();
-			if (ispell != NO_SPELL)
-			{
-				cast(ispell);
-			}
-		}
-
 		// Vampire stuff. Eating local pop, assignment of AI_FEASTING
 		if (isVampire())
 		{
