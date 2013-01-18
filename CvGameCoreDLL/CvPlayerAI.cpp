@@ -27026,6 +27026,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 				}
 			}
 		}
+	}
 	// ToDo - remove this hardcode
 	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
 	{
