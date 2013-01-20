@@ -7614,6 +7614,7 @@ void CvGame::updateMoves()
 									continue;
                                 }
 								//ToDo - this section below is all redundant. Units should be able to pick out appropriate spells via chooseSpell()
+								/*
                                 if (pLoopUnit->isBuffer())
                                 {
                                     pLoopUnit->AI_BuffCast();
@@ -7622,6 +7623,7 @@ void CvGame::updateMoves()
                                 {
                                     pLoopUnit->AI_SummonCast();
                                 }
+								*/
                             }
                             player.AI_setSummonSuicideMode(false);
                         }
