@@ -10357,6 +10357,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	if (kPromotion.isBlitz())
 	{
+		iValue += (firstStrikes() + getExtraFirstStrikes()) * 100;
+
 		if (baseMoves() > 1)
 		{
 			iValue += 5 * baseMoves();
@@ -11463,6 +11465,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						if (AI_getGroupflag()==GROUPFLAG_CONQUEST)// && !isBuffer())
 						{
 							iValue += 25;
+							if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getAddPromotionType1()).getAIWeight() < 0) // its a negative effect spell
+							{
+								iValue += kSpellInfo.getRange() * 50;
+							}
 						}
 						else
 						{
