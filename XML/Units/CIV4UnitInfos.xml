@@ -71786,6 +71786,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bNeverObsolete>1</bNeverObsolete>
             <iCombatDefense>3</iCombatDefense>
             <iTier>1</iTier>
             <iWeaponTier>1</iWeaponTier>
