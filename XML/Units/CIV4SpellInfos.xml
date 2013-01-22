@@ -872,7 +872,7 @@
             <UnitClassPrereq>UNITCLASS_LOKI</UnitClassPrereq>
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>1500</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <PyResult>spellDisrupt(pCaster)</PyResult>
@@ -1083,7 +1083,7 @@
             <UnitClassPrereq>UNITCLASS_LOKI</UnitClassPrereq>
             <bAllowAI>1</bAllowAI>
             <bInCityOnly>1</bInCityOnly>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>1250</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <PyResult>spellEntertain(pCaster)</PyResult>
