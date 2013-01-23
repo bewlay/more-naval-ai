@@ -191,32 +191,36 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 	updateCultureLevel(false);
 
-//FfH: Added by Kael 11/07/2007
+/*************************************************************************************************/
+/** Kuriotate Settlements: Start (Terkhen)                                                      **/
+/*************************************************************************************************/
 	if (kPlayer.getMaxCities() != -1)
 	{
-		if ((kPlayer.getNumCities() - kPlayer.getNumSettlements() - 1) >= kPlayer.getMaxCities())
-		{
+		/*
+		 * If it is a player's first city or an AI that does not exceed the maximum number of cities, we need
+		 * a city.
+		 */
+		if (kPlayer.getNumCities() == 1 || !kPlayer.isHuman() &&
+			kPlayer.getNumCities() - kPlayer.getNumSettlements() - 1 < kPlayer.getMaxCities()) {
+			setPlotRadius(3);
+		/*
+		 * If we exceed the maximum number of cities, the player is not a human, or we are in multiplayer, settlement.
+		 */
+		} else if (kPlayer.getNumCities() - kPlayer.getNumSettlements() - 1 >= kPlayer.getMaxCities() ||
+			!kPlayer.isHuman() || GC.getGameINLINE().isGameMultiPlayer()) {
 			setSettlement(true);
-		}
-		else
-		{
-			if (!kPlayer.isHuman() || kPlayer.getNumCities() == 1 || GC.getGameINLINE().isGameMultiPlayer())
-			{
-				setPlotRadius(3);
-			}
-			else
-			{
-				if (kPlayer.isHuman() && kPlayer.getNumCities() != 1)
-				{
-					CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRMSETTLEMENT);
-					pInfo->setData1(getID());
-					gDLL->getInterfaceIFace()->addPopup(pInfo, kPlayer.getID());
-				}
-			}
+		} else {
+			CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_CONFIRMSETTLEMENT);
+			pInfo->setData1(getID());
+			gDLL->getInterfaceIFace()->addPopup(pInfo, kPlayer.getID());
 		}
 	}
+/*************************************************************************************************/
+/** Kuriotate Settlements: End                                                                  **/
+/*************************************************************************************************/
+
 	setCivilizationType(kPlayer.getCivilizationType());
-//FfH: End Add
+
 
 	if (pPlot->getCulture(eOwner) < GC.getDefineINT("FREE_CITY_CULTURE"))
 	{
