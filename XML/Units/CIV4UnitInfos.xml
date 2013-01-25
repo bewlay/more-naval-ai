@@ -5669,7 +5669,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -5965,7 +5969,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -6271,7 +6279,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -7306,6 +7318,18 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -8835,7 +8859,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ADEPT</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_ARCHMAGE</Description>
@@ -8890,7 +8914,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -9131,7 +9159,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ADEPT</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_EATER_OF_DREAMS</Description>
@@ -9186,7 +9214,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -9486,7 +9518,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -10444,6 +10476,10 @@
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -10676,6 +10712,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -10924,6 +10964,10 @@
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -11154,6 +11198,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -11398,6 +11446,10 @@
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -11634,6 +11686,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -15681,7 +15737,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -15909,6 +15965,10 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -16128,6 +16188,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -16355,6 +16419,10 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -16562,6 +16630,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -16780,7 +16852,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -17010,7 +17082,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -17225,7 +17297,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -17461,7 +17533,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -17675,7 +17747,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -20122,6 +20194,10 @@
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -20876,6 +20952,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -23649,7 +23729,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -23658,6 +23738,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -23870,7 +23954,15 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -24095,11 +24187,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -24108,6 +24196,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -26215,15 +26307,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_COLLATERAL</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -27460,6 +27548,10 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -27695,6 +27787,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -27938,6 +28034,10 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -28175,6 +28275,14 @@
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -28402,26 +28510,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -29085,11 +29173,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -31097,7 +31181,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -31326,10 +31410,6 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -31564,6 +31644,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -34817,7 +34901,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -36644,6 +36728,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -39066,7 +39154,15 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -39284,7 +39380,19 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -39506,7 +39614,15 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -39728,7 +39844,15 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -39951,6 +40075,14 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -42349,7 +42481,7 @@
             <iCultureGarrison>16</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
             <iAsset>14</iAsset>
-            <iPower>20</iPower>
+            <iPower>25</iPower>
             <UnitMeshGroups>
             <iGroupSize>1</iGroupSize>
             <fMaxSpeed>1.75</fMaxSpeed>
@@ -42731,7 +42863,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -42959,7 +43091,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -43180,7 +43312,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -43406,7 +43538,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -43626,7 +43758,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -44095,14 +44227,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -44319,7 +44443,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -44529,7 +44657,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -44744,7 +44876,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -44984,7 +45120,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -45198,7 +45338,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -45409,6 +45553,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -45988,7 +46136,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ADEPT</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_LICH</Description>
@@ -46043,7 +46191,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -46276,7 +46428,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_MEDIC</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_LIGHTBRINGER</Description>
@@ -47236,10 +47388,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_EXPLORE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -47488,6 +47636,10 @@
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -47648,7 +47800,7 @@
             <Capture>NONE</Capture>
             <Combat>NONE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_GARGOYLE</Description>
@@ -48600,10 +48752,6 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -48815,7 +48963,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -48925,7 +49077,7 @@
                     <iFlavor>16</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>200</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>120</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -49116,7 +49268,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -49226,7 +49382,7 @@
                     <iFlavor>16</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>200</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>120</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -49413,7 +49569,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -49523,7 +49683,7 @@
                     <iFlavor>16</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>200</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>120</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -50626,22 +50786,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -51048,7 +51192,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ARCHER</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_LAND</SeeInvisible>
             <Description>TXT_KEY_UNIT_MARKSMAN</Description>
@@ -51103,7 +51247,15 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -51315,10 +51467,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -51477,7 +51625,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_MARY</Description>
@@ -51531,10 +51679,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -51753,7 +51897,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -51961,6 +52109,14 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -52413,14 +52569,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -52835,7 +52983,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_MINOTAUR</Description>
@@ -52890,15 +53038,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
                     <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -53333,14 +53477,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -53567,7 +53703,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -53798,7 +53938,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ADEPT</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_MOKKA</Description>
@@ -54098,6 +54238,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -54498,7 +54642,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_ARCHER</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_NIGHTWATCH</Description>
@@ -54566,6 +54710,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -54729,7 +54877,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MOUNTED</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_OPHANIM</Description>
@@ -54788,7 +54936,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -55017,14 +55169,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -55192,7 +55336,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_DISCIPLE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_PALADIN</Description>
@@ -55256,10 +55400,6 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -55506,6 +55646,10 @@
                     <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -55721,7 +55865,7 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -55889,7 +56033,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_PHALANX</Description>
@@ -55945,10 +56089,6 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -56108,7 +56248,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_STONESKIN_OGRE</Description>
@@ -56167,15 +56307,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -56336,7 +56472,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_VERDANDI</Description>
@@ -56395,15 +56531,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -58392,10 +58524,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -59323,7 +59451,7 @@
             <Capture>NONE</Capture>
             <Combat>NONE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_EXPLORE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_MAGE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_PUPPET</Description>
@@ -59379,6 +59507,14 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_EXPLORE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MAGE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -61129,22 +61265,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -61370,7 +61490,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -61821,19 +61945,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -61995,7 +62111,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_REPENTANT_ANGEL</Description>
@@ -62055,10 +62171,6 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -62281,7 +62393,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -62491,14 +62607,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -62721,14 +62829,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -62954,11 +63054,7 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -63633,6 +63729,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -65417,10 +65517,6 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
                     <UnitAIType>UNITAI_COLLATERAL</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -66249,7 +66345,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_RECON</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
             <Description>TXT_KEY_UNIT_COURTESAN</Description>
@@ -66482,7 +66578,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_RECON</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
             <Description>TXT_KEY_UNIT_DWARVEN_SHADOW</Description>
@@ -66718,7 +66814,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_RECON</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
             <Description>TXT_KEY_UNIT_SHADOW</Description>
@@ -66950,7 +67046,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MOUNTED</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_SHADOWRIDER</Description>
@@ -67009,7 +67105,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -67182,7 +67282,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_SKELETON</Description>
@@ -67238,6 +67338,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -68634,7 +68738,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_STYGIAN_GUARD</Description>
@@ -68697,19 +68801,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -68879,7 +68975,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_RESERVE</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_COUNTER</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_SUCCUBUS</Description>
@@ -68934,7 +69030,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -70080,10 +70180,6 @@
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -70529,18 +70625,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -70760,14 +70844,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -70936,7 +71012,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_VALKYRIE</Description>
@@ -70992,6 +71068,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -71215,6 +71295,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -71648,7 +71732,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -71871,7 +71955,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -72094,7 +72178,7 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_PILLAGE</UnitAIType>
+                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -72540,15 +72624,11 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
-                    <UnitAIType>UNITAI_RESERVE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
