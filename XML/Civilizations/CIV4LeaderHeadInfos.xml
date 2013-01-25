@@ -3426,10 +3426,6 @@
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
 				 <Trait>
-					<TraitType>TRAIT_AGNOSTIC</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_ORGANIZED</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -4846,10 +4842,6 @@
 					<bTrait>1</bTrait>
 				 </Trait>
 				 <Trait>
-					<TraitType>TRAIT_INGENUITY</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_ORGANIZED</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -5545,10 +5537,6 @@
 			<FavoriteCivic>CIVIC_FOREIGN_TRADE</FavoriteCivic>
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
-				 <Trait>
-					<TraitType>TRAIT_AGNOSTIC</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
 				 <Trait>
 					<TraitType>TRAIT_CHARISMATIC</TraitType>
 					<bTrait>1</bTrait>
@@ -9017,10 +9005,6 @@
 			<FavoriteCivic>CIVIC_FOREIGN_TRADE</FavoriteCivic>
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
-				 <Trait>
-					<TraitType>TRAIT_AGNOSTIC</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
 				 <Trait>
 					<TraitType>TRAIT_FOOLISH</TraitType>
 					<bTrait>1</bTrait>
@@ -15934,10 +15918,6 @@
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
 				 <Trait>
-					<TraitType>TRAIT_AGNOSTIC</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_FINANCIAL</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -22286,10 +22266,6 @@
 					<bTrait>1</bTrait>
 				 </Trait>
 				 <Trait>
-					<TraitType>TRAIT_BARBARIAN</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_MAGIC_RESISTANT</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -24370,10 +24346,6 @@
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
 				 <Trait>
-					<TraitType>TRAIT_BARBARIAN</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_EXPANSIVE</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -25771,10 +25743,6 @@
 				 </Trait>
 				 <Trait>
 					<TraitType>TRAIT_FINANCIAL</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
-					<TraitType>TRAIT_INGENUITY</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
 			</Traits>
@@ -35550,10 +35518,6 @@
 			<FavoriteReligion>NONE</FavoriteReligion>
 			<Traits>
 				 <Trait>
-					<TraitType>TRAIT_AGNOSTIC</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
 					<TraitType>TRAIT_CHARISMATIC</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
@@ -38383,10 +38347,6 @@
 			<Traits>
 				 <Trait>
 					<TraitType>TRAIT_AGGRESSIVE</TraitType>
-					<bTrait>1</bTrait>
-				 </Trait>
-				 <Trait>
-					<TraitType>TRAIT_BARBARIAN</TraitType>
 					<bTrait>1</bTrait>
 				 </Trait>
 				 <Trait>

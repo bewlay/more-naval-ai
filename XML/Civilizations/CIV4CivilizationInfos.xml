@@ -771,7 +771,7 @@
 			<CivilizationSelectionSound>AS3D_ARABIA_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_ARABIA_ORDER</CivilizationActionSound>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<CivTrait>NONE</CivTrait>
+			<CivTrait>TRAIT_BARBARIAN</CivTrait>
 			<DefaultRace>PROMOTION_ORC</DefaultRace>
 			<Help/>
 			<Hero>UNIT_RANTINE</Hero>
@@ -1442,7 +1442,7 @@
 			<CivilizationSelectionSound>AS3D_MALI_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_MALI_ORDER</CivilizationActionSound>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<CivTrait>NONE</CivTrait>
+			<CivTrait>TRAIT_AGNOSTIC</CivTrait>
 			<DefaultRace>PROMOTION_WINTERBORN</DefaultRace>
 			<Help>TXT_KEY_CIV_ILLIANS_HELP</Help>
 			<Hero>UNIT_WILBOMAN</Hero>
@@ -1765,7 +1765,7 @@
 			<CivilizationSelectionSound>AS3D_GERMANY_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_GERMANY_ORDER</CivilizationActionSound>
 			<bGraphicalOnly>0</bGraphicalOnly>
-			<CivTrait>NONE</CivTrait>
+			<CivTrait>TRAIT_INGENUITY</CivTrait>
 			<DefaultRace>PROMOTION_DWARF</DefaultRace>
 			<Help>TXT_KEY_CIV_KHAZAD_HELP</Help>
 			<Hero>UNIT_MAROS</Hero>
