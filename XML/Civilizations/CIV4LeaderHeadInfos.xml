@@ -47555,7 +47555,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>0</bGraphicalOnly>
+			<bGraphicalOnly>1</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
