@@ -43,7 +43,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_WARPRIZES_FAILURE</Tag>
-		<English>Our %S1 has been captured!</English>
+		<English>Our %s1 has been captured!</English>
 		<French>Our %s1 has been captured!</French>
 		<German>Our %s1 has been captured!</German>
 		<Italian>Our %s1 has been captured!</Italian>
