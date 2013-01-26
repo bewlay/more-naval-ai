@@ -2425,12 +2425,13 @@ class CvMainInterface:
 # -> Don't show the buttons, if complete city screen isn't up.
 					if (i < g_NumEmphasizeInfos - iNumCustomEmphasizeInfos) or CyInterface().isCityScreenUp():
 # FlavourMod: End Add (block below indented)
-						szButtonID = "Emphasize" + str(i)
-						screen.show( szButtonID )
-						if ( pHeadSelectedCity.AI_isEmphasize(i) ):
-							screen.setState( szButtonID, True )
-						else:
-							screen.setState( szButtonID, False )
+						if not (pHeadSelectedCity.isSettlement()):
+							szButtonID = "Emphasize" + str(i)
+							screen.show( szButtonID )
+							if ( pHeadSelectedCity.AI_isEmphasize(i) ):
+								screen.setState( szButtonID, True )
+							else:
+								screen.setState( szButtonID, False )
 
 				# City Tabs
 				for i in range( g_NumCityTabTypes ):
@@ -3671,8 +3672,8 @@ class CvMainInterface:
 				screen.setStyle( "CityNameText", "Button_Stone_Style" )
 				screen.show( "CityNameText" )
 
-				# Suppress display of Growth bar on City screen if owner is Fallow
-				if (not gc.getPlayer(pHeadSelectedCity.getOwner()).isIgnoreFood()):
+				# Suppress display of Growth bar on City screen if owner is Fallow or the city is a Settlement
+				if (not gc.getPlayer(pHeadSelectedCity.getOwner()).isIgnoreFood()) and (not pHeadSelectedCity.isSettlement()):
 	# BUG - Food Assist - start
 					if ( CityUtil.willGrowThisTurn(pHeadSelectedCity) or (iFoodDifference != 0) or not (pHeadSelectedCity.isFoodProduction() ) ):
 						
@@ -3779,118 +3780,120 @@ class CvMainInterface:
 	# BUG - Progress Bar - Tick Marks - end
 
 # End of Growth bar section for City screen
-				if (pHeadSelectedCity.getOrderQueueLength() > 0):
-					if (pHeadSelectedCity.isProductionProcess()):
-						szBuffer = pHeadSelectedCity.getProductionName()
-# BUG - Whip Assist - start
-					else:
-						HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
-						HURRY_BUY = gc.getInfoTypeForString("HURRY_GOLD")
-						if (CityScreenOpt.isShowWhipAssist() and pHeadSelectedCity.canHurry(HURRY_WHIP, False)):
-							iHurryPop = pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
-							iOverflow = pHeadSelectedCity.hurryProduction(HURRY_WHIP) - pHeadSelectedCity.productionLeft()
-							if CityScreenOpt.isWhipAssistOverflowCountCurrentProduction():
-								iOverflow += pHeadSelectedCity.getCurrentProductionDifference(False, True)
-							iMaxOverflow = max(pHeadSelectedCity.getProductionNeeded(), pHeadSelectedCity.getCurrentProductionDifference(False, False))
-							iLost = max(0, iOverflow - iMaxOverflow)
-							iOverflow = min(iOverflow, iMaxOverflow)
-							iItemModifier = pHeadSelectedCity.getProductionModifier()
-							iBaseModifier = pHeadSelectedCity.getBaseYieldRateModifier(YieldTypes.YIELD_PRODUCTION, 0)
-							iTotalModifier = pHeadSelectedCity.getBaseYieldRateModifier(YieldTypes.YIELD_PRODUCTION, iItemModifier)
-							iLost *= iBaseModifier
-							iLost /= max(1, iTotalModifier)
-							iOverflow = (iBaseModifier * iOverflow) / max(1, iTotalModifier)
-							if iLost > 0:
-								if pHeadSelectedCity.isProductionUnit():
-									iGoldPercent = gc.getDefineINT("MAXED_UNIT_GOLD_PERCENT")
-								elif pHeadSelectedCity.isProductionBuilding():
-									iGoldPercent = gc.getDefineINT("MAXED_BUILDING_GOLD_PERCENT")
-								elif pHeadSelectedCity.isProductionProject():
-									iGoldPercent = gc.getDefineINT("MAXED_PROJECT_GOLD_PERCENT")
-								else:
-									iGoldPercent = 0
-								iOverflowGold = iLost * iGoldPercent / 100
-								szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_WHIP_PLUS_GOLD", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryPop, iOverflow, iOverflowGold))
-							else:
-								szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_WHIP", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryPop, iOverflow))
-						elif (CityScreenOpt.isShowWhipAssist() and pHeadSelectedCity.canHurry(HURRY_BUY, False)):
-							iHurryCost = pHeadSelectedCity.hurryGold(HURRY_BUY)
-							szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_BUY", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryCost))
-						else:
-							szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft()))
-# BUG - Whip Assist - end
 
-					screen.setLabel( "ProductionText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, screen.centerX(512), iCityCenterRow2Y, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-					screen.setHitTest( "ProductionText", HitTestTypes.HITTEST_NOHIT )
-					screen.show( "ProductionText" )
-				
-				if (pHeadSelectedCity.isProductionProcess()):
-					szBuffer = u"%d%c" %(pHeadSelectedCity.getYieldRate(YieldTypes.YIELD_PRODUCTION), gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
-				elif (pHeadSelectedCity.isFoodProduction() and (iProductionDiffJustFood > 0)):
-					szBuffer = u"%d%c + %d%c" %(iProductionDiffJustFood, gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), iProductionDiffNoFood, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
-				else:
-					szBuffer = u"%d%c" %(iProductionDiffNoFood, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
-					
-				screen.setLabel( "ProductionInputText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, iCityCenterRow1X - 6, iCityCenterRow2Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_PRODUCTION_MOD_HELP, -1, -1 )
-				screen.show( "ProductionInputText" )
-
-				if ((pHeadSelectedCity.happyLevel() >= 0) or (pHeadSelectedCity.unhappyLevel(0) > 0)):
-					if (pHeadSelectedCity.isDisorder()):
-						szBuffer = u"%d%c" %(pHeadSelectedCity.angryPopulation(0), CyGame().getSymbolID(FontSymbols.ANGRY_POP_CHAR))
-					elif (pHeadSelectedCity.angryPopulation(0) > 0):
-# BUG - Negative Happy Rate is Positive Angry Population - start
-						szBuffer = localText.getText("INTERFACE_CITY_UNHAPPY", (pHeadSelectedCity.happyLevel(), pHeadSelectedCity.unhappyLevel(0), pHeadSelectedCity.angryPopulation(0)))
-# BUG - Negative Happy Rate is Positive Angry Population - end
-					elif (pHeadSelectedCity.unhappyLevel(0) > 0):
-						szBuffer = localText.getText("INTERFACE_CITY_HAPPY", (pHeadSelectedCity.happyLevel(), pHeadSelectedCity.unhappyLevel(0)))
-					else:
-						szBuffer = localText.getText("INTERFACE_CITY_HAPPY_NO_UNHAPPY", (pHeadSelectedCity.happyLevel(), ))
-
-# BUG - Anger Display - start
-					if (CityScreenOpt.isShowAngerCounter()
-					and pHeadSelectedCity.getTeam() == gc.getGame().getActiveTeam()):
-						iAngerTimer = max(pHeadSelectedCity.getHurryAngerTimer(), pHeadSelectedCity.getConscriptAngerTimer())
-						if iAngerTimer > 0:
-							szBuffer += u" (%i)" % iAngerTimer
-# BUG - Anger Display - end
-
-					screen.setLabel( "HappinessText", "Background", szBuffer, CvUtil.FONT_LEFT_JUSTIFY, xResolution - iCityCenterRow1X + 6, iCityCenterRow2Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_HAPPINESS, -1, -1 )
-					screen.show( "HappinessText" )
-
-				if (not(pHeadSelectedCity.isProductionProcess())):
-				
-					iNeeded = pHeadSelectedCity.getProductionNeeded()
-					iStored = pHeadSelectedCity.getProduction()
-					screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_STORED, float(iStored) / iNeeded )
-					if iNeeded > iStored:
-						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE, float(iProductionDiffNoFood) / (iNeeded - iStored) )
-					else:
-						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE, 0.0 )
-					if iNeeded > iStored + iProductionDiffNoFood:
-						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, float(iProductionDiffJustFood) / (iNeeded - iStored - iProductionDiffNoFood) )
-					else:
-						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, 0.0)
-
-					screen.show( "ProductionBar" )
-
-# BUG - Progress Bar - Tick Marks - start
-					if MainOpt.isShowpBarTickMarks():
+ 				if (not pHeadSelectedCity.isSettlement()):
+					if (pHeadSelectedCity.getOrderQueueLength() > 0):
 						if (pHeadSelectedCity.isProductionProcess()):
-							iFirst = 0
-							iRate = 0
-						elif (pHeadSelectedCity.isFoodProduction() and (iProductionDiffJustFood > 0)):
-							iFirst = pHeadSelectedCity.getCurrentProductionDifference(False, True)
-							iRate = pHeadSelectedCity.getCurrentProductionDifference(False, False)
+							szBuffer = pHeadSelectedCity.getProductionName()
+	# BUG - Whip Assist - start
 						else:
-							iFirst = pHeadSelectedCity.getCurrentProductionDifference(True, True)
-							iRate = pHeadSelectedCity.getCurrentProductionDifference(True, False)
-						self.pBarProductionBar.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, False)
-
-						HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
-						if pHeadSelectedCity.canHurry(HURRY_WHIP, False):
-							iRate = pHeadSelectedCity.hurryProduction(HURRY_WHIP) / pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
-							self.pBarProductionBar_Whip.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
-# BUG - Progress Bar - Tick Marks - end
+							HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
+							HURRY_BUY = gc.getInfoTypeForString("HURRY_GOLD")
+							if (CityScreenOpt.isShowWhipAssist() and pHeadSelectedCity.canHurry(HURRY_WHIP, False)):
+								iHurryPop = pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
+								iOverflow = pHeadSelectedCity.hurryProduction(HURRY_WHIP) - pHeadSelectedCity.productionLeft()
+								if CityScreenOpt.isWhipAssistOverflowCountCurrentProduction():
+									iOverflow += pHeadSelectedCity.getCurrentProductionDifference(False, True)
+								iMaxOverflow = max(pHeadSelectedCity.getProductionNeeded(), pHeadSelectedCity.getCurrentProductionDifference(False, False))
+								iLost = max(0, iOverflow - iMaxOverflow)
+								iOverflow = min(iOverflow, iMaxOverflow)
+								iItemModifier = pHeadSelectedCity.getProductionModifier()
+								iBaseModifier = pHeadSelectedCity.getBaseYieldRateModifier(YieldTypes.YIELD_PRODUCTION, 0)
+								iTotalModifier = pHeadSelectedCity.getBaseYieldRateModifier(YieldTypes.YIELD_PRODUCTION, iItemModifier)
+								iLost *= iBaseModifier
+								iLost /= max(1, iTotalModifier)
+								iOverflow = (iBaseModifier * iOverflow) / max(1, iTotalModifier)
+								if iLost > 0:
+									if pHeadSelectedCity.isProductionUnit():
+										iGoldPercent = gc.getDefineINT("MAXED_UNIT_GOLD_PERCENT")
+									elif pHeadSelectedCity.isProductionBuilding():
+										iGoldPercent = gc.getDefineINT("MAXED_BUILDING_GOLD_PERCENT")
+									elif pHeadSelectedCity.isProductionProject():
+										iGoldPercent = gc.getDefineINT("MAXED_PROJECT_GOLD_PERCENT")
+									else:
+										iGoldPercent = 0
+									iOverflowGold = iLost * iGoldPercent / 100
+									szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_WHIP_PLUS_GOLD", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryPop, iOverflow, iOverflowGold))
+								else:
+									szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_WHIP", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryPop, iOverflow))
+							elif (CityScreenOpt.isShowWhipAssist() and pHeadSelectedCity.canHurry(HURRY_BUY, False)):
+								iHurryCost = pHeadSelectedCity.hurryGold(HURRY_BUY)
+								szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION_BUY", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft(), iHurryCost))
+							else:
+								szBuffer = localText.getText("INTERFACE_CITY_PRODUCTION", (pHeadSelectedCity.getProductionNameKey(), pHeadSelectedCity.getProductionTurnsLeft()))
+	# BUG - Whip Assist - end
+	
+						screen.setLabel( "ProductionText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, screen.centerX(512), iCityCenterRow2Y, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+						screen.setHitTest( "ProductionText", HitTestTypes.HITTEST_NOHIT )
+						screen.show( "ProductionText" )
+					
+					if (pHeadSelectedCity.isProductionProcess()):
+						szBuffer = u"%d%c" %(pHeadSelectedCity.getYieldRate(YieldTypes.YIELD_PRODUCTION), gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+					elif (pHeadSelectedCity.isFoodProduction() and (iProductionDiffJustFood > 0)):
+						szBuffer = u"%d%c + %d%c" %(iProductionDiffJustFood, gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), iProductionDiffNoFood, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+					else:
+						szBuffer = u"%d%c" %(iProductionDiffNoFood, gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+						
+					screen.setLabel( "ProductionInputText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, iCityCenterRow1X - 6, iCityCenterRow2Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_PRODUCTION_MOD_HELP, -1, -1 )
+					screen.show( "ProductionInputText" )
+	
+					if ((pHeadSelectedCity.happyLevel() >= 0) or (pHeadSelectedCity.unhappyLevel(0) > 0)):
+						if (pHeadSelectedCity.isDisorder()):
+							szBuffer = u"%d%c" %(pHeadSelectedCity.angryPopulation(0), CyGame().getSymbolID(FontSymbols.ANGRY_POP_CHAR))
+						elif (pHeadSelectedCity.angryPopulation(0) > 0):
+	# BUG - Negative Happy Rate is Positive Angry Population - start
+							szBuffer = localText.getText("INTERFACE_CITY_UNHAPPY", (pHeadSelectedCity.happyLevel(), pHeadSelectedCity.unhappyLevel(0), pHeadSelectedCity.angryPopulation(0)))
+	# BUG - Negative Happy Rate is Positive Angry Population - end
+						elif (pHeadSelectedCity.unhappyLevel(0) > 0):
+							szBuffer = localText.getText("INTERFACE_CITY_HAPPY", (pHeadSelectedCity.happyLevel(), pHeadSelectedCity.unhappyLevel(0)))
+						else:
+							szBuffer = localText.getText("INTERFACE_CITY_HAPPY_NO_UNHAPPY", (pHeadSelectedCity.happyLevel(), ))
+	
+	# BUG - Anger Display - start
+						if (CityScreenOpt.isShowAngerCounter()
+						and pHeadSelectedCity.getTeam() == gc.getGame().getActiveTeam()):
+							iAngerTimer = max(pHeadSelectedCity.getHurryAngerTimer(), pHeadSelectedCity.getConscriptAngerTimer())
+							if iAngerTimer > 0:
+								szBuffer += u" (%i)" % iAngerTimer
+	# BUG - Anger Display - end
+	
+						screen.setLabel( "HappinessText", "Background", szBuffer, CvUtil.FONT_LEFT_JUSTIFY, xResolution - iCityCenterRow1X + 6, iCityCenterRow2Y, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_HAPPINESS, -1, -1 )
+						screen.show( "HappinessText" )
+	
+					if (not(pHeadSelectedCity.isProductionProcess())):
+					
+						iNeeded = pHeadSelectedCity.getProductionNeeded()
+						iStored = pHeadSelectedCity.getProduction()
+						screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_STORED, float(iStored) / iNeeded )
+						if iNeeded > iStored:
+							screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE, float(iProductionDiffNoFood) / (iNeeded - iStored) )
+						else:
+							screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE, 0.0 )
+						if iNeeded > iStored + iProductionDiffNoFood:
+							screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, float(iProductionDiffJustFood) / (iNeeded - iStored - iProductionDiffNoFood) )
+						else:
+							screen.setBarPercentage( "ProductionBar", InfoBarTypes.INFOBAR_RATE_EXTRA, 0.0)
+	
+						screen.show( "ProductionBar" )
+	
+	# BUG - Progress Bar - Tick Marks - start
+						if MainOpt.isShowpBarTickMarks():
+							if (pHeadSelectedCity.isProductionProcess()):
+								iFirst = 0
+								iRate = 0
+							elif (pHeadSelectedCity.isFoodProduction() and (iProductionDiffJustFood > 0)):
+								iFirst = pHeadSelectedCity.getCurrentProductionDifference(False, True)
+								iRate = pHeadSelectedCity.getCurrentProductionDifference(False, False)
+							else:
+								iFirst = pHeadSelectedCity.getCurrentProductionDifference(True, True)
+								iRate = pHeadSelectedCity.getCurrentProductionDifference(True, False)
+							self.pBarProductionBar.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, False)
+	
+							HURRY_WHIP = gc.getInfoTypeForString("HURRY_POPULATION")
+							if pHeadSelectedCity.canHurry(HURRY_WHIP, False):
+								iRate = pHeadSelectedCity.hurryProduction(HURRY_WHIP) / pHeadSelectedCity.hurryPopulation(HURRY_WHIP)
+								self.pBarProductionBar_Whip.drawTickMarks(screen, pHeadSelectedCity.getProduction(), pHeadSelectedCity.getProductionNeeded(), iFirst, iRate, True)
+	# BUG - Progress Bar - Tick Marks - end
 
 				iCount = 0
 
