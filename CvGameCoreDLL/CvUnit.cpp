@@ -8935,7 +8935,7 @@ void CvUnit::upgrade(UnitTypes eUnit)
 	if( gUnitLogLevel > 2 )
 	{
 		CvWString szString;
-		getUnitAIString(szString, AI_getUnitAIType());
+		getUnitAIString(szString, pUpgradeUnit->AI_getUnitAIType());
 		logBBAI("    %S spends %d to upgrade %S to %S, unit AI %S", GET_PLAYER(getOwnerINLINE()).getCivilizationDescription(0), upgradePrice(eUnit), getName(0).GetCString(), pUpgradeUnit->getName(0).GetCString(), szString.GetCString());
 	}
 /************************************************************************************************/
