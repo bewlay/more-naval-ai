@@ -1753,28 +1753,49 @@ class CvEventManager:
 					iInfernalPlayer = pPlayer.initNewEmpire(gc.getInfoTypeForString('LEADER_HYBOREM'), gc.getInfoTypeForString('CIVILIZATION_INFERNAL'))
 					if iInfernalPlayer != PlayerTypes.NO_PLAYER:
 						pInfernalPlayer = gc.getPlayer(iInfernalPlayer)
+						pTeam = gc.getTeam(pInfernalPlayer.getTeam())
 
 						pBestPlot = -1
 						iBestPlot = -1
 						for iLoop in range (CyMap().numPlots()):
 							pPlot = CyMap().plotByIndex(iLoop)
+							iX = pPlot.getX()
+							iY = pPlot.getY()
 							iPlot = -1
-							if pInfernalPlayer.canFound(pPlot.getX(), pPlot.getY()):
+							if pInfernalPlayer.canFound(iX, iY):
 								if pPlot.getNumUnits() == 0:
-									iPlot = CyGame().getSorenRandNum(10, "Place Hyborem")
+									iPlot = CyGame().getSorenRandNum(50, "Place Hyborem")
 									iPlot += 50
 									iPlot += pPlot.area().getNumTiles() * 2
 									iPlot += pPlot.area().getNumUnownedTiles() * 10
 
-									for jPlayer in range(gc.getMAX_PLAYERS()):
-										lPlayer = gc.getPlayer(jPlayer)
-										if lPlayer.isAlive():
-											if pPlot.getCulture(jPlayer) > 100:
-												iPlot -= 250
-									if pPlot.isAdjacentOwned():
-										iPlot -= 25
-									if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW')) or (pPlot.getTerrainType() == gc.getInfoTypeForString("TERRAIN_DESERT")):
-										iPlot -= 25
+									## Check Big Fat Cross for other players, resources and terrain
+									for iCityPlotX in range(iX-1, iX+2, 1):
+										for iCityPlotY in range(iY-1, iY+2, 1):
+											pCityPlot = CyMap().plot(iCityPlotX,iCityPlotY)
+											iCityTerrain = pCityPlot.getTerrainType()
+											iCityPlot = pCityPlot.getPlotType()
+											iCityBonus = pCityPlot.getBonusType(TeamTypes.NO_TEAM)
+
+											for jPlayer in range(gc.getMAX_PLAYERS()):
+												lPlayer = gc.getPlayer(jPlayer)
+												if lPlayer.isAlive():
+													if pCityPlot.getCulture(jPlayer) > 100:
+														iPlot -= 250
+											if pPlot.isAdjacentOwned():
+												iPlot -= 25
+											else:
+												iPlot += 15
+											if (iCityTerrain == gc.getInfoTypeForString('TERRAIN_SNOW')) or (iCityTerrain == gc.getInfoTypeForString("TERRAIN_DESERT")):
+												iPlot -= 25
+											elif (iCityTerrain == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
+												iPlot -= 10
+											if (pCityPlot.isWater()):
+												iPlot -= 25
+											elif not iCityBonus == BonusTypes.NO_BONUS:
+												iPlot += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_PRODUCTION) * 25
+												iPlot += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_COMMERCE) * 15
+											
 							if iPlot > iBestPlot:
 								iBestPlot = iPlot
 								pBestPlot = pPlot
