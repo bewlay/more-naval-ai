@@ -800,8 +800,8 @@ def spellCreateDenBear(caster):
 	if pPlot2 != -1:
 		caster.setXY(pPlot2.getX(), pPlot2.getY(), False, True, True)
 		pPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
-		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-		newUnit.convert(caster)
+		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.UNITAI_LAIRGUARDIAN, DirectionTypes.DIRECTION_SOUTH)
+#		newUnit.convert(caster)
 
 def reqCreateDenLion(caster):
 	if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_LAIRS):
@@ -836,8 +836,8 @@ def spellCreateDenLion(caster):
 	if pPlot2 != -1:
 		caster.setXY(pPlot2.getX(), pPlot2.getY(), False, True, True)
 		pPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
-		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-		newUnit.convert(caster)
+		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.UNITAI_LAIRGUARDIAN, DirectionTypes.DIRECTION_SOUTH)
+#		newUnit.convert(caster)
 
 def reqCrewBuccaneers(caster):
 	pPlot = caster.plot()
@@ -1050,7 +1050,7 @@ def spellDisrupt(caster):
 	CyInterface().addMessage(iPlayer2,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_DISRUPT",()),'',1,'Art/Interface/Buttons/Spells/Disrupt.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
 	if pCity.getCulture(iPlayer2) < 1:
 		pPlayer.acquireCity(pCity,false,false)
-		pPlayer2.AI_changeAttitudeExtra(iPlayer,-4)
+		pPlayer2.AI_changeAttitudeExtra(iPlayer,-6)
 
 def reqDivineRetribution(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
