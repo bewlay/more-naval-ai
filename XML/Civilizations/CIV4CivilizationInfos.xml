@@ -3163,6 +3163,7 @@
 			<DerivativeCiv>NONE</DerivativeCiv>
 			<CivilizationSelectionSound/>
 			<CivilizationActionSound/>
+			<bGraphicalOnly>1</bGraphicalOnly>
 		</CivilizationInfo>
 		<CivilizationInfo>
 			<Type>CIVILIZATION_BARBARIAN</Type>
@@ -3344,7 +3345,7 @@
 			<DerivativeCiv>NONE</DerivativeCiv>
 			<CivilizationSelectionSound/>
 			<CivilizationActionSound/>
-			<bGraphicalOnly>0</bGraphicalOnly>
+			<bGraphicalOnly>1</bGraphicalOnly>
 			<CivTrait>NONE</CivTrait>
 			<DefaultRace>PROMOTION_ORC</DefaultRace>
 			<Help/>
