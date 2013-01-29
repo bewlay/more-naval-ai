@@ -8377,7 +8377,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -11579,7 +11579,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -12259,7 +12259,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -14107,7 +14107,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -14332,7 +14332,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -15653,7 +15653,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -16131,7 +16131,7 @@
             <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
-            <Description>TXT_KEY_UNIT_BEASTMASTER</Description>
+            <Description>TXT_KEY_UNIT_LIZARDMAN_BEASTMASTER</Description>
             <Civilopedia>TXT_KEY_UNIT_PLACEHOLDER_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_BEASTMASTER_STRATEGY</Strategy>
             <Advisor>ADVISOR_GROWTH</Advisor>
@@ -16335,7 +16335,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -16769,7 +16769,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -22763,7 +22763,7 @@
             <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
-            <Description>TXT_KEY_UNIT_CHARIOT</Description>
+            <Description>TXT_KEY_UNIT_CHARIOT_SCORPION_CLAN</Description>
             <Civilopedia>TXT_KEY_UNIT_CHARIOT_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_CHARIOT_STRATEGY</Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
@@ -22956,7 +22956,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -23423,7 +23423,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -27975,7 +27975,7 @@
             <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
-            <Description>TXT_KEY_UNIT_DRUID</Description>
+            <Description>TXT_KEY_UNIT_LIZARDMAN_DRUID</Description>
             <Civilopedia>TXT_KEY_UNIT_DRUID_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_DRUID_STRATEGY</Strategy>
             <Advisor>ADVISOR_GROWTH</Advisor>
@@ -28167,7 +28167,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -32221,7 +32221,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -32947,7 +32947,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -35922,7 +35922,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -41185,7 +41185,7 @@
             <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
-            <Description>TXT_KEY_UNIT_WOLF_RIDER</Description>
+            <Description>TXT_KEY_UNIT_WOLF_RIDER_SCORPION_CLAN</Description>
             <Civilopedia>TXT_KEY_UNIT_WOLF_RIDER_PEDIA</Civilopedia>
             <Strategy></Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
@@ -41377,7 +41377,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -47316,7 +47316,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
@@ -51169,7 +51169,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -52946,7 +52946,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -54604,7 +54604,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -60964,7 +60964,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -62962,7 +62962,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -64805,7 +64805,7 @@
             <DefaultUnitAI>UNITAI_EXPLORE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
-            <Description>TXT_KEY_UNIT_GOBLIN</Description>
+            <Description>TXT_KEY_UNIT_GOBLIN_SCORPION_CLAN</Description>
             <Civilopedia>TXT_KEY_UNIT_GOBLIN_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_GOBLIN_STRATEGY</Strategy>
             <Advisor>ADVISOR_GROWTH</Advisor>
@@ -64997,7 +64997,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
                 <FreePromotion>
@@ -73440,7 +73440,7 @@
             <bAltDown>0</bAltDown>
             <bShiftDown>0</bShiftDown>
             <bCtrlDown>0</bCtrlDown>
-            <bGraphicalOnly>1</bGraphicalOnly>
+            <bGraphicalOnly>0</bGraphicalOnly>
             <iHotKeyPriority>0</iHotKeyPriority>
             <FreePromotions>
             </FreePromotions>
