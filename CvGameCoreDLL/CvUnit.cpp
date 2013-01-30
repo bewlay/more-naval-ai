@@ -8897,10 +8897,16 @@ void CvUnit::upgrade(UnitTypes eUnit)
     }
 
 	// Tholal AI - AI switch for upgraded Slaves
-    if (eUnitAI == UNITAI_WORKER)
+	if (eUnitAI == UNITAI_WORKER && GC.getUnitInfo(eUnit).getWorkRate() == 0)
     {
 		eUnitAI = UNITAI_ATTACK_CITY;
     }
+
+	// when we upgrade units that have AI_HERO as their default AI, we should switch to that AI
+	if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO)
+	{
+		eUnitAI = UNITAI_HERO;
+	}
 	// End Tholal AI
 
 
