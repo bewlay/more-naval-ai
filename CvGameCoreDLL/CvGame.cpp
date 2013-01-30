@@ -184,72 +184,131 @@ void CvGame::init(HandicapTypes eHandicap)
 	}
 
 //FfH: Added by Kael 05/28/2008
-    int iRndCiv = GC.getDefineINT("RANDOM_CIVILIZATION");
-    if (iRndCiv != -1)
+    int iRndCiv = GC.getInfoTypeForString("CIVILIZATION_RANDOM");
+    int iRndGoodLeader = GC.getInfoTypeForString("LEADER_RANDOM_GOOD");
+    int iRndNeutralLeader = GC.getInfoTypeForString("LEADER_RANDOM_NEUTRAL");
+    int iRndEvilLeader = GC.getInfoTypeForString("LEADER_RANDOM_EVIL");
+    if (iRndCiv != NO_CIVILIZATION && iRndGoodLeader != NO_LEADER && iRndNeutralLeader != NO_LEADER && iRndEvilLeader != NO_LEADER)
     {
-        int iAlignment = 0;
-        int iBestLeader = -1;
-        int iBestCiv = -1;
-        int iBestValue = -1;
-        int iValue = 0;
-
+		// Determine the civilization and leader to use for each player slot.
         for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++)
         {
 			if ((GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer) == SS_COMPUTER) || (GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer) == SS_TAKEN))
 			{
-			    iAlignment = 0;
-				if (GC.getInitCore().getCiv((PlayerTypes)iPlayer) == NO_CIVILIZATION)
+				// Selections made for this player slot.
+				int iSelectedCiv = GC.getInitCore().getCiv((PlayerTypes)iPlayer);
+				int iSelectedLeader = GC.getInitCore().getLeader((PlayerTypes)iPlayer);
+				int iSelectedAlignment = NO_ALIGNMENT;
+
+				if (iSelectedLeader == iRndGoodLeader || iSelectedLeader == iRndNeutralLeader || iSelectedLeader == iRndEvilLeader)
 				{
-                    GC.getInitCore().setCiv((PlayerTypes)iPlayer, (CivilizationTypes)iRndCiv);
-                    iAlignment = -1;
+					iSelectedAlignment = GC.getLeaderHeadInfo((LeaderHeadTypes)iSelectedLeader).getAlignment();
+					iSelectedLeader = NO_LEADER;
 				}
-                if (GC.getInitCore().getCiv((PlayerTypes)iPlayer) == iRndCiv)
-                {
-                    if (iAlignment != -1)
-                    {
-                        iAlignment = GC.getLeaderHeadInfo((LeaderHeadTypes)GC.getInitCore().getLeader((PlayerTypes)iPlayer)).getAlignment();
-                    }
+
+				if ((iSelectedCiv == NO_CIVILIZATION || iSelectedCiv == iRndCiv) && iSelectedLeader == NO_LEADER)
+				{
+					// A random civilization and leader were chosen for this slot.
+					int iBestValue = -1;
+
                     for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
                     {
                         if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable())
                         {
-                            for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
-                            {
-                                if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader) ||
+							for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
+							{
+								if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader) ||
 									(isOption(GAMEOPTION_LEAD_ANY_CIV) && !GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).isGraphicalOnly()) )
-                                {
-                                    if (iAlignment == -1 || GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment() == iAlignment)
-                                    {
-                                        iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
-                                        for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
-                                        {
-                                            if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
-                                            {
-                                                iValue -= 2000;
-                                            }
-                                            if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
-                                            {
-                                                iValue -= 1000;
-                                            }
-                                        }
+								{
+									if (iSelectedAlignment == NO_ALIGNMENT || iSelectedAlignment == GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment())
+									{
+										int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+										for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+										{
+											if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
+											{
+												iValue -= 2000;
+											}
+											if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
+											{
+												iValue -= 1000;
+											}
+										}
 
-                                        if (iValue > iBestValue)
-                                        {
-                                            iBestCiv = iCiv;
-                                            iBestLeader = iLeader;
-                                            iBestValue = iValue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    GC.getInitCore().setCiv((PlayerTypes)iPlayer, (CivilizationTypes)iBestCiv);
-                    GC.getInitCore().setLeader((PlayerTypes)iPlayer, (LeaderHeadTypes)iBestLeader);
-                    iBestCiv = -1;
-                    iBestLeader = -1;
-                    iBestValue = -1;
-                }
+										if (iValue > iBestValue)
+										{
+											iSelectedCiv = iCiv;
+											iSelectedLeader = iLeader;
+											iBestValue = iValue;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				else if (iSelectedCiv == NO_CIVILIZATION || iSelectedCiv == iRndCiv)
+				{
+					// A random civilization was selected for this slot.
+					int iBestValue = -1;
+
+                    for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
+                    {
+                        if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable())
+                        {
+							if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iSelectedLeader) || isOption(GAMEOPTION_LEAD_ANY_CIV))
+							{
+								int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+								for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+								{
+									if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
+									{
+										iValue -= 1000;
+									}
+								}
+
+								if (iValue > iBestValue)
+								{
+									iSelectedCiv = iCiv;
+									iBestValue = iValue;
+								}
+							}
+						}
+					}
+				}
+				else if (iSelectedLeader == NO_LEADER)
+				{
+					// A random leader was selected for this slot.
+					int iBestValue = -1;
+
+					for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
+					{
+						if (GC.getCivilizationInfo((CivilizationTypes)iSelectedCiv).isLeaders(iLeader) ||
+							(isOption(GAMEOPTION_LEAD_ANY_CIV) && !GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).isGraphicalOnly()) )
+						{
+							if (iSelectedAlignment == NO_ALIGNMENT || iSelectedAlignment == GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment())
+							{
+								int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+								for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+								{
+									if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
+									{
+										iValue -= 2000;
+									}
+								}
+
+								if (iValue > iBestValue)
+								{
+									iSelectedLeader = iLeader;
+									iBestValue = iValue;
+								}
+							}
+						}
+					}
+				}
+
+				GC.getInitCore().setCiv((PlayerTypes)iPlayer, (CivilizationTypes)iSelectedCiv);
+				GC.getInitCore().setLeader((PlayerTypes)iPlayer, (LeaderHeadTypes)iSelectedLeader);
             }
 		}
 	}
