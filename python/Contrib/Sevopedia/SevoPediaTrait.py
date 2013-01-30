@@ -106,7 +106,7 @@ class SevoPediaTrait:
 		screen.attachLabel(panelName, "", "  ")
 		for iLeader in range(gc.getNumLeaderHeadInfos()):
 			pLeader = gc.getLeaderHeadInfo(iLeader)
-			if pLeader.hasTrait(self.iTrait):
+			if pLeader.hasTrait(self.iTrait) and (not pLeader.isGraphicalOnly()):
 				self.iLeader = iLeader
 				for iCiv in range(gc.getNumCivilizationInfos()):
 					if gc.getCivilizationInfo(iCiv).isLeaders(iLeader):
