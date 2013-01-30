@@ -7800,7 +7800,7 @@ void CvGameTextMgr::parseLeaderTraits(CvWStringBuffer &szHelpString, LeaderHeadT
 	//	Build help string
 	if (eLeader != NO_LEADER)
 	{
-		if (!bDawnOfMan && !bCivilopediaText)
+		if (!bDawnOfMan)// && !bCivilopediaText)
 		{
 			szTempBuffer.Format( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getLeaderHeadInfo(eLeader).getDescription());
 			szHelpString.append(szTempBuffer);
@@ -7817,22 +7817,25 @@ void CvGameTextMgr::parseLeaderTraits(CvWStringBuffer &szHelpString, LeaderHeadT
         szHelpString.append(gDLL->getText("TXT_KEY_ALIGNMENT", GC.getAlignmentInfo((AlignmentTypes)GC.getLeaderHeadInfo(eLeader).getAlignment()).getDescription()));
         if (eCivilization != NO_CIVILIZATION)
         {
-            if (GC.getCivilizationInfo(eCivilization).getHero() != NO_UNIT)
-            {
-                szHelpString.append(NEWLINE);
-                szHelpString.append(gDLL->getText("TXT_KEY_HERO", GC.getUnitInfo((UnitTypes)GC.getCivilizationInfo(eCivilization).getHero()).getDescription()));
-            }
-            for (iI = 0; iI < GC.getNumSpellInfos(); ++iI)
-            {
-                if (GC.getSpellInfo((SpellTypes)iI).isGlobal())
-                {
-                    if (GC.getSpellInfo((SpellTypes)iI).getCivilizationPrereq() == eCivilization)
-                    {
-                        szHelpString.append(NEWLINE);
-                        szHelpString.append(gDLL->getText("TXT_KEY_GLOBAL_SPELL", GC.getSpellInfo((SpellTypes)iI).getDescription()));
-                    }
-                }
-            }
+			if (!bCivilopediaText) // suppress hero and world spell info in sevopedia (these are attached to the civ, not the leader)
+			{
+				if (GC.getCivilizationInfo(eCivilization).getHero() != NO_UNIT)
+				{
+					szHelpString.append(NEWLINE);
+					szHelpString.append(gDLL->getText("TXT_KEY_HERO", GC.getUnitInfo((UnitTypes)GC.getCivilizationInfo(eCivilization).getHero()).getDescription()));
+				}
+				for (iI = 0; iI < GC.getNumSpellInfos(); ++iI)
+				{
+					if (GC.getSpellInfo((SpellTypes)iI).isGlobal())
+					{
+						if (GC.getSpellInfo((SpellTypes)iI).getCivilizationPrereq() == eCivilization)
+						{
+							szHelpString.append(NEWLINE);
+							szHelpString.append(gDLL->getText("TXT_KEY_GLOBAL_SPELL", GC.getSpellInfo((SpellTypes)iI).getDescription()));
+						}
+					}
+				}
+			}
             if (bDawnOfMan)
             {
                 szHelpString.append(NEWLINE);
