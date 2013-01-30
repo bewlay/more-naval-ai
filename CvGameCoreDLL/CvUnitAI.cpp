@@ -28503,6 +28503,20 @@ void CvUnitAI::ConquestMove()
 void CvUnitAI::AI_heromove()
 {
 
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
+	{
+		if (isHiddenNationality())
+		{
+			AI_setUnitAIType(UNITAI_PIRATE_SEA);
+			return;
+		}
+		else
+		{
+			AI_setUnitAIType(UNITAI_ATTACK_SEA);
+			return;
+		}
+	}
+
 	if (AI_heal())
 	{
 		return;
