@@ -4537,6 +4537,7 @@ int CvPlayerAI::AI_getFundedPercent() const
 	{
 		return 100;
 	}
+	//ToDo - this needs to take into account gold in the treasury. 
 	int iNetCommerce = 1 + getCommerceRate(COMMERCE_GOLD) + getCommerceRate(COMMERCE_RESEARCH) + std::max(0, getGoldPerTurn());
 	int iNetExpenses = calculateInflatedCosts() + std::max(0, -getGoldPerTurn());
 	
@@ -10439,7 +10440,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
 			iValue += (kBonusInfo.getHappiness() * (bDemon ? 0 : 100));
-			iValue += (kBonusInfo.getHealth() * (bDemon ? 0 : 100));
+			iValue += (kBonusInfo.getHealth() * (isIgnoreFood() ? 0 : 100));
 
 			// Tholal ToDo - better valuation of yield changes
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
@@ -10903,6 +10904,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iValue /= 10;
 		}
 
+		//GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getImprovementWeightModifier((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement())));
 
 		//clamp value non-negative
 		m_aiBonusValue[eBonus] = std::max(0, iValue);
