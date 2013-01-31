@@ -823,12 +823,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_UNITCOMBAT_FREE_EXPERIENCE</Tag>
-		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 XP from City for this Combat Type[COLOR_REVERT]</English>
-		<French>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 EXP from City for this Combat Type[COLOR_REVERT]</French>
-		<German>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 EP durch Stadt for this Combat Type[COLOR_REVERT]</German>
-		<Italian>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 XP from City for this Combat Type[COLOR_REVERT]</Italian>
-		<Spanish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 PE from City for this Combat Type[COLOR_REVERT]</Spanish>
-		<Finnish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 from City for this Combat Type[COLOR_REVERT]</Finnish>
+		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 XP from City for %s2_UnitCombatName[COLOR_REVERT]</English>
+		<French>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 EXP from City for %s2_UnitCombatName[COLOR_REVERT]</French>
+		<German>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 EP durch Stadt for %s2_UnitCombatName[COLOR_REVERT]</German>
+		<Italian>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 XP from City for %s2_UnitCombatName[COLOR_REVERT]</Italian>
+		<Spanish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 PE from City for %s2_UnitCombatName[COLOR_REVERT]</Spanish>
+		<Finnish>[ICON_BULLET][COLOR_POSITIVE_TEXT]%D1 from City for %s2_UnitCombatName[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PLAYER_FREE_EXPERIENCE</Tag>
