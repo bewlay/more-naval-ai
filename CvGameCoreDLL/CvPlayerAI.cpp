@@ -10800,6 +10800,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 								iValue += (bSummoner ? 50 : 25);// ToDo - extract some info about the unit and how useful it will be to us
 							}
 							
+							//Todo - find a way to check for actual need (ie Water mana for desert)
+							if (kSpellInfo.isAllowAutomateTerrain())
+							{
+								iValue += (iCityCount - 1) * 10;
+							}
 
 							// buffs and debuffs
 							if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
