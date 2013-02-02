@@ -7056,7 +7056,7 @@
             <bNukeImmune>0</bNukeImmune>
             <bPrereqReligion>0</bPrereqReligion>
             <bCenterInCity>1</bCenterInCity>
-            <iAIWeight>500</iAIWeight>
+            <iAIWeight>1500</iAIWeight>
             <iCost>180</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>90</iAdvancedStartCost>
@@ -35844,7 +35844,7 @@
             <iGreatPeopleRateChange>0</iGreatPeopleRateChange>
             <iHurryAngerModifier>0</iHurryAngerModifier>
             <bBorderObstacle>0</bBorderObstacle>
-            <bTeamShare>0</bTeamShare>
+            <bTeamShare>1</bTeamShare>
             <bWater>0</bWater>
             <bRiver>0</bRiver>
             <bPower>0</bPower>
@@ -36295,7 +36295,7 @@
             <iGreatPeopleRateChange>0</iGreatPeopleRateChange>
             <iHurryAngerModifier>0</iHurryAngerModifier>
             <bBorderObstacle>0</bBorderObstacle>
-            <bTeamShare>0</bTeamShare>
+            <bTeamShare>1</bTeamShare>
             <bWater>0</bWater>
             <bRiver>0</bRiver>
             <bPower>0</bPower>
@@ -36739,7 +36739,7 @@
             <iGreatPeopleRateChange>0</iGreatPeopleRateChange>
             <iHurryAngerModifier>0</iHurryAngerModifier>
             <bBorderObstacle>0</bBorderObstacle>
-            <bTeamShare>0</bTeamShare>
+            <bTeamShare>1</bTeamShare>
             <bWater>0</bWater>
             <bRiver>0</bRiver>
             <bPower>0</bPower>
@@ -36976,7 +36976,7 @@
             <iGreatPeopleRateChange>0</iGreatPeopleRateChange>
             <iHurryAngerModifier>0</iHurryAngerModifier>
             <bBorderObstacle>0</bBorderObstacle>
-            <bTeamShare>0</bTeamShare>
+            <bTeamShare>1</bTeamShare>
             <bWater>0</bWater>
             <bRiver>0</bRiver>
             <bPower>0</bPower>
@@ -37201,7 +37201,7 @@
             <iGreatPeopleRateChange>0</iGreatPeopleRateChange>
             <iHurryAngerModifier>0</iHurryAngerModifier>
             <bBorderObstacle>0</bBorderObstacle>
-            <bTeamShare>0</bTeamShare>
+            <bTeamShare>1</bTeamShare>
             <bWater>0</bWater>
             <bRiver>0</bRiver>
             <bPower>0</bPower>

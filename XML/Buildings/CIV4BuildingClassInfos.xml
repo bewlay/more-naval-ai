@@ -358,7 +358,7 @@
 			<Type>BUILDINGCLASS_TOWER_OF_MASTERY</Type>
 			<Description>TXT_KEY_BUILDING_TOWER_OF_MASTERY</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
-			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
 			<iMaxPlayerInstances>1</iMaxPlayerInstances>
 			<iExtraPlayerInstances>0</iExtraPlayerInstances>
 			<bNoLimit>0</bNoLimit>
@@ -375,7 +375,7 @@
 			<Type>BUILDINGCLASS_TOWER_OF_ALTERATION</Type>
 			<Description>TXT_KEY_BUILDING_TOWER_OF_ALTERATION</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
-			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
 			<iMaxPlayerInstances>1</iMaxPlayerInstances>
 			<iExtraPlayerInstances>0</iExtraPlayerInstances>
 			<bNoLimit>0</bNoLimit>
@@ -392,7 +392,7 @@
 			<Type>BUILDINGCLASS_TOWER_OF_DIVINATION</Type>
 			<Description>TXT_KEY_BUILDING_TOWER_OF_DIVINATION</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
-			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
 			<iMaxPlayerInstances>1</iMaxPlayerInstances>
 			<iExtraPlayerInstances>0</iExtraPlayerInstances>
 			<bNoLimit>0</bNoLimit>
@@ -409,7 +409,7 @@
 			<Type>BUILDINGCLASS_TOWER_OF_NECROMANCY</Type>
 			<Description>TXT_KEY_BUILDING_TOWER_OF_NECROMANCY</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
-			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
 			<iMaxPlayerInstances>1</iMaxPlayerInstances>
 			<iExtraPlayerInstances>0</iExtraPlayerInstances>
 			<bNoLimit>0</bNoLimit>
@@ -426,7 +426,7 @@
 			<Type>BUILDINGCLASS_TOWER_OF_THE_ELEMENTS</Type>
 			<Description>TXT_KEY_BUILDING_TOWER_OF_THE_ELEMENTS</Description>
 			<iMaxGlobalInstances>-1</iMaxGlobalInstances>
-			<iMaxTeamInstances>-1</iMaxTeamInstances>
+			<iMaxTeamInstances>1</iMaxTeamInstances>
 			<iMaxPlayerInstances>1</iMaxPlayerInstances>
 			<iExtraPlayerInstances>0</iExtraPlayerInstances>
 			<bNoLimit>0</bNoLimit>
