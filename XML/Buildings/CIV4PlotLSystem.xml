@@ -61,7 +61,7 @@
 			<Attribute Class="Era">ERA_ANCIENT,ERA_CLASSICAL,ERA_MEDIEVAL,ERA_COUN,ERA_ORDE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -75,7 +75,7 @@
 			<Attribute Class="Era">ERA_ANCIENT,ERA_CLASSICAL,ERA_MEDIEVAL,ERA_COUN,ERA_ORDE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -89,7 +89,7 @@
 			<Attribute Class="Era">ERA_ANCIENT,ERA_CLASSICAL,ERA_MEDIEVAL,ERA_COUN,ERA_ORDE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -103,7 +103,7 @@
 			<Attribute Class="Era">ERA_ANCIENT,ERA_CLASSICAL,ERA_MEDIEVAL,ERA_COUN,ERA_ORDE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -117,7 +117,7 @@
 			<Attribute Class="Era">ERA_VEIL</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -131,7 +131,7 @@
 			<Attribute Class="Era">ERA_VEIL</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -145,7 +145,7 @@
 			<Attribute Class="Era">ERA_VEIL</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -159,7 +159,7 @@
 			<Attribute Class="Era">ERA_VEIL</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -173,7 +173,7 @@
 			<Attribute Class="Era">ERA_EMPY</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -187,7 +187,7 @@
 			<Attribute Class="Era">ERA_EMPY</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -201,7 +201,7 @@
 			<Attribute Class="Era">ERA_EMPY</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -215,7 +215,7 @@
 			<Attribute Class="Era">ERA_EMPY</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -229,7 +229,7 @@
 			<Attribute Class="Era">ERA_LEAF</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -243,7 +243,7 @@
 			<Attribute Class="Era">ERA_LEAF</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -257,7 +257,7 @@
 			<Attribute Class="Era">ERA_LEAF</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -271,7 +271,7 @@
 			<Attribute Class="Era">ERA_LEAF</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -285,7 +285,7 @@
 			<Attribute Class="Era">ERA_RUNE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -299,7 +299,7 @@
 			<Attribute Class="Era">ERA_RUNE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -313,7 +313,7 @@
 			<Attribute Class="Era">ERA_RUNE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -327,7 +327,7 @@
 			<Attribute Class="Era">ERA_RUNE</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -341,7 +341,7 @@
 			<Attribute Class="Era">ERA_OCTO</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -355,7 +355,7 @@
 			<Attribute Class="Era">ERA_OCTO</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -369,7 +369,7 @@
 			<Attribute Class="Era">ERA_OCTO</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -383,7 +383,7 @@
 			<Attribute Class="Era">ERA_OCTO</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -406,7 +406,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -420,7 +420,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -434,7 +434,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -448,7 +448,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -462,7 +462,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -476,7 +476,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -490,7 +490,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -504,7 +504,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -518,7 +518,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -532,7 +532,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -546,7 +546,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -560,7 +560,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -574,7 +574,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -588,7 +588,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -602,7 +602,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -616,7 +616,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -630,7 +630,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -644,7 +644,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -658,7 +658,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -672,7 +672,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -686,7 +686,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -700,7 +700,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -714,7 +714,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -728,7 +728,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -750,7 +750,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -766,7 +766,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -781,7 +781,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -797,7 +797,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -812,7 +812,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -828,7 +828,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -843,7 +843,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -859,7 +859,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -874,7 +874,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -890,7 +890,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -905,7 +905,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -921,7 +921,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -936,7 +936,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -952,7 +952,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -967,7 +967,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -983,7 +983,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -998,7 +998,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -1014,7 +1014,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1029,7 +1029,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -1045,7 +1045,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1060,7 +1060,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
@@ -1076,7 +1076,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1091,7 +1091,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
@@ -1107,7 +1107,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1130,7 +1130,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1144,7 +1144,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1158,7 +1158,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1172,7 +1172,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1186,7 +1186,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1200,7 +1200,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1214,7 +1214,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1228,7 +1228,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1242,7 +1242,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1256,7 +1256,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1270,7 +1270,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1284,7 +1284,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1298,7 +1298,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1312,7 +1312,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1326,7 +1326,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1340,7 +1340,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1354,7 +1354,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1368,7 +1368,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1382,7 +1382,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1396,7 +1396,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1410,7 +1410,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1424,7 +1424,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:0</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1438,7 +1438,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:1</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1452,7 +1452,7 @@
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">bForceGround:1</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bImprovementWorkedOnly:0</Attribute>
 			<Attribute Class="Scalar">bIrrigatedOnly:1</Attribute>
 			<Attribute Class="Scalar">szBatchGroup:farm_crop</Attribute>
@@ -1792,32 +1792,32 @@
 		<ArtRef Name="goal:IMPROVEMENT_COTTAGE">
 			<Attribute Class="Scalar">bPlace:0</Attribute>
 			<Attribute Class="Scalar">iCropArea:5</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
-			<Attribute Class="Scalar">fCenterCut:50</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
+			<Attribute Class="Scalar">fCenterCut:25</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 		</ArtRef>
 		<ArtRef Name="goal:IMPROVEMENT_HAMLET">
 			<Attribute Class="Scalar">bPlace:0</Attribute>
 			<Attribute Class="Scalar">iCropArea:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
-			<Attribute Class="Scalar">fCenterCut:60</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
+			<Attribute Class="Scalar">fCenterCut:25</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 		</ArtRef>
 		<ArtRef Name="goal:IMPROVEMENT_VILLAGE">
 			<Attribute Class="Scalar">bPlace:0</Attribute>
 			<Attribute Class="Scalar">iCropArea:15</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
-			<Attribute Class="Scalar">fCenterCut:70</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
+			<Attribute Class="Scalar">fCenterCut:25</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 		</ArtRef>
 		<ArtRef Name="goal:IMPROVEMENT_TOWN">
 			<Attribute Class="Scalar">bPlace:0</Attribute>
 			<Attribute Class="Scalar">iCropArea:25</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
-			<Attribute Class="Scalar">fCenterCut:90</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
+			<Attribute Class="Scalar">fCenterCut:25</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 				<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 		</ArtRef>
@@ -1835,7 +1835,7 @@
 			<Attribute Class="Scalar">KFM:Art/Structures/Improvements/LandWorked/sm_farm_house.kfm</Attribute>
 			<Attribute Class="Improvement">IMPROVEMENT_LAND_WORKED</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:0</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Rotation">0,180</Attribute>
 			<Attribute Class="Scalar">iPlayAnimationID:0</Attribute>
@@ -3730,7 +3730,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3743,7 +3743,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3768,7 +3768,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3781,7 +3781,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3806,7 +3806,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3821,7 +3821,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3850,7 +3850,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3865,7 +3865,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3893,7 +3893,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3908,7 +3908,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3937,7 +3937,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3952,7 +3952,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3981,7 +3981,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:12</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -3996,7 +3996,7 @@
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM1</Attribute>
 			<Attribute Class="Scalar">szExtra:art:IMPROVEMENT_FARM2</Attribute>
 			<Attribute Class="Scalar">iCropAreaMultiplier:10</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
@@ -5180,7 +5180,7 @@
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">NIF:Art/Structures/Improvements/Fort/eu_an_fort.nif</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">fCenterCut:70</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
@@ -5192,7 +5192,7 @@
 			<Attribute Class="Scalar">bIsPartOfImprovement:1</Attribute>
 			<Attribute Class="Scalar">bApplyRotation:1</Attribute>
 			<Attribute Class="Scalar">NIF:Art/Structures/Improvements/Fort/eu_med_fort.nif</Attribute>
-			<Attribute Class="Scalar">bCutTrees:1</Attribute>
+			<Attribute Class="Scalar">bCutTrees:0</Attribute>
 			<Attribute Class="Scalar">fCenterCut:70</Attribute>
 			<Attribute Class="Scalar">fTwist:-0.7853981633</Attribute>
 			<Attribute Class="Scalar">bZMode_Ground:1</Attribute>
