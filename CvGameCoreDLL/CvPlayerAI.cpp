@@ -27000,7 +27000,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 			iValue += getNumAvailableBonuses((BonusTypes)iK) * 2;
 			if (getNumAvailableBonuses((BonusTypes)iK) > 1)
 			{
-				iValue ++;
+				iValue += 2;
 			}
 		}
 		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA_RAW")))
