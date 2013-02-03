@@ -37664,7 +37664,7 @@
             <PythonCallback>doTraitAggressive</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitAggressive</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitAggressive</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -37769,7 +37769,7 @@
             <PythonCallback>doTraitArcane</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitArcane</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitArcane</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -37870,7 +37870,7 @@
             <PythonCallback>doTraitCharismatic</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitCharismatic</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitCharismatic</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -37975,7 +37975,7 @@
             <PythonCallback>doTraitCreative</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitCreative</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitCreative</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38080,7 +38080,7 @@
             <PythonCallback>doTraitExpansive</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitExpansive</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitExpansive</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38185,7 +38185,7 @@
             <PythonCallback>doTraitFinancial</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitFinancial</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitFinancial</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38290,7 +38290,7 @@
             <PythonCallback>doTraitIndustrious</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitIndustrious</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitIndustrious</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38492,7 +38492,7 @@
             <PythonCallback>doTraitOrganized</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitOrganized</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitOrganized</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38593,7 +38593,7 @@
             <PythonCallback>doTraitPhilosophical</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitPhilosophical</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitPhilosophical</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38694,7 +38694,7 @@
             <PythonCallback>doTraitRaiders</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitRaiders</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitRaiders</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
@@ -38799,7 +38799,7 @@
             <PythonCallback>doTraitSpiritual</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo>canApplyTraitSpiritual</PythonCanDo>
-            <PythonHelp></PythonHelp>
+            <PythonHelp>helpTraitSpiritual</PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>1000</iAIValue>
             <iCrime>0</iCrime>
