@@ -2937,6 +2937,10 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	SAFE_DELETE_ARRAY(paiBuildingOriginalOwner);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalTime);
 
+	// Sephi default value for avoid angry Citizens	
+	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
+			pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+
 	if (bConquest)
 	{
 		CyCity* pyCity = new CyCity(pNewCity);
