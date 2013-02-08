@@ -15630,7 +15630,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     CvUnit* pLoopUnit;
     CLLNode<IDInfo>* pUnitNode;
     bool bValid = false;
-	if (getImmobileTimer() > 0)
+	if (getImmobileTimer() > 0 && !isHeld())
 	{
 		return false;
 	}
