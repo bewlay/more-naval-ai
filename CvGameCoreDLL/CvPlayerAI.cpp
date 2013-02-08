@@ -11743,10 +11743,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	bValid = kUnitInfo.getUnitAIType(eUnitAI);
 
+/*
 	if ((kUnitInfo.getDefaultUnitAIType() == UNITAI_HERO) && (eUnitAI != UNITAI_HERO))
 	{
 		return 0;
 	}
+*/
 
 	if (!bValid)
 	{
@@ -12975,7 +12977,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	}
 
 
-	if (iCombatValue > 0 && kUnitInfo.getUnitAIType(eUnitAI))
+	if (iCombatValue > 0) //&& kUnitInfo.getUnitAIType(eUnitAI))
 	{
 		//traits
 		int iTraitMod = 0;
