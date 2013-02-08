@@ -595,7 +595,7 @@ class CvMainInterface:
 		screen.hide( "InfoAdvisorButton" )
 		# END  											2/03/08			JOHNY SMITH 
 		
-#FfH: Added by Kael 09/24/2008 - Tophy Button
+#FfH: Added by Kael 09/24/2008 - Trophy Button
 		iBtnX += iBtnAdvance
 		screen.setImageButton( "TrophyButton", "", iBtnX, iBtnY - 2, iBtnWidth, iBtnWidth, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_TROPHY).getActionInfoIndex(), -1 )
 		screen.setStyle( "TrophyButton", "Button_HUDTrophy_Style" )
@@ -1998,7 +1998,7 @@ class CvMainInterface:
 
 			elif ( CyInterface().getHeadSelectedUnit() ):
 #				screen.addUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit().getUnitType(), 165, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
-				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), 165, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
+				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), 25, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
 #				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), 175, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
 				screen.moveToFront("SelectedUnitText")
 			else:
