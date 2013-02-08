@@ -469,8 +469,9 @@ class CvGameUtils:
 		ePlayer = pCity.getOwner()
 		pPlayer = gc.getPlayer(ePlayer)
 		
+		## AI catches for buildings and projects that have python-only effects
 		if not pPlayer.isHuman():
-			## AI catch for Illians - make sure we build our best projects
+			## Illians - make sure we build our best projects
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				if pCity.findYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 3:
 					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'), true, true):
@@ -479,7 +480,18 @@ class CvGameUtils:
 					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_ASCENSION'), true, true):
 						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_ASCENSION'),-1, False, False, False, False)
 						return 1
-		
+			## Clan should build Warrens
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
+				if (pCity.getCultureLevel() > 1):
+					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_WARRENS'), True, False, False):
+						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_WARRENS'),-1, False, False, False, False)
+						return 1
+			## Amurites should build Cave of Ancestors
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
+				if (pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD')) > 0):
+					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'), True, False, False):
+						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'),-1, False, False, False, False)
+						return 1
 		return False
 
 	def AI_unitUpdate(self,argsList):
