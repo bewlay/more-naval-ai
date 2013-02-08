@@ -5807,6 +5807,10 @@
                     <FlavorType>FLAVOR_SCIENCE</FlavorType>
                     <iFlavor>10</iFlavor>
                 </Flavor>
+                <Flavor>
+                    <FlavorType>FLAVOR_MILITARY</FlavorType>
+                    <iFlavor>10</iFlavor>
+                </Flavor>
             </Flavors>
             <HotKey></HotKey>
             <bAltDown>0</bAltDown>
@@ -7056,7 +7060,7 @@
             <bNukeImmune>0</bNukeImmune>
             <bPrereqReligion>0</bPrereqReligion>
             <bCenterInCity>1</bCenterInCity>
-            <iAIWeight>1500</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>180</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>90</iAdvancedStartCost>
