@@ -14794,6 +14794,11 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 									iCombatStrength *= 10 + (pLoopUnit->getExperience() * 2);
 									iCombatStrength /= 15;
 
+									if (pLoopUnit->getUnitCombatType() == NO_UNITCOMBAT)
+									{
+										iCombatStrength /= 10;
+									}
+
 									if(bLegend)
 									{
 										iCombatStrength *= 10 - GC.getUnitClassInfo(pLoopUnit->getUnitClassType()).getMaxGlobalInstances();
