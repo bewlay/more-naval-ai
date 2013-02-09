@@ -160,7 +160,7 @@ bool CvUnitAI::AI_update()
 
 /** BETTER AI Sephi (Time for the Mages to Caste Haste, etc.)                   **/
 
-
+		/*
         CLLNode<IDInfo>* pEntityNode = getGroup()->headUnitNode();
         CvUnit* pLoopUnit;
         while (pEntityNode != NULL)
@@ -172,6 +172,7 @@ bool CvUnitAI::AI_update()
                 pLoopUnit->AI_MovementCast();
             }
         }
+		*/
     }
 
 /*************************************************************************************************/
