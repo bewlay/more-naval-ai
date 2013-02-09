@@ -15592,16 +15592,12 @@
                     <TerrainType>TERRAIN_SNOW</TerrainType>
                     <bTerrainNative>1</bTerrainNative>
                 </TerrainNative>
+                <TerrainNative>
+                    <TerrainType>TERRAIN_TUNDRA</TerrainType>
+                    <bTerrainNative>1</bTerrainNative>
+                </TerrainNative>
             </TerrainNatives>
             <FeatureNatives>
-                <FeatureNative>
-                    <FeatureType>FEATURE_FOREST</FeatureType>
-                    <bFeatureNative>1</bFeatureNative>
-                </FeatureNative>
-                <FeatureNative>
-                    <FeatureType>FEATURE_FOREST_ANCIENT</FeatureType>
-                    <bFeatureNative>1</bFeatureNative>
-                </FeatureNative>
             </FeatureNatives>
             <TerrainAttacks>
             </TerrainAttacks>
