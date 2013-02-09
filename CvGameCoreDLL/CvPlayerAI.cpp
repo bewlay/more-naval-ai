@@ -789,6 +789,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		//
 		//int iUnitValue;
 
+		/* - Tholal Note: adding this section seems to cause some other issues
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
             int iSpell = pLoopUnit->chooseSpell();
@@ -797,7 +798,9 @@ void CvPlayerAI::AI_doTurnUnitsPost()
                 pLoopUnit->cast(iSpell);
 			}
 		}
+		*/
 
+		//Tholal ToDo - Manes hit this upgrade section before they ever get a chance to 'cast'
 		// Tholal ToDo - arrange units in a sorted list then try and upgrade rather than running through whole list three times
 		// pass 0
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
@@ -5265,6 +5268,27 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 						//iNumBonuses = getNumAvailableBonuses((BonusTypes)iK);
 						iNumBonuses = countOwnedBonuses((BonusTypes)iK, true);
+
+						//ToDo - count extra rings of capitol
+						if (iCityCount == 1 && pCapitalCity != NULL)
+						{
+							if (pCapitalCity->getCultureLevel() < 2)
+							{
+								CvPlot *pLoopPlot;
+								// check for bonuses in the 2nd culture ring
+								for (int iI = 0; iI < 21; iI++)
+								{
+									pLoopPlot = plotCity(pCapitalCity->getX(), pCapitalCity->getY(), iI);
+									if (pLoopPlot != NULL)
+									{
+										if (pLoopPlot->getBonusType() == iK)
+										{
+											iNumBonuses ++;
+										}
+									}
+								}
+							}
+						}
 
 						// used for debugging
 						int iTotalBonuses = getNumAvailableBonuses((BonusTypes)iK);
