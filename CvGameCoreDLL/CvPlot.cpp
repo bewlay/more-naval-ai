@@ -9449,26 +9449,29 @@ void CvPlot::doFeature()
 //FfH: Added by Kael 03/20/2008
         if (GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade() != NO_FEATURE)
         {
-            if (GC.getFeatureInfo((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade()).getPrereqStateReligion() == NO_RELIGION
-              || isOwned() && GC.getFeatureInfo((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade()).getPrereqStateReligion() == GET_PLAYER(getOwnerINLINE()).getStateReligion())
-            {
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                       10/22/09                                jdog5000      */
-/*                                                                                              */
-/* Gamespeed scaling                                                                            */
-/************************************************************************************************/
-/* original bts code
-                if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
-*/
-				int iOdds = (100 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFeatureProductionPercent())/100;
-                if (GC.getGameINLINE().getSorenRandNum(iOdds, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
-/************************************************************************************************/
-/* UNOFFICIAL_PATCH                        END                                                  */
-/************************************************************************************************/
+			if (GC.getFeatureInfo((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade()).isTerrain(getTerrainType()))
+			{
+				if (GC.getFeatureInfo((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade()).getPrereqStateReligion() == NO_RELIGION
+				  || isOwned() && GC.getFeatureInfo((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade()).getPrereqStateReligion() == GET_PLAYER(getOwnerINLINE()).getStateReligion())
+				{
+	/************************************************************************************************/
+	/* UNOFFICIAL_PATCH                       10/22/09                                jdog5000      */
+	/*                                                                                              */
+	/* Gamespeed scaling                                                                            */
+	/************************************************************************************************/
+	/* original bts code
+					if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
+	*/
+					int iOdds = (100 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFeatureProductionPercent())/100;
+					if (GC.getGameINLINE().getSorenRandNum(iOdds, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
+	/************************************************************************************************/
+	/* UNOFFICIAL_PATCH                        END                                                  */
+	/************************************************************************************************/
 
-                {
-                    setFeatureType((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade());
-                }
+					{
+						setFeatureType((FeatureTypes)GC.getFeatureInfo(getFeatureType()).getFeatureUpgrade());
+					}
+				}
             }
         }
         if (GC.getDefineINT("FLAMES_FEATURE") != -1  && GC.getDefineINT("FLAMES_SPREAD_EFFECT") != -1)
