@@ -655,6 +655,7 @@ class CustomFunctions:
 		iForest = gc.getInfoTypeForString('FEATURE_FOREST')
 		iJungle = gc.getInfoTypeForString('FEATURE_JUNGLE')
 		iAForest = gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')
+		iNForest = gc.getInfoTypeForString('FEATURE_FOREST_NEW')
 		iBForest = gc.getInfoTypeForString('FEATURE_FOREST_BURNT')
 		iCount = CyGame().getGlobalCounter()
 		for i in range (CyMap().numPlots()):
@@ -708,10 +709,10 @@ class CustomFunctions:
 					pPlot.setBonusType(-1)
 					pPlot.setImprovementType(iSnakePillar)
 
-#				if (iFeature == iForest or iFeature == iAForest or iFeature == iJungle):
+				if (iFeature == iForest or iFeature == iAForest or iFeature == iNForest or iFeature == iJungle):
 #					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Burnt Forest")
 #					if iRandom < 10:
-#						pPlot.setFeatureType(iBForest, 0)
+					pPlot.setFeatureType(iBForest, 0)
 #				if pPlot.isPeak() == True:
 #					iRandom = CyGame().getSorenRandNum(100, "Hell Terrain Volcanos")
 #					if iRandom < 2:
