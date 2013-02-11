@@ -8410,7 +8410,8 @@ int CvCityAI::AI_getImprovementValue( CvPlot* pPlot, ImprovementTypes eImproveme
 				
 				if (GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_SAFE_AUTOMATION))
 				{
-					iValue /= 4;	//Greatly prefer builds which are legal.
+					//iValue /= 4;	//Greatly prefer builds which are legal.
+					iValue = 0;
 				}
 			}
 		}
@@ -12206,7 +12207,8 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 
 						if (GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_SAFE_AUTOMATION))
 						{
-							iValue /= 4;	//Greatly prefer builds which are legal.
+							//iValue /= 4;	//Greatly prefer builds which are legal.
+							iValue = 0;
 						}
 
 //FfH: Added by Kael 02/24/2009 dont build over recently built improvmenets
