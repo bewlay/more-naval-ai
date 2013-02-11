@@ -16627,7 +16627,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("     %S (unit %d) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
+			logBBAI("     %S (unit %d - %S) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
 		}
 	}
 
@@ -28926,16 +28926,7 @@ void CvUnitAI::AI_upgrademanaMove()
 	BuildTypes eBestBuild = NO_BUILD;
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Player %d Unit %d (%S's %S) starting mana upgrade move\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
-			gDLL->messageControlLog(szOut);
-		}
-	}
-
+	//ToDo - keep one spare raw mana node if we have more than X mana and are pursuing Tower victory (for metamagic node)
 	bool bReadytoBuild = false;
 	// loop through plots in range
 	// ToDo - make this a map search?
@@ -28980,16 +28971,6 @@ void CvUnitAI::AI_upgrademanaMove()
 
 							if (bBonusMana || bBonusRawMana)
 							{
-								if (GC.getLogging())
-								{
-									if (gDLL->getChtLvl() > 0)
-									{
-										char szOut[1024];
-										sprintf(szOut, "Player %d Unit %d (%S's %S)found mana bonus (%d, %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pLoopPlot->getX(), pLoopPlot->getY());
-										gDLL->messageControlLog(szOut);
-									}
-								}
-
 								// found mana, now check path
 								if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 								{
