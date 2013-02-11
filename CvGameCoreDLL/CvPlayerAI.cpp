@@ -10828,6 +10828,10 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 							if (kSpellInfo.isAllowAutomateTerrain())
 							{
 								iValue += (iCityCount - 1) * 10;
+								if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_WATER"))
+								{
+									// AI_countNumOwnedTerrainTypes("TERRAIN_DESERT")
+								}
 							}
 
 							// buffs and debuffs
