@@ -11767,12 +11767,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 	bValid = kUnitInfo.getUnitAIType(eUnitAI);
 
-/*
-	if ((kUnitInfo.getDefaultUnitAIType() == UNITAI_HERO) && (eUnitAI != UNITAI_HERO))
+	if ((kUnitInfo.getDefaultUnitAIType() == UNITAI_HERO) && (eUnitAI != UNITAI_HERO) && !bUpgrade)
 	{
 		return 0;
 	}
-*/
 
 	if (!bValid)
 	{

@@ -4890,21 +4890,24 @@ void CvSelectionGroup::mergeIntoGroup(CvSelectionGroup* pSelectionGroup)
 
 			if (pLoopUnit != NULL)
 			{
-				UnitAITypes eUnitAI = pLoopUnit->AI_getUnitAIType();
-
-				// if the unitAIs are different, and the loop unit has a higher val, then the group unitAI would change
-				// change this UnitAI to the old group UnitAI if possible
-				CvUnit* pNewHeadUnit = pSelectionGroup->getHeadUnit();
-				UnitAITypes eNewHeadUnitAI = pSelectionGroup->getHeadUnitAI();
-				if (pNewHeadUnit!= NULL && eUnitAI != eNewHeadUnitAI && pLoopUnit->AI_groupFirstVal() > pNewHeadUnit->AI_groupFirstVal())
+				if (pLoopUnit->AI_getUnitAIType() != UNITAI_HERO) // heroes are exempt from this check
 				{
-					// non-zero AI_unitValue means that this UnitAI is valid for this unit (that is the check used everywhere)
-					if (kPlayer.AI_unitValue(pLoopUnit->getUnitType(), eNewHeadUnitAI, NULL) > 0)
-					{
-						// this will remove pLoopUnit from the current group
-						pLoopUnit->AI_setUnitAIType(eNewHeadUnitAI);
+					UnitAITypes eUnitAI = pLoopUnit->AI_getUnitAIType();
 
-						bChangedUnitAI = true;
+					// if the unitAIs are different, and the loop unit has a higher val, then the group unitAI would change
+					// change this UnitAI to the old group UnitAI if possible
+					CvUnit* pNewHeadUnit = pSelectionGroup->getHeadUnit();
+					UnitAITypes eNewHeadUnitAI = pSelectionGroup->getHeadUnitAI();
+					if (pNewHeadUnit!= NULL && eUnitAI != eNewHeadUnitAI && pLoopUnit->AI_groupFirstVal() > pNewHeadUnit->AI_groupFirstVal())
+					{
+						// non-zero AI_unitValue means that this UnitAI is valid for this unit (that is the check used everywhere)
+						if (kPlayer.AI_unitValue(pLoopUnit->getUnitType(), eNewHeadUnitAI, NULL) > 0)
+						{
+							// this will remove pLoopUnit from the current group
+							pLoopUnit->AI_setUnitAIType(eNewHeadUnitAI);
+
+							bChangedUnitAI = true;
+						}
 					}
 				}
 
