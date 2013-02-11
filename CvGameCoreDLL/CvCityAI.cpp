@@ -1889,6 +1889,16 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 	}
+
+	// Tholal ToDo: figure out a threshold for this function so we dont build useless wonders
+	if (iProductionRank <= std::max(1, (iNumCities / 3)))
+	{
+		if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, ((iNumCities* 2) + 1)))
+		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose QUICK WONDER", getName().GetCString());
+			return;
+		}
+	}
 // End Tholal AI
     
 	
