@@ -285,10 +285,13 @@ class DynamicCivNames :
 
 		bodStr = 'New names for all civs:\n\n'
 
-		for i in range(0,gc.getMAX_CIV_PLAYERS()) :
+		for i in range( 0, gc.getMAX_CIV_PLAYERS() ) :
 			iPlayer = i
-
-			[newName,newShort,newAdj] = self.newNameByCivics(iPlayer)
+			
+			# lfgr bugfix
+			curDesc = gc.getPlayer( iPlayer ).getCivilizationDescription( 0 )
+			# lfgr end
+			[newName, newShort, newAdj] = self.newNameByCivics( iPlayer )
 
 			bodStr += curDesc + '\t-> ' + newName + '\n'
 
@@ -432,6 +435,10 @@ class DynamicCivNames :
 			
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("Names - player not of special type, naming by civics")
 			return self.newNameByCivics( iPlayer )
+		
+		# lfgr: revert "Orcish"
+		curAdj = pPlayer.getCivilizationAdjective( 0 )
+		# lfgr end
 
 		return [newName, curShort, curAdj]
 
@@ -880,9 +887,9 @@ class DynamicCivNames :
 		if( self.LOG_DEBUG ) :
 			CvUtil.pyPrint( "  Names - WARNING: No unused Names for Player #%d!"%( iPlayer ) )
 		
-#		if( sDsc in lsDescs ) :
-#			print "MODIFIED DCN - Keeping name \"%s\"" % ( sDsc )
-#			return [sDsc, sSrt, sAdj]
+		if( sDsc in lsDescs ) :
+			print "MODIFIED DCN - Keeping name \"%s\"" % ( sDsc )
+			return [sDsc, sSrt, sAdj]
 		
 		random.shuffle(lsDescs) # shuffle the name options so we dont end up all using the same style
 		
