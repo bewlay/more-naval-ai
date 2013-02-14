@@ -811,13 +811,10 @@ void CvPlot::updateCulture(bool bBumpUnits, bool bUpdatePlotGroups)
 	{
 		setOwner(calculateCulturalOwner(), bBumpUnits, bUpdatePlotGroups);
 	}
-	// This prevents forts from keeping the culture of dead players
-	else if (getOwnerINLINE() != NO_PLAYER)
+	// This prevents forts from keeping the culture of dead players and allows culture to claim unowned forts
+	else if ((getOwnerINLINE() == NO_PLAYER) || (!GET_PLAYER(getOwnerINLINE()).isAlive()))
 	{
-		if(!GET_PLAYER(getOwnerINLINE()).isAlive())
-		{
-			setOwner(calculateCulturalOwner(), bBumpUnits, bUpdatePlotGroups);
-		}
+		setOwner(calculateCulturalOwner(), bBumpUnits, bUpdatePlotGroups);
 	}
 	// Super Forts end
 }
