@@ -2,7 +2,7 @@
 
 modName = "FFH - More Naval AI"
 displayName = "FFH - More Naval AI"
-modVersion = "2.1"
+modVersion = "2.42"
 
 civName = "BtS"
 civVersion = "3.19"
