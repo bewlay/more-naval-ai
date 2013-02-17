@@ -8548,15 +8548,18 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 			{
 				if (GC.getPromotionInfo((PromotionTypes)iI).isRace())
 				{
-					if (getRace() == NO_PROMOTION)
+					if (!GC.getPromotionInfo((PromotionTypes)iI).isNotAlive()) // exception for upgrades to not-alive races
 					{
-						return false;
-					}
-					else
-					{
-						if (getRace() != iI)
+						if (getRace() == NO_PROMOTION)
 						{
 							return false;
+						}
+						else
+						{
+							if (getRace() != iI)
+							{
+								return false;
+							}
 						}
 					}
 				}
