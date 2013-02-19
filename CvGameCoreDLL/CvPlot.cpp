@@ -231,6 +231,10 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iReconCount = 0;
 	m_iRiverCrossingCount = 0;
 
+	// Super Forts begin *canal* *choke*
+	m_iCanalValue = 0;
+	m_iChokeValue = 0;
+	// Super Forts end
 	// Super Forts begin *bombard*
 	m_iDefenseDamage = 0;
 	m_bBombarded = false;
@@ -3357,6 +3361,326 @@ void CvPlot::doImprovementCulture()
 			}
 		}
 	}
+}
+// Super Forts end
+
+// Super Forts begin *canal* *choke*
+int CvPlot::countRegionPlots(const CvPlot* pInvalidPlot) const
+{
+	int iCount = 0;
+	int iInvalidPlot = (pInvalidPlot == NULL) ? 0 : GC.getMapINLINE().plotNum(pInvalidPlot->getX_INLINE(), pInvalidPlot->getY_INLINE()) + 1;
+	FAStar* pRegionFinder = gDLL->getFAStarIFace()->create();
+	gDLL->getFAStarIFace()->Initialize(pRegionFinder, GC.getMapINLINE().getGridWidthINLINE(), GC.getMapINLINE().getGridHeightINLINE(), GC.getMapINLINE().isWrapXINLINE(), GC.getMapINLINE().isWrapYINLINE(), 
+		NULL, NULL, NULL, stepValid, NULL, countPlotGroup, NULL);
+	gDLL->getFAStarIFace()->SetData(pRegionFinder, &iCount);
+	// Note to self: for GeneratePath() should bReuse be true or false?
+	gDLL->getFAStarIFace()->GeneratePath(pRegionFinder, getX_INLINE(), getY_INLINE(), -1, -1, false, iInvalidPlot, false);
+	gDLL->getFAStarIFace()->destroy(pRegionFinder);
+	return iCount;
+}
+
+int CvPlot::countAdjacentPassableSections(bool bWater) const
+{
+	CvPlot* pAdjacentPlot;
+	int iPassableSections = 0;
+	bool bInPassableSection = false;
+
+	// Are we looking for water passages or land passages?
+	if(bWater)
+	{
+		bool bPlotIsWater = isWater();
+		// This loop is for water
+		for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+		{
+			pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+			if(pAdjacentPlot != NULL)
+			{
+				if(pAdjacentPlot->isWater())
+				{
+					// Don't count diagonal hops across land isthmus
+					if (bPlotIsWater && !isCardinalDirection((DirectionTypes)iI))
+					{
+						if (!(GC.getMapINLINE().plotINLINE(getX_INLINE(), pAdjacentPlot->getY_INLINE())->isWater()) && !(GC.getMapINLINE().plotINLINE(pAdjacentPlot->getX_INLINE(), getY_INLINE())->isWater()))
+						{
+							continue;
+						}
+					}
+					if(pAdjacentPlot->isImpassable())
+					{
+						if(isCardinalDirection((DirectionTypes)iI))
+						{
+							bInPassableSection = false;
+						}
+					}
+					else if(!bInPassableSection)
+					{
+						bInPassableSection = true;
+						++iPassableSections;
+					}
+				}
+				else
+				{
+					bInPassableSection = false;
+				}
+			}
+		}
+	}
+	else
+	{
+		// This loop is for land
+		for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+		{
+			pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+			if(pAdjacentPlot != NULL)
+			{
+				if(pAdjacentPlot->isWater() || pAdjacentPlot->isImpassable())
+				{	
+					if(isCardinalDirection((DirectionTypes)iI))
+					{
+						bInPassableSection = false;
+					}
+				}
+				else if(!bInPassableSection)
+				{
+					bInPassableSection = true;
+					++iPassableSections;
+				}
+			}
+		}
+	}
+	// Corner Case Correction
+	pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), DIRECTION_NORTH);
+	if(pAdjacentPlot != NULL && (bWater == pAdjacentPlot->isWater()) && !pAdjacentPlot->isImpassable())
+	{
+		pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), DIRECTION_NORTHWEST);
+		if(pAdjacentPlot != NULL && (bWater == pAdjacentPlot->isWater()))
+		{
+			if(pAdjacentPlot->isImpassable())
+			{
+				pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), DIRECTION_WEST);
+				if(pAdjacentPlot != NULL && (bWater == pAdjacentPlot->isWater()) && !pAdjacentPlot->isImpassable())
+				{
+					--iPassableSections;
+				}
+			}
+			else
+			{
+				--iPassableSections;
+			}
+		}
+		else if(!bWater)
+		{
+			pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), DIRECTION_WEST);
+			if(pAdjacentPlot != NULL && !pAdjacentPlot->isWater() && !pAdjacentPlot->isImpassable())
+			{
+				--iPassableSections;
+			}
+		}
+	}
+	return iPassableSections;
+}
+
+int CvPlot::countImpassableCardinalDirections() const
+{
+	CvPlot* pAdjacentPlot;
+	int iCount = 0;
+	for(int iI = 0; iI < NUM_CARDINALDIRECTION_TYPES; ++iI)
+	{
+		pAdjacentPlot = plotCardinalDirection(getX_INLINE(), getY_INLINE(), ((CardinalDirectionTypes)iI));
+		if(pAdjacentPlot != NULL)
+		{
+			if(pAdjacentPlot->isImpassable() || (area() != pAdjacentPlot->area()))
+			{
+				++iCount;
+			}
+		}
+	}
+	return iCount;
+}
+// Super Forts end
+
+// Super Forts begin *canal*
+int CvPlot::getCanalValue() const																
+{
+	return m_iCanalValue;
+}
+
+void CvPlot::setCanalValue(int iNewValue)
+{
+	m_iCanalValue = iNewValue;
+}
+
+void CvPlot::calculateCanalValue()
+{
+	bool bInWaterSection;
+	CvPlot *pAdjacentPlot, *apPlotsToCheck[4];
+	int iWaterSections, iPlotsFound, iMaxDistance;
+	int iCanalValue = 0;
+
+	if(isCoastalLand() && !isImpassable())
+	{
+		iWaterSections = countAdjacentPassableSections(true);
+		if(iWaterSections > 1)
+		{
+			iMaxDistance = 0;
+			iPlotsFound = 0;
+			bInWaterSection = false;
+			// Find appropriate plots to be used for path distance calculations
+			for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+			{
+				pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+				if(pAdjacentPlot != NULL)
+				{
+					if(pAdjacentPlot->isWater())
+					{
+						if(pAdjacentPlot->isImpassable())
+						{
+							if(isCardinalDirection((DirectionTypes)iI))
+							{
+								bInWaterSection = false;
+							}
+						}
+						else if(!bInWaterSection)
+						{
+							bInWaterSection = true;
+							apPlotsToCheck[iPlotsFound] = pAdjacentPlot;
+							if((++iPlotsFound) == iWaterSections)
+								break;
+						}
+					}
+					else
+					{
+						bInWaterSection = false;
+					}
+				}
+			}
+			// Find the max path distance out of all possible pairs of plots
+			for (int iI = 0; iI < (iPlotsFound - 1); ++iI)
+			{
+				for (int iJ = iI + 1; iJ < iPlotsFound; ++iJ)
+				{
+					if(!apPlotsToCheck[iI]->isLake() || !apPlotsToCheck[iJ]->isLake())
+					{
+						int iDistance = GC.getMapINLINE().calculatePathDistance(apPlotsToCheck[iI], apPlotsToCheck[iJ]);
+						if(iDistance == -1)
+						{
+						
+							// If no path was found then value is based off the number of plots in the region minus a minimum area
+							iDistance = std::min(apPlotsToCheck[iI]->countRegionPlots(), apPlotsToCheck[iJ]->countRegionPlots()) - 7;
+							iDistance *= 4;
+						}
+						else
+						{
+							// Path already would have required 2 steps, and I don't care that much about saving just 1 or 2 moves
+							iDistance -= 4;
+						}
+						if(iDistance > iMaxDistance)
+						{
+							iMaxDistance = iDistance;
+						}
+					}
+				}
+			}
+			iCanalValue = iMaxDistance * (iPlotsFound - 1);
+		}
+	}
+
+	setCanalValue(iCanalValue);
+}
+// Super Forts end
+
+// Super Forts begin *choke*
+int CvPlot::getChokeValue() const
+{
+	return m_iChokeValue;
+}
+
+void CvPlot::setChokeValue(int iNewValue)
+{
+	m_iChokeValue = iNewValue;
+}
+
+void CvPlot::calculateChokeValue()
+{
+	bool bInPassableSection;
+	CvPlot *pAdjacentPlot, *apPlotsToCheck[4];
+	int iPassableSections, iPlotsFound, iMaxDistance;
+	int iChokeValue = 0;
+	bool bWater = isWater();
+
+	if(!isImpassable() && countImpassableCardinalDirections() > 1)
+	{
+		iPassableSections = countAdjacentPassableSections(bWater);
+		if(iPassableSections > 1)
+		{
+			iMaxDistance = 0;
+			iPlotsFound = 0;
+			bInPassableSection = false;
+			// Find appropriate plots to be used for path distance calculations
+			for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+			{
+				pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+				if(pAdjacentPlot != NULL)
+				{
+					if(pAdjacentPlot->isWater() == bWater)
+					{	
+						// Don't count diagonal hops across land isthmus
+						if (bWater && !isCardinalDirection((DirectionTypes)iI))
+						{
+							if (!(GC.getMapINLINE().plotINLINE(getX_INLINE(), pAdjacentPlot->getY_INLINE())->isWater()) && !(GC.getMapINLINE().plotINLINE(pAdjacentPlot->getX_INLINE(), getY_INLINE())->isWater()))
+							{
+								continue;
+							}
+						}
+						if(pAdjacentPlot->isImpassable())
+						{
+							if(isCardinalDirection((DirectionTypes)iI))
+							{
+								bInPassableSection = false;
+							}
+						}
+						else if(!bInPassableSection)
+						{
+							bInPassableSection = true;
+							apPlotsToCheck[iPlotsFound] = pAdjacentPlot;
+							if((++iPlotsFound) == iPassableSections)
+								break;
+						}
+					}
+					else if(bWater || isCardinalDirection((DirectionTypes)iI))
+					{
+						bInPassableSection = false;
+					}
+				}
+			}
+			// Find the max path distance out of all possible pairs of plots
+			for (int iI = 0; iI < (iPlotsFound - 1); ++iI)
+			{
+				for (int iJ = iI + 1; iJ < iPlotsFound; ++iJ)
+				{
+					int iDistance = GC.getMapINLINE().calculatePathDistance(apPlotsToCheck[iI], apPlotsToCheck[iJ], this);
+					if(iDistance == -1)
+					{
+						// If no path was found then value is based off the number of plots in the region minus a minimum area
+						iDistance = std::min(apPlotsToCheck[iI]->countRegionPlots(this), apPlotsToCheck[iJ]->countRegionPlots(this)) - 4;
+						iDistance *= 4;
+					}
+					else
+					{
+						// Path already would have required 2 steps, but we forced the enemy to go another way so there is some value
+						iDistance -= 1;
+					}
+					if(iDistance > iMaxDistance)
+					{
+						iMaxDistance = iDistance;
+					}
+				}
+			}
+			iChokeValue = iMaxDistance * (iPlotsFound - 1);
+		}
+	}
+
+	setChokeValue(iChokeValue);
 }
 // Super Forts end
 
@@ -9971,6 +10295,10 @@ void CvPlot::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iReconCount);
 	pStream->Read(&m_iRiverCrossingCount);
 
+	// Super Forts begin *canal* *choke*
+	pStream->Read(&m_iCanalValue);
+	pStream->Read(&m_iChokeValue);
+	// Super Forts end
 	// Super Forts begin *bombard*
 	pStream->Read(&m_iDefenseDamage);
 	pStream->Read(&m_bBombarded);
@@ -10237,6 +10565,10 @@ void CvPlot::write(FDataStreamBase* pStream)
 	pStream->Write(m_iReconCount);
 	pStream->Write(m_iRiverCrossingCount);
 
+	// Super Forts begin *canal* *choke*
+	pStream->Write(m_iCanalValue);
+	pStream->Write(m_iChokeValue);
+	// Super Forts end
 	// Super Forts begin *bombard*
 	pStream->Write(m_iDefenseDamage);
 	pStream->Write(m_bBombarded);

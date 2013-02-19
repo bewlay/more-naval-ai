@@ -455,6 +455,9 @@ class CvEventManager:
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_DETAILS)
 					popupInfo.setOption1(true)
 					popupInfo.addPopup(iPlayer)
+					
+		# Super Forts
+		CyMap().calculateCanalAndChokePoints()
 
 		CvAdvisorUtils.resetNoLiberateCities()
 

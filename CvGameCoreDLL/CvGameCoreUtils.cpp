@@ -2154,6 +2154,17 @@ int stepValid(FAStarNode* parent, FAStarNode* node, int data, const void* pointe
 	{
 		return FALSE;
 	}
+	// Super Forts begin *choke*
+	int iInvalidPlot = gDLL->getFAStarIFace()->GetInfo(finder);
+	if(iInvalidPlot > 0)
+	{
+		// 1 is subtracted because 1 was added earlier to avoid a conflict with index 0
+		if(pNewPlot == GC.getMapINLINE().plotByIndexINLINE((iInvalidPlot - 1)))
+		{
+			return FALSE;
+		}
+	}
+	// Super Forts end
 
 /********************************************************************************/
 /* 	BETTER_BTS_AI_MOD					12/12/08				jdog5000	*/
