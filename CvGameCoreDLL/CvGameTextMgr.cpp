@@ -5771,9 +5771,12 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 /*                                                                                              */
 /* Debug                                                                                        */
 /************************************************************************************************/
-			szTempBuffer.Format(L"Stability Index: %d, Trend: %d",GET_PLAYER(pPlot->getOwner()).getStabilityIndex(),GET_PLAYER(pPlot->getOwner()).getStabilityIndex()-GET_PLAYER(pPlot->getOwner()).getStabilityIndexAverage());
-			szString.append(szTempBuffer);
-			szString.append(NEWLINE);
+			if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
+			{
+				szTempBuffer.Format(L"Stability Index: %d, Trend: %d",GET_PLAYER(pPlot->getOwner()).getStabilityIndex(),GET_PLAYER(pPlot->getOwner()).getStabilityIndex()-GET_PLAYER(pPlot->getOwner()).getStabilityIndexAverage());
+				szString.append(szTempBuffer);
+				szString.append(NEWLINE);
+			}
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
