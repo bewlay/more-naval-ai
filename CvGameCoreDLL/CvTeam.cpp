@@ -179,10 +179,12 @@ void CvTeam::init(TeamTypes eID)
 					GET_TEAM((TeamTypes)iI).setHasMet(getID(),false);
 					setHasMet((TeamTypes)iI,false);
 				}
+				/*
 				if( GET_TEAM((TeamTypes)iI).isBarbarian() )
 				{
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
 				}
+				*/
 			}
 		}
 	}
