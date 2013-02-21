@@ -20768,7 +20768,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 		{
 			if (pLoopPlot->getOwnerINLINE() == getOwnerINLINE()
 				// Super Forts *canal* *choke* begin
-				|| pLoopPlot->getOwnerINLINE() == NO_PLAYER) 
+				|| (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && pLoopPlot->getOwnerINLINE() == NO_PLAYER && pLoopPlot->isRevealed(getTeam(), false)))
 				// Super Forts end
 			{
 				if (pLoopPlot->getImprovementType() == NO_IMPROVEMENT
@@ -20786,8 +20786,36 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 					if (pLoopPlot->isHills())
 						iValue += 10;
 					*/
+					if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+					{
+						CvPlot* pAdjacentPlot;
+						for (iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+						{
+							pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
+
+							if (pAdjacentPlot != NULL)
+							{
+								if(pAdjacentPlot->getOwnerINLINE() == NO_PLAYER)
+								{
+									BonusTypes eNonObsoleteBonus = pAdjacentPlot->getNonObsoleteBonusType(getTeam());
+									if (eNonObsoleteBonus != NO_BONUS)
+									{
+										if (!GET_PLAYER(getOwnerINLINE()).hasBonus(eNonObsoleteBonus) || GC.getBonusInfo(eNonObsoleteBonus).isMana())
+										{
+											iValue += 200;
+										}
+										else
+										{
+											iValue += 50;
+										}
+									}
+								}
+							}
+						}
+					}
+
 					int iMinAcceptableValue = 0;
-					if(pLoopPlot->getOwnerINLINE() != getOwnerINLINE())
+					if(pLoopPlot->getOwnerINLINE() == NO_PLAYER)
 					{	// Don't go outside borders for low values
 						iMinAcceptableValue += 150;
 					}
@@ -20944,7 +20972,9 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
 		// Super Forts begin *AI_worker*
-		if ((pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && pLoopPlot->getOwnerINLINE() == NO_PLAYER)) && AI_plotValid(pLoopPlot))
+		if ((pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || 
+			(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && pLoopPlot->getOwnerINLINE() == NO_PLAYER && pLoopPlot->isRevealed(getTeam(), false))) 
+			&& AI_plotValid(pLoopPlot))
 		//if (pLoopPlot->getOwnerINLINE() == getOwnerINLINE() && AI_plotValid(pLoopPlot)) - Original Code
 		// Super Forts end
 		{
