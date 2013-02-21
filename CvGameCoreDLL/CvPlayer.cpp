@@ -5971,14 +5971,19 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			{
 				if (0 == GC.getGameINLINE().getMaxCityElimination())
 				{
-					if (!GET_TEAM(getTeam()).isAVassal() && !GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isVassal(getTeam()))
+					//if (!GET_TEAM(getTeam()).isAVassal() && !GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isVassal(getTeam()))
+					if (!GET_TEAM(getTeam()).isAVassal())
 					{
-						pOurCapitalCity = getCapitalCity();
-						if (pOurCapitalCity != NULL)
+						if (!GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isAVassal() ||
+							GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isVassal(getTeam()))
 						{
-							if (pOurCapitalCity->getID() != item.m_iData)
+							pOurCapitalCity = getCapitalCity();
+							if (pOurCapitalCity != NULL)
 							{
-								return true;
+								if (pOurCapitalCity->getID() != item.m_iData)
+								{
+									return true;
+								}
 							}
 						}
 					}
