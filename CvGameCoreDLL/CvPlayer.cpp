@@ -3601,33 +3601,35 @@ void CvPlayer::setHasTrait(TraitTypes eTrait, bool bNewValue)
 
 	m_pbTraits[(int)eTrait] = bNewValue;
 
-	changeExtraHealth(GC.getTraitInfo(eTrait).getHealth() * iChange);
-	changeExtraHappiness(GC.getTraitInfo(eTrait).getHappiness() * iChange);
+	CvTraitInfo& kTraitInfo = GC.getTraitInfo(eTrait);
+
+	changeExtraHealth(kTraitInfo.getHealth() * iChange);
+	changeExtraHappiness(kTraitInfo.getHappiness() * iChange);
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		changeExtraBuildingHappiness((BuildingTypes)iI, GC.getBuildingInfo((BuildingTypes)iI).getHappinessTraits((int)eTrait) * iChange);
 	}
 
-	changeUpkeepModifier(GC.getTraitInfo(eTrait).getUpkeepModifier() * iChange);
-	changeLevelExperienceModifier(GC.getTraitInfo(eTrait).getLevelExperienceModifier() * iChange);
-	changeGreatPeopleRateModifier(GC.getTraitInfo(eTrait).getGreatPeopleRateModifier() * iChange);
-	changeGreatGeneralRateModifier(GC.getTraitInfo(eTrait).getGreatGeneralRateModifier() * iChange);
-	changeDomesticGreatGeneralRateModifier(GC.getTraitInfo(eTrait).getDomesticGreatGeneralRateModifier() * iChange);
+	changeUpkeepModifier(kTraitInfo.getUpkeepModifier() * iChange);
+	changeLevelExperienceModifier(kTraitInfo.getLevelExperienceModifier() * iChange);
+	changeGreatPeopleRateModifier(kTraitInfo.getGreatPeopleRateModifier() * iChange);
+	changeGreatGeneralRateModifier(kTraitInfo.getGreatGeneralRateModifier() * iChange);
+	changeDomesticGreatGeneralRateModifier(kTraitInfo.getDomesticGreatGeneralRateModifier() * iChange);
 
-	changeMaxGlobalBuildingProductionModifier(GC.getTraitInfo(eTrait).getMaxGlobalBuildingProductionModifier() * iChange);
-	changeMaxTeamBuildingProductionModifier(GC.getTraitInfo(eTrait).getMaxTeamBuildingProductionModifier() * iChange);
-	changeMaxPlayerBuildingProductionModifier(GC.getTraitInfo(eTrait).getMaxPlayerBuildingProductionModifier() * iChange);
+	changeMaxGlobalBuildingProductionModifier(kTraitInfo.getMaxGlobalBuildingProductionModifier() * iChange);
+	changeMaxTeamBuildingProductionModifier(kTraitInfo.getMaxTeamBuildingProductionModifier() * iChange);
+	changeMaxPlayerBuildingProductionModifier(kTraitInfo.getMaxPlayerBuildingProductionModifier() * iChange);
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		changeTradeYieldModifier(((YieldTypes)iI), GC.getTraitInfo(eTrait).getTradeYieldModifier(iI) * iChange);
+		changeTradeYieldModifier(((YieldTypes)iI), kTraitInfo.getTradeYieldModifier(iI) * iChange);
 	}
 
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
     {
-		changeFreeCityCommerce(((CommerceTypes)iI), GC.getTraitInfo(eTrait).getCommerceChange(iI) * iChange);
-		changeCommerceRateModifier(((CommerceTypes)iI), GC.getTraitInfo(eTrait).getCommerceModifier(iI) * iChange);
+		changeFreeCityCommerce(((CommerceTypes)iI), kTraitInfo.getCommerceChange(iI) * iChange);
+		changeCommerceRateModifier(((CommerceTypes)iI), kTraitInfo.getCommerceModifier(iI) * iChange);
 	}
 
 	for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
@@ -3638,50 +3640,50 @@ void CvPlayer::setHasTrait(TraitTypes eTrait, bool bNewValue)
 		}
 	}
 
-    if (GC.getTraitInfo(eTrait).isAdaptive())
+    if (kTraitInfo.isAdaptive())
     {
         setAdaptive(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isAgnostic())
+    if (kTraitInfo.isAgnostic())
     {
         setAgnostic(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isAssimilation())
+    if (kTraitInfo.isAssimilation())
     {
         setAssimilation(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isBarbarianAlly())
+    if (kTraitInfo.isBarbarianAlly())
     {
         GET_TEAM(getTeam()).setBarbarianAlly(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isIgnoreFood())
+    if (kTraitInfo.isIgnoreFood())
     {
         setIgnoreFood(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isInsane())
+    if (kTraitInfo.isInsane())
     {
         setInsane(bNewValue);
     }
-    if (GC.getTraitInfo(eTrait).isSprawling())
+    if (kTraitInfo.isSprawling())
     {
         setSprawling(bNewValue);
     }
-	changeFreeXPFromCombat(GC.getTraitInfo(eTrait).getFreeXPFromCombat() * iChange);
-    if (GC.getTraitInfo(eTrait).getMaxCities() != -1)
+	changeFreeXPFromCombat(kTraitInfo.getFreeXPFromCombat() * iChange);
+    if (kTraitInfo.getMaxCities() != -1)
     {
         if (iChange == 1)
         {
-            setMaxCities(GC.getTraitInfo(eTrait).getMaxCities() + GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getMaxCitiesMod());
+            setMaxCities(kTraitInfo.getMaxCities() + GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getMaxCitiesMod());
         }
         else
         {
             setMaxCities(-1);
         }
     }
-	changePillagingGold(GC.getTraitInfo(eTrait).getPillagingGold() * iChange);
-	changeStartingGold(GC.getTraitInfo(eTrait).getStartingGold() * iChange);
-	changeSummonDuration(GC.getTraitInfo(eTrait).getSummonDuration() * iChange);
-	changeUpgradeCostModifier(GC.getTraitInfo(eTrait).getUpgradeCostModifier() * iChange);
+	changePillagingGold(kTraitInfo.getPillagingGold() * iChange);
+	changeStartingGold(kTraitInfo.getStartingGold() * iChange);
+	changeSummonDuration(kTraitInfo.getSummonDuration() * iChange);
+	changeUpgradeCostModifier(kTraitInfo.getUpgradeCostModifier() * iChange);
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
