@@ -12003,11 +12003,20 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
         int iImprovement = pNewPlot->getImprovementType();
         if (iImprovement != NO_IMPROVEMENT)
         {
-            if (GC.getImprovementInfo((ImprovementTypes)iImprovement).getSpawnUnitType() != NO_UNIT)
+			CvImprovementInfo& kImprovementInfo = GC.getImprovementInfo((ImprovementTypes)iImprovement);
+
+            if (kImprovementInfo.getSpawnUnitType() != NO_UNIT)
             {
-                if (!isHuman() || GC.getImprovementInfo((ImprovementTypes)iImprovement).isPermanent() == false)
+				bool bAnimalLair = false;
+
+				if (GC.getUnitInfo((UnitTypes)kImprovementInfo.getSpawnUnitType()).isAnimal())
+				{
+					bAnimalLair = true;
+				}
+
+                if (!isHuman() || kImprovementInfo.isPermanent() == false)
                 {
-                    if (atWar(getTeam(), GET_PLAYER(BARBARIAN_PLAYER).getTeam()))
+                    if (atWar(getTeam(), GET_PLAYER(BARBARIAN_PLAYER).getTeam()) || (bAnimalLair && !isBarbarian()))
                     {
                         if (isHuman())
                         {
