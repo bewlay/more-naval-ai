@@ -15077,9 +15077,13 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 			}
 		}
 	}
-	// descriptive text
-	szBuffer.append(NEWLINE);
-	szBuffer.append(kProject.getStrategy());
+
+	// descriptive text for mouseovers
+	if (!bCivilopediaText)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(kProject.getStrategy());
+	}
 }
 
 
