@@ -20789,7 +20789,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 					if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 					{
 						CvPlot* pAdjacentPlot;
-						for (iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
+						for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
 						{
 							pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
 
