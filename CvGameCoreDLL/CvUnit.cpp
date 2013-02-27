@@ -830,7 +830,11 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 
 	if (ePlayer != NO_PLAYER)
 	{
-
+		if (!bConvert)
+		{
+			logBBAI("    %S Slain! (Unit %d - plot: %d, %d)", getName().GetCString(), getID(), getX(), getY());
+		}
+				
 //FfH: Modified by Kael 02/05/2009
 //		CvEventReporter::getInstance().unitKilled(this, ePlayer);
         if (!isImmortal())
@@ -838,6 +842,10 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 			CvEventReporter::getInstance().unitKilled(this, ePlayer);
         }
 //FfH: End Modify
+		else
+		{
+			logBBAI("    Immortal Rebirth!");
+		}
 
 		if (NO_UNIT != getLeaderUnitType())
 		{
@@ -13459,24 +13467,10 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking)
 		{
 			if( gUnitLogLevel > 0 ) 
 			{
-				logBBAI("*** KOMBAT!\n     ATTACKER: Player %d Unit %d (%S's %S), CombatStrength=%d\n     DEFENDER: Player %d Unit %d (%S's %S), CombatStrength=%d\n",
-						getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), currCombatStr(NULL, NULL),
+				logBBAI("      *** KOMBAT!\n                    ATTACKER: %S (Unit %d), CombatStrength=%d\n                    DEFENDER: Player %d Unit %d (%S's %S), CombatStrength=%d\n",
+						getName().GetCString(), getID(), currCombatStr(NULL, NULL),
 						pCombatUnit->getOwnerINLINE(), pCombatUnit->getID(), GET_PLAYER(pCombatUnit->getOwnerINLINE()).getNameKey(), pCombatUnit->getName().GetCString(), pCombatUnit->currCombatStr(pCombatUnit->plot(), this));
 			}
-			/*
-			if (GC.getLogging())
-			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					// Log info about this combat...
-					char szOut[1024];
-					sprintf( szOut, "*** KOMBAT!\n     ATTACKER: Player %d Unit %d (%S's %S), CombatStrength=%d\n     DEFENDER: Player %d Unit %d (%S's %S), CombatStrength=%d\n",
-						getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), currCombatStr(NULL, NULL),
-						pCombatUnit->getOwnerINLINE(), pCombatUnit->getID(), GET_PLAYER(pCombatUnit->getOwnerINLINE()).getNameKey(), pCombatUnit->getName().GetCString(), pCombatUnit->currCombatStr(pCombatUnit->plot(), this));
-					gDLL->messageControlLog(szOut);
-				}
-			}
-			*/
 
 			if (getDomainType() == DOMAIN_LAND
 				&& !m_pUnitInfo->isIgnoreBuildingDefense()
