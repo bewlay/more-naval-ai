@@ -18807,6 +18807,9 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 			}
 		}
 	}
+	
+	CvWString szBuffer;
+	
 	if (iUnit != NO_UNIT)
 	{
 		if ((!pLoser->isImmuneToCapture() && !isNoCapture() && !pLoser->isImmortal())
@@ -18857,8 +18860,20 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 					pUnit->withdrawlToNearestValidPlot();
 				}
 //<<<<Unofficial Bug Fix: End Add
+			szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_CAPTURED_UNIT", pUnit->getNameKey());
+			gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pUnit->getX_INLINE(), pUnit->getY_INLINE());
+
+			szBuffer = gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_CAPTURED", pUnit->getNameKey());
+			gDLL->getInterfaceIFace()->addMessage(pLoser->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pUnit->getX_INLINE(), pUnit->getY_INLINE());
+
 		}
 	}
+	else if (bUnitAutoCapture) // text message for captured workers
+	{
+		szBuffer = gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_CAPTURED", pLoser->getNameKey());
+		gDLL->getInterfaceIFace()->addMessage(pLoser->getOwner(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pLoser->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pLoser->getX_INLINE(), pLoser->getY_INLINE());
+	}
+
 	if (!CvString(GC.getUnitInfo(getUnitType()).getPyPostCombatWon()).empty())
     {
         CyUnit* pyCaster = new CyUnit(this);
