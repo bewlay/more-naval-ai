@@ -1037,8 +1037,13 @@ bool CvDLLWidgetData::executeAltAction( CvWidgetDataStruct &widgetDataStruct )
 	{
 	case WIDGET_HELP_TECH_ENTRY:
 	case WIDGET_HELP_TECH_PREPREQ:
-	case WIDGET_RESEARCH:
 	case WIDGET_TECH_TREE:
+		doPediaTechJump(widgetDataStruct);
+		break;
+	case WIDGET_RESEARCH:
+		// To catch right-clicking on the current research text, which has widgetDataStruct.m_iData1 = -1, because it is supposed to reset research when left-clicked
+		if( widgetDataStruct.m_iData1 == -1 )
+			widgetDataStruct.m_iData1 = GET_PLAYER( GC.getGameINLINE().getActivePlayer() ).getCurrentResearch();
 		doPediaTechJump(widgetDataStruct);
 		break;
 	case WIDGET_TRAIN:
