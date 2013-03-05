@@ -1816,6 +1816,7 @@ void CvGame::normalizeAddFoodBonuses()
 												{
 													if (pLoopPlot->canHaveBonus(((BonusTypes)iK), bIgnoreLatitude))
 													{
+														logBBAI("  (ADD FOOD BONUSES): Adding Bonus %S to plot %d, %d for %S", GC.getBonusInfo((BonusTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
 														pLoopPlot->setBonusType((BonusTypes)iK);
 														if (pLoopPlot->isWater())
 														{
@@ -1933,9 +1934,13 @@ void CvGame::normalizeAddGoodTerrain()
 												{
 													if (GC.getFeatureInfo((FeatureTypes)iK).isTerrain(pLoopPlot->getTerrainType()))
 													{
-														pLoopPlot->setFeatureType((FeatureTypes)iK);
-														bChanged = true;
-														break;
+														if (GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).isMaintainFeatures(iK))
+														{
+															logBBAI("  (ADD GOOD TERRAIN): Adding feature %S to plot %d, %d for %S", GC.getFeatureInfo((FeatureTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
+															pLoopPlot->setFeatureType((FeatureTypes)iK);
+															bChanged = true;
+															break;
+														}
 													}
 												}
 											}
@@ -2023,11 +2028,15 @@ void CvGame::normalizeAddExtras()
 										{
 											if ((GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_PRODUCTION)) > 0)
 											{
-												if (pLoopPlot->canHaveFeature((FeatureTypes)iK))
+												if (GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).isMaintainFeatures(iK))
 												{
-													pLoopPlot->setFeatureType((FeatureTypes)iK);
-													iCount++;
-													break;
+													if (pLoopPlot->canHaveFeature((FeatureTypes)iK))
+													{
+														logBBAI("  (ADD EXTRAS): Adding feature %S to plot %d, %d for %S", GC.getFeatureInfo((FeatureTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
+														pLoopPlot->setFeatureType((FeatureTypes)iK);
+														iCount++;
+														break;
+													}
 												}
 											}
 										}
@@ -2123,6 +2132,7 @@ void CvGame::normalizeAddExtras()
 														{
 															if ((iPass == 0) ? CvMapGenerator::GetInstance().canPlaceBonusAt(((BonusTypes)iK), pLoopPlot->getX(), pLoopPlot->getY(), bIgnoreLatitude) : pLoopPlot->canHaveBonus(((BonusTypes)iK), bIgnoreLatitude))
 															{
+																logBBAI("  (ADD EXTRAS): Adding Bonus %S to plot %d, %d for %S", GC.getBonusInfo((BonusTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
 																pLoopPlot->setBonusType((BonusTypes)iK);
 																iCoastFoodCount += bCoast ? 1 : 0;
 																iOceanFoodCount += bOcean ? 1 : 0;
@@ -2156,6 +2166,7 @@ void CvGame::normalizeAddExtras()
 																{
 																	if ((iPass == 0) ? CvMapGenerator::GetInstance().canPlaceBonusAt(((BonusTypes)iK), pLoopPlot->getX(), pLoopPlot->getY(), bIgnoreLatitude) : pLoopPlot->canHaveBonus(((BonusTypes)iK), bIgnoreLatitude))
 																	{
+																		logBBAI("  (ADD EXTRAS): Adding Bonus %S to plot %d, %d for %S", GC.getBonusInfo((BonusTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
 																		pLoopPlot->setBonusType((BonusTypes)iK);
 																		iOtherCount++;
 																		break;
@@ -2197,10 +2208,14 @@ void CvGame::normalizeAddExtras()
 									{
 										if ((GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo((FeatureTypes)iK).getYieldChange(YIELD_PRODUCTION)) > 0)
 										{
-											if (pLoopPlot->canHaveFeature((FeatureTypes)iK))
+											if (GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).isMaintainFeatures(iK))
 											{
-												pLoopPlot->setFeatureType((FeatureTypes)iK);
-												break;
+												if (pLoopPlot->canHaveFeature((FeatureTypes)iK))
+												{
+													logBBAI("  (ADD EXTRAS): Adding Feature(2) %S to plot %d, %d for %S", GC.getFeatureInfo((FeatureTypes)iK).getDescription(), pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
+													pLoopPlot->setFeatureType((FeatureTypes)iK);
+													break;
+												}
 											}
 										}
 									}
@@ -2243,6 +2258,7 @@ void CvGame::normalizeAddExtras()
 									if ((pLoopPlot->getBonusType() == NO_BONUS) ||
 										GC.getBonusInfo(pLoopPlot->getBonusType()).isHills())
 									{
+										logBBAI("  (ADD EXTRAS): Adding Hills to plot %d, %d for %S", pLoopPlot->getX(), pLoopPlot->getY(), GC.getCivilizationInfo((CivilizationTypes)GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getDescription());
 										pLoopPlot->setPlotType(PLOT_HILLS, false, true);
 										iHillsCount++;
 									}
@@ -2260,6 +2276,8 @@ void CvGame::normalizeAddExtras()
 void CvGame::normalizeStartingPlots()
 {
 	PROFILE_FUNC();
+
+	logBBAI("NORMALIZING STARTING PLOTS...");
 
 	if (!(GC.getInitCore().getWBMapScript()) || GC.getInitCore().getWBMapNoPlayers())
 	{
