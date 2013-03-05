@@ -801,6 +801,7 @@ def spellCreateDenBear(caster):
 		caster.setXY(pPlot2.getX(), pPlot2.getY(), False, True, True)
 		pPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.UNITAI_LAIRGUARDIAN, DirectionTypes.DIRECTION_SOUTH)
+		newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)
 #		newUnit.convert(caster)
 
 def reqCreateDenLion(caster):
@@ -837,6 +838,7 @@ def spellCreateDenLion(caster):
 		caster.setXY(pPlot2.getX(), pPlot2.getY(), False, True, True)
 		pPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 		newUnit = pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.UNITAI_LAIRGUARDIAN, DirectionTypes.DIRECTION_SOUTH)
+		newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY'), True)
 #		newUnit.convert(caster)
 
 def reqCrewBuccaneers(caster):
