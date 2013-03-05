@@ -7273,6 +7273,15 @@ void CvCityAI::AI_setEmphasize(EmphasizeTypes eIndex, bool bNewValue)
 			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 		}
 	}
+
+	// lfgr BUGFIX 02/2013: Update growth bar text
+	if ((getOwnerINLINE() == GC.getGameINLINE().getActivePlayer()) && isCitySelected())
+	{
+		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+	}
+	// lfgr end
+
+
 }
 
 void CvCityAI::AI_forceEmphasizeCulture(bool bNewValue)

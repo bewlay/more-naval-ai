@@ -3683,7 +3683,10 @@ class CvMainInterface:
 						'''
 						if pHeadSelectedCity.AI_stopGrowth():
 							szBuffer = localText.getText("INTERFACE_CITY_STAGNANT_GROWTH_CONTROL", ())
-						if (CityUtil.willGrowThisTurn(pHeadSelectedCity)):
+					# lfgr BUGFIX 02/2013
+						#if (CityUtil.willGrowThisTurn(pHeadSelectedCity)):
+						elif (CityUtil.willGrowThisTurn(pHeadSelectedCity)):
+					# lfgr end
 							szBuffer = localText.getText("INTERFACE_CITY_GROWTH", ())
 						elif (iFoodDifference > 0):
 # FlavourMod: End Change
