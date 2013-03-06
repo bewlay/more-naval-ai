@@ -3095,8 +3095,8 @@ bool CvSelectionGroup::calculateIsStranded()
 		return false;
 	}
 
-	// barbarian animals shouldnt be flagged as stranded
-	if (getHeadUnit()->isBarbarian() && getHeadUnit()->isAnimal())
+	// barbarians shouldnt be flagged as stranded
+	if (getHeadUnit()->isBarbarian())
 	{
 		return false;
 	}
