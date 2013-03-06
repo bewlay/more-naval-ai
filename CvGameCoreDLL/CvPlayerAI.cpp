@@ -11823,7 +11823,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 				{
 					if (!(kUnitInfo.getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_SIEGE")))
 					{
-						bValid = true;
+						if (!(iCombat < kUnitInfo.getCombatDefense()))
+						{
+							bValid = true;
+						}
 					}
 				}
 			}
