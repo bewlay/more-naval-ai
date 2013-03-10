@@ -17111,7 +17111,7 @@ bool CvUnitAI::AI_cityAttack(int iRange, int iOddsThreshold, bool bFollow)
 				if (AI_plotValid(pLoopPlot))
 				{
 					// Super Forts begin *AI_offense* - modified if statement so forts will be attacked too
-					if (pLoopPlot->isCity((GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && !isNoCapture())))
+					if (pLoopPlot->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)))
 					//if (pLoopPlot->isCity() || (pLoopPlot->isCity(true, getTeam()) && pLoopPlot->isVisibleEnemyUnit(this))) - Original Code
 					// Super Forts end
 					{
@@ -17198,7 +17198,7 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 					if( (bAllowCities) || !(pLoopPlot->isCity(false)) )
 					{
 						// Super Forts begin *AI_offense* - modified if statement so forts will be attacked too
-						if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity((GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && !isNoCapture())) && AI_potentialEnemy(pLoopPlot->getTeam())))
+						if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)) && AI_potentialEnemy(pLoopPlot->getTeam())))
 						//if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity() && AI_potentialEnemy(pLoopPlot->getTeam()))) - Original Code
 						// Super Forts end
 						{
@@ -17291,7 +17291,7 @@ bool CvUnitAI::AI_rangeAttack(int iRange)
 			if (pLoopPlot != NULL)
 			{
 				// Super Forts begin *AI_offense* - modified if statement so forts will be attacked too
-				if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity((GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && !isNoCapture())) && AI_potentialEnemy(pLoopPlot->getTeam())))
+				if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)) && AI_potentialEnemy(pLoopPlot->getTeam())))
 				//if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity() && AI_potentialEnemy(pLoopPlot->getTeam()))) - Original Code
 				// Super Forts end 
 				{
@@ -17369,7 +17369,7 @@ bool CvUnitAI::AI_leaveAttack(int iRange, int iOddsThreshold, int iStrengthThres
 				if (AI_plotValid(pLoopPlot))
 				{
 					// Super Forts begin *AI_offense* - modified if statement so forts will be attacked too
-					if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity((GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && !isNoCapture())) && AI_potentialEnemy(pLoopPlot->getTeam(), pLoopPlot)))
+					if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)) && AI_potentialEnemy(pLoopPlot->getTeam(), pLoopPlot)))
 					//if (pLoopPlot->isVisibleEnemyUnit(this) || (pLoopPlot->isCity() && AI_potentialEnemy(pLoopPlot->getTeam(), pLoopPlot))) - Original code
 					// Super Forts end
 					{
@@ -25234,7 +25234,7 @@ bool CvUnitAI::AI_stackAttackCity(int iRange, int iPowerThreshold, bool bFollow)
 				if (AI_plotValid(pLoopPlot))
 				{
 					// Super Forts begin *AI_offense* - modified if statement so forts are attacked too
-					if (pLoopPlot->isCity((GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)  && !isNoCapture())))
+					if (pLoopPlot->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)))
 					//if (pLoopPlot->isCity() || (pLoopPlot->isCity(true) && pLoopPlot->isVisibleEnemyUnit(this))) - Original Code
 					// Super Forts end
 					{

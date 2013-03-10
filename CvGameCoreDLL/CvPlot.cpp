@@ -4621,12 +4621,20 @@ bool CvPlot::isFriendlyCity(const CvUnit& kUnit, bool bCheckImprovement) const
 
 bool CvPlot::isEnemyCity(const CvUnit& kUnit) const
 {
+	// Super Forts begin *culture*
+	TeamTypes ePlotTeam = getTeam();
+	if (isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)) && (ePlotTeam != NO_TEAM))
+	{
+		return kUnit.isEnemy(ePlotTeam, this);
+	}
+	/* Original Code
 	CvCity* pCity = getPlotCity();
 
 	if (pCity != NULL)
 	{
 		return kUnit.isEnemy(pCity->getTeam(), this);
-	}
+	} */
+	// Super Forts end
 
 	return false;
 }
