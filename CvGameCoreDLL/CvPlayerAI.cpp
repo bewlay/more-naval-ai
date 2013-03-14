@@ -25975,14 +25975,14 @@ int CvPlayerAI::AI_getAttitudeWeight(PlayerTypes ePlayer) const
 int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 {
 	PROFILE_FUNC();
-	
+
 	FAssert(pPlot != NULL);
-	
+
 	if (pPlot->getTeam() != getTeam())
 	{
 		return 0;
 	}
-	
+
 	if (pPlot->isCityRadius())
 	{
 		CvCity* pWorkingCity = pPlot->getWorkingCity();
@@ -26002,7 +26002,7 @@ int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 			}
 		}
 	}
-	
+
 	int iMinOtherCityDistance = MAX_INT;
 	CvPlot* iMinOtherCityPlot = NULL;
 	// Super Forts begin *choke* *canal* - commenting out unnecessary code
@@ -26010,7 +26010,7 @@ int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 //	CvPlot* iMinFriendlyCityPlot = NULL;
 	
 	int iOtherCityCount = 0;
-	
+
 	int iRange = 4;
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
@@ -26020,7 +26020,7 @@ int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 			if ((pLoopPlot != NULL) && (pPlot != pLoopPlot))
 			{
 				int iDistance = plotDistance(pPlot->getX_INLINE(), pPlot->getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-				
+
 				if (pLoopPlot->getTeam() == getTeam())
 				{
 					if (pLoopPlot->isCity(true))
@@ -26057,12 +26057,12 @@ int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 			}
 		}
 	}
-	
+
 	if (0 == iOtherCityCount)
 	{
 		return 0;
 	}
-	
+
 //	if (iMinFriendlyCityPlot != NULL)
 //	{
 //		FAssert(iMinOtherCityPlot != NULL);
@@ -26101,7 +26101,7 @@ int CvPlayerAI::AI_getPlotAirbaseValue(CvPlot* pPlot) const
 int CvPlayerAI::AI_getPlotCanalValue(CvPlot* pPlot) const
 {
 	PROFILE_FUNC();
-	
+
 	FAssert(pPlot != NULL);
 
 	// Super Forts begin *canal*

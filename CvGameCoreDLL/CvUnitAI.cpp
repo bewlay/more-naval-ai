@@ -16636,7 +16636,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("     %S (unit %d - %S) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
+			logBBAI("    %S (unit %d - %S) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
 		}
 	}
 
@@ -28114,6 +28114,7 @@ void CvUnitAI::ConquestMove()
 				// or if defenses have crept up past half
 				if( (iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) )
 				{
+					logBBAI("       ...considering attack/bombard...\n");
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
 						

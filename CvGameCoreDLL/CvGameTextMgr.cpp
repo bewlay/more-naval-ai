@@ -2302,7 +2302,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 						{
 							szString.append(CvWString::format(L" + %d cargo", pHeadGroup->getCargo()));
 						}
-						szString.append(CvWString::format(L"]"));
+						szString.append(CvWString::format(L"] (%d power)", pHeadGroup->AI_GroupPower(pHeadGroup->plot(), true)));
 
 						// get average damage
 						int iAverageDamage = 0;
@@ -5625,6 +5625,14 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			tempChar = 'E';
 		}
 		szTempBuffer.Format(L"\nWERiverFlow: %c", tempChar);
+		szString.append(szTempBuffer);
+
+		// Choke value
+		szTempBuffer.Format(L"\nChoke Value: %d", pPlot->getChokeValue());
+		szString.append(szTempBuffer);
+
+		// Canal value
+		szTempBuffer.Format(L"\nCanal Value: %d", pPlot->getCanalValue());
 		szString.append(szTempBuffer);
 
 		if(pPlot->getRouteType() != NO_ROUTE)
