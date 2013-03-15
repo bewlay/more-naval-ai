@@ -27579,3 +27579,26 @@ DenialTypes CvPlayer::AI_militaryUnitTrade(CvUnit* pUnit, PlayerTypes ePlayer) c
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
+
+int CvPlayer::countNumOwnedTerrainTypes(TerrainTypes eTerrain) const
+{
+	PROFILE("CvPlayer::countNumOwnedTerrainTypes");
+
+	CvPlot* pLoopPlot;
+	int iCount = 0;
+
+	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+		if (pLoopPlot->getOwnerINLINE() == getID())
+		{
+			if (pLoopPlot->getTerrainType() == eTerrain)
+			{
+				iCount++;
+			}
+		}
+	}
+
+	return iCount;
+}
