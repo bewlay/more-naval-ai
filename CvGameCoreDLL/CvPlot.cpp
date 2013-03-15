@@ -810,13 +810,8 @@ void CvPlot::doImprovementUpgrade()
 void CvPlot::updateCulture(bool bBumpUnits, bool bUpdatePlotGroups)
 {
 	// Super Forts begin *culture*
-	if (!isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)))
+	if (!isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)) || (getOwnerINLINE() == NO_PLAYER))
 	// if (!isCity()) Original Code
-	{
-		setOwner(calculateCulturalOwner(), bBumpUnits, bUpdatePlotGroups);
-	}
-	// This prevents forts from keeping the culture of dead players and allows culture to claim unowned forts
-	else if ((getOwnerINLINE() == NO_PLAYER) || (!GET_PLAYER(getOwnerINLINE()).isAlive()))
 	{
 		setOwner(calculateCulturalOwner(), bBumpUnits, bUpdatePlotGroups);
 	}
@@ -4273,7 +4268,10 @@ PlayerTypes CvPlot::calculateCulturalOwner() const
 			}
 		}
 
-		if (!bValid)
+		if (!bValid
+			// Super Forts begin *culture*
+			|| !GET_PLAYER(eBestPlayer).isAlive())
+			// Super Forts end
 		{
 			eBestPlayer = NO_PLAYER;
 		}
