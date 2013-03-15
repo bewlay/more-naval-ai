@@ -4345,10 +4345,10 @@ class Revolution :
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
-				# Enable only for debugging different revolution styles
-		if( self.LOG_DEBUG and self.isHumanPlayerOrAutoPlay(pPlayer.getID()) and game.getAIAutoPlay(pPlayer.getID()) > 0 ) :
-			bCanCancelAuto = SdToolKitCustom.sdObjectGetVal( "AIAutoPlay", game, "bCanCancelAuto" )
-			game.setForcedAIAutoPlay(pPlayer.getID(), 0, false)
+# Enable only for debugging different revolution styles
+#		if( self.LOG_DEBUG and self.isHumanPlayerOrAutoPlay(pPlayer.getID()) and game.getAIAutoPlay(pPlayer.getID()) > 0 ) :
+#			bCanCancelAuto = SdToolKitCustom.sdObjectGetVal( "AIAutoPlay", game, "bCanCancelAuto" )
+#			game.setForcedAIAutoPlay(pPlayer.getID(), 0, false)
 #-------------------------------------------------------------------------------------------------
 # END Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
