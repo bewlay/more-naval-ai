@@ -2587,7 +2587,7 @@ void CvCityAI::AI_chooseProduction()
         {
 			if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_EXPLORE) < (kPlayer.AI_neededExplorers(pArea)))
 			{
-				if (AI_chooseUnit(UNITAI_EXPLORE, 25))
+				if (AI_chooseUnit(UNITAI_EXPLORE, 75))
 				{
 					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_EXPLORE 1", getName().GetCString());
 					return;
