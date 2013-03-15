@@ -2024,7 +2024,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 
 	if( bRaze )
 	{
-		if ((iRazeValue < 60) && canMakePuppet(pCity->getPreviousOwner()))
+		if ((iRazeValue < 150) && canMakePuppet(pCity->getPreviousOwner()))
 		{
 			logBBAI("    Player %d (%S) decides to to create Puppet State in %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
 			makePuppet(pCity->getPreviousOwner(), pCity);
