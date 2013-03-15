@@ -7256,8 +7256,7 @@ void CvGame::createBarbarianUnits()
 	}
 
 //FfH: Added by Kael 11/27/2007
-//    if (GC.getGameINLINE().isOption(GAMEOPTION_DOUBLE_ANIMALS) && getNumCivCities() < countCivPlayersAlive() * 3)
-	if (GC.getGameINLINE().isOption(GAMEOPTION_DOUBLE_ANIMALS))
+    if (GC.getGameINLINE().isOption(GAMEOPTION_DOUBLE_ANIMALS) && getNumCivCities() < countCivPlayersAlive() * 3)
     {
         bAnimals = true;
     }
