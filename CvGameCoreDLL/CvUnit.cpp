@@ -5727,6 +5727,11 @@ CvPlot* CvUnit::bombardImprovementTarget(const CvPlot* pPlot) const
 	int iBestValue = MAX_INT;
 	CvPlot* pBestPlot = NULL;
 
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		return pBestPlot;
+	}
+
 	for (int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
 	{
 		CvPlot* pLoopPlot = plotDirection(pPlot->getX_INLINE(), pPlot->getY_INLINE(), ((DirectionTypes)iI));
@@ -5774,7 +5779,7 @@ bool CvUnit::canBombard(const CvPlot* pPlot) const
 	}
 
 	// Super Forts begin *bombard*
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? (bombardTarget(pPlot) == NULL && bombardImprovementTarget(pPlot) == NULL) : bombardTarget(pPlot) == NULL)
+	if (bombardTarget(pPlot) == NULL && bombardImprovementTarget(pPlot) == NULL)
 	//if (bombardTarget(pPlot) == NULL) - Original Code
 	// Super Forts end
 	{

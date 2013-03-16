@@ -14633,22 +14633,22 @@ void CvImprovementInfo::setImprovementUpgrade(int i)
 // Super Forts begin *XML*
 int CvImprovementInfo::getCulture() const
 {
-	return m_iCulture;
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_iCulture : 0;
 }
 
 int CvImprovementInfo::getCultureRange() const
 {
-	return m_iCultureRange;
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_iCultureRange : 0;
 }
 
 int CvImprovementInfo::getSeeFrom() const
 {
-	return m_iSeeFrom;
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_iSeeFrom : 0;
 }
 
 int CvImprovementInfo::getUniqueRange() const
 {
-	return m_iUniqueRange;
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_iUniqueRange : 0;
 }
 
 bool CvImprovementInfo::isSuperFort() const
@@ -14658,19 +14658,18 @@ bool CvImprovementInfo::isSuperFort() const
 
 bool CvImprovementInfo::isBombardable() const
 {
-	return m_bBombardable;
+	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_bBombardable : false;
 }
 
 bool CvImprovementInfo::isUpgradeRequiresFortify() const
 {
-	// Super Forts *custom* *upgrade*
 	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? m_bUpgradeRequiresFortify : false;
 }
 // Super Forts end
 
 bool CvImprovementInfo::isActsAsCity() const
 {
-	// Super Forts *custom* begin
+	// Super Forts begin *custom*
 	return GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) ? isSuperFort() : m_bActsAsCity;
 	// return m_bActsAsCity; // Original
 	// Super Forts end

@@ -21097,26 +21097,9 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 
 												)
 												{
-													// Super Forts begin *AI_worker* - this should better determine the value of a build than the original code
-													if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getDefineINT("SUPER_FORTS_SAFE_BUILD") != 0)
-													{
-														iValue = GC.getBuildInfo(eBuild).getTime();
-														if(GC.getBuildInfo(eBuild).isKill())
-														{
-															iValue += 10000;
-														}
-														if(GC.getImprovementInfo((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement()).isActsAsCity())
-														{
-															iValue /= 10;
-														}
-													}
-													else // Original Code is used if SUPER_FORTS_SAFE_BUILD is turned off
-													{
 													iValue = 10000;
 
 													iValue /= (GC.getBuildInfo(eBuild).getTime() + 1);
-													}
-													// Super Forts end
 
 	/*FfH: Added by Chalid AiManaAndBonus 06/10/2006*/
 													if (!isHuman())

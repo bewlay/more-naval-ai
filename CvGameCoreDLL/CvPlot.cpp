@@ -1904,7 +1904,7 @@ int CvPlot::seeFromLevel(TeamTypes eTeam) const
 	iLevel = GC.getTerrainInfo(getTerrainType()).getSeeFromLevel();
 
 	// Super Forts begin *vision*
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && getImprovementType() != NO_IMPROVEMENT)
+	if (getImprovementType() != NO_IMPROVEMENT)
 	{
 		iLevel += GC.getImprovementInfo(getImprovementType()).getSeeFrom();
 	}
@@ -2516,7 +2516,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	// Tholal AI end
 
 	// Super Forts begin *build*
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getImprovementInfo(eImprovement).getUniqueRange() > 0)
+	if (GC.getImprovementInfo(eImprovement).getUniqueRange() > 0)
 	{
 		int iUniqueRange = GC.getImprovementInfo(eImprovement).getUniqueRange();
 		for (int iDX = -iUniqueRange; iDX <= iUniqueRange; iDX++) 
@@ -2691,7 +2691,7 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 			}
 
 			// Super Forts begin *AI_worker* - prevent forts from being built over when outside culture range
-			if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getDefineINT("SUPER_FORTS_SAFE_BUILD") != 0)
+			if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 			{
 				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
 				{
@@ -2737,7 +2737,7 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 				}
 			}
 			// Super Forts begin *AI_worker* - prevent workers from two different players from building a fort in the same plot
-			if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getDefineINT("SUPER_FORTS_SAFE_BUILD") != 0)
+			if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 			{
 				if(GC.getImprovementInfo(eImprovement).isActsAsCity())
 				{
@@ -3176,11 +3176,6 @@ bool CvPlot::isBombardable(const CvUnit* pUnit) const
 {
 	ImprovementTypes eImprovement;
 
-	if(!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
-	{
-		return false;
-	}
-
 	if (NULL != pUnit && !pUnit->isEnemy(getTeam()))
 	{
 		return false;
@@ -3282,6 +3277,11 @@ void CvPlot::changeCultureRangeFortsWithinRange(PlayerTypes ePlayer, int iChange
 	int iDX, iDY;
 	int iCultureDistance;
 
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		return;
+	}
+
 	if ((0 != iChange) && (iRange >= 0))
 	{
 		for (iDX = -iRange; iDX <= iRange; iDX++)
@@ -3318,7 +3318,7 @@ void CvPlot::doImprovementCulture()
 	PlayerTypes ePlayer;
 
 	eImprovement = getImprovementType();
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && eImprovement != NO_IMPROVEMENT)
+	if (eImprovement != NO_IMPROVEMENT)
 	{
 		ePlayer = getOwnerINLINE();
 		if(ePlayer != NO_PLAYER)
@@ -5979,7 +5979,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 				{
 					GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), -1);
 					// Super Forts begin *culture*
-					if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+					if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
 					{
 						changeCultureRangeFortsWithinRange(getOwnerINLINE(), -1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), false);
 					}
@@ -6047,7 +6047,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 				{
 					GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), 1);
 					// Super Forts begin *culture*
-					if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+					if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
 					{
 						changeCultureRangeFortsWithinRange(getOwnerINLINE(), 1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 					}
@@ -6739,7 +6739,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), -1);
 				// Super Forts begin *culture*
-				if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
 				{
 					changeCultureRangeFortsWithinRange(getOwnerINLINE(), -1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 				}
@@ -6782,7 +6782,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), 1);
 				// Super Forts begin *culture*
-				if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
 				{
 					changeCultureRangeFortsWithinRange(getOwnerINLINE(), 1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 				}
