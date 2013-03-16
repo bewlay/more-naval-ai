@@ -1908,13 +1908,10 @@ void CvUnitAI::AI_settleMove()
 								{
 									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 									{
-										if (iPathTurns < 4)
+										if (iPathTurns < 2)
 										{
 											iValue = pLoopPlot->getFoundValue(getOwnerINLINE());
-											// Tholal AI - consider distance
-											iValue *= 2;
-											iValue /= ((iPathTurns * 3) + 1);
-											// End Tholal AI
+
 											if (iValue > iBestValue)
 											{
 												iBestValue = iValue;
