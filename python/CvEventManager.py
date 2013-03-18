@@ -1605,10 +1605,10 @@ class CvEventManager:
 		if CyGame().getWBMapScript():
 			sf.onUnitKilled(unit, iAttacker)
 
-		if (not self.__LOG_UNITKILLED):
-			return
-		CvUtil.pyPrint('Player %d Civilization %s Unit %s was killed by Player %d' 
-			%(player.getID(), player.getCivilizationName(), PyInfo.UnitInfo(unit.getUnitType()).getDescription(), attacker.getID()))
+#		if (not self.__LOG_UNITKILLED):
+#			return
+#		CvUtil.pyPrint('Player %d Civilization %s Unit %s was killed by Player %d' 
+#			%(player.getID(), player.getCivilizationName(), PyInfo.UnitInfo(unit.getUnitType()).getDescription(), attacker.getID()))
 
 	def onUnitLost(self, argsList):
 		'Unit Lost'
