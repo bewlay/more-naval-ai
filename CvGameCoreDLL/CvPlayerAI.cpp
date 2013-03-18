@@ -1791,6 +1791,14 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 					logBBAI("    Player %d (%S) decides not to raze %S because they're going for domination", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
 				}
 			}
+			else if (GET_PLAYER(pCity->getOriginalOwner()).getTeam() == getTeam())
+			{
+				// Do not raze, was our city
+				if( gPlayerLogLevel >= 1 )
+				{
+					logBBAI("    Player %d (%S) decides not to raze %S because our team were the original owners", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+				}
+			}
 			else if( isBarbarian() )
 			{
 				if ( !(pCity->isHolyCity()) && !(pCity->hasActiveWorldWonder()))
