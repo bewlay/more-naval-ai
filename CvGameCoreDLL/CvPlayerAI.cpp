@@ -2511,6 +2511,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	// Pirates want a coastal city for their capitol
 	// TODO - make sure this doesnt break them on all-land maps
+	/*
     if (getNumCities() == 0)
     {
 		if (bPirate)
@@ -2521,6 +2522,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
             }
         }
     }
+	*/
 
 	pArea = pPlot->area();
 	iNumAreaCities = pArea->getCitiesPerPlayer(getID());
@@ -2747,7 +2749,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 				if (pLoopPlot != NULL)
 				{
-					if (!(pLoopPlot->isOwned()))
+					if (!(pLoopPlot->isOwned()) && (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam())))
 					{
 						if (pLoopPlot->isWater() || (pLoopPlot->area() == pArea) || (pLoopPlot->area()->getCitiesPerPlayer(getID()) > 0))
 						{
@@ -2966,7 +2968,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				iTeammateTakenTiles++;
 			}
 		}
-		else
+		else if (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam()))
 		{
 			iTempValue = 0;
 
