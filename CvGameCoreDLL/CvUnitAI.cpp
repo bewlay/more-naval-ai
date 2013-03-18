@@ -26776,6 +26776,12 @@ void CvUnitAI::PatrolMove()
 		}
 	}
 
+	if (AI_groupMergeRange(UNITAI_HERO, 0, true, true))
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
 	if (AI_groupMergeRange(UNITAI_ATTACK, 0, true, true))
 	{
 		getGroup()->pushMission(MISSION_SKIP);
