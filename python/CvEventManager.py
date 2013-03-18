@@ -1099,12 +1099,13 @@ class CvEventManager:
 			iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 			iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 			iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
-			iTimer = 40 + (CyGame().getGameSpeedType() * 20)
+			iModifier = (gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent() * 20) / 100
+			iTimer = 40 + iModifier
 			for i in range (CyMap().numPlots()):
 				pPlot = CyMap().plotByIndex(i)
 				bValid = False
 				if pPlot.isWater() == False:
-					if CyGame().getSorenRandNum(100, "The Deepening") < 75:
+					if CyGame().getSorenRandNum(100, "The Deepening") < 25:
 						iTerrain = pPlot.getTerrainType()
 						chance = CyGame().getSorenRandNum(100, "Bob")
 						if iTerrain == iSnow:
