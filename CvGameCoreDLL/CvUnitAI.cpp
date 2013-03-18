@@ -26528,7 +26528,7 @@ void CvUnitAI::AI_feastingmove()
 	{
 		if (kPlayer.AI_totalUnitAIs(UNITAI_FEASTING) < iNeededFeasters)
 		{
-			if ((getLevel() < 7) && (AI_getUnitAIType() != UNITAI_HERO))
+			if ((getLevel() < 6) && (AI_getUnitAIType() != UNITAI_HERO))
 			{
 				joinGroup(NULL);
 				AI_setGroupflag(GROUPFLAG_NONE);
