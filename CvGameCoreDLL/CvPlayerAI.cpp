@@ -12437,10 +12437,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		
 		iTempValue = ((iCombatValue * iCombatValue) / 75) + (iCombatValue / 2);
 		iValue += iTempValue;
+		/*
 		if (kUnitInfo.isNoDefensiveBonus())
 		{
 			iValue -= iTempValue / 2;
 		}
+		*/
 		if (kUnitInfo.getDropRange() > 0)
 		{
 			iValue -= iTempValue / 2;
