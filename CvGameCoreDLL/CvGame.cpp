@@ -1654,15 +1654,16 @@ void CvGame::normalizeRemoveBadTerrain()
                                 {
                                     iPlotFood = GC.getTerrainInfo(pLoopPlot->getTerrainType()).getYield(YIELD_FOOD);
                                     iPlotProduction = GC.getTerrainInfo(pLoopPlot->getTerrainType()).getYield(YIELD_PRODUCTION);
-//FlavourMod: Added by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
-						            if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
-						            {
-										{
-											iPlotFood += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
-											iPlotProduction += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_PRODUCTION);
-										}
-									}
-//FlavourMod: End Add
+/*************************************************************************************************/
+/**	CivPlotMods								03/23/09								Jean Elcard	**/
+/**																								**/
+/**					Consider Civilization-specific Terrain Yield Modifications.					**/
+/*************************************************************************************************/
+									iPlotFood += GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getTerrainYieldChanges(pLoopPlot->getTerrainType(), YIELD_FOOD, pLoopPlot->isRiver());
+									iPlotProduction += GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getTerrainYieldChanges(pLoopPlot->getTerrainType(), YIELD_PRODUCTION, pLoopPlot->isRiver());
+/*************************************************************************************************/
+/**	CivPlotMods								END													**/
+/*************************************************************************************************/
                                     if ((iPlotFood + iPlotProduction) <= 1)
                                     {
                                         iTargetFood = 1;
@@ -1687,16 +1688,19 @@ void CvGame::normalizeRemoveBadTerrain()
                                         {
                                             if (!(GC.getTerrainInfo((TerrainTypes)iK).isWater()))
                                             {
-//FlavourMod: Added by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
 												iPlotFood = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD);
 												iPlotProduction = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_PRODUCTION);
-												if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
-												{
-													iPlotFood +=  GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
-													iPlotProduction +=  GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_PRODUCTION);
-												}
+/*************************************************************************************************/
+/**	CivPlotMods								03/23/09								Jean Elcard	**/
+/**																								**/
+/**					Consider Civilization-specific Terrain Yield Modifications.					**/
+/*************************************************************************************************/
+												iPlotFood += GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getTerrainYieldChanges(iK, YIELD_FOOD, pLoopPlot->isRiver());
+												iPlotProduction += GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getTerrainYieldChanges(iK, YIELD_PRODUCTION, pLoopPlot->isRiver());
+/*************************************************************************************************/
+/**	CivPlotMods								END													**/
+/*************************************************************************************************/
 												if ((iPlotFood >= iTargetFood) && (iPlotFood + iPlotProduction == iTargetTotal))
-//FlavourMod: End Add
 												{
                                                     if ((pLoopPlot->getFeatureType() == NO_FEATURE) || GC.getFeatureInfo(pLoopPlot->getFeatureType()).isTerrain(iK))
                                                     {
@@ -1908,14 +1912,17 @@ void CvGame::normalizeAddGoodTerrain()
 											{
 												if (!(GC.getTerrainInfo((TerrainTypes)iK).isWater()))
 												{
-//FlavourMod: Changed by Jean Elcard 03/18/2009 (take Civilization Terrain Yield Changes into account)
 													iPlotFood = GC.getTerrainInfo((TerrainTypes)iK).getYield(YIELD_FOOD);
-													if (GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldType() == GET_PLAYER((PlayerTypes)iI).getCivilizationType())
-													{
-														iPlotFood += GC.getTerrainInfo(pLoopPlot->getTerrainType()).getCivilizationYieldChange(YIELD_FOOD);
-													}
+/*************************************************************************************************/
+/**	CivPlotMods								03/23/09								Jean Elcard	**/
+/**																								**/
+/**					Consider Civilization-specific Terrain Yield Modifications.					**/
+/*************************************************************************************************/
+													iPlotFood += GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iI).getCivilizationType()).getTerrainYieldChanges(iK, YIELD_FOOD, pLoopPlot->isRiver());
+/*************************************************************************************************/
+/**	CivPlotMods								END													**/
+/*************************************************************************************************/
 													if (iPlotFood >= GC.getFOOD_CONSUMPTION_PER_POPULATION())
-//FlavourMod: End Change
 													{
 														pLoopPlot->setTerrainType((TerrainTypes)iK);
 														bChanged = true;

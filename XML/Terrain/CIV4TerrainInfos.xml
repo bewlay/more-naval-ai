@@ -484,12 +484,6 @@
 			<TerrainDown>NONE</TerrainDown>
 			<iPlotCounterUp>9</iPlotCounterUp>
 			<TerrainUp>TERRAIN_BURNING_SANDS</TerrainUp>
-			<CivilizationYieldType>CIVILIZATION_MALAKIM</CivilizationYieldType>
-			<CivilizationYieldChange>
-				<iYield>0</iYield>
-				<iYield>0</iYield>
-				<iYield>1</iYield>
-			</CivilizationYieldChange>
 		</TerrainInfo>
 		<TerrainInfo>
 			<Type>TERRAIN_MARSH</Type>
@@ -917,17 +911,6 @@
 			<TerrainDown>NONE</TerrainDown>
 			<iPlotCounterUp>100</iPlotCounterUp>
 			<TerrainUp>NONE</TerrainUp>
-			<CivilizationYieldType>CIVILIZATION_ILLIANS</CivilizationYieldType>
-			<CivilizationYieldChange>
-				<iYield>2</iYield>
-				<iYield>0</iYield>
-				<iYield>0</iYield>
-			</CivilizationYieldChange>
-			<CivilizationYieldRiverChange>
-				<iYield>0</iYield>
-				<iYield>0</iYield>
-				<iYield>1</iYield>
-			</CivilizationYieldRiverChange>
 		</TerrainInfo>
 		<TerrainInfo>
 			<Type>TERRAIN_BURNING_SANDS</Type>

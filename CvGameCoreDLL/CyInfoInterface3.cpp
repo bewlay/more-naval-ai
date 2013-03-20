@@ -43,8 +43,6 @@ void CyInfoPythonInterface3()
 		// FFH
 		.def("getTerrainDown", &CvTerrainInfo::getTerrainDown, "int ()")
 		.def("getTerrainUp", &CvTerrainInfo::getTerrainUp, "int ()")
-		.def("getCivilizationYieldType", &CvTerrainInfo::getCivilizationYieldType, "int (int i)")
-		.def("getCivilizationYieldChange", &CvTerrainInfo::getCivilizationYieldChange, "int (int i)")
 		// Arrays
 
 		.def("getYield", &CvTerrainInfo::getYield, "int (int i)")

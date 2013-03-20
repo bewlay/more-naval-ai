@@ -48,6 +48,15 @@ void CyInfoPythonInterface2()
 
 		.def("isAIPlayable", &CvCivilizationInfo::isAIPlayable, "bool ()")
 		.def("isPlayable", &CvCivilizationInfo::isPlayable, "bool ()")
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		01/12/09								Xienwolf	**/
+/**																								**/
+/**								Defines Function for Use in .cpp								**/
+/*************************************************************************************************/
+		.def("getTerrainYieldChanges", &CvCivilizationInfo::getTerrainYieldChanges, "int (int i, int j, bool is_river)")
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
 
 		.def("getShortDescription", &CvCivilizationInfo::pyGetShortDescription, "wstring ()")
 		.def("getShortDescriptionKey", &CvCivilizationInfo::pyGetShortDescriptionKey, "wstring ()")

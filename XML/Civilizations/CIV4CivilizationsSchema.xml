@@ -551,6 +551,21 @@
 	<ElementType name="MaintainFeatures" content="eltOnly">
 		<element type="MaintainFeature" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="TerrainType" content="textOnly"/>
+	<ElementType name="TerrainYields" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="TerrainRiverYields" content="eltOnly">
+		<element type="iYield" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="TerrainYieldChange" content="eltOnly">
+		<element type="TerrainType"/>
+		<element type="TerrainYields" minOccurs="0" maxOccurs="1"/>
+		<element type="TerrainRiverYields" minOccurs="0" maxOccurs="1"/>
+	</ElementType>
+	<ElementType name="TerrainYieldChanges" content="eltOnly">
+		<element type="TerrainYieldChange" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
 	<ElementType name="CivilizationInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description" minOccurs="0"/>

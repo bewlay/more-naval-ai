@@ -2865,6 +2865,17 @@ public:
 	bool isMaintainFeatures(int i) const;
 //FfH: End Add
 
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		01/12/09								Xienwolf	**/
+/**																								**/
+/**								Defines Function for Use in .cpp								**/
+/*************************************************************************************************/
+	int getTerrainYieldChanges(int i, int j, bool is_river) const;
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
+
+
 	bool read(CvXMLLoadUtility* pXML);
 	DllExport bool readPass2(CvXMLLoadUtility* pXML);
 	DllExport void read(FDataStreamBase* stream);
@@ -2907,6 +2918,18 @@ protected:
 	int m_iHero;
 	bool* m_pbMaintainFeatures;
 //FfH: End Add
+
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		01/12/09								Xienwolf	**/
+/**																								**/
+/**								Defines Variable for Use in .cpp								**/
+/*************************************************************************************************/
+	int** m_ppiTerrainYieldChanges;
+	int** m_ppiTerrainRiverYieldChanges;
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
+
 
 	CvString* m_paszCityNames;
 
@@ -4150,12 +4173,7 @@ public:
 	int getPlotCounterUp() const;
 	int getTerrainUp() const;
 	bool readPass2(CvXMLLoadUtility* pXML);
-    int getCivilizationYieldType() const;
-    int getCivilizationYieldChange(int i) const;
-	bool readPass3();
 //FfH: End Add
-
-	int getCivilizationRiverYieldChange(int i) const;
 
 
 	DllExport const TCHAR* getArtDefineTag() const;
@@ -4196,16 +4214,12 @@ protected:
 
 //FfH: Added by Kael 08/02/2007
 	bool m_bNormalize;
-	int m_iCivilizationYieldType;
 	int m_iPlotCounterDown;
 	int m_iTerrainDown;
 	int m_iPlotCounterUp;
 	int m_iTerrainUp;
 
-	int* m_piCivilizationYieldChange;
 //FfH: End Add
-
-	int* m_piCivilizationYieldRiverChange;
 
 	// Arrays
 

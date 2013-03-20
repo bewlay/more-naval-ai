@@ -46,13 +46,6 @@
 	<ElementType name="TerrainDown" content="textOnly"/>
 	<ElementType name="iPlotCounterUp" content="textOnly" dt:type="int"/>
 	<ElementType name="TerrainUp" content="textOnly"/>
-	<ElementType name="CivilizationYieldType" content="textOnly"/>
-	<ElementType name="CivilizationYieldChange" content="eltOnly">
-		<element type="iYield" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
-	<ElementType name="CivilizationYieldRiverChange" content="eltOnly">
-		<element type="iYield" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
 	<ElementType name="TerrainInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -81,8 +74,6 @@
 		<element type="TerrainDown"/>
 		<element type="iPlotCounterUp"/>
 		<element type="TerrainUp"/>
-		<element type="CivilizationYieldType" minOccurs="0"/>
-		<element type="CivilizationYieldChange" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="TerrainInfos" content="eltOnly">
 		<element type="TerrainInfo" maxOccurs="*"/>

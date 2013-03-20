@@ -12082,9 +12082,18 @@ m_paszCityNames(NULL),
 m_iCivTrait(NO_TRAIT),
 m_iDefaultRace(NO_PROMOTION),
 m_iHero(NO_UNIT),
-m_pbMaintainFeatures(NULL)
+m_pbMaintainFeatures(NULL),
 //FfH: End Add
-
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		01/12/09								Xienwolf	**/
+/**																								**/
+/**										Initial Values											**/
+/*************************************************************************************************/
+m_ppiTerrainYieldChanges(NULL),
+m_ppiTerrainRiverYieldChanges(NULL)
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
 {
 }
 
@@ -12110,6 +12119,31 @@ CvCivilizationInfo::~CvCivilizationInfo()
 //FfH: Added by Kael 05/27/2008
 	SAFE_DELETE_ARRAY(m_pbMaintainFeatures);
 //FfH: End Add
+
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		03/23/09								Jean Elcard	**/
+/**																								**/
+/**										Clear Arrays											**/
+/*************************************************************************************************/
+	if (m_ppiTerrainYieldChanges != NULL)
+	{
+		for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+		{
+			SAFE_DELETE_ARRAY(m_ppiTerrainYieldChanges[iI]);
+		}
+		SAFE_DELETE_ARRAY(m_ppiTerrainYieldChanges);
+	}
+	if (m_ppiTerrainRiverYieldChanges != NULL)
+	{
+		for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+		{
+			SAFE_DELETE_ARRAY(m_ppiTerrainRiverYieldChanges[iI]);
+		}
+		SAFE_DELETE_ARRAY(m_ppiTerrainRiverYieldChanges);
+	}
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
 
 }
 
@@ -12349,6 +12383,23 @@ void CvCivilizationInfo::setDerivativeCiv(int iCiv)
 	m_iDerivativeCiv = iCiv;
 }
 
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		03/23/09								Jean Elcard	**/
+/**																								**/
+/**							Methods for accessing member variables.								**/
+/*************************************************************************************************/
+int CvCivilizationInfo::getTerrainYieldChanges(int i, int j, bool is_river) const
+{
+	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	FAssertMsg(j < NUM_YIELD_TYPES, "Index out of bounds");
+	FAssertMsg(j > -1, "Index out of bounds");
+	return is_river ? m_ppiTerrainYieldChanges[i][j] + m_ppiTerrainRiverYieldChanges[i][j]: m_ppiTerrainYieldChanges[i][j];
+}
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
+
 void CvCivilizationInfo::read(FDataStreamBase* stream)
 {
 	CvInfoBase::read(stream);
@@ -12481,6 +12532,78 @@ bool CvCivilizationInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(m_szAdjectiveKey, "Adjective");
 	// Get the Text from Text/Civ4GameTextXML.xml
+
+/*************************************************************************************************/
+/**	New Tag Defs	(CivilizationInfos)		01/12/09								Xienwolf	**/
+/**																								**/
+/**									Loads Information from XML									**/
+/*************************************************************************************************/
+	FAssertMsg((GC.getNumTerrainInfos() > 0) && (NUM_YIELD_TYPES) > 0, "either the number of terrain infos is zero or less or the number of yield types is zero or less");
+	pXML->Init2DIntList(&m_ppiTerrainYieldChanges, GC.getNumTerrainInfos(), NUM_YIELD_TYPES);
+	pXML->Init2DIntList(&m_ppiTerrainRiverYieldChanges, GC.getNumTerrainInfos(), NUM_YIELD_TYPES);
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(), "TerrainYieldChanges"))
+	{
+		if (pXML->SkipToNextVal())
+		{
+			iNumSibs = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
+			if (gDLL->getXMLIFace()->SetToChild(pXML->GetXML()))
+			{
+				if (0 < iNumSibs)
+				{
+					int iIndex;
+
+					for (j = 0; j < iNumSibs; j++)
+					{
+						pXML->GetChildXmlValByName(szTextVal, "TerrainType");
+						iIndex = pXML->FindInInfoClass(szTextVal);
+
+						if (iIndex > -1)
+						{
+							// Delete the array since it will be reallocated.
+							SAFE_DELETE_ARRAY(m_ppiTerrainYieldChanges[iIndex]);
+							// if we can set the current XML node to it's next sibling.
+							if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"TerrainYields"))
+							{
+								// call the function that sets the yield change variable
+								pXML->SetYields(&m_ppiTerrainYieldChanges[iIndex]);
+								gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+							}
+							else
+							{
+								pXML->InitList(&m_ppiTerrainYieldChanges[iIndex], NUM_YIELD_TYPES);
+							}
+
+							// Delete the array since it will be reallocated.
+							SAFE_DELETE_ARRAY(m_ppiTerrainRiverYieldChanges[iIndex]);
+							// if we can set the current XML node to it's next sibling.
+							if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"TerrainRiverYields"))
+							{
+								// call the function that sets the yield change variable
+								pXML->SetYields(&m_ppiTerrainRiverYieldChanges[iIndex]);
+								gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+							}
+							else
+							{
+								pXML->InitList(&m_ppiTerrainRiverYieldChanges[iIndex], NUM_YIELD_TYPES);
+							}
+						}
+
+						if (!gDLL->getXMLIFace()->NextSibling(pXML->GetXML()))
+						{
+							break;
+						}
+					}
+				}
+
+				gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+			}
+		}
+
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
+/*************************************************************************************************/
+/**	New Tag Defs							END													**/
+/*************************************************************************************************/
 
 	pXML->GetChildXmlValByName(szTextVal, "DefaultPlayerColor");
 	m_iDefaultPlayerColor = pXML->FindInInfoClass(szTextVal);
@@ -16836,7 +16959,6 @@ m_pi3DAudioScriptFootstepIndex(NULL),
 
 //FfH: Added By Kael 08/02/2007
 m_bNormalize(false),
-m_iCivilizationYieldType(NO_CIVILIZATION),
 m_iPlotCounterDown(-1),
 m_iTerrainDown(NO_TERRAIN),
 m_iPlotCounterUp(-1),
@@ -16859,15 +16981,6 @@ CvTerrainInfo::~CvTerrainInfo()
 	SAFE_DELETE_ARRAY(m_piRiverYieldChange);
 	SAFE_DELETE_ARRAY(m_piHillsYieldChange);
 	SAFE_DELETE_ARRAY(m_pi3DAudioScriptFootstepIndex);
-
-//FfH: Added by Kael 09/18/2008
-	SAFE_DELETE_ARRAY(m_piCivilizationYieldChange);
-//FfH: End Add
-
-//FfH Illians commerce on rivers fix: Added by Terkhen 6/12/2011
-	SAFE_DELETE_ARRAY(m_piCivilizationYieldRiverChange);
-//FfH: End Add
-
 }
 
 int CvTerrainInfo::getMovementCost() const
@@ -16940,23 +17053,6 @@ bool CvTerrainInfo::isNormalize() const
 {
 	return m_bNormalize;
 }
-
-int CvTerrainInfo::getCivilizationYieldType() const
-{
-	return m_iCivilizationYieldType;
-}
-
-int CvTerrainInfo::getCivilizationYieldChange(int i) const
-{
-	return m_piCivilizationYieldChange ? m_piCivilizationYieldChange[i] : -1;
-}
-
-//FfH Illians commerce on rivers fix: Added by Terkhen 6/12/2011
-int CvTerrainInfo::getCivilizationRiverYieldChange(int i) const
-{
-	return m_piCivilizationYieldRiverChange ? m_piCivilizationYieldRiverChange[i] : -1;
-}
-//FfH end
 
 int CvTerrainInfo::getPlotCounterDown() const
 {
@@ -17074,29 +17170,8 @@ bool CvTerrainInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bNormalize, "bNormalize");
 	pXML->GetChildXmlValByName(&m_iPlotCounterDown, "iPlotCounterDown");
 	pXML->GetChildXmlValByName(&m_iPlotCounterUp, "iPlotCounterUp");
-	pXML->GetChildXmlValByName(szTextVal, "CivilizationYieldType");
-	m_aszExtraXMLforPass3.push_back(szTextVal);
-	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"CivilizationYieldChange"))
-	{
-		pXML->SetYields(&m_piCivilizationYieldChange);
-		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-	}
-	else
-	{
-		pXML->InitList(&m_piCivilizationYieldChange, NUM_YIELD_TYPES);
-	}
 //FfH: End Add
  
-	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"CivilizationYieldRiverChange"))
-	{
-		pXML->SetYields(&m_piCivilizationYieldRiverChange);
-		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-	}
-	else
-	{
-		pXML->InitList(&m_piCivilizationYieldRiverChange, NUM_YIELD_TYPES);
-	}
-
 	return true;
 }
 
@@ -17110,17 +17185,6 @@ bool CvTerrainInfo::readPass2(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "TerrainUp");
 	m_iTerrainUp = GC.getInfoTypeForString(szTextVal);
 
-	return true;
-}
-
-bool CvTerrainInfo::readPass3()
-{
-	if (m_aszExtraXMLforPass3.size() < 1)
-	{
-		return false;
-	}
-	m_iCivilizationYieldType = GC.getInfoTypeForString(m_aszExtraXMLforPass3[0]);
-	m_aszExtraXMLforPass3.clear();
 	return true;
 }
 //FfH: End Add

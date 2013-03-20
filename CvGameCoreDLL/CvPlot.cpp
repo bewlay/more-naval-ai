@@ -7293,19 +7293,11 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 		}
 	}
 
-//FfH: Added by Kael 09/25/2008
-    if (isOwned())
-    {
-        if (GET_PLAYER(getOwnerINLINE()).getCivilizationType() == GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldType())
-        {
-            iYield += GC.getTerrainInfo((TerrainTypes)getTerrainType()).getCivilizationYieldChange(eYield);
-			if (isRiver())
-			{
-				iYield += GC.getTerrainInfo(getTerrainType()).getCivilizationRiverYieldChange(eYield);
-			}
-        }
+	// Take into account civilization specific changes to terrain yields.
+	if (isOwned())
+	{
+		iYield += GC.getCivilizationInfo(GET_PLAYER(getOwnerINLINE()).getCivilizationType()).getTerrainYieldChanges(getTerrainType(), eYield, isRiver());
 	}
-//FfH: End Add
 
 	return std::max(0, iYield);
 }
