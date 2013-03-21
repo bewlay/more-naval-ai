@@ -12789,9 +12789,10 @@ void CvPlayer::setAlive(bool bNewValue)
 
 			if (GC.getGameINLINE().getElapsedGameTurns() > 0)
 			{
-				if (!isBarbarian() && !isRebel())
+				if (!isBarbarian())// && !isRebel())
 				{
-					szBuffer = gDLL->getText("TXT_KEY_MISC_CIV_DESTROYED", getCivilizationAdjectiveKey());
+					//szBuffer = gDLL->getText("TXT_KEY_MISC_CIV_DESTROYED", getCivilizationAdjectiveKey());
+					szBuffer = gDLL->getText("TXT_KEY_MISC_CIV_DESTROYED", getCivilizationDescription());
 
 					for (iI = 0; iI < MAX_PLAYERS; iI++)
 					{
