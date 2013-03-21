@@ -7729,7 +7729,10 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	{
         if (getCivilizationType() != kUnit.getPrereqCiv())
         {
-            return false;
+			if (!isAssimilation() || (GC.getUnitClassInfo(eUnitClass).getMaxGlobalInstances() > 0))
+			{
+	            return false;
+			}
         }
 //FfH: End Add
 	}
