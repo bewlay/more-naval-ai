@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_VOTE_TIE_SECRETARY_GENERAL_DECIDES</Tag>
+		<English>(Tie Vote: %s1 decides)</English>
+		<French>(Tie Vote: %s1 decides)</French>
+		<German>(Wahl unentschieden: %s1 entscheidet)</German>
+		<Italian>(Tie Vote: %s1 decides)</Italian>
+		<Spanish>(Tie Vote: %s1 decides)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_DIPLOMATIC_VOTING_VICTORY_NOT_PASSED</Tag>
+		<English>(No %s1 chosen)</English>
+		<French>(No %s1 chosen)</French>
+		<German>(%s1 nicht gewählt)</German>
+		<Italian>(No %s1 chosen)</Italian>
+		<Spanish>(No %s1 chosen)</Spanish>
+	</TEXT>
+</Civ4GameText>

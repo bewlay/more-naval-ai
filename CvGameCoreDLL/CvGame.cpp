@@ -3123,8 +3123,18 @@ TeamTypes CvGame::findHighestVoteTeam(const VoteTriggeredData& kData) const
 			if (GET_TEAM((TeamTypes)iI).isAlive())
 			{
 				int iCount = countVote(kData, (PlayerVoteTypes)iI);
-
+				
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* Old head councilor is preferred                                              */
+/********************************************************************************/
+/* old
 				if (iCount > iBestCount)
+*/
+				if ( iCount > iBestCount || ( iCount >= iBestCount && getSecretaryGeneral( kData.eVoteSource ) == (TeamTypes) iI ) )
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 				{
 					iBestCount = iCount;
 					eBestTeam = (TeamTypes)iI;
@@ -3139,7 +3149,17 @@ TeamTypes CvGame::findHighestVoteTeam(const VoteTriggeredData& kData) const
 
 int CvGame::getVoteRequired(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 {
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* Required Votes are rounded up, rather than down.                             */
+/********************************************************************************/
+/* old
 	return ((countPossibleVote(eVote, eVoteSource) * GC.getVoteInfo(eVote).getPopulationThreshold()) / 100);
+*/
+	return ( ( countPossibleVote(eVote, eVoteSource) * GC.getVoteInfo(eVote).getPopulationThreshold() + 50 ) / 100 );
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 }
 
 
@@ -10191,6 +10211,16 @@ void CvGame::doVoteResults()
 		VoteTypes eVote = pVoteTriggered->kVoteOption.eVote;
 		VoteSourceTypes eVoteSource = pVoteTriggered->eVoteSource;
 		bool bPassed = false;
+		
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* If tie vote, whatever choice the Head Councillor made is implemented.        */
+/* Informative message.                                                         */
+/********************************************************************************/
+		bool bTieVoteSecretaryGeneral = false;
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 
 		if (!canDoResolution(eVoteSource, pVoteTriggered->kVoteOption))
 		{
@@ -10240,6 +10270,23 @@ void CvGame::doVoteResults()
 				if (NO_TEAM != eTeam)
 				{
 					bPassed = countVote(*pVoteTriggered, (PlayerVoteTypes)eTeam) >= getVoteRequired(eVote, eVoteSource);
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* If tie vote, whatever choice the Head Councillor made is implemented.        */
+/* Informative message.                                                         */
+/********************************************************************************/
+					if( bPassed && ( countPossibleVote(eVote, eVoteSource) - countVote(*pVoteTriggered, PLAYER_VOTE_ABSTAIN) ) % 2 == 0 /* even */ && countVote(*pVoteTriggered, (PlayerVoteTypes)eTeam) == getVoteRequired(eVote, eVoteSource) )
+					{
+						// tie vote
+						if( getSecretaryGeneral( eVoteSource ) != NO_TEAM )
+						{
+							// if tie vote, findHighestVoteTeam(), anyway chooses old secretary general
+							bTieVoteSecretaryGeneral = true;
+						}
+					}
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 				}
 
 				szBuffer = GC.getVoteInfo(eVote).getDescription();
@@ -10247,6 +10294,18 @@ void CvGame::doVoteResults()
 				if (eTeam != NO_TEAM)
 				{
 					szBuffer += NEWLINE + gDLL->getText("TXT_KEY_POPUP_DIPLOMATIC_VOTING_VICTORY", GET_TEAM(eTeam).getName().GetCString(), countVote(*pVoteTriggered, (PlayerVoteTypes)eTeam), getVoteRequired(eVote, eVoteSource), countPossibleVote(eVote, eVoteSource));
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* If tie vote, whatever choice the Head Councillor made is implemented.        */
+/* Informative message.                                                         */
+/********************************************************************************/
+					if( !bPassed )
+						szBuffer += NEWLINE + gDLL->getText( "TXT_KEY_POPUP_DIPLOMATIC_VOTING_VICTORY_NOT_PASSED", GC.getVoteSourceInfo( eVoteSource ).getSecretaryGeneralText().GetCString() );
+					if( bTieVoteSecretaryGeneral )
+						szBuffer += NEWLINE + gDLL->getText( "TXT_KEY_POPUP_VOTE_TIE_SECRETARY_GENERAL_DECIDES", GC.getVoteSourceInfo( eVoteSource ).getSecretaryGeneralText().GetCString() );
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 				}
 
 				for (int iI = MAX_CIV_TEAMS; iI >= 0; --iI)
@@ -10286,6 +10345,23 @@ void CvGame::doVoteResults()
 			else
 			{
 				bPassed = countVote(*pVoteTriggered, PLAYER_VOTE_YES) >= getVoteRequired(eVote, eVoteSource);
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* If tie vote, whatever choice the Head Councillor made is implemented.        */
+/********************************************************************************/
+				if( bPassed && ( countPossibleVote(eVote, eVoteSource) - countVote(*pVoteTriggered, PLAYER_VOTE_ABSTAIN) ) % 2 == 0 /* even */ && countVote(*pVoteTriggered, PLAYER_VOTE_YES) == getVoteRequired(eVote, eVoteSource) )
+				{
+					// tie vote
+					// if secretary general abstains, vote will succeede
+					if( getSecretaryGeneral( eVoteSource ) != NO_TEAM )
+					{
+						bPassed = getPlayerVote( GET_TEAM( getSecretaryGeneral( eVoteSource ) ).getSecretaryID(), pVoteTriggered->getID() ) == PLAYER_VOTE_YES;
+							bTieVoteSecretaryGeneral = true;
+					}
+				}
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 
 				// Defying resolution
 				if (bPassed)
@@ -10316,6 +10392,17 @@ void CvGame::doVoteResults()
 				}
 
 				szBuffer += NEWLINE + gDLL->getText((bPassed ? "TXT_KEY_POPUP_DIPLOMATIC_VOTING_SUCCEEDS" : "TXT_KEY_POPUP_DIPLOMATIC_VOTING_FAILURE"), GC.getVoteInfo(eVote).getTextKeyWide(), countVote(*pVoteTriggered, PLAYER_VOTE_YES), getVoteRequired(eVote, eVoteSource), countPossibleVote(eVote, eVoteSource));
+				
+/********************************************************************************/
+/* Improved Councils    03/2013                                         lfgr    */
+/* If tie vote, whatever choice the Head Councillor made is implemented.        */
+/* Informative message.                                                         */
+/********************************************************************************/
+					if( bTieVoteSecretaryGeneral )
+						szBuffer += NEWLINE + gDLL->getText( "TXT_KEY_POPUP_VOTE_TIE_SECRETARY_GENERAL_DECIDES", GC.getVoteSourceInfo( eVoteSource ).getSecretaryGeneralText().GetCString() );
+/********************************************************************************/
+/* Improved Councils                                                    END     */
+/********************************************************************************/
 
 				for (int iI = PLAYER_VOTE_NEVER; iI <= PLAYER_VOTE_YES; ++iI)
 				{
