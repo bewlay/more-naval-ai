@@ -1153,7 +1153,7 @@ void CvTeam::doTurn()
 	{
 		for (iI = 0; iI < GC.getNumTechInfos(); iI++)
 		{
-			if (!isHasTech((TechTypes)iI))
+			if (!isHasTech((TechTypes)iI) && GET_PLAYER((PlayerTypes)GC.getBARBARIAN_PLAYER()).canEverResearch((TechTypes)iI))
 			{
 				iCount = 0;
 				iPossibleCount = 0;
