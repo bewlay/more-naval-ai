@@ -26654,6 +26654,13 @@ void CvUnitAI::AI_feastingmove()
 						return;
 					}
 				}
+				else
+				{
+					AI_setGroupflag(GROUPFLAG_CONQUEST);
+					AI_setUnitAIType(UNITAI_ATTACK_CITY);
+					getGroup()->pushMission(MISSION_SKIP);
+					return;
+				}
 			}
 		}
 	}
