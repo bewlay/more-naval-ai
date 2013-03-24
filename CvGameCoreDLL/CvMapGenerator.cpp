@@ -1271,11 +1271,17 @@ void CvMapGenerator::addImprovements()
                     {
                         if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_TEAM))
                         {
-                            if (GC.getGameINLINE().getSorenRandNum(10000, "Spawn Improvement") < GC.getImprovementInfo((ImprovementTypes)iJ).getAppearanceProbability())
-                            {
-                                pPlot->setImprovementType((ImprovementTypes)iJ);
-                                pPlot->setFeatureType(NO_FEATURE);
-                            }
+							if (GC.getImprovementInfo((ImprovementTypes)iJ).getSpawnUnitType() != NO_UNIT)
+							{
+								if (!pPlot->isVisibleToCivTeam())
+								{
+									if (GC.getGameINLINE().getSorenRandNum(10000, "Spawn Improvement") < GC.getImprovementInfo((ImprovementTypes)iJ).getAppearanceProbability())
+									{
+										pPlot->setImprovementType((ImprovementTypes)iJ);
+										pPlot->setFeatureType(NO_FEATURE);
+									}
+								}
+							}
                         }
                     }
                 }
