@@ -193,7 +193,8 @@ void CvGame::init(HandicapTypes eHandicap)
 		// Determine the civilization and leader to use for each player slot.
         for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++)
         {
-			if ((GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer) == SS_COMPUTER) || (GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer) == SS_TAKEN))
+			SlotStatus playerType = GC.getInitCore().getSlotStatus((PlayerTypes)iPlayer);
+			if (playerType == SS_COMPUTER || playerType == SS_TAKEN)
 			{
 				// Selections made for this player slot.
 				int iSelectedCiv = GC.getInitCore().getCiv((PlayerTypes)iPlayer);
@@ -213,34 +214,40 @@ void CvGame::init(HandicapTypes eHandicap)
 
                     for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
                     {
-                        if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable())
-                        {
-							for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
+						// Graphical only civs are not allowed.
+						// Civilizations that are not playable by the AI must be ignored if this slot is for an AI.
+						// Civilizations that are not playable should be ignored always too.
+						if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isGraphicalOnly() ||
+							(!GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()) && playerType == SS_COMPUTER ||
+							!GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+						{
+							continue;
+						}
+						for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
+						{
+							if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader) ||
+								(isOption(GAMEOPTION_LEAD_ANY_CIV) && !GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).isGraphicalOnly()) )
 							{
-								if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iLeader) ||
-									(isOption(GAMEOPTION_LEAD_ANY_CIV) && !GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).isGraphicalOnly()) )
+								if (iSelectedAlignment == NO_ALIGNMENT || iSelectedAlignment == GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment())
 								{
-									if (iSelectedAlignment == NO_ALIGNMENT || iSelectedAlignment == GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).getAlignment())
+									int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+									for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 									{
-										int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
-										for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+										if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
 										{
-											if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
-											{
-												iValue -= 2000;
-											}
-											if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
-											{
-												iValue -= 1000;
-											}
+											iValue -= 2000;
 										}
+										if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
+										{
+											iValue -= 1000;
+										}
+									}
 
-										if (iValue > iBestValue)
-										{
-											iSelectedCiv = iCiv;
-											iSelectedLeader = iLeader;
-											iBestValue = iValue;
-										}
+									if (iValue > iBestValue)
+									{
+										iSelectedCiv = iCiv;
+										iSelectedLeader = iLeader;
+										iBestValue = iValue;
 									}
 								}
 							}
@@ -254,24 +261,30 @@ void CvGame::init(HandicapTypes eHandicap)
 
                     for (int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++)
                     {
-                        if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable())
-                        {
-							if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iSelectedLeader) || isOption(GAMEOPTION_LEAD_ANY_CIV))
+						// Graphical only civs are not allowed.
+						// Civilizations that are not playable by the AI must be ignored if this slot is for an AI.
+						// Civilizations that are not playable should be ignored always too.
+						if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isGraphicalOnly() ||
+							(!GC.getCivilizationInfo((CivilizationTypes)iCiv).isAIPlayable()) && playerType == SS_COMPUTER ||
+							!GC.getCivilizationInfo((CivilizationTypes)iCiv).isPlayable())
+						{
+							continue;
+						}
+						if (GC.getCivilizationInfo((CivilizationTypes)iCiv).isLeaders(iSelectedLeader) || isOption(GAMEOPTION_LEAD_ANY_CIV))
+						{
+							int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
+							for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 							{
-								int iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
-								for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
+								if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
 								{
-									if (GC.getInitCore().getCiv((PlayerTypes)iI) == iCiv)
-									{
-										iValue -= 1000;
-									}
+									iValue -= 1000;
 								}
+							}
 
-								if (iValue > iBestValue)
-								{
-									iSelectedCiv = iCiv;
-									iBestValue = iValue;
-								}
+							if (iValue > iBestValue)
+							{
+								iSelectedCiv = iCiv;
+								iBestValue = iValue;
 							}
 						}
 					}
