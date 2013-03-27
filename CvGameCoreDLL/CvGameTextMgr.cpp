@@ -18426,7 +18426,26 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 			szBuffer.append(gDLL->getText("TXT_KEY_WAR_WEAR_HELP", iWarWeariness / 10000));
 		}
 	}
-
+	
+	// lfgr: Display no diplo (Crusade) info
+	if( GET_TEAM( GET_PLAYER(ePlayer).getTeam() ).isAtWar( GET_PLAYER(eTargetPlayer).getTeam() ) )
+	{
+		if( GET_PLAYER( eTargetPlayer ).isNoDiplomacyWithEnemies() )
+		{
+			szBuffer.append( NEWLINE );
+			if ( eTargetPlayer == GC.getGameINLINE().getActivePlayer() )
+				szBuffer.append( gDLL->getText("TXT_KEY_MISC_NO_DIPLO_WITH_ENEMIES_YOU") );
+			else
+				szBuffer.append( gDLL->getText( "TXT_KEY_MISC_NO_DIPLO_WITH_ENEMIES_PLAYER", GET_PLAYER( eTargetPlayer ).getName() ) );
+			
+		}
+		if( GET_PLAYER( ePlayer ).isNoDiplomacyWithEnemies() )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText("TXT_KEY_MISC_NO_DIPLO_WITH_ENEMIES_OTHER") );
+		}
+	}
+	// lfgr end
 }
 
 void CvGameTextMgr::getEspionageString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer)
