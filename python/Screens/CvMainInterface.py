@@ -2108,7 +2108,8 @@ class CvMainInterface:
 							szFileName = ArtFileMgr.getInterfaceArtInfo("OVERLAY_NOMOVE").getPath()
 
 						szString = "PlotListButton" + str(iCount)
-						screen.changeImageButton( szString, gc.getUnitInfo(pLoopUnit.getUnitType()).getButton() )
+#						screen.changeImageButton( szString, gc.getUnitInfo(pLoopUnit.getUnitType()).getButton() )
+						screen.changeImageButton( szString, pLoopUnit.getButton() )
 						if ( pLoopUnit.getOwner() == gc.getGame().getActivePlayer() ):
 							bEnable = True
 						else:
