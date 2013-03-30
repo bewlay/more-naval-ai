@@ -9056,7 +9056,7 @@ InvisibleTypes CvUnit::getInvisibleType() const
 			{
 				if (plot()->getTeam() == getTeam())
 				{
-					if (!plot()->isCity())
+					if (!plot()->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))) // Super Forts *custom*
 					{
 						return ((InvisibleTypes)GC.getDefineINT("INVISIBLE_TYPE"));
 					}
@@ -9068,7 +9068,7 @@ InvisibleTypes CvUnit::getInvisibleType() const
 	{
 		if (m_pUnitInfo->getEquipmentPromotion() != NO_PROMOTION)
 		{
-			return ((InvisibleTypes)2);
+			return ((InvisibleTypes)2); // HARD CODE !!!
 		}
 		else
 		{
@@ -10815,7 +10815,7 @@ bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 //FfH: Added by Kael 04/11/2008
     if (plot() != NULL)
     {
-        if (plot()->isCity())
+        if (plot()->isCity(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))) // Super Forts *custom*
         {
             if (getTeam() == plot()->getTeam())
             {
