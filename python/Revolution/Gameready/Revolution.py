@@ -6734,6 +6734,8 @@ class Revolution :
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - New method from pop: %.2f, from troops: %.2f, total: %d"%(iNumUnits2a,iNumUnits2b,iNumUnits2))
 
 			iNumUnits = iNumUnits2
+			
+			iNumUnit = iNumUnits * 2
 
 			iNumDefenders = RevUtils.getNumDefendersNearPlot(ix,iy,pPlayer.getID())
 
