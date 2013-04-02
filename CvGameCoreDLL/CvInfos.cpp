@@ -3172,7 +3172,11 @@ m_iImmobileTurns(0),
 m_iMiscastChance(0),
 m_iEffect(NO_EFFECT),
 m_szSound(NULL),
-m_iCommandType(NO_COMMAND)
+m_iCommandType(NO_COMMAND),
+// Tholal AI begin
+m_pbTerrainValid(NULL),
+m_piTerrainConvert(NULL)
+// end
 {
 }
 
@@ -3185,6 +3189,10 @@ m_iCommandType(NO_COMMAND)
 //------------------------------------------------------------------------------------------------------
 CvSpellInfo::~CvSpellInfo()
 {
+	// Tholal AI begin
+	SAFE_DELETE_ARRAY(m_pbTerrainValid);
+	SAFE_DELETE_ARRAY(m_piTerrainConvert);
+	// end
 }
 
 int CvSpellInfo::getPromotionPrereq1() const
@@ -3585,6 +3593,22 @@ void CvSpellInfo::setCommandType(int iNewType)
 	m_iCommandType = iNewType;
 }
 
+// Tholal AI begin
+bool CvSpellInfo::getTerrainValid(int i) const
+{
+	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_pbTerrainValid ? m_pbTerrainValid[i] : true;
+}
+
+int CvSpellInfo::getTerrainConvert(int i) const		
+{
+	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piTerrainConvert ? m_piTerrainConvert[i] : -1;
+}
+// end
+
 void CvSpellInfo::read(FDataStreamBase* stream)
 {
 	CvHotkeyInfo::read(stream);
@@ -3678,6 +3702,15 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iEffect);
 	stream->ReadString(m_szSound);
 	stream->Read(&m_iCommandType);
+	// Tholal AI begin
+	SAFE_DELETE_ARRAY(m_pbTerrainValid);
+	m_pbTerrainValid = new bool[GC.getNumTerrainInfos()];
+	stream->Read(GC.getNumTerrainInfos(), m_pbTerrainValid);
+
+	SAFE_DELETE_ARRAY(m_piTerrainConvert);
+	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
+	stream->Read(GC.getNumTerrainInfos(), m_piTerrainConvert);
+	// end
 }
 
 void CvSpellInfo::write(FDataStreamBase* stream)
@@ -3774,6 +3807,10 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iEffect);
 	stream->WriteString(m_szSound);
 	stream->Write(m_iCommandType);
+	// Tholal AI begin
+	stream->Write(GC.getNumTerrainInfos(), m_pbTerrainValid);
+	stream->Write(GC.getNumTerrainInfos(), m_piTerrainConvert);
+	// end
 }
 
 bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
@@ -3907,6 +3944,11 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "Effect");
 	if (szTextVal != "") m_iEffect = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(m_szSound, "Sound");
+
+	// Tholal AI begin
+	pXML->SetVariableListTagPair(&m_pbTerrainValid, "TerrainValids", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos(), false);
+	pXML->SetVariableListTagPair(&m_piTerrainConvert, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos(), -1);
+	// end
 
 	return true;
 }

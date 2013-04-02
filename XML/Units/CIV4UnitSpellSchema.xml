@@ -97,6 +97,23 @@
 	<ElementType name="iHotKeyPriorityAlt" content="textOnly" dt:type="int"/>
 	<ElementType name="iOrderPriority" content="textOnly" dt:type="int"/>
 	<ElementType name="Button" content="textOnly"/>
+	<ElementType name="TerrainType" content="textOnly"/>
+	<ElementType name="TerrainConvert" content="textOnly"/>
+	<ElementType name="bValid" content="textOnly" dt:type="boolean"/>
+	<ElementType name="TerrainValid" content="eltOnly">
+		<element type="TerrainType"/>
+		<element type="bValid"/>
+	</ElementType>
+	<ElementType name="TerrainValids" content="eltOnly">
+		<element type="TerrainValid" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="TerrainConversion" content="eltOnly">
+		<element type="TerrainType"/>
+		<element type="TerrainConvert"/>
+	</ElementType>
+	<ElementType name="TerrainConversions" content="eltOnly">
+		<element type="TerrainConversion" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
 	<ElementType name="SpellInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -186,6 +203,8 @@
 		<element type="iHotKeyPriority" minOccurs="0"/>
 		<element type="Button" minOccurs="0" maxOccurs="*"/>
 		<element type="iOrderPriority" minOccurs="0"/>
+		<element type="TerrainValids" minOccurs="0"/>
+		<element type="TerrainConversions" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="SpellInfos" content="eltOnly">
 		<element type="SpellInfo" maxOccurs="*"/>
