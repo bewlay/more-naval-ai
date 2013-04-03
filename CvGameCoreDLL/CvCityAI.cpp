@@ -9474,6 +9474,17 @@ void CvCityAI::AI_doHurry(bool bForce)
 			{
 				CvBuildingInfo& kBuildingInfo = GC.getBuildingInfo(eProductionBuilding);
 
+				if (kBuildingInfo.isVictoryBuilding())
+				{
+						if( gCityLogLevel >= 2 )
+						{
+							logBBAI("      City %S hurry to complete Victory building", getName().GetCString() );
+						}
+
+						hurry((HurryTypes)iI);
+						break;
+				}
+
 				if (isWorldWonderClass((BuildingClassTypes)(kBuildingInfo.getBuildingClassType())))
 				{
 					iMinTurns = std::min(iMinTurns, 10);
