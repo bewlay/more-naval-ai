@@ -6111,6 +6111,11 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
     case TRADE_EMBASSY:
 		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 		{
+			if (getNumCities() == 0)
+			{
+				return false;
+			}
+
 			if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
 			{
 				if (!atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
@@ -6259,6 +6264,11 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 	case TRADE_RIGHT_OF_PASSAGE:
 		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 		{
+			if (getNumCities() == 0)
+			{
+				return false;
+			}
+
 			if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
 			{
 				if (!atWar(getTeam(), GET_PLAYER(eWhoTo).getTeam()))
