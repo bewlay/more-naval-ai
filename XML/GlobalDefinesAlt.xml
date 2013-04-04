@@ -963,4 +963,12 @@
 		<iDefineIntVal>5</iDefineIntVal>
 	</Define>
 <!-- Super Forts end -->
+	<Define>
+		<DefineName>COLONY_NUM_FREE_DEFENDERS</DefineName>
+		<iDefineIntVal>3</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>PUPPET_CULTURE_MULTIPLIER</DefineName> 
+		<iDefineIntVal>50</iDefineIntVal>
+	</Define>
 </Civ4Defines>
