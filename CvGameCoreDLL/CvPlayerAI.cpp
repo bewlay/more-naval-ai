@@ -14613,6 +14613,10 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		for (CommerceTypes i = (CommerceTypes)0; i < NUM_COMMERCE_TYPES; i = (CommerceTypes)(i+1))
 		{
 			iSpecialistValue += (getSpecialistExtraCommerce(i) + kCivic.getSpecialistExtraCommerce(i)) * AI_commerceWeight(i);
+			for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+			{
+				iSpecialistValue += getSpecialistTypeExtraCommerce((SpecialistTypes)iJ, i) * 100;
+			}
 		}
 		iValue += iCities * iSpecialistValue / 100;
 	}
@@ -15045,10 +15049,23 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	{ 
 		iTempValue = 0; 
 		if (kCivic.isSpecialistValid(iI)) 
-		{ 
+		{
+			iTempValue += (iFreeCitizens * iFreeCitizens) / 2; //find jobs for all of the citizens we have sitting around
+		
 			// Tholal Todo - more value for priest specialists when running Altar vic.; more for Bards when running culture vic.
-			iTempValue += ((iCities *  (bCultureVictory3 ? 10 : 1)) + 6);
-			iTempValue += (iFreeCitizens * iFreeCitizens) / 2;
+
+			// Culture specialists
+			//Todo - better valuation for culture victory - we can use bards before we get to Stage 3
+			if (GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(COMMERCE_CULTURE) > 0)
+			{
+				iTempValue += ((iCities *  (bCultureVictory3 ? 10 : 1)) + 6);
+			}
+
+			// account for specialistextracommerce bonuses
+			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+			{
+				iTempValue += (getSpecialistTypeExtraCommerce((SpecialistTypes)iI, (CommerceTypes)iJ) * 15) * iCities * (iFreeCitizens + 1);
+			}
 		} 
 		iValue += (iTempValue / 2); 
 	} 
