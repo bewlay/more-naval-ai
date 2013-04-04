@@ -4639,15 +4639,15 @@ It is fine for a human player mouse-over (which is what it is used for).
                 if (iView & getBugOptionINT("ACO__ShowTotalDefenseModifier", 2, "ACO_SHOW_TOTAL_DEFENSE_MODIFIER"))
                 {
                     //szString.append(L' ');//XXX
-                    if (pDefender->maxCombatStr(pPlot,pAttacker)>pDefender->baseCombatStr()*100) // modifier is positive
+                    if (pDefender->maxCombatStr(pPlot,pAttacker) > pDefender->baseCombatStr()*100) // modifier is positive
                     {
                         szTempBuffer.Format(SETCOLR L"%d%%" ENDCOLR,
-                                            TEXT_COLOR("COLOR_NEGATIVE_TEXT"),(((pDefender->maxCombatStr(pPlot,pAttacker)))/pDefender->baseCombatStr())-100);
+							TEXT_COLOR("COLOR_NEGATIVE_TEXT"),(((pDefender->maxCombatStr(pPlot,pAttacker)))/(std::max(pDefender->baseCombatStr(), 1)))-100);
                     }
                     else   // modifier is negative
                     {
                         szTempBuffer.Format(SETCOLR L"%d%%" ENDCOLR,
-                                            TEXT_COLOR("COLOR_POSITIVE_TEXT"),(100-((pDefender->baseCombatStr()*10000)/(pDefender->maxCombatStr(pPlot,pAttacker)))));
+							TEXT_COLOR("COLOR_POSITIVE_TEXT"),(100-((pDefender->baseCombatStr()*10000)/(std::max(pDefender->maxCombatStr(pPlot,pAttacker), 1)))));
                     }
 
                     szString.append(gDLL->getText("TXT_ACO_TotalDefenseModifier"));
