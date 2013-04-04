@@ -59396,7 +59396,7 @@
             <Type>UNIT_PUPPET</Type>
             <UniqueNames>
             </UniqueNames>
-            <Special>NONE</Special>
+            <Special>SPECIALUNIT_SPELL</Special>
             <Capture>NONE</Capture>
             <Combat>NONE</Combat>
             <Domain>DOMAIN_LAND</Domain>
