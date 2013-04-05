@@ -626,6 +626,12 @@ bool CyTeam::isStolenVisibility(int /*TeamTypes*/ eIndex)
 	return m_pTeam ? m_pTeam->isStolenVisibility((TeamTypes)eIndex) : false;
 }
 
+void CyTeam::changeStolenVisibilityTimer(int /*TeamTypes*/ eIndex, int iChange)	 
+{
+	if (m_pTeam)
+		m_pTeam->changeStolenVisibilityTimer((TeamTypes)eIndex, iChange);
+}
+
 int CyTeam::getWarWeariness(int /*TeamTypes*/ eIndex)
 {
 	return m_pTeam ? m_pTeam->getWarWeariness((TeamTypes)eIndex) : -1;

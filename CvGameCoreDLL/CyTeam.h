@@ -160,6 +160,7 @@ public:
 	int getID();
 
 	bool isStolenVisibility(int /*TeamTypes*/ eIndex);
+	void changeStolenVisibilityTimer(int /*TeamTypes*/ eIndex, int iChange);	
 	int getWarWeariness(int /*TeamTypes*/ eIndex);								 
 	void setWarWeariness(int /*TeamTypes*/ eIndex, int iNewValue);	 
 	void changeWarWeariness(int /*TeamTypes*/ eIndex, int iChange);	 
