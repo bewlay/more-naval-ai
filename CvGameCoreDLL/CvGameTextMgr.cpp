@@ -11000,6 +11000,14 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 				{
 					if (!bPlayerContext || !(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).canTrain(eLoopUnit)))
 					{
+						if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
+						{
+							if ((GC.getUnitInfo(eLoopUnit).getPrereqCiv() != GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()))
+							{
+								continue;
+							}
+						}
+						
 						if (GC.getUnitInfo(eLoopUnit).getPrereqAndTech() == eTech)
 						{
 							szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_TECH_CAN_TRAIN").c_str());
