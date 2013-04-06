@@ -283,5 +283,11 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("setTempTerrainType", &CyPlot::setTempTerrainType, "void (TerrainTypes eNewValue, int iTimer)")
 		.def("isVisibleToCivTeam", &CyPlot::isVisibleToCivTeam, "bool ()")
 //FfH: End Add
+		// Super Forts begin *canal* *choke*
+		.def("getCanalValue", &CyPlot::getCanalValue, "int ()")
+		.def("calculateCanalValue", &CyPlot::calculateCanalValue, "void ()")
+		.def("getChokeValue", &CyPlot::getChokeValue, "int ()")
+		.def("calculateChokeValue", &CyPlot::calculateChokeValue, "void ()")
+		// Super Forts end
 	;
 }
