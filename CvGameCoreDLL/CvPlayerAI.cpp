@@ -11786,6 +11786,11 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		return 0;
 	}
 
+	if (bUpgrade)
+	{
+		bValid = true;
+	}
+
 	if (!bValid)
 	{
 		switch (eUnitAI)

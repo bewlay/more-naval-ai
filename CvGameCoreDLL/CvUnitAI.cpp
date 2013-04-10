@@ -880,7 +880,7 @@ void CvUnitAI::AI_upgrade()
 				}
 			}
 
-			if ((iNewValue > iBestValue) && (iNewValue > iCurrentValue))
+			if ((iNewValue > iBestValue) && (iNewValue >= iCurrentValue))
 			{
 				iBestValue = iNewValue;
 				eBestUnit = ((UnitTypes)iI);
