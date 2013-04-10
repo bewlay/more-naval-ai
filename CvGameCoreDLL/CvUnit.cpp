@@ -12458,9 +12458,6 @@ void CvUnit::setLevel(int iNewValue)
 		m_iLevel = iNewValue;
 		FAssert(getLevel() >= 0);
 
-		GET_PLAYER(getOwnerINLINE()).changePower(iNewValue);
-		area()->changePower(getOwnerINLINE(), iNewValue);
-
 		if (getLevel() > GET_PLAYER(getOwnerINLINE()).getHighestUnitLevel())
 		{
 			GET_PLAYER(getOwnerINLINE()).setHighestUnitLevel(getLevel());
