@@ -14961,13 +14961,18 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 	for (iI = 0; iI < GC.getNumHurryInfos(); iI++)
 	{
-		if (kCivic.isHurry(iI) && (!canHurry((HurryTypes)iI))) /* Fuyu: only add value if we can't already use this hurry type */
+		if (kCivic.isHurry(iI) && (!canHurry((HurryTypes)iI) && !isCivic(eCivic))) /* Fuyu: only add value if we can't already use this hurry type */
 		{
 			iTempValue = 0;
 
 			if (GC.getHurryInfo((HurryTypes)iI).getGoldPerProduction() > 0)
 			{
 				iTempValue += ((((AI_avoidScience()) ? 50 : 25) * iCities) / GC.getHurryInfo((HurryTypes)iI).getGoldPerProduction());
+
+				if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4) || AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY4))
+				{
+					iTempValue += 5000;
+				}
 			}
 			if (GC.getHurryInfo((HurryTypes)iI).getProductionPerPopulation() > 0)
 			{
