@@ -4832,7 +4832,7 @@ bool CvPlot::isValidRoute(const CvUnit* pUnit) const
 
 bool CvPlot::isTradeNetworkImpassable(TeamTypes eTeam) const
 {
-	return (isImpassable() && !isRiverNetwork(eTeam));
+	return (isImpassable() && !isRiverNetwork(eTeam) && !isRoute());
 }
 
 bool CvPlot::isRiverNetwork(TeamTypes eTeam) const
