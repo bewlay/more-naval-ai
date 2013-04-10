@@ -36,10 +36,16 @@
 
 // AI victory stages
 #define AI_DEFAULT_VICTORY_STRATEGY     (1 << 0)
+#define AI_VICTORY_ALTAR1				(1 << 1)
+#define AI_VICTORY_ALTAR2				(1 << 2)
+#define AI_VICTORY_ALTAR3				(1 << 3)
+#define AI_VICTORY_ALTAR4				(1 << 4)
+/*
 #define AI_VICTORY_SPACE1				(1 << 1)
 #define AI_VICTORY_SPACE2				(1 << 2)
 #define AI_VICTORY_SPACE3				(1 << 3)
 #define AI_VICTORY_SPACE4				(1 << 4)
+*/
 #define AI_VICTORY_CONQUEST1			(1 << 5)
 #define AI_VICTORY_CONQUEST2			(1 << 6)
 #define AI_VICTORY_CONQUEST3			(1 << 7)
@@ -66,10 +72,18 @@
 #define AI_VICTORY_TOWERMASTERY2		(1 << 26)
 #define AI_VICTORY_TOWERMASTERY3		(1 << 27)
 #define AI_VICTORY_TOWERMASTERY4		(1 << 28)
+/*
 #define AI_VICTORY_ALTAR1				(1 << 29)
 #define AI_VICTORY_ALTAR2				(1 << 30)
 #define AI_VICTORY_ALTAR3				(1 << 31)
 #define AI_VICTORY_ALTAR4				(1 << 32)
+*/
+// Tholal Note: There is some limitation to this that keeps the 32nd element from being processed correctly
+// I moved the Space victory stuff down here so that the Altar 4 level strat would be used
+#define AI_VICTORY_SPACE1				(1 << 29)
+#define AI_VICTORY_SPACE2				(1 << 30)
+#define AI_VICTORY_SPACE3				(1 << 31)
+#define AI_VICTORY_SPACE4				(1 << 32)
 // End Tholal AI
 
 /********************************************************************************/

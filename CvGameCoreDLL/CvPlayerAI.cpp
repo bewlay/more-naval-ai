@@ -22035,9 +22035,19 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 		return 0;
 	}
 
-	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED")) > 0)
+	if (getBuildingClassCountPlusMaking((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_FINAL")) > 0)
 	{
 		return 4;
+	}
+
+	if (canConstruct((BuildingTypes)GC.getInfoTypeForString("BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL"), true))
+	{
+		return 4;
+	}
+
+	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED")) > 0)
+	{
+		return 3;
 	}
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")) > 0)
@@ -22365,7 +22375,7 @@ int CvPlayerAI::AI_getVictoryStrategyHash() const
 				bStartedOtherLevel3 = true;
                 m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY3;
 
-				if (iVictoryStage > 3 && !bStartedOtherLevel4)
+				if (iVictoryStage > 3)// && !bStartedOtherLevel4)
 				{
 					bStartedOtherLevel4 = true;
                 	m_iVictoryStrategyHash |= AI_VICTORY_TOWERMASTERY4;
@@ -22388,7 +22398,7 @@ int CvPlayerAI::AI_getVictoryStrategyHash() const
 				bStartedOtherLevel3 = true;
                 m_iVictoryStrategyHash |= AI_VICTORY_ALTAR3;
 
-				if (iVictoryStage > 3 && !bStartedOtherLevel4)
+				if (iVictoryStage > 3)// && !bStartedOtherLevel4)
 				{
 					bStartedOtherLevel4 = true;
                 	m_iVictoryStrategyHash |= AI_VICTORY_ALTAR4;
