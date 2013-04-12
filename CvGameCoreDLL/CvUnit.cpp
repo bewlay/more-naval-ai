@@ -13845,49 +13845,51 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 		return false;
 	}
 
-	if (GC.getPromotionInfo(ePromotion).getPrereqPromotion() != NO_PROMOTION)
+	CvPromotionInfo &kPromotion = GC.getPromotionInfo(ePromotion);
+
+	if (kPromotion.getPrereqPromotion() != NO_PROMOTION)
 	{
-		if (!isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPrereqPromotion())))
+		if (!isHasPromotion((PromotionTypes)(kPromotion.getPrereqPromotion())))
 		{
 			return false;
 		}
 	}
 
 //FfH: Modified by Kael 07/30/2007
-//	if (GC.getPromotionInfo(ePromotion).getPrereqOrPromotion1() != NO_PROMOTION)
+//	if (kPromotion.getPrereqOrPromotion1() != NO_PROMOTION)
 //	{
-//		if (!isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPrereqOrPromotion1())))
+//		if (!isHasPromotion((PromotionTypes)(kPromotion.getPrereqOrPromotion1())))
 //		{
-//			if ((GC.getPromotionInfo(ePromotion).getPrereqOrPromotion2() == NO_PROMOTION) || !isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPrereqOrPromotion2())))
+//			if ((kPromotion.getPrereqOrPromotion2() == NO_PROMOTION) || !isHasPromotion((PromotionTypes)(kPromotion.getPrereqOrPromotion2())))
 //			{
 //				return false;
 //			}
 //		}
 //	}
-	if (GC.getPromotionInfo(ePromotion).getMinLevel() == -1)
+	if (kPromotion.getMinLevel() == -1)
 	{
 	    return false;
 	}
-	if (GC.getPromotionInfo(ePromotion).isRace())
+	if (kPromotion.isRace())
 	{
 	    return false;
 	}
-	if (GC.getPromotionInfo(ePromotion).isEquipment())
+	if (kPromotion.isEquipment())
 	{
 	    return false;
 	}
-	if (GC.getPromotionInfo(ePromotion).getMinLevel() > getLevel())
+	if (kPromotion.getMinLevel() > getLevel())
 	{
 	    return false;
 	}
-	if (GC.getPromotionInfo(ePromotion).getPromotionPrereqAnd() != NO_PROMOTION)
+	if (kPromotion.getPromotionPrereqAnd() != NO_PROMOTION)
 	{
-		if (!isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPromotionPrereqAnd())))
+		if (!isHasPromotion((PromotionTypes)(kPromotion.getPromotionPrereqAnd())))
 		{
 			return false;
 		}
 	}
-	if (GC.getPromotionInfo(ePromotion).getPrereqOrPromotion1() != NO_PROMOTION)
+	if (kPromotion.getPrereqOrPromotion1() != NO_PROMOTION)
 	{
 	    bool bValid = false;
 		if (isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPrereqOrPromotion1())))
@@ -13896,21 +13898,21 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 		}
         if (GC.getPromotionInfo(ePromotion).getPrereqOrPromotion2() != NO_PROMOTION)
         {
-            if (isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPrereqOrPromotion2())))
+            if (isHasPromotion((PromotionTypes)(kPromotion.getPrereqOrPromotion2())))
             {
                 bValid = true;
             }
         }
-        if (GC.getPromotionInfo(ePromotion).getPromotionPrereqOr3() != NO_PROMOTION)
+        if (kPromotion.getPromotionPrereqOr3() != NO_PROMOTION)
         {
-            if (isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPromotionPrereqOr3())))
+            if (isHasPromotion((PromotionTypes)(kPromotion.getPromotionPrereqOr3())))
             {
                 bValid = true;
             }
         }
-        if (GC.getPromotionInfo(ePromotion).getPromotionPrereqOr4() != NO_PROMOTION)
+        if (kPromotion.getPromotionPrereqOr4() != NO_PROMOTION)
         {
-            if (isHasPromotion((PromotionTypes)(GC.getPromotionInfo(ePromotion).getPromotionPrereqOr4())))
+            if (isHasPromotion((PromotionTypes)(kPromotion.getPromotionPrereqOr4())))
             {
                 bValid = true;
             }
@@ -13920,9 +13922,9 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
             return false;
         }
 	}
-	if (GC.getPromotionInfo(ePromotion).getBonusPrereq() != NO_BONUS)
+	if (kPromotion.getBonusPrereq() != NO_BONUS)
 	{
-	    if (!GET_PLAYER(getOwnerINLINE()).hasBonus((BonusTypes)GC.getPromotionInfo(ePromotion).getBonusPrereq()))
+	    if (!GET_PLAYER(getOwnerINLINE()).hasBonus((BonusTypes)kPromotion.getBonusPrereq()))
 	    {
 	        return false;
 	    }
@@ -13945,7 +13947,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
             }
         }
     }
-	if (GC.getPromotionInfo(ePromotion).isPrereqAlive())
+	if (kPromotion.isPrereqAlive())
 	{
 	    if (!isAlive())
 	    {
@@ -13954,17 +13956,17 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 	}
 //FfH: End Add
 
-	if (GC.getPromotionInfo(ePromotion).getTechPrereq() != NO_TECH)
+	if (kPromotion.getTechPrereq() != NO_TECH)
 	{
-		if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getPromotionInfo(ePromotion).getTechPrereq()))))
+		if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(kPromotion.getTechPrereq()))))
 		{
 			return false;
 		}
 	}
 
-	if (GC.getPromotionInfo(ePromotion).getStateReligionPrereq() != NO_RELIGION)
+	if (kPromotion.getStateReligionPrereq() != NO_RELIGION)
 	{
-		if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != GC.getPromotionInfo(ePromotion).getStateReligionPrereq())
+		if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != kPromotion.getStateReligionPrereq())
 		{
 			return false;
 		}

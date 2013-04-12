@@ -9538,12 +9538,14 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/	
 
+	CvCivicInfo &kCivic = GC.getCivicInfo(eCivic);
+	
 //FfH: Added by Kael 11/23/2007
     if (isFullMember((VoteSourceTypes)0))
     {
 //FfH: End Add
 
-        if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOptionType())))
+        if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)(kCivic.getCivicOptionType())))
         {
             return GC.getGameINLINE().isForceCivic(eCivic);
         }
@@ -9565,43 +9567,43 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 		}
 	}
 
-	if (!isHasCivicOption((CivicOptionTypes)(GC.getCivicInfo(eCivic).getCivicOptionType())) && !(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getCivicInfo(eCivic).getTechPrereq()))))
+	if (!isHasCivicOption((CivicOptionTypes)(kCivic.getCivicOptionType())) && !(GET_TEAM(getTeam()).isHasTech((TechTypes)(kCivic.getTechPrereq()))))
 	{
 		return false;
 	}
 
 //FfH Civics: Added by Kael 08/11/2007
-    if (GC.getCivicInfo(eCivic).isPrereqWar())
+    if (kCivic.isPrereqWar())
     {
         if (GET_TEAM(getTeam()).getAtWarCount(true) == 0)
         {
             return false;
 		}
     }
-    if (GC.getCivicInfo(eCivic).getBlockAlignment() != NO_ALIGNMENT)
+    if (kCivic.getBlockAlignment() != NO_ALIGNMENT)
     {
-        if (getAlignment() == GC.getCivicInfo(eCivic).getBlockAlignment())
+        if (getAlignment() == kCivic.getBlockAlignment())
         {
             return false;
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqAlignment() != NO_ALIGNMENT)
+    if (kCivic.getPrereqAlignment() != NO_ALIGNMENT)
     {
-        if (getAlignment() != GC.getCivicInfo(eCivic).getPrereqAlignment())
+        if (getAlignment() != kCivic.getPrereqAlignment())
         {
             return false;
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqCivilization() != NO_CIVILIZATION)
+    if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
     {
-        if (getCivilizationType() != GC.getCivicInfo(eCivic).getPrereqCivilization())
+        if (getCivilizationType() != kCivic.getPrereqCivilization())
         {
             return false;
         }
     }
-    if (GC.getCivicInfo(eCivic).getPrereqReligion() != NO_RELIGION)
+    if (kCivic.getPrereqReligion() != NO_RELIGION)
     {
-        if (getStateReligion() != GC.getCivicInfo(eCivic).getPrereqReligion())
+        if (getStateReligion() != kCivic.getPrereqReligion())
         {
             return false;
         }
