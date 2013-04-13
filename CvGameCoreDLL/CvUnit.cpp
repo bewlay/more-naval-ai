@@ -18861,6 +18861,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 			}
 			if (iUnit == GC.getDefineINT("SLAVE_UNIT"))
 			{
+				pUnit->setRace(NO_PROMOTION); // We clear Race to make sure Slaves dont end up with the incorrect Race
 				if (pLoser->getRace() != NO_PROMOTION)
 				{
 					pUnit->setHasPromotion((PromotionTypes)pLoser->getRace(), true);
