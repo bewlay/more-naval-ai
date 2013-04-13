@@ -1007,6 +1007,13 @@ public:
     bool isTerraformer() const;
     bool withdrawlToNearestValidPlot();
 
+	// MNAI - additional promotion tags
+	//bool isCanMoveImpassable() const;
+	void changeCanMoveImpassable(int iNewValue);
+	bool isCastingBlocked() const;
+	void changeCastingBlocked(int iNewValue);
+	// End MNAI
+
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
 //FfH: End Add
 
@@ -1136,6 +1143,11 @@ protected:
 	int* m_paiDamageTypeCombat;
 	int* m_paiDamageTypeResist;
 //FfH: End Add
+	
+	// MNAI - Additional promotion tags
+	int m_iCanMoveImpassable;
+	int m_iCastingBlocked;
+	// End MNAI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	bool m_bAvatarOfCivLeader;

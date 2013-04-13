@@ -614,6 +614,12 @@ public:
 	int getBonusAffinity(int i) const;
 	int getDamageTypeCombat(int i) const;
 	int getDamageTypeResist(int i) const;
+
+	// MNAI - additional promotion tags
+	bool isAllowsMoveImpassable() const;
+	bool isCastingBlocked() const;
+	// End MNAI
+
 	bool readPass3();
 //FfH: End Add
 
@@ -752,6 +758,11 @@ protected:
 	int* m_piDamageTypeCombat;
 	int* m_piDamageTypeResist;
 //FfH: End Add
+
+	// MNAI - additional promotion tags
+	bool m_bAllowsMoveImpassable;
+	bool m_bCastingBlocked;
+	// End MNAI
 
 	// Arrays
 

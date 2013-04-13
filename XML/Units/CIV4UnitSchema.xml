@@ -991,6 +991,8 @@
 	<ElementType name="DamageTypeResists" content="eltOnly">
 		<element type="DamageTypeResist" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="bAllowsMoveImpassable" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bCastingBlocked" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PromotionInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -1129,6 +1131,8 @@
 		<element type="DamageTypeCombats" minOccurs="0"/>
 		<element type="BonusAffinities" minOccurs="0"/>
 		<element type="DamageTypeResists" minOccurs="0"/>
+		<element type="bAllowsMoveImpassable" minOccurs="0"/>
+		<element type="bCastingBlocked" minOccurs="0"/>
 		<element type="iOrderPriority" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="PromotionInfos" content="eltOnly">

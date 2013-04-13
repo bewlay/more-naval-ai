@@ -178,6 +178,11 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 	setGameTurnCreated(GC.getGameINLINE().getGameTurn());
 
+	if (m_pUnitInfo->isCanMoveImpassable())
+	{
+		changeCanMoveImpassable(1);
+	}
+
 	GC.getGameINLINE().incrementUnitCreatedCount(getUnitType());
 
 	GC.getGameINLINE().incrementUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType()));
@@ -488,6 +493,9 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iTotalDamageTypeCombat = 0;
     m_iUnitArtStyleType = NO_UNIT_ARTSTYLE;
 	m_iWorkRateModify = 0;
+
+	m_iCanMoveImpassable = 0;
+	m_iCastingBlocked = 0;
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	m_bAvatarOfCivLeader = false;
 //<<<<Unofficial Bug Fix: End Add
@@ -10735,8 +10743,8 @@ bool CvUnit::canMoveImpassable() const
         return true;
     }
 //FfH: End Add
-
-	return m_pUnitInfo->isCanMoveImpassable();
+	return m_iCanMoveImpassable == 0 ? false : true;
+	//return m_pUnitInfo->isCanMoveImpassable();
 }
 
 bool CvUnit::canMoveAllTerrain() const
@@ -14193,6 +14201,11 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 			changeDamageTypeResist(((DamageTypes)iI), (kPromotionInfo.getDamageTypeResist(iI) * iChange));
 		}
 //FfH: End Add
+		// MNAI - additional promotion tags
+		changeCanMoveImpassable((kPromotionInfo.isAllowsMoveImpassable()) ? iChange : 0);
+		changeCastingBlocked((kPromotionInfo.isCastingBlocked()) ? iChange : 0);
+		// End MNAI
+
 		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 		{
 			changeExtraTerrainAttackPercent(((TerrainTypes)iI), (kPromotionInfo.getTerrainAttackPercent(iI) * iChange));
@@ -15660,6 +15673,11 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     CLLNode<IDInfo>* pUnitNode;
     bool bValid = false;
 	if (getImmobileTimer() > 0 && !isHeld())
+	{
+		return false;
+	}
+
+	if (isCastingBlocked())
 	{
 		return false;
 	}
@@ -19251,6 +19269,29 @@ bool CvUnit::withdrawlToNearestValidPlot()
 }
 //FfH: End Add
 
+// MNAI - additional promotion tags
+void CvUnit::changeCanMoveImpassable(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iCanMoveImpassable += iNewValue;
+    }
+}
+
+bool CvUnit::isCastingBlocked() const
+{
+	return m_iCastingBlocked == 0 ? false : true;
+}
+
+void CvUnit::changeCastingBlocked(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iCastingBlocked += iNewValue;
+    }
+}
+// End MNAI
+
 void CvUnit::read(FDataStreamBase* pStream)
 {
 	// Init data before load
@@ -19391,10 +19432,14 @@ void CvUnit::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumDamageTypeInfos(), m_paiDamageTypeResist);
 //FfH: End Add
 
+	// MNAI - additional promotion tags
+	pStream->Read(&m_iCanMoveImpassable);
+	pStream->Read(&m_iCastingBlocked);
+	// End MNAI
 
-//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
+	//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	pStream->Read(&m_bAvatarOfCivLeader);
-//<<<<Unofficial Bug Fix: End Add
+	//<<<<Unofficial Bug Fix: End Add
 
 	pStream->Read((int*)&m_eOwner);
 	pStream->Read((int*)&m_eCapturingPlayer);
@@ -19554,9 +19599,14 @@ void CvUnit::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumDamageTypeInfos(), m_paiDamageTypeResist);
 //FfH: End Add
 
-//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
+	// MNAI - additional promotion tags
+	pStream->Write(m_iCanMoveImpassable);
+	pStream->Write(m_iCastingBlocked);
+	// End MNAI
+
+	//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	pStream->Write(m_bAvatarOfCivLeader);
-//<<<<Unofficial Bug Fix: End Add
+	//<<<<Unofficial Bug Fix: End Add
 
 	pStream->Write(m_eOwner);
 	pStream->Write(m_eCapturingPlayer);

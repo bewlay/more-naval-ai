@@ -1830,8 +1830,14 @@ m_iPromotionCombatType(NO_PROMOTION),
 m_iPromotionCombatMod(0),
 m_piBonusAffinity(NULL),
 m_piDamageTypeCombat(NULL),
-m_piDamageTypeResist(NULL)
+m_piDamageTypeResist(NULL),
 //FfH: End Add
+
+// MNAI - additional promotion tags
+m_bAllowsMoveImpassable(false),
+m_bCastingBlocked(false)
+// End MNAI
+
 {
 }
 
@@ -2484,6 +2490,18 @@ int CvPromotionInfo::getDamageTypeResist(int i) const
 }
 //FfH: End Add
 
+// MNAI - additional promotion tags
+bool CvPromotionInfo::isAllowsMoveImpassable() const
+{
+	return m_bAllowsMoveImpassable;
+}
+
+bool CvPromotionInfo::isCastingBlocked() const
+{
+	return m_bCastingBlocked;
+}
+// End MNAI
+
 // Arrays
 
 int CvPromotionInfo::getTerrainAttackPercent(int i) const
@@ -2691,6 +2709,11 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	stream->Read(GC.getNumDamageTypeInfos(), m_piDamageTypeResist);
 //FfH: End Add
 
+	// MNAI - additional promotion tags
+	stream->Read(&m_bAllowsMoveImpassable);
+	stream->Read(&m_bCastingBlocked);
+	// End MNAI
+
 	// Arrays
 
 	SAFE_DELETE_ARRAY(m_piTerrainAttackPercent);
@@ -2863,6 +2886,11 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumDamageTypeInfos(), m_piDamageTypeResist);
 //FfH: End Add
 
+	// MNAI - new promotion tags
+	stream->Write(m_bAllowsMoveImpassable);
+	stream->Write(m_bCastingBlocked);
+	// End MNAI
+
 	// Arrays
 
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainAttackPercent);
@@ -3017,6 +3045,12 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piDamageTypeResist, "DamageTypeResists", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 //FfH: End Add
+
+	// MNAI - additional promotion tags
+	pXML->GetChildXmlValByName(&m_bAllowsMoveImpassable, "bAllowsMoveImpassable");
+	pXML->GetChildXmlValByName(&m_bCastingBlocked, "bCastingBlocked");
+
+	// End MNAI
 
 	return true;
 }
