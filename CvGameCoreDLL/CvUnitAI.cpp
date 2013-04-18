@@ -12958,9 +12958,31 @@ bool CvUnitAI::AI_guardBonus(int iMinValue)
 
 int CvUnitAI::AI_getPlotDefendersNeeded(CvPlot* pPlot, int iExtra)
 {
-	// Tholal ToDo - add in section for Forts
 	int iNeeded = iExtra;
 	BonusTypes eNonObsoleteBonus = pPlot->getNonObsoleteBonusType(getTeam());
+	// Super Forts begin *AI_defense*
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+	
+	if (eNonObsoleteBonus != NO_BONUS)
+	{
+		if (kPlayer.AI_bonusVal(eNonObsoleteBonus, -1) > 10)
+		{
+			++iNeeded;
+		}
+	}
+
+	if (kPlayer.AI_getPlotDanger(pPlot) > 0)
+	{
+		++iNeeded;
+		if ((kPlayer.AI_getPlotCanalValue(pPlot) > 0) 
+			|| (kPlayer.AI_getPlotChokeValue(pPlot) > 0) 
+			|| (kPlayer.AI_getPlotAirbaseValue(pPlot) > 0))
+		{
+			++iNeeded;
+		}
+	}
+	// Super Forts end
+	/* Original Code
 	if (eNonObsoleteBonus != NO_BONUS)
 	{
 		iNeeded += (GET_PLAYER(getOwnerINLINE()).AI_bonusVal(eNonObsoleteBonus) + 10) / 19;
@@ -13007,13 +13029,11 @@ int CvUnitAI::AI_getPlotDefendersNeeded(CvPlot* pPlot, int iExtra)
 		{
 			iNeeded = 1;
 		}
-		// Super Forts begin *AI_defense* - removed code so when iNeeded is 1 it won't be changed to 0
-		//else
-		//{
-		//	iNeeded = 0;
-		//}
-		// Super Forts end
-	}
+		else
+		{
+			iNeeded = 0;
+		}
+	} */
 
 	return iNeeded;
 }
@@ -13029,8 +13049,9 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= ((GET_PLAYER(getOwner()).AI_getPlotDanger(plot()) > 0) ? 2: 1))
-				//if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= AI_getPlotDefendersNeeded(plot(), 0))
+				// Super Forts begin *AI_defense* - just tweaked a number here (iExtra now 1 instead of 0)
+				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= AI_getPlotDefendersNeeded(plot(), 1))
+				// Super Forts end
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
@@ -13061,8 +13082,9 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 				{
 					if (GC.getImprovementInfo(eImprovement).isActsAsCity())
 					{
-						int iValue = AI_getPlotDefendersNeeded(pLoopPlot, 0);
-
+						// Super Forts begin *AI_defense* - just tweaked a number here (iExtra now 1 instead of 0)
+						int iValue = AI_getPlotDefendersNeeded(pLoopPlot, 1);
+						// Super Forts end
 						if (iValue > 0)
 						{
 							if (!(pLoopPlot->isVisibleEnemyUnit(this)))
@@ -13127,7 +13149,7 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= ((GET_PLAYER(getOwner()).AI_getPlotDanger(plot()) > 0) ? 2: 1))
+				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= 1)
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
@@ -13142,7 +13164,6 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 	}
 
 	int iBestValue = 0;
-	int iNeededDefense = 1;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestGuardPlot = NULL;
 
@@ -13161,14 +13182,9 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 					{
 						if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 						{
-							if (GET_PLAYER(getOwner()).AI_getPlotDanger(pLoopPlot) > 0)
+							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
 							{
-								iNeededDefense++;
-							}
-							
-							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) < iNeededDefense)
-							{
-								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) < iNeededDefense)
+								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) == 0)
 								{
 									int iPathTurns;
 									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
