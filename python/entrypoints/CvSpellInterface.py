@@ -356,7 +356,7 @@ def reqAddToFleshGolem(caster):
 			if (caster.getOwner() == pUnit.getOwner() and pUnit.getUnitClassType() == iFleshGolem):
 				pFleshGolem = pUnit
 		if pFleshGolem != -1:
-			if not caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_HERO')):
+			if not caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_HERO')) and (not (caster.getLevel() > 5)) and (not caster.getUnitAIType == gc.getInfoTypeForString('UNITAI_HERO')):
 				if caster.baseCombatStr() > pFleshGolem.baseCombatStr():
 					return True
 				if caster.baseCombatStrDefense() > pFleshGolem.baseCombatStrDefense():
