@@ -4321,7 +4321,7 @@ void CvPlayer::doTurn()
 /* City AI                                                                                      */
 /************************************************************************************************/
     // New function to handle wonder construction in a centralized manner
-	GET_PLAYER(getID()).AI_doCentralizedProduction();
+	//GET_PLAYER(getID()).AI_doCentralizedProduction();
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/

@@ -1585,6 +1585,8 @@ void CvPlayerAI::AI_updateAssignWork()
 /*                                                                                              */
 /* City AI                                                                                      */
 /************************************************************************************************/
+
+// Tholal Note - The following function was never completed in BBAI is is currently unused
 void CvPlayerAI::AI_doCentralizedProduction()
 {
 	PROFILE_FUNC();
