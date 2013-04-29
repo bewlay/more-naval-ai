@@ -9013,7 +9013,7 @@ void CvUnit::upgrade(UnitTypes eUnit)
 	if( gUnitLogLevel > 2 )
 	{
 		CvWString szString;
-		getUnitAIString(szString, pUpgradeUnit->AI_getUnitAIType());
+		getUnitAIString(szString, AI_getUnitAIType());
 		logBBAI("    %S spends %d to upgrade %S to %S, unit AI %S", GET_PLAYER(getOwnerINLINE()).getCivilizationDescription(0), upgradePrice(eUnit), getName(0).GetCString(), pUpgradeUnit->getName(0).GetCString(), szString.GetCString());
 	}
 /************************************************************************************************/
@@ -18388,7 +18388,7 @@ int CvUnit::chooseSpell()
 	
 	if( gUnitLogLevel > 2 && (iBestSpell != -1))
 	{
-		logBBAI("     %S (Unit %d - %S) Best Spell - %S (value: %d) \n",  getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), GC.getSpellInfo((SpellTypes)iBestSpell).getDescription(), iBestSpellValue);
+		logBBAI("    %S (Unit %d - %S) Best Spell - %S (value: %d) \n",  getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), GC.getSpellInfo((SpellTypes)iBestSpell).getDescription(), iBestSpellValue);
 	}
 
     return iBestSpell;

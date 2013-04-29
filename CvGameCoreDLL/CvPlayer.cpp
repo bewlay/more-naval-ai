@@ -13072,15 +13072,6 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 
 		if (isTurnActive())
 		{
-			if (GC.getLogging())
-			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					TCHAR szOut[1024];
-					sprintf(szOut, "Player %d Turn ON\n", getID());
-					gDLL->messageControlLog(szOut);
-				}
-			}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/26/09                                jdog5000      */
 /*                                                                                              */
@@ -13275,16 +13266,6 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 		}
 		else
 		{
-			if (GC.getLogging())
-			{
-				if (gDLL->getChtLvl() > 0)
-				{
-					TCHAR szOut[1024];
-					sprintf(szOut, "Player %d Turn OFF\n", getID());
-					gDLL->messageControlLog(szOut);
-				}
-			}
-
 			if (getID() == GC.getGameINLINE().getActivePlayer())
 			{
 				gDLL->getInterfaceIFace()->setForcePopup(false);
@@ -21816,6 +21797,10 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		deleteEventTriggered(iEventTriggeredId);
 		return;
 	}
+	else
+	{
+		//logBBAI("    Event Trigger - %S", GC.getEventInfo((EventTypes)iEventTriggeredId).getDescription());
+	}
 
 	logBBAI("    Event result - %S", GC.getEventInfo((EventTypes)eEvent).getDescription() );
 
@@ -27340,15 +27325,6 @@ bool CvPlayer::isPuppetState() const
 void CvPlayer::setPuppetState(bool newvalue)
 {
     m_bPuppetState = newvalue;
-	if (GC.getLogging())
-	{
-		if (gDLL->getChtLvl() > 0)
-		{
-			char szOut[1024];
-			sprintf(szOut, "Puppet state set to %d\n", newvalue);
-			gDLL->messageControlLog(szOut);
-		}
-	}
 }
 // End Puppet State Functions
 

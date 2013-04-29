@@ -1861,7 +1861,11 @@ void CvUnitAI::AI_settleMove()
 	PROFILE_FUNC();
 	
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
-		
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting settleMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 /*************************************************************************************************/
 /**	BETTER AI (UNITAI_SETTLE move) Sephi                        	                            **/
 /*************************************************************************************************/
@@ -2659,6 +2663,11 @@ void CvUnitAI::AI_workerMove()
 void CvUnitAI::AI_barbAttackMove()
 {
 	PROFILE_FUNC();
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting barbAttackMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	// catch for wrong AI - units spawned through lair events maybe?
 	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
@@ -4314,6 +4323,11 @@ void CvUnitAI::AI_collateralMove()
 {
 	PROFILE_FUNC();
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting collateralMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	if (AI_leaveAttack(1, 20, 100))
 	{
 		return;
@@ -4783,6 +4797,11 @@ void CvUnitAI::AI_counterMove()
 {
 	PROFILE_FUNC();
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting counterMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/03/10                                jdog5000      */
 /*                                                                                              */
@@ -4976,6 +4995,11 @@ void CvUnitAI::AI_cityDefenseMove()
 {
 	PROFILE_FUNC();
 	
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    %S (unit %d) starting cityDefenseMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      08/20/09                                jdog5000      */
 /*                                                                                              */
@@ -5204,6 +5228,11 @@ void CvUnitAI::AI_cityDefenseExtraMove()
 {
 	PROFILE_FUNC();
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting cityDefenseExtraMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	CvCity* pCity;
 
 /************************************************************************************************/
@@ -5320,6 +5349,11 @@ void CvUnitAI::AI_cityDefenseExtraMove()
 void CvUnitAI::AI_exploreMove()
 {
 	PROFILE_FUNC();
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    %S (unit %d) starting exploreMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	// Floating Eyes & Hawks
 	if (getDomainType() == DOMAIN_AIR)
@@ -7944,6 +7978,11 @@ void CvUnitAI::AI_assaultSeaMove()
 
 	bool bEmpty = !getGroup()->hasCargo();
 	bool bFull = (getGroup()->AI_isFull() && (getGroup()->getCargo() > 0));
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting assaultSeaMove (cargo: %d)", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits(), getGroup()->getCargo());
+	}
 
 	if (plot()->isCity(true))
 	{
@@ -14993,6 +15032,7 @@ bool CvUnitAI::AI_join(int iMaxCount)
 		if (atPlot(pBestPlot))
 		{
 			getGroup()->pushMission(MISSION_JOIN, eBestSpecialist);
+			logBBAI("    %S (unit %d - %S) joining city at %d, %d as %S", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),pBestPlot->getX(), pBestPlot->getY(), GC.getSpecialistInfo(eBestSpecialist).getDescription());
 			return true;
 		}
 		else
@@ -16649,7 +16689,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("    %S (unit %d - %S) (groupsize: %d) targeting city %S \n", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getGroup()->getNumUnits(), pBestCity->getName().GetCString());
+			logBBAI("      ...targeting city %S \n", pBestCity->getName().GetCString());
 		}
 	}
 
@@ -23754,17 +23794,6 @@ bool CvUnitAI::AI_exploreAir()
 	if (pBestPlot != NULL)
 	{
 		FAssert(!atPlot(pBestPlot));
-
-		if (GC.getLogging())
-		{
-			if (gDLL->getChtLvl() > 0)
-			{
-				char szOut[1024];
-				sprintf(szOut, "Player %d Unit %d (%S's %S) recon %d, %d \n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), pBestPlot->getX(), pBestPlot->getY());
-				gDLL->messageControlLog(szOut);
-			}
-		}
-
 		getGroup()->pushMission(MISSION_RECON, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 		return true;
 	}
@@ -26520,6 +26549,12 @@ bool CvUnitAI::AI_groupheal(int iDamagePercent, int iMaxPath)
 void CvUnitAI::AI_feastingmove()
 {
 
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    %S (unit %d) starting cityDefenseMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	CvCity* pCity = plot()->getPlotCity();
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
 
@@ -26713,6 +26748,11 @@ void CvUnitAI::PatrolMove()
 	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
 
 	bool bInCity = plot()->isCity();
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting PatrolMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
@@ -27597,6 +27637,11 @@ void CvUnitAI::ConquestMove()
 	bool bAlert1 = kPlayer.AI_isDoStrategy(AI_STRATEGY_ALERT1);
 	bool bIgnoreFaster = false;
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting ConquestMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	if (kPlayer.AI_isDoStrategy(AI_STRATEGY_LAND_BLITZ))
 	{
 		if (!bAssault && area()->getCitiesPerPlayer(getOwnerINLINE()) > 0)
@@ -28032,7 +28077,7 @@ void CvUnitAI::ConquestMove()
 		{
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("      Stack (led by %d, size %d) making opportunistic city attack", getID(), getGroup()->getNumUnits());
+				logBBAI("      ...making opportunistic city attack");
 			}
 			return;
 		}
@@ -28067,7 +28112,7 @@ void CvUnitAI::ConquestMove()
 	
 	if( pTargetCity != NULL && (getGroup()->getNumUnits() > 1))
 	{
-		if( gUnitLogLevel >= 3 ) logBBAI("      %S, %d trying to assault target city", getName().GetCString(), getID());
+		if( gUnitLogLevel >= 3 ) logBBAI("       ...trying to assault target city");
 
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		//int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
@@ -28112,10 +28157,10 @@ void CvUnitAI::ConquestMove()
 			if (iStepDistToTarget == 1)
 			{
 				// temp hack - Tholal ToDo: need to figure out why the AI is reluctant to attack empty cities
-				logBBAI("       ...next to target city...\n");
+				logBBAI("     ...next to target city...\n");
 				if (pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) == 0)
 				{
-					logBBAI("       ...target city is empty!\n");
+					logBBAI("     ...target city is empty!\n");
 					getGroup()->pushMission(MISSION_MOVE_TO, pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					return;
 				}
@@ -28123,7 +28168,7 @@ void CvUnitAI::ConquestMove()
 				// or if defenses have crept up past half
 				if( (iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) )
 				{
-					logBBAI("       ...considering attack/bombard...\n");
+					logBBAI("     ...considering attack/bombard...\n");
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
 						
@@ -28179,7 +28224,7 @@ void CvUnitAI::ConquestMove()
 				// If not strong enough, pillage around target city without exposing ourselves
 				if( AI_pillageRange(0) )
 				{
-					logBBAI("Player %d Unit %d (%S's %S) pillaging (groupsize: %d))\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+					logBBAI("         ...pillaging");
 					return;
 				}
 								
@@ -28196,13 +28241,13 @@ void CvUnitAI::ConquestMove()
 				// Pillage around enemy city
 				if( AI_pillageAroundCity(pTargetCity, 11, 3) )
 				{
-					logBBAI("       ...pillage around city 1\n");
+					logBBAI("     ...pillage around city 1\n");
 					return;
 				}
 
 				if( AI_pillageAroundCity(pTargetCity, 0, 5) )
 				{
-					logBBAI("       ...pillage around city 2\n");
+					logBBAI("     ...pillage around city 2\n");
 					return;
 				}
 
@@ -28210,7 +28255,7 @@ void CvUnitAI::ConquestMove()
 				{
 					if( gUnitLogLevel >= 3 )
 					{
-						logBBAI("       ...choking %S ", pTargetCity->getName().GetCString());
+						logBBAI("     ...choking %S ", pTargetCity->getName().GetCString());
 					}
 
 					return;
@@ -28231,7 +28276,7 @@ void CvUnitAI::ConquestMove()
 			{
 				if( gUnitLogLevel >= 3 )
 				{
-					logBBAI("      Stack (led by %d, size %d) moving to attack %S ", getID(), getGroup()->getNumUnits(), pTargetCity->getName().GetCString());
+					logBBAI("       ...moving to attack %S", pTargetCity->getName().GetCString());
 				}
 				return;
 			}
@@ -28275,13 +28320,13 @@ void CvUnitAI::ConquestMove()
 	{
 		if (AI_pillageRange(3, 11))
 		{
-			logBBAI("Player %d Unit %d (%S's %S) pillage3 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+			logBBAI("     ...pillage3 \n");
 			return;
 		}
 
 		if (AI_pillageRange(1))
 		{
-			logBBAI("Player %d Unit %d (%S's %S) pillage 4 (group size: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits());
+			logBBAI("     ...pillage 4 \n");
 			return;
 		}
 	}
@@ -28421,15 +28466,10 @@ void CvUnitAI::ConquestMove()
 							{
 								if (getGroup()->getNumUnits() < (kPlayer.getNumCities() * 8))
 								{
-
-									if (GC.getLogging())
+									if( gUnitLogLevel >= 3 )
 									{
-										if( gUnitLogLevel >= 3 )
-										{
-											logBBAI("      Player %d Unit %d (%S's %S) waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getOwnerINLINE(), getID(), kPlayer.getName(), getName().GetCString(), getGroup()->getNumUnits(), iNeedUpgradeCount);
-										}
+										logBBAI("      ...waiting for upgrades. Groupsize: %d (potential upgrades: %d)\n", getGroup()->getNumUnits(), iNeedUpgradeCount);
 									}
-
 									getGroup()->pushMission(MISSION_SKIP);
 									return;
 								}
@@ -29129,7 +29169,7 @@ void CvUnitAI::AI_upgrademanaMove()
 			{
 				if( gUnitLogLevel >= 2 )
 				{
-					logBBAI("     Player %d Unit %d (%S's %S) %S with value of %d\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
+					logBBAI("     %S (unit %d) building %S with value of %d", getName().GetCString(), getID(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
 				}
 
 				getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, false, false, MISSIONAI_BUILD, plot());
@@ -29140,7 +29180,7 @@ void CvUnitAI::AI_upgrademanaMove()
 		{
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("     Player %d Unit %d (%S's %S) moving to mana\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString());
+				logBBAI("     %S (Unit %d) moving to mana node at plot %d, %d", getName().GetCString(), getID(), pBestPlot->getX(), pBestPlot->getY());
 			}
 
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
@@ -29270,7 +29310,7 @@ void CvUnitAI::AI_terraformerMove()
 
 	if( gUnitLogLevel >= 3)
 	{
-			logBBAI("Player %d Unit %d (%S's %S) starting terraformer move (%d, %d)\n", getOwnerINLINE(), getID(), GET_PLAYER(getOwnerINLINE()).getName(), getName().GetCString(), getX_INLINE(), getY_INLINE());
+			logBBAI("     %S (Unit %d) starting terraformer move\n", getName().GetCString(), getID());
 	}
 
 	if (plot()->isCity() && (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3)))
@@ -29797,6 +29837,11 @@ void CvUnitAI::setPermanentSummon(bool newvalue)
 void CvUnitAI::AI_InquisitionMove()
 {
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    %S (unit %d) starting InquisitionMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 	{
 		int iNeededInquisitors = (GET_PLAYER(getOwnerINLINE()).getNumCities() / 5);
@@ -29898,6 +29943,7 @@ void CvUnitAI::AI_InquisitionMove()
 			{
 				if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 				{
+					logBBAI("     ...Inquisitioning %d (plot %d, %d)", pBestCity->getName(), pBestCity->getX(), pBestCity->getY());
 					cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
 					return;
 				}
@@ -29936,10 +29982,16 @@ void CvUnitAI::AI_InquisitionMove()
 
 void CvUnitAI::AI_SvartalfarKidnapMove()
 {
-	int iSpell=GC.getInfoTypeForString("SPELL_KIDNAP");
-
-	if(iSpell!=NO_SPELL && canCast(iSpell,false))
+	if( gUnitLogLevel >= 2 )
 	{
+		logBBAI("    %S (unit %d) starting SvartfalarKidnapMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
+	int iSpell = GC.getInfoTypeForString("SPELL_KIDNAP");
+
+	if (iSpell != NO_SPELL && canCast(iSpell,false))
+	{
+		logBBAI("      ..Kidnapping at plot %d, %d!", plot()->getX(), plot()->getY());
 		cast(iSpell);
 	}
 
