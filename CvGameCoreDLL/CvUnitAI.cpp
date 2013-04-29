@@ -30410,20 +30410,21 @@ bool CvUnitAI::AI_seekLair(int iRange)
 }
 
 // A function to help the AI find nearby defensive ground
-// iRange: range in which to search; bIncludeHealing: include any healing bonuses from the plot when calculating defensive advantage
-// ToDo - use iRange as a path distance rather than a literal distance
+// iRange: path range in which to search; bIncludeHealing: include any healing bonuses from the plot when calculating defensive advantage
 bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 {
 	logBBAI("    %S (unit %d - %S) seeking defensive ground", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription());
 
 	CvPlot* pBestDefensivePlot = NULL;
 	CvPlot* pLoopPlot;
-	int iBestPlotValue = 0;
+	int iBestPlotValue = plot()->defenseModifier(getTeam(), false) + healRate(plot());
 	int iValue = 0;
 	int iDX, iDY;
-	for (iDX = -(iRange); iDX <= iRange; iDX++)
+	int iDistance = 6; // ToDo - consider increasing this? With roads, haste, etc, some units could easily move farther than 6 squares
+	int iPathTurns;
+	for (iDX = -(iDistance); iDX <= iDistance; iDX++)
 	{
-		for (iDY = -(iRange); iDY <= iRange; iDY++)
+		for (iDY = -(iDistance); iDY <= iDistance; iDY++)
 		{
 			pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
 			if (pLoopPlot != NULL)
@@ -30432,7 +30433,7 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 				{
 					if (pLoopPlot->getNumVisibleEnemyDefenders(this) == 0)
 					{
-						iValue = pLoopPlot->defenseModifier(getTeam(), false);
+						iValue = pLoopPlot->defenseModifier(getTeam(), false) +healRate(plot());
 
 						if (bIncludeHealing)
 						{
@@ -30441,8 +30442,14 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 
 						if (iValue > iBestPlotValue)
 						{
-							iBestPlotValue = iValue;
-							pBestDefensivePlot = pLoopPlot;
+							if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+							{
+								if (iPathTurns <= iRange)
+								{
+									iBestPlotValue = iValue;
+									pBestDefensivePlot = pLoopPlot;
+								}
+							}
 						}
 					}
 				}
