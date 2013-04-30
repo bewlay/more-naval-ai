@@ -882,7 +882,6 @@ public:
 	int getCommandType() const;
 	void setCommandType(int iNewType);
 	// Tholal AI begin
-	bool getTerrainValid(int i) const;
 	int getTerrainConvert(int i) const;
 	// end
 	void read(FDataStreamBase* stream);
@@ -980,7 +979,6 @@ protected:
 	CvString m_szPyRequirement;
 	CvString m_szSound;
 	// Tholal AI begin
-	bool* m_pbTerrainValid;
 	int* m_piTerrainConvert;
 	// end
 };

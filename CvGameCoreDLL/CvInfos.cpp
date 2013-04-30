@@ -3208,7 +3208,6 @@ m_iEffect(NO_EFFECT),
 m_szSound(NULL),
 m_iCommandType(NO_COMMAND),
 // Tholal AI begin
-m_pbTerrainValid(NULL),
 m_piTerrainConvert(NULL)
 // end
 {
@@ -3224,7 +3223,6 @@ m_piTerrainConvert(NULL)
 CvSpellInfo::~CvSpellInfo()
 {
 	// Tholal AI begin
-	SAFE_DELETE_ARRAY(m_pbTerrainValid);
 	SAFE_DELETE_ARRAY(m_piTerrainConvert);
 	// end
 }
@@ -3628,13 +3626,6 @@ void CvSpellInfo::setCommandType(int iNewType)
 }
 
 // Tholal AI begin
-bool CvSpellInfo::getTerrainValid(int i) const
-{
-	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
-	return m_pbTerrainValid ? m_pbTerrainValid[i] : true;
-}
-
 int CvSpellInfo::getTerrainConvert(int i) const		
 {
 	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
@@ -3737,10 +3728,6 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->ReadString(m_szSound);
 	stream->Read(&m_iCommandType);
 	// Tholal AI begin
-	SAFE_DELETE_ARRAY(m_pbTerrainValid);
-	m_pbTerrainValid = new bool[GC.getNumTerrainInfos()];
-	stream->Read(GC.getNumTerrainInfos(), m_pbTerrainValid);
-
 	SAFE_DELETE_ARRAY(m_piTerrainConvert);
 	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
 	stream->Read(GC.getNumTerrainInfos(), m_piTerrainConvert);
@@ -3842,7 +3829,6 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szSound);
 	stream->Write(m_iCommandType);
 	// Tholal AI begin
-	stream->Write(GC.getNumTerrainInfos(), m_pbTerrainValid);
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainConvert);
 	// end
 }
@@ -3980,7 +3966,6 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(m_szSound, "Sound");
 
 	// Tholal AI begin
-	pXML->SetVariableListTagPair(&m_pbTerrainValid, "TerrainValids", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos(), false);
 	pXML->SetVariableListTagPair(&m_piTerrainConvert, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos(), -1);
 	// end
 
