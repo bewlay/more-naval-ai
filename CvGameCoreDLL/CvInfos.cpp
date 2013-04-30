@@ -3966,8 +3966,15 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(m_szSound, "Sound");
 
 	// Tholal AI begin
-	pXML->SetVariableListTagPair(&m_piTerrainConvert, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos(), -1);
-	// end
+	CvString* pszTemp = NULL;
+	pXML->SetVariableListTagPair(&pszTemp, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
+	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
+	for (int i = 0; i < GC.getNumTerrainInfos(); ++i)
+	{
+		m_piTerrainConvert[i] = pszTemp[i].IsEmpty() ? NO_TERRAIN : pXML->FindInInfoClass(pszTemp[i]);
+	}
+	SAFE_DELETE_ARRAY(pszTemp);
+	// Tholal end
 
 	return true;
 }
