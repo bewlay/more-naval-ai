@@ -1219,12 +1219,14 @@ void CvSelectionGroup::startMission()
 /************************************************************************************************/
 		if( headMissionQueueNode()->m_data.eMissionType == MISSION_PILLAGE )
 		{
+			
 			// Fast units pillage first
 			pUnitNode = headUnitNode();
 			int iMaxMovesLeft = 0;
 
 			while (pUnitNode != NULL)
 			{
+				
 				pLoopUnit = ::getUnit(pUnitNode->m_data);
 				pUnitNode = nextUnitNode(pUnitNode);
 
@@ -1252,7 +1254,11 @@ void CvSelectionGroup::startMission()
 				{
 					pLoopUnit = ::getUnit(pUnitNode->m_data);
 					pUnitNode = nextUnitNode(pUnitNode);
-
+					if (plot()->getImprovementType() == NO_IMPROVEMENT && pLoopUnit->isEnemyRoute())
+					{
+						bDidPillage = true;
+						break;
+					}
 					if( pLoopUnit->canMove() && pLoopUnit->canPillage(pLoopUnit->plot()) )
 					{
 						int iMovesLeft = pLoopUnit->movesLeft();

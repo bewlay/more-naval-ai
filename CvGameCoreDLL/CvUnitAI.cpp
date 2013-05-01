@@ -817,8 +817,12 @@ bool CvUnitAI::AI_follow()
 	{
 		if (canPillage(plot()))
 		{
-			getGroup()->pushMission(MISSION_PILLAGE);
-			return true;
+			if (plot()->getImprovementType() != NO_IMPROVEMENT || !isEnemyRoute())
+			{
+				getGroup()->pushMission(MISSION_PILLAGE);
+				logBBAI("   FOLLOW PILLAGE (Unit %d, plot %d, %d)",getID(), plot()->getX(), plot()->getY());
+				return true;
+			}
 		}
 	}
 
@@ -24894,6 +24898,11 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 	}
 	// End Advanced Tactics
 
+	if (pPlot->getImprovementType() == NO_IMPROVEMENT && isEnemyRoute())
+	{
+		return 0;
+	}
+
 	iBonusValue = 0;
 	eNonObsoleteBonus = pPlot->getNonObsoleteBonusType(pPlot->getTeam());
 	if (eNonObsoleteBonus != NO_BONUS)
@@ -28265,6 +28274,7 @@ void CvUnitAI::ConquestMove()
 			{
 				if( AI_goToTargetCity(0,4,pTargetCity) )
 				{
+					logBBAI(" ....Moving to Target City");
 					return;
 				}
 			}

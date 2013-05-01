@@ -6043,6 +6043,13 @@ bool CvUnit::pillage()
 		}
 	}
 
+	/*
+	if (pPlot->getImprovementType() == NO_IMPROVEMENT && isEnemyRoute())
+	{
+		return false;
+	}
+	*/
+
 	if (pPlot->isWater())
 	{
 		CvUnit* pInterceptor = bestSeaPillageInterceptor(this, GC.getDefineINT("COMBAT_DIE_SIDES") / 2);
