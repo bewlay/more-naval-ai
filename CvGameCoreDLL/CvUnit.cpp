@@ -16080,6 +16080,14 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return false;
 		}
 	}
+	// MNAI begin
+	/* This terraforming check was placed before PyRequirement is checked because some terraforming spells still need
+		PyRequirement to enable other abilities (e.g. Spring can also put out flames) */
+	if (canTerraform(spell, pPlot))
+	{
+		return true;
+	}
+	// MNAI end
 	if (!CvString(kSpell.getPyRequirement()).empty())
     {
         CyUnit* pyUnit = new CyUnit(this);
@@ -16589,6 +16597,36 @@ bool CvUnit::canSpreadReligion(int spell) const
 	return true;
 }
 
+// MNAI begin
+bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const
+{
+	CvSpellInfo& kSpell = GC.getSpellInfo((SpellTypes) spell);
+	int iRange = kSpell.getRange();
+	for (int iDX = -iRange; iDX <= iRange; ++iDX)
+	{
+		for (int iDY = -iRange; iDY <= iRange; ++iDY)
+		{
+			CvPlot* pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
+			if (pLoopPlot != NULL)
+			{
+				if (kSpell.getTerrainConvert(pLoopPlot->getTerrainType()) != NO_TERRAIN)
+				{
+					if (kSpell.getCreateFeatureType() != NO_FEATURE)
+					{
+						if (pLoopPlot->getFeatureType() == kSpell.getCreateFeatureType())
+						{
+							continue;
+						}
+					}
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+// MNAI end
+
 void CvUnit::cast(int spell)
 {
 	CvWString szBuffer;
@@ -16687,6 +16725,12 @@ void CvUnit::cast(int spell)
             plot()->getPlotCity()->setNumRealBuilding((BuildingTypes)kSpellInfo.getCreateBuildingType(), true);
         }
     }
+	// MNAI begin
+	if (canTerraform(spell, plot()))
+	{
+		castTerraform(spell);
+	}
+	// MNAI end
     if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
     {
         if (canCreateFeature(spell))
@@ -17386,6 +17430,58 @@ void CvUnit::castCreateUnit(int spell)
 	}
 //<<<<Unofficial Bug Fix: End Add
 }
+
+// MNAI begin
+void CvUnit::castTerraform(int spell)
+{
+	CvSpellInfo& kSpellInfo = GC.getSpellInfo((SpellTypes) spell);
+	CvPlot* pPlot = plot();
+	int iRange = kSpellInfo.getRange();
+
+	for (int iDX = -iRange; iDX <= iRange; ++iDX)
+	{
+		for (int iDY = -iRange; iDY <= iRange; ++iDY)
+		{
+			CvPlot* pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
+			if (pLoopPlot != NULL)
+			{
+				if (kSpellInfo.getTerrainConvert(pLoopPlot->getTerrainType()) != NO_TERRAIN)
+				{
+					if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
+					{
+						if (pLoopPlot->getFeatureType() == kSpellInfo.getCreateFeatureType())
+						{
+							continue;
+						}
+					}
+					pLoopPlot->setTerrainType((TerrainTypes)kSpellInfo.getTerrainConvert(pLoopPlot->getTerrainType()));
+					if (pLoopPlot->getFeatureType() != NO_FEATURE)
+					{
+						if (!GC.getFeatureInfo(pLoopPlot->getFeatureType()).isTerrain(pLoopPlot->getTerrainType()))
+						{
+							pLoopPlot->setFeatureType(NO_FEATURE);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	if (kSpellInfo.isCausesWar())
+	{
+		if (pPlot->getTeam() != getTeam() && pPlot->getTeam() != NO_TEAM)
+		{
+			if (!isHiddenNationality())
+			{
+				if (!GET_TEAM(getTeam()).isPermanentWarPeace(pPlot->getTeam()))
+                {
+                    GET_TEAM(getTeam()).declareWar(pPlot->getTeam(), false, WARPLAN_TOTAL);
+                }
+			}
+		}
+	}
+}
+// MNAI end
 
 bool CvUnit::isHasCasted() const
 {

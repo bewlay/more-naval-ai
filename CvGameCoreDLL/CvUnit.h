@@ -871,6 +871,7 @@ public:
 	bool canImmobile(int spell);
 	bool canPush(int spell);
 	bool canRemovePromotion(int spell);
+	bool canTerraform(int spell, const CvPlot* pPlot) const;	// MNAI
 
 	void cast(int spell);
 	void castAddPromotion(int spell);
@@ -881,6 +882,7 @@ public:
     void castImmobile(int spell);
     void castPush(int spell);
 	void castRemovePromotion(int spell);
+	void castTerraform(int spell);	// MNAI
 
 	bool isImmuneToSpell(CvUnit* pCaster, int spell) const;
 	int getDelayedSpell() const;
