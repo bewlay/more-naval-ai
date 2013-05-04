@@ -2650,11 +2650,30 @@
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
+			<iRange>1</iRange>
             <PyResult>spellSanctify(pCaster)</PyResult>
             <PyRequirement>reqSanctify(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Sanctify.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_BROKEN_LANDS</TerrainType>
+					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_FIELDS_OF_PERDITION</TerrainType>
+					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_BURNING_SANDS</TerrainType>
+					<TerrainConvert>TERRAIN_DESERT</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_SHALLOWS</TerrainType>
+					<TerrainConvert>TERRAIN_MARSH</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SANCTUARY</Type>
@@ -2686,11 +2705,27 @@
             <bCausesWar>1</bCausesWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-            <PyResult>spellScorch(pCaster)</PyResult>
-            <PyRequirement>reqScorch(pCaster)</PyRequirement>
             <Effect>EFFECT_SCORCH</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
             <Button>Art/Interface/Buttons/Spells/Scorch.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_PLAINS</TerrainType>
+					<TerrainConvert>TERRAIN_DESERT</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_FIELDS_OF_PERDITION</TerrainType>
+					<TerrainConvert>TERRAIN_BURNING_SANDS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_SNOW</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_MARSH</TerrainType>
+					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SEVER</Type>
@@ -2914,11 +2949,18 @@
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
+			<CreateFeatureType>FEATURE_FLOOD_PLAINS</CreateFeatureType>
             <PyResult>spellSpring(pCaster)</PyResult>
             <PyRequirement>reqSpring(pCaster)</PyRequirement>
             <Effect>EFFECT_SPRING</Effect>
             <Sound>AS3D_SPELL_SPRING</Sound>
             <Button>Art/Interface/Buttons/Spells/Spring.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_DESERT</TerrainType>
+					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SPRINT</Type>
@@ -4462,14 +4504,35 @@
             <PromotionPrereq1>PROMOTION_NATURE3</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
+			<bInBordersOnly>1</bInBordersOnly>
             <iAIWeight>10</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-            <PyResult>spellVitalize(pCaster)</PyResult>
-            <PyRequirement>reqVitalize(pCaster)</PyRequirement>
             <Effect>EFFECT_VITALIZE</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Vitalize.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_SNOW</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_TUNDRA</TerrainType>
+					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_DESERT</TerrainType>
+					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_PLAINS</TerrainType>
+					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_MARSH</TerrainType>
+					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_WALL_OF_STONE</Type>
