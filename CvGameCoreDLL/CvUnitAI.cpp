@@ -2018,12 +2018,6 @@ void CvUnitAI::AI_settleMove()
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
-
-			if (getGroup()->getNumUnits() > iNeededSettleDefenders + 1)
-			{
-				joinGroup(NULL, true);
-				return;
-			}
 		}
 	}
 
