@@ -993,6 +993,7 @@
 	</ElementType>
 	<ElementType name="bAllowsMoveImpassable" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCastingBlocked" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bUpgradeOutsideBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PromotionInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -1133,6 +1134,7 @@
 		<element type="DamageTypeResists" minOccurs="0"/>
 		<element type="bAllowsMoveImpassable" minOccurs="0"/>
 		<element type="bCastingBlocked" minOccurs="0"/>
+		<element type="bUpgradeOutsideBorders" minOccurs="0"/>
 		<element type="iOrderPriority" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="PromotionInfos" content="eltOnly">

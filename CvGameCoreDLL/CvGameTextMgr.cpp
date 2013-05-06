@@ -1524,6 +1524,11 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				szString.append(NEWLINE);
 				szString.append(gDLL->getText("TXT_KEY_UNIT_CASTING_BLOCKED"));
 			}
+			if (pUnit->isUpgradeOutsideBorders())
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_UNIT_UPGRADE_OUTSIDE_BORDERS"));
+			}
 			if (bSummoningAbility)
 			{
 				if (pUnit->isTwincast())
@@ -9288,6 +9293,11 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CASTING_BLOCKED_PEDIA"));
+    }
+	if (kPromotionInfo.isUpgradeOutsideBorders())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_UPGRADE_OUTSIDE_BORDERS_PEDIA"));
     }
     if (kPromotionInfo.isHiddenNationality())
     {

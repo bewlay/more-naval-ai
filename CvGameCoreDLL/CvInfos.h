@@ -618,6 +618,7 @@ public:
 	// MNAI - additional promotion tags
 	bool isAllowsMoveImpassable() const;
 	bool isCastingBlocked() const;
+	bool isUpgradeOutsideBorders() const;
 	// End MNAI
 
 	bool readPass3();
@@ -762,6 +763,7 @@ protected:
 	// MNAI - additional promotion tags
 	bool m_bAllowsMoveImpassable;
 	bool m_bCastingBlocked;
+	bool m_bUpgradeOutsideBorders;
 	// End MNAI
 
 	// Arrays

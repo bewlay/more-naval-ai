@@ -1014,6 +1014,8 @@ public:
 	void changeCanMoveImpassable(int iNewValue);
 	bool isCastingBlocked() const;
 	void changeCastingBlocked(int iNewValue);
+	bool isUpgradeOutsideBorders() const;
+	void changeUpgradeOutsideBorders(int iNewValue);
 	// End MNAI
 
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
@@ -1149,6 +1151,7 @@ protected:
 	// MNAI - Additional promotion tags
 	int m_iCanMoveImpassable;
 	int m_iCastingBlocked;
+	int m_iUpgradeOutsideBorders;
 	// End MNAI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22

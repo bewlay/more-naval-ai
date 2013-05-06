@@ -496,6 +496,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 
 	m_iCanMoveImpassable = 0;
 	m_iCastingBlocked = 0;
+	m_iUpgradeOutsideBorders = 0;
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	m_bAvatarOfCivLeader = false;
 //<<<<Unofficial Bug Fix: End Add
@@ -8659,7 +8660,7 @@ bool CvUnit::isReadyForUpgrade() const
 		return false;
 	}
 
-	if (plot()->getTeam() != getTeam())
+	if (plot()->getTeam() != getTeam() && !isUpgradeOutsideBorders())
 	{
 		return false;
 	}
@@ -14225,6 +14226,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		// MNAI - additional promotion tags
 		changeCanMoveImpassable((kPromotionInfo.isAllowsMoveImpassable()) ? iChange : 0);
 		changeCastingBlocked((kPromotionInfo.isCastingBlocked()) ? iChange : 0);
+		changeUpgradeOutsideBorders((kPromotionInfo.isUpgradeOutsideBorders()) ? iChange : 0);
 		// End MNAI
 
 		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
@@ -19408,6 +19410,19 @@ void CvUnit::changeCastingBlocked(int iNewValue)
         m_iCastingBlocked += iNewValue;
     }
 }
+
+bool CvUnit::isUpgradeOutsideBorders() const
+{
+	return m_iUpgradeOutsideBorders == 0 ? false : true;
+}
+
+void CvUnit::changeUpgradeOutsideBorders(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iUpgradeOutsideBorders += iNewValue;
+    }
+}
 // End MNAI
 
 void CvUnit::read(FDataStreamBase* pStream)
@@ -19553,6 +19568,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// MNAI - additional promotion tags
 	pStream->Read(&m_iCanMoveImpassable);
 	pStream->Read(&m_iCastingBlocked);
+	pStream->Read(&m_iUpgradeOutsideBorders);
 	// End MNAI
 
 	//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
@@ -19720,6 +19736,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	// MNAI - additional promotion tags
 	pStream->Write(m_iCanMoveImpassable);
 	pStream->Write(m_iCastingBlocked);
+	pStream->Write(m_iUpgradeOutsideBorders);
 	// End MNAI
 
 	//>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
