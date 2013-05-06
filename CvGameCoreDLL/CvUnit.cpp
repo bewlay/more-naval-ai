@@ -6043,13 +6043,6 @@ bool CvUnit::pillage()
 		}
 	}
 
-	/*
-	if (pPlot->getImprovementType() == NO_IMPROVEMENT && isEnemyRoute())
-	{
-		return false;
-	}
-	*/
-
 	if (pPlot->isWater())
 	{
 		CvUnit* pInterceptor = bestSeaPillageInterceptor(this, GC.getDefineINT("COMBAT_DIE_SIDES") / 2);
@@ -19948,16 +19941,16 @@ bool CvUnit::isRangedCollateral()
     {
         if (canCast(iSpell, false))
         {
-			CvSpellInfo kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
+			CvSpellInfo kSpell = GC.getSpellInfo((SpellTypes)iSpell);
 			{
-				if (kSpellInfo.getDamage() > 0 && kSpellInfo.getRange() > 0)
+				if (kSpell.getDamage() > 0 && kSpell.getRange() > 0)
 				{
 					return true;
 				}
 
-				if (kSpellInfo.getCreateUnitType() != NO_UNIT)
+				if (kSpell.getCreateUnitType() != NO_UNIT)
 				{
-					if (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCollateralDamage() > 0)
+					if (GC.getUnitInfo((UnitTypes)kSpell.getCreateUnitType()).getCollateralDamage() > 0)
 					{
 						return true;
 					}

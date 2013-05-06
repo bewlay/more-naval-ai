@@ -803,7 +803,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		//Tholal ToDo - Manes hit this upgrade section before they ever get a chance to 'cast'
 		// Tholal ToDo - arrange units in a sorted list then try and upgrade rather than running through whole list three times
 		// pass 0
-		logBBAI("CHECKING FOR UPGRADES");
+		logBBAI("Checking for Upgrades...");
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
 			if (!pLoopUnit->isDelayedDeath())
@@ -841,7 +841,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 #endif
     }
 	// do AI promotions after upgrade
-	logBBAI("  Checking for Promotions--");
+	logBBAI("Checking for Promotions...");
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
 		if (!pLoopUnit->isDelayedDeath())

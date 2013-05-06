@@ -28115,7 +28115,7 @@ void CvUnitAI::ConquestMove()
 	
 	if( pTargetCity != NULL && (getGroup()->getNumUnits() > 1))
 	{
-		if( gUnitLogLevel >= 3 ) logBBAI("       ...trying to assault target city");
+		if( gUnitLogLevel >= 3 ) logBBAI("      ...trying to assault target city");
 
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		//int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
@@ -28160,10 +28160,10 @@ void CvUnitAI::ConquestMove()
 			if (iStepDistToTarget == 1)
 			{
 				// temp hack - Tholal ToDo: need to figure out why the AI is reluctant to attack empty cities
-				logBBAI("     ...next to target city...\n");
+				logBBAI("      ...next to target city...\n");
 				if (pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) == 0)
 				{
-					logBBAI("     ...target city is empty!\n");
+					logBBAI("      ...target city is empty!\n");
 					getGroup()->pushMission(MISSION_MOVE_TO, pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					return;
 				}
@@ -28171,7 +28171,7 @@ void CvUnitAI::ConquestMove()
 				// or if defenses have crept up past half
 				if( (iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) )
 				{
-					logBBAI("     ...considering attack/bombard...\n");
+					logBBAI("      ...considering attack/bombard...\n");
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
 						
@@ -28227,7 +28227,7 @@ void CvUnitAI::ConquestMove()
 				// If not strong enough, pillage around target city without exposing ourselves
 				if( AI_pillageRange(0) )
 				{
-					logBBAI("         ...pillaging");
+					logBBAI("      ...pillaging");
 					return;
 				}
 								
@@ -28244,13 +28244,13 @@ void CvUnitAI::ConquestMove()
 				// Pillage around enemy city
 				if( AI_pillageAroundCity(pTargetCity, 11, 3) )
 				{
-					logBBAI("     ...pillage around city 1\n");
+					logBBAI("      ...pillage around city 1\n");
 					return;
 				}
 
 				if( AI_pillageAroundCity(pTargetCity, 0, 5) )
 				{
-					logBBAI("     ...pillage around city 2\n");
+					logBBAI("      ...pillage around city 2\n");
 					return;
 				}
 
@@ -28258,7 +28258,7 @@ void CvUnitAI::ConquestMove()
 				{
 					if( gUnitLogLevel >= 3 )
 					{
-						logBBAI("     ...choking %S ", pTargetCity->getName().GetCString());
+						logBBAI("      ...choking %S ", pTargetCity->getName().GetCString());
 					}
 
 					return;
@@ -28268,7 +28268,6 @@ void CvUnitAI::ConquestMove()
 			{
 				if( AI_goToTargetCity(0,4,pTargetCity) )
 				{
-					logBBAI(" ....Moving to Target City");
 					return;
 				}
 			}
@@ -28280,7 +28279,7 @@ void CvUnitAI::ConquestMove()
 			{
 				if( gUnitLogLevel >= 3 )
 				{
-					logBBAI("       ...moving to attack %S", pTargetCity->getName().GetCString());
+					logBBAI("      ...moving to attack %S", pTargetCity->getName().GetCString());
 				}
 				return;
 			}
@@ -28324,13 +28323,13 @@ void CvUnitAI::ConquestMove()
 	{
 		if (AI_pillageRange(3, 11))
 		{
-			logBBAI("     ...pillage3 \n");
+			logBBAI("      ...pillage3 \n");
 			return;
 		}
 
 		if (AI_pillageRange(1))
 		{
-			logBBAI("     ...pillage 4 \n");
+			logBBAI("      ...pillage 4 \n");
 			return;
 		}
 	}
@@ -28527,7 +28526,7 @@ void CvUnitAI::ConquestMove()
 
 				if (pTargetCity != NULL)
 				{
-					if( gUnitLogLevel >= 3 ) logBBAI("      %S, %d blockage problem", getName().GetCString(), getID());
+					if( gUnitLogLevel >= 3 ) logBBAI("      ...%S, %d blockage problem", getName().GetCString(), getID());
 
 					if (AI_solveBlockageProblem(pTargetCity->plot(), (GET_TEAM(getTeam()).getAtWarCount(true) == 0)))
 					{
