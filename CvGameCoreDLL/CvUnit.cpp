@@ -15695,7 +15695,14 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     CvUnit* pLoopUnit;
     CLLNode<IDInfo>* pUnitNode;
     bool bValid = false;
+
 	if (getImmobileTimer() > 0 && !isHeld())
+	{
+		return false;
+	}
+
+	// Rebels cant cast World spells
+	if (kSpell.isGlobal() && GET_PLAYER(getOwnerINLINE()).isRebel())
 	{
 		return false;
 	}
