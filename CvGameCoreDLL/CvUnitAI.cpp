@@ -505,7 +505,7 @@ bool CvUnitAI::AI_update()
             switch (AI_getGroupflag())
             {
 				case GROUPFLAG_HNGROUP:
-                    HNgroupMove();
+                    AI_HiddenNationalityMove();
                     return false;
 					break;
                 case GROUPFLAG_SUICIDE_SUMMON:
@@ -517,7 +517,7 @@ bool CvUnitAI::AI_update()
 					return false;
 					break;
                 case GROUPFLAG_CONQUEST:
-                    ConquestMove();
+                    AI_ConquestMove();
                     return false;
                     break;
                 case GROUPFLAG_PERMDEFENSE:
@@ -525,7 +525,7 @@ bool CvUnitAI::AI_update()
                     return false;
                     break;
                 case GROUPFLAG_PATROL:
-                    PatrolMove();
+                    AI_PatrolMove();
                     return false;
                     break;
                 case GROUPFLAG_HERO:
@@ -615,7 +615,7 @@ bool CvUnitAI::AI_update()
 				AI_mageMove();
 				break;
 			case UNITAI_WARWIZARD:
-				ConquestMove();
+				AI_ConquestMove();
 				break;
 			case UNITAI_TERRAFORMER:
 				AI_terraformerMove();
@@ -26723,7 +26723,7 @@ void CvUnitAI::AI_feastingmove()
 	return;
 }
 
-void CvUnitAI::PatrolMove()
+void CvUnitAI::AI_PatrolMove()
 {
     bool bFollow=false;
     int iMinStack=1;
@@ -27262,7 +27262,7 @@ void CvUnitAI::PatrolMove()
 	return;
 }
 
-void CvUnitAI::HNgroupMove()
+void CvUnitAI::AI_HiddenNationalityMove()
 {
 
 	if (!isHiddenNationality())
@@ -27616,7 +27616,7 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
 	return false;
 }
 
-void CvUnitAI::ConquestMove()
+void CvUnitAI::AI_ConquestMove()
 {
     CvSelectionGroup* pLoopSelectionGroup;
     CvUnit* pBestUnit;

@@ -55,9 +55,9 @@ public:
 // Sephi AI (New Functions Definition)
     bool AI_groupheal(int iDamagePercent = 0, int iMaxPath = MAX_INT);
     void AI_feastingmove();
-    void ConquestMove();
-    void PatrolMove();
-    void HNgroupMove();
+    void AI_ConquestMove();
+    void AI_PatrolMove();
+    void AI_HiddenNationalityMove();
 	bool AI_exploreLairSea(int iRange = 0); // added by Tholal
 	bool AI_exploreLair(int iRange = 0); // added by Tholal
 	bool AI_pickupEquipment(int iRange = 0); // added by Tholal
