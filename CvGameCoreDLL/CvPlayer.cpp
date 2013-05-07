@@ -24998,7 +24998,10 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 		if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() != NO_VOTESOURCE)
 #endif
 		{
-		    iVotes += 1;
+			if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() == eVoteSource)
+			{
+			    iVotes += 1;
+			}
 		}
 	}
 //FfH: End Add
