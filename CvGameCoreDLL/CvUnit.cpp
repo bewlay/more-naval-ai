@@ -19872,7 +19872,17 @@ bool CvUnit::canTradeUnit(PlayerTypes eReceivingPlayer)
 	{
 		return false;
 	}
-
+	
+	if (!isMechUnit() && !isAnimal())
+	{
+		return false;
+	}
+	
+	if (getDuration() > 0 || isPermanentSummon())
+	{
+		return false;
+	}
+	
 	if (isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())))
 	{
 		return false;
@@ -19935,11 +19945,10 @@ void CvUnit::tradeUnit(PlayerTypes eReceivingPlayer)
 
 		pTradeUnit->convert(this);
 
-		pTradeUnit->setImmobileTimer(10);
+		pTradeUnit->setImmobileTimer(10); //ToDo - better way to decide how long the unit should be immobile; scale by gamespeed
 		
-		 szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_UNIT_TO_YOU", GET_PLAYER(eOwner).getNameKey(), pTradeUnit->getNameKey());
-		 gDLL->getInterfaceIFace()->addMessage(pTradeUnit->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITGIFTED", MESSAGE_TYPE_INFO, pTradeUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pTradeUnit->getX_INLINE(), pTradeUnit->getY_INLINE(), true, true);
-		 
+		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_UNIT_TO_YOU", GET_PLAYER(eOwner).getNameKey(), pTradeUnit->getNameKey());
+		gDLL->getInterfaceIFace()->addMessage(pTradeUnit->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITGIFTED", MESSAGE_TYPE_INFO, pTradeUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pTradeUnit->getX_INLINE(), pTradeUnit->getY_INLINE(), true, true); 
 	 }
 }
 

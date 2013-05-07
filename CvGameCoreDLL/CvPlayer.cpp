@@ -6024,7 +6024,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 				//		if (GET_PLAYER(eWhoTo).canTrain(eUnit))
 				//		{
 							pTradingCity = pUnitTraded->plot()->getPlotCity();
-							if (GC.getUnitInfo(pUnitTraded->getUnitType()).isMechUnit() && pUnitTraded->canMove() && (pTradingCity != NULL) && (pTheirCapitalCity != NULL))
+							if (pUnitTraded->canMove() && pUnitTraded->canTradeUnit(eWhoTo) && (pTradingCity != NULL) && (pTheirCapitalCity != NULL))
 							{
 								if (pTradingCity->getOwnerINLINE() == getID())
 								{
