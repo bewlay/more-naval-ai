@@ -12547,7 +12547,11 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 	int iLoop;
 
 	FAssert(getDomainType() == DOMAIN_LAND);
-	FAssert(canDefend());
+	//FAssert(getGroup()->canDefend());
+	if (!getGroup()->canDefend())
+	{
+		return false;
+	}
 
 	pPlot = plot();
 	pCity = pPlot->getPlotCity();
