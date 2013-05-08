@@ -5345,6 +5345,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				if (kImprovement.getBonusConvert() != NO_BONUS)
 				{
 					iImprovementValue += AI_getMojoFactor() * ((iNumMages > 0) ? 30 : 10);
+					iImprovementValue += AI_bonusVal((BonusTypes)kImprovement.getBonusConvert()) * 25;
 					// if not losing a war, bump up the value of mana techs for our unimproved mana nodes
 					if (GET_TEAM(getTeam()).AI_getWarSuccessRating() > -25)
 					{
@@ -10472,13 +10473,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		int iI, iJ;
 		
 		CvBonusInfo& kBonusInfo = GC.getBonusInfo(eBonus);
-		//bool bMana = (kBonusInfo.getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"));
 		bool bMana = kBonusInfo.isMana();
+		int iNumCities = AI_getNumRealCities();
 
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
-			iValue += (kBonusInfo.getHappiness() * (bDemon ? 0 : 100));
-			iValue += (kBonusInfo.getHealth() * (isIgnoreFood() ? 0 : 100));
+			iValue += kBonusInfo.getHappiness() * ((bDemon ? 0 : 20) * iNumCities);
+			iValue += kBonusInfo.getHealth() * ((isIgnoreFood() ? 0 : 10) * iNumCities);
 
 			// Tholal ToDo - better valuation of yield changes
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
@@ -10811,14 +10812,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 			if (bMana)
 			{
+				int iNumBonuses = countOwnedBonuses(eBonus);
 				if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 				{
-					iValue += 50;
-				}
-
-				if (iValue == 0)
-				{
-					iValue += 25;
+					if (iNumBonuses == 0)
+					{
+						iValue += 50;
+					}
 				}
 
 				bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
@@ -10925,7 +10925,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						countOwnedBonuses(eBonus) > 0)
 					{
 						bStack = true;
-						iValue += 100;
+						iValue += 150;
 					}
 				}
 
@@ -10933,7 +10933,6 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				iValue += 100 * AI_getTowerManaValue(eBonus);
 
-				int iNumBonuses = countOwnedBonuses(eBonus);
 				if (iNumBonuses > 0)
 				{
 					if (!kBonusInfo.isModifierPerBonus() && !bStack)
