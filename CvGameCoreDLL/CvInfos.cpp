@@ -3208,6 +3208,7 @@ m_bDispel(false),
 m_bPush(false),
 m_bRemoveHasCasted(false),
 m_bSacrificeCaster(false),
+m_bRemoveInvalidFeature(false),	// MNAI
 m_iChangePopulation(0),
 m_iCost(0),
 m_iDelay(0),
@@ -3216,9 +3217,11 @@ m_iMiscastChance(0),
 m_iEffect(NO_EFFECT),
 m_szSound(NULL),
 m_iCommandType(NO_COMMAND),
-// Tholal AI begin
-m_piTerrainConvert(NULL)
-// end
+// MNAI begin
+m_piTerrainConvert(NULL),
+m_piFeatureConvert(NULL),
+m_pbFeatureInvalid(NULL)
+// MNAI end
 {
 }
 
@@ -3231,9 +3234,11 @@ m_piTerrainConvert(NULL)
 //------------------------------------------------------------------------------------------------------
 CvSpellInfo::~CvSpellInfo()
 {
-	// Tholal AI begin
+	// MNAI begin
 	SAFE_DELETE_ARRAY(m_piTerrainConvert);
-	// end
+	SAFE_DELETE_ARRAY(m_piFeatureConvert);
+	SAFE_DELETE_ARRAY(m_pbFeatureInvalid);
+	// MNAI end
 }
 
 int CvSpellInfo::getPromotionPrereq1() const
@@ -3484,6 +3489,13 @@ bool CvSpellInfo::isSacrificeCaster() const
 	return m_bSacrificeCaster;
 }
 
+// MNAI begin
+bool CvSpellInfo::isRemoveInvalidFeature() const
+{
+	return m_bRemoveInvalidFeature;
+}
+// MNAI end
+
 int CvSpellInfo::getAIWeight() const
 {
 	return m_iAIWeight;
@@ -3624,6 +3636,13 @@ const TCHAR *CvSpellInfo::getPyRequirement() const
 	return m_szPyRequirement;
 }
 
+// MNAI begin
+const TCHAR *CvSpellInfo::getPyAlternateReq() const
+{
+	return m_szPyAlternateReq;
+}
+// MNAI end
+
 int CvSpellInfo::getCommandType() const
 {
 	return m_iCommandType;
@@ -3634,14 +3653,28 @@ void CvSpellInfo::setCommandType(int iNewType)
 	m_iCommandType = iNewType;
 }
 
-// Tholal AI begin
+// MNAI begin
 int CvSpellInfo::getTerrainConvert(int i) const		
 {
 	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_piTerrainConvert ? m_piTerrainConvert[i] : -1;
 }
-// end
+
+int CvSpellInfo::getFeatureConvert(int i) const
+{
+	FAssertMsg(i < GC.getNumFeatureInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_piFeatureConvert ? m_piFeatureConvert[i] : i;
+}
+
+bool CvSpellInfo::isFeatureInvalid(int i) const
+{
+	FAssertMsg(i < GC.getNumFeatureInfos(), "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	return m_pbFeatureInvalid ? m_pbFeatureInvalid[i] : false;
+}
+// MNAI end
 
 void CvSpellInfo::read(FDataStreamBase* stream)
 {
@@ -3725,6 +3758,7 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bPush);
 	stream->Read(&m_bRemoveHasCasted);
 	stream->Read(&m_bSacrificeCaster);
+	stream->Read(&m_bRemoveInvalidFeature);	// MNAI
 	stream->Read(&m_iChangePopulation);
 	stream->Read(&m_iCost);
 	stream->Read(&m_iDelay);
@@ -3733,14 +3767,23 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->ReadString(m_szPyMiscast);
 	stream->ReadString(m_szPyResult);
 	stream->ReadString(m_szPyRequirement);
+	stream->ReadString(m_szPyAlternateReq);	// MNAI
 	stream->Read(&m_iEffect);
 	stream->ReadString(m_szSound);
 	stream->Read(&m_iCommandType);
-	// Tholal AI begin
+	// MNAI begin
 	SAFE_DELETE_ARRAY(m_piTerrainConvert);
 	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
 	stream->Read(GC.getNumTerrainInfos(), m_piTerrainConvert);
-	// end
+
+	SAFE_DELETE_ARRAY(m_piFeatureConvert);
+	m_piFeatureConvert = new int[GC.getNumFeatureInfos()];
+	stream->Read(GC.getNumFeatureInfos(), m_piFeatureConvert);
+
+	SAFE_DELETE_ARRAY(m_pbFeatureInvalid);
+	m_pbFeatureInvalid = new bool[GC.getNumFeatureInfos()];
+	stream->Read(GC.getNumFeatureInfos(), m_pbFeatureInvalid);
+	// MNAI end
 }
 
 void CvSpellInfo::write(FDataStreamBase* stream)
@@ -3826,6 +3869,7 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bPush);
 	stream->Write(m_bRemoveHasCasted);
 	stream->Write(m_bSacrificeCaster);
+	stream->Write(m_bRemoveInvalidFeature);	// MNAI
 	stream->Write(m_iChangePopulation);
 	stream->Write(m_iCost);
 	stream->Write(m_iDelay);
@@ -3834,12 +3878,15 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szPyMiscast);
 	stream->WriteString(m_szPyResult);
 	stream->WriteString(m_szPyRequirement);
+	stream->WriteString(m_szPyAlternateReq);	// MNAI
 	stream->Write(m_iEffect);
 	stream->WriteString(m_szSound);
 	stream->Write(m_iCommandType);
-	// Tholal AI begin
+	// MNAI begin
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainConvert);
-	// end
+	stream->Write(GC.getNumFeatureInfos(), m_piFeatureConvert);
+	stream->Write(GC.getNumFeatureInfos(), m_pbFeatureInvalid);
+	// MNAI end
 }
 
 bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
@@ -3961,6 +4008,7 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bPush, "bPush");
 	pXML->GetChildXmlValByName(&m_bRemoveHasCasted, "bRemoveHasCasted");
 	pXML->GetChildXmlValByName(&m_bSacrificeCaster, "bSacrificeCaster");
+	pXML->GetChildXmlValByName(&m_bRemoveInvalidFeature, "bRemoveInvalidFeature");	// MNAI
 	pXML->GetChildXmlValByName(&m_iChangePopulation, "iChangePopulation");
 	pXML->GetChildXmlValByName(&m_iCost, "iCost");
 	pXML->GetChildXmlValByName(&m_iDelay, "iDelay");
@@ -3970,11 +4018,12 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(m_szPyMiscast, "PyMiscast");
 	pXML->GetChildXmlValByName(m_szPyResult, "PyResult");
 	pXML->GetChildXmlValByName(m_szPyRequirement, "PyRequirement");
+	pXML->GetChildXmlValByName(m_szPyAlternateReq, "PyAlternateReq");	// MNAI
 	pXML->GetChildXmlValByName(szTextVal, "Effect");
 	if (szTextVal != "") m_iEffect = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(m_szSound, "Sound");
 
-	// Tholal AI begin
+	// MNAI begin
 	CvString* pszTemp = NULL;
 	pXML->SetVariableListTagPair(&pszTemp, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
 	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
@@ -3983,7 +4032,17 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 		m_piTerrainConvert[i] = pszTemp[i].IsEmpty() ? NO_TERRAIN : pXML->FindInInfoClass(pszTemp[i]);
 	}
 	SAFE_DELETE_ARRAY(pszTemp);
-	// Tholal end
+
+	pXML->SetVariableListTagPair(&pszTemp, "FeatureConversions", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
+	m_piFeatureConvert = new int[GC.getNumFeatureInfos()];
+	for (int i = 0; i < GC.getNumFeatureInfos(); ++i)
+	{
+		m_piFeatureConvert[i] = pszTemp[i].IsEmpty() ? i : pXML->FindInInfoClass(pszTemp[i], true);
+	}
+	SAFE_DELETE_ARRAY(pszTemp);
+
+	pXML->SetVariableListTagPair(&m_pbFeatureInvalid, "FeatureInvalids", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
+	// MNAI end
 
 	return true;
 }

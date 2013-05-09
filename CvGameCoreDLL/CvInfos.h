@@ -876,16 +876,20 @@ public:
 	bool isRemoveHasCasted() const;
 	bool isResistable() const;
 	bool isSacrificeCaster() const;
+	bool isRemoveInvalidFeature() const;	// MNAI
 
 	const TCHAR* getSound() const;
 	const TCHAR* getPyMiscast() const;
 	const TCHAR* getPyResult() const;
 	const TCHAR* getPyRequirement() const;
+	const TCHAR* getPyAlternateReq() const;	// MNAI
 	int getCommandType() const;
 	void setCommandType(int iNewType);
-	// Tholal AI begin
+	// MNAI begin
 	int getTerrainConvert(int i) const;
-	// end
+	int getFeatureConvert(int i) const;
+	bool isFeatureInvalid(int i) const;
+	// MNAI end
 	void read(FDataStreamBase* stream);
 	void write(FDataStreamBase* stream);
 	bool read(CvXMLLoadUtility* pXML);
@@ -970,6 +974,7 @@ protected:
     bool m_bPush;
     bool m_bRemoveHasCasted;
     bool m_bSacrificeCaster;
+	bool m_bRemoveInvalidFeature;	// MNAI
     int m_iChangePopulation;
     int m_iCost;
     int m_iImmobileTurns;
@@ -979,10 +984,13 @@ protected:
 	CvString m_szPyMiscast;
 	CvString m_szPyResult;
 	CvString m_szPyRequirement;
+	CvString m_szPyAlternateReq;	// MNAI
 	CvString m_szSound;
-	// Tholal AI begin
+	// MNAI begin
 	int* m_piTerrainConvert;
-	// end
+	int* m_piFeatureConvert;
+	bool* m_pbFeatureInvalid;
+	// MNAI end
 };
 //FfH: End Add
 
