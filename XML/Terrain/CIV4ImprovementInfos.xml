@@ -2093,7 +2093,7 @@
             <PrereqCivilization>NONE</PrereqCivilization>
             <PythonAtRange></PythonAtRange>
             <PythonOnMove></PythonOnMove>
-            <SpawnUnitType>UNIT_CHAMPION</SpawnUnitType>
+            <SpawnUnitType>UNIT_CHAMPION_DEMON</SpawnUnitType>
         </ImprovementInfo>
         <ImprovementInfo>
             <Type>IMPROVEMENT_JUNGLE_ALTAR</Type>
