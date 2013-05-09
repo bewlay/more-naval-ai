@@ -1850,7 +1850,8 @@ class CvEventManager:
 							for iLoopTeam in range(gc.getMAX_CIV_TEAMS()):
 								pLoopTeam = gc.getTeam(iLoopTeam)
 								if pLoopTeam.isHasMet(iFounderTeam):
-									pLoopTeam.meet(iInfernalTeam, True)
+									if pLoopTeam.isAlive():
+										pLoopTeam.meet(iInfernalTeam, True)
 							for iTeam in range(gc.getMAX_TEAMS()):
 								if iTeam != iBarbTeam:
 									pTeam = gc.getTeam(iTeam)
