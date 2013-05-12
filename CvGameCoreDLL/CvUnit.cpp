@@ -16637,7 +16637,7 @@ void CvUnit::cast(int spell)
 
 	if( gUnitLogLevel > 2 )
 	{
-		logBBAI("     %S casting %S \n",  getName().GetCString(), kSpellInfo.getDescription());
+		logBBAI("     %S casting %S (plot %d, %d)\n",  getName().GetCString(), kSpellInfo.getDescription(), getX(), getY());
 	}
 
     if (kSpellInfo.isHasCasted())

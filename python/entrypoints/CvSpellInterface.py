@@ -3380,7 +3380,7 @@ def spellVeilOfNight(caster):
 	py = PyPlayer(caster.getOwner())
 	for pUnit in py.getUnitList():
 		if pUnit.baseCombatStr() > 0:
-			pUnit.setHasPromotion(iHiddenNationality, True)	
+			pUnit.setHasPromotion(iHiddenNationality, True)
 
 def reqWane(caster):
 	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ANIMAL'):

@@ -1269,7 +1269,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if( gCityLogLevel >= 3 ) logBBAI("      City %S pop %d considering new production: iProdRank %d, iBuildUnitProb %d, Workers H/N (%d/%d)", getName().GetCString(), getPopulation(), iProductionRank, iBuildUnitProb, iExistingWorkers, iNeededWorkers);
+	if( gCityLogLevel >= 3 ) logBBAI("    City %S pop %d considering new production: iProdRank %d, iBuildUnitProb %d, Workers H/N (%d/%d)", getName().GetCString(), getPopulation(), iProductionRank, iBuildUnitProb, iExistingWorkers, iNeededWorkers);
 
 	// -------------------- BBAI Notes -------------------------
 	// Start special circumstances

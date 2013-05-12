@@ -258,15 +258,14 @@ void CvTeamAI::AI_updateAreaStragies(bool bTargets)
 
 void CvTeamAI::AI_updateAreaTargets()
 {
-	int iI;
-
-	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		CvPlayerAI& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (kLoopPlayer.isAlive())
 		{
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			if (kLoopPlayer.getTeam() == getID())
 			{
-				GET_PLAYER((PlayerTypes)iI).AI_updateAreaTargets();
+				kLoopPlayer.AI_updateAreaTargets();
 			}
 		}
 	}
@@ -1423,24 +1422,24 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 // XXX this should consider area power...
 int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 {
-	int iValue;
-
 	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
 	FAssertMsg(isAtWar(eTeam), "Current AI Team instance is expected to be at war with eTeam");
 
-	iValue = 100;
+	const CvTeam& kWarTeam = GET_TEAM(eTeam); // K-Mod
+
+	int iValue = 100;
 
 	iValue += (getNumCities() * 3);
-	iValue += (GET_TEAM(eTeam).getNumCities() * 3);
+	iValue += (kWarTeam.getNumCities() * 3);
 
 	iValue += getTotalPopulation();
-	iValue += GET_TEAM(eTeam).getTotalPopulation();
+	iValue += kWarTeam.getTotalPopulation();
 
-	iValue += (GET_TEAM(eTeam).AI_getWarSuccess(getID()) * 30);
+	iValue += (kWarTeam.AI_getWarSuccess(getID()) * 30);
 	iValue -= AI_getWarSuccess(eTeam) * 30;
 
 	int iOurPower = std::max(1, getPower(true));
-	int iTheirPower = std::max(1, GET_TEAM(eTeam).getDefensivePower());
+	int iTheirPower = std::max(1, kWarTeam.getDefensivePower());
 
 	iValue *= iTheirPower + 10;
 
@@ -1465,23 +1464,21 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		bool bAnyFinancialTrouble = false;
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
-			if (GET_PLAYER((PlayerTypes)iI).isAlive())
+			const CvPlayerAI& kLoopPlayer = GET_PLAYER((PlayerTypes)iI); // K-Mod
+			if (kLoopPlayer.isAlive() && kLoopPlayer.getTeam() == getID())
 			{
-				if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+				if (kLoopPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER))
 				{
-					if (GET_PLAYER((PlayerTypes)iI).AI_isDoStrategy(AI_STRATEGY_DAGGER))
-					{
-						bDagger = true;
-					}
+					bDagger = true;
+				}
 
-					if (GET_PLAYER((PlayerTypes)iI).AI_isFinancialTrouble())
-					{
-						bAnyFinancialTrouble = true;
-					}
+				if (kLoopPlayer.AI_isFinancialTrouble())
+				{
+					bAnyFinancialTrouble = true;
 				}
 			}
 		}
-		
+
 		// if dagger, value peace at 90% * power ratio
 		if (bDagger)
 		{
@@ -1491,7 +1488,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 		
 	    // for now, we will always do the land mass check for domination
 		// if we have more than half the land, then value peace at 90% * land ratio 
-		int iLandRatio = ((getTotalLand(true) * 100) / std::max(1, GET_TEAM(eTeam).getTotalLand(true)));
+		int iLandRatio = getTotalLand(true) * 100 / std::max(1, kWarTeam.getTotalLand(true));
 	    if (iLandRatio > 120)
 	    {
 			iValue *= 9 * 100;
@@ -1549,13 +1546,13 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	}
 
 
-	if ((!(isHuman()) && (eWarPlan == WARPLAN_TOTAL)) ||
-		  (!(GET_TEAM(eTeam).isHuman()) && (GET_TEAM(eTeam).AI_getWarPlan(getID()) == WARPLAN_TOTAL)))
+	if ((!isHuman() && eWarPlan == WARPLAN_TOTAL) ||
+		(!kWarTeam.isHuman() && kWarTeam.AI_getWarPlan(getID()) == WARPLAN_TOTAL))
 	{
 		iValue *= 2;
 	}
-	else if ((!(isHuman()) && (eWarPlan == WARPLAN_DOGPILE) && (GET_TEAM(eTeam).getAtWarCount(true) > 1)) ||
-		       (!(GET_TEAM(eTeam).isHuman()) && (GET_TEAM(eTeam).AI_getWarPlan(getID()) == WARPLAN_DOGPILE) && (getAtWarCount(true) > 1)))
+	else if ((!isHuman() && eWarPlan == WARPLAN_DOGPILE && kWarTeam.getAtWarCount(true) > 1) ||
+		     (!kWarTeam.isHuman() && kWarTeam.AI_getWarPlan(getID()) == WARPLAN_DOGPILE && getAtWarCount(true) > 1))
 	{
 		iValue *= 3;
 		iValue /= 2;
@@ -2341,8 +2338,9 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 /************************************************************************************************/
 /* REVOLUTION_MOD                       END                                                     */
 /************************************************************************************************/
-		int iMasterPower = GET_TEAM(eTeam).getPower(false);
-		int iVassalPower = (getPower(true) * (iPowerMultiplier + iPersonalityModifier / std::max(1, iMembers))) / 100;
+		int iMasterPower = kMasterTeam.getPower(false);
+		int iOurPower = getPower(true); // K-Mod (this value is used a bunch of times separately)
+		int iVassalPower = (iOurPower * (iPowerMultiplier + iPersonalityModifier / std::max(1, iMembers))) / 100;
 
 		if (isAtWar(eTeam))
 		{

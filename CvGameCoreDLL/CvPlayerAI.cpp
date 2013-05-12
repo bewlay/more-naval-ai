@@ -17210,7 +17210,7 @@ void CvPlayerAI::AI_doCivics()
 	}
 
 	// FAssertMsg(AI_getCivicTimer() == 0, "AI Civic timer is expected to be 0"); // Disabled by K-Mod
-	if (gPlayerLogLevel > 0) logBBAI("%S checking civics...", getCivilizationDescription(0));
+	if (gPlayerLogLevel > 0) logBBAI("Checking Civics...");
 
 	std::vector<CivicTypes> aeBestCivic(GC.getNumCivicOptionInfos());
 	std::vector<int> aiCurrentValue(GC.getNumCivicOptionInfos());

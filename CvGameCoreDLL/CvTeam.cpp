@@ -1610,7 +1610,7 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 			AI_setWarPlan(eTeam, eWarPlan);
 		}
 
-		FAssert(!(AI_isSneakAttackPreparing(eTeam)));
+		//FAssert(!(AI_isSneakAttackPreparing(eTeam))); - Tholal Note: commenting this out since Wars can now be declared due to a trade deal
 		if ((AI_getWarPlan(eTeam) == NO_WARPLAN) || AI_isSneakAttackPreparing(eTeam))
 		{
 			if (isHuman())
