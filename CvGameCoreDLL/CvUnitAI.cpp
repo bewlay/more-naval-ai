@@ -30420,7 +30420,7 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 
 	CvPlot* pBestDefensivePlot = NULL;
 	CvPlot* pLoopPlot;
-	int iBestPlotValue = plot()->defenseModifier(getTeam(), false) + healRate(plot());
+	int iBestPlotValue = (noDefensiveBonus() ? 0 : plot()->defenseModifier(getTeam(), false)) + healRate(plot());
 	int iValue = 0;
 	int iDX, iDY;
 	int iDistance = 6; // ToDo - consider increasing this? With roads, haste, etc, some units could easily move farther than 6 squares
@@ -30436,7 +30436,12 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 				{
 					if (pLoopPlot->getNumVisibleEnemyDefenders(this) == 0)
 					{
-						iValue = pLoopPlot->defenseModifier(getTeam(), false) +healRate(plot());
+						iValue = (noDefensiveBonus() ? 0 : plot()->defenseModifier(getTeam(), false)) + healRate(plot());
+
+						if (!pLoopPlot->isVisibleToCivTeam())
+						{
+							iValue += 10;
+						}
 
 						if (bIncludeHealing)
 						{
