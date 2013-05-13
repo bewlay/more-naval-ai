@@ -1741,10 +1741,19 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
-    
-	if (((iTargetCulturePerTurn > 0) || (getPopulation() > 5)) && (getCommerceRate(COMMERCE_CULTURE) == 0))
+
+	// culture check
+	if (!kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE) && (getCommerceRate(COMMERCE_CULTURE) == 0))
 	{
-		if( !(kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE)) )
+		if (iTargetCulturePerTurn > 0)
+		{
+			if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses need culture build", getName().GetCString());
+				return;
+			}
+		}
+		else if ((getPopulation() > 5) && (getCultureLevel() == 0))
 		{
 			if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30))
 			{
