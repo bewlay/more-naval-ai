@@ -26,6 +26,11 @@ def canCast(argsList):
 	spell = gc.getSpellInfo(eSpell)
 	return eval(spell.getPyRequirement())
 
+def canCastAlternate(argsList):
+	pCaster, eSpell = argsList
+	spell = gc.getSpellInfo(eSpell)
+	return eval(spell.getPyAlternateReq())
+
 def effect(argsList):
 	pCaster, eProm = argsList
 	prom = gc.getPromotionInfo(eProm)

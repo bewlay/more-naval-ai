@@ -15743,6 +15743,23 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 
+	// MNAI begin - check alternate requirement before other requirements
+	if (!CvString(kSpell.getPyAlternateReq()).empty())
+    {
+        CyUnit* pyUnit = new CyUnit(this);
+        CyArgsList argsList;
+        argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
+        argsList.add(spell);//the spell #
+        long lResult=0;
+        gDLL->getPythonIFace()->callFunction(PYSpellModule, "canCastAlternate", argsList.makeFunctionArgs(), &lResult);
+        delete pyUnit; // python fxn must not hold on to this pointer
+        if (lResult != 0)
+        {
+            return true;
+        }
+    }
+	// MNAI end
+
     if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
     {
         if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq1()))
@@ -16083,11 +16100,12 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 	// MNAI begin
-	/* This terraforming check was placed before PyRequirement is checked because some terraforming spells still need
-		PyRequirement to enable other abilities (e.g. Spring can also put out flames) */
-	if (canTerraform(spell, pPlot))
+	if (pPlot->getFeatureType() != NO_FEATURE)
 	{
-		return true;
+		if (kSpell.isFeatureInvalid(pPlot->getFeatureType()))
+		{
+			return false;
+		}
 	}
 	// MNAI end
 	if (!CvString(kSpell.getPyRequirement()).empty())
@@ -16130,6 +16148,12 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     {
         return true;
     }
+	// MNAI begin
+	if (canTerraform(spell, pPlot))
+	{
+		return true;
+	}
+	// MNAI end
     if (kSpell.getCreateFeatureType() != NO_FEATURE)
     {
         if (canCreateFeature(spell))
@@ -16188,7 +16212,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     {
         return true;
     }
-	if (!CvString(kSpell.getPyResult()).empty())
+	if (!CvString(kSpell.getPyResult()).empty() && CvString(kSpell.getPyAlternateReq()).empty())
     {
         return true;
     }
@@ -16611,15 +16635,20 @@ bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const
 			CvPlot* pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
 			if (pLoopPlot != NULL)
 			{
+				FeatureTypes eFeature = pLoopPlot->getFeatureType();
+				if (eFeature != NO_FEATURE)
+				{
+					if (kSpell.isFeatureInvalid(eFeature))
+					{
+						continue;
+					}
+					if (kSpell.getFeatureConvert(eFeature) != eFeature)
+					{
+						return true;
+					}
+				}
 				if (kSpell.getTerrainConvert(pLoopPlot->getTerrainType()) != NO_TERRAIN)
 				{
-					if (kSpell.getCreateFeatureType() != NO_FEATURE)
-					{
-						if (pLoopPlot->getFeatureType() == kSpell.getCreateFeatureType())
-						{
-							continue;
-						}
-					}
 					return true;
 				}
 			}
@@ -17447,17 +17476,22 @@ void CvUnit::castTerraform(int spell)
 			CvPlot* pLoopPlot = plotXY(pPlot->getX_INLINE(), pPlot->getY_INLINE(), iDX, iDY);
 			if (pLoopPlot != NULL)
 			{
+				FeatureTypes eFeature = pLoopPlot->getFeatureType();
+				if (eFeature != NO_FEATURE)
+				{
+					if (kSpellInfo.isFeatureInvalid(eFeature))
+					{
+						continue;
+					}
+					if (kSpellInfo.getFeatureConvert(eFeature) != eFeature)
+					{
+						pLoopPlot->setFeatureType((FeatureTypes) kSpellInfo.getFeatureConvert(eFeature));
+					}
+				}
 				if (kSpellInfo.getTerrainConvert(pLoopPlot->getTerrainType()) != NO_TERRAIN)
 				{
-					if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
-					{
-						if (pLoopPlot->getFeatureType() == kSpellInfo.getCreateFeatureType())
-						{
-							continue;
-						}
-					}
-					pLoopPlot->setTerrainType((TerrainTypes)kSpellInfo.getTerrainConvert(pLoopPlot->getTerrainType()));
-					if (pLoopPlot->getFeatureType() != NO_FEATURE)
+					pLoopPlot->setTerrainType((TerrainTypes) kSpellInfo.getTerrainConvert(pLoopPlot->getTerrainType()));
+					if (kSpellInfo.isRemoveInvalidFeature() && pLoopPlot->getFeatureType() != NO_FEATURE)
 					{
 						if (!GC.getFeatureInfo(pLoopPlot->getFeatureType()).isTerrain(pLoopPlot->getTerrainType()))
 						{

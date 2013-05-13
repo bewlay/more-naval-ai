@@ -617,6 +617,7 @@ void CyInfoPythonInterface3()
 		.def("getCivilizationPrereq", &CvSpellInfo::getCivilizationPrereq, "int ()")
 
 		.def("isAllowAutomateTerrain", &CvSpellInfo::isAllowAutomateTerrain, "bool ()")
+		.def("getPyAlternateReq", &CvSpellInfo::getPyAlternateReq, "string ()")	// MNAI
 
 //>>>>BUGFfH: Added by Denev 2009/10/03
 		.def("getDelay", &CvSpellInfo::getDelay, "int ()")
