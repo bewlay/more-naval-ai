@@ -574,10 +574,6 @@ def reqBlaze(caster):
 def reqCallBlizzard(caster):
 	iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
 	pPlot = caster.plot()
-	if pPlot.getFeatureType() == iBlizzard:
-		return False
-	if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT'):
-		return False
 	iX = caster.getX()
 	iY = caster.getY()
 	for iiX in range(iX-1, iX+2, 1):
@@ -589,7 +585,6 @@ def reqCallBlizzard(caster):
 
 def spellCallBlizzard(caster):
 	iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
-	iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 	iX = caster.getX()
 	iY = caster.getY()
 	pBlizPlot = -1
@@ -602,12 +597,6 @@ def spellCallBlizzard(caster):
 		pBlizPlot.setFeatureType(-1, -1)
 	pPlot = caster.plot()
 	pPlot.setFeatureType(iBlizzard, 0)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
-		pPlot.setTerrainType(iTundra,True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
-		pPlot.setTerrainType(iTundra,True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT'):
-		pPlot.setTerrainType(iTundra,True,True)
 
 def reqCallForm(caster):
 	if caster.getSummoner() == -1:

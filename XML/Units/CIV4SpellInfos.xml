@@ -361,6 +361,34 @@
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CONTAGION</Sound>
             <Button>Art/Interface/Buttons/TerrainFeatures/Blizzard.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_GRASS</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_PLAINS</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_DESERT</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_MARSH</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
+			<FeatureInvalids>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_BLIZZARD</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_FOREST_ANCIENT</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_CALL_BLIZZARD_HIGH_PRIEST</Type>
@@ -378,6 +406,34 @@
             <Sound>AS3D_SPELL_CONTAGION</Sound>
             <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/TerrainFeatures/Blizzard.dds</Button>
+			<TerrainConversions>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_GRASS</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_PLAINS</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_DESERT</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_MARSH</TerrainType>
+					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
+				</TerrainConversion>
+			</TerrainConversions>
+			<FeatureInvalids>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_BLIZZARD</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_FOREST_ANCIENT</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_CALL_FORM</Type>
@@ -2651,8 +2707,9 @@
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
 			<iRange>1</iRange>
+			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
             <PyResult>spellSanctify(pCaster)</PyResult>
-            <PyRequirement>reqSanctify(pCaster)</PyRequirement>
+            <PyAlternateReq>reqSanctify(pCaster)</PyAlternateReq>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Sanctify.dds</Button>
@@ -2674,6 +2731,12 @@
 					<TerrainConvert>TERRAIN_MARSH</TerrainConvert>
 				</TerrainConversion>
 			</TerrainConversions>
+			<FeatureConversions>
+				<FeatureConversion>
+					<FeatureType>FEATURE_OBSIDIAN_PLAINS</FeatureType>
+					<FeatureConvert>FEATURE_FLOOD_PLAINS</FeatureConvert>
+				</FeatureConversion>
+			</FeatureConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SANCTUARY</Type>
@@ -2705,6 +2768,7 @@
             <bCausesWar>1</bCausesWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
+			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
             <Effect>EFFECT_SCORCH</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
             <Button>Art/Interface/Buttons/Spells/Scorch.dds</Button>
@@ -2949,9 +3013,9 @@
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-			<CreateFeatureType>FEATURE_FLOOD_PLAINS</CreateFeatureType>
+			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
             <PyResult>spellSpring(pCaster)</PyResult>
-            <PyRequirement>reqSpring(pCaster)</PyRequirement>
+            <PyAlternateReq>reqSpring(pCaster)</PyAlternateReq>
             <Effect>EFFECT_SPRING</Effect>
             <Sound>AS3D_SPELL_SPRING</Sound>
             <Button>Art/Interface/Buttons/Spells/Spring.dds</Button>
@@ -2960,7 +3024,21 @@
 					<TerrainType>TERRAIN_DESERT</TerrainType>
 					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
 				</TerrainConversion>
+				<TerrainConversion>
+					<TerrainType>TERRAIN_BURNING_SANDS</TerrainType>
+					<TerrainConvert>TERRAIN_FIELDS_OF_PERDITION</TerrainConvert>
+				</TerrainConversion>
 			</TerrainConversions>
+			<FeatureInvalids>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_FLOOD_PLAINS</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+				<FeatureInvalid>
+					<FeatureType>FEATURE_OBSIDIAN_PLAINS</FeatureType>
+					<bInvalid>1</bInvalid>
+				</FeatureInvalid>
+			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SPRINT</Type>
@@ -4533,6 +4611,12 @@
 					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
 				</TerrainConversion>
 			</TerrainConversions>
+			<FeatureConversions>
+				<FeatureConversion>
+					<FeatureType>FEATURE_SCRUB</FeatureType>
+					<FeatureConvert>NO_FEATURE</FeatureConvert>
+				</FeatureConversion>
+			</FeatureConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_WALL_OF_STONE</Type>
