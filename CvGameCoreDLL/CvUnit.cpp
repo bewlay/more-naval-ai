@@ -15701,13 +15701,33 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		return false;
 	}
 
-	// Rebels cant cast World spells
-	if (kSpell.isGlobal() && GET_PLAYER(getOwnerINLINE()).isRebel())
+	if (isCastingBlocked())
 	{
 		return false;
 	}
 
-	if (isCastingBlocked())
+	if (kSpell.isGlobal())
+    {
+        if (GC.getGameINLINE().isOption(GAMEOPTION_NO_WORLD_SPELLS))
+        {
+            return false;
+        }
+        if (GET_PLAYER(getOwnerINLINE()).isFeatAccomplished(FEAT_GLOBAL_SPELL))
+        {
+            return false;
+        }
+    }
+
+	if (GET_PLAYER(getOwnerINLINE()).getDisableSpellcasting() > 0)
+    {
+        if (!kSpell.isAbility())
+        {
+            return false;
+        }
+    }
+
+	// Rebels cant cast World spells
+	if (kSpell.isGlobal() && GET_PLAYER(getOwnerINLINE()).isRebel())
 	{
 		return false;
 	}
@@ -15742,23 +15762,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return false;
 		}
 	}
-
-	// MNAI begin - check alternate requirement before other requirements
-	if (!CvString(kSpell.getPyAlternateReq()).empty())
-    {
-        CyUnit* pyUnit = new CyUnit(this);
-        CyArgsList argsList;
-        argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
-        argsList.add(spell);//the spell #
-        long lResult=0;
-        gDLL->getPythonIFace()->callFunction(PYSpellModule, "canCastAlternate", argsList.makeFunctionArgs(), &lResult);
-        delete pyUnit; // python fxn must not hold on to this pointer
-        if (lResult != 0)
-        {
-            return true;
-        }
-    }
-	// MNAI end
 
     if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
     {
@@ -15866,17 +15869,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
-    if (kSpell.isGlobal())
-    {
-        if (GC.getGameINLINE().isOption(GAMEOPTION_NO_WORLD_SPELLS))
-        {
-            return false;
-        }
-        if (GET_PLAYER(getOwnerINLINE()).isFeatAccomplished(FEAT_GLOBAL_SPELL))
-        {
-            return false;
-        }
-    }
     if (kSpell.isPrereqSlaveTrade())
     {
         if (!GET_PLAYER(getOwnerINLINE()).isSlaveTrade())
@@ -15913,13 +15905,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     if (kSpell.isCasterNoDuration())
     {
         if (getDuration() != 0)
-        {
-            return false;
-        }
-    }
-    if (GET_PLAYER(getOwnerINLINE()).getDisableSpellcasting() > 0)
-    {
-        if (!kSpell.isAbility())
         {
             return false;
         }
@@ -15985,6 +15970,30 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return true;
 		}
 	}
+	if (!kSpell.isIgnoreHasCasted())
+	{
+		if (isHasCasted())
+		{
+			return false;
+		}
+	}
+	// MNAI begin - eveything before this point (right after the check to bTestVisible and isHasCasted()) shall be considered
+	// a hard requirement that PyAlternateReq cannot get around. Consider carefully what should go before or after this.
+	if (!CvString(kSpell.getPyAlternateReq()).empty())
+    {
+        CyUnit* pyUnit = new CyUnit(this);
+        CyArgsList argsList;
+        argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
+        argsList.add(spell);//the spell #
+        long lResult=0;
+        gDLL->getPythonIFace()->callFunction(PYSpellModule, "canCastAlternate", argsList.makeFunctionArgs(), &lResult);
+        delete pyUnit; // python fxn must not hold on to this pointer
+        if (lResult != 0)
+        {
+            return true;
+        }
+    }
+	// MNAI end
 	if (kSpell.getFeatureOrPrereq1() != NO_FEATURE)
 	{
 		if (pPlot->getFeatureType() != kSpell.getFeatureOrPrereq1())
@@ -15993,13 +16002,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			{
 				return false;
 			}
-		}
-	}
-	if (!kSpell.isIgnoreHasCasted())
-	{
-		if (isHasCasted())
-		{
-			return false;
 		}
 	}
 	if (kSpell.isAdjacentToWaterOnly())
