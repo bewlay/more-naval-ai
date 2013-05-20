@@ -2094,6 +2094,21 @@ bool CvPlayerAI::AI_acceptUnit(CvUnit* pUnit) const
 		{
 			return true; //XXX
 		}
+
+		// K-Mod
+		switch (pUnit->AI_getUnitAIType())
+		{
+		case UNITAI_PROPHET:
+		case UNITAI_ARTIST:
+		case UNITAI_SCIENTIST:
+		case UNITAI_GENERAL:
+		case UNITAI_MERCHANT:
+		case UNITAI_ENGINEER:
+			return true;
+		default:
+			break;
+		}
+		// K-Mod end
 		return false;
 	}
 
