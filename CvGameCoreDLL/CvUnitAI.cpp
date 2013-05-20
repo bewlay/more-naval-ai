@@ -29056,7 +29056,7 @@ void CvUnitAI::AI_upgrademanaMove()
 	int iPathTurns;
 	bool bBonusRawMana = false;
 	bool bBonusMana = false;
-	int iRange = 12;
+	int iRange = 15;
 
 	CvPlot* pBestPlot = NULL;
 	BuildTypes eBuild = NO_BUILD;
@@ -29076,7 +29076,7 @@ void CvUnitAI::AI_upgrademanaMove()
 			{
 				if ( pLoopPlot->getOwner() == getOwner())
 				{
-					if (!pLoopPlot->isVisibleEnemyDefender(this))
+					if (!pLoopPlot->isVisibleEnemyDefender(this) && !kPlayer.AI_getAnyPlotDanger(pLoopPlot))
 					{
 						if (pLoopPlot->getBonusType() != NO_BONUS)
 						{
