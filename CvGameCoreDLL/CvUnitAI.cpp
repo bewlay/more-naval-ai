@@ -25725,10 +25725,18 @@ bool CvUnitAI::AI_choke(int iRange, bool bDefensive)
 		if (atPlot(pBestPlot))
 		{
 			FAssert(atPlot(pEndTurnPlot));
-			if (getGroup()->canPillage(plot()))
-				getGroup()->pushMission(MISSION_PILLAGE);
+			
+			if (plot()->getImprovementType() != NO_IMPROVEMENT || !isEnemyRoute())
+			{
+				if (getGroup()->canPillage(plot()))
+					getGroup()->pushMission(MISSION_PILLAGE);
+				else
+					getGroup()->pushMission(MISSION_SKIP);
+			}
 			else
+			{
 				getGroup()->pushMission(MISSION_SKIP);
+			}
 			return true;
 		}
 		else
