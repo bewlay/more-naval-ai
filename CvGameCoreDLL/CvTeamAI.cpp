@@ -704,10 +704,23 @@ int CvTeamAI::AI_calculatePlotWarValue(TeamTypes eTeam) const
 				iValue += 4;
 			}
 
-			BonusTypes eBonus = pLoopPlot->getBonusType(getID());
-			if (NO_BONUS != eBonus)
+			if (pLoopPlot->isRevealed(getID(), false))
 			{
-				iValue += 40 * GC.getBonusInfo(eBonus).getAIObjective();
+				BonusTypes eBonus = pLoopPlot->getBonusType(getID());
+				if (NO_BONUS != eBonus)
+				{
+					if (GC.getBonusInfo(eBonus).getTechReveal() != NO_TECH)
+					{
+						if (!isHasTech((TechTypes)(GC.getBonusInfo(eBonus).getTechReveal())))
+						{
+							continue;
+						}
+					}
+					else
+					{
+						iValue += 40 * GC.getBonusInfo(eBonus).getAIObjective();
+					}
+				}
 			}
 		}
 	}
