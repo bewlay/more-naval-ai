@@ -30444,11 +30444,16 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 				{
 					if (pLoopPlot->getNumVisibleEnemyDefenders(this) == 0)
 					{
-						iValue = (noDefensiveBonus() ? 0 : plot()->defenseModifier(getTeam(), false)) + healRate(plot());
+						iValue = (noDefensiveBonus() ? 0 : pLoopPlot->defenseModifier(getTeam(), false));
 
 						if (!pLoopPlot->isVisibleToCivTeam())
 						{
 							iValue += 10;
+						}
+
+						if (pLoopPlot->isImpassable()) // being able to move into the plot is checked above
+						{
+							iValue += 100;
 						}
 
 						if (bIncludeHealing)
