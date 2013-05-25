@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Game Text - New -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_WB_HELP1</Tag>
+		<English>Erase all plots</English>
+		<French>Effacer toutes les cases</French>
+		<German>Erase all plots</German>
+		<Italian>Erase all plots</Italian>
+		<Spanish>Erase all plots</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_HELP2</Tag>
+		<English>Game Options</English>
+		<French>Options du jeu</French>
+		<German>Game Options</German>
+		<Italian>Game Options</Italian>
+		<Spanish>Game Options</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_SET_WINNER</Tag>
+		<English>Set as Winner</English>
+		<French>D&#233;signer vainqueur</French>
+		<German>Set as Winner</German>
+		<Italian>Set as Winner</Italian>
+		<Spanish>Set as Winner</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_KILL_PLAYER</Tag>
+		<English>Kill %s1</English>
+		<French>Tuer %s1</French>
+		<German>Kill %s1</German>
+		<Italian>Kill %s1</Italian>
+		<Spanish>Kill %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PLOT_DATA_MODE</Tag>
+		<English>Plot Data Mode</English>
+		<French>Mode donn&#233;es case</French>
+		<German>Plot Data Mode</German>
+		<Italian>Plot Data Mode</Italian>
+		<Spanish>Plot Data Mode</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_VICTORY_TYPE</Tag>
+		<English>Choose Victory Type</English>
+		<French>Choisir type de victoire</French>
+		<German>Choose Victory Type</German>
+		<Italian>Choose Victory Type</Italian>
+		<Spanish>Choose Victory Type</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_7_BY_7</Tag>
+		<English>7x7</English>
+		<French>7x7</French>
+		<German>7x7</German>
+		<Italian>7x7</Italian>
+		<Spanish>7x7</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_SCRIPT_DATA</Tag>
+		<English>Script Data:</English>
+		<French>Donn&#233;es Script</French>
+		<German>Script Data:</German>
+		<Italian>Script Data:</Italian>
+		<Spanish>Script Data:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_EDIT_DATA</Tag>
+		<English>Edit Data</English>
+		<French>Modifier les donn&#233;es</French>
+		<German>Edit Data</German>
+		<Italian>Edit Data</Italian>
+		<Spanish>Edit Data</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_GAME_DATA</Tag>
+		<English>Game Data</English>
+		<French>Donn&#233;es du jeu</French>
+		<German>Game Data</German>
+		<Italian>Game Data</Italian>
+		<Spanish>Game Data</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_GLOBAL_DEFINE</Tag>
+		<English>Global Defines</English>
+		<French>D&#233;finitions globales</French>
+		<German>Global Defines</German>
+		<Italian>Global Defines</Italian>
+		<Spanish>Global Defines</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_START_YEAR</Tag>
+		<English>Start Year</English>
+		<French>Ann&#233;e de d&#233;part</French>
+		<German>Start Year</German>
+		<Italian>Start Year</Italian>
+		<Spanish>Start Year</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_ADD_NEW_PLAYER</Tag>
+		<English>Add New Player</English>
+		<French>Ajout nouveau joueur</French>
+		<German>Add New Player</German>
+		<Italian>Add New Player</Italian>
+		<Spanish>Add New Player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHOOSE_CIVILIZATION</Tag>
+		<English>Choose Civilization</English>
+		<French>Choisir civilisation</French>
+		<German>Choose Civilization</German>
+		<Italian>Choose Civilization</Italian>
+		<Spanish>Choose Civilization</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHOOSE_LEADER</Tag>
+		<English>Choose Leader</English>
+		<French>Choisir dirigeant</French>
+		<German>Choose Leader</German>
+		<Italian>Choose Leader</Italian>
+		<Spanish>Choose Leader</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CREATE_PLAYER</Tag>
+		<English>Create Player</English>
+		<French>Cr&#233;er joueur</French>
+		<German>Create Player</German>
+		<Italian>Create Player</Italian>
+		<Spanish>Create Player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_GAME_OPTION</Tag>
+		<English>Game Options</English>
+		<French>Options du jeu</French>
+		<German>Game Options</German>
+		<Italian>Game Options</Italian>
+		<Spanish>Game Options</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_ADD_UNITS</Tag>
+		<English>Add Units by Categories</English>
+		<French>Ajout unit&#233;s: type de combat</French>
+		<German>Add Units by Categories</German>
+		<Italian>Add Units by Categories</Italian>
+		<Spanish>Add Units by Categories</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_NO_CLASS</Tag>
+		<English>Non-Combat Units</English>
+		<French>Unit&#233;s sans type de combat</French>
+		<German>Non-Combat Units</German>
+		<Italian>Non-Combat Units</Italian>
+		<Spanish>Non-Combat Units</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_REVEAL_PLOT</Tag>
+		<English>Reveal Plot</English>
+		<French>R&#233;v&#233;ler case</French>
+		<German>Reveal Plot</German>
+		<Italian>Reveal Plot</Italian>
+		<Spanish>Reveal Plot</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_REVEAL_SUBMARINE</Tag>
+		<English>Reveal Submarine</English>
+		<French>R&#233;v&#233;ler sous-marin</French>
+		<German>Reveal Submarine</German>
+		<Italian>Reveal Submarine</Italian>
+		<Spanish>Reveal Submarine</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_REVEAL_STEALTH</Tag>
+		<English>Reveal Stealth</English>
+		<French>R&#233;v&#233;ler furtivit&#233;</French>
+		<German>Reveal Stealth</German>
+		<Italian>Reveal Stealth</Italian>
+		<Spanish>Reveal Stealth</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_STANDARD_MODE</Tag>
+		<English>Standard Mode</English>
+		<French>Mode standard</French>
+		<German>Standard Mode</German>
+		<Italian>Standard Mode</Italian>
+		<Spanish>Standard Mode</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHANGE_AREA_PLOTS</Tag>
+		<English>Change Area Plots</English>
+		<French>Modifier aire</French>
+		<German>Change Area Plots</German>
+		<Italian>Change Area Plots</Italian>
+		<Spanish>Change Area Plots</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHANGE_PLOTTYPE</Tag>
+		<English>Plot Type:</English>
+		<French>Type de case:</French>
+		<German>Plot Type:</German>
+		<Italian>Plot Type:</Italian>
+		<Spanish>Plot Type:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHANGE_TERRAIN</Tag>
+		<English>Terrain:</English>
+		<French>Terrain:</French>
+		<German>Terrain:</German>
+		<Italian>Terrain:</Italian>
+		<Spanish>Terrain:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHANGE_ROUTE</Tag>
+		<English>Route:</English>
+		<French>Route:</French>
+		<German>Route:</German>
+		<Italian>Route:</Italian>
+		<Spanish>Route:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CHANGE_FEATURE</Tag>
+		<English>Feature:</English>
+		<French>Caract&#233;ristique du terrain:</French>
+		<German>Feature:</German>
+		<Italian>Feature:</Italian>
+		<Spanish>Feature:</Spanish>
+	</TEXT>
+</Civ4GameText>

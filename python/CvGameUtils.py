@@ -725,7 +725,12 @@ class CvGameUtils:
 		
 	def getWidgetHelp(self, argsList):
 		eWidgetType, iData1, iData2, bOption = argsList
-		
+## Platy WorldBuilder ##
+		if eWidgetType == WidgetTypes.WIDGET_GENERAL:
+			if iData1 == 1029:
+				sHelp = str(iData2)
+				return CyTranslator().getText("TXT_KEY_WB_HELP" + sHelp,())
+## Platy WorldBuilder ##
 		return u""
 		
 	def getUpgradePriceOverride(self, argsList):

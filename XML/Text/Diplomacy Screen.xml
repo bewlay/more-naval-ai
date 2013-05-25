@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Game Text - New -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_WB_SHOW_DEAD</Tag>
+		<English>Show Dead</English>
+		<French>Montrer mort(s)</French>
+		<German>Show Dead</German>
+		<Italian>Show Dead</Italian>
+		<Spanish>Show Dead</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_DIPLOMACY</Tag>
+		<English>Diplomacy</English>
+		<French>Diplomatie</French>
+		<German>Diplomacy</German>
+		<Italian>Diplomacy</Italian>
+		<Spanish>Diplomacy</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PAGE1</Tag>
+		<English>General</English>
+		<French>G&#233;n&#233;ral</French>
+		<German>General</German>
+		<Italian>General</Italian>
+		<Spanish>General</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PAGE2</Tag>
+		<English>Attitude</English>
+		<French>Attitude</French>
+		<German>Attitude</German>
+		<Italian>Attitude</Italian>
+		<Spanish>Attitude</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PERMANENT</Tag>
+		<English>Permanent</English>
+		<French>Permanent</French>
+		<German>Permanent</German>
+		<Italian>Permanent</Italian>
+		<Spanish>Permanent</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_DEAD</Tag>
+		<English>(Dead)</English>
+		<French>(Mort)</French>
+		<German>(Dead)</German>
+		<Italian>(Dead)</Italian>
+		<Spanish>(Dead)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_ENABLE_ALL</Tag>
+		<English>Enable All</English>
+		<French>Tout cocher</French>
+		<German>Enable All</German>
+		<Italian>Enable All</Italian>
+		<Spanish>Enable All</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_WAR</Tag>
+		<English>At War</English>
+		<French>En guerre</French>
+		<German>At War</German>
+		<Italian>At War</Italian>
+		<Spanish>At War</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_FVASSAL</Tag>
+		<English>Free Vassal</English>
+		<French>Vassal libre</French>
+		<German>Free Vassal</German>
+		<Italian>Free Vassal</Italian>
+		<Spanish>Free Vassal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CVASSAL</Tag>
+		<English>Capitulated Vassal</English>
+		<French>Vassal capitul&#233;</French>
+		<German>Capitulated Vassal</German>
+		<Italian>Capitulated Vassal</Italian>
+		<Spanish>Capitulated Vassal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_MASTER</Tag>
+		<English>Master</English>
+		<French>Ma&#238;tre</French>
+		<German>Master</German>
+		<Italian>Master</Italian>
+		<Spanish>Master</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_NONE</Tag>
+		<English>None</English>
+		<French>Aucun(e)</French>
+		<German>None</German>
+		<Italian>None</Italian>
+		<Spanish>None</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_TOWARDS</Tag>
+		<English>Towards %s1</English>
+		<French>envers %s1</French>
+		<German>Towards %s1</German>
+		<Italian>Towards %s1</Italian>
+		<Spanish>Towards %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_TOWARDS_OTHERS</Tag>
+		<English>Towards Others</English>
+		<French>envers les autres</French>
+		<German>Towards Others</German>
+		<Italian>Towards Others</Italian>
+		<Spanish>Towards Others</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_ESPIONAGE_WEIGHT</Tag>
+		<English>Weight</English>
+		<French>Poids</French>
+		<German>Weight</German>
+		<Italian>Weight</Italian>
+		<Spanish>Weight</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_COUNTER_ESPIONAGE_MOD</Tag>
+		<English>C. Esp Mod</English>
+		<French>Modification contre-esp.</French>
+		<German>C. Esp Mod</German>
+		<Italian>C. Esp Mod</Italian>
+		<Spanish>C. Esp Mod</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_COUNTER_ESPIONAGE</Tag>
+		<English>C. Esp Turns</English>
+		<French>Tours de contre-esp. restant</French>
+		<German>C. Esp Turns</German>
+		<Italian>C. Esp Turns</Italian>
+		<Spanish>C. Esp Turns</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_WAR_WEARINESS</Tag>
+		<English>War Weariness</English>
+		<French>Lassitude de la guerre</French>
+		<German>War Weariness</German>
+		<Italian>War Weariness</Italian>
+		<Spanish>War Weariness</Spanish>
+	</TEXT>
+</Civ4GameText>
