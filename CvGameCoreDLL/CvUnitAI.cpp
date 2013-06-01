@@ -796,40 +796,53 @@ bool CvUnitAI::AI_update()
 
 
 // Returns true if took an action or should wait to move later...
-bool CvUnitAI::AI_follow()
+// K-Mod. I've basically rewriten this function.
+// bFirst should be "true" if this is the first unit in the group to use this follow function.
+// the point is that there are some calculations and checks in here which only depend on the group, not the unit
+// so for efficiency, we should only check them once.
+bool CvUnitAI::AI_follow(bool bFirst)
 {
-	bool bCanAllMove = getGroup()->canAllMove();
+	FAssert(getDomainType() != DOMAIN_AIR);
 
 	if (AI_followBombard())
-	{
 		return true;
-	}
-	
-	if (bCanAllMove)
+
+	if (bFirst && getGroup()->getHeadUnitAI() == UNITAI_ATTACK_CITY)
 	{
-		if (AI_cityAttack(1, 65, true))
-		{
+		// note: AI_stackAttackCity will check which of our units can attack when comparing stacks;
+		// and it will issue the attack order using MOVE_DIRECT ATTACK, which will execute without waiting for the entire group to have movement points.
+		if (AI_stackAttackCity(1, 160, true)) // automatic threshold
 			return true;
-		}
 	}
+
+	// I've changed attack-follow code so that it will only attack with a single unit, not the whole group.
+	if (bFirst && AI_cityAttack(1, 65, true))
+		return true;
+	if (bFirst)
+	{
+		bool bMoveGroup = false; // to large groups to leave some units behind.
+		if (getGroup()->getNumUnits() >= 16)
+		{
+			int iCanMove = 0;
+			CLLNode<IDInfo>* pEntityNode = getGroup()->headUnitNode();
+			while (pEntityNode)
+			{
+				CvUnit* pLoopUnit = ::getUnit(pEntityNode->m_data);
+				pEntityNode = getGroup()->nextUnitNode(pEntityNode);
+				iCanMove += (pLoopUnit->canMove() ? 1 : 0);
+			}
+			bMoveGroup = 5 * iCanMove >= 4 * getGroup()->getNumUnits() || iCanMove >= 20; // if 4/5 of our group can still move.
+		}
+		if (AI_anyAttack(1, isEnemy(plot()->getTeam()) ? 65 : 70, bMoveGroup ? 0 : 2, true, true))
+			return true;
+	}
+	//
 
 	if (isEnemy(plot()->getTeam()))
 	{
 		if (canPillage(plot()))
 		{
-			if (plot()->getImprovementType() != NO_IMPROVEMENT || !isEnemyRoute())
-			{
-				getGroup()->pushMission(MISSION_PILLAGE);
-				logBBAI("   FOLLOW PILLAGE (Unit %d, plot %d, %d)",getID(), plot()->getX(), plot()->getY());
-				return true;
-			}
-		}
-	}
-
-	if (bCanAllMove)
-	{
-		if (AI_anyAttack(1, 70, 2, true, true))
-		{
+			getGroup()->pushMission(MISSION_PILLAGE);
 			return true;
 		}
 	}
@@ -848,46 +861,56 @@ bool CvUnitAI::AI_follow()
 	return false;
 }
 
-
-// XXX what if a unit gets stuck b/c of it's UnitAIType???
-// XXX is this function costing us a lot? (it's recursive...)
+// K-Mod. This function has been completely rewritten to improve efficiency and intelligence.
 void CvUnitAI::AI_upgrade()
 {
 	PROFILE_FUNC();
 
-	FAssertMsg(!isHuman(), "isHuman did not return false as expected");
-	FAssertMsg(AI_getUnitAIType() != NO_UNITAI, "AI_getUnitAIType() is not expected to be equal with NO_UNITAI");
+	FAssert(!isHuman());
+	FAssert(AI_getUnitAIType() != NO_UNITAI);
 
-	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+	if (!isReadyForUpgrade())
+		return;
+
+	const CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+	const CvCivilizationInfo& kCivInfo = GC.getCivilizationInfo(kPlayer.getCivilizationType());
 	UnitAITypes eUnitAI = AI_getUnitAIType();
 	CvArea* pArea = area();
 
-	int iCurrentValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true);
-
-	int iBestValue = 0;
-	int iNewValue = 0;
+	int iBestValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true) * 100;
 	UnitTypes eBestUnit = NO_UNIT;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// Note: the original code did two passes, presumably for speed reasons.
+	// In the first pass, they checked only units which were flagged with the right unitAI.
+	// Then, only if no such units were found, they checked all other units.
+	//
+	// I'm just jumping straight to the second (slower) pass, because most of the time no upgrades are available at all and so both passes would be used anyway.
+	//
+	// I've reversed the order of iteration because the stronger units are typically later in the list
+	for (UnitClassTypes i = (UnitClassTypes)(GC.getNumUnitClassInfos()-1); i >= 0; i=(UnitClassTypes)(i-1))
 	{
-		if (canUpgrade((UnitTypes)iI))
+		UnitTypes eLoopUnit = (UnitTypes)kCivInfo.getCivilizationUnits(i);
+
+		if (eLoopUnit != NO_UNIT)
 		{
-			iNewValue = kPlayer.AI_unitValue(((UnitTypes)iI), eUnitAI, pArea, true);
+			int iValue = kPlayer.AI_unitValue(eLoopUnit, eUnitAI, pArea, true);
+			// use a random factor. less than 100, so that the upgrade must be better than the current unit.
+			iValue *= 80 + GC.getGameINLINE().getSorenRandNum(21, "AI Upgrade");
 
-			int iUpgradeTier = GC.getUnitInfo((UnitTypes)iI).getTier();
-
+			int iUpgradeTier = GC.getUnitInfo(eLoopUnit).getTier();
 			if (iUpgradeTier > 2)
 			{
 				if ((getLevel() < (iUpgradeTier + 1)) && (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_DISCIPLE")))
 				{
-					iNewValue = 0;
+					iValue = 0;
 				}
 			}
 
-			if ((iNewValue > iBestValue) && (iNewValue >= iCurrentValue))
+			// (believe it or not, AI_unitValue is faster than canUpgrade.)
+			if (iValue > iBestValue && canUpgrade(eLoopUnit))
 			{
-				iBestValue = iNewValue;
-				eBestUnit = ((UnitTypes)iI);
+				iBestValue = iValue;
+				eBestUnit = eLoopUnit;
 			}
 		}
 	}
@@ -895,12 +918,22 @@ void CvUnitAI::AI_upgrade()
 	if (eBestUnit != NO_UNIT)
 	{
 		logBBAI("    %S (unit %d - %S) upgrading to %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),GC.getUnitInfo(eBestUnit).getDescription(), iBestValue);
-		upgrade(eBestUnit);
+		//upgrade(eBestUnit);
+		// K-Mod. Ungroup the unit, so that we don't cause the whole group to miss their turn.
+		CvUnit* pUpgradeUnit = upgrade(eBestUnit);
 		doDelayedDeath();
-		return;
-	}
 
-	return;
+		if (pUpgradeUnit != this)
+		{
+			CvSelectionGroup* pGroup = pUpgradeUnit->getGroup();
+			if (pGroup->getHeadUnit() != pUpgradeUnit)
+			{
+				pUpgradeUnit->joinGroup(NULL);
+				// indicate that the unit intends to rejoin the old group (although it might not actually do so...)
+				pUpgradeUnit->getGroup()->AI_setMissionAI(MISSIONAI_GROUP, 0, pGroup->getHeadUnit());
+			}
+		}
+	}
 }
 
 
@@ -908,19 +941,19 @@ void CvUnitAI::AI_promote()
 {
 	PROFILE_FUNC();
 
-	PromotionTypes eBestPromotion;
-	int iValue;
-	int iBestValue;
-	int iI;
+	// K-Mod. A quick check to see if we can rule out all promotions in one hit, before we go through them one by one.
+	if (!isPromotionReady())
+		return; // can't get any normal promotions. (see CvUnit::canPromote)
+	// K-Mod end
 
-	iBestValue = 0;
-	eBestPromotion = NO_PROMOTION;
+	int iBestValue = 0;
+	PromotionTypes eBestPromotion = NO_PROMOTION;
 
-	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 		if (canPromote((PromotionTypes)iI, -1))
 		{
-			iValue = AI_promotionValue((PromotionTypes)iI);
+			int iValue = AI_promotionValue((PromotionTypes)iI);
 
 			if (iValue > iBestValue)
 			{
@@ -934,7 +967,7 @@ void CvUnitAI::AI_promote()
 	{
 		if( gUnitLogLevel >= 3 )
 		{
-			logBBAI("    %S (unit %d - %S) choosing promotion %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),GC.getPromotionInfo(eBestPromotion).getDescription(), iBestValue);
+			logBBAI("    %S (unit %d - %S) choosing promotion %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), GC.getPromotionInfo(eBestPromotion).getDescription(), iBestValue);
 		}
 
 		promote(eBestPromotion, -1);
@@ -2397,7 +2430,11 @@ void CvUnitAI::AI_workerMove()
 //	}
 	if (pCity != NULL)
 	{
-		if ((pCity->AI_getWorkersNeeded() > 0) && (plot()->isCity() || (pCity->AI_getWorkersNeeded() < ((1 + pCity->AI_getWorkersHave() * 2) / 3))))
+		/* original bts code (is it just me, or did they get this backwards?)
+		if ((pCity->AI_getWorkersNeeded() > 0) && (plot()->isCity() || (pCity->AI_getWorkersNeeded() < ((1 + pCity->AI_getWorkersHave() * 2) / 3)))) */
+		// K-Mod
+		if (pCity->AI_getWorkersNeeded() > 0 && (plot()->isCity() || pCity->AI_getWorkersHave() < (1 + pCity->AI_getWorkersNeeded() * 2) / 3))
+		// K-Mod end
 		{
 			if (AI_improveCity(pCity))
 			{
@@ -4473,11 +4510,11 @@ void CvUnitAI::AI_pillageMove()
 			return;
 		}
 	}
-
-	if (AI_cityAttack(1, 55))
+	
+	/*if (AI_cityAttack(1, 55))
 	{
 		return;
-	}
+	}*/
 
 	if (AI_anyAttack(1, 65))
 	{
@@ -7229,25 +7266,35 @@ void CvUnitAI::AI_attackSeaMove()
 	if (AI_group(UNITAI_CARRIER_SEA, -1, 1, -1, false, false, false))
 	{
 		return;
-	}
-*/
+	} */
+		// K-Mod / BBAI. I've changed the order of group / shadow.
+		// What I'd really like is to join the assault group if the group needs escorts, but shadow if it doesn't.
+
+		// Get at least one shadow per assault group.
+		if (AI_shadow(UNITAI_ASSAULT_SEA, 1, -1, true, false, 4))
+		{
+			return;
+		}
+
+		// Allow several attack_sea with large flotillas 
+		if (AI_group(UNITAI_ASSAULT_SEA, -1, 4, 4, false, false, false, 4, false, true, false))
+		{
+			return;
+		}
+
+		// allow just a couple with small asault teams
+		if (AI_group(UNITAI_ASSAULT_SEA, -1, 2, -1, false, false, false, 5, false, true, false))
+		{
+			return;
+		}
+
+		// Otherwise, try to shadow.
 		if (AI_shadow(UNITAI_ASSAULT_SEA, 4, 34, true, false, 4))
 		{
 			return;
 		}
-		
+
 		if (AI_shadow(UNITAI_CARRIER_SEA, 4, 51, true, false, 5))
-		{
-			return;
-		}
-
-		// Group with large flotillas first
-		if (AI_group(UNITAI_ASSAULT_SEA, -1, 4, 3, false, false, false, 3, false, true, false))
-		{
-			return;
-		}
-
-		if (AI_group(UNITAI_ASSAULT_SEA, -1, 2, -1, false, false, false, 5, false, true, false))
 		{
 			return;
 		}
@@ -7257,10 +7304,7 @@ void CvUnitAI::AI_attackSeaMove()
 	{
 		return;
 	}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-
+	// K-Mod / BBAI end
 	
 	if (plot()->isOwned() && (isEnemy(plot()->getTeam())))
 	{
@@ -7298,6 +7342,10 @@ void CvUnitAI::AI_attackSeaMove()
 	{
 		return;
 	}
+
+	// K-Mod
+	if (AI_guardBonus(10))
+		return;
 
 	if (AI_patrol())
 	{
@@ -7537,6 +7585,7 @@ void CvUnitAI::AI_reserveSeaMove()
 void CvUnitAI::AI_escortSeaMove()
 {
 	PROFILE_FUNC();
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE()); // K-Mod
 
 //	// if we have cargo, possibly convert to UNITAI_ASSAULT_SEA (this will most often happen with galleons)
 //	// note, this should not happen when we are not the group head, so escort galleons are fine joining a group, just not as head
@@ -7572,7 +7621,7 @@ void CvUnitAI::AI_escortSeaMove()
 	if (plot()->isCity(true)) //prioritize getting outta there
 	{
 		int iOurDefense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(),0,true,false,true);
-		int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(plot(),2,false,false);
+		int iEnemyOffense = kOwner.AI_getEnemyPlotStrength(plot(),2,false,false);
 
 		if( getDamage() > 0 )	// extra risk to leaving when wounded
 		{
@@ -7628,18 +7677,18 @@ void CvUnitAI::AI_escortSeaMove()
 		if( getCargo() > 0 && (GC.getUnitInfo(getUnitType()).getSpecialCargo() == NO_SPECIALUNIT) )
 		{
 			//Obsolete?
-			int iValue = GET_PLAYER(getOwnerINLINE()).AI_unitValue(getUnitType(), AI_getUnitAIType(), area());
-			int iBestValue = GET_PLAYER(getOwnerINLINE()).AI_bestAreaUnitAIValue(AI_getUnitAIType(), area());
+			int iValue = kOwner.AI_unitValue(getUnitType(), AI_getUnitAIType(), area());
+			int iBestValue = kOwner.AI_bestAreaUnitAIValue(AI_getUnitAIType(), area());
 			
 			if (iValue < iBestValue)
 			{
-				if (GET_PLAYER(getOwnerINLINE()).AI_unitValue(getUnitType(), UNITAI_ASSAULT_SEA, area()) > 0)
+				if (kOwner.AI_unitValue(getUnitType(), UNITAI_ASSAULT_SEA, area()) > 0)
 				{
 					AI_setUnitAIType(UNITAI_ASSAULT_SEA);
 					return;
 				}
 
-				if (GET_PLAYER(getOwnerINLINE()).AI_unitValue(getUnitType(), UNITAI_SETTLER_SEA, area()) > 0)
+				if (kOwner.AI_unitValue(getUnitType(), UNITAI_SETTLER_SEA, area()) > 0)
 				{
 					AI_setUnitAIType(UNITAI_SETTLER_SEA);
 					return;
@@ -7965,6 +8014,7 @@ void CvUnitAI::AI_exploreSeaMove()
 void CvUnitAI::AI_assaultSeaMove()
 {
 	PROFILE_FUNC();
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE()); // K-Mod
 
 	FAssert(AI_getUnitAIType() == UNITAI_ASSAULT_SEA);
 
@@ -7979,16 +8029,16 @@ void CvUnitAI::AI_assaultSeaMove()
 	if (plot()->isCity(true))
 	{
 		int iOurDefense = GET_TEAM(getTeam()).AI_getOurPlotStrength(plot(),0,true,false,true);
-		int iEnemyOffense = GET_PLAYER(getOwnerINLINE()).AI_getEnemyPlotStrength(plot(),2,false,false);
+		int iEnemyOffense = kOwner.AI_getEnemyPlotStrength(plot(),2,false,false);
 
 		if( getDamage() > 0 )	// extra risk to leaving when wounded
 		{
 			iOurDefense *= 2;
 		}
 
-		if( iEnemyOffense > iOurDefense/8 || iOurDefense == 0 )
+		if (iEnemyOffense > iOurDefense/4) // was 1 vs 1/8
 		{
-			if( iEnemyOffense > iOurDefense/4 || iOurDefense == 0 ) //prioritize getting outta there
+			if (iEnemyOffense > iOurDefense/2) // was 1 vs 1/4
 			{
 				if( !bEmpty )
 				{
@@ -8032,10 +8082,10 @@ void CvUnitAI::AI_assaultSeaMove()
 		{
 			return;
 		}
-		if (AI_anyAttack(1, 45))
+		/*if (AI_anyAttack(1, 45))
 		{
 			return;
-		}		
+		}*/ // disabled by K-Mod. (redundant)
 	}
 
 	bool bReinforce = false;
@@ -8100,13 +8150,13 @@ void CvUnitAI::AI_assaultSeaMove()
 		if( pCity != NULL && (plot()->getOwnerINLINE() == getOwnerINLINE()) ) 
 		{
 			// split out galleys from stack of ocean capable ships
-			if( GET_PLAYER(getOwnerINLINE()).AI_unitImpassableCount(getUnitType()) == 0 && getGroup()->getNumUnits() > 1 )
+			if( kOwner.AI_unitImpassableCount(getUnitType()) == 0 && getGroup()->getNumUnits() > 1 )
 			{
 				getGroup()->AI_separateImpassable();
 			}
 
 			// galleys with upgrade available should get that ASAP
-			if( GET_PLAYER(getOwnerINLINE()).AI_unitImpassableCount(getUnitType()) > 0 )
+			if( kOwner.AI_unitImpassableCount(getUnitType()) > 0 )
 			{
 				CvCity* pUpgradeCity = getUpgradeCity(false);
 				if( pUpgradeCity != NULL && pUpgradeCity == pCity )
@@ -8163,7 +8213,7 @@ void CvUnitAI::AI_assaultSeaMove()
 			}
 
 			MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-			if( (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 3) > 0) || (GET_PLAYER(getOwnerINLINE()).AI_getWaterDanger(plot(), 4, false) > 0) )
+			if( (kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 3) > 0) || (kOwner.AI_getWaterDanger(plot(), 4, false) > 0) )
 			{
 				// Loaded but with no escort, wait for others joining us soon or avoid dangerous waters
 				getGroup()->pushMission(MISSION_SKIP);
@@ -8184,7 +8234,7 @@ void CvUnitAI::AI_assaultSeaMove()
 				}
 			}
 
-			if ((iCargo >= iTargetReinforcementSize))
+			if (iCargo >= iTargetReinforcementSize)
 			{
 				getGroup()->AI_separateEmptyTransports();
 
@@ -8246,7 +8296,7 @@ void CvUnitAI::AI_assaultSeaMove()
 		}
 
 		MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-		if( GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
+		if( kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
 		{
 			// Wait for units which are joining our group this turn
 			getGroup()->pushMission(MISSION_SKIP);
@@ -8258,14 +8308,14 @@ void CvUnitAI::AI_assaultSeaMove()
 			if( bAttack )
 			{
 				eMissionAIType = MISSIONAI_LOAD_ASSAULT;
-				if( GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
+				if( kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
 				{
 					// Wait for cargo which will load this turn
 					getGroup()->pushMission(MISSION_SKIP);
 					return;
 				}
 			}
-			else if( GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_ASSAULT) > 0 )
+			else if( kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_ASSAULT) > 0 )
 			{
 				// Wait for cargo which is on the way
 				getGroup()->pushMission(MISSION_SKIP);
@@ -8395,7 +8445,7 @@ void CvUnitAI::AI_assaultSeaMove()
 		if(iCargo > 0)
 		{
 			MissionAITypes eMissionAIType = MISSIONAI_GROUP;
-			if( GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
+			if( kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
 			{
 				if( iEscorts < GET_PLAYER(getOwnerINLINE()).AI_getWaterDanger(plot(), 2, false) )
 				{
@@ -8525,10 +8575,11 @@ void CvUnitAI::AI_assaultSeaMove()
 	if ((bFull || bReinforce) && !bAttack)
 	{
 		// Group with nearby transports with units on board
-		if (AI_group(UNITAI_ASSAULT_SEA, -1, /*iMaxOwnUnitAI*/ -1, -1, true, false, false, 2, false, true, false, MISSIONAI_ASSAULT))
+		/* original code
+		if (AI_group(UNITAI_ASSAULT_SEA, -1, -1, -1, true, false, false, 2, false, true, false, MISSIONAI_ASSAULT))
 		{
 			return;
-		}
+		} */ // disabled by K-Mod. This is redundant.
 
 		if (AI_group(UNITAI_ASSAULT_SEA, -1, -1, -1, true, false, false, 10, false, true, false, MISSIONAI_ASSAULT))
 		{
@@ -8591,7 +8642,7 @@ void CvUnitAI::AI_assaultSeaMove()
 	if (bIsCity && bLandWar && getGroup()->hasCargo())
 	{
 		// Enemy units in this player's territory
-		if( GET_PLAYER(getOwnerINLINE()).AI_countNumAreaHostileUnits(area(),true,false,false,false) > (getGroup()->getCargo()/2))
+		if( kOwner.AI_countNumAreaHostileUnits(area(),true,false,false,false) > (getGroup()->getCargo()/2))
 		{
 			getGroup()->unloadAll();
 			getGroup()->pushMission(MISSION_SKIP);
@@ -15901,7 +15952,8 @@ bool CvUnitAI::AI_defend()
 /************************************************************************************************/
 		if( !(pBestPlot->isCity()) && (getGroup()->getNumUnits() > 1) )
 		{
-			getGroup()->AI_makeForceSeparate();
+			//getGroup()->AI_makeForceSeparate();
+			joinGroup(0); // K-Mod. (AI_makeForceSeparate is a complete waste of time here.)
 		}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
