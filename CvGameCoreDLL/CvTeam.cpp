@@ -5219,6 +5219,18 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 	}
 }
 
+// K-Mod. Return the team which is the master of this team. (if this team is free, return getID())
+TeamTypes CvTeam::getMasterTeam() const
+{
+	for (TeamTypes i = (TeamTypes)0; i < MAX_CIV_TEAMS; i=(TeamTypes)(i+1))
+	{
+		if (isVassal(i))
+			return i;
+	}
+	return getID();
+}
+// K-Mod end
+
 void CvTeam::assignVassal(TeamTypes eVassal, bool bSurrender) const
 {
 	CLinkList<TradeData> ourList;
