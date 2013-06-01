@@ -268,7 +268,8 @@ public:
 	bool hasUpgrade(UnitTypes eUnit, bool bSearch = false) const;
 	CvCity* getUpgradeCity(bool bSearch = false) const;
 	CvCity* getUpgradeCity(UnitTypes eUnit, bool bSearch = false, int* iSearchValue = NULL) const;
-	void upgrade(UnitTypes eUnit);
+	//void upgrade(UnitTypes eUnit);
+	CvUnit* upgrade(UnitTypes eUnit); // K-Mod
 
 	HandicapTypes getHandicapType() const;																// Exposed to Python
 	CivilizationTypes getCivilizationType() const;							// Exposed to Python
@@ -821,7 +822,8 @@ public:
 	virtual void AI_uninit() = 0;
 	virtual void AI_reset(UnitAITypes eUnitAI = NO_UNITAI) = 0;
 	virtual bool AI_update() = 0;
-	virtual bool AI_follow() = 0;
+	//virtual bool AI_follow() = 0;
+	virtual bool AI_follow(bool bFirst = true) = 0; // K-Mod
 	virtual void AI_upgrade() = 0;
 	virtual void AI_promote() = 0;
 	virtual int AI_getBirthmark() const = 0;
