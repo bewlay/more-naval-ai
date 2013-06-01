@@ -4380,7 +4380,8 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	int iGoodValue;
 	int iBadValue;
 
-	iValue = GC.getBonusInfo(eBonus).getHealth();
+	CvBonusInfo &kBonus = GC.getBonusInfo(eBonus);
+	iValue = kBonus.getHealth();
 	iGoodValue = std::max(0, iValue);
 	iBadValue = std::min(0, iValue);
 
@@ -4402,7 +4403,7 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	changeBonusBadHealth(iBadValue * iChange);
 
 
-	iValue = GC.getBonusInfo(eBonus).getHappiness();
+	iValue = kBonus.getHappiness();
 	iGoodValue = std::max(0, iValue);
 	iBadValue = std::min(0, iValue);
 
@@ -4427,46 +4428,46 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	changePowerCount((getBonusPower(eBonus, false) * iChange), false);
 
 //FfH: Added by Kael 01/27/2008
-    if (GC.getBonusInfo(eBonus).getGreatPeopleRateModifier() != 0)
+    if (kBonus.getGreatPeopleRateModifier() != 0)
     {
-        changeGreatPeopleRateModifier(GC.getBonusInfo(eBonus).getGreatPeopleRateModifier() * iChange);
+        changeGreatPeopleRateModifier(kBonus.getGreatPeopleRateModifier() * iChange);
     }
-    if (GC.getBonusInfo(eBonus).getMaintenanceModifier() != 0)
+    if (kBonus.getMaintenanceModifier() != 0)
     {
-        changeMaintenanceModifier(GC.getBonusInfo(eBonus).getMaintenanceModifier() * iChange);
+        changeMaintenanceModifier(kBonus.getMaintenanceModifier() * iChange);
     }
-    if (GC.getBonusInfo(eBonus).getMutateChance() != 0)
+    if (kBonus.getMutateChance() != 0)
     {
-        changeMutateChance(GC.getBonusInfo(eBonus).getMutateChance() * iChange);
+        changeMutateChance(kBonus.getMutateChance() * iChange);
     }
-    if (GC.getBonusInfo(eBonus).getResearchModifier() != 0)
+    if (kBonus.getResearchModifier() != 0)
     {
-        changeCommerceRateModifier(COMMERCE_RESEARCH, GC.getBonusInfo(eBonus).getResearchModifier() * iChange);
+        changeCommerceRateModifier(COMMERCE_RESEARCH, kBonus.getResearchModifier() * iChange);
     }
     if (isCapital())
     {
-        if (GC.getBonusInfo(eBonus).getDiscoverRandModifier() != 0)
+        if (kBonus.getDiscoverRandModifier() != 0)
         {
-            GET_PLAYER(getOwnerINLINE()).changeDiscoverRandModifier(GC.getBonusInfo(eBonus).getDiscoverRandModifier() * iChange);
+            GET_PLAYER(getOwnerINLINE()).changeDiscoverRandModifier(kBonus.getDiscoverRandModifier() * iChange);
         }
-        if (GC.getBonusInfo(eBonus).getHealChange() != 0)
+        if (kBonus.getHealChange() != 0)
         {
-            GET_PLAYER(getOwnerINLINE()).changeHealChange(GC.getBonusInfo(eBonus).getHealChange() * iChange);
+            GET_PLAYER(getOwnerINLINE()).changeHealChange(kBonus.getHealChange() * iChange);
         }
-        if (GC.getBonusInfo(eBonus).getHealChangeEnemy() != 0)
+        if (kBonus.getHealChangeEnemy() != 0)
         {
-            GET_PLAYER(getOwnerINLINE()).changeHealChangeEnemy(GC.getBonusInfo(eBonus).getHealChangeEnemy() * iChange);
+            GET_PLAYER(getOwnerINLINE()).changeHealChangeEnemy(kBonus.getHealChangeEnemy() * iChange);
         }
     }
-    if (GC.getBonusInfo(eBonus).getFreePromotion() != NO_PROMOTION)
+    if (kBonus.getFreePromotion() != NO_PROMOTION)
     {
         if (hasBonus(eBonus))
         {
-            changeFreePromotionCount((PromotionTypes)GC.getBonusInfo(eBonus).getFreePromotion(), 1);
+            changeFreePromotionCount((PromotionTypes)kBonus.getFreePromotion(), 1);
         }
         else
         {
-            changeFreePromotionCount((PromotionTypes)GC.getBonusInfo(eBonus).getFreePromotion(), -1);
+            changeFreePromotionCount((PromotionTypes)kBonus.getFreePromotion(), -1);
         }
     }
 //FfH: End Add
@@ -11509,6 +11510,8 @@ void CvCity::changeNumBonuses(BonusTypes eIndex, int iChange)
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	FAssertMsg(eIndex < GC.getNumBonusInfos(), "eIndex expected to be < GC.getNumBonusInfos()");
 
+	CvBonusInfo &kBonus = GC.getBonusInfo(eIndex);
+
 	if (iChange != 0)
 	{
 		bool bOldHasBonus = hasBonus(eIndex);
@@ -11517,7 +11520,7 @@ void CvCity::changeNumBonuses(BonusTypes eIndex, int iChange)
 
 //FfH: Modified by Kael 08/21/2007
 //		if (bOldHasBonus != hasBonus(eIndex))
-		if (bOldHasBonus != hasBonus(eIndex) && !GC.getBonusInfo(eIndex).isModifierPerBonus())
+		if (bOldHasBonus != hasBonus(eIndex) && !kBonus.isModifierPerBonus())
 //FfH: End Modify
 
 		{
@@ -11532,7 +11535,7 @@ void CvCity::changeNumBonuses(BonusTypes eIndex, int iChange)
 		}
 
 //FfH: Added by Kael 08/21/2007
-		if (GC.getBonusInfo(eIndex).isModifierPerBonus())
+		if (kBonus.isModifierPerBonus())
 		{
             processBonus(eIndex, iChange);
 		}

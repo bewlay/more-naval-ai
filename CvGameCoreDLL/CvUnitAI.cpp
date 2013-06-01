@@ -28210,6 +28210,7 @@ void CvUnitAI::AI_ConquestMove()
 				{
 					if( AI_choke(1, true) )
 					{
+						logBBAI("      ...choking %S due to troop presence in city", pTargetCity->getName().GetCString());
 						return;
 					}
 				}
