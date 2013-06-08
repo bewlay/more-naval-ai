@@ -1319,6 +1319,7 @@ public:
 	bool isIgnoreBuildingDefense() const;				// Exposed to Python
 	bool isCanMoveImpassable() const;				// Exposed to Python
 	bool isCanMoveAllTerrain() const;				// Exposed to Python
+	bool isCanMoveLimitedBorders() const;				// Exposed to Python
 	bool isFlatMovementCost() const;				// Exposed to Python
 	bool isIgnoreTerrainCost() const;				// Exposed to Python
 	bool isNukeImmune() const;				// Exposed to Python
@@ -1572,6 +1573,7 @@ protected:
 	bool m_bIgnoreBuildingDefense;
 	bool m_bCanMoveImpassable;
 	bool m_bCanMoveAllTerrain;
+	bool m_bCanMoveLimitedBorders; // MNAI
 	bool m_bFlatMovementCost;
 	bool m_bIgnoreTerrainCost;
 	bool m_bNukeImmune;

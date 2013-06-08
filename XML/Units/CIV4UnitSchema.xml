@@ -548,6 +548,7 @@
 	<ElementType name="UnitCreateFromCombat" content="textOnly"/>
 	<ElementType name="iUnitCreateFromCombatChance" content="textOnly" dt:type="int"/>
 	<ElementType name="UpgradeCiv" content="textOnly"/>
+	<ElementType name="bCanMoveLimitedBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PythonPostCombatLost" content="textOnly"/>
 	<ElementType name="PythonPostCombatWon" content="textOnly"/>
 	<ElementType name="DamageType" content="textOnly"/>
@@ -759,6 +760,7 @@
 		<element type="UnitCreateFromCombat" minOccurs="0"/>
 		<element type="iUnitCreateFromCombatChance" minOccurs="0"/>
 		<element type="UpgradeCiv" minOccurs="0"/>
+		<element type="bCanMoveLimitedBorders" minOccurs="0"/>
 		<element type="PythonPostCombatLost" minOccurs="0"/>
 		<element type="PythonPostCombatWon" minOccurs="0"/>
 		<element type="DamageTypeCombats" minOccurs="0"/>

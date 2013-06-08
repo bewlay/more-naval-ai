@@ -4927,6 +4927,7 @@ m_bFirstStrikeImmune(false),
 m_bNoDefensiveBonus(false),
 m_bIgnoreBuildingDefense(false),
 m_bCanMoveImpassable(false),
+m_bCanMoveLimitedBorders(false), // MNAI
 m_bCanMoveAllTerrain(false),
 m_bFlatMovementCost(false),
 m_bIgnoreTerrainCost(false),
@@ -5581,6 +5582,13 @@ bool CvUnitInfo::isCanMoveAllTerrain() const
 {
 	return m_bCanMoveAllTerrain;
 }
+
+// MNAI Start
+bool CvUnitInfo::isCanMoveLimitedBorders() const
+{
+	return m_bCanMoveLimitedBorders;
+}
+// MNAI End
 
 bool CvUnitInfo::isFlatMovementCost() const
 {
@@ -6445,6 +6453,7 @@ void CvUnitInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bIgnoreBuildingDefense);
 	stream->Read(&m_bCanMoveImpassable);
 	stream->Read(&m_bCanMoveAllTerrain);
+	stream->Read(&m_bCanMoveLimitedBorders); // MNAI
 	stream->Read(&m_bFlatMovementCost);
 	stream->Read(&m_bIgnoreTerrainCost);
 	stream->Read(&m_bNukeImmune);
@@ -6791,6 +6800,7 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bIgnoreBuildingDefense);
 	stream->Write(m_bCanMoveImpassable);
 	stream->Write(m_bCanMoveAllTerrain);
+	stream->Write(m_bCanMoveLimitedBorders); // MNAI
 	stream->Write(m_bFlatMovementCost);
 	stream->Write(m_bIgnoreTerrainCost);
 	stream->Write(m_bNukeImmune);
@@ -6978,6 +6988,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bIgnoreBuildingDefense, "bIgnoreBuildingDefense");
 	pXML->GetChildXmlValByName(&m_bCanMoveImpassable, "bCanMoveImpassable");
 	pXML->GetChildXmlValByName(&m_bCanMoveAllTerrain, "bCanMoveAllTerrain");
+	pXML->GetChildXmlValByName(&m_bCanMoveLimitedBorders, "bCanMoveLimitedBorders"); // MNAI
 	pXML->GetChildXmlValByName(&m_bFlatMovementCost, "bFlatMovementCost");
 	pXML->GetChildXmlValByName(&m_bIgnoreTerrainCost, "bIgnoreTerrainCost");
 	pXML->GetChildXmlValByName(&m_bNukeImmune, "bNukeImmune");

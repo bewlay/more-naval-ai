@@ -375,6 +375,7 @@ public:
 	bool ignoreBuildingDefense() const;																								// Exposed to Python
 	bool canMoveImpassable() const;																										// Exposed to Python
 	bool canMoveAllTerrain() const;																										// Exposed to Python
+	bool canMoveLimitedBorders() const;																										// Exposed to Python
 	bool flatMovementCost() const;																										// Exposed to Python
 	bool ignoreTerrainCost() const;																										// Exposed to Python
 	bool isNeverInvisible() const;																										// Exposed to Python
