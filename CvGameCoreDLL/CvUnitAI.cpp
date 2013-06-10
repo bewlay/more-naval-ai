@@ -5124,6 +5124,19 @@ void CvUnitAI::AI_cityDefenseMove()
 			{
 				return;
 			}
+			
+			if (plot()->isCity())
+			{
+				CvCity* pCity = plot()->getPlotCity();
+				if (pCity->AI_neededDefenders() > plot()->getNumDefenders(getOwnerINLINE()))
+				{
+					if (AI_travelToUpgradeCity())
+					{
+						logBBAI("  %S (unit %d - %S) traveling to upgrade city (DEFENSE)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription());
+						return;
+					}
+				}
+			}
 		}
 
 		/*
