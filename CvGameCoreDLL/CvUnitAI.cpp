@@ -20916,7 +20916,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 									{
 										if (!GET_PLAYER(getOwnerINLINE()).hasBonus(eNonObsoleteBonus) || GC.getBonusInfo(eNonObsoleteBonus).isMana())
 										{
-											iValue += 200;
+											iValue += 250;
 										}
 										else
 										{
