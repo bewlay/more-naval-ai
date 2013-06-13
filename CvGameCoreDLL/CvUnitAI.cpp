@@ -29978,40 +29978,43 @@ void CvUnitAI::AI_InquisitionMove()
 		{
 			if (GET_PLAYER((PlayerTypes)iJ).isAlive())
 			{
-				for (pLoopCity = GET_PLAYER((PlayerTypes)iJ).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iJ).nextCity(&iLoop))
+				if ( GET_PLAYER((PlayerTypes)iJ).getStateReligion() == iStateRel)
 				{
-					int iPathTurns;
-					if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+					for (pLoopCity = GET_PLAYER((PlayerTypes)iJ).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iJ).nextCity(&iLoop))
 					{
-						bValidTargetForInquisition=false;
-						iNumHeathenRels = 0;
-
-						for (int iTarget=0; iTarget < GC.getNumReligionInfos(); iTarget++)
+						int iPathTurns;
+						if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 						{
-							if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+							bValidTargetForInquisition=false;
+							iNumHeathenRels = 0;
+
+							for (int iTarget=0; iTarget < GC.getNumReligionInfos(); iTarget++)
 							{
-								bValidTargetForInquisition=true;
-								iNumHeathenRels ++;
+								if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+								{
+									bValidTargetForInquisition=true;
+									iNumHeathenRels ++;
+								}
 							}
-						}
 
-						if (bValidTargetForInquisition)
-						{
-
-							iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
-							
-							if (pLoopCity->isHolyCity((ReligionTypes)iStateRel))
+							if (bValidTargetForInquisition)
 							{
+
+								iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
+								
+								if (pLoopCity->isHolyCity((ReligionTypes)iStateRel))
+								{
+									iValue *= 2;
+								}
+								
 								iValue *= 2;
-							}
-							
-							iValue *= 2;
-							iValue /= iPathTurns;
-							
-							if (iValue > iBestValue)
-							{
-								iBestValue = iValue;
-								pBestCity = pLoopCity;
+								iValue /= iPathTurns;
+								
+								if (iValue > iBestValue)
+								{
+									iBestValue = iValue;
+									pBestCity = pLoopCity;
+								}
 							}
 						}
 					}
