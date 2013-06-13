@@ -13141,6 +13141,11 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 {
 	PROFILE_FUNC();
 
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+	{
+		return false;
+	}
+
 	if (plot()->getOwnerINLINE() == getOwnerINLINE())
 	{
 		ImprovementTypes eImprovement = plot()->getImprovementType();
@@ -13237,6 +13242,11 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 	PROFILE_FUNC();
 	
 	if(!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		return false;
+	}
+
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 	{
 		return false;
 	}
