@@ -21439,6 +21439,11 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 		}
 	}
 
+	if (AI_isDoVictoryStrategyLevel3())
+	{
+		return 0;
+	}
+
 	if( isHuman() && !(GC.getGameINLINE().isDebugMode()) )
 	{
 		return 0;
@@ -21810,6 +21815,11 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 		}
 	}
 
+	if (AI_isDoVictoryStrategyLevel3())
+	{
+		return 0;
+	}
+
 	if( isHuman() && !(GC.getGameINLINE().isDebugMode()) )
 	{
 		return 0;
@@ -21916,6 +21926,11 @@ int CvPlayerAI::AI_getDominationVictoryStage() const
 	if( iPercentOfDomination > 50 )
 	{
 		return 3;
+	}
+
+	if (AI_isDoVictoryStrategyLevel3())
+	{
+		return 0;
 	}
 
 	if( isHuman() && !(GC.getGameINLINE().isDebugMode()) )
@@ -22144,6 +22159,11 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 		return iNumTowers;
 	}
 
+	if (AI_isDoVictoryStrategyLevel3())
+	{
+		return 0;
+	}
+
 	// if we have magic type traits, pursue a Tower victory - HARDCODE
 	bool bHasMageTrait = false;
 
@@ -22240,6 +22260,11 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_BLESSED")) > 0)
 	{
 		return 2;
+	}
+
+	if (AI_isDoVictoryStrategyLevel3())
+	{
+		return 0;
 	}
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_ANOINTED")) > 0)
