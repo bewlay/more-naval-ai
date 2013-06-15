@@ -2332,7 +2332,7 @@ void CvUnit::updateCombat(bool bQuick)
                         pUnitNode = pPlot->nextUnitNode(pUnitNode);
                         if (pLoopUnit->isEnemy(getTeam()))
                         {
-                            if (!pLoopUnit->isImmuneToFear())
+							if (!pLoopUnit->isImmuneToFear() && !pLoopUnit->isCargo())
                             {
                                 if (GC.getGameINLINE().getSorenRandNum(20, "Im afeared!") <= (baseCombatStr() + 10 - pLoopUnit->baseCombatStr()))
                                 {
