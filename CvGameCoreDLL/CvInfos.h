@@ -3659,6 +3659,7 @@ public:
 	const TCHAR* getPythonAtRange() const;
 	const TCHAR* getPythonOnMove() const;
 	int getSpawnUnitType() const;
+	int getFreeSpawnPromotion() const;
 	int getVisibilityChange() const;
 	bool readPass3();
 //FfH: End Add
@@ -3730,6 +3731,7 @@ protected:
 	CvString m_szPythonAtRange;
 	CvString m_szPythonOnMove;
 	int m_iSpawnUnitType;
+	int m_iFreeSpawnPromotion;
 	int m_iVisibilityChange;
 
 	std::vector<CvString> m_aszExtraXML2forPass3;

@@ -549,6 +549,16 @@ void CvPlot::doTurn()
                             {
                                 CvUnit* pUnit;
                                 pUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit((UnitTypes)iUnit, getX_INLINE(), getY_INLINE(), UNITAI_ATTACK);
+
+								if (GC.getImprovementInfo(eImprovement).getFreeSpawnPromotion() != NO_PROMOTION)
+								{
+									logBBAI("FREE SPAWN PROMOTION!!");
+									if ((GC.getPromotionInfo((PromotionTypes)GC.getImprovementInfo(eImprovement).getFreeSpawnPromotion())).isRace())
+									{
+										pUnit->setRace(NO_PROMOTION);
+									}
+									pUnit->setHasPromotion((PromotionTypes)GC.getImprovementInfo(eImprovement).getFreeSpawnPromotion(), true);
+								}
 								if (pUnit->isAnimal())
                                 {
                                     pUnit->setHasPromotion((PromotionTypes)GC.getDefineINT("HIDDEN_NATIONALITY_PROMOTION"), true);

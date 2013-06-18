@@ -475,6 +475,7 @@
 	<ElementType name="PrereqCivilization" content="textOnly"/>
 	<ElementType name="PythonAtRange" content="textOnly"/>
 	<ElementType name="SpawnUnitType" content="textOnly"/>
+	<ElementType name="FreeSpawnPromotion" content="textOnly"/>
 	<ElementType name="ImprovementInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -543,6 +544,7 @@
 		<element type="PythonAtRange"/>
 		<element type="PythonOnMove"/>
 		<element type="SpawnUnitType"/>
+		<element type="FreeSpawnPromotion" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ImprovementInfos" content="eltOnly">
 		<element type="ImprovementInfo" maxOccurs="*"/>

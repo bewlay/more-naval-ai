@@ -14776,6 +14776,7 @@ m_iBonusConvert(NO_BONUS),
 m_iFeatureUpgrade(NO_FEATURE),
 m_iPrereqCivilization(NO_CIVILIZATION),
 m_iSpawnUnitType(NO_UNIT),
+m_iFreeSpawnPromotion(NO_PROMOTION),
 m_iVisibilityChange(0)
 //FfH: End Add
 
@@ -15071,6 +15072,11 @@ int CvImprovementInfo::getSpawnUnitType() const
 	return m_iSpawnUnitType;
 }
 
+int CvImprovementInfo::getFreeSpawnPromotion() const
+{
+	return m_iFreeSpawnPromotion;
+}
+
 int CvImprovementInfo::getVisibilityChange() const
 {
 	return m_iVisibilityChange;
@@ -15314,6 +15320,7 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 	stream->ReadString(m_szPythonAtRange);
 	stream->ReadString(m_szPythonOnMove);
 	stream->Read(&m_iSpawnUnitType);
+	stream->Read(&m_iFreeSpawnPromotion);
 	stream->Read(&m_iVisibilityChange);
 //FfH: End Add
 
@@ -15451,6 +15458,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szPythonAtRange);
 	stream->WriteString(m_szPythonOnMove);
 	stream->Write(m_iSpawnUnitType);
+	stream->Write(m_iFreeSpawnPromotion);
 	stream->Write(m_iVisibilityChange);
 //FfH: End Add
 
@@ -15733,6 +15741,9 @@ bool CvImprovementInfo::readPass2(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "ImprovementUpgrade");
 	m_iImprovementUpgrade = GC.getInfoTypeForString(szTextVal);
+
+	pXML->GetChildXmlValByName(szTextVal, "FreeSpawnPromotion");
+	m_iFreeSpawnPromotion = GC.getInfoTypeForString(szTextVal);
 
 	return true;
 }

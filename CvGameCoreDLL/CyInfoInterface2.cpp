@@ -343,6 +343,7 @@ void CyInfoPythonInterface2()
 		.def("getPythonAtRange", &CvImprovementInfo::getPythonAtRange, "string ()")
 		.def("getPythonOnMove", &CvImprovementInfo::getPythonOnMove, "string ()")
 		.def("getSpawnUnitType", &CvImprovementInfo::getSpawnUnitType, "string ()")
+		.def("getFreeSpawnPromotion", &CvImprovementInfo::getFreeSpawnPromotion, "string ()")
 //FfH: End Add
 
 		// Arrays
