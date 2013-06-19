@@ -14085,6 +14085,14 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 		}
 	}
 
+	if (kPromotion.getUnitReligionPrereq() != NO_RELIGION)
+	{
+		if (getReligion() != kPromotion.getUnitReligionPrereq())
+		{
+			return false;
+		}
+	}
+
 	if (!isPromotionValid(ePromotion))
 	{
 		return false;

@@ -128,6 +128,14 @@
         <Italian>Requires of Player</Italian>
         <Spanish>Requiere del Jugador</Spanish>
     </TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_REQ_UNIT_RELIGION</Tag>
+        <English>Unit[ICON_RELIGION] is</English>
+        <French>Unit[ICON_RELIGION] is</French>
+        <German>Unit[ICON_RELIGION] is</German>
+        <Italian>Unit[ICON_RELIGION] is</Italian>
+        <Spanish>Unit[ICON_RELIGION] is</Spanish>
+	</TEXT>
 	<!-- Civilopedia (Religions) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_FOUNDED_BY_FIRST</Tag>

@@ -112,6 +112,7 @@ void CyInfoPythonInterface1()
 
 		.def("getTechPrereq", &CvPromotionInfo::getTechPrereq, "int ()")
 		.def("getStateReligionPrereq", &CvPromotionInfo::getStateReligionPrereq, "int ()")
+		.def("getUnitReligionPrereq", &CvPromotionInfo::getUnitReligionPrereq, "int ()")
 		.def("getVisibilityChange", &CvPromotionInfo::getVisibilityChange, "int ()")
 		.def("getMovesChange", &CvPromotionInfo::getMovesChange, "int ()")
 		.def("getMoveDiscountChange", &CvPromotionInfo::getMoveDiscountChange, "int ()")

@@ -1709,6 +1709,7 @@ m_iPrereqOrPromotion1(NO_PROMOTION),
 m_iPrereqOrPromotion2(NO_PROMOTION),
 m_iTechPrereq(NO_TECH),
 m_iStateReligionPrereq(NO_RELIGION),
+m_iUnitReligionPrereq(NO_RELIGION),
 m_iVisibilityChange(0),
 m_iMovesChange(0),
 m_iMoveDiscountChange(0),
@@ -1912,6 +1913,11 @@ int CvPromotionInfo::getTechPrereq() const
 int CvPromotionInfo::getStateReligionPrereq() const
 {
 	return m_iStateReligionPrereq;
+}
+
+int CvPromotionInfo::getUnitReligionPrereq() const
+{
+	return m_iUnitReligionPrereq;
 }
 
 int CvPromotionInfo::getVisibilityChange() const
@@ -2587,6 +2593,7 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 
 	stream->Read(&m_iTechPrereq);
 	stream->Read(&m_iStateReligionPrereq);
+	stream->Read(&m_iUnitReligionPrereq); // MNAI
 	stream->Read(&m_iVisibilityChange);
 	stream->Read(&m_iMovesChange);
 	stream->Read(&m_iMoveDiscountChange);
@@ -2774,6 +2781,7 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 
 	stream->Write(m_iTechPrereq);
 	stream->Write(m_iStateReligionPrereq);
+	stream->Write(m_iUnitReligionPrereq); // MNAI
 	stream->Write(m_iVisibilityChange);
 	stream->Write(m_iMovesChange);
 	stream->Write(m_iMoveDiscountChange);
@@ -2931,6 +2939,9 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "StateReligionPrereq");
 	m_iStateReligionPrereq = pXML->FindInInfoClass(szTextVal);
+
+	pXML->GetChildXmlValByName(szTextVal, "UnitReligionPrereq");
+	m_iUnitReligionPrereq = pXML->FindInInfoClass(szTextVal);
 
 	pXML->GetChildXmlValByName(&m_bLeader, "bLeader");
 	if (m_bLeader)

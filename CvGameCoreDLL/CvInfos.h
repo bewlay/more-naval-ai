@@ -481,6 +481,7 @@ public:
 
 	int getTechPrereq() const;				// Exposed to Python
 	int getStateReligionPrereq() const;				// Exposed to Python
+	int getUnitReligionPrereq() const;				// MNAI - Exposed to Python
 	int getVisibilityChange() const;				// Exposed to Python
 	int getMovesChange() const;				// Exposed to Python
 	int getMoveDiscountChange() const;				// Exposed to Python
@@ -641,6 +642,7 @@ protected:
 
 	int m_iTechPrereq;
 	int m_iStateReligionPrereq;
+	int m_iUnitReligionPrereq; // MNAI
 	int m_iVisibilityChange;
 	int m_iMovesChange;
 	int m_iMoveDiscountChange;
@@ -812,6 +814,7 @@ public:
 	int getPromotionInStackPrereq() const;
 	int getReligionPrereq() const;
 	int getStateReligionPrereq() const;
+	int getUnitReligionPrereq() const; // MNAI
 	int getTechPrereq() const;
 	int getRange() const;
     int getEffect() const;

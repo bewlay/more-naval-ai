@@ -878,6 +878,7 @@
 	<ElementType name="PromotionPrereqOr2" content="textOnly"/>
 	<ElementType name="TechPrereq" content="textOnly"/>
 	<ElementType name="StateReligionPrereq" content="textOnly"/>
+	<ElementType name="UnitReligionPrereq" content="textOnly"/>
 	<ElementType name="bLeader" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bBlitz" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAmphib" content="textOnly" dt:type="boolean"/>
@@ -1007,6 +1008,7 @@
 		<element type="PromotionPrereqOr2" minOccurs="0"/>
 		<element type="TechPrereq" minOccurs="0"/>
 		<element type="StateReligionPrereq" minOccurs="0"/>
+		<element type="UnitReligionPrereq" minOccurs="0"/>
 		<element type="bLeader" minOccurs="0"/>
 		<element type="bBlitz" minOccurs="0"/>
 		<element type="bAmphib" minOccurs="0"/>

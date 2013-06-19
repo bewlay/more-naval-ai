@@ -206,6 +206,14 @@ class SevoPediaPromotion:
 			screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_STATE_RELIGION", ()) + u"</font>")
 			screen.attachImageButton(panelName, "", gc.getReligionInfo(eReligion).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, eReligion, 1, False)
 			screen.attachLabel(panelName, "", u"<font=3>)</font>")
+
+		eUnitReligion = gc.getPromotionInfo(self.iPromotion).getUnitReligionPrereq()
+		if (eUnitReligion != ReligionTypes.NO_RELIGION):
+			if not bFirst:
+				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_AND", ()))
+			screen.attachLabel(panelName, "", u"  <font=3>(" + localText.getText("TXT_KEY_PEDIA_REQ_UNIT_RELIGION", ()) + u"</font>")
+			screen.attachImageButton(panelName, "", gc.getReligionInfo(eUnitReligion).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, eUnitReligion, 1, False)
+			screen.attachLabel(panelName, "", u"<font=3>)</font>")
 ##--------	BUGFfH: End Modify
 
 
