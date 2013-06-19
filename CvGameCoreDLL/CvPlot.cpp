@@ -552,7 +552,6 @@ void CvPlot::doTurn()
 
 								if (GC.getImprovementInfo(eImprovement).getFreeSpawnPromotion() != NO_PROMOTION)
 								{
-									logBBAI("FREE SPAWN PROMOTION!!");
 									if ((GC.getPromotionInfo((PromotionTypes)GC.getImprovementInfo(eImprovement).getFreeSpawnPromotion())).isRace())
 									{
 										pUnit->setRace(NO_PROMOTION);
