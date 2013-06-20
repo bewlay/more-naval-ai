@@ -183,6 +183,11 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		changeCanMoveImpassable(1);
 	}
 
+	if (m_pUnitInfo->isCanMoveLimitedBorders())
+	{
+		changeCanMoveLimitedBorders(1);
+	}
+
 	GC.getGameINLINE().incrementUnitCreatedCount(getUnitType());
 
 	GC.getGameINLINE().incrementUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType()));
@@ -495,6 +500,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iWorkRateModify = 0;
 
 	m_iCanMoveImpassable = 0;
+	m_iCanMoveLimitedBorders = 0;
 	m_iCastingBlocked = 0;
 	m_iUpgradeOutsideBorders = 0;
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
@@ -10765,7 +10771,7 @@ bool CvUnit::canMoveAllTerrain() const
 
 bool CvUnit::canMoveLimitedBorders() const
 {
-	return m_pUnitInfo->isCanMoveLimitedBorders();
+	return m_iCanMoveLimitedBorders == 0 ? false : true;
 }
 
 bool CvUnit::flatMovementCost() const
@@ -14316,6 +14322,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 //FfH: End Add
 		// MNAI - additional promotion tags
 		changeCanMoveImpassable((kPromotionInfo.isAllowsMoveImpassable()) ? iChange : 0);
+		changeCanMoveLimitedBorders((kPromotionInfo.isAllowsMoveLimitedBorders()) ? iChange : 0);
 		changeCastingBlocked((kPromotionInfo.isCastingBlocked()) ? iChange : 0);
 		changeUpgradeOutsideBorders((kPromotionInfo.isUpgradeOutsideBorders()) ? iChange : 0);
 		// End MNAI
@@ -19532,6 +19539,14 @@ void CvUnit::changeCanMoveImpassable(int iNewValue)
     }
 }
 
+void CvUnit::changeCanMoveLimitedBorders(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iCanMoveLimitedBorders += iNewValue;
+    }
+}
+
 bool CvUnit::isCastingBlocked() const
 {
 	return m_iCastingBlocked == 0 ? false : true;
@@ -19701,6 +19716,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 	// MNAI - additional promotion tags
 	pStream->Read(&m_iCanMoveImpassable);
+	pStream->Read(&m_iCanMoveLimitedBorders);
 	pStream->Read(&m_iCastingBlocked);
 	pStream->Read(&m_iUpgradeOutsideBorders);
 	// End MNAI
@@ -19869,6 +19885,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 	// MNAI - additional promotion tags
 	pStream->Write(m_iCanMoveImpassable);
+	pStream->Write(m_iCanMoveLimitedBorders);
 	pStream->Write(m_iCastingBlocked);
 	pStream->Write(m_iUpgradeOutsideBorders);
 	// End MNAI

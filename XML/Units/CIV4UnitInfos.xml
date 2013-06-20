@@ -10392,6 +10392,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_ASSASSIN</Class>
@@ -23238,6 +23239,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_COMMANDER</Class>
@@ -30032,6 +30034,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_EURABATRES</Class>
@@ -52454,6 +52457,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_MESHABBER</Class>
@@ -59390,6 +59394,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_PUPPET</Class>
@@ -64303,6 +64308,7 @@
             </FreePromotions>
             <LeaderPromotion>NONE</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_SCORPION</Class>
@@ -64740,6 +64746,7 @@
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
             <UpgradeCiv>CIVILIZATION_CLAN_OF_EMBERS</UpgradeCiv>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
             <PythonPostCombatWon>postCombatWolfRider(pCaster,pOpponent)</PythonPostCombatWon>
         </UnitInfo>
         <UnitInfo>
@@ -64959,6 +64966,7 @@
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
             <UpgradeCiv>CIVILIZATION_CLAN_OF_EMBERS</UpgradeCiv>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
             <PythonPostCombatWon>postCombatWolfRider(pCaster,pOpponent)</PythonPostCombatWon>
             <DamageTypeCombats>
                 <DamageTypeCombat>
@@ -65187,6 +65195,7 @@
             <iLeaderExperience>0</iLeaderExperience>
             <iCombatDefense>2</iCombatDefense>
             <iTier>1</iTier>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
         <UnitInfo>
             <Class>UNITCLASS_SEA_SERPENT</Class>
@@ -75320,6 +75329,7 @@
             </FreePromotions>
             <LeaderPromotion>PROMOTION_GREAT_GENERAL</LeaderPromotion>
             <iLeaderExperience>0</iLeaderExperience>
+            <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
         </UnitInfo>
     </UnitInfos>
 </Civ4UnitInfos>

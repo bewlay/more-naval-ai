@@ -1013,8 +1013,8 @@ public:
     bool withdrawlToNearestValidPlot();
 
 	// MNAI - additional promotion tags
-	//bool isCanMoveImpassable() const;
 	void changeCanMoveImpassable(int iNewValue);
+	void changeCanMoveLimitedBorders(int iNewValue);
 	bool isCastingBlocked() const;
 	void changeCastingBlocked(int iNewValue);
 	bool isUpgradeOutsideBorders() const;
@@ -1153,6 +1153,7 @@ protected:
 	
 	// MNAI - Additional promotion tags
 	int m_iCanMoveImpassable;
+	int m_iCanMoveLimitedBorders;
 	int m_iCastingBlocked;
 	int m_iUpgradeOutsideBorders;
 	// End MNAI

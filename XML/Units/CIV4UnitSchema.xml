@@ -995,6 +995,7 @@
 		<element type="DamageTypeResist" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
 	<ElementType name="bAllowsMoveImpassable" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bAllowsMoveLimitedBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCastingBlocked" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bUpgradeOutsideBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PromotionInfo" content="eltOnly">
@@ -1137,6 +1138,7 @@
 		<element type="BonusAffinities" minOccurs="0"/>
 		<element type="DamageTypeResists" minOccurs="0"/>
 		<element type="bAllowsMoveImpassable" minOccurs="0"/>
+		<element type="bAllowsMoveLimitedBorders" minOccurs="0"/>
 		<element type="bCastingBlocked" minOccurs="0"/>
 		<element type="bUpgradeOutsideBorders" minOccurs="0"/>
 		<element type="iOrderPriority" minOccurs="0"/>
