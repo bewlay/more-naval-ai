@@ -13031,6 +13031,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	case UNITAI_ENGINEER:
 	case UNITAI_INQUISITOR:
 	case UNITAI_FEASTING:
+		iValue += 1500;
 		break;
 
 	case UNITAI_SPY:
