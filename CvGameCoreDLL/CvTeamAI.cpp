@@ -809,6 +809,7 @@ int CvTeamAI::AI_calculateBonusWarValue(TeamTypes eTeam) const
 		}
 	}
 
+	/*
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
@@ -863,6 +864,7 @@ int CvTeamAI::AI_calculateBonusWarValue(TeamTypes eTeam) const
 			}
 		}
 	}
+	*/
 
 	return iValue;
 }
