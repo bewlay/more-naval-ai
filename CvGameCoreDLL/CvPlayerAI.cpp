@@ -5100,7 +5100,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	// K-Mod. Value pact trading based on how many civs are willing, and on how much we think we need it!
 	if (kTech.isDefensivePactTrading() && !kTeam.isDefensivePactTrading())
 	{
-		int iDefPactTradeValue;
+		int iDefPactTradeValue = 0;
 		int iNewTrade = 0;
 		int iExistingTrade = 0;
 		for (TeamTypes i = (TeamTypes)0; i < MAX_CIV_TEAMS; i = (TeamTypes)(i+1))
