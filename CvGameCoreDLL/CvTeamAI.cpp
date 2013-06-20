@@ -3740,6 +3740,12 @@ int CvTeamAI::AI_openBordersTradeVal(TeamTypes eTeam) const
 			iValue *= 2;
 		}
 	}
+
+	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION1))
+	{
+		iValue *= 2;
+	}
+
 	return iValue;
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
