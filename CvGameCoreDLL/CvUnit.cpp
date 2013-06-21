@@ -18607,7 +18607,7 @@ int CvUnit::chooseSpell()
 				{
 					if (kSpellInfo.getChangePopulation() == 0) // Tholal AI - temporary gate to make sure Manes use the Add to City ability
 					{
-						iValue -= (getLevel() * 20) * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), UNITAI_ATTACK, area());
+						iValue -= (getLevel() * 20) * GET_PLAYER(getOwnerINLINE()).AI_unitValue((UnitTypes)getUnitType(), AI_getUnitAIType(), area());
 					}
 				}
 				if (kSpellInfo.isResistable())
