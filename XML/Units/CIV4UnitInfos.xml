@@ -56934,6 +56934,10 @@
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
@@ -57186,6 +57190,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+		<UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -57441,6 +57449,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+		<UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -57702,6 +57714,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+		<UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
@@ -57969,6 +57985,10 @@
                     <UnitAIType>UNITAI_MEDIC</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+	        <UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
@@ -58226,6 +58246,10 @@
             <UnitAIs>
                 <UnitAI>
                     <UnitAIType>UNITAI_MEDIC</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+		<UnitAI>
+                    <UnitAIType>UNITAI_INQUISITOR</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
                 <UnitAI>
