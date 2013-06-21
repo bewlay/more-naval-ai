@@ -10490,6 +10490,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	// Tholal AI - account for new FFH promotion tags
 	// ToDo - add logic for tags that arent selectable but could be in mods (flying, Dispellable, Immortal, immunetofear, bImmuneToMagic, 
 
+	iValue += (kPromotion.getResistMagic() * iLevel) / 5;
+
 	if (kPromotion.isIgnoreBuildingDefense())
 	{
 		if (eUnitAI == UNITAI_ATTACK_CITY)
@@ -10578,7 +10580,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 			if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_INQUISITOR) < iNeededInquisitors)
 			{
-				iValue += 40;
+				iValue += 140;
 			}
 		}
 	}
@@ -13172,6 +13174,10 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 	int iBestValue = 0;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestGuardPlot = NULL;
+	
+	// Tholal note: to be used in the future - try and keep defense units with city defense in cities, and hills defense in hills
+	bool bUnitHillsDefense = false;
+	bool bUnitCityDefense = false;
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -30047,6 +30053,7 @@ void CvUnitAI::AI_InquisitionMove()
 			}
 			else
 			{
+				logBBAI("     ...moving to Inquisition %d (plot %d, %d)", pBestCity->getName(), pBestCity->getX(), pBestCity->getY());
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 				return;
 			}
