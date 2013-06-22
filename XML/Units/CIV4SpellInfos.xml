@@ -361,34 +361,6 @@
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_CONTAGION</Sound>
             <Button>Art/Interface/Buttons/TerrainFeatures/Blizzard.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_GRASS</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_PLAINS</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_DESERT</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_MARSH</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
-			<FeatureInvalids>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_BLIZZARD</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_FOREST_ANCIENT</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_CALL_BLIZZARD_HIGH_PRIEST</Type>
@@ -406,34 +378,6 @@
             <Sound>AS3D_SPELL_CONTAGION</Sound>
             <bGraphicalOnly>0</bGraphicalOnly>
             <Button>Art/Interface/Buttons/TerrainFeatures/Blizzard.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_GRASS</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_PLAINS</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_DESERT</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_MARSH</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
-			<FeatureInvalids>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_BLIZZARD</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_FOREST_ANCIENT</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_CALL_FORM</Type>
@@ -2706,37 +2650,11 @@
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-			<iRange>1</iRange>
-			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
             <PyResult>spellSanctify(pCaster)</PyResult>
-            <PyAlternateReq>reqSanctify(pCaster)</PyAlternateReq>
+            <PyRequirement>reqSanctify(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Sanctify.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_BROKEN_LANDS</TerrainType>
-					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_FIELDS_OF_PERDITION</TerrainType>
-					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_BURNING_SANDS</TerrainType>
-					<TerrainConvert>TERRAIN_DESERT</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_SHALLOWS</TerrainType>
-					<TerrainConvert>TERRAIN_MARSH</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
-			<FeatureConversions>
-				<FeatureConversion>
-					<FeatureType>FEATURE_OBSIDIAN_PLAINS</FeatureType>
-					<FeatureConvert>FEATURE_FLOOD_PLAINS</FeatureConvert>
-				</FeatureConversion>
-			</FeatureConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SANCTUARY</Type>
@@ -2768,28 +2686,11 @@
             <bCausesWar>1</bCausesWar>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
+            <PyResult>spellScorch(pCaster)</PyResult>
+            <PyRequirement>reqScorch(pCaster)</PyRequirement>
             <Effect>EFFECT_SCORCH</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
             <Button>Art/Interface/Buttons/Spells/Scorch.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_PLAINS</TerrainType>
-					<TerrainConvert>TERRAIN_DESERT</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_FIELDS_OF_PERDITION</TerrainType>
-					<TerrainConvert>TERRAIN_BURNING_SANDS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_SNOW</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_MARSH</TerrainType>
-					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SEVER</Type>
@@ -3013,32 +2914,11 @@
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-			<bRemoveInvalidFeature>1</bRemoveInvalidFeature>
             <PyResult>spellSpring(pCaster)</PyResult>
-            <PyAlternateReq>reqSpring(pCaster)</PyAlternateReq>
+            <PyRequirement>reqSpring(pCaster)</PyRequirement>
             <Effect>EFFECT_SPRING</Effect>
             <Sound>AS3D_SPELL_SPRING</Sound>
             <Button>Art/Interface/Buttons/Spells/Spring.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_DESERT</TerrainType>
-					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_BURNING_SANDS</TerrainType>
-					<TerrainConvert>TERRAIN_FIELDS_OF_PERDITION</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
-			<FeatureInvalids>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_FLOOD_PLAINS</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-				<FeatureInvalid>
-					<FeatureType>FEATURE_OBSIDIAN_PLAINS</FeatureType>
-					<bInvalid>1</bInvalid>
-				</FeatureInvalid>
-			</FeatureInvalids>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_SPRINT</Type>
@@ -3383,6 +3263,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_ATHAME</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_ATHAME</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3417,6 +3298,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_BLACK_MIRROR</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_BLACK_MIRROR</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3470,6 +3352,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_CROWN_OF_AKHARIEN</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_CROWN_OF_AKHARIEN</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3504,6 +3387,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_CROWN_OF_COMMAND</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_CROWN_OF_COMMAND</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3557,6 +3441,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_DRAGONS_HORDE</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_DRAGONS_HORDE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3592,7 +3477,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_EMPTY_BIER</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_EMPTY_BIER</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3628,7 +3513,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_GELA</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_GELA</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3664,7 +3549,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_GOLDEN_HAMMER</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_GOLDEN_HAMMER</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3719,7 +3604,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_HEALING_SALVE</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_HEALING_SALVE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3771,6 +3656,8 @@
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_INFERNAL_GRIMOIRE</UnitInStackPrereq>
+            <bAllowAI>1</bAllowAI>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_INFERNAL_GRIMOIRE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3806,7 +3693,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_JADE_TORC</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_JADE_TORC</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3842,7 +3729,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_NETHER_BLADE</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_NETHER_BLADE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3878,7 +3765,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_ORTHUSS_AXE</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_ORTHUSS_AXE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3914,7 +3801,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_PIECES_OF_BARNAXUS</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_PIECES_OF_BARNAXUS</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3950,7 +3837,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_POTION_OF_INVISIBILITY</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_POTION_OF_INVISIBILITY</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -3986,7 +3873,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_POTION_OF_RESTORATION</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_POTION_OF_RESTORATION</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4022,7 +3909,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_ROD_OF_WINDS</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_ROD_OF_WINDS</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4058,7 +3945,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_SCORCHED_STAFF</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_SCORCHED_STAFF</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4094,7 +3981,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_STAFF_OF_SOULS</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_STAFF_OF_SOULS</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4149,7 +4036,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_SYLIVENS_PERFECT_LYRE</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_SYLIVENS_PERFECT_LYRE</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4185,7 +4072,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_TIMOR_MASK</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_TIMOR_MASK</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4221,7 +4108,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_GODSLAYER</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_GODSLAYER</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4257,7 +4144,7 @@
             <Help>TXT_KEY_SPELL_TAKE_EQUIPMENT_HELP</Help>
             <UnitInStackPrereq>EQUIPMENT_WAR</UnitInStackPrereq>
             <bAllowAI>1</bAllowAI>
-            <iAIWeight>50</iAIWeight>
+            <iAIWeight>500</iAIWeight>
             <bHasCasted>1</bHasCasted>
             <AddPromotionType1>PROMOTION_WAR</AddPromotionType1>
             <bBuffCasterOnly>1</bBuffCasterOnly>
@@ -4582,41 +4469,14 @@
             <PromotionPrereq1>PROMOTION_NATURE3</PromotionPrereq1>
             <bAllowAI>1</bAllowAI>
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
-			<bInBordersOnly>1</bInBordersOnly>
             <iAIWeight>10</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
+            <PyResult>spellVitalize(pCaster)</PyResult>
+            <PyRequirement>reqVitalize(pCaster)</PyRequirement>
             <Effect>EFFECT_VITALIZE</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Vitalize.dds</Button>
-			<TerrainConversions>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_SNOW</TerrainType>
-					<TerrainConvert>TERRAIN_TUNDRA</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_TUNDRA</TerrainType>
-					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_DESERT</TerrainType>
-					<TerrainConvert>TERRAIN_PLAINS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_PLAINS</TerrainType>
-					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
-				</TerrainConversion>
-				<TerrainConversion>
-					<TerrainType>TERRAIN_MARSH</TerrainType>
-					<TerrainConvert>TERRAIN_GRASS</TerrainConvert>
-				</TerrainConversion>
-			</TerrainConversions>
-			<FeatureConversions>
-				<FeatureConversion>
-					<FeatureType>FEATURE_SCRUB</FeatureType>
-					<FeatureConvert>NO_FEATURE</FeatureConvert>
-				</FeatureConversion>
-			</FeatureConversions>
         </SpellInfo>
         <SpellInfo>
             <Type>SPELL_WALL_OF_STONE</Type>

@@ -16206,6 +16206,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 	// MNAI begin
+	/*
 	if (pPlot->getFeatureType() != NO_FEATURE)
 	{
 		if (kSpell.isFeatureInvalid(pPlot->getFeatureType()))
@@ -16213,6 +16214,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return false;
 		}
 	}
+	*/
 	// MNAI end
 	if (!CvString(kSpell.getPyRequirement()).empty())
     {
@@ -16255,10 +16257,12 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         return true;
     }
 	// MNAI begin
+	/*
 	if (canTerraform(spell, pPlot))
 	{
 		return true;
 	}
+	*/
 	// MNAI end
     if (kSpell.getCreateFeatureType() != NO_FEATURE)
     {
@@ -16730,6 +16734,7 @@ bool CvUnit::canSpreadReligion(int spell) const
 }
 
 // MNAI begin
+/*
 bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const
 {
 	CvSpellInfo& kSpell = GC.getSpellInfo((SpellTypes) spell);
@@ -16762,6 +16767,7 @@ bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const
 	}
 	return false;
 }
+*/
 // MNAI end
 
 void CvUnit::cast(int spell)
@@ -16863,10 +16869,12 @@ void CvUnit::cast(int spell)
         }
     }
 	// MNAI begin
+	/*
 	if (canTerraform(spell, plot()))
 	{
 		castTerraform(spell);
 	}
+	*/
 	// MNAI end
     if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
     {
@@ -17569,6 +17577,7 @@ void CvUnit::castCreateUnit(int spell)
 }
 
 // MNAI begin
+/*
 void CvUnit::castTerraform(int spell)
 {
 	CvSpellInfo& kSpellInfo = GC.getSpellInfo((SpellTypes) spell);
@@ -17623,6 +17632,7 @@ void CvUnit::castTerraform(int spell)
 		}
 	}
 }
+*/
 // MNAI end
 
 bool CvUnit::isHasCasted() const

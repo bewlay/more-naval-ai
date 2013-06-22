@@ -26,11 +26,6 @@ def canCast(argsList):
 	spell = gc.getSpellInfo(eSpell)
 	return eval(spell.getPyRequirement())
 
-def canCastAlternate(argsList):
-	pCaster, eSpell = argsList
-	spell = gc.getSpellInfo(eSpell)
-	return eval(spell.getPyAlternateReq())
-
 def effect(argsList):
 	pCaster, eProm = argsList
 	prom = gc.getPromotionInfo(eProm)
@@ -574,6 +569,10 @@ def reqBlaze(caster):
 def reqCallBlizzard(caster):
 	iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
 	pPlot = caster.plot()
+	if pPlot.getFeatureType() == iBlizzard:
+		return False
+	if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT'):
+		return False
 	iX = caster.getX()
 	iY = caster.getY()
 	for iiX in range(iX-1, iX+2, 1):
@@ -585,6 +584,7 @@ def reqCallBlizzard(caster):
 
 def spellCallBlizzard(caster):
 	iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
+	iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 	iX = caster.getX()
 	iY = caster.getY()
 	pBlizPlot = -1
@@ -597,6 +597,12 @@ def spellCallBlizzard(caster):
 		pBlizPlot.setFeatureType(-1, -1)
 	pPlot = caster.plot()
 	pPlot.setFeatureType(iBlizzard, 0)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
+		pPlot.setTerrainType(iTundra,True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
+		pPlot.setTerrainType(iTundra,True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT'):
+		pPlot.setTerrainType(iTundra,True,True)
 
 def reqCallForm(caster):
 	if caster.getSummoner() == -1:
@@ -2752,20 +2758,41 @@ def spellSacrificePyre(caster):
 
 def reqSanctify(caster):
 	pPlot = caster.plot()
+	bValid = False
 	if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_CITY_RUINS'):
 		return True
 	if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_GRAVEYARD'):
 		return True
 	iX = pPlot.getX()
 	iY = pPlot.getY()
-	if not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_PLOT_COUNTER):
+	if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_PLOT_COUNTER):
+		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
+		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
+		iFieldsOfPerdition = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
+		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
+		for iiX in range(iX-1, iX+2, 1):
+			for iiY in range(iY-1, iY+2, 1):
+				pPlot = CyMap().plot(iiX,iiY)
+				if not pPlot.isNone():
+					iTerrain = pPlot.getTerrainType()
+					if (iTerrain == iBrokenLands or iTerrain == iBurningSands or iTerrain == iFieldsOfPerdition or iTerrain == iShallows):
+						bValid = True
+	else:
 		for iiX in range(iX-1, iX+2, 1):
 			for iiY in range(iY-1, iY+2, 1):
 				pPlot = CyMap().plot(iiX,iiY)
 				if not pPlot.isNone():
 					if pPlot.getPlotCounter() > 0:
-						return True	
-	return False
+						bValid = True
+	if bValid == False:
+		return False
+	pPlayer = gc.getPlayer(caster.getOwner())
+	if not pPlayer.isHuman():
+		if caster.getOwner() != pPlot.getOwner():
+			return False
+		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+			return False
+	return True
 
 def spellSanctify(caster):
 	pPlot = caster.plot()
@@ -2779,13 +2806,34 @@ def spellSanctify(caster):
 		newUnit = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_EINHERJAR'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 	iX = pPlot.getX()
 	iY = pPlot.getY()
-	if not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_PLOT_COUNTER):
+	if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_PLOT_COUNTER):
+		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
+		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
+		iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
+		iFieldsOfPerdition = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
+		iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+		iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
+		iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
+		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
 		for iiX in range(iX-1, iX+2, 1):
 			for iiY in range(iY-1, iY+2, 1):
 				pPlot = CyMap().plot(iiX,iiY)
 				if not pPlot.isNone():
-					if pPlot.getPlotCounter() > 0:
-						pPlot.changePlotCounter(pPlot.getPlotCounter() * -1)
+					iTerrain = pPlot.getTerrainType()
+					if iTerrain == iBrokenLands:
+						pPlot.setTerrainType(iGrass, True, True)
+					if iTerrain == iBurningSands:
+						pPlot.setTerrainType(iDesert, True, True)
+					if iTerrain == iFieldsOfPerdition:
+						pPlot.setTerrainType(iPlains, True, True)
+					if iTerrain == iShallows:
+						pPlot.setTerrainType(iMarsh, True, True)
+	else:
+		for iiX in range(iX-1, iX+2, 1):
+			for iiY in range(iY-1, iY+2, 1):
+				pPlot = CyMap().plot(iiX,iiY)
+				if pPlot.getPlotCounter() > 0:
+					pPlot.changePlotCounter(pPlot.getPlotCounter() * -1)
 
 def reqSanctuary(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
@@ -2820,6 +2868,47 @@ def reqSandLion(caster):
 	if (pPlot.getTerrainType() != gc.getInfoTypeForString('TERRAIN_DESERT') and pPlot.getTerrainType() != gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')):
 		return False
 	return True
+
+def reqScorch(caster):
+	pPlot = caster.plot()
+	pPlayer = gc.getPlayer(caster.getOwner())
+
+	if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')):
+		if pPlayer.isHuman() == False:
+			ePlotOwner = pPlot.getOwner()
+			if (ePlotOwner == caster.getOwner()) or (ePlotOwner == -1):
+				return False
+			return gc.getTeam(pPlayer.getTeam()).isAtWar(gc.getPlayer(ePlotOwner).getTeam())
+		return True
+		
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
+		if pPlayer.isHuman() == False:
+			if caster.getOwner() != pPlot.getOwner():
+				return False
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+				return False
+		return True	
+
+# Tholal AI - allow marshes to be scorched
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
+		if pPlayer.isHuman() == False:
+			if caster.getOwner() != pPlot.getOwner():
+				return False
+		return True
+	return False
+
+def spellScorch(caster):
+	pPlot = caster.plot()
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_DESERT'),True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'),True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_TUNDRA'),True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
+	if pPlot.isOwned():
+		cf.startWar(caster.getOwner(), pPlot.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
 
 def spellSing(caster):
 	pPlot = caster.plot()
@@ -2917,17 +3006,43 @@ def reqSpreadTheCouncilOfEsus(caster):
 
 def reqSpring(caster):
 	pPlot = caster.plot()
+	pPlayer = gc.getPlayer(caster.getOwner())
+	bFlames = False
 	iX = pPlot.getX()
 	iY = pPlot.getY()
 	for iiX in range(iX-1, iX+2, 1):
 		for iiY in range(iY-1, iY+2, 1):
 			pPlot2 = CyMap().plot(iiX,iiY)
 			if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES') or pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
-				return True
-	return False
+				bFlames = True
+	if bFlames == False:
+		if pPlot.getTerrainType() != gc.getInfoTypeForString('TERRAIN_DESERT'):
+			return False
+		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS'):
+			return False
+		if pPlayer.isHuman() == False:
+			if caster.getOwner() != pPlot.getOwner():
+				return False
+	if pPlayer.isHuman() == False:
+		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+			return False
+		iX = pPlot.getX()
+		iY = pPlot.getY()
+		for iiX in range(iX-1, iX+2, 1):
+			for iiY in range(iY-1, iY+2, 1):
+				pPlot2 = CyMap().plot(iiX,iiY)
+				if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES'):
+					return True
+				if pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
+					return True
+	return True
 
 def spellSpring(caster):
 	pPlot = caster.plot()
+	if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT') and pPlot.getFeatureType() != gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
+		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'):
+			pPlot.setFeatureType(-1, -1)
 	iX = pPlot.getX()
 	iY = pPlot.getY()
 	for iiX in range(iX-1, iX+2, 1):
@@ -3375,6 +3490,37 @@ def spellVeilOfNight(caster):
 	for pUnit in py.getUnitList():
 		if pUnit.baseCombatStr() > 0:
 			pUnit.setHasPromotion(iHiddenNationality, True)
+
+def reqVitalize(caster):
+	pPlot = caster.plot()
+	if pPlot.getOwner() != caster.getOwner():
+		return False
+	if pPlot.isWater():
+		return False
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
+		return False
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'):
+		return False
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS'):
+		return False
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'):
+		return False
+	return True
+
+def spellVitalize(caster):
+	pPlot = caster.plot()
+	if(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW')):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_TUNDRA'),True,True)
+	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA')):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
+	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT')):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
+		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'):
+			pPlot.setFeatureType(-1, -1)
+	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_PLAINS')):
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_GRASS'),True,True)
+	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):	
+		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_GRASS'),True,True)	
 
 def reqWane(caster):
 	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ANIMAL'):

@@ -3236,11 +3236,13 @@ m_iImmobileTurns(0),
 m_iMiscastChance(0),
 m_iEffect(NO_EFFECT),
 m_szSound(NULL),
-m_iCommandType(NO_COMMAND),
+m_iCommandType(NO_COMMAND)
 // MNAI begin
+/*
 m_piTerrainConvert(NULL),
 m_piFeatureConvert(NULL),
 m_pbFeatureInvalid(NULL)
+*/
 // MNAI end
 {
 }
@@ -3255,9 +3257,9 @@ m_pbFeatureInvalid(NULL)
 CvSpellInfo::~CvSpellInfo()
 {
 	// MNAI begin
-	SAFE_DELETE_ARRAY(m_piTerrainConvert);
-	SAFE_DELETE_ARRAY(m_piFeatureConvert);
-	SAFE_DELETE_ARRAY(m_pbFeatureInvalid);
+	//SAFE_DELETE_ARRAY(m_piTerrainConvert);
+	//SAFE_DELETE_ARRAY(m_piFeatureConvert);
+	//SAFE_DELETE_ARRAY(m_pbFeatureInvalid);
 	// MNAI end
 }
 
@@ -3674,6 +3676,7 @@ void CvSpellInfo::setCommandType(int iNewType)
 }
 
 // MNAI begin
+/*
 int CvSpellInfo::getTerrainConvert(int i) const		
 {
 	FAssertMsg(i < GC.getNumTerrainInfos(), "Index out of bounds");
@@ -3694,6 +3697,7 @@ bool CvSpellInfo::isFeatureInvalid(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_pbFeatureInvalid ? m_pbFeatureInvalid[i] : false;
 }
+*/
 // MNAI end
 
 void CvSpellInfo::read(FDataStreamBase* stream)
@@ -3792,6 +3796,7 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->ReadString(m_szSound);
 	stream->Read(&m_iCommandType);
 	// MNAI begin
+	/*
 	SAFE_DELETE_ARRAY(m_piTerrainConvert);
 	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
 	stream->Read(GC.getNumTerrainInfos(), m_piTerrainConvert);
@@ -3803,6 +3808,7 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_pbFeatureInvalid);
 	m_pbFeatureInvalid = new bool[GC.getNumFeatureInfos()];
 	stream->Read(GC.getNumFeatureInfos(), m_pbFeatureInvalid);
+	*/
 	// MNAI end
 }
 
@@ -3903,9 +3909,11 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szSound);
 	stream->Write(m_iCommandType);
 	// MNAI begin
+	/*
 	stream->Write(GC.getNumTerrainInfos(), m_piTerrainConvert);
 	stream->Write(GC.getNumFeatureInfos(), m_piFeatureConvert);
 	stream->Write(GC.getNumFeatureInfos(), m_pbFeatureInvalid);
+	*/
 	// MNAI end
 }
 
@@ -4044,6 +4052,7 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(m_szSound, "Sound");
 
 	// MNAI begin
+	/*
 	CvString* pszTemp = NULL;
 	pXML->SetVariableListTagPair(&pszTemp, "TerrainConversions", sizeof(GC.getTerrainInfo((TerrainTypes)0)), GC.getNumTerrainInfos());
 	m_piTerrainConvert = new int[GC.getNumTerrainInfos()];
@@ -4062,6 +4071,7 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	SAFE_DELETE_ARRAY(pszTemp);
 
 	pXML->SetVariableListTagPair(&m_pbFeatureInvalid, "FeatureInvalids", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos());
+	*/
 	// MNAI end
 
 	return true;

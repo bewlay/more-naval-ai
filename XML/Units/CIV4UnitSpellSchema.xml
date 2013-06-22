@@ -74,7 +74,6 @@
 	<ElementType name="bPush" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bRemoveHasCasted" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bSacrificeCaster" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bRemoveInvalidFeature" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iChangePopulation" content="textOnly" dt:type="int"/>
 	<ElementType name="iCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iDelay" content="textOnly" dt:type="int"/>
@@ -83,7 +82,6 @@
 	<ElementType name="PyMiscast" content="textOnly"/>
 	<ElementType name="PyResult" content="textOnly"/>
 	<ElementType name="PyRequirement" content="textOnly"/>
-	<ElementType name="PyAlternateReq" content="textOnly"/>
 	<ElementType name="Effect" content="textOnly"/>
 	<ElementType name="Sound" content="textOnly"/>
 	<ElementType name="HotKey" content="textOnly"/>
@@ -99,32 +97,6 @@
 	<ElementType name="iHotKeyPriorityAlt" content="textOnly" dt:type="int"/>
 	<ElementType name="iOrderPriority" content="textOnly" dt:type="int"/>
 	<ElementType name="Button" content="textOnly"/>
-	<ElementType name="TerrainType" content="textOnly"/>
-	<ElementType name="TerrainConvert" content="textOnly"/>
-	<ElementType name="TerrainConversion" content="eltOnly">
-		<element type="TerrainType"/>
-		<element type="TerrainConvert"/>
-	</ElementType>
-	<ElementType name="TerrainConversions" content="eltOnly">
-		<element type="TerrainConversion" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
-	<ElementType name="FeatureType" content="textOnly"/>
-	<ElementType name="FeatureConvert" content="textOnly"/>
-	<ElementType name="FeatureConversion" content="eltOnly">
-		<element type="FeatureType"/>
-		<element type="FeatureConvert"/>
-	</ElementType>
-	<ElementType name="FeatureConversions" content="eltOnly">
-		<element type="FeatureConversion" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
-	<ElementType name="bInvalid" content="textOnly" dt:type="boolean"/>
-	<ElementType name="FeatureInvalid" content="eltOnly">
-		<element type="FeatureType"/>
-		<element type="bInvalid"/>
-	</ElementType>
-	<ElementType name="FeatureInvalids" content="eltOnly">
-		<element type="FeatureInvalid" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
 	<ElementType name="SpellInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -196,7 +168,6 @@
 		<element type="bPush" minOccurs="0"/>
 		<element type="bRemoveHasCasted" minOccurs="0"/>
 		<element type="bSacrificeCaster" minOccurs="0"/>
-		<element type="bRemoveInvalidFeature" minOccurs="0"/>
 		<element type="iChangePopulation" minOccurs="0"/>
 		<element type="iCost" minOccurs="0"/>
 		<element type="iDelay" minOccurs="0"/>
@@ -205,7 +176,6 @@
 		<element type="PyMiscast" minOccurs="0"/>
 		<element type="PyResult" minOccurs="0"/>
 		<element type="PyRequirement" minOccurs="0"/>
-		<element type="PyAlternateReq" minOccurs="0"/>
 		<element type="Effect" minOccurs="0"/>
 		<element type="Sound" minOccurs="0"/>
 		<element type="HotKey" minOccurs="0"/>
@@ -216,9 +186,6 @@
 		<element type="iHotKeyPriority" minOccurs="0"/>
 		<element type="Button" minOccurs="0" maxOccurs="*"/>
 		<element type="iOrderPriority" minOccurs="0"/>
-		<element type="TerrainConversions" minOccurs="0"/>
-		<element type="FeatureConversions" minOccurs="0"/>
-		<element type="FeatureInvalids" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="SpellInfos" content="eltOnly">
 		<element type="SpellInfo" maxOccurs="*"/>

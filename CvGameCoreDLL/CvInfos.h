@@ -891,9 +891,11 @@ public:
 	int getCommandType() const;
 	void setCommandType(int iNewType);
 	// MNAI begin
+	/*
 	int getTerrainConvert(int i) const;
 	int getFeatureConvert(int i) const;
 	bool isFeatureInvalid(int i) const;
+	*/
 	// MNAI end
 	void read(FDataStreamBase* stream);
 	void write(FDataStreamBase* stream);
@@ -992,9 +994,11 @@ protected:
 	CvString m_szPyAlternateReq;	// MNAI
 	CvString m_szSound;
 	// MNAI begin
+	/*
 	int* m_piTerrainConvert;
 	int* m_piFeatureConvert;
 	bool* m_pbFeatureInvalid;
+	*/
 	// MNAI end
 };
 //FfH: End Add
