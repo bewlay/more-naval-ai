@@ -4309,6 +4309,11 @@ bool CvUnit::canLoadUnit(const CvUnit* pUnit, const CvPlot* pPlot) const
 		return false;
 	}
 
+	if (isHeld())
+	{
+		return false;
+	}
+
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       06/23/10                     Mongoose & jdog5000      */
 /*                                                                                              */
