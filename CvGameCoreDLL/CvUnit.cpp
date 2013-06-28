@@ -8806,10 +8806,10 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 	CvCity* pBestCity = NULL;
 
 	// if search is true, check every city for our team
-	if (bSearch)
+	if (bSearch || isUpgradeOutsideBorders())
 	{
 		// air units can travel any distance
-		bool bIgnoreDistance = (getDomainType() == DOMAIN_AIR);
+		bool bIgnoreDistance = ((getDomainType() == DOMAIN_AIR) || isUpgradeOutsideBorders());
 
 		TeamTypes eTeam = getTeam();
 		int iArea = getArea();
