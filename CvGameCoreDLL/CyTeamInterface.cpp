@@ -154,6 +154,7 @@ void CyTeamPythonInterface()
 		.def("getID", &CyTeam::getID, "int () - team ID")
 
 		.def("isStolenVisibility", &CyTeam::isStolenVisibility, "int (int /*TeamTypes*/ eIndex)")
+		.def("changeStolenVisibilityTimer", &CyTeam::changeStolenVisibilityTimer, "int (int /*TeamTypes*/ eIndex)")
 		.def("getWarWeariness", &CyTeam::getWarWeariness, "int (int /*TeamTypes*/ eIndex)")
 		.def("setWarWeariness", &CyTeam::setWarWeariness, "void (int /*TeamTypes*/ eIndex, iNewValue)")
 		.def("changeWarWeariness", &CyTeam::changeWarWeariness, "void (int /*TeamTypes*/ eIndex, iChange)")
