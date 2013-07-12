@@ -480,13 +480,14 @@ def isGivingFavoriteCivicDenial(playerOrID, askingPlayerOrID):
 	askedPlayer, askedTeam = getPlayerAndTeam(playerOrID)
 	askingPlayer, askingTeam = getPlayerAndTeam(askingPlayerOrID)
 	if askingTeam.isHasMet(askedTeam.getID()):
-		for iCategory in range(gc.getNumCivicOptionInfos()):
-			iCivic = askingPlayer.getCivics(iCategory)
-			tradeData.iData = iCivic
-			if askedPlayer.canTradeItem(askingPlayer.getID(), tradeData, False):
-				denial = askedPlayer.getTradeDenial(askingPlayer.getID(), tradeData)
-				if denial == DenialTypes.DENIAL_FAVORITE_CIVIC:
-					return True
+		if askedTeam != askingTeam:
+			for iCategory in range(gc.getNumCivicOptionInfos()):
+				iCivic = askingPlayer.getCivics(iCategory)
+				tradeData.iData = iCivic
+				if askedPlayer.canTradeItem(askingPlayer.getID(), tradeData, False):
+					denial = askedPlayer.getTradeDenial(askingPlayer.getID(), tradeData)
+					if denial == DenialTypes.DENIAL_FAVORITE_CIVIC:
+						return True
 	return False
 
 
