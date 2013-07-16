@@ -34,7 +34,6 @@ import SevoScreenEnums
 # BUG - Sevopedia - end
 
 import CvWorldBuilderScreen
-import CvWorldBuilderDiplomacyScreen
 
 import CvDebugTools
 import CvDebugInfoScreen
@@ -648,17 +647,19 @@ def WorldBuilderHandleUnitEditNameCB( argsList ):
 def WorldBuilderHandleCityEditPopulationCB( argsList ):
 	worldBuilderScreen.handleCityEditPopulationCB(argsList)
 
+##MagisterModmod
+def WorldBuilderHandleCityEditRevIndexCB( argsList ):
+	worldBuilderScreen.handleCityEditRevIndexCB(argsList)
+
+
+def WorldBuilderHandleCivTypeEditPullDownCB( argsList ):
+	worldBuilderScreen.handleCivTypeEditPullDownCB(argsList)
+
+
+##MagisterModmod
+
 def WorldBuilderHandleCityEditCultureCB( argsList ):
 	worldBuilderScreen.handleCityEditCultureCB(argsList)
-
-def WorldBuilderHandleCityEditGoldCB( argsList ):
-	worldBuilderScreen.handleCityEditGoldCB(argsList)
-
-def WorldBuilderHandleCityEditAddScriptCB( argsList ):
-	worldBuilderScreen.getCityScript()
-
-def WorldBuilderHandleUnitEditAddScriptCB( argsList ):
-	worldBuilderScreen.getUnitScript()
 
 def WorldBuilderHandleCityEditNameCB( argsList ):
 	worldBuilderScreen.handleCityEditNameCB(argsList)
@@ -680,9 +681,6 @@ def WorldBuilderHandlePlayerUnitPullDownCB( argsList ):
 
 def WorldBuilderHandleSelectTeamPullDownCB( argsList ):
 	worldBuilderScreen.handleSelectTeamPullDownCB(argsList)
-
-def WorldBuilderHandlePromotionCB( argsList ):
-	worldBuilderScreen.handlePromotionCB(argsList)
 
 def WorldBuilderHandleBuildingCB( argsList ):
 	worldBuilderScreen.handleBuildingCB(argsList)
@@ -717,6 +715,26 @@ def WorldBuilderHandleEnterNewScreenCB( argsList ):
 
 def WorldBuilderHandleUnitEditStrengthCB( argsList ):
 	worldBuilderScreen.handleUnitEditStrengthCB(argsList)
+##MagisterModmod
+def WorldBuilderHandleUnitReligionEditPullDownCB( argsList ):
+	worldBuilderScreen.handleUnitReligionEditPullDownCB(argsList)
+
+def WorldBuilderHandleUnitEditStrengthDefenseCB( argsList ):
+	worldBuilderScreen.handleUnitEditStrengthDefenseCB(argsList)
+
+def WorldBuilderHandleUnitEditDurationCB( argsList ):
+	worldBuilderScreen.handleUnitEditDurationCB(argsList)
+
+def WorldBuilderHandleUnitEditSummonerCB( argsList ):
+	worldBuilderScreen.handleUnitEditSummonerCB(argsList)
+
+def WorldBuilderHandleUnitEditHasCastedCB( argsList ):
+	worldBuilderScreen.handleUnitEditHasCastedCB(argsList)
+
+def WorldBuilderHandleUnitEditScenarioCounterCB( argsList ):
+	worldBuilderScreen.handleUnitEditScenarioCounterCB(argsList)
+
+##MagisterModmod
 
 def WorldBuilderHandleUnitEditDamageCB( argsList ):
 	worldBuilderScreen.handleUnitEditDamageCB(argsList)
@@ -729,6 +747,7 @@ def WorldBuilderHandleUnitEditMovesCB( argsList ):
 
 def WorldBuilderHandleUnitEditImmobileTimerCB( argsList ):
 	worldBuilderScreen.handleUnitEditImmobileTimerCB(argsList)
+
 
 def WorldBuilderHandleUnitEditPromotionReadyCB( argsList ):
 	worldBuilderScreen.handleUnitEditPromotionReadyCB(argsList)
@@ -776,6 +795,19 @@ def WorldBuilderHandleGlobalDefineCB( argsList ):
 
 def WorldBuilderHandleGameEditStartYearCB( argsList ):
 	worldBuilderScreen.handleGameEditStartYearCB(argsList)
+
+def WorldBuilderHandleVisibleOptionsCB( argsList ):
+	worldBuilderScreen.handleVisibleOptionsCB(argsList)
+
+
+##MagisterModmod
+def WorldBuilderHandleGameEditScenarioCounterCB( argsList ):
+	worldBuilderScreen.handleGameEditScenarioCounterCB(argsList)
+
+
+def WorldBuilderHandleGlobalCounterEditCB( argsList ):
+	worldBuilderScreen.handleGlobalCounterEditCB(argsList)
+##MagisterModmod
 
 ## City Data ##
 
@@ -888,6 +920,15 @@ def WorldBuilderHandlePlayerEditCivicCB( argsList ):
 
 def WorldBuilderHandleStateReligionEditPullDownCB( argsList ):
 	worldBuilderScreen.handleStateReligionEditPullDownCB(argsList)
+
+##MagisterModmod
+def WorldBuilderHandleAlignmentEditPullDownCB( argsList ):
+	worldBuilderScreen.handleAlignmentEditPullDownCB(argsList)
+
+def WorldBuilderHandleEditPlayerTraitCB( argsList ):
+	worldBuilderScreen.handleEditPlayerTraitCB(argsList)
+
+##MagisterModmod
 
 def WorldBuilderHandlePlayerEditStateReligionUnitProductionCB( argsList ):
 	worldBuilderScreen.handlePlayerEditStateReligionUnitProductionCB(argsList)
@@ -1058,8 +1099,27 @@ def WorldBuilderHandlePlayerEditEspionageWeightCB( argsList ):
 def WorldBuilderHandleTowardsPlayerCB( argsList ):
 	worldBuilderScreen.handleTowardsPlayerCB(argsList)
 
-def WorldBuilderHandleTowardsOthersCB( argsList ):
-	worldBuilderScreen.handleTowardsOthersCB(argsList)
+def WorldBuilderHandleEspionagePullDownCB( argsList ):
+	worldBuilderScreen.handleEspionagePullDownCB(argsList)
+
+def WorldBuilderHandleEspionageWeightPullDownCB( argsList ):
+	worldBuilderScreen.handleEspionageWeightPullDownCB(argsList)
+
+def WorldBuilderHandleCounterEspionageModPullDownCB( argsList ):
+	worldBuilderScreen.handleCounterEspionageModPullDownCB(argsList)
+
+def WorldBuilderHandleCounterEspionagePullDownCB( argsList ):
+	worldBuilderScreen.handleCounterEspionagePullDownCB(argsList)
+
+def WorldBuilderHandleWarWearinessPullDownCB( argsList ):
+	worldBuilderScreen.handleWarWearinessPullDownCB(argsList)
+
+def WorldBuilderHandleDiploNameCB( argsList ):
+	worldBuilderScreen.handleDiploNameCB(argsList)
+
+def WorldBuilderHandleMeetAllCB( argsList ):
+	worldBuilderScreen.handleMeetAllCB(argsList)
+
 ## Plot ##
 
 def WorldBuilderHandlePlotEditCultureCB( argsList ):
@@ -1076,6 +1136,43 @@ def WorldBuilderHandlePlotEditTerrainCB( argsList ):
 
 def WorldBuilderHandlePlotAddCityCB( argsList ):
 	worldBuilderScreen.handlePlotAddCityCB(argsList)
+
+##MagisterModmod
+
+def WorldBuilderHandlePlotMoveDisabledAICB( argsList ):
+	worldBuilderScreen.handlePlotMoveDisabledAICB(argsList)
+
+def WorldBuilderHandlePlotMoveDisabledHumanCB( argsList ):
+	worldBuilderScreen.handlePlotMoveDisabledHumanCB(argsList)
+
+def WorldBuilderHandlePlotBuildDisabledCB( argsList ):
+	worldBuilderScreen.handlePlotBuildDisabledCB(argsList)
+
+def WorldBuilderHandlePlotFoundDisabledCB( argsList ):
+	worldBuilderScreen.handlePlotFoundDisabledCB(argsList)
+
+def WorldBuilderHandlePlotPythonActiveCB( argsList ):
+	worldBuilderScreen.handlePlotPythonActiveCB(argsList)
+
+def WorldBuilderHandlePlotEditMinLevelCB( argsList ):
+	worldBuilderScreen.handlePlotMinLevelCB(argsList)
+
+
+def WorldBuilderHandlePlotEditPortalExitXCB( argsList ):
+	worldBuilderScreen.handlePlotPortalExitXCB(argsList)
+
+
+def WorldBuilderHandlePlotEditPortalExitYCB( argsList ):
+	worldBuilderScreen.handlePlotPortalExitYCB(argsList)
+
+
+
+def WorldBuilderHandlePlotCounterEditCB( argsList ):
+	worldBuilderScreen.handlePlotCounterEditCB(argsList)
+
+
+
+##MagisterModmod
 
 def WorldBuilderHandlePlotEditFeatureCB( argsList ):
 	worldBuilderScreen.handlePlotEditFeatureCB(argsList)
@@ -1255,53 +1352,6 @@ def WorldBuilderHasPromotion(argsList):
 def WorldBuilderHasBuilding(argsList):
 	iBuilding = argsList[0]
 	return worldBuilderScreen.getNumBuilding(iBuilding)
-
-def WorldBuilderHasReligion(argsList):
-	iReligion = argsList[0]
-	return worldBuilderScreen.hasReligion(iReligion)
-
-def WorldBuilderHasHolyCity(argsList):
-	iReligion = argsList[0]
-	return worldBuilderScreen.hasHolyCity(iReligion)
-
-def WorldBuilderHasCorporation(argsList):
-	iCorporation = argsList[0]
-	return worldBuilderScreen.hasCorporation(iCorporation)
-
-def WorldBuilderHasHeadquarters(argsList):
-	iCorporation = argsList[0]
-	return worldBuilderScreen.hasHeadquarters(iCorporation)
-
-def WorldBuilderHandleDiploPlayerDropdownCB( argsList ):
-	worldBuilderScreen.handleDiploPlayerDropdownCB(argsList)
-	
-##### WORLDBUILDER DIPLOMACY SCREEN #####
-
-worldBuilderDiplomacyScreen = CvWorldBuilderDiplomacyScreen.CvWorldBuilderDiplomacyScreen()
-def showWorldBuilderDiplomacyScreen():
-	worldBuilderDiplomacyScreen.interfaceScreen()
-
-def hideWorldBuilderDiplomacyScreen():
-	worldBuilderDiplomacyScreen.killScreen()
-
-def handleWorldBuilderDiplomacyPlayerPullDownCB(argsList):
-	worldBuilderDiplomacyScreen.handlePlayerPullDownCB(int(argsList[0]))
-
-def handleWorldBuilderDiplomacyVassalPullDownCB(argsList):
-	worldBuilderDiplomacyScreen.handleVassalPullDownCB(int(argsList[0]))
-
-def handleWorldBuilderDiplomacyAtWarPullDownCB(argsList):
-	worldBuilderDiplomacyScreen.handleAtWarPullDownCB(argsList)
-
-def handleWorldBuilderDiplomacyAIWeightPullDownCB(argsList):
-	worldBuilderDiplomacyScreen.handleAIWeightPullDownCB(argsList)
-
-def handleWorldBuilderDiplomacyAIWeightResetAllCB(argsList):
-	worldBuilderDiplomacyScreen.handleAIWeightResetAll()
-
-def handleWorldBuilderDiplomacyExitCB(argsList):
-	worldBuilderDiplomacyScreen.killScreen()
-
 #################################################
 ## Utility Functions (can be overridden by CvScreenUtilsInterface
 #################################################
@@ -1393,9 +1443,6 @@ def forceScreenUpdate (argsList):
 	# world builder Screen
 	elif ( argsList[0] == WORLDBUILDER_SCREEN ):
 		worldBuilderScreen.updateScreen()
-	# world builder diplomacy Screen
-	elif ( argsList[0] == WORLDBUILDER_DIPLOMACY_SCREEN ):
-		worldBuilderDiplomacyScreen.updateScreen()
 
 # Forced redraw
 def forceScreenRedraw (argsList):
@@ -1408,8 +1455,6 @@ def forceScreenRedraw (argsList):
 		mainInterface.redraw()
 	elif ( argsList[0] == WORLDBUILDER_SCREEN ):
 		worldBuilderScreen.redraw()
-	elif ( argsList[0] == WORLDBUILDER_DIPLOMACY_SCREEN ):
-		worldBuilderDiplomacyScreen.redraw()
 	elif ( argsList[0] == TECH_CHOOSER ):
 		techChooser.updateTechRecords(true)
 
@@ -1631,7 +1676,6 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 #					PEDIA_CORPORATION : pediaMainScreen,
 					PEDIA_HISTORY : pediaMainScreen,
 					WORLDBUILDER_SCREEN : worldBuilderScreen,
-					WORLDBUILDER_DIPLOMACY_SCREEN : worldBuilderDiplomacyScreen,
 					
 					DEBUG_INFO_SCREEN : debugInfoScreen,
 				
@@ -1645,6 +1689,7 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 ## Handle Navigation Map
 #######################################################################################
 HandleNavigationMap = {
+					MAIN_INTERFACE : mainInterface,
 					PEDIA_MAIN : pediaMainScreen,
 					PEDIA_TECH : pediaMainScreen,
 					PEDIA_UNIT : pediaMainScreen,
