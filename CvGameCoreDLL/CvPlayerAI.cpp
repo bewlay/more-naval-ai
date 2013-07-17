@@ -7645,7 +7645,12 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						if (ePrereqAlignment != getAlignment())
 						{
 							bHeathenUnit = true;
-							iUnitValue /= abs(ePrereqAlignment - getAlignment()) * 4;
+							//iUnitValue /= abs(ePrereqAlignment - getAlignment()) * 4;
+							iUnitValue = 0;
+							if ((gPlayerLogLevel > 3) && bDebugLog)
+							{
+								logBBAI("       WRONG ALIGNMENT\n");
+							}
 						}
 					}
 
