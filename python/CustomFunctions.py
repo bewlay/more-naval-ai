@@ -80,13 +80,12 @@ class CustomFunctions:
 	def doCrusade(self, iPlayer):
 		iCrusadeChance = gc.getDefineINT('CRUSADE_SPAWN_CHANCE')
 		iDemagog = gc.getInfoTypeForString('UNIT_DEMAGOG')
-		iEnclave = gc.getInfoTypeForString('IMPROVEMENT_ENCLAVE')
 		iTown = gc.getInfoTypeForString('IMPROVEMENT_TOWN')
 		iVillage = gc.getInfoTypeForString('IMPROVEMENT_VILLAGE')
 		pPlayer = gc.getPlayer(iPlayer)
 		for i in range (CyMap().numPlots()):
 			pPlot = CyMap().plotByIndex(i)
-			if pPlot.getImprovementType() == iTown or pPlot.getImprovementType() == iEnclave :
+			if pPlot.getImprovementType() == iTown:
 				if pPlot.getOwner() == iPlayer :
 ##--------		Unofficial Bug Fix: Added by Denev		--------##
 # To prevent spawning demagog in the same tile with his enemy unit.
