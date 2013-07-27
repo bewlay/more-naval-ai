@@ -224,7 +224,7 @@ HELP_TEXT_MINIMUM_WIDTH = 300
 g_pSelectedUnit = 0
 
 #FfH: Added by Kael 07/17/2008
-#iHelpX = 120
+iHelpX = 120
 #FfH: End Add
 
 # BUG - start
@@ -480,7 +480,10 @@ class CvMainInterface:
 		yResolution = self.yResolution
 		
 		# Help Text Area
-		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
+#FfH: Modified by Kael 07/17/2008
+#		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+		screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
 
 		# Center Left
 		screen.addPanel( "InterfaceCenterLeftBackgroundWidget", u"", u"", True, False, 0, 0, 250, yResolution-149, PanelStyles.PANEL_STYLE_STANDARD )
@@ -1997,10 +2000,13 @@ class CvMainInterface:
 				screen.moveToFront("SelectedCityText")
 
 			elif ( CyInterface().getHeadSelectedUnit() ):
-#				screen.addUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit().getUnitType(), 165, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
-				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), 25, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
+
+#FfH: Modified by Kael 07/17/2008
 #				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), 175, yResolution - 138, 123, 132, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
-				screen.moveToFront("SelectedUnitText")
+				screen.addSpecificUnitGraphicGFC( "InterfaceUnitModel", CyInterface().getHeadSelectedUnit(), -20, yResolution - 350, 160, 198, WidgetTypes.WIDGET_UNIT_MODEL, CyInterface().getHeadSelectedUnit().getUnitType(), -1,  -20, 30, 1, False )
+#FfH: End Modify
+
+#				screen.moveToFront("SelectedUnitText")
 			else:
 				screen.hide( "InterfaceUnitModel" )
 		else:
@@ -4477,9 +4483,18 @@ class CvMainInterface:
 		
 			# Help Text Area
 			if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
+
+#FfH: Modified by Kael 07/17/2008
+#				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
+
 			else:
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
+
+#FfH: Modified by Kael 07/17/2008
+#				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
 
 			screen.hide( "InterfaceTopLeftBackgroundWidget" )
 			screen.hide( "InterfaceTopRightBackgroundWidget" )
@@ -5587,13 +5602,26 @@ class CvMainInterface:
 		
 		# Positioning things based on the visibility of the globe
 		if kEngine.isGlobeviewUp():
-			screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
+
+#FfH: Modified by Kael 07/17/2008
+#			screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+			screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
+
 		else:
 			if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW ):
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
-			else:
-				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, HELP_TEXT_MINIMUM_WIDTH )
 
+#FfH: Modified by Kael 07/17/2008
+#				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 172, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
+
+			else:
+
+#FfH: Modified by Kael 07/17/2008
+#				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, 7, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+				screen.setHelpTextArea( 350, FontTypes.SMALL_FONT, iHelpX, yResolution - 50, -0.1, False, "", True, False, CvUtil.FONT_LEFT_JUSTIFY, 150 )
+#FfH: End Modify
 		
 		# Set base Y position for the LayerOptions, if we find them	
 		if CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_HIDE:
