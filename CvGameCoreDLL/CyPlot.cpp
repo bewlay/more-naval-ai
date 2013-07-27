@@ -1130,6 +1130,11 @@ bool CyPlot::isAdjacentToWater() const
 	return m_pPlot ? m_pPlot->isAdjacentToWater() : false;
 }
 
+int CyPlot::getMinLevel() const
+{
+	return m_pPlot ? m_pPlot->getMinLevel() : -1;
+}
+
 void CyPlot::setMinLevel(int iNewValue)
 {
 	if (m_pPlot)

@@ -277,6 +277,7 @@ public:
     bool isPythonActive() const;
 	void setPythonActive(bool bNewValue);
 	bool isAdjacentToWater() const;
+	int getMinLevel() const;
 	void setMinLevel(int iNewValue);
     int getNumAnimalUnits() const;
 	void setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer);
