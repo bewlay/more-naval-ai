@@ -14341,7 +14341,7 @@
             <iLeaderExperience>0</iLeaderExperience>
             <iCombatDefense>2</iCombatDefense>
             <UnitConvertFromCombat>UNIT_GIANT_SPIDER</UnitConvertFromCombat>
-            <iUnitConvertFromCombatChance>2</iUnitConvertFromCombatChance>
+            <iUnitConvertFromCombatChance>20</iUnitConvertFromCombatChance>
             <DamageTypeCombats>
                 <DamageTypeCombat>
                     <DamageType>DAMAGE_POISON</DamageType>
