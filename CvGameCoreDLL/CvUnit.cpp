@@ -2214,7 +2214,7 @@ void CvUnit::updateCombat(bool bQuick)
 				GET_TEAM(pDefender->getTeam()).AI_changeWarSuccess(getTeam(), GC.getDefineINT("WAR_SUCCESS_DEFENDING"));
 			}
 
-			if (getCaptureUnitType(GET_PLAYER(pDefender->getOwner()).getCivilizationType()) == NO_UNIT)
+			if (getCaptureUnitType(GET_PLAYER(pDefender->getOwner()).getCivilizationType()) == NO_UNIT || isHiddenNationality())
 			{
 				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_DIED_ATTACKING", getNameKey(), pDefender->getNameKey());
 				gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
@@ -2262,7 +2262,7 @@ void CvUnit::updateCombat(bool bQuick)
 				GET_TEAM(getTeam()).AI_changeWarSuccess(pDefender->getTeam(), GC.getDefineINT("WAR_SUCCESS_ATTACKING"));
 			}
 
-			if (pDefender->getCaptureUnitType(GET_PLAYER(getOwnerINLINE()).getCivilizationType()) == NO_UNIT)
+			if (pDefender->getCaptureUnitType(GET_PLAYER(getOwnerINLINE()).getCivilizationType()) == NO_UNIT || isHiddenNationality())
 			{
 				szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_UNIT_DESTROYED_ENEMY", getNameKey(), pDefender->getNameKey());
 				gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitVictoryScript(), MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
