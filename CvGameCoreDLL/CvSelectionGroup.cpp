@@ -1254,7 +1254,7 @@ void CvSelectionGroup::startMission()
 				{
 					pLoopUnit = ::getUnit(pUnitNode->m_data);
 					pUnitNode = nextUnitNode(pUnitNode);
-					if (pLoopUnit->plot()->getImprovementType() == NO_IMPROVEMENT && pLoopUnit->isEnemyRoute())
+					if (pLoopUnit->plot()->getImprovementType() == NO_IMPROVEMENT && pLoopUnit->isEnemyRoute() && !isHuman())
 					{
 						bDidPillage = true;
 						break;
