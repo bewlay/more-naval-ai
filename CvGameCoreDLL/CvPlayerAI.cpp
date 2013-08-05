@@ -2782,7 +2782,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 							if (eBonus != NO_BONUS)
 							{
 								if ((getNumTradeableBonuses(eBonus) == 0) || (AI_bonusVal(eBonus) > 10)
-									|| (GC.getBonusInfo(eBonus).getYieldChange(YIELD_FOOD) > 0))
+									|| (GC.getBonusInfo(eBonus).getYieldChange(YIELD_FOOD) > 0) || GC.getBonusInfo(eBonus).isMana())
 								{
 									bHasGoodBonus = true;
 
@@ -3004,6 +3004,10 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			if (eBonus != NO_BONUS)
 			{
+				if (GC.getBonusInfo(eBonus).isMana())
+				{
+					iTempValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 250 : 100);
+				}
 				// dont value bonuses that have blocking features. working?
 				bool bCanWork = true;
 
@@ -6888,6 +6892,25 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 							if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3))
 							{
 								iBuildingValue += 10000;
+							}
+						}
+					}
+					else // probably a tower building
+					{
+						if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+						{
+							iValue += 1000;
+							if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
+							{
+								iValue += 1000;
+								if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3))
+								{
+									iValue += 1000;
+									if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY4))
+									{
+										iValue += 10000;
+									}
+								}
 							}
 						}
 					}
@@ -21377,6 +21400,8 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 int CvPlayerAI::AI_getCultureVictoryStage() const
 {
     int iValue = 0;
+
+	return 0; // MNAI - disabling this for now - the AI doesnt know how to pursue a culture victory (nor do I really)
 
 	if( GC.getDefineINT("BBAI_VICTORY_STRATEGY_CULTURE") <= 0 )
 	{
