@@ -2311,7 +2311,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 					// group
 					CvSelectionGroup* pHeadGroup = pHeadUnit->getGroup();
 					FAssertMsg(pHeadGroup != NULL, "unit has NULL group");
-					if (pHeadGroup->getNumUnits() > 1)
+					if (pHeadGroup->getNumUnits() > 0)
 					{
 						szString.append(CvWString::format(L"\nGroup:%d [%d units", shortenID(pHeadGroup->getID()), pHeadGroup->getNumUnits()));
 						if( pHeadGroup->getCargo() > 0 )

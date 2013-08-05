@@ -890,6 +890,8 @@ void CvPlayerAI::AI_doPeace()
 	int iLoop;
 	int iI, iJ;
 
+	CvTeamAI &kTeam = GET_TEAM(getTeam());
+
 	FAssert(!isHuman());
 	FAssert(!isMinorCiv());
 	FAssert(!isBarbarian());
@@ -901,23 +903,25 @@ void CvPlayerAI::AI_doPeace()
 
 	for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		CvPlayer &kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+
+		if (kLoopPlayer.isAlive())
 		{
 			if (iI != getID())
 			{
 				if (canContact((PlayerTypes)iI) && AI_isWillingToTalk((PlayerTypes)iI))
 				{
-					if (!(GET_TEAM(getTeam()).isHuman()) && (GET_PLAYER((PlayerTypes)iI).isHuman() || !(GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHuman())))
+					if (!(kTeam.isHuman()) && (kLoopPlayer.isHuman() || !(GET_TEAM(kLoopPlayer.getTeam()).isHuman())))
 					{
-						if (GET_TEAM(getTeam()).isAtWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+						if (kTeam.isAtWar(kLoopPlayer.getTeam()))
 						{
-							if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (GET_TEAM(getTeam()).getLeaderID() == getID()))
+							if (!(kLoopPlayer.isHuman()) || (kTeam.getLeaderID() == getID()))
 							{
-								FAssertMsg(!(GET_PLAYER((PlayerTypes)iI).isBarbarian()), "(GET_PLAYER((PlayerTypes)iI).isBarbarian()) did not return false as expected");
+								FAssertMsg(!(kLoopPlayer.isBarbarian()), "(kLoopPlayer.isBarbarian()) did not return false as expected");
 								FAssertMsg(iI != getID(), "iI is not expected to be equal with getID()");
-								FAssert(GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam());
+								FAssert(kLoopPlayer.getTeam() != getTeam());
 
-								if (GET_TEAM(getTeam()).AI_getAtWarCounter(GET_PLAYER((PlayerTypes)iI).getTeam()) > 10)
+								if (kTeam.AI_getAtWarCounter(kLoopPlayer.getTeam()) > 10)
 								{
 									if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_PEACE_TREATY) == 0)
 									{
@@ -934,9 +938,9 @@ void CvPlayerAI::AI_doPeace()
 
 											bOffered = true;
 
-											if (GET_PLAYER((PlayerTypes)iI).isHuman())
+											if (kLoopPlayer.isHuman())
 											{
-												if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+												if (!(abContacted[kLoopPlayer.getTeam()]))
 												{
 													AI_changeContactTimer(((PlayerTypes)iI), CONTACT_PEACE_TREATY, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_PEACE_TREATY));
 													pDiplo = new CvDiploParameters(getID());
@@ -946,7 +950,7 @@ void CvPlayerAI::AI_doPeace()
 													pDiplo->setOurOfferList(theirList);
 													pDiplo->setTheirOfferList(ourList);
 													gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
-													abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+													abContacted[kLoopPlayer.getTeam()] = true;
 												}
 											}
 											else
@@ -956,7 +960,7 @@ void CvPlayerAI::AI_doPeace()
 /*                                                                                              */
 /* War Strategy AI                                                                              */
 /************************************************************************************************/
-												if( GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_acceptSurrender(getTeam()) )
+												if( GET_TEAM(kLoopPlayer.getTeam()).AI_acceptSurrender(getTeam()) )
 												{
 													GC.getGameINLINE().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
 												}
@@ -972,10 +976,10 @@ void CvPlayerAI::AI_doPeace()
 											{
 												setTradeItem(&item, TRADE_PEACE_TREATY);
 
-												if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+												if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 												{
-													iOurValue = GET_TEAM(getTeam()).AI_endWarVal(GET_PLAYER((PlayerTypes)iI).getTeam());
-													iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_endWarVal(getTeam());
+													iOurValue = kTeam.AI_endWarVal(kLoopPlayer.getTeam());
+													iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_endWarVal(getTeam());
 
 													eBestReceiveTech = NO_TECH;
 													eBestGiveTech = NO_TECH;
@@ -996,7 +1000,7 @@ void CvPlayerAI::AI_doPeace()
 															{
 																setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Peace Trading (Tech #1)"));
 
@@ -1010,17 +1014,17 @@ void CvPlayerAI::AI_doPeace()
 
 															if (eBestReceiveTech != NO_TECH)
 															{
-																iOurValue += GET_TEAM(getTeam()).AI_techTradeVal(eBestReceiveTech, GET_PLAYER((PlayerTypes)iI).getTeam());
+																iOurValue += kTeam.AI_techTradeVal(eBestReceiveTech, kLoopPlayer.getTeam());
 															}
 														}
 
-														iGold = std::min((iTheirValue - iOurValue), GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+														iGold = std::min((iTheirValue - iOurValue), kLoopPlayer.AI_maxGoldTrade(getID()));
 
 														if (iGold > 0)
 														{
 															setTradeItem(&item, TRADE_GOLD, iGold);
 
-															if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+															if (kLoopPlayer.canTradeItem(getID(), item, true))
 															{
 																iReceiveGold = iGold;
 																iOurValue += iGold;
@@ -1031,11 +1035,11 @@ void CvPlayerAI::AI_doPeace()
 														{
 															iBestValue = 0;
 
-															for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
+															for (pLoopCity = kLoopPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kLoopPlayer.nextCity(&iLoop))
 															{
 																setTradeItem(&item, TRADE_CITIES, pLoopCity->getID());
 
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	iValue = pLoopCity->plot()->calculateCulturePercent(getID());
 
@@ -1063,7 +1067,7 @@ void CvPlayerAI::AI_doPeace()
 
 															if (canTradeItem(((PlayerTypes)iI), item, true))
 															{
-																if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal((TechTypes)iJ, getTeam()) <= (iOurValue - iTheirValue))
+																if (GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal((TechTypes)iJ, getTeam()) <= (iOurValue - iTheirValue))
 																{
 																	iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Peace Trading (Tech #2)"));
 
@@ -1078,7 +1082,7 @@ void CvPlayerAI::AI_doPeace()
 
 														if (eBestGiveTech != NO_TECH)
 														{
-															iTheirValue += GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+															iTheirValue += GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 														}
 
 														iGold = std::min((iOurValue - iTheirValue), AI_maxGoldTrade((PlayerTypes)iI));
@@ -1102,7 +1106,7 @@ void CvPlayerAI::AI_doPeace()
 
 															if (canTradeItem(((PlayerTypes)iI), item, true))
 															{
-																if (GET_PLAYER((PlayerTypes)iI).AI_cityTradeVal(pLoopCity) <= (iOurValue - iTheirValue))
+																if (kLoopPlayer.AI_cityTradeVal(pLoopCity) <= (iOurValue - iTheirValue))
 																{
 																	iValue = pLoopCity->plot()->calculateCulturePercent((PlayerTypes)iI);
 
@@ -1117,11 +1121,11 @@ void CvPlayerAI::AI_doPeace()
 
 														if (pBestGiveCity != NULL)
 														{
-															iTheirValue += GET_PLAYER((PlayerTypes)iI).AI_cityTradeVal(pBestGiveCity);
+															iTheirValue += kLoopPlayer.AI_cityTradeVal(pBestGiveCity);
 														}
 													}
 
-													if ((GET_PLAYER((PlayerTypes)iI).isHuman()) ? (iOurValue >= iTheirValue) : ((iOurValue > ((iTheirValue * 3) / 5)) && (iTheirValue > ((iOurValue * 3) / 5))))
+													if ((kLoopPlayer.isHuman()) ? (iOurValue >= iTheirValue) : ((iOurValue > ((iTheirValue * 3) / 5)) && (iTheirValue > ((iOurValue * 3) / 5))))
 													{
 														ourList.clear();
 														theirList.clear();
@@ -1167,9 +1171,9 @@ void CvPlayerAI::AI_doPeace()
 															theirList.insertAtEnd(item);
 														}
 
-														if (GET_PLAYER((PlayerTypes)iI).isHuman())
+														if (kLoopPlayer.isHuman())
 														{
-															if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+															if (!(abContacted[kLoopPlayer.getTeam()]))
 															{
 																AI_changeContactTimer(((PlayerTypes)iI), CONTACT_PEACE_TREATY, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_PEACE_TREATY));
 																pDiplo = new CvDiploParameters(getID());
@@ -1179,7 +1183,7 @@ void CvPlayerAI::AI_doPeace()
 																pDiplo->setOurOfferList(theirList);
 																pDiplo->setTheirOfferList(ourList);
 																gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
-																abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																abContacted[kLoopPlayer.getTeam()] = true;
 															}
 														}
 														else
@@ -2519,8 +2523,9 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	// disallow the AI from founding new cities on Mana bonuses
     if (pPlot->getBonusType() != NO_BONUS)
 	{
-		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW") || 
-			(GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA")))
+		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).isMana())
+		//if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW") || 
+		//	(GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA")))
 		{
 			return 0;
 		}
@@ -27476,24 +27481,26 @@ TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes ePlayer)
 
 	for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 	{
-		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		CvPlayerAI &kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+
+		if (kLoopPlayer.isAlive())
 		{
-			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()))
+			if (atWar(kLoopPlayer.getTeam(), getTeam()))
 			{
-				if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+				if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).canDeclareWar(kLoopPlayer.getTeam()))
 				{
-					if (!GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) && !GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isDefensivePact(GET_PLAYER(ePlayer).getTeam()))
+					if (!GET_TEAM(kLoopPlayer.getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()) && !GET_TEAM(kLoopPlayer.getTeam()).isDefensivePact(GET_PLAYER(ePlayer).getTeam()))
 					{
 						if (GET_PLAYER(ePlayer).isHuman() || 
 							(GET_PLAYER(ePlayer).AI_getAttitude(getID()) > GC.getLeaderHeadInfo(GET_PLAYER(ePlayer).getPersonalityType()).getDeclareWarRefuseAttitudeThreshold()))
 						{
 							if (GET_PLAYER(ePlayer).isHuman() || (GET_PLAYER(ePlayer).AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS))
 							{
-								iValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(GET_PLAYER((PlayerTypes)iI).getTeam(), GET_PLAYER(ePlayer).getTeam());
+								iValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(kLoopPlayer.getTeam(), GET_PLAYER(ePlayer).getTeam());
 								if (iBestValue < iValue)
 								{
 									iBestValue = iValue;
-									eWarTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+									eWarTeam = kLoopPlayer.getTeam();
 								}
 							}
 						}
@@ -27511,19 +27518,21 @@ TeamTypes CvPlayerAI::AI_bestMakePeaceTeam(PlayerTypes ePlayer)
 	{
 		if ((iI != ePlayer) && (iI != getID()))
 		{
-			if (GET_PLAYER((PlayerTypes)iI).isAlive())
+			CvPlayerAI &kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+
+			if (kLoopPlayer.isAlive())
 			{
-				if (!GET_PLAYER((PlayerTypes)iI).isMinorCiv())
+				if (!kLoopPlayer.isMinorCiv() && !GET_TEAM(kLoopPlayer.getTeam()).isAVassal())
 				{
-					if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
+					if (GET_TEAM(getTeam()).isHasMet(kLoopPlayer.getTeam()))
 					{
-						if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), GET_PLAYER(ePlayer).getTeam()) && !atWar(getTeam(), GET_PLAYER((PlayerTypes)iI).getTeam()))
+						if (atWar(kLoopPlayer.getTeam(), GET_PLAYER(ePlayer).getTeam()) && !atWar(getTeam(), kLoopPlayer.getTeam()))
 						{
-							if (GET_PLAYER((PlayerTypes)iI).AI_isWillingToTalk(ePlayer))
+							if (kLoopPlayer.AI_isWillingToTalk(ePlayer))
 							{
 								if (AI_getAttitude((PlayerTypes)iI) >= ATTITUDE_FRIENDLY)
 								{
-									return (TeamTypes)GET_PLAYER((PlayerTypes)iI).getTeam();
+									return (TeamTypes)kLoopPlayer.getTeam();
 								}
 							}
 						}
