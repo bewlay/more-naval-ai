@@ -17097,7 +17097,24 @@ bool CvUnitAI::AI_bombardCity()
 
 	CvCity* pBombardCity;
 
-	if (canBombard(plot()))
+	bool bGroupCanBombard = false;
+	
+	CLLNode<IDInfo>* pUnitNode = getGroup()->headUnitNode();
+	while (pUnitNode != NULL)
+	{
+		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = getGroup()->nextUnitNode(pUnitNode);
+		{
+			if (pLoopUnit->canBombard(plot()))
+			{
+				bGroupCanBombard = true;
+				break;
+			}
+		}
+	}
+
+
+	if (bGroupCanBombard)
 	{
 		pBombardCity = bombardTarget(plot());
 		// Super Forts begin *bombard* (if statement contains original code for cities, else statement is new code for improvements)
@@ -17126,11 +17143,13 @@ bool CvUnitAI::AI_bombardCity()
 				int iComparison = getGroup()->AI_compareStacks(pBombardCity->plot(), /*bPotentialEnemy*/ true, /*bCheckCanAttack*/ true, /*bCheckCanMove*/ true);
 				
 				// Big troop advantage plus pretty good starting odds, don't wait to allow reinforcements
+				/*
 				if( iComparison > (iBase - 4*iAttackOdds) )
 				{
 					if( gUnitLogLevel > 2 ) logBBAI("      Stack skipping bombard of %S with compare %d and starting odds %d", pBombardCity->getName().GetCString(), iComparison, iAttackOdds);
 					return false;
 				}
+				*/
 
 				int iMin = std::max(100, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"));
 				bool bHasWaited = false;
