@@ -3630,18 +3630,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		    int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
 		    int iNumCities = getNumCities();
 
-		    if (iDistance > 5)
+			if (iDistance > (bSprawlingExpand ? 6 : 5))
 		    {
 		    	iValue -= (iDistance - 5) * 500;
-		    }
-			else if (iDistance < 4)
-		    {
-		    	iValue -= (4 - iDistance) * 5000;
 		    }
 
 			if (bSprawlingExpand)
 			{
-				if (iDistance < 6)
+				if (iDistance < 5)
 				{
 					iValue /= 2;
 				}
