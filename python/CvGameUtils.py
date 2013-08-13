@@ -726,10 +726,12 @@ class CvGameUtils:
 	def getWidgetHelp(self, argsList):
 		eWidgetType, iData1, iData2, bOption = argsList
 ## Platy WorldBuilder ##
-		if eWidgetType == WidgetTypes.WIDGET_GENERAL:
+		if eWidgetType == WidgetTypes.WIDGET_PYTHON:
 			if iData1 == 1029:
 				sHelp = str(iData2)
 				return CyTranslator().getText("TXT_KEY_WB_HELP" + sHelp,())
+			elif iData1 > 1029 and iData1 < 1046:
+				return " "
 ## Platy WorldBuilder ##
 		return u""
 		

@@ -9,8 +9,15 @@ import CvScreenEnums
 import time
 import Popup as PyPopup
 
-import PyHelpers
-import CustomFunctions
+##
+import WBBuildingScreen
+import WBTechScreen
+import WBPromotionScreen
+import WBCorporationScreen
+import WBBonusScreen
+import WBProjectScreen
+import WBSpecialistScreen
+import WBDiplomacyScreen
 
 gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()
@@ -91,8 +98,8 @@ class CvWorldBuilderScreen:
 		self.m_iEraseCheckboxID = -1
 		self.iScreenWidth = 228
 
-		self.m_bSideMenuDirty = false
-		self.m_bASItemCostDirty = false
+		self.m_bSideMenuDirty = False
+		self.m_bASItemCostDirty = False
 		self.m_iCost = 0
 
 
@@ -103,7 +110,6 @@ class CvWorldBuilderScreen:
 		self.m_iYield = 0
 		self.m_iDomain = 0
 		self.m_iRoute = 0
-		self.m_iMemory = 0
 		self.m_pScript = -1
 		self.m_bMoveUnit = False
 		self.m_iUnitCombat = -99
@@ -111,13 +117,8 @@ class CvWorldBuilderScreen:
 		self.m_iPlotMode = 0
 		self.m_iArea = -1
 		self.m_iCityTimer = 0
-		self.m_iGlobalDefine = 0
-		self.m_iDiplomacyPage = 0
-		self.m_bShowDead = False
-		self.m_bTowardsPlayer = True
 		self.m_iOtherPlayer = -1
 		self.m_iEventUnit = -1
-		self.m_iTechShareCivs = 1
 		self.m_iBuildingClass = 0
 		self.m_iBuildingModifier = 0
 		self.m_iRevealMode = 2
@@ -125,9 +126,11 @@ class CvWorldBuilderScreen:
 		self.m_iVisibleOption = 1
 		self.xResolution = 1000
 		self.yResolution = 1000
+		self.m_iAddUnitCount = 1
+
 		self.iColumnHeight = 41
 		self.iColumnWidth = 200
-		self.m_bDiploName = True
+
 ## Platy Builder ##
 
 	def interfaceScreen (self):
@@ -145,7 +148,7 @@ class CvWorldBuilderScreen:
 		#add interface items
 		self.refreshPlayerTabCtrl()
 
-		self.refreshAdvancedStartTabCtrl(false)
+		self.refreshAdvancedStartTabCtrl(False)
 
 		if (CyInterface().isInAdvancedStart()):
 			pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
@@ -237,6 +240,8 @@ class CvWorldBuilderScreen:
 				self.handleWorldBuilderAddUnitsPullDownCB(inputClass.getData())
 			elif(inputClass.getFunctionName() == "WorldBuilderUnitCombat"):
 				self.handleWorldBuilderUnitCombatPullDownCB(inputClass.getData())
+			elif(inputClass.getFunctionName() == "WorldBuilderAddUnitCount"):
+				self.handleWorldBuilderAddUnitCountPullDownCB(inputClass.getData())
 			elif(inputClass.getFunctionName() == "WorldBuilderSetWinner"):
 				self.handleWorldBuilderSetWinnerPullDownCB(inputClass.getData())
 			elif(inputClass.getFunctionName() == "WorldBuilderChooseCivilization"):
@@ -292,9 +297,6 @@ class CvWorldBuilderScreen:
 		self.refreshASItemCost()
 
 		if (self.m_pCurrentPlot != 0):
-#			if (CyInterface().isInAdvancedStart() and self.m_pCurrentPlot.isAdjacentNonrevealed(CyGame().getActiveTeam())):
-#				if (self.getASActiveVisibility() == -1):
-#					return []
 			if (CyInterface().isInAdvancedStart()):
 				if (self.m_iCost <= 0):
 					return []
@@ -322,7 +324,8 @@ class CvWorldBuilderScreen:
 				return 1
 ## Add Units ##
 		elif self.m_bNormalPlayer and self.m_iUnitType > -1:
-			pNewUnit = gc.getPlayer(self.m_iCurrentPlayer).initUnit(self.m_iUnitType, self.m_iCurrentX, self.m_iCurrentY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			for i in xrange(self.m_iAddUnitCount):
+				pNewUnit = gc.getPlayer(self.m_iCurrentPlayer).initUnit(self.m_iUnitType, self.m_iCurrentX, self.m_iCurrentY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			return 1
 ## Move Unit Start ##
 		elif self.m_bMoveUnit:
@@ -399,8 +402,8 @@ class CvWorldBuilderScreen:
 				self.refreshASItemCost()
 
 		if (CyInterface().isDirty(InterfaceDirtyBits.Advanced_Start_DIRTY_BIT) and not CyInterface().isFocusedWidget()):
-			self.refreshAdvancedStartTabCtrl(true)
-			CyInterface().setDirty(InterfaceDirtyBits.Advanced_Start_DIRTY_BIT, false)
+			self.refreshAdvancedStartTabCtrl(True)
+			CyInterface().setDirty(InterfaceDirtyBits.Advanced_Start_DIRTY_BIT, False)
 
 		if (self.useLargeBrush()):
 			self.m_bShowBigBrush = True
@@ -458,37 +461,44 @@ class CvWorldBuilderScreen:
 			unit.setName(szNewName)
 		return 1
 
+#MagisterModmod
+	def handleUnitEditIDSelectCB ( self, argsList ) :
+		ID = int(argsList[0])
+		pUnit = gc.getPlayer(self.m_iCurrentPlayer).getUnit(ID)
+		if not pUnit.isNone():
+			CyCamera().LookAtUnit(pUnit)
+			self.m_iCurrentPlot = pUnit.plot()
+			self.m_pActivePlot = pUnit.plot()
+			for i in xrange(self.m_pActivePlot.getNumUnits()):
+				if self.m_pActivePlot.getUnit(i).getID() == ID:
+					self.m_iCurrentUnit = i
+					self.setUnitEditInfo(True)
+		return 1
+#MagisterModmod
+
 ## Platy World Builder Start ##
 ## Common ##
 	def handleEnterNewScreenCB ( self, argsList ) :
 		strName = argsList[0]
 		if strName == "PromotionEditScreen":
-			self.setPromotionEditInfo()
-		elif strName == "BackToUnit":
-			self.setUnitEditInfo(True)
-		elif strName == "TeamEditScreen":
-			self.setTeamEditInfo()
-			self.refreshSideMenu()
+			WBPromotionScreen.WBPromotionScreen().interfaceScreen(self.m_pActivePlot.getUnit(self.m_iCurrentUnit))
 		elif strName == "ProjectEditScreen":
-			self.setProjectEditInfo()
+			WBProjectScreen.WBProjectScreen().interfaceScreen(gc.getTeam(self.m_iCurrentTeam))
 		elif strName == "TechEditScreen":
-			self.setTechnologyEditInfo()
+			WBTechScreen.WBTechScreen().interfaceScreen(gc.getTeam(self.m_iCurrentTeam))
 		elif strName == "BuildingEditScreen":
-			self.setBuildingEditInfo()
-		elif strName == "WonderEditScreen":
-			self.setWonderEditInfo()
+			WBBuildingScreen.WBBuildingScreen().interfaceScreen(self.m_pActivePlot.getPlotCity())
 		elif strName == "ReligionEditScreen":
-			self.setReligionEditInfo()
+			WBCorporationScreen.WBCorporationScreen().interfaceScreen(self.m_pActivePlot.getPlotCity())
 		elif strName == "CorporationEditScreen":
-			self.setCorporationEditInfo()
+			WBCorporationScreen.WBCorporationScreen().interfaceScreen(self.m_pActivePlot.getPlotCity())
 		elif strName == "FreeSpecialistEditScreen":
-			self.setFreeSpecialistEditInfo()
-		elif strName == "GreatPeopleEditScreen":
-			self.setGreatPeopleEditInfo()
+			WBSpecialistScreen.WBSpecialistScreen().interfaceScreen(self.m_pActivePlot.getPlotCity())
 		elif strName == "FreeBonusEditScreen":
-			self.setFreeBonusEditInfo()
+			WBBonusScreen.WBBonusScreen().interfaceScreen(self.m_pActivePlot.getPlotCity())
 		elif strName == "CityEditScreen":
 			self.setCityEditInfo(True)
+
 ##MagisterModmod
 		elif strName == "TraitEditScreen":
 			self.setTraitEditInfo()
@@ -514,8 +524,6 @@ class CvWorldBuilderScreen:
 					if strName == "PlayerEditCurrentPlayer":
 						self.setPlayerEditInfo()
 						self.refreshSideMenu()
-					elif strName == "DiplomacyEditCurrentPlayer":
-						self.setDiplomacyEditInfo()
 					elif strName == "PlotEditCurrentPlayer":
 						self.setPlotEditInfo(False)
 					elif strName == "UnitEditOwner":
@@ -525,14 +533,11 @@ class CvWorldBuilderScreen:
 						pNewUnit.setBaseCombatStr(pUnit.baseCombatStr())
 						pNewUnit.changeCargoSpace(pUnit.cargoSpace() - pNewUnit.cargoSpace())
 						pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
-
 ##MagisterModmod
 						pNewUnit.setDuration(pUnit.getDuration())
 						pNewUnit.setBaseCombatStrDefense(pUnit.baseCombatStrDefense())
 						pNewUnit.setReligion(pUnit.getReligion())
-						pNewUnit.setSummoner(pUnit.getSummoner())
 ##MagisterModmod
-
 
 						pUnit.kill(False, -1)
 						self.setUnitEditInfo(True)
@@ -567,14 +572,14 @@ class CvWorldBuilderScreen:
 			self.m_iUnitCombat = - iIndex
 			if iIndex == 3:
 				pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
-				(loopCity, iter) = pPlayer.firstCity(false)
+				(loopCity, iter) = pPlayer.firstCity(False)
 				while(loopCity):
 					loopCity.kill()
-					(loopCity, iter) = pPlayer.nextCity(iter, false)
-				(loopUnit, iter) = pPlayer.firstUnit(false)
+					(loopCity, iter) = pPlayer.nextCity(iter, False)
+				(loopUnit, iter) = pPlayer.firstUnit(False)
 				while(loopUnit):
 					loopUnit.kill(False, -1)
-					(loopUnit, iter) = pPlayer.nextUnit(iter, false)
+					(loopUnit, iter) = pPlayer.nextUnit(iter, False)
 		else:
 			self.m_iUnitCombat = -99
 		self.m_iUnitType = -1
@@ -586,6 +591,14 @@ class CvWorldBuilderScreen:
 		self.m_iUnitCombat = iIndex -1
 		self.m_iUnitType = -1
 		self.refreshSideMenu()
+		return 1
+
+	def handleWorldBuilderAddUnitCountPullDownCB ( self, argsList ) :
+		iIndex = int(argsList)
+		if iIndex == 0:
+			self.m_iAddUnitCount = 1
+		else:
+			self.m_iAddUnitCount = iIndex * 10
 		return 1
 
 	def handleWorldBuilderUnitCombatPullDownCB ( self, argsList ) :
@@ -628,7 +641,7 @@ class CvWorldBuilderScreen:
 					self.m_iNewLeaderType = i
 					for i in xrange(gc.getMAX_CIV_PLAYERS()):
 						if not gc.getPlayer(i).isEverAlive():
-							CyGame().addPlayer(i, self.m_iNewLeaderType, self.m_iNewCivilization)
+							CyGame().addPlayer(i, self.m_iNewLeaderType, self.m_iNewCivilization, True)
 							self.m_iCurrentPlayer = i
 							self.m_iCurrentTeam = gc.getPlayer(i).getTeam()
 							self.m_iNewCivilization = -1
@@ -716,14 +729,14 @@ class CvWorldBuilderScreen:
 
 	def handleChooseCityCB (self, argsList) :
 		iCount = 0
-		(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(false)
+		(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(False)
 		while(loopCity):
 			if iCount == int(argsList[0]):
 				self.m_pActivePlot = loopCity.plot()
 				self.setCityEditInfo(True)
 				return 1
 			iCount += 1
-			(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, false)
+			(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, False)
 
 	def handleCityEditPopulationCB (self, argsList) :
 		self.m_pActivePlot.getPlotCity().setPopulation(int(argsList[0]))
@@ -734,8 +747,6 @@ class CvWorldBuilderScreen:
 		self.m_pActivePlot.getPlotCity().setRevolutionIndex(int(argsList[0]))
 		self.setCityEditInfo(True)
 		return 1
-
-
 ##MagisterModmod MNAI
 
 	def handleCityEditCultureCB (self, argsList) :
@@ -788,129 +799,6 @@ class CvWorldBuilderScreen:
 		self.m_pActivePlot.getPlotCity().changeExtraTradeRoutes(int(argsList[0]) - self.m_pActivePlot.getPlotCity().getTradeRoutes())
 		return 1
 
-	def handleBuildingCommandsCB (self, argsList) :
-		iIndex = int(argsList[0])
-		if iIndex == 1:
-			for i in xrange(gc.getNumBuildingInfos()):
-				if isLimitedWonderClass(gc.getBuildingInfo(i).getBuildingClassType()): continue
-				if self.m_pActivePlot.getPlotCity().canConstruct(i, True, True, True):
-					self.m_pActivePlot.getPlotCity().setNumRealBuilding(i, 1)
-		elif iIndex == 2:
-			for i in xrange(gc.getNumBuildingInfos()):
-				if isLimitedWonderClass(gc.getBuildingInfo(i).getBuildingClassType()): continue
-				self.m_pActivePlot.getPlotCity().setNumRealBuilding(i, 0)
-		elif iIndex == 3:
-			for i in xrange(gc.getNumBuildingInfos()):
-				if isLimitedWonderClass(gc.getBuildingInfo(i).getBuildingClassType()): continue
-				(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(false)
-				while(loopCity):
-					if self.m_pActivePlot.getPlotCity().isHasBuilding(i):
-						loopCity.setNumRealBuilding(i, 1)
-					else:
-						loopCity.setNumRealBuilding(i, 0)
-					(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, false)
-		self.setBuildingEditInfo()
-		return 1
-
-	def handleCityEditReligionCB (self, argsList) :
-		iIndex, strName = argsList
-		self.m_pActivePlot.getPlotCity().setHasReligion(int(strName), int(iIndex), False, False)
-		if self.m_pActivePlot.getPlotCity().isHolyCityByType(int(strName)) and not iIndex:
-			CyGame().clearHolyCity(int(strName))
-		self.setReligionEditInfo()
-		return 1
-
-	def handleCityEditHolyCityCB (self, argsList) :
-		iIndex, strName = argsList
-		CyGame().clearHolyCity(int(strName))
-		if iIndex:
-			CyGame().setHolyCity(int(strName), self.m_pActivePlot.getPlotCity(), False)
-		self.setReligionEditInfo()
-		return 1
-
-	def handleReligionCommandsCB (self, argsList) :
-		iIndex = int(argsList[0])
-		if iIndex == 1:
-			for i in xrange(gc.getNumReligionInfos()):
-				self.m_pActivePlot.getPlotCity().setHasReligion(i, True, False, False)
-		elif iIndex == 2:
-			for i in xrange(gc.getNumReligionInfos()):
-				self.m_pActivePlot.getPlotCity().setHasReligion(i, False, False, False)
-				if self.m_pActivePlot.getPlotCity().isHolyCityByType(i):
-					CyGame().clearHolyCity(i)
-		elif iIndex == 3:
-			for i in xrange(gc.getNumReligionInfos()):
-				(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(false)
-				while(loopCity):
-					if self.m_pActivePlot.getPlotCity().isHasReligion(i):
-						loopCity.setHasReligion(i, True, False, False)
-					else:
-						loopCity.setHasReligion(i, False, False, False)
-						if loopCity.isHolyCityByType(i):
-							CyGame().clearHolyCity(i)
-					(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, false)
-		self.setReligionEditInfo()
-		return 1
-
-	def handleCityEditCorporationCB (self, argsList) :
-		iIndex, strName = argsList
-		self.m_pActivePlot.getPlotCity().setHasCorporation(int(strName), int(iIndex), False, False)
-		if self.m_pActivePlot.getPlotCity().isHeadquartersByType(int(strName)) and not iIndex:
-			CyGame().clearHeadquarters(int(strName))
-		self.setCorporationEditInfo()
-		return 1
-
-	def handleCityEditHeadquartersCB (self, argsList) :
-		iIndex, strName = argsList
-		CyGame().clearHeadquarters(int(strName))
-		if iIndex:
-			CyGame().setHeadquarters(int(strName), self.m_pActivePlot.getPlotCity(), False)
-		self.setCorporationEditInfo()
-		return 1
-
-	def handleCorporationCommandsCB (self, argsList) :
-		iIndex = int(argsList[0])
-		if iIndex == 1:
-			for i in xrange(gc.getNumReligionInfos()):
-				self.m_pActivePlot.getPlotCity().setHasCorporation(i, False, False, False)
-				if self.m_pActivePlot.getPlotCity().isHeadquartersByType(i):
-					CyGame().clearHeadquarters(i)
-		elif iIndex == 2:
-			for i in xrange(gc.getNumCorporationInfos()):
-				(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(false)
-				while(loopCity):
-					if self.m_pActivePlot.getPlotCity().isHasCorporation(i):
-						loopCity.setHasCorporation(i, True, False, False)
-					else:
-						loopCity.setHasCorporation(i, False, False, False)
-						if loopCity.isHeadquartersByType(i):
-							CyGame().clearHeadquarters(i)
-					(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, false)
-		self.setCorporationEditInfo()
-		return 1
-
-	def handleCityEditSpecialistCB (self, argsList) :
-		iIndex, strName = argsList
-		self.m_pActivePlot.getPlotCity().setFreeSpecialistCount(int(strName), int(iIndex))
-		return 1
-
-	def handleCityEditGreatPeopleCB (self, argsList) :
-		iIndex, strName = argsList
-		pCity = self.m_pActivePlot.getPlotCity()
-		iDiff = int(iIndex) - pCity.getGreatPeopleUnitProgress(int(strName))
-		pCity.setGreatPeopleUnitProgress(int(strName), int(iIndex))
-		pCity.changeGreatPeopleProgress(iDiff)
-		self.setGreatPeopleEditInfo()
-
-	def handleCityEditGPProgressCB (self, argsList) :
-		self.m_pActivePlot.getPlotCity().changeGreatPeopleProgress(int(argsList[0]) - self.m_pActivePlot.getPlotCity().getGreatPeopleProgress())
-		return 1
-
-	def handleCityEditGPRateCB (self, argsList) :
-		iBaseGPRate = int(argsList[0]) * 100 / self.m_pActivePlot.getPlotCity().getTotalGreatPeopleRateModifier()
-		self.m_pActivePlot.getPlotCity().changeBaseGreatPeopleRate(iBaseGPRate - self.m_pActivePlot.getPlotCity().getBaseGreatPeopleRate())
-		return 1
-
 	def handleCityEditBonusCB (self, argsList) :
 		iIndex, strName = argsList
 		self.m_pActivePlot.getPlotCity().changeFreeBonus(int(strName), int(iIndex) - self.m_pActivePlot.getPlotCity().getFreeBonus(int(strName)))
@@ -929,9 +817,9 @@ class CvWorldBuilderScreen:
 	def handleCityEditModifyBuildingClassCB (self, argsList) :
 		lBuildingClass = []
 		for i in xrange(gc.getNumBuildingClassInfos()):
-			lBuildingClass.append(gc.getBuildingClassInfo(i).getDescription() + "_Platy_" + str(i))
+			lBuildingClass.append([gc.getBuildingClassInfo(i).getDescription(), i])
 		lBuildingClass.sort()
-		iBuildingClass = int(lBuildingClass[self.m_iBuildingClass][lBuildingClass[self.m_iBuildingClass].find("_Platy_") +7:])
+		iBuildingClass = lBuildingClass[self.m_iBuildingClass][1]
 		pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
 		iBuilding = gc.getCivilizationInfo(pPlayer.getCivilizationType()).getCivilizationBuildings(iBuildingClass)
 		if self.m_iBuildingModifier < 3:
@@ -1058,8 +946,8 @@ class CvWorldBuilderScreen:
 
 	def handleUnitEditScenarioCounterCB (self, argsList):
 		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setScenarioCounter(int(argsList[0]))
+		self.setUnitEditInfo(True)
 		return 1
-
 ##MagisterModmod
 
 	def handleUnitEditPromotionReadyCB (self, argsList) :
@@ -1079,31 +967,25 @@ class CvWorldBuilderScreen:
 		return 1
 ##Magister
 	def handleUnitEditHasCastedCB (self, argsList) :
-		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setHasCasted(int(argsList[0]))
+		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setHasCasted(bool(argsList[0]))
 		return 1
+
+	def handleUnitEditIsImmortalCB (self, argsList) :
+		if bool(argsList[0]):
+			self.m_pActivePlot.getUnit(self.m_iCurrentUnit).changeImmortal(1)
+		elif self.m_pActivePlot.getUnit(self.m_iCurrentUnit).isImmortal():
+			self.m_pActivePlot.getUnit(self.m_iCurrentUnit).changeImmortal(-1)
+		self.setUnitEditInfo(True)
+		return 1
+
+	def handleUnitEditAvatarOfCivLeaderCB(self, argsList) :
+		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setAvatarOfCivLeader(bool(argsList[0]))
+		return 1
+
 ##Magister
 	def handleMoveUnitCB (self, argsList) :
 		self.m_bMoveUnit = True
 		self.toggleUnitEditCB()
-		return 1
-
-	def handleEditUnitPromotionCB (self, argsList) :
-		iIndex, strName = argsList
-		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setHasPromotion(int(strName), int(iIndex))
-		return 1
-
-	def handlePromotionCommandsCB (self, argsList) :
-		iIndex = int(argsList[0])
-		if iIndex == 1:
-			for iPromotion in xrange(gc.getNumPromotionInfos()):
-				pUnit = self.m_pActivePlot.getUnit(self.m_iCurrentUnit)
-				if pUnit.canAcquirePromotion(iPromotion):
-					if gc.getInfoTypeForString("PROMOTION_LEADER") > -1 and iPromotion == gc.getInfoTypeForString("PROMOTION_LEADER"): continue
-					pUnit.setHasPromotion(iPromotion, True)
-		elif iIndex == 2:
-			for iPromotion in xrange(gc.getNumPromotionInfos()):
-				self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setHasPromotion(iPromotion, False)
-		self.setPromotionEditInfo()
 		return 1
 
 	def handleUnitEditDirectionCB (self, argsList) :
@@ -1122,14 +1004,12 @@ class CvWorldBuilderScreen:
 		for i in range (2):
 			pNewUnit = gc.getPlayer(self.m_iCurrentPlayer).initUnit(pUnit.getUnitType(), pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
-
 ##MagisterModmod
 ##When duplicating Adventurers and other great people, I don't want the double to get the free promotion that the named ones get
 			for iProm in range(gc.getNumPromotionInfos()):
 				if pNewUnit.isHasPromotion(iProm):
 					pNewUnit.setHasPromotion(iProm, False)
 ##MagisterModmod
-
 
 			pNewUnit.convert(pUnit)
 			pNewUnit.setBaseCombatStr(pUnit.baseCombatStr())
@@ -1149,14 +1029,14 @@ class CvWorldBuilderScreen:
 
 	def handleUnitEditLeaderCB (self, argsList) :
 		pUnit = self.m_pActivePlot.getUnit(self.m_iCurrentUnit)
-		lUnitType = ["_Platy_-1"]
+##		lUnitType = ["_Platy_-1"]
+		lUnitType = [-1]
 		for i in xrange(gc.getNumUnitInfos()):
 			if gc.getUnitInfo(i).getDomainType() == pUnit.getDomainType():
-				lUnitType.append(gc.getUnitInfo(i).getDescription() + "_Platy_" + str(i))
+				lUnitType.append([gc.getUnitInfo(i).getDescription(), i])
 		lUnitType.sort()
 		iIndex = int(argsList[0]) -1
-		iLeaderType = int(lUnitType[iIndex][lUnitType[iIndex].find("_Platy_") +7:])
-		pUnit.setLeaderUnitType(iLeaderType)
+		pUnit.setLeaderUnitType(lUnitType[iIndex][1])
 		return 1
 
 	def handleUnitEditUnitTypeCB (self, argsList) :
@@ -1164,20 +1044,22 @@ class CvWorldBuilderScreen:
 		pUnit = self.m_pActivePlot.getUnit(self.m_iCurrentUnit)
 		lUnitType = []
 		for i in xrange(gc.getNumUnitInfos()):
-			lUnitType.append(gc.getUnitInfo(i).getDescription() + "_Platy_" + str(i))
+			lUnitType.append([gc.getUnitInfo(i).getDescription(), i])
 		lUnitType.sort()
-		iUnitType = int(lUnitType[iIndex][lUnitType[iIndex].find("_Platy_") +7:])
-		pNewUnit = gc.getPlayer(self.m_iCurrentPlayer).initUnit(iUnitType, pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+		pNewUnit = gc.getPlayer(self.m_iCurrentPlayer).initUnit(lUnitType[iIndex][1], pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 ##MagisterModmod
 		pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
 		pNewUnit.setSummoner(pUnit.getSummoner())
-
-		pUnitID = pUnit.getID()
 		pNewUnitID = pNewUnit.getID()
-		for pUnit2 in PyHelpers.PyPlayer(pUnit.getOwner()).getUnitList():
-			if pUnit2.getSummoner() == pUnitID:
-				pUnit2.setSummoner(pNewUnitID)
+		summonerID = pUnit.getID()
+		pPlayer = gc.getPlayer(pUnit.getOwner())
+		(loopUnit, iter) = pPlayer.firstUnit(False)
+		while(loopUnit):
+			if not loopUnit.isDead(): #is the unit alive and valid?
+				if loopUnit.getSummoner() == summonerID:#is it a summon of pUnit?
+					loopUnit.setSummoner(pNewUnitID)
+			(loopUnit, iter) = pPlayer.nextUnit(iter, False)
 ##MagisterModmod
 
 		pNewUnit.convert(pUnit)
@@ -1253,6 +1135,16 @@ class CvWorldBuilderScreen:
 		iIndex, strName = argsList
 		gc.getPlayer(self.m_iCurrentPlayer).setHasTrait(int(strName), iIndex)
 		return 1
+
+	def handleEditFeatHasCastWorldSpellCB (self, argsList) :
+		gc.getPlayer(self.m_iCurrentPlayer).setFeatAccomplished(FeatTypes.FEAT_GLOBAL_SPELL, bool(argsList[0]))
+
+	def handleEditFeatTrustCB (self, argsList) :
+		gc.getPlayer(self.m_iCurrentPlayer).setFeatAccomplished(FeatTypes.FEAT_TRUST, bool(argsList[0]))
+
+	def handleEditFeatHealUnitPerTurnCB (self, argsList) :
+		gc.getPlayer(self.m_iCurrentPlayer).setFeatAccomplished(FeatTypes.FEAT_HEAL_UNIT_PER_TURN, bool(argsList[0]))
+
 ##MagisterModmod
 
 	def handleStateReligionEditPullDownCB ( self, argsList ) :
@@ -1312,21 +1204,6 @@ class CvWorldBuilderScreen:
 					self.setTeamEditInfo()
 					return 1
 				iCount += 1
-
-	def handleEditTeamProjectCB (self, argsList) :
-		iIndex, strName = argsList
-		gc.getTeam(self.m_iCurrentTeam).changeProjectCount(int(strName), int(iIndex) - gc.getTeam(self.m_iCurrentTeam).getProjectCount(int(strName)))
-		if gc.getProjectInfo(int(strName)).isAllowsNukes():
-			if CyGame().getProjectCreatedCount(int(strName)) == 0:
-				CyGame().makeNukesValid(False)
-		return 1
-
-	def handleEditTeamTechnologyCB (self, argsList) :
-		iIndex, strName = argsList
-		gc.getTeam(self.m_iCurrentTeam).setHasTech(int(strName), int(iIndex), self.m_iCurrentPlayer, False, False)
-		self.refreshPlayerTabCtrl()
-		self.setTechnologyEditInfo()
-		return 1
 
 	def handleTeamEditEnemyWarWearinessCB (self, argsList) :
 		gc.getTeam(self.m_iCurrentTeam).changeEnemyWarWearinessModifier(int(argsList[0]) - gc.getTeam(self.m_iCurrentTeam).getEnemyWarWearinessModifier())
@@ -1461,19 +1338,6 @@ class CvWorldBuilderScreen:
 			gc.getTeam(self.m_iCurrentTeam).changeIgnoreIrrigationCount( -gc.getTeam(self.m_iCurrentTeam).getIgnoreIrrigationCount())
 		return 1
 
-
-	def handleTeamEditKnownCivsCB ( self, argsList ) :
-		self.m_iTechShareCivs = int(argsList[0])
-		self.setTeamEditInfo()
-		return 1
-
-	def handleTeamEditTechShareCB (self, argsList) :
-		if int(argsList[0]):
-			gc.getTeam(self.m_iCurrentTeam).changeTechShareCount(self.m_iTechShareCivs -1, 1)
-		else:
-			gc.getTeam(self.m_iCurrentTeam).changeTechShareCount(self.m_iTechShareCivs -1, - gc.getTeam(self.m_iCurrentTeam).getTechShareCount(self.m_iTechShareCivs -1))
-		return 1
-
 	def handleTeamEditForceTeamVoteCB (self, argsList) :
 		iIndex, strName = argsList
 		if int(iIndex):
@@ -1484,23 +1348,12 @@ class CvWorldBuilderScreen:
 
 ## Game Options ##
 
-	def handleEditGlobalDefineCB (self, argsList) :
-		self.m_iGlobalDefine = int(argsList[0])
-		self.setGameEditInfo()
-		return 1
-
-	def handleGlobalDefineCB (self, argsList) :
-		iIndex, strName = argsList
-		if strName[0] == "I":
-			gc.setDefineINT(strName[1:], int(iIndex))
-		elif strName[0] == "S":
-			gc.setDefineSTRING(strName[1:], str(iIndex))
-		else:
-			gc.setDefineFLOAT(strName[1:], float(iIndex))
-		return 1
-
 	def handleGameEditStartYearCB (self, argsList) :
 		CyGame().setStartYear(int(argsList[0]))
+		return 1
+
+	def handleGameEditNukesExplodedCB (self, argsList) :
+		CyGame().changeNukesExploded(int(argsList[0]) - CyGame().getNukesExploded())
 		return 1
 
 	def handleEditGameOptionCB (self, argsList) :
@@ -1527,21 +1380,21 @@ class CvWorldBuilderScreen:
 			for iPlayerX in xrange(gc.getMAX_CIV_PLAYERS()):
 				pPlayerX = gc.getPlayer(iPlayerX)
 				if pPlayerX.isHuman():
-					(loopCity, iter) = pPlayerX.firstCity(false)
+					(loopCity, iter) = pPlayerX.firstCity(False)
 					while(loopCity):
 						if not loopCity.isCapital():
 							loopCity.kill()
-						(loopCity, iter) = pPlayerX.nextCity(iter, false)
+						(loopCity, iter) = pPlayerX.nextCity(iter, False)
 		elif int(strName) == GameOptionTypes.GAMEOPTION_NO_BARBARIANS and iIndex:
 			pPlayerBarb = gc.getPlayer(gc.getBARBARIAN_PLAYER ())
-			(loopCity, iter) = pPlayerBarb.firstCity(false)
+			(loopCity, iter) = pPlayerBarb.firstCity(False)
 			while(loopCity):
 				loopCity.kill()
-				(loopCity, iter) = pPlayerBarb.nextCity(iter, false)
-			(loopUnit, iter) = pPlayerBarb.firstUnit(false)
+				(loopCity, iter) = pPlayerBarb.nextCity(iter, False)
+			(loopUnit, iter) = pPlayerBarb.firstUnit(False)
 			while(loopUnit):
 				loopUnit.kill(False, -1)
-				(loopUnit, iter) = pPlayerBarb.nextUnit(iter, false)
+				(loopUnit, iter) = pPlayerBarb.nextUnit(iter, False)
 		return 1
 
 	def handleVisibleOptionsCB (self, argsList):
@@ -1691,7 +1544,7 @@ class CvWorldBuilderScreen:
 
 	def handleTriggerEventCB ( self, argsList ) :
 		iCityID = -1
-		pCity = CyMap().findCity(self.m_pActivePlot.getX(), self.m_pActivePlot.getY(), self.m_iCurrentPlayer, -1, false, false, -1, -1, CyCity())
+		pCity = CyMap().findCity(self.m_pActivePlot.getX(), self.m_pActivePlot.getY(), self.m_iCurrentPlayer, -1, False, False, -1, -1, CyCity())
 		if not pCity.isNone():
 			iCityID = pCity.getID()
 		pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
@@ -1746,376 +1599,6 @@ class CvWorldBuilderScreen:
 		return 1
 ##MagisterModmod
 
-## Diplomacy Data ##
-
-	def handleDiplomacyPageCB (self, argsList) :
-		self.m_iDiplomacyPage = int(argsList[0])
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTowardsPlayerCB (self, argsList) :
-		self.m_bTowardsPlayer = int(argsList[0])
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleDiploNameCB (self, argsList) :
-		self.m_bDiploName = int(argsList[0])
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleDiplomacyShowDeadCB (self, argsList) :
-		self.m_bShowDead = int(argsList[0])
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleMeetAllCB (self, argsList) :
-		for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-			pTeamX = gc.getTeam(iTeamX)
-			if pTeamX.isAlive() and iTeamX != self.m_iCurrentTeam:
-				pTeamX.meet(self.m_iCurrentTeam, False)
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditMetStatusCB (self, argsList) :
-		iIndex, strName = argsList
-		if int(iIndex):
-			gc.getTeam(self.m_iCurrentTeam).meet(int(strName), False)
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditWarStatusCB (self, argsList) :
-		iIndex, strName = argsList
-		if int(iIndex):
-			gc.getTeam(self.m_iCurrentTeam).declareWar(int(strName), True, -1)
-		else:
-			gc.getTeam(self.m_iCurrentTeam).makePeace(int(strName))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditRelationshipCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iTeam1 = int(strName)
-			iTeam2 = self.m_iCurrentTeam
-		else:
-			iTeam2 = int(strName)
-			iTeam1 = self.m_iCurrentTeam
-
-		gc.getTeam(iTeam2).freeVassal(iTeam1)
-		gc.getTeam(iTeam1).freeVassal(iTeam2)
-		if int(iIndex) == 0:
-			gc.getTeam(iTeam2).assignVassal(iTeam1, False)
-		elif int(iIndex) == 1:
-			gc.getTeam(iTeam2).assignVassal(iTeam1, True)
-		elif int(iIndex) == 2:
-			gc.getTeam(iTeam1).assignVassal(iTeam2, True)
-		self.setDiplomacyEditInfo()
-
-	def handleMemoryEditPullDownCB ( self, argsList ) :
-		self.m_iMemory = int(argsList[0])
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handlePlayerEditMemoryCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			pPlayer1 = gc.getPlayer(int(strName))
-			iPlayer2 = self.m_iCurrentPlayer
-		else:
-			iPlayer2 = int(strName)
-			pPlayer1 = gc.getPlayer(self.m_iCurrentPlayer)
-		pPlayer1.AI_changeMemoryCount(iPlayer2, self.m_iMemory, (int(iIndex) - pPlayer1.AI_getMemoryCount(iPlayer2, self.m_iMemory)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleAttitudeEditPullDownCB ( self, argsList ) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			pPlayer1 = gc.getPlayer(int(strName))
-			iPlayer2 = self.m_iCurrentPlayer
-		else:
-			iPlayer2 = int(strName)
-			pPlayer1 = gc.getPlayer(self.m_iCurrentPlayer)
-		while int(iIndex) != pPlayer1.AI_getAttitude(iPlayer2):
-			if int(iIndex) < pPlayer1.AI_getAttitude(iPlayer2):
-				pPlayer1.AI_changeAttitudeExtra(iPlayer2, -1)
-			else:
-				pPlayer1.AI_changeAttitudeExtra(iPlayer2, 1)
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleEspionagePullDownCB (self, argsList) :
-		iIndex = int(argsList[0]) - 1
-		if iIndex < 4:
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeEspionagePointsAgainstTeam(self.m_iCurrentTeam, 10 ** iIndex)
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeEspionagePointsAgainstTeam(iTeamX, 10 ** iIndex)
-		else:
-			iIndex -= 4
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeEspionagePointsAgainstTeam(self.m_iCurrentTeam, - min(10 ** iIndex, pTeamX.getEspionagePointsAgainstTeam(self.m_iCurrentTeam)))
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeEspionagePointsAgainstTeam(iTeamX, - min(10 ** iIndex, gc.getTeam(self.m_iCurrentTeam).getEspionagePointsAgainstTeam(iTeamX)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditEspionagePointsCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iTeam1 = int(strName)
-			iTeam2 = self.m_iCurrentTeam
-		else:
-			iTeam2 = int(strName)
-			iTeam1 = self.m_iCurrentTeam
-		gc.getTeam(iTeam1).setEspionagePointsAgainstTeam(iTeam2, int(iIndex))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleEspionageWeightPullDownCB (self, argsList) :
-		iIndex = int(argsList[0]) - 1
-		if iIndex < 3:
-			for iPlayerX in xrange(gc.getMAX_CIV_PLAYERS()):
-				pPlayerX = gc.getPlayer(iPlayerX)
-				iTeamX = pPlayerX.getTeam()
-				if iTeamX == self.m_iCurrentTeam: continue
-				if self.m_bTowardsPlayer:
-					pPlayerX.changeEspionageSpendingWeightAgainstTeam(self.m_iCurrentTeam, 10 ** iIndex)
-				else:
-					if gc.getTeam(iTeamX).getLeaderID() != iPlayerX: continue
-					gc.getPlayer(self.m_iCurrentPlayer).changeEspionageSpendingWeightAgainstTeam(iTeamX, 10 ** iIndex)
-		else:
-			iIndex -= 3
-			for iPlayerX in xrange(gc.getMAX_CIV_PLAYERS()):
-				pPlayerX = gc.getPlayer(iPlayerX)
-				iTeamX = pPlayerX.getTeam()
-				if iTeamX == self.m_iCurrentTeam: continue
-				if self.m_bTowardsPlayer:
-					pPlayerX.changeEspionageSpendingWeightAgainstTeam(self.m_iCurrentTeam, - min(10 ** iIndex, pPlayerX.getEspionageSpendingWeightAgainstTeam(self.m_iCurrentTeam)))
-				else:
-					if gc.getTeam(iTeamX).getLeaderID() != iPlayerX: continue
-					gc.getPlayer(self.m_iCurrentPlayer).changeEspionageSpendingWeightAgainstTeam(iTeamX, - min(10 ** iIndex, gc.getPlayer(self.m_iCurrentPlayer).getEspionageSpendingWeightAgainstTeam(iTeamX)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handlePlayerEditEspionageWeightCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iPlayer1 = int(strName)
-			iTeam2 = self.m_iCurrentPlayer
-		else:
-			iTeam2 = int(strName)
-			iPlayer1 = self.m_iCurrentPlayer
-		gc.getPlayer(iPlayer1).setEspionageSpendingWeightAgainstTeam(iTeam2, int(iIndex))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleCounterEspionagePullDownCB (self, argsList) :
-		iIndex = int(argsList[0]) - 1
-		if iIndex < 4:
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeCounterespionageTurnsLeftAgainstTeam(self.m_iCurrentTeam, 10 ** iIndex)
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeCounterespionageTurnsLeftAgainstTeam(iTeamX, 10 ** iIndex)
-		else:
-			iIndex -= 4
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeCounterespionageTurnsLeftAgainstTeam(self.m_iCurrentTeam, - min(10 ** iIndex, pTeamX.getCounterespionageTurnsLeftAgainstTeam(self.m_iCurrentTeam)))
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeCounterespionageTurnsLeftAgainstTeam(iTeamX, - min(10 ** iIndex, gc.getTeam(self.m_iCurrentTeam).getCounterespionageTurnsLeftAgainstTeam(iTeamX)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditCounterEspionageCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iTeam1 = int(strName)
-			iTeam2 = self.m_iCurrentTeam
-		else:
-			iTeam2 = int(strName)
-			iTeam1 = self.m_iCurrentTeam
-		gc.getTeam(iTeam1).setCounterespionageTurnsLeftAgainstTeam(iTeam2, int(iIndex))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleCounterEspionageModPullDownCB (self, argsList) :
-		iIndex = int(argsList[0]) - 1
-		if iIndex < 4:
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeCounterespionageModAgainstTeam(self.m_iCurrentTeam, 10 ** iIndex)
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeCounterespionageModAgainstTeam(iTeamX, 10 ** iIndex)
-		else:
-			iIndex -= 4
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeCounterespionageModAgainstTeam(self.m_iCurrentTeam, - min(10 ** iIndex, pTeamX.getCounterespionageModAgainstTeam(self.m_iCurrentTeam)))
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeCounterespionageModAgainstTeam(iTeamX, - min(10 ** iIndex, gc.getTeam(self.m_iCurrentTeam).getCounterespionageModAgainstTeam(iTeamX)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditCounterEspionageModCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iTeam1 = int(strName)
-			iTeam2 = self.m_iCurrentTeam
-		else:
-			iTeam2 = int(strName)
-			iTeam1 = self.m_iCurrentTeam
-		gc.getTeam(iTeam1).setCounterespionageModAgainstTeam(iTeam2, int(iIndex))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleWarWearinessPullDownCB (self, argsList) :
-		iIndex = int(argsList[0]) - 1
-		if iIndex < 4:
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeWarWeariness(self.m_iCurrentTeam, 10 ** iIndex)
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeWarWeariness(iTeamX, 10 ** iIndex)
-		else:
-			iIndex -= 4
-			for iTeamX in xrange(gc.getMAX_CIV_TEAMS()):
-				if iTeamX == self.m_iCurrentTeam: continue
-				pTeamX = gc.getTeam(iTeamX)
-				if self.m_bTowardsPlayer:
-					pTeamX.changeWarWeariness(self.m_iCurrentTeam, - min(10 ** iIndex, pTeamX.getWarWeariness(self.m_iCurrentTeam)))
-				else:
-					gc.getTeam(self.m_iCurrentTeam).changeWarWeariness(iTeamX, - min(10 ** iIndex, gc.getTeam(self.m_iCurrentTeam).getWarWeariness(iTeamX)))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditWarWearinessCB (self, argsList) :
-		iIndex, strName = argsList
-		if self.m_bTowardsPlayer:
-			iTeam1 = int(strName)
-			iTeam2 = self.m_iCurrentTeam
-		else:
-			iTeam2 = int(strName)
-			iTeam1 = self.m_iCurrentTeam
-		gc.getTeam(iTeam1).setWarWeariness(iTeam2, int(iIndex))
-		self.setDiplomacyEditInfo()
-		return 1
-
-	def handleTeamEditSignOpenBordersCB (self, argsList) :
-		iIndex, strName = argsList
-		if int(iIndex):
-			gc.getTeam(int(strName)).signOpenBorders(self.m_iCurrentTeam)
-			self.setDiplomacyEditInfo()
-			return 1
-		else:
-			for i in xrange(CyGame().getIndexAfterLastDeal()):
-				pDeal = CyGame().getDeal(i)
-				iPlayer1 = pDeal.getFirstPlayer()
-				iPlayer2 = pDeal.getSecondPlayer()
-				if iPlayer1 == -1 or iPlayer2 == -1: continue
-				iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
-				iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
-				if (iTeam1 == int(strName) and iTeam2 == self.m_iCurrentTeam) or (iTeam2 == int(strName) and iTeam1 == self.m_iCurrentTeam):
-					for j in xrange(pDeal.getLengthFirstTrades()):
-						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_OPEN_BORDERS:
-							pDeal.kill()
-							self.setDiplomacyEditInfo()
-							return 1
-
-	def handleTeamEditSignDefensivePactCB (self, argsList) :
-		iIndex, strName = argsList
-		if int(iIndex):
-			gc.getTeam(int(strName)).signDefensivePact(self.m_iCurrentTeam)
-			self.setDiplomacyEditInfo()
-			return 1
-		else:
-			for i in xrange(CyGame().getIndexAfterLastDeal()):
-				pDeal = CyGame().getDeal(i)
-				iPlayer1 = pDeal.getFirstPlayer()
-				iPlayer2 = pDeal.getSecondPlayer()
-				if iPlayer1 == -1 or iPlayer2 == -1: continue
-				iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
-				iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
-				if (iTeam1 == int(strName) and iTeam2 == self.m_iCurrentTeam) or (iTeam2 == int(strName) and iTeam1 == self.m_iCurrentTeam):
-					for j in xrange(pDeal.getLengthFirstTrades()):
-						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_DEFENSIVE_PACT:
-							pDeal.kill()
-							self.setDiplomacyEditInfo()
-							return 1
-
-	def handleDiplomacyCommandsCB (self, argsList) :
-		iIndex, strName = argsList
-		if strName == "War":
-			if int(argsList[0]) == 2:
-				for i in xrange(gc.getMAX_TEAMS()):
-					if gc.getTeam(i).isAlive() and i != self.m_iCurrentTeam:
-						if gc.getTeam(i).isVassal(self.m_iCurrentTeam) or gc.getTeam(self.m_iCurrentTeam).isVassal(i): continue
-						if gc.getTeam(self.m_iCurrentTeam).isHasMet(i):
-							gc.getTeam(self.m_iCurrentTeam).declareWar(i, True, -1)
-			elif int(argsList[0]) == 1:
-				for i in xrange(gc.getMAX_TEAMS()):
-					if gc.getTeam(i).isAlive() and i != self.m_iCurrentTeam:
-						gc.getTeam(self.m_iCurrentTeam).makePeace(i)
-		elif strName == "Permanent":
-			for i in xrange(gc.getMAX_TEAMS()):
-				if gc.getTeam(i).isAlive() and i != self.m_iCurrentTeam:
-					if gc.getTeam(self.m_iCurrentTeam).isHasMet(i):
-						gc.getTeam(self.m_iCurrentTeam).setPermanentWarPeace(i, int(argsList[0]) - 1)
-		elif strName == "OpenBorders":
-			if int(argsList[0]) == 2:
-				for i in xrange(gc.getMAX_TEAMS()):
-					if gc.getTeam(i).isAlive() and i != self.m_iCurrentTeam:
-						if gc.getTeam(self.m_iCurrentTeam).isHasMet(i):
-							gc.getTeam(self.m_iCurrentTeam).signOpenBorders(i)
-			elif int(argsList[0]) == 1:
-				for i in xrange(CyGame().getIndexAfterLastDeal()):
-					pDeal = CyGame().getDeal(i)
-					iPlayer1 = pDeal.getFirstPlayer()
-					iPlayer2 = pDeal.getSecondPlayer()
-					if iPlayer1 == -1 or iPlayer2 == -1: continue
-					iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
-					iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
-					if iTeam1 == self.m_iCurrentTeam or iTeam2 == self.m_iCurrentTeam:
-						for j in xrange(pDeal.getLengthFirstTrades()):
-							if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_OPEN_BORDERS:
-								pDeal.kill()
-		elif strName == "DefensivePact":
-			if int(argsList[0]) == 2:
-				for i in xrange(gc.getMAX_TEAMS()):
-					if gc.getTeam(i).isAlive() and i != self.m_iCurrentTeam:
-						if gc.getTeam(self.m_iCurrentTeam).isHasMet(i):
-							gc.getTeam(self.m_iCurrentTeam).signDefensivePact(i)
-			elif int(argsList[0]) == 1:
-				for i in xrange(CyGame().getIndexAfterLastDeal()):
-					pDeal = CyGame().getDeal(i)
-					iPlayer1 = pDeal.getFirstPlayer()
-					iPlayer2 = pDeal.getSecondPlayer()
-					if iPlayer1 == -1 or iPlayer2 == -1: continue
-					iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
-					iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
-					if iTeam1 == self.m_iCurrentTeam or iTeam2 == self.m_iCurrentTeam:
-						for j in xrange(pDeal.getLengthFirstTrades()):
-							if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_DEFENSIVE_PACT:
-								pDeal.kill()
-		self.setDiplomacyEditInfo()
-		return 1
 ## Platy World Builder End ##
 
 	def handleCityEditNameCB (self, argsList) :
@@ -2157,28 +1640,6 @@ class CvWorldBuilderScreen:
 				iCount += 1
 ## Platy World Builder End ##
 
-## Platy Tech By Era Start ##
-	def handleTechByEraPullDownCB ( self, argsList ) :
-		iIndex = int(argsList[0])
-		for i in xrange(gc.getNumTechInfos()):
-			if gc.getTechInfo(i).getEra() == -1: continue
-			if gc.getTechInfo(i).getEra() == iIndex -1 or iIndex > gc.getNumEraInfos():
-				gc.getTeam(self.m_iCurrentTeam).setHasTech(i, True, self.m_iCurrentPlayer, False, False)
-		self.refreshPlayerTabCtrl()
-		self.setTechnologyEditInfo()
-		return 1
-
-	def handleRemoveTechByEraPullDownCB ( self, argsList ) :
-		iIndex = int(argsList[0])
-		for i in xrange(gc.getNumTechInfos()):
-			if gc.getTechInfo(i).getEra() == -1: continue
-			if gc.getTechInfo(i).getEra() == iIndex -1 or iIndex > gc.getNumEraInfos():
-				gc.getTeam(self.m_iCurrentTeam).setHasTech(i, False, self.m_iCurrentPlayer, False, False)
-		self.refreshPlayerTabCtrl()
-		self.setTechnologyEditInfo()
-		return 1
-## Platy Tech By Era End ##
-
 	def handleSelectTeamPullDownCB ( self, argsList ) :
 		iIndex = int(argsList)
 		iCount = -1
@@ -2204,14 +1665,6 @@ class CvWorldBuilderScreen:
 			self.resetTechButtons()
 		return 1
 
-## Platy Edit Building ##
-	def handleEditCityBuildingCB (self, argsList) :
-		iIndex, strName = argsList
-		iNewBuilding = int(strName)
-		self.m_pActivePlot.getPlotCity().setNumRealBuilding(iNewBuilding, iIndex)
-		return 1
-## Platy Edit Building ##
-
 ## Platy Brush Size ##
 	def handleBrushSizeCB (self, argsList):
 		self.m_iBrushSize = int(argsList) + 1
@@ -2232,29 +1685,27 @@ class CvWorldBuilderScreen:
 			self.m_iCost = 0
 
 			if (self.m_pCurrentPlot != 0):
-
-#				if (not self.m_pCurrentPlot.isAdjacentNonrevealed(CyGame().getActiveTeam()) and self.m_pCurrentPlot.isRevealed(CyGame().getActiveTeam(), false)):
-				if (self.m_pCurrentPlot.isRevealed(CyGame().getActiveTeam(), false)):
+				if (self.m_pCurrentPlot.isRevealed(CyGame().getActiveTeam(), False)):
 
 					# Unit mode
 					if (self.getASActiveUnit() != -1):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartUnitCost(self.getASActiveUnit(), true, self.m_pCurrentPlot)
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartUnitCost(self.getASActiveUnit(), True, self.m_pCurrentPlot)
 					elif (self.getASActiveCity() != -1):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartCityCost(true, self.m_pCurrentPlot)
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartCityCost(True, self.m_pCurrentPlot)
 					elif (self.getASActivePop() != -1 and self.m_pCurrentPlot.isCity()):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartPopCost(true, self.m_pCurrentPlot.getPlotCity())
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartPopCost(True, self.m_pCurrentPlot.getPlotCity())
 					elif (self.getASActiveCulture() != -1 and self.m_pCurrentPlot.isCity()):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartCultureCost(true, self.m_pCurrentPlot.getPlotCity())
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartCultureCost(True, self.m_pCurrentPlot.getPlotCity())
 					elif (self.getASActiveBuilding() != -1 and self.m_pCurrentPlot.isCity()):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartBuildingCost(self.getASActiveBuilding(), true, self.m_pCurrentPlot.getPlotCity())
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartBuildingCost(self.getASActiveBuilding(), True, self.m_pCurrentPlot.getPlotCity())
 					elif (self.getASActiveRoute() != -1):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartRouteCost(self.getASActiveRoute(), true, self.m_pCurrentPlot)
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartRouteCost(self.getASActiveRoute(), True, self.m_pCurrentPlot)
 					elif (self.getASActiveImprovement() != -1):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartImprovementCost(self.getASActiveImprovement(), true, self.m_pCurrentPlot)
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartImprovementCost(self.getASActiveImprovement(), True, self.m_pCurrentPlot)
 
 				elif (self.m_pCurrentPlot.isAdjacentNonrevealed(CyGame().getActiveTeam())):
 					if (self.getASActiveVisibility() != -1):
-						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartVisibilityCost(true, self.m_pCurrentPlot)
+						self.m_iCost = gc.getPlayer(self.m_iCurrentPlayer).getAdvancedStartVisibilityCost(True, self.m_pCurrentPlot)
 
 			if (self.m_iCost < 0):
 				self.m_iCost = 0
@@ -2361,7 +1812,7 @@ class CvWorldBuilderScreen:
 			pPlot = CyMap().plot(self.m_iCurrentX, self.m_iCurrentY)
 
 			iActiveTeam = CyGame().getActiveTeam()
-			if (self.m_pCurrentPlot.isRevealed(iActiveTeam, false)):
+			if (self.m_pCurrentPlot.isRevealed(iActiveTeam, False)):
 
 				# City Tab
 				if (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASCityTabID):
@@ -2375,9 +1826,9 @@ class CvWorldBuilderScreen:
 						if (iOptionID == 0):
 
 							# Cost -1 means may not be placed here
-							if (pPlayer.getAdvancedStartCityCost(true, pPlot) != -1):
+							if (pPlayer.getAdvancedStartCityCost(True, pPlot) != -1):
 
-								CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, true)	#Action, Player, X, Y, Data, bAdd
+								CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, True)	#Action, Player, X, Y, Data, bAdd
 
 						# City Population
 						elif (iOptionID == 1):
@@ -2386,9 +1837,9 @@ class CvWorldBuilderScreen:
 								pCity = pPlot.getPlotCity()
 
 								# Cost -1 means may not be placed here
-								if (pPlayer.getAdvancedStartPopCost(true, pCity) != -1):
+								if (pPlayer.getAdvancedStartPopCost(True, pCity) != -1):
 
-										CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_POP, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, true)	#Action, Player, X, Y, Data, bAdd
+										CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_POP, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, True)	#Action, Player, X, Y, Data, bAdd
 
 						# City Culture
 						elif (iOptionID == 2):
@@ -2397,9 +1848,9 @@ class CvWorldBuilderScreen:
 								pCity = pPlot.getPlotCity()
 
 								# Cost -1 means may not be placed here
-								if (pPlayer.getAdvancedStartCultureCost(true, pCity) != -1):
+								if (pPlayer.getAdvancedStartCultureCost(True, pCity) != -1):
 
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CULTURE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, true)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CULTURE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, True)	#Action, Player, X, Y, Data, bAdd
 
 					# Buildings List
 					elif (self.m_iAdvancedStartCurrentList[self.m_advancedStartTabCtrl.getActiveTab()] == self.m_iASBuildingsListID):
@@ -2410,18 +1861,18 @@ class CvWorldBuilderScreen:
 								iBuildingType = getASBuilding(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 								# Cost -1 means may not be placed here
-								if (iBuildingType != -1 and pPlayer.getAdvancedStartBuildingCost(iBuildingType, true, pCity) != -1):
+								if (iBuildingType != -1 and pPlayer.getAdvancedStartBuildingCost(iBuildingType, True, pCity) != -1):
 
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_BUILDING, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iBuildingType, true)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_BUILDING, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iBuildingType, True)	#Action, Player, X, Y, Data, bAdd
 
 				# Unit Tab
 				elif (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASUnitTabID):
 					iUnitType = getASUnit(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 					# Cost -1 means may not be placed here
-					if (iUnitType != -1 and pPlayer.getAdvancedStartUnitCost(iUnitType, true, pPlot) != -1):
+					if (iUnitType != -1 and pPlayer.getAdvancedStartUnitCost(iUnitType, True, pPlot) != -1):
 
-						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_UNIT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iUnitType, true)	#Action, Player, X, Y, Data, bAdd
+						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_UNIT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iUnitType, True)	#Action, Player, X, Y, Data, bAdd
 
 				# Improvements Tab
 				elif (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASImprovementsTabID):
@@ -2432,9 +1883,9 @@ class CvWorldBuilderScreen:
 						iRouteType = getASRoute(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 						# Cost -1 means may not be placed here
-						if (iRouteType != -1 and pPlayer.getAdvancedStartRouteCost(iRouteType, true, pPlot) != -1):
+						if (iRouteType != -1 and pPlayer.getAdvancedStartRouteCost(iRouteType, True, pPlot) != -1):
 
-							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_ROUTE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iRouteType, true)	#Action, Player, X, Y, Data, bAdd
+							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_ROUTE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iRouteType, True)	#Action, Player, X, Y, Data, bAdd
 
 					# Improvements List
 					elif (self.m_iAdvancedStartCurrentList[self.m_advancedStartTabCtrl.getActiveTab()] == self.m_iASImprovementsListID):
@@ -2442,9 +1893,9 @@ class CvWorldBuilderScreen:
 						iImprovementType = getASImprovement(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 						# Cost -1 means may not be placed here
-						if (pPlayer.getAdvancedStartImprovementCost(iImprovementType, true, pPlot) != -1):
+						if (pPlayer.getAdvancedStartImprovementCost(iImprovementType, True, pPlot) != -1):
 
-							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_IMPROVEMENT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iImprovementType, true)	#Action, Player, X, Y, Data, bAdd
+							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_IMPROVEMENT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iImprovementType, True)	#Action, Player, X, Y, Data, bAdd
 
 			# Adjacent nonrevealed
 			else:
@@ -2453,12 +1904,12 @@ class CvWorldBuilderScreen:
 				if (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASVisibilityTabID):
 
 					# Cost -1 means may not be placed here
-					if (pPlayer.getAdvancedStartVisibilityCost(true, pPlot) != -1):
+					if (pPlayer.getAdvancedStartVisibilityCost(True, pPlot) != -1):
 
-						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_VISIBILITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, true)	#Action, Player, X, Y, Data, bAdd
+						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_VISIBILITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, True)	#Action, Player, X, Y, Data, bAdd
 
-			self.m_bSideMenuDirty = true
-			self.m_bASItemCostDirty = true
+			self.m_bSideMenuDirty = True
+			self.m_bASItemCostDirty = True
 
 			return 1
 
@@ -2578,8 +2029,7 @@ class CvWorldBuilderScreen:
 			pPlot = CyMap().plot(self.m_iCurrentX, self.m_iCurrentY)
 
 			iActiveTeam = CyGame().getActiveTeam()
-#			if (not self.m_pCurrentPlot.isAdjacentNonrevealed(iActiveTeam) and self.m_pCurrentPlot.isRevealed(iActiveTeam, false)):
-			if (self.m_pCurrentPlot.isRevealed(iActiveTeam, false)):
+			if (self.m_pCurrentPlot.isRevealed(iActiveTeam, False)):
 
 				# City Tab
 				if (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASCityTabID):
@@ -2599,7 +2049,7 @@ class CvWorldBuilderScreen:
 
 								if (self.m_pCurrentPlot.getPlotCity().getOwner() == self.m_iCurrentPlayer):
 
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, false)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, False)	#Action, Player, X, Y, Data, bAdd
 
 						# City Population
 						elif (iOptionID == 1):
@@ -2607,7 +2057,7 @@ class CvWorldBuilderScreen:
 							if (pPlot.isCity()):
 								if (pPlot.getPlotCity().getOwner() == self.m_iCurrentPlayer):
 
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_POP, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, false)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_POP, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, False)	#Action, Player, X, Y, Data, bAdd
 
 						# City Culture
 						elif (iOptionID == 2):
@@ -2618,7 +2068,7 @@ class CvWorldBuilderScreen:
 							if (pPlot.isCity()):
 								if (pPlot.getPlotCity().getOwner() == self.m_iCurrentPlayer):
 
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CULTURE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, false)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_CULTURE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, False)	#Action, Player, X, Y, Data, bAdd
 
 					# Buildings List
 					elif (self.m_iAdvancedStartCurrentList[self.m_advancedStartTabCtrl.getActiveTab()] == self.m_iASBuildingsListID):
@@ -2629,7 +2079,7 @@ class CvWorldBuilderScreen:
 								iBuildingType = getASBuilding(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 								if -1 != iBuildingType:
-									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_BUILDING, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iBuildingType, false)	#Action, Player, X, Y, Data, bAdd
+									CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_BUILDING, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iBuildingType, False)	#Action, Player, X, Y, Data, bAdd
 
 				# Unit Tab
 				elif (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASUnitTabID):
@@ -2637,7 +2087,7 @@ class CvWorldBuilderScreen:
 					iUnitType = getASUnit(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 					if -1 != iUnitType:
-						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_UNIT, self.m_iCurrentPlayer, self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), iUnitType, false)	#Action, Player, X, Y, Data, bAdd
+						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_UNIT, self.m_iCurrentPlayer, self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), iUnitType, False)	#Action, Player, X, Y, Data, bAdd
 
 				# Improvements Tab
 				elif (self.m_advancedStartTabCtrl.getActiveTab() == self.m_iASImprovementsTabID):
@@ -2648,7 +2098,7 @@ class CvWorldBuilderScreen:
 						iRouteType = getASRoute(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 						if -1 != iRouteType:
-							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_ROUTE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iRouteType, false)	#Action, Player, X, Y, Data, bAdd
+							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_ROUTE, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iRouteType, False)	#Action, Player, X, Y, Data, bAdd
 
 					# Improvements List
 					elif (self.m_iAdvancedStartCurrentList[self.m_advancedStartTabCtrl.getActiveTab()] == self.m_iASImprovementsListID):
@@ -2656,7 +2106,7 @@ class CvWorldBuilderScreen:
 						iImprovementType = getASImprovement(self.m_iAdvancedStartCurrentIndexes[self.m_advancedStartTabCtrl.getActiveTab()])
 
 						if -1 != iImprovementType:
-							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_IMPROVEMENT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iImprovementType, false)	#Action, Player, X, Y, Data, bAdd
+							CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_IMPROVEMENT, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, iImprovementType, False)	#Action, Player, X, Y, Data, bAdd
 
 			# Adjacent nonrevealed
 			else:
@@ -2668,12 +2118,12 @@ class CvWorldBuilderScreen:
 					return 1
 
 					# Remove Visibility
-					if (pPlot.isRevealed(iActiveTeam, false)):
+					if (pPlot.isRevealed(iActiveTeam, False)):
 
-						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_VISIBILITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, false)	#Action, Player, X, Y, Data, bAdd
+						CyMessageControl().sendAdvancedStartAction(AdvancedStartActionTypes.ADVANCEDSTARTACTION_VISIBILITY, self.m_iCurrentPlayer, self.m_iCurrentX, self.m_iCurrentY, -1, False)	#Action, Player, X, Y, Data, bAdd
 
-			self.m_bSideMenuDirty = true
-			self.m_bASItemCostDirty = true
+			self.m_bSideMenuDirty = True
+			self.m_bASItemCostDirty = True
 
 			return 1
 
@@ -2686,11 +2136,11 @@ class CvWorldBuilderScreen:
 			for i in range (self.m_pCurrentPlot.getNumUnits()):
 				pUnit = self.m_pCurrentPlot.getUnit(i)
 				if (pUnit.getUnitType() == self.m_iNormalPlayerCurrentIndexes[self.m_normalPlayerTabCtrl.getActiveTab()]):
-					pUnit.kill(false, PlayerTypes.NO_PLAYER)
+					pUnit.kill(False, PlayerTypes.NO_PLAYER)
 					return 1
 			if (self.m_pCurrentPlot.getNumUnits() > 0):
 				pUnit = self.m_pCurrentPlot.getUnit(0)
-				pUnit.kill(false, PlayerTypes.NO_PLAYER)
+				pUnit.kill(False, PlayerTypes.NO_PLAYER)
 				return 1
 		elif ((self.m_bNormalPlayer) and (self.m_normalPlayerTabCtrl.getActiveTab() == self.m_iBuildingTabID)):
 			if (self.m_pCurrentPlot.isCity()):
@@ -2850,7 +2300,7 @@ class CvWorldBuilderScreen:
 			self.m_pActivePlot = self.m_pCurrentPlot
 
 		self.m_tabCtrlEdit.setNumColumns((gc.getNumPromotionInfos()/10)+1)
-		self.m_tabCtrlEdit.setColumnLength(13)##MagisterModmod
+		self.m_tabCtrlEdit.setColumnLength(15)##MagisterModmod
 		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_UNIT_DATA",(self.m_pActivePlot.getX(), self.m_pActivePlot.getY())))
 
 		strTest = ()
@@ -2860,6 +2310,7 @@ class CvWorldBuilderScreen:
 			else:
 				strTest = strTest + (self.m_pActivePlot.getUnit(i).getName(),)
 
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CURRENT_UNIT",()),  0)
 		self.m_tabCtrlEdit.addSectionDropdown("Current_Unit", strTest, "CvScreensInterface", "WorldBuilderHandleUnitEditPullDownCB", "UnitEditPullDown", 0, self.m_iCurrentUnit)
 
 ## Platy Builder ##
@@ -2876,15 +2327,13 @@ class CvWorldBuilderScreen:
 
 		lUnitType = []
 		for i in xrange(gc.getNumUnitInfos()):
-			lUnitType.append(gc.getUnitInfo(i).getDescription() + "_Platy_" + str(i))
+			lUnitType.append([gc.getUnitInfo(i).getDescription(), i])
 		lUnitType.sort()
 
 		strTest = ()
 		for i in xrange(len(lUnitType)):
-			sUnitType = lUnitType[i][:lUnitType[i].find("_Platy_")]
-			iUnitType = int(lUnitType[i][lUnitType[i].find("_Platy_") +7:])
-			strTest = strTest + (sUnitType,)
-			if pUnit.getUnitType() == iUnitType:
+			strTest = strTest + (lUnitType[i][0],)
+			if pUnit.getUnitType() == lUnitType[i][1]:
 				iType = i
 		self.m_tabCtrlEdit.addSectionDropdown("Unit_Leader_Type", strTest, "CvScreensInterface", "WorldBuilderHandleUnitEditUnitTypeCB", "UnitEditUnitType", 0, iType)
 
@@ -2916,15 +2365,13 @@ class CvWorldBuilderScreen:
 		lUnitType = []
 		for i in xrange(gc.getNumUnitInfos()):
 			if gc.getUnitInfo(i).getDomainType() == pUnit.getDomainType():
-				lUnitType.append(gc.getUnitInfo(i).getDescription() + "_Platy_" + str(i))
+				lUnitType.append([gc.getUnitInfo(i).getDescription(), i])
 		lUnitType.sort()
 		iLeaderType = 0
 		strTest = (localText.getText("TXT_KEY_WB_NONE",()),)
 		for i in xrange(len(lUnitType)):
-			sUnitType = lUnitType[i][:lUnitType[i].find("_Platy_")]
-			iUnitType = int(lUnitType[i][lUnitType[i].find("_Platy_") +7:])
-			strTest = strTest + (sUnitType,)
-			if pUnit.getLeaderUnitType() == iUnitType:
+			strTest = strTest + (lUnitType[i][0],)
+			if pUnit.getLeaderUnitType() == lUnitType[i][1]:
 				iLeaderType = i +1
 		self.m_tabCtrlEdit.addSectionDropdown("Unit_Leader_Type", strTest, "CvScreensInterface", "WorldBuilderHandleUnitEditLeaderCB", "UnitEditLeader", 0, iLeaderType)
 ## Unit AI Type ##
@@ -2942,17 +2389,9 @@ class CvWorldBuilderScreen:
 		strTest = (localText.getText("TXT_KEY_WB_NORTH",()),) + (localText.getText("TXT_KEY_WB_NORTHEAST",()),) + (localText.getText("TXT_KEY_WB_EAST",()),) + (localText.getText("TXT_KEY_WB_SOUTHEAST",()),)
 		strTest += (localText.getText("TXT_KEY_WB_SOUTH",()),) + (localText.getText("TXT_KEY_WB_SOUTHWEST",()),) + (localText.getText("TXT_KEY_WB_WEST",()),) + (localText.getText("TXT_KEY_WB_NORTHWEST",()),)
 		self.m_tabCtrlEdit.addSectionDropdown("Unit_Direction", strTest, "CvScreensInterface", "WorldBuilderHandleUnitEditDirectionCB", "UnitEditDirection", 0, pUnit.getFacingDirection())
-
-
-
-
-
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_UNIT_ID",(pUnit.getID(),)), 0)
-
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
+## Unit Name ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_UNIT_NAME",()), 0)
-
-##MagisterModmod
-
 		if (len(pUnit.getNameNoDesc())):
 			strName = pUnit.getNameNoDesc()
 		else:
@@ -2960,22 +2399,25 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionEditCtrl(strName, "CvScreensInterface", "WorldBuilderHandleUnitEditNameCB", "UnitEditName", 0)
 
 
-## Unit Script ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
-		self.m_tabCtrlEdit.addSectionEditCtrl(pUnit.getScriptData(), "CvScreensInterface", "WorldBuilderHandleEditScriptCB", "UnitEditScript", 0)
-
-
-##MagisterModmod Moved
 ## Promotions ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_PROMOTIONS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "PromotionEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_PROMOTION",()), "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "PromotionEditScreen", 0)
+
+
 ## Move Unit ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_MOVE_UNIT",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleMoveUnitCB", "MoveUnit", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_MOVE_UNIT",()), "CvScreensInterface", "WorldBuilderHandleMoveUnitCB", "MoveUnit", 0)
 
 ## Duplicate ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_DUPLICATE",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleUnitEditDuplicateCB", "UnitEditDuplicate", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_DUPLICATE",()), "CvScreensInterface", "WorldBuilderHandleUnitEditDuplicateCB", "UnitEditDuplicate", 0)
 ## Kill ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_KILL",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleKillCB", "Unit", 0)
-##
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_KILL",()), "CvScreensInterface", "WorldBuilderHandleKillCB", "Unit", 0)
+
+##MagisterModmod
+##Has Casted
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_PROMOTION_AVATAR",()), "CvScreensInterface", "WorldBuilderHandleUnitEditAvatarOfCivLeaderCB", "UnitEditAvatarOfCivLeader", 0, pUnit.isAvatarOfCivLeader())
+
+##Has Casted
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HAS_CAST",()), "CvScreensInterface", "WorldBuilderHandleUnitEditHasCastedCB", "UnitEditHasCasted", 0, pUnit.isHasCasted())
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IS_IMMORTAL",()), "CvScreensInterface", "WorldBuilderHandleUnitEditIsImmortalCB", "UnitEditIsImmortal", 0, pUnit.isImmortal())
 
 ##MagisterModmod
 ## Promotion Ready ##
@@ -2985,25 +2427,26 @@ class CvWorldBuilderScreen:
 ## Made Interception ##
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_MADE_INTERCEPT",()), "CvScreensInterface", "WorldBuilderHandleUnitEditMadeInterceptionCB", "UnitEditMadeInterception", 0, pUnit.isMadeInterception())
 
-##MagisterModmod
-##Has Casted
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HAS_CASTED",()), "CvScreensInterface", "WorldBuilderHandleUnitEditHasCastedCB", "UnitEditHasCasted", 0, pUnit.isHasCasted())
-##MagisterModmod
-
 ##		self.m_tabCtrlEdit.addSectionLabel("",  0)
-##		self.m_tabCtrlEdit.addSectionLabel("",  0)
-##		self.m_tabCtrlEdit.addSectionLabel("",  0)
-##		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_UNIT_ID",(pUnit.getID(),)), 0)
-
-
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
+##MagisterModmod
+## Unit ID ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_UNIT_ID",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("Current_Unit", "CvScreensInterface", "WorldBuilderHandleUnitEditIDSelectCB", "UnitEditIDSelect", 0, -1, 999999999, 1, pUnit.getID(), 0, 0)
+
+## Group ID ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GROUP_ID",(pUnit.getGroupID(),)), 0)
+##MagisterModmod
+
 ## Experience ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_EXPERIENCE",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditExperienceCB", "CvScreensInterface", "WorldBuilderHandleUnitEditExperienceCB", "UnitEditExperience", 0, 0, 10000, 1, pUnit.getExperience(), 0, 0)
 ## Level ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_LEVEL",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditLevelCB", "CvScreensInterface", "WorldBuilderHandleUnitEditLevelCB", "UnitEditLevel", 0, 1, 100, 1, pUnit.getLevel(), 0, 0)
-##
+
 ## Damage % ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_DAMAGE",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditDamageCB", 	"CvScreensInterface", "WorldBuilderHandleUnitEditDamageCB", "UnitEditDamage", 0, 0, 100, 1, pUnit.getDamage(), 0, 0)
@@ -3016,13 +2459,28 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_STRENGTH",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditStrengthCB", "CvScreensInterface", "WorldBuilderHandleUnitEditStrengthCB", "UnitEditStrength", 0, 0, 1000, 1, pUnit.baseCombatStr(), 0, 0)
 ####Magister
-##		self.m_tabCtrlEdit.addSectionLabel("",  0)
 ## Base Strength ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_STRENGTH_DEFENSE",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditStrengthDefenseCB", "CvScreensInterface", "WorldBuilderHandleUnitEditStrengthDefenseCB", "UnitEditStrengthDefense", 0, 0, 1000, 1, pUnit.baseCombatStrDefense(), 0, 0)
 ##Magister
 
 ##		self.m_tabCtrlEdit.addSectionLabel("",  0)
+## Summoner ID ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_ID",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("UnitEditSummonerCB", "CvScreensInterface", "WorldBuilderHandleUnitEditSummonerCB", "UnitEditSummoner", 0, -1, 999999999, 1, pUnit.getSummoner(), 0, 0)
+
+		pSummoner = pPlayer.getUnit(pUnit.getSummoner())
+		if pSummoner.isNone():
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_NONE",()),  0)
+			self.m_tabCtrlEdit.addSectionLabel("",  0)
+		else:
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_DESCRIPTION",(pSummoner.getName(),)), 0)
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_LOCATION",(pSummoner.getX(),pSummoner.getY(),)), 0)
+
+
+## Duration ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_DURATION",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("UnitEditDurationCB", "CvScreensInterface", "WorldBuilderHandleUnitEditDurationCB", "UnitEditDuration", 0, 0, 100, 1, pUnit.getDuration(), 0, 0)
 ## Cargo ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CARGO",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("UnitEditCargoCB", "CvScreensInterface", "WorldBuilderHandleUnitEditCargoCB", 	"UnitEditCargo", 0, 0, min(100, pUnit.cargoSpace() * 100), 1, pUnit.cargoSpace(), 0, 0)
@@ -3034,39 +2492,22 @@ class CvWorldBuilderScreen:
 
 ##MagisterModmod
 
-## Duration ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_DURATION",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("UnitEditDurationCB", "CvScreensInterface", "WorldBuilderHandleUnitEditDurationCB", "UnitEditDuration", 0, 0, 100, 1, pUnit.getDuration(), 0, 0)
-
-
 ##ScenarioCounter
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCENARIO_COUNTER",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("UnitEditScenarioCounterCB", "CvScreensInterface", "WorldBuilderHandleUnitEditScenarioCounterCB", "UnitEditScenarioCounter", 0, -10000, 10000, -1, pUnit.getScenarioCounter(), 0, 0)
+		self.m_tabCtrlEdit.addSectionSpinner("UnitEditScenarioCounterCB", "CvScreensInterface", "WorldBuilderHandleUnitEditScenarioCounterCB", "UnitEditScenarioCounter", 0, -10000, 10000, 1, pUnit.getScenarioCounter(), 0, 0)
 
-
-## Summoner ID ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_ID",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("UnitEditSummonerCB", "CvScreensInterface", "WorldBuilderHandleUnitEditSummonerCB", "UnitEditSummoner", 0, -1, 999999999, 1, pUnit.getSummoner(), 0, 0)
-
-
-		pSummoner = pPlayer.getUnit(pUnit.getSummoner())
-		if pSummoner.isNone():
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_NONE",()),  0)
-			self.m_tabCtrlEdit.addSectionLabel("",  0)
+		if -1 < pUnit.getScenarioCounter() < gc.getNumUnitInfos():
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT",(gc.getUnitInfo(pUnit.getScenarioCounter()).getDescription(),)), 0)
 		else:
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_DESCRIPTION",(pSummoner.getName(),)), 0)
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SUMMONER_LOCATION",(pSummoner.getX(),pSummoner.getY(),)), 0)
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCENARIO_COUNTER_NO_UNIT",()),  0)
 
 
-
-##
 ##		self.m_tabCtrlEdit.addSectionLabel("",  0)
+## Unit Script ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
+		self.m_tabCtrlEdit.addSectionEditCtrl(pUnit.getScriptData(), "CvScreensInterface", "WorldBuilderHandleEditScriptCB", "UnitEditScript", 0)
 
 
-##MagisterModmod
-##		self.m_tabCtrlEdit.addSectionLabel("",  0)
-
-		initWBToolEditCtrlTab(True)
 
 		if (not self.m_tabCtrlEdit.isNone()):
 			print("Enabling map control 4")
@@ -3074,43 +2515,6 @@ class CvWorldBuilderScreen:
 			self.m_normalMapTabCtrl.enable(False)
 			self.m_bCtrlEditUp = True
 		return
-
-## Promotion Edit Screen ##
-	def setPromotionEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 4
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_PROMOTIONS",()))
-
-		lPromotions = [(0,0)]*gc.getNumPromotionInfos()
-		for j in xrange(gc.getNumPromotionInfos()):
-			lPromotions[j] = (gc.getPromotionInfo(j).getDescription(), j)
-		lPromotions.sort()
-
-		iColumnLength = (len(lPromotions) +2) /iNumColumns
-		if (len(lPromotions) +2) %iNumColumns > 0:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		for i in xrange(gc.getNumPromotionInfos()):
-			sPromotion = lPromotions[i][0]
-			iPromotion = lPromotions[i][1]
-			self.m_tabCtrlEdit.addSectionCheckbox(sPromotion, "CvScreensInterface", "WorldBuilderHandleEditUnitPromotionCB", str(iPromotion), 0, self.m_pActivePlot.getUnit(self.m_iCurrentUnit).isHasPromotion(iPromotion))
-		for i in range(iNumColumns * iColumnLength - (len(lPromotions) +2)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-
-		strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_ALL_PROMOTIONS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Promotion Commands", strTest, "CvScreensInterface", "WorldBuilderHandlePromotionCommandsCB", "Promotion Commands", 0, 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "BackToUnit", 0)
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Promotion Edit Screen ##
 
 	def setCityEditInfo(self, bSamePlot):
 		initWBToolEditCtrl()
@@ -3128,18 +2532,16 @@ class CvWorldBuilderScreen:
 ## Choose City ##
 		strTest = ()
 		iCount = 0
-		(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(false)
+		(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).firstCity(False)
 		while(loopCity):
 			if loopCity.getX() == self.m_pActivePlot.getX() and loopCity.getY() == self.m_pActivePlot.getY():
 				iCurrentCity = iCount
 			strTest = strTest + (loopCity.getName(),)
 			iCount += 1
-			(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, false)
+			(loopCity, iter) = gc.getPlayer(self.m_iCurrentPlayer).nextCity(iter, False)
 		self.m_tabCtrlEdit.addSectionDropdown("Owner", strTest, "CvScreensInterface", "WorldBuilderHandleChooseCityCB", "ChooseCity", 0, iCurrentCity)
 ## City Name ##
 		self.m_tabCtrlEdit.addSectionEditCtrl(pCity.getName(), "CvScreensInterface", "WorldBuilderHandleCityEditNameCB", "CityEditName", 0)
-
-
 ## Owner ##
 		strTest = ()
 		iCount = 0
@@ -3151,11 +2553,7 @@ class CvWorldBuilderScreen:
 				iCount = iCount + 1
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_OWNER",()),  0)
 		self.m_tabCtrlEdit.addSectionDropdown("Owner", strTest, "CvScreensInterface", "WorldBuilderHandleCurrentPlayerEditPullDownCB", "CityEditOwner", 0, iOwner)
-
-
 ##MagisterModmod
-
-
 ## Civ Type ##
 
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CIV_TYPE",()),  0)
@@ -3163,26 +2561,19 @@ class CvWorldBuilderScreen:
 		for i in range(gc.getNumCivilizationInfos()):
 			strTest = strTest + (gc.getCivilizationInfo(i).getDescription(),)
 		self.m_tabCtrlEdit.addSectionDropdown("Civilization Type", strTest, "CvScreensInterface", "WorldBuilderHandleCivTypeEditPullDownCB", "CityEditCivType", 0, pCity.getCivilizationType())
-
-
 ##MagisterModmod
 
-
 ## New Screens ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BUILDINGS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "BuildingEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton( localText.getText("TXT_KEY_WB_WONDERS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "WonderEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_RELIGION",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "ReligionEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_CORPORATION",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CorporationEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_FREE_SPECIALISTS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "FreeSpecialistEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_GREAT_PEOPLE",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "GreatPeopleEditScreen", 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_FREE_BONUS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "FreeBonusEditScreen", 0)
-
-
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "BuildingEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_RELIGION",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "ReligionEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_SPECIALIST",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "FreeSpecialistEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_BONUS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "FreeBonusEditScreen", 0)
 
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
-
-
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
+		self.m_tabCtrlEdit.addSectionLabel("",  0)
 
 ## Population ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_POPULATION",()),  0)
@@ -3205,32 +2596,29 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_DEFENSE",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("CityEditDefenseCB", "CvScreensInterface", "WorldBuilderHandleCityEditDefenseCB", "CityEditDefense", 0, 0, pCity.getTotalDefense(False), 1, pCity.getTotalDefense(False) * (100 - pCity.getDefenseDamage())/100, 0, 0)
 ## Trade Routes ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_TRADE_ROUTE",()),  0)
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_HEADING_TRADEROUTE_LIST",()) + ":",  0)
 		self.m_tabCtrlEdit.addSectionSpinner("CityEditTradeRouteCB", "CvScreensInterface", "WorldBuilderHandleCityEditTradeRouteCB", "CityEditTradeRoute", 0, 0, gc.getDefineINT("MAX_TRADE_ROUTES"), 1, pCity.getTradeRoutes(), 0, 0)
 ## Food ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_FOOD",()),  0)
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_CONCEPT_FOOD",()) + ":",  0)
 		self.m_tabCtrlEdit.addSectionSpinner("CityEditFoodCB", "CvScreensInterface", "WorldBuilderHandleCityEditFoodCB", "CityEditFood", 0, 0, pCity.growthThreshold(), 1, pCity.getFood(), 0, 0)
 ## Modify Buildings ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_MODIFIED_BUILDINGS",()),  0)
 		lBuildingClass = []
 		for i in xrange(gc.getNumBuildingClassInfos()):
-			lBuildingClass.append(gc.getBuildingClassInfo(i).getDescription() + "_Platy_" + str(i))
+			lBuildingClass.append([gc.getBuildingClassInfo(i).getDescription(), i])
 		lBuildingClass.sort()
 
 		strTest = ()
-		for iBC in xrange(len(lBuildingClass)):
-			i = lBuildingClass[iBC]
-			sBuildingClass = i[:i.find("_Platy_")]
-			iBuildingClass = int(i[i.find("_Platy_") +7:])
-			strTest += (sBuildingClass,)
-		self.m_tabCtrlEdit.addSectionDropdown("CityEditBuildingClass", strTest, "CvScreensInterface", "WorldBuilderHandleCityEditBuildingClassCB", "iBuildingClass", 0, self.m_iBuildingClass)
+		for i in xrange(len(lBuildingClass)):
+			strTest += (lBuildingClass[i][0],)
+		self.m_tabCtrlEdit.addSectionDropdown("CityEditBuildingClass", strTest, "CvScreensInterface", "WorldBuilderHandleCityEditBuildingClassCB", "BuildingClass", 0, self.m_iBuildingClass)
 		strTest = ()
 		for i in range(3):
 			strTest += (gc.getYieldInfo(i).getDescription(),)
 		for i in range(4):
 			strTest += (gc.getCommerceInfo(i).getDescription(),)
 		self.m_tabCtrlEdit.addSectionDropdown("CityEditModifer", strTest, "CvScreensInterface", "WorldBuilderHandleCityEditModiferCB", "CityEditModifer", 0, self.m_iBuildingModifier)
-		iBuildingClass = int(lBuildingClass[self.m_iBuildingClass][lBuildingClass[self.m_iBuildingClass].find("_Platy_") +7:])
+		iBuildingClass = lBuildingClass[self.m_iBuildingClass][1]
 		if self.m_iBuildingModifier < 3:
 			iModifier = pCity.getBuildingYieldChange(iBuildingClass, self.m_iBuildingModifier)
 		else:
@@ -3271,10 +2659,10 @@ class CvWorldBuilderScreen:
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 		else:
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PROGRESS",(pCity.getProductionNeeded(),)),  0)
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PROGRESS_OUT_OF",(pCity.getProductionNeeded(),)),  0)
 			self.m_tabCtrlEdit.addSectionSpinner("CityEditProductionProgressCB", "CvScreensInterface", "WorldBuilderHandleCityEditProductionProgressCB", "CityEditProductionProgress", 0, 0, pCity.getProductionNeeded(), 1, pCity.getProduction(), 0, 0)
 ## Timers##
-		strTest = (localText.getText("TXT_KEY_WB_OCCUPATION",()),) + (localText.getText("TXT_KEY_WB_DRAFT_ANGER",()),) + (localText.getText("TXT_KEY_WB_HURRY_ANGER",()),)
+		strTest = (localText.getText("TXT_KEY_CONCEPT_RESISTANCE",()),) + (localText.getText("TXT_KEY_WB_DRAFT_ANGER",()),) + (localText.getText("TXT_KEY_WB_HURRY_ANGER",()),)
 		strTest += (localText.getText("TXT_KEY_WB_DEFY_RESOLUTION",()),) + (localText.getText("TXT_KEY_WB_ESP_HAPPY",()),) + (localText.getText("TXT_KEY_WB_ESP_HEALTH",()),) + (localText.getText("TXT_KEY_WB_TEMP_HAPPY",()),)
 		self.m_tabCtrlEdit.addSectionDropdown("Timers", strTest, "CvScreensInterface", "WorldBuilderHandleCityEditTimersCB", "CityEditTimers", 0, self.m_iCityTimer)
 		if self.m_iCityTimer == 0:
@@ -3293,343 +2681,18 @@ class CvWorldBuilderScreen:
 			iCurrentTimer = pCity.getHappinessTimer()
 		self.m_tabCtrlEdit.addSectionSpinner("CityEditCurrentTimerCB", "CvScreensInterface", "WorldBuilderHandleCityEditCurrentTimerCB", "CityEditCurrentTimer", 0, 0, 100, 1, iCurrentTimer, 0, 0)
 
-
 ##MagisterModmod - MNAI Advanced Tactics
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_REV_INDEX",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("CityEditRevIndexCB", "CvScreensInterface", "WorldBuilderHandleCityEditRevIndexCB", "CityEditRevIndex", 0, -10000, 10000, 1, pCity.getRevolutionIndex(), 0, 0)
-
+		if CyGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS):
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_REV_INDEX",()),  0)
+			self.m_tabCtrlEdit.addSectionSpinner("CityEditRevIndexCB", "CvScreensInterface", "WorldBuilderHandleCityEditRevIndexCB", "CityEditRevIndex", 0, -10000, 10000, 1, pCity.getRevolutionIndex(), 0, 0)
+		else:
+			self.m_tabCtrlEdit.addSectionLabel("",  0)
+			self.m_tabCtrlEdit.addSectionLabel("",  0)
 ## City Script ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
 		self.m_tabCtrlEdit.addSectionEditCtrl(pCity.getScriptData(), "CvScreensInterface", "WorldBuilderHandleEditScriptCB", "CityEditScript", 0)
 
 		return
-
-## Building Edit Screen ##
-	def setBuildingEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 5
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_BUILDINGS",()))
-
-		lBuildings = []
-		for i in xrange(gc.getNumBuildingInfos()):
-			BuildingInfo = gc.getBuildingInfo(i)
-			if isLimitedWonderClass(gc.getBuildingInfo(i).getBuildingClassType()): continue
-			lBuildings.append(BuildingInfo.getDescription() + "_Platy_" + str(i))
-		lBuildings.sort()
-
-		iColumnLength = (len(lBuildings) +2) /iNumColumns
-		if (len(lBuildings) +2) %iNumColumns > 0:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-		for i in lBuildings:
-			sBuilding = i[:i.find("_Platy_")]
-			iBuilding = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionCheckbox(sBuilding, "CvScreensInterface", "WorldBuilderHandleEditCityBuildingCB", str(iBuilding), 0, self.m_pActivePlot.getPlotCity().isHasBuilding(iBuilding))
-		for i in range(iNumColumns * iColumnLength - (len(lBuildings) +2)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-
-		strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_BUILD_ALL",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_COPY_ALL",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Building Commands", strTest, "CvScreensInterface", "WorldBuilderHandleBuildingCommandsCB", "Building Commands", 0, 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Building Edit Screen ##
-
-## Wonder Edit Screen ##
-	def setWonderEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 4
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_WONDERS",()))
-
-		lNationalWonders = []
-		lTeamWonders = []
-		lWorldWonders = []
-		for i in xrange(gc.getNumBuildingInfos()):
-			BuildingInfo = gc.getBuildingInfo(i)
-			if isNationalWonderClass(BuildingInfo.getBuildingClassType()):
-				lNationalWonders.append(BuildingInfo.getDescription() + "_Platy_" + str(i))
-			elif isTeamWonderClass(BuildingInfo.getBuildingClassType()):
-				lNationalWonders.append(BuildingInfo.getDescription() + "_Platy_" + str(i))
-			elif isWorldWonderClass(BuildingInfo.getBuildingClassType()):
-				lWorldWonders.append(BuildingInfo.getDescription() + "_Platy_" + str(i))
-		lNationalWonders.sort()
-		lTeamWonders.sort()
-		lWorldWonders.sort()
-		iWonderType = 1
-		if len(lNationalWonders) > 0:
-			iWonderType += 1
-		if len(lTeamWonders) > 0:
-			iWonderType += 1
-		if len(lWorldWonders) > 0:
-			iWonderType += 1
-
-		iColumnLength = (len(lNationalWonders) + len(lTeamWonders) + len(lWorldWonders) +iWonderType) /iNumColumns
-		if (len(lNationalWonders) + len(lTeamWonders) + len(lWorldWonders) +iWonderType) %iNumColumns > 0:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-		if len(lNationalWonders) > 0:
-			self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_NATIONAL_WONDERS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleNationalWonderCB", "NationalWonder", 0)
-			for i in lNationalWonders:
-				sWonder = i[:i.find("_Platy_")]
-				iWonder = int(i[i.find("_Platy_") +7:])
-				self.m_tabCtrlEdit.addSectionCheckbox(sWonder, "CvScreensInterface", "WorldBuilderHandleEditCityBuildingCB", str(iWonder), 0, self.m_pActivePlot.getPlotCity().isHasBuilding(iWonder))
-		if len(lTeamWonders) > 0:
-			self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_TEAM_WONDERS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleTeamWonderCB", "TeamWonder", 0)
-			for i in lTeamWonders:
-				sWonder = i[:i.find("_Platy_")]
-				iWonder = int(i[i.find("_Platy_") +7:])
-				self.m_tabCtrlEdit.addSectionCheckbox(sWonder, "CvScreensInterface", "WorldBuilderHandleEditCityBuildingCB", str(iWonder), 0, self.m_pActivePlot.getPlotCity().isHasBuilding(iWonder))
-		if len(lWorldWonders) > 0:
-			self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_WORLD_WONDERS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleWorldWonderCB", "WorldWonder", 0)
-			for i in lWorldWonders:
-				sWonder = i[:i.find("_Platy_")]
-				iWonder = int(i[i.find("_Platy_") +7:])
-				self.m_tabCtrlEdit.addSectionCheckbox(sWonder, "CvScreensInterface", "WorldBuilderHandleEditCityBuildingCB", str(iWonder), 0, self.m_pActivePlot.getPlotCity().isHasBuilding(iWonder))
-		for i in range(iNumColumns * iColumnLength - (len(lNationalWonders) + len(lTeamWonders) + len(lWorldWonders) + iWonderType)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Wonder Edit Screen ##
-
-## Religion Edit Screen ##
-	def setReligionEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 4
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		iReligionPerColumn = (gc.getNumReligionInfos() +1) /iNumColumns
-		if (gc.getNumReligionInfos() +1) % iNumColumns > 0:
-			iReligionPerColumn += 1
-		iColumnLength = iReligionPerColumn *4 -1
-		iReligionColumn = (gc.getNumReligionInfos() +1) / iReligionPerColumn
-		if (gc.getNumReligionInfos() +1) % iReligionPerColumn > 0:
-			iReligionColumn += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_RELIGION",()))
-		lReligion = []
-		for i in xrange(gc.getNumReligionInfos()):
-			lReligion.append(gc.getReligionInfo(i).getDescription() + "_Platy_" + str(i))
-		lReligion.sort()
-
-		for i in xrange(len(lReligion)):
-			sI = lReligion[i]
-			sReligion = sI[:sI.find("_Platy_")]
-			iReligion = int(sI[sI.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sReligion, 0)
-			self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_PRESENT",()), "CvScreensInterface", "WorldBuilderHandleCityEditReligionCB", str(iReligion), 0, self.m_pActivePlot.getPlotCity().isHasReligion(iReligion))
-			self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HOLY_CITY",()), "CvScreensInterface", "WorldBuilderHandleCityEditHolyCityCB", str(iReligion), 0, self.m_pActivePlot.getPlotCity().isHolyCityByType(iReligion))
-			if (i+1) % iReligionPerColumn != 0:
-				self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-
-		for i in range(iReligionColumn * iColumnLength - (gc.getNumReligionInfos()*4 - iReligionColumn + 3)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_SPREAD_ALL",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_COPY_ALL",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Religion Commands", strTest, "CvScreensInterface", "WorldBuilderHandleReligionCommandsCB", "Religion Commands", 0, 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Religion Edit Screen ##
-
-## Corporation Edit Screen ##
-	def setCorporationEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 4
-
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		iCorporationPerColumn = (gc.getNumCorporationInfos() +1) /iNumColumns
-		if (gc.getNumCorporationInfos() +1) % iNumColumns > 0:
-			iCorporationPerColumn += 1
-		iColumnLength = iCorporationPerColumn *4 -1
-		iCorporationColumn = (gc.getNumCorporationInfos() +1) / iCorporationPerColumn
-		if (gc.getNumCorporationInfos() +1) % iCorporationPerColumn > 0:
-			iCorporationColumn += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_CORPORATION",()))
-		lCorporation = []
-		for i in xrange(gc.getNumCorporationInfos()):
-			lCorporation.append(gc.getCorporationInfo(i).getDescription() + "_Platy_" + str(i))
-		lCorporation.sort()
-		for i in xrange(len(lCorporation)):
-			sI = lCorporation[i]
-			sCorporation = sI[:sI.find("_Platy_")]
-			iCorporation = int(sI[sI.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sCorporation, 0)
-			self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_PRESENT",()), "CvScreensInterface", "WorldBuilderHandleCityEditCorporationCB", str(iCorporation), 0, self.m_pActivePlot.getPlotCity().isHasCorporation(iCorporation))
-			self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HEADQUARTERS",()), "CvScreensInterface", "WorldBuilderHandleCityEditHeadquartersCB", str(iCorporation), 0, self.m_pActivePlot.getPlotCity().isHeadquartersByType(iCorporation))
-			if (i+1) % iCorporationPerColumn != 0:
-				self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-
-		for i in range(iCorporationColumn * iColumnLength - (gc.getNumCorporationInfos()*4 - iCorporationColumn + 3)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_COPY_ALL",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Corporation Commands", strTest, "CvScreensInterface", "WorldBuilderHandleCorporationCommandsCB", "Corporation Commands", 0, 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Corporation Edit Screen ##
-
-## Free Specialists Edit Screen ##
-	def setFreeSpecialistEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 4
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-
-		iColumnLength = (gc.getNumSpecialistInfos() *2 +1) /iNumColumns
-		if (gc.getNumSpecialistInfos() *2 +1) %iNumColumns > 0:
-			iColumnLength += 1
-		if iColumnLength %2 == 1:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_FREE_SPECIALISTS",()))
-		lSpecialist = []
-		lGreatSpecialist = []
-		for i in xrange(gc.getNumSpecialistInfos()):
-			sSpecialist = gc.getSpecialistInfo(i).getType()
-			if sSpecialist.find("GREAT") > -1:
-				lGreatSpecialist.append(gc.getSpecialistInfo(i).getDescription() + "_Platy_" + str(i))
-			else:
-				lSpecialist.append(gc.getSpecialistInfo(i).getDescription() + "_Platy_" + str(i))
-		lSpecialist.sort()
-		lGreatSpecialist.sort()
-
-		for i in lSpecialist:
-			sSpecialist = i[:i.find("_Platy_")]
-			iSpecialist = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sSpecialist,  0)
-			self.m_tabCtrlEdit.addSectionSpinner(sSpecialist, "CvScreensInterface", "WorldBuilderHandleCityEditSpecialistCB", str(iSpecialist), 0, 0, 100, 1, self.m_pActivePlot.getPlotCity().getFreeSpecialistCount(iSpecialist), 0, 0)
-		for i in lGreatSpecialist:
-			sSpecialist = i[:i.find("_Platy_")]
-			iSpecialist = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sSpecialist,  0)
-			self.m_tabCtrlEdit.addSectionSpinner(sSpecialist, "CvScreensInterface", "WorldBuilderHandleCityEditSpecialistCB", str(iSpecialist), 0, 0, 100, 1, self.m_pActivePlot.getPlotCity().getFreeSpecialistCount(iSpecialist), 0, 0)
-
-		for i in range(iNumColumns * iColumnLength - (gc.getNumSpecialistInfos() *2 +1)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Free Specialists Edit Screen ##
-
-## Great People Edit Screen ##
-	def setGreatPeopleEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		lGreatPeople = []
-		for i in xrange(gc.getNumUnitInfos()):
-			if gc.getUnitInfo(i).isGoldenAge():
-				lGreatPeople.append(gc.getUnitInfo(i).getDescription() + "_Platy_" + str(i))
-		lGreatPeople.sort()
-
-		iMaxLength = 26
-		iNumColumns = ((len(lGreatPeople) *2 +5) + iMaxLength -1) /iMaxLength
-		iColumnLength = (len(lGreatPeople) *2 +5) /iNumColumns
-		if (len(lGreatPeople) *2 +5) %iNumColumns > 0:
-			iColumnLength += 1
-		if iColumnLength %2 == 1:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-		pCity = self.m_pActivePlot.getPlotCity()
-		pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
-
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_GREAT_PEOPLE",()))
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GREAT_PEOPLE_RATE",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("CityEditGPRateCB", "CvScreensInterface", "WorldBuilderHandleCityEditGPRateCB", "CityEditGPRate", 0, 0, 99999, 1, pCity.getGreatPeopleRate(), 0, 0)
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PROGRESS",(pPlayer.greatPeopleThreshold(False),)),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("CityEditGPProgressCB", "CvScreensInterface", "WorldBuilderHandleCityEditGPProgressCB", "CityEditGPProgress", 0, 0, 99999, 1, pCity.getGreatPeopleProgress(), 0, 0)
-		for i in lGreatPeople:
-			sGreatPeople = i[:i.find("_Platy_")]
-			iGreatPeople = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sGreatPeople,  0)
-			self.m_tabCtrlEdit.addSectionSpinner(sGreatPeople, "CvScreensInterface", "WorldBuilderHandleCityEditGreatPeopleCB", str(iGreatPeople), 0, 0, 99999, 1, pCity.getGreatPeopleUnitProgress(iGreatPeople), 0, 0)
-		for i in range(iColumnLength * iNumColumns - (len(lGreatPeople) *2 +5)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Great People Edit Screen ##
-
-## Free Bonus Edit Screen ##
-	def setFreeBonusEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 5
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-
-		iColumnLength = (gc.getNumBonusInfos() *2 +1) /iNumColumns
-		if (gc.getNumBonusInfos() *2 +1) %iNumColumns > 0:
-			iColumnLength += 1
-		if iColumnLength %2 == 1:
-			iColumnLength += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_FREE_BONUS",()))
-		lBonus = []
-		for i in xrange(gc.getNumBonusInfos()):
-			lBonus.append(gc.getBonusInfo(i).getDescription() + "_Platy_" + str(i))
-##		lBonus.sort()
-
-		for i in lBonus:
-			sBonus = i[:i.find("_Platy_")]
-			iBonus = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sBonus,  0)
-			self.m_tabCtrlEdit.addSectionSpinner(sBonus, "CvScreensInterface", "WorldBuilderHandleCityEditBonusCB", str(iBonus), 0, 0, 100, 1, self.m_pActivePlot.getPlotCity().getFreeBonus(iBonus), 0, 0)
-		for i in range(iNumColumns * iColumnLength - (gc.getNumBonusInfos() *2 +1)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "CityEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Free Bonus Edit Screen ##
 
 ## Player Edit Screen ##
 	def setPlayerEditInfo(self):
@@ -3691,13 +2754,13 @@ class CvWorldBuilderScreen:
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 		else:
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PROGRESS",(gc.getTeam(self.m_iCurrentTeam).getResearchCost(pPlayer.getCurrentResearch()),)),  0)
+			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PROGRESS_OUT_OF",(gc.getTeam(self.m_iCurrentTeam).getResearchCost(pPlayer.getCurrentResearch()),)),  0)
 			self.m_tabCtrlEdit.addSectionSpinner("TeamEditResearchProgressCB", "CvScreensInterface", "WorldBuilderHandleTeamEditResearchProgressCB", "TeamEditResearchProgress", 0, 0, gc.getTeam(self.m_iCurrentTeam).getResearchCost(pPlayer.getCurrentResearch()), 1, gc.getTeam(self.m_iCurrentTeam).getResearchProgress(pPlayer.getCurrentResearch()), 0, 0)
 ##
 		for i in range (iExtraSpace):
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 ## Civics ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CIVICS",()),  0)
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_PEDIA_CATEGORY_CIVIC",()) + ":",  0)
 		for iCivicOption in xrange(gc.getNumCivicOptionInfos()):
 			strTest = ()
 			iCount = 0
@@ -3713,7 +2776,7 @@ class CvWorldBuilderScreen:
 ##			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 
 ##MagisterModmod
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_TRAITS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TraitEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_TRAITS",())+"      ", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TraitEditScreen", 0)
 
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_ALIGNMENT",()),  0)
 		strTest = (localText.getText("TXT_KEY_ALIGNMENT_GOOD",()), localText.getText("TXT_KEY_ALIGNMENT_NEUTRAL",()), localText.getText("TXT_KEY_ALIGNMENT_EVIL",()))
@@ -3734,13 +2797,23 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_STATE_RELIGION_BUILDING",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("PlayerEditStateReligionBuildingProductionCB", "CvScreensInterface", "WorldBuilderHandlePlayerEditStateReligionBuildingProductionCB", "PlayerEditStateReligionBuildingProduction", 0, 0, 1000, 1, pPlayer.getStateReligionBuildingProductionModifier(), 0, 0)
 
-		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
+##		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
+##		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
+##		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 ##		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_COMMERCE_SLIDERS",()),  0)
+
+##MagisterModmod
+##Has Cast World Spell
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HAS_CAST_WORLD_SPELL",()), "CvScreensInterface", "WorldBuilderHandleEditFeatHasCastWorldSpellCB", "PlayerEditFeatHasCastedWorldSpell", 0, pPlayer.isFeatAccomplished(FeatTypes.FEAT_GLOBAL_SPELL))
+##Trust
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_SPELL_TRUST",()), "CvScreensInterface", "WorldBuilderHandleEditFeatTrustCB", "PlayerEditFeatTrust", 0, pPlayer.isFeatAccomplished(FeatTypes.FEAT_TRUST))
+##Sirona
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_SPELL_SIRONAS_TOUCH",()), "CvScreensInterface", "WorldBuilderHandleEditFeatHealUnitPerTurnCB", "PlayerEditFeatHealUnitPerTurn", 0, pPlayer.isFeatAccomplished(FeatTypes.FEAT_HEAL_UNIT_PER_TURN))
+
+
 ## Commerce Sliders ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_COMMERCE_SLIDERS",()),  0)
 		for i in xrange(4):
 			self.m_tabCtrlEdit.addSectionCheckbox(gc.getCommerceInfo(i).getDescription(), "CvScreensInterface", "WorldBuilderHandleTeamEditCommerceFlexibleCB", str(i), 0, pPlayer.isCommerceFlexible(i))
 			self.m_tabCtrlEdit.addSectionSpinner("PlayerEditCommercePercentCB", "CvScreensInterface", "WorldBuilderHandlePlayerEditCommercePercentCB", str(i), 0, 0, 100, 10, pPlayer.getCommercePercent(i), 0, 0)
@@ -3752,7 +2825,7 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 		self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 ## Golden Age ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GOLDEN_AGE",()),  0)
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_CONCEPT_GOLDEN_AGE",()) + ":",  0)
 		self.m_tabCtrlEdit.addSectionSpinner("PlayerEditGoldenAgeCB", "CvScreensInterface", "WorldBuilderHandlePlayerEditGoldenAgeCB", "PlayerEditGoldenAge", 0, 0, 1000, 1, pPlayer.getGoldenAgeTurns(), 0, 0)
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GOLDEN_AGE_UNITS",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("PlayerEditGoldenAgeUnitsCB", "CvScreensInterface", "WorldBuilderHandlePlayerEditGoldenAgeUnitsCB", "PlayerEditGoldenAgeUnits", 0, 1, 10, 1, pPlayer.unitsRequiredForGoldenAge(), 0, 0)
@@ -3770,6 +2843,7 @@ class CvWorldBuilderScreen:
 			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 
 
+
 ## Player Script ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
 		self.m_tabCtrlEdit.addSectionEditCtrl(pPlayer.getScriptData(), "CvScreensInterface", "WorldBuilderHandleEditScriptCB", "PlayerEditScript", 0)
@@ -3785,8 +2859,11 @@ class CvWorldBuilderScreen:
 	def setTeamEditInfo(self):
 		initWBToolEditCtrl()
 		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-		self.m_tabCtrlEdit.setNumColumns(3)
-		self.m_tabCtrlEdit.setColumnLength(12)
+		self.m_tabCtrlEdit.setNumColumns(4)
+
+		iExtraSpace = max(0, gc.getNumVoteSourceInfos() - 2)
+		iColumnLength = 8 + iExtraSpace
+		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
 		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_TEAM_DATA",(self.m_iCurrentTeam,)))
 ## Team ##
 		strTest = ()
@@ -3799,24 +2876,6 @@ class CvWorldBuilderScreen:
 				iCount = iCount + 1
 		self.m_tabCtrlEdit.addSectionDropdown("Team", strTest, "CvScreensInterface", "WorldBuilderHandleTeamEditPullDownCB", "TeamEditPullDown", 0, iTeam)
 		pTeam = gc.getTeam(self.m_iCurrentTeam)
-## Team Leader ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_LEADER",(gc.getPlayer(pTeam.getLeaderID()).getName(),)),  0)
-## Projects ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_PROJECTS",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "ProjectEditScreen", 0)
-## Technology ##
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_TECHNOLOGY",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TechEditScreen", 0)
-## Guaranteed Eligiblity ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GUARANTEED_ELIGIBILITY",()),  0)
-		for i in xrange(gc.getNumVoteSourceInfos()):
-			self.m_tabCtrlEdit.addSectionCheckbox(gc.getVoteSourceInfo(i).getDescription(), "CvScreensInterface", "WorldBuilderHandleTeamEditForceTeamVoteCB", str(i), 0, pTeam.isForceTeamVoteEligible(i))
-		for i in xrange(3 - gc.getNumVoteSourceInfos()):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-## Enemy War Weariness ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_ENEMY_WAR_WEARINESS",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("TeamEditEnemyWarWearinessCB", "CvScreensInterface", "WorldBuilderHandleTeamEditEnemyWarWearinessCB", "TeamEditEnemyWarWeariness", 0, 0, 1000, 1, pTeam.getEnemyWarWearinessModifier(), 0, 0)
-## Nuke Interception ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_NUKE_INTERCEPTION",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("TeamEditNukeInterceptionCB", "CvScreensInterface", "WorldBuilderHandleTeamEditNukeInterceptionCB", "TeamEditNukeInterception", 0, -100, 100, 1, pTeam.getNukeInterception(), 0, 0)
 ## Merge Team ##
 		strTest = (localText.getText("TXT_KEY_WB_MERGE_TEAM",()),)
 		for i in xrange(gc.getMAX_TEAMS()):
@@ -3824,19 +2883,19 @@ class CvWorldBuilderScreen:
 				if i == self.m_iCurrentTeam: continue
 				strTest = strTest + (gc.getTeam(i).getName(),)
 		self.m_tabCtrlEdit.addSectionDropdown("AddTeam", strTest, "CvScreensInterface", "WorldBuilderHandleAddTeamCB", "AddTeam", 0, 0)
-## Improvement Extra Yield ##
-		strTest = ()
-		lImprovements = []
-		for i in xrange(gc.getNumImprovementInfos()):
-			if gc.getImprovementInfo(i).isGraphicalOnly(): continue
-			strTest = strTest + (gc.getImprovementInfo(i).getDescription(),)
-			lImprovements.append(i)
-		self.m_tabCtrlEdit.addSectionDropdown("Improvement", strTest, "CvScreensInterface", "WorldBuilderHandleImprovementEditPullDownCB", "ImprovementEditPullDown", 0, self.m_iImprovement)
-		strTest = ()
-		for i in xrange(3):
-			strTest = strTest + (localText.getText("TXT_KEY_WB_IMPROVEMENT_YIELD",(gc.getYieldInfo(i).getDescription(),)),)
-		self.m_tabCtrlEdit.addSectionDropdown("Yield", strTest, "CvScreensInterface", "WorldBuilderHandleYieldEditPullDownCB", "YieldEditPullDown", 0, self.m_iYield)
-		self.m_tabCtrlEdit.addSectionSpinner("TeamEditImprovementYieldCB", "CvScreensInterface", "WorldBuilderHandleTeamEditImprovementYieldCB", "TeamEditImprovementYield", 0, 0, 10, 1, pTeam.getImprovementYieldChange(lImprovements[self.m_iImprovement], self.m_iYield), 0, 0)
+## Team Leader ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_LEADER",(gc.getPlayer(pTeam.getLeaderID()).getName(),)),  0)
+## Projects ##
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_PROJECT",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "ProjectEditScreen", 0)
+## Technology ##
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_PEDIA_CATEGORY_TECH",())+"\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TechEditScreen", 0)
+## Guaranteed Eligiblity ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GUARANTEED_ELIGIBILITY",()),  0)
+		for i in xrange(gc.getNumVoteSourceInfos()):
+			self.m_tabCtrlEdit.addSectionCheckbox(gc.getVoteSourceInfo(i).getDescription(), "CvScreensInterface", "WorldBuilderHandleTeamEditForceTeamVoteCB", str(i), 0, pTeam.isForceTeamVoteEligible(i))
+##
+		for i in xrange(iExtraSpace):
+			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 ## Domain Moves ##
 		strTest = ()
 		for i in range(3):
@@ -3851,16 +2910,37 @@ class CvWorldBuilderScreen:
 			strTest = strTest + (gc.getRouteInfo(i).getDescription() + " " + localText.getText("TXT_KEY_WB_ROUTE_CHANGE",()),)
 		self.m_tabCtrlEdit.addSectionDropdown("Route", strTest, "CvScreensInterface", "WorldBuilderHandleRouteEditPullDownCB", "RouteEditPullDown", 0, self.m_iRoute)
 		self.m_tabCtrlEdit.addSectionSpinner("TeamEditRouteChangeCB", "CvScreensInterface", "WorldBuilderHandleTeamEditRouteChangeCB", "TeamEditRouteChange", 0, -100, 100, 1, pTeam.getRouteChange(self.m_iRoute), 0, 0)
-## Tech Sharing ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_KNOWN_CIVS",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("TeamEditKnownCivsCB", "CvScreensInterface", "WorldBuilderHandleTeamEditKnownCivsCB", "TeamEditKnownCivs", 0, 1, 100, 1, self.m_iTechShareCivs, 0, 0)
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_TECH_SHARE",()), "CvScreensInterface", "WorldBuilderHandleTeamEditTechShareCB", "TeamEditTechShare", 0, pTeam.isTechShare(self.m_iTechShareCivs -1))
+## Enemy War Weariness ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_ENEMY_WAR_WEARINESS",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("TeamEditEnemyWarWearinessCB", "CvScreensInterface", "WorldBuilderHandleTeamEditEnemyWarWearinessCB", "TeamEditEnemyWarWeariness", 0, 0, 1000, 1, pTeam.getEnemyWarWearinessModifier(), 0, 0)
+## Nuke Interception ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_NUKE_INTERCEPTION",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("TeamEditNukeInterceptionCB", "CvScreensInterface", "WorldBuilderHandleTeamEditNukeInterceptionCB", "TeamEditNukeInterception", 0, -100, 100, 1, pTeam.getNukeInterception(), 0, 0)
+##
+		for i in xrange(iExtraSpace):
+			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
+## Improvement Extra Yield ##
+		strTest = ()
+		lImprovements = []
+		for i in xrange(gc.getNumImprovementInfos()):
+			if gc.getImprovementInfo(i).isGraphicalOnly(): continue
+			strTest = strTest + (gc.getImprovementInfo(i).getDescription(),)
+			lImprovements.append(i)
+		self.m_tabCtrlEdit.addSectionDropdown("Improvement", strTest, "CvScreensInterface", "WorldBuilderHandleImprovementEditPullDownCB", "ImprovementEditPullDown", 0, self.m_iImprovement)
+		strTest = ()
+		for i in xrange(3):
+			strTest = strTest + (localText.getText("TXT_KEY_WB_IMPROVEMENT_YIELD",(gc.getYieldInfo(i).getDescription(),)),)
+		self.m_tabCtrlEdit.addSectionDropdown("Yield", strTest, "CvScreensInterface", "WorldBuilderHandleYieldEditPullDownCB", "YieldEditPullDown", 0, self.m_iYield)
+		self.m_tabCtrlEdit.addSectionSpinner("TeamEditImprovementYieldCB", "CvScreensInterface", "WorldBuilderHandleTeamEditImprovementYieldCB", "TeamEditImprovementYield", 0, 0, 10, 1, pTeam.getImprovementYieldChange(lImprovements[self.m_iImprovement], self.m_iYield), 0, 0)
 ## Team Abilities ##
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_MAP_CENTERING",()), "CvScreensInterface", "WorldBuilderHandleTeamEditMapCenteringCB", "TeamEditMapCentering", 0, pTeam.isMapCentering())
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_WATER_WORK",()), "CvScreensInterface", "WorldBuilderHandleTeamEditWaterWorkCB", "TeamEditWaterWork", 0, pTeam.isWaterWork())
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_EXTRA_WATER_SIGHT",()), "CvScreensInterface", "WorldBuilderHandleTeamEditExtraWaterSeeFromCB", "TeamEditExtraWaterSeeFrom", 0, pTeam.isExtraWaterSeeFrom())
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_BRIDGE_BUILDING",()), "CvScreensInterface", "WorldBuilderHandleTeamEditBridgeBuildingCB", "TeamEditBridgeBuilding", 0, pTeam.isBridgeBuilding())
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IRRIGATION",()), "CvScreensInterface", "WorldBuilderHandleTeamEditIrrigationCB", "TeamEditIrrigation", 0, pTeam.isIrrigation())
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_CONCEPT_IRRIGATION",()), "CvScreensInterface", "WorldBuilderHandleTeamEditIrrigationCB", "TeamEditIrrigation", 0, pTeam.isIrrigation())
+##
+		for i in xrange(iExtraSpace):
+			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IGNORE_IRRIGATION",()), "CvScreensInterface", "WorldBuilderHandleTeamEditIgnoreIrrigationCB", "TeamEditIgnoreIrrigation", 0, pTeam.isIgnoreIrrigation())
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_GOLD_TRADING",()), "CvScreensInterface", "WorldBuilderHandleTeamEditGoldTradingCB", "TeamEditGoldTrading", 0, pTeam.isGoldTrading())
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_TECH_TRADING",()), "CvScreensInterface", "WorldBuilderHandleTeamEditTechTradingCB", "TeamEditTechTrading", 0, pTeam.isTechTrading())
@@ -3877,46 +2957,6 @@ class CvWorldBuilderScreen:
 		return
 ## Team Edit Screen ##
 
-## Project Edit Screen ##
-	def setProjectEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 5
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_PROJECTS",()))
-
-		iProjectPerColumn = (gc.getNumProjectInfos() +1) /iNumColumns
-		if (gc.getNumProjectInfos() +1) % iNumColumns > 0:
-			iProjectPerColumn += 1
-		iColumnLength = iProjectPerColumn *2
-		iProjectColumn = (gc.getNumProjectInfos() +1) / iProjectPerColumn
-		if (gc.getNumProjectInfos() +1) % iProjectPerColumn > 0:
-			iProjectColumn += 1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		lProject = []
-		for i in xrange(gc.getNumProjectInfos()):
-			lProject.append(gc.getProjectInfo(i).getDescription() + "_Platy_" + str(i))
-		lProject.sort()
-
-		for i in lProject:
-			sProject = i[:i.find("_Platy_")]
-			iProject = int(i[i.find("_Platy_") +7:])
-			self.m_tabCtrlEdit.addSectionLabel(sProject,  0)
-			self.m_tabCtrlEdit.addSectionSpinner(sProject, "CvScreensInterface", "WorldBuilderHandleEditTeamProjectCB", str(iProject), 0, 	0, max(1, gc.getProjectInfo(iProject).getVictoryThreshold(gc.getInfoTypeForString("VICTORY_SPACE_RACE"))), 1, gc.getTeam(self.m_iCurrentTeam).getProjectCount(iProject), 0, 0)
-
-		for i in range(iProjectColumn * iColumnLength - (gc.getNumProjectInfos() *2 +1)):
-			self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TeamEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Project Edit Screen ##
 
 ## MagisterModmod
 ## Trait Edit Screen ##
@@ -3943,7 +2983,7 @@ class CvWorldBuilderScreen:
 		for iTrait in xrange(gc.getNumTraitInfos()):
 			self.m_tabCtrlEdit.addSectionCheckbox(localText.getText(str(gc.getTraitInfo(iTrait).getDescription()),()), "CvScreensInterface", "WorldBuilderHandleEditPlayerTraitCB", str(iTrait), 0, gc.getPlayer(self.m_iCurrentPlayer).hasTrait(iTrait))
 
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "PlayerEditScreen", 0)
+		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "      ", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "PlayerEditScreen", 0)
 
 		if (not self.m_tabCtrlEdit.isNone()):
 			self.m_normalPlayerTabCtrl.enable(False)
@@ -3953,78 +2993,19 @@ class CvWorldBuilderScreen:
 ## Trait Edit Screen ##
 ## MagisterModmod
 
-## Technology Edit Screen ##
-	def setTechnologyEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 7
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_TECHNOLOGY",()))
-		iEraPerColumn = (gc.getNumEraInfos() + 6) / iNumColumns
-		iMax = 0
-		for iEra in xrange(0, gc.getNumEraInfos(), iEraPerColumn):
-			iCount = 0
-			for i in xrange(gc.getNumTechInfos()):
-				if gc.getTechInfo(i).getEra() >= iEra and gc.getTechInfo(i).getEra() < (iEra + iEraPerColumn):
-					iCount += 1
-			iMax = max(iCount, iMax)
-		iColumnLength = iMax +iEraPerColumn *2 -1
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
-
-		iCount = 0
-		for iEra in xrange(gc.getNumEraInfos()):
-			self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_ERA",(gc.getEraInfo(iEra).getDescription(),)),  0)
-			lTech = []
-			for i in xrange(gc.getNumTechInfos()):
-				if gc.getTechInfo(i).getEra() == iEra:
-					lTech.append(gc.getTechInfo(i).getDescription() + "_Platy_" + str(i))
-					iCount += 1
-			lTech.sort()
-			for i in lTech:
-				sTech = i[:i.find("_Platy_")]
-				iTech = int(i[i.find("_Platy_") +7:])
-				self.m_tabCtrlEdit.addSectionCheckbox(sTech, "CvScreensInterface", "WorldBuilderHandleEditTeamTechnologyCB", str(iTech), 0, gc.getTeam(self.m_iCurrentTeam).isHasTech(iTech))
-			if iEra == gc.getNumEraInfos() -1:
-				for i in range(iMax - iCount -3):
-					self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-			elif (iEra +1) % iEraPerColumn > 0:
-				self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-			else:
-				for i in range(iMax - iCount):
-					self.m_tabCtrlEdit.addSectionLabel(" ",  0)
-				iCount = 0
-
-		strTest = (localText.getText("TXT_KEY_WB_ADD_ERA",()),)
-		for i in xrange(gc.getNumEraInfos()):
-			strTest = strTest + (localText.getText("TXT_KEY_WB_ERA", (gc.getEraInfo(i).getDescription(),)),)
-		strTest = strTest + (localText.getText("TXT_KEY_WB_ALL_TECHS",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Tech By Era", strTest, "CvScreensInterface", "WorldBuilderHandleTechByEraPullDownCB", "TechByEraPullDown", 0, 0)
-		strTest = (localText.getText("TXT_KEY_WB_REMOVE_ERA",()),)
-		for i in xrange(gc.getNumEraInfos()):
-			strTest = strTest + (localText.getText("TXT_KEY_WB_ERA", (gc.getEraInfo(i).getDescription(),)),)
-		strTest = strTest + (localText.getText("TXT_KEY_WB_ALL_TECHS",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Tech By Era", strTest, "CvScreensInterface", "WorldBuilderHandleRemoveTechByEraPullDownCB", "RemoveTechByEraPullDown", 0, 0)
-		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_BACK",()) + "\b\b\b\b\b\b", "CvScreensInterface", "WorldBuilderHandleEnterNewScreenCB", "TeamEditScreen", 0)
-
-		if (not self.m_tabCtrlEdit.isNone()):
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Technology Edit Screen ##
-
 ## Game Data Screen ##
 	def setGameEditInfo(self):
 		initWBToolEditCtrl()
 		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-		self.m_tabCtrlEdit.setNumColumns(2)
+		self.m_tabCtrlEdit.setNumColumns(1)
 		self.m_tabCtrlEdit.setColumnLength(15)
 		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_GAME_DATA",()))
 ## Start Year ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_START_YEAR",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("Start Year", "CvScreensInterface", "WorldBuilderHandleGameEditStartYearCB", "GameEditStartYear", 0, -10000, 10000, 100, CyGame().getStartYear(), 0, 0)
+## Nukes Exploded ##
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_NUKES_EXPLODED",()),  0)
+		self.m_tabCtrlEdit.addSectionSpinner("Nukes Exploded", "CvScreensInterface", "WorldBuilderHandleGameEditNukesExplodedCB", "GameEditNukesExploded", 0, 0, 10000, 1, CyGame().getNukesExploded(), 0, 0)
 
 ##MagisterModmod
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCENARIO_COUNTER",()),  0)
@@ -4034,41 +3015,6 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionSpinner("GlobalCounterCB", "CvScreensInterface", "WorldBuilderHandleGlobalCounterEditCB", "GameEditGlobalCounter", 0, 0, 100, 1, CyGame().getGlobalCounter(), 0, 0)
 ##MagisterModmod
 
-## Global Defines ##
-		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GLOBAL_DEFINE",()),  0)
-		lGlobalDefine = []
-		GlobalDefineFile = open("Assets/XML/GlobalDefines.xml")
-		for line in GlobalDefineFile.readlines():
-			if "<DefineName>" in line:
-				strGlobal = line[line.find(">") +1 : line.find("</")]
-			elif "<iDefineIntVal>" in line:
-				lGlobalDefine.append(strGlobal + "_PLATYINT")
-			elif "<DefineTextVal>" in line:
-				lGlobalDefine.append(strGlobal + "_PLATYSTR")
-			elif "<fDefineFloatVal>" in line:
-				lGlobalDefine.append(strGlobal + "_PLATYFLOAT")
-		GlobalDefineFile.close()
-		lGlobalDefine.sort()
-		lGlobalType = []
-		strTest = ()
-		for i in xrange(len(lGlobalDefine)):
-			sGlobal = lGlobalDefine[i]
-			strTest += (sGlobal[:sGlobal.find("_PLATY")] ,)
-			if sGlobal.find("_PLATYINT") > -1:
-				lGlobalType.append("INT")
-			elif sGlobal.find("_PLATYSTR") > -1:
-				lGlobalType.append("STR")
-			else:
-				lGlobalType.append("FLOAT")
-			lGlobalDefine[i] = sGlobal[:sGlobal.find("_PLATY")]
-		self.m_tabCtrlEdit.addSectionDropdown("Global Define", strTest, "CvScreensInterface", "WorldBuilderHandleEditGlobalDefineCB", "EditGlobal Define", 0, self.m_iGlobalDefine)
-		if lGlobalType[self.m_iGlobalDefine] == "INT":
-			self.m_tabCtrlEdit.addSectionSpinner("GlobalDefineINT", "CvScreensInterface", "WorldBuilderHandleGlobalDefineCB", "I" + lGlobalDefine[self.m_iGlobalDefine], 0, -10000, 10000, 1, gc.getDefineINT(lGlobalDefine[self.m_iGlobalDefine]), 0 , 0)
-		elif lGlobalType[self.m_iGlobalDefine] == "STR":
-			self.m_tabCtrlEdit.addSectionLabel("",  0)
-		#	self.m_tabCtrlEdit.addSectionEditCtrl(gc.getDefineSTRING(lGlobalDefine[self.m_iGlobalDefine]), "CvScreensInterface", "WorldBuilderHandleGlobalDefineCB", "S" + lGlobalDefine[self.m_iGlobalDefine], 0)
-		else:
-			self.m_tabCtrlEdit.addSectionSpinner("GlobalDefineFLOAT", "CvScreensInterface", "WorldBuilderHandleGlobalDefineCB", "F" + lGlobalDefine[self.m_iGlobalDefine], 0, -10000.00, 10000.00, 0.01, gc.getDefineFLOAT(lGlobalDefine[self.m_iGlobalDefine]), 0 , 0)
 ## Game Script ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
 		self.m_tabCtrlEdit.addSectionEditCtrl(CyGame().getScriptData(), "CvScreensInterface", "WorldBuilderHandleEditScriptCB", "GameEditScript", 0)
@@ -4085,7 +3031,7 @@ class CvWorldBuilderScreen:
 		initWBToolEditCtrl()
 		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
 
-		iNumColumns = 4
+		iNumColumns = 5
 		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
 		Visible = []
 		Hidden = []
@@ -4106,9 +3052,9 @@ class CvWorldBuilderScreen:
 		if iTotal % iNumColumns > 0:
 			iColumnLength += 1
 		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), min(self.yResolution, max(5, iColumnLength) * self.iColumnHeight))
+		self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * 200), min(self.yResolution, max(5, iColumnLength) * 41))
 
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_GAME_OPTION",()))
+		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_HELP2",()))
 		if bHasHidden:
 			self.m_tabCtrlEdit.addSectionRadioButton(localText.getText("TXT_KEY_WB_SHOW_ALL",()), "CvScreensInterface", "WorldBuilderHandleVisibleOptionsCB", "ShowAll", 0, self.m_iVisibleOption == 0)
 			self.m_tabCtrlEdit.addSectionRadioButton(localText.getText("TXT_KEY_WB_SHOW_VISIBLE",()), "CvScreensInterface", "WorldBuilderHandleVisibleOptionsCB", "ShowVisible", 0, self.m_iVisibleOption == 1)
@@ -4205,7 +3151,7 @@ class CvWorldBuilderScreen:
 
 ## Plot Type ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CHANGE_PLOTTYPE",()),  0)
-		strTest = (localText.getText("TXT_KEY_WB_MOUNTAIN",()),) + (localText.getText("TXT_KEY_WB_HILL",()),) + (localText.getText("TXT_KEY_WB_LAND",()),) + (localText.getText("TXT_KEY_WB_OCEAN",()),)
+		strTest = (localText.getText("TXT_KEY_TERRAIN_PEAK",()),) + (localText.getText("TXT_KEY_TERRAIN_HILL",()),) + (localText.getText("TXT_KEY_WB_LAND",()),) + (localText.getText("TXT_KEY_TERRAIN_OCEAN",()),)
 		self.m_tabCtrlEdit.addSectionDropdown("PlotEditPlotType", strTest, "CvScreensInterface", "WorldBuilderHandlePlotEditPlotTypeCB", "PlotEditPlotType", 0, self.m_pActivePlot.getPlotType())
 ## Terrain ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_CHANGE_TERRAIN",()),  0)
@@ -4326,208 +3272,6 @@ class CvWorldBuilderScreen:
 			self.m_bCtrlEditUp = True
 		return
 ## Plot Edit Screen ##
-
-
-## Diplomacy Edit Screen ##
-	def setDiplomacyEditInfo(self):
-		initWBToolEditCtrl()
-		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-
-		iNumColumns = 8
-		self.m_tabCtrlEdit.setNumColumns(iNumColumns)
-		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_DIPLOMACY",()))
-
-		pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
-		pTeam = gc.getTeam(self.m_iCurrentTeam)
-
-		strTest = (localText.getText("TXT_KEY_WB_PAGE1",()),) + (localText.getText("TXT_KEY_WB_PAGE2",()),) + (localText.getText("TXT_KEY_WB_ESPIONAGE",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Diplomacy Page", strTest, "CvScreensInterface", "WorldBuilderHandleDiplomacyPageCB", "Diplomacy Page", 0, self.m_iDiplomacyPage)
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_MEET_ALL",()), "CvScreensInterface", "WorldBuilderHandleMeetAllCB", "MeetAll", 0, 0)
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_SHOW_DEAD",()), "CvScreensInterface", "WorldBuilderHandleDiplomacyShowDeadCB", "ShowDead", 0, self.m_bShowDead)
-		strTest = (localText.getText("TXT_KEY_WB_TOWARDS_OTHERS",()),) + (localText.getText("TXT_KEY_WB_TOWARDS",(pPlayer.getName(),)),)
-		self.m_tabCtrlEdit.addSectionDropdown("Towards Choice", strTest, "CvScreensInterface", "WorldBuilderHandleTowardsPlayerCB", "War", 0, self.m_bTowardsPlayer)
-		strTest = (localText.getText("TXT_KEY_PEDIA_CATEGORY_CIV",()),) + (localText.getText("TXT_KEY_PEDIA_CATEGORY_LEADER",()),)
-		self.m_tabCtrlEdit.addSectionDropdown("Towards Choice", strTest, "CvScreensInterface", "WorldBuilderHandleDiploNameCB", "War", 0, self.m_bDiploName)
-
-		strTest = ()
-		iCount = 0
-		lOthers = []
-		for i in xrange(gc.getMAX_PLAYERS()):
-			if gc.getPlayer(i).isEverAlive():
-				if self.m_bDiploName:
-					sName = gc.getPlayer(i).getName()
-				else:
-					sName = gc.getPlayer(i).getCivilizationShortDescription(0)
-				if not gc.getPlayer(i).isAlive():
-					sName = "*" + sName
-				strTest = strTest + (sName,)
-				if i == self.m_iCurrentPlayer:
-					iCurrentPlayer = iCount
-				elif gc.getPlayer(i).isAlive() or self.m_bShowDead:
-					lOthers.append(i)
-				iCount += 1
-		
-		iColumnLength = max(5, len(lOthers) +1)
-		self.m_tabCtrlEdit.setColumnLength(iColumnLength)
-		if max(5, iColumnLength) * self.iColumnHeight > self.yResolution:
-			self.m_tabCtrlEdit.setSize(min(self.xResolution, iNumColumns * self.iColumnWidth), self.yResolution)
-		for i in range(iColumnLength - 5):
-			self.m_tabCtrlEdit.addSectionLabel("",  0)
-
-		self.m_tabCtrlEdit.addSectionDropdown("Current Player", strTest, "CvScreensInterface", "WorldBuilderHandleCurrentPlayerEditPullDownCB", "DiplomacyEditCurrentPlayer", 0, iCurrentPlayer)
-		for i in lOthers:
-			if self.m_bDiploName:
-				sName = gc.getPlayer(i).getName()
-			else:
-				sName = gc.getPlayer(i).getCivilizationShortDescription(0)
-			if not gc.getPlayer(i).isAlive():
-				sName = "*" + sName
-			self.m_tabCtrlEdit.addSectionCheckbox(sName, "CvScreensInterface", "WorldBuilderHandleTeamEditMetStatusCB", str(gc.getPlayer(i).getTeam()), 0, pTeam.isHasMet(gc.getPlayer(i).getTeam()))
-		for i in xrange(iColumnLength - len(lOthers) - 1):
-			self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-		if self.m_iDiplomacyPage == 0:
-			strTest = (localText.getText("TXT_KEY_WB_RELATIONSHIP",()),)
-			self.m_tabCtrlEdit.addSectionDropdown("Relationship", strTest, "CvScreensInterface", "WorldBuilderHandleRelationshipCB", "Relationship", 0, 0)
-			for i in lOthers:
-				strTest = (localText.getText("TXT_KEY_WB_FVASSAL",()),) + (localText.getText("TXT_KEY_WB_CVASSAL",()),) + (localText.getText("TXT_KEY_WB_MASTER",()),) + (localText.getText("TXT_KEY_WB_NONE",()),)
-				self.m_tabCtrlEdit.addSectionDropdown("Relationship", strTest, "CvScreensInterface", "WorldBuilderHandleTeamEditRelationshipCB", str(gc.getPlayer(i).getTeam()), 0, self.relationshipStatus(gc.getPlayer(i).getTeam(), self.m_iCurrentTeam))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_ENABLE_ALL",()),) 
-			self.m_tabCtrlEdit.addSectionDropdown("Diplomacy Commands", strTest, "CvScreensInterface", "WorldBuilderHandleDiplomacyCommandsCB", "War", 0, 0)
-			for i in lOthers:
-				self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_WAR",()), "CvScreensInterface", "WorldBuilderHandleTeamEditWarStatusCB", str(gc.getPlayer(i).getTeam()), 0, pTeam.isAtWar(gc.getPlayer(i).getTeam()))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_ENABLE_ALL",()),) 
-			self.m_tabCtrlEdit.addSectionDropdown("Diplomacy Commands", strTest, "CvScreensInterface", "WorldBuilderHandleDiplomacyCommandsCB", "Permanent", 0, 0)
-			for i in lOthers:
-				self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_PERMANENT",()), "CvScreensInterface", "WorldBuilderHandleTeamEditPermanentWarCB", str(gc.getPlayer(i).getTeam()), 0, pTeam.isPermanentWarPeace(gc.getPlayer(i).getTeam()))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_ENABLE_ALL",()),)
-			self.m_tabCtrlEdit.addSectionDropdown("Diplomacy Commands", strTest, "CvScreensInterface", "WorldBuilderHandleDiplomacyCommandsCB", "OpenBorders", 0, 0)
-			for i in lOthers:
-				self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_OPEN_BORDERS",()), "CvScreensInterface", "WorldBuilderHandleTeamEditSignOpenBordersCB", str(gc.getPlayer(i).getTeam()), 0, pTeam.isOpenBorders(gc.getPlayer(i).getTeam()))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COMMANDS",()),) + (localText.getText("TXT_KEY_WB_CLEAR_ALL",()),) + (localText.getText("TXT_KEY_WB_ENABLE_ALL",()),) 
-			self.m_tabCtrlEdit.addSectionDropdown("Diplomacy Commands", strTest, "CvScreensInterface", "WorldBuilderHandleDiplomacyCommandsCB", "DefensivePact", 0, 0)
-			for i in lOthers:
-				self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_DEFENSIVE_PACT",()), "CvScreensInterface", "WorldBuilderHandleTeamEditSignDefensivePactCB", str(gc.getPlayer(i).getTeam()), 0, pTeam.isDefensivePact(gc.getPlayer(i).getTeam()))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-		elif self.m_iDiplomacyPage == 1:
-			strTest = (localText.getText("TXT_KEY_WB_PAGE2",()),)
-			self.m_tabCtrlEdit.addSectionDropdown("Attitude", strTest, "CvScreensInterface", "WorldBuilderHandleAttitudeCB", "Attitude", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iPlayerB = i
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iPlayerB = self.m_iCurrentPlayer
-				strTest = ()
-				for iAttitude in range(5):
-					strTest = strTest + (gc.getAttitudeInfo(iAttitude).getDescription(),)
-				self.m_tabCtrlEdit.addSectionDropdown("Attitude", strTest, "CvScreensInterface", "WorldBuilderHandleAttitudeEditPullDownCB", str(i), 0, pPlayerA.AI_getAttitude(iPlayerB))
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = ()
-			for i in range(33):
-				strTest = strTest + (gc.getMemoryInfo(i).getDescription(),)
-			self.m_tabCtrlEdit.addSectionDropdown("Memory", strTest, "CvScreensInterface", "WorldBuilderHandleMemoryEditPullDownCB", "MemoryEditPullDown", 0, self.m_iMemory)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iPlayerB = i
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iPlayerB = self.m_iCurrentPlayer
-				self.m_tabCtrlEdit.addSectionSpinner("Memory Count", "CvScreensInterface", "WorldBuilderHandlePlayerEditMemoryCB", str(i), 0, 0, 100, 1, pPlayerA.AI_getMemoryCount(iPlayerB, self.m_iMemory), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-		else:
-			strTest = (localText.getText("TXT_KEY_WB_ESPIONAGE",()),)
-			for i in xrange(0, 4):
-				strTest += ("+" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			for i in xrange(0, 4):
-				strTest += ("-" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			self.m_tabCtrlEdit.addSectionDropdown("Espionage", strTest, "CvScreensInterface", "WorldBuilderHandleEspionagePullDownCB", "Espionage", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iTeamB = gc.getPlayer(i).getTeam()
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iTeamB = self.m_iCurrentTeam
-				self.m_tabCtrlEdit.addSectionSpinner("TeamEditEspionagePointsCB", "CvScreensInterface", "WorldBuilderHandleTeamEditEspionagePointsCB", str(iTeamB), 0, 0, 1000000, 1, gc.getTeam(pPlayerA.getTeam()).getEspionagePointsAgainstTeam(iTeamB), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_ESPIONAGE_WEIGHT",()),)
-			for i in xrange(0, 3):
-				strTest += ("+" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			for i in xrange(0, 3):
-				strTest += ("-" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			self.m_tabCtrlEdit.addSectionDropdown("EspionageWeight", strTest, "CvScreensInterface", "WorldBuilderHandleEspionageWeightPullDownCB", "EspionageWeight", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iTeamB = gc.getPlayer(i).getTeam()
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iTeamB = self.m_iCurrentTeam
-				self.m_tabCtrlEdit.addSectionSpinner("PlayerEditEspionageWeightCB", "CvScreensInterface", "WorldBuilderHandlePlayerEditEspionageWeightCB", str(i), 0, 0, 99, 1, pPlayerA.getEspionageSpendingWeightAgainstTeam(iTeamB), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COUNTER_ESPIONAGE_MOD",()),)
-			for i in xrange(0, 4):
-				strTest += ("+" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			for i in xrange(0, 4):
-				strTest += ("-" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			self.m_tabCtrlEdit.addSectionDropdown("CounterEspionageMod", strTest, "CvScreensInterface", "WorldBuilderHandleCounterEspionageModPullDownCB", "CounterEspionageMod", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iTeamB = gc.getPlayer(i).getTeam()
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iTeamB = self.m_iCurrentTeam
-				self.m_tabCtrlEdit.addSectionSpinner("TeamEditCounterEspionageModCB", "CvScreensInterface", "WorldBuilderHandleTeamEditCounterEspionageModCB", str(iTeamB), 0, 0, 1000, 1, gc.getTeam(pPlayerA.getTeam()).getCounterespionageModAgainstTeam(iTeamB), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_COUNTER_ESPIONAGE",()),)
-			for i in xrange(0, 4):
-				strTest += ("+" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			for i in xrange(0, 4):
-				strTest += ("-" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			self.m_tabCtrlEdit.addSectionDropdown("CounterEspionage", strTest, "CvScreensInterface", "WorldBuilderHandleCounterEspionagePullDownCB", "CounterEspionage", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iTeamB = gc.getPlayer(i).getTeam()
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iTeamB = self.m_iCurrentTeam
-				self.m_tabCtrlEdit.addSectionSpinner("TeamEditCounterEspionageCB", "CvScreensInterface", "WorldBuilderHandleTeamEditCounterEspionageCB", str(iTeamB), 0, 0, 1000, 1, gc.getTeam(pPlayerA.getTeam()).getCounterespionageTurnsLeftAgainstTeam(iTeamB), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-			strTest = (localText.getText("TXT_KEY_WB_WAR_WEARINESS",()),)
-			for i in xrange(0, 4):
-				strTest += ("+" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			for i in xrange(0, 4):
-				strTest += ("-" + localText.getText("TXT_KEY_WB_ADD_ALL",(10 ** i,)),)
-			self.m_tabCtrlEdit.addSectionDropdown("WarWeariness", strTest, "CvScreensInterface", "WorldBuilderHandleWarWearinessPullDownCB", "WarWeariness", 0, 0)
-			for i in lOthers:
-				pPlayerA = gc.getPlayer(self.m_iCurrentPlayer)
-				iTeamB = gc.getPlayer(i).getTeam()
-				if self.m_bTowardsPlayer:
-					pPlayerA = gc.getPlayer(i)
-					iTeamB = self.m_iCurrentTeam
-				self.m_tabCtrlEdit.addSectionSpinner("TeamEditWarWearinessCB", "CvScreensInterface", "WorldBuilderHandleTeamEditWarWearinessCB", str(iTeamB), 0, 0, 10000, 1, gc.getTeam(pPlayerA.getTeam()).getWarWeariness(iTeamB), 0, 0)
-			for i in xrange(iColumnLength - len(lOthers) - 1):
-				self.m_tabCtrlEdit.addSectionCheckbox("", "", "", "", 0, 0)
-		if (not self.m_tabCtrlEdit.isNone()):
-			print("Enabling map control 5")
-			self.m_normalPlayerTabCtrl.enable(False)
-			self.m_normalMapTabCtrl.enable(False)
-			self.m_bCtrlEditUp = True
-		return
-## Diplomacy Edit Screen ##
 
 	def initCityEditScreen(self):
 		self.setCityEditInfo(False)
@@ -4692,7 +3436,7 @@ class CvWorldBuilderScreen:
 		if (self.m_tabCtrlEdit != 0):
 			self.m_tabCtrlEdit.enable(False)
 ## Diplomacy Screen ##
-		self.setDiplomacyEditInfo()
+		WBDiplomacyScreen.WBDiplomacyScreen().interfaceScreen(self.m_iCurrentPlayer)
 ## Diplomacy Screen ##
 		return
 
@@ -4788,34 +3532,6 @@ class CvWorldBuilderScreen:
 			bOn = not self.m_pActivePlot.getUnit(self.m_iCurrentUnit).isHasPromotion(iIndex)
 			self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setHasPromotion(iIndex, bOn)
 		return 1
-
-	def relationshipStatus(self, iTeam1, iTeam2):
-		if not self.m_bTowardsPlayer:
-			iTemp = iTeam2
-			iTeam2 = iTeam1
-			iTeam1 = iTemp
-		if gc.getTeam(iTeam1).isVassal(iTeam2):
-			for i in range(CyGame().getIndexAfterLastDeal()):
-				pDeal = CyGame().getDeal(i)
-				iPlayer1 = pDeal.getFirstPlayer()
-				iPlayer2 = pDeal.getSecondPlayer()
-				if iPlayer1 == -1 or iPlayer2 == -1: continue
-				iTeamX = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
-				iTeamY = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
-				if (iTeam1 == iTeamX and iTeam2 == iTeamY) or (iTeam2 == iTeamX and iTeam1 == iTeamY):
-					for j in range(pDeal.getLengthFirstTrades()):
-						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_VASSAL:
-							return 0
-						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_SURRENDER:
-							return 1
-					for j in range(pDeal.getLengthSecondTrades()):
-						if pDeal.getSecondTrade(j).ItemType == TradeableItems.TRADE_VASSAL:
-							return 0
-						if pDeal.getSecondTrade(j).ItemType == TradeableItems.TRADE_SURRENDER:
-							return 1
-		elif gc.getTeam(iTeam2).isVassal(iTeam1):
-			return 2
-		return 3
 ## Platy World Builder End ##
 
 	def getUnitTabID(self):
@@ -4997,9 +3713,7 @@ class CvWorldBuilderScreen:
 				or self.m_normalMapTabCtrl.getActiveTab() == self.m_iImprovementTabID
 			):
 				return True
-
-		else:
-			return False
+		return False
 ## Platy Multi Tile End ##
 
 	def clearSideMenu(self):
@@ -5020,11 +3734,19 @@ class CvWorldBuilderScreen:
 		screen.deleteWidget("WorldBuilderRevealMode")
 
 		screen.deleteWidget("WorldBuilderPlayerChoice")
+		screen.deleteWidget("WorldBuilderBrushSize")
+		screen.deleteWidget("WorldBuilderRegenerateMap")
+		screen.deleteWidget("WorldBuilderTeamChoice")
+		screen.deleteWidget("WorldBuilderRevealAll")
+		screen.deleteWidget("WorldBuilderUnrevealAll")
+		screen.deleteWidget("WorldBuilderRevealPanel")
+		screen.deleteWidget("WorldBuilderBackgroundBottomPanel")
 ## Side Panel ##
 		screen.deleteWidget("WorldBuilderGameData")
 		screen.deleteWidget("WorldBuilderGameCommands")
 		screen.deleteWidget("WorldBuilderAddUnits")
 		screen.deleteWidget("WorldBuilderUnitCombat")
+		screen.deleteWidget("WorldBuilderAddUnitCount")
 		screen.deleteWidget("WorldBuilderSetWinner")
 		screen.deleteWidget("WorldBuilderChooseCivilization")
 		screen.deleteWidget("WorldBuilderChooseLeader")
@@ -5036,15 +3758,8 @@ class CvWorldBuilderScreen:
 		screen.deleteWidget("WorldBuilderRevealMode")
 		screen.deleteWidget("WorldBuilderEraseAll")
 ## Side Panel ##
-		screen.deleteWidget("WorldBuilderBrushSize")
-		screen.deleteWidget("WorldBuilderRegenerateMap")
-		screen.deleteWidget("WorldBuilderTeamChoice")
 
-		screen.deleteWidget("WorldBuilderRevealAll")
-		screen.deleteWidget("WorldBuilderUnrevealAll")
-		screen.deleteWidget("WorldBuilderRevealPanel")
 
-		screen.deleteWidget("WorldBuilderBackgroundBottomPanel")
 		return
 
 	def setSideMenu(self):
@@ -5059,15 +3774,14 @@ class CvWorldBuilderScreen:
 		iButtonX = 0
 		iButtonY = 0
 
+		iX = iMaxScreenWidth-self.iScreenWidth
 		if (CyInterface().isInAdvancedStart()):
 			iX = 0
-		else:
-			iX = iMaxScreenWidth-self.iScreenWidth
 
 		screen.addPanel( "WorldBuilderBackgroundPanel", "", "", True, True, iX, 0, self.iScreenWidth, iScreenHeight, PanelStyles.PANEL_STYLE_MAIN )
 		screen.addScrollPanel( "WorldBuilderMainPanel", "", iX, 0, self.iScreenWidth, iScreenHeight, PanelStyles.PANEL_STYLE_MAIN )
 
-		if (CyInterface().isInAdvancedStart()):
+		if CyInterface().isInAdvancedStart():
 
 			iX = 50
 			iY = 15
@@ -5085,21 +3799,9 @@ class CvWorldBuilderScreen:
 		else:
 
 			iPanelWidth = 35*6
-			screen.attachPanelAt(
-				"WorldBuilderMainPanel",
-				"WorldBuilderLoadSavePanel",
-				"",
-				"",
-				False,
-				True,
-				PanelStyles.PANEL_STYLE_CITY_TANSHADE,
-				70,
-				0,
-				iPanelWidth-70,
-				35,
-				WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.attachPanelAt("WorldBuilderMainPanel", "WorldBuilderLoadSavePanel", "", "", False, True, PanelStyles.PANEL_STYLE_CITY_TANSHADE, 70, 0,	iPanelWidth-70, 35, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-			screen.setImageButtonAt( "WorldBuilderVersion", "WorldBuilderLoadSavePanel", ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_FREETECH").getPath(), iButtonX, iButtonY, iButtonWidth, iButtonHeight, WidgetTypes.WIDGET_GENERAL, 1029, 2)
+			screen.setImageButtonAt( "WorldBuilderVersion", "WorldBuilderLoadSavePanel", ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_FREETECH").getPath(), iButtonX, iButtonY, iButtonWidth, iButtonHeight, WidgetTypes.WIDGET_PYTHON, 1029, 2)
 			iButtonX = iButtonX + 35
 			screen.setImageButtonAt( "WorldBuilderSaveButton", "WorldBuilderLoadSavePanel", ArtFileMgr.getInterfaceArtInfo("WORLDBUILDER_SAVE").getPath(), iButtonX, iButtonY, iButtonWidth, iButtonHeight, WidgetTypes.WIDGET_WB_SAVE_BUTTON, -1, -1)
 			iButtonX = iButtonX + 35
@@ -5231,11 +3933,19 @@ class CvWorldBuilderScreen:
 		else:
 
 			screen.deleteWidget("WorldBuilderPlayerChoice")
+			screen.deleteWidget("WorldBuilderBrushSize")
+			screen.deleteWidget("WorldBuilderRegenerateMap")
+			screen.deleteWidget("WorldBuilderTeamChoice")
+			screen.deleteWidget("WorldBuilderRevealAll")
+			screen.deleteWidget("WorldBuilderUnrevealAll")
+			screen.deleteWidget("WorldBuilderRevealPanel")
+			screen.deleteWidget("WorldBuilderBackgroundBottomPanel")
 ## Game Data ##
 			screen.deleteWidget("WorldBuilderGameData")
 			screen.deleteWidget("WorldBuilderGameCommands")
 			screen.deleteWidget("WorldBuilderAddUnits")
 			screen.deleteWidget("WorldBuilderUnitCombat")
+			screen.deleteWidget("WorldBuilderAddUnitCount")
 			screen.deleteWidget("WorldBuilderSetWinner")
 			screen.deleteWidget("WorldBuilderChooseCivilization")
 			screen.deleteWidget("WorldBuilderChooseLeader")
@@ -5247,14 +3957,6 @@ class CvWorldBuilderScreen:
 			screen.deleteWidget("WorldBuilderRevealMode")
 			screen.deleteWidget("WorldBuilderEraseAll")
 ## Game Data ##
-			screen.deleteWidget("WorldBuilderBrushSize")
-			screen.deleteWidget("WorldBuilderRegenerateMap")
-			screen.deleteWidget("WorldBuilderTeamChoice")
-
-			screen.deleteWidget("WorldBuilderRevealAll")
-			screen.deleteWidget("WorldBuilderUnrevealAll")
-			screen.deleteWidget("WorldBuilderRevealPanel")
-			screen.deleteWidget("WorldBuilderBackgroundBottomPanel")
 ## Panel Screen ##
 			iPanelWidth = 35*6
 			if self.m_bReveal:
@@ -5263,7 +3965,7 @@ class CvWorldBuilderScreen:
 				screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45, PanelStyles.PANEL_STYLE_MAIN )
 			elif self.m_bNormalPlayer:
 				if self.m_iUnitCombat > -2:
-					screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 4, PanelStyles.PANEL_STYLE_MAIN )
+					screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 5, PanelStyles.PANEL_STYLE_MAIN )
 				elif self.m_iUnitCombat == -2:
 					screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 3, PanelStyles.PANEL_STYLE_MAIN )
 				elif self.m_iUnitCombat == -4:
@@ -5333,6 +4035,12 @@ class CvWorldBuilderScreen:
 							iCount += 1
 							szPullDownString = gc.getUnitInfo(i).getDescription()
 							screen.addPullDownString(szDropdownName, szPullDownString, i, i, self.m_iUnitType == i)
+
+					szDropdownName = str("WorldBuilderAddUnitCount")
+					screen.addDropDownBoxGFC(szDropdownName, (iMaxScreenWidth-self.iScreenWidth)+8, (10+ 36*7), iPanelWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+					screen.addPullDownString(szDropdownName, "1", 0, 0, self.m_iAddUnitCount == 1)
+					for i in xrange(1, 11, 1):
+						screen.addPullDownString(szDropdownName, str(10 * i), i, i, self.m_iAddUnitCount == 10 * i)
 ## Set as Winner ##
 				elif self.m_iUnitCombat == -2:
 					szDropdownName = str("WorldBuilderSetWinner")
@@ -5397,10 +4105,10 @@ class CvWorldBuilderScreen:
 					szDropdownName = str("WorldBuilderModifyAreaPlotType")
 					screen.addDropDownBoxGFC(szDropdownName, (iMaxScreenWidth-self.iScreenWidth)+8, (10+ 36*4), iPanelWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_CHANGE_PLOTTYPE",()), 0, 0, True)
-					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_MOUNTAIN",()), 0, 0, False)
-					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_HILL",()), 0, 0, False)
+					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_TERRAIN_PEAK",()), 0, 0, False)
+					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_TERRAIN_HILL",()), 0, 0, False)
 					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_LAND",()), 0, 0, False)
-					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_OCEAN",()), 0, 0, False)
+					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_TERRAIN_OCEAN",()), 0, 0, False)
 
 					szDropdownName = str("WorldBuilderModifyAreaTerrain")
 					screen.addDropDownBoxGFC(szDropdownName, (iMaxScreenWidth-self.iScreenWidth)+8, (10+ 36*5), iPanelWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -5464,7 +4172,7 @@ class CvWorldBuilderScreen:
 				iButtonWidth = 32
 				iButtonHeight = 32
 				self.m_tabCtrlEdit = getWBToolEditTabCtrl()
-				screen.setImageButton( "WorldBuilderEraseAll", ArtFileMgr.getInterfaceArtInfo("WORLDBUILDER_UNREVEAL_ALL_TILES").getPath(), (iMaxScreenWidth-self.iScreenWidth)+8, (10+36+36), iButtonWidth, iButtonHeight, WidgetTypes.WIDGET_GENERAL, 1029, 1)
+				screen.setImageButton( "WorldBuilderEraseAll", ArtFileMgr.getInterfaceArtInfo("WORLDBUILDER_UNREVEAL_ALL_TILES").getPath(), (iMaxScreenWidth-self.iScreenWidth)+8, (10+36+36), iButtonWidth, iButtonHeight, WidgetTypes.WIDGET_PYTHON, 1029, 1)
 
 				szDropdownName = str("WorldBuilderBrushSize")
 				screen.addDropDownBoxGFC(szDropdownName, (iMaxScreenWidth-self.iScreenWidth)+8+40, (10+ 36*2), iPanelWidth-40, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -5480,18 +4188,17 @@ class CvWorldBuilderScreen:
 
 ## Platy Reveal Mode Start ##
 	def revealAll(self, bReveal):
-		for i in range (CyMap().getGridWidth()):
-			for j in range (CyMap().getGridHeight()):
+		for i in xrange (CyMap().getGridWidth()):
+			for j in xrange (CyMap().getGridHeight()):
 				pPlot = CyMap().plot(i,j)
 				if (not pPlot.isNone()):
 					if self.m_iRevealMode == 2:
 						if bReveal or (not pPlot.isVisible(self.m_iCurrentTeam, False)):
 							pPlot.setRevealed(self.m_iCurrentTeam, bReveal, False, -1);
-					else:
-						if bReveal == True:
+					elif bReveal:
 							pPlot.changeInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode, 1)
-						else:
-							pPlot.changeInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode, - pPlot.getInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode))
+					else:
+						pPlot.changeInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode, - pPlot.getInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode))
 		self.refreshReveal()
 		return
 
@@ -5500,7 +4207,7 @@ class CvWorldBuilderScreen:
 			if bReveal or (not self.m_pCurrentPlot.isVisible(self.m_iCurrentTeam, False)):
 				self.m_pCurrentPlot.setRevealed(self.m_iCurrentTeam, bReveal, False, -1);
 		else:
-			if bReveal == True or (not self.m_pCurrentPlot.isInvisibleVisible(self.m_iCurrentTeam, self.m_iRevealMode)):
+			if bReveal or (not self.m_pCurrentPlot.isInvisibleVisible(self.m_iCurrentTeam, self.m_iRevealMode)):
 				self.m_pCurrentPlot.changeInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode, 1)
 			if bReveal == False or (not self.m_pCurrentPlot.isInvisibleVisible(self.m_iCurrentTeam, self.m_iRevealMode)):
 				self.m_pCurrentPlot.changeInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode, - self.m_pCurrentPlot.getInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode))
@@ -5508,7 +4215,7 @@ class CvWorldBuilderScreen:
 
 	def showRevealed(self, pPlot):
 		if self.m_iRevealMode == 2:
-			if (not pPlot.isRevealed(self.m_iCurrentTeam, False)):
+			if not pPlot.isRevealed(self.m_iCurrentTeam, False):
 				CyEngine().fillAreaBorderPlotAlt(pPlot.getX(), pPlot.getY(), AreaBorderLayers.AREA_BORDER_LAYER_REVEALED_PLOTS, "COLOR_BLACK", 1.0)
 		elif self.m_iRevealMode == 1:
 			if pPlot.getInvisibleVisibilityCount(self.m_iCurrentTeam, self.m_iRevealMode) == 0:
@@ -5519,16 +4226,8 @@ class CvWorldBuilderScreen:
 		return
 ## Platy Reveal Mode End ##
 
-	def getNumPlayers(self):
-		iCount = 0
-		for i in range( gc.getMAX_CIV_PLAYERS() ):
-			if ( gc.getPlayer(i).isEverAlive() ):
-				iCount = iCount + 1
-
-		return iCount
-
 	def Exit(self):
-		CyInterface().setWorldBuilder(false)
+		CyInterface().setWorldBuilder(False)
 		return
 
 	def setLandmarkCB(self, szLandmark):
@@ -5566,17 +4265,15 @@ class CvWorldBuilderScreen:
 		return
 
 	def refreshAdvancedStartTabCtrl(self, bReuse):
+		if CyInterface().isInAdvancedStart():
+			iActiveTab = 0
+			iActiveList = 0
+			iActiveIndex = 0
 
-		if (CyInterface().isInAdvancedStart()):
-
-			if (self.m_advancedStartTabCtrl and bReuse):
+			if self.m_advancedStartTabCtrl and bReuse:
 				iActiveTab = self.m_advancedStartTabCtrl.getActiveTab()
 				iActiveList = self.m_iAdvancedStartCurrentList[iActiveTab]
 				iActiveIndex = self.m_iAdvancedStartCurrentIndexes[iActiveTab]
-			else:
-				iActiveTab = 0
-				iActiveList = 0
-				iActiveIndex = 0
 
 			self.m_iCurrentPlayer = CyGame().getActivePlayer()
 			self.m_iCurrentTeam = CyGame().getActiveTeam()
@@ -5639,21 +4336,20 @@ class CvWorldBuilderScreen:
 
 			self.m_advancedStartTabCtrl = getWBToolAdvancedStartTabCtrl()
 
-			self.m_advancedStartTabCtrl.enable(false)
+			self.m_advancedStartTabCtrl.enable(False)
 
 		return
 
 	def eraseAll(self):
 		# kill all units on plot if one is selected
-		if (self.m_pCurrentPlot != 0):
+		if self.m_pCurrentPlot != 0:
 			while (self.m_pCurrentPlot.getNumUnits() > 0):
 				pUnit = self.m_pCurrentPlot.getUnit(0)
-				pUnit.kill(false, PlayerTypes.NO_PLAYER)
+				pUnit.kill(False, PlayerTypes.NO_PLAYER)
 
 			self.m_pCurrentPlot.setBonusType(-1)
 			self.m_pCurrentPlot.setFeatureType(FeatureTypes.NO_FEATURE, -1)
-
-			if (self.m_pCurrentPlot.isCity()):
+			if self.m_pCurrentPlot.isCity():
 				self.m_pCurrentPlot.getPlotCity().kill()
 
 			self.m_pCurrentPlot.setRouteType(-1)
@@ -5697,16 +4393,6 @@ class CvWorldBuilderScreen:
 
 	def setCurrentModeCheckbox(self, iButton):
 		screen = CyGInterfaceScreen( "WorldBuilderScreen", CvScreenEnums.WORLDBUILDER_SCREEN )
-		#print("iButton: %s" %(str(iButton)))
-
-		#print("m_iUnitEditCheckboxID: %s" %(str(self.m_iUnitEditCheckboxID)))
-		#print("m_iCityEditCheckboxID: %s" %(str(self.m_iCityEditCheckboxID)))
-		#print("m_iNormalPlayerCheckboxID: %s" %(str(self.m_iNormalPlayerCheckboxID)))
-		#print("m_iNormalMapCheckboxID: %s" %(str(self.m_iNormalMapCheckboxID)))
-		#print("m_iRevealTileCheckboxID: %s" %(str(self.m_iRevealTileCheckboxID)))
-		#print("m_iDiplomacyCheckboxID: %s" %(str(self.m_iDiplomacyCheckboxID)))
-
-## Platy World Builder Start ##
 		screen.setState("WorldBuilderUnitEditModeButton", iButton == self.m_iUnitEditCheckboxID)
 		screen.setState("WorldBuilderCityEditModeButton", iButton == self.m_iCityEditCheckboxID)
 		screen.setState("WorldBuilderNormalPlayerModeButton", iButton == self.m_iNormalPlayerCheckboxID)
@@ -5716,7 +4402,6 @@ class CvWorldBuilderScreen:
 		screen.setState("WorldBuilderLandmarkButton", iButton == self.m_iLandmarkCheckboxID)
 		screen.setState("WorldBuilderEraseButton", iButton == self.m_iEraseCheckboxID)
 		return
-## Platy World Builder End ##
 
 	def initVars(self):
 		self.m_normalPlayerTabCtrl = 0
@@ -5777,7 +4462,6 @@ class CvWorldBuilderScreen:
 		self.m_iYield = 0
 		self.m_iDomain = 0
 		self.m_iRoute = 0
-		self.m_iMemory = 0
 		self.m_pScript = -1
 		self.m_bMoveUnit = False
 		self.m_iUnitCombat = -99
@@ -5785,18 +4469,13 @@ class CvWorldBuilderScreen:
 		self.m_iPlotMode = 0
 		self.m_iArea = -1
 		self.m_iCityTimer = 0
-		self.m_iGlobalDefine = 0
-		self.m_iDiplomacyPage = 0
-		self.m_bShowDead = False
-		self.m_bTowardsPlayer = True
 		self.m_iOtherPlayer = -1
 		self.m_iEventUnit = -1
-		self.m_iTechShareCivs = 1
 		self.m_iBuildingClass = 0
 		self.m_iBuildingModifier = 0
 		self.m_iRevealMode = 2
 		self.m_iBrushSize = 1
 		self.m_iVisibleOption = 1
-		self.m_bDiploName = True
+		self.m_iAddUnitCount = 1
 ## Platy Builder ##
 		return
