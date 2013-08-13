@@ -2664,8 +2664,11 @@ def spellRiverOfBlood(caster):
 			if iPlayer != iOwner:
 				for pyCity in PyPlayer(iPlayer).getCityList() :
 					pCity = pyCity.GetCy()
-					if pCity.getPopulation() > 2:
-						pCity.changePopulation(-2)
+					if pCity.getPopulation() > 1:
+						iChange = -2
+						if pCity.getPopulation() == 2:
+							iChange = -1
+						pCity.changePopulation(iChange)
 						CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_RIVER_OF_BLOOD", ()),'',1,'Art/Interface/Buttons/Spells/River of Blood.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
 			if iPlayer == iOwner:
 				for pyCity in PyPlayer(iPlayer).getCityList() :
