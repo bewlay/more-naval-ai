@@ -447,7 +447,6 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>Art/Interface/Buttons/Promotions/Blur.dds</Button>
-            <bImmuneToDefensiveStrike>1</bImmuneToDefensiveStrike>
             <iAIWeight>50</iAIWeight>
             <iExpireChance>50</iExpireChance>
             <iMinLevel>-1</iMinLevel>
