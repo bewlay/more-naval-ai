@@ -711,6 +711,29 @@ void CvUnit::convert(CvUnit* pUnit)
 	setGameTurnCreated(pUnit->getGameTurnCreated());
 	setDamage(pUnit->getDamage());
 	setMoves(pUnit->getMoves());
+//>>>>Advanced Rules: Added by Denev 2010/02/04
+	setMadeAttack(pUnit->isMadeAttack());
+	setImmobileTimer(pUnit->getImmobileTimer());
+	setIgnoreHide(pUnit->isIgnoreHide());
+	if (getOwnerINLINE() == pUnit->getOwnerINLINE())
+	{
+		setSummoner(pUnit->getSummoner());
+
+		int iLoop;
+		for (CvUnit* pLoopUnit = GET_PLAYER(getOwnerINLINE()).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER(getOwnerINLINE()).nextUnit(&iLoop))
+		{
+			if (pLoopUnit->getSummoner() == pUnit->getID())
+			{
+				pLoopUnit->setSummoner(getID());
+			}
+		}
+	}
+
+	if (bHero || isWorldUnitClass((UnitClassTypes)getUnitInfo().getUnitClassType()))
+	{
+		AI_setUnitAIType(UNITAI_HERO);
+	}
+//<<<<Advanced Rules: End Add
 
 	setLevel(pUnit->getLevel());
 	int iOldModifier = std::max(1, 100 + GET_PLAYER(pUnit->getOwnerINLINE()).getLevelExperienceModifier());
