@@ -1762,7 +1762,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 							if (GET_PLAYER(pCity->getPreviousOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3))
 							{
 								//Raze city enemy needs for cultural victory unless we greatly over power them
-								logBBAI( "  Razing enemy cultural victory city" );
+								logBBAI( "  Razing enemy cultural victory city!" );
 								bRaze = true;
 							}
 						}
@@ -1778,7 +1778,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 			{
 				if( gPlayerLogLevel >= 1 )
 				{
-					logBBAI("    Player %d (%S) decides not to raze %S because they have few cities", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+					logBBAI("    ...decides not to raze %S because they have few cities", pCity->getName().GetCString() );
 				}
 			}
 			else if (getFavoriteReligion() != NO_RELIGION)
@@ -1787,7 +1787,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				{
 					if( gPlayerLogLevel >= 1 )
 					{
-						logBBAI("    Player %d (%S) decides not to raze %S because it's the Holy City for their favorite religion", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+						logBBAI("    ...decides not to raze %S because it's the Holy City for their favorite religion", pCity->getName().GetCString() );
 					}
 				}
 			}
@@ -1796,7 +1796,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				// Do not raze, going for domination
 				if( gPlayerLogLevel >= 1 )
 				{
-					logBBAI("    Player %d (%S) decides not to raze %S because they're going for domination", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+					logBBAI("    ...decides not to raze %S because they're going for domination", pCity->getName().GetCString() );
 				}
 			}
 			else if (GET_PLAYER(pCity->getOriginalOwner()).getTeam() == getTeam())
@@ -1804,7 +1804,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				// Do not raze, was our city
 				if( gPlayerLogLevel >= 1 )
 				{
-					logBBAI("    Player %d (%S) decides not to raze %S because our team were the original owners", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+					logBBAI("    ...decides not to raze %S because our team were the original owners", pCity->getName().GetCString() );
 				}
 			}
 			else if( isBarbarian() )
@@ -2017,7 +2017,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 
 			if( gPlayerLogLevel >= 1 )
 			{
-				logBBAI("    Player %d (%S) has odds %d to raze city %S", getID(), getCivilizationDescription(0), iRazeValue, pCity->getName().GetCString() );
+				logBBAI("    ...odds %d to raze city %S", iRazeValue, pCity->getName().GetCString() );
 			}
 			
 			if (iRazeValue > 0)
@@ -2047,7 +2047,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 		}
 		else
 		{
-			logBBAI("    Player %d (%S) decides to to raze city %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
+			logBBAI("    ...decides to to raze city %S!!!", pCity->getName().GetCString() );
 			pCity->doTask(TASK_RAZE);
 		}
 	}
@@ -2061,6 +2061,7 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 /* original bts code
 		CvEventReporter::getInstance().cityAcquiredAndKept(GC.getGameINLINE().getActivePlayer(), pCity);
 */
+		logBBAI("    ...decides to to keep city %S", pCity->getName().GetCString() );
 		CvEventReporter::getInstance().cityAcquiredAndKept(getID(), pCity);
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */

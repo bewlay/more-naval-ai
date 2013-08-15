@@ -8165,6 +8165,7 @@ void CvUnitAI::AI_assaultSeaMove()
 			// split out galleys from stack of ocean capable ships
 			if( kOwner.AI_unitImpassableCount(getUnitType()) == 0 && getGroup()->getNumUnits() > 1 )
 			{
+				logBBAI("    ...separating from Galleys");
 				getGroup()->AI_separateImpassable();
 			}
 
@@ -8175,6 +8176,7 @@ void CvUnitAI::AI_assaultSeaMove()
 				if( pUpgradeCity != NULL && pUpgradeCity == pCity )
 				{
 					// Wait for upgrade, this unit is top upgrade priority
+					logBBAI("    ...skipping turn while waiting for upgrades");
 					getGroup()->pushMission(MISSION_SKIP);
 					return;
 				}
@@ -8221,6 +8223,7 @@ void CvUnitAI::AI_assaultSeaMove()
 			if( plot()->plotCount(PUF_isUnitAIType, UNITAI_ESCORT_SEA, -1, getOwnerINLINE(), NO_TEAM, PUF_isGroupHead, -1, -1) > 0 )
 			{
 				// Loaded but with no escort, wait for escorts in plot to join us
+				logBBAI("    ...waiting for escorts");
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
@@ -8229,6 +8232,7 @@ void CvUnitAI::AI_assaultSeaMove()
 			if( (kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 3) > 0) || (kOwner.AI_getWaterDanger(plot(), 4, false) > 0) )
 			{
 				// Loaded but with no escort, wait for others joining us soon or avoid dangerous waters
+				logBBAI("    ...waiting for joiners");
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
@@ -8303,6 +8307,7 @@ void CvUnitAI::AI_assaultSeaMove()
 				iEscorts = getGroup()->countNumUnitAIType(UNITAI_ESCORT_SEA);
 				if( iEscorts > 3 && iEscorts > (2*getGroup()->countNumUnitAIType(UNITAI_ASSAULT_SEA)) )
 				{
+					logBBAI("    ...freeing up escorts");
 					getGroup()->AI_separateAI(UNITAI_ESCORT_SEA);
 				}
 			}
@@ -8312,6 +8317,7 @@ void CvUnitAI::AI_assaultSeaMove()
 		if( kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
 		{
 			// Wait for units which are joining our group this turn
+			logBBAI("    ...waiting for joiners 2");
 			getGroup()->pushMission(MISSION_SKIP);
 			return;
 		}
@@ -8324,6 +8330,7 @@ void CvUnitAI::AI_assaultSeaMove()
 				if( kOwner.AI_unitTargetMissionAIs(this, &eMissionAIType, 1, getGroup(), 1) > 0 )
 				{
 					// Wait for cargo which will load this turn
+					logBBAI("    ...waiting for nearby cargo to load");
 					getGroup()->pushMission(MISSION_SKIP);
 					return;
 				}
@@ -8331,6 +8338,7 @@ void CvUnitAI::AI_assaultSeaMove()
 			else if( kOwner.AI_unitTargetMissionAIs(this, MISSIONAI_LOAD_ASSAULT) > 0 )
 			{
 				// Wait for cargo which is on the way
+				logBBAI("    ...waiting for any cargo on the way");
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
@@ -12722,6 +12730,7 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 					//if (pEjectedUnit->cityDefenseModifier() > 0)
 					if (pEjectedUnit->isUnitAllowedPermDefense())
 					{
+						logBBAI("   ...setting %S (%d) to city defense from ai_guardcity function", pEjectedUnit->getNameKey(), pEjectedUnit->getID());
 						pEjectedUnit->AI_setUnitAIType(UNITAI_CITY_DEFENSE);
 					}
 				}
@@ -28208,11 +28217,13 @@ void CvUnitAI::AI_ConquestMove()
 
 	if (AI_groupMergeRange(UNITAI_HERO, 0, true, true, bIgnoreFaster))
 	{
+		logBBAI("      ...merging with hero unit");
 		return;
 	}
 		
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
 	{
+		logBBAI("      ...merging with attack city unit");
 		return;
 	}
 
@@ -28240,7 +28251,7 @@ void CvUnitAI::AI_ConquestMove()
 			iComparePostBombard *= 100 + std::max(0, iDefenseModifier);
 			iComparePostBombard /= 100;
 		}
-
+		logBBAI("      ...iComparePostBombard = %d", iComparePostBombard);
 		if( iStepDistToTarget <= 2 )
 		{
 			if( iComparePostBombard < iAttackRatio )
@@ -28267,10 +28278,10 @@ void CvUnitAI::AI_ConquestMove()
 			if (iStepDistToTarget == 1)
 			{
 				// temp hack - Tholal ToDo: need to figure out why the AI is reluctant to attack empty cities
-				logBBAI("      ...next to target city...\n");
+				logBBAI("      ...next to target city...");
 				if (pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()) == 0)
 				{
-					logBBAI("      ...target city is empty!\n");
+					logBBAI("      ...target city is empty!");
 					getGroup()->pushMission(MISSION_MOVE_TO, pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					return;
 				}
@@ -28278,7 +28289,7 @@ void CvUnitAI::AI_ConquestMove()
 				// or if defenses have crept up past half
 				if( (iComparePostBombard >= iAttackRatio) || (pTargetCity->getDefenseDamage() < ((GC.getMAX_CITY_DEFENSE_DAMAGE() * 1) / 2)) )
 				{
-					logBBAI("      ...considering attack/bombard...\n");
+					logBBAI("      ...considering attack/bombard...");
 					if( (iComparePostBombard < std::max(150, GC.getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO"))) )
 					{
 						
@@ -28298,6 +28309,7 @@ void CvUnitAI::AI_ConquestMove()
 					// Bombard may skip if stack is powerful enough
 					if (AI_bombardCity())
 					{
+						logBBAI("      ...bombarding city");
 						return;
 					}
 
@@ -28309,6 +28321,7 @@ void CvUnitAI::AI_ConquestMove()
 						//if (AI_cityAttack(1, iAttackRatio, true))
 						if (AI_stackAttackCity(1, iAttackRatio, true))
 						{
+							logBBAI("      ...stack attacking city");
 							return;
 						}
 					}
@@ -28316,6 +28329,7 @@ void CvUnitAI::AI_ConquestMove()
 					// If not strong enough alone, merge if another stack is nearby
 					if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 2, true, true, bIgnoreFaster))
 					{
+						logBBAI("      ...merging with another group");
 						return;
 					}
 					
@@ -28323,6 +28337,7 @@ void CvUnitAI::AI_ConquestMove()
 					{
 						if( AI_cityAttack(1, 50) )
 						{
+							logBBAI("      ...solo city attack");
 							return;
 						}
 					}
@@ -28340,11 +28355,13 @@ void CvUnitAI::AI_ConquestMove()
 								
 				if( AI_anyAttack(1, 60, 0, false) )
 				{
+					logBBAI("      ...AI_anyttack");
 					return;
 				}
 
 				if (AI_heal(30, 1))
 				{
+					logBBAI("      ...healing");
 					return;
 				}
 
@@ -28375,6 +28392,7 @@ void CvUnitAI::AI_ConquestMove()
 			{
 				if( AI_goToTargetCity(0,4,pTargetCity) )
 				{
+					logBBAI("      ...moving to target city (%S)", pTargetCity->getName().GetCString());
 					return;
 				}
 			}
