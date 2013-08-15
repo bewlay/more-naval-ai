@@ -8952,30 +8952,23 @@ CvUnit* CvUnit::upgrade(UnitTypes eUnit) // K-Mod: this now returns the new unit
 
 //FfH: Modified by Kael 04/18/2009
 //	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
-    UnitAITypes eUnitAI = AI_getUnitAIType();
-    if (eUnitAI == UNITAI_MISSIONARY)
-    {
-        ReligionTypes eReligion = GET_PLAYER(getOwnerINLINE()).getStateReligion();
-        if (eReligion == NO_RELIGION || GC.getUnitInfo(eUnit).getReligionSpreads(eReligion) == 0)
-        {
-            eUnitAI = UNITAI_RESERVE;
-        }
-    }
-
-	// Tholal AI - AI switch for upgraded Slaves
-	if (eUnitAI == UNITAI_WORKER && GC.getUnitInfo(eUnit).getWorkRate() == 0)
-    {
-		eUnitAI = UNITAI_ATTACK_CITY;
-    }
-
-	// when we upgrade units that have AI_HERO as their default AI, we should switch to that AI
-	if (GC.getUnitInfo(eUnit).getDefaultUnitAIType() == UNITAI_HERO)
+	UnitAITypes eUnitAI = AI_getUnitAIType();
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/23
+/*
+	if (eUnitAI == UNITAI_MISSIONARY)
 	{
-		eUnitAI = UNITAI_HERO;
+		ReligionTypes eReligion = GET_PLAYER(getOwnerINLINE()).getStateReligion();
+		if (eReligion == NO_RELIGION || GC.getUnitInfo(eUnit).getReligionSpreads(eReligion) == 0)
+		{
+			eUnitAI = UNITAI_RESERVE;
+		}
 	}
-	// End Tholal AI
-
-
+*/
+	if (!GC.getUnitInfo(eUnit).getUnitAIType(eUnitAI))
+	{
+		eUnitAI = (UnitAITypes)GC.getUnitInfo(eUnit).getDefaultUnitAIType();
+	}
+//<<<<Unofficial Bug Fix: End Modify
 	pUpgradeUnit = GET_PLAYER(getOwnerINLINE()).initUnit(eUnit, getX_INLINE(), getY_INLINE(), eUnitAI);
 //FfH: End Modify
 
