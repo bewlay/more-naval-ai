@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<!-- MINOR_LEADERS_PEDIA 08/2013 lfgr -->
+    <TEXT>
+        <Tag>TXT_KEY_PEDIA_CATEGORY_MINOR_LEADER</Tag>
+        <English>Minor Leaders</English>
+        <French>Minor Leaders</French>
+        <German>Minor Leaders</German>
+        <Italian>Minor Leaders</Italian>
+        <Spanish>Minor Leaders</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_ANAGANTIOS_PEDIA</Tag>
+        <English>Anagantios appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Anagantios appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Anagantios appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Anagantios appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Anagantios appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_AVERAX_PEDIA</Tag>
+        <English>Averax appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Averax appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Averax appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Averax appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Averax appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_DUIN_PEDIA</Tag>
+        <English>Baron Duin Halfmorn appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Baron Duin Halfmorn appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Baron Duin Halfmorn appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Baron Duin Halfmorn appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Baron Duin Halfmorn appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_BRAEDEN_PEDIA</Tag>
+        <English>Breaden the Laconic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Breaden the Laconic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Breaden the Laconic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Breaden the Laconic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Breaden the Laconic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_OSTANES_PEDIA</Tag>
+        <English>Captain Ostanes appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Captain Ostanes appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Captain Ostanes appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Captain Ostanes appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Captain Ostanes appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_ULDANOR_PEDIA</Tag>
+        <English>Captain Uldanor appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Captain Uldanor appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Captain Uldanor appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Captain Uldanor appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Captain Uldanor appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_SALLOS_PEDIA</Tag>
+        <English>Duke Sallos appears in the official Scenarios.</English>
+        <French>Duke Sallos appears in the official Scenarios.</French>
+        <German>Duke Sallos appears in the official Scenarios.</German>
+        <Italian>Duke Sallos appears in the official Scenarios.</Italian>
+        <Spanish>Duke Sallos appears in the official Scenarios.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_DUMANNIOS_PEDIA</Tag>
+        <English>Dumannois appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Dumannois appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Dumannois appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Dumannois appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Dumannois appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_FURIA_PEDIA</Tag>
+        <English>Furia the Mad appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Furia the Mad appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Furia the Mad appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Furia the Mad appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Furia the Mad appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_GOSEA_PEDIA</Tag>
+        <English>Gosea appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Gosea appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Gosea appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Gosea appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Gosea appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_HAFGAN_PEDIA</Tag>
+        <English>Hafgan the Purger appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Hafgan the Purger appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Hafgan the Purger appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Hafgan the Purger appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Hafgan the Purger appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_JUDECCA_PEDIA</Tag>
+        <English>Judecca appears in the official Scenarios.</English>
+        <French>Judecca appears in the official Scenarios.</French>
+        <German>Judecca appears in the official Scenarios.</German>
+        <Italian>Judecca appears in the official Scenarios.</Italian>
+        <Spanish>Judecca appears in the official Scenarios.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_KANE_PEDIA</Tag>
+        <English>Kane appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Kane appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Kane appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Kane appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Kane appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_LETHE_PEDIA</Tag>
+        <English>Lethe, Queen of Sorrow appears in the official Scenarios.</English>
+        <French>Lethe, Queen of Sorrow appears in the official Scenarios.</French>
+        <German>Lethe, Queen of Sorrow appears in the official Scenarios.</German>
+        <Italian>Lethe, Queen of Sorrow appears in the official Scenarios.</Italian>
+        <Spanish>Lethe, Queen of Sorrow appears in the official Scenarios.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_MAHON_PEDIA</Tag>
+        <English>Mahon the Butcher appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Mahon the Butcher appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Mahon the Butcher appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Mahon the Butcher appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Mahon the Butcher appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_MALCHAVIC_PEDIA</Tag>
+        <English>Malchavic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Malchavic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Malchavic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Malchavic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Malchavic appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_MELISANDRE_PEDIA</Tag>
+        <English>Melisandre appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Melisandre appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Melisandre appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Melisandre appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Melisandre appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_MERESIN_PEDIA</Tag>
+        <English>Meresin appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Meresin appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Meresin appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Meresin appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Meresin appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_KOUN_PEDIA</Tag>
+        <English>Minister Koun can enter the game after an Event in which a City requests freedom from your Civilization. There is a 50% chance for him to either start out on the Mother Civilization's Team, or independent (chance is determined at the start of the game). The Event to bring Minister Koun into the game will only appear in approximately 1/3 of all games played. All attributes of Minister Koun except his Traits will be based on the Mother Civilization (thus he shares the same Unique Buildings, Unique Units, Civilization Trait and World Spell). He will start in control of the Liberated City with 4 Archers and 1 Worker. Minister Koun appears in the official Scenarios and  can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Minister Koun can enter the game after an Event in which a City requests freedom from your Civilization. There is a 50% chance for him to either start out on the Mother Civilization's Team, or independent (chance is determined at the start of the game). The Event to bring Minister Koun into the game will only appear in approximately 1/3 of all games played. All attributes of Minister Koun except his Traits will be based on the Mother Civilization (thus he shares the same Unique Buildings, Unique Units, Civilization Trait and World Spell). He will start in control of the Liberated City with 4 Archers and 1 Worker. Minister Koun appears in the official Scenarios and  can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Minister Koun can enter the game after an Event in which a City requests freedom from your Civilization. There is a 50% chance for him to either start out on the Mother Civilization's Team, or independent (chance is determined at the start of the game). The Event to bring Minister Koun into the game will only appear in approximately 1/3 of all games played. All attributes of Minister Koun except his Traits will be based on the Mother Civilization (thus he shares the same Unique Buildings, Unique Units, Civilization Trait and World Spell). He will start in control of the Liberated City with 4 Archers and 1 Worker. Minister Koun appears in the official Scenarios and  can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Minister Koun can enter the game after an Event in which a City requests freedom from your Civilization. There is a 50% chance for him to either start out on the Mother Civilization's Team, or independent (chance is determined at the start of the game). The Event to bring Minister Koun into the game will only appear in approximately 1/3 of all games played. All attributes of Minister Koun except his Traits will be based on the Mother Civilization (thus he shares the same Unique Buildings, Unique Units, Civilization Trait and World Spell). He will start in control of the Liberated City with 4 Archers and 1 Worker. Minister Koun appears in the official Scenarios and  can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Minister Koun can enter the game after an Event in which a City requests freedom from your Civilization. There is a 50% chance for him to either start out on the Mother Civilization's Team, or independent (chance is determined at the start of the game). The Event to bring Minister Koun into the game will only appear in approximately 1/3 of all games played. All attributes of Minister Koun except his Traits will be based on the Mother Civilization (thus he shares the same Unique Buildings, Unique Units, Civilization Trait and World Spell). He will start in control of the Liberated City with 4 Archers and 1 Worker. Minister Koun appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_OUZZA_PEDIA</Tag>
+        <English>Ouzza appears in the official Scenarios.</English>
+        <French>Ouzza appears in the official Scenarios.</French>
+        <German>Ouzza appears in the official Scenarios.</German>
+        <Italian>Ouzza appears in the official Scenarios.</Italian>
+        <Spanish>Ouzza appears in the official Scenarios.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_RIUROS_PEDIA</Tag>
+        <English>Riorus appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Riorus appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Riorus appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Riorus appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Riorus appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_RIVANNA_PEDIA</Tag>
+        <English>Rivanna the Wraith Lord appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Rivanna the Wraith Lord appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Rivanna the Wraith Lord appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Rivanna the Wraith Lord appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Rivanna the Wraith Lord appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_SHEKINAH_PEDIA</Tag>
+        <English>Shekinah appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Shekinah appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Shekinah appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Shekinah appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Shekinah appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_STATIUS_PEDIA</Tag>
+        <English>Statius the Redeemer appears in the official Scenarios.</English>
+        <French>Statius the Redeemer appears in the official Scenarios.</French>
+        <German>Statius the Redeemer appears in the official Scenarios.</German>
+        <Italian>Statius the Redeemer appears in the official Scenarios.</Italian>
+        <Spanish>Statius the Redeemer appears in the official Scenarios.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_TETHIRA_PEDIA</Tag>
+        <English>Tethira appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Tethira appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Tethira appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Tethira appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Tethira appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_THESSALONICA_PEDIA</Tag>
+        <English>Thessalonica appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Thessalonica appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Thessalonica appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Thessalonica appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Thessalonica appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_TYA_PEDIA</Tag>
+        <English>Tya Kiri appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Tya Kiri appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Tya Kiri appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Tya Kiri appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Tya Kiri appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_VOLANNA_PEDIA</Tag>
+        <English>Volanna appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Volanna appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Volanna appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Volanna appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Volanna appears in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+    <TEXT>
+        <Tag>TXT_KEY_LEADER_WEEVIL_PEDIA</Tag>
+        <English>Weevil, Pickle and Hyde appear in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</English>
+        <French>Weevil, Pickle and Hyde appear in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</French>
+        <German>Weevil, Pickle and Hyde appear in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</German>
+        <Italian>Weevil, Pickle and Hyde appear in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Italian>
+        <Spanish>Weevil, Pickle and Hyde appear in the official Scenarios and can also lead a revolution if the Revolutions Gameoption is enabled.</Spanish>
+    </TEXT>
+</Civ4GameText>
