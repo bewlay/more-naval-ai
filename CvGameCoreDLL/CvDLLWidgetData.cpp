@@ -6002,10 +6002,19 @@ void CvDLLWidgetData::parseCivilizationHelp(CvWidgetDataStruct &widgetDataStruct
 
 void CvDLLWidgetData::parseLeaderHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
+/************************************************************************************************/
+/* MINOR_LEADERS_PEDIA                            08/2013                         DPII          */
+/************************************************************************************************/
+/*
 	if (widgetDataStruct.m_iData2 != -1)
 	{
 		GAMETEXT.parseLeaderTraits(szBuffer, (LeaderHeadTypes)widgetDataStruct.m_iData1, (CivilizationTypes)widgetDataStruct.m_iData2, false, true);
 	}
+*/
+	GAMETEXT.parseLeaderTraits(szBuffer, (LeaderHeadTypes)widgetDataStruct.m_iData1, (CivilizationTypes)widgetDataStruct.m_iData2, false, true);
+/************************************************************************************************/
+/* MINOR_LEADERS_PEDIA                            END                                           */
+/************************************************************************************************/
 }
 
 void CvDLLWidgetData::parseCloseScreenHelp(CvWStringBuffer& szBuffer)

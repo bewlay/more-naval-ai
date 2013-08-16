@@ -373,6 +373,9 @@ def createCivilopedia():
 								SevoScreenEnums.PEDIA_IMPROVEMENTS	: pediaMainScreen,
 								SevoScreenEnums.PEDIA_CIVS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_LEADERS		: pediaMainScreen,
+							# MINOR_LEADERS_PEDIA 08/2013 lfgr
+								SevoScreenEnums.PEDIA_MINOR_LEADERS	: pediaMainScreen,
+							# MINOR_LEADERS_PEDIA end
 								SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_CIVICS		: pediaMainScreen,
 								SevoScreenEnums.PEDIA_RELIGIONS		: pediaMainScreen,
@@ -423,6 +426,9 @@ def createCivilopedia():
 							SevoScreenEnums.PEDIA_IMPROVEMENTS	: pediaMainScreen,
 							SevoScreenEnums.PEDIA_CIVS		 	: pediaMainScreen,
 							SevoScreenEnums.PEDIA_LEADERS		: pediaMainScreen,
+						# MINOR_LEADERS_PEDIA 08/2013 lfgr
+							SevoScreenEnums.PEDIA_MINOR_LEADERS	: pediaMainScreen,
+						# MINOR_LEADERS_PEDIA end
 							SevoScreenEnums.PEDIA_TRAITS		: pediaMainScreen,
 							SevoScreenEnums.PEDIA_CIVICS		: pediaMainScreen,
 							SevoScreenEnums.PEDIA_RELIGIONS		: pediaMainScreen,

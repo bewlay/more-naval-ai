@@ -4019,7 +4019,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -6839,7 +6839,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -7527,7 +7527,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -9603,7 +9603,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -11003,7 +11003,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -11687,7 +11687,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -15795,7 +15795,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -16511,7 +16511,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -20767,7 +20767,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -22151,7 +22151,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -22851,7 +22851,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -25615,7 +25615,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -27035,7 +27035,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -28435,7 +28435,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -29831,7 +29831,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -30507,7 +30507,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -31211,7 +31211,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -31899,7 +31899,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -32607,7 +32607,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -34003,7 +34003,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -36111,7 +36111,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -36819,7 +36819,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -39623,7 +39623,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -40303,7 +40303,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>-2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -42379,7 +42379,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -43807,7 +43807,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>2</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -44479,7 +44479,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -46563,7 +46563,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>1</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>
@@ -47271,7 +47271,7 @@
 				 </DiploMusicWarEra>
 			</DiplomacyMusicWar>
 			<bFemale>0</bFemale>
-			<bGraphicalOnly>1</bGraphicalOnly>
+			<bGraphicalOnly>0</bGraphicalOnly>
 			<iAttitudeBadBonus>0</iAttitudeBadBonus>
 			<iAttitudeFromFemales>0</iAttitudeFromFemales>
 			<iAttitudeFromMales>0</iAttitudeFromMales>

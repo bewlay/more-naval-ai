@@ -220,3 +220,12 @@ class SevoPediaLeader:
 			else:
 				self.top.getScreen().leaderheadKeyInput(self.leaderWidget, inputClass.getData())
 		return 0
+		
+# MINOR_LEADERS_PEDIA 08/2013 lfgr
+	def getLeaderType( self, eLeader ) :
+		for eCiv in range( gc.getNumCivilizationInfos() ) :
+			if( gc.getCivilizationInfo( eCiv ).isLeaders( eLeader ) ) :
+				return SevoScreenEnums.TYPE_MAJOR
+
+		return SevoScreenEnums.TYPE_MINOR
+# MINOR_LEADERS_PEDIA end

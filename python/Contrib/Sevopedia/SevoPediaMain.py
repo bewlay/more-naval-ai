@@ -180,6 +180,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: self.placeImprovements,
 			SevoScreenEnums.PEDIA_CIVS		: self.placeCivs,
 			SevoScreenEnums.PEDIA_LEADERS		: self.placeLeaders,
+		# MINOR_LEADERS_PEDIA 08/2013 lfgr
+			SevoScreenEnums.PEDIA_MINOR_LEADERS	: self.placeMinorLeaders,
+		# MINOR_LEADERS_PEDIA end
 			SevoScreenEnums.PEDIA_TRAITS		: self.placeTraits,
 			SevoScreenEnums.PEDIA_CIVICS		: self.placeCivics,
 			SevoScreenEnums.PEDIA_RELIGIONS		: self.placeReligions,
@@ -233,6 +236,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			SevoScreenEnums.PEDIA_IMPROVEMENTS	: SevoPediaImprovement.SevoPediaImprovement(self),
 			SevoScreenEnums.PEDIA_CIVS		: SevoPediaCivilization.SevoPediaCivilization(self),
 			SevoScreenEnums.PEDIA_LEADERS		: self.pediaLeader,
+		# MINOR_LEADERS_PEDIA 08/2013 lfgr
+			SevoScreenEnums.PEDIA_MINOR_LEADERS	: self.pediaLeader,
+		# MINOR_LEADERS_PEDIA end
 			SevoScreenEnums.PEDIA_TRAITS		: SevoPediaTrait.SevoPediaTrait(self),
 			SevoScreenEnums.PEDIA_CIVICS		: SevoPediaCivic.SevoPediaCivic(self),
 			SevoScreenEnums.PEDIA_RELIGIONS		: SevoPediaReligion.SevoPediaReligion(self),
@@ -332,6 +338,14 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			if bAbility:
 				iCategory = SevoScreenEnums.PEDIA_ABILITIES
 ##--------	BUGFfH: End Add
+	# MINOR_LEADERS_PEDIA 08/2013 lfgr
+		elif (iCategory == SevoScreenEnums.PEDIA_LEADERS):
+			BugUtil.debug("Leader!")
+			iLeaderType = self.pediaLeader.getLeaderType(iItem)
+			if iLeaderType == SevoScreenEnums.TYPE_MINOR:		
+				BugUtil.debug("MINOR Leader!")	
+				iCategory = SevoScreenEnums.PEDIA_MINOR_LEADERS	
+	# MINOR_LEADERS_PEDIA end
 		elif (iCategory == SevoScreenEnums.PEDIA_BTS_CONCEPTS):
 			iCategory = self.determineNewConceptSubCategory(iItem)
 			BugUtil.debug("Switching to category %d" % iCategory)
@@ -439,6 +453,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		self.szCategoryImprovements	= localText.getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT", ())
 		self.szCategoryCivs			= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIV", ())
 		self.szCategoryLeaders		= localText.getText("TXT_KEY_PEDIA_CATEGORY_LEADER", ())
+	# MINOR_LEADERS_PEDIA 08/2013 lfgr
+		self.szCategoryMinorLeaders	= localText.getText("TXT_KEY_PEDIA_CATEGORY_MINOR_LEADER", ())
+	# MINOR_LEADERS_PEDIA end
 		self.szCategoryTraits		= localText.getText("TXT_KEY_PEDIA_TRAITS", ())
 		self.szCategoryCivics		= localText.getText("TXT_KEY_PEDIA_CATEGORY_CIVIC", ())
 		self.szCategoryReligions	= localText.getText("TXT_KEY_PEDIA_CATEGORY_RELIGION", ())
@@ -484,6 +501,9 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			["TERRAINS",	self.szCategoryImprovements],
 			["CIVS",	self.szCategoryCivs],
 			["CIVS",	self.szCategoryLeaders],
+	# MINOR_LEADERS_PEDIA 08/2013 lfgr
+			["CIVS",	self.szCategoryMinorLeaders],
+	# MINOR_LEADERS_PEDIA end
 			["CIVS",	self.szCategoryTraits],
 			["CIVICS",	self.szCategoryCivics],
 			["CIVICS",	self.szCategoryReligions],
@@ -753,11 +773,22 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 
 	def placeLeaders(self):
-		self.list = self.getLeaderList()
+	# MINOR_LEADERS_PEDIA 08/2013 lfgr
+	#	self.list = self.getLeaderList()
+		self.list = self.getLeaderList( SevoScreenEnums.TYPE_MAJOR )
+	# MINOR_LEADERS_PEDIA end
 		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, gc.getLeaderHeadInfo)
-	
-	def getLeaderList(self):
-		return self.getSortedList(gc.getNumLeaderHeadInfos(), gc.getLeaderHeadInfo)
+
+# MINOR_LEADERS_PEDIA 08/2013 lfgr
+	def placeMinorLeaders(self):
+		self.list = self.getLeaderList( SevoScreenEnums.TYPE_MINOR )
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, gc.getLeaderHeadInfo)
+
+#	 def getLeaderList(self):
+#		return self.getSortedList(gc.getNumLeaderHeadInfos(), gc.getLeaderHeadInfo)
+	def getLeaderList( self, iType ):
+		return self.getSortedList( gc.getNumLeaderHeadInfos(), gc.getLeaderHeadInfo, iType, self.pediaLeader.getLeaderType )
+# MINOR_LEADERS_PEDIA end
 
 
 	def placeTraits(self):
@@ -1040,6 +1071,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_CIVS, True, True)
 		elif (szLink == "PEDIA_MAIN_LEADER"):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_LEADERS, True, True)
+			# MINOR_LEADERS_PEDIA_TODO
 		elif (szLink == "PEDIA_MAIN_TRAIT"):
 			return self.pediaJump(SevoScreenEnums.PEDIA_MAIN, SevoScreenEnums.PEDIA_TRAITS, True, True)
 		elif (szLink == "PEDIA_MAIN_CIVIC"):
@@ -1103,6 +1135,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 		for i in range(gc.getNumLeaderHeadInfos()):
 			if (gc.getLeaderHeadInfo(i).isMatchForLink(szLink, False)):
 				return self.pediaJump(SevoScreenEnums.PEDIA_LEADERS, i, True, True)
+				# MINOR_LEADERS_PEDIA_TODO
 ##--------	BUGFfH: Added by Denev 2009/09/11
 		for i in range(gc.getNumTraitInfos()):
 			if (gc.getTraitInfo(i).isMatchForLink(szLink, False)):
@@ -1127,7 +1160,10 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen):
 
 
 	def handleInput (self, inputClass):
-		if (inputClass.getPythonFile() == SevoScreenEnums.PEDIA_LEADERS):
+	# MINOR_LEADERS_PEDIA 08/2013 lfgr
+	#	if (inputClass.getPythonFile() == SevoScreenEnums.PEDIA_LEADERS):
+		if ( inputClass.getPythonFile() == SevoScreenEnums.PEDIA_LEADERS or inputClass.getPythonFile() == SevoScreenEnums.PEDIA_MINOR_LEADERS ) :
+	# MINOR_LEADERS_PEDIA end
 			return self.pediaLeader.handleInput(inputClass)
 		elif (inputClass.getFunctionName() == self.TOC_ID):
 			self.showContents()

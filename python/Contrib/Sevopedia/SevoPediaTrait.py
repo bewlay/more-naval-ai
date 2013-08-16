@@ -108,10 +108,13 @@ class SevoPediaTrait:
 			pLeader = gc.getLeaderHeadInfo(iLeader)
 			if pLeader.hasTrait(self.iTrait) and (not pLeader.isGraphicalOnly()):
 				self.iLeader = iLeader
-				for iCiv in range(gc.getNumCivilizationInfos()):
-					if gc.getCivilizationInfo(iCiv).isLeaders(iLeader):
-						screen.attachImageButton(panelName, "", gc.getLeaderHeadInfo(iLeader).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, iLeader, 1, False)
-						break
+			# MINOR_LEADERS_PEDIA 08/2013 lfgr
+			#	for iCiv in range(gc.getNumCivilizationInfos()):
+			#		if gc.getCivilizationInfo(iCiv).isLeaders(iLeader):
+			#			screen.attachImageButton(panelName, "", gc.getLeaderHeadInfo(iLeader).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, iLeader, 1, False)
+			#			break
+				screen.attachImageButton(panelName, "", gc.getLeaderHeadInfo(iLeader).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, iLeader, 1, False)
+			# MINOR_LEADERS_PEDIA end
 		
 #BUGFfH: Added by Denev 2009/09/10
 		for iCivilization in range(gc.getNumCivilizationInfos()):
