@@ -635,6 +635,8 @@ void CvUnit::convert(CvUnit* pUnit)
             }
         }
     }
+
+	bool bHero = false;
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
         if (pUnit->isHasPromotion((PromotionTypes)iI))
@@ -650,6 +652,10 @@ void CvUnit::convert(CvUnit* pUnit)
                 {
                     pUnit->setHasPromotion((PromotionTypes)iI, false);
                 }
+			    if (GC.getPromotionInfo((PromotionTypes)iI).getFreeXPPerTurn() != 0)
+			    {
+					bHero = true;
+				}
             }
             if (GC.getPromotionInfo((PromotionTypes)iI).isValidate())
             {
