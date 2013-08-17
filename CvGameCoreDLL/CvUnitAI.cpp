@@ -29487,8 +29487,11 @@ void CvUnitAI::AI_terraformerMove()
         getGroup()->pushMission(MISSION_SKIP);
 		return;
     }
-
-	getGroup()->pushMission(MISSION_SKIP);
+	// Tholal note: terraformers can get stuck in loop, if they've casted, are at a terraformable plot and have movement left
+	if (isHasCasted())
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+	}
 	return;
 }
 //returns true if the Unit can Summon stuff
