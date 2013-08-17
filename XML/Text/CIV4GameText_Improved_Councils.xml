@@ -9,11 +9,87 @@
 		<Spanish>(Tie Vote: %s1 decides)</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_POPUP_DIPLOMATIC_VOTING_VICTORY_NOT_PASSED</Tag>
+		<Tag>TXT_KEY_POPUP_DIPLOMATIC_VOTING_SECRETARY_NOT_PASSED</Tag>
 		<English>(No %s1 chosen)</English>
 		<French>(No %s1 chosen)</French>
 		<German>(%s1 nicht gewählt)</German>
 		<Italian>(No %s1 chosen)</Italian>
 		<Spanish>(No %s1 chosen)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_DIPLOMATIC_VOTING_VICTORY_NOT_PASSED</Tag>
+		<English>(Diplomatic Victory Failed)</English>
+		<French>(Diplomatic Victory Failed)</French>
+		<German>(Diplomatic Victory Failed)</German>
+		<Italian>(Diplomatic Victory Failed)</Italian>
+		<Spanish>(Diplomatic Victory Failed)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_CHOOSE_ELECTION_OVERCOUNCIL</Tag>
+		<English>As Head Councilor, you can choose a Resolution to put forward for a vote.</English>
+		<French>As Head Councilor, you can choose a Resolution to put forward for a vote.</French>
+		<German>Als Ratsvorsitzender k&#246;nnen Sie eine Resolution f&#252;r eine Wahl vorschlagen.</German>
+		<Italian>As Head Councilor, you can choose a Resolution to put forward for a vote.</Italian>
+		<Spanish>Como Gran Consejo, pod&#233;is escoger una resoluci&#243;n que presentar a votaci&#243;n.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_POPUP_CHOOSE_ELECTION_UNDERCOUNCIL</Tag>
+		<English>As Dark Magistrate, you can choose a Resolution to put forward for a vote.</English>
+		<French>As Dark Magistrate, you can choose a Resolution to put forward for a vote.</French>
+		<German>Als Dunkler Magistrat k&#246;nnen Sie eine Resolution f&#252;r eine Wahl vorschlagen.</German>
+		<Italian>As Dark Magistrate, you can choose a Resolution to put forward for a vote.</Italian>
+		<Spanish>Como Magistrado Oscuro, pod&#233;is escoger una resoluci&#243;n que presentar a votaci&#243;n.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_VICTORY_OVERCOUNCIL</Tag>
+		<!-- TODO: better text -->
+		<English>Overcouncil Election (Diplomatic Victory)</English>
+		<French>Overcouncil Election (Diplomatic Victory)</French>
+		<German>Wahl des Hohen Rates (Diplomatischer Sieg)</German>
+		<Italian>Overcouncil Election (Diplomatic Victory)</Italian>
+		<Spanish>Votaci&#243;n en el Gran Consejo (victoria diplom&#225;tica)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_VICTORY_UNDERCOUNCIL</Tag>
+		<!-- TODO: better text -->
+		<English>Undercouncil Election (Diplomatic Victory)</English>
+		<French>Undercouncil Election (Diplomatic Victory)</French>
+		<German>Wahl des Geheimen Rates (Diplomatischer Sieg)</German>
+		<Italian>Undercouncil Election (Diplomatic Victory)</Italian>
+		<Spanish>Votaci&#243;n en el Concilio Oculto (victoria diplom&#225;tica)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_VICTORY_SCREEN_ELECTION_POSSIBLE</Tag>
+		<English>Election possible</English>
+		<French>Election possible</French>
+		<German>Wahl m&#246;glich</German>
+		<Italian>Election possible</Italian>
+		<Spanish>Election possible</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_VICTORY_SCREEN_ELECTION_NOT_POSSIBLE</Tag>
+		<English>Election not possible</English>
+		<French>Election not possible</French>
+		<German>Wahl nicht m&#246;glich</German>
+		<Italian>Election not possible</Italian>
+		<Spanish>Election not possible</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_RESULTS_VICTORY</Tag>
+		<!-- TODO: better text -->
+		<English>The %s1_institution has announced the Diplomatic Victory of %s2_player!</English>
+		<French>The %s1_institution has announced the Diplomatic Victory of %s2_player!</French>
+		<German>The %s1_institution has announced the Diplomatic Victory of %s2_player!</German>
+		<Italian>The %s1_institution has announced the Diplomatic Victory of %s2_player!</Italian>
+		<Spanish>The %s1_institution has announced the Diplomatic Victory of %s2_player!</Spanish>
+	</TEXT>
+	<TEXT>
+		<!-- TODO: better text -->
+		<Tag>TXT_KEY_VOTE_RESULTS_SECRETARY</Tag>
+		<English>The %s1_institution has elected %s2_player to be the new %s3_title</English>
+		<French>The %s1_institution has elected %s2_player to be the new %s3_title</French>
+		<German>The %s1_institution has elected %s2_player to be the new %s3_title</German>
+		<Italian>The %s1_institution has elected %s2_player to be the new %s3_title</Italian>
+		<Spanish>The %s1_institution has elected %s2_player to be the new %s3_title</Spanish>
 	</TEXT>
 </Civ4GameText>

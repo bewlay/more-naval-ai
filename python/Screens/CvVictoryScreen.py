@@ -1393,18 +1393,57 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 5, iVictoryTitleRow, str(victoryDelay), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 						
 				if (victory.isDiploVote()):
-					for (iVoteBuildingClass, iUNTeam, bUnknown) in aiVoteBuildingClass:
-						iRow = screen.appendTableRow(szTable)
-						screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (gc.getBuildingClassInfo(iVoteBuildingClass).getTextKey(), )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						if (iUNTeam != -1):
-							if bUnknown:
-								szName = localText.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
-							else:
-								szName = gc.getTeam(iUNTeam).getName()
-							screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName, )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						else:
-							screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						bEntriesFound = True
+				# Improved Councils 07/2013 lfgr
+				#	for (iVoteBuildingClass, iUNTeam, bUnknown) in aiVoteBuildingClass:
+				#		iRow = screen.appendTableRow(szTable)
+				#		screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (gc.getBuildingClassInfo(iVoteBuildingClass).getTextKey(), )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				#		if (iUNTeam != -1):
+				#			if bUnknown:
+				#				szName = localText.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
+				#			else:
+				#				szName = gc.getTeam(iUNTeam).getName()
+				#			screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName, )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				#		else:
+				#			screen.setTableText(szTable, 2, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				#		bEntriesFound = True
+					# will mess up if more than one Victory VoteInfo for a VoteSourceInfo (unlikely)
+					for eVote in range( gc.getNumVoteInfos() ) :
+						pVote = gc.getVoteInfo( eVote )
+						if( pVote.isVictory() ) :
+							for eVoteSource in range( gc.getNumVoteSourceInfos() ) :
+								if( pVote.isVoteSourceType( eVoteSource ) ) :
+									iRow = screen.appendTableRow(szTable)
+									
+									bValid = True
+									szText = ""
+									
+									# check if all players are in council
+									for iLoopPlayer in range( gc.getMAX_PLAYERS() ):
+										pLoopPlayer = gc.getPlayer( iLoopPlayer )
+										if( pLoopPlayer.isAlive() and not pLoopPlayer.isMinorCiv() and not pLoopPlayer.isBarbarian() ) :
+											if( not pLoopPlayer.isVotingMember( eVoteSource ) ) :
+												bValid = False
+												break
+									# check if one team has enough own votes to win
+									iRequired = CyGame().getVoteRequired( eVote, eVoteSource )
+									for iLoopTeam in range( gc.getMAX_TEAMS() ):
+										iTeamVotes = 0
+										for iLoopPlayer in range( gc.getMAX_PLAYERS() ):
+											pLoopPlayer = gc.getPlayer( iLoopPlayer )
+											if( pLoopPlayer.getTeam() == iLoopTeam ) :
+												iTeamVotes += pLoopPlayer.getVotes( eVote, eVoteSource )
+										if( iTeamVotes >= iRequired ) :
+											bValid = False
+											break
+									
+									if( bValid ) :
+										szText = localText.getText("TXT_KEY_VOTE_VICTORY_SCREEN_ELECTION_POSSIBLE", ())
+									else :
+										szText = localText.getText("TXT_KEY_VOTE_VICTORY_SCREEN_ELECTION_NOT_POSSIBLE", ())
+									
+									screen.setTableText(szTable, 0, iRow, gc.getVoteSourceInfo(eVoteSource).getDescription(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+									screen.setTableText(szTable, 2, iRow, szText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				# Improved Councils end
 					
 				if (victory.getCityCulture() != CultureLevelTypes.NO_CULTURELEVEL and victory.getNumCultureCities() > 0):
 					ourBestCities = self.getListCultureCities(self.iActivePlayer, victory)[0:victory.getNumCultureCities()]

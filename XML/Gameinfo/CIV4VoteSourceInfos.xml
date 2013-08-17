@@ -9,7 +9,7 @@
 		<VoteSourceInfo>
 			<Type>DIPLOVOTE_OVERCOUNCIL</Type>
 			<Description>TXT_KEY_OVERCOUNCIL</Description>
-			<PopupText>TXT_KEY_POPUP_CHOOSE_ELECTION</PopupText>
+			<PopupText>TXT_KEY_POPUP_CHOOSE_ELECTION_OVERCOUNCIL</PopupText>
 			<SecretaryGeneralText>TXT_KEY_OVERCOUNCIL_LEADER</SecretaryGeneralText>
 			<iVoteInterval>10</iVoteInterval>
 			<FreeSpecialist>NONE</FreeSpecialist>
@@ -20,7 +20,7 @@
 		<VoteSourceInfo>
 			<Type>DIPLOVOTE_UNDERCOUNCIL</Type>
 			<Description>TXT_KEY_UNDERCOUNCIL</Description>
-			<PopupText>TXT_KEY_POPUP_CHOOSE_ELECTION</PopupText>
+			<PopupText>TXT_KEY_POPUP_CHOOSE_ELECTION_UNDERCOUNCIL</PopupText>
 			<SecretaryGeneralText>TXT_KEY_UNDERCOUNCIL_LEADER</SecretaryGeneralText>
 			<iVoteInterval>15</iVoteInterval>
 			<FreeSpecialist>NONE</FreeSpecialist>

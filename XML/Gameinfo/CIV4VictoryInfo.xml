@@ -158,5 +158,25 @@
 			<iVictoryDelayTurns>0</iVictoryDelayTurns>
 			<VictoryMovie>ART_DEF_MOVIE_VICTORY_ALTAR_OF_THE_LUONNOTAR</VictoryMovie>
 		</VictoryInfo>
+		<VictoryInfo>
+			<!-- Improved Councils 07/2013 lfgr -->
+			<Type>VICTORY_DIPLOMATIC</Type>
+			<Description>TXT_KEY_VICTORY_DIPLOMATIC</Description>
+			<Civilopedia>TXT_KEY_VICTORY_DIPLOMATIC_PEDIA</Civilopedia>
+			<bTargetScore>0</bTargetScore>
+			<bEndScore>0</bEndScore>
+			<bConquest>0</bConquest>
+			<bDiploVote>1</bDiploVote>
+			<bPermanent>0</bPermanent>
+			<iPopulationPercentLead>0</iPopulationPercentLead>
+			<iLandPercent>0</iLandPercent>
+			<iMinLandPercent>0</iMinLandPercent>
+			<iReligionPercent>0</iReligionPercent>
+			<CityCulture>NONE</CityCulture>
+			<iNumCultureCities>0</iNumCultureCities>
+			<iTotalCultureRatio>0</iTotalCultureRatio>
+			<iVictoryDelayTurns>0</iVictoryDelayTurns>
+			<VictoryMovie/>
+		</VictoryInfo>
 	</VictoryInfos>
 </Civ4VictoryInfo>
