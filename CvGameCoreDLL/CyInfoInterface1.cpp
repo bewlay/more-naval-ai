@@ -168,12 +168,10 @@ void CyInfoPythonInterface1()
 		.def("isEquipment", &CvPromotionInfo::isEquipment, "bool ()")
 		.def("isRace", &CvPromotionInfo::isRace, "bool ()")
 		.def("isImmuneToDefensiveStrike", &CvPromotionInfo::isImmuneToDefensiveStrike, "bool ()")
+		.def("getAIWeight", &CvPromotionInfo::getAIWeight, "int ()") //MNAI
 		.def("getDefensiveStrikeChance", &CvPromotionInfo::getDefensiveStrikeChance, "int ()")
 		.def("getDefensiveStrikeDamage", &CvPromotionInfo::getDefensiveStrikeDamage, "int ()")
-
-		// Tholal AI
-		.def("getExpireChance", &CvPromotionInfo::getExpireChance, "int ()")
-		// End Tholal AI
+		.def("getExpireChance", &CvPromotionInfo::getExpireChance, "int ()") //MNAI
 //FfH: End Add
 
 		// Arrays
