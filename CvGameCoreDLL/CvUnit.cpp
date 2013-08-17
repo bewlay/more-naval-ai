@@ -15937,7 +15937,8 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     }
     if (kSpell.getBuildingClassOwnedPrereq() != NO_BUILDINGCLASS)
     {
-        if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq())  == 0)
+        //if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq())  == 0)
+		if (GET_TEAM(getTeam()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq()) == 0)
         {
             return false;
         }
