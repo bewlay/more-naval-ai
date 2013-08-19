@@ -1658,6 +1658,12 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	// MNAI
+	// increase value for distant opponents
+	// increase value for long wars
+	iValue += kWarTeam.getWarWeariness(eTeam);
+	// End MNAI
+
 	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
 
 	if (isHuman())
