@@ -209,7 +209,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 	GET_PLAYER(getOwnerINLINE()).changeAssets(m_pUnitInfo->getAssetValue());
 
 	//GET_PLAYER(getOwnerINLINE()).changePower(m_pUnitInfo->getPowerValue());
-	GET_PLAYER(getOwnerINLINE()).changePower(getTruePower());
+	GET_PLAYER(getOwnerINLINE()).changePower(getTruePower()); // MNAI - True Power calculations
 
 	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
@@ -1035,7 +1035,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	GET_PLAYER(getOwnerINLINE()).changeAssets(-(m_pUnitInfo->getAssetValue()));
 
 	//GET_PLAYER(getOwnerINLINE()).changePower(-(m_pUnitInfo->getPowerValue()));
-	GET_PLAYER(getOwnerINLINE()).changePower(-(getTruePower()));
+	GET_PLAYER(getOwnerINLINE()).changePower(-(getTruePower())); // MNAI - True Power calculations
 
 	GET_PLAYER(getOwnerINLINE()).AI_changeNumAIUnits(AI_getUnitAIType(), -1);
 
@@ -12602,6 +12602,12 @@ void CvUnit::setLevel(int iNewValue)
 {
 	if (getLevel() != iNewValue)
 	{
+		// MNAI - True Power calculations
+		int iNetPowerChange = iNewValue - getLevel();
+		GET_PLAYER(getOwnerINLINE()).changePower(iNetPowerChange);
+		area()->changePower(getOwnerINLINE(), iNetPowerChange);
+		// MNAI End
+
 		m_iLevel = iNewValue;
 		FAssert(getLevel() >= 0);
 
@@ -12620,10 +12626,6 @@ void CvUnit::setLevel(int iNewValue)
 void CvUnit::changeLevel(int iChange)
 {
 	setLevel(getLevel() + iChange);
-
-	// True Power calculations
-	area()->changePower(getOwnerINLINE(), iChange);
-	GET_PLAYER(getOwnerINLINE()).changePower(iChange);
 }
 
 int CvUnit::getCargo() const
@@ -20146,11 +20148,14 @@ void CvUnit::tradeUnit(PlayerTypes eReceivingPlayer)
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
 
+ // MNAI - True Power calculations
 int CvUnit::getTruePower() const
 {
-	return (m_pUnitInfo->getPowerValue() + getLevel());
+	//Tholal note: units start at level 1
+	return (m_pUnitInfo->getPowerValue() + (getLevel() - 1));
 }
 
+ // MNAI - Identify Units with Ranged Collateral Damage ability
 bool CvUnit::isRangedCollateral()
 {
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
@@ -20176,3 +20181,4 @@ bool CvUnit::isRangedCollateral()
 	}
 	return false;
 }
+// MNAI End
