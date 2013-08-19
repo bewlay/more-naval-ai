@@ -14535,7 +14535,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	int iMaintenanceFactor =  AI_commerceWeight(COMMERCE_GOLD) * std::max(0, calculateInflationRate() + 100) / 100; // K-Mod
 
 	//iValue = (getNumCities() * 6);
-	iValue = 1 + AI_getNumRealCities();
+	//iValue = 1 + AI_getNumRealCities();
+	iValue = 0;
 	//iValue = 1;
 
 	// account for civic-specfic units with the <bAbandon> tag
@@ -14886,7 +14887,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	iValue += (getTotalPopulation() * 4 * getCivicPercentAnger(eCivic, true)) / GC.getPERCENT_ANGER_DIVISOR();
 //>>>>Better AI: End Modify
 
-	if (kCivic.getExtraHealth() != 0)
+	if ((kCivic.getExtraHealth() != 0) && !isIgnoreFood())
 	{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       10/21/09                                jdog5000      */
@@ -15043,7 +15044,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (kCivic.getCapitalYieldModifier(iI) != 0)
 			{
 				iTemp = (kCivic.getCapitalYieldModifier(iI)) * pCapital->getBaseYieldRate((YieldTypes)iI);
-				iTemp /= (iCities * 35);
+				iTemp /= (iCities * 25);
 				iTempValue += iTemp;
 			}
 			//iTemp *= 4;
@@ -15062,11 +15063,15 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		{
 			if (AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION2))
 			{
-				iTempValue *= 3; 
+				iTempValue *= 4; 
+			}
+			else if (isIgnoreFood())
+			{
+				iTempValue = 0;
 			}
 			else
 			{
-				iTempValue *= 2;
+				iTempValue *= 3;
 			}
 		} 
 		else if (iI == YIELD_PRODUCTION) 
@@ -15095,7 +15100,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			if (kCivic.getCapitalCommerceModifier(iI) != 0)
 			{
 				iTemp = (kCivic.getCapitalCommerceModifier(iI)) * pCapital->getBaseCommerceRate((CommerceTypes)iI);
-				iTemp /= (iCities * 35);
+				iTemp /= (iCities * 25);
 	
 				//iTemp *= 4;
 				//iTemp /= std::max(1, iCities);
