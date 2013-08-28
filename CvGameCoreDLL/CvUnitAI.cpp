@@ -27874,11 +27874,14 @@ void CvUnitAI::AI_ConquestMove()
 		}
 	}
 
+	/* Tholal Note - I add this section a while back. Seems like its now causing problems
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, false, true, bIgnoreFaster))
 	{
-		getGroup()->pushMission(MISSION_SKIP);
+		logBBAI("      ...Merge 1");
+		//getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
+	*/
 
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
@@ -28089,77 +28092,7 @@ void CvUnitAI::AI_ConquestMove()
 	// Look for local threats - mainly meant to deal with early barbarian or HN threats
 	bool bDanger = (kPlayer.AI_getAnyPlotDanger(plot(), 3, false));
 
-	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
-    {
-        //check for enemies in own territory
-        int iOddsThreshold=70;
-        int iMinStack=1+(getGroup()->getNumUnits()/5);
-        int iRange=20;
-        pBestPlot=NULL;
-		iSearchRange= (bAtWar ? 3 : 10);
-        iBestValue=0;
-        for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-        {
-            for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-            {
-                pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
 
-                if (pLoopPlot != NULL)
-                {
-                    if ((AI_plotValid(pLoopPlot)))
-					{
-						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
-						{
-							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity())
-							{
-								if (!atPlot(pLoopPlot) && ((bFollow) ? canMoveInto(pLoopPlot, true) : (generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))))
-								{
-									if (pLoopPlot->getNumVisibleEnemyDefenders(this) > 0)//= iMinStack)
-									{
-										int iOurStrength=getGroup()->AI_GroupPower(pLoopPlot,false);
-										int iTheirStrength=kPlayer.AI_getEnemyPlotStrength(pLoopPlot,0,true,false);
-										if (iOurStrength>(iTheirStrength*1.2))
-										{
-											iValue = AI_attackOdds(pLoopPlot, true);
-											
-											
-											if (getGroup()->getNumUnits() >= (pLoopPlot->getNumVisibleEnemyDefenders(this) * 5))
-											{
-												//iValue = (bAtWar ? 0 : 50);
-												iValue /= 2;
-											}
-											
-
-											if (iValue>30)
-											{
-												iValue *=(100/(1+iPathTurns));
-												iValue *=(3+pLoopPlot->getNumVisibleEnemyDefenders(this));
-												if (iValue > iBestValue)
-												{
-													iBestValue = iValue;
-													pBestPlot = ((bFollow) ? pLoopPlot : getPathEndTurnPlot());
-													FAssert(!atPlot(pBestPlot));
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-                    }
-                }
-            }
-        }
-
-        if (pBestPlot != NULL)
-        {
-            FAssert(!atPlot(pBestPlot));
-            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
-            return;
-        }
-    }
-
-	
 	if( bReadyToAttack )
 	{
 		// Check that stack has units which can capture cities
@@ -28398,7 +28331,9 @@ void CvUnitAI::AI_ConquestMove()
 			}
 		}
 		
-		if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
+		// Tholal Note - seems that sometimes we have to force the AI to attack their targets
+		//if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
+		if (iComparePostBombard >= 120)
 		{
 			if( AI_goToTargetCity(MOVE_THROUGH_ENEMY, 10 ,pTargetCity) )
 			{
@@ -28409,7 +28344,80 @@ void CvUnitAI::AI_ConquestMove()
 				return;
 			}
 		}
+		//
 	}
+
+	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
+    {
+        //check for enemies in own territory
+        int iOddsThreshold=80;
+        int iMinStack=1+(getGroup()->getNumUnits()/5);
+        int iRange=20;
+        pBestPlot=NULL;
+		iSearchRange = AI_searchRange(bAtWar ? 3 : 10);
+        iBestValue=0;
+        for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
+        {
+            for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
+            {
+                pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
+
+                if (pLoopPlot != NULL)
+                {
+                    if ((AI_plotValid(pLoopPlot)))
+					{
+						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
+						{
+							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity())
+							{
+								if (!atPlot(pLoopPlot) && ((bFollow) ? canMoveInto(pLoopPlot, true) : (generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))))
+								{
+									if (pLoopPlot->getNumVisibleEnemyDefenders(this) > 0)//= iMinStack)
+									{
+										int iOurStrength=getGroup()->AI_GroupPower(pLoopPlot,false);
+										int iTheirStrength=kPlayer.AI_getEnemyPlotStrength(pLoopPlot,0,true,false);
+										if (iOurStrength>(iTheirStrength*1.2))
+										{
+											iValue = AI_attackOdds(pLoopPlot, true);
+											
+											
+											if (getGroup()->getNumUnits() >= (pLoopPlot->getNumVisibleEnemyDefenders(this) * 5))
+											{
+												//iValue = (bAtWar ? 0 : 50);
+												iValue /= 2;
+											}
+											
+
+											if (iValue>30)
+											{
+												iValue *=(100/(1+iPathTurns));
+												iValue *=(3+pLoopPlot->getNumVisibleEnemyDefenders(this));
+												if (iValue > iBestValue)
+												{
+													iBestValue = iValue;
+													//pBestPlot = ((bFollow) ? pLoopPlot : getPathEndTurnPlot());
+													pBestPlot = pLoopPlot;
+													FAssert(!atPlot(pBestPlot));
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+                    }
+                }
+            }
+        }
+
+        if (pBestPlot != NULL)
+        {
+			logBBAI(" moving to danger plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+            FAssert(!atPlot(pBestPlot));
+            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
+            return;
+        }
+    }
 
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 2, true, true, bIgnoreFaster))
 	{
