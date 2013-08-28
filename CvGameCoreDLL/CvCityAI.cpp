@@ -1839,6 +1839,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if ( AI_chooseBuilding(BUILDINGFOCUS_HEALTHY, 20, 0, (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION4) ? 50 : 20)) )
 			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_HEALTHY for Domination Victory", getName().GetCString());
 				return;
 			}
 		}
@@ -1855,6 +1856,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseBuilding(BUILDINGFOCUS_HEALTHY, 30, 0, 3*getPopulation()))
 				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_HEALTHY1", getName().GetCString());
 					return;
 				}
 			}
@@ -1863,6 +1865,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if (AI_chooseBuilding(BUILDINGFOCUS_CULTURE, 30, 0 + 3*iWarTroubleThreshold, 3*getPopulation()))
 				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose BUILDINGFOCUS_CULTURE1", getName().GetCString());
 					return;
 				}
 			}
