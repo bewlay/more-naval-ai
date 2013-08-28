@@ -2831,8 +2831,8 @@
             <Button>Art/Interface/Buttons/Spells/Snowfall.dds</Button>
         </SpellInfo>
         <SpellInfo>
-            <Type>SPELL_SNOWFALL_GREATOR</Type>
-            <Description>TXT_KEY_SPELL_SNOWFALL</Description>
+            <Type>SPELL_SNOWFALL_GREATER</Type>
+            <Description>TXT_KEY_SPELL_SNOWFALL_GREATER</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
             <Help>TXT_KEY_SPELL_SNOWFALL_HELP</Help>
             <UnitClassPrereq>UNITCLASS_AURIC_ASCENDED</UnitClassPrereq>
