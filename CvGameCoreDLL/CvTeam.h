@@ -223,21 +223,27 @@ public:
 	bool isVassalStateTrading() const;																						// Exposed to Python
 	void changeVassalTradingCount(int iChange);												// Exposed to Python
 
-	int getBridgeBuildingCount() const;																									// Exposed to Python
-	bool isBridgeBuilding() const;																						// Exposed to Python
-	void changeBridgeBuildingCount(int iChange);																	// Exposed to Python
+// MNAI - Puppet States
+	int getPuppetTradingCount() const;																				// Exposed to Python	
+	bool isPuppetStateTrading() const;																						// Exposed to Python						
+	void changePuppetTradingCount(int iChange);												// Exposed to Python
+// MNAI End
 
-	int getIrrigationCount() const;																											// Exposed to Python
-	bool isIrrigation() const;																								// Exposed to Python
-	void changeIrrigationCount(int iChange);																			// Exposed to Python
-
-	int getIgnoreIrrigationCount() const;																								// Exposed to Python
-	bool isIgnoreIrrigation() const;																					// Exposed to Python
-	void changeIgnoreIrrigationCount(int iChange);																// Exposed to Python
-
-	int getWaterWorkCount() const;																											// Exposed to Python
-	bool isWaterWork() const;																									// Exposed to Python
-	void changeWaterWorkCount(int iChange);																				// Exposed to Python
+	int getBridgeBuildingCount() const;																									// Exposed to Python	
+	bool isBridgeBuilding() const;																						// Exposed to Python						
+	void changeBridgeBuildingCount(int iChange);																	// Exposed to Python	
+																																								
+	int getIrrigationCount() const;																											// Exposed to Python	
+	bool isIrrigation() const;																								// Exposed to Python	
+	void changeIrrigationCount(int iChange);																			// Exposed to Python	
+																																								
+	int getIgnoreIrrigationCount() const;																								// Exposed to Python	
+	bool isIgnoreIrrigation() const;																					// Exposed to Python	
+	void changeIgnoreIrrigationCount(int iChange);																// Exposed to Python	
+																																								
+	int getWaterWorkCount() const;																											// Exposed to Python	
+	bool isWaterWork() const;																									// Exposed to Python	
+	void changeWaterWorkCount(int iChange);																				// Exposed to Python	
 
 	int getVassalPower() const;																							// Exposed to Python
 	void setVassalPower(int iPower);																					// Exposed to Python
@@ -497,6 +503,9 @@ protected:
 	int m_iDefensivePactTradingCount;
 	int m_iPermanentAllianceTradingCount;
 	int m_iVassalTradingCount;
+// MNAI - Puppet States
+	int m_iPuppetTradingCount;
+// MNAI End
 	int m_iBridgeBuildingCount;
 	int m_iIrrigationCount;
 	int m_iIgnoreIrrigationCount;

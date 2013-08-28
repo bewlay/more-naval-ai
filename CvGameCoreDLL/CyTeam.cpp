@@ -502,6 +502,24 @@ void CyTeam::changeVassalTradingCount(int iChange)
 		m_pTeam->changeVassalTradingCount(iChange);
 }
 
+// MNAI - Puppet States
+int CyTeam::getPuppetTradingCount()
+{
+	return m_pTeam ? m_pTeam->getPuppetTradingCount() : -1;
+}
+
+bool CyTeam::isPuppetStateTrading()
+{
+	return m_pTeam ? m_pTeam->isPuppetStateTrading() : false;
+}
+
+void CyTeam::changePuppetTradingCount(int iChange)
+{
+	if (m_pTeam)
+		m_pTeam->changePuppetTradingCount(iChange);
+}
+// MNAI End
+
 int CyTeam::getBridgeBuildingCount()
 {
 	return m_pTeam ? m_pTeam->getBridgeBuildingCount() : -1;

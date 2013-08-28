@@ -336,6 +336,9 @@ public:
 	bool isDefensivePactTrading() const;	// Exposed to Python
 	bool isPermanentAllianceTrading() const;	// Exposed to Python
 	bool isVassalStateTrading() const;	// Exposed to Python
+// MNAI - Puppet States
+	bool isPuppetStateTrading() const;	// Exposed to Python
+// MNAI End
 	bool isBridgeBuilding() const;				// Exposed to Python
 	bool isIrrigation() const;						// Exposed to Python
 	bool isIgnoreIrrigation() const;			// Exposed to Python
@@ -419,6 +422,9 @@ protected:
 	bool m_bDefensivePactTrading;
 	bool m_bPermanentAllianceTrading;
 	bool m_bVassalStateTrading;
+// MNAI - Puppet States
+	bool m_bPuppetStateTrading;
+// MNAI End
 	bool m_bBridgeBuilding;
 	bool m_bIrrigation;
 	bool m_bIgnoreIrrigation;

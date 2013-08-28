@@ -2648,9 +2648,7 @@ void CyPlayer::setParent(int /*PlayerTypes*/ eParent)
 }
 //<<<<Unofficial Bug Fix: End Add
 
-/************************************************************************/
-/*** PUPPET STATES 04/21/08 by DPII                                   ***/
-/************************************************************************/
+// MNAI - Puppet States
 bool CyPlayer::makePuppet(int /*PlayerTypes*/ eSplitPlayer, CvCity* pVassalCapital) const
 {
     if (m_pPlayer)
@@ -2683,7 +2681,7 @@ void CyPlayer::setPuppetState(bool newvalue)
         m_pPlayer->setPuppetState(newvalue);
 }
 
-/*************************************************************************/
+// End MNAI
 
 bool CyPlayer::canHaveTradeRoutesWith(int iPlayer)
 {

@@ -373,7 +373,7 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 				CvEventReporter::getInstance().cityAcquiredAndKept(GC.getGameINLINE().getActivePlayer(), pCity);
 			}
 		}
-		/*** PUPPET STATES 04/21/08 by DPII START ***/
+		// MNAI - Puppet States
 		else if (pPopupReturn->getButtonClicked() == 4)
 		{
 		    bool bValid;
@@ -389,7 +389,7 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
                 }
 		    }
 		}
-		/*** PUPPET STATES END ***/
+		// End MNAI
 		break;
 
 	case BUTTONPOPUP_DISBANDCITY:

@@ -132,7 +132,12 @@ public:
 	void changePermanentAllianceTradingCount(int iChange);													
 	int getVassalTradingCount();
 	bool isVassalStateTrading();
-	void changeVassalTradingCount(int iChange);													
+	void changeVassalTradingCount(int iChange);
+	// MNAI - Puppet States
+	int getPuppetTradingCount();
+	bool isPuppetStateTrading();
+	void changePuppetTradingCount(int iChange);	
+	// MNAI End
 	int getBridgeBuildingCount();
 	bool isBridgeBuilding();
 	void changeBridgeBuildingCount(int iChange);																		

@@ -10965,6 +10965,11 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 	//	Enables permanent alliances...
 	buildVassalStateString(szBuffer, eTech, true, bPlayerContext);
 
+	// MNAI - Puppet States
+	//	Enables puppet states...
+	buildPuppetStateString(szBuffer, eTech, true, bPlayerContext);
+	// MNAI End
+
 	//	Build farm, irrigation, etc...
 	for (iI = 0; iI < GC.getNumBuildInfos(); ++iI)
 	{
@@ -17216,15 +17221,23 @@ void CvGameTextMgr::buildVassalStateString(CvWStringBuffer &szBuffer, TechTypes 
 			szBuffer.append(NEWLINE);
 		}
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_VASSAL_STATES"));
-
-		if (GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES))
-		{
-			szBuffer.append(NEWLINE);
-
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_PUPPET_STATES"));
-		}
 	}
 }
+
+// MNAI - Puppet States
+void CvGameTextMgr::buildPuppetStateString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
+{
+	if (GC.getTechInfo(eTech).isPuppetStateTrading() && (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).isPuppetStateTrading()) || !(GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES))))
+	{
+		if (bList)
+		{
+			szBuffer.append(NEWLINE);
+		}
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_PUPPET_STATES"));
+	}
+}
+// MNAI End
+
 
 void CvGameTextMgr::buildBridgeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
 {
@@ -18195,11 +18208,12 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 					{
 						szBuffer.append(NEWLINE);
 						szBuffer.append(gDLL->getText("TXT_KEY_ATTITUDE_VASSAL_OF", kLoopTeam.getName().GetCString()));
+						// MNAI - Puppet States
 						if (GET_PLAYER(ePlayer).isPuppetState())
 						{
-							szBuffer.append(" (puppet state)");
+							szBuffer.append(" (Puppet State)");
 						}
-
+						// MNAI End
 						setVassalRevoltHelp(szBuffer, (TeamTypes)iTeam, kTeam.getID());
 					}
 					else if (kLoopTeam.isVassal(kTeam.getID()))
@@ -18425,7 +18439,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 		}
 //FfH: End Add
 
-		// Puppet States
+		// MNAI - Puppet States
 		iAttitudeChange = GET_PLAYER(ePlayer).AI_getPuppetAttitude(eTargetPlayer);
 		if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
 		{
@@ -18433,7 +18447,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 			szBuffer.append(NEWLINE);
 			szBuffer.append(szTempBuffer);
 		}
-		// End Puppet States
+		// MNAI End
 
 		for (iI = 0; iI < NUM_MEMORY_TYPES; ++iI)
 		{

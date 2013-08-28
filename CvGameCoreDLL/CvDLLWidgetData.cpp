@@ -672,6 +672,12 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		parseSpellHelp(widgetDataStruct, szBuffer);
 		break;
 //FfH: End Add
+
+// MNAI - Puppet States
+	case WIDGET_HELP_PUPPET_STATE:
+		parsePuppetStateHelp(widgetDataStruct, szBuffer);
+		break;
+// MNAI End
 	}
 }
 
@@ -1021,6 +1027,9 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 	case WIDGET_HELP_SPELL:
 //FfH: End Add
 
+// MNAI - Puppet States
+	case WIDGET_HELP_PUPPET_STATE:
+// MNAI End
 		break;
 	}
 
@@ -5678,6 +5687,13 @@ void CvDLLWidgetData::parseVassalStateHelp(CvWidgetDataStruct &widgetDataStruct,
 {
 	GAMETEXT.buildVassalStateString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
 }
+
+// MNAI - Puppet States
+void CvDLLWidgetData::parsePuppetStateHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
+{
+	GAMETEXT.buildPuppetStateString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)));
+}
+// MNAI End
 
 void CvDLLWidgetData::parseBuildBridgeHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {

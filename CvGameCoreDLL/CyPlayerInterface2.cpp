@@ -68,32 +68,23 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("setParent", &CyPlayer::setParent, "void (int /*PlayerTypes*/ eParent)")
 //<<<<Unofficial Bug Fix: End Add
 
-		/*** PUPPET STATES 04/21/08 by DPII ***/
+		// MNAI
+		// Puppet States
 		.def("makePuppet", &CyPlayer::makePuppet, "bool (int /*PlayerTypes*/ eSplitPlayer, int (CyCity* pVassalCapital)")
 		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int /*PlayerTypes*/ eFromPlayer)")
 		.def("isPuppetState", &CyPlayer::isPuppetState, "bool ()")
-		/*************************************/
-/************************************************************************************************/
-/* REVOLUTION_MOD                         11/15/08                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
+		// Revolutions
 		.def("assimilatePlayer", &CyPlayer::assimilatePlayer, "bool ( int iPlayer ) - acquire iPlayer's units and cities")
-/************************************************************************************************/
-/* REVOLUTION_MOD                          END                                                  */
-/************************************************************************************************/
+		// MNAI End
+		
 		.def("canHaveTradeRoutesWith", &CyPlayer::canHaveTradeRoutesWith, "bool (int)")
 		.def("forcePeace", &CyPlayer::forcePeace, "void (int)")
-
-/************************************************************************************************/
-/* REVOLUTION_MOD                         06/11/08                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
 
 // BUG - Reminder Mod - start
 		.def("addReminder", &CyPlayer::addReminder, "void (int iGameTurn, string szMessage)")
 // BUG - Reminder Mod - end
+
+		// MNAI - Revolutions
 		.def("setFoundedFirstCity", &CyPlayer::setFoundedFirstCity, "void (bool bNewValue)")
 		.def("setAlive", &CyPlayer::setAlive, "void (bool bNewValue)")
 		.def("setNewPlayerAlive", &CyPlayer::setNewPlayerAlive, "void (bool bNewValue) - like setAlive, but without firing turn logic")
@@ -104,20 +95,7 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("getStabilityIndexAverage", &CyPlayer::getStabilityIndexAverage, "int ( )")
 		.def("setStabilityIndexAverage", &CyPlayer::setStabilityIndexAverage, "void ( int iNewValue )")
 		.def("updateStabilityIndexAverage", &CyPlayer::updateStabilityIndexAverage, "void ( )")
-/************************************************************************************************/
-/* LoR                                        11/03/10                          phungus420      */
-/*                                                                                              */
-/* Colonists                                                                                    */
-/************************************************************************************************/
 		.def("getBestUnitType", &CyPlayer::getBestUnitType, "int ()")
-/************************************************************************************************/
-/* LoR                            END                                                           */
-/************************************************************************************************/
-/************************************************************************************************/
-/* REVDCM                                 09/02/10                                phungus420    */
-/*                                                                                              */
-/* Player Functions                                                                             */
-/************************************************************************************************/
 		.def("isNonStateReligionCommerce", &CyPlayer::isNonStateReligionCommerce, "bool ()")
 		.def("isUpgradeAnywhere", &CyPlayer::isUpgradeAnywhere, "bool ()")
 		.def("getRevIdxLocal", &CyPlayer::getRevIdxLocal, "int ()")
@@ -128,22 +106,8 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("getRevIdxNationalityMod", &CyPlayer::getRevIdxNationalityMod, "float ()")
 		.def("getRevIdxBadReligionMod", &CyPlayer::getRevIdxBadReligionMod, "float ()")
 		.def("getRevIdxGoodReligionMod", &CyPlayer::getRevIdxGoodReligionMod, "float ()")
-		//.def("isInquisitionConditions", &CyPlayer::isInquisitionConditions, "bool ()")
-		//.def("getUnitUpgradePriceModifier", &CyPlayer::getUnitUpgradePriceModifier, "int ()")
-		//.def("canFoundReligion", &CyPlayer::canFoundReligion, "bool ()")
-		//.def("isBuildingClassRequiredToTrain", &CyPlayer::isBuildingClassRequiredToTrain, "bool ((BuildingClassTypes)iBuildingClass, (UnitTypes)iUnit)")
-/************************************************************************************************/
-/* REVDCM                                  END                                                  */
-/************************************************************************************************/
-/************************************************************************************************/
-/* REVDCM                                 			                              glider1       */
-/*                                                                                              */
-/* RevolutionDCM - revolution stability history                                                 */
-/************************************************************************************************/
 		.def("getRevolutionStabilityHistory", &CyPlayer::getRevolutionStabilityHistory, "int (int iTurn)")
-/************************************************************************************************/
-/* REVDCM                                  END                                                  */
-/************************************************************************************************/	
+		// MNAI End
 
 //FfH Alignment: Added by Kael 08/09/2007
 		.def("canSeeCivic", &CyPlayer::canSeeCivic, "void (int iCivic)")

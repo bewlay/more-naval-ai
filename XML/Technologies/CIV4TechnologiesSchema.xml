@@ -43,6 +43,7 @@
 	<ElementType name="bDefensivePactTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPermanentAllianceTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bVassalTrading" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bPuppetTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bBridgeBuilding" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bIrrigation" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bIgnoreIrrigation" content="textOnly" dt:type="boolean"/>
@@ -141,6 +142,7 @@
 		<element type="bDefensivePactTrading"/>
 		<element type="bPermanentAllianceTrading"/>
 		<element type="bVassalTrading"/>
+		<element type="bPuppetTrading" minOccurs="0"/>
 		<element type="bBridgeBuilding"/>
 		<element type="bIrrigation"/>
 		<element type="bIgnoreIrrigation"/>

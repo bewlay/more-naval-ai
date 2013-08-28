@@ -1738,6 +1738,8 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 	int iRazeValue;
 	int iI;
 
+	PlayerTypes eHighestCulturePlayer = pCity->getLiberationPlayer(true);
+
 	if (canRaze(pCity))
 	{
 	    iRazeValue = 0;
@@ -2040,10 +2042,26 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 
 	if( bRaze )
 	{
-		if ((iRazeValue < 150) && canMakePuppet(pCity->getPreviousOwner()))
+		if ((iRazeValue < 150))
 		{
-			logBBAI("    Player %d (%S) decides to to create Puppet State in %S!!!", getID(), getCivilizationDescription(0), pCity->getName().GetCString() );
-			makePuppet(pCity->getPreviousOwner(), pCity);
+			if (canMakePuppet(pCity->getPreviousOwner()))
+			{
+				logBBAI("    ...decides to to create Puppet State in %S!!!", pCity->getName().GetCString() );
+				makePuppet(pCity->getPreviousOwner(), pCity);
+			}
+			else
+			{
+				if ((eHighestCulturePlayer != NO_PLAYER) &&
+					(eHighestCulturePlayer != getID()) &&
+					((getTeam() == GET_PLAYER(eHighestCulturePlayer).getTeam())	||
+					GET_TEAM(getTeam()).isOpenBorders(GET_PLAYER(eHighestCulturePlayer).getTeam()) ||
+					GET_TEAM(GET_PLAYER(eHighestCulturePlayer).getTeam()).isVassal(getTeam())))
+				{
+					logBBAI("    ...decides to to hand over control of %S!!!", pCity->getName().GetCString() );
+					GET_PLAYER(eHighestCulturePlayer).acquireCity(pCity, false, true, true);
+				}
+			}
+
 		}
 		else
 		{
@@ -11242,7 +11260,14 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 
 	if (GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()))
 	{
-		return NO_DENIAL;
+		if (!GC.getBonusInfo(eBonus).isMana() || !isPuppetState()) // Puppet States barred from trading mana
+		{
+			return NO_DENIAL;
+		}
+		else
+		{
+			return DENIAL_VASSAL;
+		}
 	}
 
 	if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))

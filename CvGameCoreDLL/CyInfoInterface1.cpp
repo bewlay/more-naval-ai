@@ -81,6 +81,9 @@ void CyInfoPythonInterface1()
 		.def("isDefensivePactTrading", &CvTechInfo::isDefensivePactTrading, "bool ()")
 		.def("isPermanentAllianceTrading", &CvTechInfo::isPermanentAllianceTrading, "bool ()")
 		.def("isVassalStateTrading", &CvTechInfo::isVassalStateTrading, "bool ()")
+// MNAI - Puppet States
+		.def("isPuppetStateTrading", &CvTechInfo::isPuppetStateTrading, "bool ()")
+// MNAI End
 		.def("isBridgeBuilding", &CvTechInfo::isBridgeBuilding, "bool ()")
 		.def("isIrrigation", &CvTechInfo::isIrrigation, "bool ()")
 		.def("isIgnoreIrrigation", &CvTechInfo::isIgnoreIrrigation, "bool ()")

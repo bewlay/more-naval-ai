@@ -576,6 +576,9 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_PEDIA_JUMP_TO_SPELL,
 	WIDGET_HELP_SPELL,
 //FfH: End Add
+// MNAI - Puppet States
+	WIDGET_HELP_PUPPET_STATE,
+// MNAI End
 
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES
@@ -855,11 +858,11 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_ALWAYS_OPEN_BORDERS,
 	GAMEOPTION_ALWAYS_RAZE,
 //FfH: End Modify
-// New Game Options from Tholal
+// MNAI - New Game Options
 	GAMEOPTION_PUPPET_STATES,
 	GAMEOPTION_REVOLUTIONS,
 	GAMEOPTION_ADVANCED_TACTICS,
-// End New Game Options
+// MNAI End
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES

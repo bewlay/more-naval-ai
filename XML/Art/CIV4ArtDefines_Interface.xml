@@ -839,6 +839,10 @@
 			<Path>Art/Interface/Buttons/Civics/Vassalage.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_PUPPET</Type>
+			<Path>Art/Interface/Buttons/Puppet.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
 			<Type>INTERFACE_TECH_TECHTRADING</Type>
 			<Path>Art/Interface/Screens/TechTree/Tech_Trading.dds</Path>
 		</InterfaceArtInfo>

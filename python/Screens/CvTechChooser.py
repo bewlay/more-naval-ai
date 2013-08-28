@@ -636,6 +636,14 @@ class CvTechChooser:
 		j = 0
 		k = 0
 
+		# MNAI - Puppet States
+		if ( gc.getTechInfo(i).isPuppetStateTrading() ):
+			szVassalStateButton = "PuppetState" + str(i)
+			screen.addDDSGFCAt( szVassalStateButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_PUPPET").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_PUPPET_STATE, i, -1, False )
+			fX += X_INCREMENT
+
+		j = 0
+		k = 0
 		# Bridge Building
 		if ( gc.getTechInfo(i).isBridgeBuilding() ):
 			szBuildBridgeButton = self.getNextWidgetName("BuildBridge")

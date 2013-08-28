@@ -336,17 +336,14 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	{
 		if (kPlayer.getNumCities() == 1)
 		{
-			if (!kPlayer.isPuppetState()) // Puppet States
+			for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
 			{
-				for (iI = 0; iI < GC.getNumBuildingClassInfos(); iI++)
+				if (GC.getCivilizationInfo(getCivilizationType()).isCivilizationFreeBuildingClass(iI))
 				{
-					if (GC.getCivilizationInfo(getCivilizationType()).isCivilizationFreeBuildingClass(iI))
+					eLoopBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI)));
+					if (eLoopBuilding != NO_BUILDING)
 					{
-						eLoopBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI)));
-						if (eLoopBuilding != NO_BUILDING)
-						{
-							setNumRealBuilding(eLoopBuilding, true);
-						}
+						setNumRealBuilding(eLoopBuilding, true);
 					}
 				}
 			}
@@ -16753,7 +16750,7 @@ bool CvCity::isAutoRaze() const
 }
 
 
-/*** PUPPET STATES 07/15/08 by DPII ***/
+// MNAI - Puppet States
 bool CvCity::canJoinPuppetState(PlayerTypes eOfPlayer) const
 {
     bool bFound = false;
@@ -16793,7 +16790,7 @@ bool CvCity::canJoinPuppetState(PlayerTypes eOfPlayer) const
 
     return bFound;
 }
-/*** PUPPET STATES END 07/15/08 by DPII ***/
+// MNAI End
 
 int CvCity::getMusicScriptId() const
 {

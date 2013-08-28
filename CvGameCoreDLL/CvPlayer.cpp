@@ -2071,6 +2071,16 @@ void CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 
 	pStartingPlot = getStartingPlot();
 
+	// MNAI - Puppet States - used for adding units to a newly created Puppet State
+	if (pStartingPlot == NULL)
+	{
+		if (getCapitalCity() != NULL)
+		{
+			pStartingPlot = getCapitalCity()->plot();
+		}
+	}
+	// MNAI End
+
 	if (pStartingPlot != NULL)
 	{
 		pBestPlot = NULL;
@@ -4247,7 +4257,7 @@ void CvPlayer::doTurn()
     }
 	// End Sephi AI
 
-	// Puppet States
+	// MNAI - Puppet States
 	if (isPuppetState())
 	{
 		// check for legitimacy - requires that we be the only civ of our type left in the game
@@ -4271,7 +4281,7 @@ void CvPlayer::doTurn()
 			findNewCapital();
 		}
 	}
-	// End Puppet States
+	// MNAI End
 
 	GC.getGameINLINE().verifyDeals();
 	AI_doTurnPre();
@@ -5858,6 +5868,13 @@ bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 		return true;
 	}
 
+// MNAI - Puppet States
+	if (GET_TEAM(getTeam()).isPuppetStateTrading() || GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isPuppetStateTrading())
+	{
+		return true;
+	}
+// MNAI End
+
 	return false;
 }
 
@@ -5948,6 +5965,14 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 
 	case TRADE_RESOURCES:
 		FAssertMsg(item.m_iData > -1, "iData is expected to be non-negative");
+		
+		// MNAI - Puppet States - barred from trading mana
+		if (GC.getBonusInfo((BonusTypes) item.m_iData).isMana() && 
+			(GET_PLAYER(eWhoTo).isPuppetState() || isPuppetState()))
+		{
+			return false;
+		}
+		// MNAI End
 
 		if (canTradeNetworkWith(eWhoTo))
 		{
@@ -6672,13 +6697,6 @@ void CvPlayer::findNewCapital()
 	int iValue;
 	int iBestValue;
 	int iLoop;
-
-	// Puppet States
-	if (isPuppetState())
-	{
-		return;
-	}
-	// End Puppet States
 	
 	eCapitalBuilding = ((BuildingTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(GC.getDefineINT("CAPITAL_BUILDINGCLASS"))));
 
@@ -7770,11 +7788,6 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 //		return false;
 //	}
 //FfH: End Modify
-
-	if (kBuilding.isCapital() && isPuppetState())
-	{
-		return false;
-	}
 
 	if (!bIgnoreCost)
 	{
@@ -24138,7 +24151,9 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
         return false;
     }
 
-    bool bPlayerExists = GET_PLAYER(eNewPlayer).isAlive();
+	CvPlayerAI &kNewPlayer = GET_PLAYER(eNewPlayer);
+
+    bool bPlayerExists = kNewPlayer.isAlive();
     FAssert(!bPlayerExists);
     if (!bPlayerExists)
     {
@@ -24235,28 +24250,30 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 		GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szMessage, -1, -1, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
 
 		GC.getGameINLINE().addPlayer(eNewPlayer, eBestLeader, eBestCiv);
-		GET_PLAYER(eNewPlayer).setParent(GET_PLAYER(eSplitPlayer).getID());
+
+		kNewPlayer = GET_PLAYER(eNewPlayer); //reset this variable
+		kNewPlayer.setParent(GET_PLAYER(eSplitPlayer).getID());
 
         if (getStateReligion() != NO_RELIGION)
         {
-            if (GET_PLAYER(eNewPlayer).getStateReligion() != getStateReligion())
+            if (kNewPlayer.getStateReligion() != getStateReligion())
             {
-                if (GET_PLAYER(eNewPlayer).canConvert(getStateReligion()))
+                if (kNewPlayer.canConvert(getStateReligion()))
                 {
-                    GET_PLAYER(eNewPlayer).convert(getStateReligion());
+                    kNewPlayer.convert(getStateReligion());
                 }
             }
         }
 
         for (iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
         {
-            if (getCivics((CivicOptionTypes)iI) != GET_PLAYER(eNewPlayer).getCivics((CivicOptionTypes)iI))
+            if (getCivics((CivicOptionTypes)iI) != kNewPlayer.getCivics((CivicOptionTypes)iI))
             {
-                GET_PLAYER(eNewPlayer).setCivics((CivicOptionTypes)iI, getCivics((CivicOptionTypes)iI));
+                kNewPlayer.setCivics((CivicOptionTypes)iI, getCivics((CivicOptionTypes)iI));
             }
         }
 
-		CvTeam& kNewTeam = GET_TEAM(GET_PLAYER(eNewPlayer).getTeam());
+		CvTeam& kNewTeam = GET_TEAM(kNewPlayer.getTeam());
 		for (int i = 0; i < GC.getNumTechInfos(); ++i)
 		{
 			// only give free techs that both civs already have
@@ -24275,14 +24292,20 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 				if (kLoopTeam.isAlive())
 				{
 					kNewTeam.setEspionagePointsAgainstTeam((TeamTypes)iTeam, GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsAgainstTeam((TeamTypes)iTeam));
-					kLoopTeam.setEspionagePointsAgainstTeam(GET_PLAYER(eNewPlayer).getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(GET_PLAYER(eSplitPlayer).getTeam()));
+					kLoopTeam.setEspionagePointsAgainstTeam(kNewPlayer.getTeam(), kLoopTeam.getEspionagePointsAgainstTeam(GET_PLAYER(eSplitPlayer).getTeam()));
 				}
 			}
 			kNewTeam.setEspionagePointsEver(GET_TEAM(GET_PLAYER(eSplitPlayer).getTeam()).getEspionagePointsEver());
 		}
 
-		GET_TEAM(getTeam()).assignVassal(GET_PLAYER(eNewPlayer).getTeam(), false);
-		GET_PLAYER(eNewPlayer).setPuppetState(true);
+		GET_TEAM(getTeam()).assignVassal(kNewPlayer.getTeam(), true);
+		kNewPlayer.setPuppetState(true);
+
+		GET_TEAM(getTeam()).signOpenBorders(kNewPlayer.getTeam());
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+		{
+			GET_TEAM(getTeam()).setHasEmbassy(kNewPlayer.getTeam(), true);
+		}
 
 		AI_updateBonusValue();
 	}
@@ -24290,22 +24313,34 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 	if (pVassalCapital != NULL)
 	{
 	    CvPlot* pPlot = pVassalCapital->plot();
-        int iCulture = (pVassalCapital->getCultureTimes100(eSplitPlayer) * (GC.getDefineINT("PUPPET_CULTURE_MULTIPLIER") / 100));
+		int iMultiplier = GC.getDefineINT("PUPPET_CULTURE_MULTIPLIER");
+        int iCulture = ((100 + pVassalCapital->getCultureTimes100(eSplitPlayer)) * GC.getDefineINT("PUPPET_CULTURE_MULTIPLIER")) / 100;
 
-        GET_PLAYER(eNewPlayer).acquireCity(pVassalCapital, false, true, true);
+        kNewPlayer.acquireCity(pVassalCapital, false, true, true);
 
-        if (NULL != pPlot)
+		if (NULL != pPlot)
         {
             CvCity* pCity = pPlot->getPlotCity();
             if (NULL != pCity)
             {
-                pCity->setCultureTimes100(eNewPlayer, iCulture, true, true);
-            }
+            	pCity->setOccupationTimer(0);
+		        pCity->setCultureTimes100(eNewPlayer, iCulture, true, true);
 
-            for (int i = 0; i < (GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS") * 2); ++i)
-            {
-                pCity->initConscriptedUnit();
-            }
+	            for (int i = 0; i < (GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS") * 2); ++i)
+	            {
+	                pCity->initConscriptedUnit();
+	            }
+
+				int iFreeCount = GC.getHandicapInfo(getHandicapType()).getStartingWorkerUnits();
+				iFreeCount += GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIStartingWorkerUnits();
+				iFreeCount += GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingWorkerUnits();
+				iFreeCount += 2;
+			
+				if (iFreeCount > 0)
+				{
+					kNewPlayer.addFreeUnitAI(UNITAI_WORKER, iFreeCount);
+				}
+			}
         }
 	}
 

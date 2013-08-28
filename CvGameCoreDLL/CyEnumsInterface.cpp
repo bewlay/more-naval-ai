@@ -424,7 +424,9 @@ void CyEnumsPythonInterface()
 		.value("WIDGET_PEDIA_JUMP_TO_TRAIT", WIDGET_PEDIA_JUMP_TO_TRAIT)
 		.value("WIDGET_HELP_TRAIT", WIDGET_HELP_TRAIT)
 //<<<<BUGFfH: End Add
-
+// MNAI - Puppet States
+		.value("WIDGET_HELP_PUPPET_STATE", WIDGET_HELP_PUPPET_STATE)
+// MNAI End
 		.value("NUM_WIDGET_TYPES", NUM_WIDGET_TYPES)
 		;
 

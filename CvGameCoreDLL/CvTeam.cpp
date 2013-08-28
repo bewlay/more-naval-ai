@@ -4189,6 +4189,30 @@ void CvTeam::changeVassalTradingCount(int iChange)
 	FAssert(getVassalTradingCount() >= 0);
 }
 
+// MNAI - Puppet States
+int CvTeam::getPuppetTradingCount() const
+{
+	return m_iPuppetTradingCount;
+}
+
+
+bool CvTeam::isPuppetStateTrading() const
+{
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_PUPPET_STATES))
+	{
+		return false;
+	}
+
+	return (getPuppetTradingCount() > 0);
+}
+
+
+void CvTeam::changePuppetTradingCount(int iChange)
+{
+	m_iPuppetTradingCount += iChange;
+	FAssert(getPuppetTradingCount() >= 0);
+}
+// MNAI End
 
 int CvTeam::getBridgeBuildingCount() const
 {
@@ -6848,6 +6872,13 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 	{
 		changeVassalTradingCount(iChange);
 	}
+
+// MNAI - Puppet States
+	if (GC.getTechInfo(eTech).isPuppetStateTrading())
+	{
+		changePuppetTradingCount(iChange);
+	}
+// MNAI End
 
 	if (GC.getTechInfo(eTech).isBridgeBuilding())
 	{

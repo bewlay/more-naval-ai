@@ -646,13 +646,13 @@ public:
 	void setParent(int /*PlayerTypes*/ eParent);
 //<<<<Unofficial Bug Fix: End Add
 
-    /*** PUPPET STATES 04/21/08 by DPII ***/
+    // MNAI - Puppet States
     bool makePuppet(int /*PlayerTypes*/ eSplitPlayer, CvCity* pVassalCapital) const;
     bool canMakePuppet(int /*PlayerTypes*/ eFromPlayer) const;
 
 	bool isPuppetState() const;
 	void setPuppetState (bool bNewValue);
-    /*************************************/
+    // End MNAI
 	
 	bool canHaveTradeRoutesWith(int iPlayer);
 
