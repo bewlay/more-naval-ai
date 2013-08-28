@@ -495,7 +495,7 @@ class CvGameUtils:
 						return 1
 			## Clan should build Warrens
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
-				if (pCity.getCultureLevel() > 1):
+				if (pCity.getCultureLevel() > 1) and (pCity.getPopulation() > 3):
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_WARRENS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_WARRENS'),-1, False, False, False, False)
 						return 1
