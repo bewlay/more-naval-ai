@@ -4256,7 +4256,7 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 
 	if (m_pUnitInfo->getPrereqAlignment() != NO_ALIGNMENT)
 	{
-		if (m_pUnitInfo->getStateReligion() != GET_PLAYER(pPlot->getOwner()).getAlignment())
+		if (m_pUnitInfo->getPrereqAlignment() != GET_PLAYER(pPlot->getOwner()).getAlignment())
 		{
 			return false;
 		}

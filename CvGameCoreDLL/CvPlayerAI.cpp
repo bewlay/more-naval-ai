@@ -16724,6 +16724,7 @@ void CvPlayerAI::AI_changeMemoryCount(PlayerTypes eIndex1, MemoryTypes eIndex2, 
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	}
 // BUG - Update Attitude Icons - end
+	GET_PLAYER(getID()).AI_invalidateAttitudeCache(eIndex1);
 	FAssert(AI_getMemoryCount(eIndex1, eIndex2) >= 0);
 }
 
