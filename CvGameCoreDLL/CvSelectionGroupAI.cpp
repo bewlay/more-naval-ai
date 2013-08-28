@@ -949,10 +949,14 @@ CvUnit* CvSelectionGroupAI::AI_ejectBestDefender(CvPlot* pDefendPlot)
 				iValue += pLoopUnit->hillsDefenseModifier();
 			}
 
-			iValue *= 100;
-			iValue /= (100 + pLoopUnit->cityAttackModifier() + pLoopUnit->getExtraCityAttackPercent());
+			int iCityAttackMod = pLoopUnit->cityAttackModifier();
+			if (iCityAttackMod > 0)
+			{
+				iValue *= 100;
+				iValue /= 100 + (iCityAttackMod * 2);
+			}
 
-			iValue /= 2 + pLoopUnit->getLevel();
+			iValue /= 2 + (pLoopUnit->getLevel() * (pLoopUnit->AI_getUnitAIType() == UNITAI_ATTACK_CITY ? 2 : 1));
 
 			if (iValue > iBestUnitValue)
 			{
