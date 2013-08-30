@@ -27509,6 +27509,7 @@ int CvPlayerAI::AI_militaryUnitTradeVal(CvUnit* pUnit) const
 	int iValue = 0;
 	UnitTypes eUnit = pUnit->getUnitType();
 
+	/* - this is already handled in CvUnit::canTradeUnit()
 	if (!pUnit->isMechUnit())
 	{
 		return 0;
@@ -27518,6 +27519,7 @@ int CvPlayerAI::AI_militaryUnitTradeVal(CvUnit* pUnit) const
 	{
 		return 0;
 	}
+	*/
 
 	iValue += AI_unitValue(eUnit, (UnitAITypes)GC.getUnitInfo(eUnit).getDefaultUnitAIType(), getCapitalCity()->area());
 	iValue /= 8;
