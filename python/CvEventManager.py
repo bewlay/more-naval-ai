@@ -1140,9 +1140,12 @@ class CvEventManager:
 			pPlayer.initUnit(gc.getInfoTypeForString('UNIT_DRIFA'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 		if iProjectType == gc.getInfoTypeForString('PROJECT_THE_DRAW'):
-			pPlayer.changeNoDiplomacyWithEnemies(1)
 			iTeam = pPlayer.getTeam()
 			eTeam = gc.getTeam(iTeam)
+			for iLoopPlayer in range(gc.getMAX_PLAYERS()):
+				pLoopPlayer = gc.getPlayer(iLoopPlayer)
+				if pLoopPlayer.isAlive() and pLoopPlayer.getTeam() == iTeam:
+					pLoopPlayer.changeNoDiplomacyWithEnemies(1)
 			for iLoopTeam in range(gc.getMAX_TEAMS()):
 				if iLoopTeam != iTeam:
 					if iLoopTeam != gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam():

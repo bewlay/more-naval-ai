@@ -960,6 +960,9 @@ class CustomFunctions:
 			if pTargetPlayer.getTeam() == pCasterPlayer.getTeam():
 				continue
 
+			if (gc.getTeam(pCasterPlayer.getTeam()).isVassal(pTargetPlayer.getTeam())):
+				continue
+
 			iBaseModifier = 100
 			if pTargetPlayer.getStateReligion() == iVeil:
 				iBaseModifier -= 20
