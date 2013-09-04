@@ -3945,6 +3945,8 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 	// Tholal AI: Increased valuation of our culture percent in the city (was set to 50%)
 	iValue += ((pCity->getPopulation() * (75 + pCity->calculateCulturePercent(getID()))) / 100);
 
+	const CvPlayerAI& kOwner = GET_PLAYER(pCity->getOwnerINLINE());
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      06/30/10                     Mongoose & jdog5000      */
 /*                                                                                              */
@@ -3972,7 +3974,7 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		{
 			iValue += 2 + ((GC.getGameINLINE().calculateReligionPercent((ReligionTypes)iI)) / 5);
 
-			if (GET_PLAYER(pCity->getOwnerINLINE()).getStateReligion() == iI)
+			if (kOwner.getStateReligion() == iI)
 			{
 				iValue += 2;
 			}
@@ -4026,13 +4028,13 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		}
 	}
 
-	if( GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) )
+	if( kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3) )
 	{
 		if( pCity->getCultureLevel() >= (GC.getGameINLINE().culturalVictoryCultureLevel() - 1) )
 		{
 			iValue += 15;
 			
-			if( GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE4) )
+			if( kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE4) )
 			{
 				iValue += 25;
 
@@ -4045,13 +4047,13 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 	}
 
 	// Target Altar cities
-	if( GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) )
+	if( kOwner.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3) )
 	{
 		if (pCity->getAltarLevel() > 1)
 		{
 			iValue += 15;
 			
-			if (GET_PLAYER(pCity->getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4))
+			if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4))
 			{
 				iValue += 25;
 			}
