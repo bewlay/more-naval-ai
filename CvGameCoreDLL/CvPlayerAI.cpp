@@ -21900,17 +21900,6 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 		int iNonsense = AI_getStrategyRand() + 30;
 		iValue += (iNonsense % 100);
 
-		// Tholal AI - If we seem to be powerful scorewise
-		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 4))
-		{
-			iValue += 10;
-		}
-		if (GC.getGameINLINE().getPlayerRank(getID()) <= (GC.getGameINLINE().countCivPlayersAlive() / 3))
-		{
-			iValue += 20;
-		}
-		// End Tholal AI
-
 		if (iValue >= 100)
 		{
 			if( m_iStrategyHash & AI_STRATEGY_GET_BETTER_UNITS )
