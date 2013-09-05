@@ -3047,7 +3047,6 @@ bool CvTeamAI::AI_acceptSurrender( TeamTypes eSurrenderTeam )
 		return true;
 	}
 
-	//int iOurWarSuccessRatio = AI_getWarSuccessCapitulationRatio();
 	int iOurWarSuccessRatio = AI_getWarSuccessRating();
 	if( iOurWarSuccessRatio < -30 )
 	{

@@ -3620,11 +3620,7 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
 		}
 	}
 
-/*************************************************************************************************/
-/**	BETTER AI (Groupattack Spellcasting) Sephi                                 					**/
-/** Do some nasty Spells before we attack 														**/
-/**						                                            							**/
-/*************************************************************************************************/
+// Sephi AI (Groupattack Spellcasting) - Do some nasty Spells before we attack
     if (!GET_PLAYER(getOwnerINLINE()).isHuman())
     {
         if((this->getX()-iX)*(this->getX()-iX)+(this->getY()-iY)*(this->getY()-iY)<4)
@@ -3679,45 +3675,8 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
                 }
             }
         }
-
-		/*
-        if (pDestPlot->isCity() && GET_TEAM(getTeam()).isAtWar(pDestPlot->getTeam()))
-        {
-            int iBombarbTurns=getBombardTurns(pDestPlot->getPlotCity());
-			bool bHasBombard = false;
-            if (iBombarbTurns>0 && iBombarbTurns<8)
-            {
-                CLLNode<IDInfo>* pEntityNode = headUnitNode();
-                CvUnit* pLoopUnit;
-                while (pEntityNode != NULL)
-                {
-                    pLoopUnit = ::getUnit(pEntityNode->m_data);
-                    pEntityNode = nextUnitNode(pEntityNode);
-                    if (pLoopUnit!=NULL)
-                    {
-                        //Good Time to use Siege Units
-                        if (pLoopUnit->canBombard(plot()))
-                        {
-                            pLoopUnit->bombard();
-							bHasBombard = true;
-                        }
-                    }
-                }
-				
-				if (bHasBombard)
-				{
-					//Bombard some more turns
-					getHeadUnit()->finishMoves();
-					return true;
-				}
-            }
-		}
-		*/
 	}
-
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+// End Sephi AI
 
 	FAssertMsg(pDestPlot != NULL, "DestPlot is not assigned a valid value");
 
