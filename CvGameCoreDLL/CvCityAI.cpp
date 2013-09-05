@@ -1743,7 +1743,19 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// culture check
-	if (!kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE) && (getCommerceRate(COMMERCE_CULTURE) == 0))
+	bool bCultureTrait = false;
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (kPlayer.hasTrait((TraitTypes)iTrait))
+		{
+			if (GC.getTraitInfo((TraitTypes)iTrait).getCommerceChange(COMMERCE_CULTURE) > 0)
+			{
+				bCultureTrait = true;
+			}
+		}
+	}
+
+	if (!kPlayer.AI_isDoStrategy(AI_STRATEGY_TURTLE) && (getCommerceRate(COMMERCE_CULTURE) == 0) && !bCultureTrait)
 	{
 		if (iTargetCulturePerTurn > 0)
 		{
