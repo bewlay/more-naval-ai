@@ -789,24 +789,13 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		//
 		//int iUnitValue;
 
-		/* - Tholal Note: adding this section seems to cause some other issues
-		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
-		{
-            int iSpell = pLoopUnit->chooseSpell();
-            if (iSpell != NO_SPELL)
-            {
-                pLoopUnit->cast(iSpell);
-			}
-		}
-		*/
-
 		//Tholal ToDo - Manes hit this upgrade section before they ever get a chance to 'cast'
 		// Tholal ToDo - arrange units in a sorted list then try and upgrade rather than running through whole list three times
 		// pass 0
 		logBBAI("Checking for Upgrades...");
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (!pLoopUnit->isDelayedDeath())
+			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
 				pUnitPlot = pLoopUnit->plot();
 				if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
@@ -819,7 +808,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		// pass 1
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (!pLoopUnit->isDelayedDeath())
+			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
 				if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
 				{
@@ -830,7 +819,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		// pass 2
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (!pLoopUnit->isDelayedDeath())
+			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
 				if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
 				{
