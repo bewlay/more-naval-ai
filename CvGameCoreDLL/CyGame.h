@@ -222,6 +222,7 @@ public:
 	void setWinner(int /*TeamTypes*/ eNewWinner, int /*VictoryTypes*/ eNewVictory);
 	int /*GameStateTypes*/ getGameState();
 	int /*HandicapTypes*/ getHandicapType();
+	void setHandicapType(int /*HandicapTypes*/ eHandicap);
 	CalendarTypes getCalendar() const;
 	int /*EraTypes*/ getStartEra();
 	int /*GameSpeedTypes*/ getGameSpeedType();

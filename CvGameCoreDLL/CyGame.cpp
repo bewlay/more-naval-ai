@@ -772,6 +772,12 @@ int /* HandicapTypes */ CyGame::getHandicapType()
 	return m_pGame ? (int) m_pGame->getHandicapType() : (int) NO_HANDICAP;
 }
 
+void CyGame::setHandicapType(int /*HandicapTypes*/ eHandicap)
+{
+	if (m_pGame)
+		m_pGame->setHandicapType((HandicapTypes)eHandicap);
+}
+
 CalendarTypes CyGame::getCalendar() const
 {
 	return m_pGame ? m_pGame->getCalendar() : CALENDAR_DEFAULT;

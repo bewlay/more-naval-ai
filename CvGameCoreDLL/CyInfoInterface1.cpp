@@ -684,6 +684,7 @@ void CyInfoPythonInterface1()
 
 //FfH: Added by Kael 12/18/2007
 		.def("isEquipment", &CvBuildingInfo::isEquipment, "bool ()")
+		.def("isRequiresCaster", &CvBuildingInfo::isRequiresCaster, "bool ()")
 		.def("getFreeBonus2", &CvBuildingInfo::getFreeBonus2, "int ()")
 		.def("getFreeBonus3", &CvBuildingInfo::getFreeBonus3, "int ()")
 		.def("getPrereqCiv", &CvBuildingInfo::getPrereqCiv, "int ()")
