@@ -6809,7 +6809,8 @@ int CvCityAI::AI_neededDefenders()
 			iDefenders++;
 		}
 	}
-	
+
+	/*
 	if (!GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_CRUSH))
 	{
 		iDefenders += AI_neededFloatingDefenders();
@@ -6818,6 +6819,7 @@ int CvCityAI::AI_neededDefenders()
 	{
 		iDefenders += (AI_neededFloatingDefenders() + 2) / 4;
 	}
+	*/
 	
 	if (bDefenseWar || GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_ALERT2))
 	{
@@ -6875,7 +6877,7 @@ int CvCityAI::AI_neededDefenders()
 		{
 			iDefenders++;
 
-			if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4) )
+			if( GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION4) && bDefenseWar)
 			{
 				iDefenders += 2;
 			}
