@@ -2781,33 +2781,6 @@ int CvTeamAI::AI_getWarSuccessRating() const
 /*                                                                                              */
 /* War Strategy AI                                                                              */
 /************************************************************************************************/
-/// \brief Compute how close our wars are to capitulation.
-///
-/// At -99, this means we're losing on net enough to capitulate.  At +99, we're winning enough
-/// to perhaps have another player capitulate to us.
-int CvTeamAI::AI_getWarSuccessCapitulationRatio() const
-{
-	int iSumWarSuccess = 0;
-
-	for( int iI = 0; iI < MAX_CIV_TEAMS; iI++ )
-	{
-		if( iI != getID() )
-		{
-			if( GET_TEAM((TeamTypes)iI).isAlive() && isAtWar((TeamTypes)iI) )
-			{
-				iSumWarSuccess += AI_getWarSuccess((TeamTypes)iI);
-				iSumWarSuccess -= GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID());
-			}
-		}
-	}
-
-	int iDivisor = std::max(25, std::min(getNumCities(), 4) * GC.getWAR_SUCCESS_CITY_CAPTURING());
-
-	iSumWarSuccess = range((100*iSumWarSuccess)/iDivisor, -99, 99);
-
-	return iSumWarSuccess;
-}
-
 /// \brief Compute power of enemies as percentage of our power.
 ///
 ///

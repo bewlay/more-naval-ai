@@ -138,7 +138,6 @@ public:
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD - War Strategy AI    05/14/10                                jdog5000      */
 /************************************************************************************************/
-	int AI_getWarSuccessCapitulationRatio() const;
 	int AI_getEnemyPowerPercent( bool bConsiderOthers = false ) const;
 	int AI_getRivalAirPower( ) const;
 	bool AI_acceptSurrender( TeamTypes eSurrenderTeam );

@@ -1620,7 +1620,6 @@ void CvPlayerAI::AI_doCentralizedProduction()
 
 	if( bAtWar )
 	{
-		//int iWarCapRatio = GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio();
 		int iWarCapRatio = GET_TEAM(getTeam()).AI_getWarSuccessRating();
 		if( iWarCapRatio < -90 )
 		{
@@ -22994,7 +22993,6 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 
 		// Are we losing badly or recently attacked?
-		//if( GET_TEAM(getTeam()).AI_getWarSuccessCapitulationRatio() < -50 || iMaxWarCounter < 10 )
 		if( kTeam.AI_getWarSuccessRating() < -50 || iMaxWarCounter < 10 )
 		{
 			if( kTeam.AI_getEnemyPowerPercent(true) > std::max(150, GC.getDefineINT("BBAI_TURTLE_ENEMY_POWER_RATIO")) )
