@@ -15563,14 +15563,16 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 		//{
 			if (kReligionInfo.getReligionHero1() != NO_UNITCLASS)
 			{
-				if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero1()) > 0)
+				//if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero1()) > 0)
+				if (getUnitClassCount(kReligionInfo.getReligionHero1()) > 0)
 				{
 					return getStateReligion();
 				}
 			}
 			if (kReligionInfo.getReligionHero2() != NO_UNITCLASS)
 			{
-				if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero2()) > 0)
+				//if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero2()) > 0)
+				if (getUnitClassCount(kReligionInfo.getReligionHero2()) > 0)
 				{
 					return getStateReligion();
 				}
@@ -15640,7 +15642,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 
 int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 {
-	if (getHasReligionCount(eReligion) == 0)
+	if (isAgnostic())
 	{
 		return 0;
 	}
@@ -15655,7 +15657,14 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	}
 //>>>>Better AI: End Add
 
-	int iValue = GC.getGameINLINE().countReligionLevels(eReligion);
+	int iValue = 0;
+	
+	if (getStateReligion() == NO_RELIGION)
+	{
+		iValue += getNumCities() * 5;
+	}
+	// ToDo - make this for diplomacy victory
+	//GC.getGameINLINE().countReligionLevels(eReligion);
 	
 	int iLoop;
 	CvCity* pLoopCity;
@@ -15722,6 +15731,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
         }
 	}
 
+	// need some base value for the units
 	// Tholal AI - add value for unused heros
 	const UnitClassTypes eReligionHeroClass1 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero1();
 	const UnitClassTypes eReligionHeroClass2 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero2();
@@ -15730,9 +15740,11 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	{
 		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
 		{
-			iValue *= 5;
-			iValue /= 3;
-			iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
+			CvUnitInfo &kHero1 = GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero1());
+			iValue += kHero1.getTier() * 10;
+			//iValue *= 5;
+			//iValue /= 3;
+			//iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
@@ -15740,9 +15752,10 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	{
 		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
 		{
-			iValue *= 4;
-			iValue /= 3;
-			iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
+			iValue += GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero2()).getTier() * 10;
+			//iValue *= 4;
+			//iValue /= 3;
+			//iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
