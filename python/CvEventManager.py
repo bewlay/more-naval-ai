@@ -427,7 +427,7 @@ class CvEventManager:
 				CyGame().changeTrophyValue(t, 1)
 				sf.addPopupWB(CyTranslator().getText("TXT_KEY_FFH_INTRO",()),'art/interface/popups/FfHIntro.dds')
 
-		if CyGame().isOption(gc.getInfoTypeForString('GAMEOPTION_NO_BARBARIANS')) == False:
+		if CyGame().isOption(gc.getInfoTypeForString('GAMEOPTION_NO_BARBARIANS')) == False and (not CyGame().getWBMapScript()):
 			iGoblinFort = gc.getInfoTypeForString('IMPROVEMENT_GOBLIN_FORT')
 			bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 			for i in range (CyMap().numPlots()):
