@@ -30,7 +30,8 @@ class TechDiffusion :
 
 		print "Initializing TechDiffusion Mod"
 
-		self.LOG_DEBUG = RevOpt.isTechDifDebugMode()
+#		self.LOG_DEBUG = RevOpt.isTechDifDebugMode()
+		self.LOG_DEBUG = True
 		self.techDict = None
 
 		self.minTechsBehind = RevOpt.getMinTechsBehind()

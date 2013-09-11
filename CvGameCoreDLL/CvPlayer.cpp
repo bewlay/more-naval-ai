@@ -9195,13 +9195,14 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 					}
 				}
 
-			iPossibleKnownCount++;
+				iPossibleKnownCount++;
+			}
 		}
-	}
 
-	if (iPossibleKnownCount > 0)
-	{
-		iModifier += (GC.getDefineINT("TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER") * iKnownCount) / iPossibleKnownCount;
+		if (iPossibleKnownCount > 0)
+		{
+			iModifier += (GC.getDefineINT("TECH_COST_TOTAL_KNOWN_TEAM_MODIFIER") * iKnownCount) / iPossibleKnownCount;
+		}
 	}
 
 	int iPossiblePaths = 0;
