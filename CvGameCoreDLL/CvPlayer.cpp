@@ -9130,17 +9130,70 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 	int iKnownCount = 0;
 	int iPossibleKnownCount = 0;
 
-	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+/************************************************************************************************/
+/* BETTER_BTS_AI_MOD                      07/27/09                                jdog5000      */
+/*                                                                                              */
+/* Tech Diffusion                                                                               */
+/************************************************************************************************/
+	if( GC.getDefineINT("TECH_DIFFUSION_ENABLE") && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 	{
-		if (GET_TEAM((TeamTypes)iI).isAlive())
+		double knownExp = 0.0;
+		// Tech flows better through open borders
+		for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
 		{
-			if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iI))
+			if (GET_TEAM((TeamTypes)iI).isAlive())
 			{
 				if (GET_TEAM((TeamTypes)iI).isHasTech(eTech))
 				{
-					iKnownCount++;
+					if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iI))
+					{
+						knownExp += 0.5;
+
+						if( GET_TEAM(getTeam()).isOpenBorders((TeamTypes)iI) || GET_TEAM((TeamTypes)iI).isVassal(getTeam()) )
+						{
+							knownExp += 1.5;
+						}
+						else if( GET_TEAM(getTeam()).isAtWar((TeamTypes)iI) || GET_TEAM(getTeam()).isVassal((TeamTypes)iI) )
+						{
+							knownExp += 0.5;
+						}
+					}
 				}
 			}
+		}
+
+		int techDiffMod = GC.getTECH_DIFFUSION_KNOWN_TEAM_MODIFIER();
+		if (knownExp > 0.0)
+		{
+			iModifier += techDiffMod - (int)(techDiffMod * pow(0.85, knownExp) + 0.5);
+		}
+
+		// Tech flows downhill to those who are far behind
+		int iTechScorePercent = GET_TEAM(getTeam()).getBestKnownTechScorePercent();
+		int iWelfareThreshold = GC.getTECH_DIFFUSION_WELFARE_THRESHOLD();
+		if( iTechScorePercent < iWelfareThreshold )
+		{
+			if( knownExp > 0.0 )
+			{
+				iModifier += (GC.getTECH_DIFFUSION_WELFARE_MODIFIER() * GC.getGameINLINE().getCurrentEra() * (iWelfareThreshold - iTechScorePercent))/200;
+			}
+		}
+	}
+	// End Tech Diffusion
+	else
+	{
+		// Default BTS code
+		for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+		{
+			if (GET_TEAM((TeamTypes)iI).isAlive())
+			{
+				if (GET_TEAM(getTeam()).isHasMet((TeamTypes)iI))
+				{
+					if (GET_TEAM((TeamTypes)iI).isHasTech(eTech))
+					{
+						iKnownCount++;
+					}
+				}
 
 			iPossibleKnownCount++;
 		}

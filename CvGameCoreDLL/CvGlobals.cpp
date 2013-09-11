@@ -253,6 +253,15 @@ m_paMainMenus(NULL)
 ,m_iBBAI_SKIP_BOMBARD_BEST_ATTACK_ODDS(12)
 ,m_iBBAI_SKIP_BOMBARD_BASE_STACK_RATIO(300)
 ,m_iBBAI_SKIP_BOMBARD_MIN_STACK_RATIO(140)
+
+// Tech Diffusion
+,m_bTECH_DIFFUSION_ENABLE(false)
+,m_iTECH_DIFFUSION_KNOWN_TEAM_MODIFIER(30)
+,m_iTECH_DIFFUSION_WELFARE_THRESHOLD(88)
+,m_iTECH_DIFFUSION_WELFARE_MODIFIER(30)
+,m_iTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER(20)
+,m_iTECH_COST_KNOWN_PREREQ_MODIFIER(20)
+,m_iTECH_COST_MODIFIER(0)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -2787,6 +2796,15 @@ void CvGlobals::cacheGlobals()
 	m_iBBAI_SKIP_BOMBARD_BASE_STACK_RATIO = getDefineINT("BBAI_SKIP_BOMBARD_BASE_STACK_RATIO", m_iBBAI_SKIP_BOMBARD_BASE_STACK_RATIO);
 	m_iBBAI_SKIP_BOMBARD_MIN_STACK_RATIO = getDefineINT("BBAI_SKIP_BOMBARD_MIN_STACK_RATIO", m_iBBAI_SKIP_BOMBARD_MIN_STACK_RATIO);
 
+// Tech Diffusion
+	m_bTECH_DIFFUSION_ENABLE = !(getDefineINT("TECH_DIFFUSION_ENABLE") == 0);
+	m_iTECH_DIFFUSION_KNOWN_TEAM_MODIFIER = getDefineINT("TECH_DIFFUSION_KNOWN_TEAM_MODIFIER", m_iTECH_DIFFUSION_KNOWN_TEAM_MODIFIER);
+	m_iTECH_DIFFUSION_WELFARE_THRESHOLD = getDefineINT("TECH_DIFFUSION_WELFARE_THRESHOLD", m_iTECH_DIFFUSION_WELFARE_THRESHOLD);
+	m_iTECH_DIFFUSION_WELFARE_MODIFIER = getDefineINT("TECH_DIFFUSION_WELFARE_MODIFIER", m_iTECH_DIFFUSION_WELFARE_MODIFIER);
+	m_iTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER = getDefineINT("TECH_COST_FIRST_KNOWN_PREREQ_MODIFIER", m_iTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER);
+	m_iTECH_COST_KNOWN_PREREQ_MODIFIER = getDefineINT("TECH_COST_KNOWN_PREREQ_MODIFIER", m_iTECH_COST_KNOWN_PREREQ_MODIFIER);
+	m_iTECH_COST_MODIFIER = getDefineINT("TECH_COST_MODIFIER", m_iTECH_COST_MODIFIER);
+	
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -3843,6 +3861,41 @@ int CvGlobals::getBBAI_SKIP_BOMBARD_MIN_STACK_RATIO()
 	return m_iBBAI_SKIP_BOMBARD_MIN_STACK_RATIO;
 }
 
+// Tech Diffusion
+bool CvGlobals::getTECH_DIFFUSION_ENABLE()
+{
+	return m_bTECH_DIFFUSION_ENABLE;
+}
+
+int CvGlobals::getTECH_DIFFUSION_KNOWN_TEAM_MODIFIER()
+{
+	return m_iTECH_DIFFUSION_KNOWN_TEAM_MODIFIER;
+}
+
+int CvGlobals::getTECH_DIFFUSION_WELFARE_THRESHOLD()
+{
+	return m_iTECH_DIFFUSION_WELFARE_THRESHOLD;
+}
+
+int CvGlobals::getTECH_DIFFUSION_WELFARE_MODIFIER()
+{
+	return m_iTECH_DIFFUSION_WELFARE_MODIFIER;
+}
+
+int CvGlobals::getTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER()
+{
+	return m_iTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER;
+}
+
+int CvGlobals::getTECH_COST_KNOWN_PREREQ_MODIFIER()
+{
+	return m_iTECH_COST_KNOWN_PREREQ_MODIFIER;
+}
+
+int CvGlobals::getTECH_COST_MODIFIER()
+{
+	return m_iTECH_COST_MODIFIER;
+}
 
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
