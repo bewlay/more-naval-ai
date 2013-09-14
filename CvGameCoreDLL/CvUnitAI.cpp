@@ -12728,7 +12728,7 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 				if (pPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
 				{
 					//if (pEjectedUnit->cityDefenseModifier() > 0)
-					if (pEjectedUnit->isUnitAllowedPermDefense())
+					//if (pEjectedUnit->isUnitAllowedPermDefense())
 					{
 						logBBAI("   ...setting %S (%d) to city defense from ai_guardcity function", pEjectedUnit->getNameKey(), pEjectedUnit->getID());
 						pEjectedUnit->AI_setUnitAIType(UNITAI_CITY_DEFENSE);
@@ -15882,7 +15882,7 @@ bool CvUnitAI::AI_patrol()
 		  	 
 								if (!(pAdjacentPlot->isAdjacentOwned()))
 								{
-								iValue += 10000;
+									iValue += 10000;
 								}
 							}
 						}
@@ -16775,7 +16775,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("      ...targeting city %S \n", pBestCity->getName().GetCString());
+			logBBAI("      ...targeting city %S (value: %d) \n", pBestCity->getName().GetCString(), iBestValue);
 		}
 	}
 
@@ -26528,14 +26528,6 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         return false;
     }
 
-	if (plot()->isCity())
-	{
-		if (plot()->isHills() && hillsDefenseModifier() > 0)
-		{
-			return true;
-		}
-	}
-
     if (isHiddenNationality())
     {
         return false;
@@ -26573,7 +26565,8 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         default:
             break;
     }
-    if (kUnitInfo.getTier()==4)
+
+    if (kUnitInfo.getTier() > 3)
         return false;
 
     return m_bAllowedPermDefense;
@@ -26689,7 +26682,6 @@ void CvUnitAI::AI_feastingmove()
 		return;
 	}
 
-	//int iNeededFeasters = (kPlayer.getNumCities() / 3);
 	// TODO: Change this to Feast odds - higher if in peactime, more angry/unhealthy, larger cities
 	int iNeededFeasters = std::max(1,(kPlayer.getNumCities() / 3));
 
@@ -28332,6 +28324,7 @@ void CvUnitAI::AI_ConquestMove()
 		}
 		
 		// Tholal Note - seems that sometimes we have to force the AI to attack their targets
+		// Note: This section can cause the AI to declare War before stack is near borders
 		//if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
 		if (iComparePostBombard >= 120)
 		{
@@ -28412,7 +28405,7 @@ void CvUnitAI::AI_ConquestMove()
 
         if (pBestPlot != NULL)
         {
-			logBBAI(" moving to danger plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+			logBBAI("      ...moving to danger plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
             FAssert(!atPlot(pBestPlot));
             getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
             return;

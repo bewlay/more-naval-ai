@@ -796,18 +796,12 @@ void CvPlot::doImprovementUpgrade()
                 }
 //FfH: End Modify
 
-/*************************************************************************************************/
-/**	BUGFIX (some FFH code above can change the Plot Improvement ot NO_IMPROVEMENT) Sephi		**/
-/**																			                    **/
-/**	                                                                 							**/
-/*************************************************************************************************/
-/**
-				if (getUpgradeProgress() >= GC.getGameINLINE().getImprovementUpgradeTime(getImprovementType()))
-**/
-				if (getImprovementType()!=NO_IMPROVEMENT && getUpgradeProgress() >= GC.getGameINLINE().getImprovementUpgradeTime(getImprovementType()))
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+// Sephi AI - BUGFIX (some FFH code above can change the Plot Improvement ot NO_IMPROVEMENT)
+				// Tholal Note: This doesnt check for prereqciv - is that an issue?
+				//if (getUpgradeProgress() >= GC.getGameINLINE().getImprovementUpgradeTime(getImprovementType()))
+
+				if (getImprovementType() != NO_IMPROVEMENT && getUpgradeProgress() >= GC.getGameINLINE().getImprovementUpgradeTime(getImprovementType()))
+// End Sephi AI
 				{
 					setImprovementType(eImprovementUpgrade);
 				}

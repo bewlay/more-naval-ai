@@ -934,7 +934,7 @@ CvUnit* CvSelectionGroupAI::AI_ejectBestDefender(CvPlot* pDefendPlot)
 		pLoopUnit = ::getUnit(pEntityNode->m_data);
 		pEntityNode = nextUnitNode(pEntityNode);
 
-		if (!pLoopUnit->noDefensiveBonus() && pLoopUnit->AI_getUnitAIType() != UNITAI_HERO)
+		if (!pLoopUnit->noDefensiveBonus() && pLoopUnit->isUnitAllowedPermDefense())
 		{
 			int iValue = pLoopUnit->currEffectiveStr(pDefendPlot, NULL) * 100;
 
