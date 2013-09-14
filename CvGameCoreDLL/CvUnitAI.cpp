@@ -11923,6 +11923,17 @@ bool CvUnitAI::AI_group(UnitAITypes eUnitAI, int iMaxGroup, int iMaxOwnUnitAI, i
 		return false;
 	}
 
+// lfgr fix: copied this check from AI_counterMove(), else it is possible that a group is created and then splitted indefinitely
+	// "Should never have group lead by counter unit"
+	if( getGroup()->getHeadUnitAI() == UNITAI_COUNTER && getGroup()->getNumUnits() == 1 )
+	{
+		if( plot()->isCity() && plot()->getOwnerINLINE() == getOwnerINLINE() )
+		{
+			return false;
+		}
+	}
+// lfgr fix end
+
 	int iOurImpassableCount = 0;
 	CLLNode<IDInfo>* pUnitNode = getGroup()->headUnitNode();
 	while (pUnitNode != NULL)
