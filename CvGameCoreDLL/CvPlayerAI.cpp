@@ -4089,6 +4089,40 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	// MNAI Start
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	{
+		int iAttitudeMod = 3;
+		switch (AI_getAttitude(pCity->getOwner()))
+		{
+		case ATTITUDE_FURIOUS:
+			iAttitudeMod = 6;
+
+		case ATTITUDE_ANNOYED:
+			iAttitudeMod = 4;
+			break;
+
+		case ATTITUDE_CAUTIOUS:
+			break;
+
+		case ATTITUDE_PLEASED:
+			iAttitudeMod = 2;
+			break;
+
+		case ATTITUDE_FRIENDLY:
+			iAttitudeMod = 1;
+			break;
+
+		default:
+			FAssert(false);
+			break;
+		}
+
+		iValue *= iAttitudeMod;
+		iValue /= 3;
+	}
+	// End MNAI
+
 	return iValue;
 }
 
