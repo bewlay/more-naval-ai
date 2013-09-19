@@ -8913,14 +8913,6 @@
             <FlankingStrikes>
             </FlankingStrikes>
             <UnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_MAGE</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
-                <UnitAI>
-                    <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
                 <UnitAI>

@@ -505,6 +505,13 @@ class CvGameUtils:
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'),-1, False, False, False, False)
 						return 1
+			## Demons should build Demon Altars
+			#if gc.getCivilizationInfo(pPlayer.getCivilizationType()).getDefaultRace == gc.getInfoTypeForString('PROMOTION_DEMON'):
+			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'), True, False, False):
+						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'),-1, False, False, False, False)
+						return 1
+						
 		return False
 
 	def AI_unitUpdate(self,argsList):
