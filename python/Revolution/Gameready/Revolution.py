@@ -7102,12 +7102,12 @@ class Revolution :
 							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Scout spawned outside %s"%(pCity.getName()))
 							pRevPlayer.initUnit( iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
-					if( not bIsBarbRev and not bIsJoinWar ) :
-						# Settler if there is sufficient empty land available?
-						if( pCity.area().getNumTiles()/pCity.area().getNumCities() > 25 ) :
-							if(iSettler != -1):
-								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Settler spawned outside %s"%(pCity.getName()))
-								pRevPlayer.initUnit( iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+#					if( not bIsBarbRev and not bIsJoinWar ) :
+#						# Settler if there is sufficient empty land available?
+#						if( pCity.area().getNumTiles()/pCity.area().getNumCities() > 25 ) :
+#							if(iSettler != -1):
+#								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Settler spawned outside %s"%(pCity.getName()))
+#								pRevPlayer.initUnit( iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 				if(iSpy != -1):
 					if( pRevPlayer.canTrain(iSpy,False,False) and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3 ) :
