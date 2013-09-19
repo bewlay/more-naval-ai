@@ -20352,6 +20352,13 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 		iBaseModifier += iCivicMod;
 	}
 
+	// MNAI - copied from getBaseYieldRateModifier()- code by Kael 11/08/2007
+    if (city.isSettlement())
+    {
+        iBaseModifier -= 75;
+    }
+	// End MNAI
+
 	FAssertMsg((iBaseModifier * iBaseProduction) / 100 == city.getYieldRate(eYieldType), "Yield Modifier in setProductionHelp does not agree with actual value");
 }
 
