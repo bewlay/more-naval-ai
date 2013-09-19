@@ -25,7 +25,7 @@ import AIAutoPlay
 import ChangePlayer
 import Revolution
 #import Tester
-#import TechDiffusion
+import TechDiffusion
 #import StartAsMinors
 import DynamicCivNames
 import RevInstances
@@ -159,8 +159,9 @@ class RevolutionInit :
 				RevEvents.init( self.customEM, self.RevOpt )
 				RevInstances.RevolutionInst = Revolution.Revolution(self.customEM, self.RevOpt)
 #		if( not game.isOption(GameOptionTypes.GAMEOPTION_NO_TECH_DIFFUSION) ):#self.config.getboolean("TechDiffusion", "Enable", True) ) :
-#			if( bDoInit ) :
-#				RevInstances.TechDiffusionInst = TechDiffusion.TechDiffusion(self.customEM, self.RevOpt)
+		if( game.isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS) ):
+			if( bDoInit ) :
+				RevInstances.TechDiffusionInst = TechDiffusion.TechDiffusion(self.customEM, self.RevOpt)
 #		if( game.isOption(GameOptionTypes.GAMEOPTION_START_AS_MINORS) ):
 #			if( bDoInit ) :
 #				StartAsMinors.init( self.customEM, self.RevOpt )
