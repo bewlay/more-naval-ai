@@ -25194,6 +25194,11 @@ int CvUnitAI::AI_searchRange(int iRange)
 		return 0;
 	}
 
+	if (getDuration() > 0)
+	{
+		iRange = getDuration();
+	}
+
 	if (flatMovementCost() || (getDomainType() == DOMAIN_SEA))
 	{
 		return (iRange * baseMoves());
