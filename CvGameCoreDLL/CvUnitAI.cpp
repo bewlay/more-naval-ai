@@ -27013,28 +27013,8 @@ void CvUnitAI::AI_PatrolMove()
 		}
 	}
 
-
-	// switch to PermDefense if needed
-	if (plot()->isCity() && plot()->getOwnerINLINE() == getOwnerINLINE())
-	{
-		if (plot()->getPlotCity()->AI_neededDefenders() > plot()->getNumDefenders(getOwnerINLINE()))
-	    {
-			if (isUnitAllowedPermDefense())
-			{
-				AI_setGroupflag(GROUPFLAG_PERMDEFENSE);
-				AI_setUnitAIType(UNITAI_CITY_DEFENSE);
-				return;
-			}
-		}
-	}
-
 	// Guard a city we're in if it needs it
 	if (AI_guardCity(true))
-	{
-		return;
-	}
-
-	if (AI_stackAttackCity(3, 140))
 	{
 		return;
 	}
@@ -27072,7 +27052,13 @@ void CvUnitAI::AI_PatrolMove()
 	{
 		return;
 	}
-		
+
+	if (AI_stackAttackCity(3, 140))
+	{
+		logBBAI("   ...Stack Attack City");
+		return;
+	}
+
 	if (!bDanger && !bHero)
 	{
 		if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
@@ -27264,6 +27250,14 @@ void CvUnitAI::AI_PatrolMove()
 		}
 	}
 	
+	if( bInCity && plot()->getOwnerINLINE() == getOwnerINLINE() )
+	{
+		if (AI_heal())
+		{
+			return;
+		}
+	}
+
 	if (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE)
 	{
 		if (getGroup()->getNumUnits() > 1)
