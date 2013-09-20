@@ -14365,6 +14365,8 @@ void CvCity::doReligion()
 	int iLoop;
 	int iI, iJ;
 
+	CvPlayer &kPlayer = GET_PLAYER(getOwnerINLINE());
+
 	if (isBarbarian())
 	{
 		return;
@@ -14398,7 +14400,7 @@ void CvCity::doReligion()
 		{
 			if (!isHasReligion((ReligionTypes)iI))
 			{
-				if ((iI == GET_PLAYER(getOwnerINLINE()).getStateReligion()) || !(GET_PLAYER(getOwnerINLINE()).isNoNonStateReligionSpread()))
+				if ((iI == kPlayer.getStateReligion()) || !kPlayer.isNoNonStateReligionSpread()))
 				{
 					iRandThreshold = 0;
 
@@ -14414,6 +14416,9 @@ void CvCity::doReligion()
 
 									iSpread *= GC.getReligionInfo((ReligionTypes)iI).getSpreadFactor();
 
+									// MNAI ToDo - Advanced Diplomacy
+									// if rights of passage or embassy, bonus to iSpread
+
 									if (iSpread > 0)
 									{
 										iSpread /= std::max(1, (((GC.getDefineINT("RELIGION_SPREAD_DISTANCE_DIVISOR") * plotDistance(getX_INLINE(), getY_INLINE(), pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE())) / GC.getMapINLINE().maxPlotDistance()) - 5));
@@ -14421,7 +14426,7 @@ void CvCity::doReligion()
 										//iSpread /= (getReligionCount() + 1);
 
 //FfH: Added by Kael 07/30/2008
-                                        if (GET_PLAYER(getOwnerINLINE()).isAgnostic())
+                                        if (kPlayer.isAgnostic())
                                         {
                                             iSpread /= 2;
                                         }

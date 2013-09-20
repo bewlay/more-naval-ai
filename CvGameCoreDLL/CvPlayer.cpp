@@ -9157,6 +9157,21 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 						{
 							knownExp += 0.5;
 						}
+						
+						// MNAI - Advanced Diplomacy
+						if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+						{
+							if (GET_TEAM(getTeam()).isLimitedBorders((TeamTypes)iI)) // Rights of Passage
+							{
+								knownExp += 0.5;
+							}
+							if (GET_TEAM(getTeam()).isHasEmbassy((TeamTypes)iI)) // Embassy
+							{
+								knownExp += 1.0;
+							}
+						}
+						// End MNAI
+
 					}
 				}
 			}
