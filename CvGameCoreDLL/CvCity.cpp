@@ -14400,7 +14400,7 @@ void CvCity::doReligion()
 		{
 			if (!isHasReligion((ReligionTypes)iI))
 			{
-				if ((iI == kPlayer.getStateReligion()) || !kPlayer.isNoNonStateReligionSpread()))
+				if ((iI == kPlayer.getStateReligion()) || !kPlayer.isNoNonStateReligionSpread())
 				{
 					iRandThreshold = 0;
 
