@@ -612,8 +612,16 @@ int CvSelectionGroupAI::AI_sumStrength(const CvPlot* pAttackedPlot, DomainTypes 
 	CLLNode<IDInfo>* pUnitNode;
 	CvUnit* pLoopUnit;
 	int	strSum = 0;
+	bool bDefenders = pAttackedPlot ? pAttackedPlot->isVisibleEnemyUnit(getHeadOwner()) : false; // K-Mod
+	bool bCountCollateral = pAttackedPlot && pAttackedPlot != plot(); // K-Mod
 
 	pUnitNode = headUnitNode();
+
+	/*
+	int iBaseCollateral = bCountCollateral
+		? iBaseCollateral = estimateCollateralWeight(pAttackedPlot, pAttackedPlot->getTeam() == getTeam() ? NO_TEAM : pAttackedPlot->getTeam())
+		: 0;
+	*/
 
 	while (pUnitNode != NULL)
 	{
@@ -622,18 +630,43 @@ int CvSelectionGroupAI::AI_sumStrength(const CvPlot* pAttackedPlot, DomainTypes 
 
 		if (!pLoopUnit->isDead())
 		{
-			bool bCanAttack = false;
-			if (pLoopUnit->getDomainType() == DOMAIN_AIR)
-				bCanAttack = pLoopUnit->canAirAttack();
-			else
-				bCanAttack = pLoopUnit->canAttack();
-
-			if (!bCheckCanAttack || bCanAttack)
+			// K-Mod. (original checks deleted.)
+			if (bCheckCanAttack)
 			{
-				if (!bCheckCanMove || pLoopUnit->canMove())
-					if (!bCheckCanMove || pAttackedPlot == NULL || pLoopUnit->canMoveInto(pAttackedPlot, /*bAttack*/ true, /*bDeclareWar*/ true))
-						if (eDomainType == NO_DOMAIN || pLoopUnit->getDomainType() == eDomainType)
-							strSum += pLoopUnit->currEffectiveStr(pAttackedPlot, pLoopUnit);
+				if (pLoopUnit->getDomainType() == DOMAIN_AIR)
+				{
+					if (!pLoopUnit->canAirAttack() || !pLoopUnit->canMove() || (pAttackedPlot && bDefenders && !pLoopUnit->canMoveInto(pAttackedPlot, true, true)))
+						continue; // can't attack.
+				}
+				else
+				{
+					if (!pLoopUnit->canAttack() || !pLoopUnit->canMove()
+						|| (pAttackedPlot && bDefenders && !pLoopUnit->canMoveInto(pAttackedPlot, true, true))
+						|| (!pLoopUnit->isBlitz() && pLoopUnit->isMadeAttack()))
+						continue; // can't attack.
+				}
+			}
+			// K-Mod end
+
+			if (eDomainType == NO_DOMAIN || pLoopUnit->getDomainType() == eDomainType)
+			{
+				strSum += pLoopUnit->currEffectiveStr(pAttackedPlot, pLoopUnit);
+				// K-Mod estimate the attack power of collateral units. (cf with calculation in AI_localAttackStrength)
+				if (bCountCollateral && pLoopUnit->collateralDamage() > 0)
+				{
+					int iPossibleTargets = pLoopUnit->collateralDamageMaxUnits();
+					// If !bCheckCanAttack, then lets not assume pAttackPlot won't get more units on it.
+					if (bCheckCanAttack && pAttackedPlot->isVisible(getTeam(), false))
+						iPossibleTargets = std::min(iPossibleTargets, pAttackedPlot->getNumVisibleEnemyDefenders(pLoopUnit) - 1);
+
+					if (iPossibleTargets > 0)
+					{
+						// collateral damage is not trivial to calculate. This estimate is pretty rough.
+						// (Note: collateralDamage() and iBaseCollateral both include factors of 100.)
+						strSum += pLoopUnit->baseCombatStr() * pLoopUnit->collateralDamage() * iPossibleTargets / 1000;
+					}
+				}
+				// K-Mod end
 			}
 		}
 	}
