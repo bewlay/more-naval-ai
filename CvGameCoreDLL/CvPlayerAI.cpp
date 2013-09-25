@@ -6557,7 +6557,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				const ReligionTypes eHolyCity = (ReligionTypes)kLoopBuilding.getHolyCity();
 				if (eHolyCity != NO_RELIGION)
 				{
-					if (!hasHolyCity(eHolyCity))
+					if (!hasHolyCity(eHolyCity) && GC.getGameINLINE().isReligionFounded(eHolyCity))
 					{
 						continue;
 					}
@@ -6573,7 +6573,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					}
 				}
 
-				if (GC.getGameINLINE().isBuildingClassMaxedOut((BuildingClassTypes)(GC.getBuildingInfo(eLoopBuilding).getBuildingClassType())))
+				if (GC.getGameINLINE().isBuildingClassMaxedOut((BuildingClassTypes)(kLoopBuilding.getBuildingClassType())))
 				{
 					continue;
 				}
@@ -6704,7 +6704,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 */
 				const BuildingClassTypes eBuildingClass = (BuildingClassTypes)iJ;
 
-				if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() == getCivilizationType())
+				if (kLoopBuilding.getPrereqCiv() == getCivilizationType())
 				{
 					iBuildingValue += 600;
 				}
@@ -6717,7 +6717,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				// free bonuses
 				if (kLoopBuilding.getNumFreeBonuses() > 0)
 				{
-					iBuildingValue += (AI_bonusVal((BonusTypes)GC.getBuildingInfo(eLoopBuilding).getFreeBonus()) * 2) * kLoopBuilding.getNumFreeBonuses();
+					iBuildingValue += (AI_bonusVal((BonusTypes)kLoopBuilding.getFreeBonus()) * 2) * kLoopBuilding.getNumFreeBonuses();
 				}
 
 				// palaces
@@ -6903,7 +6903,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 
 				for (int iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); ++iI)
 				{
-					if (GC.getBuildingInfo(eLoopBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
+					if (kLoopBuilding.getPrereqOrBonuses(iI) != NO_BONUS)
 					{
 						bRequiresBonus = true;
 
@@ -6924,7 +6924,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue /= 4;
 				}
 
-				if (GC.getBuildingInfo(eLoopBuilding).isVictoryBuilding())
+				if (kLoopBuilding.isVictoryBuilding())
 				{
 					iBuildingValue += 1000;
 					if (iProphetSpecialist > 0) // probably an altar building - semi-hardcode
@@ -6960,9 +6960,9 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 
 				}
 
-				if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() != NO_CIVILIZATION)
+				if (kLoopBuilding.getPrereqCiv() != NO_CIVILIZATION)
 				{
-					if (GC.getBuildingInfo(eLoopBuilding).getPrereqCiv() == getCivilizationType())
+					if (kLoopBuilding.getPrereqCiv() == getCivilizationType())
 					{
 						iBuildingValue *= 3;
 						iBuildingValue /= 2;
@@ -6972,7 +6972,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 
 				if ((gPlayerLogLevel > 3) && bDebugLog)
 				{
-					logBBAI("     BUILDING - %S : %d\n", GC.getBuildingInfo(eLoopBuilding).getDescription(), iBuildingValue);
+					logBBAI("     BUILDING - %S : %d\n", kLoopBuilding.getDescription(), iBuildingValue);
 				}
 
 

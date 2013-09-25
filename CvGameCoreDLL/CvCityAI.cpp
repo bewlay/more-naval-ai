@@ -1934,7 +1934,7 @@ void CvCityAI::AI_chooseProduction()
 		iAttackNeeded++;
 	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	if (bAggressiveAI)
 	{
 		iAttackNeeded++;
 	}
@@ -2657,7 +2657,7 @@ void CvCityAI::AI_chooseProduction()
 /* Ruthless AI                                                                                  */
 /************************************************************************************************/
 			//Avoid building wonders that take a long time
-			if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+			if (bAggressiveAI)
 			{
 				iWonderTime /= 2;
 			}

@@ -26401,13 +26401,15 @@ void CvUnitAI::AI_setGroupflag(int newflag)
 // Chooses the Groupflag for AI Units in CvUnit::DoTurn()
 void CvUnitAI::AI_chooseGroupflag()
 {
+	CvPlayerAI &kPlayer = GET_PLAYER(getOwnerINLINE());
+
     if( AI_getGroupflag() != GROUPFLAG_NONE)
     {
         return;
     }
 
     //Don't Choose a Groupflag if we haven't already built a city
-    if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
+    if (kPlayer.getNumCities() == 0)
     {
         return;
     }
@@ -26466,12 +26468,12 @@ void CvUnitAI::AI_chooseGroupflag()
 	//Svartalfar Kidnap
 	// ToDo - better code for this
 	CivilizationTypes iSvartal=(CivilizationTypes)GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR");
-	if (iSvartal!=NO_CIVILIZATION && getCivilizationType()==iSvartal)
+	if (iSvartal != NO_CIVILIZATION && getCivilizationType() == iSvartal)
 	{
-		UnitTypes iHunter=(UnitTypes)GC.getInfoTypeForString("UNIT_HUNTER");
-		if(iHunter!=NO_UNIT && getUnitType()==iHunter)
+		UnitTypes iHunter = (UnitTypes)GC.getInfoTypeForString("UNIT_HUNTER");
+		if(iHunter != NO_UNIT && getUnitType() == iHunter)
 		{
-			if(GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_SVARTALFAR_KIDNAP)==0)
+			if(kPlayer.countGroupFlagUnits(GROUPFLAG_SVARTALFAR_KIDNAP) == 0)
 			{
                 AI_setGroupflag(GROUPFLAG_SVARTALFAR_KIDNAP);
                 return;
@@ -26485,8 +26487,8 @@ void CvUnitAI::AI_chooseGroupflag()
 
 		if (AI_getUnitAIType() != UNITAI_MEDIC)
 		{
-			int iAttackCityCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
-			int iAttackCount = GET_PLAYER(getOwnerINLINE()).AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
+			int iAttackCityCount = kPlayer.AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
+			int iAttackCount = kPlayer.AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
 
 			if (iAttackCount > iAttackCityCount)
 			{
@@ -26497,7 +26499,7 @@ void CvUnitAI::AI_chooseGroupflag()
 		return;
 	}
 
-	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3, false));
+	bool bDanger = (kPlayer.AI_getAnyPlotDanger(plot(), 3, false));
 
 	if (bDanger)
 	{
@@ -28347,7 +28349,6 @@ void CvUnitAI::AI_ConquestMove()
 				return;
 			}
 		}
-		//
 	}
 
 	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
