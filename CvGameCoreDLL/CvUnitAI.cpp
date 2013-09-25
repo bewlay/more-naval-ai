@@ -16773,7 +16773,21 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 										// dont start new wars unless we have a seemingly overwhelming force
 										if (!GET_TEAM(getTeam()).isAtWar(pLoopCity->getTeam()))
 										{
-											if (getGroup()->getNumUnits() < (2 * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
+											int iModifier = 2;
+
+											// if we don't already have a warplan for this foe, make sure we overwhelm them
+											if (GET_TEAM(getTeam()).AI_getWarPlan(pLoopCity->getTeam()) == NO_WARPLAN)
+											{
+												iModifier = 5;
+											}
+
+											// if we're already at war - need to be really powerful to start a new one
+											if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+											{
+												iModifier *= 2;
+											}
+
+											if (getGroup()->getNumUnits() < (iModifier * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
 											{
 												iValue = 0;
 											}
