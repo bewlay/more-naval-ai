@@ -5093,6 +5093,18 @@ void CvUnitAI::AI_cityDefenseMove()
 		return;
 	}
 
+	if (plot()->isCity())
+	{
+		if (plot()->getOwnerINLINE() == getOwnerINLINE())
+		{
+			if (plot()->getPlotCity()->AI_neededDefenders() >= plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE()))
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
+			}
+		}
+	}
+
 	// Super Forts begin *AI_defense*
 	if (AI_guardFortMinDefender(true))
 	{
