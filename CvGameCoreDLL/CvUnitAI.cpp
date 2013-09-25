@@ -28372,9 +28372,9 @@ void CvUnitAI::AI_ConquestMove()
 					{
 						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
 						{
-							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity())
+							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity() && canMoveInto(pLoopPlot, false))
 							{
-								if (!atPlot(pLoopPlot) && ((bFollow) ? canMoveInto(pLoopPlot, true) : (generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))))
+								if (!atPlot(pLoopPlot) && generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))
 								{
 									if (pLoopPlot->getNumVisibleEnemyDefenders(this) > 0)//= iMinStack)
 									{
