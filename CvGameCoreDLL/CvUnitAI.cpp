@@ -13952,7 +13952,7 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
         return false;
 	}
 
-	iMaxPath = std::min(iMaxPath, 2);
+	iMaxPath = std::min(iMaxPath, 4);
 
 	pEntityNode = getGroup()->headUnitNode();
 
@@ -23889,43 +23889,47 @@ bool CvUnitAI::AI_exploreAir()
 			{
 				if (pLoopPlot != plot())
 				{
-					if (!pLoopPlot->isVisible(getTeam(), false) || (pLoopPlot->isAdjacentOwned() && pLoopPlot->getOwner() != getOwner()))
+					if (canReconAt(plot(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()))
 					{
-						if (canReconAt(plot(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()))
+						iValue = 1 + GC.getGame().getSorenRandNum(10, "AI explore air");
+						iValue *= plotDistance(getX_INLINE(), getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+
+						if (pLoopPlot->isPeak())
 						{
-							iValue = 1 + GC.getGame().getSorenRandNum(10, "AI explore air");
-							iValue *= plotDistance(getX_INLINE(), getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+							iValue += 3;
+						}
 
-							if (pLoopPlot->isPeak())
+						if (!pLoopPlot->isVisible(getTeam(), false))
+						{
+							iValue += 10;
+						}
+
+						if (pLoopPlot->isOwned())
+						{
+							if (GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
 							{
-								iValue += 3;
+								iValue += 5;
 							}
-
-							if (pLoopPlot->isOwned())
-							{
-								if (GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
-								{
-									iValue += 5;
-								}
-
-								iValue *= 2;
-							}
-
-							if (pLoopPlot->isCity())
-							{
-								iValue *= 5;
-							}
-
-							if (!pLoopPlot->isRevealed(getTeam(), false))
+							if (pLoopPlot->getOwner() != getOwner())
 							{
 								iValue *= 2;
 							}
+						}
 
-							if (iValue > iBestValue)
-							{
-								iBestValue = iValue;
-								pBestPlot = pLoopPlot;
-							}
+						if (pLoopPlot->isCity())
+						{
+							iValue *= 5;
+						}
+
+						if (!pLoopPlot->isRevealed(getTeam(), false))
+						{
+							iValue *= 2;
+						}
+
+						if (iValue > iBestValue)
+						{
+							iBestValue = iValue;
+							pBestPlot = pLoopPlot;
 						}
 					}
 				}
@@ -23936,6 +23940,7 @@ bool CvUnitAI::AI_exploreAir()
 	if (pBestPlot != NULL)
 	{
 		FAssert(!atPlot(pBestPlot));
+		logBBAI("      ...recon at %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 		getGroup()->pushMission(MISSION_RECON, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 		return true;
 	}
