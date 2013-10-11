@@ -198,8 +198,8 @@
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
 						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>2</iRevIdxNational>
-						<iRevIdxDistanceModifier>25</iRevIdxDistanceModifier>
+						<iRevIdxNational>1</iRevIdxNational>
+						<iRevIdxDistanceModifier>10</iRevIdxDistanceModifier>
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
