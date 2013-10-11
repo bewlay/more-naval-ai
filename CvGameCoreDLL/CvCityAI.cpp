@@ -849,11 +849,11 @@ int CvCityAI::AI_calculateMaxUnitSpending()
     	switch (pArea->getAreaAIType(getTeam()))
     	{
 			case AREAAI_OFFENSIVE:
-				iMaxUnitSpending += 2;
+				iMaxUnitSpending += 6;
 				break;
 			
 			case AREAAI_DEFENSIVE:
-				iMaxUnitSpending += 3;
+				iMaxUnitSpending += 5;
 				break;
 			
 			case AREAAI_MASSING:
@@ -876,13 +876,25 @@ int CvCityAI::AI_calculateMaxUnitSpending()
 				break;
 
 			default:
-				FAssert(false);
+				//FAssert(false);
+				break;
 		}
 
 		int iSpendingDivisor;
 		iSpendingDivisor = range((((100-kPlayer.AI_getFundedPercent()) + 10) / 4), 10, 18);
 		iMaxUnitSpending = iMaxUnitSpending * 10 / iSpendingDivisor;
 
+	}
+	
+	iMaxUnitSpending += std::max(0, (GET_TEAM(getTeam()).AI_getWarSuccessRating() / 10));
+
+	if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
+	{
+		iMaxUnitSpending += 10;
+		if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
+		{
+			iMaxUnitSpending *= 2;
+		}
 	}
 	return iMaxUnitSpending;
 }
@@ -923,6 +935,20 @@ void CvCityAI::AI_chooseProduction()
 	bDanger = AI_isDanger();
 	
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
+
+	// Unit Costs
+	int iFreeUnits = 0;
+	int iFreeMilitaryUnits = 0;
+	int iUnits = kPlayer.getNumUnits();
+	int iMilitaryUnits = kPlayer.getNumMilitaryUnits();
+	int iPaidUnits = 0;
+	int iPaidMilitaryUnits = 0;
+	int iMilitaryCost = 0;
+	int iBaseUnitCost = 0;
+	int iExtraCost = 0;
+	int iUnitCost = kPlayer.calculateUnitCost(iFreeUnits, iFreeMilitaryUnits, iPaidUnits, iPaidMilitaryUnits, iBaseUnitCost, iMilitaryCost, iExtraCost);
+
+	bool bBuildTroops = AI_calculateMaxUnitSpending() > iUnitCost;
 
 	if (isProduction())
 	{
@@ -1708,7 +1734,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	
+/*
 	if (iNumCities > 1 || bDanger)
 	{
 		if (iPlotCityDefenderCount < AI_neededDefenders())
@@ -1720,6 +1746,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
+*/
 	
 	//minimal defense.
 	if (!bLandWar && !bCrushStrategy)
@@ -2162,11 +2189,11 @@ void CvCityAI::AI_chooseProduction()
  	int iTotalFloatingDefenders = (isBarbarian() ? 0 : kPlayer.AI_getTotalFloatingDefenders(pArea));
 	
 	UnitTypeWeightArray floatingDefenderTypes;
-	floatingDefenderTypes.push_back(std::make_pair(UNITAI_CITY_DEFENSE, 125));
-	floatingDefenderTypes.push_back(std::make_pair(UNITAI_CITY_COUNTER, 100));
+	floatingDefenderTypes.push_back(std::make_pair(UNITAI_CITY_DEFENSE, 100));
+	floatingDefenderTypes.push_back(std::make_pair(UNITAI_CITY_COUNTER, 150));
 	//floatingDefenderTypes.push_back(std::make_pair(UNITAI_CITY_SPECIAL, 0));
 	//floatingDefenderTypes.push_back(std::make_pair(UNITAI_RESERVE, 100));
-	floatingDefenderTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 100));
+	//floatingDefenderTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 100));
 	
 	if (iTotalFloatingDefenders < ((iNeededFloatingDefenders + 1) / (bGetBetterUnits ? 3 : 2)))
 	{
@@ -2182,13 +2209,13 @@ void CvCityAI::AI_chooseProduction()
 	{
 		UnitTypeWeightArray defensiveTypes;
 		defensiveTypes.push_back(std::make_pair(UNITAI_COUNTER, 100));
-		defensiveTypes.push_back(std::make_pair(UNITAI_ATTACK, 100));
+		defensiveTypes.push_back(std::make_pair(UNITAI_ATTACK, 200));
 		//defensiveTypes.push_back(std::make_pair(UNITAI_RESERVE, 60));
 		defensiveTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 60));
 		defensiveTypes.push_back(std::make_pair(UNITAI_MAGE, 60));
 		if ( bDanger || (iTotalFloatingDefenders < (5*iNeededFloatingDefenders)/(bGetBetterUnits ? 6 : 4)))
 		{
-			defensiveTypes.push_back(std::make_pair(UNITAI_CITY_DEFENSE, 200));
+			defensiveTypes.push_back(std::make_pair(UNITAI_CITY_DEFENSE, 100));
 			defensiveTypes.push_back(std::make_pair(UNITAI_CITY_COUNTER, 50));
 		}
 
@@ -2312,7 +2339,9 @@ void CvCityAI::AI_chooseProduction()
 
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
 	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) ||
-		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)))
+		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)) ||
+		bAggressiveAI ||
+		kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
 	{
 		//Building city hunting stack.
 
@@ -2365,19 +2394,26 @@ void CvCityAI::AI_chooseProduction()
 						return;
 					}
 				}
-				else if (iAttackCount < (3 + iBuildUnitProb / 10))
+				else if (iAttackCount < (3 + iBuildUnitProb / (bWarPlan ? 10 : 20)))
 				{
+					if (bAtWar)
+					{
+						if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+						{
+							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack (ATTACK_CITY)", getName().GetCString());
+							return;
+						}
+					}
 					if (AI_chooseUnit(UNITAI_ATTACK))
 					{
-						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack", getName().GetCString());
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack(ATTACK)", getName().GetCString());
 						return;
 					}
 				}
 			}
 		}
 	}
-
-
+	
 	//minimal defense.
 	if (iPlotCityDefenderCount < (AI_minDefenders() + iPlotSettlerCount))
 	{
@@ -2488,7 +2524,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 	
 	// Tholal AI - second check for Priests
-	if (iNumPriests < (iNeededPriests / 2))
+	if (iNumPriests < (iNeededPriests / 2) && bBuildTroops)
 	{
 		if (AI_chooseUnit(UNITAI_MEDIC, kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) ? 50 : 25))
 		{
@@ -6819,9 +6855,23 @@ int CvCityAI::AI_neededDefenders()
 		iDefenders += (AI_neededFloatingDefenders() + 2) / 4;
 	}
 	*/
-	
+
+	int iFloatersNeeded = 0;
+	CvArea* pArea = area();
+
+	if (!GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_CRUSH))
+	{
+		iFloatersNeeded += AI_neededFloatingDefenders() - GET_PLAYER(getOwner()).AI_getTotalFloatingDefenders(pArea);
+	}
+	else
+	{
+		iFloatersNeeded += (AI_neededFloatingDefenders() - GET_PLAYER(getOwner()).AI_getTotalFloatingDefenders(pArea)) / 2;
+	}
+	iDefenders += std::max(0, iFloatersNeeded);
+
 	if (bDefenseWar || GET_PLAYER(getOwner()).AI_isDoStrategy(AI_STRATEGY_ALERT2))
 	{
+		iDefenders++;
 		if (!(plot()->isHills()))
 		{
 			iDefenders++;
@@ -6917,10 +6967,12 @@ int CvCityAI::AI_neededDefenders()
 /* RevolutionDCM	                     END                                                    */
 /************************************************************************************************/
 
+	/*
 	if (bFinancialTrouble)
 	{
 		iDefenders /= 2;
 	}
+	*/
 	
 	iDefenders = std::max(iDefenders, AI_minDefenders());
 
