@@ -795,24 +795,30 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		logBBAI("Checking for Upgrades...");
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
+			if (!pLoopUnit->isDelayedDeath())// && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
 				pUnitPlot = pLoopUnit->plot();
-				if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
-					&& pLoopUnit->hasUpgrade())
+				if (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES") || !pUnitPlot->isCity())
 				{
-					pLoopUnit->AI_upgrade();
+					if (((pLoopUnit->AI_getUnitAIType() == UNITAI_HERO) || pLoopUnit->isChanneler() || (AI_getPlotDanger(pUnitPlot, 1, false) > 0)) 
+						&& pLoopUnit->hasUpgrade())
+					{
+						pLoopUnit->AI_upgrade();
+					}
 				}
 			}
 		}
 		// pass 1
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 		{
-			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
+			if (!pLoopUnit->isDelayedDeath())// && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
-				if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
+				if (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES") || !pLoopUnit->plot()->isCity())
 				{
-					pLoopUnit->AI_upgrade();
+					if (pLoopUnit->getLevel() > 3 && pLoopUnit->hasUpgrade())
+					{
+						pLoopUnit->AI_upgrade();
+					}
 				}
 			}
 		}
@@ -821,9 +827,12 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		{
 			if (!pLoopUnit->isDelayedDeath() && (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES"))) // HARDCODE
 			{
-				if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
+				if (pLoopUnit->getUnitType() != (UnitTypes)GC.getInfoTypeForString("UNIT_MANES") || !pLoopUnit->plot()->isCity())
 				{
-					pLoopUnit->AI_upgrade();
+					if (pLoopUnit->getLevel() <= 3 && pLoopUnit->hasUpgrade())
+					{
+						pLoopUnit->AI_upgrade();
+					}
 				}
 			}
 		}
