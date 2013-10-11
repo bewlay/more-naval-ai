@@ -36280,7 +36280,7 @@
             <iMoves>1</iMoves>
             <bNoRevealMap>0</bNoRevealMap>
             <iAirRange>3</iAirRange>
-            <iAirUnitCap>0</iAirUnitCap>
+            <iAirUnitCap>1</iAirUnitCap>
             <iDropRange>0</iDropRange>
             <iNukeRange>-1</iNukeRange>
             <iWorkRate>0</iWorkRate>

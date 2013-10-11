@@ -481,6 +481,7 @@ class CvGameUtils:
 		pCity = argsList[0]
 		ePlayer = pCity.getOwner()
 		pPlayer = gc.getPlayer(ePlayer)
+		pPlot = pCity.plot()
 		
 		## AI catches for buildings and projects that have python-only effects
 		if not pPlayer.isHuman():
@@ -511,6 +512,11 @@ class CvGameUtils:
 				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'),-1, False, False, False, False)
 						return 1
+						
+			if pCity.canTrain(gc.getInfoTypeForString('UNIT_HAWK'), True, False):
+				if pPlot.countNumAirUnits(pPlayer.getTeam()) == 0:
+					pCity.pushOrder(OrderTypes.ORDER_TRAIN, gc.getInfoTypeForString('UNIT_HAWK'), -1, False, False, False, False)
+					return 1
 						
 		return False
 
