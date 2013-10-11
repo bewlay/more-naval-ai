@@ -1617,13 +1617,14 @@ class CvEventManager:
 	def onUnitLost(self, argsList):
 		'Unit Lost'
 		unit = argsList[0]
+		pPlayer = unit.getOwner()
 		player = PyPlayer(unit.getOwner())
 		pPlot = unit.plot()
 
 		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_TREANT'):
 			if pPlot.getFeatureType() == -1:
 				if pPlot.canHaveFeature(gc.getInfoTypeForString('FEATURE_FOREST_NEW')):
-					if pPlot.getOwner() == player:
+					if pPlot.getOwner() == pPlayer:
 						if CyGame().getSorenRandNum(100, "Treant Spawn Chance") < 50:
 							pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FOREST_NEW'), 0)
 
