@@ -1893,6 +1893,9 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, CvBattleDefinition&
 //FfH: Added by Kael 05/27/2008
                     setMadeAttack(true);
                     changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
+					//FfH Promotions: Added by Kael 08/12/2007
+                    setFleeWithdrawl(true);
+					//FfH: End Add
 //FfH: End Add
 
 					break;
