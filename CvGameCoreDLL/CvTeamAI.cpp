@@ -3956,20 +3956,7 @@ void CvTeamAI::AI_updateWorstEnemy()
 					if (AI_getAttitude(eLoopTeam) < ATTITUDE_CAUTIOUS)
 					{
 						int iValue = AI_getAttitudeVal(eLoopTeam);
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/* Ruthless AI                                                                                  */
-/************************************************************************************************/
-//Our Worst enemy isn't just the person we hate the most, but the person we hate and is winning!
-						//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-						if (1 < 2)
-						{
-							iValue += GC.getGameINLINE().getPlayerRank(kLoopTeam.getLeaderID()) / 2;
-							iValue -= GC.getGameINLINE().countCivPlayersAlive() / 2;
-						}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 						if (iValue < iBestValue)
 						{
 							iBestValue = iValue;

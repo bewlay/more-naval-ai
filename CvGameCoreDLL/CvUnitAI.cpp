@@ -28015,10 +28015,12 @@ void CvUnitAI::AI_ConquestMove()
 													iValue /= (iPathTurns + 1);
 
 													// Tholal AI - trying to give the AI some sense of when a group is too big - obsolete?
+													/*
 													if (pLoopSelectionGroup->getNumUnits() > (kPlayer.getNumCities() * 8))
 													{
 														iValue = 0;
 													}
+													*/
 												}
 											}
 
@@ -28204,7 +28206,7 @@ void CvUnitAI::AI_ConquestMove()
 
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		//int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
-		int iAttackRatio = 120; //Todo - find better way to come up with an AttackRatio - should vary based on situation
+		int iAttackRatio = 105; //Todo - find better way to come up with an AttackRatio - should vary based on situation
 
 		int iComparePostBombard = 0;
 		// AI gets a 1-tile sneak peak to compensate for lack of memory
