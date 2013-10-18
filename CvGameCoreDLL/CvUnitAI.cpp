@@ -26567,10 +26567,12 @@ bool CvUnitAI::isUnitAllowedPermDefense()
         return false;
     }
 
+	/*
     if (isPermanentSummon())
     {
         return false;
     }
+	*/
 
     if (noDefensiveBonus())
     {
