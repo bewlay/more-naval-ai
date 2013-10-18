@@ -533,7 +533,8 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 
 		owner = gc.getPlayer( pCity.getOwner() )
 		ownerPy = PyPlayer( pCity.getOwner() )
-		iOwnerEra = owner.getCurrentEra()
+#		iOwnerEra = owner.getCurrentEra()
+		iOwnerEra = gc.getGame().getCurrentPeriod()
 
 		bIsBarb = pRevPlayer.isBarbarian()
 		enemyPy = None
@@ -541,7 +542,13 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 			enemyPy = PyPlayer( pRevPlayer.getID() )
 
 		for unitClass in range(0,gc.getNumUnitClassInfos()) :
-			ownerUnitType = gc.getCivilizationInfo( owner.getCivilizationType() ).getCivilizationUnits(unitClass)
+#			ownerUnitType = gc.getCivilizationInfo( owner.getCivilizationType() ).getCivilizationUnits(unitClass)
+			ownerUnitType = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
+			
+			if ownerUnitType == -1:
+#				ownerUnitType = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
+				ownerUnitType = gc.getCivilizationInfo( owner.getCivilizationType() ).getCivilizationUnits(unitClass)
+				
 			ownerUnits = ownerPy.getUnitsOfType( ownerUnitType )
 			unitInfo = gc.getUnitInfo(ownerUnitType)
 			
@@ -557,8 +564,8 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 			if( not unitInfo.getDomainType() == DomainTypes.DOMAIN_LAND ) :
 				continue
 			
-			if( gc.getUnitClassInfo(unitClass).getMaxGlobalInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxPlayerInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxTeamInstances() > 0 ) :
-				continue
+#			if( gc.getUnitClassInfo(unitClass).getMaxGlobalInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxPlayerInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxTeamInstances() > 0 ) :
+#				continue
 
 			# First check what units there are nearby
 			if( not unitInfo.getPrereqAndTech() == TechTypes.NO_TECH ) :

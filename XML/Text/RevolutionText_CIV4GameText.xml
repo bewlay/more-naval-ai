@@ -2399,12 +2399,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>REVOLUTION_GRAPH_TITLE_SMALL</Tag>
-		<English>Revolt Instability</English>
-		<French>Revolt Instability</French>
-		<German>Revolutions-Instabilit&#228;t</German>
-		<Italian>Instabilit&#224;</Italian>
-		<Spanish>Inestabilidad Revolucionaria</Spanish>
-		<Finnish>Revolt Instability</Finnish>
+		<English>Stability</English>
+		<French>Stability</French>
+		<German>Stability</German>
+		<Italian>Stability</Italian>
+		<Spanish>Stability</Spanish>
+		<Finnish>Stability</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_REV_INDEX_LOCAL_PENALTY</Tag>
