@@ -11,7 +11,15 @@ import BugOptionsTab
 credits = [ 
 			"-", "Fall from Heaven|FFH2 Team",
 			"Kael - Designer, Lead Programmer",
-			"Full credits at http://forums.civfanatics.com/showthread.php?t=304415"
+			" - Full credits at http://forums.civfanatics.com/showthread.php?t=304415",
+			"-",
+			"-", "More Naval AI (MNAI)",
+			"Tholal - Lead Programmer",
+			"Additional Coders - Red Key, DaveV, lfgr, Terkhen, MagisterCultuum",
+			"Testers - all the folk who provided feedback and suggestions",
+			"Puppet States - original code by Dom Pedro II, updated by stolenrays, adopted for FFH by the MNAI team",
+			"Advanced Diplomacy - original code by Afforess, updated by stolenrays, adapted for FFH by the MNAI team",
+			" - additional code and tweaks borrowed from Denev, Wild Mana, Flavor Mod and K-mod",
 			"-",
 			"-", "REVOLUTIONDCM_TEAM|RevDCM Team",
 			"jdog5000 - Designer, Lead Programmer",
