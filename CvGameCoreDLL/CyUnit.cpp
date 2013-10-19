@@ -1980,6 +1980,16 @@ void CyUnit::setAvatarOfCivLeader(bool bNewValue)
 }
 //<<<<Unofficial Bug Fix: End Add
 
+bool CyUnit::isPermanentSummon() const
+{
+	return m_pUnit ? m_pUnit->isPermanentSummon() : false;
+}
+
+void CyUnit::setPermanentSummon(bool bNewValue)
+{
+	if (m_pUnit)
+		m_pUnit->setPermanentSummon(bNewValue);
+}
 
 void CyUnit::joinGroup(CySelectionGroup* pNewGroup)
 {

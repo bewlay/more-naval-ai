@@ -471,7 +471,8 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("isAvatarOfCivLeader", &CyUnit::isAvatarOfCivLeader, "bool ()")
 		.def("setAvatarOfCivLeader", &CyUnit::setAvatarOfCivLeader, "void (bool bNewValue)")
 //<<<<Unofficial Bug Fix: End Add
-
+		.def("isPermanentSummon", &CyUnit::isPermanentSummon, "bool ()")
+		.def("setPermanentSummon", &CyUnit::setPermanentSummon, "void (bool bNewValue)")
 //FfH: End Add
 
 		;

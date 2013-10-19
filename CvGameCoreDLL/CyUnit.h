@@ -475,6 +475,9 @@ public:
 	void setAvatarOfCivLeader(bool bNewValue);
 //<<<<Unofficial Bug Fix: End Add
 
+	bool isPermanentSummon() const;
+    void setPermanentSummon(bool newvalue);
+
 	// Python Helper Functions
 
 	void centerCamera();
