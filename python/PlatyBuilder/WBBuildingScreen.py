@@ -64,8 +64,7 @@ class WBBuildingScreen:
 				if not isLimitedWonderClass(iBuildingClass):
 					if not BuildingInfo.isGraphicalOnly():
 						if not BuildingInfo.isEquipment():
-							iSpell = gc.getInfoTypeForString('BUILDINGCLASS_SPELL')
-							if iSpell == -1 or iBuildingClass != iSpell:
+							if not BuildingInfo.isRequiresCaster():
 								self.iList.append([BuildingInfo.getDescription(), i])
 			if self.iBuildingCategory == 1:#Wonders
 				if isLimitedWonderClass(iBuildingClass):
@@ -86,10 +85,8 @@ class WBBuildingScreen:
 				if BuildingInfo.getReligionType() != -1:
 					self.iList.append([BuildingInfo.getDescription(), i])
 			if self.iBuildingCategory == 7:#Spell Buildings
-				iSpell = gc.getInfoTypeForString('BUILDINGCLASS_SPELL')
-				if iSpell > -1:
-					if iBuildingClass == iSpell:
-						self.iList.append([BuildingInfo.getDescription(), i])
+				if BuildingInfo.isRequiresCaster():
+					self.iList.append([BuildingInfo.getDescription(), i])
 			if self.iBuildingCategory == 8:#Equipment
 				if BuildingInfo.isEquipment():
 					self.iList.append([BuildingInfo.getDescription(), i])
@@ -123,7 +120,7 @@ class WBBuildingScreen:
 			else:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			screen.setTableText("WBBuilding", iColumn, iRow, sColor + item[0] + "</color>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY )
-				
+
 	def handleInput (self, inputClass):
 		if inputClass.getFunctionName() == "BuildingCategory":
 			self.handlePlatyBuildingCategoryCB(inputClass.getData())

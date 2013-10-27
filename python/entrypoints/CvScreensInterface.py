@@ -748,6 +748,9 @@ def WorldBuilderHandleUnitEditIsImmortalCB( argsList ):
 def WorldBuilderHandleUnitEditAvatarOfCivLeaderCB( argsList ):
 	worldBuilderScreen.handleUnitEditAvatarOfCivLeaderCB(argsList)
 
+def WorldBuilderHandleUnitEditPermanentSummonCB( argsList ):
+	worldBuilderScreen.handleUnitEditPermanentSummonCB(argsList)
+
 
 def WorldBuilderHandleUnitEditScenarioCounterCB( argsList ):
 	worldBuilderScreen.handleUnitEditScenarioCounterCB(argsList)
@@ -815,6 +818,10 @@ def WorldBuilderHandleGameEditScenarioCounterCB( argsList ):
 
 def WorldBuilderHandleGlobalCounterEditCB( argsList ):
 	worldBuilderScreen.handleGlobalCounterEditCB(argsList)
+
+def WorldBuilderHandleHandicapEditPullDownCB( argsList ):
+	worldBuilderScreen.handleHandicapEditPullDownCB(argsList)
+
 ##MagisterModmod
 
 ## City Data ##

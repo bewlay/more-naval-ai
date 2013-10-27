@@ -244,6 +244,10 @@ class CvWorldBuilderScreen:
 				self.handleWorldBuilderAddUnitCountPullDownCB(inputClass.getData())
 			elif(inputClass.getFunctionName() == "WorldBuilderSetWinner"):
 				self.handleWorldBuilderSetWinnerPullDownCB(inputClass.getData())
+#Magsiter Modmod
+			elif(inputClass.getFunctionName() == "WorldBuilderReassignPlayer"):
+				self.handleWorldBuilderReassignPlayerCB(inputClass.getData())
+
 			elif(inputClass.getFunctionName() == "WorldBuilderChooseCivilization"):
 				self.handleWorldBuilderChooseCivilizationPullDownCB(inputClass.getData())
 			elif(inputClass.getFunctionName() == "WorldBuilderChooseLeader"):
@@ -618,17 +622,23 @@ class CvWorldBuilderScreen:
 		CyGame().setWinner(self.m_iCurrentTeam, iIndex -1)
 		return 1
 
+#Magister Modmod
+	def handleWorldBuilderReassignPlayerCB ( self, argsList ) :
+		iIndex = int(argsList)
+		CyGame().reassignPlayerAdvanced(self.m_iCurrentPlayer, iIndex, -1)
+		return 1
+
 	def handleWorldBuilderChooseCivilizationPullDownCB ( self, argsList ) :
 		iIndex = int(argsList)
 		iCount = 1
 		for i in xrange(gc.getNumCivilizationInfos()):
-			if not CyGame().isCivEverActive(i):
-				if iCount == iIndex:
-					self.m_iNewCivilization = i
-					self.m_iNewLeaderType = -1
-					self.refreshSideMenu()
-					return 1
-				iCount+= 1
+##			if not CyGame().isCivEverActive(i):#I want to allow multiple leaders of the same civ in the same game
+			if iCount == iIndex:
+				self.m_iNewCivilization = i
+				self.m_iNewLeaderType = -1
+				self.refreshSideMenu()
+				return 1
+			iCount+= 1
 
 	def handleWorldBuilderChooseLeaderPullDownCB ( self, argsList ) :
 		iIndex = int(argsList)
@@ -980,6 +990,10 @@ class CvWorldBuilderScreen:
 
 	def handleUnitEditAvatarOfCivLeaderCB(self, argsList) :
 		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setAvatarOfCivLeader(bool(argsList[0]))
+		return 1
+
+	def handleUnitEditPermanentSummonCB(self, argsList) :
+		self.m_pActivePlot.getUnit(self.m_iCurrentUnit).setPermanentSummon(bool(argsList[0]))
 		return 1
 
 ##Magister
@@ -1417,6 +1431,11 @@ class CvWorldBuilderScreen:
 ##		CyGame().changeGlobalCounter(-10000)#We need to make sure the global counter is 0 for change to equal set
 		CyGame().changeGlobalCounter(int((argsList[0] -CyGame().getGlobalCounter())*CyGame().getGlobalCounterLimit()/100))
 		return 1
+
+	def handleHandicapEditPullDownCB(self, argsList):
+		CyGame().setHandicapType(int(argsList[0]))
+		return 1
+
 ##MagisterModmod
 
 ## Plot Data ##
@@ -2411,15 +2430,6 @@ class CvWorldBuilderScreen:
 ## Kill ##
 		self.m_tabCtrlEdit.addSectionButton(localText.getText("TXT_KEY_WB_KILL",()), "CvScreensInterface", "WorldBuilderHandleKillCB", "Unit", 0)
 
-##MagisterModmod
-##Has Casted
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_PROMOTION_AVATAR",()), "CvScreensInterface", "WorldBuilderHandleUnitEditAvatarOfCivLeaderCB", "UnitEditAvatarOfCivLeader", 0, pUnit.isAvatarOfCivLeader())
-
-##Has Casted
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HAS_CAST",()), "CvScreensInterface", "WorldBuilderHandleUnitEditHasCastedCB", "UnitEditHasCasted", 0, pUnit.isHasCasted())
-		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IS_IMMORTAL",()), "CvScreensInterface", "WorldBuilderHandleUnitEditIsImmortalCB", "UnitEditIsImmortal", 0, pUnit.isImmortal())
-
-##MagisterModmod
 ## Promotion Ready ##
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_PROMOTION_READY",()), "CvScreensInterface", "WorldBuilderHandleUnitEditPromotionReadyCB", "UnitEditPromotionReady", 0, pUnit.isPromotionReady())
 ## Made Attack ##
@@ -2427,8 +2437,19 @@ class CvWorldBuilderScreen:
 ## Made Interception ##
 		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_MADE_INTERCEPT",()), "CvScreensInterface", "WorldBuilderHandleUnitEditMadeInterceptionCB", "UnitEditMadeInterception", 0, pUnit.isMadeInterception())
 
-##		self.m_tabCtrlEdit.addSectionLabel("",  0)
-		self.m_tabCtrlEdit.addSectionLabel("",  0)
+##MagisterModmod
+##Has Casted
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_HAS_CAST",()), "CvScreensInterface", "WorldBuilderHandleUnitEditHasCastedCB", "UnitEditHasCasted", 0, pUnit.isHasCasted())
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IS_IMMORTAL",()), "CvScreensInterface", "WorldBuilderHandleUnitEditIsImmortalCB", "UnitEditIsImmortal", 0, pUnit.isImmortal())
+
+##Is Avatar
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_PROMOTION_AVATAR",()), "CvScreensInterface", "WorldBuilderHandleUnitEditAvatarOfCivLeaderCB", "UnitEditAvatarOfCivLeader", 0, pUnit.isAvatarOfCivLeader())
+
+## Is PermanentSummon ##
+		self.m_tabCtrlEdit.addSectionCheckbox(localText.getText("TXT_KEY_WB_IS_PERMANENT_SUMMON",()), "CvScreensInterface", "WorldBuilderHandleUnitEditPermanentSummonCB", "UnitEditPermanentSummon", 0, pUnit.isPermanentSummon())
+
+##MagisterModmod
+
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
 ##MagisterModmod
@@ -2998,7 +3019,7 @@ class CvWorldBuilderScreen:
 		initWBToolEditCtrl()
 		self.m_tabCtrlEdit = getWBToolEditTabCtrl()
 		self.m_tabCtrlEdit.setNumColumns(1)
-		self.m_tabCtrlEdit.setColumnLength(15)
+		self.m_tabCtrlEdit.setColumnLength(18)
 		self.m_tabCtrlEdit.addTabSection(localText.getText("TXT_KEY_WB_GAME_DATA",()))
 ## Start Year ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_START_YEAR",()),  0)
@@ -3013,7 +3034,16 @@ class CvWorldBuilderScreen:
 
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_GLOBAL_COUNTER",()),  0)
 		self.m_tabCtrlEdit.addSectionSpinner("GlobalCounterCB", "CvScreensInterface", "WorldBuilderHandleGlobalCounterEditCB", "GameEditGlobalCounter", 0, 0, 100, 1, CyGame().getGlobalCounter(), 0, 0)
+
+
+		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_HANDICAP",()),  0)
+		strTest = ()
+		for i in xrange(gc.getNumHandicapInfos()):
+			strTest = strTest + (gc.getHandicapInfo(i).getDescription(),)
+		self.m_tabCtrlEdit.addSectionDropdown("HandicapCB", strTest, "CvScreensInterface", "WorldBuilderHandleHandicapEditPullDownCB", "HandicapEditPullDown", 0, CyGame().getHandicapType())
 ##MagisterModmod
+
+
 
 ## Game Script ##
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_SCRIPT_DATA",()),  0)
@@ -3144,7 +3174,7 @@ class CvWorldBuilderScreen:
 		self.m_tabCtrlEdit.addSectionSpinner("PlotEditPortalExitYCB", "CvScreensInterface", "WorldBuilderHandlePlotEditPortalExitYCB", "PlotEditPortalExitY", 0, 0,CyMap().getGridHeight()-1, 1, self.m_pActivePlot.getPortalExitY(), 0, 0)
 
 		self.m_tabCtrlEdit.addSectionLabel(localText.getText("TXT_KEY_WB_PLOT_MIN_LEVEL",()),  0)
-		self.m_tabCtrlEdit.addSectionSpinner("PlotEditMinLevelCB", "CvScreensInterface", "WorldBuilderHandlePlotEditMinLevelCB", "PlotEditMinLevel", 0, 0, 100, 1, 1, 0, 0)
+		self.m_tabCtrlEdit.addSectionSpinner("PlotEditMinLevelCB", "CvScreensInterface", "WorldBuilderHandlePlotEditMinLevelCB", "PlotEditMinLevel", 0, 0, 100, 1, self.m_pActivePlot.getMinLevel(), 0, 0)
 
 		self.m_tabCtrlEdit.addSectionLabel("",  0)
 ##MagisterModmod
@@ -3748,6 +3778,9 @@ class CvWorldBuilderScreen:
 		screen.deleteWidget("WorldBuilderUnitCombat")
 		screen.deleteWidget("WorldBuilderAddUnitCount")
 		screen.deleteWidget("WorldBuilderSetWinner")
+#Magister Modmod
+		screen.deleteWidget("WorldBuilderReassignPlayer")
+
 		screen.deleteWidget("WorldBuilderChooseCivilization")
 		screen.deleteWidget("WorldBuilderChooseLeader")
 		screen.deleteWidget("WorldBuilderEditAreaMap")
@@ -3947,6 +3980,9 @@ class CvWorldBuilderScreen:
 			screen.deleteWidget("WorldBuilderUnitCombat")
 			screen.deleteWidget("WorldBuilderAddUnitCount")
 			screen.deleteWidget("WorldBuilderSetWinner")
+#MagisterModmod
+			screen.deleteWidget("WorldBuilderReassignPlayer")
+
 			screen.deleteWidget("WorldBuilderChooseCivilization")
 			screen.deleteWidget("WorldBuilderChooseLeader")
 			screen.deleteWidget("WorldBuilderEditAreaMap")
@@ -3973,6 +4009,8 @@ class CvWorldBuilderScreen:
 						screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 3, PanelStyles.PANEL_STYLE_MAIN )
 					else:
 						screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 4, PanelStyles.PANEL_STYLE_MAIN )
+				elif self.m_iUnitCombat == -5:
+					screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 3, PanelStyles.PANEL_STYLE_MAIN )
 				else:
 					screen.addPanel( "WorldBuilderBackgroundBottomPanel", "", "", True, True, iMaxScreenWidth-self.iScreenWidth, 10+32+32, self.iScreenWidth, 45 + 37 * 2, PanelStyles.PANEL_STYLE_MAIN )
 			elif self.m_bNormalMap:
@@ -4016,6 +4054,11 @@ class CvWorldBuilderScreen:
 				screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_KILL_PLAYER",(gc.getPlayer(self.m_iCurrentPlayer).getName(),)), 0, 0, False)
 				if CyGame().countCivPlayersEverAlive() != gc.getMAX_CIV_PLAYERS():
 					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_ADD_NEW_PLAYER",()), 0, 0, self.m_iUnitCombat == -4)
+
+#Magister Momdod
+				if gc.getPlayer(self.m_iCurrentPlayer).isHuman():
+					screen.addPullDownString(szDropdownName, localText.getText("TXT_KEY_WB_REASSIGN_PLAYER",()), 0, 0, self.m_iUnitCombat == -5)
+
 ## Adds Units Start ##
 				if self.m_iUnitCombat > -2:
 					szDropdownName = str("WorldBuilderAddUnits")
@@ -4078,6 +4121,18 @@ class CvWorldBuilderScreen:
 								sTrait = localText.getText("TXT_KEY_WB_NONE",())
 							szPullDownString = gc.getLeaderHeadInfo(iLeader).getDescription() + sTrait + "]"
 							screen.addPullDownString(szDropdownName, szPullDownString, iLeader, iLeader, self.m_iNewLeaderType == iLeader)
+
+#Magister Modmod
+##Reassign Player
+				elif self.m_iUnitCombat == -5:
+					szDropdownName = str("WorldBuilderReassignPlayer")
+					screen.addDropDownBoxGFC(szDropdownName, (iMaxScreenWidth-self.iScreenWidth)+8, (10+36*5), iPanelWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+					for iPlayer in xrange(gc.getMAX_PLAYERS()):
+						pPlayer = gc.getPlayer(iPlayer)
+						if pPlayer.isAlive() and not pPlayer.isBarbarian():
+							strPlayerAliveStatus = pPlayer.getName() + " (" + pPlayer.getCivilizationShortDescription(0) + ")"
+							screen.addPullDownString(szDropdownName, strPlayerAliveStatus, iPlayer, iPlayer, self.m_iCurrentPlayer == iPlayer)
+
 ## Game Commands Ends ##
 
 			elif(self.m_bNormalMap and (not self.m_bUnitEdit) and (not self.m_bCityEdit)):

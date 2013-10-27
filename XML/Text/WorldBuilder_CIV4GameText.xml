@@ -1532,4 +1532,32 @@
 		<Italian>Alternate Type: %s1</Italian>
 		<Spanish>Alternate Type: %s1</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_REASSIGN_PLAYER</Tag>
+		<English>Reassign Player</English>
+		<French>Reassign Player</French>
+		<German>Reassign Player</German>
+		<Italian>Reassign Player</Italian>
+		<Spanish>Reassign Player</Spanish>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_WB_HANDICAP</Tag>
+		<English>Difficulty Level:</English>
+		<French>Difficulty Level:</French>
+		<German>Difficulty Level:</German>
+		<Italian>Difficulty Level:</Italian>
+		<Spanish>Difficulty Level:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_IS_PERMANENT_SUMMON</Tag>
+		<English>Is Permanent Summon</English>
+		<French>Is Permanent Summon</French>
+		<German>Is Permanent Summon</German>
+		<Italian>Is Permanent Summon</Italian>
+		<Spanish>Is Permanent Summon</Spanish>
+	</TEXT>
+
+
+
 </Civ4GameText>

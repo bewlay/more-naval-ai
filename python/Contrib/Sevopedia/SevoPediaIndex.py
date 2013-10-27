@@ -19,17 +19,17 @@ class SevoPediaIndex:
 
 	def __init__(self, main):
 		self.top = main
-		
+
 		self.LIST_BUTTON_SIZE = 24
 		self.X_INDEX = self.top.X_CATEGORIES
 		self.Y_INDEX = self.top.Y_CATEGORIES
 		self.W_INDEX = self.top.W_SCREEN - 2 * self.top.X_CATEGORIES
 		self.H_INDEX = self.top.H_CATEGORIES
-		
+
 		self.X_LETTER = main.X_INDEX + 130  # position of first letter button
 		self.Y_LETTER = main.Y_INDEX
 		self.W_LETTER = 20
-		
+
 		self.index = None
 		self.letterTextIDs = None
 
@@ -48,12 +48,12 @@ class SevoPediaIndex:
 
 	def buildIndex(self):
 		if self.index: return
-		
+
 		techList = self.top.getTechList()
 		unitList = self.top.getUnitList()
 		unitCombatList = self.top.getUnitCategoryList()
 		promotionList = self.top.getPromotionList()
-		
+
 		buildingList = self.top.getBuildingList()
 ##--------	BUGFfH: Deleted by Denev 2009/10/09
 		"""
@@ -63,23 +63,26 @@ class SevoPediaIndex:
 ##--------	BUGFfH: End Delete
 		projectList = self.top.getProjectList()
 		specialistList = self.top.getSpecialistList()
-		
+
 		terrainList = self.top.getTerrainList()
 		featureList = self.top.getFeatureList()
 		bonusList = self.top.getBonusList()
 		improvementList = self.top.getImprovementList()
-		
+
 		civList = self.top.getCivilizationList()
-		leaderList = self.top.getLeaderList()
+##		leaderList = self.top.getLeaderList()
+
+		leaderList = self.top.getLeaderList( SevoScreenEnums.TYPE_MAJOR ) + self.top.getLeaderList( SevoScreenEnums.TYPE_MINOR )
+
 		traitList = self.top.getTraitList()
-		
+
 		civicList = self.top.getCivicList()
 		religionList = self.top.getReligionList()
 		corporationList = self.top.getCorporationList()
-		
+
 		conceptList = self.top.getConceptList()
 		newConceptList = self.top.getNewConceptList()
-		
+
 		list=[]
 ##--------	BUGFfH: Modified by Denev 2009/10/09
 		"""
@@ -100,7 +103,7 @@ class SevoPediaIndex:
 				list.append([item[0][18:].capitalize(),"Promo",item])
 			else:
 				list.append([item[0],"Promo",item])
-		
+
 		for item in buildingList:
 			if (item[0][:17]=="TXT_KEY_BUILDING_"):
 				list.append([item[0][17:].capitalize(),"Building",item])
@@ -130,7 +133,7 @@ class SevoPediaIndex:
 				list.append([item[0][19:].capitalize(),"Specialist",item])
 			else:
 				list.append([item[0],"Specialist",item])
-		
+
 		for item in terrainList:
 			list.append([item[0],"Terrain",item])
 		for item in featureList:
@@ -139,14 +142,14 @@ class SevoPediaIndex:
 			list.append([item[0],"Bonus",item])
 		for item in improvementList:
 			list.append([item[0],"Improv",item])
-		
+
 		for item in civList:
 			list.append([item[0],"Civ",item])
 		for item in leaderList:
 			list.append([item[0],"Leader",item])
 		for item in traitList:
 			list.append([item[0][2:],"Trait",item])
-		
+
 		for item in religionList:
 			list.append([item[0],"Religion",item])
 		for item in civicList:
@@ -154,7 +157,7 @@ class SevoPediaIndex:
 				list.append([item[0][14:].capitalize(),"Civic",item])
 			else:
 				list.append([item[0],"Civic",item])
-		
+
 		for item in conceptList:
 			list.append([item[0],"Concept",item])
 		for item in newConceptList:
@@ -181,21 +184,21 @@ class SevoPediaIndex:
 		list += [(szIndexName,"Concept",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in conceptList]
 	#	list += [(szIndexName,"NewConcept",	(szItemName, iItemID))	for szIndexName, iItemID, szItemName in newConceptList]
 ##--------	BUGFfH: End Modify
-		
+
 		list.sort()
 		self.index = list
-		
+
 	def placeIndex(self):
 		screen = self.top.getScreen()
 		CONCEPT_CHAR = gc.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()
-		
+
 		nColumns = 3
 		self.tableName = self.top.getNextWidgetName()
 		screen.addTableControlGFC(self.tableName, nColumns, self.X_INDEX, self.Y_INDEX, self.W_INDEX, self.H_INDEX, False, False, self.LIST_BUTTON_SIZE, self.LIST_BUTTON_SIZE, TableStyles.TABLE_STYLE_STANDARD);
 		screen.enableSelect(self.tableName, False)
 		for i in range(nColumns):
 			screen.setTableColumnHeader(self.tableName, i, "", (self.W_INDEX - 10) / nColumns)
-		
+
 		iRow = -1
 		iColumn = 0
 		sLetter = "#"
@@ -211,8 +214,8 @@ class SevoPediaIndex:
 				# create letter button
 				textName = self.top.getNextWidgetName()
 				letterText = u"<font=4>%s</font>" % sLetter
-				screen.setText(textName, "Background", letterText, CvUtil.FONT_CENTER_JUSTIFY, 
-						iX, self.Y_LETTER, 0, FontTypes.TITLE_FONT, 
+				screen.setText(textName, "Background", letterText, CvUtil.FONT_CENTER_JUSTIFY,
+						iX, self.Y_LETTER, 0, FontTypes.TITLE_FONT,
 						WidgetTypes.WIDGET_GENERAL, iRow, -1)
 				self.letterTextIDs[textName] = iRow
 				iX += self.W_LETTER
@@ -224,7 +227,7 @@ class SevoPediaIndex:
 					screen.appendTableRow(self.tableName)
 					iRow += 1
 					iColumn = 0
-			
+
 			sText = u"<font=3>" + item[0] + u"</font>"
 			sButton = ""
 			eWidget = None
@@ -238,7 +241,7 @@ class SevoPediaIndex:
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getUnitCombatInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT_COMBAT, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Promo"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getPromotionInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
-			
+
 			elif (type == "Building"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 ##--------	BUGFfH: Deleted by Denev 2009/10/09
@@ -251,7 +254,7 @@ class SevoPediaIndex:
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getProjectInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Specialist"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getSpecialistInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPECIALIST, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
-			
+
 			elif (type == "Terrain"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getTerrainInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_TERRAIN, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Feature"):
@@ -260,7 +263,7 @@ class SevoPediaIndex:
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getBonusInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Improv"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getImprovementInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
-			
+
 			elif (type == "Civ"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getCivilizationInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Leader"):
@@ -270,24 +273,24 @@ class SevoPediaIndex:
 #				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getConceptInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_DESCRIPTION, CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW, item[1], CvUtil.FONT_LEFT_JUSTIFY)
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getTraitInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 ##--------	BUGFfH: End Modify
-			
+
 			elif (type == "Civic"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getCivicInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Religion"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getReligionInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "Corporation"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>" + item[0] + u"</font>", gc.getCorporationInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_CORPORATION, item[1], 1, CvUtil.FONT_LEFT_JUSTIFY)
-			
+
 			elif (type == "Concept"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>%c %s</font>" % (CONCEPT_CHAR, item[0]), gc.getConceptInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_DESCRIPTION, CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT, item[1], CvUtil.FONT_LEFT_JUSTIFY)
 			elif (type == "NewConcept"):
 				screen.setTableText(self.tableName, iColumn, iRow, u"<font=3>%c %s</font>" % (CONCEPT_CHAR, item[0]), gc.getConceptInfo(item[1]).getButton(), WidgetTypes.WIDGET_PEDIA_DESCRIPTION, CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW, item[1], CvUtil.FONT_LEFT_JUSTIFY)
-		
+
 		self.iLastRow = iRow
 
 	def handleInput (self, inputClass):
 		BugUtil.debugInput(inputClass)
-		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED 
+		if (inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED
 				and inputClass.getFunctionName() + str(inputClass.getID()) in self.letterTextIDs):
 			screen = self.top.getScreen()
 			screen.selectRow(self.tableName, self.iLastRow, True)
