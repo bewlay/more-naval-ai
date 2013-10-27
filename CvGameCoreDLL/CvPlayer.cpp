@@ -24066,6 +24066,7 @@ PlayerTypes CvPlayer::getPuppetPlayer() const
 
 bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
 {
+	// Puppet States are a type of Vassal
     if (GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES))
     {
         return false;
@@ -24086,10 +24087,17 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
         return false;
     }
 
+	if (!GET_TEAM(getTeam()).isPuppetStateTrading())
+	{
+		return false;
+	}
+
+	/*
 	if (!GET_TEAM(getTeam()).isVassalStateTrading())
 	{
 		return false;
 	}
+	*/
 
     PlayerTypes ePlayer = getPuppetPlayer();
     if (ePlayer == NO_PLAYER)
