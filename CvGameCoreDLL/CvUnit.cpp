@@ -17912,7 +17912,10 @@ void CvUnit::changeHiddenNationality(int iNewValue)
             updatePlunder(-1, false);
 			setBlockading(false);
             m_iHiddenNationality += iNewValue;
-            joinGroup(NULL, true);
+			if (getGroup()->getNumUnits() > 1)
+			{
+	            joinGroup(NULL, true);
+			}
             updatePlunder(1, false);
         }
         else
