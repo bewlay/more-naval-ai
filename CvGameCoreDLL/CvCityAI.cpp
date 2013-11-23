@@ -3128,15 +3128,18 @@ void CvCityAI::AI_chooseProduction()
 			iMissionarySeaNeeded++;
 		}
 
-		if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= (bLandWar ? 0 : iMissionarySeaNeeded))
+		if (iMissionarySeaNeeded > 0)
 		{
-			if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
+			if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= (bLandWar ? 0 : iMissionarySeaNeeded))
 			{
-				if( gCityLogLevel >= 2 )
+				if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
 				{
-					logBBAI("      City %S uses choose Missionary_Sea", getName().GetCString());
+					if( gCityLogLevel >= 2 )
+					{
+						logBBAI("      City %S uses choose Missionary_Sea (%d needed)", getName().GetCString(), iMissionarySeaNeeded);
+					}
+					return;
 				}
-				return;
 			}
 		}
 	}
