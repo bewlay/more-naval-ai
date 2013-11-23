@@ -6241,7 +6241,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 					if (kUnitInfo.isGoldenAge())
 					{
-						iFreeUnitValue += 3500;
+						iFreeUnitValue += 4000 * iCityCount;
 					}
 					
 					if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
@@ -6944,6 +6944,10 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 							if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3))
 							{
 								iBuildingValue += 10000;
+								if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR4))
+								{
+									iBuildingValue += 100000;
+								}
 							}
 						}
 					}
@@ -22343,7 +22347,7 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED")) > 0)
 	{
-		return 3;
+		return 4;
 	}
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_DIVINE")) > 0)
