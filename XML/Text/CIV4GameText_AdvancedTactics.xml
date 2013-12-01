@@ -191,11 +191,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADABLE_UNIT</Tag>
-		<English>[ICON_BULLET]This Unit is Tradable</English>
-		<French>[ICON_BULLET]Cette unité peut être vendue</French>
-		<German>[ICON_BULLET]Diese Einheit kann gehandelt werden</German>
-		<Italian>[ICON_BULLET]This Unit is Tradable</Italian>
-		<Spanish>[ICON_BULLET]Esta unidad puede ser intercambiada</Spanish>
+		<English>[ICON_BULLET]Unit can be Traded</English>
+		<French>[ICON_BULLET]Unité peut être négociée</French>
+		<German>[ICON_BULLET]Einheit kann gehandelt werden</German>
+		<Italian>[ICON_BULLET]Unità possono essere scambiati</Italian>
+		<Spanish>[ICON_BULLET]Unidad puede negociarse</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HIRED_WAR_ALLY</Tag>
