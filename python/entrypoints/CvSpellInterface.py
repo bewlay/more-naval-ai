@@ -2038,8 +2038,17 @@ def reqMarchOfTheTrees(caster):
 	if pPlayer.isHuman() == False:
 		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
 		eTeam = gc.getTeam(iTeam)
-		if eTeam.getAtWarCount(True) < 2:
+		
+		iEnemyPower = 0
+		for i in range(gc.getMAX_CIV_PLAYERS()):
+			if (gc.getPlayer(i).isAlive()):
+				if eTeam.isAtWar(gc.getPlayer(i).getTeam()):
+					iEnemyPower += gc.getPlayer(i).getPower()
+		
+#		if eTeam.getAtWarCount(True) < 2:
+		if iEnemyPower < ((pPlayer.getPower() * 150) / 100):
 			return False
+# TODO - check for number of forests
 	return True
 
 def spellMarchOfTheTrees(caster):
@@ -2840,7 +2849,15 @@ def reqSanctuary(caster):
 	if not pPlayer.isHuman():
 		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
 		eTeam = gc.getTeam(iTeam)
-		if eTeam.getAtWarCount(True) < 2:
+		
+		iEnemyPower = 0
+		for i in range(gc.getMAX_CIV_PLAYERS()):
+			if (gc.getPlayer(i).isAlive()):
+				if eTeam.isAtWar(gc.getPlayer(i).getTeam()):
+					iEnemyPower += gc.getPlayer(i).getPower()
+		
+#		if eTeam.getAtWarCount(True) < 2:
+		if iEnemyPower < ((pPlayer.getPower() * 150) / 100):
 			return False
 	return True
 
