@@ -765,10 +765,28 @@ void CvUnit::convert(CvUnit* pUnit)
 	}
 
 	// lfgr UnitArtstyle
-	if( pUnit->getUnitArtStyleType() != NO_UNIT_ARTSTYLE )
+	bool bArtStyleFound = false;
+	if ( pUnit->getUnitArtStyleType() != NO_UNIT_ARTSTYLE )
+	{
 		setUnitArtStyleType( pUnit->getUnitArtStyleType() );
-	else
+		bArtStyleFound = true;
+	}
+	else if (pUnit->getRace() != NO_PROMOTION)
+	{
+		int iUnitArtStyle = NO_UNIT_ARTSTYLE;
+		iUnitArtStyle = GC.getPromotionInfo((PromotionTypes)pUnit->getRace()).getUnitArtStyleType();
+		if (iUnitArtStyle != NO_UNIT_ARTSTYLE)
+		{
+			setUnitArtStyleType(iUnitArtStyle);
+			bArtStyleFound = true;
+		}
+	}
+
+	if (!bArtStyleFound)
+	{
 		setUnitArtStyleType( GC.getCivilizationInfo( GET_PLAYER( pUnit->getOwnerINLINE() ).getCivilizationType() ).getUnitArtStyleType() );
+	}
+
 	reloadEntity();
 	// lfgr end
 
