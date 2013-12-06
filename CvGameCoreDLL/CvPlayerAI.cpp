@@ -2745,6 +2745,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 					}
 				}
 			}
+			/*
 			else if (!(pLoopPlot->isFreshWater()) && !(pLoopPlot->isHills()))
 			{
 
@@ -2761,6 +2762,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 					iBadTile++;
 				}
 			}
+			*/
             else if (pLoopPlot->isOwned())
             {
 				if (pLoopPlot->getTeam() != getTeam() || pLoopPlot->isBeingWorked())
