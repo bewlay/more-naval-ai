@@ -2338,10 +2338,10 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
-	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) ||
-		(kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER)) ||
-		bAggressiveAI ||
-		kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
+	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) || // units for expansion
+		kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER) || // Dagger strategy
+		bAggressiveAI || // Aggressive AI
+		(kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) && bWarPlan)) // Conquest strat plus warplan
 	{
 		//Building city hunting stack.
 
