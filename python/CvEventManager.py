@@ -93,83 +93,83 @@ class CvEventManager:
 
 		## EVENTLIST
 		self.EventHandlerMap = {
-			'mouseEvent'			: self.onMouseEvent,
-			'kbdEvent' 				: self.onKbdEvent,
-			'ModNetMessage'					: self.onModNetMessage,
-			'Init'					: self.onInit,
-			'Update'				: self.onUpdate,
-			'UnInit'				: self.onUnInit,
-			'OnSave'				: self.onSaveGame,
-			'OnPreSave'				: self.onPreSave,
-			'OnLoad'				: self.onLoadGame,
-			'GameStart'				: self.onGameStart,
-			'GameEnd'				: self.onGameEnd,
-			'plotRevealed' 			: self.onPlotRevealed,
-			'plotFeatureRemoved' 	: self.onPlotFeatureRemoved,
-			'plotPicked'			: self.onPlotPicked,
-			'nukeExplosion'			: self.onNukeExplosion,
-			'gotoPlotSet'			: self.onGotoPlotSet,
-			'BeginGameTurn'			: self.onBeginGameTurn,
-			'EndGameTurn'			: self.onEndGameTurn,
-			'BeginPlayerTurn'		: self.onBeginPlayerTurn,
-			'EndPlayerTurn'			: self.onEndPlayerTurn,
-			'endTurnReady'			: self.onEndTurnReady,
-			'combatResult'			: self.onCombatResult,
-			'combatLogCalc'			: self.onCombatLogCalc,
-			'combatLogHit'			: self.onCombatLogHit,
-			'improvementBuilt'		: self.onImprovementBuilt,
-			'improvementDestroyed'	: self.onImprovementDestroyed,
-			'routeBuilt'			: self.onRouteBuilt,
-			'firstContact'			: self.onFirstContact,
-			'cityBuilt'				: self.onCityBuilt,
-			'cityRazed'				: self.onCityRazed,
-			'cityAcquired' 			: self.onCityAcquired,
-			'cityAcquiredAndKept' 	: self.onCityAcquiredAndKept,
-			'cityLost'				: self.onCityLost,
-			'cultureExpansion' 		: self.onCultureExpansion,
-			'cityGrowth' 			: self.onCityGrowth,
-			'cityDoTurn' 			: self.onCityDoTurn,
-			'cityBuildingUnit'	: self.onCityBuildingUnit,
-			'cityBuildingBuilding'	: self.onCityBuildingBuilding,
-			'cityRename'				: self.onCityRename,
-			'cityHurry'				: self.onCityHurry,
-			'selectionGroupPushMission'		: self.onSelectionGroupPushMission,
-			'unitMove' 				: self.onUnitMove,
-			'unitSetXY' 			: self.onUnitSetXY,
-			'unitCreated' 			: self.onUnitCreated,
-			'unitBuilt' 			: self.onUnitBuilt,
-			'unitKilled'			: self.onUnitKilled,
-			'unitLost'				: self.onUnitLost,
-			'unitPromoted'			: self.onUnitPromoted,
-			'unitSelected'			: self.onUnitSelected,
-			'UnitRename'				: self.onUnitRename,
-			'unitPillage'				: self.onUnitPillage,
-			'unitSpreadReligionAttempt'	: self.onUnitSpreadReligionAttempt,
-			'unitGifted'				: self.onUnitGifted,
-			'unitBuildImprovement'				: self.onUnitBuildImprovement,
-			'goodyReceived'        	: self.onGoodyReceived,
-			'greatPersonBorn'      	: self.onGreatPersonBorn,
-			'buildingBuilt' 		: self.onBuildingBuilt,
-			'projectBuilt' 			: self.onProjectBuilt,
-			'techAcquired'			: self.onTechAcquired,
-			'techSelected'			: self.onTechSelected,
-			'religionFounded'		: self.onReligionFounded,
-			'religionSpread'		: self.onReligionSpread,
-			'religionRemove'		: self.onReligionRemove,
-			'corporationFounded'	: self.onCorporationFounded,
-			'corporationSpread'		: self.onCorporationSpread,
-			'corporationRemove'		: self.onCorporationRemove,
-			'goldenAge'				: self.onGoldenAge,
-			'endGoldenAge'			: self.onEndGoldenAge,
-			'chat' 					: self.onChat,
-			'victory'				: self.onVictory,
-			'vassalState'			: self.onVassalState,
-			'changeWar'				: self.onChangeWar,
-			'setPlayerAlive'		: self.onSetPlayerAlive,
-			'playerChangeStateReligion'		: self.onPlayerChangeStateReligion,
-			'playerGoldTrade'		: self.onPlayerGoldTrade,
-			'windowActivation'		: self.onWindowActivation,
-			'gameUpdate'			: self.onGameUpdate,		# sample generic event
+			'mouseEvent'			: CvEventManager.onMouseEvent.__get__(self,CvEventManager),
+			'kbdEvent' 				: CvEventManager.onKbdEvent.__get__(self,CvEventManager),
+			'ModNetMessage'					: CvEventManager.onModNetMessage.__get__(self,CvEventManager),
+			'Init'					: CvEventManager.onInit.__get__(self,CvEventManager),
+			'Update'				: CvEventManager.onUpdate.__get__(self,CvEventManager),
+			'UnInit'				: CvEventManager.onUnInit.__get__(self,CvEventManager),
+			'OnSave'				: CvEventManager.onSaveGame.__get__(self,CvEventManager),
+			'OnPreSave'				: CvEventManager.onPreSave.__get__(self,CvEventManager),
+			'OnLoad'				: CvEventManager.onLoadGame.__get__(self,CvEventManager),
+			'GameStart'				: CvEventManager.onGameStart.__get__(self,CvEventManager),
+			'GameEnd'				: CvEventManager.onGameEnd.__get__(self,CvEventManager),
+			'plotRevealed' 			: CvEventManager.onPlotRevealed.__get__(self,CvEventManager),
+			'plotFeatureRemoved' 	: CvEventManager.onPlotFeatureRemoved.__get__(self,CvEventManager),
+			'plotPicked'			: CvEventManager.onPlotPicked.__get__(self,CvEventManager),
+			'nukeExplosion'			: CvEventManager.onNukeExplosion.__get__(self,CvEventManager),
+			'gotoPlotSet'			: CvEventManager.onGotoPlotSet.__get__(self,CvEventManager),
+			'BeginGameTurn'			: CvEventManager.onBeginGameTurn.__get__(self,CvEventManager),
+			'EndGameTurn'			: CvEventManager.onEndGameTurn.__get__(self,CvEventManager),
+			'BeginPlayerTurn'		: CvEventManager.onBeginPlayerTurn.__get__(self,CvEventManager),
+			'EndPlayerTurn'			: CvEventManager.onEndPlayerTurn.__get__(self,CvEventManager),
+			'endTurnReady'			: CvEventManager.onEndTurnReady.__get__(self,CvEventManager),
+			'combatResult'			: CvEventManager.onCombatResult.__get__(self,CvEventManager),
+			'combatLogCalc'			: CvEventManager.onCombatLogCalc.__get__(self,CvEventManager),
+			'combatLogHit'			: CvEventManager.onCombatLogHit.__get__(self,CvEventManager),
+			'improvementBuilt'		: CvEventManager.onImprovementBuilt.__get__(self,CvEventManager),
+			'improvementDestroyed'	: CvEventManager.onImprovementDestroyed.__get__(self,CvEventManager),
+			'routeBuilt'			: CvEventManager.onRouteBuilt.__get__(self,CvEventManager),
+			'firstContact'			: CvEventManager.onFirstContact.__get__(self,CvEventManager),
+			'cityBuilt'				: CvEventManager.onCityBuilt.__get__(self,CvEventManager),
+			'cityRazed'				: CvEventManager.onCityRazed.__get__(self,CvEventManager),
+			'cityAcquired' 			: CvEventManager.onCityAcquired.__get__(self,CvEventManager),
+			'cityAcquiredAndKept' 	: CvEventManager.onCityAcquiredAndKept.__get__(self,CvEventManager),
+			'cityLost'				: CvEventManager.onCityLost.__get__(self,CvEventManager),
+			'cultureExpansion' 		: CvEventManager.onCultureExpansion.__get__(self,CvEventManager),
+			'cityGrowth' 			: CvEventManager.onCityGrowth.__get__(self,CvEventManager),
+			'cityDoTurn' 			: CvEventManager.onCityDoTurn.__get__(self,CvEventManager),
+			'cityBuildingUnit'	: CvEventManager.onCityBuildingUnit.__get__(self,CvEventManager),
+			'cityBuildingBuilding'	: CvEventManager.onCityBuildingBuilding.__get__(self,CvEventManager),
+			'cityRename'				: CvEventManager.onCityRename.__get__(self,CvEventManager),
+			'cityHurry'				: CvEventManager.onCityHurry.__get__(self,CvEventManager),
+			'selectionGroupPushMission'		: CvEventManager.onSelectionGroupPushMission.__get__(self,CvEventManager),
+			'unitMove' 				: CvEventManager.onUnitMove.__get__(self,CvEventManager),
+			'unitSetXY' 			: CvEventManager.onUnitSetXY.__get__(self,CvEventManager),
+			'unitCreated' 			: CvEventManager.onUnitCreated.__get__(self,CvEventManager),
+			'unitBuilt' 			: CvEventManager.onUnitBuilt.__get__(self,CvEventManager),
+			'unitKilled'			: CvEventManager.onUnitKilled.__get__(self,CvEventManager),
+			'unitLost'				: CvEventManager.onUnitLost.__get__(self,CvEventManager),
+			'unitPromoted'			: CvEventManager.onUnitPromoted.__get__(self,CvEventManager),
+			'unitSelected'			: CvEventManager.onUnitSelected.__get__(self,CvEventManager),
+			'UnitRename'				: CvEventManager.onUnitRename.__get__(self,CvEventManager),
+			'unitPillage'				: CvEventManager.onUnitPillage.__get__(self,CvEventManager),
+			'unitSpreadReligionAttempt'	: CvEventManager.onUnitSpreadReligionAttempt.__get__(self,CvEventManager),
+			'unitGifted'				: CvEventManager.onUnitGifted.__get__(self,CvEventManager),
+			'unitBuildImprovement'				: CvEventManager.onUnitBuildImprovement.__get__(self,CvEventManager),
+			'goodyReceived'        	: CvEventManager.onGoodyReceived.__get__(self,CvEventManager),
+			'greatPersonBorn'      	: CvEventManager.onGreatPersonBorn.__get__(self,CvEventManager),
+			'buildingBuilt' 		: CvEventManager.onBuildingBuilt.__get__(self,CvEventManager),
+			'projectBuilt' 			: CvEventManager.onProjectBuilt.__get__(self,CvEventManager),
+			'techAcquired'			: CvEventManager.onTechAcquired.__get__(self,CvEventManager),
+			'techSelected'			: CvEventManager.onTechSelected.__get__(self,CvEventManager),
+			'religionFounded'		: CvEventManager.onReligionFounded.__get__(self,CvEventManager),
+			'religionSpread'		: CvEventManager.onReligionSpread.__get__(self,CvEventManager),
+			'religionRemove'		: CvEventManager.onReligionRemove.__get__(self,CvEventManager),
+			'corporationFounded'	: CvEventManager.onCorporationFounded.__get__(self,CvEventManager),
+			'corporationSpread'		: CvEventManager.onCorporationSpread.__get__(self,CvEventManager),
+			'corporationRemove'		: CvEventManager.onCorporationRemove.__get__(self,CvEventManager),
+			'goldenAge'				: CvEventManager.onGoldenAge.__get__(self,CvEventManager),
+			'endGoldenAge'			: CvEventManager.onEndGoldenAge.__get__(self,CvEventManager),
+			'chat' 					: CvEventManager.onChat.__get__(self,CvEventManager),
+			'victory'				: CvEventManager.onVictory.__get__(self,CvEventManager),
+			'vassalState'			: CvEventManager.onVassalState.__get__(self,CvEventManager),
+			'changeWar'				: CvEventManager.onChangeWar.__get__(self,CvEventManager),
+			'setPlayerAlive'		: CvEventManager.onSetPlayerAlive.__get__(self,CvEventManager),
+			'playerChangeStateReligion'		: CvEventManager.onPlayerChangeStateReligion.__get__(self,CvEventManager),
+			'playerGoldTrade'		: CvEventManager.onPlayerGoldTrade.__get__(self,CvEventManager),
+			'windowActivation'		: CvEventManager.onWindowActivation.__get__(self,CvEventManager),
+			'gameUpdate'			: CvEventManager.onGameUpdate.__get__(self,CvEventManager),		# sample generic event
 		}
 
 		################## Events List ###############################
@@ -280,13 +280,13 @@ class CvEventManager:
 				# Shift - T (Debug - No MP)
 				if (theKey == int(InputTypes.KB_T)):
 					if ( self.bShift ):
-						self.beginEvent(CvUtil.EventAwardTechsAndGold)
+						CvEventManager.beginEvent(self,CvUtil.EventAwardTechsAndGold)
 						#self.beginEvent(CvUtil.EventCameraControlPopup)
 						return 1
 
 				elif (theKey == int(InputTypes.KB_W)):
 					if ( self.bShift and self.bCtrl):
-						self.beginEvent(CvUtil.EventShowWonder)
+						CvEventManager.beginEvent(self,CvUtil.EventShowWonder)
 						return 1
 
 				# Shift - ] (Debug - currently mouse-overd unit, health += 10
@@ -2599,12 +2599,12 @@ class CvEventManager:
 			if ( eventType == self.EventLButtonDown ):
 				if (self.bAllowCheats and self.bCtrl and self.bAlt and CyMap().plot(px,py).isCity() and not interfaceConsumed):
 					# Launch Edit City Event
-					self.beginEvent( CvUtil.EventEditCity, (px,py) )
+					CvEventManager.beginEvent(self, CvUtil.EventEditCity, (px,py) )
 					return 1
 
 				elif (self.bAllowCheats and self.bCtrl and self.bShift and not interfaceConsumed):
 					# Launch Place Object Event
-					self.beginEvent( CvUtil.EventPlaceObject, (px, py) )
+					CvEventManager.beginEvent(self, CvUtil.EventPlaceObject, (px, py) )
 					return 1
 
 		if ( eventType == self.EventBack ):
