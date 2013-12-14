@@ -3735,6 +3735,11 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
             szTempBuffer.Format(L"BigEspionage, ");
             szBuffer.append(szTempBuffer);
         }
+		if (kPlayer.AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS)) // K-Mod
+		{
+			szTempBuffer.Format(L"EconomyFocus, ");
+			szBuffer.append(szTempBuffer);
+		}
 
 		szBuffer.append(NEWLINE);
 		szTempBuffer.Format(L"Vic Strats: ");

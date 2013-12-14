@@ -2648,7 +2648,12 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 							{
 								szTempBuffer.Format(L"BigEspionage, ");
 								szString.append(szTempBuffer);
-							}	
+							}
+							if (GET_PLAYER(pHeadGroup->getOwner()).AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS)) // K-Mod
+							{
+								szTempBuffer.Format(L"EconomyFocus, ");
+								szString.append(szTempBuffer);
+							}
 
 							//Area battle plans.
 							if (pPlot->area()->getAreaAIType(pHeadGroup->getTeam()) == AREAAI_OFFENSIVE)
@@ -5881,6 +5886,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
                 szTempBuffer.Format(L"BigEspionage, ");
                 szString.append(szTempBuffer);
             }
+			if (GET_PLAYER(pPlot->getOwner()).AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS)) // K-Mod
+			{
+				szTempBuffer.Format(L"EconomyFocus, ");
+				szString.append(szTempBuffer);
+			}
                        
             //Area battle plans.
             if (pPlot->area()->getAreaAIType(pPlot->getTeam()) == AREAAI_OFFENSIVE)

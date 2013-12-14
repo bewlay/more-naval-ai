@@ -4970,6 +4970,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	int iNumMages = (getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_ADEPT")) + 
 						getUnitClassCountPlusMaking((UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_MAGE")));
 	int iCityCount = AI_getNumRealCities();
+	bool bIsEconomicFocus = AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS);
 
 
 	if (iPathLength < 0)
@@ -5411,9 +5412,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							//iTempValue /= 2;
 						}
 
-						if (bFinancialTrouble)
+						if (bFinancialTrouble || bIsEconomicFocus)
 						{
-							iTempValue *= 2;
+							iTempValue *= 5;
 						}
 					}
 
@@ -6533,6 +6534,8 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 	bEnablesWonder = false;
 	int iExistingCultureBuildingCount = 0;
 	bool bIsCultureBuilding = false;
+	
+	bool bIsEconomicFocus = AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS);
 
 	// setting trait variables
 	// ToDo: Use this to gather other info about traits that might affect what buildings we like to build
@@ -6668,8 +6671,8 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				}
 
 				// buildings that give free commerce are good for almost any city - added check to make sure we don't overvalue Wonders which can only be built once
-				iBuildingValue += (kLoopBuilding.getCommerceChange(COMMERCE_RESEARCH) * (150 * (bIsLimitedWonder ? 1 : iCityCount)));
-				iBuildingValue += (kLoopBuilding.getCommerceChange(COMMERCE_GOLD) * ((bFinancialTrouble ? 500 : 200) * (bIsLimitedWonder ? 1 : iCityCount)));
+				iBuildingValue += (kLoopBuilding.getCommerceChange(COMMERCE_RESEARCH) * ((bIsEconomicFocus ? 250 : 150) * (bIsLimitedWonder ? 1 : iCityCount)));
+				iBuildingValue += (kLoopBuilding.getCommerceChange(COMMERCE_GOLD) * (((bFinancialTrouble || bIsEconomicFocus) ? 500 : 200) * (bIsLimitedWonder ? 1 : iCityCount)));
 				iBuildingValue += (kLoopBuilding.getHappiness() * 300);
 
 				iBuildingValue += ((kLoopBuilding.getGlobalFreeExperience() * (bWarPlan ? 10 : 5)) * iCityCount);
@@ -7689,7 +7692,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					
 					if( iMilitaryValue > 0 )
 					{
-						if (iHasMetCount == 0 || !bWarPlan)
+						if (iHasMetCount == 0 || AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
 						{
 							iMilitaryValue /= 2;
 						}
@@ -15268,8 +15271,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		int iProductionShareUnits = GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb();
 		if (bWarPlan)
 			iProductionShareUnits = (100 + iProductionShareUnits)/2;
-//		else if (AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
-//			iProductionShareUnits /= 2;
+		else if (AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
+			iProductionShareUnits /= 2;
 
 		int iProductionShareBuildings = 100 - iProductionShareUnits;
 
@@ -23250,7 +23253,8 @@ int CvPlayerAI::AI_getStrategyHash() const
 			logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
 		}
 	}
-	
+
+
 	// BBAI TODO: Integrate Dagger with new conquest victory strategy, have Dagger focus on early rushes
     //dagger
 	if( !(AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)) 
@@ -23796,6 +23800,48 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 		m_iStrategyHash &= ~AI_STRATEGY_OWABWNW;
 		m_iStrategyHash &= ~AI_STRATEGY_FASTMOVERS;
+	}
+	// Economic focus (K-Mod) - This strategy is a gambit. The goal is to tech faster by neglecting military.
+	if (kTeam.getAnyWarPlanCount(true) == 0)
+	{
+		int iFocus = (100 - iParanoia) / 20;
+		//iFocus += std::max(iAverageEnemyUnit - std::max(iTypicalAttack, iTypicalDefence), std::min(iTypicalAttack, iTypicalDefence) - iAverageEnemyUnit) / 12;
+		//Note: if we haven't met anyone then average enemy is zero. So this essentially assures economic strategy when in isolation.
+		//iFocus += (AI_getPeaceWeight() + AI_getStrategyRand(2)%10)/3; // note: peace weight will be between 0 and 12
+		iFocus += AI_getPeaceWeight();
+		if (iMetCount == 0)
+		{
+			iFocus += 10;
+		}
+		if (iFocus >= 12)
+		{
+			m_iStrategyHash |= AI_STRATEGY_ECONOMY_FOCUS;
+		}
+		else if (!(m_iStrategyHash & AI_STRATEGY_DAGGER) &&
+			!(m_iStrategyHash & AI_STRATEGY_CRUSH) &&
+			!(m_iStrategyHash & AI_STRATEGY_ALERT1) &&
+			!(m_iStrategyHash & AI_STRATEGY_ALERT2) &&
+			!(m_iStrategyHash & AI_STRATEGY_TURTLE) &&
+			!(m_iStrategyHash & AI_STRATEGY_FINAL_WAR) &&
+			!(m_iStrategyHash & AI_STRATEGY_LAST_STAND) &&
+			!(m_iStrategyHash & AI_STRATEGY_PRODUCTION))
+		{
+			m_iStrategyHash |= AI_STRATEGY_ECONOMY_FOCUS;
+			logBBAI("   starting AI_STRATEGY_ECONOMY_FOCUS due to no conflicting other strategies");
+		}
+
+		if( gPlayerLogLevel >= 2 )
+		{
+			if( (m_iStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) && !(iLastStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) )
+			{
+				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iFocus);
+			}
+
+			if( !(m_iStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) && (iLastStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) )
+			{
+				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iFocus);
+			}
+		}
 	}
 
 	return m_iStrategyHash;   

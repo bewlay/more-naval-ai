@@ -1125,6 +1125,7 @@ void CvCityAI::AI_chooseProduction()
 	int iWaterPercent = AI_calculateWaterWorldPercent();
 	
 	int iBuildUnitProb = AI_buildUnitProb();
+	iBuildUnitProb /= kPlayer.AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS) ? 2 : 1; // K-Mod
     
     int iExistingWorkers = kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_WORKER);
     int iNeededWorkers = kPlayer.AI_neededWorkers(pArea);
@@ -8074,6 +8075,12 @@ void CvCityAI::AI_getYieldMultipliers( int &iFoodMultiplier, int &iProductionMul
 		iCommerceMultiplier -= 10;
 	}
 
+	if (kPlayer.AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
+	{
+		iProductionMultiplier -= 10;
+		iCommerceMultiplier += 20;
+	}
+		
 	if (iFoodMultiplier < 100)
 	{
 		iFoodMultiplier = 10000 / (200 - iFoodMultiplier);
@@ -13347,6 +13354,36 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 		CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 		AreaAITypes eAreaAIType = area()->getAreaAIType(getTeam());
 
+		// K-Mod. special strategy / personality adjustments
+		if (kPlayer.AI_isDoStrategy(AI_STRATEGY_PRODUCTION))
+		{
+			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 20;
+			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 20;
+		}
+		else if (findBaseYieldRateRank(YIELD_PRODUCTION) <= kPlayer.getNumCities()/3 && findBaseYieldRateRank(YIELD_PRODUCTION) < findBaseYieldRateRank(YIELD_COMMERCE))
+		{
+			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 10;
+			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 10;
+		}
+
+		/*
+		if (kPlayer.AI_getFlavorValue(AI_FLAVOR_PRODUCTION) > 0)
+		{
+			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 5 + 2*kPlayer.AI_getFlavorValue(AI_FLAVOR_PRODUCTION);
+		}
+		*/
+
+		if (kPlayer.AI_isDoStrategy(AI_STRATEGY_ECONOMY_FOCUS))
+		{
+			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] -= 10;
+			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] += 20;
+		}
+		else if (kPlayer.AI_isDoVictoryStrategy(AI_STRATEGY_GET_BETTER_UNITS)) // doesn't stack with ec focus.
+		{
+			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] += 20;
+		}
+		// K-Mod end
+		
 		if ((kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER) && getPopulation() >= 4)
 			|| (eAreaAIType == AREAAI_OFFENSIVE) || (eAreaAIType == AREAAI_DEFENSIVE)
 			|| (eAreaAIType == AREAAI_MASSING) || (eAreaAIType == AREAAI_ASSAULT))
