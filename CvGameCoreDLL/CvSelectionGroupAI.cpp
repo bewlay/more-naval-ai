@@ -652,19 +652,30 @@ int CvSelectionGroupAI::AI_sumStrength(const CvPlot* pAttackedPlot, DomainTypes 
 			{
 				strSum += pLoopUnit->currEffectiveStr(pAttackedPlot, pLoopUnit);
 				// K-Mod estimate the attack power of collateral units. (cf with calculation in AI_localAttackStrength)
-				if (bCountCollateral && pLoopUnit->collateralDamage() > 0)
+				if (bCountCollateral)
 				{
-					int iPossibleTargets = pLoopUnit->collateralDamageMaxUnits();
-					// If !bCheckCanAttack, then lets not assume pAttackPlot won't get more units on it.
-					if (bCheckCanAttack && pAttackedPlot->isVisible(getTeam(), false))
-						iPossibleTargets = std::min(iPossibleTargets, pAttackedPlot->getNumVisibleEnemyDefenders(pLoopUnit) - 1);
-
-					if (iPossibleTargets > 0)
+					if (pLoopUnit->collateralDamage() > 0)
 					{
-						// collateral damage is not trivial to calculate. This estimate is pretty rough.
-						// (Note: collateralDamage() and iBaseCollateral both include factors of 100.)
-						strSum += pLoopUnit->baseCombatStr() * pLoopUnit->collateralDamage() * iPossibleTargets / 1000;
+						int iPossibleTargets = pLoopUnit->collateralDamageMaxUnits();
+						// If !bCheckCanAttack, then lets not assume pAttackPlot won't get more units on it.
+						if (bCheckCanAttack && pAttackedPlot->isVisible(getTeam(), false))
+							iPossibleTargets = std::min(iPossibleTargets, pAttackedPlot->getNumVisibleEnemyDefenders(pLoopUnit) - 1);
+
+						if (iPossibleTargets > 0)
+						{
+							// collateral damage is not trivial to calculate. This estimate is pretty rough.
+							// (Note: collateralDamage() and iBaseCollateral both include factors of 100.)
+							strSum += pLoopUnit->baseCombatStr() * pLoopUnit->collateralDamage() * iPossibleTargets / 1000;
+						}
 					}
+
+					// Tholal Note: note - some units 'explode' but dont deal damage (do this properly with XML tags)
+					/* - setting this up for future use when new tags implemented
+					if (GC.getUnitInfo(pLoopUnit->getUnitType()).isExplodeInCombat())
+					{
+						strSum += (pAttackedPlot->getNumDefenders(pAttackedPlot->getOwner()) * 20);
+					}
+					*/
 				}
 				// K-Mod end
 			}

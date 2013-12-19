@@ -5108,7 +5108,7 @@ void CvUnitAI::AI_cityDefenseMove()
 	// Super Forts begin *AI_defense*
 	if (AI_guardFortMinDefender(true))
 	{
-		logBBAI("Unit guard fort min defender 1: %S (%d) [%d, %d]\n", getName().GetCString(), getID(), getX_INLINE(), getY_INLINE());
+		logBBAI("    Unit %d (%S) guard fort at [%d, %d] (MinDefender pass 1) \n", getID(), getName().GetCString(), getX_INLINE(), getY_INLINE());
 		return;
 	}
 	// Super Forts end
@@ -5341,7 +5341,7 @@ void CvUnitAI::AI_cityDefenseExtraMove()
 	// Super Forts begin *AI_defense*
 	if (AI_guardFortMinDefender(true))
 	{
-		logBBAI("Unit guard fort min defender 2: %S (%d) [%d, %d]\n", getName().GetCString(), getID(), getX_INLINE(), getY_INLINE());
+		logBBAI("    Unit %d (%S) guard fort at [%d, %d] (MinDefender pass 2) \n", getID(), getName().GetCString(), getX_INLINE(), getY_INLINE());
 		return;
 	}
 
@@ -16661,6 +16661,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	iBestValue = 0;
 	pBestCity = NULL;
 
+	if( gUnitLogLevel > 3 )
+	{
+		logBBAI("    Starting Pick Target City:");
+	}
+
 	pTargetCity = area()->getTargetCity(getOwnerINLINE());
 
 	// Don't always go after area target ... don't know how far away it is
@@ -16728,6 +16733,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											iValue = kOwner.AI_targetCityValue(pLoopCity, true, true);
 										}
 
+										if( gUnitLogLevel > 3 )
+										{
+											logBBAI("     ...valuing city %S (initial value: %d)", pLoopCity->getName().GetCString(), iValue);
+										}
+
 										if( pLoopCity == pTargetCity )
 										{
 											iValue *= 2;
@@ -16783,6 +16793,10 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 											if (getGroup()->getNumUnits() < (iModifier * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
 											{
+												if( gUnitLogLevel > 3 )
+												{
+													logBBAI("     ...zeroing out city value (modifier %d - groupsize %d)", iModifier, iGroupSize);
+												}
 												iValue = 0;
 											}
 										}
@@ -16806,7 +16820,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 	{
 		if( gUnitLogLevel >= 2 )
 		{
-			logBBAI("      ...targeting city %S (value: %d) \n", pBestCity->getName().GetCString(), iBestValue);
+			logBBAI("      ...targeting city %S (final value: %d) \n", pBestCity->getName().GetCString(), iBestValue);
 		}
 	}
 
@@ -18677,6 +18691,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 {
 	PROFILE_FUNC();
 
+	logBBAI("    ...starting assaultSeaTransport");
 	bool bIsAttackCity = (getUnitAICargo(UNITAI_ATTACK_CITY) > 0);
 
 	FAssert(getGroup()->hasCargo());
@@ -18951,11 +18966,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 	{
 		FAssert(!(pBestPlot->isImpassable()));
 
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      02/11/10                                jdog5000      */
-/*                                                                                              */
-/* War tactics AI                                                                               */
-/************************************************************************************************/
+		// BETTER_BTS_AI_MOD - War tactics AI
 		// Cancel missions of all those coming to join departing transport
 		CvSelectionGroup* pLoopGroup = NULL;
 		int iLoop = 0;
@@ -18976,50 +18987,37 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 				}
 			}
 		}
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+		// BETTER_BTS_AI_MOD END
 
 		//if ((pBestPlot == pBestAssaultPlot) || (stepDistance(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE()) == 1))
 		if (stepDistance(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE()) == 1)
 		{
 			if (atPlot(pBestAssaultPlot))
 			{
+				logBBAI("    ...unloading at %d, %d", pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE());
 				getGroup()->unloadAll(); // XXX is this dangerous (not pushing a mission...) XXX air units?
 				return true;
 			}
 			else
 			{
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      01/01/09                                jdog5000      */
-/*                                                                                              */
-/* War tactics AI                                                                               */
-/************************************************************************************************/
-/* original bts code
+				// BETTER_BTS_AI_MOD - War tactics AI
+				/* original bts code
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
-*/
+				*/
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+				// BETTER_BTS_AI_MOD END
 				return true;
 			}
 		}
 		else
 		{
 			FAssert(!atPlot(pBestPlot));
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      01/01/09                                jdog5000      */
-/*                                                                                              */
-/* War tactics AI                                                                               */
-/************************************************************************************************/
-/* original bts code
+			// BETTER_BTS_AI_MOD - War tactics AI
+			/* original bts code
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
-*/
+			*/
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+			// BETTER_BTS_AI_MOD END
 			return true;
 		}
 	}
@@ -24788,6 +24786,7 @@ bool CvUnitAI::AI_moveToStagingCity()
 		else
 		{
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+			logBBAI("     ...moving to Staging City %S at %d, %d", pBestPlot->getPlotCity()->getName().GetCString(), pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 			return true;
 		}
 	}

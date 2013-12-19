@@ -9565,7 +9565,7 @@ void CvCityAI::AI_doHurry(bool bForce)
 				{
 						if( gCityLogLevel >= 2 )
 						{
-							logBBAI("      City %S hurry to complete Victory building", getName().GetCString() );
+							logBBAI("    City %S hurries a Victory building!", getName().GetCString() );
 						}
 
 						hurry((HurryTypes)iI);
