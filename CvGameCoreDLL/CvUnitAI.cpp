@@ -8285,7 +8285,7 @@ void CvUnitAI::AI_assaultSeaMove()
 		}
 		else
 		{
-			if ( (eAreaAIType == AREAAI_ASSAULT) )
+			if ( (eAreaAIType == AREAAI_ASSAULT) || (getGroup()->AI_getMissionAIType() == MISSIONAI_ASSAULT))
 			{
 				if( iCargo >= iTargetInvasionSize )
 				{
@@ -8395,13 +8395,21 @@ void CvUnitAI::AI_assaultSeaMove()
 				if( iCargo > 0 )
 				{
 					CvCity* pAdjacentCity = pAdjacentPlot->getPlotCity();
-					if( pAdjacentCity != NULL && pAdjacentCity->getOwner() == getOwnerINLINE() && pAdjacentCity->getPreviousOwner() != NO_PLAYER )
+					if( pAdjacentCity != NULL)
 					{
-						if( (GC.getGameINLINE().getGameTurn() - pAdjacentCity->getGameTurnAcquired()) < 5 )
+						if ( GET_TEAM(getTeam()).AI_getWarPlan(pAdjacentPlot->getTeam()) != NO_WARPLAN)
 						{
-							// If just captured city and we have some cargo, dump units in city
-							getGroup()->pushMission(MISSION_MOVE_TO, pAdjacentPlot->getX_INLINE(), pAdjacentPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pAdjacentPlot);
-							return;
+							bAttack = true;
+						}
+						
+						if (pAdjacentCity->getOwner() == getOwnerINLINE() && pAdjacentCity->getPreviousOwner() != NO_PLAYER )
+						{
+							if( (GC.getGameINLINE().getGameTurn() - pAdjacentCity->getGameTurnAcquired()) < 5 )
+							{
+								// If just captured city and we have some cargo, dump units in city
+								getGroup()->pushMission(MISSION_MOVE_TO, pAdjacentPlot->getX_INLINE(), pAdjacentPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pAdjacentPlot);
+								return;
+							}
 						}
 					}
 				}
@@ -16695,7 +16703,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 					//if (pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam()))
 					if (kOwner.AI_deduceCitySite(pLoopCity))
 					{
-						if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()))
+						if (AI_plotValid(pLoopCity->plot()) && (pLoopCity->area() == area()) || (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL")))
 						{
 							if (AI_potentialEnemy(GET_PLAYER((PlayerTypes)iI).getTeam(), pLoopCity->plot()))
 							{
@@ -16724,7 +16732,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 										}
 
 										iValue = 0;
-										if (AI_getUnitAIType() == UNITAI_ATTACK_CITY) //lemming?
+										if (AI_getUnitAIType() == (UNITAI_ATTACK_CITY | UNITAI_ASSAULT_SEA)) //lemming?
 										{
 											iValue = kOwner.AI_targetCityValue(pLoopCity, false, false);
 										}
@@ -16738,7 +16746,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											logBBAI("     ...valuing city %S (initial value: %d)", pLoopCity->getName().GetCString(), iValue);
 										}
 
-										if( pLoopCity == pTargetCity )
+										if( pLoopCity == pTargetCity)
 										{
 											iValue *= 2;
 										}
@@ -16769,6 +16777,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											}
 										}
 
+										if (!(pLoopCity->isRevealed(getTeam(), false) || pLoopCity->plot()->isAdjacentRevealed(getTeam())))
+										{
+											iValue /= 4;
+										}
+
 										// If stack has poor bombard, direct towards lower defense cities
 										iPathTurns += std::min(12, getGroup()->getBombardTurns(pLoopCity)/4);
 
@@ -16791,7 +16804,17 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 												iModifier *= 2;
 											}
 
-											if (getGroup()->getNumUnits() < (iModifier * (pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) +1)))
+											int iGroupSize = 0;
+											if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_NAVAL"))
+											{
+												iGroupSize = getGroup()->getCargo();
+											}
+											else
+											{
+												iGroupSize = getGroup()->getNumUnits();
+											}
+
+											if (iGroupSize < (iModifier * pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner())))
 											{
 												if( gUnitLogLevel > 3 )
 												{
@@ -16858,7 +16881,7 @@ bool CvUnitAI::AI_goToTargetCity(int iFlags, int iMaxPathTurns, CvCity* pTargetC
 
 				if (pAdjacentPlot != NULL)
 				{
-					if (getGroup()->canMoveThrough(pAdjacentPlot))
+					if (getGroup()->canMoveThrough(pAdjacentPlot) && (pAdjacentPlot->isRevealed(getTeam(), false) || pAdjacentPlot->isAdjacentRevealed(getTeam())))
 					{
 						if (AI_plotValid(pAdjacentPlot))
 						{
@@ -18704,7 +18727,14 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 
 	if (getGroup()->AI_getMissionAIType() == MISSIONAI_ASSAULT)
 	{
-		getGroup()->pushMission(MISSION_MOVE_TO, getGroup()->AI_getMissionAIPlot()->getX(), getGroup()->AI_getMissionAIPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
+		if (getPathEndTurnPlot() != NULL)
+		{
+			getGroup()->pushMission(MISSION_MOVE_TO, getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
+		}
+		else
+		{
+			getGroup()->pushMission(MISSION_MOVE_TO, getGroup()->AI_getMissionAIPlot()->getX(), getGroup()->AI_getMissionAIPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
+		}
 		return true;
 	}
 
@@ -18730,7 +18760,8 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-		if (pLoopPlot->isCoastalLand())
+		//if (pLoopPlot->isCoastalLand())
+		if (pLoopPlot->isRevealed(getTeam(), false) && pLoopPlot->isCoastalLand()) // K-Mod
 		{
 			if (pLoopPlot->isOwned())
 			{
@@ -24769,7 +24800,8 @@ bool CvUnitAI::AI_moveToStagingCity()
 					if (iValue > iBestValue)
 					{
 						iBestValue = iValue;
-						pBestPlot = getPathEndTurnPlot();
+						//pBestPlot = getPathEndTurnPlot();
+						pBestPlot = pLoopCity->plot();
 					}
 				}
 			}
@@ -27932,10 +27964,14 @@ void CvUnitAI::AI_ConquestMove()
 				iRange = 10;
 			}
 
-			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, iRange, false, true, false))
+			if (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP) == 0)
 			{
-				return;
+				if (AI_groupMergeRange(UNITAI_ATTACK_CITY, iRange, false, true, false))
+				{
+					return;
+				}
 			}
+
 			if (AI_moveToStagingCity())
 			{
 				return;
@@ -27981,53 +28017,54 @@ void CvUnitAI::AI_ConquestMove()
 
         if (getGroup()->getNumUnits() == 1)
         {
-            for(pLoopSelectionGroup = kPlayer.firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = kPlayer.nextSelectionGroup(&iLoop))
-            {
-                if (pLoopSelectionGroup->getHeadUnit() != NULL)
-                {
-                    if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST)
-                    {
-						if (pLoopSelectionGroup != getGroup() && !pLoopSelectionGroup->getHeadUnit()->isCargo())
-                        {
-                            pLoopPlot = pLoopSelectionGroup->getHeadUnit()->plot();
-                            if (AI_plotValid(pLoopPlot))
-                            {
-                                if (!isEnemy(pLoopPlot->getTeam()))
-                                {
-                                    if (AI_allowGroup(pLoopSelectionGroup->getHeadUnit(), UNITAI_UNKNOWN))
-                                    {
-                                        if (!(pLoopPlot->isVisibleEnemyUnit(this)))
-                                        {
-											if (atPlot(pLoopPlot))
+			if (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP) == 0)
+			{
+				for(pLoopSelectionGroup = kPlayer.firstSelectionGroup(&iLoop); pLoopSelectionGroup != NULL; pLoopSelectionGroup = kPlayer.nextSelectionGroup(&iLoop))
+				{
+					if (pLoopSelectionGroup->getHeadUnit() != NULL)
+					{
+						if (pLoopSelectionGroup->getHeadUnit()->AI_getGroupflag() == GROUPFLAG_CONQUEST)
+						{
+							if (pLoopSelectionGroup != getGroup() && !pLoopSelectionGroup->getHeadUnit()->isCargo())
+							{
+								pLoopPlot = pLoopSelectionGroup->getHeadUnit()->plot();
+								if (AI_plotValid(pLoopPlot))
+								{
+									if (!isEnemy(pLoopPlot->getTeam()))
+									{
+										if (AI_allowGroup(pLoopSelectionGroup->getHeadUnit(), UNITAI_UNKNOWN))
+										{
+											if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 											{
-												iValue = 10;
-											}
-											else
-											{
-												if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+												iValue = 10 * pLoopSelectionGroup->getHeadUnit()->getLevel();
+												iValue += pLoopSelectionGroup->getNumUnits();
+												if (pLoopSelectionGroup->getHeadUnit()->AI_getUnitAIType() == UNITAI_HERO)
 												{
-													iValue = pLoopSelectionGroup->getNumUnits();
-													iValue /= (iPathTurns + 1);
+													iValue *= 2;
+												}
 
-													// Tholal AI - trying to give the AI some sense of when a group is too big - obsolete?
-													/*
-													if (pLoopSelectionGroup->getNumUnits() > (kPlayer.getNumCities() * 8))
+												if (atPlot(pLoopPlot))
+												{
+													iValue *= 2;
+												}
+												else
+												{
+													if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 													{
-														iValue = 0;
+														iValue /= (iPathTurns + 1);
 													}
-													*/
+												}
+
+												if (iValue > iBestValue)
+												{
+													iBestValue = iValue;
+													pBestUnit = pLoopSelectionGroup->getHeadUnit();
 												}
 											}
-
-											if (iValue > iBestValue)
-											{
-												iBestValue = iValue;
-												pBestUnit = pLoopSelectionGroup->getHeadUnit();
-											}
-                                        }
-                                    }
-                                }
-                            }
+										}
+									}
+								}
+							}
                         }
                     }
                 }
@@ -28048,7 +28085,8 @@ void CvUnitAI::AI_ConquestMove()
                 }
                 else
                 {
-					getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
+					//getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
+					getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
                     return;
                 }
             }
@@ -28112,7 +28150,8 @@ void CvUnitAI::AI_ConquestMove()
                 }
                 else
                 {
-					getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
+					//getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
+					getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
                     return;
                 }
 			}
@@ -28308,73 +28347,96 @@ void CvUnitAI::AI_ConquestMove()
 					}
 				}
 			}
+		}
 
-			if( iComparePostBombard < iAttackRatio)
+		if( iComparePostBombard < iAttackRatio)
+		{
+			// If not strong enough, pillage around target city without exposing ourselves
+			if( AI_pillageRange(0) )
 			{
-				// If not strong enough, pillage around target city without exposing ourselves
-				if( AI_pillageRange(0) )
-				{
-					logBBAI("      ...pillaging");
-					return;
-				}
-								
-				if( AI_anyAttack(1, 60, 0, false) )
-				{
-					logBBAI("      ...AI_anyttack");
-					return;
-				}
-
-				if (AI_heal(30, 1))
-				{
-					logBBAI("      ...healing");
-					return;
-				}
-
-				// Pillage around enemy city
-				if( AI_pillageAroundCity(pTargetCity, 11, 3) )
-				{
-					logBBAI("      ...pillage around city 1\n");
-					return;
-				}
-
-				if( AI_pillageAroundCity(pTargetCity, 0, 5) )
-				{
-					logBBAI("      ...pillage around city 2\n");
-					return;
-				}
-
-				if( AI_choke(1) )
-				{
-					if( gUnitLogLevel >= 3 )
-					{
-						logBBAI("      ...choking %S ", pTargetCity->getName().GetCString());
-					}
-
-					return;
-				}
+				logBBAI("      ...pillaging");
+				return;
 			}
-			else
+							
+			if( AI_anyAttack(1, 60, 0, false) )
 			{
-				if( AI_goToTargetCity(0,4,pTargetCity) )
+				logBBAI("      ...AI_anyttack");
+				return;
+			}
+
+			if (AI_heal(30, 1))
+			{
+				logBBAI("      ...healing");
+				return;
+			}
+
+			// Pillage around enemy city
+			if( AI_pillageAroundCity(pTargetCity, 11, 3) )
+			{
+				logBBAI("      ...pillage around city 1\n");
+				return;
+			}
+
+			if( AI_pillageAroundCity(pTargetCity, 0, 5) )
+			{
+				logBBAI("      ...pillage around city 2\n");
+				return;
+			}
+
+			if( AI_choke(1) )
+			{
+				if( gUnitLogLevel >= 3 )
 				{
-					logBBAI("      ...moving to target city (%S)", pTargetCity->getName().GetCString());
+					logBBAI("      ...choking %S ", pTargetCity->getName().GetCString());
+				}
+
+				return;
+			}
+
+			if (!pTargetCity->isVisible(getTeam(),false))
+			{
+				if (AI_goToTargetCity(0, 10, pTargetCity))
+				{
+					logBBAI("      ...moving to scout target city (%S)", pTargetCity->getName().GetCString());
 					return;
 				}
 			}
 		}
-		
+		else
+		{
+			if( AI_goToTargetCity(0,6,pTargetCity) )
+			{
+				logBBAI("      ...moving to target city (%S)", pTargetCity->getName().GetCString());
+				return;
+			}
+		}
+				
 		// Tholal Note - seems that sometimes we have to force the AI to attack their targets
 		// Note: This section can cause the AI to declare War before stack is near borders
 		//if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
 		if (iComparePostBombard >= 120)
 		{
-			if( AI_goToTargetCity(MOVE_THROUGH_ENEMY, 10 ,pTargetCity) )
+			if (GET_TEAM(getTeam()).isAtWar(pTargetCity->getTeam()) || plot()->isAdjacentPlayer(pTargetCity->getOwner()))
 			{
-				if( gUnitLogLevel >= 3 )
+				if( AI_goToTargetCity(MOVE_THROUGH_ENEMY, 10 ,pTargetCity) )
 				{
-					logBBAI("      ...moving to attack %S", pTargetCity->getName().GetCString());
+					if( gUnitLogLevel >= 3 )
+					{
+						logBBAI("      ...moving to direct attack %S", pTargetCity->getName().GetCString());
+					}
+					return;
 				}
-				return;
+			}
+			else
+			{
+				if( AI_goToTargetCity(0, 10 ,pTargetCity) )
+				{
+					if( gUnitLogLevel >= 3 )
+					{
+						logBBAI("      ...moving to attack %S", pTargetCity->getName().GetCString());
+					}
+					return;
+				}
 			}
 		}
 	}
@@ -28630,7 +28692,7 @@ void CvUnitAI::AI_ConquestMove()
 						{
 							iNeedUpgradeCount++;
 
-							if( (3 * iNeedUpgradeCount) > getGroup()->getNumUnits()) // was 8
+							if( (2 * iNeedUpgradeCount) > getGroup()->getNumUnits()) // was 8
 							{
 								if (getGroup()->getNumUnits() < (kPlayer.getNumCities() * 8))
 								{
