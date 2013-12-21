@@ -23257,9 +23257,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	// BBAI TODO: Integrate Dagger with new conquest victory strategy, have Dagger focus on early rushes
     //dagger
-	if( !(AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)) 
-	 && !(m_iStrategyHash & AI_STRATEGY_MISSIONARY)
-     && (iCurrentEra <= (2+(iNonsense%2))) && (iCloseTargets > 0) )
+	if( !(AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2)) && 
+		!(AI_isDoVictoryStrategy(AI_VICTORY_ALTAR3)) &&
+		!(AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY3)) &&
+		!(m_iStrategyHash & AI_STRATEGY_MISSIONARY) &&
+		(iCurrentEra <= (2+(iNonsense%2))) && (iCloseTargets > 0) )
     {	    
 	    int iDagger = 0;
 	    iDagger += 12000 / std::max(100, (50 + GC.getLeaderHeadInfo(getPersonalityType()).getMaxWarRand()));
@@ -23378,7 +23380,11 @@ int CvPlayerAI::AI_getStrategyHash() const
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
-        
+        if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2) || AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
+		{
+			iDagger -= 50;
+		}
+
         if (iDagger >= AI_DAGGER_THRESHOLD)
         {
             m_iStrategyHash |= AI_STRATEGY_DAGGER;            
