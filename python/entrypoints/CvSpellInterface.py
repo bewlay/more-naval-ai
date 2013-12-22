@@ -1985,13 +1985,13 @@ def spellPillarofFire(caster):
 			pUnit.doDamage(50, 75, caster, gc.getInfoTypeForString('DAMAGE_FIRE'), True)
 		if (pBestPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST') or pBestPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_JUNGLE')):
 			bValid = True
-			iImprovement = pPlot.getImprovementType()
+			iImprovement = pBestPlot.getImprovementType()
 			if iImprovement != -1 :
 				if gc.getImprovementInfo(iImprovement).isPermanent():
 					bValid = False
 			if bValid:
 				if CyGame().getSorenRandNum(100, "Flames Spread") < gc.getDefineINT('FLAMES_SPREAD_CHANCE'):
-					pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_SMOKE'))
+					pBestPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_SMOKE'))
 		CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_PILLAR_OF_FIRE'),pBestPlot.getPoint())
 
 def reqPirateCove(caster):
