@@ -7234,7 +7234,7 @@
             <Capture>NONE</Capture>
             <Combat>UNITCOMBAT_MELEE</Combat>
             <Domain>DOMAIN_LAND</Domain>
-            <DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
+            <DefaultUnitAI>UNITAI_ATTACK_CITY</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_ANGEL</Description>
