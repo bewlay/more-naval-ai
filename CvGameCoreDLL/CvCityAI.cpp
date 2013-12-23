@@ -4166,7 +4166,8 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 		{
 			if ((eIgnoreAdvisor == NO_ADVISOR) || (GC.getUnitInfo(eLoopUnit).getAdvisorType() != eIgnoreAdvisor))
 			{
-				if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
+				//if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
+				if (GC.getUnitInfo(eLoopUnit).getUnitAIType(eUnitAI) || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
 				{
 					if (!(bGrowMore && isFoodProduction(eLoopUnit)))
 					{
@@ -4208,7 +4209,8 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 		{
 			if ((eIgnoreAdvisor == NO_ADVISOR) || (GC.getUnitInfo(eLoopUnit).getAdvisorType() != eIgnoreAdvisor))
 			{
-				if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
+				//if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
+				if (GC.getUnitInfo(eLoopUnit).getUnitAIType(eUnitAI) || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
 				{
 					if (!(bGrowMore && isFoodProduction(eLoopUnit)))
 					{
@@ -4218,7 +4220,8 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 
 							if ((iValue > ((iBestOriginalValue * 2) / 3)) && ((eUnitAI != UNITAI_EXPLORE) || (iValue >= iBestOriginalValue)))
 							{
-								if (GC.getUnitInfo(eLoopUnit).getUnitAIType(eUnitAI))
+								//if (GC.getUnitInfo(eLoopUnit).getUnitAIType(eUnitAI))
+								// Tholal Note - this is already checked just a few lines up. Not sure why we're doing it again here.
 								{
 									iValue *= (getProductionExperience(eLoopUnit) + 10);
 									iValue /= 10;
