@@ -4132,6 +4132,11 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		iValue *= iAttitudeMod;
 		iValue /= 3;
 	}
+
+	if (pCity->isAutoRaze())
+	{
+		iValue /= 10;
+	}
 	// End MNAI
 
 	return iValue;
