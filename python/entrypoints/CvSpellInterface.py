@@ -3077,12 +3077,13 @@ def reqStasis(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 
 	if pPlayer.isHuman() == False:
-		if pPlayer.getNumCities() < 5:
-			return False
+#		if pPlayer.getNumCities() < 5:
+#			return False
 		iTeam = gc.getPlayer(caster.getOwner()).getTeam()
 		eTeam = gc.getTeam(iTeam)
 		if eTeam.getAtWarCount(True) == 0:
 			return False
+		## ToDo - dont cast if suffering from Blight effects - check pcity.getEspionageHealthCounter() for the capital
 	return True
 
 def spellStasis(caster):
