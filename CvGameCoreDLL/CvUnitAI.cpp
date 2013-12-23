@@ -11410,29 +11410,47 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	}
 
 	// Slaying
-	if (kPromotion.getPromotionCombatType() != NULL)
+	if (kPromotion.getPromotionCombatType() != -1)
 	{
 		// first make sure we dont have a counter to a different combat type already
 		// note - doesnt count PromoCombats :(
+		/*
 		bool bHasOtherCombatCounter = false;
 		for (int iJ = 0; iJ < GC.getNumUnitCombatInfos(); iJ++)
 		{
 			if (unitCombatModifier((UnitCombatTypes)iJ) > 10)
 			{
+				logBBAI("has other combat promo");
 				bHasOtherCombatCounter = true;
 				break;
 			}
 		}
+		*/
 
-		if (!bHasOtherCombatCounter)
+		int iPromoCombatBonus = kPromotion.getPromotionCombatMod();
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if( GET_PLAYER((PlayerTypes)iI).isAlive() )
+			{
+				if (GET_TEAM(getTeam()).isAtWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+				{
+					if (GC.getCivilizationInfo((GET_PLAYER((PlayerTypes)iI).getCivilizationType())).getDefaultRace() == kPromotion.getPromotionCombatType())
+					{
+						logBBAI("%d bonus to slaying promo for enemy civ", iPromoCombatBonus);
+						iValue += iPromoCombatBonus * 2;
+					}
+				}
+			}
+		}
+		//if (!bHasOtherCombatCounter)
 		{
 			if ((eUnitAI == UNITAI_CITY_COUNTER) || (eUnitAI == UNITAI_COUNTER) || (eUnitAI == UNITAI_ATTACK))
 			{
-				iValue += 50;
+				iValue += iPromoCombatBonus;
 			}
 			else
 			{
-				iValue += 20;
+				iValue += iPromoCombatBonus / 2;
 			}
 		}
 	}
@@ -30077,7 +30095,7 @@ void CvUnitAI::AI_InquisitionMove()
 		logBBAI("    %S (unit %d) starting InquisitionMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
 	}
 
-	if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+	if (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2) && (AI_getUnitAIType() != UNITAI_HERO))
 	{
 		int iNeededInquisitors = (GET_PLAYER(getOwnerINLINE()).getNumCities() / 5);
 		iNeededInquisitors = std::max(1, iNeededInquisitors);
@@ -30097,16 +30115,12 @@ void CvUnitAI::AI_InquisitionMove()
 
 
 	CvCity* pLoopCity;
-	CvCity* pBestCity=NULL;
+	CvCity* pBestCity = NULL;
 	CvPlot* pBestPlot;
 
-	int iValue;
-	int iBestValue;
+	int iValue = 0;
+	int iBestValue = 0;
 	int iLoop;
-
-	iBestValue = 0;
-	pBestCity = NULL;
-	iValue = 0;
 
 	int iStateRel = kOwner.getStateReligion();
 
@@ -30118,7 +30132,6 @@ void CvUnitAI::AI_InquisitionMove()
 
 	if (iStateRel != NO_RELIGION)
 	{
-
 		// ToDo - check that no other inquisitors are here - count untiaitypes unitai_inquisitor
 		if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 		{
@@ -30126,10 +30139,7 @@ void CvUnitAI::AI_InquisitionMove()
 			return;
 		}
 
-
-		CvCity* pCity = plot()->getPlotCity();
-	
-        bool bValidTargetForInquisition=false;
+        bool bValidTargetForInquisition = false;
 		int iNumHeathenRels = 0;
 
 		for (int iJ = 0; iJ < MAX_PLAYERS; iJ++)
@@ -30143,23 +30153,21 @@ void CvUnitAI::AI_InquisitionMove()
 						int iPathTurns;
 						if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 						{
-							bValidTargetForInquisition=false;
+							bValidTargetForInquisition = false;
 							iNumHeathenRels = 0;
 
 							for (int iTarget=0; iTarget < GC.getNumReligionInfos(); iTarget++)
 							{
 								if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
 								{
-									bValidTargetForInquisition=true;
-									iNumHeathenRels ++;
+									bValidTargetForInquisition = true;
+									iNumHeathenRels++;
 								}
 							}
 
 							if (bValidTargetForInquisition)
 							{
-
 								iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
-								
 								if (pLoopCity->isHolyCity((ReligionTypes)iStateRel))
 								{
 									iValue *= 2;
@@ -30183,19 +30191,19 @@ void CvUnitAI::AI_InquisitionMove()
 		if (pBestCity != NULL)
 		{
 			pBestPlot = pBestCity->plot();
-
-			if(atPlot(pBestPlot))
+			logBBAI("     ...targeting %S for Inquisition (plot %d, %d)", pBestCity->getName().GetCString(), pBestCity->getX(), pBestCity->getY());
+			if (atPlot(pBestPlot))
 			{
 				if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 				{
-					logBBAI("     ...Inquisitioning %d (plot %d, %d)", pBestCity->getName(), pBestCity->getX(), pBestCity->getY());
+					logBBAI("     ...Inquisitioning");
 					cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
 					return;
 				}
 			}
 			else
 			{
-				logBBAI("     ...moving to Inquisition %d (plot %d, %d)", pBestCity->getName(), pBestCity->getX(), pBestCity->getY());
+				logBBAI("     ...moving to city");
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 				return;
 			}
