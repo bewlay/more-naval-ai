@@ -1931,22 +1931,35 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	
-	if (iProductionRank <= std::max(1, (iNumCities / 3)))
+	bool bSuperCity = false;
+	if (getPopulation() > 5)
 	{
-		if (AI_chooseUnit(UNITAI_HERO, (GET_TEAM(getTeam()).getTotalPopulation() * (iNumCities + 1))))
+		if (getYieldRate(YIELD_PRODUCTION) > (getPopulation() * 3))
 		{
-			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_HERO", getName().GetCString());
-			return;
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S is a SuperCity (%d production)", getName().GetCString(), getYieldRate(YIELD_PRODUCTION));
+			bSuperCity = true;
 		}
 	}
 
 	// Tholal ToDo: figure out a threshold for this function so we dont build useless wonders
 	if (iProductionRank <= std::max(1, (iNumCities / 3)))
 	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, ((iNumCities* 2) + 1)))
+		int iWonderTime = ((kPlayer.AI_getNumRealCities() * 2) + 1) * (bSuperCity ? 4 : 1);
+		if( gCityLogLevel > 3 ) logBBAI("checking for wonder %d", iWonderTime);
+		if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose QUICK WONDER", getName().GetCString());
+			return;
+		}
+	}
+
+	if (iProductionRank <= std::max(1, (iNumCities / 3)))
+	{
+		int iHeroOdds = (GET_TEAM(getTeam()).getTotalPopulation() * (iNumCities + 1)) * (bSuperCity ? 5 : 2);
+		if( gCityLogLevel > 3 ) logBBAI("checking for hero %d", iHeroOdds);
+		if (AI_chooseUnit(UNITAI_HERO, iHeroOdds))
+		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_HERO", getName().GetCString());
 			return;
 		}
 	}
@@ -2026,7 +2039,7 @@ void CvCityAI::AI_chooseProduction()
 				{
 					if (pWaterArea != NULL)
 					{
-						if (kPlayer.AI_totalAreaUnitAIs(pWaterArea, UNITAI_ATTACK_SEA) < iNumCitiesInArea)
+						if (kPlayer.AI_totalAreaUnitAIs(pWaterArea, UNITAI_ATTACK_SEA) < (kPlayer.countNumCoastalCities() / (bLandWar ? 2: 1)))
 						{
 							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses minimal naval", getName().GetCString());
 							if (AI_chooseUnit(UNITAI_ATTACK_SEA))
@@ -2186,7 +2199,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	int iNeededFloatingDefenders = (isBarbarian() || bCrushStrategy) ?  0 : kPlayer.AI_getTotalFloatingDefendersNeeded(pArea);
+	int iNeededFloatingDefenders = ((isBarbarian() || bCrushStrategy) ?  0 : AI_neededFloatingDefenders()); //kPlayer.AI_getTotalFloatingDefendersNeeded(pArea);
  	int iTotalFloatingDefenders = (isBarbarian() ? 0 : kPlayer.AI_getTotalFloatingDefenders(pArea));
 	
 	UnitTypeWeightArray floatingDefenderTypes;
@@ -3408,12 +3421,15 @@ void CvCityAI::AI_chooseProduction()
 		FAssertMsg(false, "AI_bestSpreadUnit should provide a valid unit when it returns true");
 	}
 		
-	if (iTotalFloatingDefenders < iNeededFloatingDefenders && (!bFinancialTrouble || bLandWar))
+	if (iTotalFloatingDefenders < iNeededFloatingDefenders)
 	{
-		if (AI_chooseLeastRepresentedUnit(floatingDefenderTypes, 50))
+		if (!bFinancialTrouble || bLandWar)
 		{
-			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose floating defender 2", getName().GetCString());
-			return;
+			if (AI_chooseLeastRepresentedUnit(floatingDefenderTypes, 50))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose floating defender 2", getName().GetCString());
+				return;
+			}
 		}
 	}
 	
