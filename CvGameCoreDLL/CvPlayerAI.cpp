@@ -7128,8 +7128,9 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					}
 				}
 
-				// dont value units that can't be built (ie, War Elephants)
-				if (kLoopUnit.getProductionCost() == -1)
+				// dont value units that can't be built
+				// First check is for units that have no production cost (ie, Elephants). Second is for special units (ie, War Elephants)
+				if ((kLoopUnit.getProductionCost() == -1) || (kLoopUnit.getMinLevel() == 1))
 				{
 					continue;
 				}
