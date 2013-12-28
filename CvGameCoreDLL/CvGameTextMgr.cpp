@@ -11055,7 +11055,7 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 					{
 						if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
 						{
-							if ((GC.getUnitInfo(eLoopUnit).getPrereqCiv() != GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()))
+							if (!bPlayerContext || (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()))
 							{
 								continue;
 							}
