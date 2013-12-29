@@ -5753,6 +5753,10 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if (GC.getPromotionInfo((PromotionTypes)iI).getTechPrereq() == eTech)
 			{
 				iPromotionValue += 50;
+				if (GC.getPromotionInfo((PromotionTypes)iI).getMovesChange() > 0) //extra moves is extremely valuable so we give those promotions a bonus
+				{
+					iPromotionValue += (bWarPlan ? 250 : 50);
+				}
 			}
 		}
 	}
@@ -5986,11 +5990,13 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					//iCivicTechValue += std::min((4000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
 					iCivicTechValue += std::min((5000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
 				}
-
+				
+				/*
 				if (GC.getCivicInfo(eCurrCivic).getAIWeight() < 0)
 				{
 					iCivicTechValue *= 2;
 				}
+				*/
 			}
 			
 			/*
