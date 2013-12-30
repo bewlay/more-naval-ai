@@ -45437,8 +45437,8 @@
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
             <Description>TXT_KEY_UNIT_WAR_TORTOISE</Description>
-            <Civilopedia>TXT_KEY_UNIT_WAR_ELEPHANT_PEDIA</Civilopedia>
-            <Strategy>TXT_KEY_UNIT_WAR_ELEPHANT_STRATEGY</Strategy>
+            <Civilopedia>TXT_KEY_UNIT_WAR_TORTOISE_PEDIA</Civilopedia>
+            <Strategy>TXT_KEY_UNIT_WAR_TORTOISE_STRATEGY</Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
             <bAnimal>0</bAnimal>
             <bFood>0</bFood>
