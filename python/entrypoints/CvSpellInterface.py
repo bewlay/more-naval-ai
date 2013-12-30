@@ -1202,10 +1202,10 @@ def spellEntertain(caster):
 		pPlayer.changeGold(iGold)
 		szBuffer = CyTranslator().getText("TXT_KEY_MESSAGE_ENTERTAIN_GOOD", (iGold, ))
 		CyInterface().addMessage(iPlayer,true,25,szBuffer,'',1,'Art/Interface/Buttons/Spells/Entertain.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
-		iGold = iGold * -1
-		pPlayer2.changeGold(iGold)
 		szBuffer = CyTranslator().getText("TXT_KEY_MESSAGE_ENTERTAIN_BAD", (iGold, ))
 		CyInterface().addMessage(iPlayer2,true,25,szBuffer,'',1,'Art/Interface/Buttons/Spells/Entertain.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
+		iGold = iGold * -1
+		pPlayer2.changeGold(iGold)
 	pCity.changeHappinessTimer(2)
 
 def reqEscape(caster):
