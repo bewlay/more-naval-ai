@@ -29032,17 +29032,18 @@ bool CvUnitAI::AI_Govannonmove()
 
 bool CvUnitAI::AI_Lokimove()
 {
-    CvCity* pLoopCity;
-    int iLoop;
-    int iSearchRange=8;
-    int icount=0;
-    int iDX, iDY;
-    int iPathTurns;
-	int iBestValue=0, iValue;
-    CvPlot* pLoopPlot;
-	CvPlot* pBestPlot = NULL;
+	logBBAI("    %S (unit %d) starting LokiMove", getName().GetCString(), getID());
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
-	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
+	bool bFinancialTrouble = kPlayer.AI_isFinancialTrouble();
+
+	if (getGroup()->getNumUnits() > 1)
+	{
+		logBBAI("      ...leaving group");
+		joinGroup(NULL);
+	}
+
+	// HARDCODE!
     if (plot()->isCity())
 	{
 		if (!bFinancialTrouble && plot()->getPlotCity()->getCulture(plot()->getPlotCity()->getOwnerINLINE())==0)
@@ -29054,11 +29055,11 @@ bool CvUnitAI::AI_Lokimove()
 		{
 			if (plot()->getOwnerINLINE() == getOwnerINLINE())
 			{
-			int ispell = chooseSpell();
-			if (ispell != NO_SPELL)
-			{
-				cast(ispell);
-			}
+				int ispell = chooseSpell();
+				if (ispell != NO_SPELL)
+				{
+					cast(ispell);
+				}
 			}
 			else
 			{
@@ -29067,42 +29068,44 @@ bool CvUnitAI::AI_Lokimove()
 			}
 		}
     }
-	// find a target city - preference given to high population cities (for entertain) and no culture cities (for disrupt)
-    for (pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)getOwnerINLINE()).nextCity(&iLoop))
-    {
-		iValue = 0;
+	
+	CvCity* pLoopCity;
+    int iLoop = 0;
+    int iPathTurns;
+	CvPlot* pBestPlot = NULL;
+	int iValue = 0;
+	int iBestValue = 0;
 
-        if (pLoopCity)
-        {
-            for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-            {
-                for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-                {
-                    pLoopPlot = plotXY(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iDX, iDY);
-                    if (pLoopPlot)
-                    {
-						if (AI_plotValid(pLoopPlot))
-                        {
-							if(pLoopPlot->isCity() && pLoopPlot->getTeam() != getTeam() && !GET_TEAM(pLoopPlot->getTeam()).isVassal(getTeam()))
-                            {
-                                if (!GET_TEAM(getTeam()).isAtWar(pLoopPlot->getTeam()))
-                                {
-									if (generatePath(pLoopPlot, 0, true, &iPathTurns))
-                                    {
-										iValue = pLoopPlot->getPlotCity()->getPopulation();
+	// find a target city - preference given to high population cities (for Entertain) and zero culture cities (for Disrupt)
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			//don't target teammates or vassals
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam() && !GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()))
+			{
+				for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
+				{
+					if (kPlayer.AI_deduceCitySite(pLoopCity))
+					{
+						if (!GET_TEAM(getTeam()).isAtWar(pLoopCity->getTeam()))
+						{
+							if (generatePath(pLoopCity->plot(), 0, true, &iPathTurns))
+							{
+								iValue = pLoopCity->getPopulation();
 
-										if (pLoopPlot->getPlotCity()->getCulture(pLoopPlot->getOwnerINLINE())==0)
-										{
-											iValue *= 20;
-											
-                                        }
-										if (iValue > iBestValue)
-										{
-											iBestValue = iValue;
-											pBestPlot = pLoopPlot;
-										}
-                                    }
-                                }
+								if (pLoopCity->getCulture(pLoopCity->getOwnerINLINE())==0)
+								{
+									iValue *= 20;
+								}
+								
+								iValue /= iPathTurns;
+
+								if (iValue > iBestValue)
+								{
+									iBestValue = iValue;
+									pBestPlot = pLoopCity->plot();
+								}
                             }
                         }
                     }
@@ -29111,15 +29114,18 @@ bool CvUnitAI::AI_Lokimove()
         }
     }
 	
-	if (pBestPlot!=NULL)
+	if (pBestPlot != NULL)
 	{
-		if(atPlot(pBestPlot))
+		logBBAI("      ...targeting %S (value: %d)", pBestPlot->getPlotCity()->getName().GetCString(), iBestValue);
+		if (atPlot(pBestPlot))
 		{
+			logBBAI("      ...at target city");
 			getGroup()->pushMission(MISSION_SKIP);
 			return true;
 		}
 		else
 		{
+			logBBAI("      ...moving to target city");
 			getGroup()->pushMission(MISSION_MOVE_TO,pBestPlot->getX_INLINE(),pBestPlot->getY_INLINE(),MOVE_THROUGH_ENEMY);
 			return true;
 		}
@@ -29127,6 +29133,7 @@ bool CvUnitAI::AI_Lokimove()
 
 	if (AI_exploreRange(5))
 	{
+		logBBAI("      ...exploring");
 		return true;
 	}
 
