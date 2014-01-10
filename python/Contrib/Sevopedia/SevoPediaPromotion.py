@@ -215,6 +215,13 @@ class SevoPediaPromotion:
 			screen.attachImageButton(panelName, "", gc.getReligionInfo(eUnitReligion).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, eUnitReligion, 1, False)
 			screen.attachLabel(panelName, "", u"<font=3>)</font>")
 ##--------	BUGFfH: End Modify
+##-------- More Naval AI: Bonus requirements for promotions.
+		eBonus = gc.getPromotionInfo(self.iPromotion).getBonusPrereq()
+		if (eBonus != BonusTypes.NO_BONUS):
+			if not bFirst:
+				screen.attachLabel(panelName, "", localText.getText("TXT_KEY_AND", ()))
+			screen.attachImageButton(panelName, "", gc.getBonusInfo(eBonus).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, eBonus, -1, False)
+##-------- More Naval AI: End Modify
 
 
 
@@ -271,6 +278,26 @@ class SevoPediaPromotion:
 			if (iPrereq == self.iPromotion):
 				screen.attachImageButton( panelName, "", gc.getSpellInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, j, 1, False )
 
+	def isMagicSpherePromotion(self, pPromotion):
+		iBonus = pPromotion.getBonusPrereq()
+
+		# If the promotion itself requires mana, it is a magic sphere promotion.
+		if iBonus != BonusTypes.NO_BONUS and gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
+			return True
+
+		lChannelingPromotions = [gc.getInfoTypeForString('PROMOTION_CHANNELING2'), gc.getInfoTypeForString('PROMOTION_CHANNELING3')]
+
+		# If the current promotion requires channeling 2 or 3, it is possible that it is a magic sphere promotion if it also requires a magic sphere promotion.
+		if (pPromotion.getPrereqPromotion() in lChannelingPromotions or pPromotion.getPromotionPrereqAnd() in lChannelingPromotions):
+			iRequirementOther = PromotionTypes.NO_PROMOTION
+			if pPromotion.getPrereqPromotion() not in lChannelingPromotions:
+				iRequirementOther = pPromotion.getPrereqPromotion()
+			elif pPromotion.getPromotionPrereqAnd() not in lChannelingPromotions:
+				iRequirementOther = pPromotion.getPrereqPromotion()
+			if iRequirementOther != PromotionTypes.NO_PROMOTION:
+				return self.isMagicSpherePromotion(gc.getPromotionInfo(iRequirementOther))
+
+		return False
 
 	def getPromotionType(self, iPromotion):
 		if (gc.getPromotionInfo(iPromotion).isRace()):
@@ -281,6 +308,8 @@ class SevoPediaPromotion:
 #			return SevoScreenEnums.TYPE_GEAR			
 		elif (gc.getPromotionInfo(iPromotion).getMinLevel() < 0):
 			return SevoScreenEnums.TYPE_EFFECT
+		elif self.isMagicSpherePromotion(gc.getPromotionInfo(iPromotion)):
+			return SevoScreenEnums.TYPE_SPHERE
 		else:
 			return SevoScreenEnums.TYPE_REGULAR
 ##--------	BUGFfH: End Add

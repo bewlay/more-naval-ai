@@ -15,6 +15,27 @@ class WBPromotionScreen:
 		self.iList = []
 		self.iPromotionCategory = 0
 
+	def isMagicSpherePromotion(self, pPromotion):
+		iBonus = pPromotion.getBonusPrereq()
+
+		# If the promotion itself requires mana, it is a magic sphere promotion.
+		if iBonus != BonusTypes.NO_BONUS and gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
+			return True
+
+		lChannelingPromotions = [gc.getInfoTypeForString('PROMOTION_CHANNELING2'), gc.getInfoTypeForString('PROMOTION_CHANNELING3')]
+
+		# If the current promotion requires channeling 2 or 3, it is possible that it is a magic sphere promotion if it also requires a magic sphere promotion.
+		if (pPromotion.getPrereqPromotion() in lChannelingPromotions or pPromotion.getPromotionPrereqAnd() in lChannelingPromotions):
+			iRequirementOther = PromotionTypes.NO_PROMOTION
+			if pPromotion.getPrereqPromotion() not in lChannelingPromotions:
+				iRequirementOther = pPromotion.getPrereqPromotion()
+			elif pPromotion.getPromotionPrereqAnd() not in lChannelingPromotions:
+				iRequirementOther = pPromotion.getPrereqPromotion()
+			if iRequirementOther != PromotionTypes.NO_PROMOTION:
+				return self.isMagicSpherePromotion(gc.getPromotionInfo(iRequirementOther))
+
+		return False
+
 	def interfaceScreen(self, pUnit):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
 		global g_pUnit
@@ -72,13 +93,11 @@ class WBPromotionScreen:
 			elif ItemInfo.getMinLevel() < 0:
 				if self.iPromotionCategory == 2:#Effect
 					self.iList.append([ItemInfo.getDescription(), i])
-			else:
-				iBonus = ItemInfo.getBonusPrereq()
-				if iBonus != -1 and gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
-					if self.iPromotionCategory == 1:#Spell Spheres
-						self.iList.append([ItemInfo.getDescription(), i])
-				elif self.iPromotionCategory == 0:#Normal Promotions
+			elif self.isMagicSpherePromotion(ItemInfo):
+				if self.iPromotionCategory == 1:#Spell Spheres
 					self.iList.append([ItemInfo.getDescription(), i])
+			elif self.iPromotionCategory == 0:#Normal Promotions
+				self.iList.append([ItemInfo.getDescription(), i])
 
 		self.iList.sort()
 
