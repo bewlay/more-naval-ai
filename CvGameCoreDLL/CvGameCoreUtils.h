@@ -244,7 +244,7 @@ int getLandPlotsScore(int iLandPlots);									// Exposed to Python
 int getTechScore(TechTypes eTech);											// Exposed to Python
 int getWonderScore(BuildingClassTypes eWonderClass);		// Exposed to Python
 
-ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCount = 0);		// Exposed to Python
+ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCount = 0, PlayerTypes ePlayer = NO_PLAYER);		// Exposed to Python
 
 int getWorldSizeMaxConscript(CivicTypes eCivic);								// Exposed to Python
 

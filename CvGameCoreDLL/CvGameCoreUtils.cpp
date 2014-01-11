@@ -429,7 +429,7 @@ int getWonderScore(BuildingClassTypes eWonderClass)
 	}
 }
 
-ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCount)
+ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCount, PlayerTypes ePlayer)
 {
 	FAssertMsg(eImprovement != NO_IMPROVEMENT, "Improvement is not assigned a valid value");
 
@@ -440,16 +440,23 @@ ImprovementTypes finalImprovementUpgrade(ImprovementTypes eImprovement, int iCou
 
 	if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
 	{
-		// dont count civilization improvements (ie Enclaves)
-		if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != NO_CIVILIZATION)
+		// MNAI - dont count civilization-specific improvements (ie Enclaves)
+		if (ePlayer != NO_PLAYER)
 		{
-			if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != GET_PLAYER((PlayerTypes)GC.getGameINLINE().getActivePlayer()).getCivilizationType())
+			if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != NO_CIVILIZATION)
 			{
-				return eImprovement;
+				if (GC.getImprovementInfo((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())).getPrereqCivilization() != GET_PLAYER(ePlayer).getCivilizationType())
+				{
+					return eImprovement;
+				}
 			}
+			return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1), ePlayer);
 		}
-
-		return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1));
+		// MNAI End
+		else
+		{
+			return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1));
+		}
 	}
 	else
 	{

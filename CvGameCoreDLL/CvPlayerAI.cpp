@@ -5358,7 +5358,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			eImprovement = (ImprovementTypes)(GC.getBuildInfo((BuildTypes)iJ).getImprovement());
 			if (eImprovement != NO_IMPROVEMENT)
 			{
-				eImprovement = finalImprovementUpgrade(eImprovement);
+				eImprovement = finalImprovementUpgrade(eImprovement, 0, getID());
 			}
 			else
 			{
