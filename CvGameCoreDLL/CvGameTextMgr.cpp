@@ -19323,15 +19323,9 @@ void CvGameTextMgr::setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(NEWLINE);
 	}
 
-//FfH: Added by Kael 10/13/2007
-	//int iUnhappyProd = (city.isUnhappyProduction() ? city.angryPopulation(0) : 0);
+	//FfH: Added by Kael 10/13/2007
 	int iUnhappyProd = (city.isUnhappyProduction() ? city.unhappyLevel(0) : 0);
-	if (iUnhappyProd != 0)
-	{
-		szBuffer.append(gDLL->getText("TXT_KEY_MISC_UNHAPPY_PROD", iUnhappyProd));
-		szBuffer.append(NEWLINE);
-	}
-//FfH: End Add
+	//FfH: End Add
 
 // BUG - Building Additional Production - start
 	bool bBuildingAdditionalYield = getBugOptionBOOL("MiscHover__BuildingAdditionalProduction", true, "BUG_BUILDING_ADDITIONAL_PRODUCTION_HOVER");
@@ -20266,6 +20260,16 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	int iBaseProduction = city.getBaseYieldRate(eYieldType);
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BASE_YIELD", info.getTextKeyWide(), iBaseProduction, info.getChar()));
 	szBuffer.append(NEWLINE);
+
+	//FfH: Added by Kael 10/13/2007
+	int iUnhappyProd = (city.isUnhappyProduction() ? city.unhappyLevel(0) : 0);
+	if (iUnhappyProd != 0)
+	{
+		iBaseProduction += iUnhappyProd;
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_UNHAPPY_PROD", iUnhappyProd));
+		szBuffer.append(NEWLINE);
+	}
+	//FfH: End Add
 
 	int iBaseModifier = 100;
 
