@@ -26,7 +26,7 @@ def doGameUpdate():
 
 def writeLog():
 	playername = CvUtil.convertToStr(gc.getPlayer(gc.getGame().getActivePlayer()).getName())
-	szNewFilename = BugPath.getRootDir() + "\\Logs\\"+ "%s - Player %s - " % (playername, gc.getGame().getActivePlayer()) + "OOSLog - Turn " + "%s" % (gc.getGame().getGameTurn()) + ".txt"
+	szNewFilename = BugPath.getRootDir() + "\\Logs\\" + "OOSLog - %s - " % (playername) + "Turn %s" % (gc.getGame().getGameTurn()) + ".txt"
 	pFile = open(szNewFilename, "w")
 
 	#
