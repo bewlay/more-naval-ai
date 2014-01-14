@@ -1667,7 +1667,7 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 
 	if (eBestTech == NO_TECH)
 	{
-		eBestTech = player.AI_bestTech(1, (iDiscover > 0), true);
+		eBestTech = player.AI_bestTech(1, (iDiscover > 0), true, false);
 	}
 
 	if (eBestTech != NO_TECH)
@@ -1679,7 +1679,7 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 
 		if (eNextBestTech == NO_TECH)
 		{
-			eNextBestTech = player.AI_bestTech(1, (iDiscover > 0), true, eBestTech, ((AdvisorTypes)(GC.getTechInfo(eBestTech).getAdvisorType())));
+			eNextBestTech = player.AI_bestTech(1, (iDiscover > 0), true, false, eBestTech, ((AdvisorTypes)(GC.getTechInfo(eBestTech).getAdvisorType())));
 		}
 	}
 

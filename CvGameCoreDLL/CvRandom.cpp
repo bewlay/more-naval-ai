@@ -13,6 +13,7 @@
 CvRandom::CvRandom()
 { 
 	reset();
+	enableLogs = true;
 }
 
 
@@ -54,13 +55,15 @@ unsigned short CvRandom::get(unsigned short usNum, const TCHAR* pszLog)
 {
 	if (pszLog != NULL)
 	{
-		if (GC.getLogging() && GC.getRandLogging())
+		if (enableLogs && GC.getLogging() && GC.getRandLogging())
 		{
 			if (GC.getGameINLINE().getTurnSlice() > 0)
 			{
 				TCHAR szOut[1024];
 				sprintf(szOut, "Rand = %d on %d (%s)\n", getSeed(), GC.getGameINLINE().getTurnSlice(), pszLog);
-				gDLL->messageControlLog(szOut);
+				TCHAR szFileName[1024];
+				sprintf(szFileName, "SynchLog - %S.txt", GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getName());
+				gDLL->logMsg(szFileName, szOut, false, false);
 			}
 		}
 	}
@@ -98,8 +101,12 @@ void CvRandom::read(FDataStreamBase* pStream)
 	pStream->Read(&m_ulRandomSeed);
 }
 
-
 void CvRandom::write(FDataStreamBase* pStream)
 {
 	pStream->Write(m_ulRandomSeed);
+}
+
+void CvRandom::setLogging(bool enabled)
+{
+	enableLogs = enabled;
 }

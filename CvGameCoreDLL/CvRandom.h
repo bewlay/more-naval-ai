@@ -27,9 +27,11 @@ public:
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
+	void setLogging(bool enabled);
 protected:
 
 	unsigned long m_ulRandomSeed;
+	bool enableLogs;
 };
 
 #endif

@@ -413,6 +413,7 @@ void CvGlobals::init()
 
 	m_VarSystem = new FVariableSystem;
 	m_asyncRand = new CvRandom;
+	m_asyncRand->setLogging(false);
 	m_initCore = new CvInitCore;
 	m_loadedInitCore = new CvInitCore;
 	m_iniInitCore = new CvInitCore;
