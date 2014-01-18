@@ -2795,6 +2795,7 @@ void CvUnitAI::AI_barbAttackMove()
 	
 	// heros and aggressive units will wait till someone else starts defending the plot then move on
 	// otherwise switch UnitAIs
+	/*
 	if (!bHero && plot()->isLair(false, isAnimal()))
 	{
 		if (plot()->plotCount(PUF_isUnitAIType, UNITAI_LAIRGUARDIAN, -1, (PlayerTypes)BARBARIAN_PLAYER) == 0)
@@ -2813,6 +2814,7 @@ void CvUnitAI::AI_barbAttackMove()
 			}
 		}
 	}
+	*/
 	
 	// Heros shouldn't be guarding cities or goodies
 	if (!bHero && ((!bAttackCity || !bAttack) && iCaution > 4))
