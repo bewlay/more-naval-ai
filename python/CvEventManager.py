@@ -2235,20 +2235,8 @@ class CvEventManager:
 
 		if CyGame().getWBMapScript():
 			sf.onCityAcquired(iPreviousOwner, iNewOwner, pCity, bConquest, bTrade)
-## END FFH
 
-
-		CvUtil.pyPrint('City Acquired Event: %s' %(pCity.getName()))
-
-	def onCityAcquiredAndKept(self, argsList):
-		'City Acquired and Kept'
-		iOwner,pCity = argsList
-
-## FFH
-		pPlayer = gc.getPlayer(iOwner)
 		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-			pCity.setHasReligion(gc.getInfoTypeForString('RELIGION_THE_ORDER'), False, True, True)
-			pCity.setHasReligion(gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'), True, True, True)
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ELDER_COUNCIL'), 1)
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_TRAINING_YARD'), 1)
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_OBSIDIAN_GATE'), 1)
@@ -2256,6 +2244,10 @@ class CvEventManager:
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD'), 1)
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'), 1)
 ## END FFH
+
+	def onCityAcquiredAndKept(self, argsList):
+		'City Acquired and Kept'
+		iOwner,pCity = argsList
 
 		#Functions added here tend to cause OOS issues
 
