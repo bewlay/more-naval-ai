@@ -29,6 +29,11 @@ def writeLog():
 	szNewFilename = BugPath.getRootDir() + "\\Logs\\" + "OOSLog - %s - " % (playername) + "Turn %s" % (gc.getGame().getGameTurn()) + ".txt"
 	pFile = open(szNewFilename, "w")
 
+	# Backup current language
+	iLanguage = CyGame().getCurrentLanguage()
+	# Force english language for logs
+	CyGame().setCurrentLanguage(0)
+
 	#
 	# Global data
 	#
@@ -193,6 +198,9 @@ def writeLog():
 			# Space at end of player's info
 			pFile.write("\n\n")
 		
+	# Restore current language
+	CyGame().setCurrentLanguage(iLanguage)
+
 	# Close file
 
 	pFile.close()
