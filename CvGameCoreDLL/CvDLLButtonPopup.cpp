@@ -490,7 +490,7 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 	case BUTTONPOPUP_PYTHON:
 		if (!info.getOnClickedPythonCallback().IsEmpty())
 		{
-			FAssertMsg(!GC.getGameINLINE().isNetworkMultiPlayer(), "Danger: Out of Sync");
+			//FAssertMsg(!GC.getGameINLINE().isNetworkMultiPlayer(), "Danger: Out of Sync");
 			CyArgsList argsList;
 			argsList.add(pPopupReturn->getButtonClicked());
 			argsList.add(info.getData1());
