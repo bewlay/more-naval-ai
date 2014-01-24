@@ -2569,7 +2569,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_AIR</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2628,7 +2628,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_BODY</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2687,7 +2687,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_CHAOS</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2746,7 +2746,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_EARTH</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2805,7 +2805,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_ENCHANTMENT</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2864,7 +2864,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_ENTROPY</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2923,7 +2923,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_ICE</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -2982,7 +2982,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_LAW</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3041,7 +3041,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_LIFE</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3100,7 +3100,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_METAMAGIC</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3159,7 +3159,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_MIND</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3218,7 +3218,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_NATURE</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3277,7 +3277,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_SPIRIT</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3336,7 +3336,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_WATER</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3395,7 +3395,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_SUN</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
@@ -3454,7 +3454,7 @@
             <BonusClassType>BONUSCLASS_MANA</BonusClassType>
             <ArtDefineTag>ART_DEF_BONUS_MANA_SHADOW</ArtDefineTag>
             <TechReveal>NONE</TechReveal>
-            <TechCityTrade>NONE</TechCityTrade>
+            <TechCityTrade>TECH_KNOWLEDGE_OF_THE_ETHER</TechCityTrade>
             <TechObsolete>NONE</TechObsolete>
             <YieldChanges>
                 <iYieldChange>0</iYieldChange>
