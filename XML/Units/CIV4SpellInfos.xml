@@ -2348,6 +2348,7 @@
             <Help>TXT_KEY_SPELL_RECRUIT_MERCENARY_HELP</Help>
             <BuildingClassOwnedPrereq>BUILDINGCLASS_GUILD_OF_THE_NINE</BuildingClassOwnedPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>100</iAIWeight>
             <bInBordersOnly>1</bInBordersOnly>
             <bInCityOnly>1</bInCityOnly>
             <bHasCasted>1</bHasCasted>
