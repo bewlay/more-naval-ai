@@ -771,7 +771,7 @@ public:
     virtual void AI_setGroupflag(int newflag) = 0;
     virtual void AI_chooseGroupflag() = 0;
 
-	virtual void AI_mageMove() = 0;
+	virtual bool AI_mageMove() = 0;
 	virtual void AI_mageCast() = 0;
 	virtual void AI_terraformerMove() = 0;
     virtual void AI_upgrademanaMove() = 0;

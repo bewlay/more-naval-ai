@@ -77,7 +77,7 @@ public:
     bool AI_Lokimove();
     bool AI_Rantinemove();
 
-	void AI_mageMove();
+	bool AI_mageMove();
 	void AI_mageCast();
     void AI_terraformerMove();
     void AI_upgrademanaMove();

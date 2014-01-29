@@ -612,7 +612,8 @@ bool CvUnitAI::AI_update()
 				AI_upgrademanaMove();
 				break;
 			case UNITAI_MAGE:
-				AI_mageMove();
+				//AI_mageMove();
+				AI_cityDefenseMove();
 				break;
 			case UNITAI_WARWIZARD:
 				AI_ConquestMove();
@@ -5069,6 +5070,14 @@ void CvUnitAI::AI_cityDefenseMove()
 		}
 
 		if (AI_chokeDefend())
+		{
+			return;
+		}
+	}
+
+	if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+	{
+		if (AI_mageMove())
 		{
 			return;
 		}
@@ -29535,16 +29544,24 @@ void CvUnitAI::AI_mageCast()
 }
 
 
-void CvUnitAI::AI_mageMove()
+bool CvUnitAI::AI_mageMove()
 {
-
+	if( gUnitLogLevel > 2 ) logBBAI("      ...checking MageMove()", getID());
 	if (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 	{
 		AI_setUnitAIType(UNITAI_ATTACK_CITY);
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
-		return;
+		return true;
+	}
+	else if (GC.getUnitInfo(getUnitType()).getTier() > 2)
+	{
+		if( gUnitLogLevel > 2 ) logBBAI("      ...switching to WarWizard");
+		AI_setUnitAIType(UNITAI_WARWIZARD);
+		AI_setGroupflag(GROUPFLAG_CONQUEST);
+		return true;
 	}
 
+	/*
 	if (plot()->getPlotCity() == NULL)
 	{
 		if (AI_retreatToCity())
@@ -29554,6 +29571,52 @@ void CvUnitAI::AI_mageMove()
 	}
 
     getGroup()->pushMission(MISSION_FORTIFY);
+	*/
+
+	if (plot()->plotCount(PUF_isUnitAIType, UNITAI_MAGE, -1, NO_PLAYER, getTeam()) > 1)
+	{
+		if( gUnitLogLevel > 2 ) logBBAI("      ...current location is too crowded");
+		CvCity* pLoopCity;
+		CvCity* pBestCity = NULL;
+		//CvPlot* pBestPlot;
+		int iValue = 0;
+		int iBestValue = 0;
+		int iLoop;
+		for (pLoopCity = GET_PLAYER(getOwner()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwner()).nextCity(&iLoop))
+		{
+			if (pLoopCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_MAGE, -1, NO_PLAYER, getTeam()) == 0)
+			{
+				int iPathTurns;
+				if (generatePath(pLoopCity->plot(), MOVE_AVOID_ENEMY_WEIGHT_3, true, &iPathTurns))
+				{
+					iValue = (pLoopCity->getPopulation() * 10) / (iPathTurns + 1);
+
+					if (pLoopCity->isCapital())
+					{
+						iValue *= 2;
+					}
+
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						pBestCity = pLoopCity;
+					}
+				}
+			}
+		}
+
+		if (pBestCity != NULL)
+		{
+			if (!atPlot(pBestCity->plot()))
+			{
+				if( gUnitLogLevel > 2 ) logBBAI("      ....Mage moving to %d, %d", pBestCity->plot()->getX_INLINE(), pBestCity->plot()->getY_INLINE());
+				getGroup()->pushMission(MISSION_MOVE_TO, pBestCity->plot()->getX_INLINE(), pBestCity->plot()->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void CvUnitAI::AI_terraformerMove()
