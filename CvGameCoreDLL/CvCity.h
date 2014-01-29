@@ -744,7 +744,7 @@ public:
 	int getAdditionalBaseYieldRateBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;		// Exposed to Python
 // BUG - Specialist Additional Yield - end
 
-	int getBaseYieldRate(YieldTypes eIndex) const;															// Exposed to Python
+	int getBaseYieldRate(YieldTypes eIndex, bool bUnhappyProduction = true) const;	// Exposed to Python
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;			// Exposed to Python
 	int getYieldRate(YieldTypes eIndex) const;												// Exposed to Python
 	void setBaseYieldRate(YieldTypes eIndex, int iNewValue);												// Exposed to Python
