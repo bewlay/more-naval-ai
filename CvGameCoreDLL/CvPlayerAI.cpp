@@ -7889,7 +7889,7 @@ void CvPlayerAI::AI_chooseFreeTech()
 
 	if (eBestTech == NO_TECH)
 	{
-		eBestTech = AI_bestTech(1, true);
+		eBestTech = AI_bestTech(1, true, false, true);
 	}
 
 	if (eBestTech != NO_TECH)
@@ -7962,7 +7962,7 @@ void CvPlayerAI::AI_chooseResearch()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-			eBestTech = AI_bestTech((isHuman()) ? 1 : iAIResearchDepth);
+			eBestTech = AI_bestTech((isHuman()) ? 1 : iAIResearchDepth, false, false, true);
 		}
 
 		if (eBestTech != NO_TECH)
