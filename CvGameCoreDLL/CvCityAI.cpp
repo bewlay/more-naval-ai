@@ -5819,7 +5819,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				if (iFocusFlags & BUILDINGFOCUS_FOOD)
 				{
 					// Tholal AI - try to avoid food buildings unless we have use for them
-					if ((happyLevel() > unhappyLevel()) || (healthRate() < 0) || bCanPopRush || isUnhappyProduction())
+					if ((happyLevel() > unhappyLevel()) || bCanPopRush || isUnhappyProduction())
 					{
 						iValue += ((kBuilding.getFoodKept() * getPopulation()) / (kOwner.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION1) ? 10 : 15));
 
