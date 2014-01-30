@@ -5287,7 +5287,7 @@ void CvTeamAI::AI_doWar()
 															logBBAI("  Team %d (%S) making peace due to time and no fighting", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0) );
 														}
 
-														break;
+														continue;
 													}
 												}
 											}
@@ -5304,7 +5304,7 @@ void CvTeamAI::AI_doWar()
 														logBBAI("  Team %d (%S) making peace due to time and endWarVal %d vs their %d", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0) , iOurValue, iTheirValue );
 													}
 													makePeace((TeamTypes)iI);
-													break;
+													continue;
 												}
 											}
 
@@ -5322,7 +5322,7 @@ void CvTeamAI::AI_doWar()
 															logBBAI("  Team %d (%S) making peace due to being only dog-piler left", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0) );
 														}
 														makePeace((TeamTypes)iI);
-														break;
+														continue;
 													}
 												}
 											}
