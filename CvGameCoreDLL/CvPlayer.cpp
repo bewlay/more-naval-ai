@@ -19401,19 +19401,19 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 /*                                                                                              */
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
-		changeUpgradeAnywhere((GC.getCivicInfo(eCivic).isUpgradeAnywhere())? iChange : 0);
-		changeRevIdxLocal(GC.getCivicInfo(eCivic).getRevIdxLocal() * iChange);
-		changeRevIdxNational(GC.getCivicInfo(eCivic).getRevIdxNational() * iChange);
-		changeRevIdxDistanceModifier(GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() * iChange);
-		changeRevIdxHolyCityGood(GC.getCivicInfo(eCivic).getRevIdxHolyCityGood() * iChange);
-		changeRevIdxHolyCityBad(GC.getCivicInfo(eCivic).getRevIdxHolyCityBad() * iChange);
-		changeRevIdxNationalityMod(GC.getCivicInfo(eCivic).getRevIdxNationalityMod() * static_cast<float>(iChange));
-		changeRevIdxBadReligionMod(GC.getCivicInfo(eCivic).getRevIdxBadReligionMod() * static_cast<float>(iChange));
-		changeRevIdxGoodReligionMod(GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod() * static_cast<float>(iChange));
-//		if ( GC.getCivicInfo(eCivic).isAllowInquisitions() || GC.getCivicInfo(eCivic).isDisallowInquisitions() )
-//		{
-//			setInquisitionConditions();
-//		}
+	changeUpgradeAnywhere((GC.getCivicInfo(eCivic).isUpgradeAnywhere())? iChange : 0);
+	changeRevIdxLocal(GC.getCivicInfo(eCivic).getRevIdxLocal() * iChange);
+	changeRevIdxNational(GC.getCivicInfo(eCivic).getRevIdxNational() * iChange);
+	changeRevIdxDistanceModifier(GC.getCivicInfo(eCivic).getRevIdxDistanceModifier() * iChange);
+	changeRevIdxHolyCityGood(GC.getCivicInfo(eCivic).getRevIdxHolyCityGood() * iChange);
+	changeRevIdxHolyCityBad(GC.getCivicInfo(eCivic).getRevIdxHolyCityBad() * iChange);
+	changeRevIdxNationalityMod(GC.getCivicInfo(eCivic).getRevIdxNationalityMod() * static_cast<float>(iChange));
+	changeRevIdxBadReligionMod(GC.getCivicInfo(eCivic).getRevIdxBadReligionMod() * static_cast<float>(iChange));
+	changeRevIdxGoodReligionMod(GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod() * static_cast<float>(iChange));
+//	if ( GC.getCivicInfo(eCivic).isAllowInquisitions() || GC.getCivicInfo(eCivic).isDisallowInquisitions() )
+//	{
+//		setInquisitionConditions();
+//	}
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/

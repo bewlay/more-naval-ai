@@ -29294,6 +29294,7 @@ bool CvUnitAI::AI_Rantinemove()
 void CvUnitAI::AI_upgrademanaMove()
 {
 
+	logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_upgrademanaMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
 
 	if (bDanger)
@@ -29308,7 +29309,6 @@ void CvUnitAI::AI_upgrademanaMove()
 	{
 		return;
 	}
-
 	
 	int iValue = 0;
 	int iBestValue = 10;
@@ -29448,7 +29448,7 @@ void CvUnitAI::AI_upgrademanaMove()
 		{
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("     %S (Unit %d) moving to mana node at plot %d, %d", getName().GetCString(), getID(), pBestPlot->getX(), pBestPlot->getY());
+				logBBAI("      ...moving to mana node at plot %d, %d", getName().GetCString(), getID(), pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 			}
 
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
