@@ -27569,24 +27569,24 @@ bool CvUnitAI::AI_exploreLairSea(int iRange)
 														iValue = 0;
 													}
 												}
-											
-												pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-												if (pNearestCity != NULL)
+											}
+
+											pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+											if (pNearestCity != NULL)
+											{
+												// avoid opening lairs near our team if they are lightly defended or its early in the game
+												if (pNearestCity->getTeam() == getTeam())
 												{
-													// avoid opening lairs near our team if they are lightly defended or its early in the game
-													if (pNearestCity->getTeam() == getTeam())
+													if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
 													{
-														if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
-														{
-															iValue = 0;
-														}
+														iValue = 0;
 													}
 												}
+											}
 
-												if (iValue > iBestValue)
-												{
-													pBestPlot = pLoopPlot;
-												}
+											if (iValue > iBestValue)
+											{
+												pBestPlot = pLoopPlot;
 											}
 										}
 									}
@@ -27613,6 +27613,7 @@ bool CvUnitAI::AI_exploreLairSea(int iRange)
 		}
 		else
 		{
+			if( gUnitLogLevel > 2 ) logBBAI("      ....moving to %d, %d to explore Sea Lair", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 	        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
 			return true;
 		}
@@ -27685,24 +27686,24 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 													iValue = 0;
 												}
 											}
+										}
 										
-											pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-											if (pNearestCity != NULL)
+										pNearestCity = GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+										if (pNearestCity != NULL)
+										{
+											// avoid opening lairs near our team if they are lightly defended or its early in the game
+											if (pNearestCity->getTeam() == getTeam())
 											{
-												// avoid opening lairs near our team if they are lightly defended or its early in the game
-												if (pNearestCity->getTeam() == getTeam())
+												if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
 												{
-													if (!pNearestCity->AI_isDefended() || (GET_PLAYER(getOwnerINLINE()).getNumCities() == 1))
-													{
-														iValue = 0;
-													}
+													iValue = 0;
 												}
 											}
+										}
 
-											if (iValue > iBestValue)
-											{
-												pBestPlot = pLoopPlot;
-											}
+										if (iValue > iBestValue)
+										{
+											pBestPlot = pLoopPlot;
 										}
 									}
 								}
@@ -27728,6 +27729,7 @@ bool CvUnitAI::AI_exploreLair(int iRange)
 		}
 		else
 		{
+			if( gUnitLogLevel > 2 )	logBBAI("      ....moving to %d, %d to explore Lair", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 	        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);
 			return true;
 		}
