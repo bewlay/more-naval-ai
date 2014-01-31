@@ -4046,7 +4046,7 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 					int iOtherValue = kTeam.AI_endWarVal(eLoopTeam);
 					int iTheirValue = kLoopTeam.AI_endWarVal(eTeam);
 					
-					szBuffer.append( CvWString::format(SETCOLR L" %s " ENDCOLR SETCOLR L"(%d, %d)" ENDCOLR SETCOLR L" with %s " ENDCOLR  SETCOLR L"(%d, %d)\n" ENDCOLR, 
+					szBuffer.append( CvWString::format(SETCOLR L" %s " ENDCOLR SETCOLR L"(%d, %d)" ENDCOLR SETCOLR L" with %s " ENDCOLR  SETCOLR L"(%d, %d) " ENDCOLR SETCOLR L"(%d turns)\n" ENDCOLR, 
 						TEXT_COLOR((iOtherValue < iTheirValue) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"),
 						szWarplan.getCString(),
 						TEXT_COLOR((iOtherValue < iTheirValue) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"),
@@ -4054,7 +4054,9 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 						TEXT_COLOR((iOtherValue < iTheirValue) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"),
 						kLoopTeam.getName().GetCString(),
 						TEXT_COLOR((iTheirValue < iOtherValue) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"),
-						iTheirValue, kLoopTeam.AI_getWarSuccess(eTeam)) );
+						iTheirValue, kLoopTeam.AI_getWarSuccess(eTeam),
+						TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"),
+						kTeam.AI_getAtWarCounter(eLoopTeam)) );
 				}
 			}
 		}
