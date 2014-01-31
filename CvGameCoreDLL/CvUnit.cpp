@@ -18725,7 +18725,7 @@ int CvUnit::chooseSpell()
 					int iCost = kSpellInfo.getCost();
 					iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
 					iCost /= 100;
-					iValue += (GET_PLAYER(getOwner()).getGold() - GET_PLAYER(getOwner()).AI_goldTarget()) - (iCost * 4);
+					iValue += (GET_PLAYER(getOwner()).getGold() - GET_PLAYER(getOwner()).AI_getGoldTreasury(true, true, true, true)) - iCost;
 				}
 
 				if (kSpellInfo.getImmobileTurns() != 0)
