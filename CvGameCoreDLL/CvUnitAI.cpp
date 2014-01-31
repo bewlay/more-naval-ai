@@ -152,7 +152,7 @@ bool CvUnitAI::AI_update()
 		}
 
 		// Vampire stuff. Eating local pop, assignment of AI_FEASTING
-		if (isVampire())
+		if (isVampire() && getGroup()->getNumUnits() == 1)
 		{
 			AI_feastingmove();
 		}
@@ -26764,45 +26764,15 @@ bool CvUnitAI::AI_groupheal(int iDamagePercent, int iMaxPath)
 
 void CvUnitAI::AI_feastingmove()
 {
-
-
 	if( gUnitLogLevel >= 2 )
 	{
 		logBBAI("    %S (unit %d) starting feastingMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
 	}
+	
+	FAssertMsg(isVampire(), "Feasters are expected to be Vampires");
 
 	CvCity* pCity = plot()->getPlotCity();
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
-
-	if (!isVampire() || !isAlive())
-	{
-		//TODO - change this to a choose groupflag call then return
-		if (AI_getUnitAIType() == UNITAI_FEASTING)
-		{
-			AI_setGroupflag(GROUPFLAG_CONQUEST);
-			AI_setUnitAIType(UNITAI_ATTACK_CITY);
-			getGroup()->pushMission(MISSION_SKIP);
-		}
-
-		return;
-	}
-
-	// TODO: Change this to Feast odds - higher if in peactime, more angry/unhealthy, larger cities
-	int iNeededFeasters = std::max(1,(kPlayer.getNumCities() / 3));
-
-	if (AI_getGroupflag() == GROUPFLAG_CONQUEST || AI_getGroupflag() == GROUPFLAG_PATROL)
-	{
-		if (kPlayer.AI_totalUnitAIs(UNITAI_FEASTING) < iNeededFeasters)
-		{
-			if ((getLevel() < 6) && (AI_getUnitAIType() != UNITAI_HERO))
-			{
-				joinGroup(NULL);
-				AI_setGroupflag(GROUPFLAG_NONE);
-				AI_setUnitAIType(UNITAI_FEASTING);
-				getGroup()->pushMission(MISSION_SKIP);
-			}
-		}
-	}
 
 	// Tholal ToDo: move this into python? - Hardcode
 	if ((pCity != NULL) && !isHasCasted())
@@ -26815,8 +26785,42 @@ void CvUnitAI::AI_feastingmove()
 				{
 					cast(GC.getDefineINT("SPELL_FEAST"));
 				}
-				getGroup()->pushMission(MISSION_SKIP);
-				return;
+				//getGroup()->pushMission(MISSION_SKIP);
+				//return;
+				if( gUnitLogLevel > 2 ) logBBAI("      ...Unit %S (%d) making opportunistic feast at %S", getName().GetCString(), getID(), pCity->getName().GetCString());
+			}
+		}
+	}
+
+
+	/*
+	if (!isVampire() || !isAlive())
+	{
+		//TODO - change this to a choose groupflag call then return
+		if (AI_getUnitAIType() == UNITAI_FEASTING)
+		{
+			AI_setGroupflag(GROUPFLAG_CONQUEST);
+			AI_setUnitAIType(UNITAI_ATTACK_CITY);
+			getGroup()->pushMission(MISSION_SKIP);
+		}
+
+		return;
+	}
+	*/
+
+	// TODO: Change this to Feast odds - higher if in peactime, more angry/unhealthy, larger cities
+	int iNeededFeasters = std::max(1,(kPlayer.getNumCities() / 3));
+
+	if (AI_getGroupflag() == GROUPFLAG_CONQUEST || AI_getGroupflag() == GROUPFLAG_PATROL)
+	{
+		if (kPlayer.AI_totalUnitAIs(UNITAI_FEASTING) < iNeededFeasters)
+		{
+			if ((getLevel() < 6) && (AI_getUnitAIType() != UNITAI_HERO))
+			{
+				//joinGroup(NULL);
+				AI_setGroupflag(GROUPFLAG_NONE);
+				AI_setUnitAIType(UNITAI_FEASTING);
+				//getGroup()->pushMission(MISSION_SKIP);
 			}
 		}
 	}
@@ -26895,6 +26899,7 @@ void CvUnitAI::AI_feastingmove()
 					}
 					else
 					{
+						if( gUnitLogLevel > 2 )	logBBAI("      ....moving to %d, %d to Feast", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 						FAssert(!atPlot(pBestPlot));
 						getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
 						return;
