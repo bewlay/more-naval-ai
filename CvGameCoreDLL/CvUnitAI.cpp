@@ -30211,11 +30211,13 @@ void CvUnitAI::AI_InquisitionMove()
 
 	if (iStateRel != NO_RELIGION)
 	{
-		// ToDo - check that no other inquisitors are here - count untiaitypes unitai_inquisitor
 		if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 		{
-			cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
-			return;
+			if (plot()->plotCount(PUF_isUnitAIType, UNITAI_INQUISITOR, -1, NO_PLAYER, getTeam()) == 1)
+			{
+				cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
+				return;
+			}
 		}
 
         bool bValidTargetForInquisition = false;
@@ -30229,36 +30231,39 @@ void CvUnitAI::AI_InquisitionMove()
 				{
 					for (pLoopCity = GET_PLAYER((PlayerTypes)iJ).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iJ).nextCity(&iLoop))
 					{
-						int iPathTurns;
-						if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+						if (pLoopCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_INQUISITOR, -1, NO_PLAYER, getTeam()) == 0)
 						{
-							bValidTargetForInquisition = false;
-							iNumHeathenRels = 0;
-
-							for (int iTarget=0; iTarget < GC.getNumReligionInfos(); iTarget++)
+							int iPathTurns;
+							if (generatePath(pLoopCity->plot(), MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 							{
-								if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+								bValidTargetForInquisition = false;
+								iNumHeathenRels = 0;
+
+								for (int iTarget=0; iTarget < GC.getNumReligionInfos(); iTarget++)
 								{
-									bValidTargetForInquisition = true;
-									iNumHeathenRels++;
+									if (iStateRel != ((ReligionTypes)iTarget) && pLoopCity->isHasReligion((ReligionTypes)iTarget) && (!pLoopCity->isHolyCity((ReligionTypes)iTarget)))
+									{
+										bValidTargetForInquisition = true;
+										iNumHeathenRels++;
+									}
 								}
-							}
 
-							if (bValidTargetForInquisition)
-							{
-								iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
-								if (pLoopCity->isHolyCity((ReligionTypes)iStateRel))
+								if (bValidTargetForInquisition)
 								{
+									iValue = pLoopCity->getPopulation() * (iNumHeathenRels * 2);
+									if (pLoopCity->isHolyCity((ReligionTypes)iStateRel))
+									{
+										iValue *= 2;
+									}
+									
 									iValue *= 2;
-								}
-								
-								iValue *= 2;
-								iValue /= iPathTurns;
-								
-								if (iValue > iBestValue)
-								{
-									iBestValue = iValue;
-									pBestCity = pLoopCity;
+									iValue /= iPathTurns;
+									
+									if (iValue > iBestValue)
+									{
+										iBestValue = iValue;
+										pBestCity = pLoopCity;
+									}
 								}
 							}
 						}
@@ -30275,15 +30280,22 @@ void CvUnitAI::AI_InquisitionMove()
 			{
 				if (canCast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"), false))
 				{
-					logBBAI("     ...Inquisitioning");
-					cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
-					return;
+					if (plot()->plotCount(PUF_isUnitAIType, UNITAI_INQUISITOR, -1, NO_PLAYER, getTeam()) == 1)
+					{
+						logBBAI("     ...Inquisitioning");
+						cast((SpellTypes)GC.getInfoTypeForString("SPELL_INQUISITION"));
+						return;
+					}
+					else
+					{
+						if( gUnitLogLevel > 2 ) logBBAI("     ...too many Inquisitioners at pBestPlot");
+					}
 				}
 			}
 			else
 			{
 				logBBAI("     ...moving to city");
-				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+				getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
 				return;
 			}
 		}
@@ -30309,7 +30321,7 @@ void CvUnitAI::AI_InquisitionMove()
 		return;
 	}
 
-    getGroup()->pushMission(MISSION_SKIP);
+    //getGroup()->pushMission(MISSION_SKIP);
     return;
 }
 
