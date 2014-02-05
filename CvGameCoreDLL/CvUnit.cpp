@@ -2246,6 +2246,15 @@ void CvUnit::updateCombat(bool bQuick)
 		NotifyEntity(MISSION_DAMAGE);
 		pDefender->NotifyEntity(MISSION_DAMAGE);
 
+		// Bugfix: Defenders that flee can be killed after combat
+		bool pDefenderCannotFlee = false;
+		if (pDefender->isFleeWithdrawl())
+		{
+			pDefender->joinGroup(NULL);
+			pDefenderCannotFlee = !pDefender->withdrawlToNearestValidPlot(false);
+		}
+		// Bugfix end
+
 		if (isDead())
 		{
 			if (isBarbarian())
@@ -2294,7 +2303,7 @@ void CvUnit::updateCombat(bool bQuick)
 //FfH: End Modify
 
 		}
-		else if (pDefender->isDead())
+		else if (pDefenderCannotFlee || pDefender->isDead())
 		{
 			if (pDefender->isBarbarian())
 			{
@@ -2433,9 +2442,11 @@ void CvUnit::updateCombat(bool bQuick)
 //			getGroup()->clearMissionQueue();
             if (pDefender->isFleeWithdrawl())
             {
-                pDefender->joinGroup(NULL);
+				// Bugfix: Defenders that flee can be killed after combat
+                // pDefender->joinGroup(NULL);
                 pDefender->setFleeWithdrawl(false);
-                pDefender->withdrawlToNearestValidPlot();
+                // pDefender->withdrawlToNearestValidPlot();
+				// Bugfix end
 
 //>>>>BUGFfH: Modified by Denev 10/14/2009 (0.41k)
 /*	When defender fleed, attacker loses movement point as same as wining	*/
@@ -19611,7 +19622,7 @@ bool CvUnit::isTerraformer() const
 	return bTerraformer;
 }
 
-bool CvUnit::withdrawlToNearestValidPlot()
+bool CvUnit::withdrawlToNearestValidPlot(bool bKillUnit)
 {
 	CvPlot* pLoopPlot;
 	CvPlot* pBestPlot = NULL;
@@ -19664,7 +19675,11 @@ bool CvUnit::withdrawlToNearestValidPlot()
 	}
 	else
 	{
-		kill(false);
+		// Bugfix: Defenders that flee can be killed after combat
+		if (bKillUnit) {
+			kill(false);
+		}
+		// Bugfix end
 		bValid = false;
 	}
 	return bValid;
