@@ -4326,6 +4326,7 @@ void CvUnit::gift(bool bTestTransport)
 
 	pGiftUnit->convert(this);
 
+	int iUnitGiftValue = 0;
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/03/09                                jdog5000      */
 /*                                                                                              */
@@ -4336,13 +4337,45 @@ void CvUnit::gift(bool bTestTransport)
 	if (pGiftUnit->canDefend())
 	{
 		//GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost() * 3 * GC.getGameINLINE().AI_combatValue(pGiftUnit->getUnitType()))/100);
-		GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (3 * GET_PLAYER(plot()->getOwnerINLINE()).AI_trueCombatValue(pGiftUnit->getUnitType()))/100);
+		//GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (3 * GET_PLAYER(plot()->getOwnerINLINE()).AI_trueCombatValue(pGiftUnit->getUnitType()))/100);
+		iUnitGiftValue = pGiftUnit->getUnitInfo().getProductionCost() * 3 * GET_PLAYER(plot()->getOwnerINLINE()).AI_trueCombatValue(pGiftUnit->getUnitType()) / 100;
 	}
 	else
 	{
-		GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost()));
+		int productionCost = pGiftUnit->getUnitInfo().getProductionCost();
+		if (productionCost > 0) 
+		{
+			iUnitGiftValue = pGiftUnit->getUnitInfo().getProductionCost();
+			//GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, (pGiftUnit->getUnitInfo().getProductionCost()));
+		} 
+		else 
+		{
+			// ToDo: The AI should probably evaluate the gift instead of giving them fixed values.
+			bool isValuedUnit = false;
+
+			if (pGiftUnit->getUnitInfo().getFreePromotions((PromotionTypes)GC.getDefineINT("PROMOTION_HERO"))) {
+				// Hardcode: Adventurers
+				isValuedUnit = true;
+			} else if (pGiftUnit->getUnitInfo().getLeaderPromotion() != NO_PROMOTION) {
+				isValuedUnit = true;
+			} else {
+				for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+				{
+					SpecialistTypes eSpecialist = (SpecialistTypes)iI;
+					if (m_pUnitInfo->getGreatPeoples(eSpecialist))
+					{
+						isValuedUnit = true;
+						iUnitGiftValue = 240;
+						break;
+					}
+				}
+			
+			}
+		}
 	}
-	//Todo - add debug message here
+
+	if (gUnitLogLevel > 2) logBBAI("   Unit %S (%d) gifted to %S (value: %d)", pGiftUnit->getName().GetCString(), getID(), GET_PLAYER(pGiftUnit->getOwnerINLINE()).getCivilizationDescription(0), iUnitGiftValue);
+	GET_PLAYER(pGiftUnit->getOwnerINLINE()).AI_changePeacetimeGrantValue(eOwner, iUnitGiftValue);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
