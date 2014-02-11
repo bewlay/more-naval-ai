@@ -1424,23 +1424,23 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	switch (AI_getAttitude(eTeam))
 	{
 	case ATTITUDE_FURIOUS:
-		iValue *= 16;
+		iValue *= 6;
 		break;
 
 	case ATTITUDE_ANNOYED:
-		iValue *= 8;
-		break;
-
-	case ATTITUDE_CAUTIOUS:
 		iValue *= 4;
 		break;
 
-	case ATTITUDE_PLEASED:
+	case ATTITUDE_CAUTIOUS:
 		iValue *= 2;
 		break;
 
-	case ATTITUDE_FRIENDLY:
+	case ATTITUDE_PLEASED:
 		iValue *= 1;
+		break;
+
+	case ATTITUDE_FRIENDLY:
+		iValue /= 2;
 		break;
 
 	default:
@@ -1482,6 +1482,11 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	if (AI_calculateAdjacentLandPlots(eTeam) == 0)
+	{
+		iValue /= 2;
+	}
+	// MNAI ToDo - devalue based on distance
 	return iValue;
 }
 
@@ -1502,14 +1507,23 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	iValue += getTotalPopulation();
 	iValue += kWarTeam.getTotalPopulation();
 
-	iValue += (kWarTeam.AI_getWarSuccess(getID()) * 30);
-	iValue -= AI_getWarSuccess(eTeam) * 30;
+	iValue += kWarTeam.AI_getWarSuccess(getID()); //* 30);
+	iValue -= AI_getWarSuccess(eTeam);// * 30;
 
 	int iOurPower = std::max(1, getPower(true));
 	int iTheirPower = std::max(1, kWarTeam.getDefensivePower());
 
-	iValue *= iTheirPower + 10;
+	// MNAI To Do - increase value for distant opponents
+	// MNAI - add value based on the duration of the war
+	int iDurationMod = (AI_getAtWarCounter(eTeam) - ((AI_getWarPlan(eTeam) == WARPLAN_TOTAL) ? 40 : 30) * 3);
+	iDurationMod *=  GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
+	iDurationMod /= 100;
+	iValue += iDurationMod;
 
+	iValue += kWarTeam.getWarWeariness(eTeam);
+	// End MNAI
+
+	iValue *= iTheirPower + 10;
 //FfH: Modified by Kael 04/23/2009
 //	iValue /= std::max(1, iOurPower + iTheirPower + 10);
 	iValue /= std::max(1, iOurPower + 10);
@@ -1657,12 +1671,6 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-
-	// MNAI
-	// increase value for distant opponents
-	// increase value for long wars
-	iValue += kWarTeam.getWarWeariness(eTeam);
-	// End MNAI
 
 	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
 
