@@ -15560,9 +15560,15 @@ bool CvUnit::canApplyEvent(EventTypes eEvent) const
 {
 	CvEventInfo& kEvent = GC.getEventInfo(eEvent);
 
-	if (0 != kEvent.getUnitExperience())
+	int iEventExperience = kEvent.getUnitExperience();
+	if (0 != iEventExperience)
 	{
 		if (!canAcquirePromotionAny())
+		{
+			return false;
+		}
+
+		if ((iEventExperience + getExperience()) < 0)
 		{
 			return false;
 		}
