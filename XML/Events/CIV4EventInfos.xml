@@ -52688,7 +52688,7 @@
             <PythonCanDo></PythonCanDo>
             <PythonHelp></PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1000</iAIValue>
+            <iAIValue>100</iAIValue>
             <iCrime>0</iCrime>
             <iGlobalCounter>0</iGlobalCounter>
             <PrereqAlignment>NONE</PrereqAlignment>
