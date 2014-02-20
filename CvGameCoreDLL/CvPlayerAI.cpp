@@ -7491,7 +7491,12 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 									iMilitaryValue += 15;
 								}
 
-								if ((PromotionTypes)kLoopUnit.getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE"))
+								if ((PromotionTypes)kLoopUnit.getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE")) // MNAI - HARDCODE
+								{
+									iMilitaryValue += 25 * iTier;
+								}
+
+								if ((PromotionTypes)kLoopUnit.getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_CHANNELING3")) // MNAI - HARDCODE
 								{
 									iMilitaryValue += 25 * iTier;
 								}
