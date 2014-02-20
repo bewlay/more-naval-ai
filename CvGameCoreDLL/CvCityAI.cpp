@@ -1043,7 +1043,7 @@ void CvCityAI::AI_chooseProduction()
 	AI_setChooseProductionDirty(false);
 
 // Tholal AI - block python in financial trouble
-	if (!kPlayer.AI_isFinancialTrouble())
+	if (!kPlayer.AI_isFinancialTrouble() && !bDanger)
 	{
 		// allow python to handle it
 		CyCity* pyCity = new CyCity(this);
@@ -2351,11 +2351,13 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
+	bool bBarbCitiesinArea = pArea->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0;
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
 	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) || // units for expansion
 		kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER) || // Dagger strategy
 		bAggressiveAI || // Aggressive AI
-		(kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) && bWarPlan)) // Conquest strat plus warplan
+		(kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) && bWarPlan) &&  // Conquest strat plus warplan
+		(!kPlayer.AI_isCapitalAreaAlone() || bBarbCitiesinArea))
 	{
 		//Building city hunting stack.
 
@@ -2373,7 +2375,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 
 		int iStartAttackStackRand = 0;
-		if (pArea->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0)
+		if (bBarbCitiesinArea)
 		{
 			iStartAttackStackRand += 15;
 		}
@@ -2407,20 +2409,32 @@ void CvCityAI::AI_chooseProduction()
 						return;
 					}
 				}
-				else if (iAttackCount < (3 + iBuildUnitProb / (bWarPlan ? 10 : 20)))
+				else
 				{
-					if (bAtWar)
+					int iDivisor = 10;
+
+					if (bWarPlan)
 					{
-						if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+						iDivisor /= 2;
+					}
+
+					int iAttackWanted = (3 + iNumCitiesInArea + iBuildUnitProb + getDomainFreeExperience(DOMAIN_LAND)) / iDivisor;
+
+					if (iAttackCount < iAttackWanted)
+					{
+						if (bAtWar)
 						{
-							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack (ATTACK_CITY)", getName().GetCString());
+							if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+							{
+								if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack (ATTACK_CITY)(H/N : %d / %d)", getName().GetCString(), iAttackCount, iAttackWanted);
+								return;
+							}
+						}
+						if (AI_chooseUnit(UNITAI_ATTACK))
+						{
+							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack(ATTACK)(H/N : %d / %d)", getName().GetCString(), iAttackCount, iAttackWanted);
 							return;
 						}
-					}
-					if (AI_chooseUnit(UNITAI_ATTACK))
-					{
-						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack(ATTACK)", getName().GetCString());
-						return;
 					}
 				}
 			}
@@ -3313,7 +3327,6 @@ void CvCityAI::AI_chooseProduction()
 			invaderTypes.push_back(std::make_pair(UNITAI_ATTACK, 40));
 			invaderTypes.push_back(std::make_pair(UNITAI_PARADROP, (kPlayer.AI_isDoStrategy(AI_STRATEGY_AIR_BLITZ) ? 30 : 20) / (bAssault ? 2 : 1)));
 
-			/*
 			if (!bAssault)
 			{
 				if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_PILLAGE) <= ((iNumCitiesInArea + 1) / 2))
@@ -3321,8 +3334,7 @@ void CvCityAI::AI_chooseProduction()
 					invaderTypes.push_back(std::make_pair(UNITAI_PILLAGE, 30));
 				}
 			}
-			*/
-
+			
 			if (AI_chooseLeastRepresentedUnit(invaderTypes, iTrainInvaderChance))
 			{
 				if( gCityLogLevel >= 2 )
@@ -4971,8 +4983,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 				iValue += (kBuilding.getFreePromotionPick() * 5); // Tholal AI
 
-				iValue += kBuilding.getFlavorValue((FlavorTypes)0); // FLAVOR_MILITARY
-
 				for (iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 				{
 					if (canTrain((UnitCombatTypes)iI))
@@ -5125,6 +5135,11 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 					}
 
 					iValue += iTempValue;
+
+					if (iValue > 0)
+					{
+						iValue += kBuilding.getFlavorValue((FlavorTypes)0); // FLAVOR_MILITARY
+					}
 				}
 	//<<<<Better AI: End Add
 			}
