@@ -3107,7 +3107,10 @@ int CvGame::countPossibleVote(VoteTypes eVote, VoteSourceTypes eVoteSource) cons
 
 	for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 	{
-		iCount += GET_PLAYER((PlayerTypes)iI).getVotes(eVote, eVoteSource);
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			iCount += GET_PLAYER((PlayerTypes)iI).getVotes(eVote, eVoteSource);
+		}
 	}
 
 	return iCount;
