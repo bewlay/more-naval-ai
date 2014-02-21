@@ -25023,7 +25023,10 @@ bool CvPlayer::hasVotes(ReligionTypes eReligion) const
 	{
 		if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() != NO_VOTESOURCE)
 		{
-		    return true;
+			if (pLoopUnit->getDuration() == 0)
+			{
+			    return true;
+			}
 		}
 	}
 //FfH: End Add
@@ -25116,7 +25119,10 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 		{
 			if (GC.getUnitInfo(pLoopUnit->getUnitTypeINLINE()).getDiploVoteType() == eVoteSource)
 			{
-			    iVotes += 1;
+				if (pLoopUnit->getDuration() == 0)
+				{
+				    iVotes += 1;
+				}
 			}
 		}
 	}
