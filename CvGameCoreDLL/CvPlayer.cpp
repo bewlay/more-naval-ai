@@ -2820,7 +2820,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 					{
 						if (pNewCity->isValidBuildingLocation(eBuilding))
 						{
-							if (!bConquest || bRecapture || GC.getGameINLINE().getSorenRandNum(100, "Capture Probability") < GC.getBuildingInfo((BuildingTypes)iI).getConquestProbability())
+							if (!bConquest || bRecapture || 
+								// Tholal ToDo - rebels have increased chance of keeping buildings
+								GC.getGameINLINE().getSorenRandNum(100, "Capture Probability") < GC.getBuildingInfo((BuildingTypes)iI).getConquestProbability())
 							{
 								iNum += paiNumRealBuilding[iI];
 							}
@@ -7892,9 +7894,20 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 
 		if (NO_BUILDING != ePrereqBuilding && currentTeam.isObsoleteBuilding(ePrereqBuilding))
 		{
-			if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, (BuildingClassTypes)iI, 0))
+			// MNAI - check team if prereq building is flagged as teamshare
+			if (GC.getBuildingInfo(ePrereqBuilding).isTeamShare())
 			{
-				return false;
+				if (currentTeam.getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, (BuildingClassTypes)iI, 0))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, (BuildingClassTypes)iI, 0))
+				{
+					return false;
+				}
 			}
 		}
 	}
@@ -7960,9 +7973,20 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 
 		for (iI = 0; iI < numBuildingClassInfos; iI++)
 		{
-			if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, ((BuildingClassTypes)iI), ((bContinue) ? 0 : getBuildingClassMaking(eBuildingClass))))
+			// MNAI - check if Prereq Building Class is a team building
+			if (GC.getBuildingClassInfo((BuildingClassTypes)iI).getMaxTeamInstances() == 1)
 			{
-				return false;
+				if (currentTeam.getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, ((BuildingClassTypes)iI), ((bContinue) ? 0 : getBuildingClassMaking(eBuildingClass))))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (getBuildingClassCount((BuildingClassTypes)iI) < getBuildingClassPrereqBuilding(eBuilding, ((BuildingClassTypes)iI), ((bContinue) ? 0 : getBuildingClassMaking(eBuildingClass))))
+				{
+					return false;
+				}
 			}
 		}
 	}
