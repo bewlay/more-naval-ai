@@ -15060,11 +15060,11 @@ bool CvUnitAI::AI_lead(std::vector<UnitAITypes>& aeUnitAITypes)
 
 				if(bBestUnitLegend)
 				{
-					logBBAI("      Great general %d for %S chooses to lead %S Legend Unit", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString());
+					logBBAI("    Great general %d for %S chooses to lead %S (%d) Legend Unit", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString(), pBestUnit->getID());
 				}
 				else
 				{
-					logBBAI("      Great general %d for %S chooses to lead %S with UNITAI %S", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString(), szString.GetCString());
+					logBBAI("    Great general %d for %S chooses to lead %S (%d) with UNITAI %S", getID(), GET_PLAYER(getOwner()).getCivilizationDescription(0), pBestUnit->getName(0).GetCString(), pBestUnit->getID(), szString.GetCString());
 				}
 			}
 			getGroup()->pushMission(MISSION_LEAD, pBestUnit->getID());
@@ -17124,7 +17124,7 @@ bool CvUnitAI::AI_pillageAroundCity(CvCity* pTargetCity, int iBonusValueThreshol
 			{
 				if (potentialWarAction(pLoopPlot) && (pLoopPlot->getTeam() == pTargetCity->getTeam()))
 				{
-					if (getGroup()->canPillage(pLoopPlot))//canPillage(pLoopPlot))
+					if (getGroup()->canPillage(pLoopPlot))
                     {
                         if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                         {
@@ -25095,7 +25095,22 @@ int CvUnitAI::AI_pillageValue(CvPlot* pPlot, int iBonusValueThreshold)
 	}
 	// End Advanced Tactics
 
-	if (pPlot->getImprovementType() == NO_IMPROVEMENT && isEnemyRoute())
+	CLLNode<IDInfo>* pUnitNode;
+	CvUnit* pLoopUnit;
+	bool bHasEnemyRouteTroops = false;
+	pUnitNode = getGroup()->headUnitNode();
+	while (pUnitNode != NULL)
+	{
+		pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = getGroup()->nextUnitNode(pUnitNode);
+		if (pLoopUnit->isEnemyRoute())
+		{
+			bHasEnemyRouteTroops = true;
+			break;
+		}
+	}
+
+	if (pPlot->getImprovementType() == NO_IMPROVEMENT && bHasEnemyRouteTroops) // loops triggered when stack is led by units without enemyroute (Stooges for example)
 	{
 		return 0;
 	}
@@ -27940,7 +27955,6 @@ void CvUnitAI::AI_ConquestMove()
 			return;
 		}
 
-		//if ((eAreaAIType == AREAAI_ASSAULT) || (eAreaAIType == AREAAI_ASSAULT_ASSIST))
 		if (bAssault)
 		{
 		    if (AI_offensiveAirlift())
@@ -27948,14 +27962,6 @@ void CvUnitAI::AI_ConquestMove()
 		        return;
 		    }
 		}
-
-		/*
-		if (plot()->getNumDefenders(getOwnerINLINE()) == getGroupSize())
-		{
-			getGroup()->pushMission(MISSION_SKIP);
-			return;
-		}
-		*/
     }
 
 
@@ -27971,15 +27977,6 @@ void CvUnitAI::AI_ConquestMove()
 			return;
 		}
 	}
-
-	/* Tholal Note - I add this section a while back. Seems like its now causing problems
-	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, false, true, bIgnoreFaster))
-	{
-		logBBAI("      ...Merge 1");
-		//getGroup()->pushMission(MISSION_SKIP);
-		return;
-	}
-	*/
 
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
@@ -28110,18 +28107,10 @@ void CvUnitAI::AI_ConquestMove()
                 if (atPlot(pBestUnit->plot()))
                 {
                     joinGroup(pBestUnit->getGroup());
-
-					/*
-                    if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
-                    {
-                        getGroup()->pushMission(MISSION_SKIP);
-                    }
-					*/
                     return;
                 }
                 else
                 {
-					//getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
                     return;
                 }
@@ -28174,19 +28163,10 @@ void CvUnitAI::AI_ConquestMove()
                 if (atPlot(pBestUnit->plot()))
                 {
 					getGroup()->mergeIntoGroup(pBestUnit->getGroup());
-					
-					/*
-                    if (getGroup()->getLengthMissionQueue()==0) //Make sure we push a Mission if joining a group failed
-                    {
-                        getGroup()->pushMission(MISSION_SKIP);
-                    }
-					*/
-					
                     return;
                 }
                 else
                 {
-					//getGroup()->pushMission(MISSION_MOVE_TO, pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), MOVE_DIRECT_ATTACK);
 					getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
                     return;
                 }
@@ -28198,7 +28178,6 @@ void CvUnitAI::AI_ConquestMove()
 
 	// Look for local threats - mainly meant to deal with early barbarian or HN threats
 	bool bDanger = (kPlayer.AI_getAnyPlotDanger(plot(), 3, false));
-
 
 	if( bReadyToAttack )
 	{
@@ -28449,7 +28428,6 @@ void CvUnitAI::AI_ConquestMove()
 				
 		// Tholal Note - seems that sometimes we have to force the AI to attack their targets
 		// Note: This section can cause the AI to declare War before stack is near borders
-		//if (getGroup()->getNumUnits() > ((kPlayer.getNumCities() * 6)))
 		if (iComparePostBombard >= 120)
 		{
 			if (GET_TEAM(getTeam()).isAtWar(pTargetCity->getTeam()) || plot()->isAdjacentPlayer(pTargetCity->getOwner()))
@@ -30413,7 +30391,7 @@ void CvUnitAI::AI_SvartalfarKidnapMove()
 
     if (pBestPlot!=NULL)
     {
-        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+        getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
         return;
     }
 
@@ -30535,7 +30513,7 @@ bool CvUnitAI::AI_buildPirateCove()
     {
         if (plot() != pBestPlot)
         {
-            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_BUILD, pBestPlot);
+            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_BUILD, pBestPlot);
         }
         else
         {
