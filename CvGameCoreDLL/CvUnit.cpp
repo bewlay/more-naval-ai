@@ -18525,9 +18525,30 @@ int CvUnit::chooseSpell()
 				iRange = kSpellInfo.getRange();
 				if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 				{
-					int iMoveRange = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getMoves() + getExtraSpellMove();
+					CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType());
+
+					int iMoveRange = kUnitInfo.getMoves() + getExtraSpellMove();
 					bool bPermSummon = kSpellInfo.isPermanentUnitCreate();
 					bool bEnemy = false;
+					bool isBombardSummon = false;
+					if (kUnitInfo.getBombardRate() > 0)
+					{
+						isBombardSummon = true;
+					}
+
+					//check promotions for movement bonus
+					for (int iPromotions = 0; iPromotions < GC.getNumPromotionInfos(); iPromotions++)
+					{
+						if (kUnitInfo.getFreePromotions(iPromotions))
+						{
+							CvPromotionInfo& kSummonPromotionInfo =  GC.getPromotionInfo((PromotionTypes)iPromotions);
+							// mainly to account for the Flying promo but will catch other changes to movement
+							iMoveRange += kSummonPromotionInfo.getMovesChange();
+
+							// ToDo - any other useful info we can get from a summoned unit based on the free promotions it receives?
+						}
+					}
+
 					for (int i = -iMoveRange; i <= iMoveRange; ++i)
 					{
 						for (int j = -iMoveRange; j <= iMoveRange; ++j)
@@ -18538,6 +18559,13 @@ int CvUnit::chooseSpell()
 								if (pLoopPlot->isVisibleEnemyUnit(this))
 								{
 									bEnemy = true;
+								}
+								if (pLoopPlot->isCity() && GET_TEAM(pLoopPlot->getTeam()).isAtWar(getTeam()))
+								{
+									if (isBombardSummon)
+									{
+										bEnemy = true;
+									}
 								}
 							}
 						}
@@ -18650,24 +18678,25 @@ int CvUnit::chooseSpell()
 				// Tholal ToDo - fix this. AI_promotionValue gives a value for the promotion for this unit
 				// some spells buff only this unit, some team units, some also include allied units - add code to sort that out here
 				
+				// Tholal ToDo - use the range of the spell for this check - use range check above - maybe even move it further up and gather data about all enemies, friends, etc
 				CvPlot* pAdjacentPlot = NULL;
-				int iEnemyCount = 0;
+				int iAdjacentEnemyCount = 0;
 				for (int iI = 0; iI < NUM_DIRECTION_TYPES; iI++)
 				{
 					pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
 					if( pAdjacentPlot != NULL )
 					{
-						iEnemyCount += pAdjacentPlot->getNumVisibleEnemyDefenders(this);
+						iAdjacentEnemyCount += pAdjacentPlot->getNumVisibleEnemyDefenders(this);
 					}
 				}
 
-				if (gUnitLogLevel > 3) logBBAI("      ....iEnemyCount: %d", iEnemyCount);  //MNAI - level 4 logging
+				if (gUnitLogLevel > 3) logBBAI("      ....iAdjacentEnemyCount: %d", iAdjacentEnemyCount);  //MNAI - level 4 logging
 				bool isImmuneTeamSpell = kSpellInfo.isImmuneTeam();  // this means it affects enemies
 				if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 				{
 					if (isImmuneTeamSpell)
 					{
-						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType1()) * iEnemyCount;
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getAddPromotionType1()) * iAdjacentEnemyCount;
 					}
 					else
 					{
@@ -18690,7 +18719,7 @@ int CvUnit::chooseSpell()
 					}
 					else
 					{
-						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType1()) * iEnemyCount;
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType1()) * iAdjacentEnemyCount;
 					}
 				}
 				if (kSpellInfo.getRemovePromotionType2() != NO_PROMOTION)
@@ -18701,7 +18730,7 @@ int CvUnit::chooseSpell()
 					}
 					else
 					{
-						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2()) * iEnemyCount;
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2()) * iAdjacentEnemyCount;
 					}
 				}
 				if (kSpellInfo.getRemovePromotionType3() != NO_PROMOTION)
@@ -18712,7 +18741,7 @@ int CvUnit::chooseSpell()
 					}
 					else
 					{
-						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType3()) * iEnemyCount;
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType3()) * iAdjacentEnemyCount;
 					}
 				}
 
