@@ -15925,6 +15925,13 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         {
             return false;
         }
+		
+		// MNAI: Revolutions - Rebels cant cast World spells
+		if (GET_PLAYER(getOwnerINLINE()).isRebel())
+		{
+			return false;
+		}
+		// End MNAI
     }
 
 	if (GET_PLAYER(getOwnerINLINE()).getDisableSpellcasting() > 0)
@@ -15934,12 +15941,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
-
-	// Rebels cant cast World spells
-	if (kSpell.isGlobal() && GET_PLAYER(getOwnerINLINE()).isRebel())
-	{
-		return false;
-	}
 
 	// objects cant cast spells
 	if (getUnitInfo().isObject())
