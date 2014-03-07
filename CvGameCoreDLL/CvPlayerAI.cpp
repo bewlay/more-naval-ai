@@ -435,7 +435,7 @@ void CvPlayerAI::AI_doTurnPre()
 		}
     }
 
-	if (getNumCities() > 0)
+	if (getNumCities() > 0 && !isAnarchy())
 	{
 		AI_doResearch();
 
@@ -6448,23 +6448,31 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	{
 		if (iValue > 0)
 		{
-			//this stops quick speed messing up.... might want to adjust by other things too...
-			int iSpeedAdjustment = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent();
+			if (getCommercePercent(COMMERCE_RESEARCH) > 0)
+			{
+				//this stops quick speed messing up.... might want to adjust by other things too...
+				int iSpeedAdjustment = GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getResearchPercent();
 
-			int iSpeedMod = ((iSpeedAdjustment * 15) / 100);
-	
-			// Shouldn't run this during anarchy
-			iTurnsLeft = getResearchTurnsLeftTimes100((eTech), false);
-			//int iTurnsLeft = getResearchTurnsLeft((eTech), false);
-			//bool bCheapBooster = ((iTurnsLeft < (2 * iAdjustment)) && (0 == ((bAsync) ? GC.getASyncRand().get(5, "AI Choose Cheap Tech") : GC.getGameINLINE().getSorenRandNum(5, "AI Choose Cheap Tech"))));
-			
-			
-			//iValue *= 100000;
-			//iValue *= 15;
-			iValue *= iSpeedMod;
-			
-            //iValue /= (iTurnsLeft + (bCheapBooster ? 1 : (5 * iAdjustment)));
-			iValue /= std::max(1, iTurnsLeft);
+				int iSpeedMod = ((iSpeedAdjustment * 15) / 100);
+		
+				// Shouldn't run this during anarchy
+				iTurnsLeft = getResearchTurnsLeftTimes100((eTech), false);
+				//int iTurnsLeft = getResearchTurnsLeft((eTech), false);
+				//bool bCheapBooster = ((iTurnsLeft < (2 * iAdjustment)) && (0 == ((bAsync) ? GC.getASyncRand().get(5, "AI Choose Cheap Tech") : GC.getGameINLINE().getSorenRandNum(5, "AI Choose Cheap Tech"))));
+				
+				
+				//iValue *= 100000;
+				//iValue *= 15;
+				iValue *= iSpeedMod;
+				
+				//iValue /= (iTurnsLeft + (bCheapBooster ? 1 : (5 * iAdjustment)));
+				iValue /= std::max(1, iTurnsLeft);
+			}
+			else
+			{
+				iValue *= 10000;
+				iValue /= GET_TEAM(getTeam()).getResearchLeft(eTech);
+			}
 		}
 	}
 	
