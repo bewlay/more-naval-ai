@@ -699,6 +699,11 @@ public:
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+	// MNAI - new functions
+	int countNumOwnedTerrainTypes(int /*TerrainTypes*/ eTerrain) const;
+	int getHighestUnitTier(bool bIncludeHeroes, bool bIncludeLimitedUnits) const;
+	// End MNAI
+
 // BUG - Reminder Mod - start
 	void addReminder(int iGameTurn, std::wstring szMessage) const;
 // BUG - Reminder Mod - start

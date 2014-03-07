@@ -2875,3 +2875,15 @@ void CyPlayer::addReminder(int iGameTurn, std::wstring szMessage) const
 		m_pPlayer->addReminder(iGameTurn, CvWString(szMessage));
 }
 // BUG - Reminder Mod - end
+
+// MNAI - new functions
+int CyPlayer::countNumOwnedTerrainTypes(int /*TerrainTypes*/ eTerrain) const
+{
+	return m_pPlayer ? m_pPlayer->countNumOwnedTerrainTypes((TerrainTypes)eTerrain) : -1;
+}
+
+int CyPlayer::getHighestUnitTier(bool bIncludeHeroes, bool bIncludeLimitedUnits) const
+{
+    return m_pPlayer ? m_pPlayer->getHighestUnitTier(bIncludeHeroes, bIncludeLimitedUnits) : -1;
+}
+// End MNAI

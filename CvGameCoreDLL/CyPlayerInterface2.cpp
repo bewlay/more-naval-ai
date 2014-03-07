@@ -151,6 +151,9 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
-
+		// MNAI - new functions
+		.def("countNumOwnedTerrainTypes",&CyPlayer::countNumOwnedTerrainTypes, "int (TerrainTypes eTerrain)")
+		.def("getHighestUnitTier",&CyPlayer::getHighestUnitTier, "int (bool bIncludeHeroes, bool bIncludeLimitedUnits)")
+		// End MNAI
 		;
 }

@@ -228,7 +228,10 @@ public:
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+	// MNAI - new functions
 	int countNumOwnedTerrainTypes(TerrainTypes eTerrain) const;
+	int getHighestUnitTier(bool bIncludeHeroes = false, bool bIncludeLimitedUnits = false) const;
+	// End MNAI
 	int countNumCoastalCities() const;																																		// Exposed to Python
 	int countNumCoastalCitiesByArea(CvArea* pArea) const;																									// Exposed to Python
 	int countTotalCulture() const;																																				// Exposed to Python

@@ -27721,6 +27721,7 @@ DenialTypes CvPlayer::AI_militaryUnitTrade(CvUnit* pUnit, PlayerTypes ePlayer) c
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
 
+// MNAI - new functions
 int CvPlayer::countNumOwnedTerrainTypes(TerrainTypes eTerrain) const
 {
 	PROFILE("CvPlayer::countNumOwnedTerrainTypes");
@@ -27743,3 +27744,33 @@ int CvPlayer::countNumOwnedTerrainTypes(TerrainTypes eTerrain) const
 
 	return iCount;
 }
+
+int CvPlayer::getHighestUnitTier(bool bIncludeHeroes, bool bIncludeLimitedUnits) const
+{
+	CvUnit* pLoopUnit;
+	int iLoop;
+	int iHighestTier = 0;
+
+	for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+	{
+		CvUnitInfo& kLoopUnit = GC.getUnitInfo(pLoopUnit->getUnitType());
+		
+		if (!(pLoopUnit->getDuration() > 0)) // dont count temporary units
+		{
+			if (!isWorldUnitClass(pLoopUnit->getUnitClassType()) || bIncludeHeroes) // dont count heroes unless the flag is set
+			{
+				if (!isLimitedUnitClass(pLoopUnit->getUnitClassType()) || bIncludeLimitedUnits)// dont count limited units unless the flag is set
+				{
+					if (kLoopUnit.getTier() > iHighestTier)
+					{
+						iHighestTier = kLoopUnit.getTier();
+					}
+				}
+			}
+		}
+	}
+
+	return iHighestTier;
+}
+
+// End MNAI
