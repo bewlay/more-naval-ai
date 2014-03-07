@@ -1964,67 +1964,64 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 // End Tholal AI
-    
-	
-	// -------------------- BBAI Notes -------------------------
-	// Minimal attack force, both land and sea
-	int iAttackNeeded = 1;
-
-	if (GC.getGameINLINE().getCurrentPeriod() > 0)
+    // Tholal ToDo - this should call a function to determine how many attack units we need - both for this city and for the team/player
+	if (bHasMetOtherPlayer || bDanger)
 	{
-		iAttackNeeded++;
-	}
+		// -------------------- BBAI Notes -------------------------
+		// Minimal attack force, both land and sea
+		int iAttackNeeded = 1;
 
-	if (bAggressiveAI)
-	{
-		iAttackNeeded++;
-	}
+		if (GC.getGameINLINE().getCurrentPeriod() > 0)
+		{
+			iAttackNeeded++;
+		}
 
-	if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
-	{
-		iAttackNeeded++;
+		if (bAggressiveAI)
+		{
+			iAttackNeeded++;
+		}
 
-		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2))
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
 		{
 			iAttackNeeded++;
 
-			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+			if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2))
 			{
 				iAttackNeeded++;
+
+				if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+				{
+					iAttackNeeded++;
+				}
 			}
 		}
-	}
 
-	if (bCrushStrategy)
-	{
-		iAttackNeeded++;
-	}
-	
-    if (bDanger && !bAtWar) 
-    {
-		iAttackNeeded += 4;
-		//iAttackNeeded += std::max(0, AI_neededDefenders() - plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE()));
-	}
-		
-	if (bLandWar || bAssault)
-	{
-		iAttackNeeded += 2;
-	}
-
-	if (!bHasMetOtherPlayer)
-	{
-		iAttackNeeded -= 1;
-	}
-
-	if( (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK) + kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY)) <  iAttackNeeded)
-	{
-		if (kPlayer.AI_getFundedPercent() > 50)
+		if (bCrushStrategy)
 		{
-    		if (AI_chooseUnit(UNITAI_ATTACK))
-    		{
-				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack", getName().GetCString());
-    			return;
-    		}
+			iAttackNeeded++;
+		}
+		
+		if (bDanger && !bAtWar) 
+		{
+			iAttackNeeded += 4;
+			//iAttackNeeded += std::max(0, AI_neededDefenders() - plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE()));
+		}
+			
+		if (bLandWar || bAssault)
+		{
+			iAttackNeeded += 2;
+		}
+
+		if ((kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK) + kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY)) <  iAttackNeeded)
+		{
+			if (kPlayer.AI_getFundedPercent() > 50)
+			{
+    			if (AI_chooseUnit(UNITAI_ATTACK))
+    			{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack", getName().GetCString());
+    				return;
+    			}
+			}
 		}
 	}
     
@@ -6539,7 +6536,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject)
 		}
 		else
 		{
-			iValue += kProject.getModifyGlobalCounter() * ((200 - GC.getGameINLINE().getGlobalCounter()) / 4);
+			iValue += kProject.getModifyGlobalCounter() * ((150 - GC.getGameINLINE().getGlobalCounter()) / 4);
 		}
 	}
 
