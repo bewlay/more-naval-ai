@@ -477,13 +477,13 @@ class CvEventManager:
 				if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_QUICK'):
 					if iGameTurn >= iOrthusTurn / 3 * 2:
 						bOrthus = True
-				if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_NORMAL'):
+				elif CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_NORMAL'):
 					if iGameTurn >= iOrthusTurn:
 						bOrthus = True
-				if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_EPIC'):
+				elif CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_EPIC'):
 					if iGameTurn >= iOrthusTurn * 3 / 2:
 						bOrthus = True
-				if CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_MARATHON'):
+				elif CyGame().getGameSpeedType() == gc.getInfoTypeForString('GAMESPEED_MARATHON'):
 					if iGameTurn >= iOrthusTurn * 3:
 						bOrthus = True
 				if bOrthus:
@@ -528,34 +528,6 @@ class CvEventManager:
 		pPlayer = gc.getPlayer(iPlayer)
 		player = PyPlayer(iPlayer)
 
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_VEIL'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_VEIL'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_THE_ORDER'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_ORDE'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_ORDE'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_LEAF'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_LEAF'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_RUNE'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_RUNE'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_OCTO'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_OCTO'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_EMPY'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_EMPY'))
-
-		if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS'):
-			if pPlayer.getCurrentEra() != gc.getInfoTypeForString('ERA_COUN'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_COUN'))
-
 		if not pPlayer.isHuman():
 			if not CyGame().getWBMapScript():
 				cf.warScript(iPlayer)
@@ -565,8 +537,7 @@ class CvEventManager:
 
 		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
 			cf.doTurnKhazad(iPlayer)
-
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
+		elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
 			cf.doTurnLuchuirp(iPlayer)
 
 		if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_INSANE')):
@@ -720,7 +691,7 @@ class CvEventManager:
 				pPlot.setMinLevel(15)
 				bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 				bPlayer.initUnit(gc.getInfoTypeForString('UNIT_BRIGIT_HELD'), pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-			if iImprovement == gc.getInfoTypeForString('IMPROVEMENT_SEVEN_PINES'):
+			elif iImprovement == gc.getInfoTypeForString('IMPROVEMENT_SEVEN_PINES'):
 				pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_GRASS'), True, True)
 				pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FOREST'), 1)
 
@@ -817,20 +788,20 @@ class CvEventManager:
 					if pCity.getOwner() == CyGame().getActivePlayer():
 						cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_INFERNAL_GRIMOIRE_BALOR",()), 'art/interface/popups/Balor.dds')
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'), 0)
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'), 0)
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'), 0)
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'), 0)
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'), 0)
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'):
 			pCity.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'), 0)
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
 			for iLoop in range(pPlot.getNumUnits(), -1, -1):
 				pUnit = pPlot.getUnit(iLoop)
 				pUnit.jumpToNearestValidPlot()
@@ -867,7 +838,7 @@ class CvEventManager:
 					popupInfo.setOnClickedPythonCallback("reassignPlayer")
 					popupInfo.addPopup(player)
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS'):
 			lList = ['UNIT_AIR_ELEMENTAL', 'UNIT_EARTH_ELEMENTAL', 'UNIT_FIRE_ELEMENTAL', 'UNIT_WATER_ELEMENTAL']
 			iUnit = gc.getInfoTypeForString(lList[CyGame().getSorenRandNum(len(lList), "Pick Elemental")-1])
 			newUnit = pPlayer.initUnit(iUnit, pCity.getX(), pCity.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
@@ -880,7 +851,7 @@ class CvEventManager:
 				if pUnit.isHasPromotion(iElemental):
 					pUnit.setHasPromotion(iStrong, True)
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY'):
 			iUndead = gc.getInfoTypeForString('PROMOTION_UNDEAD')
 			iStrong = gc.getInfoTypeForString('PROMOTION_STRONG')
 			apUnitList = PyPlayer(player).getUnitList()
@@ -888,7 +859,7 @@ class CvEventManager:
 				if pUnit.isHasPromotion(iUndead):
 					pUnit.setHasPromotion(iStrong, True)
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'):
 			iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 			iFlames = gc.getInfoTypeForString('FEATURE_FLAMES')
 			iFloodPlains = gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')
@@ -922,7 +893,7 @@ class CvEventManager:
 								pLoopPlot.setFeatureType(iBlizzard, -1)
 			CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_SNOWFALL'),pPlot.getPoint())
 
-		if iBuildingType == gc.getInfoTypeForString('BUILDING_GRAND_MENAGERIE'):
+		elif iBuildingType == gc.getInfoTypeForString('BUILDING_GRAND_MENAGERIE'):
 			if pPlayer.isHuman():
 				if not CyGame().getWBMapScript():
 					t = "TROPHY_FEAT_GRAND_MENAGERIE"
@@ -961,14 +932,13 @@ class CvEventManager:
 						if pUnit.getUnitCombatType() == iCombatDisciple:
 							pUnit.kill(False, pCity.getOwner())
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_GENESIS'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_GENESIS'):
 			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				cf.snowgenesis(iPlayer)
 			else:
 				cf.genesis(iPlayer)
 
-
-		if iProjectType == gc.getInfoTypeForString('PROJECT_GLORY_EVERLASTING'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_GLORY_EVERLASTING'):
 			iDemon = gc.getInfoTypeForString('PROMOTION_DEMON')
 			iUndead = gc.getInfoTypeForString('PROMOTION_UNDEAD')
 			for iLoopPlayer in range(gc.getMAX_PLAYERS()):
@@ -980,7 +950,7 @@ class CvEventManager:
 						if (pUnit.isHasPromotion(iDemon) or pUnit.isHasPromotion(iUndead)):
 							pUnit.kill(False, iPlayer)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_RITES_OF_OGHMA'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_RITES_OF_OGHMA'):
 			i = 7
 			if CyMap().getWorldSize() == gc.getInfoTypeForString('WORLDSIZE_DUEL'):
 				i = i - 3
@@ -994,7 +964,7 @@ class CvEventManager:
 				i = i + 3
 			cf.addBonus('BONUS_MANA',i,'Art/Interface/Buttons/WorldBuilder/mana_button.dds')
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_NATURES_REVOLT'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_NATURES_REVOLT'):
 			bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
 			py = PyPlayer(gc.getBARBARIAN_PLAYER())
 			iAxeman = gc.getInfoTypeForString('UNITCLASS_AXEMAN')
@@ -1015,16 +985,16 @@ class CvEventManager:
 				if pUnit.getUnitClassType() == iWorker:
 					iNewUnit = iWolf
 					bValid = True
-				if pUnit.getUnitClassType() == iScout:
+				elif pUnit.getUnitClassType() == iScout:
 					iNewUnit = iLion
 					bValid = True
-				if pUnit.getUnitClassType() == iWarrior:
+				elif pUnit.getUnitClassType() == iWarrior:
 					iNewUnit = iLion
 					bValid = True
-				if pUnit.getUnitClassType() == iHunter:
+				elif pUnit.getUnitClassType() == iHunter:
 					iNewUnit = iTiger
 					bValid = True
-				if pUnit.getUnitClassType() == iAxeman:
+				elif pUnit.getUnitClassType() == iAxeman:
 					iNewUnit = iBear
 					bValid = True
 				if bValid:
@@ -1043,7 +1013,7 @@ class CvEventManager:
 							pUnit.setHasPromotion(iHeroicStrength, True)
 							pUnit.setHasPromotion(iHeroicStrength2, True)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_BLOOD_OF_THE_PHOENIX'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_BLOOD_OF_THE_PHOENIX'):
 			py = PyPlayer(iPlayer)
 			apUnitList = py.getUnitList()
 			for pUnit in apUnitList:
@@ -1051,7 +1021,7 @@ class CvEventManager:
 					if pUnit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
 						pUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_IMMORTAL'), True)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_PURGE_THE_UNFAITHFUL'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_PURGE_THE_UNFAITHFUL'):
 			for pyCity in PyPlayer(iPlayer).getCityList():
 				pCity2 = pyCity.GetCy()
 				iRnd = CyGame().getSorenRandNum(2, "Bob")
@@ -1068,10 +1038,10 @@ class CvEventManager:
 				if iRnd > 0:
 					pCity2.setOccupationTimer(iRnd)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_BIRTHRIGHT_REGAINED'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_BIRTHRIGHT_REGAINED'):
 			pPlayer.setFeatAccomplished(FeatTypes.FEAT_GLOBAL_SPELL, False)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_SAMHAIN'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_SAMHAIN'):
 			for pyCity in PyPlayer(iPlayer).getCityList():
 				pCity = pyCity.GetCy()
 				pCity.changeHappinessTimer(20)
@@ -1083,7 +1053,7 @@ class CvEventManager:
 				cf.addUnit(gc.getInfoTypeForString('UNIT_FROSTLING_WOLF_RIDER'))
 			cf.addUnit(gc.getInfoTypeForString('UNIT_MOKKA'))
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'):
 			newUnit1 = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_PRIEST_OF_WINTER'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			newUnit1.setName("Dumannios")
 			newUnit2 = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_PRIEST_OF_WINTER'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
@@ -1091,7 +1061,7 @@ class CvEventManager:
 			newUnit3 = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_PRIEST_OF_WINTER'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			newUnit3.setName("Anagantios")
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_THE_DEEPENING'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_THE_DEEPENING'):
 			iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
 			iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
 			iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
@@ -1110,22 +1080,22 @@ class CvEventManager:
 						chance = CyGame().getSorenRandNum(100, "Bob")
 						if iTerrain == iSnow:
 							bValid = True
-						if iTerrain == iTundra:
+						elif iTerrain == iTundra:
 							pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							bValid = True
-						if iTerrain == iGrass or iTerrain == iMarsh:
+						elif iTerrain == iGrass or iTerrain == iMarsh:
 							if chance < 40:
 								pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							else:
 								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							bValid = True
-						if iTerrain == iPlains:
+						elif iTerrain == iPlains:
 							if chance < 60:
 								pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							else:
 								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							bValid = True
-						if iTerrain == iDesert:
+						elif iTerrain == iDesert:
 							if chance < 10:
 								pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(iTimer, "Bob") + 10)
 							elif chance < 30:
@@ -1136,10 +1106,10 @@ class CvEventManager:
 							if CyGame().getSorenRandNum(750, "The Deepening") < 10:
 								pPlot.setFeatureType(iBlizzard,-1)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_STIR_FROM_SLUMBER'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_STIR_FROM_SLUMBER'):
 			pPlayer.initUnit(gc.getInfoTypeForString('UNIT_DRIFA'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_THE_DRAW'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_THE_DRAW'):
 			iTeam = pPlayer.getTeam()
 			eTeam = gc.getTeam(iTeam)
 			for iLoopPlayer in range(gc.getMAX_PLAYERS()):
@@ -1168,7 +1138,7 @@ class CvEventManager:
 					iPop = 1
 				pLoopCity.setPopulation(iPop)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_ASCENSION'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_ASCENSION'):
 			pAuricUnit = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_AURIC_ASCENDED'), pCity.getX(), pCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			pAuricUnit.setAvatarOfCivLeader(True)
 			if pPlayer.isHuman():
@@ -1199,7 +1169,7 @@ class CvEventManager:
 					else:
 						pBestPlayer.initUnit(gc.getInfoTypeForString('EQUIPMENT_GODSLAYER'), pBestCity.getX(), pBestCity.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-		if iProjectType == gc.getInfoTypeForString('PROJECT_PACT_OF_THE_NILHORN'):
+		elif iProjectType == gc.getInfoTypeForString('PROJECT_PACT_OF_THE_NILHORN'):
 			newUnit1 = pPlayer.initUnit(gc.getInfoTypeForString('UNIT_HILL_GIANT'), pCity.getX(), pCity.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_NORTH)
 			newUnit1.setName("Larry")
 			newUnit1.AI_setGroupflag(10)
@@ -1516,7 +1486,7 @@ class CvEventManager:
 				city.setPopulation(iPop)
 				city.setOccupationTimer(4)
 
-		if unit.getUnitType() == gc.getInfoTypeForString('UNIT_ACHERON'):
+		elif unit.getUnitType() == gc.getInfoTypeForString('UNIT_ACHERON'):
 			unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_HELD'), True)
 			city.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_THE_DRAGONS_HORDE'), 1)
 			iX = city.getX()
@@ -1558,15 +1528,16 @@ class CvEventManager:
 
 		if (unit.isAlive() and unit.isImmortal() == False):
 			iSoulForge = gc.getInfoTypeForString('BUILDING_SOUL_FORGE')
-			for iiX in range(iX-1, iX+2, 1):
-				for iiY in range(iY-1, iY+2, 1):
-					pPlot2 = CyMap().plot(iiX,iiY)
-					if pPlot2.isCity():
-						pCity = pPlot2.getPlotCity()
-						if pCity.getNumRealBuilding(iSoulForge) > 0:
-							pCity.changeProduction(unit.getExperience() + 10)
-							CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_SOUL_FORGE",()),'AS2D_DISCOVERBONUS',1,'Art/Interface/Buttons/Buildings/Soulforge.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
-			
+			if gc.getGame().getBuildingClassCreatedCount(gc.getInfoTypeForString("BUILDINGCLASS_SOUL_FORGE")) > 0:
+				for iiX in range(iX-1, iX+2, 1):
+					for iiY in range(iY-1, iY+2, 1):
+						pPlot2 = CyMap().plot(iiX,iiY)
+						if pPlot2.isCity():
+							pCity = pPlot2.getPlotCity()
+							if pCity.getNumRealBuilding(iSoulForge) > 0:
+								pCity.changeProduction(unit.getExperience() + 10)
+								CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_SOUL_FORGE",()),'AS2D_DISCOVERBONUS',1,'Art/Interface/Buttons/Buildings/Soulforge.dds',ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
+				
 			if pPlot.isCity():
 				pCity = pPlot.getPlotCity()
 				if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_MOKKAS_CAULDRON')) > 0:
@@ -1583,8 +1554,7 @@ class CvEventManager:
 			if (unit.getReligion() == gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS') or unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_DEATH1')) or unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_ENTROPY1'))):
 				cf.giftUnit(gc.getInfoTypeForString('UNIT_MANES'), gc.getInfoTypeForString('CIVILIZATION_INFERNAL'), 0, unit.plot(), unit.getOwner())
 				cf.giftUnit(gc.getInfoTypeForString('UNIT_MANES'), gc.getInfoTypeForString('CIVILIZATION_INFERNAL'), 0, unit.plot(), unit.getOwner())
-
-			if (unit.getReligion() == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_THE_ORDER') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH') or (unit.getUnitCombatType() != gc.getInfoTypeForString('UNITCOMBAT_ANIMAL') and pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'))):
+			elif (unit.getReligion() == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_THE_ORDER') or unit.getReligion() == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH') or (unit.getUnitCombatType() != gc.getInfoTypeForString('UNITCOMBAT_ANIMAL') and pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'))):
 				cf.giftUnit(gc.getInfoTypeForString('UNIT_ANGEL'), gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'), unit.getExperience(), unit.plot(), unit.getOwner())
 
 			if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SPIRIT_GUIDE')):
@@ -1725,25 +1695,25 @@ class CvEventManager:
 			if iTechType == gc.getInfoTypeForString('TECH_CORRUPTION_OF_SPIRIT'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_THE_ASHEN_VEIL')
 				iReligion = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')
-			if iTechType == gc.getInfoTypeForString('TECH_ORDERS_FROM_HEAVEN'):
+			elif iTechType == gc.getInfoTypeForString('TECH_ORDERS_FROM_HEAVEN'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_THE_ORDER')
 				iReligion = gc.getInfoTypeForString('RELIGION_THE_ORDER')
-			if iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
+			elif iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_FELLOWSHIP_OF_LEAVES')
 				iReligion = gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES')
-			if iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_EARTHMOTHER'):
+			elif iTechType == gc.getInfoTypeForString('TECH_WAY_OF_THE_EARTHMOTHER'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_RUNES_OF_KILMORPH')
 				iReligion = gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH')
-			if iTechType == gc.getInfoTypeForString('TECH_MESSAGE_FROM_THE_DEEP'):
+			elif iTechType == gc.getInfoTypeForString('TECH_MESSAGE_FROM_THE_DEEP'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_OCTOPUS_OVERLORDS')
 				iReligion = gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS')
-			if iTechType == gc.getInfoTypeForString('TECH_HONOR'):
+			elif iTechType == gc.getInfoTypeForString('TECH_HONOR'):
 				iUnit = gc.getInfoTypeForString('UNIT_DISCIPLE_EMPYREAN')
 				iReligion = gc.getInfoTypeForString('RELIGION_THE_EMPYREAN')
-			if iTechType == gc.getInfoTypeForString('TECH_DECEPTION'):
+			elif iTechType == gc.getInfoTypeForString('TECH_DECEPTION'):
 				iUnit = gc.getInfoTypeForString('UNIT_NIGHTWATCH')
 				iReligion = gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS')
-			if iReligion != -1:
+			elif iReligion != -1:
 				if (iReligion==pPlayer.getFavoriteReligion()):
 					pPlayer.getCapitalCity().setHasReligion(iReligion,True,True,True)	
 				if CyGame().isReligionFounded(iReligion):
@@ -2046,87 +2016,110 @@ class CvEventManager:
 			
 			if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
 				CyGame().changeGlobalCounter(5)
-			if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+			elif pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
 				CyGame().changeGlobalCounter(-5)
 			if CyGame().getWBMapScript():
 				sf.playerDefeated(pPlayer)
 			else:
 				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ALEXIS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_CALABIM",()),'art/interface/popups/Alexis.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_AMELANCHIER'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_AMELANCHIER'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LJOSALFAR",()),'art/interface/popups/Amelanchier.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ARENDEL'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ARENDEL'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LJOSALFAR",()),'art/interface/popups/Arendel.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ARTURUS'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ARTURUS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_KHAZAD",()),'art/interface/popups/Arturus.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_AURIC'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_AURIC'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_ILLIANS",()),'art/interface/popups/Auric.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_BASIUM'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_BASIUM'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_MERCURIANS",()),'art/interface/popups/Basium.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_BEERI'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_BEERI'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LUCHUIRP",()),'art/interface/popups/Beeri.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CAPRIA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CAPRIA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_BANNOR",()),'art/interface/popups/Capria.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CARDITH'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CARDITH'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_KURIOTATES",()),'art/interface/popups/Cardith.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CASSIEL'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CASSIEL'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_GRIGORI",()),'art/interface/popups/Cassiel.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CHARADON'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_CHARADON'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_DOVIELLO",()),'art/interface/popups/Charadon.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_DAIN'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_DAIN'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_AMURITES",()),'art/interface/popups/Dain.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_DECIUS'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_DECIUS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_DECIUS",()),'art/interface/popups/Decius.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_EINION'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_EINION'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_ELOHIM",()),'art/interface/popups/Einion.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ETHNE'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_ETHNE'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_ELOHIM",()),'art/interface/popups/Ethne.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FAERYL'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FAERYL'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_SVARTALFAR",()),'art/interface/popups/Faeryl.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FALAMAR'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FALAMAR'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LANUN",()),'art/interface/popups/Falamar.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FLAUROS'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_FLAUROS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_CALABIM",()),'art/interface/popups/Flauros.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_GARRIM'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_GARRIM'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LUCHUIRP",()),'art/interface/popups/Garrim.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_HANNAH'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_HANNAH'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_HANNAH",()),'art/interface/popups/Hannah.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_HYBOREM'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_HYBOREM'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_INFERNAL",()),'art/interface/popups/Hyborem.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_JONAS'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_JONAS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_CLAN_OF_EMBERS",()),'art/interface/popups/Jonus.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KANDROS'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KANDROS'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_KHAZAD",()),'art/interface/popups/Kandros.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KEELYN'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_KEELYN'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_KEELYN",()),'art/interface/popups/Keelyn.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_MAHALA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_MAHALA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_DOVIELLO",()),'art/interface/popups/Mahala.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SANDALPHON'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SANDALPHON'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_SIDAR",()),'art/interface/popups/Sandalphon.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_OS-GABELLA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_OS-GABELLA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_SHEAIM",()),'art/interface/popups/Os-Gabella.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_PERPENTACH'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_PERPENTACH'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_BALSERAPHS",()),'art/interface/popups/Perpentach.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_RHOANNA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_RHOANNA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_HIPPUS",()),'art/interface/popups/Rhoanna.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SABATHIEL'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SABATHIEL'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_BANNOR",()),'art/interface/popups/Sabathiel.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SHEELBA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_SHEELBA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_CLAN_OF_EMBERS",()),'art/interface/popups/Sheelba.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TASUNKE'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TASUNKE'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_HIPPUS",()),'art/interface/popups/Tasunke.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TEBRYN'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_TEBRYN'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_SHEAIM",()),'art/interface/popups/Tebryn.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_THESSA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_THESSA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_LJOSALFAR",()),'art/interface/popups/Thessa.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_VALLEDIA'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_VALLEDIA'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_AMURITES",()),'art/interface/popups/Valledia.dds')
-				if pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_VARN'):
+				elif pPlayer.getLeaderType() == gc.getInfoTypeForString('LEADER_VARN'):
 					cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_MALAKIM",()),'art/interface/popups/Varn.dds')
 
 	def onPlayerChangeStateReligion(self, argsList):
 		'Player changes his state religion'
 		iPlayer, iNewReligion, iOldReligion = argsList
+		pPlayer = gc.getPlayer(iPlayer)
+		
+		if iNewReligion != iOldReligion:
+			if iNewReligion == -1:
+				iCurrentEra = pPlayer.getCurrentEra()
+				iEra = iCurrentEra
+				if not (iCurrentEra == gc.getInfoTypeForString('ERA_ANCIENT') or iCurrentEra == gc.getInfoTypeForString('ERA_CLASSICAL') or iCurrentEra == gc.getInfoTypeForString('ERA_MEDIEVAL')):
+					iEra = gc.getGame().getStartEra()
+					pPlayer.setCurrentEra(iEra)
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_ORDER'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_ORDE'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_EMPY'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_RUNE'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_LEAF'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_OCTO'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_COUN'))
+			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'):
+				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_VEIL'))
 
 	def onPlayerGoldTrade(self, argsList):
 		'Player Trades gold to another player'
@@ -2148,7 +2141,7 @@ class CvEventManager:
 			city.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD'), 1)
 			city.setNumRealBuilding(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'), 1)
 
-		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
+		elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
 			eTeam = gc.getTeam(gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam())
 
 			iUnit = gc.getInfoTypeForString('UNIT_ARCHER')
@@ -2196,13 +2189,13 @@ class CvEventManager:
 				for i in range(city.getPopulation()):
 					cf.giftUnit(iManes, iInfernal, 0, city.plot(), city.getOwner())
 
-		if gc.getPlayer(city.getOriginalOwner()).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_NEUTRAL'):
+		elif gc.getPlayer(city.getOriginalOwner()).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_NEUTRAL'):
 			for i in range((city.getPopulation() / 4) + 1):
 				cf.giftUnit(iManes, iInfernal, 0, city.plot(), city.getOwner())
 				cf.giftUnit(iManes, iInfernal, 0, city.plot(), city.getOwner())
 				cf.giftUnit(iAngel, iMercurians, 0, city.plot(), city.getOwner())
 
-		if gc.getPlayer(city.getOriginalOwner()).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
+		elif gc.getPlayer(city.getOriginalOwner()).getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
 			for i in range((city.getPopulation() / 2) + 1):
 				cf.giftUnit(iAngel, iMercurians, 0, city.plot(), city.getOwner())
 				
@@ -2493,62 +2486,62 @@ class CvEventManager:
 								iCiv = pPlayer.getCivilizationType()
 								if iCiv == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_AMURITES", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_BALSERAPHS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_BALSERAPHS", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_BANNOR'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_BANNOR'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_BANNOR", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_CALABIM'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_CALABIM'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_CALABIM", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_CLAN_OF_EMBERS", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_DOVIELLO", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_ELOHIM'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_ELOHIM", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_GRIGORI'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_GRIGORI'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_GRIGORI", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_HIPPUS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_HIPPUS", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_ILLIANS", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_INFERNAL", 1)
-								if iCiv	== gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
+								elif iCiv	== gc.getInfoTypeForString('CIVILIZATION_KHAZAD'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_KHAZAD", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_KURIOTATES'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_KURIOTATES'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_KURIOTATES", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_LANUN'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_LANUN'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_LANUN", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_LJOSALFAR", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_LUCHUIRP'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_LUCHUIRP", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_MALAKIM'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_MALAKIM'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_MALAKIM", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_MERCURIANS", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_SHEAIM'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_SHEAIM", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_SIDAR'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_SIDAR'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_SIDAR", 1)
-								if iCiv == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
+								elif iCiv == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_SVARTALFAR", 1)
 
 								if iVictory == gc.getInfoTypeForString('VICTORY_ALTAR_OF_THE_LUONNOTAR'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_ALTAR_OF_THE_LUONNOTAR", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_CONQUEST'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_CONQUEST'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_CONQUEST", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_CULTURAL'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_CULTURAL'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_CULTURAL", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_DOMINATION'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_DOMINATION'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_DOMINATION", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_RELIGIOUS'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_RELIGIOUS'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_RELIGIOUS", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_SCORE'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_SCORE'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_SCORE", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_TIME'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_TIME'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_TIME", 1)
-								if iVictory == gc.getInfoTypeForString('VICTORY_TOWER_OF_MASTERY'):
+								elif iVictory == gc.getInfoTypeForString('VICTORY_TOWER_OF_MASTERY'):
 									CyGame().changeTrophyValue("TROPHY_VICTORY_TOWER_OF_MASTERY", 1)
 
 								if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_BARBARIAN_WORLD):
