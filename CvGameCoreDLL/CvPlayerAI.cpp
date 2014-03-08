@@ -6255,7 +6255,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 					if (kUnitInfo.isGoldenAge())
 					{
-						iFreeUnitValue += 4000 * iCityCount;
+						iFreeUnitValue += 4000 * (iCityCount / (bWarPlan ? 2 : 1));
 					}
 					
 					if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
@@ -6266,7 +6266,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iValue += 1500 + iFreeUnitValue;
 					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
-						logBBAI("    Free Unit (%S) - %d\n", kUnitInfo.getDescription(), iFreeUnitValue);
+						logBBAI("    Free Unit (%S): %d\n", kUnitInfo.getDescription(), iFreeUnitValue);
 					}
 
 				iValue += (kTech.getFirstFreeTechs() * (bCapitalAlone ? 3000 : 2000));//200 + ((bCapitalAlone) ? 400 : 0) + ((bAsync) ? GC.getASyncRand().get(3200, "AI Research Free Tech ASYNC") : GC.getGameINLINE().getSorenRandNum(3200, "AI Research Free Tech"))));
@@ -7494,10 +7494,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							if (kLoopUnit.getFreePromotions(iJ))
 							{
 								iMilitaryValue += 10;
-								if (GC.getPromotionInfo((PromotionTypes)kLoopUnit.getFreePromotions(iJ)).getSpellCasterXP() > 0)
-								{
-									iMilitaryValue += 15;
-								}
+								iMilitaryValue += GC.getPromotionInfo((PromotionTypes)kLoopUnit.getFreePromotions(iJ)).getSpellCasterXP();
+								iMilitaryValue += GC.getPromotionInfo((PromotionTypes)kLoopUnit.getFreePromotions(iJ)).getAIWeight() * 2;
 
 								if ((PromotionTypes)kLoopUnit.getFreePromotions(iJ) == GC.getInfoTypeForString("PROMOTION_DIVINE")) // MNAI - HARDCODE
 								{
@@ -7514,7 +7512,18 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 						iMilitaryValue += iCombatValue * 150;
 						iMilitaryValue += kLoopUnit.getWeaponTier() * 150;
 						//iMilitaryValue += iTier * 100;
-						iMilitaryValue *= iTier;
+						//iMilitaryValue *= iTier;
+						
+						if (getHighestUnitTier(false, true) >= iTier && !isWorldUnitClass(eUnitClass) && !(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech))
+						{
+							iMilitaryValue *= 2;
+							iMilitaryValue /= 3;
+						}
+						else
+						{
+							iMilitaryValue *= 3;
+							iMilitaryValue /= 2;
+						}
 
 						
 						if (kLoopUnit.isMechUnit())
@@ -14549,6 +14558,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		}
 	}
 
+	// Tholal ToDo - zero out civic if it interferes with mana for towers
+	// loop through mana, is it banned and do we need it for a tower (AI_isNeededTowerMana())? IF so, civic vaue is 0
+	// not sure how to identify the overcouncil here without hardcoding.
+    // if (GC.getGameINLINE().isNoBonus(eBonus))
+    
 	/* - Commenting this out - religion can be changed, so dont automatically zero out religious civics
 	if (kCivic.getPrereqReligion() != NO_RELIGION)
 	{
