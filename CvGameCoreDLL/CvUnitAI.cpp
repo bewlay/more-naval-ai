@@ -11540,7 +11540,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 				// mobility is especially valuable
 				if (GC.getPromotionInfo((PromotionTypes)kPromotion.getPromotionSummonPerk()).getMovesChange() > 0)
 				{
-					iValue += 25;
+					iValue += 35;
 				}
 			}
 		}
@@ -16700,7 +16700,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 
 	if( gUnitLogLevel > 3 )
 	{
-		logBBAI("    Starting Pick Target City:");
+		logBBAI("     Starting Pick Target City:");
 	}
 
 	pTargetCity = area()->getTargetCity(getOwnerINLINE());
@@ -16920,33 +16920,39 @@ bool CvUnitAI::AI_goToTargetCity(int iFlags, int iMaxPathTurns, CvCity* pTargetC
 								{
 									if( iPathTurns <= iMaxPathTurns )
 									{
-										iValue = std::max(0, (pAdjacentPlot->defenseModifier(getTeam(), false) + 100));
-
-										if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pTargetCity->plot()))))
+										if ((getDuration() != 1) || // either we're not a temp unit about to expire
+											((bombardRate() <= 0) || // or we cant bombard
+											(plotDistance(plot()->getX_INLINE(), plot()->getY_INLINE(), pAdjacentPlot->getX_INLINE(), pAdjacentPlot->getY_INLINE()) < baseMoves()) // or we can get to destination plot with moves still left
+											))
 										{
-											iValue += (12 * -(GC.getRIVER_ATTACK_MODIFIER()));
-										}
+											iValue = std::max(0, (pAdjacentPlot->defenseModifier(getTeam(), false) + 100));
 
-										if (!isEnemy(pAdjacentPlot->getTeam(), pAdjacentPlot))
-										{
-											iValue += 100;                                
-										}
+											if (!(pAdjacentPlot->isRiverCrossing(directionXY(pAdjacentPlot, pTargetCity->plot()))))
+											{
+												iValue += (12 * -(GC.getRIVER_ATTACK_MODIFIER()));
+											}
 
-										if( atPlot(pAdjacentPlot) )
-										{
-											iValue += 50;
-										}
+											if (!isEnemy(pAdjacentPlot->getTeam(), pAdjacentPlot))
+											{
+												iValue += 100;                                
+											}
 
-										iValue = std::max(1, iValue);
+											if( atPlot(pAdjacentPlot) )
+											{
+												iValue += 50;
+											}
 
-										iValue *= 1000;
+											iValue = std::max(1, iValue);
 
-										iValue /= (iPathTurns + 1);
+											iValue *= 1000;
 
-										if (iValue > iBestValue)
-										{
-											iBestValue = iValue;
-											pBestPlot = getPathEndTurnPlot();
+											iValue /= (iPathTurns + 1);
+
+											if (iValue > iBestValue)
+											{
+												iBestValue = iValue;
+												pBestPlot = getPathEndTurnPlot();
+											}
 										}
 									}
 								}
@@ -25296,7 +25302,8 @@ int CvUnitAI::AI_searchRange(int iRange)
 
 	if (getDuration() > 0)
 	{
-		iRange = getDuration();
+		//iRange = getDuration();
+		return getDuration() * baseMoves();
 	}
 
 	if (flatMovementCost() || (getDomainType() == DOMAIN_SEA))
@@ -26425,7 +26432,7 @@ void CvUnitAI::AI_summonAttackMove()
 
 	bool bBombard = (bombardRate() > 0);
 
-    if (getDuration()>0)
+    if (getDuration() > 0)
     {
 		if (bBombard)
 		{
@@ -26433,22 +26440,13 @@ void CvUnitAI::AI_summonAttackMove()
 			{
 				return;
 			}
-		}
-
-        if (AI_anyAttack(getDuration()*baseMoves(), 0))
-        {
-            return;
-        }	
-
-		// check for distant bombard targets
-		if (bBombard)
-		{
+			// check for distant bombard targets
 			CvCity* pTargetCity = NULL;
 			pTargetCity = AI_pickTargetCity(0, getDuration(), true);
 			
 			if( pTargetCity != NULL )
 			{
-				if( AI_goToTargetCity(0, getDuration() ,pTargetCity) )
+				if( AI_goToTargetCity(0, (getDuration() - 1), pTargetCity) )
 				{
 					if (AI_bombardCity())
 					{
@@ -26458,6 +26456,11 @@ void CvUnitAI::AI_summonAttackMove()
 				}
 			}
 		}
+		
+        if (AI_anyAttack(getDuration()*baseMoves(), 0))
+        {
+            return;
+        }	
 	}
 
     else
