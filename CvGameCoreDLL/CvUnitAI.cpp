@@ -27853,13 +27853,13 @@ void CvUnitAI::AI_ConquestMove()
     CvSelectionGroup* pLoopSelectionGroup;
     CvUnit* pBestUnit;
     CvPlot* pLoopPlot;
-    CvPlot* pBestPlot;
+    //CvPlot* pBestPlot;
     int iPathTurns;
-    int iDX, iDY;
+    //int iDX, iDY;
     int iLoop;
     int iValue;
     int iBestValue;
-    int iSearchRange;
+    //int iSearchRange;
     bool bFollow=false;
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
@@ -27901,10 +27901,12 @@ void CvUnitAI::AI_ConquestMove()
 			break;
         case UNITAI_WARWIZARD:
 			bWizard = true;
+			/*
 			if (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 			{
 				AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			}
+			*/
             break;
 		case UNITAI_RESERVE:
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);
@@ -27985,12 +27987,13 @@ void CvUnitAI::AI_ConquestMove()
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
 	{
-		if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
+		//if (getGroup()->getNumUnits() < ((getLevel() / 2) +1))
 		{
 			if (AI_pickupEquipment(3))
 			{
 				return;
 			}
+			/*
 			int iRange = 0;
 			if (plot()->getOwner() == getOwner())
 			{
@@ -28013,6 +28016,7 @@ void CvUnitAI::AI_ConquestMove()
 			{
 				return;
 			}
+			*/
 		}
 	}
 	else // Mainly affects Clan and the units they get from their World Spell
@@ -28073,29 +28077,34 @@ void CvUnitAI::AI_ConquestMove()
 										{
 											if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 											{
-												iValue = 10 * pLoopSelectionGroup->getHeadUnit()->getLevel();
-												iValue += pLoopSelectionGroup->getNumUnits();
-												if (pLoopSelectionGroup->getHeadUnit()->AI_getUnitAIType() == UNITAI_HERO)
+												if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 												{
-													iValue *= 2;
-												}
+													iValue = 10 * pLoopSelectionGroup->getHeadUnit()->getLevel();
+													iValue += pLoopSelectionGroup->getNumUnits();
+													if (pLoopSelectionGroup->getHeadUnit()->AI_getUnitAIType() == UNITAI_HERO)
+													{
+														iValue *= 2;
+													}
 
-												if (atPlot(pLoopPlot))
-												{
-													iValue *= 2;
-												}
-												else
-												{
-													if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+													if (pLoopSelectionGroup->getHeadUnit()->isAvatarOfCivLeader())
+													{
+														iValue *= 5;
+													}
+
+													if (atPlot(pLoopPlot))
+													{
+														iValue *= 2;
+													}
+													else
 													{
 														iValue /= (iPathTurns + 1);
 													}
-												}
 
-												if (iValue > iBestValue)
-												{
-													iBestValue = iValue;
-													pBestUnit = pLoopSelectionGroup->getHeadUnit();
+													if (iValue > iBestValue)
+													{
+														iBestValue = iValue;
+														pBestUnit = pLoopSelectionGroup->getHeadUnit();
+													}
 												}
 											}
 										}
@@ -28238,13 +28247,19 @@ void CvUnitAI::AI_ConquestMove()
 		return;
 	}
 
-	if (AI_groupMergeRange(UNITAI_HERO, 0, true, true, bIgnoreFaster))
+	if (AI_groupMergeRange(UNITAI_HERO, 0, false, true, bIgnoreFaster))
 	{
 		logBBAI("      ...merging with hero unit");
 		return;
 	}
+	
+	if (AI_groupMergeRange(UNITAI_WARWIZARD, 0, false, true, bIgnoreFaster))
+	{
+		logBBAI("      ...merging with wizard unit");
+		return;
+	}
 		
-	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
+	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, false, true, bIgnoreFaster))
 	{
 		logBBAI("      ...merging with attack city unit");
 		return;
@@ -28377,7 +28392,7 @@ void CvUnitAI::AI_ConquestMove()
 				return;
 			}
 							
-			if( AI_anyAttack(1, 60, 0, false) )
+			if( AI_anyAttack(1, 80, 0, false) )
 			{
 				logBBAI("      ...AI_anyttack");
 				return;
@@ -28458,78 +28473,6 @@ void CvUnitAI::AI_ConquestMove()
 			}
 		}
 	}
-
-	if ((!bReadyToAttack || bDanger) && GET_TEAM(getTeam()).getAtWarCount(true) == 0)// || (bDanger && plot()->getOwnerINLINE() == getOwnerINLINE()))
-    {
-        //check for enemies in own territory
-        int iOddsThreshold=80;
-        int iMinStack=1+(getGroup()->getNumUnits()/5);
-        int iRange=20;
-        pBestPlot=NULL;
-		iSearchRange = AI_searchRange(bAtWar ? 3 : 10);
-        iBestValue=0;
-        for (iDX = -(iSearchRange); iDX <= iSearchRange; iDX++)
-        {
-            for (iDY = -(iSearchRange); iDY <= iSearchRange; iDY++)
-            {
-                pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iDX, iDY);
-
-                if (pLoopPlot != NULL)
-                {
-                    if ((AI_plotValid(pLoopPlot)))
-					{
-						if (pLoopPlot->isAdjacentPlayer(getOwnerINLINE(), false) || pLoopPlot->getOwnerINLINE()==getOwnerINLINE())
-						{
-							if (pLoopPlot->isVisibleEnemyUnit(this) && !pLoopPlot->isCity() && canMoveInto(pLoopPlot, false))
-							{
-								if (!atPlot(pLoopPlot) && generatePath(pLoopPlot, 0, true, &iPathTurns) && (iPathTurns <= iRange))
-								{
-									if (pLoopPlot->getNumVisibleEnemyDefenders(this) > 0)//= iMinStack)
-									{
-										int iOurStrength=getGroup()->AI_GroupPower(pLoopPlot,false);
-										int iTheirStrength=kPlayer.AI_getEnemyPlotStrength(pLoopPlot,0,true,false);
-										if (iOurStrength>(iTheirStrength*1.2))
-										{
-											iValue = AI_attackOdds(pLoopPlot, true);
-											
-											
-											if (getGroup()->getNumUnits() >= (pLoopPlot->getNumVisibleEnemyDefenders(this) * 5))
-											{
-												//iValue = (bAtWar ? 0 : 50);
-												iValue /= 2;
-											}
-											
-
-											if (iValue>30)
-											{
-												iValue *=(100/(1+iPathTurns));
-												iValue *=(3+pLoopPlot->getNumVisibleEnemyDefenders(this));
-												if (iValue > iBestValue)
-												{
-													iBestValue = iValue;
-													//pBestPlot = ((bFollow) ? pLoopPlot : getPathEndTurnPlot());
-													pBestPlot = pLoopPlot;
-													FAssert(!atPlot(pBestPlot));
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-                    }
-                }
-            }
-        }
-
-        if (pBestPlot != NULL)
-        {
-			logBBAI("      ...moving to danger plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
-            FAssert(!atPlot(pBestPlot));
-            getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), ((bFollow) ? MOVE_DIRECT_ATTACK : 0));
-            return;
-        }
-    }
 
 	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 2, true, true, bIgnoreFaster))
 	{
@@ -29281,7 +29224,7 @@ bool CvUnitAI::AI_Rantinemove()
 void CvUnitAI::AI_upgrademanaMove()
 {
 
-	logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_upgrademanaMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	logBBAI("    %S (unit %d), starting AI_upgrademanaMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
 
 	if (bDanger)
