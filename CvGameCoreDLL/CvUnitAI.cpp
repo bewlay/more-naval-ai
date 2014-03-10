@@ -2244,6 +2244,15 @@ void CvUnitAI::AI_workerMove()
 		AI_setGroupflag(GROUPFLAG_NONE);
 	}
 
+	// slaves can hurry production
+	if (GC.getUnitInfo(getUnitType()).getBaseHurry() > 0)
+	{
+		if (AI_hurry())
+		{
+			return;
+		}
+	}
+
 	// XXX could be trouble...
 	// Super Forts begin *AI_worker* (removing this to allow workers to build outside borders)
 	if(!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && plot()->getOwnerINLINE() != getOwnerINLINE())
@@ -2645,15 +2654,6 @@ void CvUnitAI::AI_workerMove()
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
-
-	// slaves can hurry production
-	if (GC.getUnitInfo(getUnitType()).getBaseHurry() > 0)
-	{
-		if (AI_hurry())
-		{
-			return;
-		}
-	}
 
 	if (AI_retreatToCity(false, true))
 	{
@@ -15407,8 +15407,6 @@ bool CvUnitAI::AI_hurry()
 	CvCity* pLoopCity;
 	CvPlot* pBestPlot;
 	CvPlot* pBestHurryPlot;
-	bool bHurry;
-	int iTurnsLeft;
 	int iPathTurns;
 	int iValue;
 	int iBestValue;
@@ -15447,25 +15445,25 @@ bool CvUnitAI::AI_hurry()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 						{
-							bHurry = false;
-
 							if (pLoopCity->isProductionBuilding())
 							{
-								if (isWorldWonderClass((BuildingClassTypes)(GC.getBuildingInfo(pLoopCity->getProductionBuilding()).getBuildingClassType())))
+								if (pLoopCity->getProductionTurnsLeft() > iPathTurns)
 								{
-									bHurry = true;
-								}
-							}
+									iValue = pLoopCity->getProductionNeeded();
+									iValue += pLoopCity->getProductionTurnsLeft() * 5;
+									// Tholal ToDo - value based on what building we're making
 
-							if (bHurry)
-							{
-								iTurnsLeft = pLoopCity->getProductionTurnsLeft();
+									if (isWorldWonderClass((BuildingClassTypes)GC.getBuildingInfo(pLoopCity->getProductionBuilding()).getBuildingClassType()))
+									{
+										iValue *= 4;
+									}
+									else if (isNationalWonderClass((BuildingClassTypes)GC.getBuildingInfo(pLoopCity->getProductionBuilding()).getBuildingClassType()))
+									{
+										iValue *= 2;
+									}
 
-								iTurnsLeft -= iPathTurns;
-
-								if (iTurnsLeft > 8)
-								{
-									iValue = iTurnsLeft;
+									iValue -= GC.getUnitInfo(getUnitType()).getBaseHurry();
+									iValue -= iPathTurns * 2;
 
 									if (iValue > iBestValue)
 									{
@@ -15484,9 +15482,11 @@ bool CvUnitAI::AI_hurry()
 
 	if ((pBestPlot != NULL) && (pBestHurryPlot != NULL))
 	{
+		int iProdRemaining =  pBestHurryPlot->getPlotCity()->getProductionNeeded();
 		if (atPlot(pBestHurryPlot))
 		{
 			getGroup()->pushMission(MISSION_HURRY);
+			logBBAI("    %S (%d) hurrying production of %S in %S (%d prod. left)", getName().GetCString(), getID(), GC.getBuildingInfo((BuildingTypes)pBestHurryPlot->getPlotCity()->getProductionBuilding()).getDescription(), pBestHurryPlot->getPlotCity()->getName().GetCString(), iProdRemaining);
 			return true;
 		}
 		else
@@ -15497,6 +15497,7 @@ bool CvUnitAI::AI_hurry()
 /*                                                                                              */
 /* Unit AI                                                                                      */
 /************************************************************************************************/
+			logBBAI("    %S (%d) moving to hurry production of %S in %S (%d prod. left)", getName().GetCString(), getID(), GC.getBuildingInfo((BuildingTypes)pBestHurryPlot->getPlotCity()->getProductionBuilding()).getDescription(), pBestHurryPlot->getPlotCity()->getName().GetCString(), iProdRemaining);
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_HURRY, pBestHurryPlot);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
