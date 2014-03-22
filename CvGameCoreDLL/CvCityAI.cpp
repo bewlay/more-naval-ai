@@ -1723,7 +1723,7 @@ void CvCityAI::AI_chooseProduction()
 	int iPlotCityDefenderCount = plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
 	// Tholal AI - Era fix
 	//if( kPlayer.getCurrentEra() == 0 )
-	
+	/*
 	if (GC.getGameINLINE().getCurrentPeriod() <= 1)
 	{
 		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= iNumCities)
@@ -1734,6 +1734,7 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
+	*/
 	
 /*
 	if (iNumCities > 1 || bDanger)
@@ -2441,13 +2442,16 @@ void CvCityAI::AI_chooseProduction()
 	//minimal defense.
 	if (iPlotCityDefenderCount < (AI_minDefenders() + iPlotSettlerCount))
 	{
+		if( gCityLogLevel >= 2 ) logBBAI("      City %S needs more defense!", getName().GetCString());
 		if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
 		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_CITY_DEFENSE (minimal troops: %d)", getName().GetCString(), (AI_minDefenders() + iPlotSettlerCount));
 			return;
 		}
 
 		if (AI_chooseUnit(UNITAI_ATTACK))
 		{
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_CITY_ATTACK (minimal troops: %d)", getName().GetCString(), (AI_minDefenders() + iPlotSettlerCount));
 			return;
 		}
 	}
