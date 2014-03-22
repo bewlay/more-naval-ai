@@ -5108,7 +5108,8 @@ void CvUnitAI::AI_cityDefenseMove()
 	{
 		if (plot()->getOwnerINLINE() == getOwnerINLINE())
 		{
-			if (plot()->getPlotCity()->AI_neededDefenders() >= plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE()))
+			if (plot()->getPlotCity()->AI_neededDefenders() > (plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE())) +
+				plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_COUNTER, -1, getOwnerINLINE()))
 			{
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
@@ -11558,12 +11559,8 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 					if (!isDirectDamageCaster()) // if we dont already have a damage spell
 					{
-						if (AI_getUnitAIType() == UNITAI_WARWIZARD || 
-							AI_getUnitAIType() == UNITAI_MAGE)
-						{
-							iValue += kSpellInfo.getDamage() * kSpellInfo.getRange(); 
-							iValue += kSpellInfo.getDamageLimit() / 5;
-						}
+						iValue += kSpellInfo.getDamage() * kSpellInfo.getRange(); 
+						iValue += kSpellInfo.getDamageLimit() / 5;
 					}
 
 					if (kSpellInfo.getCreateUnitType() != NO_UNIT)
@@ -28383,7 +28380,7 @@ void CvUnitAI::AI_ConquestMove()
 			}
 		}
 
-		if( iComparePostBombard < iAttackRatio)
+		if( iComparePostBombard < iAttackRatio && GET_TEAM(getTeam()).isAtWar(pTargetCity->getTeam()))
 		{
 			// If not strong enough, pillage around target city without exposing ourselves
 			if( AI_pillageRange(0) )
@@ -28417,14 +28414,16 @@ void CvUnitAI::AI_ConquestMove()
 				return;
 			}
 
-			if( AI_choke(1) )
+			if (getGroup()->getNumUnits() > pTargetCity->plot()->getNumDefenders(pTargetCity->getOwner()))
 			{
-				if( gUnitLogLevel >= 3 )
+				if( AI_choke(1) )
 				{
-					logBBAI("      ...choking %S ", pTargetCity->getName().GetCString());
+					if( gUnitLogLevel >= 3 )
+					{
+						logBBAI("      ...choking %S ", pTargetCity->getName().GetCString());
+					}
+					return;
 				}
-
-				return;
 			}
 
 			if (!pTargetCity->isVisible(getTeam(),false))
@@ -29475,9 +29474,15 @@ void CvUnitAI::AI_mageCast()
         cast(GC.getInfoTypeForString("SPELL_BLUR"));
 }
 
-
+// MNAI - modified so that this function is used by the AI to keep its defensive Adept units spread out to different cities
 bool CvUnitAI::AI_mageMove()
 {
+	// short-circuit this function for barbarians unless we're playing with the Raging Barbarians option
+	if (isBarbarian() && !GC.getGameINLINE().isOption(GAMEOPTION_RAGING_BARBARIANS))
+	{
+		return false;
+	}
+
 	if( gUnitLogLevel > 2 ) logBBAI("      ...checking MageMove()", getID());
 	if (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 	{
@@ -29493,24 +29498,11 @@ bool CvUnitAI::AI_mageMove()
 		return true;
 	}
 
-	/*
-	if (plot()->getPlotCity() == NULL)
-	{
-		if (AI_retreatToCity())
-		{
-			return;
-		}
-	}
-
-    getGroup()->pushMission(MISSION_FORTIFY);
-	*/
-
 	if (plot()->plotCount(PUF_isUnitAIType, UNITAI_MAGE, -1, NO_PLAYER, getTeam()) > 1)
 	{
 		if( gUnitLogLevel > 2 ) logBBAI("      ...current location is too crowded");
 		CvCity* pLoopCity;
 		CvCity* pBestCity = NULL;
-		//CvPlot* pBestPlot;
 		int iValue = 0;
 		int iBestValue = 0;
 		int iLoop;
@@ -29541,7 +29533,7 @@ bool CvUnitAI::AI_mageMove()
 		{
 			if (!atPlot(pBestCity->plot()))
 			{
-				if( gUnitLogLevel > 2 ) logBBAI("      ....Mage moving to %d, %d", pBestCity->plot()->getX_INLINE(), pBestCity->plot()->getY_INLINE());
+				if( gUnitLogLevel > 2 ) logBBAI("      ....Mage moving to %S (%d, %d)", pBestCity->getName().GetCString(), pBestCity->plot()->getX_INLINE(), pBestCity->plot()->getY_INLINE());
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestCity->plot()->getX_INLINE(), pBestCity->plot()->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
 				return true;
 			}
