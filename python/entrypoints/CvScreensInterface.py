@@ -1,9 +1,12 @@
 ## Sid Meier's Civilization 4
 ## Copyright Firaxis Games 2005
 import CvMainInterface
+import CvDomesticAdvisor
 import CvTechChooser
 import CvForeignAdvisor
 import CvExoticForeignAdvisor
+import CvMilitaryAdvisor
+import CvFinanceAdvisor
 import CvReligionScreen
 import CvCorporationScreen
 import CvCivicsScreen
@@ -33,7 +36,7 @@ import CvSpaceShipScreen
 import SevoScreenEnums
 # BUG - Sevopedia - end
 
-import CvWorldBuilderScreen
+#import CvWorldBuilderScreen
 
 import CvDebugTools
 import CvDebugInfoScreen
@@ -60,15 +63,21 @@ TechWindowOpt = BugCore.game.TechWindow
 g_bIsScreenActive = -1
 
 ## World Builder ##
+import CvPlatyBuilderScreen
+import WBPlotScreen
+import WBEventScreen
 import WBBuildingScreen
+import WBCityDataScreen
+import WBCityEditScreen
 import WBTechScreen
-import WBPromotionScreen
-import WBCorporationScreen
-import WBBonusScreen
 import WBProjectScreen
-import WBSpecialistScreen
+import WBTeamScreen
+import WBPlayerScreen
+import WBUnitScreen
+import WBPromotionScreen
 import WBDiplomacyScreen
-## Platy Screens ##
+import WBGameDataScreen
+import WBPlayerUnits
 
 def toggleSetNoScreens():
 	global g_bIsScreenActive
@@ -102,7 +111,7 @@ def showTrophyHall():
 
 techChooser = CvTechChooser.CvTechChooser()
 def showTechChooser():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		techChooser.interfaceScreen()
 
 hallOfFameScreen = CvHallOfFameScreen.CvHallOfFameScreen(HALL_OF_FAME)
@@ -111,17 +120,17 @@ def showHallOfFame(argsList):
 
 civicScreen = CvCivicsScreen.CvCivicsScreen()
 def showCivicsScreen():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		civicScreen.interfaceScreen()
 
 religionScreen = CvReligionScreen.CvReligionScreen()
 def showReligionScreen():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		religionScreen.interfaceScreen()
 
 corporationScreen = CvCorporationScreen.CvCorporationScreen()
 def showCorporationScreen():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		corporationScreen.interfaceScreen()
 
 ## FfH Card Game: begin
@@ -136,7 +145,7 @@ def showOptionsScreen():
 #foreignAdvisor = CvForeignAdvisor.CvForeignAdvisor()
 foreignAdvisor = CvExoticForeignAdvisor.CvExoticForeignAdvisor()
 def showForeignAdvisorScreen(argsList):
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		foreignAdvisor.interfaceScreen(argsList[0])
 
 # BUG - Finance Advisor - start
@@ -155,7 +164,7 @@ def createFinanceAdvisor():
 # BUG - Finance Advisor - end
 
 def showFinanceAdvisor():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		financeAdvisor.interfaceScreen()
 
 # BUG - CustDomAdv - start
@@ -174,7 +183,7 @@ def createDomesticAdvisor():
 # BUG - CustDomAdv - end
 
 def showDomesticAdvisor(argsList):
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		domesticAdvisor.interfaceScreen()
 
 # BUG - Military Advisor - start
@@ -192,7 +201,7 @@ def createMilitaryAdvisor():
 		HandleInputMap[MILITARY_ADVISOR] = militaryAdvisor
 
 def showMilitaryAdvisor():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		if (AdvisorOpt.isBUG_MA()):
 			# TODO: move to CvBUGMilitaryAdvisor.interfaceScreen()
 			militaryAdvisor.IconGridActive = False
@@ -201,7 +210,7 @@ def showMilitaryAdvisor():
 
 espionageAdvisor = CvEspionageAdvisor.CvEspionageAdvisor()
 def showEspionageAdvisor():
-#	if (-1 != CyGame().getActivePlayer()):
+#	if CyGame().getActivePlayer() > -1:
 	espionageAdvisor.interfaceScreen()
 
 dawnOfMan = CvDawnOfMan.CvDawnOfMan(DAWN_OF_MAN)
@@ -250,7 +259,7 @@ def showTopCivs():
 
 infoScreen = CvInfoScreen.CvInfoScreen(INFO_SCREEN)
 def showInfoScreen(argsList):
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		iTabID = argsList[0]
 		iEndGame = argsList[1]
 		infoScreen.showScreen(-1, iTabID, iEndGame)
@@ -290,7 +299,7 @@ def showTechSplash(argsList):
 
 victoryScreen = CvVictoryScreen.CvVictoryScreen(VICTORY_SCREEN)
 def showVictoryScreen():
-	if (-1 != CyGame().getActivePlayer()):
+	if CyGame().getActivePlayer() > -1:
 		victoryScreen.interfaceScreen()
 
 # RevolutionDCM - RevolutionWatchAdvisor - start
@@ -561,11 +570,11 @@ def pediaJumpToReligion(argsList):
 	else:
 		pediaMainScreen.pediaJump(PEDIA_RELIGION, argsList[0], True)
 
-def pediaJumpToCorporation(argsList):
-	if (bUsingSevopedia):
-		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_CORPORATIONS, argsList[0], True, False)
-	else:
-		pediaMainScreen.pediaJump(PEDIA_CORPORATION, argsList[0], True)
+##def pediaJumpToCorporation(argsList):
+##	if (bUsingSevopedia):
+##		pediaMainScreen.pediaJump(SevoScreenEnums.PEDIA_CORPORATIONS, argsList[0], True, False)
+##	else:
+##		pediaMainScreen.pediaJump(PEDIA_CORPORATION, argsList[0], True)
 
 def pediaShowHistorical(argsList):
 	if (bUsingSevopedia):
@@ -582,7 +591,7 @@ def pediaShowHistorical(argsList):
 #################################################
 ## Worldbuilder
 #################################################
-worldBuilderScreen = CvWorldBuilderScreen.CvWorldBuilderScreen()
+worldBuilderScreen = CvPlatyBuilderScreen.CvWorldBuilderScreen()
 def getWorldBuilderScreen():
 	return worldBuilderScreen
 
@@ -617,481 +626,13 @@ def WorldBuilderRevealTabModeCB():
 	worldBuilderScreen.revealTabModeCB()
 
 def WorldBuilderDiplomacyModeCB():
-	worldBuilderScreen.diplomacyModeCB()
+	WBDiplomacyScreen.WBDiplomacyScreen().interfaceScreen(CyGame().getActivePlayer())
 
 def WorldBuilderRevealAllCB():
 	worldBuilderScreen.revealAll(True)
 
 def WorldBuilderUnRevealAllCB():
 	worldBuilderScreen.revealAll(False)
-
-def WorldBuilderHandleUnitCB( argsList ):
-	worldBuilderScreen.handleUnitCB(argsList)
-
-def WorldBuilderHandleTerrainCB( argsList ):
-	worldBuilderScreen.handleTerrainCB(argsList)
-
-def WorldBuilderHandleFeatureCB(argsList):
-	worldBuilderScreen.handleFeatureCB(argsList)
-
-def WorldBuilderHandleBonusCB( argsList ):
-	worldBuilderScreen.handleBonusCB(argsList)
-
-def WorldBuilderHandleImprovementCB(argsList):
-	worldBuilderScreen.handleImprovementCB(argsList)
-
-def WorldBuilderHandleTerritoryCB(argsList):
-	worldBuilderScreen.handleTerritoryCB(argsList)
-
-def WorldBuilderHandlePlotTypeCB( argsList ):
-	worldBuilderScreen.handlePlotTypeCB(argsList)
-
-def WorldBuilderHandleUnitEditExperienceCB( argsList ):
-	worldBuilderScreen.handleUnitEditExperienceCB(argsList)
-
-def WorldBuilderHandleUnitEditLevelCB( argsList ):
-	worldBuilderScreen.handleUnitEditLevelCB(argsList)
-
-def WorldBuilderHandleUnitEditNameCB( argsList ):
-	worldBuilderScreen.handleUnitEditNameCB(argsList)
-
-def WorldBuilderHandleCityEditPopulationCB( argsList ):
-	worldBuilderScreen.handleCityEditPopulationCB(argsList)
-
-##MagisterModmod
-def WorldBuilderHandleCityEditRevIndexCB( argsList ):
-	worldBuilderScreen.handleCityEditRevIndexCB(argsList)
-
-
-def WorldBuilderHandleCivTypeEditPullDownCB( argsList ):
-	worldBuilderScreen.handleCivTypeEditPullDownCB(argsList)
-
-
-##MagisterModmod
-
-def WorldBuilderHandleCityEditCultureCB( argsList ):
-	worldBuilderScreen.handleCityEditCultureCB(argsList)
-
-def WorldBuilderHandleCityEditNameCB( argsList ):
-	worldBuilderScreen.handleCityEditNameCB(argsList)
-
-def WorldBuilderHandleLandmarkTextCB( argsList ):
-	worldBuilderScreen.handleLandmarkTextCB(argsList)
-
-def WorldBuilderHandleUnitEditPullDownCB( argsList ):
-	worldBuilderScreen.handleUnitEditPullDownCB(argsList)
-
-def WorldBuilderHandleUnitAITypeEditPullDownCB( argsList ):
-	worldBuilderScreen.handleUnitAITypeEditPullDownCB(argsList)
-
-def WorldBuilderHandlePlayerEditPullDownCB( argsList ):
-	worldBuilderScreen.handlePlayerEditPullDownCB(argsList)
-
-def WorldBuilderHandlePlayerUnitPullDownCB( argsList ):
-	worldBuilderScreen.handlePlayerUnitPullDownCB(argsList)
-
-def WorldBuilderHandleSelectTeamPullDownCB( argsList ):
-	worldBuilderScreen.handleSelectTeamPullDownCB(argsList)
-
-def WorldBuilderHandleBuildingCB( argsList ):
-	worldBuilderScreen.handleBuildingCB(argsList)
-
-def WorldBuilderHandleTechCB( argsList ):
-	worldBuilderScreen.handleTechCB(argsList)
-
-def WorldBuilderHandleRouteCB( argsList ):
-	worldBuilderScreen.handleRouteCB(argsList)
-
-def WorldBuilderHandleLandmarkCB( argsList ):
-	worldBuilderScreen.handleLandmarkCB(argsList)
-
-## Platy World Builder Start ##
-
-def WorldBuilderHandleEditScriptCB( argsList ):
-	worldBuilderScreen.handleEditScriptCB(argsList)
-
-def WorldBuilderHandleEnterNewScreenCB( argsList ):
-	worldBuilderScreen.handleEnterNewScreenCB(argsList)
-
-def WorldBuilderHandleCurrentPlayerEditPullDownCB( argsList ):
-	worldBuilderScreen.handleCurrentPlayerEditPullDownCB(argsList)
-
-## Unit Data ##
-
-def WorldBuilderHandleUnitEditStrengthCB( argsList ):
-	worldBuilderScreen.handleUnitEditStrengthCB(argsList)
-##MagisterModmod
-
-def WorldBuilderHandleUnitEditIDSelectCB( argsList ):
-	worldBuilderScreen.handleUnitEditIDSelectCB(argsList)
-
-
-def WorldBuilderHandleUnitReligionEditPullDownCB( argsList ):
-	worldBuilderScreen.handleUnitReligionEditPullDownCB(argsList)
-
-def WorldBuilderHandleUnitEditStrengthDefenseCB( argsList ):
-	worldBuilderScreen.handleUnitEditStrengthDefenseCB(argsList)
-
-def WorldBuilderHandleUnitEditDurationCB( argsList ):
-	worldBuilderScreen.handleUnitEditDurationCB(argsList)
-
-def WorldBuilderHandleUnitEditSummonerCB( argsList ):
-	worldBuilderScreen.handleUnitEditSummonerCB(argsList)
-
-def WorldBuilderHandleUnitEditHasCastedCB( argsList ):
-	worldBuilderScreen.handleUnitEditHasCastedCB(argsList)
-
-def WorldBuilderHandleUnitEditIsImmortalCB( argsList ):
-	worldBuilderScreen.handleUnitEditIsImmortalCB(argsList)
-
-
-def WorldBuilderHandleUnitEditAvatarOfCivLeaderCB( argsList ):
-	worldBuilderScreen.handleUnitEditAvatarOfCivLeaderCB(argsList)
-
-def WorldBuilderHandleUnitEditPermanentSummonCB( argsList ):
-	worldBuilderScreen.handleUnitEditPermanentSummonCB(argsList)
-
-
-def WorldBuilderHandleUnitEditScenarioCounterCB( argsList ):
-	worldBuilderScreen.handleUnitEditScenarioCounterCB(argsList)
-
-##MagisterModmod
-
-def WorldBuilderHandleUnitEditDamageCB( argsList ):
-	worldBuilderScreen.handleUnitEditDamageCB(argsList)
-
-def WorldBuilderHandleUnitEditCargoCB( argsList ):
-	worldBuilderScreen.handleUnitEditCargoCB(argsList)
-
-def WorldBuilderHandleUnitEditMovesCB( argsList ):
-	worldBuilderScreen.handleUnitEditMovesCB(argsList)
-
-def WorldBuilderHandleUnitEditImmobileTimerCB( argsList ):
-	worldBuilderScreen.handleUnitEditImmobileTimerCB(argsList)
-
-def WorldBuilderHandleUnitEditPromotionReadyCB( argsList ):
-	worldBuilderScreen.handleUnitEditPromotionReadyCB(argsList)
-
-def WorldBuilderHandleUnitEditMadeAttackCB( argsList ):
-	worldBuilderScreen.handleUnitEditMadeAttackCB(argsList)
-
-def WorldBuilderHandleUnitEditMadeInterceptionCB( argsList ):
-	worldBuilderScreen.handleUnitEditMadeInterceptionCB(argsList)
-
-def WorldBuilderHandleMoveUnitCB( argsList ):
-	worldBuilderScreen.handleMoveUnitCB(argsList)
-
-def WorldBuilderHandleUnitEditDuplicateCB( argsList ):
-	worldBuilderScreen.handleUnitEditDuplicateCB(argsList)
-
-def WorldBuilderHandleKillCB( argsList ):
-	worldBuilderScreen.handleKillCB(argsList)
-
-def WorldBuilderHandleUnitEditDirectionCB( argsList ):
-	worldBuilderScreen.handleUnitEditDirectionCB(argsList)
-
-def WorldBuilderHandleUnitEditLeaderCB( argsList ):
-	worldBuilderScreen.handleUnitEditLeaderCB(argsList)
-
-def WorldBuilderHandleUnitEditUnitTypeCB( argsList ):
-	worldBuilderScreen.handleUnitEditUnitTypeCB(argsList)
-
-## Game Option ##
-
-def WorldBuilderHandleEditGameOptionCB( argsList ):
-	worldBuilderScreen.handleEditGameOptionCB(argsList)
-
-def WorldBuilderHandleGameEditStartYearCB( argsList ):
-	worldBuilderScreen.handleGameEditStartYearCB(argsList)
-
-def WorldBuilderHandleGameEditNukesExplodedCB( argsList ):
-	worldBuilderScreen.handleGameEditNukesExplodedCB(argsList)
-
-def WorldBuilderHandleVisibleOptionsCB( argsList ):
-	worldBuilderScreen.handleVisibleOptionsCB(argsList)
-
-
-##MagisterModmod
-def WorldBuilderHandleGameEditScenarioCounterCB( argsList ):
-	worldBuilderScreen.handleGameEditScenarioCounterCB(argsList)
-
-
-def WorldBuilderHandleGlobalCounterEditCB( argsList ):
-	worldBuilderScreen.handleGlobalCounterEditCB(argsList)
-
-def WorldBuilderHandleHandicapEditPullDownCB( argsList ):
-	worldBuilderScreen.handleHandicapEditPullDownCB(argsList)
-
-##MagisterModmod
-
-## City Data ##
-
-def WorldBuilderHandleChooseCityCB( argsList ):
-	worldBuilderScreen.handleChooseCityCB(argsList)
-
-def WorldBuilderHandleCityEditCultureLevelCB( argsList ):
-	worldBuilderScreen.handleCityEditCultureLevelCB(argsList)
-
-def WorldBuilderHandleCityEditHappinessCB( argsList ):
-	worldBuilderScreen.handleCityEditHappinessCB(argsList)
-
-def WorldBuilderHandleCityEditHealthCB( argsList ):
-	worldBuilderScreen.handleCityEditHealthCB(argsList)
-
-def WorldBuilderHandleCityEditTimersCB( argsList ):
-	worldBuilderScreen.handleCityEditTimersCB(argsList)
-
-def WorldBuilderHandleCityEditCurrentTimerCB( argsList ):
-	worldBuilderScreen.handleCityEditCurrentTimerCB(argsList)
-
-def WorldBuilderHandleCityEditDefenseCB( argsList ):
-	worldBuilderScreen.handleCityEditDefenseCB(argsList)
-
-def WorldBuilderHandleCityEditTradeRouteCB( argsList ):
-	worldBuilderScreen.handleCityEditTradeRouteCB(argsList)
-
-def WorldBuilderHandleCityEditBuildingClassCB( argsList ):
-	worldBuilderScreen.handleCityEditBuildingClassCB(argsList)
-
-def WorldBuilderHandleCityEditModiferCB( argsList ):
-	worldBuilderScreen.handleCityEditModiferCB(argsList)
-
-def WorldBuilderHandleCityEditModifyBuildingClassCB( argsList ):
-	worldBuilderScreen.handleCityEditModifyBuildingClassCB(argsList)
-
-def WorldBuilderHandleCityEditChooseProductionCB( argsList ):
-	worldBuilderScreen.handleCityEditChooseProductionCB(argsList)
-
-def WorldBuilderHandleCityEditProductionProgressCB( argsList ):
-	worldBuilderScreen.handleCityEditProductionProgressCB(argsList)
-
-def WorldBuilderHandleCityEditFoodCB( argsList ):
-	worldBuilderScreen.handleCityEditFoodCB(argsList)
-
-## Player Data ##
-
-def WorldBuilderHandlePlayerEditGoldCB( argsList ):
-	worldBuilderScreen.handlePlayerEditGoldCB(argsList)
-
-def WorldBuilderHandleCurrentEraEditPullDownCB( argsList ):
-	worldBuilderScreen.handleCurrentEraEditPullDownCB(argsList)
-
-def WorldBuilderHandleTeamEditCommerceFlexibleCB( argsList ):
-	worldBuilderScreen.handleTeamEditCommerceFlexibleCB(argsList)
-
-def WorldBuilderHandlePlayerEditCommercePercentCB( argsList ):
-	worldBuilderScreen.handlePlayerEditCommercePercentCB(argsList)
-
-def WorldBuilderHandlePlayerEditGoldenAgeCB( argsList ):
-	worldBuilderScreen.handlePlayerEditGoldenAgeCB(argsList)
-
-def WorldBuilderHandlePlayerEditGoldenAgeUnitsCB( argsList ):
-	worldBuilderScreen.handlePlayerEditGoldenAgeUnitsCB(argsList)
-
-def WorldBuilderHandlePlayerEditAnarchyCB( argsList ):
-	worldBuilderScreen.handlePlayerEditAnarchyCB(argsList)
-
-def WorldBuilderHandlePlayerEditCombatExperienceCB( argsList ):
-	worldBuilderScreen.handlePlayerEditCombatExperienceCB(argsList)
-
-def WorldBuilderHandlePlayerEditCivicCB( argsList ):
-	worldBuilderScreen.handlePlayerEditCivicCB(argsList)
-
-def WorldBuilderHandleStateReligionEditPullDownCB( argsList ):
-	worldBuilderScreen.handleStateReligionEditPullDownCB(argsList)
-
-##MagisterModmod
-def WorldBuilderHandleAlignmentEditPullDownCB( argsList ):
-	worldBuilderScreen.handleAlignmentEditPullDownCB(argsList)
-
-def WorldBuilderHandleEditPlayerTraitCB( argsList ):
-	worldBuilderScreen.handleEditPlayerTraitCB(argsList)
-
-def WorldBuilderHandleEditFeatHasCastWorldSpellCB( argsList ):
-	worldBuilderScreen.handleEditFeatHasCastWorldSpellCB(argsList)
-
-def WorldBuilderHandleEditFeatTrustCB( argsList ):
-	worldBuilderScreen.handleEditFeatTrustCB(argsList)
-
-def WorldBuilderHandleEditFeatHealUnitPerTurnCB( argsList ):
-	worldBuilderScreen.handleEditFeatHealUnitPerTurnCB(argsList)
-
-
-
-##MagisterModmod
-
-def WorldBuilderHandlePlayerEditStateReligionUnitProductionCB( argsList ):
-	worldBuilderScreen.handlePlayerEditStateReligionUnitProductionCB(argsList)
-
-def WorldBuilderHandlePlayerEditStateReligionBuildingProductionCB( argsList ):
-	worldBuilderScreen.handlePlayerEditStateReligionBuildingProductionCB(argsList)
-
-def WorldBuilderHandleCurrentTechEditPullDownCB( argsList ):
-	worldBuilderScreen.handleCurrentTechEditPullDownCB(argsList)
-
-def WorldBuilderHandleTeamEditResearchProgressCB( argsList ):
-	worldBuilderScreen.handleTeamEditResearchProgressCB(argsList)
-
-def WorldBuilderHandleTriggerEventCB( argsList ):
-	worldBuilderScreen.handleTriggerEventCB(argsList)
-
-## Team Data ##
-
-def WorldBuilderHandleTeamEditPullDownCB( argsList ):
-	worldBuilderScreen.handleTeamEditPullDownCB(argsList)
-
-def WorldBuilderHandleAddTeamCB( argsList ):
-	worldBuilderScreen.handleAddTeamCB(argsList)
-
-def WorldBuilderHandleTeamEditNukeInterceptionCB( argsList ):
-	worldBuilderScreen.handleTeamEditNukeInterceptionCB(argsList)
-
-def WorldBuilderHandleDomainEditPullDownCB( argsList ):
-	worldBuilderScreen.handleDomainEditPullDownCB(argsList)
-
-def WorldBuilderHandleTeamEditDomainMovesCB( argsList ):
-	worldBuilderScreen.handleTeamEditDomainMovesCB(argsList)
-
-def WorldBuilderHandleRouteEditPullDownCB( argsList ):
-	worldBuilderScreen.handleRouteEditPullDownCB(argsList)
-
-def WorldBuilderHandleTeamEditRouteChangeCB( argsList ):
-	worldBuilderScreen.handleTeamEditRouteChangeCB(argsList)
-
-def WorldBuilderHandleImprovementEditPullDownCB( argsList ):
-	worldBuilderScreen.handleImprovementEditPullDownCB(argsList)
-
-def WorldBuilderHandleYieldEditPullDownCB( argsList ):
-	worldBuilderScreen.handleYieldEditPullDownCB(argsList)
-
-def WorldBuilderHandleTeamEditImprovementYieldCB( argsList ):
-	worldBuilderScreen.handleTeamEditImprovementYieldCB(argsList)
-
-def WorldBuilderHandleTeamEditMapCenteringCB( argsList ):
-	worldBuilderScreen.handleTeamEditMapCenteringCB(argsList)
-
-def WorldBuilderHandleTeamEditGoldTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditGoldTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditTechTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditTechTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditMapTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditMapTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditOpenBordersTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditOpenBordersTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditPermanentAllianceTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditPermanentAllianceTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditDefensivePactTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditDefensivePactTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditVassalTradingCB( argsList ):
-	worldBuilderScreen.handleTeamEditVassalTradingCB(argsList)
-
-def WorldBuilderHandleTeamEditWaterWorkCB( argsList ):
-	worldBuilderScreen.handleTeamEditWaterWorkCB(argsList)
-
-def WorldBuilderHandleTeamEditExtraWaterSeeFromCB( argsList ):
-	worldBuilderScreen.handleTeamEditExtraWaterSeeFromCB(argsList)
-
-def WorldBuilderHandleTeamEditBridgeBuildingCB( argsList ):
-	worldBuilderScreen.handleTeamEditBridgeBuildingCB(argsList)
-
-def WorldBuilderHandleTeamEditIrrigationCB( argsList ):
-	worldBuilderScreen.handleTeamEditIrrigationCB(argsList)
-
-def WorldBuilderHandleTeamEditIgnoreIrrigationCB( argsList ):
-	worldBuilderScreen.handleTeamEditIgnoreIrrigationCB(argsList)
-
-def WorldBuilderHandleTeamEditEnemyWarWearinessCB( argsList ):
-	worldBuilderScreen.handleTeamEditEnemyWarWearinessCB(argsList)
-
-def WorldBuilderHandleTeamEditKnownCivsCB( argsList ):
-	worldBuilderScreen.handleTeamEditKnownCivsCB(argsList)
-
-def WorldBuilderHandleTeamEditTechShareCB( argsList ):
-	worldBuilderScreen.handleTeamEditTechShareCB(argsList)
-
-def WorldBuilderHandleTeamEditForceTeamVoteCB( argsList ):
-	worldBuilderScreen.handleTeamEditForceTeamVoteCB(argsList)
-
-## Plot ##
-
-def WorldBuilderHandlePlotEditCultureCB( argsList ):
-	worldBuilderScreen.handlePlotEditCultureCB(argsList)
-
-def WorldBuilderHandlePlotEditYieldCB( argsList ):
-	worldBuilderScreen.handlePlotEditYieldCB(argsList)
-
-def WorldBuilderHandlePlotEditPlotTypeCB( argsList ):
-	worldBuilderScreen.handlePlotEditPlotTypeCB(argsList)
-
-def WorldBuilderHandlePlotEditTerrainCB( argsList ):
-	worldBuilderScreen.handlePlotEditTerrainCB(argsList)
-
-def WorldBuilderHandlePlotAddCityCB( argsList ):
-	worldBuilderScreen.handlePlotAddCityCB(argsList)
-
-##MagisterModmod
-def WorldBuilderHandlePlotMoveDisabledAICB( argsList ):
-	worldBuilderScreen.handlePlotMoveDisabledAICB(argsList)
-
-def WorldBuilderHandlePlotMoveDisabledHumanCB( argsList ):
-	worldBuilderScreen.handlePlotMoveDisabledHumanCB(argsList)
-
-def WorldBuilderHandlePlotBuildDisabledCB( argsList ):
-	worldBuilderScreen.handlePlotBuildDisabledCB(argsList)
-
-def WorldBuilderHandlePlotFoundDisabledCB( argsList ):
-	worldBuilderScreen.handlePlotFoundDisabledCB(argsList)
-
-def WorldBuilderHandlePlotPythonActiveCB( argsList ):
-	worldBuilderScreen.handlePlotPythonActiveCB(argsList)
-
-def WorldBuilderHandlePlotEditMinLevelCB( argsList ):
-	worldBuilderScreen.handlePlotMinLevelCB(argsList)
-
-def WorldBuilderHandlePlotEditPortalExitXCB( argsList ):
-	worldBuilderScreen.handlePlotPortalExitXCB(argsList)
-
-def WorldBuilderHandlePlotEditPortalExitYCB( argsList ):
-	worldBuilderScreen.handlePlotPortalExitYCB(argsList)
-
-def WorldBuilderHandlePlotCounterEditCB( argsList ):
-	worldBuilderScreen.handlePlotCounterEditCB(argsList)
-##MagisterModmod
-
-def WorldBuilderHandlePlotEditFeatureCB( argsList ):
-	worldBuilderScreen.handlePlotEditFeatureCB(argsList)
-
-def WorldBuilderHandlePlotEditVarietyCB( argsList ):
-	worldBuilderScreen.handlePlotEditVarietyCB(argsList)
-
-def WorldBuilderHandlePlotEditBonusCB( argsList ):
-	worldBuilderScreen.handlePlotEditBonusCB(argsList)
-
-def WorldBuilderHandlePlotEditImprovementCB( argsList ):
-	worldBuilderScreen.handlePlotEditImprovementCB(argsList)
-
-def WorldBuilderHandlePlotEditUpgradeProgressCB( argsList ):
-	worldBuilderScreen.handlePlotEditUpgradeProgressCB(argsList)
-
-def WorldBuilderHandlePlotEditRouteCB( argsList ):
-	worldBuilderScreen.handlePlotEditRouteCB(argsList)
-
-def WorldBuilderHandlePlotEditRiverCB( argsList ):
-	worldBuilderScreen.handlePlotEditRiverCB(argsList)
-
-def WorldBuilderHandleEventOtherPlayerCB( argsList ):
-	worldBuilderScreen.handleEventOtherPlayerCB(argsList)
-
-def WorldBuilderHandleEventUnitCB( argsList ):
-	worldBuilderScreen.handleEventUnitCB(argsList)
-
-## Platy World Builder End ##
 
 def WorldBuilderGetHighlightPlot(argsList):
 	return worldBuilderScreen.getHighlightPlot(argsList)
@@ -1107,56 +648,6 @@ def WorldBuilderOnAdvancedStartBrushSelected(argsList):
 	if (worldBuilderScreen.setCurrentAdvancedStartIndex(iIndex)):
 		if (worldBuilderScreen.setCurrentAdvancedStartList(iList)):
 			return 1
-	return 0
-
-def WorldBuilderOnNormalPlayerBrushSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	print("WB brush selected, iList=%d, iIndex=%d, type=%d" %(iList,iIndex,iTab))
-	if (worldBuilderScreen.setCurrentNormalPlayerIndex(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnNormalMapBrushSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	print("WB brush selected, iList=%d, iIndex=%d, type=%d" %(iList,iIndex,iTab))
-	if (worldBuilderScreen.setCurrentNormalMapIndex(iIndex)):
-		if (worldBuilderScreen.setCurrentNormalMapList(iList)):
-			return 1
-	return 0
-
-def WorldBuilderOnWBEditBrushSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	if (worldBuilderScreen.setEditButtonClicked(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnWBEditReligionSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	if (worldBuilderScreen.setEditReligionSelected(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnWBEditHolyCitySelected(argsList):
-	iList,iIndex,iTab = argsList;
-	if (worldBuilderScreen.setEditHolyCitySelected(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnWBEditCorporationSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	if (worldBuilderScreen.setEditCorporationSelected(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnWBEditHeadquartersSelected(argsList):
-	iList,iIndex,iTab = argsList;
-	if (worldBuilderScreen.setEditHeadquartersSelected(iIndex)):
-		return 1
-	return 0
-
-def WorldBuilderOnAllPlotsBrushSelected(argsList):
-	if (worldBuilderScreen.handleAllPlotsCB(argsList)):
-		return 1
 	return 0
 
 def WorldBuilderGetASUnitTabID():
@@ -1188,60 +679,6 @@ def WorldBuilderGetASVisibilityTabID():
 
 def WorldBuilderGetASTechTabID():
 	return worldBuilderScreen.getASTechTabID()
-
-def WorldBuilderGetUnitTabID():
-	return worldBuilderScreen.getUnitTabID()
-
-def WorldBuilderGetBuildingTabID():
-	return worldBuilderScreen.getBuildingTabID()
-
-def WorldBuilderGetTechnologyTabID():
-	return worldBuilderScreen.getTechnologyTabID()
-
-def WorldBuilderGetImprovementTabID():
-	return worldBuilderScreen.getImprovementTabID()
-
-def WorldBuilderGetBonusTabID():
-	return worldBuilderScreen.getBonusTabID()
-
-def WorldBuilderGetImprovementListID():
-	return worldBuilderScreen.getImprovementListID()
-
-def WorldBuilderGetBonusListID():
-	return worldBuilderScreen.getBonusListID()
-
-def WorldBuilderGetTerrainTabID():
-	return worldBuilderScreen.getTerrainTabID()
-
-def WorldBuilderGetTerrainListID():
-	return worldBuilderScreen.getTerrainListID()
-
-def WorldBuilderGetFeatureListID():
-	return worldBuilderScreen.getFeatureListID()
-
-def WorldBuilderGetPlotTypeListID():
-	return worldBuilderScreen.getPlotTypeListID()
-
-def WorldBuilderGetRouteListID():
-	return worldBuilderScreen.getRouteListID()
-
-def WorldBuilderGetTerritoryTabID():
-	return worldBuilderScreen.getTerritoryTabID()
-
-def WorldBuilderGetTerritoryListID():
-	return worldBuilderScreen.getTerritoryListID()
-
-def WorldBuilderHasTech(argsList):
-	iTech = argsList[0]
-	return worldBuilderScreen.hasTech(iTech)
-
-def WorldBuilderHasPromotion(argsList):
-	iPromotion = argsList[0]
-	return worldBuilderScreen.hasPromotion(iPromotion)
-
-def WorldBuilderHasBuilding(argsList):
-	iBuilding = argsList[0]
-	return worldBuilderScreen.getNumBuilding(iBuilding)
 #################################################
 ## Utility Functions (can be overridden by CvScreenUtilsInterface
 #################################################
@@ -1343,8 +780,6 @@ def forceScreenRedraw (argsList):
 	# Main Interface Screen
 	if ( argsList[0] == MAIN_INTERFACE ):
 		mainInterface.redraw()
-	elif ( argsList[0] == WORLDBUILDER_SCREEN ):
-		worldBuilderScreen.redraw()
 	elif ( argsList[0] == TECH_CHOOSER ):
 		techChooser.updateTechRecords(true)
 
@@ -1521,14 +956,14 @@ HandleCloseMap = {  DAWN_OF_MAN : dawnOfMan,
 ## Handle Input Map
 #######################################################################################
 HandleInputMap = {  MAIN_INTERFACE : mainInterface,
-#					DOMESTIC_ADVISOR : domesticAdvisor,
+					DOMESTIC_ADVISOR : domesticAdvisor,
 					RELIGION_SCREEN : religionScreen,
 					CORPORATION_SCREEN : corporationScreen,
 					CIVICS_SCREEN : civicScreen,
 					TECH_CHOOSER : techChooser,
 					FOREIGN_ADVISOR : foreignAdvisor,
-#					FINANCE_ADVISOR : financeAdvisor,
-#					MILITARY_ADVISOR : militaryAdvisor,
+					FINANCE_ADVISOR : financeAdvisor,
+					MILITARY_ADVISOR : militaryAdvisor,
 					DAWN_OF_MAN : dawnOfMan,
 					WONDER_MOVIE_SCREEN : wonderMovie,
 					ERA_MOVIE_SCREEN : eraMovie,
@@ -1536,6 +971,7 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					INTRO_MOVIE_SCREEN : introMovie,
 					OPTIONS_SCREEN : optionsScreen,
 					INFO_SCREEN : infoScreen,
+					TECH_SPLASH : techSplashScreen,
 					REPLAY_SCREEN : replayScreen,
 					VICTORY_SCREEN : victoryScreen,
 					TOP_CIVS : topCivs,
@@ -1575,15 +1011,20 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					REVOLUTION_WATCH_ADVISOR : revolutionWatchAdvisor,
 
 ## World Builder ##
-					WB_BUILDING : WBBuildingScreen.WBBuildingScreen(),
-					WB_TECH : WBTechScreen.WBTechScreen(),
-					WB_PROMOTION : WBPromotionScreen.WBPromotionScreen(),
-					WB_CORPORATION : WBCorporationScreen.WBCorporationScreen(),
-					WB_BONUS : WBBonusScreen.WBBonusScreen(),
-					WB_PROJECT : WBProjectScreen.WBProjectScreen(),
-					WB_SPECIALIST : WBSpecialistScreen.WBSpecialistScreen(),
+					WB_PLOT : WBPlotScreen.WBPlotScreen(worldBuilderScreen),
+					WB_EVENT: WBEventScreen.WBEventScreen(worldBuilderScreen),
+					WB_BUILDING : WBBuildingScreen.WBBuildingScreen(worldBuilderScreen),
+					WB_CITYDATA : WBCityDataScreen.WBCityDataScreen(worldBuilderScreen),
+					WB_CITYEDIT : WBCityEditScreen.WBCityEditScreen(worldBuilderScreen),
+					WB_TECH : WBTechScreen.WBTechScreen(worldBuilderScreen),
+					WB_PROJECT : WBProjectScreen.WBProjectScreen(worldBuilderScreen),
+					WB_TEAM : WBTeamScreen.WBTeamScreen(worldBuilderScreen),
+					WB_PLAYER : WBPlayerScreen.WBPlayerScreen(worldBuilderScreen),
+					WB_UNIT : WBUnitScreen.WBUnitScreen(worldBuilderScreen),
+					WB_PROMOTION : WBPromotionScreen.WBPromotionScreen(worldBuilderScreen),
 					WB_DIPLOMACY : WBDiplomacyScreen.WBDiplomacyScreen(),
-## World Builder ##
+					WB_GAMEDATA : WBGameDataScreen.WBGameDataScreen(worldBuilderScreen),
+					WB_UNITLIST : WBPlayerUnits.WBPlayerUnits(worldBuilderScreen),
 				}
 
 #######################################################################################
@@ -1607,7 +1048,7 @@ HandleNavigationMap = {
 					PEDIA_LEADER : pediaMainScreen,
 					PEDIA_HISTORY : pediaMainScreen,
 					PEDIA_RELIGION : pediaMainScreen,
-#					PEDIA_CORPORATION : pediaMainScreen,
+##					PEDIA_CORPORATION : pediaMainScreen,
 
 				# add new screens here
 					PEDIA_SPELL : pediaMainScreen
