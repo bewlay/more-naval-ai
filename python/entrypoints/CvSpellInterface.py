@@ -419,9 +419,13 @@ def reqAddToFreakShowHuman(caster):
 	return True
 
 def reqAddToWolfPack(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
 	pPlot = caster.plot()
 	iWolfPack = gc.getInfoTypeForString('UNIT_WOLF_PACK')
 	iEmpower5 = gc.getInfoTypeForString('PROMOTION_EMPOWER5')
+	if pPlayer.isHuman() == False:
+		if caster.baseCombatStr() > 2:
+			return False
 	for i in range(pPlot.getNumUnits()):
 		pUnit = pPlot.getUnit(i)
 		if pUnit.getUnitType() == iWolfPack:
@@ -1362,6 +1366,7 @@ def spellForTheHorde(caster):
 					newUnit.convert(pUnit)
 
 def reqFormWolfPack(caster):
+	pPlayer = gc.getPlayer(caster.getOwner())
 	pPlot = caster.plot()
 	iWolf = gc.getInfoTypeForString('UNIT_WOLF')
 	iCount = 0
@@ -1372,6 +1377,9 @@ def reqFormWolfPack(caster):
 				iCount += 1
 	if iCount < 2:
 		return False
+	if pPlayer.isHuman() == False:
+		if caster.baseCombatStr() > 2:
+			return False
 	return True
 
 def spellFormWolfPack(caster):
