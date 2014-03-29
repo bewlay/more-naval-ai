@@ -2381,7 +2381,6 @@ void CvUnit::updateCombat(bool bQuick)
 					}
 				}
 
-
 				pDefender->kill(false);
 				pDefender = NULL;
 
@@ -3130,7 +3129,7 @@ void CvUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
 		}
 	}
 
-	if (isDelayedDeath())
+	if (!isDead() && isDelayedDeath())
 	{
 		getGroup()->doDelayedDeath();
 	}
