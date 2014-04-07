@@ -2820,9 +2820,15 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 					{
 						if (pNewCity->isValidBuildingLocation(eBuilding))
 						{
-							if (!bConquest || bRecapture || 
-								// Tholal ToDo - rebels have increased chance of keeping buildings
-								GC.getGameINLINE().getSorenRandNum(100, "Capture Probability") < GC.getBuildingInfo((BuildingTypes)iI).getConquestProbability())
+							// MNAI - Revolutions - rebels have increased chance of keeping buildings if captured from civ they are rebelling against
+							int iBuildingCaptureProb = GC.getBuildingInfo((BuildingTypes)iI).getConquestProbability();
+							if (GET_TEAM(getTeam()).isRebelAgainst(GET_PLAYER(eOldOwner).getTeam()))
+							{
+								iBuildingCaptureProb *= 2;
+							}
+							// MNAI End
+
+							if (!bConquest || bRecapture || GC.getGameINLINE().getSorenRandNum(100, "Capture Probability") < iBuildingCaptureProb)
 							{
 								iNum += paiNumRealBuilding[iI];
 							}
