@@ -1737,7 +1737,7 @@ class CvEventManager:
 			elif iTechType == gc.getInfoTypeForString('TECH_DECEPTION'):
 				iUnit = gc.getInfoTypeForString('UNIT_NIGHTWATCH')
 				iReligion = gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS')
-			elif iReligion != -1:
+			if iReligion != -1:
 				if (iReligion==pPlayer.getFavoriteReligion()):
 					pPlayer.getCapitalCity().setHasReligion(iReligion,True,True,True)	
 				if CyGame().isReligionFounded(iReligion):
