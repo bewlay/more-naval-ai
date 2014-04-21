@@ -10895,6 +10895,15 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 		}
 	}
 
+	//	Enable Bonuses
+	for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+	{
+		if (GC.getBonusInfo((BonusTypes)iI).getTechCityTrade() == eTech)
+		{
+			buildEnableBonusString(szBuffer, iI, true);
+		}
+	}
+
 	for (iI = 0; iI < GC.getNumSpecialBuildingInfos(); ++iI)
 	{
 		if (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getObsoleteTech() == eTech)
@@ -16975,6 +16984,17 @@ void CvGameTextMgr::buildObsoleteBonusString(CvWStringBuffer &szBuffer, int iIte
 		szBuffer.append(NEWLINE);
 	}
 	szBuffer.append(gDLL->getText("TXT_KEY_TECH_OBSOLETES", GC.getBonusInfo((BonusTypes) iItem).getTextKeyWide()));
+}
+
+void CvGameTextMgr::buildEnableBonusString(CvWStringBuffer &szBuffer, int iItem, bool bList, bool bPlayerContext)
+{
+	CvWString szTempBuffer;
+
+	if (bList)
+	{
+		szBuffer.append(NEWLINE);
+	}
+	szBuffer.append(gDLL->getText("TXT_KEY_TECH_ENABLES", GC.getBonusInfo((BonusTypes) iItem).getTextKeyWide()));
 }
 
 void CvGameTextMgr::buildObsoleteSpecialString(CvWStringBuffer &szBuffer, int iItem, bool bList, bool bPlayerContext)
