@@ -119,7 +119,10 @@ void CvUnit::reloadEntity()
 
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
 //void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection)
-void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, bool bPushOutExistingUnit)
+// lfgr 04/2014 bugfix
+//void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, bool bPushOutExistingUnit)
+void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, bool bPushOutExistingUnit, bool bGift)
+// lfgr end
 //<<<<Unofficial Bug Fix: End Modify
 {
 	CvWString szBuffer;
@@ -307,7 +310,10 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 	AI_init(eUnitAI);
 
 //FfH Units: Added by Kael 04/18/2008
-	if (m_pUnitInfo->getFreePromotionPick() > 0)
+// lfgr 04/2014 bugfix
+//	if (m_pUnitInfo->getFreePromotionPick() > 0)
+	if ( !bGift && m_pUnitInfo->getFreePromotionPick() > 0)
+// lfgr end
 	{
 	    changeFreePromotionPick(m_pUnitInfo->getFreePromotionPick());
         setPromotionReady(true);
@@ -691,10 +697,19 @@ void CvUnit::convert(CvUnit* pUnit)
             setHasPromotion((PromotionTypes)GC.getDefineINT("WEAPON_PROMOTION_TIER3"), false);
         }
     }
+// lfgr 04/2014 bugfix
+/* old
     if (m_pUnitInfo->getFreePromotionPick() > 0 && getGameTurnCreated() == GC.getGameINLINE().getGameTurn())
 	{
         setPromotionReady(true);
     }
+*/
+	if( pUnit->getFreePromotionPick() > 0 )
+	{
+		changeFreePromotionPick( pUnit->getFreePromotionPick() );
+	}
+// lfgr end
+
     setDuration(pUnit->getDuration());
     if (pUnit->getReligion() != NO_RELIGION && getReligion() == NO_RELIGION)
     {
@@ -745,6 +760,10 @@ void CvUnit::convert(CvUnit* pUnit)
 	int iOldModifier = std::max(1, 100 + GET_PLAYER(pUnit->getOwnerINLINE()).getLevelExperienceModifier());
 	int iOurModifier = std::max(1, 100 + GET_PLAYER(getOwnerINLINE()).getLevelExperienceModifier());
 	setExperience(std::max(0, (pUnit->getExperience() * iOurModifier) / iOldModifier));
+
+// lfgr 04/2014 bugfix
+    testPromotionReady();
+// lfgr end
 
 	setName(pUnit->getNameNoDesc());
 // BUG - Unit Name - start
@@ -4317,7 +4336,10 @@ void CvUnit::gift(bool bTestTransport)
 	}
 
 	FAssertMsg(plot()->getOwnerINLINE() != NO_PLAYER, "plot()->getOwnerINLINE() is not expected to be equal with NO_PLAYER");
-	pGiftUnit = GET_PLAYER(plot()->getOwnerINLINE()).initUnit(getUnitType(), getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
+// lfgr 04/2014 bugfix
+//	pGiftUnit = GET_PLAYER(plot()->getOwnerINLINE()).initUnit(getUnitType(), getX_INLINE(), getY_INLINE(), AI_getUnitAIType());
+	pGiftUnit = GET_PLAYER(plot()->getOwnerINLINE()).initUnit(getUnitType(), getX_INLINE(), getY_INLINE(), AI_getUnitAIType(), NO_DIRECTION, true, true);
+// lfgr end
 
 	FAssertMsg(pGiftUnit != NULL, "GiftUnit is not assigned a valid value");
 
@@ -13422,12 +13444,17 @@ void CvUnit::setMadeInterception(bool bNewValue)
 
 bool CvUnit::isPromotionReady() const
 {
+// lfgr 04/2014 bugfix
+// Commented out: now handled in testPromotionReady()
+/*
 	//FfH - Free Promotions (Kael 08/04/2007)
     if (getFreePromotionPick() > 0)
     {
         return true;
     }
 	//End FfH
+*/
+// lfgr end
 
 	return m_bPromotionReady;
 }
@@ -13468,7 +13495,12 @@ void CvUnit::setPromotionReady(bool bNewValue)
 
 void CvUnit::testPromotionReady()
 {
+// lfgr 04/2014 bugfix
+/* old
 	setPromotionReady((getExperience() >= experienceNeeded()) && canAcquirePromotionAny());
+*/
+	setPromotionReady( getFreePromotionPick() > 0 || (getExperience() >= experienceNeeded() ) && canAcquirePromotionAny());
+// lfgr end
 }
 
 

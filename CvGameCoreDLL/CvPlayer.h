@@ -117,7 +117,10 @@ public:
 
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
 //	CvUnit* initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI, DirectionTypes eFacingDirection = NO_DIRECTION);							// Exposed to Python
-	CvUnit* initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI, DirectionTypes eFacingDirection = NO_DIRECTION, bool bPushOutExistingUnit = true);
+// lfgr 04/2014 bugfix
+//	CvUnit* initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI, DirectionTypes eFacingDirection = NO_DIRECTION, bool bPushOutExistingUnit = true);
+	CvUnit* initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI, DirectionTypes eFacingDirection = NO_DIRECTION, bool bPushOutExistingUnit = true, bool bGift = false);
+// lfgr end
 //<<<<Unofficial Bug Fix: End Modify
 	void disbandUnit(bool bAnnounce);																																					// Exposed to Python
 	void killUnits();																																													// Exposed to Python
