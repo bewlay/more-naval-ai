@@ -2019,7 +2019,7 @@ void CvCityAI::AI_chooseProduction()
 			{
     			if (AI_chooseUnit(UNITAI_ATTACK))
     			{
-					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack", getName().GetCString());
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack (%d needed)", getName().GetCString(), iAttackNeeded);
     				return;
     			}
 			}

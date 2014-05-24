@@ -2470,6 +2470,8 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 		return false;
 	}
 
+	CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+
 //FfH: Modified by Kael 09/10/2008
 //	if (isImpassable())
 //	{
@@ -2479,7 +2481,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	{
 		if (isPeak())
 		{
-			if (!GC.getImprovementInfo(eImprovement).isRequiresPeak())
+			if (!kImprovement.isRequiresPeak())
 			{
 				return false;
 			}
@@ -2489,7 +2491,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 			return false;
 		}
 	}
-    if (GC.getImprovementInfo(eImprovement).isRequiresPeak())
+    if (kImprovement.isRequiresPeak())
     {
 		if (!isPeak())
 		{
@@ -2498,7 +2500,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
     }
 //FfH: End Modify
 
-	if (GC.getImprovementInfo(eImprovement).isWater() != isWater())
+	if (kImprovement.isWater() != isWater())
 	{
 		return false;
 	}
@@ -2512,16 +2514,16 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	}
 
 	// Tholal AI begin
-	if((getBonusType() != NO_BONUS) && GC.getImprovementInfo(eImprovement).isActsAsCity() && GC.getBonusInfo(getBonusType()).isMana())
+	if((getBonusType() != NO_BONUS) && kImprovement.isActsAsCity() && GC.getBonusInfo(getBonusType()).isMana())
 	{
 		return false;
 	}
 	// Tholal AI end
 
 	// Super Forts begin *build*
-	if (GC.getImprovementInfo(eImprovement).getUniqueRange() > 0)
+	if (kImprovement.getUniqueRange() > 0)
 	{
-		int iUniqueRange = GC.getImprovementInfo(eImprovement).getUniqueRange();
+		int iUniqueRange = kImprovement.getUniqueRange();
 		for (int iDX = -iUniqueRange; iDX <= iUniqueRange; iDX++) 
 		{
 			for (int iDY = -iUniqueRange; iDY <= iUniqueRange; iDY++)
@@ -2539,47 +2541,47 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 	}
 	// Super Forts end
 
-	if ((getBonusType(eTeam) != NO_BONUS) && GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(getBonusType(eTeam)))
+	if ((getBonusType(eTeam) != NO_BONUS) && kImprovement.isImprovementBonusMakesValid(getBonusType(eTeam)))
 	{
 		return true;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isNoFreshWater() && isFreshWater())
+	if (kImprovement.isNoFreshWater() && isFreshWater())
 	{
 		return false;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isRequiresFlatlands() && !isFlatlands())
+	if (kImprovement.isRequiresFlatlands() && !isFlatlands())
 	{
 		return false;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isRequiresFeature() && (getFeatureType() == NO_FEATURE))
+	if (kImprovement.isRequiresFeature() && (getFeatureType() == NO_FEATURE))
 	{
 		return false;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isHillsMakesValid() && isHills())
+	if (kImprovement.isHillsMakesValid() && isHills())
 	{
 		bValid = true;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isFreshWaterMakesValid() && isFreshWater())
+	if (kImprovement.isFreshWaterMakesValid() && isFreshWater())
 	{
 		bValid = true;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isRiverSideMakesValid() && isRiverSide())
+	if (kImprovement.isRiverSideMakesValid() && isRiverSide())
 	{
 		bValid = true;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).getTerrainMakesValid(getTerrainType()))
+	if (kImprovement.getTerrainMakesValid(getTerrainType()))
 	{
 		bValid = true;
 	}
 
-	if ((getFeatureType() != NO_FEATURE) && GC.getImprovementInfo(eImprovement).getFeatureMakesValid(getFeatureType()))
+	if ((getFeatureType() != NO_FEATURE) && kImprovement.getFeatureMakesValid(getFeatureType()))
 	{
 		bValid = true;
 	}
@@ -2589,7 +2591,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 		return false;
 	}
 
-	if (GC.getImprovementInfo(eImprovement).isRequiresRiverSide())
+	if (kImprovement.isRequiresRiverSide())
 	{
 		bValid = false;
 
@@ -2618,7 +2620,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 
 	for (iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 	{
-		if (calculateNatureYield(((YieldTypes)iI), eTeam) < GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI))
+		if (calculateNatureYield(((YieldTypes)iI), eTeam) < kImprovement.getPrereqNatureYield(iI))
 		{
 			return false;
 		}
@@ -2626,7 +2628,7 @@ bool CvPlot::canHaveImprovement(ImprovementTypes eImprovement, TeamTypes eTeam, 
 
 	if ((getTeam() == NO_TEAM) || !(GET_TEAM(getTeam()).isIgnoreIrrigation()))
 	{
-		if (!bPotential && GC.getImprovementInfo(eImprovement).isRequiresIrrigation() && !isIrrigationAvailable())
+		if (!bPotential && kImprovement.isRequiresIrrigation() && !isIrrigationAvailable())
 		{
 			return false;
 		}

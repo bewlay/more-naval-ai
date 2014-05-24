@@ -735,6 +735,7 @@ int CvTeamAI::AI_calculatePlotWarValue(TeamTypes eTeam) const
 	FAssert(eTeam != getID());
 
 	int iValue = 0;
+	if( gTeamLogLevel >= 4 ) logBBAI("     Calculating Plot War Value...");
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -1301,11 +1302,14 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 
 	int iValue;
 	CvTeamAI& kTeam = GET_TEAM(eTeam);
+	if( gTeamLogLevel >= 4 ) logBBAI("    Valuing War with Team %d" ,eTeam);
 
 	iValue = AI_calculatePlotWarValue(eTeam);
+	if( gTeamLogLevel >= 4 )logBBAI("     Initial Value: %d", iValue);
 
 	iValue += (3 * AI_calculateCapitalProximity(eTeam)) / ((iValue > 0) ? 2 : 3);
-	
+	if( gTeamLogLevel >= 4 )logBBAI("     Plus Capital Proximity: %d", iValue);
+
 	int iClosenessValue = AI_teamCloseness(eTeam);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      05/16/10                                jdog5000      */
@@ -1327,9 +1331,11 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		iValue /= (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? 4 : 2);
 	}
 	iValue += iClosenessValue;
+	if( gTeamLogLevel >= 4 ) logBBAI("     After Closeness Modifier: %d", iValue);
 
 	iValue += AI_calculateBonusWarValue(eTeam);
-	
+	if( gTeamLogLevel >= 4 ) logBBAI("     After Bonus War Value: %d", iValue);
+
 	// Target other teams close to victory
 	if( kTeam.AI_isAnyMemberDoVictoryStrategyLevel3() )
 	{
@@ -5496,6 +5502,7 @@ void CvTeamAI::AI_doWar()
 											{
 												logBBAI("      Team %d (%S) considering starting TOTAL warplan with team %d with value %d on pass %d with %d adjacent plots", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), iI, iValue, iPass, AI_calculateAdjacentLandPlots((TeamTypes)iI) );
 												logBBAI("          Our Power: %d  --  Their Defensive Power: %d", iOurPower, iDefensivePower);
+												logBBAI("          Current Attitude: %S", GC.getAttitudeInfo(AI_getAttitude((TeamTypes)iI)).getDescription(0));
 											}
 
 											if (iValue > iBestValue)
@@ -5562,6 +5569,8 @@ void CvTeamAI::AI_doWar()
 									if( iValue > 0 && gTeamLogLevel >= 2 )
 									{
 										logBBAI("      Team %d (%S) considering starting LIMITED warplan with team %d with value %d", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), iI, iValue );
+										//logBBAI("          Our Power: %d  --  Their Defensive Power: %d", iOurPower, iDefensivePower);
+										logBBAI("          Current Attitude: %S", GC.getAttitudeInfo(AI_getAttitude((TeamTypes)iI)).getDescription(0));
 									}
 
 									if (iValue > iBestValue)
@@ -5636,6 +5645,8 @@ void CvTeamAI::AI_doWar()
 										if( iValue > 0 && gTeamLogLevel >= 2 )
 										{
 											logBBAI("      Team %d (%S) considering starting DOGPILE warplan with team %d with value %d", getID(), GET_PLAYER(getLeaderID()).getCivilizationDescription(0), iI, iValue );
+											//logBBAI("          Our Power: %d  --  Their Defensive Power: %d", iOurPower, iDefensivePower);
+											logBBAI("          Current Attitude: %S", GC.getAttitudeInfo(AI_getAttitude((TeamTypes)iI)).getDescription(0));
 										}
 
 										if (iValue > iBestValue)

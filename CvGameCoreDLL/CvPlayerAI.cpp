@@ -22838,6 +22838,8 @@ int CvPlayerAI::AI_getStrategyHash() const
         return m_iStrategyHash;
     }
     
+	logBBAI("Checking Strategies...");
+
     int iNonsense = AI_getStrategyRand();
     
 	int iMetCount = kTeam.getHasMetCivCount(true);
@@ -22988,12 +22990,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 	{
 		if( (m_iStrategyHash & AI_STRATEGY_LAND_BLITZ) && !(iLastStrategyHash & AI_STRATEGY_LAND_BLITZ) )
 		{
-			logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_LAND_BLITZ on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+			logBBAI( "  starting strategy AI_STRATEGY_LAND_BLITZ on turn %d", GC.getGameINLINE().getGameTurn());
 		}
 
 		if( (m_iStrategyHash & AI_STRATEGY_AIR_BLITZ) && !(iLastStrategyHash & AI_STRATEGY_AIR_BLITZ) )
 		{
-			logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_AIR_BLITZ on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+			logBBAI( "  starting strategy AI_STRATEGY_AIR_BLITZ on turn %d", GC.getGameINLINE().getGameTurn());
 		}
 	}
     
@@ -23111,12 +23113,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 	{
 		if( (m_iStrategyHash & AI_STRATEGY_TURTLE) && !(iLastStrategyHash & AI_STRATEGY_TURTLE) )
 		{
-			logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_TURTLE on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+			logBBAI( "  starting strategy AI_STRATEGY_TURTLE on turn %d", GC.getGameINLINE().getGameTurn());
 		}
 
 		if( !(m_iStrategyHash & AI_STRATEGY_TURTLE) && (iLastStrategyHash & AI_STRATEGY_TURTLE) )
 		{
-			logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_TURTLE on turn %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn());
+			logBBAI( "  stopping strategy AI_STRATEGY_TURTLE on turn %d", GC.getGameINLINE().getGameTurn());
 		}
 	}
 	
@@ -23164,7 +23166,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 									if( gPlayerLogLevel >= 2 )
 									{
-										logBBAI( "    Player %d (%S) wary of %S because of war memory %d", getID(), getCivilizationDescription(0), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription(0), iWarMemory);
+										logBBAI( "    wary of %S because of war memory %d", GET_PLAYER((PlayerTypes)iI).getCivilizationDescription(0), iWarMemory);
 									}
 								}
 							}
@@ -23275,22 +23277,22 @@ int CvPlayerAI::AI_getStrategyHash() const
 	{
 		if( (m_iStrategyHash & AI_STRATEGY_ALERT1) && !(iLastStrategyHash & AI_STRATEGY_ALERT1) )
 		{
-			logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+			logBBAI( "  starting strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", GC.getGameINLINE().getGameTurn(), iParanoia);
 		}
 
 		if( !(m_iStrategyHash & AI_STRATEGY_ALERT1) && (iLastStrategyHash & AI_STRATEGY_ALERT1) )
 		{
-			logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+			logBBAI( "  stopping strategy AI_STRATEGY_ALERT1 on turn %d with iParanoia %d", GC.getGameINLINE().getGameTurn(), iParanoia);
 		}
 
 		if( (m_iStrategyHash & AI_STRATEGY_ALERT2) && !(iLastStrategyHash & AI_STRATEGY_ALERT2) )
 		{
-			logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+			logBBAI( "  starting strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", GC.getGameINLINE().getGameTurn(), iParanoia);
 		}
 
 		if( !(m_iStrategyHash & AI_STRATEGY_ALERT2) && (iLastStrategyHash & AI_STRATEGY_ALERT2) )
 		{
-			logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iParanoia);
+			logBBAI( "  stopping strategy AI_STRATEGY_ALERT2 on turn %d with iParanoia %d", GC.getGameINLINE().getGameTurn(), iParanoia);
 		}
 	}
 
@@ -23444,12 +23446,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			if( (m_iStrategyHash & AI_STRATEGY_DAGGER) && !(iLastStrategyHash & AI_STRATEGY_DAGGER) )
 			{
-				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iDagger);
+				logBBAI( "  starting strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", GC.getGameINLINE().getGameTurn(), iDagger);
 			}
 
 			if( !(m_iStrategyHash & AI_STRATEGY_DAGGER) && (iLastStrategyHash & AI_STRATEGY_DAGGER) )
 			{
-				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iDagger);
+				logBBAI( "  stopping strategy AI_STRATEGY_DAGGER on turn %d with iDagger %d", GC.getGameINLINE().getGameTurn(), iDagger);
 			}
 		}
 	}
@@ -23568,12 +23570,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			if( (m_iStrategyHash & AI_STRATEGY_CRUSH) && !(iLastStrategyHash & AI_STRATEGY_CRUSH) )
 			{
-				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iCrushValue);
+				logBBAI( "  starting strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", GC.getGameINLINE().getGameTurn(), iCrushValue);
 			}
 
 			if( !(m_iStrategyHash & AI_STRATEGY_CRUSH) && (iLastStrategyHash & AI_STRATEGY_CRUSH) )
 			{
-				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iCrushValue);
+				logBBAI( "  stopping strategy AI_STRATEGY_CRUSH on turn %d with iCrushValue %d", GC.getGameINLINE().getGameTurn(), iCrushValue);
 			}
 		}
 	}
@@ -23619,12 +23621,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			if( (m_iStrategyHash & AI_STRATEGY_PRODUCTION) && !(iLastStrategyHash & AI_STRATEGY_PRODUCTION) )
 			{
-				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iProductionValue);
+				logBBAI( "  starting strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", GC.getGameINLINE().getGameTurn(), iProductionValue);
 			}
 
 			if( !(m_iStrategyHash & AI_STRATEGY_PRODUCTION) && (iLastStrategyHash & AI_STRATEGY_PRODUCTION) )
 			{
-				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iProductionValue);
+				logBBAI( "  stopping strategy AI_STRATEGY_PRODUCTION on turn %d with iProductionValue %d", GC.getGameINLINE().getGameTurn(), iProductionValue);
 			}
 		}
 	}
@@ -23880,12 +23882,12 @@ int CvPlayerAI::AI_getStrategyHash() const
 		{
 			if( (m_iStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) && !(iLastStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) )
 			{
-				logBBAI( "  Player %d (%S) starts strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iFocus);
+				logBBAI( "  starting strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", GC.getGameINLINE().getGameTurn(), iFocus);
 			}
 
 			if( !(m_iStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) && (iLastStrategyHash & AI_STRATEGY_ECONOMY_FOCUS) )
 			{
-				logBBAI( "  Player %d (%S) stops strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", getID(), getCivilizationDescription(0), GC.getGameINLINE().getGameTurn(), iFocus);
+				logBBAI( "  stopping strategy AI_STRATEGY_ECONOMY_FOCUS on turn %d with iFocus %d", GC.getGameINLINE().getGameTurn(), iFocus);
 			}
 		}
 	}

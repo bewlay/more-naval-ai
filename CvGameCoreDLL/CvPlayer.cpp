@@ -11445,50 +11445,6 @@ void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
 	m_iUnitUpgradePriceModifier = (m_iUnitUpgradePriceModifier + iChange);
 }
 */
-/*
-bool CvPlayer::canFoundReligion() const
-{
-	if( getNumCities() < 1 || isBarbarian() 
-	|| (GC.getGameINLINE().isGameStart() && GC.getGameINLINE().getElapsedGameTurns() < 3) )
-	{
-		return false;
-	}
-
-	if(GC.getGameINLINE().isOption(GAMEOPTION_LIMITED_RELIGIONS))
-	{
-		if( ((getNumCities() > 1) && !(isRebel())) || !GC.isLIMITED_RELIGIONS_EXCEPTIONS() )
-		{
-			if(hasHolyCity())
-			{
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-*/
-/*
-bool CvPlayer::isBuildingClassRequiredToTrain(BuildingClassTypes eBuildingClass, UnitTypes eUnit) const
-{
-	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-	if (kUnit.getPrereqBuildingClass(isPrereqBuildingClass(eBuildingClass))
-	{
-		TechTypes eOverrideTech = (TechTypes) kUnit.getPrereqBuildingClassOverrideTech(eBuildingClass);
-		if (eOverrideTech != NO_TECH && GET_TEAM(getTeam()).isHasTech(TechTypes(eOverrideTech)) )
-		{
-			return false;
-		}
-		EraTypes eOverrideEra = (EraTypes) kUnit.getPrereqBuildingClassOverrideEra(eBuildingClass);
-		if (eOverrideEra != NO_ERA && EraTypes(getCurrentEra()) >= eOverrideEra)
-		{
-			return false;
-		}
-		return true;
-	}
-	return false;
-}
-*/
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
