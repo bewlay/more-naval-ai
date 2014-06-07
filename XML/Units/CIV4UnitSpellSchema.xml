@@ -82,6 +82,9 @@
 	<ElementType name="PyMiscast" content="textOnly"/>
 	<ElementType name="PyResult" content="textOnly"/>
 	<ElementType name="PyRequirement" content="textOnly"/>
+<!-- SpellPyHelp 11/2013 lfgr -->
+	<ElementType name="PyHelp" content="textOnly"/>
+<!-- SpellPyHelp END -->
 	<ElementType name="Effect" content="textOnly"/>
 	<ElementType name="Sound" content="textOnly"/>
 	<ElementType name="HotKey" content="textOnly"/>
@@ -176,6 +179,9 @@
 		<element type="PyMiscast" minOccurs="0"/>
 		<element type="PyResult" minOccurs="0"/>
 		<element type="PyRequirement" minOccurs="0"/>
+	<!-- SpellPyHelp 11/2013 lfgr -->
+		<element type="PyHelp" minOccurs="0"/>
+	<!-- SpellPyHelp END -->
 		<element type="Effect" minOccurs="0"/>
 		<element type="Sound" minOccurs="0"/>
 		<element type="HotKey" minOccurs="0"/>

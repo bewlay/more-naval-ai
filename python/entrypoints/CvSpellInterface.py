@@ -66,6 +66,17 @@ def postCombatWon(argsList):
 	unit = gc.getUnitInfo(pCaster.getUnitType())
 	eval(unit.getPyPostCombatWon())
 
+# SpellPyHelp 11/2013 lfgr
+def getSpellHelp( argsList ) :
+	eSpell, ePlayer, leUnits = argsList
+	pSpell = gc.getSpellInfo( eSpell )
+	pPlayer = gc.getPlayer( ePlayer )
+	lpUnits = []
+	for eUnit in leUnits :
+		lpUnits.append( pPlayer.getUnit( eUnit ) )
+	return eval( pSpell.getPyHelp() )
+# SpellPyHelp END
+
 def findClearPlot(pUnit, plot):
 	BestPlot = -1
 	iBestPlot = 0
