@@ -762,7 +762,22 @@ int CvTeamAI::AI_calculatePlotWarValue(TeamTypes eTeam) const
 					}
 					else
 					{
-						iValue += 40 * GC.getBonusInfo(eBonus).getAIObjective();
+						for ( int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; iPlayer++ )
+						{
+							CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+							if ( kPlayer.getTeam() == getID() && kPlayer.isAlive())
+							{
+								// add value for bonuses we dont have
+								if (kPlayer.countOwnedBonuses(eBonus) == 0)
+								{
+									int iTempBonusValue = 0;
+									iTempBonusValue += (kPlayer.AI_bonusVal(eBonus) / 5);
+									iTempBonusValue += (pLoopPlot->getCulture((PlayerTypes)iPlayer) / 5);
+									if( gTeamLogLevel >= 4 )  logBBAI("      Coveting their Bonus %S (Value: %d)", GC.getBonusInfo(eBonus).getDescription(), iTempBonusValue);
+									iValue += iTempBonusValue;
+								}
+							}
+						}
 					}
 				}
 			}
@@ -1302,6 +1317,8 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 
 	int iValue;
 	CvTeamAI& kTeam = GET_TEAM(eTeam);
+	bool bAggressiveAI = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
+	
 	if( gTeamLogLevel >= 4 ) logBBAI("    Valuing War with Team %d" ,eTeam);
 
 	iValue = AI_calculatePlotWarValue(eTeam);
@@ -1311,26 +1328,15 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	if( gTeamLogLevel >= 4 )logBBAI("     Plus Capital Proximity: %d", iValue);
 
 	int iClosenessValue = AI_teamCloseness(eTeam);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      05/16/10                                jdog5000      */
-/*                                                                                              */
-/* War Strategy AI, Victory Strategy AI                                                         */
-/************************************************************************************************/
-/* original code
+
 	if (iClosenessValue == 0)
 	{
-		iValue /= 4;
+		iValue /= (bAggressiveAI ? 2 : 4);
 	}
-	iValue += iClosenessValue / 4;
-*/
-	// Dividing iValue by 4 is a drastic move, will result in more backstabbing between friendly neighbors
-	// which is appropriate for Aggressive
-	// Closeness values are much smaller after the fix to CvPlayerAI::AI_playerCloseness, no need to divide by 4
-	if (iClosenessValue == 0)
+	else
 	{
-		iValue /= (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? 4 : 2);
+		iValue += iClosenessValue;
 	}
-	iValue += iClosenessValue;
 	if( gTeamLogLevel >= 4 ) logBBAI("     After Closeness Modifier: %d", iValue);
 
 	iValue += AI_calculateBonusWarValue(eTeam);
@@ -1341,11 +1347,10 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	{
 		iValue += 10;
 
-		bool bAggressive = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
 		bool bConq4 = AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST4);
 
 		// Prioritize targets closer to victory
-		if( bConq4 || bAggressive )
+		if( bConq4 || bAggressiveAI )
 		{
 			iValue *= 3;
 			iValue /= 2;
@@ -1358,16 +1363,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 				iValue += 50;
 			}
 
-			iValue *= 2;
-
-			if( bConq4 || bAggressive )
-			{
-				iValue *= 4;
-			}
-			else if( AI_isAnyMemberDoVictoryStrategyLevel3() )
-			{
-				iValue *= 2;
-			}
+			iValue *= ((bConq4 || bAggressiveAI)? 4 : 2);
 		}	
 	}
 
@@ -1375,7 +1371,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	// as boost applies to all rivals
 	if( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_DOMINATION3) )
 	{
-		iValue *= (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) ? 3 : 2);
+		iValue *= (bAggressiveAI ? 3 : 2);
 	}
 
 	// boost for declaring war on other religious leaders when pursuing a religious victory
@@ -1387,24 +1383,11 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		}
 	}
 	
-	// If occupied or conquest inclined and early/not strong, value weak opponents
-	/*
-	if( getAnyWarPlanCount(true) > 0 || 
-		(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST2) && !(AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CONQUEST3))) )
-	{
-		int iMultiplier = (75 * getPower(false))/std::max(1, GET_TEAM(eTeam).getDefensivePower());
-
-		iValue *= range(iMultiplier, 50, 400);
-		iValue /= 100;
-	}
-	*/
-
 	// assaults on weak opponents
 	int iEnemyPowerPercent = kTeam.AI_getEnemyPowerPercent(true);
-
 	if (iEnemyPowerPercent < 75)
 	{
-		if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+		if (bAggressiveAI)
 		{
 			int iModValue = 0;
 
@@ -1422,36 +1405,34 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		}
 	}
 
-
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-
-	switch (AI_getAttitude(eTeam))
+	if (!bAggressiveAI)
 	{
-	case ATTITUDE_FURIOUS:
-		iValue *= 6;
-		break;
+		switch (AI_getAttitude(eTeam))
+		{
+		case ATTITUDE_FURIOUS:
+			iValue *= 4;
+			break;
 
-	case ATTITUDE_ANNOYED:
-		iValue *= 4;
-		break;
+		case ATTITUDE_ANNOYED:
+			iValue *= 2;
+			break;
 
-	case ATTITUDE_CAUTIOUS:
-		iValue *= 2;
-		break;
+		case ATTITUDE_CAUTIOUS:
+			iValue *= 1;
+			break;
 
-	case ATTITUDE_PLEASED:
-		iValue *= 1;
-		break;
+		case ATTITUDE_PLEASED:
+			iValue /= 5;
+			break;
 
-	case ATTITUDE_FRIENDLY:
-		iValue /= 2;
-		break;
+		case ATTITUDE_FRIENDLY:
+			iValue /= 10;
+			break;
 
-	default:
-		FAssert(false);
-		break;
+		default:
+			FAssert(false);
+			break;
+		}
 	}
 	
 /************************************************************************************************/
@@ -1468,10 +1449,6 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	{
 		iValue /= 4;
 	}
-	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE3))
-	{
-		iValue /= 3;
-	}
 	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_ALTAR3))
 	{
 		iValue /= 4;
@@ -1481,6 +1458,10 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		iValue /= 4;
 	}
 	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_TOWERMASTERY2))
+	{
+		iValue /= 3;
+	}
+	else if ( AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_CULTURE3))
 	{
 		iValue /= 3;
 	}
