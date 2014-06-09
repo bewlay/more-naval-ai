@@ -1888,7 +1888,6 @@ public:
 /* RevCivicEffects                                                                              */
 /************************************************************************************************/
 	bool isUpgradeAnywhere() const;
-	bool isAllowInquisitions() const;
 	bool isDisallowInquisitions() const;
 	int getRevIdxLocal() const;
 	int getRevIdxNational() const;
@@ -2014,7 +2013,6 @@ protected:
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	int m_bUpgradeAnywhere;
-	int m_bAllowInquisitions;
 	int m_bDisallowInquisitions;
 	int m_iRevIdxLocal;
 	int m_iRevIdxNational;

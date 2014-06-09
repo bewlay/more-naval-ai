@@ -7708,7 +7708,6 @@ m_iExpInBorderModifier(0),
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 m_bUpgradeAnywhere(false),
-m_bAllowInquisitions(false),
 m_bDisallowInquisitions(false),
 m_iRevIdxLocal(0),
 m_iRevIdxNational(0),
@@ -7990,11 +7989,6 @@ int CvCivicInfo::getExpInBorderModifier() const
 bool CvCivicInfo::isUpgradeAnywhere() const
 {
 	return m_bUpgradeAnywhere;
-}
-
-bool CvCivicInfo::isAllowInquisitions() const
-{
-	return m_bAllowInquisitions;
 }
 
 bool CvCivicInfo::isDisallowInquisitions() const
@@ -8370,7 +8364,6 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	stream->Read(&m_bUpgradeAnywhere);
-	stream->Read(&m_bAllowInquisitions);
 	stream->Read(&m_bDisallowInquisitions);
 	stream->Read(&m_iRevIdxLocal);
 	stream->Read(&m_iRevIdxNational);
@@ -8535,7 +8528,6 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	stream->Write(&m_bUpgradeAnywhere);
-	stream->Write(&m_bAllowInquisitions);
 	stream->Write(&m_bDisallowInquisitions);
 	stream->Write(&m_iRevIdxLocal);
 	stream->Write(&m_iRevIdxNational);
@@ -8676,7 +8668,6 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	pXML->GetChildXmlValByName(&m_bUpgradeAnywhere, "bUpgradeAnywhere");
-	pXML->GetChildXmlValByName(&m_bAllowInquisitions, "bAllowInquisitions");
 	pXML->GetChildXmlValByName(&m_bDisallowInquisitions, "bDisallowInquisitions");
 	pXML->GetChildXmlValByName(&m_iRevIdxLocal, "iRevIdxLocal");
 	pXML->GetChildXmlValByName(&m_iRevIdxNational, "iRevIdxNational");

@@ -482,7 +482,6 @@ void CyInfoPythonInterface1()
 /*                                                                                              */
 /*                                                                                              */
 /************************************************************************************************/
-		.def("isAllowInquisitions", &CvCivicInfo::isAllowInquisitions, "bool ()")
 		.def("isDisallowInquisitions", &CvCivicInfo::isDisallowInquisitions, "bool ()")
 		.def("getRevIdxLocal", &CvCivicInfo::getRevIdxLocal, "int ()")
 		.def("getRevIdxNational", &CvCivicInfo::getRevIdxNational, "int ()")

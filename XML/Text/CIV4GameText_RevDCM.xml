@@ -41,4 +41,13 @@
 		<Spanish>[ICON_BULLET]Causa da&#241;o colateral (Max %d1% to %d2 Units)</Spanish>
 		<Finnish>[ICON_BULLET]Syyt Collateral Damage (Max %d1% to %d2 Units)</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIVIC_DISALLOW_INQUISITONS</Tag>
+		<English>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</English>
+		<French>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</French>
+		<German>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</German>
+		<Italian>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Italian>
+		<Spanish>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Spanish>
+		<Finnish>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Finnish>
+	</TEXT>
 </Civ4GameText>

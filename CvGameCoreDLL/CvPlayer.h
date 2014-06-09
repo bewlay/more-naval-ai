@@ -552,8 +552,8 @@ public:
 	float getRevIdxGoodReligionMod() const;																																		// Exposed to Python
 	void changeRevIdxGoodReligionMod(float fChange);
 
-	//bool isInquisitionConditions() const;																																		// Exposed to Python
-	//void setInquisitionConditions();
+	bool canInquisition() const;																																		// Exposed to Python
+	void setCanInquisition(bool bNewValue);
 
 	//int getUnitUpgradePriceModifier() const;																																		// Exposed to Python
 	//void changeUnitUpgradePriceModifier(int iChange);
@@ -1444,7 +1444,7 @@ protected:
 	float m_fRevIdxNationalityMod;
 	float m_fRevIdxBadReligionMod;
 	float m_fRevIdxGoodReligionMod;
-	//bool m_bInquisitionConditions;
+	bool m_bCanInquisition;
 	//int m_iUnitUpgradePriceModifier;
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */

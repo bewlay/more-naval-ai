@@ -1338,6 +1338,11 @@ float CyPlayer::getRevIdxGoodReligionMod()
 {
 	return m_pPlayer ? m_pPlayer->getRevIdxGoodReligionMod() : 0;
 }
+
+bool CyPlayer::canInquisition() 
+{
+	return m_pPlayer->canInquisition();
+}
 /*
 int CyPlayer::getUnitUpgradePriceModifier()
 {

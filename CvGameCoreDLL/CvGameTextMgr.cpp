@@ -10178,25 +10178,13 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CAN_UPGRADE_ANYWHERE"));	
 	}
-
-	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
-	{
-		if (kCivic.isAllowInquisitions())
-		{
-			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_ALLOW_INQUISITONS"));
-		}
-	}
-
-	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_INQUISITIONS))
-	{
-		if (kCivic.isDisallowInquisitions())
-		{
-			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
-		}
-	}
 */
+
+	if (kCivic.isDisallowInquisitions())
+	{
+		szHelpText.append(NEWLINE);
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
+	}
 
 	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 	{

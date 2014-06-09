@@ -84,7 +84,6 @@
             </ImprovementYieldChanges>
 				    <!-- Revolution Mod Start -->
 						<bUpgradeAnywhere>0</bUpgradeAnywhere>
-						<bAllowInquisitions>0</bAllowInquisitions>
 						<bDisallowInquisitions>0</bDisallowInquisitions>
 						<iRevIdxLocal>2</iRevIdxLocal>
 						<iRevIdxNational>2</iRevIdxNational>
@@ -539,7 +538,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<bAllowInquisitions>1</bAllowInquisitions>
 						<iRevIdxLocal>0</iRevIdxLocal>
 						<iRevIdxNational>0</iRevIdxNational>
 						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>

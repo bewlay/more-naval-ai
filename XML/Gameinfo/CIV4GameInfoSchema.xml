@@ -795,7 +795,6 @@
 	</ElementType>
 <!--DPII < Revolution Mod Start > -->
 	<ElementType name="bUpgradeAnywhere" content= "textOnly" dt:type="boolean"/>
-	<ElementType name="bAllowInquisitions" content= "textOnly" dt:type="boolean"/>
 	<ElementType name="bDisallowInquisitions" content= "textOnly" dt:type="boolean"/>
 	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
@@ -891,7 +890,6 @@
 		<element type="ImprovementYieldChanges"/>
 <!-- DPII < Revolution Mod Start > -->
 		<element type="bUpgradeAnywhere" minOccurs="0"/>
-		<element type="bAllowInquisitions" minOccurs="0"/>
 		<element type="bDisallowInquisitions" minOccurs="0"/>
 		<element type="iRevIdxLocal" minOccurs="0"/>
 		<element type="iRevIdxNational" minOccurs="0"/>

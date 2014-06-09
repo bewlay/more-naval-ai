@@ -339,7 +339,7 @@ public:
 	float getRevIdxNationalityMod();
 	float getRevIdxBadReligionMod();
 	float getRevIdxGoodReligionMod();
-	//bool isInquisitionConditions();
+	bool canInquisition();
 	//int getUnitUpgradePriceModifier();
 	//bool canFoundReligion();
 	//bool isBuildingClassRequiredToTrain(int /*BuildingClassTypes*/ iBuildingClass, int /*UnitTypes*/ iUnit);

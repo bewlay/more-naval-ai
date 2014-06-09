@@ -107,6 +107,7 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("getRevIdxBadReligionMod", &CyPlayer::getRevIdxBadReligionMod, "float ()")
 		.def("getRevIdxGoodReligionMod", &CyPlayer::getRevIdxGoodReligionMod, "float ()")
 		.def("getRevolutionStabilityHistory", &CyPlayer::getRevolutionStabilityHistory, "int (int iTurn)")
+		.def("canInquisition", &CyPlayer::canInquisition, "bool ()")
 		// MNAI End
 
 //FfH Alignment: Added by Kael 08/09/2007

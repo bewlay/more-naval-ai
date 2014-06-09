@@ -1708,14 +1708,16 @@ def reqInquisition(caster):
 	pCity = pPlot.getPlotCity()
 	pPlayer = gc.getPlayer(caster.getOwner())
 	StateBelief = pPlayer.getStateReligion()
-	if StateBelief == -1:
-		if caster.getOwner() != pCity.getOwner():
+	
+	if pPlayer.canInquisition():
+		if StateBelief == -1:
+			if caster.getOwner() != pCity.getOwner():
+				return False
+		if (StateBelief != gc.getPlayer(pCity.getOwner()).getStateReligion()):
 			return False
-	if (StateBelief != gc.getPlayer(pCity.getOwner()).getStateReligion()):
-		return False
-	for iTarget in range(gc.getNumReligionInfos()):
-		if (StateBelief != iTarget and pCity.isHasReligion(iTarget) and pCity.isHolyCityByType(iTarget) == False):
-			return True
+		for iTarget in range(gc.getNumReligionInfos()):
+			if (StateBelief != iTarget and pCity.isHasReligion(iTarget) and pCity.isHolyCityByType(iTarget) == False):
+				return True
 	return False
 
 def spellInquisition(caster):
