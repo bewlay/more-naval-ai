@@ -168,7 +168,6 @@
 	<ElementType name="iAllCityDefense" content="textOnly" dt:type="int"/>
 	<ElementType name="iEspionageDefense" content="textOnly" dt:type="int"/>
 	<!-- RevDCM Building Effects -->
-	<ElementType name="iUnitUpgradePriceModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>
@@ -532,7 +531,6 @@
 		<element type="iAllCityDefense"/>
 		<element type="iEspionageDefense"/>
 		<!-- RevDCM Building Effects -->
-		<element type="iUnitUpgradePriceModifier" minOccurs="0"/>
 		<element type="iRevIdxLocal" minOccurs="0"/>
 		<element type="iRevIdxNational" minOccurs="0"/>
 		<element type="iRevIdxDistanceModifier" minOccurs="0"/>

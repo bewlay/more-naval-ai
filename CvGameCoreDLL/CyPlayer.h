@@ -340,9 +340,6 @@ public:
 	float getRevIdxBadReligionMod();
 	float getRevIdxGoodReligionMod();
 	bool canInquisition();
-	//int getUnitUpgradePriceModifier();
-	//bool canFoundReligion();
-	//bool isBuildingClassRequiredToTrain(int /*BuildingClassTypes*/ iBuildingClass, int /*UnitTypes*/ iUnit);
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/

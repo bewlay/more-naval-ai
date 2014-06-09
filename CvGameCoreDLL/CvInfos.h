@@ -2267,7 +2267,6 @@ public:
 /**																				*/
 /**		Building Effects														*/
 /********************************************************************************/
-	int getUnitUpgradePriceModifier() const;					// Exposed to Python
 	int getRevIdxLocal() const;					// Exposed to Python
 	int getRevIdxNational() const;					// Exposed to Python
 	int getRevIdxDistanceModifier() const;					// Exposed to Python
@@ -2513,7 +2512,6 @@ protected:
 /**																				*/
 /**		Building Effects														*/
 /********************************************************************************/
-	int m_iUnitUpgradePriceModifier;
 	int m_iRevIdxLocal;
 	int m_iRevIdxNational;
 	int m_iRevIdxDistanceModifier;

@@ -1343,12 +1343,6 @@ bool CyPlayer::canInquisition()
 {
 	return m_pPlayer->canInquisition();
 }
-/*
-int CyPlayer::getUnitUpgradePriceModifier()
-{
-	return m_pPlayer ? m_pPlayer->getUnitUpgradePriceModifier() : 0;
-}
-*/
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/

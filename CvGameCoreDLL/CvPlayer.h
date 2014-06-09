@@ -554,13 +554,6 @@ public:
 
 	bool canInquisition() const;																																		// Exposed to Python
 	void setCanInquisition(bool bNewValue);
-
-	//int getUnitUpgradePriceModifier() const;																																		// Exposed to Python
-	//void changeUnitUpgradePriceModifier(int iChange);
-
-	//bool canFoundReligion() const;																																		// Exposed to Python
-
-	//bool isBuildingClassRequiredToTrain(BuildingClassTypes eBuildingClass, UnitTypes eUnit) const;																			// Exposed to Python
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
@@ -1445,7 +1438,6 @@ protected:
 	float m_fRevIdxBadReligionMod;
 	float m_fRevIdxGoodReligionMod;
 	bool m_bCanInquisition;
-	//int m_iUnitUpgradePriceModifier;
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/

@@ -808,7 +808,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_fRevIdxBadReligionMod = 0;
 	m_fRevIdxGoodReligionMod = 0;
 	m_bCanInquisition = true;
-	//m_iUnitUpgradePriceModifier = 0;
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
@@ -8578,7 +8577,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 /*                                                                                              */
 /* Building Effects                                                                             */
 /************************************************************************************************/
-	//changeUnitUpgradePriceModifier(GC.getBuildingInfo(eBuilding).getUnitUpgradePriceModifier() * iChange);
 	changeRevIdxNational(GC.getBuildingInfo(eBuilding).getRevIdxNational() * iChange);
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
@@ -11416,17 +11414,6 @@ void CvPlayer::setCanInquisition(bool bNewValue)
 	m_bCanInquisition = bNewValue;
 }
 // End MNAI
-/*
-int CvPlayer::getUnitUpgradePriceModifier() const
-{
-	return m_iUnitUpgradePriceModifier;
-}
-
-void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
-{
-	m_iUnitUpgradePriceModifier = (m_iUnitUpgradePriceModifier + iChange);
-}
-*/
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
@@ -19553,7 +19540,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read(&m_fRevIdxBadReligionMod);
 	pStream->Read(&m_fRevIdxGoodReligionMod);
 	pStream->Read(&m_bCanInquisition);
-	//pStream->Read(&m_iUnitUpgradePriceModifier);
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
@@ -20148,7 +20134,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_fRevIdxBadReligionMod);
 	pStream->Write(m_fRevIdxGoodReligionMod);
 	pStream->Write(m_bCanInquisition);
-	//pStream->Write(m_iUnitUpgradePriceModifier);
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */
 /************************************************************************************************/
