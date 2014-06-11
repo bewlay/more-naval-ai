@@ -83,7 +83,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 				    <!-- Revolution Mod Start -->
-						<bUpgradeAnywhere>0</bUpgradeAnywhere>
 						<bDisallowInquisitions>0</bDisallowInquisitions>
 						<iRevIdxLocal>2</iRevIdxLocal>
 						<iRevIdxNational>2</iRevIdxNational>

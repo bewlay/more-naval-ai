@@ -330,7 +330,6 @@ public:
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	bool isNonStateReligionCommerce() const;
-	bool isUpgradeAnywhere() const;
 	int getRevIdxLocal();
 	int getRevIdxNational();
 	int getRevIdxDistanceModifier();

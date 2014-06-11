@@ -525,9 +525,6 @@ public:
 	bool isNonStateReligionCommerce() const;
 	void changeNonStateReligionCommerce(int iNewValue);
 
-	bool isUpgradeAnywhere() const;	
-	void changeUpgradeAnywhere(int iNewValue);
-
 	int getRevIdxLocal() const;																																		// Exposed to Python
 	void changeRevIdxLocal(int iChange);
 
@@ -1428,7 +1425,6 @@ protected:
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	int m_iNonStateReligionCommerceCount;
-	int m_iUpgradeAnywhereCount;
 	int m_iRevIdxLocal;
 	int m_iRevIdxNational;
 	int m_iRevIdxDistanceModifier;

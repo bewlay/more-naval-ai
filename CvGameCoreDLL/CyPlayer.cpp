@@ -1294,11 +1294,6 @@ bool CyPlayer::isNonStateReligionCommerce() const
     return m_pPlayer ? m_pPlayer->isNonStateReligionCommerce() : false;
 }
 
-bool CyPlayer::isUpgradeAnywhere() const
-{
-    return m_pPlayer ? m_pPlayer->isUpgradeAnywhere() : false;
-}
-
 int CyPlayer::getRevIdxLocal()
 {
 	return m_pPlayer ? m_pPlayer->getRevIdxLocal() : 0;

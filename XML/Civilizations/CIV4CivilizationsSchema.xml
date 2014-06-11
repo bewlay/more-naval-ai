@@ -348,18 +348,6 @@
 	<ElementType name="iMaxGlobalBuildingProductionModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxTeamBuildingProductionModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMaxPlayerBuildingProductionModifier" content="textOnly" dt:type="int"/>
-	<!-- Phungus Rev Trait Effects -->
-	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>
-	<ElementType name="fRevIdxNationalityMod" content="textOnly"/>
-	<ElementType name="fRevIdxBadReligionMod" content="textOnly"/>
-	<ElementType name="fRevIdxGoodReligionMod" content="textOnly"/>
-	<ElementType name="bNonStateReligionCommerce" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bUpgradeAnywhere" content="textOnly" dt:type="boolean"/>
-	<!-- End Phungus Traits -->
 	<ElementType name="bAdaptive" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAgnostic" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAssimilation" content="textOnly" dt:type="boolean"/>
@@ -423,18 +411,6 @@
 		<element type="iMaxGlobalBuildingProductionModifier"/>
 		<element type="iMaxTeamBuildingProductionModifier"/>
 		<element type="iMaxPlayerBuildingProductionModifier"/>
-		<!-- Phungus Rev Trait Effects -->
-		<element type="iRevIdxLocal" minOccurs="0"/>
-		<element type="iRevIdxNational" minOccurs="0"/>
-		<element type="iRevIdxDistanceModifier" minOccurs="0"/>
-		<element type="iRevIdxHolyCityGood" minOccurs="0"/>
-		<element type="iRevIdxHolyCityBad" minOccurs="0"/>
-		<element type="fRevIdxNationalityMod" minOccurs="0"/>
-		<element type="fRevIdxBadReligionMod" minOccurs="0"/>
-		<element type="fRevIdxGoodReligionMod" minOccurs="0"/>
-		<element type="bNonStateReligionCommerce" minOccurs="0"/>
-		<element type="bUpgradeAnywhere" minOccurs="0"/>
-		<!-- End Phungus Traits -->
 		<element type="bAdaptive"/>
 		<element type="bAgnostic"/>
 		<element type="bAssimilation"/>

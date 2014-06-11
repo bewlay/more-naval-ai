@@ -794,7 +794,6 @@
 		<element type="ImprovementYieldChange" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
 <!--DPII < Revolution Mod Start > -->
-	<ElementType name="bUpgradeAnywhere" content= "textOnly" dt:type="boolean"/>
 	<ElementType name="bDisallowInquisitions" content= "textOnly" dt:type="boolean"/>
 	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
@@ -889,7 +888,6 @@
 		<element type="FeatureHappinessChanges"/>
 		<element type="ImprovementYieldChanges"/>
 <!-- DPII < Revolution Mod Start > -->
-		<element type="bUpgradeAnywhere" minOccurs="0"/>
 		<element type="bDisallowInquisitions" minOccurs="0"/>
 		<element type="iRevIdxLocal" minOccurs="0"/>
 		<element type="iRevIdxNational" minOccurs="0"/>

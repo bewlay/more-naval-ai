@@ -798,7 +798,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	m_iNonStateReligionCommerceCount = 0;
-	m_iUpgradeAnywhereCount = 0;
 	m_iRevIdxLocal = 0;
 	m_iRevIdxNational = 0;
 	m_iRevIdxDistanceModifier = 0;
@@ -11275,23 +11274,6 @@ void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
     }
 }
 
-bool CvPlayer::isUpgradeAnywhere() const
-{
-	if(m_iUpgradeAnywhereCount > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-void CvPlayer::changeUpgradeAnywhere(int iNewValue)
-{
-	FAssert(m_iUpgradeAnywhereCount >= 0 && m_iUpgradeAnywhereCount <= 2);
-
-    m_iUpgradeAnywhereCount += iNewValue;
-}
-
-
 int CvPlayer::getRevIdxLocal() const
 {
 	return m_iRevIdxLocal;
@@ -19363,7 +19345,6 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 /*                                                                                              */
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
-	changeUpgradeAnywhere((kCivic.isUpgradeAnywhere())? iChange : 0);
 	changeRevIdxLocal(kCivic.getRevIdxLocal() * iChange);
 	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
 	changeRevIdxDistanceModifier(kCivic.getRevIdxDistanceModifier() * iChange);
@@ -19530,7 +19511,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	pStream->Read(&m_iNonStateReligionCommerceCount);
-	pStream->Read(&m_iUpgradeAnywhereCount);
 	pStream->Read(&m_iRevIdxLocal);
 	pStream->Read(&m_iRevIdxNational);
 	pStream->Read(&m_iRevIdxDistanceModifier);
@@ -20124,7 +20104,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	pStream->Write(m_iNonStateReligionCommerceCount);
-	pStream->Write(m_iUpgradeAnywhereCount);
 	pStream->Write(m_iRevIdxLocal);
 	pStream->Write(m_iRevIdxNational);
 	pStream->Write(m_iRevIdxDistanceModifier);

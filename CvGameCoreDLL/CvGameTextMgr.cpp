@@ -10172,14 +10172,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /*                                                                                              */
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
-/*
-	if (kCivic.isUpgradeAnywhere())
-	{
-		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CAN_UPGRADE_ANYWHERE"));	
-	}
-*/
-
 	if (kCivic.isDisallowInquisitions())
 	{
 		szHelpText.append(NEWLINE);
