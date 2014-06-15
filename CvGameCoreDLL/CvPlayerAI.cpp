@@ -3643,73 +3643,82 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (pNearestCity != NULL)
 	{
-		if (isBarbarian())
+		if ((getCapitalCity() != NULL) &&
+			getCapitalCity()->getArea() == pNearestCity->getArea())
 		{
-			iValue -= (std::max(0, (8 - plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE()))) * 200);
-		}
-		else
-		{
-		    int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
-		    int iNumCities = getNumCities();
-
-			if (iDistance > (bSprawlingExpand ? 6 : 5))
-		    {
-		    	iValue -= (iDistance - 5) * 500;
-		    }
-
-			if (bSprawlingExpand)
+			if (isBarbarian())
 			{
-				if (iDistance < 5)
-				{
-					iValue /= 2;
-				}
+				//iValue -= (std::max(0, (8 - plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE()))) * 200);
 			}
-			/*
-			iValue *= (8 + iNumCities * 4);
-			iValue /= (2 + (iNumCities * 4) + iDistance);
-			*/
-			if (pNearestCity->isCapital())
+			else
 			{
-				iValue *= 150;
-				iValue /= 100;
-			}
-			else if (getCapitalCity() != NULL)
-			{
-				//Provide up to a 50% boost to value (80% for adv.start)
-				//for city sites which are relatively close to the core
-				//compared with the most distance city from the core
-				//(having a boost rather than distance penalty avoids some distortion)
-
-				//This is not primarly about maitenance but more about empire
-				//shape as such forbidden palace/state property are not big deal.
-				CvCity* pLoopCity;
-				int iLoop;
-				int iMaxDistanceFromCapital = 0;
-
-				int iCapitalX = getCapitalCity()->getX();
-				int iCapitalY = getCapitalCity()->getY();
-
-				for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+				
+				int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
+				int iNumCities = getNumCities();
+				
+				if (iDistance > (bSprawlingExpand ? 6 : 5))
 				{
-					iMaxDistanceFromCapital = std::max(iMaxDistanceFromCapital, plotDistance(iCapitalX, iCapitalY, pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE()));
+		    		iValue -= (iDistance - 5) * 500;
 				}
 
-				int iDistanceToCapital = plotDistance(iCapitalX, iCapitalY, iX, iY);
+				/*
+				if (bSprawlingExpand)
+				{
+					if (iDistance < 5)
+					{
+						iValue /= 2;
+					}
+				}
+				*/
+				/*
+				iValue *= (8 + iNumCities * 4);
+				iValue /= (2 + (iNumCities * 4) + iDistance);
+				*/
+				if (pNearestCity->isCapital())
+				{
+					iValue *= 150;
+					iValue /= 100;
+				}
+				else if (getCapitalCity() != NULL)
+				{
+					//Provide up to a 50% boost to value (80% for adv.start)
+					//for city sites which are relatively close to the core
+					//compared with the most distance city from the core
+					//(having a boost rather than distance penalty avoids some distortion)
 
-				FAssert(iMaxDistanceFromCapital > 0);
-				iValue *= 100 + (((bAdvancedStart ? 80 : 50) * std::max(0, (iMaxDistanceFromCapital - iDistance))) / iMaxDistanceFromCapital);
-				iValue /= 100;
+					//This is not primarly about maitenance but more about empire
+					//shape as such forbidden palace/state property are not big deal.
+					CvCity* pLoopCity;
+					int iLoop;
+					int iMaxDistanceFromCapital = 0;
+
+					int iCapitalX = getCapitalCity()->getX();
+					int iCapitalY = getCapitalCity()->getY();
+
+					for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+					{
+						iMaxDistanceFromCapital = std::max(iMaxDistanceFromCapital, plotDistance(iCapitalX, iCapitalY, pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE()));
+					}
+
+					int iDistanceToCapital = plotDistance(iCapitalX, iCapitalY, iX, iY);
+
+					FAssert(iMaxDistanceFromCapital > 0);
+					iValue *= 100 + (((bAdvancedStart ? 80 : 50) * std::max(0, (iMaxDistanceFromCapital - iDistance))) / iMaxDistanceFromCapital);
+					iValue /= 100;
+				}
 			}
 		}
 	}
 	else
 	{
+		/*
 		pNearestCity = GC.getMapINLINE().findCity(iX, iY, ((isBarbarian()) ? NO_PLAYER : getID()), ((isBarbarian()) ? NO_TEAM : getTeam()), false);
 		if (pNearestCity != NULL)
 		{
 			int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
 			iValue -= std::min(500 * iDistance, (8000 * iDistance) / GC.getMapINLINE().maxPlotDistance());
 		}
+		*/
 	}
 
 	if (iValue <= 0)
@@ -3842,6 +3851,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	// ALN FfH-AI Start
 	// I don't want to make a hard and fast rule that the city can't border a cityRadius tile
 	// but I want to damn well discourage it
+	/*
 	for (int iI = 0; iI < 9; iI++)
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
@@ -3854,6 +3864,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 		}
 	}
+	*/
 	// ALN End
 
 
