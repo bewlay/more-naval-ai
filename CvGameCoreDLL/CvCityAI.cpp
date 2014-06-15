@@ -1006,28 +1006,31 @@ void CvCityAI::AI_chooseProduction()
 			
 			// if we are building a wonder, do not cancel, keep building it (if no danger)
 			BuildingTypes eProductionBuilding = getProductionBuilding();
-			if (!bDanger && eProductionBuilding != NO_BUILDING && 
-				isLimitedWonderClass((BuildingClassTypes) GC.getBuildingInfo(eProductionBuilding).getBuildingClassType()))
+			if (!bDanger)
 			{
-				return;
-			}
+				if (eProductionBuilding != NO_BUILDING && 
+					isLimitedWonderClass((BuildingClassTypes) GC.getBuildingInfo(eProductionBuilding).getBuildingClassType()))
+				{
+					return;
+				}
 
-//>>>>Better AI: Added by Denev 2010/03/31
-			// if we are creating a project, do not cancel, keep creating it (if no danger)
-			ProjectTypes eProductionProject = getProductionProject();
-			if (!bDanger && eProductionProject != NO_PROJECT && isWorldProject(eProductionProject))
-			{
-				return;
-			}
+	//>>>>Better AI: Added by Denev 2010/03/31
+				// if we are creating a project, do not cancel, keep creating it (if no danger)
+				ProjectTypes eProductionProject = getProductionProject();
+				if (eProductionProject != NO_PROJECT && isWorldProject(eProductionProject))
+				{
+					return;
+				}
 
-			// if we are training a hero, do not cancel, keep training him (if no danger)
-			UnitTypes eProductionUnit = getProductionUnit();
-			if (!bDanger && eProductionUnit != NO_UNIT &&
-				isLimitedUnitClass((UnitClassTypes)GC.getUnitInfo(eProductionUnit).getUnitClassType()))
-			{
-				return;
+				// if we are training a hero, do not cancel, keep training him (if no danger)
+				UnitTypes eProductionUnit = getProductionUnit();
+				if (eProductionUnit != NO_UNIT &&
+					isLimitedUnitClass((UnitClassTypes)GC.getUnitInfo(eProductionUnit).getUnitClassType()))
+				{
+					return;
+				}
+	//<<<<Better AI: End Add
 			}
-//<<<<Better AI: End Add
 		}
 
 		clearOrderQueue();
@@ -1119,6 +1122,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
     bool bGetBetterUnits = kPlayer.AI_isDoStrategy(AI_STRATEGY_GET_BETTER_UNITS);
+	bool bDagger = kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER);
     bool bAggressiveAI = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
     bool bAlwaysPeace = GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE);
 
@@ -2353,7 +2357,7 @@ void CvCityAI::AI_chooseProduction()
 	bool bBarbCitiesinArea = pArea->getCitiesPerPlayer(BARBARIAN_PLAYER) > 0;
 	// BBAI TODO: Check that this works to produce early rushes on tight maps
 	if ((!bGetBetterUnits && (bIsCapitalArea) && (iAreaBestFoundValue < (iMinFoundValue * 2))) || // units for expansion
-		kPlayer.AI_isDoStrategy(AI_STRATEGY_DAGGER) || // Dagger strategy
+		bDagger || // Dagger strategy
 		bAggressiveAI || // Aggressive AI
 		(kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) && bWarPlan) &&  // Conquest strat plus warplan
 		(!kPlayer.AI_isCapitalAreaAlone() || bBarbCitiesinArea))
@@ -2457,7 +2461,7 @@ void CvCityAI::AI_chooseProduction()
 
 		if (AI_chooseUnit(UNITAI_ATTACK))
 		{
-			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_CITY_ATTACK (minimal troops: %d)", getName().GetCString(), (AI_minDefenders() + iPlotSettlerCount));
+			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_ATTACK (minimal troops: %d)", getName().GetCString(), (AI_minDefenders() + iPlotSettlerCount));
 			return;
 		}
 	}

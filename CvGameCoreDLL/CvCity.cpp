@@ -1948,8 +1948,9 @@ int CvCity::findBaseYieldRateRank(YieldTypes eYield) const
 		CvCity* pLoopCity;
 		for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
 		{
-			if ((pLoopCity->getBaseYieldRate(eYield) > iRate) ||
-				((pLoopCity->getBaseYieldRate(eYield) == iRate) && (pLoopCity->getID() < getID())))
+			int iLoopCityBaseYieldRate = pLoopCity->getBaseYieldRate(eYield);
+			if ((iLoopCityBaseYieldRate > iRate) ||
+				((iLoopCityBaseYieldRate == iRate) && (pLoopCity->getID() < getID())))
 			{
 				iRank++;
 			}
@@ -9752,7 +9753,8 @@ void CvCity::changeBaseYieldRate(YieldTypes eIndex, int iChange)
 {
 	// Bugfix: Unhappy production should be calculated in getBaseYieldRate to make sure that it is taken into account in all production related calculations.
 	// Since the unhappy production part of getBaseYieldRate is calculated dynamically, it shouldn't be taking into account when it is required to modify it.
-	setBaseYieldRate(eIndex, (getBaseYieldRate(eIndex, false) + iChange));
+	int iBaseYield = getBaseYieldRate(eIndex, false);
+	setBaseYieldRate(eIndex, (iBaseYield + iChange));
 	// Bugfix end
 }
 

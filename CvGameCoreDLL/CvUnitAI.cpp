@@ -27886,8 +27886,8 @@ void CvUnitAI::AI_ConquestMove()
 	
 	bool bFinancialTrouble = kPlayer.AI_isFinancialTrouble();
 
-	int bStackSize = getGroup()->getNumUnits();
-	bool bLargeGroup = (bStackSize > (kPlayer.getNumCities() *6));
+	//int bStackSize = getGroup()->getNumUnits();
+	//bool bLargeGroup = (bStackSize > (kPlayer.getNumCities() *6));
 
 
 	bool bHero = false;
@@ -27900,12 +27900,6 @@ void CvUnitAI::AI_ConquestMove()
 			break;
         case UNITAI_WARWIZARD:
 			bWizard = true;
-			/*
-			if (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
-			{
-				AI_setUnitAIType(UNITAI_ATTACK_CITY);
-			}
-			*/
             break;
 		case UNITAI_RESERVE:
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);

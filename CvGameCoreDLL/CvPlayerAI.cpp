@@ -13707,6 +13707,19 @@ int CvPlayerAI::AI_neededExecutives(CvArea* pArea, CorporationTypes eCorporation
 	return iCount;
 }
 
+bool CvPlayerAI::AI_isLandWar(CvArea* pArea) const
+{
+	switch(pArea->getAreaAIType(getTeam()))
+	{
+	case AREAAI_OFFENSIVE:
+	case AREAAI_MASSING:
+	case AREAAI_DEFENSIVE:
+		return true;
+	default:
+		return false;
+	}
+}
+// K-Mod end
 
 int CvPlayerAI::AI_adjacentPotentialAttackers(CvPlot* pPlot, bool bTestCanMove) const
 {
@@ -15661,11 +15674,8 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	if (getStateReligion() != NO_RELIGION)
 	{
 		CvReligionInfo& kReligionInfo = GC.getReligionInfo(getStateReligion());
-		//for (int iIndex = 0; iIndex < kReligionInfo.getNumReligionHeroes(); iIndex++)
-		//{
 			if (kReligionInfo.getReligionHero1() != NO_UNITCLASS)
 			{
-				//if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero1()) > 0)
 				if (getUnitClassCount(kReligionInfo.getReligionHero1()) > 0)
 				{
 					return getStateReligion();
@@ -15673,13 +15683,11 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 			}
 			if (kReligionInfo.getReligionHero2() != NO_UNITCLASS)
 			{
-				//if (getUnitClassCountPlusMaking(kReligionInfo.getReligionHero2()) > 0)
 				if (getUnitClassCount(kReligionInfo.getReligionHero2()) > 0)
 				{
 					return getStateReligion();
 				}
 			}
-		//}
 	}
 
 	ReligionTypes eFavorite = (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
@@ -15844,9 +15852,6 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		{
 			CvUnitInfo &kHero1 = GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero1());
 			iValue += kHero1.getTier() * 10;
-			//iValue *= 5;
-			//iValue /= 3;
-			//iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
@@ -15855,12 +15860,12 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
 		{
 			iValue += GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero2()).getTier() * 10;
-			//iValue *= 4;
-			//iValue /= 3;
-			//iValue -= GC.getGameINLINE().countReligionLevels(eReligion);
 		}
 	}
 
+	// To Do - add value for religious buildings and units
+	// AI_getBuildingReligionValue(eBuilding)
+	// AI_getUnitReligionValue(eUnit)
 	// Add value for like alignments
 	if (GC.getReligionInfo(eReligion).getAlignment() == getAlignment())
 	{
