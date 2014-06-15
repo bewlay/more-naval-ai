@@ -2699,6 +2699,12 @@ bool CyPlayer::canSeeReligion(int iReligion) const
     return m_pPlayer ? m_pPlayer->canSeeReligion(iReligion, NULL) : false;
 }
 
+
+int CyPlayer::getSanctuaryTimer() const
+{
+	return m_pPlayer ? m_pPlayer->getSanctuaryTimer() : -1;
+}
+
 void CyPlayer::changeSanctuaryTimer(int iChange)
 {
 	if (m_pPlayer)

@@ -657,6 +657,7 @@ public:
 //FfH Alignment: Added by Kael 08/09/2007
     bool canSeeCivic(int iCivic) const;
     bool canSeeReligion(int iReligion) const;
+	int getSanctuaryTimer() const;
 	void changeSanctuaryTimer(int iChange);
 	int getAlignment() const;
     void setAlignment(int /*AlignmentTypes*/ iAlignment);

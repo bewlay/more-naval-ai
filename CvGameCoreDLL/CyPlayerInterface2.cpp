@@ -112,6 +112,7 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 //FfH Alignment: Added by Kael 08/09/2007
 		.def("canSeeCivic", &CyPlayer::canSeeCivic, "void (int iCivic)")
 		.def("canSeeReligion", &CyPlayer::canSeeReligion, "void (int iReligion)")
+		.def("getSanctuaryTimer", &CyPlayer::getSanctuaryTimer, "int ()")
 		.def("changeSanctuaryTimer", &CyPlayer::changeSanctuaryTimer, "void (int iChange)")
 		.def("getAlignment", &CyPlayer::getAlignment, "int ()")
         .def("setAlignment", &CyPlayer::setAlignment, "AlignmentTypes (iAlignment)")
