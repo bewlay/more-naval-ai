@@ -1085,7 +1085,8 @@ void CvCityAI::AI_chooseProduction()
 	bWasFoodProduction = isFoodProduction();
 	bHasMetOtherPlayer = (GET_TEAM(getTeam()).getHasMetCivCount(true) > 0);
 	bAtWar = (GET_TEAM(getTeam()).getAtWarCount(true) > 0);
-	bLandWar = ((pArea->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (pArea->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (pArea->getAreaAIType(getTeam()) == AREAAI_MASSING));
+	//bool bLandWar = ((pArea->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (pArea->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (pArea->getAreaAIType(getTeam()) == AREAAI_MASSING));
+	bLandWar = kPlayer.AI_isLandWar(pArea); // K-Mod
 	bDefenseWar = (pArea->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE);
 	bool bAssaultAssist = (pArea->getAreaAIType(getTeam()) == AREAAI_ASSAULT_ASSIST);
 	bAssault = bAssaultAssist || (pArea->getAreaAIType(getTeam()) == AREAAI_ASSAULT) || (pArea->getAreaAIType(getTeam()) == AREAAI_ASSAULT_MASSING);
@@ -2416,7 +2417,12 @@ void CvCityAI::AI_chooseProduction()
 						iDivisor /= 2;
 					}
 
-					int iAttackWanted = (3 + iNumCitiesInArea + iBuildUnitProb + getDomainFreeExperience(DOMAIN_LAND)) / iDivisor;
+					if (bLandWar)
+					{
+						iDivisor /= 4;
+					}
+
+					int iAttackWanted = ((3 + iNumCitiesInArea + iBuildUnitProb) * getDomainFreeExperience(DOMAIN_LAND)) / iDivisor;
 
 					if (iAttackCount < iAttackWanted)
 					{
@@ -3849,7 +3855,8 @@ UnitTypes CvCityAI::AI_bestUnit(bool bAsync, AdvisorTypes eIgnoreAdvisor, UnitAI
 
 	bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
 	bDefense = (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE);
-	bLandWar = (bDefense || (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+	//bLandWar = (bDefense || (area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+	bLandWar = kOwner.AI_isLandWar(area()); // K-Mod
 	bAssault = (area()->getAreaAIType(getTeam()) == AREAAI_ASSAULT);
 	bPrimaryArea = kOwner.AI_isPrimaryArea(area());
 	bAreaAlone = kOwner.AI_isAreaAlone(area());
@@ -9047,7 +9054,8 @@ void CvCityAI::AI_updateBestBuild()
 	}
 	if (!bChop)
 	{
-        bChop = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+		//bChop = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+		bChop = kPlayer.AI_isLandWar(area()); // K-Mod
     }
 
     if (getProductionBuilding() != NO_BUILDING)
@@ -9266,7 +9274,8 @@ void CvCityAI::AI_doDraft(bool bForce)
 				conscript();
 				return;
         	}
-			bool bLandWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+			//bool bLandWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+			bool bLandWar = kOwner.AI_isLandWar(area()); // K-Mod
             bool bDanger = (!AI_isDefended() && AI_isDanger());
 
 			// Don't go broke from drafting
@@ -12628,9 +12637,9 @@ int CvCityAI::AI_cityValue() const
 
 bool CvCityAI::AI_doPanic()
 {
-
-	bool bLandWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
-
+	//bool bLandWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
+	bool bLandWar = GET_PLAYER(getOwnerINLINE()).AI_isLandWar(area()); // K-Mod
+	
 	if (bLandWar)
 	{
 		int iOurDefense = GET_PLAYER(getOwnerINLINE()).AI_getOurPlotStrength(plot(), 0, true, false);
