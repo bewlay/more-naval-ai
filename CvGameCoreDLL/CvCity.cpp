@@ -9725,7 +9725,7 @@ void CvCity::setBaseYieldRate(YieldTypes eIndex, int iNewValue)
 	FAssertMsg(eIndex >= 0, "eIndex expected to be >= 0");
 	FAssertMsg(eIndex < NUM_YIELD_TYPES, "eIndex expected to be < NUM_YIELD_TYPES");
 
-	if (getBaseYieldRate(eIndex) != iNewValue)
+	if (getBaseYieldRate(eIndex, false) != iNewValue)
 	{
 		FAssertMsg(iNewValue >= 0, "iNewValue expected to be >= 0");
 		FAssertMsg(((iNewValue * 100) / 100) >= 0, "((iNewValue * 100) / 100) expected to be >= 0");

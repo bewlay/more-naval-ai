@@ -10992,7 +10992,10 @@ int CvCityAI::AI_yieldValue(short* piYields, short* piCommerceYields, bool bAvoi
 		else
 		{
 			// Get yield for city after adding/removing the citizen in question
-			int iOldCityYield = getBaseYieldRate((YieldTypes)iI);
+			// Bugfix: Unhappy production is now calculated in getBaseYieldRate. We ignore it in plot value calculations in order to avoid overcomplicating the algorithm.
+			//int iOldCityYield = getBaseYieldRate((YieldTypes)iI);
+			int iOldCityYield = getBaseYieldRate((YieldTypes)iI, false);
+			// Bugfix end
 			int iNewCityYield = (bRemove ? (iOldCityYield - piYields[iI]) : (iOldCityYield + piYields[iI]));
 			int iModifier = getBaseYieldRateModifier((YieldTypes)iI);
 			if (iI == YIELD_PRODUCTION)
