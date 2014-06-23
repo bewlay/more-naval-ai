@@ -13707,6 +13707,121 @@ int CvPlayerAI::AI_neededExecutives(CvArea* pArea, CorporationTypes eCorporation
 	return iCount;
 }
 
+// K-Mod. This function is used to replace the old (broken) "unit cost percentage" calculation used by the AI
+int CvPlayerAI::AI_unitCostPerMil() const
+{
+	// original "cost percentage" = calculateUnitCost() * 100 / std::max(1, calculatePreInflatedCosts());
+	// If iUnitCostPercentage is calculated as above, decreasing maintenance will actually decrease the max units.
+	// If a builds a courthouse or switches to state property, it would then think it needs to get rid of units!
+	// It makes no sense, and civs with a surplus of cash still won't want to build units. So lets try it another way...
+	int iUnitCost = calculateUnitCost() * std::max(0, calculateInflationRate() + 100) / 100;
+	if (iUnitCost <= getNumCities()/2) // cf with the final line
+		return 0;
+
+	int iTotalRaw = calculateTotalYield(YIELD_COMMERCE);
+
+	int iFunds = iTotalRaw * AI_averageCommerceMultiplier(COMMERCE_GOLD) / 100;
+	iFunds += getGoldPerTurn() - calculateInflatedCosts();
+	iFunds += getCommerceRate(COMMERCE_GOLD) - iTotalRaw * AI_averageCommerceMultiplier(COMMERCE_GOLD) * getCommercePercent(COMMERCE_GOLD) / 10000;
+	return std::max(0, iUnitCost-getNumCities()/2) * 1000 / std::max(1, iFunds); // # cities is there to offset early-game distortion.
+}
+
+// This function gives an approximate / recommended maximum on our unit spending. Note though that it isn't a hard cap.
+// we might go as high has 20 point above the "maximum"; and of course, the maximum might later go down.
+// So this should only be used as a guide.
+int CvPlayerAI::AI_maxUnitCostPerMil(CvArea* pArea, int iBuildProb) const
+{
+	if (isBarbarian())
+		return 500;
+
+	if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE))
+		return 20; // ??
+
+	if (iBuildProb < 0)
+		iBuildProb = GC.getLeaderHeadInfo(getPersonalityType()).getBuildUnitProb() + 6; // a rough estimate.
+
+	bool bTotalWar = GET_TEAM(getTeam()).getWarPlanCount(WARPLAN_TOTAL, true);
+	bool bAggressiveAI = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
+
+	int iMaxUnitSpending = (bAggressiveAI ? 30 : 20) + iBuildProb*4/3;
+
+	if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4))
+	{
+		iMaxUnitSpending += 30;
+	}
+	else if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3 | AI_VICTORY_DOMINATION3))
+	{
+		iMaxUnitSpending += 20;
+	}
+	else if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1))
+	{
+		iMaxUnitSpending += 10;
+	}
+
+	if (!bTotalWar)
+	{
+		iMaxUnitSpending += AI_isDoStrategy(AI_STRATEGY_ALERT1) ? 15 + iBuildProb / 3 : 0;
+		iMaxUnitSpending += AI_isDoStrategy(AI_STRATEGY_ALERT2) ? 15 + iBuildProb / 3 : 0;
+		// note. the boost from alert1 + alert2 matches the boost from total war. (see below).
+	}
+
+	if (AI_isDoStrategy(AI_STRATEGY_FINAL_WAR))
+	{
+		iMaxUnitSpending += 300;
+	}
+	else
+	{
+		iMaxUnitSpending += bTotalWar ? 30 + iBuildProb*2/3 : 0;
+		if (pArea)
+		{
+			switch (pArea->getAreaAIType(getTeam()))
+			{
+			case AREAAI_OFFENSIVE:
+				iMaxUnitSpending += 40;
+				break;
+
+			case AREAAI_DEFENSIVE:
+				iMaxUnitSpending += 75;
+				break;
+
+			case AREAAI_MASSING:
+				iMaxUnitSpending += 75;
+				break;
+
+			case AREAAI_ASSAULT:
+				iMaxUnitSpending += 40;
+				break;
+
+			case AREAAI_ASSAULT_MASSING:
+				iMaxUnitSpending += 70;
+				break;
+
+			case AREAAI_ASSAULT_ASSIST:
+				iMaxUnitSpending += 35;
+				break;
+
+			case AREAAI_NEUTRAL:
+				// think of 'dagger' as being prep for total war.
+				FAssert(!bTotalWar);
+				iMaxUnitSpending += AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 20 + iBuildProb*2/3 : 0;
+				break;
+			default:
+				FAssert(false);
+			}
+		}
+		else
+		{
+			if (GET_TEAM(getTeam()).getAnyWarPlanCount(true))
+				iMaxUnitSpending += 55;
+			else
+			{
+				FAssert(!bTotalWar);
+				iMaxUnitSpending += AI_isDoStrategy(AI_STRATEGY_DAGGER) ? 20 + iBuildProb*2/3 : 0;
+			}
+		}
+	}
+	return iMaxUnitSpending;
+}
 bool CvPlayerAI::AI_isLandWar(CvArea* pArea) const
 {
 	switch(pArea->getAreaAIType(getTeam()))
