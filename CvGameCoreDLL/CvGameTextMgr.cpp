@@ -2690,7 +2690,8 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 							{
 								szString.append(CvWString::format(L"\nTarget City: None"));
 							}
-
+							
+							/*
 							if( gDLL->shiftKey() )
 							{
 								CvCity* pLoopCity;
@@ -2720,6 +2721,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 									}
 								}
 							}
+							*/
 						}
 					}
 /************************************************************************************************/
