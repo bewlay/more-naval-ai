@@ -21067,7 +21067,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 					}
 
 					int iMinAcceptableValue = 0;
-					if(pLoopPlot->getOwnerINLINE() == NO_PLAYER)
+					if(pLoopPlot->getOwnerINLINE() == NO_PLAYER || pLoopPlot->isBeingWorked())
 					{	// Don't go outside borders for low values
 						iMinAcceptableValue += 150;
 					}
