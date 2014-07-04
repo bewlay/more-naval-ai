@@ -233,6 +233,9 @@ public:
 /************************************************************************************************/
 	// MNAI - new functions
 	int countNumOwnedTerrainTypes(TerrainTypes eTerrain) const;
+	int countNumOwnedHills() const;
+	int countNumOwnedRiverSide() const;
+	int countNumAvailablePlotsForImprovement(ImprovementTypes eImprovement) const;
 	int getHighestUnitTier(bool bIncludeHeroes = false, bool bIncludeLimitedUnits = false) const;
 	// End MNAI
 	int countNumCoastalCities() const;																																		// Exposed to Python

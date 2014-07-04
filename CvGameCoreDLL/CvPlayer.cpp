@@ -27657,6 +27657,75 @@ int CvPlayer::countNumOwnedTerrainTypes(TerrainTypes eTerrain) const
 	return iCount;
 }
 
+int CvPlayer::countNumOwnedHills() const
+{
+	PROFILE("CvPlayer::countNumOwnedHills");
+
+	CvPlot* pLoopPlot;
+	int iCount = 0;
+
+	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+		if (pLoopPlot->getOwnerINLINE() == getID())
+		{
+			if (pLoopPlot->isHills())
+			{
+				iCount++;
+			}
+		}
+	}
+
+	return iCount;
+}
+
+int CvPlayer::countNumOwnedRiverSide() const
+{
+	PROFILE("CvPlayer::countNumOwnedRiverSide");
+
+	CvPlot* pLoopPlot;
+	int iCount = 0;
+
+	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+		if (pLoopPlot->getOwnerINLINE() == getID())
+		{
+			if (pLoopPlot->isRiverSide())
+			{
+				iCount++;
+			}
+		}
+	}
+
+	return iCount;
+}
+
+int CvPlayer::countNumAvailablePlotsForImprovement(ImprovementTypes eImprovement) const
+{
+	PROFILE("CvPlayer::countNumAvailablePlotsForImprovement");
+
+	CvPlot* pLoopPlot;
+	int iCount = 0;
+
+	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+	{
+		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+		if (pLoopPlot->getOwnerINLINE() == getID())
+		{
+			if (pLoopPlot->canHaveImprovement(eImprovement, getTeam()))
+			{
+				iCount++;
+			}
+		}
+	}
+
+	return iCount;
+}
+
 int CvPlayer::getHighestUnitTier(bool bIncludeHeroes, bool bIncludeLimitedUnits) const
 {
 	CvUnit* pLoopUnit;
