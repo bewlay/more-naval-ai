@@ -1502,18 +1502,34 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 
 	// MNAI To Do - increase value for distant opponents
 	// MNAI - add value based on the duration of the war
-	int iDurationMod = (AI_getAtWarCounter(eTeam) - ((AI_getWarPlan(eTeam) == WARPLAN_TOTAL) ? 40 : 30) * 3);
+	int iDurationMod = AI_getAtWarCounter(eTeam);// - ((AI_getWarPlan(eTeam) == WARPLAN_TOTAL) ? 40 : 30) * 3);
 	iDurationMod *=  GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent();
 	iDurationMod /= 100;
 	iValue += iDurationMod;
 
 	iValue += kWarTeam.getWarWeariness(eTeam);
+
+	//todo - check countNumImprovedPlots for enemy cities - if they are all pillaged, its a sign that we're not making headway in the war
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		const CvPlayerAI& kLoopPlayer = GET_PLAYER((PlayerTypes)iI); // K-Mod
+		if (kLoopPlayer.isAlive() && kLoopPlayer.getTeam() == eTeam)
+		{
+			if (kLoopPlayer.getCapitalCity() != NULL)
+			{
+				if (kLoopPlayer.getCapitalCity()->countNumImprovedPlots() < 4)
+				{
+					iValue += AI_getAtWarCounter(eTeam) * 2;
+				}
+			}
+		}
+	}
 	// End MNAI
 
-	iValue *= iTheirPower + 10;
+	//iValue *= iTheirPower + 10;
 //FfH: Modified by Kael 04/23/2009
 //	iValue /= std::max(1, iOurPower + iTheirPower + 10);
-	iValue /= std::max(1, iOurPower + 10);
+	//iValue /= std::max(1, iOurPower + 10);
 	if ((iOurPower * 100) > (iTheirPower * 150))
 	{
 		iValue *= 8;
@@ -1524,8 +1540,8 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	WarPlanTypes eWarPlan = AI_getWarPlan(eTeam);
 
 	// if we not human, do we want to continue war for strategic reasons?
-	// only check if our power is at least 120% of theirs
-	if (!isHuman() && iOurPower > ((120 * iTheirPower) / 100))
+	// only check if our power is at least 150% of theirs
+	if (!isHuman() && iOurPower > ((150 * iTheirPower) / 100))
 	{
 		bool bDagger = false;
 
@@ -1557,7 +1573,7 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 	    // for now, we will always do the land mass check for domination
 		// if we have more than half the land, then value peace at 90% * land ratio 
 		int iLandRatio = getTotalLand(true) * 100 / std::max(1, kWarTeam.getTotalLand(true));
-	    if (iLandRatio > 120)
+	    if (iLandRatio > 150)
 	    {
 			iValue *= 9 * 100;
 			iValue /= 10 * iLandRatio;
