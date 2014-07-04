@@ -7083,7 +7083,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 	return std::max(0, iValue);
 }
 
-
+// the bDebugLog variable is to keep this from spamming the log file when viewing the tech values in-game
 int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnablesUnitWonder, bool bDebugLog ) const
 {
 	bool bWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0);
@@ -7203,16 +7203,10 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (kLoopUnit.getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 1050;
-
-							if (GC.getLogging() && bDebugLog)
+							iUnitValue += 1250;
+							if (gPlayerLogLevel > 3 && bDebugLog)
 							{
-								if (gDLL->getChtLvl() > 0)
-								{
-									char szOut[1024];
-									sprintf(szOut, "       FAVORITE UNITCOMBAT\n");
-									gDLL->messageControlLog(szOut);
-								}
+								logBBAI("       FAVORITE UNITCOMBAT");
 							}
 						}
 					}
@@ -7522,8 +7516,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 
 						iMilitaryValue += iCombatValue * 150;
 						iMilitaryValue += kLoopUnit.getWeaponTier() * 150;
-						//iMilitaryValue += iTier * 100;
-						//iMilitaryValue *= iTier;
+						iMilitaryValue += kLoopUnit.getMoves() * 100;
 						
 						if (getHighestUnitTier(false, true) >= iTier && !isWorldUnitClass(eUnitClass) && !(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteTech() == eTech))
 						{
@@ -7582,14 +7575,14 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iUnitValue += 1000;
 						}
 
-						if( kLoopUnit.getUnitAIType(UNITAI_CITY_DEFENSE) )
+						if (kLoopUnit.getUnitAIType(UNITAI_CITY_DEFENSE))
 						{
 							//iUnitValue += (2000 * GC.getGameINLINE().AI_combatValue(eLoopUnit))/100;
 							iUnitValue += (2000 * AI_combatValue(eLoopUnit))/100;
 						}
 					}
 
-					if( AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) )
+					if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
 					{
 						if( kLoopUnit.getUnitAIType(UNITAI_ATTACK_CITY) )
 						{
@@ -7597,12 +7590,19 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 							iUnitValue += (1500 * AI_combatValue(eLoopUnit))/100;
 						}
 					}
-					else if( AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2) )
+					else if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2))
 					{
 						if( kLoopUnit.getUnitAIType(UNITAI_ATTACK_CITY) )
 						{
 							//iUnitValue += (500 * GC.getGameINLINE().AI_combatValue(eLoopUnit))/100;
 							iUnitValue += (500 * AI_combatValue(eLoopUnit))/100;
+						}
+					}
+					else if( AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST1) )
+					{
+						if( kLoopUnit.getUnitAIType(UNITAI_ATTACK_CITY) )
+						{
+							iUnitValue += (250 * AI_combatValue(eLoopUnit))/100;
 						}
 					}
 					
