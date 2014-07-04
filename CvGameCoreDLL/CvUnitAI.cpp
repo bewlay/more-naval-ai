@@ -26592,7 +26592,7 @@ void CvUnitAI::AI_chooseGroupflag()
 			int iAttackCityCount = kPlayer.AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK_CITY);
 			int iAttackCount = kPlayer.AI_totalAreaUnitAIs(plot()->area(), UNITAI_ATTACK);
 
-			if (iAttackCount > iAttackCityCount)
+			if ((iAttackCount * 2) > iAttackCityCount)
 			{
 				AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			}
@@ -27905,7 +27905,9 @@ void CvUnitAI::AI_ConquestMove()
 			AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			break;
 		case UNITAI_ATTACK:
-			if ((getLevel() > 4) || ((kPlayer.AI_getNumAIUnits(UNITAI_ATTACK_CITY) < kPlayer.getNumCities())))
+			if ((getLevel() > 4) 
+				|| (kPlayer.AI_getNumAIUnits(UNITAI_ATTACK) > (kPlayer.getNumCities() * (bLandWar ? 2 : 4)))
+				|| (kPlayer.AI_getNumAIUnits(UNITAI_ATTACK_CITY) < kPlayer.getNumCities()))
 			{
 				AI_setUnitAIType(UNITAI_ATTACK_CITY);
 				break;
@@ -28049,7 +28051,7 @@ void CvUnitAI::AI_ConquestMove()
         iBestValue = getGroup()->getNumUnits();
         pBestUnit = NULL;
 
-        if (getGroup()->getNumUnits() == 1)
+        //if (getGroup()->getNumUnits() == 1)
         {
 			if (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP) == 0)
 			{
@@ -28070,33 +28072,37 @@ void CvUnitAI::AI_ConquestMove()
 										{
 											if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 											{
-												if (generatePath(pLoopPlot, 0, true, &iPathTurns))
+												if ((getGroup()->getNumUnits() == 1) ||
+													atPlot(pLoopPlot))
 												{
-													iValue = 10 * pLoopSelectionGroup->getHeadUnit()->getLevel();
-													iValue += pLoopSelectionGroup->getNumUnits();
-													if (pLoopSelectionGroup->getHeadUnit()->AI_getUnitAIType() == UNITAI_HERO)
+													if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 													{
-														iValue *= 2;
-													}
+														iValue = 10 * pLoopSelectionGroup->getHeadUnit()->getLevel();
+														iValue += pLoopSelectionGroup->getNumUnits();
+														if (pLoopSelectionGroup->getHeadUnit()->AI_getUnitAIType() == UNITAI_HERO)
+														{
+															iValue *= 2;
+														}
 
-													if (pLoopSelectionGroup->getHeadUnit()->isAvatarOfCivLeader())
-													{
-														iValue *= 5;
-													}
+														if (pLoopSelectionGroup->getHeadUnit()->isAvatarOfCivLeader())
+														{
+															iValue *= 5;
+														}
 
-													if (atPlot(pLoopPlot))
-													{
-														iValue *= 2;
-													}
-													else
-													{
-														iValue /= (iPathTurns + 1);
-													}
+														if (atPlot(pLoopPlot))
+														{
+															iValue *= 2;
+														}
+														else
+														{
+															iValue /= (iPathTurns + 1);
+														}
 
-													if (iValue > iBestValue)
-													{
-														iBestValue = iValue;
-														pBestUnit = pLoopSelectionGroup->getHeadUnit();
+														if (iValue > iBestValue)
+														{
+															iBestValue = iValue;
+															pBestUnit = pLoopSelectionGroup->getHeadUnit();
+														}
 													}
 												}
 											}
@@ -28112,16 +28118,33 @@ void CvUnitAI::AI_ConquestMove()
             {
                 if (atPlot(pBestUnit->plot()))
                 {
-                    joinGroup(pBestUnit->getGroup());
-                    return;
+					if( gUnitLogLevel >= 3 )
+					{
+						logBBAI("       ...joining group on plot");
+					}
+					if (getGroup()->getNumUnits() == 1)
+					{
+	                    joinGroup(pBestUnit->getGroup());
+		                return;
+					}
+					else
+					{
+						getGroup()->mergeIntoGroup(pBestUnit->getGroup());
+	                    return;
+					}
                 }
                 else
                 {
+					if( gUnitLogLevel >= 2 )
+					{
+						logBBAI("       ...moving to merge group");
+					}
 					getGroup()->pushMission(MISSION_MOVE_TO_UNIT, pBestUnit->getOwnerINLINE(), pBestUnit->getID(), 0, false, false, MISSIONAI_GROUP, NULL, pBestUnit);
                     return;
                 }
             }
         }
+		/*
         else
         {
 			bool bMerge = false;
@@ -28145,7 +28168,7 @@ void CvUnitAI::AI_ConquestMove()
 										{
 											if (generatePath(pPlot, 0, true, &iPathTurns))
 											{
-												if (pLoopSelectionGroup->getNumUnits() >= (getGroup()->getNumUnits() * 3))
+												if (pLoopSelectionGroup->getNumUnits() > (getGroup()->getNumUnits() * 2))
 												{
 													if (iPathTurns < 5)
 													{
@@ -28164,6 +28187,7 @@ void CvUnitAI::AI_ConquestMove()
                 }
             }
 
+
 			if (bMerge)
 			{
                 if (atPlot(pBestUnit->plot()))
@@ -28178,6 +28202,7 @@ void CvUnitAI::AI_ConquestMove()
                 }
 			}
 		}
+		*/
 	}
 
 	bool bAtWar = isEnemy(plot()->getTeam());
@@ -28252,7 +28277,7 @@ void CvUnitAI::AI_ConquestMove()
 		return;
 	}
 		
-	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, false, true, bIgnoreFaster))
+	if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 0, true, true, bIgnoreFaster))
 	{
 		logBBAI("      ...merging with attack city unit");
 		return;
@@ -28894,7 +28919,7 @@ void CvUnitAI::AI_heromove()
 		joinGroup(NULL);
 	}
 
-	if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
+	if ((GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0) || isAvatarOfCivLeader())
 	{
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 	}
