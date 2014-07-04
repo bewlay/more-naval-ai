@@ -8272,8 +8272,8 @@ int CvCityAI::AI_getImprovementValue( CvPlot* pPlot, ImprovementTypes eImproveme
 
 	if (bValid)
 	{
-		ImprovementTypes eFinalImprovement = finalImprovementUpgrade(eImprovement);
-
+		ImprovementTypes eFinalImprovement = finalImprovementUpgrade(eImprovement, 0, getOwner());
+		
 		if (eFinalImprovement == NO_IMPROVEMENT)
 		{
 			eFinalImprovement = eImprovement;
@@ -8354,7 +8354,7 @@ int CvCityAI::AI_getImprovementValue( CvPlot* pPlot, ImprovementTypes eImproveme
 					ImprovementTypes eCurImprovement = pPlot->getImprovementType();
 					if( eCurImprovement != NO_IMPROVEMENT )
 					{
-						ImprovementTypes eCurFinalImprovement = finalImprovementUpgrade(eCurImprovement);
+						ImprovementTypes eCurFinalImprovement = finalImprovementUpgrade(eCurImprovement, 0, getOwner());
 						if (eCurFinalImprovement == NO_IMPROVEMENT)
 						{
 							eCurFinalImprovement = eCurImprovement;
@@ -11580,7 +11580,7 @@ int CvCityAI::AI_plotValue(CvPlot* pPlot, bool bAvoidGrowth, bool bRemove, bool 
 
 	if (eCurrentImprovement != NO_IMPROVEMENT)
 	{
-		eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement);
+		eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement, 0, getOwner());
 	}
 
 
@@ -12039,7 +12039,7 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 
         if (bValid)
 		{
-            eFinalImprovement = finalImprovementUpgrade(eImprovement);
+            eFinalImprovement = finalImprovementUpgrade(eImprovement, 0, getOwner());
 
             if (eFinalImprovement == NO_IMPROVEMENT)
             {
@@ -12137,7 +12137,7 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 						ImprovementTypes eCurImprovement = pPlot->getImprovementType();
 						if( eCurImprovement != NO_IMPROVEMENT )
 						{
-							ImprovementTypes eCurFinalImprovement = finalImprovementUpgrade(eCurImprovement);
+							ImprovementTypes eCurFinalImprovement = finalImprovementUpgrade(eCurImprovement,0, getOwner());
 							if (eCurFinalImprovement == NO_IMPROVEMENT)
 							{
 								eCurFinalImprovement = eCurImprovement;
@@ -13046,7 +13046,7 @@ int CvCityAI::AI_getPlotMagicValue(CvPlot* pPlot, bool bHealthy, bool bWorkerOpt
 
     if (eCurrentImprovement != NO_IMPROVEMENT)
     {
-        eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement);
+        eFinalImprovement = finalImprovementUpgrade(eCurrentImprovement, 0, getOwner());
 
         if ((eFinalImprovement != NO_IMPROVEMENT) && (eFinalImprovement != eCurrentImprovement))
         {
