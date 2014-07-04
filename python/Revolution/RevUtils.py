@@ -449,7 +449,11 @@ def getHandoverUnitTypes( city, pPlayer, compPlayer = None, bSilent = False ) :
 				playerUnitType = gc.getCivilizationInfo( pPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
 
 			if( playerUnitType < 0 and cityUnitType < 0 ) :
-				print "WARNING: Civ types %d and %d have no unit of class type %d"%(city.getCivilizationType(),pPlayer.getCivilizationType(),unitClass)
+##				print "WARNING: Civ types %d and %d have no unit of class type %d"%(city.getCivilizationType(),pPlayer.getCivilizationType(),unitClass)
+				if city.getCivilizationType() == pPlayer.getCivilizationType():
+					print "WARNING: Civ type %s has no unit of class type %s"%(gc.getCivilizationInfo(pPlayer.getCivilizationType()).getDescription(), gc.getUnitClassInfo(unitClass).getDescription())
+				else:
+					print "WARNING: Neither Civ type %s nor %s has any unit of class type %s"%(gc.getCivilizationInfo(city.getCivilizationType()).getDescription(), gc.getCivilizationInfo(pPlayer.getCivilizationType()).getDescription(), gc.getUnitClassInfo(unitClass).getDescription())
 				continue
 
 			if( playerUnitType < 0 ) :
