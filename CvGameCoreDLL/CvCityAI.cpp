@@ -13094,16 +13094,15 @@ int CvCityAI::AI_countGoodTiles(bool bHealthy, bool bUnworkedOnly, int iThreshol
 	}
 	return iCount;
 }
-
+// note: use this for valuing culture buildings - try to avoid building culture wonders
 int CvCityAI::AI_calculateTargetCulturePerTurn()
 {
-	/*
 	int iTarget = 0;
 
 	bool bAnyGoodPlotUnowned = false;
 	bool bAnyGoodPlotHighPressure = false;
 
-	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
+	for (int iI = 0; iI < getNumCityPlots(); iI++)
 	{
 		CvPlot* pLoopPlot = plotCity(getX_INLINE(),getY_INLINE(),iI);
 
@@ -13132,8 +13131,8 @@ int CvCityAI::AI_calculateTargetCulturePerTurn()
 		iTarget += getCommerceRate(COMMERCE_CULTURE) + 1;
 	}
 	return iTarget;
-	*/
-	return 1;
+
+	//return 1;
 }
 
 int CvCityAI::AI_countGoodSpecialists(bool bHealthy)
