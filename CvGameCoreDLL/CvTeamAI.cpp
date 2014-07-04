@@ -657,7 +657,7 @@ AreaAITypes CvTeamAI::AI_calculateAreaAIType(CvArea* pArea, bool bPreparingTotal
 
 	if (iAreaCities > 0)
 	{
-		if (countEnemyDangerByArea(pArea) > iAreaCities)
+		if (countEnemyDangerByArea(pArea) > (iAreaCities * 2))
 		{
 			return AREAAI_DEFENSIVE;
 		}
@@ -677,7 +677,7 @@ AreaAITypes CvTeamAI::AI_calculateAreaAIType(CvArea* pArea, bool bPreparingTotal
 				return AREAAI_MASSING;
 			}
 		}
-		return AREAAI_DEFENSIVE;
+		//return AREAAI_DEFENSIVE;
 	}
 	else
 	{
@@ -5447,7 +5447,7 @@ void CvTeamAI::AI_doWar()
 				int iNoWarRoll = GC.getGameINLINE().getSorenRandNum(100, "AI No War");
 				iNoWarRoll = range(iNoWarRoll + (bAggressive ? 10 : 0) + (bFinancesProTotalWar ? 10 : 0) - (20*iGetBetterUnitsCount)/iNumMembers, 0, 99);
 
-				int iBestValue = 10; // K-Mod. I've set the starting value above zero just as a buffer against close-calls which end up being negative value in the near future.
+				int iBestValue = 75; // minimum value before we start warplans
 				TeamTypes eBestTeam = NO_TEAM;
 
 				for (int iPass = 0; iPass < 3; iPass++)
@@ -5524,7 +5524,7 @@ void CvTeamAI::AI_doWar()
 				int iNoWarRoll = GC.getGameINLINE().getSorenRandNum(100, "AI No War") - 10;
 				iNoWarRoll = range(iNoWarRoll + (bAggressive ? 10 : 0) + (bFinancesProLimitedWar ? 10 : 0), 0, 99);
 
-				int iBestValue = 0;
+				int iBestValue = 50;
 				TeamTypes eBestTeam = NO_TEAM;
 
 				for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
@@ -5582,7 +5582,7 @@ void CvTeamAI::AI_doWar()
 				int iNoWarRoll = GC.getGameINLINE().getSorenRandNum(100, "AI No War") - 20;
 				iNoWarRoll = range(iNoWarRoll + (bAggressive ? 10 : 0) + (bFinancesProDogpileWar ? 10 : 0), 0, 99);
 
-				int iBestValue = 0;
+				int iBestValue = 35;
 				TeamTypes eBestTeam = NO_TEAM;
 
 				for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
