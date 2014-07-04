@@ -2469,6 +2469,7 @@ int CvPlayerAI::AI_commerceWeight(CommerceTypes eCommerce, CvCity* pCity) const
 }
 
 // Improved as per Blake - thanks!
+// bStartLoc is used for placing starting units only
 int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStartingLoc) const
 {
 	CvCity* pNearestCity;
@@ -2540,29 +2541,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
     if (pPlot->getBonusType() != NO_BONUS)
 	{
 		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).isMana())
-		//if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA_RAW") || 
-		//	(GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA")))
 		{
 			return 0;
 		}
     }
 
 	bIsCoastal = pPlot->isCoastalLand(GC.getMIN_WATER_SIZE_FOR_OCEAN());
-
-	// Pirates want a coastal city for their capitol
-	// TODO - make sure this doesnt break them on all-land maps
-	/*
-    if (getNumCities() == 0)
-    {
-		if (bPirate)
-        {
-            if (!bIsCoastal)
-            {
-                return 0;
-            }
-        }
-    }
-	*/
 
 	pArea = pPlot->area();
 	iNumAreaCities = pArea->getCitiesPerPlayer(getID());
@@ -2657,7 +2641,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 	}
 
-	//if (bStartingLoc)
+	if (bStartingLoc)
 	{
 		if (pPlot->isGoody())
 		{
@@ -2668,7 +2652,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		{
 			pLoopPlot = plotCity(iX, iY, iI);
 
-			// dont place first city near the map edge
+			// dont start players near the map edge
 			if (pLoopPlot == NULL)
 			{
 				return 0;
@@ -2700,7 +2684,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
 
-		if (iI != CITY_HOME_PLOT)
+		if (iI != CITY_HOME_PLOT && pLoopPlot != NULL)
 		{
 			eFeature = pLoopPlot->getFeatureType();
 			if ((pLoopPlot == NULL) || pLoopPlot->isImpassable())
@@ -2779,7 +2763,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	iBadTile /= 2;
 
-//	if (!bStartingLoc)
+	if (!bStartingLoc)
 	{
 		if ((iBadTile > (iNumCityPlots / 2)) || (pArea->getNumTiles() <= 2))
 		{
@@ -3494,7 +3478,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		iRange = GREATER_FOUND_RANGE;
 		int iGreaterBadTile = 0;
-
+		// ToDo - put in minimums for starting food and prod
 		for (iDX = -(iRange); iDX <= iRange; iDX++)
 		{
 			for (iDY = -(iRange); iDY <= iRange; iDY++)
@@ -3509,7 +3493,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 						{
 						    iTempValue = 0;
 							iTempValue += (pLoopPlot->getYield(YIELD_FOOD) * 15);
-							iTempValue += (pLoopPlot->getYield(YIELD_PRODUCTION) * 11);
+							iTempValue += (pLoopPlot->getYield(YIELD_PRODUCTION) * 15);
 							iTempValue += (pLoopPlot->getYield(YIELD_COMMERCE) * 5);
 							iValue += iTempValue;
 							if (iTempValue < 21)
