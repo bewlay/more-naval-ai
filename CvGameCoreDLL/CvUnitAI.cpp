@@ -219,11 +219,13 @@ bool CvUnitAI::AI_update()
                 {
                     if ((m_pUnitInfo->getForceBuildings(eBuilding)) || (m_pUnitInfo->getBuildings(eBuilding)))
                     {
-                        if (canConstruct(plot(),eBuilding))
+                       /*
+						if (canConstruct(plot(),eBuilding))
                         {
                             construct(eBuilding);
                             return false;
                         }
+						*/
                         bDoesBuild = true;
                     }
                 }
@@ -5596,14 +5598,11 @@ void CvUnitAI::AI_missionaryMove()
 {
 	PROFILE_FUNC();
 
-	// Tholal AI - added variable
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
 	CvCity* pLoopCity;
-	CvPlot* pBestGreatWorkPlot;
-	//int iValue;
+	CvPlot* pBestGreatWorkPlot = NULL;
 	int iLoop;
-	pBestGreatWorkPlot = NULL;
 
 // Tholal AI - modifications to improve Missionary AI
 
@@ -5783,11 +5782,9 @@ void CvUnitAI::AI_prophetMove()
 {
 	PROFILE_FUNC();
 
-/*************************************************************************************************/
-/**	BETTER AI (Altar) Sephi                                          		                **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
+	logBBAI("    %S (%d) starting ProphetMove", getName().GetCString(), getID());
+
+	// Sephi AI (Altar)
 	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1))
     {
         if (AI_construct(10000,10000))
@@ -5795,11 +5792,9 @@ void CvUnitAI::AI_prophetMove()
             return;
         }
     }
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+	// End Sephi AI
 
-	if (AI_construct(1))
+	if (AI_construct())
 	{
 		return;
 	}
@@ -6149,7 +6144,7 @@ void CvUnitAI::AI_generalMove()
 		}
 	}
 
-	if (AI_construct(1))
+	if (AI_construct())
 	{
 		return;
 	}
@@ -15216,13 +15211,15 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 	eBestBuilding = NO_BUILDING;
 	iCount = 0;
 
-	for (pLoopCity = GET_PLAYER(getOwnerINLINE()).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
+	CvPlayer &kPlayer = GET_PLAYER(getOwnerINLINE());
+
+	for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER(getOwnerINLINE()).nextCity(&iLoop))
 	{
 		if (AI_plotValid(pLoopCity->plot()) && pLoopCity->area() == area())
 		{
 			if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
 			{
-				if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_CONSTRUCT, getGroup()) == 0)
+				if (kPlayer.AI_plotTargetMissionAIs(pLoopCity->plot(), MISSIONAI_CONSTRUCT, getGroup()) == 0)
 				{
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      04/03/09                                jdog5000      */
@@ -15239,56 +15236,59 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 							BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI);
 
 							if (NO_BUILDING != eBuilding)
-						{
-							bool bDoesBuild = false;
-							if ((m_pUnitInfo->getForceBuildings(eBuilding))
-								|| (m_pUnitInfo->getBuildings(eBuilding)))
 							{
-								bDoesBuild = true;
-							}
-
-							if (bDoesBuild && (pLoopCity->getNumBuilding(eBuilding) > 0))
-							{
-								iCount++;
-								if (iCount >= iMaxCount)
+								bool bDoesBuild = false;
+								if ((m_pUnitInfo->getForceBuildings(eBuilding))
+									|| (m_pUnitInfo->getBuildings(eBuilding)))
 								{
-									return false;
+									bDoesBuild = true;
 								}
-							}
 
-							if (bDoesBuild && GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType()) < iMaxSingleBuildingCount)
-							{
-								if (canConstruct(pLoopCity->plot(), eBuilding))
+								if (bDoesBuild && (pLoopCity->getNumBuilding(eBuilding) > 0))
 								{
-									iValue = pLoopCity->AI_buildingValue(eBuilding);
-/*************************************************************************************************/
-/**	BETTER AI (Religion Victory) Sephi                                          		                **/
-/**																								**/
-/**						                                            							**/
-/*************************************************************************************************/
-                                    if(AI_getUnitAIType()==UNITAI_PROPHET)
-                                    {
-										if(pLoopCity->isCapital())
-                                        {
-                                            iValue+=10000;
-                                        }
-                                    }
-
-									// Tholal AI - Holy Shrines
-									if (pLoopCity->isHolyCity())
+									iCount++;
+									if (iCount >= iMaxCount)
 									{
-										iValue+=20001;
+										return false;
 									}
-									// End Tholal AI
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+								}
 
-									if ((iValue > iThreshold) && (iValue > iBestValue))
+								if (bDoesBuild && kPlayer.getBuildingClassCount((BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType()) < iMaxSingleBuildingCount)
+								{
+									if (canConstruct(pLoopCity->plot(), eBuilding))
 									{
-										iBestValue = iValue;
-										pBestPlot = getPathEndTurnPlot();
-										pBestConstructPlot = pLoopCity->plot();
+										iValue = pLoopCity->AI_buildingValue(eBuilding);
+
+										// Sephi AI (Religion Victory)
+										/*
+										if (AI_getUnitAIType()==UNITAI_PROPHET)
+										{
+											if (pLoopCity->isCapital())
+											{
+												iValue+=10000;
+											}
+										}
+										*/
+										// End Sephi AI
+
+										// Tholal AI - Holy Shrines
+										if (GC.getBuildingInfo(eBuilding).getHolyCity() != NO_RELIGION)
+										{
+											if (kPlayer.getStateReligion() != NO_RELIGION)
+											{
+												if (GC.getBuildingInfo(eBuilding).getHolyCity() == kPlayer.getStateReligion())
+												{
+													iValue+=20001;
+												}
+											}
+										}
+										// End Tholal AI
+
+										if ((iValue > iThreshold) && (iValue > iBestValue))
+										{
+											iBestValue = iValue;
+											pBestPlot = getPathEndTurnPlot();
+											pBestConstructPlot = pLoopCity->plot();
 											eBestBuilding = eBuilding;
 										}
 									}
@@ -15303,6 +15303,7 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 
 	if ((pBestPlot != NULL) && (pBestConstructPlot != NULL) && (eBestBuilding != NO_BUILDING))
 	{
+		logBBAI("  %S constructing %S at %d, %d (value: %d)", getName().GetCString(), GC.getBuildingInfo(eBestBuilding).getText(), pBestPlot->getX(), pBestPlot->getY(), iBestValue);
 		if (atPlot(pBestConstructPlot))
 		{
 			getGroup()->pushMission(MISSION_CONSTRUCT, eBestBuilding);
