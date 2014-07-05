@@ -5364,6 +5364,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if (eImprovement != NO_IMPROVEMENT)
 			{
 				CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+
+				int iPossiblePlots = countNumAvailablePlotsForImprovement(eImprovement);
 				
 				int iImprovementValue = 300;
 
@@ -5420,6 +5422,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 					iTempValue *= AI_yieldWeight((YieldTypes)iK);
 					iTempValue /= 100;
+
+					iTempValue *= iPossiblePlots;
+					iTempValue /= 3;
 
 					iImprovementValue += iTempValue;
 				}
@@ -5676,15 +5681,29 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	}
 	iValue += iBuildValue;
 
-	// does tech reveal bonus resources
+	// does tech reveal or enable bonus resources
 	int iBestRevealValue = 0;
 	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 	{
-		if (GC.getBonusInfo((BonusTypes)iJ).getTechReveal() == eTech)
+		if (GC.getBonusInfo((BonusTypes)iJ).getTechCityTrade() == eTech)
+		{
+			if (countOwnedBonuses((BonusTypes)iJ) > 0)
+			{
+				int iObjectiveValue = 0;
+				iObjectiveValue += (AI_bonusVal((BonusTypes)iJ) * 50);
+				iObjectiveValue += (GC.getBonusInfo((BonusTypes)iJ).getAIObjective() + GC.getBonusInfo((BonusTypes)iJ).getAITradeModifier()) * 25;
+				if ((gPlayerLogLevel > 3) && bDebugLog && (iBuildValue > 0))
+				{
+					logBBAI("     Objective Value for %S: %d", GC.getBonusInfo((BonusTypes)iJ).getText(), iObjectiveValue);
+				}
+				iValue += iObjectiveValue;
+			}
+		}
+		if ((GC.getBonusInfo((BonusTypes)iJ).getTechReveal() == eTech))
 		{
 			int iRevealValue = 150;
 			iRevealValue += (AI_bonusVal((BonusTypes)iJ) * 25);
-			
+
 			BonusClassTypes eBonusClass = (BonusClassTypes)GC.getBonusInfo((BonusTypes)iJ).getBonusClassType();
 			int iBonusClassTotal = (paiBonusClassRevealed[eBonusClass] + paiBonusClassUnrevealed[eBonusClass]);
 			
@@ -5719,6 +5738,12 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			
 		}
 	}
+
+	if ((gPlayerLogLevel > 3) && bDebugLog && (iBestRevealValue > 0))
+	{
+		logBBAI("   Best Reveal value: %d \n", iBestRevealValue);
+	}
+
 	iValue += iBestRevealValue;
 
 
