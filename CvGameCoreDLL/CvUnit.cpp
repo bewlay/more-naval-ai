@@ -5195,6 +5195,8 @@ bool CvUnit::airlift(int iX, int iY)
 
 	setXY(pTargetPlot->getX_INLINE(), pTargetPlot->getY_INLINE());
 
+	logBBAI("    %S (%d) airlifting to plot %d, %d", getName().GetCString(), getID(), pTargetPlot->getX_INLINE(), pTargetPlot->getY_INLINE());    
+
 	return true;
 }
 
