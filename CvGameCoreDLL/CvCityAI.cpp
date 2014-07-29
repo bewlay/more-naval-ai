@@ -9275,13 +9275,15 @@ void CvCityAI::AI_doDraft(bool bForce)
 			{
 				conscript();
 				return;
-        	}
+			}
 			//bool bLandWar = ((area()->getAreaAIType(getTeam()) == AREAAI_OFFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_DEFENSIVE) || (area()->getAreaAIType(getTeam()) == AREAAI_MASSING));
 			bool bLandWar = kOwner.AI_isLandWar(area()); // K-Mod
-            bool bDanger = (!AI_isDefended() && AI_isDanger());
+			bool bDanger = (!AI_isDefended() && AI_isDanger());
+			int iUnitCostPerMil = kOwner.AI_unitCostPerMil(); // K-Mod
 
 			// Don't go broke from drafting
-			if( !bDanger && kOwner.AI_isFinancialTrouble() )
+			//if( !bDanger && kOwner.AI_isFinancialTrouble() )
+			if (!bDanger && iUnitCostPerMil > kOwner.AI_maxUnitCostPerMil(area(), 50)) // K-Mod. (cf. conditions for scraping units in AI_doTurnUnitPost)
 			{
 				return;
 			}
