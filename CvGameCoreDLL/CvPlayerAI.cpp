@@ -5768,7 +5768,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
-		if (GC.getPromotionInfo((PromotionTypes)iI).getTechPrereq() != NO_TECH) //GC.getInfoTypeForString("TECH_NEVER"))
+		if (GC.getPromotionInfo((PromotionTypes)iI).getTechPrereq() != NO_TECH)
 		{
 			if (GC.getPromotionInfo((PromotionTypes)iI).getTechPrereq() == eTech)
 			{
@@ -11324,8 +11324,9 @@ int CvPlayerAI::AI_bonusTradeVal(BonusTypes eBonus, PlayerTypes ePlayer, int iCh
 
 	iValue = AI_bonusVal(eBonus, iChange);
 
-	iValue *= ((std::min(getNumCities(), GET_PLAYER(ePlayer).getNumCities()) + 3) * 30);
-	iValue /= 100;
+	// MNAI - commenting these two lines out. Whether or not a bonus is more valuable when you have more cities is decided in AI_baseBonusVal
+	//iValue *= ((std::min(getNumCities(), GET_PLAYER(ePlayer).getNumCities()) + 3) * 30);
+	//iValue /= 100;
 
 	iValue *= std::max(0, (GC.getBonusInfo(eBonus).getAITradeModifier() + 100));
 	iValue /= 100;
@@ -23722,12 +23723,13 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	// K-Mod
 	{//production
-		int iProductionValue = iNonsense % (5 + AI_getFlavorValue(AI_FLAVOR_PRODUCTION)/2);
+		//int iProductionValue = iNonsense % (5 + AI_getFlavorValue(AI_FLAVOR_PRODUCTION)/2);
+		int iProductionValue = AI_getFlavorValue(AI_FLAVOR_PRODUCTION);
 		iProductionValue += (iLastStrategyHash & AI_STRATEGY_PRODUCTION) ? 1 : 0;
 		iProductionValue += AI_getFlavorValue(AI_FLAVOR_PRODUCTION) > 0 ? 1 : 0;
 		iProductionValue += (m_iStrategyHash & AI_STRATEGY_DAGGER) ? 1 : 0;
 		iProductionValue += (m_iStrategyHash & AI_STRATEGY_CRUSH) ? 1 : 0;
-		iProductionValue += AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST4 | AI_VICTORY_SPACE4) ? 3 : 0;
+		iProductionValue += AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST2 | AI_VICTORY_SPACE4 | AI_VICTORY_TOWERMASTERY2) ? 3 : 0;
 		// warplans. (done manually rather than using getWarPlanCount, so that we only have to do the loop once.)
 		bool bAnyWarPlans = false;
 		bool bTotalWar = false;
@@ -23750,7 +23752,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 			}
 		}
 		iProductionValue += bAnyWarPlans ? 1 : 0;
-		iProductionValue += bTotalWar ? 3 : 0;
+		iProductionValue -= bTotalWar ? 3 : 0;
 
 		if (iProductionValue >= 10)
 		{
