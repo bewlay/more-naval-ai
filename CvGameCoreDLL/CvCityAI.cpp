@@ -11670,6 +11670,11 @@ int CvCityAI::AI_buildUnitProb()
 	{
 		iProb += std::min(15,getMilitaryProductionModifier()/4);
 	}
+
+	if (AI_isDanger())
+	{
+		iProb *= 4;
+	}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -11851,7 +11856,7 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 		}
 	}
 
-	iBestValue = 0;
+	iBestValue = 10;
 	eBestBuild = NO_BUILD;
 
 	int iClearFeatureValue = 0;
