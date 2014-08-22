@@ -2405,7 +2405,7 @@ bool CvSelectionGroup::canDoInterfaceModeAt(InterfaceModeTypes eInterfaceMode, C
 			if (pLoopUnit != NULL)
 			{
 				//Limit hawks a bit
-				if (plotDistance(pLoopUnit->plot()->getX(), pLoopUnit->plot()->getY(), pPlot->getX(), pPlot->getY()) < (pLoopUnit->airRange() * 2))
+				if (plotDistance(pLoopUnit->plot()->getX(), pLoopUnit->plot()->getY(), pPlot->getX(), pPlot->getY()) < (pLoopUnit->airRange() * 3))
 				{
 					// todo - make this a team check instead. maybe include vassals?
 					if (pPlot->getOwner() == pLoopUnit->getOwner())
