@@ -951,52 +951,31 @@ class CvGameUtils:
 #-----------------------------------
 
 #INIT
-			smokeb = true #terraformer tries to put out smoke
-			desertb = true #terraformer tries to spring deserts
-			snowb = true #terraformer tries to scorch snow to tundra
+			smokeb = false #terraformer tries to put out smoke
+			desertb = false #terraformer tries to spring deserts
+			plainsb = false #terraformer tries to improve plains
+			snowb = false #terraformer tries to scorch snow to tundra
 			tundrab = false #terraformer tries to scorch tundra to plains
-			marshb = true #terraformer tries to scorch marsh to grassland
-			grassb = false #terraformer tries to scorch grassland to plains
-			hellterrb = true #terraformer tries to remove hell terrain
+			marshb = false #terraformer tries to scorch marsh to grassland
+			hellterrb = false #terraformer tries to remove hell terrain
 			treesb = false #terraformer tries to Create Trees
 
-			desert = 0
-			snow = 0
-			tundra = 0
-			marsh = 0
-			grass = 0
-			hellterr = 0
-			floodplain = 0
-			trees = 0
-
 #CIV SPECIFICS
-			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-				smokeb = false
-			if iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-				snowb = false
-			if (iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO') or iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
-				tundrab = false
-			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-				hellterrb = false
+#			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+#				smokeb = false
+#			if iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+#				snowb = false
+#			if (iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO') or iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
+#				tundrab = false
+#			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+#				hellterrb = false
 
 #UNIT SPECIFIC
-			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):
-				desertb = false #terraformer tries to spring deserts
-				snowb = false #terraformer tries to scorch snow to tundra
-				tundrab = false #terraformer tries to scorch tundra to plains
-				marshb = false #terraformer tries to scorch marsh to grassland
-				grassb = false #terraformer tries to scorch grassland to plains
-				hellterrb = true #terraformer tries to remove hell terrain
-				treesb = false #terraformer tries to Create Trees
-				treesimpb= false #terraformer can Create Trees in Improvements
+			if (pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT') or pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1'))):
+				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+					hellterrb = true #terraformer tries to remove hell terrain
 
 			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
-				desertb = false #terraformer tries to spring deserts
-				snowb = false #terraformer tries to scorch snow to tundra
-				tundrab = false #terraformer tries to scorch tundra to plains
-				marshb = false #terraformer tries to scorch marsh to grassland
-				grassb = false #terraformer tries to scorch grassland to plains
-				hellterrb = false #terraformer tries to remove hell terrain
 				treesb = true #terraformer tries to Create Trees
 				treesimpb = false
 				if (iCiv == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR') or iCiv == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR')):
@@ -1005,204 +984,116 @@ class CvGameUtils:
 					if not pPlayer.isHuman():
 						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
 						return 0
+			
+			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1')):
+				smokeb = true
+				desertb = true
 
+			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
+				tundrab = true
+				marshb = true
+				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+					snowb = true
 
-#TERRAFORMING
-			if pPlot.getOwner()==pUnit.getOwner():
-				if (desertb or pPlot.isRiver()):
-					if pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT'):
-						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
-							pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
-							return 1
-				elif smokeb:
+			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_NATURE3')):
+				desertb = true
+				plainsb = true
+				tundrab = true
+				marshb = true
+				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+					snowb = true
+
+#TERRAFORMING CURRENT PLOT
+			if pPlot.getOwner() == pUnit.getOwner():
+				if (desertb and	pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT')):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
+							
+				if smokeb:
 					if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
 							pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
-							return 1
 
-				if (snowb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW')):
+				if (snowb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 1
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
-				if (tundrab and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA')):
+				if (tundrab and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 1
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
-				if (marshb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_MARSH')):
+				if (plainsb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS')):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
+
+				if (marshb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH')):
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 1
-
-				if (grassb and pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_GRASS')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
-						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-						return 1
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
 				if hellterrb:
 					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SANCTIFY'),false):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SANCTIFY'))
-						return 1
 
 				if treesb:
-					if pPlot.getFeatureType()==-1:
+					if pPlot.getFeatureType() == -1:
 						if pUnit.canCast(gc.getInfoTypeForString('SPELL_BLOOM'),false):
 							if treesimpb or pPlot.getBonusType(-1) == -1:
 								pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
-								return 1
 
-#-----------------------------------
-#LOOK FOR WORK
-#
-#MALAKIM EXCEPTION
-#LOOK FOR WORK
-#-----------------------------------
-
-
+## LOOK FOR WORK
+			if not pUnit.canMove():
+				return 2
+				
 			for isearch in range(1,searchdistance,1):
-
-	#LOOK FOR WORK
-				if 1==1:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
-										if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1')):
-											if smokeb:
-												if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
-													desert=desert+1
-											if (desertb or pPlot.isRiver()):
-												if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-													desert=desert+1
-										if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
-											if snowb:
-												if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
-													snow=snow+1
-											if tundrab:
-												if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA'):
-													tundra=tundra+1
-											if marshb:
-												if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_MARSH'):
-													marsh=marsh+1
-											if grassb:
-												if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_GRASS'):
-													grass=grass+1
-										if hellterrb:
-											if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1')):
-												if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SHALLOWS')):
-													hellterr=hellterr+1
-										if treesb:
-											if (pPlot2.getFeatureType() == -1):
-												if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
-													if not pPlot2.isCity():
-														if (pPlot2.getImprovementType()==-1 or treesimpb):
-															trees=trees+1
-
-	#Remove some deserts/smoke etc.?
-
-				if desert>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
-										if smokeb:
-											if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
-												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-												return 1
-										if (desertb or pPlot.isRiver()):
-											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-												pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-												return 1
-
-
-				if snow>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+				for iiX in range(iX-isearch, iX+isearch+1, 1):
+					for iiY in range(iY-isearch, iY+isearch+1, 1):
+						pPlot2 = CyMap().plot(iiX,iiY)
+						if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
+							if pPlot2.getOwner()==pUnit.getOwner() and pPlot2 != pUnit.plot():
+								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+									if smokeb:
+										if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
+											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+											return 2
+									if desertb:
+										if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
+											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+											return 2
+									if snowb:
 										if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 1
-
-				if tundra>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+											return 2
+									if tundrab:
 										if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA'):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 1
-				if marsh>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+											return 2
+									if marshb:
 										if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_MARSH'):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 1
-
-				if grass>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
-										if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_GRASS'):
+											return 2
+									if plainsb:
+										if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_PLAINS'):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 1
-
-
-	#Hell terrain to sanctify?
-				if (hellterr>0 and pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1'))):
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner()) or pPlot2.isWater()):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_PLOT_COUNTER):
+											return 2
+									if hellterrb:
 										if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SHALLOWS')):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									elif pPlot2.getPlotCounter()>7:
-										pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-
-				if floodplain>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
-										if (pPlot2.isRiver() and pPlot2.getFeatureType()==-1):
-											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 1
-
-				if trees>0:
-					for iiX in range(iX-isearch, iX+isearch+1, 1):
-						for iiY in range(iY-isearch, iY+isearch+1, 1):
-							pPlot2 = CyMap().plot(iiX,iiY)
-							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
-								if pPlot2.getOwner()==pUnit.getOwner():
-									if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+											return 2
+									if treesb:
 										if (pPlot2.getFeatureType() == -1):
-											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
+											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH')):
 												if not pPlot2.isCity():
-													if ((pPlot2.getImprovementType()==-1 and pPlot2.getBonusType(-1)==-1)or treesimpb):
+													if (pPlot2.getImprovementType() == -1 or treesimpb):
 														pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-														if pUnit.plot() == pPlot2:
-															pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
-														return 1
+														return 2
 
 #Nothing to do, lets move on to another City!
 			iBestCount=0
@@ -1216,35 +1107,29 @@ class CvGameUtils:
 						if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
 							if pPlot2.getOwner()==pUnit.getOwner():
 								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
-									if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1')):
-										if smokeb:
-											if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
-												iCount=iCount+1
-										if (desertb or pPlot.isRiver()):
-											if (pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-												iCount=iCount+1
-									if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
-										if snowb:
-											if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW'):
-												iCount=iCount+1
-										if tundrab:
-											if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA'):
-												iCount=iCount+1
-										if marshb:
-											if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_MARSH'):
-												iCount=iCount+1
-										if grassb:
-											if pPlot2.getTerrainType()==gc.getInfoTypeForString('TERRAIN_GRASS'):
-												iCount=iCount+1
+									if smokeb:
+										if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
+											iCount=iCount+1
+									if desertb:
+										if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT') and not pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
+											iCount=iCount+1
+									if snowb:
+										if pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
+											iCount=iCount+1
+									if tundrab:
+										if pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA'):
+											iCount=iCount+1
+									if marshb:
+										if pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
+											iCount=iCount+1
 									if hellterrb:
-										if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1')):
-											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SHALLOWS')):
-												iCount=iCount+1
+										if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SHALLOWS')):
+											iCount=iCount+1
 									if treesb:
 										if (pPlot2.getFeatureType() == -1):
 											if (pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot2.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
 												if not pPlot2.isCity():
-													if (pPlot2.getImprovementType()==-1 or treesimpb):
+													if (pPlot2.getImprovementType() == -1 or treesimpb):
 														iCount=iCount+1
 
 					if (iCount>iBestCount):
