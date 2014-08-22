@@ -15796,6 +15796,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 	// End Tholal AI
 
 	// Do we have a religion hero already?
+	/*
 	if (getStateReligion() != NO_RELIGION)
 	{
 		CvReligionInfo& kReligionInfo = GC.getReligionInfo(getStateReligion());
@@ -15814,6 +15815,7 @@ ReligionTypes CvPlayerAI::AI_bestReligion() const
 				}
 			}
 	}
+	*/
 
 	ReligionTypes eFavorite = (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
 
@@ -15881,11 +15883,12 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 	{
 		return 0;
 	}
-
+	
+	CvReligionInfo& kReligion = GC.getReligionInfo(eReligion);
 //>>>>Better AI: Added by Denev 2010/07/21
 	if (AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 	{
-		if (GC.getReligionInfo(eReligion).getAlignmentBest() == ALIGNMENT_EVIL)
+		if (kReligion.getAlignmentBest() == ALIGNMENT_EVIL)
 		{
 			return 0;
 		}
@@ -15893,6 +15896,7 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
 //>>>>Better AI: End Add
 
 	int iValue = 0;
+	
 	
 	if (getStateReligion() == NO_RELIGION)
 	{
@@ -15966,44 +15970,45 @@ int CvPlayerAI::AI_religionValue(ReligionTypes eReligion) const
         }
 	}
 
-	// need some base value for the units
-	// Tholal AI - add value for unused heros
+	// MNAI Start
 	const UnitClassTypes eReligionHeroClass1 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero1();
 	const UnitClassTypes eReligionHeroClass2 = (UnitClassTypes)GC.getReligionInfo(eReligion).getReligionHero2();
 
 	if (eReligionHeroClass1 != NO_UNITCLASS)
 	{
-		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1))
+		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass1) || getUnitClassCount(eReligionHeroClass1) > 0)
 		{
-			CvUnitInfo &kHero1 = GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero1());
+			CvUnitInfo &kHero1 = GC.getUnitInfo((UnitTypes)kReligion.getReligionHero1());
 			iValue += kHero1.getTier() * 10;
 		}
 	}
 
 	if (eReligionHeroClass2 != NO_UNITCLASS)
 	{
-		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2))
+		if (!GC.getGameINLINE().isUnitClassMaxedOut(eReligionHeroClass2) || getUnitClassCount(eReligionHeroClass2) > 0)
 		{
-			iValue += GC.getUnitInfo((UnitTypes)GC.getReligionInfo(eReligion).getReligionHero2()).getTier() * 10;
+			iValue += GC.getUnitInfo((UnitTypes)kReligion.getReligionHero2()).getTier() * 10;
 		}
 	}
 
 	// To Do - add value for religious buildings and units
 	// AI_getBuildingReligionValue(eBuilding)
 	// AI_getUnitReligionValue(eUnit)
-	// Add value for like alignments
+	
+	// +10% value if this religion matches our alignment
 	if (GC.getReligionInfo(eReligion).getAlignment() == getAlignment())
 	{
 		iValue *= 10;
 		iValue /= 9;
 	}
 
+	// double value if its our favorite religion
 	if (eReligion == getFavoriteReligion())
 	{
 		iValue *= 2;
 	}
 
-	// End Tholal AI
+	// End MNAI
 
 //>>>>Unofficial Bug Fix: Added by Denev 2010/03/11
 	iValue *= 100 + GC.getLeaderHeadInfo(getPersonalityType()).getReligionWeightModifier(eReligion);
