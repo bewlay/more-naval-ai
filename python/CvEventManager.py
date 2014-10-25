@@ -1257,132 +1257,15 @@ class CvEventManager:
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 
 		if unit.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ADEPT'):
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_AIR'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_AIR1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_AIR2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_AIR3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_BODY'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_BODY1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_BODY2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_BODY3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_CHAOS'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_CHAOS1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_CHAOS2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_CHAOS3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_DEATH'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DEATH1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DEATH2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_DEATH3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_EARTH'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_EARTH1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_EARTH2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_EARTH3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENCHANTMENT'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENCHANTMENT1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENCHANTMENT2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENCHANTMENT3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ENTROPY'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENTROPY1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENTROPY2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENTROPY3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_FIRE'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_FIRE1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_FIRE2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_FIRE3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_ICE'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ICE1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ICE2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ICE3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LAW'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LAW1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LAW2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LAW3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_LIFE'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_METAMAGIC'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_METAMAGIC1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_METAMAGIC2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_METAMAGIC3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_MIND'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_MIND1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_MIND2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_MIND3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_NATURE'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_NATURE1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_NATURE2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_NATURE3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SHADOW'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SHADOW1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SHADOW2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SHADOW3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SPIRIT'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SPIRIT1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SPIRIT2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SPIRIT3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN3'), True)
-			iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'))
-			if iNum > 1:
-				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1'), True)
-				if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
-					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER2'), True)
-					if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
-						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER3'), True)
+			lCheckThis = ['AIR', 'BODY', 'CHAOS', 'EARTH', 'ENCHANTMENT', 'ENTROPY', 'FIRE', 'ICE', 'LAW', 'LIFE', 'METAMAGIC', 'MIND', 'NATURE', 'SHADOW', 'SPIRIT', 'SUN', 'WATER']
+			for item in lCheckThis:
+				iNum = pPlayer.getNumAvailableBonuses(gc.getInfoTypeForString('BONUS_MANA_' + item))
+				if iNum > 1:
+					unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_' + item + '1'), True)
+					if (iNum > 2 and unit.isHasPromotion(iChanneling2)):
+						unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_' + item + '2'), True)
+						if (iNum > 3 and unit.isHasPromotion(iChanneling3)):
+							unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_' + item + '3'), True)
 
 		if unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_ELEMENTAL')):
 			if pPlayer.getNumBuilding(gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS')) > 0:
@@ -1393,85 +1276,83 @@ class CvEventManager:
 				unit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_STRONG'), True)
 
 #UNITAI for Adepts and Terraformers
-		if ((not pPlayer.isHuman()) and (not pPlayer.isBarbarian())):
+		if not pPlayer.isHuman() and not pPlayer.isBarbarian():
 			if unit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):
-				numberterraformer=0
+				numberterraformer = 0
 				for pUnit in player.getUnitList():
 					if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):
 						if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
-							numberterraformer = numberterraformer+1
-				if 	numberterraformer<(pPlayer.getNumCities()*CyGame().getGlobalCounter()/100):
+							numberterraformer += 1
+				if numberterraformer < pPlayer.getNumCities()*CyGame().getGlobalCounter()/100:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
-				elif numberterraformer<3:
+				elif numberterraformer < 3:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
 
 			numTreeTerraformer=0
 			if unit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
 				neededTreeTerraformer = 1
 				if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR') or pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR'):
-					neededTreeTerraformer = neededTreeTerraformer + (pPlayer.getNumCities() / 3)
+					neededTreeTerraformer += pPlayer.getNumCities()/3
 				for pUnit in player.getUnitList():
 					if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
 						if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
-							numTreeTerraformer = numTreeTerraformer+1
+							numTreeTerraformer += 1
 				if numTreeTerraformer < neededTreeTerraformer:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
 
 			if unit.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_ADEPT'):
 
-				bCanMageTerraform = false
+				bCanMageTerraform = False
 				if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_WATER'), False) > 0:
-					bCanMageTerraform = true
+					bCanMageTerraform = True
 				elif pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA_SUN'), False) > 0:
-					bCanMageTerraform = true
+					bCanMageTerraform = True
 
 				numbermageterrafomer = (pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_TERRAFORMER')) - numTreeTerraformer)
 				numbermanaupgrade = pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
 
-				bHasAI = false
-				canupgrademana = false
+				bHasAI = False
+				canupgrademana = False
 
 				if pPlayer.isHasTech(gc.getInfoTypeForString('TECH_SORCERY')):
-					canupgrademana=true
+					canupgrademana=True
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ALTERATION')):
-					canupgrademana=true
+					canupgrademana=True
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_DIVINATION')):
-					canupgrademana=true
+					canupgrademana=True
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_ELEMENTALISM')):
-					canupgrademana=true
+					canupgrademana=True
 				elif pPlayer.isHasTech(gc.getInfoTypeForString('TECH_NECROMANCY')):
-					canupgrademana=true
+					canupgrademana=True
 
 
 				if numbermanaupgrade == 0:
 					unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
-					bHasAI = true
+					bHasAI = True
 				if canupgrademana:
-					if (pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA'), False) > (numbermanaupgrade * 2)):
+					if pPlayer.countOwnedBonuses(gc.getInfoTypeForString('BONUS_MANA'), False) > numbermanaupgrade * 2:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MANA_UPGRADE'))
-						bHasAI = true
+						bHasAI = True
 
-				if bHasAI == false:
+				if not bHasAI:
 					if bCanMageTerraform:
 						if numbermageterrafomer < 2:
 							unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_TERRAFORMER'))
-							bHasAI = true
+							bHasAI = True
 
-				if bHasAI == false:
+				if not bHasAI:
 					pPlot = unit.plot()
-					if (pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_MAGE')) < (pPlayer.getNumCities() / 2)):
+					if pPlayer.AI_getNumAIUnits(gc.getInfoTypeForString('UNITAI_MAGE')) < pPlayer.getNumCities() / 2:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
 					elif pPlot.area().getAreaAIType(pPlayer.getTeam()) == AreaAITypes.AREAAI_DEFENSIVE:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MAGE'))
 					else:
 						unit.setUnitAIType(gc.getInfoTypeForString('UNITAI_WARWIZARD'))
 
-
-
 		if CyGame().getWBMapScript():
 			sf.onUnitCreated(unit)
 
-		if (not self.__LOG_UNITBUILD):
+		if not self.__LOG_UNITBUILD:
 			return
 
 	def onUnitBuilt(self, argsList):
