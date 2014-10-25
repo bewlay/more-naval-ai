@@ -6,19 +6,25 @@ import WBProjectScreen
 import WBTeamScreen
 import WBPlayerScreen
 import WBPlayerUnits
+import WBInfoScreen
 gc = CyGlobalContext()
+
+iChangeType = 2
+bApplyAll = False
+bNoBarb = True
+iSelectedEra = -1
 
 class WBTechScreen:
 
-	def __init__(self, main):
-		self.top = main
-		self.iEra = -1
-		self.iTable_Y = 80
+	def __init__(self):
+		self.iTable_Y = 110
 
-	def interfaceScreen(self, pTeamX):
-		screen = CyGInterfaceScreen( "WBTechScreen", CvScreenEnums.WB_TECH)
+	def interfaceScreen(self, iTeamX):
+		screen = CyGInterfaceScreen("WBTechScreen", CvScreenEnums.WB_TECH)
+		global iTeam
 		global pTeam
-		pTeam = pTeamX
+		iTeam = iTeamX
+		pTeam = gc.getTeam(iTeam)
 
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
@@ -29,28 +35,45 @@ class WBTechScreen:
 
 		screen.addDropDownBoxGFC("CurrentTeam", 20, 20, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(gc.getMAX_TEAMS()):
-			if gc.getTeam(i).isAlive():
-				iLeader = gc.getTeam(i).getLeaderID()
+			loopTeam = gc.getTeam(i)
+			if loopTeam.isAlive():
+				iLeader = loopTeam.getLeaderID()
 				sName = gc.getPlayer(iLeader).getName()
-				if gc.getTeam(i).getNumMembers() > 1:
-					sName += " + " + str(gc.getTeam(i).getNumMembers() -1) + " " + CyTranslator().getText("TXT_KEY_WB_MEMBERS", ())
-				screen.addPullDownString("CurrentTeam", sName, i, i, i == pTeamX.getID())
+				if loopTeam.getNumMembers() > 1:
+					sName += " (" + str(gc.getTeam(i).getNumMembers()) + " " + CyTranslator().getText("TXT_KEY_MEMBERS_TITLE", ()) + ")"
+				screen.addPullDownString("CurrentTeam", sName, i, i, i == iTeam)
 
 		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 0, 0, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 1, 1, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROJECT", ()), 2, 2, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_TECH", ()), 3, 3, True)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 4, 4, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
 		screen.addDropDownBoxGFC("TechEra", 20, self.iTable_Y - 30, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("TechEra", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), -1, -1, True)
 		for i in xrange(gc.getNumEraInfos()):
-			screen.addPullDownString("TechEra", CyTranslator().getText("TXT_KEY_WB_ERA",(gc.getEraInfo(i).getDescription(),)), i, i, i == self.iEra)
+			screen.addPullDownString("TechEra", gc.getEraInfo(i).getDescription(), i, i, i == iSelectedEra)
 
-		screen.setButtonGFC("TechAllPlus", u"", "", screen.getXResolution() - 70, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("TechAllMinus", u"", "", screen.getXResolution() - 45, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		screen.setLabel("TechAll", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 70, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_GAME_OPTION_NO_BARBARIANS", ()) + "</font>"
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if bNoBarb:
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		screen.setText("NoBarbarians", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYERS", ()),)) + "</font>"
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if bApplyAll:
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		screen.setText("ApplyAll", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, 50, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 120, self.iTable_Y - 30, 100, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MODIFY", ("",)), 2, 2, 2 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, 1 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, 0 == iChangeType)
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</color></font>"
+		screen.setText("TechAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 120, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
 		self.createTechList()
 		self.placeTechs()
@@ -86,41 +109,85 @@ class WBTechScreen:
 				
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBTechScreen", CvScreenEnums.WB_TECH)
+		global iChangeType
+		global bApplyAll
+		global bNoBarb
+		global iSelectedEra
+
 		if inputClass.getFunctionName() == "TechEra":
-			self.iEra = inputClass.getData() - 1
+			iSelectedEra = inputClass.getData() - 1
 			self.createTechList()
 			self.placeTechs()
 
 		elif inputClass.getFunctionName() == "CurrentTeam":
 			iIndex = screen.getPullDownData("CurrentTeam", screen.getSelectedPullDownID("CurrentTeam"))
-			self.interfaceScreen(gc.getTeam(iIndex))
+			self.interfaceScreen(iIndex)
+
+		elif inputClass.getFunctionName() == "ChangeType":
+			iChangeType = screen.getPullDownData("ChangeType", screen.getSelectedPullDownID("ChangeType"))
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pTeam.getLeaderID())
 			elif iIndex == 1:
-				WBTeamScreen.WBTeamScreen(self.top).interfaceScreen(pTeam.getID())
+				WBTeamScreen.WBTeamScreen().interfaceScreen(iTeam)
 			elif iIndex == 2:
-				WBProjectScreen.WBProjectScreen(self.top).interfaceScreen(pTeam)
+				WBProjectScreen.WBProjectScreen().interfaceScreen(iTeam)
 			elif iIndex == 4:
-				WBPlayerUnits.WBPlayerUnits(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(pTeam.getLeaderID())
+			elif iIndex == 11:
+				WBInfoScreen.WBInfoScreen().interfaceScreen(pTeam.getLeaderID())
 
-		elif inputClass.getFunctionName().find("TechAll") > -1:
-			self.handlePlatyTechAll(inputClass.getData1()%2)
+		elif inputClass.getFunctionName() == "TechAll":
+			for item in lTech:
+				ItemInfo = gc.getTechInfo(item[1])
+				if ItemInfo.isRepeat(): continue
+				self.editTech(item[1])
 			self.placeTechs()
 
 		elif inputClass.getFunctionName() == "WBTech":
-			pTeam.setHasTech(inputClass.getData2(), not pTeam.isHasTech(inputClass.getData2()), pTeam.getLeaderID(), False, False)
-			self.interfaceScreen(pTeam)
+			self.editTech(inputClass.getData2())
+			self.placeTechs()
+
+		elif inputClass.getFunctionName() == "ApplyAll":
+			bApplyAll = not bApplyAll
+			sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYERS", ()),)) + "</font>"
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if bApplyAll:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.modifyString("ApplyAll", sColor + sText + "</color>", 0)
+
+		elif inputClass.getFunctionName() == "NoBarbarians":
+			bNoBarb = not bNoBarb
+			sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_GAME_OPTION_NO_BARBARIANS", ()) + "</font>"
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if bNoBarb:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.modifyString("NoBarbarians", sColor + sText + "</color>", 0)
 		return 1
+
+	def editTech(self, item):
+		iType = iChangeType
+		if bApplyAll:
+			for i in xrange(gc.getMAX_TEAMS()):
+				pTeamX = gc.getTeam(i)
+				if pTeamX.isBarbarian() and bNoBarb: continue
+				if pTeamX.isAlive():
+					if iChangeType == 2:
+						iType = not pTeamX.isHasTech(item)
+					pTeamX.setHasTech(item, iType, pTeam.getLeaderID(), False, False)
+		else:
+			if iChangeType == 2:
+				iType = not pTeam.isHasTech(item)
+			pTeam.setHasTech(item, iType, pTeam.getLeaderID(), False, False)
 
 	def createTechList(self):
 		global lTech
 		lTech = []
 		for i in xrange(gc.getNumTechInfos()):
 			ItemInfo = gc.getTechInfo(i)
-			if self.iEra == -1 or self.iEra == ItemInfo.getEra():
+			if iSelectedEra == -1 or iSelectedEra == ItemInfo.getEra():
 				lTech.append([ItemInfo.getDescription(), i])
 		lTech.sort()
 

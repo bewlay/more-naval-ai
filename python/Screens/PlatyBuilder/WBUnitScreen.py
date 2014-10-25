@@ -8,6 +8,8 @@ import WBTeamScreen
 import WBPlotScreen
 import WBEventScreen
 import WBPlayerUnits
+import CvPlatyBuilderScreen
+import WBInfoScreen
 import Popup
 gc = CyGlobalContext()
 
@@ -17,44 +19,41 @@ iOwnerType = 0
 iChangeType = 0
 iEditType = 0
 iCommandUnitType = 0
+iSelectedClass = -2
+iCargoType = 1#Magister##bCargo = True
+iUnitType = 1#Magister##bUnitType = True
 
 class WBUnitScreen:
 
 	def __init__(self, main):
 		self.top = main
-		self.iTable_Y = 160
-		self.iCombatClass = -2
-#Magister
-		self.iUnitType = 1
-		self.iCargoType = 1
-#Magister
+		self.iTable_Y = 110
+		self.iScriptH = 90
 
 	def interfaceScreen(self, pUnitX):
 		screen = CyGInterfaceScreen( "WBUnitScreen", CvScreenEnums.WB_UNIT)
-
+		
 		global pUnit
 		global pPlot
-		global iWidth
-
 
 		pUnit = pUnitX
 		pPlot = pUnit.plot()
-		iWidth = screen.getXResolution()/5 - 20#Magister
-
+		iWidth = screen.getXResolution()/5 - 20
+		
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 
 		screen.setText("UnitExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-
+		
 		screen.addDropDownBoxGFC("OwnerType", 20, self.iTable_Y - 90, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_OWNER", ()), 1, 1, 1 == iOwnerType)
-		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_TEAM", ()), 2, 2, 2 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
 
 		screen.addDropDownBoxGFC("CopyType", 20, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_PEDIA_TYPE", ()), 1, 1, 1 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_SPACE_SHIP_SCREEN_TYPE_BUTTON", ()), 1, 1, 1 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_COMBAT", ()), 2, 2, 2 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, 4 == iCopyType)
@@ -67,28 +66,18 @@ class WBUnitScreen:
 		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 0, 0, True)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROMOTION", ()), 1, 1, False)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 2, 2, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 2, 2, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 3, 3, False)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP19", ()), 4, 4, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLOT_DATA", ()), 4, 4, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS", ()), 5, 5, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 6, 6, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
-#Magister
-		screen.addDropDownBoxGFC("CargoType", screen.getXResolution()*3/5 + 20, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_UNIT_TRANSPORT", ()), 0, 0, self.iCargoType == 0)
-		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_CARGO_SPACE", ()), 1, 1, self.iCargoType == 1)
-		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SUMMON", ()), 2, 2, self.iCargoType == 2)
-		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SUMMONER", ()), 3, 3, self.iCargoType == 3)
-
-		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SPELL", ()), 4, 4, self.iCargoType == 4)
-
-		screen.addDropDownBoxGFC("ChangeBy", screen.getXResolution() *4/5 + 20, self.iTable_Y - 60,  iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-#Magister
-
-		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution()*2/5 + 20, screen.getYResolution() - 120, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iX = screen.getXResolution()/5 + 20
+		screen.addDropDownBoxGFC("ChangeType", iX, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_XLEVEL", ()), 0, 0, 0 == iChangeType)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_XEXPERIENCE", ()), 1, 1, 1 == iChangeType)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_STRENGTH", ()), 2, 2, 2 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("INTERFACE_PANE_EXPERIENCE", ()), 1, 1, 1 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_DEMO_SCREEN_STRENGTH_TEXT", ()), 2, 2, 2 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_DAMAGE", ()), 3, 3, 3 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MOVES", ()), 4, 4, 4 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_IMMOBILE_TIMER", ()), 5, 5, 5 == iChangeType)
@@ -96,11 +85,10 @@ class WBUnitScreen:
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MADE_ATTACK", ()), 7, 7, 7 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MADE_INTERCEPT", ()), 8, 8, 8 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_DIRECTION", ()), 9, 9, 9 == iChangeType)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_AI", ()), 10, 10, 10 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_UNIT_AI", ()), 10, 10, 10 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CARGO_SPACE", ()), 11, 11, 11 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_SCRIPT_DATA", ()), 12, 12, 12 == iChangeType)
-
-#Magister
+#Magister Start
 		screen.addPullDownString("ChangeType", CyTranslator().getText("INTERFACE_PANE_STRENGTH_DEFENSE", ()), 13, 13, 13 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_DURATION", ()), 14, 14, 14 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_SCRIPT_DATA", ()), 15, 15, 15 == iChangeType)
@@ -108,44 +96,13 @@ class WBUnitScreen:
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_SUMMONER", ()), 17, 17, 17 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_IS_PERMANENT_SUMMON", ()), 18, 18, 18 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_PROMOTION_AVATAR", ()), 19, 19, 19 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ()), 20, 20, 20 == iChangeType)
+#Magister Stop
 
-#Magister
-
-
-		screen.setText("CopyStats", "Background", u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, screen.getYResolution() - 160, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		screen.addDropDownBoxGFC("ChangeBy", screen.getXResolution() *4/5 + 20, 20, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		i = 1
-		while i < 10001:
-			screen.addPullDownString("ChangeBy", CyTranslator().getText("TXT_KEY_WB_CHANGE_BY",(i,)), i, i, iChange == i)
-			if str(i)[0] == "1":
-				i *= 5
-			else:
-				i *= 2
-
-		screen.addDropDownBoxGFC("CommandUnits", screen.getXResolution() *4/5 + 20, self.iTable_Y - 90, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_UNIT", ()), 0, 0, iCommandUnitType == 0)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_PEDIA_TYPE", ()), 1, 1, iCommandUnitType == 1)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_COMBAT", ()), 2, 2, iCommandUnitType == 2)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCommandUnitType == 3)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, iCommandUnitType == 4)
-		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 5, 5, iCommandUnitType == 5)
-
-		screen.addDropDownBoxGFC("Commands", screen.getXResolution() *4/5 + 20, self.iTable_Y - 60, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_COMMANDS", ()), 0, 0, True)
-		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_RESTORE_DEFAULT", ()), 1, 1, False)
-		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_MOVE_UNIT", ()), 2, 2, False)
-		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_DUPLICATE", ()), 3, 3, False)
-		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_KILL", ()), 4, 4, False)
-
-		screen.addDropDownBoxGFC("UnitOwner", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
-			pPlayerX = gc.getPlayer(iPlayerX)
-			if pPlayerX.isEverAlive():
-				sName = CyTranslator().getText("TXT_KEY_WB_OWNER", ()) + ": " + pPlayerX.getName()
-				if not pPlayerX.isAlive():
-					sName = "*" + sName
-				screen.addPullDownString("UnitOwner", sName, iPlayerX, iPlayerX, iPlayerX == pUnit.getOwner())
+		iX += iWidth/2#Magister		iX += iWidth
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</color></font>"
+		screen.setText("CopyStats", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, iX, screen.getYResolution() - 72, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)#Magister		screen.setText("CopyStats", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, iX, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
 		global lUnitAI
 		lUnitAI = []
 		for i in xrange(UnitAITypes.NUM_UNITAI_TYPES):
@@ -164,7 +121,7 @@ class WBUnitScreen:
 			lUnitAI.append([sList, i])
 		lUnitAI.sort()
 
-##MagisterModmod
+##Magister Start
 		global lUnitReligion
 		lUnitReligion = []
 		sText = CyTranslator().getText("TXT_KEY_NO_RELIGION",())
@@ -178,158 +135,31 @@ class WBUnitScreen:
 		for i in xrange(gc.getNumSpellInfos()):
 			sText = gc.getSpellInfo(i).getDescription()
 			lSpells.append([sText, i])
-
-##MagisterModmod
+##Magister Stop
 
 		self.placeStats()
+		self.placeDirection()
 		self.sortUnits()
 		self.placeUnitType()
 		self.placeCargo()
 		self.placeScript()
 
-	def placeScript(self):
+	def placeMap(self):
 		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
-		iY = iScript_Y
-		screen.setText("UnitEditScriptData", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_SCRIPT_DATA", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() /2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.addPanel( "ScriptPanel", "", "", False, False, screen.getXResolution() *2/5 + 20, iY + 25, iWidth, 50, PanelStyles.PANEL_STYLE_IN)
-		screen.addMultilineText("GameScriptDataText", pUnit.getScriptData(), (screen.getXResolution() - iWidth)/2, iY + 25, iWidth - 20, 50, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+		iWidth = screen.getXResolution()/5 - 40
+		iY = self.iTable_Y
+		iMapHeight = min((screen.getYResolution()/2 - self.iScriptH - 35 - iY), iWidth * 2/3)
+		iMapWidth = iMapHeight * 3/2
+		screen.addPlotGraphicGFC("PlotView", screen.getXResolution()/2 - iMapWidth/2, iY, iMapWidth, iMapHeight, pUnit.plot(), 250, True, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-	def placeStats(self):
+	def placeDirection(self):
 		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
+		iY = screen.getYResolution()/2
+		screen.setLabel("UnitDirectionText", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_DIRECTION", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		screen.setText("UnitScreenHeader", "Background", "<font=4b>" + pUnit.getName() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_UNIT_NAME, -1, -1)
-		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), pUnit.getGroupID())
-		screen.setLabel("UnitScreenHeaderB", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		sText = "<font=3b>%s, X: %d, Y: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_LATITUDE",(pPlot.getLatitude(),)), pPlot.getX(), pPlot.getY())
-		screen.setLabel("UnitLocation", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 70, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-
-#Magister
-		iY = self.iTable_Y - 30
-		screen.setButtonGFC("UnitLevelPlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitLevelMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_XLEVEL", ()) + ": " + str(pUnit.getLevel())
-		screen.setLabel("UnitLevelText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		screen.setButtonGFC("UnitExperiencePlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitExperienceMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_XEXPERIENCE", ()) + ": " + str(pUnit.getExperience())
-		screen.setLabel("UnitExperienceText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		screen.setButtonGFC("UnitBaseStrPlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitBaseStrMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("INTERFACE_PANE_STRENGTH", ()) + " " + str(pUnit.baseCombatStr()) + CyTranslator().getText("[ICON_STRENGTH]", ())
-		screen.setLabel("UnitBaseStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-#Magister
-		iY += 30
-		screen.setButtonGFC("UnitBaseDefStrPlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitBaseDefStrMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("INTERFACE_PANE_STRENGTH_DEFENSE", ()) + ": " + str(pUnit.baseCombatStrDefense()) + CyTranslator().getText("[ICON_DEFENSE]", ())
-		screen.setLabel("UnitBaseDefStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-#Magister
-
-		iY += 30
-		sText = CyTranslator().getText("INTERFACE_PANE_AIR_STRENGTH", ()) + " " + str(pUnit.airBaseCombatStr())
-		screen.setLabel("UnitAirStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		screen.setButtonGFC("UnitDamagePlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitDamageMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_DAMAGE", ()) + ": " + str(pUnit.getDamage())
-		screen.setLabel("UnitDamageText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		screen.setButtonGFC("UnitMovesLeftPlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitMovesLeftMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"%s: %.2f" %(CyTranslator().getText("TXT_KEY_WB_MOVES", ()), float(pUnit.movesLeft()) / gc.getDefineINT("MOVE_DENOMINATOR")) + CyTranslator().getText("[ICON_MOVES]", ())
-		screen.setLabel("UnitMovesLeftText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		screen.setButtonGFC("UnitImmobilePlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitImmobileMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_IMMOBILE_TIMER", ()) + ": " + str(pUnit.getImmobileTimer())
-		screen.setLabel("UnitImmobileText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-
-#Magister
-		iY += 30
-		screen.setButtonGFC("UnitDurationPlus", "", "", screen.getXResolution() *4/5 + 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("UnitDurationMinus", "", "", screen.getXResolution() *4/5 + 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_DURATION", ()) + ": " + str(pUnit.getDuration())
-		screen.setLabel("UnitDurationText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() *4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-#Magister
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isPromotionReady():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_PROMOTION_READY", ())
-		screen.setText("PromotionReadyText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5 + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isMadeAttack():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_MADE_ATTACK", ())
-		screen.setText("MadeAttackText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isMadeInterception():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_MADE_INTERCEPT", ())
-		screen.setText("MadeInterceptionText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-#Magister
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isHasCasted():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_HAS_CAST", ())
-		screen.setText("HasCasted", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isImmortal():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_IS_IMMORTAL", ())
-		screen.setText("IsImmortal", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isAvatarOfCivLeader():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_PROMOTION_AVATAR", ())
-		screen.setText("IsAvatar", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		if pUnit.isPermanentSummon():
-			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = CyTranslator().getText("TXT_KEY_WB_IS_PERMANENT_SUMMON", ())
-		screen.setText("IsPermanentSummon", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-
-		if -1 < pUnit.getScenarioCounter() < gc.getNumUnitInfos() and pUnit.getScenarioCounter() != pUnit.getUnitType():
-			iY += 30
-			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			sText = CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ())
-			screen.setText("SwitchToAlternateType", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*4/5  + 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-
-
-		iY = self.iTable_Y - 60
-		screen.addPlotGraphicGFC("NewPlotLocation", screen.getXResolution()/2 - iWidth/2, iY, iWidth, iWidth * 2/3, CyMap().plot(pUnit.getX(), pUnit.getY()), 500, True, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += iWidth*2/3
-		screen.setLabel("UnitDirectionText", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_DIRECTION", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() *4/8, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
-
+		iY += 20#Magister##		iY += 30
 		iHeight = 3*24 + 2
-		screen.addTableControlGFC("WBUnitDirection", 3, screen.getXResolution() /2 - iHeight/2, iY, iHeight, iHeight, False, True, 24, 24, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addTableControlGFC("WBUnitDirection", 3, screen.getXResolution()/2 - iHeight/2, iY, iHeight, iHeight, False, True, 24, 24, TableStyles.TABLE_STYLE_EMPTY)
 		for i in xrange(3):
 			screen.setTableColumnHeader("WBUnitDirection", i, "", iHeight/3)
 			screen.appendTableRow("WBUnitDirection")
@@ -362,137 +192,302 @@ class WBUnitScreen:
 		elif pUnit.getFacingDirection() == DirectionTypes.NO_DIRECTION:
 			screen.setTableText("WBUnitDirection", 1,1 , "", pUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, -1, CvUtil.FONT_CENTER_JUSTIFY)
 
-
+		iWidth = screen.getXResolution()/5 - 40
+		iX = screen.getXResolution()/2 - iWidth/2
 		iY += iHeight
-		screen.addDropDownBoxGFC("UnitAIType", screen.getXResolution() *2/5 + 20, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("UnitAIType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for item in lUnitAI:
 			screen.addPullDownString("UnitAIType", item[0], item[1], item[1], item[1] == pUnit.getUnitAIType())
 
-#Magister
+#Magister Start
 		iY += 30
 		iRel = pUnit.getReligion()
+		screen.addDropDownBoxGFC("UnitReligionType", iX+30, iY, iWidth-30, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for item in lUnitReligion:
+			screen.addPullDownString("UnitReligionType", item[0], item[1], item[1], item[1] == iRel)
 		button = CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath()
 		if iRel > -1:
 			button = gc.getReligionInfo(iRel).getButton()
-		iHeight /= 2
-		screen.addDDSGFC("ReligionPic", button, screen.getXResolution() /2 - iHeight/2, iY, iHeight, iHeight, WidgetTypes.WIDGET_HELP_RELIGION, iRel, -1)
+		screen.addDDSGFC("ReligionPic", button, iX, iY, 30, 30, WidgetTypes.WIDGET_HELP_RELIGION, iRel, -1)
+#Magister Stop
 
-		iY += iHeight
-		screen.addDropDownBoxGFC("UnitReligionType", screen.getXResolution() *2/5 + 20, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for item in lUnitReligion:
-			screen.addPullDownString("UnitReligionType", item[0], item[1], item[1], item[1] == iRel)
+		iY += 30
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isPromotionReady():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_PROMOTION_READY", ())
+		screen.setText("PromotionReadyText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
+		iY += 25#Magister		iY += 30
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isMadeAttack():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_MADE_ATTACK", ())
+		screen.setText("MadeAttackText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-#Magister
-		global iScript_Y
-		iScript_Y = iY + 30
+		iY += 25#Magister		iY += 30
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isMadeInterception():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_MADE_INTERCEPT", ())
+		screen.setText("MadeInterceptionText", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+#Magister Start
+		iY += 25#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isHasCasted():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_HAS_CAST", ())
+		screen.setText("HasCasted", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 25#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isImmortal():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_IS_IMMORTAL", ())
+		screen.setText("IsImmortal", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 25#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isAvatarOfCivLeader():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_PROMOTION_AVATAR", ())
+		screen.setText("IsAvatar", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 25#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isPermanentSummon():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_IS_PERMANENT_SUMMON", ())
+		screen.setText("IsPermanentSummon", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		if -1 < pUnit.getScenarioCounter() < gc.getNumUnitInfos() and pUnit.getScenarioCounter() != pUnit.getUnitType():
+			iY += 25#Magister
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			sText = CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ())
+			screen.setText("SwitchToAlternateType", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#Magister Stop
+
+	def placeScript(self):
+		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
+		iWidth = screen.getXResolution()/5 - 40
+		iX = screen.getXResolution()/2 - iWidth/2
+		iY = screen.getYResolution()/2 - self.iScriptH - 35
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_SCRIPT_DATA", ()) + "</color></font>"
+		screen.setText("UnitEditScriptData", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.addPanel( "ScriptPanel", "", "", False, False, iX, iY + 25, iWidth, self.iScriptH, PanelStyles.PANEL_STYLE_IN)
+		screen.addMultilineText("GameScriptDataText", pUnit.getScriptData(), iX, iY + 25, iWidth, self.iScriptH, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+	def placeStats(self):
+		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + pUnit.getName() + "</color></font>"
+		screen.setText("UnitScreenHeader", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_UNIT_NAME, -1, -1)
+		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), pUnit.getGroupID())
+		screen.setLabel("UnitScreenHeaderB", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		sText = "<font=3b>%s, X: %d, Y: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_LATITUDE",(pPlot.getLatitude(),)), pPlot.getX(), pPlot.getY())
+		screen.setLabel("UnitLocation", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 70, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iX = screen.getXResolution()/5 + 20
+		iY = self.iTable_Y
+		iWidth = screen.getXResolution()/5 - 20
+
+		screen.addDropDownBoxGFC("UnitOwner", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
+			pPlayerX = gc.getPlayer(iPlayerX)
+			if pPlayerX.isEverAlive():
+				sName = pPlayerX.getName()
+				if not pPlayerX.isAlive():
+					sName = "*" + sName
+				screen.addPullDownString("UnitOwner", sName, iPlayerX, iPlayerX, iPlayerX == pUnit.getOwner())
+
+		iY += 30
+		screen.addDropDownBoxGFC("ChangeBy", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		i = 1
+		while i < 100001:
+			screen.addPullDownString("ChangeBy", "(+/-) " + str(i), i, i, iChange == i)
+			if str(i)[0] == "1":
+				i *= 5
+			else:
+				i *= 2
+
+		iY += 30
+		screen.addDropDownBoxGFC("CommandUnits", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_UNIT", ()), 0, 0, iCommandUnitType == 0)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_SPACE_SHIP_SCREEN_TYPE_BUTTON", ()), 1, 1, iCommandUnitType == 1)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_COMBAT", ()), 2, 2, iCommandUnitType == 2)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCommandUnitType == 3)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, iCommandUnitType == 4)
+		screen.addPullDownString("CommandUnits", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 5, 5, iCommandUnitType == 5)
+
+		iY += 30
+		screen.addDropDownBoxGFC("Commands", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_WB_COMMANDS", ()), 0, 0, True)
+		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_OPTIONS_RESET", ()), 1, 1, False)
+		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_MISSION_MOVE_TO", ()), 2, 2, False)
+		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_MAP_SCRIPT_COPY", ()), 3, 3, False)
+		screen.addPullDownString("Commands", CyTranslator().getText("TXT_KEY_ESPIONAGE_DESTROY_UNIT", ()), 4, 4, False)
+
+		iY += 30
+		screen.setButtonGFC("UnitLevelPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitLevelMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("TXT_KEY_WB_XLEVEL", ()) + ": " + str(pUnit.getLevel())
+		screen.setLabel("UnitLevelText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("UnitExperiencePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitExperienceMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("INTERFACE_PANE_EXPERIENCE", ()) + ": " + str(pUnit.getExperience())
+		screen.setLabel("UnitExperienceText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("UnitBaseStrPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitBaseStrMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("INTERFACE_PANE_STRENGTH", ()) + " " + str(pUnit.baseCombatStr()) + CyTranslator().getText("[ICON_STRENGTH]", ())
+		screen.setLabel("UnitBaseStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+#Magister Start
+		iY += 30
+		screen.setButtonGFC("UnitBaseDefStrPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitBaseDefStrMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("INTERFACE_PANE_STRENGTH_DEFENSE", ()) + ": " + str(pUnit.baseCombatStrDefense()) + CyTranslator().getText("[ICON_DEFENSE]", ())
+		screen.setLabel("UnitBaseDefStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#Magister Stop
+
+		iY += 30
+		sText = CyTranslator().getText("INTERFACE_PANE_AIR_STRENGTH", ()) + " " + str(pUnit.airBaseCombatStr())
+		screen.setLabel("UnitAirStrText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("UnitDamagePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitDamageMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("TXT_KEY_WB_DAMAGE", ()) + ": " + str(pUnit.getDamage())
+		screen.setLabel("UnitDamageText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("UnitMovesLeftPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitMovesLeftMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = u"%s: %.2f" %(CyTranslator().getText("TXT_KEY_WB_MOVES", ()), float(pUnit.movesLeft()) / gc.getDefineINT("MOVE_DENOMINATOR")) + CyTranslator().getText("[ICON_MOVES]", ())
+		screen.setLabel("UnitMovesLeftText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("UnitImmobilePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitImmobileMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("TXT_KEY_WB_IMMOBILE_TIMER", ()) + ": " + str(pUnit.getImmobileTimer())
+		screen.setLabel("UnitImmobileText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+#Magister Start
+		iY += 30
+		screen.setButtonGFC("UnitDurationPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("UnitDurationMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = CyTranslator().getText("TXT_KEY_WB_DURATION", ()) + ": " + str(pUnit.getDuration())
+		screen.setLabel("UnitDurationText",  "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+#Magister Stop
+
 
 	def placeUnitType(self):
 		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
 
+		iX = screen.getXResolution() * 4/5
+		iY = self.iTable_Y - 90
+		iWidth = screen.getXResolution()/5 - 20
 
-		screen.addDropDownBoxGFC("LeaderType", screen.getXResolution() /5 + 20, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iY += 30
+		screen.addDropDownBoxGFC("LeaderType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+#Magister Start
+		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_LEADER",()), 0, 0, iUnitType == 0)
+		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_SPACE_SHIP_SCREEN_TYPE_BUTTON",()), 1, 1, iUnitType == 1)
+		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT",()), 2, 2, iUnitType == 2)
+#Magister Stop
 
-#Magister
-		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_WB_LEADER_UNIT",()), 0, 0, self.iUnitType == 0)
-		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_WB_UNIT_TYPE",()), 1, 1, self.iUnitType == 1)
-		screen.addPullDownString("LeaderType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT",()), 2, 2, self.iUnitType == 2)
-
-#Magister
-		screen.addDropDownBoxGFC("CombatClass", screen.getXResolution()/5 + 20, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == self.iCombatClass)
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_PEDIA_NON_COMBAT",()), -1, -1, -1 == self.iCombatClass)
+		iY += 30
+		screen.addDropDownBoxGFC("CombatClass", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_PEDIA_NON_COMBAT",()), -1, -1, -1 == iSelectedClass)
 		for iCombatClass in xrange(gc.getNumUnitCombatInfos()):
-			screen.addPullDownString("CombatClass", gc.getUnitCombatInfo(iCombatClass).getDescription(), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
+			screen.addPullDownString("CombatClass", gc.getUnitCombatInfo(iCombatClass).getDescription(), iCombatClass, iCombatClass, iCombatClass == iSelectedClass)
+#Magister Start
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_UNLIMITED_UNITS", ()), -3, -3, -3 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_NATIONAL_UNITS", ()), -4, -4, -4 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TEAM_UNITS", ()), -5, -5, -5 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WORLD_UNITS", ()), -6, -6, -6 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_FREE_UNITS", ()), -7, -7, -7 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ()), -8, -8, -8 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (1,)), -9, -9, -9 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (2,)), -10, -10, -10 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (3,)), -11, -11, -11 == iSelectedClass)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (4,)), -12, -12, -12 == iSelectedClass)
+#Magister Stop
 
-#magister
-		iCombatClass = -3
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_UNLIMITED_UNITS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -4
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_NATIONAL_UNITS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -5
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TEAM_UNITS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -6
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WORLD_UNITS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -7
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_FREE_UNITS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -8
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ()), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -9
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (1,)), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -10
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (2,)), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -11
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (3,)), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-		iCombatClass = -12
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_TIER_#", (4,)), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
-#magister
-
-		iHeight = (screen.getYResolution() - self.iTable_Y - 40) /24 * 24 + 2
-		screen.addTableControlGFC("WBUnitType", 1, screen.getXResolution()/5 + 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		iY += 30
+		iHeight = (screen.getYResolution() - iY - 40) /24 * 24 + 2
+		screen.addTableControlGFC("WBUnitType", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBUnitType", 0, "", iWidth)
 
 		lUnitType = []
 		for i in xrange(gc.getNumUnitInfos()):
 			UnitInfo = gc.getUnitInfo(i)
 			iUnitClass = UnitInfo.getUnitClassType ()
-##			if UnitInfo.getUnitCombatType() != self.iCombatClass and self.iCombatClass > -2: continue
-##			lUnitType.append([UnitInfo.getDescription(), i])
+##			if UnitInfo.getUnitCombatType() != iSelectedClass and iSelectedClass > -2: continue	#Magister
 
-#magister
-			if self.iCombatClass > -2:
-				if UnitInfo.getUnitCombatType() == self.iCombatClass:
+			if CvPlatyBuilderScreen.bHideInactive:
+				iCivilization = gc.getPlayer(pUnit.getOwner()).getCivilizationType()
+				if gc.getCivilizationInfo(iCivilization).getCivilizationUnits(UnitInfo.getUnitClassType()) != i: continue
+##			lUnitType.append([UnitInfo.getDescription(), i])	#Magister
+
+#Magister Start
+			if iSelectedClass > -2:
+				if UnitInfo.getUnitCombatType() == iSelectedClass:
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -2:
+			elif iSelectedClass == -2:
 				lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -3:
+			elif iSelectedClass == -3:
 				if not (isWorldUnitClass(iUnitClass) or isNationalUnitClass(iUnitClass) or isTeamUnitClass(iUnitClass)):
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -4:
+			elif iSelectedClass == -4:
 				if isNationalUnitClass(iUnitClass):
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -5:
+			elif iSelectedClass == -5:
 				if isTeamUnitClass(iUnitClass):
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -6:
+			elif iSelectedClass == -6:
 				if isWorldUnitClass(iUnitClass):
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -7:
+			elif iSelectedClass == -7:
 				if UnitInfo.getPrereqCiv() > -1 or gc.getUnitClassInfo(iUnitClass).getDefaultUnitIndex () != i:
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -8:
+			elif iSelectedClass == -8:
 				if UnitInfo.isObject():
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -9:
+			elif iSelectedClass == -9:
 				if UnitInfo.getTier() == 1:
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -10:
+			elif iSelectedClass == -10:
 				if UnitInfo.getTier() == 2:
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -11:
+			elif iSelectedClass == -11:
 				if UnitInfo.getTier() == 3:
 					lUnitType.append([UnitInfo.getDescription(), i])
-			elif self.iCombatClass == -12:
+			elif iSelectedClass == -12:
 				if UnitInfo.getTier() == 4:
 					lUnitType.append([UnitInfo.getDescription(), i])
-#magister
+#Magister Stop
 
 		lUnitType.sort()
 
 		for item in lUnitType:
 			iRow = screen.appendTableRow("WBUnitType")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-#magister
-			if self.iUnitType == 1:
+#Magister Start
+			if iUnitType == 1:
 				if pUnit.getUnitType() == item[1]:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			elif self.iUnitType == 0:
+			elif iUnitType == 0:
 				if pUnit.getLeaderUnitType() == item[1]:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			elif self.iUnitType == 2:#magister
+			elif iUnitType == 2:#magister
 				if pUnit.getScenarioCounter() == item[1]:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-#magister
+#Magister Stop
 			screen.setTableText("WBUnitType", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getUnitInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 8202, item[1], CvUtil.FONT_LEFT_JUSTIFY)
 
 	def sortUnits(self):
@@ -530,14 +525,14 @@ class WBUnitScreen:
 					(loopUnit, iter) = pPlayerX.nextUnit(iter, False)
 		lUnits.sort()
 		self.placeCurrentUnit()
-
+		
 	def placeCurrentUnit(self):
 		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
 
-		iMaxRows = (screen.getYResolution() - self.iTable_Y - 42) /24
-		iHeight = iMaxRows * 24 + 2
-		iWidth = screen.getXResolution()/5 - 20#Magister
-		screen.addTableControlGFC("WBCurrentUnit", 3, 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		iX = 20
+		iWidth = screen.getXResolution()/5 - 20
+		iHeight = (screen.getYResolution() - self.iTable_Y - 42) /24 * 24 + 2
+		screen.addTableControlGFC("WBCurrentUnit", 3, iX, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBCurrentUnit", 0, "", 24)
 		screen.setTableColumnHeader("WBCurrentUnit", 1, "", 24)
 		screen.setTableColumnHeader("WBCurrentUnit", 2, "", iWidth - 48)
@@ -564,20 +559,30 @@ class WBUnitScreen:
 
 	def placeCargo(self):
 		screen = CyGInterfaceScreen("WBUnitScreen", CvScreenEnums.WB_UNIT)
+		iX = screen.getXResolution()*3/5
+		iWidth = screen.getXResolution()/5 - 20
+		screen.addDropDownBoxGFC("CargoType", iX, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+#Magister Start
+		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_UNIT_TRANSPORT", ()), 0, 0, iCargoType == 0)
+		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_CARGO_SPACE", ()), 1, 1, iCargoType == 1)
+		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SUMMON", ()), 2, 2, iCargoType == 2)
+		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SUMMONER", ()), 3, 3, iCargoType == 3)
+		screen.addPullDownString("CargoType", CyTranslator().getText("TXT_KEY_WB_SPELL", ()), 4, 4, iCargoType == 4)
+#Magister Stop
 
-		iMaxRows = (screen.getYResolution() - self.iTable_Y - 42) /24
-		iHeight = iMaxRows * 24 + 2
-		screen.addTableControlGFC("WBCargoUnits", 1, screen.getXResolution()*3/5 + 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		iHeight = (screen.getYResolution() - self.iTable_Y - 42) /24 * 24 + 2
+
+		screen.addTableControlGFC("WBCargoUnits", 1, iX, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBCargoUnits", 0, "", iWidth)
 		screen.hide("UnitCargoPlus")
 		screen.hide("UnitCargoMinus")
 		screen.hide("CargoSpaceHeader")
 
-		if self.iCargoType == 1:#Magister
-			screen.setButtonGFC("UnitCargoPlus", "", "", screen.getXResolution()*3/5 + 20, self.iTable_Y - 31, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-			screen.setButtonGFC("UnitCargoMinus", "", "", screen.getXResolution()*3/5 + 45, self.iTable_Y - 31, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		if iCargoType == 1:#Magister
+			screen.setButtonGFC("UnitCargoPlus", "", "", iX, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("UnitCargoMinus", "", "", iX + 25, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 			sText = CyTranslator().getText("TXT_KEY_WB_CARGO_SPACE", ()) + " (" + str(pUnit.getCargo()) + "/" + str(pUnit.cargoSpace()) + ")"
-			screen.setText("CargoSpaceHeader", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()*3/5 + 75, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+			screen.setLabel("CargoSpaceHeader", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, screen.getYResolution() - 41, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 			if pUnit.cargoSpace() > 0:
 				for i in xrange(pPlot.getNumUnits()):
@@ -600,7 +605,7 @@ class WBUnitScreen:
 					if pUnitX.getTransportUnit().getID() == pUnit.getID():
 						sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 					screen.setTableText("WBCargoUnits", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), CvUtil.FONT_LEFT_JUSTIFY)
-		elif self.iCargoType == 0:#Magister
+		elif iCargoType == 0:#Magister
 			for i in xrange(pPlot.getNumUnits()):
 				pUnitX = pPlot.getUnit(i)
 				if pUnitX.isNone(): continue
@@ -624,7 +629,7 @@ class WBUnitScreen:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				screen.setTableText("WBCargoUnits", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), CvUtil.FONT_LEFT_JUSTIFY)
 #Magister
-		elif self.iCargoType == 2:
+		elif iCargoType == 2:
 			iPlayerX = pUnit.getOwner()
 			pPlayer = gc.getPlayer(iPlayerX)
 			unitID = pUnit.getID()
@@ -641,7 +646,7 @@ class WBUnitScreen:
 					screen.setTableText("WBCargoUnits", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), CvUtil.FONT_LEFT_JUSTIFY)
 				(pUnitX, iter) = pPlayer.nextUnit(iter, False)
 
-		elif self.iCargoType == 3:
+		elif iCargoType == 3:
 			iPlayerX = pUnit.getOwner()
 			pPlayer = gc.getPlayer(iPlayerX)
 			unitID = pUnit.getID()
@@ -659,7 +664,7 @@ class WBUnitScreen:
 					screen.setTableText("WBCargoUnits", 0, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), CvUtil.FONT_LEFT_JUSTIFY)
 				(pUnitX, iter) = pPlayer.nextUnit(iter, False)
 
-		elif self.iCargoType == 4:
+		elif iCargoType == 4:
 			for item in lSpells:
 				if pUnit.canCast(item[1], False):
 					sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
@@ -667,7 +672,7 @@ class WBUnitScreen:
 					ItemInfo = gc.getSpellInfo(item[1])
 					screen.setTableText("WBCargoUnits", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 9001, item[1], CvUtil.FONT_LEFT_JUSTIFY)
 
-#Magister
+#Magister Stop
 
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBUnitScreen", CvScreenEnums.WB_UNIT)
@@ -677,31 +682,32 @@ class WBUnitScreen:
 		global iCopyType
 		global iOwnerType
 		global iCommandUnitType
+		global iSelectedClass
+		global iCargoType#Magister##		global bCargo
+		global iUnitType#Magister##		global bUnitType
 
 		if inputClass.getFunctionName() == "ChangeBy":
-			iIndex = screen.getSelectedPullDownID("ChangeBy")
-			iChange = screen.getPullDownData("ChangeBy", iIndex)
+			iChange = screen.getPullDownData("ChangeBy", screen.getSelectedPullDownID("ChangeBy"))
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 1:
-				WBPromotionScreen.WBPromotionScreen(self.top).interfaceScreen(pUnit)
+				WBPromotionScreen.WBPromotionScreen().interfaceScreen(pUnit)
 			elif iIndex == 2:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pUnit.getOwner())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pUnit.getOwner())
 			elif iIndex == 3:
-				WBTeamScreen.WBTeamScreen(self.top).interfaceScreen(pUnit.getTeam())
+				WBTeamScreen.WBTeamScreen().interfaceScreen(pUnit.getTeam())
 			elif iIndex == 4:
-				WBPlotScreen.WBPlotScreen(self.top).interfaceScreen(pPlot)
+				WBPlotScreen.WBPlotScreen().interfaceScreen(pPlot)
 			elif iIndex == 5:
-				WBEventScreen.WBEventScreen(self.top).interfaceScreen(pPlot)
+				WBEventScreen.WBEventScreen().interfaceScreen(pPlot)
 			elif iIndex == 6:
-				WBPlayerUnits.WBPlayerUnits(self.top).interfaceScreen(pUnit.getOwner())
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(pUnit.getOwner())
+			elif iIndex == 11:
+				WBInfoScreen.WBInfoScreen().interfaceScreen(pUnit.getOwner())
 
 		elif inputClass.getFunctionName() == "CargoType":
-#Magister
-			iIndex = screen.getSelectedPullDownID("CargoType")
-			self.iCargoType = iIndex
-#Magister
+			iCargoType = screen.getSelectedPullDownID("CargoType")#Magister			bCargo = not bCargo
 			self.placeCargo()
 
 		elif inputClass.getFunctionName() == "ChangeType":
@@ -732,21 +738,18 @@ class WBUnitScreen:
 			self.interfaceScreen(gc.getPlayer(iPlayer).getUnit(inputClass.getData2()))
 
 		elif inputClass.getFunctionName() == "UnitOwner":
-			iIndex = screen.getSelectedPullDownID("UnitOwner")
-			self.changeOwner(screen.getPullDownData("UnitOwner", iIndex))
+			self.changeOwner(screen.getPullDownData("UnitOwner", screen.getSelectedPullDownID("UnitOwner")))
 
 		elif inputClass.getFunctionName() == "LeaderType":
-			iIndex = screen.getSelectedPullDownID("LeaderType")
-			self.iUnitType = iIndex
+			iUnitType = screen.getSelectedPullDownID("LeaderType")#Magister			bUnitType = not bUnitType
 			self.placeUnitType()
 
 		elif inputClass.getFunctionName() == "CombatClass":
-			iIndex = screen.getSelectedPullDownID("CombatClass")
-			self.iCombatClass = screen.getPullDownData("CombatClass", iIndex)
+			iSelectedClass = screen.getPullDownData("CombatClass", screen.getSelectedPullDownID("CombatClass"))
 			self.placeUnitType()
 
 		elif inputClass.getFunctionName() == "WBUnitType":
-			self.changeUnitType(pUnit, inputClass.getData2(), self.iUnitType)
+			self.changeUnitType(pUnit, inputClass.getData2(), iUnitType)#Magister			self.changeUnitType(pUnit, inputClass.getData2(), bUnitType)
 
 		elif inputClass.getFunctionName().find("UnitLevel") > -1:
 			if inputClass.getData1() == 1030:
@@ -798,7 +801,7 @@ class WBUnitScreen:
 			self.placeCargo()
 
 		elif inputClass.getFunctionName() == "WBCargoUnits":
-			if self.iCargoType == 1:#Magister
+			if iCargoType == 1:#Magister
 				iPlayerX = inputClass.getData1() - 8300
 				pUnitX = gc.getPlayer(iPlayerX).getUnit(inputClass.getData2())
 				if pUnitX.getTransportUnit().getID() == pUnit.getID():
@@ -806,7 +809,8 @@ class WBUnitScreen:
 				else:
 					if not pUnit.isFull():
 						pUnitX.setTransportUnit(pUnit)
-			elif self.iCargoType == 0:#Magister
+				self.interfaceScreen(pUnit)
+			elif iCargoType == 0:#Magister
 				iPlayerX = inputClass.getData1() - 8300
 				pUnitX = gc.getPlayer(iPlayerX).getUnit(inputClass.getData2())
 				if pUnit.getTransportUnit().getID() == pUnitX.getID():
@@ -814,43 +818,56 @@ class WBUnitScreen:
 				else:
 					if not pUnitX.isFull():
 						pUnit.setTransportUnit(pUnitX)
+				self.interfaceScreen(pUnit)
 
-#Magister
-			elif self.iCargoType == 3:
+#Magister Start
+			elif iCargoType == 3:
 				iPlayerX = inputClass.getData1() - 8300
 				pUnitX = gc.getPlayer(iPlayerX).getUnit(inputClass.getData2())
 				if pUnit.getSummoner() == pUnitX.getID():
 					pUnit.setSummoner(-1)
 				else:
 					pUnit.setSummoner(pUnitX.getID())
+				self.interfaceScreen(pUnit)
 
-			elif self.iCargoType == 2:
+			elif iCargoType == 2:
 				iPlayerX = inputClass.getData1() - 8300
 				pUnitX = gc.getPlayer(iPlayerX).getUnit(inputClass.getData2())
 				if pUnitX.getSummoner() == pUnit.getID():
 					pUnitX.setSummoner(-1)
 				else:
 					pUnitX.setSummoner(pUnit.getID())
+				self.interfaceScreen(pUnit)
 
-			elif self.iCargoType == 4:
+			elif iCargoType == 4:
 				pUnit.cast(inputClass.getData2())
-#Magister
-
-			self.interfaceScreen(pUnit)
+				if pUnit == None or  pUnit is None or pUnit.isDead() or pUnit.isDelayedDeath():
+					screen.hideScreen()#if the spell kills the caster, leaving the screen open causes problems
+					return
+				else:
+					self.interfaceScreen(pUnit)
+#Magister Stop
 
 		elif inputClass.getFunctionName() == "PromotionReadyText":
 			pUnit.setPromotionReady(not pUnit.isPromotionReady())
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "MadeAttackText":
 			pUnit.setMadeAttack(not pUnit.isMadeAttack())
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "MadeInterceptionText":
 			pUnit.setMadeInterception(not pUnit.isMadeInterception())
+			self.placeDirection()
+
+#Magister Start
+		elif inputClass.getFunctionName().find("UnitBaseDefStr") > -1:
+			if inputClass.getData1() == 1030:
+				pUnit.setBaseCombatStrDefense(pUnit.baseCombatStrDefense() + iChange)
+			elif inputClass.getData1() == 1031:
+				pUnit.setBaseCombatStrDefense(max(0, pUnit.baseCombatStrDefense() - iChange))
 			self.placeStats()
 
-#magister
 		elif inputClass.getFunctionName().find("UnitDuration") > -1:
 			if inputClass.getData1() == 1030:
 				pUnit.setDuration(pUnit.getDuration() + iChange)
@@ -858,10 +875,14 @@ class WBUnitScreen:
 				pUnit.setDuration(max(0, pUnit.getDuration() - iChange))
 			self.placeStats()
 
+		elif inputClass.getFunctionName() == "UnitReligionType":
+			pUnit.setReligion(screen.getPullDownData("UnitReligionType", screen.getSelectedPullDownID("UnitReligionType")))
+			self.placeDirection()
+
 		elif inputClass.getFunctionName() == "HasCasted":
 			pUnit.setHasCasted(not pUnit.isHasCasted())
-			self.placeStats()
-			if self.iCargoType == 4:
+			self.placeDirection()
+			if iCargoType == 4:
 				self.placeCargo()
 
 		elif inputClass.getFunctionName() == "IsImmortal":
@@ -870,45 +891,27 @@ class WBUnitScreen:
 					pUnit.changeImmortal(-1)
 			else:
 				pUnit.changeImmortal(1)
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "IsAvatar":
 			pUnit.setAvatarOfCivLeader(not pUnit.isAvatarOfCivLeader())
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "IsPermanentSummon":
 			pUnit.setPermanentSummon(not pUnit.isPermanentSummon())
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "SwitchToAlternateType":
 			self.changeUnitType(pUnit, pUnit.getScenarioCounter(), 1)
-			self.placeStats()
+			self.placeDirection()
+#Magister Stop
 
-
-		elif inputClass.getFunctionName() == "UnitReligionType":
-			iIndex = screen.getSelectedPullDownID("UnitReligionType")
-			pUnit.setReligion(screen.getPullDownData("UnitReligionType", iIndex))
-			self.placeStats()
-
-
-
-
-
-		elif inputClass.getFunctionName().find("UnitBaseDefStr") > -1:
-			if inputClass.getData1() == 1030:
-				pUnit.setBaseCombatStrDefense(pUnit.baseCombatStrDefense() + iChange)
-			elif inputClass.getData1() == 1031:
-				pUnit.setBaseCombatStrDefense(max(0, pUnit.baseCombatStrDefense() - iChange))
-			self.placeStats()
-#magister
-
-		elif inputClass.getFunctionName() == "UnitAIType":
-			iIndex = screen.getSelectedPullDownID("UnitAIType")
-			pUnit.setUnitAIType(screen.getPullDownData("UnitAIType", iIndex))
+		if inputClass.getFunctionName() == "UnitAIType":
+			pUnit.setUnitAIType(screen.getPullDownData("UnitAIType", screen.getSelectedPullDownID("UnitAIType")))
 
 		elif inputClass.getFunctionName() == "WBUnitDirection":
 			self.changeDirection(inputClass.getData2(), pUnit)
-			self.placeStats()
+			self.placeDirection()
 
 		elif inputClass.getFunctionName() == "UnitEditScriptData":
 			popup = Popup.PyPopup(3333, EventContextTypes.EVENTCONTEXT_ALL)
@@ -961,16 +964,16 @@ class WBUnitScreen:
 			pUnitX.setPromotionReady(False)
 			pUnitX.setMadeAttack(False)
 			pUnitX.setMadeInterception(False)
-#Magister
+#Magister Start
 			pUnitX.setBaseCombatStrDefense(Info.getCombatDefense())
 			pUnitX.setDuration(0)
 			pUnitX.setHasCasted(False)
 			pUnitX.setReligion(Info.getReligionType())
+			pUnitX.changeImmortal(-1)
 ##			pUnitX.setSummoner(-1)
 ##			pUnitX.setPermanentSummon(False)
-			pUnitX.changeImmortal(-1)
 ##			pUnitX.setAvatarOfCivLeader(False)
-#Magister
+#Magister Stop
 
 			self.changeDirection(DirectionTypes.DIRECTION_SOUTH, pUnitX)
 			pUnitX.setUnitAIType(Info.getDefaultUnitAIType())
@@ -990,9 +993,7 @@ class WBUnitScreen:
 				pNewUnit.changeCargoSpace(pUnitX.cargoSpace() - pNewUnit.cargoSpace())
 				pNewUnit.setImmobileTimer(pUnitX.getImmobileTimer())
 				pNewUnit.setScriptData(pUnitX.getScriptData())
-
-#Magister
-
+#Magister Start
 				pNewUnit.setDuration(pUnitX.getDuration())
 				pNewUnit.setHasCasted(pUnitX.isHasCasted())
 				pNewUnit.setSummoner(pUnitX.getSummoner())
@@ -1000,8 +1001,7 @@ class WBUnitScreen:
 				pNewUnit.setReligion(pUnitX.getReligion())
 				pNewUnit.setBaseCombatStrDefense(pUnitX.baseCombatStrDefense())
 				pNewUnit.setUnitArtStyleType(pUnitX.getUnitArtStyleType())
-#Magister
-
+#Magister Stop
 			pUnitX.kill(False, -1)
 			return True
 		elif iIndex == 4:
@@ -1022,36 +1022,32 @@ class WBUnitScreen:
 
 	def changeOwner(self, iPlayer):
 		pNewUnit = gc.getPlayer(iPlayer).initUnit(pUnit.getUnitType(), pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-
-##MagisterModmod
-##When duplicating Adventurers and other great people, I don't want the double to get the free promotion that the named ones get
+##Magister Start
+		##When duplicating Adventurers and other great people, I don't want the double to get the free promotion that the named ones get
 		for iProm in range(gc.getNumPromotionInfos()):
 			if pNewUnit.isHasPromotion(iProm):
 				pNewUnit.setHasPromotion(iProm, False)
-##MagisterModmod
-
+##Magister Stop
 		pNewUnit.convert(pUnit)
 		pNewUnit.setBaseCombatStr(pUnit.baseCombatStr())
 		pNewUnit.changeCargoSpace(pUnit.cargoSpace() - pNewUnit.cargoSpace())
 		pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
 		pNewUnit.setScriptData(pUnit.getScriptData())
-
-##MagisterModmod
+##Magister Start
 		pNewUnit.setDuration(pUnit.getDuration())
 		pNewUnit.setBaseCombatStrDefense(pUnit.baseCombatStrDefense())
 		pNewUnit.setReligion(pUnit.getReligion())
 		pNewUnit.setSummoner(pUnit.getSummoner())
 		pNewUnit.setHasCasted(pUnit.isHasCasted())
-##MagisterModmod
-
+		pNewUnit.setScenarioCounter(pUnit.getScenarioCounter())
+##Magister Stop
 		pUnit.kill(False, -1)
 		self.interfaceScreen(pNewUnit)
 
-	def changeUnitType(self, pUnit, iUnitType, iListType):
-		if iListType == 1:
+	def changeUnitType(self, pUnit, iUnitType, iListType):##Magister	def changeUnitType(self, pUnit, iUnitType, bUnitType):
+		if iListType == 1:##Magister 		if bUnitType:
 			pNewUnit = gc.getPlayer(pUnit.getOwner()).initUnit(iUnitType, pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-
-##MagisterModmod
+##Magister Start
 			pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
 			pNewUnit.setSummoner(pUnit.getSummoner())
 			pNewUnitID = pNewUnit.getID()
@@ -1063,8 +1059,7 @@ class WBUnitScreen:
 					if loopUnit.getSummoner() == summonerID:#is it a summon of pUnit?
 						loopUnit.setSummoner(pNewUnitID)
 				(loopUnit, iter) = pPlayer.nextUnit(iter, False)
-##MagisterModmod
-
+##Magister Stop
 			pNewUnit.convert(pUnit)
 			pNewUnit.setScriptData("PlatyUnit" + pUnit.getScriptData())
 			pUnit.kill(False, -1)
@@ -1074,21 +1069,20 @@ class WBUnitScreen:
 					pUnitX.setScriptData(pUnitX.getScriptData()[9:])
 					break
 			self.interfaceScreen(pUnitX)
-		elif iListType == 0:
+		elif iListType == 0:#Magister		else:
 			if pUnit.getLeaderUnitType() == iUnitType:
 				pUnit.setLeaderUnitType(-1)
 			else:
 				pUnit.setLeaderUnitType(iUnitType)
 			self.interfaceScreen(pUnit)
-
-#Magister
+#Magister Start
 		elif iListType == 2:
 			if pUnit.getScenarioCounter() == iUnitType:
 				pUnit.setScenarioCounter(-1)
 			else:
 				pUnit.setScenarioCounter(iUnitType)
 			self.interfaceScreen(pUnit)
-#Magister
+#Magister Stop
 
 	def handleCopyAll(self):
 		for i in lUnits:
@@ -1121,7 +1115,7 @@ class WBUnitScreen:
 			elif iChangeType == 12:
 				loopUnit.setScriptData(pUnit.getScriptData())
 
-#Magister
+#Magister Start
 			elif iChangeType == 13:
 				loopUnit.setBaseCombatStrDefense(pUnit.baseCombatStrDefense())
 			elif iChangeType == 14:
@@ -1136,10 +1130,11 @@ class WBUnitScreen:
 				loopUnit.setPermanentSummon(pUnit.isPermanentSummon())
 			elif iChangeType == 19:
 				loopUnit.setAvatarOfCivLeader(pUnit.isAvatarOfCivLeader())
-
-
-#Magister
+			elif iChangeType == 20:
+				loopUnit.setScenarioCounter(pUnit.getScenarioCounter())
+#Magister Stop
 
 
 	def update(self, fDelta):
+		self.placeMap()
 		return 1

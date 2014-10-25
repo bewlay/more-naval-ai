@@ -6,63 +6,79 @@ import WBProjectScreen
 import WBTechScreen
 import WBPlayerScreen
 import WBPlayerUnits
+import WBInfoScreen
 gc = CyGlobalContext()
-iImprovementType = -1
+
 iChange = 1
+bRemove = False
+iSelectedYield = 0
 
 class WBTeamScreen:
 
-	def __init__(self, main):
-		self.top = main
-		self.iImprovement_Y = 80
-		self.iAbilities_Y = 270
-		self.iRoutes_Y = self.iAbilities_Y + 150
-		self.iVotes_Y = self.iAbilities_Y + 13 * 24 + 52
-		self.iYieldType = 0
+	def __init__(self):
+		self.iTable_Y = 110
 
 	def interfaceScreen(self, iTeamX):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
 		global iTeam
 		global pTeam
+
 		iTeam = iTeamX
 		pTeam = gc.getTeam(iTeam)
+		iWidth = screen.getXResolution() /4 - 20
 
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 
+		sText = "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_TEAM_DATA",()).upper() + " (ID: " + str(iTeam) + ")</font>"
+		screen.setLabel("TeamHeader", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.setText("TeamExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-		screen.setLabel("MemberHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_MEMBERS",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 3/8, self.iImprovement_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setLabel("DomainHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_DOMAIN_MOVES",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 3/8, self.iAbilities_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setLabel("RouteHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_ROUTE_CHANGE",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 3/8, self.iRoutes_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setLabel("VoteHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_GUARANTEED_ELIGIBILITY",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/8, self.iVotes_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
-		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 0, 0, False)
+		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 1, 1, True)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROJECT", ()), 2, 2, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_TECH", ()), 3, 3, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 4, 4, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
-		screen.addTableControlGFC("YieldType", YieldTypes.NUM_YIELD_TYPES, screen.getXResolution() - 20 - 25 * YieldTypes.NUM_YIELD_TYPES, 50, 25 * YieldTypes.NUM_YIELD_TYPES, 25, False, False, 24, 24, TableStyles.TABLE_STYLE_EMPTY)
-		screen.appendTableRow("YieldType")
-		for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-			screen.setTableColumnHeader("YieldType", i, "", 24)
-			sText = u"<font=4>%c</font>" %(gc.getYieldInfo(i).getChar())
-			screen.setTableText("YieldType", i, 0, sText, "", WidgetTypes.WIDGET_PYTHON, 7880, i, CvUtil.FONT_LEFT_JUSTIFY )
-		
-		screen.addDropDownBoxGFC("ChangeBy", 20, 110, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 170, 20, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, not bRemove)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, bRemove)
+
+		screen.addDropDownBoxGFC("ChangeBy", screen.getXResolution() - 170, 50, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		i = 1
-		while i < 101:
-			screen.addPullDownString("ChangeBy", CyTranslator().getText("TXT_KEY_WB_CHANGE_BY",(i,)), i, i, iChange == i)
+		while i < 1000001:
+			screen.addPullDownString("ChangeBy", "(+/-) " + str(i), i, i, iChange == i)
 			if str(i)[0] == "1":
 				i *= 5
 			else:
 				i *= 2
 
+		screen.addDropDownBoxGFC("CurrentTeam", 20, 20, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for i in xrange(gc.getMAX_TEAMS()):
+			if gc.getTeam(i).isAlive():
+				iLeader = gc.getTeam(i).getLeaderID()
+				sName = gc.getPlayer(iLeader).getName()
+				if gc.getTeam(i).getNumMembers() > 1:
+					sName += " (" + str(gc.getTeam(i).getNumMembers()) + " " + CyTranslator().getText("TXT_KEY_MEMBERS_TITLE", ()) + ")"
+				screen.addPullDownString("CurrentTeam", sName, i, i, i == iTeam)
+
+		screen.addDropDownBoxGFC("MergeTeam", 20, 50, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("MergeTeam", CyTranslator().getText("TXT_KEY_WB_MERGE_TEAM",()), -1, -1, True)
+		for i in xrange(gc.getMAX_TEAMS()):
+			if gc.getTeam(i).isAlive():
+				if i == iTeam: continue
+				iLeader = gc.getTeam(i).getLeaderID()
+				sName = gc.getPlayer(iLeader).getName()
+				if gc.getTeam(i).getNumMembers() > 1:
+					sName += " (" + str(gc.getTeam(i).getNumMembers()) + " " + CyTranslator().getText("TXT_KEY_MEMBERS_TITLE", ()) + ")"
+				screen.addPullDownString("MergeTeam", sName, i, i, False)
+
 		global lImprovements
 		global lRoutes
-##		global lVoteBuildings#magister
+##		global lVoteBuildings#Magister
 		global lAbilities
 
 		lImprovements = []
@@ -77,7 +93,7 @@ class WBTeamScreen:
 			ItemInfo = gc.getRouteInfo(i)
 			lRoutes.append([ItemInfo.getDescription(), i])
 		lRoutes.sort()
-#magister
+#Magister Start
 ##		lVoteBuildings = []
 ##		for i in xrange(gc.getNumVoteSourceInfos()):
 ##			iVoteBuilding = -1
@@ -88,6 +104,7 @@ class WBTeamScreen:
 ##			if iVoteBuilding == -1: continue
 ##			lVoteBuildings.append([gc.getBuildingInfo(iVoteBuilding).getDescription(), iVoteBuilding])
 ##		lVoteBuildings.sort()
+#Magister Stop
 
 		lAbilities = []
 		for i in xrange(13):
@@ -135,6 +152,7 @@ class WBTeamScreen:
 				lAbilities[12][1] = i
 
 		self.placeStats()
+		self.placeMembers()
 		self.placeAbilities()
 		self.placeImprovements()
 		self.placeDomains()
@@ -142,93 +160,52 @@ class WBTeamScreen:
 		self.placeVotes()
 
 	def placeStats(self):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		sText = "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_TEAM_DATA",()).upper() + " (ID: " + str(iTeam) + ")</font>"
-		screen.setLabel("TeamHeader", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		screen.addDropDownBoxGFC("CurrentTeam", 20, 50, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		for i in xrange(gc.getMAX_TEAMS()):
-			if gc.getTeam(i).isAlive():
-				iLeader = gc.getTeam(i).getLeaderID()
-				sName = gc.getPlayer(iLeader).getName()
-				if gc.getTeam(i).getNumMembers() > 1:
-					sName += " + " + str(gc.getTeam(i).getNumMembers() -1) + " " + CyTranslator().getText("TXT_KEY_WB_MEMBERS", ())
-				screen.addPullDownString("CurrentTeam", sName, i, i, i == iTeam)
-
-		screen.addDropDownBoxGFC("MergeTeam", 20, 80, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("MergeTeam", CyTranslator().getText("TXT_KEY_WB_MERGE_TEAM",()), -1, -1, True)
-		for i in xrange(gc.getMAX_TEAMS()):
-			if gc.getTeam(i).isAlive():
-				if i == iTeam: continue
-				iLeader = gc.getTeam(i).getLeaderID()
-				sName = gc.getPlayer(iLeader).getName()
-				if gc.getTeam(i).getNumMembers() > 1:
-					sName += " " + CyTranslator().getText("TXT_KEY_WB_TEAM_MEMBERS", (gc.getTeam(i).getNumMembers() -1,))
-				screen.addPullDownString("MergeTeam", sName, i, i, False)
-
-		screen.setButtonGFC("NukeInterceptionPlus", u"", "", 20, 160, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("NukeInterceptionMinus", u"", "", 45, 160, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_NUKE_INTERCEPTION",(pTeam.getNukeInterception(),)) + "</font>"
-		screen.setLabel("NukeInterceptionText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, 160 + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		screen.setButtonGFC("EnemyWWPlus", u"", "", 20, 190, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("EnemyWWMinus", u"", "", 45, 190, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_ENEMY_WAR_WEARINESS",(pTeam.getEnemyWarWearinessModifier(),)) + "</font>"
-		screen.setLabel("EnemyWWText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, 190 + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iWidth = screen.getXResolution()/4
-		iHeight = min(6, pTeam.getNumMembers()) * 24 + 2
-		screen.addTableControlGFC("WBTeamMembers", 2, screen.getXResolution()/4, self.iImprovement_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		screen.setTableColumnHeader( "WBTeamMembers", 0, "", iWidth/2)
-		screen.setTableColumnHeader( "WBTeamMembers", 1, "", iWidth/2)
-		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
-			pPlayerX = gc.getPlayer(iPlayerX)
-			iTeamX = pPlayerX.getTeam()
-			if iTeamX != iTeam: continue
-			iRow = screen.appendTableRow("WBTeamMembers")
-			sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
-			iCivilization = pPlayerX.getCivilizationType()
-			sCiv = pPlayerX.getCivilizationShortDescription(0)
-			iLeader = pPlayerX.getLeaderType()
-			sName = pPlayerX.getName()
-			if not pPlayerX.isAlive():
-				sName = "*" + sName
-				sCiv = "*" + sCiv
-			if gc.getTeam(iTeamX).getLeaderID() == iPlayerX:
-				sName = CyTranslator().getText("[ICON_STAR]", ()) + sName
-				sCiv = CyTranslator().getText("[ICON_STAR]", ()) + sCiv
-			screen.setTableText("WBTeamMembers", 0, iRow, "<font=3>" + sColor + sCiv + "</font></color>", gc.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, CvUtil.FONT_LEFT_JUSTIFY )
-			screen.setTableText("WBTeamMembers", 1, iRow, "<font=3>" + sColor + sName + "</font></color>", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, CvUtil.FONT_LEFT_JUSTIFY )
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
 		
+		iY = self.iTable_Y
+		screen.setButtonGFC("NukeInterceptionPlus", u"", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("NukeInterceptionMinus", u"", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_NUKE_INTERCEPTION",(pTeam.getNukeInterception(),)) + "</font>"
+		screen.setLabel("NukeInterceptionText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("EnemyWWPlus", u"", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("EnemyWWMinus", u"", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_ENEMY_WAR_WEARINESS",(pTeam.getEnemyWarWearinessModifier(),)) + "</font>"
+		screen.setLabel("EnemyWWText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("MasterPowerPlus", u"", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("MasterPowerMinus", u"", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3>" + CyTranslator().getText("[ICON_STRENGTH]",()) + CyTranslator().getText("TXT_KEY_MISC_MASTER",()) + ": " + str(pTeam.getMasterPower()) + "</font>"
+		screen.setLabel("MasterPowerText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("VassalPowerPlus", u"", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("VassalPowerMinus", u"", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3>" + CyTranslator().getText("[ICON_STRENGTH]",()) + CyTranslator().getText("TXT_KEY_MISC_VASSAL_SHORT",()) + ": " + str(pTeam.getVassalPower()) + "</font>"
+		screen.setLabel("VassalPowerText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 30
+		screen.setButtonGFC("EspionageEverPlus", u"", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("EspionageEverMinus", u"", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3>" + CyTranslator().getText("[ICON_ESPIONAGE]",()) + CyTranslator().getText("TXT_KEY_WB_EVER",()) + ": " + str(pTeam.getEspionagePointsEver()) + "</font>"
+		screen.setLabel("EspionageEverText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 	def placeVotes(self):
-##		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-##		iWidth = screen.getXResolution()/5
-##		iHeight = min(len(lVoteBuildings), (screen.getYResolution() - self.iVotes_Y - 40) /24) * 24 + 2
-##		screen.addTableControlGFC("WBTeamVotes", 1, 20, self.iVotes_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-##		screen.setTableColumnHeader( "WBTeamVotes", 0, "", iWidth)
-##		for item in lVoteBuildings:
-##			iVoteSource = gc.getBuildingInfo(item[1]).getVoteSourceType()
-##			iRow = screen.appendTableRow("WBTeamVotes")
-##			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-##			if pTeam.isForceTeamVoteEligible(iVoteSource):
-##				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-##			screen.setTableText("WBTeamVotes", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, CvUtil.FONT_LEFT_JUSTIFY )
-
-
-#magister
-
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		iWidth = screen.getXResolution()/5
-		iHeight = max(2, (screen.getYResolution() - self.iVotes_Y - 40) /24) * 24 + 2
-		screen.addTableControlGFC("WBTeamVotes", 1, 20, self.iVotes_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() /4 - 40
+		iX = 20
+		iY = self.iTable_Y + 180 + 13 * 24 + 2
+		screen.setLabel("VoteHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_GUARANTEED_ELIGIBILITY",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+#Magister Start
+		iHeight = max(2, (screen.getYResolution() - iY - 40) /24) * 24 + 2
+		screen.addTableControlGFC("WBTeamVotes", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader( "WBTeamVotes", 0, "", iWidth)
-
-
 
 		iVoteSource = gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')
 		iMembership = gc.getInfoTypeForString('CIVIC_OVERCOUNCIL')
-
-
 		sButton = gc.getCivicInfo(iMembership).getButton()
 		sDescription = gc.getCivicInfo(iMembership).getDescription()
 		iRow = screen.appendTableRow("WBTeamVotes")
@@ -237,13 +214,8 @@ class WBTeamScreen:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setTableText("WBTeamVotes", 0, iRow, "<font=3>" + sColor + sDescription + "</font></color>", sButton, WidgetTypes.WIDGET_PYTHON, 8206, iMembership, CvUtil.FONT_LEFT_JUSTIFY )
 
-
-
 		iVoteSource = gc.getInfoTypeForString('DIPLOVOTE_UNDERCOUNCIL')
 		iMembership = gc.getInfoTypeForString('CIVIC_UNDERCOUNCIL')
-
-
-
 		sButton = gc.getCivicInfo(iMembership).getButton()
 		sDescription = gc.getCivicInfo(iMembership).getDescription()
 		iRow = screen.appendTableRow("WBTeamVotes")
@@ -251,91 +223,128 @@ class WBTeamScreen:
 		if pTeam.isForceTeamVoteEligible(iVoteSource):
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setTableText("WBTeamVotes", 0, iRow, "<font=3>" + sColor + sDescription + "</font></color>", sButton, WidgetTypes.WIDGET_PYTHON, 8205, iMembership, CvUtil.FONT_LEFT_JUSTIFY )
-
-
-
-#magister
-
+#Magister Stop
 
 	def placeRoutes(self):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		iWidth = screen.getXResolution()/4
-		iHeight = min(len(lRoutes), (screen.getYResolution() - self.iImprovement_Y - 40) /24) * 24 + 2
-		screen.addTableControlGFC("WBTeamRoutes", 4, screen.getXResolution()/4, self.iRoutes_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		iWidth1 = 70
-		iWidth2 = iWidth - (iWidth1 + 48)
-		screen.setTableColumnHeader( "WBTeamRoutes", 0, "", iWidth2)
-		screen.setTableColumnHeader( "WBTeamRoutes", 1, "", 24)
-		screen.setTableColumnHeader( "WBTeamRoutes", 2, "", 24)
-		screen.setTableColumnHeader( "WBTeamRoutes", 3, "", iWidth1)
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() *3/8 - 20
+		iX = screen.getXResolution()/4
+		iY = screen.getYResolution()/2 + 30 + DomainTypes.NUM_DOMAIN_TYPES * 24 + 2
+		sText = CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_ROUTE",())
+		screen.setLabel("RouteHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_MODIFY", (sText,)) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		iHeight = (screen.getYResolution() - 40 - iY) /24 * 24 + 2
+		screen.addTableControlGFC("WBTeamRoutes", 2, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		screen.setTableColumnHeader("WBTeamRoutes", 0, "", iWidth *2/3)
+		screen.setTableColumnHeader("WBTeamRoutes", 1, "", iWidth /3)
 
 		for item in lRoutes:
 			iRow = screen.appendTableRow("WBTeamRoutes")
-			ItemInfo = gc.getRouteInfo(item[1])
-			screen.setTableText("WBTeamRoutes", 0, iRow, "<font=3>" + item[0] + "</font>", ItemInfo.getButton(), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
-			sText = u"%d%s" %(pTeam.getRouteChange(item[1]), CyTranslator().getText("[ICON_MOVES]", ()))
-			screen.setTableText("WBTeamRoutes", 1, iRow, "", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_PLUS").getPath(), WidgetTypes.WIDGET_PYTHON, 1030, item[1], CvUtil.FONT_CENTER_JUSTIFY )
-			screen.setTableText("WBTeamRoutes", 2, iRow, "", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_MINUS").getPath(), WidgetTypes.WIDGET_PYTHON, 1031, item[1], CvUtil.FONT_CENTER_JUSTIFY )
-			screen.setTableInt("WBTeamRoutes", 3, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_RIGHT_JUSTIFY )
-
+			Info = gc.getRouteInfo(item[1])
+			screen.setTableText("WBTeamRoutes", 0, iRow, "<font=3>" + item[0] + "</font>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 6788, item[1], CvUtil.FONT_LEFT_JUSTIFY)
+			iChange = pTeam.getRouteChange(item[1])
+			if iChange != 0:
+				sText = u"%+d%s %s" %(iChange, CyTranslator().getText("[ICON_MOVES]", ()), CyTranslator().getText("TXT_KEY_ESPIONAGE_SCREEN_COST", ()))
+				screen.setTableInt("WBTeamRoutes", 1, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 6788, item[1], CvUtil.FONT_RIGHT_JUSTIFY)
+		
 	def placeDomains(self):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		iWidth = screen.getXResolution()/4
-		screen.addTableControlGFC("WBTeamDomainMoves", 4, screen.getXResolution()/4, self.iAbilities_Y, iWidth, 4 * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		iWidth1 = 70
-		iWidth2 = iWidth - (iWidth1 + 48)
-		screen.setTableColumnHeader( "WBTeamDomainMoves", 0, "", iWidth2)
-		screen.setTableColumnHeader( "WBTeamDomainMoves", 1, "", 24)
-		screen.setTableColumnHeader( "WBTeamDomainMoves", 2, "", 24)
-		screen.setTableColumnHeader( "WBTeamDomainMoves", 3, "", iWidth1)
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() *3/8 - 20
+		iX = screen.getXResolution()/4
+		iY = screen.getYResolution()/2
+		sText = CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN",())
+		screen.setLabel("DomainHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_MODIFY", (sText,)) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		screen.addTableControlGFC("WBTeamDomainMoves", 2, iX, iY, iWidth, DomainTypes.NUM_DOMAIN_TYPES * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setTableColumnHeader("WBTeamDomainMoves", 0, "", iWidth/2)
+		screen.setTableColumnHeader("WBTeamDomainMoves", 1, "", iWidth/2)
 		for i in xrange(DomainTypes.NUM_DOMAIN_TYPES):
-			ItemInfo = gc.getDomainInfo(i)
+			Info = gc.getDomainInfo(i)
 			screen.appendTableRow("WBTeamDomainMoves")
-			screen.setTableText("WBTeamDomainMoves", 0, i, "<font=3>" + ItemInfo.getDescription() + "</font>", ItemInfo.getButton(), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
-			sText = u"%d%s" %(pTeam.getExtraMoves(i), CyTranslator().getText("[ICON_MOVES]", ()))
-			screen.setTableText("WBTeamDomainMoves", 1, i, "", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_PLUS").getPath(), WidgetTypes.WIDGET_PYTHON, 1030, i, CvUtil.FONT_CENTER_JUSTIFY )
-			screen.setTableText("WBTeamDomainMoves", 2, i, "", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_MINUS").getPath(), WidgetTypes.WIDGET_PYTHON, 1031, i, CvUtil.FONT_CENTER_JUSTIFY )
-			screen.setTableInt("WBTeamDomainMoves", 3, i, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_RIGHT_JUSTIFY )
-
+			screen.setTableText("WBTeamDomainMoves", 0, i, "<font=3>" + Info.getDescription() + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1030, i, CvUtil.FONT_LEFT_JUSTIFY )
+			iChange = pTeam.getExtraMoves(i)
+			if iChange != 0:
+				sText = u"%+d%s" %(iChange, CyTranslator().getText("[ICON_MOVES]", ()))
+				screen.setTableInt("WBTeamDomainMoves", 1, i, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1030, i, CvUtil.FONT_RIGHT_JUSTIFY )
+		
 	def placeImprovements(self):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		global iImprovementType
-		iWidth = screen.getXResolution() /2 - 40
-		iHeight = min(len(lImprovements), (screen.getYResolution() - self.iImprovement_Y - 40) /24) * 24 + 2
-		iColWidth = (iWidth - 8) / (YieldTypes.NUM_YIELD_TYPES + 2)
-		screen.addTableControlGFC("WBTeamYield", YieldTypes.NUM_YIELD_TYPES + 2, screen.getXResolution()/2 + 20, self.iImprovement_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		screen.setTableColumnHeader( "WBTeamYield", 0, "", iColWidth * 2)
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() *3/8 - 20
+		iX = screen.getXResolution() *5/8
+		iY = self.iTable_Y - 30
+		sText = CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT",())
+		screen.setLabel("ImprovementHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_MODIFY", (sText,)) + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		screen.addDropDownBoxGFC("YieldType", iX + iWidth - 150, iY, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-			screen.setTableColumnHeader( "WBTeamYield", i + 1, "", iColWidth)
-		screen.setTableColumnHeader( "WBTeamYield", YieldTypes.NUM_YIELD_TYPES + 1, "", 8)
+			screen.addPullDownString("YieldType", gc.getYieldInfo(i).getDescription(), i, i, iSelectedYield == i)
+
+		iY += 30
+		iHeight = (screen.getYResolution() - 40 - iY) /24 * 24 + 2
+		screen.addTableControlGFC("WBTeamYield", 2, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setTableColumnHeader("WBTeamYield", 0, "", iWidth/2)
+		screen.setTableColumnHeader("WBTeamYield", 1, "", iWidth/2)
 
 		for item in lImprovements:
-			if iImprovementType == -1:
-				iImprovementType = item[1]
-			ItemInfo = gc.getImprovementInfo(item[1])
+			Info = gc.getImprovementInfo(item[1])
 			iRow = screen.appendTableRow("WBTeamYield")
-			screen.setTableText("WBTeamYield", 0, iRow, "<font=3>" + item[0] + "</font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7877, item[1], CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableText("WBTeamYield", 0, iRow, "<font=3>" + item[0] + "</font>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 7877, item[1], CvUtil.FONT_LEFT_JUSTIFY )
+			sText = ""
 			for j in xrange(YieldTypes.NUM_YIELD_TYPES):
 				iYieldChange = pTeam.getImprovementYieldChange(item[1], j)
-				sFont = "<font=3>"
-				if abs(iYieldChange) > 99:
-					sFont = "<font=2>"
-				sText = u"%d%c" %(iYieldChange, gc.getYieldInfo(j).getChar())
-				screen.setTableInt("WBTeamYield", j + 1, iRow, sFont + sText + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_RIGHT_JUSTIFY )
+				if iYieldChange != 0:
+					sText += u"%d%c" %(iYieldChange, gc.getYieldInfo(j).getChar())
+			screen.setTableInt("WBTeamYield", 1, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7877, item[1], CvUtil.FONT_LEFT_JUSTIFY)
 
-		screen.setButtonGFC("ModifyImprovementPlus", "", "", screen.getXResolution()/2 + 20, self.iImprovement_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("ModifyImprovementMinus", "", "", screen.getXResolution()/2 + 45, self.iImprovement_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"<font=3>%s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_MODIFY", (gc.getImprovementInfo(iImprovementType).getDescription(),)), gc.getYieldInfo(self.iYieldType).getChar())
-		screen.setLabel("ImprovementText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()/2 + 75, self.iImprovement_Y - 30 + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-	def placeAbilities(self):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		iWidth = screen.getXResolution()/5
-		screen.setButtonGFC("AbilitiesAllPlus", u"", "", iWidth - 30, self.iAbilities_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("AbilitiesAllMinus", u"", "", iWidth - 5, self.iAbilities_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		screen.setLabel("AbilitiesHeader", "Background", "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, iWidth - 30, self.iAbilities_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+	def placeMembers(self):
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() *3/8 - 20
+		iHeight = (screen.getYResolution()/2 - self.iTable_Y) /24 * 24 + 2
+		iX = screen.getXResolution()/4
+		screen.setLabel("MemberHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_MEMBERS_TITLE",()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.addTableControlGFC("WBTeamMembers", 2, iX, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setTableColumnHeader("WBTeamMembers", 0, "", iWidth/2)
+		screen.setTableColumnHeader("WBTeamMembers", 1, "", iWidth/2)
+		lMembers = []
+		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
+			pPlayerX = gc.getPlayer(iPlayerX)
+			iTeamX = pPlayerX.getTeam()
+			pTeamX = gc.getTeam(iTeamX)
+			sText = CyTranslator().getText("[ICON_ANGRYPOP]", ())
+			fType = 1
+			if iTeamX == iTeam:
+				if pTeamX.getLeaderID() == iPlayerX:
+					sText = CyTranslator().getText("[ICON_STAR]", ())
+					fType = 0
+			elif pTeamX.isVassal(iTeam):
+				sText = CyTranslator().getText("[ICON_SILVER_STAR]", ())
+				fType = 2
+			else:
+				continue
+			if not pPlayerX.isAlive():
+				sText += "*"
+				fType += 0.5
+			sText += pPlayerX.getName()
+			sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
+			sText = "<font=3>" + sColor + sText + "</font></color>"
+			sCiv = "<font=3>" + sColor + pPlayerX.getCivilizationShortDescription(0) + "</font></color>"
+			lMembers.append([fType, sText, iPlayerX, pPlayerX.getCivilizationType(), pPlayerX.getLeaderType(), sCiv])
+		lMembers.sort()
+		for item in lMembers:
+			iRow = screen.appendTableRow("WBTeamMembers")
+			screen.setTableText("WBTeamMembers", 0, iRow, item[5], gc.getCivilizationInfo(item[3]).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, item[2] * 10000 + item[3], CvUtil.FONT_LEFT_JUSTIFY)
+			screen.setTableText("WBTeamMembers", 1, iRow, item[1], gc.getLeaderHeadInfo(item[4]).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, item[2] * 10000 + item[4], CvUtil.FONT_LEFT_JUSTIFY)
 		
-		screen.addTableControlGFC("WBAbilities", 1, 20, self.iAbilities_Y, iWidth, 13 * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+	def placeAbilities(self):
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
+		iWidth = screen.getXResolution() /4 - 40
+		iX = 20
+		iY = self.iTable_Y + 150
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</color></font>"
+		screen.setText("AbilitiesAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, iX + iWidth, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		iY += 30
+		screen.addTableControlGFC("WBAbilities", 1, iX, iY, iWidth, 13 * 24 + 2, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader( "WBAbilities", 0, "", iWidth)
 	
 		iRow = screen.appendTableRow("WBAbilities")
@@ -417,106 +426,114 @@ class WBTeamScreen:
 		screen.setTableText("WBAbilities", 0, iRow, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_WB_EXTRA_WATER_SIGHT",()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_TECH_LOS").getPath(), lAbilities[12][0], lAbilities[12][1], -1, CvUtil.FONT_LEFT_JUSTIFY )
 	
 	def handleInput (self, inputClass):
-		screen = CyGInterfaceScreen( "WBTeamScreen", CvScreenEnums.WB_TEAM)
-		global iImprovementType
+		screen = CyGInterfaceScreen("WBTeamScreen", CvScreenEnums.WB_TEAM)
 		global iChange
+		global bRemove
+		global iSelectedYield
 
 		if inputClass.getFunctionName() == "ChangeBy":
-			iIndex = screen.getSelectedPullDownID("ChangeBy")
-			iChange = screen.getPullDownData("ChangeBy", iIndex)
+			iChange = screen.getPullDownData("ChangeBy", screen.getSelectedPullDownID("ChangeBy"))
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pTeam.getLeaderID())
 			elif iIndex == 2:
-				WBProjectScreen.WBProjectScreen(self.top).interfaceScreen(pTeam)
+				WBProjectScreen.WBProjectScreen().interfaceScreen(iTeam)
 			elif iIndex == 3:
-				WBTechScreen.WBTechScreen(self.top).interfaceScreen(pTeam)
+				WBTechScreen.WBTechScreen().interfaceScreen(iTeam)
 			elif iIndex == 4:
-				WBPlayerUnits.WBPlayerUnits(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(pTeam.getLeaderID())
+			elif iIndex == 11:
+				WBInfoScreen.WBInfoScreen().interfaceScreen(pTeam.getLeaderID())
 
 		elif inputClass.getFunctionName() == "CurrentTeam":
-			iIndex = screen.getSelectedPullDownID("CurrentTeam")
-			iTeam = screen.getPullDownData("CurrentTeam", iIndex)
-			self.interfaceScreen(iTeam)
+			iTeamX = screen.getPullDownData("CurrentTeam", screen.getSelectedPullDownID("CurrentTeam"))
+			self.interfaceScreen(iTeamX)
 
 		elif inputClass.getFunctionName() == "WBTeamMembers":
 			if inputClass.getData1() == 7876 or inputClass.getData1() == 7872:
 				iPlayer = inputClass.getData2() /10000
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(iPlayer)
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(iPlayer)
 
 		elif inputClass.getFunctionName() == "MergeTeam":
-			iIndex = screen.getSelectedPullDownID("MergeTeam")
-			pTeam.addTeam(screen.getPullDownData("MergeTeam", iIndex))
+			pTeam.addTeam(screen.getPullDownData("MergeTeam", screen.getSelectedPullDownID("MergeTeam")))
 			self.interfaceScreen(pTeam.getID())
 
 		elif inputClass.getFunctionName().find("NukeInterception") > -1:
 			if inputClass.getData1() == 1030:
-				pTeam.changeNukeInterception(iChange)
+				pTeam.changeNukeInterception(min(iChange, 100 - pTeam.getNukeInterception()))
 			elif inputClass.getData1() == 1031:
-				pTeam.changeNukeInterception(- iChange)
+				iCount = min(iChange, pTeam.getNukeInterception())
+				pTeam.changeNukeInterception(-iCount)
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("EnemyWW") > -1:
 			if inputClass.getData1() == 1030:
 				pTeam.changeEnemyWarWearinessModifier(iChange)
 			elif inputClass.getData1() == 1031:
-				pTeam.changeEnemyWarWearinessModifier(- iChange)
+				iCount = min(iChange, pTeam.getEnemyWarWearinessModifier())
+				pTeam.changeEnemyWarWearinessModifier(-iCount)
+			self.placeStats()
+
+		elif inputClass.getFunctionName().find("MasterPower") > -1:
+			if inputClass.getData1() == 1030:
+				pTeam.setMasterPower(pTeam.getMasterPower() + iChange)
+			elif inputClass.getData1() == 1031:
+				pTeam.setMasterPower(max(0, pTeam.getMasterPower() - iChange))
+			self.placeStats()
+
+		elif inputClass.getFunctionName().find("VassalPower") > -1:
+			if inputClass.getData1() == 1030:
+				pTeam.setVassalPower(pTeam.getVassalPower() + iChange)
+			elif inputClass.getData1() == 1031:
+				pTeam.setVassalPower(max(0, pTeam.getVassalPower() - iChange))
+			self.placeStats()
+
+		elif inputClass.getFunctionName().find("EspionageEver") > -1:
+			if inputClass.getData1() == 1030:
+				pTeam.changeEspionagePointsEver(iChange)
+			elif inputClass.getData1() == 1031:
+				iCount = min(iChange, pTeam.getEspionagePointsEver())
+				pTeam.changeEspionagePointsEver(-iCount)
 			self.placeStats()
 
 		elif inputClass.getFunctionName() == "WBTeamRoutes":
-			if inputClass.getData1() == 1030:
-				pTeam.changeRouteChange(inputClass.getData2(), iChange)
-			elif inputClass.getData1() == 1031:
-				pTeam.changeRouteChange(inputClass.getData2(), - iChange)
+			self.editRoute(inputClass.getData2())
 			self.placeRoutes()
 
 		elif inputClass.getFunctionName() == "WBTeamDomainMoves":
-			if inputClass.getData1() == 1030:
-				pTeam.changeExtraMoves(inputClass.getData2(), iChange)
-			elif inputClass.getData1() == 1031:
-				pTeam.changeExtraMoves(inputClass.getData2(), - iChange)
+			self.editDomain(inputClass.getData2())
 			self.placeDomains()
 
+		elif inputClass.getFunctionName() == "ChangeType":
+			bRemove = not bRemove
+
 		elif inputClass.getFunctionName() == "YieldType":
-			self.iYieldType = inputClass.getData2()
-			self.placeImprovements()
+			iSelectedYield = screen.getPullDownData("YieldType", screen.getSelectedPullDownID("YieldType"))
 
 		elif inputClass.getFunctionName() == "WBTeamYield":
-			if inputClass.getData1() == 7877:
-				iImprovementType = inputClass.getData2()
-				self.placeImprovements()
-
-		elif inputClass.getFunctionName().find("ModifyImprovement") > -1:
-			if inputClass.getData1() == 1030:
-				pTeam.changeImprovementYieldChange(iImprovementType, self.iYieldType, iChange)
-			elif inputClass.getData1() == 1031:
-				pTeam.changeImprovementYieldChange(iImprovementType, self.iYieldType, - iChange)
+			self.modifyImprovement(inputClass.getData2())
 			self.placeImprovements()
 
 		elif inputClass.getFunctionName() == "WBTeamVotes":
+#Magister Start
 ##			iVote = gc.getBuildingInfo(inputClass.getData1()).getVoteSourceType()
-			iVote = inputClass.getData2()#magister
-
+			iVote = inputClass.getData2()
 			if iVote == gc.getInfoTypeForString('CIVIC_OVERCOUNCIL'):
 				iVote = gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')
-
 			if iVote == gc.getInfoTypeForString('CIVIC_UNDERCOUNCIL'):
 				iVote = gc.getInfoTypeForString('DIPLOVOTE_UNDERCOUNCIL')
-
+#Magister Stop
 			if pTeam.isForceTeamVoteEligible(iVote):
 				pTeam.changeForceTeamVoteEligibilityCount(iVote, - pTeam.getForceTeamVoteEligibilityCount(iVote))
 			else:
 				pTeam.changeForceTeamVoteEligibilityCount(iVote, 1)
 			self.placeVotes()
 
-		elif inputClass.getFunctionName().find("AbilitiesAll") > -1:
+		elif inputClass.getFunctionName() == "AbilitiesAll":
 			for i in xrange(13):
-				if inputClass.getData1() == 1030:
-					self.doTeamAbilities(i, 1)
-				elif inputClass.getData1() == 1031:
-					self.doTeamAbilities(i, 0)
+				self.doTeamAbilities(i, not bRemove)
 			self.placeAbilities()
 
 		elif inputClass.getFunctionName() == "WBAbilities":
@@ -552,14 +569,30 @@ class WBTeamScreen:
 			self.placeAbilities()
 		return 1
 
+	def editDomain(self, item):
+		iCount = iChange
+		if bRemove:
+			iCount = -iCount
+		pTeam.changeExtraMoves(item, iCount)
+
+	def editRoute(self, item):
+		iCount = iChange
+		if bRemove:
+			iCount = -iCount
+		pTeam.changeRouteChange(item, iCount)
+
+	def modifyImprovement(self, item):
+		iCount = iChange
+		if bRemove:
+			iCount = -iCount
+		pTeam.changeImprovementYieldChange(item, iSelectedYield, iCount)
+
 	def doTeamAbilities(self, i, iType):
 		if i == 0:
 			if iType == -1:
 				pTeam.setMapCentering(not pTeam.isMapCentering())
-			elif iType == 0:
-				pTeam.setMapCentering(False)
-			elif iType == 1:
-				pTeam.setMapCentering(True)
+			else:
+				pTeam.setMapCentering(iType)
 		elif i == 1:
 			if pTeam.isMapTrading():
 				if iType !=1:

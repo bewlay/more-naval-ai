@@ -7,22 +7,23 @@ import WBCityEditScreen
 import WBUnitScreen
 import WBPlayerScreen
 import WBTeamScreen
-import WBLandMarks
+import WBInfoScreen
+import CvPlatyBuilderScreen
 gc = CyGlobalContext()
+
+iSelectedEvent = -1
 iEventPlayer = -1
+iOtherPlayer = -1
+iOtherCity = -1
+iSelectedReligion = -1
+iSelectedCorporation = -1
+iSelectedUnit = -1
+iSelectedBuilding = -1
 
 class WBEventScreen:
 
-	def __init__(self, main):
-		self.top = main
-		self.iEvent = -1
+	def __init__(self):
 		self.iTable_Y = 80
-		self.iOtherPlayer = -1
-		self.iOtherCity = -1
-		self.iReligion = -1
-		self.iCorporation = -1
-		self.iUnit = -1
-		self.iBuilding = -1
 
 	def interfaceScreen(self, pPlotX):
 		screen = CyGInterfaceScreen( "WBEventScreen", CvScreenEnums.WB_EVENT)
@@ -40,16 +41,16 @@ class WBEventScreen:
 		screen.setText("PlotExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 
 		screen.addDropDownBoxGFC("CurrentPage", 10, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP19", ()), 0, 0, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLOT_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS", ()), 1, 1, True)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_LANDMARKS", ()), 2, 2, False)
 		if pPlot.isOwned():
-			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 3, 3, False)
-			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 4, 4, False)
+			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 2, 2, False)
+			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 3, 3, False)
 			if pPlot.isCity():
-				screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_CITY_DATA", ()), 5, 5, False)
+				screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_CITY_DATA", ()), 4, 4, False)
 		if pPlot.getNumUnits() > 0:
-			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 6, 6, False)
+			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 5, 5, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
 		global lEvents
 		global lReligions
@@ -140,7 +141,7 @@ class WBEventScreen:
 				sText = pUnitX.getNameNoDesc()
 			iPlayerX = pUnitX.getOwner()
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if pUnitX.getID() == self.iUnit:
+			if pUnitX.getID() == iSelectedUnit:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = sText
 			screen.setTableText("WBEventUnit", 2, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), CvUtil.FONT_LEFT_JUSTIFY)
@@ -162,7 +163,7 @@ class WBEventScreen:
 		for item in lCorporations:
 			iRow = screen.appendTableRow("WBEventCorporation")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if item[1] == self.iCorporation:
+			if item[1] == iSelectedCorporation:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
 			screen.setTableText("WBEventCorporation", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getCorporationInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 8201, item[1], CvUtil.FONT_LEFT_JUSTIFY )
@@ -179,7 +180,7 @@ class WBEventScreen:
 		for item in lReligions:
 			iRow = screen.appendTableRow("WBEventReligion")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if item[1] == self.iReligion:
+			if item[1] == iSelectedReligion:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
 			screen.setTableText("WBEventReligion", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getReligionInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_RELIGION, item[1], -1, CvUtil.FONT_LEFT_JUSTIFY )
@@ -196,7 +197,7 @@ class WBEventScreen:
 		for item in lBuildings:
 			iRow = screen.appendTableRow("WBEventBuilding")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if item[1] == self.iBuilding:
+			if item[1] == iSelectedBuilding:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
 			screen.setTableText("WBEventBuilding", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getBuildingInfo(item[1]).getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, CvUtil.FONT_LEFT_JUSTIFY )
@@ -204,31 +205,31 @@ class WBEventScreen:
 
 	def placeOtherCities(self):
 		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
-		if self.iOtherPlayer == -1:
+		if iOtherPlayer == -1:
 			screen.hide("WBOtherCity")
 			return
 		iHeight = (screen.getYResolution()/2 - self.iTable_Y - 2) / 24 * 24 + 2
 
-		sHeader = CyTranslator().getText("TXT_KEY_WB_OTHER_CITY", ())
+		sHeader = CyTranslator().getText("TXT_KEY_WB_CITY", ()) + " II"
 		screen.addTableControlGFC("WBOtherCity", 1, screen.getXResolution() * 3/5 + 10, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBOtherCity", 0, "", iWidth)
 
-		(loopCity, iter) = gc.getPlayer(self.iOtherPlayer).firstCity(False)
+		(loopCity, iter) = gc.getPlayer(iOtherPlayer).firstCity(False)
 		while(loopCity):
 			iRow = screen.appendTableRow("WBOtherCity")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if loopCity.getID() == self.iOtherCity:
+			if loopCity.getID() == iOtherCity:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = loopCity.getName()
-			screen.setTableText("WBOtherCity", 0, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", "", WidgetTypes.WIDGET_PYTHON, 1030, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY)
-			(loopCity, iter) = gc.getPlayer(self.iOtherPlayer).nextCity(iter, False)
+			screen.setTableText("WBOtherCity", 0, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", "", WidgetTypes.WIDGET_PYTHON, 7200 + iOtherPlayer, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY)
+			(loopCity, iter) = gc.getPlayer(iOtherPlayer).nextCity(iter, False)
 		screen.setLabel("OtherCityText", "Background", "<font=3b>" + sHeader + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() *7/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 	def placeOtherPlayers(self):
 		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
 		iHeight = (screen.getYResolution()/2 - self.iTable_Y - 2) / 24 * 24 + 2
 
-		sHeader = CyTranslator().getText("TXT_KEY_WB_OTHER_PLAYER", ())
+		sHeader = CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()) + " II"
 		screen.addTableControlGFC("WBOtherPlayer", 2, screen.getXResolution() * 2/5 + 10, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBOtherPlayer", 0, "", 24)
 		screen.setTableColumnHeader("WBOtherPlayer", 1, "", iWidth - 24)
@@ -239,7 +240,7 @@ class WBEventScreen:
 			if pPlayerX.isAlive():
 				iRow = screen.appendTableRow("WBOtherPlayer")
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-				if iPlayerX == self.iOtherPlayer:
+				if iPlayerX == iOtherPlayer:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 					sHeader = pPlayerX.getName()
 				iCivilization = pPlayerX.getCivilizationType()
@@ -260,53 +261,60 @@ class WBEventScreen:
 		for item in lEvents:
 			iRow = screen.appendTableRow("WBEvent")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if item[1] == self.iEvent:
+			if item[1] == iSelectedEvent:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = item[0]
 			screen.setTableText("WBEvent", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", "", WidgetTypes.WIDGET_PYTHON, 1030, item[1], CvUtil.FONT_LEFT_JUSTIFY )
-		if self.iEvent > -1:
+		if iSelectedEvent > -1:
 			sText = "<font=4b>" + CyTranslator().getText("[COLOR_BLACK]", ()) + CyTranslator().getText("TXT_KEY_WB_TRIGGER_EVENT", (sHeader,)).upper() + "</color></font>"
 			screen.setButtonGFC("TriggerEvent", sText, "", screen.getXResolution()/4, 20, screen.getXResolution()/2, 30, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBEventScreen", CvScreenEnums.WB_EVENT)
+		global iSelectedEvent
 		global iEventPlayer
-		if inputClass.getFunctionName() == "ChangeBy":
-			iIndex = screen.getSelectedPullDownID("ChangeBy")
-			self.iChange = screen.getPullDownData("ChangeBy", iIndex)
+		global iOtherPlayer
+		global iOtherCity
+		global iSelectedReligion
+		global iSelectedCorporation
+		global iSelectedUnit
+		global iSelectedBuilding
 
-		elif inputClass.getFunctionName() == "CurrentPage":
+		if inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBPlotScreen.WBPlotScreen(self.top).interfaceScreen(pPlot)
+				WBPlotScreen.WBPlotScreen().interfaceScreen(pPlot)
 			elif iIndex == 2:
-				WBLandMarks.WBLandMarks(self.top).interfaceScreen(pPlot)
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pPlot.getOwner())
 			elif iIndex == 3:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pPlot.getOwner())
+				WBTeamScreen.WBTeamScreen().interfaceScreen(pPlot.getTeam())
 			elif iIndex == 4:
-				WBTeamScreen.WBTeamScreen(self.top).interfaceScreen(pPlot.getTeam())
-			elif iIndex == 5:
 				if pPlot.isCity():
-					WBCityEditScreen.WBCityEditScreen(self.top).interfaceScreen(pPlot.getPlotCity())
-			elif iIndex == 6:
-				if self.iUnit > -1 and iEventPlayer > -1:
-					pUnit = gc.getPlayer(iEventPlayer).getUnit(self.iUnit)
+					WBCityEditScreen.WBCityEditScreen().interfaceScreen(pPlot.getPlotCity())
+			elif iIndex == 5:
+				if iSelectedUnit > -1 and iEventPlayer > -1:
+					pUnit = gc.getPlayer(iEventPlayer).getUnit(iSelectedUnit)
 				else:
 					pUnit = pPlot.getUnit(0)
 				if pUnit:
-					WBUnitScreen.WBUnitScreen(self.top).interfaceScreen(pUnit)
+					WBUnitScreen.WBUnitScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pUnit)
+			elif iIndex == 11:
+				iPlayer = pPlot.getOwner()
+				if iPlayer == -1:
+					iPlayer = CyGame().getActivePlayer()
+				WBInfoScreen.WBInfoScreen().interfaceScreen(iPlayer)
 
 		elif inputClass.getFunctionName() == "WBEvent":
-			self.iEvent = inputClass.getData2()
+			iSelectedEvent = inputClass.getData2()
 			self.placeEvents()
 
 		elif inputClass.getFunctionName() == "WBEventPlayer":
 			if inputClass.getData1() == 7876 or inputClass.getData1() == 7872:
 				iEventPlayer = inputClass.getData2() /10000
-				self.iUnit = -1
-				if iEventPlayer == self.iOtherPlayer:
-					self.iOtherPlayer = -1
-					self.iOtherCity = -1
+				iSelectedUnit = -1
+				if iEventPlayer == iOtherPlayer:
+					iOtherPlayer = -1
+					iOtherCity = -1
 				self.placeEventPlayers()
 				self.placeOtherPlayers()
 				self.placeOtherCities()
@@ -314,58 +322,58 @@ class WBEventScreen:
 
 		elif inputClass.getFunctionName() == "WBOtherPlayer":
 			if inputClass.getData1() == 7876 or inputClass.getData1() == 7872:
-				iOtherPlayer = inputClass.getData2() /10000
-				if self.iOtherPlayer == iOtherPlayer:
-					self.iOtherPlayer = -1
+				iTemp = inputClass.getData2() /10000
+				if iOtherPlayer == iTemp:
+					iOtherPlayer = -1
 				else:
-					self.iOtherPlayer = iOtherPlayer
-				self.iOtherCity = -1
+					iOtherPlayer = iTemp
+				iOtherCity = -1
 				self.placeOtherPlayers()
 				self.placeOtherCities()
 
 		elif inputClass.getFunctionName() == "WBOtherCity":
-			iOtherCity = inputClass.getData2()
-			if self.iOtherCity == iOtherCity:
-				self.iOtherCity = -1
+			iTemp = inputClass.getData2()
+			if iOtherCity == iTemp:
+				iOtherCity = -1
 			else:
-				self.iOtherCity = iOtherCity
+				iOtherCity = iTemp
 			self.placeOtherCities()
 
 		elif inputClass.getFunctionName() == "WBEventReligion":
-			iReligion = inputClass.getData1()
-			if self.iReligion == iReligion:
-				self.iReligion = -1
+			iTemp = inputClass.getData1()
+			if iSelectedReligion == iTemp:
+				iSelectedReligion = -1
 			else:
-				self.iReligion = iReligion
+				iSelectedReligion = iTemp
 			self.placeReligions()
 
 		elif inputClass.getFunctionName() == "WBEventCorporation":
-			iCorporation = inputClass.getData2()
-			if self.iCorporation == iCorporation:
-				self.iCorporation = -1
+			iTemp = inputClass.getData2()
+			if iSelectedCorporation == iTemp:
+				iSelectedCorporation = -1
 			else:
-				self.iCorporation = iCorporation
+				iSelectedCorporation = iTemp
 			self.placeCorporations()
 
 		elif inputClass.getFunctionName() == "WBEventBuilding":
-			iBuilding = inputClass.getData1()
-			if self.iBuilding == iBuilding:
-				self.iBuilding = -1
+			iTemp = inputClass.getData1()
+			if iSelectedBuilding == iTemp:
+				iSelectedBuilding = -1
 			else:
-				self.iBuilding = iBuilding
+				iSelectedBuilding = iTemp
 			self.placeBuildings()
 
 		elif inputClass.getFunctionName() == "WBEventUnit":
 			if inputClass.getData1() > 8299 and inputClass.getData1() < 8400:
 				iUnit = inputClass.getData2()
-				if self.iUnit == iUnit:
-					self.iUnit = -1
+				if iSelectedUnit == iUnit:
+					iSelectedUnit = -1
 				else:
-					self.iUnit = iUnit
+					iSelectedUnit = iUnit
 				iEventPlayer = inputClass.getData1() - 8300
-				if iEventPlayer == self.iOtherPlayer:
-					self.iOtherPlayer = -1
-					self.iOtherCity = -1
+				if iEventPlayer == iOtherPlayer:
+					iOtherPlayer = -1
+					iOtherCity = -1
 				self.placeEventPlayers()
 				self.placeOtherPlayers()
 				self.placeOtherCities()
@@ -377,7 +385,7 @@ class WBEventScreen:
 			iCity = -1
 			if pPlot.isCity():
 				iCity = pPlot.getPlotCity().getID()
-			triggerData = pPlayer.initTriggeredData(self.iEvent, True, iCity, pPlot.getX(), pPlot.getY(), self.iOtherPlayer, self.iOtherCity, self.iReligion, self.iCorporation, self.iUnit, self.iBuilding)
+			triggerData = pPlayer.initTriggeredData(iSelectedEvent, True, iCity, pPlot.getX(), pPlot.getY(), iOtherPlayer, iOtherCity, iSelectedReligion, iSelectedCorporation, iSelectedUnit, iSelectedBuilding)
 			screen.hideScreen()
 		return 1
 

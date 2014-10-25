@@ -8,23 +8,24 @@ import WBTeamScreen
 import WBPlotScreen
 import WBEventScreen
 import WBPlayerUnits
+import WBInfoScreen
+import CvPlatyBuilderScreen
+import CvEventManager
 gc = CyGlobalContext()
 
+bApplyAll = False
 iCopyType = 0
 iEditType = 0
-iChangeType = 0
+iChangeType = 2
 iOwnerType = 0
+iSelectedClass = -2
+iStatus = 0 #Magister
+iCategory = 1 #Magister
 
 class WBPromotionScreen:
 
-	def __init__(self, main):
-		self.top = main
-		self.iCombatClass = -2
+	def __init__(self):
 		self.iTable_Y = 110
-
-
-		self.iStatus = 0#Magister
-		self.iCategory = 1#Magister
 
 	def interfaceScreen(self, pUnitX):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
@@ -32,6 +33,7 @@ class WBPromotionScreen:
 		global pPlot
 		pUnit = pUnitX
 		pPlot = pUnit.plot()
+		iWidth = screen.getXResolution()/5 - 20
 
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
@@ -42,67 +44,67 @@ class WBPromotionScreen:
 		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), pUnit.getGroupID())
 		screen.setLabel("PromotionHeaderB", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
-		screen.addDropDownBoxGFC("OwnerType", 20, 20, screen.getXResolution()/4 - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("OwnerType", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_OWNER", ()), 1, 1, 1 == iOwnerType)
-		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_TEAM", ()), 2, 2, 2 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
 
-		screen.addDropDownBoxGFC("CopyType", 20, 50, screen.getXResolution()/4 - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("CopyType", 20, 50, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_PEDIA_TYPE", ()), 1, 1, 1 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_SPACE_SHIP_SCREEN_TYPE_BUTTON", ()), 1, 1, 1 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_COMBAT", ()), 2, 2, 2 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, 4 == iCopyType)
 
-		screen.addDropDownBoxGFC("EditType", 20, 80, screen.getXResolution()/4 - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("EditType", 20, 80, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_SINGLE_PLOT", ()), 0, 0, iEditType == 0)
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iEditType == 1)
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iEditType == 2)
 
-		iX = screen.getXResolution()/4 + 20
-		iWidth = 150
-		screen.addDropDownBoxGFC("ChangeType", iX, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_ADD", ()), 0, 0, 0 == iChangeType)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_COPY", ()), 1, 1, 1 == iChangeType)
-		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_REMOVE", ()), 2, 2, 2 == iChangeType)
-
-		iX += iWidth
-		screen.setText("PromotionCopy", "Background", u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
-		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, screen.getXResolution()/4 - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROMOTION", ()), 1, 1, True)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 2, 2, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 2, 2, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 3, 3, False)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP19", ()), 4, 4, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLOT_DATA", ()), 4, 4, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS", ()), 5, 5, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 6, 6, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
-		screen.addDropDownBoxGFC("CombatClass", screen.getXResolution()/4 + 20, self.iTable_Y - 30, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == self.iCombatClass)
+		screen.addDropDownBoxGFC("CombatClass", iWidth + 40, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("CombatClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -2, -2, -2 == iSelectedClass)
 		for iCombatClass in xrange(gc.getNumUnitCombatInfos()):
-			screen.addPullDownString("CombatClass", gc.getUnitCombatInfo(iCombatClass).getDescription(), iCombatClass, iCombatClass, iCombatClass == self.iCombatClass)
+			screen.addPullDownString("CombatClass", gc.getUnitCombatInfo(iCombatClass).getDescription(), iCombatClass, iCombatClass, iCombatClass == iSelectedClass)
 
-#Magister
-		screen.addDropDownBoxGFC("Category", screen.getXResolution()*45/100+20, self.iTable_Y - 30, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), 0, 0, 0 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_STANDARD_PROMOTIONS", ()), 1, 1, 1 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_SPELL_SPHERES", ()), 2, 2, 2 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ()), 3, 3, 3 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_EFFECTS", ()), 4, 4, 4 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_RACES", ()), 5, 5, 5 == self.iCategory)
-		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_SHOW_HIDDEN", ()), 6, 6, 6 == self.iCategory)
+#Magister Start
+		screen.addDropDownBoxGFC("Category",  iWidth + 40, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), 0, 0, 0 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_STANDARD_PROMOTIONS", ()), 1, 1, 1 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_SPELL_SPHERES", ()), 2, 2, 2 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_ITEMS", ()), 3, 3, 3 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_EFFECTS", ()), 4, 4, 4 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_RACES", ()), 5, 5, 5 == iCategory)
+		screen.addPullDownString("Category", CyTranslator().getText("TXT_KEY_WB_SHOW_HIDDEN", ()), 6, 6, 6 == iCategory)
 
-		screen.addDropDownBoxGFC("Status", screen.getXResolution()*65/100+20, self.iTable_Y - 30, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), 0, 0, 0 == self.iStatus)
-		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_AVAILIBLE_PROMOTIONS",()), 1, 1, 1 == self.iStatus)
-		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_CURRENT_PROMOTIONS",()), 2, 2, 2 == self.iStatus)
-		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_LACKS_PROMOTIONS",()), 3, 3, 3 == self.iStatus)
-#Magister
+		screen.addDropDownBoxGFC("Status", iWidth + 40, self.iTable_Y - 90, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), 0, 0, 0 == iStatus)
+		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_AVAILIBLE_PROMOTIONS",()), 1, 1, 1 == iStatus)
+		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_CURRENT_PROMOTIONS",()), 2, 2, 2 == iStatus)
+		screen.addPullDownString("Status", CyTranslator().getText("TXT_KEY_WB_LACKS_PROMOTIONS",()), 3, 3, 3 == iStatus)
+#Magister Stp
 
-		screen.setLabel("PromotionAll", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 70, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setButtonGFC("PromotionAllPlus", "", "", screen.getXResolution() - 70, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("PromotionAllMinus", "", "", screen.getXResolution() - 45, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</font>"
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if bApplyAll:
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		screen.setText("ApplyAll", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 120, self.iTable_Y - 30, 100, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MODIFY", ("",)), 2, 2, 2 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, 1 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, 0 == iChangeType)
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</color></font>"
+		screen.setText("PromotionAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 120, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
 		self.sortUnits()
 		self.sortPromotions()
@@ -147,8 +149,8 @@ class WBPromotionScreen:
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
 
 		iMaxRows = (screen.getYResolution() - self.iTable_Y - 42) /24
+		iWidth = screen.getXResolution()/5 - 20
 		iHeight = iMaxRows * 24 + 2
-		iWidth = screen.getXResolution()/4 - 20
 		screen.addTableControlGFC("WBCurrentUnit", 3, 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBCurrentUnit", 0, "", 24)
 		screen.setTableColumnHeader("WBCurrentUnit", 1, "", 24)
@@ -178,24 +180,29 @@ class WBPromotionScreen:
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
 		global lList
 		lList = []
+
+#Magister Start
 		iChanneling2 = gc.getInfoTypeForString('PROMOTION_CHANNELING2')#For MNAI, not MagisterModmod
 		iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')#For MNAI, not MagisterModmod
 		iMana = gc.getInfoTypeForString('BONUSCLASS_MANA')
+
 		for i in xrange(gc.getNumPromotionInfos()):
-#Magister
-			if self.iStatus == 0:#All promptions
+			if CvPlatyBuilderScreen.bHideInactive and not pUnit.isPromotionValid(i): continue
+			if iStatus == 0:#All promptions
 				pass
-			elif self.iStatus == 1:#Availible promotions
+			elif iStatus == 1:#Availible promotions
 				if not pUnit.canAcquirePromotion(i):continue
-			elif self.iStatus == 2:#Current promotions
+			elif iStatus == 2:#Current promotions
 				if not pUnit.isHasPromotion(i):continue
-			elif self.iStatus == 3:#Lacking promotions
+			elif iStatus == 3:#Lacking promotions
 				if pUnit.isHasPromotion(i):continue
+
 			ItemInfo = gc.getPromotionInfo(i)
-			if not (self.iCombatClass == -2 or ItemInfo.getUnitCombat(self.iCombatClass)):continue
-			if self.iCategory == 0:#All
+			if not (iSelectedClass == -2 or ItemInfo.getUnitCombat(iSelectedClass)):continue
+
+			if iCategory == 0:#All
 				lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 1:#Standard Promotions
+			elif iCategory == 1:#Standard Promotions
 				if ItemInfo.isGraphicalOnly():continue
 				if ItemInfo.isEquipment():continue
 				if ItemInfo.getMinLevel() < 0:continue
@@ -206,7 +213,7 @@ class WBPromotionScreen:
 				iPrereq = ItemInfo.getPromotionPrereqAnd()#For MNAI, not MagisterModmod
 				if iPrereq == iChanneling2 or iPrereq == iChanneling3:continue#For MNAI, not MagisterModmod
 				lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 2:#Spell Spheres
+			elif iCategory == 2:#Spell Spheres
 				iBonus = ItemInfo.getBonusPrereq()
 				if iBonus != -1:
 					if gc.getBonusInfo(iBonus).getBonusClassType() == iMana:
@@ -214,19 +221,19 @@ class WBPromotionScreen:
 				iPrereq = ItemInfo.getPromotionPrereqAnd()#For MNAI, not MagisterModmod
 				if iPrereq == iChanneling2 or iPrereq == iChanneling3:#For MNAI, not MagisterModmod
 					lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 3:#Equipment
+			elif iCategory == 3:#Equipment
 				if ItemInfo.isEquipment():
 					lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 4:#Effect
+			elif iCategory == 4:#Effect
 				if ItemInfo.getMinLevel() < 0:
 					lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 5:#Race
+			elif iCategory == 5:#Race
 				if ItemInfo.isRace():
 					lList.append([ItemInfo.getDescription(), i])
-			elif self.iCategory == 6:#Hidden
+			elif iCategory == 6:#Hidden
 				if ItemInfo.isGraphicalOnly():
 					lList.append([ItemInfo.getDescription(), i])
-#Magister
+#Magister Stop
 		lList.sort()
 		self.placePromotions()
 
@@ -235,8 +242,8 @@ class WBPromotionScreen:
 		iMaxRows = (screen.getYResolution() - self.iTable_Y - 42) /24
 		nColumns = max(1, min(4, (len(lList) + iMaxRows - 1)/iMaxRows))
 		iHeight = iMaxRows * 24 + 2
-		iWidth = screen.getXResolution() *3/4 - 40
-		screen.addTableControlGFC( "WBPromotion", nColumns, screen.getXResolution()/4 + 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		iWidth = screen.getXResolution() * 4/5 - 40
+		screen.addTableControlGFC( "WBPromotion", nColumns, screen.getXResolution()/5 + 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		for i in xrange(nColumns):
 			screen.setTableColumnHeader("WBPromotion", i, "", iWidth/nColumns)
 
@@ -252,29 +259,37 @@ class WBPromotionScreen:
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if pUnit.isHasPromotion(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("WBPromotion", iColumn, iRow, sColor + item[0] + "</color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7873, item[1], CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableText("WBPromotion", iColumn, iRow, "<font=3>" + sColor + item[0] + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7873, item[1], CvUtil.FONT_LEFT_JUSTIFY )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
+		global bApplyAll
 		global iChangeType
 		global iEditType
 		global iCopyType
 		global iOwnerType
+		global iSelectedClass
+#Magister Start
+		global iCategory
+		global iStatus
+#Magister Stop
 
 		if inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBUnitScreen.WBUnitScreen(self.top).interfaceScreen(pUnit)
+				WBUnitScreen.WBUnitScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pUnit)
 			elif iIndex == 2:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pUnit.getOwner())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pUnit.getOwner())
 			elif iIndex == 3:
-				WBTeamScreen.WBTeamScreen(self.top).interfaceScreen(pUnit.getTeam())
+				WBTeamScreen.WBTeamScreen().interfaceScreen(pUnit.getTeam())
 			elif iIndex == 4:
-				WBPlotScreen.WBPlotScreen(self.top).interfaceScreen(pPlot)
+				WBPlotScreen.WBPlotScreen().interfaceScreen(pPlot)
 			elif iIndex == 5:
-				WBEventScreen.WBEventScreen(self.top).interfaceScreen(pPlot)
+				WBEventScreen.WBEventScreen().interfaceScreen(pPlot)
 			elif iIndex == 6:
-				WBPlayerUnits.WBPlayerUnits(self.top).interfaceScreen(pUnit.getOwner())
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(pUnit.getOwner())
+			elif iIndex == 11:
+				WBInfoScreen.WBInfoScreen().interfaceScreen(pUnit.getOwner())
 
 		elif inputClass.getFunctionName() == "ChangeType":
 			iChangeType = screen.getPullDownData("ChangeType", screen.getSelectedPullDownID("ChangeType"))
@@ -296,48 +311,64 @@ class WBPromotionScreen:
 			self.interfaceScreen(gc.getPlayer(iPlayer).getUnit(inputClass.getData2()))
 
 		elif inputClass.getFunctionName() == "CombatClass":
-			iIndex = screen.getSelectedPullDownID("CombatClass")
-			self.iCombatClass = screen.getPullDownData("CombatClass", iIndex)
+			iSelectedClass = screen.getPullDownData("CombatClass", screen.getSelectedPullDownID("CombatClass"))
 			self.sortPromotions()
 
-#Magister
-		elif inputClass.getFunctionName() == "Status":
-			iIndex = screen.getSelectedPullDownID("Status")
-			self.iStatus = screen.getPullDownData("Status", iIndex)
-			self.sortPromotions()
-
+#Magister Start
 		elif inputClass.getFunctionName() == "Category":
 			iIndex = screen.getSelectedPullDownID("Category")
-			self.iCategory = screen.getPullDownData("Category", iIndex)
+			iCategory = screen.getPullDownData("Category", iIndex)
 			self.sortPromotions()
-#Magister
+
+		elif inputClass.getFunctionName() == "Status":
+			iIndex = screen.getSelectedPullDownID("Status")
+			iStatus = screen.getPullDownData("Status", iIndex)
+			self.sortPromotions()
+#Magister Stop
 
 		elif inputClass.getFunctionName() == "WBPromotion":
-			pUnit.setHasPromotion(inputClass.getData2(), not pUnit.isHasPromotion(inputClass.getData2()))
+			self.editPromotion(inputClass.getData2())
 			self.placePromotions()
 
-		elif inputClass.getFunctionName().find("PromotionAll") > -1:
+		elif inputClass.getFunctionName() == "PromotionAll":
 			for item in lList:
-				pUnit.setHasPromotion(item[1], not inputClass.getData1() %2)
+				self.editPromotion(item[1])
 			self.placePromotions()
 
-		elif inputClass.getFunctionName() == "PromotionCopy":
-			self.handleCopyAll()
+		elif inputClass.getFunctionName() == "ApplyAll":
+			bApplyAll = not bApplyAll
+			sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()),)) + "</font>"
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if bApplyAll:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.modifyString("ApplyAll", sColor + sText + "</color>", 0)
 		return 1
 
-	def handleCopyAll(self):
-		for i in lUnits:
-			loopUnit = gc.getPlayer(i[0]).getUnit(i[1])
-			if loopUnit.isNone(): continue
-			for iPromotion in xrange(gc.getNumPromotionInfos()):
-				if iChangeType == 0:
-					if pUnit.isHasPromotion(iPromotion):
-						loopUnit.setHasPromotion(iPromotion, True)
-				elif iChangeType == 1:
-					loopUnit.setHasPromotion(iPromotion, pUnit.isHasPromotion(iPromotion))
-				elif iChangeType == 2:
-					if not pUnit.isHasPromotion(iPromotion):
-						loopUnit.setHasPromotion(iPromotion, False)		
+	def editPromotion(self, item):
+		iType = iChangeType
+		if bApplyAll:
+			for i in lUnits:
+				loopUnit = gc.getPlayer(i[0]).getUnit(i[1])
+				if loopUnit.isNone(): continue
+				if iChangeType == 2:
+					iType = not loopUnit.isHasPromotion(item)
+				self.doEffects(loopUnit, item, iType)
+		else:
+			if iChangeType == 2:
+				iType = not pUnit.isHasPromotion(item)
+			self.doEffects(pUnit, item, iType)
+
+	def doEffects(self, pUnit, item, bAdd):
+		bEffects = False
+		if bAdd and CvPlatyBuilderScreen.bPython and not pUnit.isHasPromotion(item):
+			bEffects = True
+		pUnit.setHasPromotion(item, bAdd)
+		if bEffects:
+			CvEventManager.CvEventManager().onUnitPromoted([pUnit, item])
+#Magister Start
+		if iStatus != 0:
+			self.sortPromotions()
+#Magister Stop
 
 	def update(self, fDelta):
 		return 1

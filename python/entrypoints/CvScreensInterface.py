@@ -78,6 +78,10 @@ import WBPromotionScreen
 import WBDiplomacyScreen
 import WBGameDataScreen
 import WBPlayerUnits
+import WBReligionScreen
+import WBCorporationScreen
+import WBInfoScreen
+import WBTradeScreen
 
 def toggleSetNoScreens():
 	global g_bIsScreenActive
@@ -626,7 +630,7 @@ def WorldBuilderRevealTabModeCB():
 	worldBuilderScreen.revealTabModeCB()
 
 def WorldBuilderDiplomacyModeCB():
-	WBDiplomacyScreen.WBDiplomacyScreen().interfaceScreen(CyGame().getActivePlayer())
+	WBDiplomacyScreen.WBDiplomacyScreen().interfaceScreen(CyGame().getActivePlayer(), False)
 
 def WorldBuilderRevealAllCB():
 	worldBuilderScreen.revealAll(True)
@@ -1011,20 +1015,24 @@ HandleInputMap = {  MAIN_INTERFACE : mainInterface,
 					REVOLUTION_WATCH_ADVISOR : revolutionWatchAdvisor,
 
 ## World Builder ##
-					WB_PLOT : WBPlotScreen.WBPlotScreen(worldBuilderScreen),
-					WB_EVENT: WBEventScreen.WBEventScreen(worldBuilderScreen),
-					WB_BUILDING : WBBuildingScreen.WBBuildingScreen(worldBuilderScreen),
-					WB_CITYDATA : WBCityDataScreen.WBCityDataScreen(worldBuilderScreen),
-					WB_CITYEDIT : WBCityEditScreen.WBCityEditScreen(worldBuilderScreen),
-					WB_TECH : WBTechScreen.WBTechScreen(worldBuilderScreen),
-					WB_PROJECT : WBProjectScreen.WBProjectScreen(worldBuilderScreen),
-					WB_TEAM : WBTeamScreen.WBTeamScreen(worldBuilderScreen),
-					WB_PLAYER : WBPlayerScreen.WBPlayerScreen(worldBuilderScreen),
+					WB_PLOT : WBPlotScreen.WBPlotScreen(),
+					WB_EVENT: WBEventScreen.WBEventScreen(),
+					WB_BUILDING : WBBuildingScreen.WBBuildingScreen(),
+					WB_CITYDATA : WBCityDataScreen.WBCityDataScreen(),
+					WB_CITYEDIT : WBCityEditScreen.WBCityEditScreen(),
+					WB_TECH : WBTechScreen.WBTechScreen(),
+					WB_PROJECT : WBProjectScreen.WBProjectScreen(),
+					WB_TEAM : WBTeamScreen.WBTeamScreen(),
+					WB_PLAYER : WBPlayerScreen.WBPlayerScreen(),
 					WB_UNIT : WBUnitScreen.WBUnitScreen(worldBuilderScreen),
-					WB_PROMOTION : WBPromotionScreen.WBPromotionScreen(worldBuilderScreen),
+					WB_PROMOTION : WBPromotionScreen.WBPromotionScreen(),
 					WB_DIPLOMACY : WBDiplomacyScreen.WBDiplomacyScreen(),
 					WB_GAMEDATA : WBGameDataScreen.WBGameDataScreen(worldBuilderScreen),
-					WB_UNITLIST : WBPlayerUnits.WBPlayerUnits(worldBuilderScreen),
+					WB_UNITLIST : WBPlayerUnits.WBPlayerUnits(),
+					WB_RELIGION : WBReligionScreen.WBReligionScreen(),
+					WB_CORPORATION : WBCorporationScreen.WBCorporationScreen(),
+					WB_INFO : WBInfoScreen.WBInfoScreen(),
+					WB_TRADE : WBTradeScreen.WBTradeScreen(),
 				}
 
 #######################################################################################

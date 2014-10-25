@@ -6,21 +6,28 @@ import WBTeamScreen
 import WBTechScreen
 import WBPlayerScreen
 import WBPlayerUnits
+import WBInfoScreen
+import CvPlatyBuilderScreen
+import CvEventManager
 gc = CyGlobalContext()
-iCurrentProject = 0
+
 iChange = 1
+iChangeType = 1
+bApplyAll = False
+bNoBarb = True
+iProjectType = 0
 
 class WBProjectScreen:
 
-	def __init__(self, main):
-		self.top = main
-		self.iTable_Y = 80
-		self.iProjectType = 0
+	def __init__(self):
+		self.iTable_Y = 110
 
-	def interfaceScreen(self, pTeamX):
+	def interfaceScreen(self, iTeamX):
 		screen = CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
+		global iTeam
 		global pTeam
-		pTeam = pTeamX
+		iTeam = iTeamX
+		pTeam = gc.getTeam(iTeam)
 
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
@@ -36,45 +43,59 @@ class WBProjectScreen:
 				iLeader = gc.getTeam(i).getLeaderID()
 				sName = gc.getPlayer(iLeader).getName()
 				if gc.getTeam(i).getNumMembers() > 1:
-					sName += " + " + str(gc.getTeam(i).getNumMembers() -1) + " " + CyTranslator().getText("TXT_KEY_WB_MEMBERS", ())
-				screen.addPullDownString("CurrentTeam", sName, i, i, i == pTeamX.getID())
+					sName += " (" + str(gc.getTeam(i).getNumMembers()) + " " + CyTranslator().getText("TXT_KEY_MEMBERS_TITLE", ()) + ")"
+				screen.addPullDownString("CurrentTeam", sName, i, i, i == iTeam)
 
-		screen.addDropDownBoxGFC("ChangeBy", screen.getXResolution() *4/5 - 20, 20, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("ChangeBy", 20, 50, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		i = 1
 		while i < 101:
-			screen.addPullDownString("ChangeBy", CyTranslator().getText("TXT_KEY_WB_CHANGE_BY",(i,)), i, i, iChange == i)
+			screen.addPullDownString("ChangeBy", "(+/-) " + str(i), i, i, iChange == i)
 			if str(i)[0] == "1":
 				i *= 5
 			else:
 				i *= 2
 
 		screen.addDropDownBoxGFC("ProjectType", 20, self.iTable_Y - 30, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, self.iProjectType == 0)
-		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_PEDIA_TEAM_PROJECT", ()), 1, 1, self.iProjectType == 1)
-		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_PEDIA_WORLD_PROJECT", ()), 2, 2, self.iProjectType == 2)
+		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, iProjectType == 0)
+		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_PEDIA_TEAM_PROJECT", ()), 1, 1, iProjectType == 1)
+		screen.addPullDownString("ProjectType", CyTranslator().getText("TXT_KEY_PEDIA_WORLD_PROJECT", ()), 2, 2, iProjectType == 2)
 
 		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_HELP4", ()), 0, 0, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 1, 1, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_PROJECT", ()), 2, 2, True)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_TECH", ()), 3, 3, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 4, 4, False)
+		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
-		sText = CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ())
-		screen.setLabel("ProjectAll", "Background", u"<font=4b>" + sText + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 70, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setButtonGFC("ProjectAllPlus", u"", "", screen.getXResolution() - 70, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("ProjectAllMinus", u"", "", screen.getXResolution() - 45, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_GAME_OPTION_NO_BARBARIANS", ()) + "</font>"
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if bNoBarb:
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		screen.setText("NoBarbarians", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYERS", ()),)) + "</font>"
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if bApplyAll:
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		screen.setText("ApplyAll", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, 50, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
+		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 120, self.iTable_Y - 30, 100, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, 1 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, 0 == iChangeType)
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</color></font>"
+		screen.setText("ProjectAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 120, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		
 		self.sortProjects()
 
 	def sortProjects(self):
 		screen = CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
-		global iCurrentProject
 		global lProject
 		lProject = []
 		for i in xrange(gc.getNumProjectInfos()):
 			Info = gc.getProjectInfo(i)
-			if self.iProjectType == 1 and not isTeamProject(i): continue
-			if self.iProjectType == 2 and not isWorldProject(i): continue
+			if iProjectType == 1 and not isTeamProject(i): continue
+			if iProjectType == 2 and not isWorldProject(i): continue
 			iTeam = Info.getMaxTeamInstances()
 			iWorld = Info.getMaxGlobalInstances()
 			iMax = max(iTeam, iWorld)
@@ -82,8 +103,6 @@ class WBProjectScreen:
 				iMax = min(iTeam, iWorld)
 			lProject.append([Info.getDescription(), i, iMax])
 		lProject.sort()
-		if len(lProject) > 0:
-			iCurrentProject = lProject[0][1]
 		self.placeProjects()
 
 	def placeProjects(self):
@@ -120,79 +139,101 @@ class WBProjectScreen:
 					sText = u"%s (%d)" %(sText, iCount)
 			if iCount == 0:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if item[1] == iCurrentProject:
-				screen.setButtonGFC("CurrentProjectPlus", u"", "", screen.getXResolution() /5 + 25, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-				screen.setButtonGFC("CurrentProjectMinus", u"", "", screen.getXResolution() /5 + 50, self.iTable_Y - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-				screen.setLabel("CurrentProjectText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution() /5 + 75, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setTableText("WBProject", iColumn, iRow, "<font=3>" + sColor + sText + "</font></color>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 6785, item[1], CvUtil.FONT_LEFT_JUSTIFY )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
-		global iCurrentProject
 		global iChange
+		global iChangeType
+		global bApplyAll
+		global bNoBarb
+		global iProjectType
 
 		if inputClass.getFunctionName() == "ChangeBy":
-			iIndex = screen.getSelectedPullDownID("ChangeBy")
-			iChange = screen.getPullDownData("ChangeBy", iIndex)
+			iChange = screen.getPullDownData("ChangeBy", screen.getSelectedPullDownID("ChangeBy"))
 
 		elif inputClass.getFunctionName() == "CurrentTeam":
 			iIndex = screen.getPullDownData("CurrentTeam", screen.getSelectedPullDownID("CurrentTeam"))
-			self.interfaceScreen(gc.getTeam(iIndex))
+			self.interfaceScreen(iIndex)
 
 		elif inputClass.getFunctionName() == "ProjectType":
-			self.iProjectType = screen.getPullDownData("ProjectType", screen.getSelectedPullDownID("ProjectType"))
+			iProjectType = screen.getPullDownData("ProjectType", screen.getSelectedPullDownID("ProjectType"))
 			self.sortProjects()
+
+		elif inputClass.getFunctionName() == "ChangeType":
+			iChangeType = screen.getPullDownData("ChangeType", screen.getSelectedPullDownID("ChangeType"))
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBPlayerScreen.WBPlayerScreen(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pTeam.getLeaderID())
 			elif iIndex == 1:
-				WBTeamScreen.WBTeamScreen(self.top).interfaceScreen(pTeam.getID())
+				WBTeamScreen.WBTeamScreen().interfaceScreen(iTeam)
 			elif iIndex == 3:
-				WBTechScreen.WBTechScreen(self.top).interfaceScreen(pTeam)
+				WBTechScreen.WBTechScreen().interfaceScreen(iTeam)
 			elif iIndex == 4:
-				WBPlayerUnits.WBPlayerUnits(self.top).interfaceScreen(pTeam.getLeaderID())
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(pTeam.getLeaderID())
+			elif iIndex == 11:
+				WBInfoScreen.WBInfoScreen().interfaceScreen(pTeam.getLeaderID())
 
-		elif inputClass.getFunctionName().find("ProjectAll") > -1:
-			self.handlePlatyProjectAll(inputClass.getData1())
+		elif inputClass.getFunctionName() == "ProjectAll":
+			for item in lProject:
+				self.editProject(item[1])
 			self.placeProjects()
 
 		elif inputClass.getFunctionName() == "WBProject":
-			iCurrentProject = inputClass.getData2()
+			self.editProject(inputClass.getData2())
 			self.placeProjects()
 
-		elif inputClass.getFunctionName() == "CurrentProjectPlus":
-			self.handlePlatyProjectCount(iCurrentProject, iChange)
-			self.placeProjects()
+		elif inputClass.getFunctionName() == "ApplyAll":
+			bApplyAll = not bApplyAll
+			sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_WB_COPY_ALL", (CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYERS", ()),)) + "</font>"
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if bApplyAll:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.modifyString("ApplyAll", sColor + sText + "</color>", 0)
 
-		elif inputClass.getFunctionName() == "CurrentProjectMinus":
-			self.handlePlatyProjectCount(iCurrentProject, - iChange)
-			self.placeProjects()
+		elif inputClass.getFunctionName() == "NoBarbarians":
+			bNoBarb = not bNoBarb
+			sText = u"<font=3b>" + CyTranslator().getText("TXT_KEY_GAME_OPTION_NO_BARBARIANS", ()) + "</font>"
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if bNoBarb:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.modifyString("NoBarbarians", sColor + sText + "</color>", 0)
 		return 1
 
-	def handlePlatyProjectAll(self, iData1):
-		for item in lProject:
-			if iData1 % 2:
-				self.handlePlatyProjectCount(item[1], - iChange)
-			else:
-				self.handlePlatyProjectCount(item[1], iChange)
-
-	def handlePlatyProjectCount(self, iData1, iCount):
-		if iCount < 0:
-			iCount = max(iCount, - pTeam.getProjectCount(iData1))
+	def editProject(self, item):
+		if bApplyAll:
+			for i in xrange(gc.getMAX_TEAMS()):
+				pTeamX = gc.getTeam(i)
+				if pTeamX.isBarbarian() and bNoBarb: continue
+				if pTeamX.isAlive():
+					self.modifyCount(item, pTeamX)
 		else:
-			Info = gc.getProjectInfo(iData1)
+			self.modifyCount(item, pTeam)
+		if gc.getProjectInfo(item).isAllowsNukes() and CyGame().getProjectCreatedCount(item) == 0:
+			CyGame().makeNukesValid(False)
+
+	def modifyCount(self, item, pTeamX):
+		iCount = iChange
+		if iChangeType == 0:
+			iCount = -iCount
+			iCount = max(iCount, - pTeamX.getProjectCount(item))
+		else:
+			Info = gc.getProjectInfo(item)
 			iTeam = Info.getMaxTeamInstances()
 			iWorld = Info.getMaxGlobalInstances()
 			iMax = max(iTeam, iWorld)
 			if iTeam > -1 and iWorld > -1:
 				iMax = min(iTeam, iWorld)
 			if iMax > -1:
-				iCount = min(iCount, iMax - pTeam.getProjectCount(iData1))
-		pTeam.changeProjectCount(iData1, iCount)
-		if gc.getProjectInfo(iData1).isAllowsNukes() and CyGame().getProjectCreatedCount(iData1) == 0:
-			CyGame().makeNukesValid(False)
+				iCount = min(iCount, iMax - pTeamX.getProjectCount(item))
+		pTeamX.changeProjectCount(item, iCount)
+		if CvPlatyBuilderScreen.bPython and iCount > 0:
+			pCapital = gc.getPlayer(pTeamX.getLeaderID()).getCapitalCity()
+			if not pCapital.isNone():
+				for i in xrange(iCount):
+					CvEventManager.CvEventManager().onProjectBuilt([pCapital, item])
 
 	def update(self, fDelta):
 		return 1
