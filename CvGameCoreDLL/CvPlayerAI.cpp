@@ -22494,7 +22494,12 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	*/
 
 	//TODO - reference getMojoFactor() instead?
+	if (AI_getMojoFactor() > 10)
+	{
+		return 1;
+	}
 	// Count amount of mana
+	/*
 	int iTotalMana = 0;
 	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 	{
@@ -22512,6 +22517,7 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	{
 		return 1;
 	}
+	*/
 
 	if (bHasMageTrait)
 	{
