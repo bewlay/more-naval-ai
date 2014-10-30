@@ -27089,6 +27089,17 @@ void CvUnitAI::AI_PatrolMove()
 		return;
 	}
 
+	// this should be in the AI_guardcity function
+	if (plot()->isCity() && plot()->getOwner() == getOwner() && bDanger)
+	{
+		if (plot()->getPlotCity()->AI_neededDefenders() >= plot()->getNumDefenders(getOwnerINLINE()))
+		{
+			logBBAI("   ...staying to guard city");
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
+	}
+
 	// Attack choking units
 	if( plot()->getOwnerINLINE() == getOwnerINLINE() && bDanger )
 	{
@@ -27171,7 +27182,7 @@ void CvUnitAI::AI_PatrolMove()
 		return;
 	}
 
-	if (!bDanger && !bHero)
+	if (!bDanger && !bHero && !bAtWar)
 	{
 		if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
 		{
@@ -29567,16 +29578,21 @@ bool CvUnitAI::AI_mageMove()
 
 void CvUnitAI::AI_terraformerMove()
 {
-	if (!isChanneler())
-	{
-		AI_setUnitAIType(UNITAI_ATTACK_CITY);
-		AI_setGroupflag(GROUPFLAG_CONQUEST);
-		return;
-	}
 
 	if( gUnitLogLevel >= 3)
 	{
 			logBBAI("     %S (Unit %d) starting terraformer move\n", getName().GetCString(), getID());
+	}
+
+	if (!isChanneler())
+	{
+		if( gUnitLogLevel >= 3)
+		{
+			logBBAI("       WARNING! Not a Channeler! Resetting AI for this unit.\n");
+		}
+		AI_setUnitAIType((UnitAITypes)m_pUnitInfo->getDefaultUnitAIType());
+		AI_setGroupflag(GROUPFLAG_NONE);
+		return;
 	}
 
 	if (plot()->isCity() && (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3)))
@@ -29584,13 +29600,6 @@ void CvUnitAI::AI_terraformerMove()
         getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
-	// ToDo - try and move some of the terraformer python function into the DLL
-	// loop through spells
-	// if is allowautomateterrain()
-	// need to avoid scorching the wrong places - this is the tricky part without harcoding it
-	// cast spell; break
-	// if !canmove; return
-	// else look for work -> go to python for this
 
     CyUnit* pyUnit1 = new CyUnit(this);
     CyArgsList argsList1;
@@ -29600,21 +29609,43 @@ void CvUnitAI::AI_terraformerMove()
     delete pyUnit1;	// python fxn must not hold on to this pointer
     if (lResult != 1)
     {
-		if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+		// lResult of 2 means that the unit has been told to move somewhere or 
+		// that the unit cannot move (either it already has or something is preventing it from moving)
+		if (lResult == 2)
 		{
-			if (isDeBuffer() || isBuffer() || isDirectDamageCaster())
+			if (isHasCasted())
 			{
-				AI_setUnitAIType(UNITAI_WARWIZARD);
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
 			}
 			else
 			{
-				AI_setUnitAIType(UNITAI_MAGE);
+				int iSpell = chooseSpell();
+				if (iSpell != NO_SPELL)
+				{
+					cast(iSpell);
+				}
+				return;
 			}
 		}
-		else
+
+		if (GET_TEAM(getTeam()).getAtWarCount(false) > 0) //nothing to do and we're at war
 		{
-			// Tholal note - are there other terraformers that arent mages or medics? This should probably be more dynamic
-			AI_setUnitAIType(UNITAI_MEDIC);
+			if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+			{
+				if (isDeBuffer() || isBuffer() || isDirectDamageCaster())
+				{
+					AI_setUnitAIType(UNITAI_WARWIZARD);
+				}
+				else
+				{
+					AI_setUnitAIType(UNITAI_MAGE);
+				}
+			}
+			else
+			{
+				AI_setUnitAIType((UnitAITypes)m_pUnitInfo->getDefaultUnitAIType());
+			}
 		}
 
 		if (AI_retreatToCity())
@@ -29626,10 +29657,12 @@ void CvUnitAI::AI_terraformerMove()
 		return;
     }
 	// Tholal note: terraformers can get stuck in loop, if they've casted, are at a terraformable plot and have movement left
+	/*
 	if (isHasCasted())
 	{
 		getGroup()->pushMission(MISSION_SKIP);
 	}
+	*/
 	return;
 }
 //returns true if the Unit can Summon stuff
