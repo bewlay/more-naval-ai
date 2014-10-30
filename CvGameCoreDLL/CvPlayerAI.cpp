@@ -9915,6 +9915,13 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 				return false;
 			}
 		}
+		else if ( pNode->m_data.m_eItemType == TRADE_OPEN_BORDERS ) // Vassals should not deny Open Borders requests
+		{
+			if (GET_TEAM(getTeam()).isVassal(GET_PLAYER(ePlayer).getTeam()))
+			{
+				return true;
+			}
+		}
 	}
 
 	if( !bVassalTrade )
