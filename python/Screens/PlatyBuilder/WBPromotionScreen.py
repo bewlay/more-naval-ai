@@ -187,7 +187,7 @@ class WBPromotionScreen:
 		iMana = gc.getInfoTypeForString('BONUSCLASS_MANA')
 
 		for i in xrange(gc.getNumPromotionInfos()):
-			if CvPlatyBuilderScreen.bHideInactive and not pUnit.isPromotionValid(i): continue
+			if CvPlatyBuilderScreen.bHideInactive and not isPromotionValid(i, pUnit.getUnitType(), True): continue
 			if iStatus == 0:#All promptions
 				pass
 			elif iStatus == 1:#Availible promotions

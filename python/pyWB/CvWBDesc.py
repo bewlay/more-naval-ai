@@ -2383,7 +2383,7 @@ class CvWBDesc:
 
 		f = file(self.getDescFileName(fileName), "w")		# open text file
 ##	## Platy Builder ##
-##		f.write("%s\n" %("Platy Builder 4.09"))
+##		f.write("%s\n" %("Platy Builder"))
 ##	## Platy Builder ##
 		f.write("Version=%d\n" %(self.getVersion(),))
 		self.gameDesc.write(f)	# write game info
