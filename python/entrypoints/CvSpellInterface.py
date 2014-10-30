@@ -3636,7 +3636,7 @@ def spellWildHunt(caster):
 	for pUnit in py.getUnitList():
 		pPlot = pUnit.plot()
 		if pUnit.baseCombatStr() > 0 and pUnit.isAlive() and not pPlot.isWater() and not pPlot.isPeak():
-			newUnit = pPlayer.initUnit(iWolf, pUnit.getX(), pUnit.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+			newUnit = pPlayer.initUnit(iWolf, pUnit.getX(), pUnit.getY(), UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.DIRECTION_SOUTH)
 			if pUnit.baseCombatStr() > 3:
 				i = (pUnit.baseCombatStr() - 2) / 2
 				newUnit.setBaseCombatStr(2 + i)
