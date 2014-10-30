@@ -17867,6 +17867,20 @@ int CvUnit::getDuration() const
 
 void CvUnit::setDuration(int iNewValue)
 {
+	/*
+	* Bugfix: If a unit is made temporary or permanent in a place in which units must pay supply costs,
+	* the NumOutsideUnits variable must be updated accordingly.
+	*/
+	if (m_iDuration != iNewValue && plot()->getTeam() != getTeam() && (plot()->getTeam() == NO_TEAM || !GET_TEAM(plot()->getTeam()).isVassal(getTeam()))) {
+		   if (m_iDuration == 0) {
+				   // The unit is now temporary.
+				   GET_PLAYER(getOwnerINLINE()).changeNumOutsideUnits(-1);
+		   } else if (iNewValue == 0) {
+				   // The unit is now permanent.
+				   GET_PLAYER(getOwnerINLINE()).changeNumOutsideUnits(1);
+		   }
+	}
+
 	m_iDuration = iNewValue;
 }
 
