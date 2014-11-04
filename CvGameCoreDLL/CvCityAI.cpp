@@ -11643,7 +11643,7 @@ int CvCityAI::AI_plotValue(CvPlot* pPlot, bool bAvoidGrowth, bool bRemove, bool 
 
 int CvCityAI::AI_experienceWeight()
 {
-	return ((getProductionExperience() + getDomainFreeExperience(DOMAIN_SEA)) * 2);
+	return (getProductionExperience() *2);// + getDomainFreeExperience(DOMAIN_SEA)) * 2);
 }
 
 
@@ -13363,16 +13363,21 @@ void CvCityAI::AI_updateSpecialYieldMultiplier()
 		if (GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_WORKER_SEA)
 		{
 			m_aiSpecialYieldMultiplier[YIELD_PRODUCTION] += 50;
-			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 50;
+			//m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 50;
 		}
 		if ((GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_WORKER) ||
 			(GC.getUnitInfo(eProductionUnit).getDefaultUnitAIType() == UNITAI_SETTLE))
 
 		{
-			m_aiSpecialYieldMultiplier[YIELD_COMMERCE] -= 50;
+			m_aiSpecialYieldMultiplier[YIELD_FOOD] += 50;
 		}
 	}
 
+	m_aiSpecialYieldMultiplier[YIELD_COMMERCE] += 25;
+	if (happyLevel() <= unhappyLevel(0))
+	{
+		m_aiSpecialYieldMultiplier[YIELD_FOOD] -= 50;
+	}
 	BuildingTypes eProductionBuilding = getProductionBuilding();
 	if (eProductionBuilding != NO_BUILDING)
 	{
