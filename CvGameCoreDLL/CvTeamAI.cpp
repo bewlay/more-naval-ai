@@ -1385,7 +1385,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	
 	// assaults on weak opponents
 	int iEnemyPowerPercent = kTeam.AI_getEnemyPowerPercent(true);
-	if (iEnemyPowerPercent < 75)
+	if (iEnemyPowerPercent < 65)
 	{
 		if (bAggressiveAI)
 		{
@@ -1473,6 +1473,12 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	{
 		iValue /= 2;
 	}
+
+	if (getPower(true) < 100)
+	{
+		iValue /= 2;
+	}
+
 	// MNAI ToDo - devalue based on distance
 	return iValue;
 }
@@ -4800,8 +4806,13 @@ int CvTeamAI::AI_noWarAttitudeProb(AttitudeTypes eAttitude) const
 		iProb /= iCount;
 		iVictoryStrategyAdjust /= iCount;
 	}
+	int iFinalCount = iProb - iVictoryStrategyAdjust;
+	if (iFinalCount > 90)
+	{
+		iFinalCount = 90;
+	}
 
-	iProb = std::max( 0, iProb - iVictoryStrategyAdjust );
+	iProb = std::max( 0, iFinalCount);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -4810,8 +4821,8 @@ int CvTeamAI::AI_noWarAttitudeProb(AttitudeTypes eAttitude) const
 /* Afforess	                  Start		 02/19/10                                               */
 /* Ruthless AI: Friends are just enemies we haven't made yet.                                   */
 /************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-		iProb /= 10;
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+		iProb /= 5;
 /************************************************************************************************/
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
