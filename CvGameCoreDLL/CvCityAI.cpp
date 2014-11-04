@@ -4424,7 +4424,6 @@ BuildingTypes CvCityAI::AI_bestBuildingThreshold(int iFocusFlags, int iMaxTurns,
 	iBestValue = 0;
 	eBestBuilding = NO_BUILDING;
 
-
 	if (iFocusFlags & BUILDINGFOCUS_CAPITAL)
 	{
 		int iBestTurnsLeft = iMaxTurns > 0 ? iMaxTurns : MAX_INT;
@@ -4633,6 +4632,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 	int iFoodDifference = foodDifference(false);
 
+	bool bFallow = kOwner.isIgnoreFood();
 	// Reduce reaction to espionage induced happy/health problems
 	int iHappinessLevel = happyLevel() - unhappyLevel(1);// + getEspionageHappinessCounter()/2;
 	int iAngryPopulation = range(-iHappinessLevel, 0, (getPopulation() + 1));
@@ -4926,7 +4926,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 /**	BETTER AI (isIgnoreFood)        merged  Sephi                            					**/
 /**						                                            							**/
 /*************************************************************************************************/
-            if (((iFocusFlags & BUILDINGFOCUS_HEALTHY) || (iPass > 0)) && !isNoUnhealthyPopulation() && !kOwner.isIgnoreFood())
+            if (((iFocusFlags & BUILDINGFOCUS_HEALTHY) || (iPass > 0)) && !isNoUnhealthyPopulation() && !bFallow)
             {
 /*************************************************************************************************/
 /**	END                                                                  						**/
@@ -5515,7 +5515,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				}
 				// End Tholal AI
 				
-				if (bCanPopRush)
+				if (bCanPopRush && !bFallow)
 				{
 					iValue += kBuilding.getFoodKept() / 2;
 				}
@@ -5840,7 +5840,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 			}
 			else
 			{
-				if (iFocusFlags & BUILDINGFOCUS_FOOD)
+				if (iFocusFlags & BUILDINGFOCUS_FOOD && !bFallow)
 				{
 					// Tholal AI - try to avoid food buildings unless we have use for them
 					if ((happyLevel() > unhappyLevel()) || bCanPopRush || isUnhappyProduction())
