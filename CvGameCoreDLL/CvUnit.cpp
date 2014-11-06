@@ -508,6 +508,8 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iCanMoveImpassable = 0;
 	m_iCanMoveLimitedBorders = 0;
 	m_iCastingBlocked = 0;
+	m_iUpgradeBlocked = 0;
+	m_iGiftingBlocked = 0;
 	m_iUpgradeOutsideBorders = 0;
 //>>>>Unofficial Bug Fix: Added by Denev 2010/02/22
 	m_bAvatarOfCivLeader = false;
@@ -4193,6 +4195,11 @@ bool CvUnit::canGift(bool bTestVisible, bool bTestTransport)
 //FfH: Added by Kael 04/22/2008 (to disable gifting)
 		return false;
 //FfH: End Add
+	}
+
+	if (isGiftingBlocked())
+	{
+		return false;
 	}
 
 	if (isAvatarOfCivLeader())
@@ -8665,6 +8672,11 @@ bool CvUnit::upgradeAvailable(UnitTypes eFromUnit, UnitClassTypes eToUnitClass, 
 bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 {
 	if (eUnit == NO_UNIT)
+	{
+		return false;
+	}
+
+	if (isUpgradeBlocked())
 	{
 		return false;
 	}
@@ -14462,6 +14474,8 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		changeCanMoveImpassable((kPromotionInfo.isAllowsMoveImpassable()) ? iChange : 0);
 		changeCanMoveLimitedBorders((kPromotionInfo.isAllowsMoveLimitedBorders()) ? iChange : 0);
 		changeCastingBlocked((kPromotionInfo.isCastingBlocked()) ? iChange : 0);
+		changeUpgradeBlocked((kPromotionInfo.isBlocksUpgrade()) ? iChange : 0);
+		changeGiftingBlocked((kPromotionInfo.isBlocksGifting()) ? iChange : 0);
 		changeUpgradeOutsideBorders((kPromotionInfo.isUpgradeOutsideBorders()) ? iChange : 0);
 		// End MNAI
 
@@ -19832,6 +19846,32 @@ void CvUnit::changeCastingBlocked(int iNewValue)
     }
 }
 
+bool CvUnit::isUpgradeBlocked() const
+{
+	return m_iUpgradeBlocked == 0 ? false : true;
+}
+
+void CvUnit::changeUpgradeBlocked(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iUpgradeBlocked += iNewValue;
+    }
+}
+
+bool CvUnit::isGiftingBlocked() const
+{
+	return m_iGiftingBlocked == 0 ? false : true;
+}
+
+void CvUnit::changeGiftingBlocked(int iNewValue)
+{
+    if (iNewValue != 0)
+    {
+        m_iGiftingBlocked += iNewValue;
+    }
+}
+
 bool CvUnit::isUpgradeOutsideBorders() const
 {
 	return m_iUpgradeOutsideBorders == 0 ? false : true;
@@ -19990,6 +20030,8 @@ void CvUnit::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iCanMoveImpassable);
 	pStream->Read(&m_iCanMoveLimitedBorders);
 	pStream->Read(&m_iCastingBlocked);
+	pStream->Read(&m_iUpgradeBlocked);
+	pStream->Read(&m_iGiftingBlocked);
 	pStream->Read(&m_iUpgradeOutsideBorders);
 	// End MNAI
 
@@ -20159,6 +20201,8 @@ void CvUnit::write(FDataStreamBase* pStream)
 	pStream->Write(m_iCanMoveImpassable);
 	pStream->Write(m_iCanMoveLimitedBorders);
 	pStream->Write(m_iCastingBlocked);
+	pStream->Write(m_iUpgradeBlocked);
+	pStream->Write(m_iGiftingBlocked);
 	pStream->Write(m_iUpgradeOutsideBorders);
 	// End MNAI
 

@@ -1530,6 +1530,16 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				szString.append(NEWLINE);
 				szString.append(gDLL->getText("TXT_KEY_UNIT_CASTING_BLOCKED"));
 			}
+			if (pUnit->isUpgradeBlocked())
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_UNIT_UPGRADE_BLOCKED"));
+			}
+			if (pUnit->isGiftingBlocked())
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_UNIT_GIFTING_BLOCKED"));
+			}
 			if (pUnit->isUpgradeOutsideBorders())
 			{
 				szString.append(NEWLINE);
@@ -9390,6 +9400,16 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CASTING_BLOCKED_PEDIA"));
+    }
+	if (kPromotionInfo.isBlocksUpgrade())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_UPGRADE_BLOCKED_PEDIA"));
+    }
+	if (kPromotionInfo.isBlocksGifting())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_GIFTING_BLOCKED_PEDIA"));
     }
 	if (kPromotionInfo.isUpgradeOutsideBorders())
     {
