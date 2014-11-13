@@ -1601,6 +1601,30 @@
 					<TerrainType>TERRAIN_TUNDRA</TerrainType>
 					<bTerrain>1</bTerrain>
 				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_GRASS</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_PLAINS</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_PEAK</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_HILL</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_COAST</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
+				<TerrainBoolean>
+					<TerrainType>TERRAIN_OCEAN</TerrainType>
+					<bTerrain>1</bTerrain>
+				</TerrainBoolean>
 			</TerrainBooleans>
 			<FootstepSounds>
 				<FootstepSound>

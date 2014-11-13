@@ -282,6 +282,7 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("setMinLevel", &CyPlot::setMinLevel, "int ()")
 		.def("getNumAnimalUnits", &CyPlot::getNumAnimalUnits, "int ()")
 		.def("setTempTerrainType", &CyPlot::setTempTerrainType, "void (TerrainTypes eNewValue, int iTimer)")
+		.def("getTempTerrainTimer", &CyPlot::getTempTerrainTimer, "int ()")
 		.def("isVisibleToCivTeam", &CyPlot::isVisibleToCivTeam, "bool ()")
 //FfH: End Add
 		// Super Forts begin *canal* *choke*
@@ -290,5 +291,10 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("getChokeValue", &CyPlot::getChokeValue, "int ()")
 		.def("calculateChokeValue", &CyPlot::calculateChokeValue, "void ()")
 		// Super Forts end
+
+// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+		.def("setTempFeatureType", &CyPlot::setTempFeatureType, "void (FeatureTypes eFeature, int iVariety, int iTimer)")
+		.def("setTempBonusType", &CyPlot::setTempBonusType, "void (BonusTypes eBonus, int iTimer)")
+// End Enhanced End of Winter
 	;
 }

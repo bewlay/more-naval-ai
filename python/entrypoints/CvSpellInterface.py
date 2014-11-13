@@ -10,11 +10,15 @@ import PyHelpers
 import CustomFunctions
 import ScenarioFunctions
 
+import Blizzards		#Added in Blizzards: TC01
+
 PyInfo = PyHelpers.PyInfo
 PyPlayer = PyHelpers.PyPlayer
 gc = CyGlobalContext()
 cf = CustomFunctions.CustomFunctions()
 sf = ScenarioFunctions.ScenarioFunctions()
+
+Blizzards = Blizzards.Blizzards()		#Added in Blizzards: TC01
 
 def cast(argsList):
 	pCaster, eSpell = argsList
@@ -612,12 +616,16 @@ def spellCallBlizzard(caster):
 		pBlizPlot.setFeatureType(-1, -1)
 	pPlot = caster.plot()
 	pPlot.setFeatureType(iBlizzard, 0)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
-		pPlot.setTerrainType(iTundra,True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
-		pPlot.setTerrainType(iTundra,True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT'):
-		pPlot.setTerrainType(iTundra,True,True)
+#Changed in Blizzards: TC01
+	Blizzards.doBlizzard(pPlot)
+#	Original Code:
+#	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
+#		pPlot.setTerrainType(iTundra,True,True)
+#	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
+#		pPlot.setTerrainType(iTundra,True,True)
+#	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT'):
+#		pPlot.setTerrainType(iTundra,True,True)
+#End of Blizzards
 
 def reqCallForm(caster):
 	if caster.getSummoner() == -1:

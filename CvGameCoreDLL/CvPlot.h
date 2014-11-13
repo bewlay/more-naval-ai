@@ -628,6 +628,29 @@ public:
 //<<<<Unofficial Bug Fix: End Add
 	bool isLair(bool bIgnoreIsAnimal = true, bool bAnimal = false) const;
 
+// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+	FeatureTypes getRealFeatureType() const;
+	int getRealFeatureVariety() const;
+	BonusTypes getRealBonusType() const;
+
+	void setRealFeatureType(FeatureTypes eFeature);
+	void setRealFeatureVariety(int iVariety);
+	void setRealBonusType(BonusTypes eBonus);
+
+	void setTempFeatureType(FeatureTypes eFeature, int iVariety, int iTimer);
+	void setTempBonusType(BonusTypes eBonus, int iTimer);
+
+	int getTempFeatureTimer() const;
+	int getTempBonusTimer() const;
+
+	void changeTempFeatureTimer(int iChange);
+	void changeTempBonusTimer(int iChange);
+
+	bool isHasTempTerrain();
+	bool isHasTempFeature();
+	bool isHasTempBonus();
+// End Enhanced End of Winter
+
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
@@ -764,6 +787,13 @@ protected:
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+	int m_iTempFeatureTimer;
+	int m_iTempBonusTimer;
+	short m_eRealFeatureType;
+	int m_iRealFeatureVariety;
+	short m_eRealBonusType;
+// End Enhanced End of Winter
 	// added so under cheat mode we can access protected stuff
 	friend class CvGameTextMgr;
 };

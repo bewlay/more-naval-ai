@@ -5671,6 +5671,26 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		if (pPlot->getTempTerrainTimer() > 0)
 		{
 			szString.append(CvWString::format(L" (temp terrain (%d turns left))", pPlot->getTempTerrainTimer()));
+			szString.append(CvWString::format(L"\n --Real Terrain: %s", GC.getTerrainInfo(pPlot->getRealTerrainType()).getDescription()));
+		}
+		if (pPlot->getTempBonusTimer() > 0)
+		{
+			if (pPlot->getBonusType() != NO_BONUS)
+			{
+				szString.append(CvWString::format(L"\n Temp bonus %s (%d turns left)", GC.getBonusInfo(pPlot->getBonusType()).getDescription(), pPlot->getTempBonusTimer()));
+			}
+			if (pPlot->getRealBonusType() != NO_BONUS)
+			{
+				szString.append(CvWString::format(L"\n --Real Bonus: %s", GC.getBonusInfo(pPlot->getRealBonusType()).getDescription()));
+			}
+		}
+		if (pPlot->getTempFeatureTimer() > 0)
+		{
+			szString.append(CvWString::format(L"\n Temp feature %s (%d turns left)", GC.getFeatureInfo(pPlot->getFeatureType()).getDescription(), pPlot->getTempFeatureTimer()));
+			if (pPlot->getRealFeatureType() != NO_FEATURE)
+			{
+				szString.append(CvWString::format(L"\n --Real Feature: %s", GC.getFeatureInfo(pPlot->getRealFeatureType()).getDescription()));
+			}
 		}
 
 		FAssert((0 < GC.getNumBonusInfos()) && "GC.getNumBonusInfos() is not greater than zero but an array is being allocated in CvInterface::updateHelpStrings");

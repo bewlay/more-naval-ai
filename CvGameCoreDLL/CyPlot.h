@@ -281,11 +281,18 @@ public:
 	void setMinLevel(int iNewValue);
     int getNumAnimalUnits() const;
 	void setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer);
+	int getTempTerrainTimer() const;
 	bool isVisibleToCivTeam() const;
 //FfH: End Add
 	// Super Forts begin *canal* *choke*
 	int getCanalValue();
 	void calculateCanalValue();
+
+// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+	void setTempFeatureType(int /*FeatureTypes*/ eFeature, int iVariety, int iTimer);
+	void setTempBonusType(int /*BonusTypes*/ eBonus, int iTimer);
+// End Enhanced End of Winter
+
 	int getChokeValue();
 	void calculateChokeValue();
 	// Super Forts end

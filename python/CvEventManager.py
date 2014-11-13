@@ -42,6 +42,8 @@ import WBPlotScreen
 import CvPlatyBuilderScreen
 ## Ultrapack ##
 
+import Blizzards		#Added in Blizzards: TC01
+
 # globals
 cf = CustomFunctions.CustomFunctions()
 gc = CyGlobalContext()
@@ -55,6 +57,7 @@ game = gc.getGame()
 cs = CvCorporationScreen.cs
 #FfH: Card Game: end
 
+Blizzards = Blizzards.Blizzards()		#Added in Blizzards: TC01
 
 # globals
 ###################################################
@@ -414,6 +417,8 @@ class CvEventManager:
 			introMovie.interfaceScreen()
 
 		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_THAW):
+# Enhanced End of Winter - Adpated from FlavourMod
+			'''		
 			iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
 			iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
 			iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
@@ -423,16 +428,125 @@ class CvEventManager:
 				pPlot = CyMap().plotByIndex(i)
 				if pPlot.getFeatureType() == -1:
 					if pPlot.getImprovementType() == -1:
-						if not pPlot.isWater():
+						if pPlot.isWater() == False:
 							iTerrain = pPlot.getTerrainType()
 							if iTerrain == iTundra:
-								pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(90, "Thaw") + 10)
-							elif iTerrain == iGrass:
-								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(90, "Thaw") + 10)
-							elif iTerrain == iPlains:
-								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(90, "Thaw") + 10)
-							elif iTerrain == iDesert:
-								pPlot.setTempTerrainType(iPlains, CyGame().getSorenRandNum(90, "Thaw") + 10)
+								pPlot.setTempTerrainType(iSnow, CyGame().getSorenRandNum(90, "Bob") + 10)
+							if iTerrain == iGrass:
+								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(90, "Bob") + 10)
+							if iTerrain == iPlains:
+								pPlot.setTempTerrainType(iTundra, CyGame().getSorenRandNum(90, "Bob") + 10)
+							if iTerrain == iDesert:
+								pPlot.setTempTerrainType(iPlains, CyGame().getSorenRandNum(90, "Bob") + 10)
+			'''
+			FLAT_WORLDS = ["ErebusWrap", "Erebus"]			# map scripts with wrapping but no equator
+			MAX_EOW_PERCENTAGE = 0.25 						# percentage of EoW on total game turns 
+			THAW_DELAY_PERCENTAGE = 0.05 					# don't start thawing for x percent of EoW
+
+			# forest varieties
+			DECIDUOUS_FOREST = 0
+			CONIFEROUS_FOREST = 1
+			SNOWY_CONIFEROUS_FOREST = 2
+			
+			dice = gc.getGame().getSorenRand()
+
+			iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
+			iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+			iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
+			iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
+			iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
+			iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
+			iIce = gc.getInfoTypeForString('FEATURE_ICE')
+			iForest = gc.getInfoTypeForString('FEATURE_FOREST')
+			iJungle = gc.getInfoTypeForString('FEATURE_JUNGLE')
+			iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
+
+#			iTotalGameTurns = gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getGameTurnInfo(0).iNumGameTurnsPerIncrement
+#			iMaxEOWTurns = max(1, int(iTotalGameTurns * MAX_EOW_PERCENTAGE))
+#			iThawDelayTurns = max(1, int(iMaxEOWTurns * THAW_DELAY_PERCENTAGE))
+
+			iMaxLatitude = max(CyMap().getTopLatitude(), abs(CyMap().getBottomLatitude()))
+			bIsFlatWorld = not (CyMap().isWrapX() or CyMap().isWrapY()) or CyMap().getMapScriptName() in FLAT_WORLDS
+
+			for i in range (CyMap().numPlots()):
+				pPlot = CyMap().plotByIndex(i)
+				eTerrain = pPlot.getTerrainType()
+				eFeature = pPlot.getFeatureType()
+				iVariety = pPlot.getFeatureVariety()
+				eBonus = pPlot.getBonusType(TeamTypes.NO_TEAM)
+
+				iTurns = dice.get(110, "Thaw") + 40
+				iTurns = (iTurns * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
+				if not bIsFlatWorld:
+					iLatitude = abs(pPlot.getLatitude())
+					iTurns = int(iTurns * ((float(iLatitude) / iMaxLatitude) ** 0.4))
+#				iTurns += iThawDelayTurns
+
+				# cover erebus' oceans and lakes in ice
+				if pPlot.isWater():
+					if bIsFlatWorld:
+						if dice.get(100, "Bob") < 90:
+							pPlot.setTempFeatureType(iIce, 0, iTurns)
+					elif iLatitude + 10 > dice.get(50, "Bob"):
+						pPlot.setTempFeatureType(iIce, 0, iTurns)
+
+				# change terrains to colder climate versions
+				if eTerrain == iTundra:
+					if dice.get(100, "Tundra to Snow") < 90:
+						pPlot.setTempTerrainType(iSnow, iTurns)
+				elif eTerrain == iGrass:
+					if eFeature != iJungle: 
+						if dice.get(100, "Grass to Snow or Tundra") < 60:
+							pPlot.setTempTerrainType(iSnow, iTurns)
+						else:
+							pPlot.setTempTerrainType(iTundra, iTurns)
+				elif eTerrain == iPlains:
+					if dice.get(100, "Plains to Snow or Tundra") < 30:
+						pPlot.setTempTerrainType(iSnow, iTurns)
+					else:
+						pPlot.setTempTerrainType(iTundra, iTurns)
+				elif eTerrain == iDesert:
+					if dice.get(100, "Desert to Tundra or Plains") < 50:
+						pPlot.setTempTerrainType(iTundra, iTurns)
+					else:
+						pPlot.setTempTerrainType(iPlains, iTurns)
+				elif eTerrain == iMarsh:
+					pPlot.setTempTerrainType(iGrass, iTurns)
+
+				# change forests to colder climate versions
+				if eFeature == iForest:
+					if iVariety == DECIDUOUS_FOREST:
+						pPlot.setTempFeatureType(iForest, CONIFEROUS_FOREST, iTurns)
+					elif iVariety == CONIFEROUS_FOREST:
+						pPlot.setTempFeatureType(iForest, SNOWY_CONIFEROUS_FOREST, iTurns)
+				elif eFeature == iJungle:
+					pPlot.setTempFeatureType(iForest, DECIDUOUS_FOREST, iTurns)
+				elif eFeature == FeatureTypes.NO_FEATURE:
+					if dice.get(100, "Spawn Blizzard") < 5:
+						pPlot.setFeatureType(iBlizzard, -1)
+
+				# remove invalid bonuses or replace them (if food) with a valid surrogate
+				if eBonus != BonusTypes.NO_BONUS:
+					pPlot.setBonusType(BonusTypes.NO_BONUS)
+					if not pPlot.canHaveBonus(eBonus, True):
+						if gc.getBonusInfo(eBonus).getYieldChange(YieldTypes.YIELD_FOOD) > 0:
+							iPossibleTempFoodBonuses = []
+							for iLoopBonus in range(gc.getNumBonusInfos()):
+								if gc.getBonusInfo(iLoopBonus).getYieldChange(YieldTypes.YIELD_FOOD) > 0:
+									if pPlot.canHaveBonus(iLoopBonus, True):
+										iPossibleTempFoodBonuses.append(iLoopBonus)
+							pPlot.setBonusType(eBonus)
+							if len(iPossibleTempFoodBonuses) > 0:
+								pPlot.setTempBonusType(iPossibleTempFoodBonuses[dice.get(len(iPossibleTempFoodBonuses), "Bob")], iTurns)
+							else:
+								pPlot.setTempBonusType(BonusTypes.NO_BONUS, iTurns)
+						else:
+							pPlot.setBonusType(eBonus)
+							pPlot.setTempBonusType(BonusTypes.NO_BONUS, iTurns)
+					else:
+						pPlot.setBonusType(eBonus)
+			Blizzards.doBlizzardTurn()
+# End Enhanced End of Winter
 
 		for iPlayer in range(gc.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
@@ -532,6 +646,8 @@ class CvEventManager:
 		cs.doTurn()
 # FfH Card Game: end
 
+		Blizzards.doBlizzardTurn()		#Added in Blizzards: TC01
+		
 #		if( CyGame().getAIAutoPlay(self) == 0 ) :
 		if( game.getAIAutoPlay(game.getActivePlayer()) == 0 ) :
 			CvTopCivs.CvTopCivs().turnChecker(iGameTurn)

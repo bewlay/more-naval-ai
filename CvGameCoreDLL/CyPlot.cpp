@@ -1152,6 +1152,11 @@ void CyPlot::setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer)
 		m_pPlot->setTempTerrainType((TerrainTypes)eNewValue, iTimer);
 }
 
+int CyPlot::getTempTerrainTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempTerrainTimer() : -1;
+}
+
 bool CyPlot::isVisibleToCivTeam() const
 {
 	return m_pPlot ? m_pPlot->isVisibleToCivTeam() : false;
@@ -1180,3 +1185,17 @@ void CyPlot::calculateChokeValue()
 		m_pPlot->calculateChokeValue();
 }
 // Super Forts end
+
+// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+void CyPlot::setTempFeatureType(int /*FeatureTypes*/ eFeature, int iVariety, int iTimer)
+{
+	if (m_pPlot)
+		m_pPlot->setTempFeatureType((FeatureTypes) eFeature, iVariety, iTimer);
+}
+
+void CyPlot::setTempBonusType(int /*BonusTypes*/ eBonus, int iTimer)
+{
+	if (m_pPlot)
+		m_pPlot->setTempBonusType((BonusTypes) eBonus, iTimer);
+}
+// End Enhanced End of Winter

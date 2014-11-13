@@ -275,6 +275,13 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
     m_iTempTerrainTimer = 0;
 //FfH: End Add
 
+// Enhanced End of Winter
+	m_eRealFeatureType = NO_FEATURE;
+	m_iRealFeatureVariety = -1;
+	m_iTempFeatureTimer = 0;
+	m_eRealBonusType = NO_BONUS;
+	m_iTempBonusTimer = 0;
+// End Enhanced End of Winter
 	m_plotCity.reset();
 	m_workingCity.reset();
 	m_workingCityOverride.reset();
@@ -378,6 +385,14 @@ void CvPlot::erase()
    	m_eRealTerrainType = NO_TERRAIN;
     m_iTempTerrainTimer = 0;
 //FfH: End Add
+
+// Enhanced End of Winter
+	m_eRealFeatureType = NO_FEATURE;
+	m_iRealFeatureVariety = -1;
+	m_iTempFeatureTimer = 0;
+	m_eRealBonusType = NO_BONUS;
+	m_iTempBonusTimer = 0;
+// End Enhanced End of Winter
 
 	// disable rivers
 	setNOfRiver(false, NO_CARDINALDIRECTION);
@@ -605,7 +620,7 @@ void CvPlot::doTurn()
         changeTempTerrainTimer(-1);
         if (getTempTerrainTimer() == 0)
         {
-			if(getRealTerrainType()!=NO_TERRAIN)	// added Sephi
+			if (getRealTerrainType() != NO_TERRAIN)
 			{
 				setTerrainType(getRealTerrainType(),true,true);
 				setRealTerrainType(NO_TERRAIN);
@@ -613,6 +628,60 @@ void CvPlot::doTurn()
         }
     }
 //FfH: End Add
+
+// Enhanced End of Winter
+	if (isHasTempFeature())
+	{
+		changeTempFeatureTimer(-1);
+
+		if (getTempFeatureTimer() == 0)
+		{
+			setFeatureType(getRealFeatureType(), getRealFeatureVariety());
+		}
+	}
+
+	if (isHasTempBonus())
+	{
+		changeTempBonusTimer(-1);
+
+		if (getTempBonusTimer() == 0)
+		{
+			CvCity* pCity;
+			pCity = GC.getMapINLINE().findCity(getX_INLINE(), getY_INLINE(), getOwnerINLINE(), NO_TEAM, false);
+
+			if (pCity != NULL)
+			{
+				if (isRevealed(pCity->getTeam(), false))
+				{
+					if (stepDistance(getX(), getY(), pCity->getX(), pCity->getY()) <= 5)
+					{	
+						CvWString szBuffer;
+
+						if (getBonusType() != NO_BONUS)
+						{
+							if (GET_TEAM(pCity->getTeam()).isHasTech((TechTypes)(GC.getBonusInfo(getBonusType()).getTechReveal())))
+							{
+								szBuffer = gDLL->getText("TXT_KEY_MISC_LOST_WINTER_RESOURCE", GC.getBonusInfo(getBonusType()).getTextKeyWide(), pCity->getNameKey());
+								gDLL->getInterfaceIFace()->addMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_DISCOVERBONUS", MESSAGE_TYPE_MINOR_EVENT, GC.getBonusInfo(getBonusType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX_INLINE(), getY_INLINE(), true, true);
+							}
+						}
+
+						if (getRealBonusType() != NO_BONUS)
+						{
+							if (GET_TEAM(pCity->getTeam()).isHasTech((TechTypes)(GC.getBonusInfo(getRealBonusType()).getTechReveal())))
+							{
+								szBuffer = gDLL->getText("TXT_KEY_MISC_DISCOVERED_SUMMER_RESOURCE", GC.getBonusInfo(getRealBonusType()).getTextKeyWide(), pCity->getNameKey());
+								gDLL->getInterfaceIFace()->addMessage(pCity->getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_DISCOVERBONUS", MESSAGE_TYPE_MINOR_EVENT, GC.getBonusInfo(getRealBonusType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX_INLINE(), getY_INLINE(), true, true);
+							}
+						}
+					}
+				}
+			}
+
+			setBonusType(getRealBonusType());
+		}
+	}
+// End Enhanced End of Winter
 
 	/*
 	if (!isOwned())
@@ -6516,6 +6585,13 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety)
 
 	eOldFeature = getFeatureType();
 
+// Enhanced End of Winter
+	if (isHasTempFeature())
+	{
+		changeTempFeatureTimer(-getTempFeatureTimer());
+	}
+// End Enhanced End of Winter
+
 	if (eNewValue != NO_FEATURE)
 	{
 		if (iVariety == -1)
@@ -6678,6 +6754,14 @@ BonusTypes CvPlot::getNonObsoleteBonusType(TeamTypes eTeam) const
 
 void CvPlot::setBonusType(BonusTypes eNewValue)
 {
+
+// Enhanced End of Winter
+	if (isHasTempBonus())
+	{
+		changeTempBonusTimer(-getTempBonusTimer());
+	}
+// End Enhanced End of Winter
+
 	if (getBonusType() != eNewValue)
 	{
 		if (getBonusType() != NO_BONUS)
@@ -9926,7 +10010,19 @@ void CvPlot::doFeature()
 /************************************************************************************************/
 
 								{
+// Enhanced End of Winter
+/**
 									setFeatureType((FeatureTypes)iI);
+**/
+									if (getTempTerrainTimer() > 0  && !GC.getFeatureInfo((FeatureTypes)iI).isTerrain(getRealTerrainType()))
+									{
+										setTempFeatureType((FeatureTypes)iI, -1, getTempTerrainTimer());
+									}
+									else
+									{
+										setFeatureType((FeatureTypes)iI);
+									}
+// End Enhanced End of Winter
 
 									pCity = GC.getMapINLINE().findCity(getX_INLINE(), getY_INLINE(), getOwnerINLINE(), NO_TEAM, false);
 
@@ -10369,6 +10465,13 @@ void CvPlot::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iTempTerrainTimer);
 //FfH: End Add
 
+// Enhanced End of Winter
+	pStream->Read(&m_eRealFeatureType);
+	pStream->Read(&m_iRealFeatureVariety);
+	pStream->Read(&m_iTempFeatureTimer);
+	pStream->Read(&m_eRealBonusType);
+	pStream->Read(&m_iTempBonusTimer);
+// End Enhanced End of Winter
 	SAFE_DELETE_ARRAY(m_aiCulture);
 	pStream->Read(&cCount);
 	if (cCount > 0)
@@ -10621,6 +10724,13 @@ void CvPlot::write(FDataStreamBase* pStream)
 	pStream->Write(m_iTempTerrainTimer);
 //FfH: End Add
 
+// Enhanced End of Winter
+	pStream->Write(m_eRealFeatureType);
+	pStream->Write(m_iRealFeatureVariety);
+	pStream->Write(m_iTempFeatureTimer);
+	pStream->Write(m_eRealBonusType);
+	pStream->Write(m_iTempBonusTimer);
+// End Enhanced End of Winter
 	if (NULL == m_aiCulture)
 	{
 		pStream->Write((char)0);
@@ -12306,3 +12416,103 @@ bool CvPlot::isLair(bool bIgnoreIsAnimal, bool bAnimal) const
 	}
 	return false;
 }
+
+// Enhanced End of Winter
+FeatureTypes CvPlot::getRealFeatureType() const
+{
+	return (FeatureTypes) m_eRealFeatureType;
+}
+
+BonusTypes CvPlot::getRealBonusType() const
+{
+	return (BonusTypes) m_eRealBonusType;
+}
+
+int CvPlot::getRealFeatureVariety() const
+{
+	return (FeatureTypes) m_iRealFeatureVariety;
+}
+
+void CvPlot::setRealFeatureType(FeatureTypes eFeature)
+{
+	m_eRealFeatureType = eFeature;
+}
+
+void CvPlot::setRealBonusType(BonusTypes eBonus)
+{
+	m_eRealBonusType = eBonus;
+}
+
+void CvPlot::setRealFeatureVariety(int iVariety)
+{
+	m_iRealFeatureVariety = iVariety;
+}
+
+void CvPlot::setTempFeatureType(FeatureTypes eFeature, int iVariety, int iTimer)
+{
+	if (getFeatureType() != eFeature || getFeatureVariety() != iVariety)
+	{
+		if (!isHasTempFeature())
+		{
+			setRealFeatureType(getFeatureType());
+			setRealFeatureVariety(getFeatureVariety());
+		}
+		setFeatureType(eFeature, iVariety);
+		changeTempFeatureTimer(iTimer);
+	}
+}
+
+void CvPlot::setTempBonusType(BonusTypes eBonus, int iTimer)
+{
+	if (getBonusType(NO_TEAM) != eBonus)
+	{
+		if (!isHasTempBonus())
+		{
+			setRealBonusType(getBonusType(NO_TEAM));
+		}
+		setBonusType(eBonus);
+		changeTempBonusTimer(iTimer);
+	}
+}
+
+int CvPlot::getTempFeatureTimer() const
+{
+	return m_iTempFeatureTimer;
+}
+
+int CvPlot::getTempBonusTimer() const
+{
+	return m_iTempBonusTimer;
+}
+
+bool CvPlot::isHasTempTerrain()
+{
+	return getTempTerrainTimer() > 0;
+}
+
+bool CvPlot::isHasTempFeature()
+{
+	return getTempFeatureTimer() > 0;
+}
+
+bool CvPlot::isHasTempBonus()
+{
+	return getTempBonusTimer() > 0;
+}
+
+void CvPlot::changeTempFeatureTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iTempFeatureTimer += iChange;
+	}
+}
+
+void CvPlot::changeTempBonusTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iTempBonusTimer += iChange;
+	}
+}
+// End Enhanced End of Winter
