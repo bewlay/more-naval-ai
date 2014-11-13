@@ -122,6 +122,8 @@ Somnium = 0
 ChangeCiv = 1
 #Declare war to Barbarians
 BarbarianWar = 2
+#Hyborem's Whisper
+HyboremWhisper = 3
 
 # Popup defines (TODO: Expose these from C++)
 FONT_CENTER_JUSTIFY=1<<2

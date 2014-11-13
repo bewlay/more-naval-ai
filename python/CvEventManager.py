@@ -374,7 +374,11 @@ class CvEventManager:
 ## Declare war to Barbarians.
 		elif (iData1 == CvUtil.BarbarianWar):
 			gc.getTeam(iData2).declareWar(iData3, False, WarPlanTypes.WARPLAN_TOTAL)
-
+		elif (iData1 == CvUtil.HyboremWhisper):
+			pPlayer = gc.getPlayer(iData2)
+			pPlot = CyMap().plot(iData3, iData4)
+			pCity = pPlot.getPlotCity()
+			pPlayer.acquireCity(pCity, False, True)
 
 	def onInit(self, argsList):
 		'Called when Civ starts up'
