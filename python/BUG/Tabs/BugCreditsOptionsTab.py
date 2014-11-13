@@ -19,7 +19,7 @@ credits = [
 			"Testers - all the folk who provided feedback and suggestions",
 			"Puppet States - original code by Dom Pedro II, updated by stolenrays, adopted for FFH by the MNAI team",
 			"Advanced Diplomacy - original code by Afforess, updated by stolenrays, adapted for FFH by the MNAI team",
-			" - additional code and tweaks borrowed from Denev, Wild Mana, Flavor Mod and K-mod",
+			" - additional code and tweaks borrowed from Denev, Wild Mana, Flavor Mod, K-mod and Better Blizzards",
 			"-",
 			"-", "REVOLUTIONDCM_TEAM|RevDCM Team",
 			"jdog5000 - Designer, Lead Programmer",
