@@ -14,6 +14,7 @@
 #include "CyPlot.h"
 #include "CyArgsList.h"
 
+#include "BetterBTSAI.h"
 //
 // static
 //
@@ -1269,18 +1270,21 @@ void CvMapGenerator::addImprovements()
                 {
                     for (int iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
                     {
-                        if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_TEAM))
-                        {
-							if (GC.getImprovementInfo((ImprovementTypes)iJ).getSpawnUnitType() != NO_UNIT)
+						if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_TEAM))
+						{
+							int iImprovementChance = GC.getGameINLINE().getSorenRandNum(10000, "Spawn Improvement");
+							if (iImprovementChance < GC.getImprovementInfo((ImprovementTypes)iJ).getAppearanceProbability())
 							{
-								if (!pPlot->isVisibleToCivTeam())
+								if (GC.getImprovementInfo((ImprovementTypes)iJ).getSpawnUnitType() != NO_UNIT)
 								{
-									if (GC.getGameINLINE().getSorenRandNum(10000, "Spawn Improvement") < GC.getImprovementInfo((ImprovementTypes)iJ).getAppearanceProbability())
+									if (pPlot->isVisibleToCivTeam()) // does this even work? I think civs havent been placed yet
 									{
-										pPlot->setImprovementType((ImprovementTypes)iJ);
-										pPlot->setFeatureType(NO_FEATURE);
+										continue;
 									}
 								}
+								logBBAI("  Placing %S at %d, %d", GC.getImprovementInfo((ImprovementTypes)iJ).getDescription(), pPlot->getX(), pPlot->getY());
+								pPlot->setImprovementType((ImprovementTypes)iJ);
+								pPlot->setFeatureType(NO_FEATURE);
 							}
                         }
                     }
