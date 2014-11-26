@@ -5177,7 +5177,8 @@ class CvMainInterface:
 														szTempBuffer = " (" + localText.getColorText("TXT_KEY_ALIGNMENT_GOOD", (), gc.getInfoTypeForString("COLOR_YELLOW")) + ") "
 													#szBuffer = szBuffer + szTempBuffer
 													szPlayerName = szPlayerName + szTempBuffer
-													scores.setName(szPlayerName)
+													if (bAlignIcons):
+														scores.setName(szPlayerName)
 #FfH: End Add
 													if (gc.getPlayer(ePlayer).canTradeNetworkWith(gc.getGame().getActivePlayer()) and (ePlayer != gc.getGame().getActivePlayer())):
 														szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.TRADE_CHAR))
