@@ -187,13 +187,10 @@ class Blizzards:
 	
 			#Temporary terrain conversions
 			if not pPlot.isWater():
-				if not pPlot.getTempTerrainTimer() < iTurns: #Only convert existing temporary terrain if our timer will be longer than current timer
+				if pPlot.getTempTerrainTimer() < iTurns: #Only convert existing temporary terrain if our timer will be longer than current timer
 					if not pPlot.getTerrainType() == iSnow:
 						if (pPlot.getTerrainType() == iTundra) or pPlot.isHills():
 							pPlot.setTempTerrainType(iSnow, iTurns)
-						elif pPlot.isOwned():
-							if (gc.getPlayer(pPlot.getOwner()).getCivilizationType() == iIllians):
-								pPlot.setTempTerrainType(iSnow, iTurns)
 						else:
 							pPlot.setTempTerrainType(iTundra, iTurns)
 					

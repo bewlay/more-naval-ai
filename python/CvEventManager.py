@@ -463,6 +463,7 @@ class CvEventManager:
 			iIce = gc.getInfoTypeForString('FEATURE_ICE')
 			iForest = gc.getInfoTypeForString('FEATURE_FOREST')
 			iJungle = gc.getInfoTypeForString('FEATURE_JUNGLE')
+			iFloodplains = gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')
 			iBlizzard = gc.getInfoTypeForString('FEATURE_BLIZZARD')
 
 #			iTotalGameTurns = gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getGameTurnInfo(0).iNumGameTurnsPerIncrement
@@ -525,12 +526,14 @@ class CvEventManager:
 						pPlot.setTempFeatureType(iForest, SNOWY_CONIFEROUS_FOREST, iTurns)
 				elif eFeature == iJungle:
 					pPlot.setTempFeatureType(iForest, DECIDUOUS_FOREST, iTurns)
+				elif eFeature == iFloodplains:
+					pPlot.setTempFeatureType(FeatureTypes.NO_FEATURE, -1, iTurns)
 				elif eFeature == FeatureTypes.NO_FEATURE:
 					if dice.get(100, "Spawn Blizzard") < 5:
 						pPlot.setFeatureType(iBlizzard, -1)
 
-				# remove invalid bonuses or replace them (if food) with a valid surrogate
-				if eBonus != BonusTypes.NO_BONUS:
+				# temporarily remove invalid bonuses or replace them (if food) with a valid surrogate
+				if eBonus != BonusTypes.NO_BONUS and not gc.getBonusInfo(eBonus).isMana():
 					pPlot.setBonusType(BonusTypes.NO_BONUS)
 					if not pPlot.canHaveBonus(eBonus, True):
 						if gc.getBonusInfo(eBonus).getYieldChange(YieldTypes.YIELD_FOOD) > 0:
