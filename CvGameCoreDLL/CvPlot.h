@@ -603,14 +603,8 @@ public:
     bool isPythonActive() const;
     void setPythonActive(bool bNewValue);
 	int getRangeDefense(TeamTypes eDefender, int iRange, bool bFinal, bool bExcludeCenter) const;
-
-	TerrainTypes getRealTerrainType() const;
-	void setRealTerrainType(TerrainTypes eNewValue);
-	void setTempTerrainType(TerrainTypes eNewValue, int iTimer);
-	int getTempTerrainTimer() const;
-	void changeTempTerrainTimer(int iChange);
-
 //FfH: End Add
+
 /*************************************************************************************************/
 /** Skyre Mod                                                                                   **/
 /** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
@@ -628,28 +622,45 @@ public:
 //<<<<Unofficial Bug Fix: End Add
 	bool isLair(bool bIgnoreIsAnimal = true, bool bAnimal = false) const;
 
-// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+// Temporary map features (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+	TerrainTypes getRealTerrainType() const;
 	FeatureTypes getRealFeatureType() const;
 	int getRealFeatureVariety() const;
 	BonusTypes getRealBonusType() const;
+	ImprovementTypes getRealImprovementType() const;
+	RouteTypes getRealRouteType() const;
 
+	void setRealTerrainType(TerrainTypes eNewValue);
 	void setRealFeatureType(FeatureTypes eFeature);
 	void setRealFeatureVariety(int iVariety);
 	void setRealBonusType(BonusTypes eBonus);
+	void setRealImprovementType(ImprovementTypes eImprovement);
+	void setRealRouteType(RouteTypes eRoute);
 
+	void setTempTerrainType(TerrainTypes eNewValue, int iTimer);
 	void setTempFeatureType(FeatureTypes eFeature, int iVariety, int iTimer);
 	void setTempBonusType(BonusTypes eBonus, int iTimer);
+	void setTempImprovementType(ImprovementTypes eImprovement, int iTimer);
+	void setTempRouteType(RouteTypes eRoute, int iTimer);
 
+	int getTempTerrainTimer() const;
 	int getTempFeatureTimer() const;
 	int getTempBonusTimer() const;
+	int getTempImprovementTimer() const;
+	int getTempRouteTimer() const;
 
+	void changeTempTerrainTimer(int iChange);
 	void changeTempFeatureTimer(int iChange);
 	void changeTempBonusTimer(int iChange);
+	void changeTempImprovementTimer(int iChange);
+	void changeTempRouteTimer(int iChange);
 
 	bool isHasTempTerrain();
 	bool isHasTempFeature();
 	bool isHasTempBonus();
-// End Enhanced End of Winter
+	bool isHasTempImprovement();
+	bool isHasTempRoute();
+// End Temporary map features
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
@@ -787,13 +798,18 @@ protected:
 /**	END	                                        												**/
 /*************************************************************************************************/
 
-// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+
 	int m_iTempFeatureTimer;
 	int m_iTempBonusTimer;
+	int m_iTempImprovementTimer;
+	int m_iTempRouteTimer;
 	short m_eRealFeatureType;
 	int m_iRealFeatureVariety;
 	short m_eRealBonusType;
-// End Enhanced End of Winter
+	short /*ImprovementTypes*/ m_eRealImprovementType;
+	short /*RouteTypes*/ m_eRealRouteType;
+// End Temporary Map Items
 	// added so under cheat mode we can access protected stuff
 	friend class CvGameTextMgr;
 };

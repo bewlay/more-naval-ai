@@ -281,8 +281,6 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("getMinLevel", &CyPlot::getMinLevel, "int ()")
 		.def("setMinLevel", &CyPlot::setMinLevel, "int ()")
 		.def("getNumAnimalUnits", &CyPlot::getNumAnimalUnits, "int ()")
-		.def("setTempTerrainType", &CyPlot::setTempTerrainType, "void (TerrainTypes eNewValue, int iTimer)")
-		.def("getTempTerrainTimer", &CyPlot::getTempTerrainTimer, "int ()")
 		.def("isVisibleToCivTeam", &CyPlot::isVisibleToCivTeam, "bool ()")
 //FfH: End Add
 		// Super Forts begin *canal* *choke*
@@ -292,9 +290,43 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("calculateChokeValue", &CyPlot::calculateChokeValue, "void ()")
 		// Super Forts end
 
-// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+		// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+		.def("getRealFeatureType", &CyPlot::getRealFeatureType, "int ()")
+		.def("getRealFeatureVariety", &CyPlot::getRealFeatureVariety, "int ()")
+		.def("getRealBonusType", &CyPlot::getRealBonusType, "int ()")
+		.def("getRealImprovementType", &CyPlot::getRealImprovementType, "int ()")
+		.def("getRealRouteType", &CyPlot::getRealRouteType, "int ()")
+
+		.def("setRealTerrainType", &CyPlot::setRealTerrainType, "void (TerrainTypes eTerrain)")
+		.def("setRealFeatureType", &CyPlot::setRealFeatureType, "void (FeatureTypes eFeature)")
+		.def("setRealFeatureVariety", &CyPlot::setRealFeatureVariety, "void (int iVariety)")
+		.def("setRealBonusType", &CyPlot::setRealBonusType, "void (BonusTypes eBonus)")
+		.def("setRealImprovementType", &CyPlot::setRealImprovementType, "void (ImprovementTypes eImprovement)")
+		.def("setRealRouteType", &CyPlot::setRealRouteType, "void (RouteTypes eRoute)")
+
+		.def("setTempTerrainType", &CyPlot::setTempTerrainType, "void (TerrainTypes eNewValue, int iTimer)")
 		.def("setTempFeatureType", &CyPlot::setTempFeatureType, "void (FeatureTypes eFeature, int iVariety, int iTimer)")
 		.def("setTempBonusType", &CyPlot::setTempBonusType, "void (BonusTypes eBonus, int iTimer)")
-// End Enhanced End of Winter
+		.def("setTempImprovementType", &CyPlot::setTempImprovementType, "void (ImprovementTypes eImprovement, int iTimer)")
+		.def("setTempRouteType", &CyPlot::setTempRouteType, "void (RouteTypes eRoute, int iTimer)")
+
+		.def("getTempTerrainTimer", &CyPlot::getTempTerrainTimer, "int ()")
+		.def("getTempFeatureTimer", &CyPlot::getTempFeatureTimer, "int ()")
+		.def("getTempBonusTimer", &CyPlot::getTempBonusTimer, "int ()")
+		.def("getTempImprovementTimer", &CyPlot::getTempImprovementTimer, "int ()")
+		.def("getTempRouteTimer", &CyPlot::getTempRouteTimer, "int ()")
+
+		.def("changeTempTerrainTimer", &CyPlot::changeTempTerrainTimer, "int (int iChange)")
+		.def("changeTempFeatureTimer", &CyPlot::changeTempFeatureTimer, "int (int iChange)")
+		.def("changeTempBonusTimer", &CyPlot::changeTempBonusTimer, "int (int iChange)")
+		.def("changeTempImprovementTimer", &CyPlot::changeTempImprovementTimer, "int (int iChange)")
+		.def("changeTempRouteTimer", &CyPlot::changeTempRouteTimer, "int (int iChange)")
+
+		.def("isHasTempTerrain", &CyPlot::isHasTempTerrain, "bool ()")
+		.def("isHasTempFeature", &CyPlot::isHasTempFeature, "bool ()")
+		.def("isHasTempBonus", &CyPlot::isHasTempBonus, "bool ()")
+		.def("isHasTempImprovement", &CyPlot::isHasTempImprovement, "bool ()")
+		.def("isHasTempRoute", &CyPlot::isHasTempRoute, "bool ()")
+		// End Temporary Map Items
 	;
 }

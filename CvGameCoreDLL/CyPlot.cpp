@@ -1146,17 +1146,6 @@ int CyPlot::getNumAnimalUnits() const
 	return m_pPlot ? m_pPlot->getNumAnimalUnits() : -1;
 }
 
-void CyPlot::setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer)
-{
-	if (m_pPlot)
-		m_pPlot->setTempTerrainType((TerrainTypes)eNewValue, iTimer);
-}
-
-int CyPlot::getTempTerrainTimer() const
-{
-	return m_pPlot ? m_pPlot->getTempTerrainTimer() : -1;
-}
-
 bool CyPlot::isVisibleToCivTeam() const
 {
 	return m_pPlot ? m_pPlot->isVisibleToCivTeam() : false;
@@ -1186,7 +1175,79 @@ void CyPlot::calculateChokeValue()
 }
 // Super Forts end
 
-// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+TerrainTypes CyPlot::getRealTerrainType() const
+{
+	return m_pPlot->getRealTerrainType();
+}
+
+FeatureTypes CyPlot::getRealFeatureType() const
+{
+	return m_pPlot->getRealFeatureType();
+}
+
+int CyPlot::getRealFeatureVariety() const
+{
+	return m_pPlot ? m_pPlot->getRealFeatureVariety() : -1;
+}
+
+BonusTypes CyPlot::getRealBonusType() const
+{
+	return m_pPlot->getRealBonusType();
+}
+
+ImprovementTypes CyPlot::getRealImprovementType() const
+{
+	return m_pPlot->getRealImprovementType();
+}
+
+RouteTypes CyPlot::getRealRouteType() const
+{
+	return m_pPlot->getRealRouteType();
+}
+
+void CyPlot::setRealTerrainType(int /*TerrainTypes*/ eTerrain)
+{
+	if (m_pPlot)
+		m_pPlot->setRealTerrainType((TerrainTypes)eTerrain);
+}
+
+void CyPlot::setRealFeatureType(int /*FeatureTypes*/ eFeature)
+{
+	if (m_pPlot)
+		m_pPlot->setRealFeatureType((FeatureTypes)eFeature);
+}
+
+void CyPlot::setRealFeatureVariety(int iVariety)
+{
+	if (m_pPlot)
+		m_pPlot->setRealFeatureVariety(iVariety);
+}
+
+void CyPlot::setRealBonusType(int /*BonusTypes*/ eBonus)
+{
+	if (m_pPlot)
+		m_pPlot->setRealBonusType((BonusTypes)eBonus);
+}
+
+void CyPlot::setRealImprovementType(int /*ImprovementTypes*/ eImprovement)
+{
+	if (m_pPlot)
+		m_pPlot->setRealImprovementType((ImprovementTypes)eImprovement);
+}
+
+void CyPlot::setRealRouteType(int /*RouteTypes*/ eRoute)
+{
+	if (m_pPlot)
+		m_pPlot->setRealRouteType((RouteTypes)eRoute);
+}
+
+void CyPlot::setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer)
+{
+	if (m_pPlot)
+		m_pPlot->setTempTerrainType((TerrainTypes)eNewValue, iTimer);
+}
+
 void CyPlot::setTempFeatureType(int /*FeatureTypes*/ eFeature, int iVariety, int iTimer)
 {
 	if (m_pPlot)
@@ -1198,4 +1259,111 @@ void CyPlot::setTempBonusType(int /*BonusTypes*/ eBonus, int iTimer)
 	if (m_pPlot)
 		m_pPlot->setTempBonusType((BonusTypes) eBonus, iTimer);
 }
-// End Enhanced End of Winter
+
+void CyPlot::setTempImprovementType(int /*BonusTypes*/ eImprovement, int iTimer)
+{
+	if (m_pPlot)
+		m_pPlot->setTempImprovementType((ImprovementTypes) eImprovement, iTimer);
+}
+
+void CyPlot::setTempRouteType(int /*RouteTypes*/ eRoute, int iTimer)
+{
+	if (m_pPlot)
+		m_pPlot->setTempRouteType((RouteTypes) eRoute, iTimer);
+}
+
+int CyPlot::getTempTerrainTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempTerrainTimer() : -1;
+}
+
+int CyPlot::getTempFeatureTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempFeatureTimer() : -1;
+}
+
+int CyPlot::getTempBonusTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempBonusTimer() : -1;
+}
+
+int CyPlot::getTempImprovementTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempImprovementTimer() : -1;
+}
+
+int CyPlot::getTempRouteTimer() const
+{
+	return m_pPlot ? m_pPlot->getTempRouteTimer() : -1;
+}
+
+void CyPlot::changeTempTerrainTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		if (m_pPlot)
+			m_pPlot->changeTempTerrainTimer(iChange);
+	}
+}
+
+void CyPlot::changeTempFeatureTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		if (m_pPlot)
+			m_pPlot->changeTempFeatureTimer(iChange);
+	}
+}
+
+void CyPlot::changeTempBonusTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		if (m_pPlot)
+			m_pPlot->changeTempBonusTimer(iChange);
+	}
+}
+
+void CyPlot::changeTempImprovementTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		if (m_pPlot)
+			m_pPlot->changeTempImprovementTimer(iChange);
+	}
+}
+
+void CyPlot::changeTempRouteTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		if (m_pPlot)
+			m_pPlot->changeTempRouteTimer(iChange);
+	}
+}
+
+bool CyPlot::isHasTempTerrain()
+{
+	return m_pPlot ? m_pPlot->isHasTempTerrain() : false;
+}
+
+bool CyPlot::isHasTempFeature()
+{
+	return m_pPlot ? m_pPlot->isHasTempFeature() : false;
+}
+
+bool CyPlot::isHasTempBonus()
+{
+	return m_pPlot ? m_pPlot->isHasTempBonus() : false;
+}
+
+bool CyPlot::isHasTempImprovement()
+{
+	return m_pPlot ? m_pPlot->isHasTempImprovement() : false;
+}
+
+bool CyPlot::isHasTempRoute()
+{
+	return m_pPlot ? m_pPlot->isHasTempRoute() : false;
+}
+// End Temporary Map Items

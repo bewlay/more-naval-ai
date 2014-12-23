@@ -5670,14 +5670,18 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 
 		if (pPlot->getTempTerrainTimer() > 0)
 		{
-			szString.append(CvWString::format(L" (temp terrain (%d turns left))", pPlot->getTempTerrainTimer()));
+			szString.append(CvWString::format(L" (Temp Terrain: %d turns left)", pPlot->getTempTerrainTimer()));
 			szString.append(CvWString::format(L"\n --Real Terrain: %s", GC.getTerrainInfo(pPlot->getRealTerrainType()).getDescription()));
 		}
 		if (pPlot->getTempBonusTimer() > 0)
 		{
-			if (pPlot->getBonusType() != NO_BONUS)
+			if (pPlot->getBonusType() == NO_BONUS)
 			{
-				szString.append(CvWString::format(L"\n Temp bonus %s (%d turns left)", GC.getBonusInfo(pPlot->getBonusType()).getDescription(), pPlot->getTempBonusTimer()));
+				szString.append(CvWString::format(L"\n Temp Bonus: NO_BONUS (%d turns left)", pPlot->getTempBonusTimer()));
+			}
+			else
+			{
+				szString.append(CvWString::format(L"\n Temp Bonus: %s (%d turns left)", GC.getBonusInfo(pPlot->getBonusType()).getDescription(), pPlot->getTempBonusTimer()));
 			}
 			if (pPlot->getRealBonusType() != NO_BONUS)
 			{
@@ -5686,10 +5690,47 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		}
 		if (pPlot->getTempFeatureTimer() > 0)
 		{
-			szString.append(CvWString::format(L"\n Temp feature %s (%d turns left)", GC.getFeatureInfo(pPlot->getFeatureType()).getDescription(), pPlot->getTempFeatureTimer()));
+			if (pPlot->getFeatureType() == NO_FEATURE)
+			{
+				szString.append(CvWString::format(L"\n Temp Feature: NO_FEATURE (%d turns left)", pPlot->getTempFeatureTimer()));
+			}
+			else
+			{
+				szString.append(CvWString::format(L"\n Temp Feature: %s (%d turns left)", GC.getFeatureInfo(pPlot->getFeatureType()).getDescription(), pPlot->getTempFeatureTimer()));
+			}
 			if (pPlot->getRealFeatureType() != NO_FEATURE)
 			{
 				szString.append(CvWString::format(L"\n --Real Feature: %s", GC.getFeatureInfo(pPlot->getRealFeatureType()).getDescription()));
+			}
+		}
+		if (pPlot->getTempImprovementTimer() > 0)
+		{
+			if (pPlot->getImprovementType() == NO_IMPROVEMENT)
+			{
+				szString.append(CvWString::format(L"\n Temp Improvement: NO_IMPROVEMENT (%d turns left)", pPlot->getTempImprovementTimer()));
+			}
+			else
+			{
+				szString.append(CvWString::format(L"\n Temp Improvement: %s (%d turns left)", GC.getImprovementInfo(pPlot->getImprovementType()).getDescription(), pPlot->getTempImprovementTimer()));
+			}
+			if (pPlot->getRealImprovementType() != NO_IMPROVEMENT)
+			{
+				szString.append(CvWString::format(L"\n --Real Improvement: %s", GC.getImprovementInfo(pPlot->getRealImprovementType()).getDescription()));
+			}
+		}
+		if (pPlot->getTempRouteTimer() > 0)
+		{
+			if (pPlot->getRouteType() == NO_ROUTE)
+			{
+				szString.append(CvWString::format(L"\n Temp Route: NO_ROUTE (%d turns left)", pPlot->getTempRouteTimer()));
+			}
+			else
+			{
+				szString.append(CvWString::format(L"\n Temp Route %s (%d turns left)", GC.getRouteInfo(pPlot->getRouteType()).getDescription(), pPlot->getTempRouteTimer()));
+			}
+			if (pPlot->getRealRouteType() != NO_ROUTE)
+			{
+				szString.append(CvWString::format(L"\n --Real Route: %s", GC.getRouteInfo(pPlot->getRealRouteType()).getDescription()));
 			}
 		}
 

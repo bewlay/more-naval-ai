@@ -259,7 +259,7 @@ public:
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);
 
-//FfH: Added by Kael 08/15/2007
+	//FfH: Added by Kael 08/15/2007
     void changePlotCounter(int iChange) const;
     int getPlotCounter() const;
     int getPortalExitX() const;
@@ -280,22 +280,56 @@ public:
 	int getMinLevel() const;
 	void setMinLevel(int iNewValue);
     int getNumAnimalUnits() const;
-	void setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer);
-	int getTempTerrainTimer() const;
 	bool isVisibleToCivTeam() const;
-//FfH: End Add
+	//FfH: End Add
+
 	// Super Forts begin *canal* *choke*
 	int getCanalValue();
 	void calculateCanalValue();
-
-// Enhanced End of Winter - adapted from FlavourMod by Jean Elcard
-	void setTempFeatureType(int /*FeatureTypes*/ eFeature, int iVariety, int iTimer);
-	void setTempBonusType(int /*BonusTypes*/ eBonus, int iTimer);
-// End Enhanced End of Winter
-
 	int getChokeValue();
 	void calculateChokeValue();
 	// Super Forts end
+
+	// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+
+	TerrainTypes getRealTerrainType() const;
+	FeatureTypes getRealFeatureType() const;
+	int getRealFeatureVariety() const;
+	BonusTypes getRealBonusType() const;
+	ImprovementTypes getRealImprovementType() const;
+	RouteTypes getRealRouteType() const;
+
+	void setRealTerrainType(int /*TerrainTypes*/ eTerrain);
+	void setRealFeatureType(int /*FeatureTypes*/ eFeature);
+	void setRealFeatureVariety(int iVariety);
+	void setRealBonusType(int /*BonusTypes*/ eBonus);
+	void setRealImprovementType(int /*RouteTypes*/ eImprovement);
+	void setRealRouteType(int /*RouteTypes*/ eRoute);
+
+	void setTempTerrainType(int /*TerrainTypes*/ eNewValue, int iTimer);
+	void setTempFeatureType(int /*FeatureTypes*/ eFeature, int iVariety, int iTimer);
+	void setTempBonusType(int /*BonusTypes*/ eBonus, int iTimer);
+	void setTempImprovementType(int /*ImprovementTypes*/ eImprovement, int iTimer);
+	void setTempRouteType(int /*RouteTypes*/ eRoute, int iTimer);
+
+	int getTempTerrainTimer() const;
+	int getTempFeatureTimer() const;
+	int getTempBonusTimer() const;
+	int getTempImprovementTimer() const;
+	int getTempRouteTimer() const;
+
+	void changeTempTerrainTimer(int iChange);
+	void changeTempFeatureTimer(int iChange);
+	void changeTempBonusTimer(int iChange);
+	void changeTempImprovementTimer(int iChange);
+	void changeTempRouteTimer(int iChange);
+
+	bool isHasTempTerrain();
+	bool isHasTempFeature();
+	bool isHasTempBonus();
+	bool isHasTempImprovement();
+	bool isHasTempRoute();
+	// End Temporary Map Items
 
 private:
 	CvPlot* m_pPlot;

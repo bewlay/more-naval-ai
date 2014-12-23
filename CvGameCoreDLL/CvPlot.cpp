@@ -275,13 +275,17 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
     m_iTempTerrainTimer = 0;
 //FfH: End Add
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 	m_eRealFeatureType = NO_FEATURE;
 	m_iRealFeatureVariety = -1;
 	m_iTempFeatureTimer = 0;
 	m_eRealBonusType = NO_BONUS;
 	m_iTempBonusTimer = 0;
-// End Enhanced End of Winter
+	m_eRealImprovementType = NO_IMPROVEMENT;
+	m_iTempImprovementTimer = 0;
+	m_eRealRouteType = NO_ROUTE;
+	m_iTempRouteTimer = 0;
+// End Temporary Map Items
 	m_plotCity.reset();
 	m_workingCity.reset();
 	m_workingCityOverride.reset();
@@ -381,18 +385,19 @@ void CvPlot::erase()
 	setRouteType(NO_ROUTE, false);
 	setFeatureType(NO_FEATURE);
 
-//FfH: Added by Kael 10/14/2009
+	// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
    	m_eRealTerrainType = NO_TERRAIN;
     m_iTempTerrainTimer = 0;
-//FfH: End Add
-
-// Enhanced End of Winter
 	m_eRealFeatureType = NO_FEATURE;
 	m_iRealFeatureVariety = -1;
 	m_iTempFeatureTimer = 0;
 	m_eRealBonusType = NO_BONUS;
 	m_iTempBonusTimer = 0;
-// End Enhanced End of Winter
+	m_eRealImprovementType = NO_IMPROVEMENT;
+	m_iTempImprovementTimer = 0;
+	m_eRealRouteType = NO_ROUTE;
+	m_iTempRouteTimer = 0;
+	// End Temporary Map Items
 
 	// disable rivers
 	setNOfRiver(false, NO_CARDINALDIRECTION);
@@ -614,8 +619,8 @@ void CvPlot::doTurn()
 
 	verifyUnitValidPlot();
 
-//FfH: Added by Kael 11/02/2007
-    if (getTempTerrainTimer() > 0)
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+    if (isHasTempTerrain())
     {
         changeTempTerrainTimer(-1);
         if (getTempTerrainTimer() == 0)
@@ -627,9 +632,7 @@ void CvPlot::doTurn()
 			}
         }
     }
-//FfH: End Add
 
-// Enhanced End of Winter
 	if (isHasTempFeature())
 	{
 		changeTempFeatureTimer(-1);
@@ -637,6 +640,7 @@ void CvPlot::doTurn()
 		if (getTempFeatureTimer() == 0)
 		{
 			setFeatureType(getRealFeatureType(), getRealFeatureVariety());
+			setRealFeatureType(NO_FEATURE);
 		}
 	}
 
@@ -679,9 +683,30 @@ void CvPlot::doTurn()
 			}
 
 			setBonusType(getRealBonusType());
+			setRealBonusType(NO_BONUS);
 		}
 	}
-// End Enhanced End of Winter
+
+	if (isHasTempImprovement())
+    {
+        changeTempImprovementTimer(-1);
+        if (getTempImprovementTimer() == 0)
+        {
+			setImprovementType(getRealImprovementType());
+			setRealImprovementType(NO_IMPROVEMENT);
+        }
+    }
+
+	if (isHasTempRoute())
+    {
+        changeTempRouteTimer(-1);
+        if (getTempRouteTimer() == 0)
+        {
+			setRouteType(getRealRouteType(), true);
+			setRealRouteType(NO_ROUTE);
+        }
+    }
+// End Temporary Map Items
 
 	/*
 	if (!isOwned())
@@ -6585,12 +6610,12 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety)
 
 	eOldFeature = getFeatureType();
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 	if (isHasTempFeature())
 	{
 		changeTempFeatureTimer(-getTempFeatureTimer());
 	}
-// End Enhanced End of Winter
+// End Temporary Map Items
 
 	if (eNewValue != NO_FEATURE)
 	{
@@ -6755,12 +6780,12 @@ BonusTypes CvPlot::getNonObsoleteBonusType(TeamTypes eTeam) const
 void CvPlot::setBonusType(BonusTypes eNewValue)
 {
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 	if (isHasTempBonus())
 	{
 		changeTempBonusTimer(-getTempBonusTimer());
 	}
-// End Enhanced End of Winter
+// End Temporary Map Items
 
 	if (getBonusType() != eNewValue)
 	{
@@ -6815,6 +6840,13 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 {
 	int iI;
 	ImprovementTypes eOldImprovement = getImprovementType();
+
+	// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+	if (isHasTempImprovement())
+	{
+		changeTempImprovementTimer(-getTempImprovementTimer());
+	}
+	// End Temporary Map Items
 
 	if (getImprovementType() != eNewValue)
 	{
@@ -6962,6 +6994,13 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 {
 	bool bOldRoute;
 	int iI;
+
+	// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+	if (isHasTempRoute())
+	{
+		changeTempRouteTimer(-getTempRouteTimer());
+	}
+	// End Temporary Map Items
 
 	if (getRouteType() != eNewValue)
 	{
@@ -10010,7 +10049,7 @@ void CvPlot::doFeature()
 /************************************************************************************************/
 
 								{
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 /**
 									setFeatureType((FeatureTypes)iI);
 **/
@@ -10022,7 +10061,7 @@ void CvPlot::doFeature()
 									{
 										setFeatureType((FeatureTypes)iI);
 									}
-// End Enhanced End of Winter
+// End Temporary Map Items
 
 									pCity = GC.getMapINLINE().findCity(getX_INLINE(), getY_INLINE(), getOwnerINLINE(), NO_TEAM, false);
 
@@ -10465,13 +10504,17 @@ void CvPlot::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iTempTerrainTimer);
 //FfH: End Add
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 	pStream->Read(&m_eRealFeatureType);
 	pStream->Read(&m_iRealFeatureVariety);
 	pStream->Read(&m_iTempFeatureTimer);
 	pStream->Read(&m_eRealBonusType);
 	pStream->Read(&m_iTempBonusTimer);
-// End Enhanced End of Winter
+	pStream->Read(&m_eRealImprovementType);
+	pStream->Read(&m_iTempImprovementTimer);
+	pStream->Read(&m_eRealRouteType);
+	pStream->Read(&m_iTempRouteTimer);
+// End Temporary Map Items
 	SAFE_DELETE_ARRAY(m_aiCulture);
 	pStream->Read(&cCount);
 	if (cCount > 0)
@@ -10724,13 +10767,17 @@ void CvPlot::write(FDataStreamBase* pStream)
 	pStream->Write(m_iTempTerrainTimer);
 //FfH: End Add
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
 	pStream->Write(m_eRealFeatureType);
 	pStream->Write(m_iRealFeatureVariety);
 	pStream->Write(m_iTempFeatureTimer);
 	pStream->Write(m_eRealBonusType);
 	pStream->Write(m_iTempBonusTimer);
-// End Enhanced End of Winter
+	pStream->Write(m_eRealImprovementType);
+	pStream->Write(m_iTempImprovementTimer);
+	pStream->Write(m_eRealRouteType);
+	pStream->Write(m_iTempRouteTimer);
+// Temporary Map Items
 	if (NULL == m_aiCulture)
 	{
 		pStream->Write((char)0);
@@ -12236,57 +12283,6 @@ int CvPlot::getRangeDefense(TeamTypes eDefender, int iRange, bool bFinal, bool b
     return iBestModifier;
 }
 
-TerrainTypes CvPlot::getRealTerrainType() const
-{
-	return (TerrainTypes)m_eRealTerrainType;
-}
-
-void CvPlot::setRealTerrainType(TerrainTypes eNewValue)
-{
-    m_eRealTerrainType = eNewValue;
-}
-
-void CvPlot::setTempTerrainType(TerrainTypes eNewValue, int iTimer)
-{
-//>>>>Unofficial Bug Fix: Added by Denev 2009/12/28
-//*** If new value is not assigned, reset temporary terrain.
-	if (iTimer == 0 || eNewValue == NO_TERRAIN)
-	{
-		changeTempTerrainTimer(getTempTerrainTimer() * -1);
-		if (getRealTerrainType() != NO_TERRAIN)
-		{
-			setTerrainType(getRealTerrainType(), true, true);
-			setRealTerrainType(NO_TERRAIN);
-		}
-
-		return;
-	}
-//<<<<Unofficial Bug Fix: End Add
-
-	if (getTerrainType() != eNewValue)
-	{
-		if (getRealTerrainType() == NO_TERRAIN) //Dont overwrite the real terrain if we double temp
-		{
-			setRealTerrainType(getTerrainType());
-		}
-		changeTempTerrainTimer(iTimer);
-		setTerrainType(eNewValue, true, true, true);
-	}
-}
-
-int CvPlot::getTempTerrainTimer() const
-{
-    return m_iTempTerrainTimer;
-}
-
-void CvPlot::changeTempTerrainTimer(int iChange)
-{
-    if (iChange != 0)
-    {
-        m_iTempTerrainTimer += iChange;
-    }
-}
-
 int CvPlot::getPortalExitX() const
 {
     return m_iPortalExitX;
@@ -12417,15 +12413,16 @@ bool CvPlot::isLair(bool bIgnoreIsAnimal, bool bAnimal) const
 	return false;
 }
 
-// Enhanced End of Winter
+// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+// return Real Map Item type
+TerrainTypes CvPlot::getRealTerrainType() const
+{
+	return (TerrainTypes)m_eRealTerrainType;
+}
+
 FeatureTypes CvPlot::getRealFeatureType() const
 {
 	return (FeatureTypes) m_eRealFeatureType;
-}
-
-BonusTypes CvPlot::getRealBonusType() const
-{
-	return (BonusTypes) m_eRealBonusType;
 }
 
 int CvPlot::getRealFeatureVariety() const
@@ -12433,9 +12430,35 @@ int CvPlot::getRealFeatureVariety() const
 	return (FeatureTypes) m_iRealFeatureVariety;
 }
 
+BonusTypes CvPlot::getRealBonusType() const
+{
+	return (BonusTypes) m_eRealBonusType;
+}
+
+ImprovementTypes CvPlot::getRealImprovementType() const
+{
+	return (ImprovementTypes) m_eRealImprovementType;
+}
+
+RouteTypes CvPlot::getRealRouteType() const
+{
+	return (RouteTypes) m_eRealRouteType;
+}
+
+// setting Real Map Items
+void CvPlot::setRealTerrainType(TerrainTypes eNewValue)
+{
+    m_eRealTerrainType = eNewValue;
+}
+
 void CvPlot::setRealFeatureType(FeatureTypes eFeature)
 {
 	m_eRealFeatureType = eFeature;
+}
+
+void CvPlot::setRealFeatureVariety(int iVariety)
+{
+	m_iRealFeatureVariety = iVariety;
 }
 
 void CvPlot::setRealBonusType(BonusTypes eBonus)
@@ -12443,9 +12466,42 @@ void CvPlot::setRealBonusType(BonusTypes eBonus)
 	m_eRealBonusType = eBonus;
 }
 
-void CvPlot::setRealFeatureVariety(int iVariety)
+void CvPlot::setRealImprovementType(ImprovementTypes eImprovement)
 {
-	m_iRealFeatureVariety = iVariety;
+	m_eRealImprovementType = eImprovement;
+}
+
+void CvPlot::setRealRouteType(RouteTypes eRoute)
+{
+	m_eRealRouteType = eRoute;
+}
+
+// setting Temporary Map Items
+void CvPlot::setTempTerrainType(TerrainTypes eNewValue, int iTimer)
+{
+//>>>>Unofficial Bug Fix: Added by Denev 2009/12/28
+//*** If new value is not assigned, reset temporary terrain.
+	if (iTimer == 0 || eNewValue == NO_TERRAIN)
+	{
+		changeTempTerrainTimer(getTempTerrainTimer() * -1);
+		if (getRealTerrainType() != NO_TERRAIN)
+		{
+			setTerrainType(getRealTerrainType(), true, true);
+			setRealTerrainType(NO_TERRAIN);
+		}
+
+		return;
+	}
+//<<<<Unofficial Bug Fix: End Add
+	if (getTerrainType() != eNewValue)
+	{
+		if (!isHasTempTerrain()) //Dont overwrite the real terrain if we double temp
+		{
+			setRealTerrainType(getTerrainType());
+		}
+		changeTempTerrainTimer(iTimer);
+		setTerrainType(eNewValue, true, true, true);
+	}
 }
 
 void CvPlot::setTempFeatureType(FeatureTypes eFeature, int iVariety, int iTimer)
@@ -12475,6 +12531,37 @@ void CvPlot::setTempBonusType(BonusTypes eBonus, int iTimer)
 	}
 }
 
+void CvPlot::setTempImprovementType(ImprovementTypes eImprovement, int iTimer)
+{
+	if (getImprovementType() != eImprovement)
+	{
+		if (!isHasTempImprovement())
+		{
+			setRealImprovementType(getImprovementType());
+		}
+		setImprovementType(eImprovement);
+		changeTempImprovementTimer(iTimer);
+	}
+}
+
+void CvPlot::setTempRouteType(RouteTypes eRoute, int iTimer)
+{
+	if (getRouteType() != eRoute)
+	{
+		if (!isHasTempRoute())
+		{
+			setRealRouteType(getRouteType());
+		}
+		setRouteType(eRoute, true);
+		changeTempRouteTimer(iTimer);
+	}
+}
+// return timer count for Temporary Map Items
+int CvPlot::getTempTerrainTimer() const
+{
+    return m_iTempTerrainTimer;
+}
+
 int CvPlot::getTempFeatureTimer() const
 {
 	return m_iTempFeatureTimer;
@@ -12485,6 +12572,17 @@ int CvPlot::getTempBonusTimer() const
 	return m_iTempBonusTimer;
 }
 
+int CvPlot::getTempImprovementTimer() const
+{
+	return m_iTempImprovementTimer;
+}
+
+int CvPlot::getTempRouteTimer() const
+{
+	return m_iTempRouteTimer;
+}
+
+// boolean checks for Temporary Map Items
 bool CvPlot::isHasTempTerrain()
 {
 	return getTempTerrainTimer() > 0;
@@ -12498,6 +12596,25 @@ bool CvPlot::isHasTempFeature()
 bool CvPlot::isHasTempBonus()
 {
 	return getTempBonusTimer() > 0;
+}
+
+bool CvPlot::isHasTempImprovement()
+{
+	return getTempImprovementTimer() > 0;
+}
+
+bool CvPlot::isHasTempRoute()
+{
+	return getTempRouteTimer() > 0;
+}
+
+// functions for changing the timers for Temporary Map Items
+void CvPlot::changeTempTerrainTimer(int iChange)
+{
+    if (iChange != 0)
+    {
+        m_iTempTerrainTimer += iChange;
+    }
 }
 
 void CvPlot::changeTempFeatureTimer(int iChange)
@@ -12515,4 +12632,20 @@ void CvPlot::changeTempBonusTimer(int iChange)
 		m_iTempBonusTimer += iChange;
 	}
 }
-// End Enhanced End of Winter
+
+void CvPlot::changeTempImprovementTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iTempImprovementTimer += iChange;
+	}
+}
+
+void CvPlot::changeTempRouteTimer(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iTempRouteTimer += iChange;
+	}
+}
+// End Temporary Map Items
