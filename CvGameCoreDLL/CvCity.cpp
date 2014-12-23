@@ -2341,11 +2341,11 @@ bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
 bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
 {
 	BuildingTypes ePrereqBuilding;
-
+	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 //FfH: Modified by Kael 08/24/2007
 //	bool bRequiresBonus;
 //	bool bNeedsBonus;
-    if (isSettlement())
+    if (isSettlement() && (kBuilding.getHolyCity() == NO_RELIGION))
     {
         return false;
     }
@@ -2353,7 +2353,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 
 	int iI;
 	CorporationTypes eCorporation;
-	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	
 	CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
 
 	if (eBuilding == NO_BUILDING)
