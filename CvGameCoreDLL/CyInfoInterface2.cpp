@@ -404,6 +404,7 @@ void CyInfoPythonInterface2()
 		.def("isNormalize", &CvBonusInfo::isNormalize, "bool ()")
 
 		.def("getArtDefineTag", &CvBonusInfo::getArtDefineTag, "string ()")
+		.def("isMana", &CvBonusInfo::isMana, "bool ()")
 
 		// Arrays
 
