@@ -230,6 +230,8 @@ class TechDiffusion :
 				if( teamTechCount <= curMaxTechCount - self.bonusTechsBehind ) :
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint( " TD : Team is way behind")
 					researchPercent = researchPercent*pow((curMaxTechCount-teamTechCount-self.bonusTechsBehind + 2)/2.0, 0.5 )
+					
+				## TODO - Modify tech research percent for religious techs based on religion present in empire
 
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint( " TD : Percent to add to research: %1.2f (%d points, rate would be %d)"%(100*researchPercent,int(researchPercent*techCost + 0.5),teamLeader.calculateResearchRate(techID)) )
 
