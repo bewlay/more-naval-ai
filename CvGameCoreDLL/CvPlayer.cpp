@@ -9230,6 +9230,8 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 				iModifier += (GC.getTECH_DIFFUSION_WELFARE_MODIFIER() * GC.getGameINLINE().getCurrentEra() * (iWelfareThreshold - iTechScorePercent))/200;
 			}
 		}
+		
+		iModifier -= GC.getTECH_COST_MODIFIER();
 	}
 	// End Tech Diffusion
 	else
