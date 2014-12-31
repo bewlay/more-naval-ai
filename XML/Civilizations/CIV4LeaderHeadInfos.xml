@@ -30515,7 +30515,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
+			<FavoriteTech>TECH_NECROMANCY</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -33319,7 +33319,7 @@
 			<iAttitudeToMales>-4</iAttitudeToMales>
 			<iSomniumAggressiveness>90</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
+			<FavoriteTech>TECH_NECROMANCY</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
@@ -41703,7 +41703,7 @@
 			<iAttitudeToMales>0</iAttitudeToMales>
 			<iSomniumAggressiveness>95</iSomniumAggressiveness>
 			<Alignment>ALIGNMENT_EVIL</Alignment>
-			<FavoriteTech>TECH_BRONZE_WORKING</FavoriteTech>
+			<FavoriteTech>TECH_NECROMANCY</FavoriteTech>
 			<FavoriteUnitCombat>UNITCOMBAT_ADEPT</FavoriteUnitCombat>
 			<FavoriteWonder>BUILDING_PROPHECY_OF_RAGNAROK</FavoriteWonder>
 			<PermanentTrait>NONE</PermanentTrait>
