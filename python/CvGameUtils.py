@@ -161,45 +161,38 @@ class CvGameUtils:
 		if eTech == gc.getInfoTypeForString('TECH_ORDERS_FROM_HEAVEN'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_1):
 				return True
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_WAY_OF_THE_EARTHMOTHER'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_3):
 				return True
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_WAY_OF_THE_FORESTS'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_0):
 				return True
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_MESSAGE_FROM_THE_DEEP'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_2):
 				return True
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_CORRUPTION_OF_SPIRIT'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_RELIGION_4):
 				return True
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_HONOR'):
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
 		if eTech == gc.getInfoTypeForString('TECH_DECEPTION'):
-#			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
 			if bNonReligiousPlayer:
 				return True
 
