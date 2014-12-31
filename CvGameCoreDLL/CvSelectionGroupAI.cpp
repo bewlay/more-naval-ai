@@ -803,6 +803,7 @@ bool CvSelectionGroupAI::AI_isDeclareWar(const CvPlot* pPlot)
 /*************************************************************************************************/
 			case UNITAI_INQUISITOR:
 			case UNITAI_LAIRGUARDIAN:
+			case UNITAI_SHADE:
 				break;
 
 			case UNITAI_ATTACK_SEA:

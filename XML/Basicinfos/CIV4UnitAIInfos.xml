@@ -206,5 +206,9 @@
 			<Type>UNITAI_LAIRGUARDIAN</Type>
 			<Description>UNITAI_LAIRGUARDIAN</Description>
 		</UnitAIInfo>
+		<UnitAIInfo>
+			<Type>UNITAI_SHADE</Type>
+			<Description>UNITAI_SHADE</Description>
+		</UnitAIInfo>
 	</UnitAIInfos>
 </Civ4UnitAIInfos>

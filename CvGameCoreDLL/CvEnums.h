@@ -1467,6 +1467,7 @@ enum UnitAITypes			// Exposed to Python
 	// ALN LairGuards Start
 	UNITAI_LAIRGUARDIAN,
 	// ALN End
+	UNITAI_SHADE, // MNAI
 
 	NUM_UNITAI_TYPES
 };

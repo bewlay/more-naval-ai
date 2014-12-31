@@ -2218,6 +2218,7 @@ DomainTypes CvPlayerAI::AI_unitAIDomainType(UnitAITypes eUnitAI) const
 	// ALN LairGuards Start
 	case UNITAI_LAIRGUARDIAN:
 	// ALN End
+	case UNITAI_SHADE:
 		return DOMAIN_LAND;
 		break;
 
@@ -12666,6 +12667,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 
 		case UNITAI_ATTACK_CITY_LEMMING:
 		case UNITAI_LAIRGUARDIAN:
+		case UNITAI_SHADE:
 			bValid = false;
 			break;
 

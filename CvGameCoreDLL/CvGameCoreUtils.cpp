@@ -2742,6 +2742,7 @@ void getUnitAIString(CvWString& szString, UnitAITypes eUnitAI)
 	// ALN LairGuards Start
 	case UNITAI_LAIRGUARDIAN: szString = L"lair guardian"; break;
 	// ALN End
+	case UNITAI_SHADE: szString = L"shade"; break;
 
 	default: szString = CvWString::format(L"unknown(%d)", eUnitAI); break;
 	}

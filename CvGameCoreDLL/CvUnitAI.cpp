@@ -85,6 +85,13 @@ void CvUnitAI::AI_reset(UnitAITypes eUnitAI)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	if (eUnitAI != NO_UNITAI)
+	{
+		if (!GC.getUnitInfo(getUnitType()).getUnitAIType(eUnitAI))
+		{
+			eUnitAI = (UnitAITypes)GC.getUnitInfo(getUnitType()).getDefaultUnitAIType();
+		}
+	}
 
 	m_eUnitAIType = eUnitAI;
 
@@ -133,13 +140,7 @@ bool CvUnitAI::AI_update()
 		// Tholal AI - Shades
 		if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
 		{
-			AI_setGroupflag(GROUPFLAG_NONE);
-			//AI_setUnitAIType(UNITAI_CITY_DEFENSE);
-			joinGroup(NULL);
-			if (AI_join())
-			{
-				return false;
-			}
+			AI_ShadeMove();
 		}
 		
 		// Bring out the comfy chair!
@@ -786,6 +787,9 @@ bool CvUnitAI::AI_update()
 				AI_lairGuardianMove();
 				break;
 
+			case UNITAI_SHADE:
+				AI_ShadeMove();
+				break;
 				
 			default:
 				FAssert(false);
@@ -1208,6 +1212,7 @@ int CvUnitAI::AI_groupFirstVal()
 		break;
 
 	case UNITAI_LAIRGUARDIAN:
+	case UNITAI_SHADE:
 		break;
 
 	default:
@@ -30393,6 +30398,51 @@ void CvUnitAI::AI_SvartalfarKidnapMove()
     return;
 }
 
+void CvUnitAI::AI_ShadeMove()
+{
+
+	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    %S (unit %d) starting Shade move (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
+	if (getGroup()->getNumUnits() > 1)
+	{
+		if( gUnitLogLevel >= 2 )
+		{
+			logBBAI("       ...degrouping");
+		}
+		AI_setGroupflag(GROUPFLAG_NONE);
+		joinGroup(NULL);
+	}
+
+	if (AI_join())
+	{
+		return;
+	}
+
+	if (kOwner.getCapitalCity() != NULL)
+	{
+		const CvPlot* pPlot = kOwner.getCapitalCity()->plot();
+		int iPathTurns;
+
+		if (generatePath(pPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+		{
+			logBBAI("       ...moving to capital");
+			getGroup()->pushMission(MISSION_MOVE_TO, pPlot->getX_INLINE(), pPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3);
+			return;
+		}
+	}
+
+	if (AI_retreatToCity())
+	{
+		return;
+	}
+}
+
+
 /*************************************************************************************************/
 /** Skyre Mod                                                                                   **/
 /** BETTER AI (Lanun Pirate Coves) merged Sephi                                                 **/
@@ -30443,7 +30493,7 @@ bool CvUnitAI::AI_buildPirateCove()
                 continue;
             }
 
-			// Tholal AI (by Red Key) - smarter cove placement
+			// MNAI (by Red Key) - smarter cove placement
 			int idX = std::abs(pLoopPlot->getX() - pLoopPlot->getWorkingCity()->getX());
 			int idY = std::abs(pLoopPlot->getY() - pLoopPlot->getWorkingCity()->getY());
 			int iPlotValue = std::max(idX,idY) * 10 + std::min(idX,idY); 
@@ -30466,7 +30516,7 @@ bool CvUnitAI::AI_buildPirateCove()
                 }
             }
 			iPlotValue *= iValueModifier;
-			// End Tholal AI
+			// End MNAI
 
             if (iPlotValue > iBestPlotValue)
             {

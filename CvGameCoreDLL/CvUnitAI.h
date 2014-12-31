@@ -64,6 +64,7 @@ public:
 	bool AI_pickupEquipment(int iRange = 0); // added by Tholal
     void AI_InquisitionMove();
 	void AI_SvartalfarKidnapMove();
+	void AI_ShadeMove();
 
     int AI_getGroupflag() const;
     void AI_setGroupflag(int newflag);
