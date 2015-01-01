@@ -29278,11 +29278,11 @@ void CvUnitAI::AI_upgrademanaMove()
 	}
 	
 	int iValue = 0;
-	int iBestValue = 10;
+	int iBestValue = 0;
 	int iPathTurns;
 	bool bBonusRawMana = false;
 	bool bBonusMana = false;
-	int iRange = 15;
+	//int iRange = 15;
 
 	CvPlot* pBestPlot = NULL;
 	BuildTypes eBuild = NO_BUILD;
@@ -29293,11 +29293,18 @@ void CvUnitAI::AI_upgrademanaMove()
 	bool bReadytoBuild = false;
 	// loop through plots in range
 	// ToDo - make this a map search?
+	/*
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
 		for (int iY = -iRange; iY <= iRange; iY++)
 		{
-			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
+		*/
+	{
+		for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
+		{
+			CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
+
+			//CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
 			if (pLoopPlot != NULL)
 			{
 				if ( pLoopPlot->getOwner() == getOwner())
@@ -29310,7 +29317,8 @@ void CvUnitAI::AI_upgrademanaMove()
 							bBonusMana = false;
 
 							// HARDCODE - should have some sort of global variable to let the AI know about mana - XML tag?
-							if (GC.getBonusInfo(pLoopPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+							//if (GC.getBonusInfo(pLoopPlot->getBonusType()).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+							if (GC.getBonusInfo(pLoopPlot->getBonusType()).isMana())
 							{
 								// check to make sure we don't check existing nodes
 								if (pLoopPlot->getImprovementType() == NO_IMPROVEMENT)
@@ -29337,25 +29345,26 @@ void CvUnitAI::AI_upgrademanaMove()
 								// found mana, now check path
 								if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 								{
+									// we can reach the mana, now make sure we have a build
 									bool bFoundBuild = false;
-									// we can reach mana, now make sure we can build
 									for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
 									{
 										eBuild = ((BuildTypes)iJ);
 										if (canBuild(pLoopPlot, eBuild))
 										{
-											iValue = iPathTurns;
-
-											if (iValue < iBestValue)
-											{
-												pBestPlot = pLoopPlot;
-												bFoundBuild = true;
-											}
-										}
-
-										if (bFoundBuild)
-										{
+											bFoundBuild = true;
 											break;
+										}
+									}
+									
+									if (bFoundBuild)
+									{
+										iValue = 100 / (iPathTurns +1);
+
+										if (iValue > iBestValue)
+										{
+											pBestPlot = pLoopPlot;
+											iBestValue = iValue;
 										}
 									}
 								}
@@ -29371,6 +29380,11 @@ void CvUnitAI::AI_upgrademanaMove()
 	{
 		if (atPlot(pBestPlot))
 		{
+			if (isHasCasted()) // casting blocks mana builds
+			{
+				getGroup()->pushMission(MISSION_FORTIFY);
+				return;
+			}
 			iBestValue = 0;
 			eBestBuild = NO_BUILD;
 
@@ -29384,7 +29398,7 @@ void CvUnitAI::AI_upgrademanaMove()
 					ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
 					BonusTypes eNewBonus = (BonusTypes)GC.getImprovementInfo(eImprovement).getBonusConvert();
 
-					iValue = kPlayer.AI_bonusVal(eNewBonus);
+					iValue = kPlayer.AI_bonusVal(eNewBonus) + 1;
 
 					if( gUnitLogLevel >= 3 )
 					{
@@ -29404,7 +29418,7 @@ void CvUnitAI::AI_upgrademanaMove()
 			{
 				if( gUnitLogLevel >= 2 )
 				{
-					logBBAI("     %S (unit %d) building %S with value of %d", getName().GetCString(), getID(), GC.getBuildInfo((BuildTypes)eBuild).getDescription(), iValue);
+					logBBAI("     %S (unit %d) building %S with value of %d at plot %d, %d", getName().GetCString(), getID(), GC.getBuildInfo((BuildTypes)eBestBuild).getDescription(), iBestValue, plot()->getX(), plot()->getY());
 				}
 
 				getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, false, false, MISSIONAI_BUILD, plot());
@@ -29415,7 +29429,7 @@ void CvUnitAI::AI_upgrademanaMove()
 		{
 			if( gUnitLogLevel >= 3 )
 			{
-				logBBAI("      ...moving to mana node at plot %d, %d", getName().GetCString(), getID(), pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+				logBBAI("      ...moving to mana node at plot %d, %d", pBestPlot->getX(), pBestPlot->getY());
 			}
 
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_2);

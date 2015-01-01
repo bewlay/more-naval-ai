@@ -5676,6 +5676,14 @@
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
                 <UnitAI>
@@ -5974,6 +5982,14 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -6284,6 +6300,14 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -48910,6 +48934,14 @@
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
                 <UnitAI>
@@ -49215,6 +49247,14 @@
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
                 <UnitAI>
@@ -49514,6 +49554,14 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -53649,6 +53697,14 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_WARWIZARD</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_MANA_UPGRADE</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_TERRAFORMER</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
@@ -64754,7 +64810,7 @@
             <PythonPostCombatWon>postCombatWolfRider(pCaster,pOpponent)</PythonPostCombatWon>
         </UnitInfo>
         <UnitInfo>
-            <Class>UNITCLASS_SCOUT</Class>
+            <Class>UNITAI_ATTACK</Class>
             <Type>UNIT_GOBLIN_SCORPION_CLAN</Type>
             <UniqueNames>
             </UniqueNames>

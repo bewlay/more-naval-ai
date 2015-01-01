@@ -4563,10 +4563,13 @@ bool CvPlayerAI::AI_isFinancialTrouble(int iSafePercent, bool bIgnoreWarplans) c
 	{
 		return false;
 	}
+	/*
 	int iNetCommerce = 1 + getCommerceRate(COMMERCE_GOLD) + getCommerceRate(COMMERCE_RESEARCH) + std::max(0, getGoldPerTurn());
 	int iNetExpenses = calculateInflatedCosts() + std::max(0, -getGoldPerTurn());
 	
 	int iFundedPercent = (100 * (iNetCommerce - iNetExpenses)) / std::max(1, iNetCommerce);
+	*/
+	int iFundedPercent = AI_getFundedPercent();
 	
 	if (!bIgnoreWarplans)
 	{
@@ -9707,6 +9710,10 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
             {
                 bValid = false;
             }
+			if (AI_getTowerManaValue((BonusTypes)GC.getVoteInfo(eVote).getNoBonus()) > 0)
+			{
+				bValid = false;
+			}
         }
 //FfH: End Add
 
@@ -10736,7 +10743,8 @@ int CvPlayerAI::AI_bonusVal(BonusTypes eBonus, int iChange) const
 	int iBonusCount = getNumAvailableBonuses(eBonus);
 
 	// calculations for mana will be handled in BaseBonusVal
-	if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+	//if (GC.getBonusInfo(eBonus).getBonusClassType() == GC.getDefineINT("BONUSCLASS_MANA"))
+	if (GC.getBonusInfo(eBonus).isMana())
 	{
 		iValue += AI_baseBonusVal(eBonus);
 	}
@@ -11118,14 +11126,12 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 			// Tholal AI - mana valuation
 			// HARCODE - lots of it!
-			// Note: we could loop through spells, find which ones require this mana and then value those spells. Too much? Probably the best way to do it in the long run
-			// value spells that provide promotions for favorite unitcombat
-			// NOTE: make sure the values add up to the appropriate range
 			// TODO: Add valuation for unit affinities?
 
 			if (bMana)
 			{
 				int iNumBonuses = countOwnedBonuses(eBonus);
+				/*
 				if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 				{
 					if (iNumBonuses == 0)
@@ -11133,6 +11139,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						iValue += 50;
 					}
 				}
+				*/
 
 				bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
 				for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
@@ -11202,10 +11209,10 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_FIRE"))
 				{
+					bStack = true;
 					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_LUCHUIRP") || getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_LJOSALFAR") ||
 						getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SVARTALFAR"))
 					{
-						bStack = true;
 						iValue += 150;
 					}
 				}
@@ -11237,10 +11244,10 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_DEATH"))
 				{
+					bStack = true;
 					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
 						iNumBonuses > 0)
 					{
-						bStack = true;
 						iValue += 150;
 					}
 				}
@@ -14715,13 +14722,8 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			return 0;
 		}
 	}
-
-	// Tholal ToDo - zero out civic if it interferes with mana for towers
-	// loop through mana, is it banned and do we need it for a tower (AI_isNeededTowerMana())? IF so, civic vaue is 0
-	// not sure how to identify the overcouncil here without hardcoding.
-    // if (GC.getGameINLINE().isNoBonus(eBonus))
-    
-	/* - Commenting this out - religion can be changed, so dont automatically zero out religious civics
+   
+	/* MNAI - Commenting this section out - religion can be changed, so dont automatically zero out religious civics
 	if (kCivic.getPrereqReligion() != NO_RELIGION)
 	{
 		if (kCivic.getPrereqReligion() != getStateReligion())
@@ -14730,6 +14732,29 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 		}
 	}
 	*/
+
+	// MNAI - devalue overcouncil if mana ban is interfering with Tower Victory
+	if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+	{
+		 //if (isFullMember((VoteSourceTypes)0))
+		if (GC.getVoteSourceInfo((VoteSourceTypes)0).getCivic() == eCivic)
+		//if (kCivic.getType() == "CIVIC_OVERCOUNCIL") // HARDCODE
+		{
+			for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); iBonus++)
+			{
+				BonusTypes eBonus = (BonusTypes)iBonus;
+
+				if (GC.getGameINLINE().isNoBonus(eBonus))
+				{
+					if (AI_getTowerManaValue(eBonus) > 0)
+					{
+						return -20;
+					}
+				}
+			}
+		}
+	}
+	// End MNAI
 
 	bWarPlan = (kTeam.getAnyWarPlanCount(true) > 0);
 	if( bWarPlan )
@@ -24713,11 +24738,15 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 /************************************************************************************************/
 	if (AI_isLandWar(pArea))
 	{
-		if( iAreaCities <= std::min(4, pArea->getNumCities()/3) )
+		iDefenders += iAreaCities;
+		if (!AI_isPrimaryArea(pArea))
 		{
-			// Land war here, as floating defenders are based on cities/population need to make sure
-			// AI defends its footholds in new continents well.
-			iDefenders += GET_TEAM(getTeam()).countEnemyPopulationByArea(pArea) / 14;
+			if( iAreaCities <= std::min(4, pArea->getNumCities()/3) )
+			{
+				// Land war here, as floating defenders are based on cities/population need to make sure
+				// AI defends its footholds in new continents well.
+				iDefenders += GET_TEAM(getTeam()).countEnemyPopulationByArea(pArea) / 14;
+			}
 		}
 	}
 
@@ -27400,6 +27429,7 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
     }
 
 	// Don't count mana that we can't use due to Overcouncil resolutions
+	/*
     if (isFullMember((VoteSourceTypes)0))
     {
         if (GC.getGameINLINE().isNoBonus(eBonus))
@@ -27407,6 +27437,7 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
             return 0;
         }
     }
+	*/
 
 	if (getNumAvailableBonuses(eBonus) > 0)
 	{
@@ -27647,66 +27678,13 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 
 	iBestTowerManaValue += iNumCompletedTowers;
 
+	if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+		iBestTowerManaValue *= 10;
+
 	return iBestTowerManaValue;
 }
 
-bool CvPlayerAI::AI_isNeededTowerMana(BonusTypes eBonus) const
-{
-	// No need to worry about Tower mana if we're about to win
-	if (AI_isDoVictoryStrategyLevel4())
-	{
-		return false;
-	}
-
-	// Don't count mana that we can't use due to Overcouncil resolutions
-    if (isFullMember((VoteSourceTypes)0))
-    {
-        if (GC.getGameINLINE().isNoBonus(eBonus))
-        {
-            return false;
-        }
-    }
-
-	// get prereq buildings for Mastery Tower
-	// Do we have tech for the building? If yes, then get prereq bonuses
-	// if eBonusTYpe == prereq bonnus and number of eBonusType we have is 0, return true
-	//
-	//	int iMasteryTower = gc.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY');
-	/*
-	for (iI = 0; iI < numBuildingClassInfos; iI++)
-	{
-		if (getBuildingClassPrereqBuilding(((BuildingClassTypes)iI), GC.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_MASTERY')))
-		{
-			return false;
-		}
-	}
-	/*
-	int iAlterationTower = GC.getInfoTypeForString('BUILDINGCLASS_TOWER_OF_ALTERATION');
-
-	if (getBuildingClassCount((BuildingClassTypes)iAlterationTower) == 0)
-	{
-		if (isHasTech  canConstruct(iAlterationTower))
-		{
-			// Get mana requirements
-			// check if we have it
-			// check it if matches eBonus
-			for (iI = 0; iI < GC.getNUM_BUILDING_PREREQ_OR_BONUSES(); iI++)
-			{
-				if (GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI) != NO_BONUS)
-				{
-					if (!hasBonus((BonusTypes)GC.getBuildingInfo(eBuilding).getPrereqOrBonuses(iI)))
-					{
-						 return false;
-					}
-				}
-			}
-		}
-	}
-*/
-	return false;
-}
-
-// Mage factor
+// Used to approximate how much this player might be interested in magic techs and units
 int CvPlayerAI::AI_getMojoFactor() const
 {
 	int iValue = 0;
@@ -27748,7 +27726,7 @@ int CvPlayerAI::AI_getMojoFactor() const
 			}
 		}
 	}
-	// ToDo - remove this hardcode
+	// ToDo - remove this hardcode - note: this is done due to the fact that the Khazad have no mage units
 	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
 	{
 		iValue /= 2;
