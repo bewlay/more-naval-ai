@@ -64873,15 +64873,11 @@
             </FlankingStrikes>
             <UnitAIs>
                 <UnitAI>
-                    <UnitAIType>UNITAI_EXPLORE</UnitAIType>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
-                <UnitAI>
-                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
-                    <bUnitAI>1</bUnitAI>
-                </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_CITY_DEFENSE</UnitAIType>
                     <bUnitAI>1</bUnitAI>
