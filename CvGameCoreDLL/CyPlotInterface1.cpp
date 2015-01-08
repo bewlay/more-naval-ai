@@ -291,6 +291,7 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		// Super Forts end
 
 		// Temporary Map Items (original code from FFH2 (Kael) and FlavorMod (Jean Elcard) - expanded on for MNAI)
+		.def("getRealTerrainType", &CyPlot::getRealTerrainType, "int ()")
 		.def("getRealFeatureType", &CyPlot::getRealFeatureType, "int ()")
 		.def("getRealFeatureVariety", &CyPlot::getRealFeatureVariety, "int ()")
 		.def("getRealBonusType", &CyPlot::getRealBonusType, "int ()")
