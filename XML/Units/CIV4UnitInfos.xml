@@ -32025,7 +32025,7 @@
             <iBombardRate>10</iBombardRate>
             <SpecialCargo>SPECIALUNIT_BIRD</SpecialCargo>
             <DomainCargo>DOMAIN_AIR</DomainCargo>
-            <iCargo>0</iCargo>
+            <iCargo>1</iCargo>
             <iConscription>0</iConscription>
             <iCultureGarrison>0</iCultureGarrison>
             <iExtraCost>0</iExtraCost>
