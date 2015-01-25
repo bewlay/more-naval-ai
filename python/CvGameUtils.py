@@ -468,8 +468,14 @@ class CvGameUtils:
 
 		## AI catches for buildings and projects that have python-only effects
 		if not pPlayer.isHuman():
+			## Barbarians
+			if pPlayer.isBarbarian():
+				if pCity.canTrain(gc.getInfoTypeForString('UNIT_ACHERON'), True, False):
+					pCity.pushOrder(OrderTypes.ORDER_TRAIN, gc.getInfoTypeForString('UNIT_ACHERON'), -1, False, False, False, False)
+					return 1
+		
 			## Illians - make sure we build our best projects
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'), True, False, False):
 					iBadTileCount = 0
 					for iiX in range(pCity.getX()-1, pCity.getX()+2, 1):
@@ -490,20 +496,20 @@ class CvGameUtils:
 						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_ASCENSION'),-1, False, False, False, False)
 						return 1
 			## Clan should build Warrens
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
+			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
 				if (pCity.getCultureLevel() > 1) and (pCity.getPopulation() > 3):
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_WARRENS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_WARRENS'),-1, False, False, False, False)
 						return 1
 			## Amurites should build Cave of Ancestors
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
+			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
 				if (pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD')) > 0):
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'),-1, False, False, False, False)
 						return 1
 			## Demons should build Demon Altars
 			#if gc.getCivilizationInfo(pPlayer.getCivilizationType()).getDefaultRace == gc.getInfoTypeForString('PROMOTION_DEMON'):
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
+			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR'),-1, False, False, False, False)
 						return 1
