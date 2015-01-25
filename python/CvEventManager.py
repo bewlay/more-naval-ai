@@ -2218,12 +2218,18 @@ class CvEventManager:
 
 		elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_BARBARIAN'):
 			eTeam = gc.getTeam(gc.getPlayer(gc.getBARBARIAN_PLAYER()).getTeam())
-
+			iUnit = gc.getInfoTypeForString('UNIT_WARRIOR')
+			if (eTeam.isHasTech(gc.getInfoTypeForString('TECH_BRONZE_WORKING')) or CyGame().getStartEra() > gc.getInfoTypeForString('ERA_ANCIENT') ):
+				iUnit = gc.getInfoTypeForString('UNIT_AXEMAN')
+			if (eTeam.isHasTech(gc.getInfoTypeForString('TECH_IRON_WORKING')) or CyGame().getStartEra() > gc.getInfoTypeForString('ERA_CLASSICAL') ):
+				iUnit = gc.getInfoTypeForString('UNIT_OGRE')
+			newUnit = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.UNITAI_ATTACK, DirectionTypes.DIRECTION_SOUTH)
+			newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), true)
 			iUnit = gc.getInfoTypeForString('UNIT_ARCHER')
 			if eTeam.isHasTech(gc.getInfoTypeForString('TECH_BOWYERS')) or CyGame().getStartEra() > gc.getInfoTypeForString('ERA_CLASSICAL'):
 				iUnit = gc.getInfoTypeForString('UNIT_LONGBOWMAN')
-			newUnit2 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-			newUnit3 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			newUnit2 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
+			newUnit3 = pPlayer.initUnit(iUnit, city.getX(), city.getY(), UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.DIRECTION_SOUTH)
 			newUnit2.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), True)
 			newUnit3.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ORC'), True)
 			if not eTeam.isHasTech(gc.getInfoTypeForString('TECH_ARCHERY')) or CyGame().getStartEra() == gc.getInfoTypeForString('ERA_ANCIENT'):
