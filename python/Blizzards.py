@@ -33,14 +33,14 @@ class Blizzards:
 		self.iBlizzardDriftChanceWest = 30		#Chance a blizzard drifts west
 		self.iBlizzardDriftChanceNorth = 30		#Chance a blizzard drifts north
 		self.iBlizzardDriftChanceSouth = 30		#Chance a blizzard drifts south
-		self.iBlizzardKillChance = 15			#Chance a blizzard expires
-		self.iBlizzardKillChancePlus = 35		#Chance a blizzard expires outside of Illian territory
-		self.iBlizzardIceChance = 10			#Chance a blizzard turns an adjacent water plot into ice
-		self.iPermanentSnowChance = 30			#Chance a blizzard turns land plots into permanent snow
+		self.iBlizzardKillChance = 25			#Chance a blizzard expires
+		self.iBlizzardKillChancePlus = 45		#Chance a blizzard expires outside of Illian territory
+#		self.iBlizzardIceChance = 10			#Chance a blizzard turns an adjacent water plot into ice
+#		self.iPermanentSnowChance = 30			#Chance a blizzard turns land plots into permanent snow
 
-		self.iBlizzardChance = 5				#Chance a blizzard spawns
+		self.iBlizzardChance = 3				#Chance a blizzard spawns
 		if (self.isDeepening()):
-			self.iBlizzardChance = 10			#If the Deepening has been completed, activate blizzards.
+			self.iBlizzardChance = 10			#If the Deepening has been completed, activate more blizzards.
 
 		self.iMaxBlizzardsInRange = 2			#Maximum number of blizzards that can be around a newly created blizzard
 
@@ -98,30 +98,30 @@ class Blizzards:
 		if iDirection == 0:
 			if iRnd <= self.iBlizzardDriftChanceEast:
 				newPlot = CyMap().plot(pPlot.getX() + 1, pPlot.getY() + 1)
-			if (iRnd > self.iBlizzardDriftChanceEast and iRnd < (100 - self.iBlizzardDriftChanceEast)):
+			elif (iRnd > self.iBlizzardDriftChanceEast and iRnd < (100 - self.iBlizzardDriftChanceEast)):
 				newPlot = CyMap().plot(pPlot.getX() + 1, pPlot.getY())
-			if iRnd >= 100 - self.iBlizzardDriftChanceEast:
+			elif iRnd >= 100 - self.iBlizzardDriftChanceEast:
 				newPlot = CyMap().plot(pPlot.getX() + 1, pPlot.getY() - 1)
-		if iDirection == 1:
+		elif iDirection == 1:
 			if iRnd <= self.iBlizzardDriftChanceWest:
 				newPlot = CyMap().plot(pPlot.getX() - 1, pPlot.getY() + 1)
-			if (iRnd > self.iBlizzardDriftChanceWest and iRnd < (100 - self.iBlizzardDriftChanceWest)):
+			elif (iRnd > self.iBlizzardDriftChanceWest and iRnd < (100 - self.iBlizzardDriftChanceWest)):
 				newPlot = CyMap().plot(pPlot.getX() - 1, pPlot.getY())
-			if iRnd >= 100 - self.iBlizzardDriftChanceWest:
+			elif iRnd >= 100 - self.iBlizzardDriftChanceWest:
 				newPlot = CyMap().plot(pPlot.getX() - 1, pPlot.getY() - 1)
-		if iDirection == 2:
+		elif iDirection == 2:
 			if iRnd <= self.iBlizzardDriftChanceNorth:
 				newPlot = CyMap().plot(pPlot.getX() - 1, pPlot.getY() + 1)
-			if (iRnd > self.iBlizzardDriftChanceNorth and iRnd < (100 - self.iBlizzardDriftChanceNorth)):
+			elif (iRnd > self.iBlizzardDriftChanceNorth and iRnd < (100 - self.iBlizzardDriftChanceNorth)):
 				newPlot = CyMap().plot(pPlot.getX(), pPlot.getY() + 1)
-			if iRnd >= 100 - self.iBlizzardDriftChanceNorth:
+			elif iRnd >= 100 - self.iBlizzardDriftChanceNorth:
 				newPlot = CyMap().plot(pPlot.getX() + 1, pPlot.getY() + 1)
-		if iDirection == 3:
+		elif iDirection == 3:
 			if iRnd <= self.iBlizzardDriftChanceSouth:
 				newPlot = CyMap().plot(pPlot.getX() - 1, pPlot.getY() - 1)
-			if (iRnd > self.iBlizzardDriftChanceSouth and iRnd < (100 - self.iBlizzardDriftChanceSouth)):
+			elif (iRnd > self.iBlizzardDriftChanceSouth and iRnd < (100 - self.iBlizzardDriftChanceSouth)):
 				newPlot = CyMap().plot(pPlot.getX(), pPlot.getY() - 1)
-			if iRnd >= 100 - self.iBlizzardDriftChanceSouth:
+			elif iRnd >= 100 - self.iBlizzardDriftChanceSouth:
 				newPlot = CyMap().plot(pPlot.getX() + 1, pPlot.getY() - 1)
 		
 		if self.canBlizzard(newPlot, false):
@@ -180,7 +180,7 @@ class Blizzards:
 		iSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
 
 		if not pPlot.isNone():
-			iTurns = CyGame().getSorenRandNum(25, "Temp Terrain") + 10
+			iTurns = CyGame().getSorenRandNum(15, "Temp Terrain") + 10
 			iTurns = (iTurns * gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()) / 100
 			if (self.isDeepening()):
 				iTurns *= 2
