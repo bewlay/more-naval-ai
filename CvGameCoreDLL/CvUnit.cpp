@@ -8379,7 +8379,7 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 
 //FfH Units: Modified by Kael 08/04/2007
 //	if (!GC.getPromotionInfo(ePromotion).isLeader())
-	if ((!GC.getPromotionInfo(ePromotion).isLeader()) && getFreePromotionPick() == 0)
+	if ((!GC.getPromotionInfo(ePromotion).isLeader()) && !(getFreePromotionPick() > 0))
 //FfH: End Modify
 
 	{
