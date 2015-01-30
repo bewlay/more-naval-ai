@@ -904,15 +904,6 @@ void CvUnitAI::AI_upgrade()
 			// use a random factor. less than 100, so that the upgrade must be better than the current unit.
 			iValue *= 80 + GC.getGameINLINE().getSorenRandNum(21, "AI Upgrade");
 
-			int iUpgradeTier = GC.getUnitInfo(eLoopUnit).getTier();
-			if (iUpgradeTier > 2)
-			{
-				if ((getLevel() < (iUpgradeTier + 1)) && (getUnitCombatType() != GC.getInfoTypeForString("UNITCOMBAT_DISCIPLE")))
-				{
-					iValue = 0;
-				}
-			}
-
 			// (believe it or not, AI_unitValue is faster than canUpgrade.)
 			if (iValue > iBestValue && canUpgrade(eLoopUnit))
 			{
@@ -924,7 +915,7 @@ void CvUnitAI::AI_upgrade()
 
 	if (eBestUnit != NO_UNIT)
 	{
-		logBBAI("    %S (unit %d - %S) upgrading to %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(),GC.getUnitInfo(eBestUnit).getDescription(), iBestValue);
+		logBBAI("    %S (unit %d - %S, level %d) upgrading to %S (value: %d)", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription(), getLevel(), GC.getUnitInfo(eBestUnit).getDescription(), iBestValue);
 		//upgrade(eBestUnit);
 		// K-Mod. Ungroup the unit, so that we don't cause the whole group to miss their turn.
 		CvUnit* pUpgradeUnit = upgrade(eBestUnit);
