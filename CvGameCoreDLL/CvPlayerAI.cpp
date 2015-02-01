@@ -790,7 +790,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 		//int iUnitValue;
 
 		//Tholal ToDo - Manes hit this upgrade section before they ever get a chance to 'cast'
-		// Tholal ToDo - arrange units in a sorted list then try and upgrade rather than running through whole list three times
+		// Tholal ToDo - arrange units in a sorted list by level then try and upgrade rather than running through whole list three times
 		// pass 0
 		logBBAI("   Checking for Upgrades...");
 		for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
@@ -11141,7 +11141,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				}
 				*/
 
-				bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
+				int bSummonChange = getSummonDuration();
 				for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
 				{
 					CvSpellInfo &kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
@@ -11155,7 +11155,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 							// summons
 							if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 							{
-								iValue += (bSummoner ? 50 : 25);// ToDo - extract some info about the unit and how useful it will be to us
+								iValue += 25 + (bSummonChange * 50);// ToDo - extract some info about the unit and how useful it will be to us
 							}
 							
 							//Todo - find a way to check for actual need (ie Water mana for desert)
@@ -22495,7 +22495,7 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	// if we have magic type traits, pursue a Tower victory - HARDCODE
 	bool bHasMageTrait = false;
 
-	bool bSummoner = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
+	bool bSummoner = (getSummonDuration() > 0);
 	bool bSundered = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
 	bool bArcane = hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
 
@@ -27692,7 +27692,8 @@ int CvPlayerAI::AI_getMojoFactor() const
 	// Count amount of mana
 	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 	{
-		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
+		//if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
+		if (GC.getBonusInfo((BonusTypes)iK).isMana())
 		{
 			iValue += getNumAvailableBonuses((BonusTypes)iK) * 2;
 			if (getNumAvailableBonuses((BonusTypes)iK) > 1)
@@ -27700,6 +27701,8 @@ int CvPlayerAI::AI_getMojoFactor() const
 				iValue += 2;
 			}
 		}
+
+		// Tholal ToDo - dump this section
 		if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA_RAW")))
 		{
 			iValue += countOwnedBonuses((BonusTypes)iK) * 5; // we overvalue rawmana to encourage the AI to pursue techs and units to help it convert the mana
@@ -27726,6 +27729,9 @@ int CvPlayerAI::AI_getMojoFactor() const
 			}
 		}
 	}
+
+	iValue += getSummonDuration();
+
 	// ToDo - remove this hardcode - note: this is done due to the fact that the Khazad have no mage units
 	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
 	{

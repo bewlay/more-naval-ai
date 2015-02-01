@@ -10472,10 +10472,11 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	UnitAITypes eUnitAI = AI_getUnitAIType();
 	int iLevel = getLevel();
+	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 
 	iValue = 0;
 
-	bool bFinancialTrouble = GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble();
+	bool bFinancialTrouble = kPlayer.AI_isFinancialTrouble();
 
 	CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
 
@@ -10601,12 +10602,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	// Inquisitor
 	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_INQUISITOR")))
 	{
-		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION2))
 		{
-			int iNeededInquisitors = (GET_PLAYER(getOwnerINLINE()).getNumCities() / 5);
+			int iNeededInquisitors = (kPlayer.getNumCities() / 5);
 			iNeededInquisitors = std::max(1, iNeededInquisitors);
 
-			if (GET_PLAYER(getOwnerINLINE()).AI_getNumAIUnits(UNITAI_INQUISITOR) < iNeededInquisitors)
+			if (kPlayer.AI_getNumAIUnits(UNITAI_INQUISITOR) < iNeededInquisitors)
 			{
 				iValue += 140;
 			}
@@ -10616,7 +10617,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	//Metamagic for Tower Victory Strategies
 	if (ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC1")) || ePromotion == ((PromotionTypes)GC.getInfoTypeForString("PROMOTION_METAMAGIC2")))
 	{
-		if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 		{
 			if ((eUnitAI == UNITAI_MANA_UPGRADE))
 			{
@@ -10633,9 +10634,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			iValue += 30;
 		}
 
-		if (GET_PLAYER(getOwnerINLINE()).getStateReligion() != NO_RELIGION)
+		if (kPlayer.getStateReligion() != NO_RELIGION)
 		{
-			if (GET_PLAYER(getOwnerINLINE()).getStateReligion() == ((ReligionTypes)GC.getInfoTypeForString("RELIGION_FELLOWSHIP_OF_LEAVES")))
+			if (kPlayer.getStateReligion() == ((ReligionTypes)GC.getInfoTypeForString("RELIGION_FELLOWSHIP_OF_LEAVES")))
 			{
 				iValue += 25;
 			}
@@ -11142,7 +11143,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		if (iTemp > 0)
 		{
 			PlayerTypes eOwner = plot()->calculateCulturalOwner();
-			if (eOwner != NO_PLAYER && GET_PLAYER(eOwner).getTeam() != GET_PLAYER(getOwnerINLINE()).getTeam())
+			if (eOwner != NO_PLAYER && GET_PLAYER(eOwner).getTeam() != kPlayer.getTeam())
 			{
 				iValue += (iTemp / 2);
 			}
@@ -11507,9 +11508,10 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 	if (isChanneler())
 	{
 		// traits - HARDCODE
-		bool bSummoner = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUMMONER"));
-		bool bSundered = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
-		bool bArcane = GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
+		bool bSundered = kPlayer.hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_SUNDERED"));
+		bool bArcane = kPlayer.hasTrait((TraitTypes)GC.getInfoTypeForString("TRAIT_ARCANE"));
+
+		int iSummonDurationBonus = kPlayer.getSummonDuration();
 		
 		/* - all sorts of traits give free promos - need way to properly sort out ones that are useful to mages
 		int iNumMageTraits = 0;
@@ -11517,7 +11519,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		{
 			if (GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getDefineINT("UNITCOMBAT_ADEPT")))
 			{
-				if (GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)iJ))
+				if (kPlayer.hasTrait((TraitTypes)iJ))
 				{
 					iNumMageTraits++;
 				}
@@ -11549,7 +11551,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 			{
 				if (kSpellInfo.getPromotionPrereq1() == ePromotion)
 				{
-					iValue += GC.getGameINLINE().getSorenRandNum(10, "AI Spell Promote") + GET_PLAYER(getOwnerINLINE()).AI_getMojoFactor(); // added this to try and get a better distribution of spells
+					iValue += GC.getGameINLINE().getSorenRandNum(10, "AI Spell Promote") + kPlayer.AI_getMojoFactor(); // added this to try and get a better distribution of spells
 
 					if (!isDirectDamageCaster()) // if we dont already have a damage spell
 					{
@@ -11585,16 +11587,21 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 						{
 							if (kCreateUnitInfo.getBonusAffinity((BonusTypes)iBonuses) != 0)
 							{
-								iTempValue += GET_PLAYER(getOwnerINLINE()).countOwnedBonuses((BonusTypes)iBonuses);
+								iTempValue += kPlayer.countOwnedBonuses((BonusTypes)iBonuses);
 							}
 						}
 
 
 						int iModValue = 0; //iNumMageTraits;
 
-						if (bSummoner || bSundered || bArcane)
+						if (bSundered || bArcane)
 						{
 							iModValue += 1;
+						}
+
+						if (!kSpellInfo.isPermanentUnitCreate())
+						{
+							iModValue += iSummonDurationBonus;
 						}
 
 						// heroes make powerful summoners
