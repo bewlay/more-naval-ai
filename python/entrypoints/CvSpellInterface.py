@@ -1530,8 +1530,8 @@ def spellHeal(caster,amount):
 	pPlot = caster.plot()
 	iPoisoned = gc.getInfoTypeForString('PROMOTION_POISONED')
 	for i in range(pPlot.getNumUnits()):
+		pUnit = pPlot.getUnit(i)
 		if not pUnit.isImmuneToMagic():
-			pUnit = pPlot.getUnit(i)
 			pUnit.setHasPromotion(iPoisoned,False)
 			if pUnit.isAlive():
 				pUnit.changeDamage(-amount, PlayerTypes.NO_PLAYER)
