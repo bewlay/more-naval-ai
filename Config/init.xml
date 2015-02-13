@@ -177,6 +177,9 @@
 	
 	<screen id="BUGFull">
 		<tab module="BugGeneralOptionsTab"/>
+    <!--RevolutionDCM start - RevDCM option control tab (delete next line to remove the tab -->
+		<tab module="RevDCMOptionsTab"/>
+    <!--RevolutionDCM end -->
 		<tab module="BugMapOptionsTab"/>
 		<tab module="BugCityScreenOptionsTab"/>
 		
