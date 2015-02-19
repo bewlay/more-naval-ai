@@ -1128,7 +1128,7 @@ public:
 	PlayerTypes initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationTypes eNewCiv);
 //<<<<Unofficial Bug Fix: End Add
 
-    /*** PUPPET STATES 04/21/08 by DPII ***/
+    // MNAI - Puppet States
     DllExport bool makePuppet(PlayerTypes eSplitPlayer = NO_PLAYER, CvCity* pVassalCapital = NULL);
     DllExport bool canMakePuppet(PlayerTypes eFromPlayer) const;
     PlayerTypes getPuppetPlayer() const;
@@ -1139,7 +1139,7 @@ public:
 
 	bool isPuppetState() const;
 	void setPuppetState(bool newvalue);
-    /*** PUPPET STATES END ***/
+    // MNAI - End Puppet States
 
 /************************************************************************************************/
 /* REVOLUTION_MOD                         11/15/08                                jdog5000      */
@@ -1561,8 +1561,7 @@ protected:
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;
 
-	// Puppet States
-	bool m_bPuppetState;
+	bool m_bPuppetState; // MNAI - Puppet States
 
 /*************************************************************************************************/
 /**	BETTER AI (New Functions Definition) Sephi                                 					**/

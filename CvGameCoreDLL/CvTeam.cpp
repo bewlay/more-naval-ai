@@ -4212,7 +4212,7 @@ void CvTeam::changePuppetTradingCount(int iChange)
 	m_iPuppetTradingCount += iChange;
 	FAssert(getPuppetTradingCount() >= 0);
 }
-// MNAI End
+// MNAI - End Puppet States
 
 int CvTeam::getBridgeBuildingCount() const
 {
@@ -6878,7 +6878,7 @@ void CvTeam::processTech(TechTypes eTech, int iChange)
 	{
 		changePuppetTradingCount(iChange);
 	}
-// MNAI End
+// MNAI - End Puppet States
 
 	if (GC.getTechInfo(eTech).isBridgeBuilding())
 	{

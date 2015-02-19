@@ -137,7 +137,7 @@ public:
 	int getPuppetTradingCount();
 	bool isPuppetStateTrading();
 	void changePuppetTradingCount(int iChange);	
-	// MNAI End
+	// MNAI - End Puppet States
 	int getBridgeBuildingCount();
 	bool isBridgeBuilding();
 	void changeBridgeBuildingCount(int iChange);																		

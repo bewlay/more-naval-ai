@@ -27380,7 +27380,7 @@ int CvPlayerAI::AI_getCivicShareAttitude(PlayerTypes ePlayer) const
 }
 //FfH: End Add
 
-// Puppet States
+// MNAI - Puppet States
 int CvPlayerAI::AI_getPuppetAttitude(PlayerTypes ePlayer) const
 {
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
@@ -27398,7 +27398,7 @@ int CvPlayerAI::AI_getPuppetAttitude(PlayerTypes ePlayer) const
 
 	return 0;
 }
-// End Puppet States
+// MNAI - End Puppet States
 
 // Attitude cache
 void CvPlayerAI::AI_invalidateAttitudeCache(PlayerTypes ePlayer)

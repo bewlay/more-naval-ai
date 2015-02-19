@@ -518,7 +518,7 @@ void CyTeam::changePuppetTradingCount(int iChange)
 	if (m_pTeam)
 		m_pTeam->changePuppetTradingCount(iChange);
 }
-// MNAI End
+// MNAI - End Puppet States
 
 int CyTeam::getBridgeBuildingCount()
 {

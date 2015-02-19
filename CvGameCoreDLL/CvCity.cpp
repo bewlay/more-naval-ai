@@ -16827,7 +16827,7 @@ bool CvCity::canJoinPuppetState(PlayerTypes eOfPlayer) const
 
     return bFound;
 }
-// MNAI End
+// MNAI - End Puppet States
 
 int CvCity::getMusicScriptId() const
 {

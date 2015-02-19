@@ -389,7 +389,7 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
                 }
 		    }
 		}
-		// End MNAI
+		// MNAI - End Puppet States
 		break;
 
 	case BUTTONPOPUP_DISBANDCITY:
@@ -1505,7 +1505,8 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 		return false;
 	}
 
-    /*** PUPPET STATES 04/21/08 by DPII
+	// MNAI - Puppet States
+	/* - Original Code
 	PlayerTypes eHighestCulturePlayer = (PlayerTypes)info.getData2();
 
 	int iCaptureGold = info.getData3();
@@ -1549,7 +1550,8 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 			}
         }
     }
-    /*** PUPPET STATES END ***/
+	// MNAI - End Puppet States
+
 	CvWString szBuffer;
 	if (iCaptureGold > 0)
 	{
@@ -1570,7 +1572,8 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 	}
 	if (bGift)
 	{
-	    /*** PUPPET STATES 04/21/08 by DPII
+	// MNAI - Puppet States
+		/* - Original Code
 		szBuffer = gDLL->getText("TXT_KEY_POPUP_RETURN_ALLIED_CITY", GET_PLAYER(eHighestCulturePlayer).getCivilizationDescriptionKey());
 		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 2, WIDGET_GENERAL, 2, eHighestCulturePlayer);
 		END ORIGINAL CODE ***/
@@ -1583,13 +1586,13 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 		gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 2, WIDGET_GENERAL, 2, eReceivingPlayer);
 	}
 
-	/*** PUPPET STATES 04/21/08 by DPII START ***/
 	if (bPuppet)
 	{
         szBuffer = gDLL->getText("TXT_KEY_POPUP_CREATE_PUPPET_STATE", GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationAdjectiveKey(), pNewCity->getNameKey());
         gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, szBuffer, NULL, 4, WIDGET_GENERAL);
 	}
-		/*** PUPPET STATES END ***/
+	// MNAI - End Puppet States
+
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_CITY_WARNING_ANSWER3").c_str(), NULL, 3, WIDGET_GENERAL, -1, -1);
 	
 	gDLL->getInterfaceIFace()->popupLaunch(pPopup, false, POPUPSTATE_IMMEDIATE);

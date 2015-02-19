@@ -501,23 +501,16 @@ public:
     int AI_getGenderAttitude(PlayerTypes ePlayer) const;
     int AI_getTrustAttitude(PlayerTypes ePlayer) const;
     int AI_getCivicShareAttitude(PlayerTypes ePlayer) const;
-	int AI_magicCombatValue(UnitTypes eUnit) const; // added by Tholal
-    int AI_trueCombatValue(UnitTypes eUnit) const;
+	int AI_magicCombatValue(UnitTypes eUnit) const; // MNAI
+    int AI_trueCombatValue(UnitTypes eUnit) const; // MNAI
     int AI_combatValue(UnitTypes eUnit) const;
     int AI_getGoldReserve() const;
 //FfH: End Add
 
-	// MNAI - Puppet States
-	int AI_getPuppetAttitude(PlayerTypes ePlayer) const;
-	// MNAI - End
+	int AI_getPuppetAttitude(PlayerTypes ePlayer) const; // MNAI - Puppet States
+    int AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTrading, bool bReserve) const; // Spehi AI - better gold management
 
-// Sephi BETTER AI (better AI gold management) Sephi                                                 **/
-    int AI_getGoldTreasury(bool bVictoryHurry, bool bHurry, bool bTrading, bool bReserve) const;
-// Sephi Better AI - END
-
-//>>>>BUGFfH: Added by Denev 2009/09/29
-	UnitArtStyleTypes getUnitArtStyleType() const;
-//<<<<BUGFfH: End Add
+	UnitArtStyleTypes getUnitArtStyleType() const; // BUGFfH: Added by Denev 2009/09/29
 
 	// for serialization
   virtual void read(FDataStreamBase* pStream);

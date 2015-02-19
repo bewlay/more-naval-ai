@@ -648,7 +648,7 @@ public:
 
 	bool isPuppetState() const;
 	void setPuppetState (bool bNewValue);
-    // End MNAI
+    // MNAI - End Puppet States
 	
 	bool canHaveTradeRoutesWith(int iPlayer);
 

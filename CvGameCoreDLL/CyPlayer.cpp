@@ -2663,7 +2663,6 @@ bool CyPlayer::canMakePuppet(int /*PlayerTypes*/ eFromPlayer) const
     return false;
 }
 
-// Puppet State functions (added by Tholal)
 bool CyPlayer::isPuppetState() const
 {
 	return m_pPlayer ? m_pPlayer->isPuppetState() : false;
@@ -2675,7 +2674,7 @@ void CyPlayer::setPuppetState(bool newvalue)
         m_pPlayer->setPuppetState(newvalue);
 }
 
-// End MNAI
+// MNAI - End Puppet States
 
 bool CyPlayer::canHaveTradeRoutesWith(int iPlayer)
 {

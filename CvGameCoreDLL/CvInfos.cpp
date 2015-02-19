@@ -1018,10 +1018,7 @@ m_bOpenBordersTrading(false),
 m_bDefensivePactTrading(false),
 m_bPermanentAllianceTrading(false),
 m_bVassalStateTrading(false),
-// MNAI - Puppet States
-m_bPuppetStateTrading(false),
-// MNAI End
-
+m_bPuppetStateTrading(false), // MNAI - Puppet States
 m_bBridgeBuilding(false),
 m_bIrrigation(false),
 m_bIgnoreIrrigation(false),
@@ -1235,7 +1232,7 @@ bool CvTechInfo::isPuppetStateTrading() const
 {
 	return m_bPuppetStateTrading;
 }
-// MNAI End
+// MNAI - End Puppet States
 
 bool CvTechInfo::isBridgeBuilding() const
 {
@@ -1397,9 +1394,7 @@ void CvTechInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bDefensivePactTrading);
 	stream->Read(&m_bPermanentAllianceTrading);
 	stream->Read(&m_bVassalStateTrading);
-	// MNAI - Puppet States
-	stream->Read(&m_bPuppetStateTrading);
-	// MNAI End
+	stream->Read(&m_bPuppetStateTrading); // MNAI - Puppet States
 	stream->Read(&m_bBridgeBuilding);
 	stream->Read(&m_bIrrigation);
 	stream->Read(&m_bIgnoreIrrigation);
@@ -1490,9 +1485,7 @@ void CvTechInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bDefensivePactTrading);
 	stream->Write(m_bPermanentAllianceTrading);
 	stream->Write(m_bVassalStateTrading);
-	// MNAI - Puppet States
-	stream->Write(m_bPuppetStateTrading);
-	// MNAI End
+	stream->Write(m_bPuppetStateTrading); // MNAI - Puppet States
 	stream->Write(m_bBridgeBuilding);
 	stream->Write(m_bIrrigation);
 	stream->Write(m_bIgnoreIrrigation);
@@ -1574,9 +1567,7 @@ bool CvTechInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bDefensivePactTrading, "bDefensivePactTrading");
 	pXML->GetChildXmlValByName(&m_bPermanentAllianceTrading, "bPermanentAllianceTrading");
 	pXML->GetChildXmlValByName(&m_bVassalStateTrading, "bVassalTrading");
-// MNAI - Puppet States
-	pXML->GetChildXmlValByName(&m_bPuppetStateTrading, "bPuppetTrading");
-// MNAI End
+	pXML->GetChildXmlValByName(&m_bPuppetStateTrading, "bPuppetTrading"); // MNAI - Puppet States
 	pXML->GetChildXmlValByName(&m_bBridgeBuilding, "bBridgeBuilding");
 	pXML->GetChildXmlValByName(&m_bIrrigation, "bIrrigation");
 	pXML->GetChildXmlValByName(&m_bIgnoreIrrigation, "bIgnoreIrrigation");

@@ -11117,7 +11117,7 @@ void CvGameTextMgr::setTechTradeHelp(CvWStringBuffer &szBuffer, TechTypes eTech,
 	// MNAI - Puppet States
 	//	Enables puppet states...
 	buildPuppetStateString(szBuffer, eTech, true, bPlayerContext);
-	// MNAI End
+	// MNAI - End Puppet States
 
 	//	Build farm, irrigation, etc...
 	for (iI = 0; iI < GC.getNumBuildInfos(); ++iI)
@@ -17396,7 +17396,7 @@ void CvGameTextMgr::buildPuppetStateString(CvWStringBuffer &szBuffer, TechTypes 
 		szBuffer.append(gDLL->getText("TXT_KEY_MISC_ENABLES_PUPPET_STATES"));
 	}
 }
-// MNAI End
+// MNAI - End Puppet States
 
 
 void CvGameTextMgr::buildBridgeString(CvWStringBuffer &szBuffer, TechTypes eTech, bool bList, bool bPlayerContext)
@@ -18373,8 +18373,11 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 						{
 							szBuffer.append(" (Puppet State)");
 						}
-						// MNAI End
-						setVassalRevoltHelp(szBuffer, (TeamTypes)iTeam, kTeam.getID());
+						// MNAI - End Puppet States
+						else
+						{
+							setVassalRevoltHelp(szBuffer, (TeamTypes)iTeam, kTeam.getID());
+						}
 					}
 					else if (kLoopTeam.isVassal(kTeam.getID()))
 					{
@@ -18607,7 +18610,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 			szBuffer.append(NEWLINE);
 			szBuffer.append(szTempBuffer);
 		}
-		// MNAI End
+		// MNAI - End Puppet States
 
 		for (iI = 0; iI < NUM_MEMORY_TYPES; ++iI)
 		{

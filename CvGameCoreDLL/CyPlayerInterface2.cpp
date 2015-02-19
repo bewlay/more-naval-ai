@@ -68,14 +68,12 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 		.def("setParent", &CyPlayer::setParent, "void (int /*PlayerTypes*/ eParent)")
 //<<<<Unofficial Bug Fix: End Add
 
-		// MNAI
-		// Puppet States
+		// MNAI - Puppet States
 		.def("makePuppet", &CyPlayer::makePuppet, "bool (int /*PlayerTypes*/ eSplitPlayer, int (CyCity* pVassalCapital)")
 		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int /*PlayerTypes*/ eFromPlayer)")
 		.def("isPuppetState", &CyPlayer::isPuppetState, "bool ()")
-		// Revolutions
-		.def("assimilatePlayer", &CyPlayer::assimilatePlayer, "bool ( int iPlayer ) - acquire iPlayer's units and cities")
-		// MNAI End
+		// MNAI - End Puppet States
+		.def("assimilatePlayer", &CyPlayer::assimilatePlayer, "bool ( int iPlayer ) - acquire iPlayer's units and cities") // MNAI - Revolutions
 		
 		.def("canHaveTradeRoutesWith", &CyPlayer::canHaveTradeRoutesWith, "bool (int)")
 		.def("forcePeace", &CyPlayer::forcePeace, "void (int)")

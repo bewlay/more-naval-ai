@@ -578,7 +578,7 @@ enum WidgetTypes					// Exposed to Python
 //FfH: End Add
 // MNAI - Puppet States
 	WIDGET_HELP_PUPPET_STATE,
-// MNAI End
+// MNAI - End Puppet States
 
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES

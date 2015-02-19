@@ -882,9 +882,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_bFoundedFirstCity = false;
 	m_bStrike = false;
 
-	// Puppet States
-	m_bPuppetState = false;
-	// End Puppet States
+	m_bPuppetState = false; // MNAI - Puppet States
 
 	// Sephi AI (New Functions Definition)
     m_eFavoriteReligion = NO_RELIGION;
@@ -2077,7 +2075,7 @@ void CvPlayer::addFreeUnit(UnitTypes eUnit, UnitAITypes eUnitAI)
 			pStartingPlot = getCapitalCity()->plot();
 		}
 	}
-	// MNAI End
+	// MNAI - End Puppet States
 
 	if (pStartingPlot != NULL)
 	{
@@ -2444,9 +2442,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	int* paiBuildingOriginalTime;
 	CvWString szBuffer;
 	CvWString szName;
-	/*** PUPPET STATES 04/21/08 by DPII ***/
-	CvWString szTempBuffer;
-	/*************************************/
+	CvWString szTempBuffer; // MNAI - Puppet States
 	bool abEverOwned[MAX_PLAYERS];
 	int aiCulture[MAX_PLAYERS];
 	PlayerTypes eOldOwner;
@@ -4293,7 +4289,7 @@ void CvPlayer::doTurn()
 			findNewCapital();
 		}
 	}
-	// MNAI End
+	// MNAI - End Puppet States
 
 	GC.getGameINLINE().verifyDeals();
 	AI_doTurnPre();
@@ -5889,7 +5885,7 @@ bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 	{
 		return true;
 	}
-// MNAI End
+// MNAI - End Puppet States
 
 	return false;
 }
@@ -5988,7 +5984,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 		{
 			return false;
 		}
-		// MNAI End
+		// MNAI - End Puppet States
 
 		if (canTradeNetworkWith(eWhoTo))
 		{
@@ -19605,9 +19601,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	// tech bug fix
 	pStream->Read(&m_bChoosingFreeTech);
 
-	// Puppet States
-	pStream->Read(&m_bPuppetState);
-	// End Puppet States
+	pStream->Read(&m_bPuppetState); // MNAI - Puppet States
 
 	// Sephi AI (New Functions Definition)
     pStream->Read((int*)&m_eFavoriteReligion);
@@ -20198,9 +20192,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	// Tech bug fix
 	pStream->Write(m_bChoosingFreeTech);
 
-	// Puppet States
-	pStream->Write(m_bPuppetState);
-	// End Puppet States
+	pStream->Write(m_bPuppetState); // MNAI - Puppet States
 
 	// Sephi AI (New Functions Definition) Sephi
     pStream->Write(m_eFavoriteReligion);
@@ -23985,8 +23977,8 @@ PlayerTypes CvPlayer::initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationType
 }
 //<<<<Unofficial Bug Fix: End Add
 
-// PUPPET STATES 07/15/08 by DPII
-// returns a player number for the new player
+// MNAI - Puppet States
+//returns a player number for the new player
 PlayerTypes CvPlayer::getPuppetPlayer() const
 {
     PlayerTypes eNewPlayer = NO_PLAYER;
@@ -24451,8 +24443,8 @@ PlayerTypes CvPlayer::findPuppetPlayer(PlayerTypes eParent) const
     }
     return NO_PLAYER;
 }
+// MNAI - End Puppet States
 
-/************************************************************************/
 /************************************************************************************************/
 /* REVOLUTION_MOD                         11/15/08                                jdog5000      */
 /*                                                                                              */
@@ -27379,7 +27371,7 @@ void CvPlayer::setGreatPeopleThresholdModifier(int iNewValue)
 }
 //FfH: End Add
 
-// Puppet State functions (added by Tholal)
+// MNAI - Puppet States
 bool CvPlayer::isPuppetState() const
 {
 	return m_bPuppetState;
@@ -27389,7 +27381,7 @@ void CvPlayer::setPuppetState(bool newvalue)
 {
     m_bPuppetState = newvalue;
 }
-// End Puppet State Functions
+// MNAI - End Puppet States
 
 /*************************************************************************************************/
 /** Sephi AI (Lanun Pirate Coves) (merged from Skyre Mod)                                       **/

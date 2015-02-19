@@ -127,11 +127,11 @@ void CyTeamPythonInterface()
 		.def("getVassalTradingCount", &CyTeam::getVassalTradingCount, "int ()")
 		.def("isVassalStateTrading", &CyTeam::isVassalStateTrading, "bool ()")
 		.def("changeVassalTradingCount", &CyTeam::changeVassalTradingCount, "void (iChange)")
-// MNAI - Puppet States
+		// MNAI - Puppet States
 		.def("getPuppetTradingCount", &CyTeam::getPuppetTradingCount, "int ()")
 		.def("isPuppetStateTrading", &CyTeam::isPuppetStateTrading, "bool ()")
 		.def("changePuppetTradingCount", &CyTeam::changePuppetTradingCount, "void (iChange)")
-// MNAI End
+		// MNAI - End Puppet States
 		.def("getBridgeBuildingCount", &CyTeam::getBridgeBuildingCount, "int ()")
 		.def("isBridgeBuilding", &CyTeam::isBridgeBuilding, "bool ()")
 		.def("changeBridgeBuildingCount", &CyTeam::changeBridgeBuildingCount, "void (iChange)")
