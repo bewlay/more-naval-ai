@@ -2062,6 +2062,8 @@ void CvCityAI::AI_chooseProduction()
 					iOdds = 13;
 				}
 
+				iOdds += iFreeSeaExperience;
+
 				if( iOdds >= 0 )
 				{
 					// if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_EXPLORE_SEA) == 0) // original code
@@ -2182,7 +2184,7 @@ void CvCityAI::AI_chooseProduction()
 	{
 		if (kPlayer.AI_totalUnitAIs(UNITAI_ASSAULT_SEA) < kPlayer.countNumCoastalCitiesByArea(pWaterArea))
 		{
-			if (AI_chooseUnit(UNITAI_ASSAULT_SEA, 50))
+			if (AI_chooseUnit(UNITAI_ASSAULT_SEA, (50 + iFreeSeaExperience)))
 			{
 				return;
 			}
@@ -3404,7 +3406,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 		if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_PIRATE_SEA) < iNeededPirates)
 		{
-			if (kPlayer.AI_calculateUnitAIViability(UNITAI_PIRATE_SEA, DOMAIN_SEA) > 49)
+			if ((kPlayer.AI_calculateUnitAIViability(UNITAI_PIRATE_SEA, DOMAIN_SEA) + iFreeSeaExperience ) > 49)
 			{
 				if (AI_chooseUnit(UNITAI_PIRATE_SEA, iWaterPercent / (1 + iPirateCount)))
 				{

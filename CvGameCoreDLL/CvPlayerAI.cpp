@@ -4104,6 +4104,7 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		{
 		case ATTITUDE_FURIOUS:
 			iAttitudeMod = 6;
+			break;
 
 		case ATTITUDE_ANNOYED:
 			iAttitudeMod = 4;
@@ -6051,6 +6052,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		{
 			AlignmentTypes eAlignment = (AlignmentTypes)GC.getLeaderHeadInfo(getPersonalityType()).getAlignment();
 
+			/*
 			bool bHaveMyReligion = false;
 			bool bHaveMyHolyCity = false;
 			bool bHaveOurHolyCity = false;
@@ -6084,6 +6086,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					}
 				}
 			}
+			*/
 
 			bool bHasReligion = (getStateReligion() != NO_RELIGION);
 			ReligionTypes eFavorite = (ReligionTypes)GC.getLeaderHeadInfo(getLeaderType()).getFavoriteReligion();
@@ -17738,7 +17741,7 @@ void CvPlayerAI::AI_doCivics()
 			int iTestAnarchy = getCivicAnarchyLength(&aeBestCivic[0]);
 			// using 20 percent as a rough estimate of revolution cost, and 2 percent just for a bit of inertia.
 			// reduced threshold if we are already going to have a revolution.
-			int iThreshold = (iTestAnarchy > iAnarchyLength ? (!bFirstPass | bWantSwitch ? 14 : 24) : 2);
+			int iThreshold = (iTestAnarchy > iAnarchyLength ? (!bFirstPass || bWantSwitch ? 14 : 24) : 2);
 
 			if (100*iBestValue > (100+iThreshold)*aiCurrentValue[iI])
 			{
