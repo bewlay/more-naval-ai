@@ -355,7 +355,7 @@ class PyPlayer:
 	def getPlotList(self):
 		' plotList - player plots '
 		lPlots = []
-		for iIndex in self.getPlotIDList():
+		for i in self.getPlotIDList():
 			lPlots.append( CyMap().plotByIndex(i) )
 		return lPlots
 	
