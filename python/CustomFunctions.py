@@ -898,50 +898,92 @@ class CustomFunctions:
 
 	def genesis(self, iPlayer):
 		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
-		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
-		iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
 		iFields = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
-		iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
+		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
 		iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 		iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 		iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
+		iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
+		iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+		iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
+		iSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
+		iFlames = gc.getInfoTypeForString('FEATURE_FLAMES')
 		iForestAncient = gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')
 		iForest = gc.getInfoTypeForString('FEATURE_FOREST')
+		
 		for i in range (CyMap().numPlots()):
 			pPlot = CyMap().plotByIndex(i)
 			if pPlot.getOwner() == iPlayer:
+			
+				# Change Terrain
 				iTerrain = pPlot.getTerrainType()
 				if iTerrain == iSnow:
 					pPlot.setTerrainType(iTundra,True,True)
-				if iTerrain == iTundra:
+				elif iTerrain == iTundra or iTerrain == iMarsh or iTerrain == iShallows:
 					pPlot.setTerrainType(iPlains,True,True)
-				if (iTerrain == iDesert or iTerrain == iBurningSands):
+				elif (iTerrain == iDesert or iTerrain == iBurningSands):
 					pPlot.setTerrainType(iPlains,True,True)
-				if (iTerrain == iPlains or iTerrain == iFields or iTerrain == iBrokenLands):
+				elif (iTerrain == iPlains or iTerrain == iFields or iTerrain == iBrokenLands):
 					pPlot.setTerrainType(iGrass,True,True)
-				if (iTerrain == iGrass and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
+					
+				# Put out fire and smoke
+				if pPlot.getImprovementType() == iSmoke:
+					pPlot.setImprovementType(-1)
+				if pPlot.getFeatureType() == iFlames:
+					pPlot.setFeatureType(-1, -1)					
+
+				# Grow Forests - TODO - let forests grow over improvements if allowed by civs (ie Elves)
+				if (pPlot.getTerrainType() == iGrass and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
 					pPlot.setFeatureType(iForest, 0)
-				iTemp = pPlot.getFeatureType()
+					
+				# Remove blight
 				pPlot.changePlotCounter(-100)
-				if iTemp!=-1:
-					pPlot.setFeatureType(iTemp, 0)
+				
+#				iTemp = pPlot.getFeatureType()
+#				if iTemp!=-1:
+#					pPlot.setFeatureType(iTemp, 0)
 
 	def snowgenesis(self, iPlayer):
+		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
+		iFields = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
+		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
+		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
 		iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 		iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 		iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
 		iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
 		iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+		iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
+		iSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
+		iFlames = gc.getInfoTypeForString('FEATURE_FLAMES')
+		iForestAncient = gc.getInfoTypeForString('FEATURE_FOREST_ANCIENT')
+		iForest = gc.getInfoTypeForString('FEATURE_FOREST')
+		
 		for i in range (CyMap().numPlots()):
 			pPlot = CyMap().plotByIndex(i)
 			if pPlot.getOwner() == iPlayer:
-				pPlot.changePlotCounter(0)
-				if(pPlot.getTerrainType() == iGrass):
+			
+				# Change terrain
+				iTerrain = pPlot.getTerrainType()
+				pPlot.changePlotCounter(-100)
+				if (iTerrain == iGrass or iTerrain == iPlains or iTerrain == iBrokenLands or iTerrain == iTundra or iTerrain == iFields):
 					pPlot.setTerrainType(iSnow,True,True)
-				elif(pPlot.getTerrainType() == iPlains):
-					pPlot.setTerrainType(iSnow,True,True)
-				elif(pPlot.getTerrainType() == iDesert):
+				elif (iTerrain == iDesert or iTerrain == iBurningSands or iTerrain == iMarsh or iTerrain == iShallows):
 					pPlot.setTerrainType(iTundra,True,True)
+					
+				#Put out fire and smoke
+				if pPlot.getImprovementType() == iSmoke:
+					pPlot.setImprovementType(-1)
+				if pPlot.getFeatureType() == iFlames:
+					pPlot.setFeatureType(-1, -1)
+
+				# Grow Forests
+				if (pPlot.getTerrainType() == iTundra and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
+					pPlot.setFeatureType(iForest, 1)
+
+				# Remove blight
+				pPlot.changePlotCounter(-100)
 
 ##--------		Tweaked Hyborem: Added by Denev	--------##
 	def getAshenVeilCities(self, iCasterPlayer, iCasterID, iNum):
