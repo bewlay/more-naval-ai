@@ -139,6 +139,8 @@ class Blizzards:
 #				return False
 			if pPlot.getFeatureType() != -1:
 				return False
+			if pPlot.isHasTempFeature():
+				return False
 #			if pPlot.isWater():
 #				return False
 
