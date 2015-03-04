@@ -290,7 +290,7 @@
             <PromotionPrereq1>PROMOTION_CHANNELING2</PromotionPrereq1>
             <PromotionPrereq2>PROMOTION_DIVINE</PromotionPrereq2>
             <ReligionPrereq>RELIGION_FELLOWSHIP_OF_LEAVES</ReligionPrereq>
-            <bAllowAI>0</bAllowAI>
+            <bAllowAI>1</bAllowAI>
             <bAllowAutomateTerrain>1</bAllowAutomateTerrain>
             <bInBordersOnly>1</bInBordersOnly>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
