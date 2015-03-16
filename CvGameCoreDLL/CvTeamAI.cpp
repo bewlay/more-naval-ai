@@ -2968,7 +2968,10 @@ bool CvTeamAI::AI_acceptSurrender( TeamTypes eSurrenderTeam )
 				{
 					// Valuable terrain bonuses
 					CvPlot* pLoopPlot = NULL;
-					for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//					for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+					for (int iJ = 0; iJ < pLoopCity->getNumCityPlots(); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 					{
 						pLoopPlot = plotCity(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iJ);
 

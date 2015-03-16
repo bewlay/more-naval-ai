@@ -26,7 +26,9 @@ void CyGameCoreUtilsPythonInterface()
 	python::def("directionXY", cyDirectionXYFromInt,"DirectionTypes (int iDX, int iDY)");
 	python::def("directionXYFromPlot", cyDirectionXYFromPlot,"DirectionTypes (CyPlot* pFromPlot, CyPlot* pToPlot)");
 	python::def("plotCity", cyPlotCity, python::return_value_policy<python::manage_new_object>(), "CyPlot* (int iX, int iY, int iIndex)");
-	python::def("plotCityXY", cyPlotCityXYFromInt,"int (int iDX, int iDY)");
+//>>>>Unofficial Bug Fix: Deleted by Denev 2010/04/06
+//	python::def("plotCityXY", cyPlotCityXYFromInt,"int (int iDX, int iDY)");
+//<<<<Unofficial Bug Fix: End Delete
 	python::def("plotCityXYFromCity", cyPlotCityXYFromCity,"int (CyCity* pCity, CyPlot* pPlot)");
 	python::def("getOppositeCardinalDirection", cyGetOppositeCardinalDirection,"CardinalDirectionTypes (CardinalDirectionTypes eDir)");
 	python::def("cardinalDirectionToDirection", cyCardinalDirectionToDirection, "DirectionTypes (CardinalDirectionTypes eDir) - converts a CardinalDirectionType to the corresponding DirectionType");

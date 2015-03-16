@@ -25,7 +25,9 @@ CyPlot* cysPlotXY(int iX, int iY, int iDX, int iDY);
 DirectionTypes cyDirectionXYFromInt(int iDX, int iDY);
 DirectionTypes cyDirectionXYFromPlot(CyPlot* pFromPlot, CyPlot* pToPlot);
 CyPlot* cyPlotCity(int iX, int iY, int iIndex);
-int cyPlotCityXYFromInt(int iDX, int iDY);
+//>>>>Unofficial Bug Fix: Deleted by Denev 2010/04/06
+//int cyPlotCityXYFromInt(int iDX, int iDY);
+//<<<<Unofficial Bug Fix: End Delete
 int cyPlotCityXYFromCity(CyCity* pCity, CyPlot* pPlot);
 CardinalDirectionTypes cyGetOppositeCardinalDirection(CardinalDirectionTypes eDir);
 DirectionTypes cyCardinalDirectionToDirection(CardinalDirectionTypes eCard);

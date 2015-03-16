@@ -260,7 +260,8 @@ void CvGame::updateColoredPlots()
 					{
 						TeamTypes eOwnerTeam = pSelectedCity->getTeam();
 
-						for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+						//for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+						for (iI = 0; iI < pHeadSelectedCity->getNumCityPlots(); iI++)
 						{
 							pLoopPlot = pSelectedCity->getCityIndexPlot(iI);
 

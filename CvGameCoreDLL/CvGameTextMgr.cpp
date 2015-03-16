@@ -6926,7 +6926,10 @@ void CvGameTextMgr::setCityPlotYieldValueString(CvWStringBuffer &szString, CvCit
 
 	CvPlot* pPlot = NULL;
 
-	if (iIndex >= 0 && iIndex < NUM_CITY_PLOTS)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	if (iIndex >= 0 && iIndex < NUM_CITY_PLOTS)
+	if (iIndex >= 0 && iIndex < pCity->getNumCityPlots())
+//<<<<Unofficial Bug Fix: End Modify
 		pPlot = pCity->getCityIndexPlot(iIndex);
 	
 	if (pPlot != NULL && pPlot->getWorkingCity() == pCity)

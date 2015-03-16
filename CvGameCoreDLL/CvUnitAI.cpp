@@ -17124,7 +17124,10 @@ bool CvUnitAI::AI_pillageAroundCity(CvCity* pTargetCity, int iBonusValueThreshol
 	pBestPlot = NULL;
 	pBestPillagePlot = NULL;
 
-	for( int iI = 0; iI < NUM_CITY_PLOTS; iI++ )
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for( int iI = 0; iI < NUM_CITY_PLOTS; iI++ )
+	for (int iI = 0; iI < pTargetCity->getNumCityPlots(); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = pTargetCity->getCityIndexPlot(iI);
 

@@ -273,13 +273,12 @@ void CvCityAI::AI_assignWorkingPlots()
 	}
 
 	// remove all assigned plots if we automated
-
 	if (!isHuman() || isCitizensAutomated())
 	{
 
 //FfH: Modified by Kael 11/18/2007
-//	    for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
-        for (iI = 0; iI < getNumCityPlots(); iI++)
+//		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+		for (iI = 0; iI < getNumCityPlots(); iI++)
 //FfH: End Modify
 
 		{

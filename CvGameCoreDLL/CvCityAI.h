@@ -180,9 +180,15 @@ protected:
 	int* m_aiEmphasizeCommerceCount;
 	bool m_bForceEmphasizeCulture;
 
-	int m_aiBestBuildValue[NUM_CITY_PLOTS];
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	int m_aiBestBuildValue[NUM_CITY_PLOTS];
+	int m_aiBestBuildValue[NUM_MAX_CITY_PLOTS];
+//<<<<Unofficial Bug Fix: End Modify
 
-	BuildTypes m_aeBestBuild[NUM_CITY_PLOTS];
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	BuildTypes m_aeBestBuild[NUM_CITY_PLOTS];
+	BuildTypes m_aeBestBuild[NUM_MAX_CITY_PLOTS];
+//<<<<Unofficial Bug Fix: End Modify
 
 	bool* m_pbEmphasize;
 

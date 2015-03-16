@@ -737,9 +737,18 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 			m_paiFreePromotionCount[iI] = 0;
 		}
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
 		FAssertMsg((0 < NUM_CITY_PLOTS),  "NUM_CITY_PLOTS is not greater than zero but an array is being allocated in CvCity::reset");
 		m_pabWorkingPlot = new bool[NUM_CITY_PLOTS];
 		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+*/
+		setPlotRadius(CITY_PLOTS_DEFAULT_RADIUS);
+
+		FAssertMsg((0 < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS)),  "::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS) is not greater than zero but an array is being allocated in CvCity::reset");
+		m_pabWorkingPlot = new bool[::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS)];
+		for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			m_pabWorkingPlot[iI] = false;
 		}
@@ -17058,29 +17067,25 @@ bool CvCity::isSettlement() const
 
 void CvCity::setSettlement(bool bNewValue)
 {
-    m_bSettlement = bNewValue;
+//>>>>Advanced Rules: Added by Denev 2010/07/13
+	setPlotRadius(1);
+//<<<<Advanced Rules: End Add
+
+	m_bSettlement = bNewValue;
 }
 
 int CvCity::getNumCityPlots() const
 {
-    if (getPlotRadius() == 3)
-    {
-        return 37;
-    }
-
-    else if (getPlotRadius() == 1)
-    {
-		if (isSettlement())
-		{
-			return 1;
-		}
-		else
-		{
-	        return 9;
-		}
-    }
-
-    return 21;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
+	if (getPlotRadius() == 3)
+	{
+		return 37;
+	}
+	return 21;
+*/
+	return ::calculateNumCityPlots(getPlotRadius());
+//<<<<Unofficial Bug Fix: End Modify
 }
 
 int CvCity::getPlotRadius() const

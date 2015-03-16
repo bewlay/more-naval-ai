@@ -46,6 +46,8 @@ CvPlot* plotCity(int iX, int iY, int iIndex)
 	return GC.getMapINLINE().plotINLINE((iX + GC.getCityPlotX()[iIndex]), (iY + GC.getCityPlotY()[iIndex]));
 }
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/05
+/*
 int plotCityXY(int iDX, int iDY)
 {
 	if ((abs(iDX) > CITY_PLOTS_RADIUS) || (abs(iDY) > CITY_PLOTS_RADIUS))
@@ -57,21 +59,19 @@ int plotCityXY(int iDX, int iDY)
 		return GC.getXYCityPlot((iDX + CITY_PLOTS_RADIUS), (iDY + CITY_PLOTS_RADIUS));
 	}
 }
-
-//FfH: Added by Kael 12/03/2007
+*/
 int plotCityXY(int iDX, int iDY, int iRadius)
 {
-	if ((abs(iDX) > iRadius) || (abs(iDY) > iRadius))
+	if (::plotDistance(0, 0, iDX, iDY) > iRadius)
 	{
 		return -1;
 	}
-	if (iRadius == 2 && GC.getXYCityPlot((iDX + CITY_PLOTS_RADIUS), (iDY + CITY_PLOTS_RADIUS)) > 21)
+	else
 	{
-	    return -1;
+		return GC.getXYCityPlot((iDX + CITY_PLOTS_MAX_RADIUS), (iDY + CITY_PLOTS_MAX_RADIUS));
 	}
-    return GC.getXYCityPlot((iDX + CITY_PLOTS_RADIUS), (iDY + CITY_PLOTS_RADIUS));
 }
-//FfH: End Add
+//<<<<Unofficial Bug Fix: End Modify
 
 int plotCityXY(const CvCity* pCity, const CvPlot* pPlot)
 {

@@ -989,10 +989,13 @@ protected:
 	int* m_aiPlotDirectionY;	// [NUM_DIRECTION_TYPES];
 	int* m_aiPlotCardinalDirectionX;	// [NUM_CARDINALDIRECTION_TYPES];
 	int* m_aiPlotCardinalDirectionY;	// [NUM_CARDINALDIRECTION_TYPES];
-	int* m_aiCityPlotX;	// [NUM_CITY_PLOTS];
-	int* m_aiCityPlotY;	// [NUM_CITY_PLOTS];
-	int* m_aiCityPlotPriority;	// [NUM_CITY_PLOTS];
-	int m_aaiXYCityPlot[CITY_PLOTS_DIAMETER][CITY_PLOTS_DIAMETER];
+	int* m_aiCityPlotX;	// [::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS)];
+	int* m_aiCityPlotY;	// [::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS)];
+	int* m_aiCityPlotPriority;	// [::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS)];
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	int m_aaiXYCityPlot[CITY_PLOTS_DIAMETER][CITY_PLOTS_DIAMETER];
+	int m_aaiXYCityPlot[CITY_PLOTS_MAX_DIAMETER][CITY_PLOTS_MAX_DIAMETER];
+//<<<<Unofficial Bug Fix: End Modify
 
 	DirectionTypes* m_aeTurnLeftDirection;	// [NUM_DIRECTION_TYPES];
 	DirectionTypes* m_aeTurnRightDirection;	// [NUM_DIRECTION_TYPES];

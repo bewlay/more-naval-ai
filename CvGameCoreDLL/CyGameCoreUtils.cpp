@@ -78,10 +78,14 @@ CyPlot* cyPlotCity(int iX, int iY, int iIndex)
 	return new CyPlot(plotCity(iX, iY, iIndex));
 }
 
+//>>>>Unofficial Bug Fix: Deleted by Denev 2010/04/06
+/*
 int cyPlotCityXYFromInt(int iDX, int iDY)
 {
 	return plotCityXY(iDX, iDY);
 }
+*/
+//<<<<Unofficial Bug Fix: End Delete
 
 int cyPlotCityXYFromCity(CyCity* pCity, CyPlot* pPlot)
 {

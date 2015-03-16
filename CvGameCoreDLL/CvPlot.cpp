@@ -4295,7 +4295,10 @@ PlayerTypes CvPlot::calculateCulturalOwner() const
 			iBestPriority = MAX_INT;
 			pBestCity = NULL;
 
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -5845,7 +5848,10 @@ bool CvPlot::isPotentialCityWorkForArea(CvArea* pArea) const
 	CvPlot* pLoopPlot;
 	int iI;
 
-	for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+	for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -5875,11 +5881,10 @@ void CvPlot::updatePotentialCityWork()
 
 	bValid = false;
 
-//FfH: Modified by Kael 07/12/208
-//  for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
-	for (iI = 0; iI < 21; ++iI)
-//FfH: End Modify
-
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+	for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -5917,7 +5922,10 @@ void CvPlot::updateShowCitySymbols()
 
 	bNewShowCitySymbols = false;
 
-	for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+	for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -6372,7 +6380,10 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 				}
 			}
 
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -6667,7 +6678,10 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety)
 			updateRiverSymbolArt(true);
 		}
 
-		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+		for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -6917,7 +6931,10 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 		updateIrrigated();
 		updateYield();
 
-		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+		for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			CvPlot* pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -7079,8 +7096,10 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	{
 		if (isCity())
 		{
-			//for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
-			for (iI = 0; iI > getPlotCity()->getNumCityPlots(); ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < ::calculateNumCityPlots(getPlotCity()->getPlotRadius()); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -7131,7 +7150,10 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 
 		if (isCity())
 		{
-			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+			for (iI = 0; iI < ::calculateNumCityPlots(pNewValue->getPlotRadius()); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -7178,7 +7200,10 @@ void CvPlot::updateWorkingCity()
 	{
 		iBestPlot = 0;
 
-		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (iI = 0; iI < NUM_CITY_PLOTS; ++iI)
+		for (iI = 0; iI < ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS); ++iI)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			pLoopPlot = plotCity(getX_INLINE(), getY_INLINE(), iI);
 
@@ -7188,40 +7213,68 @@ void CvPlot::updateWorkingCity()
 
 				if (pLoopCity != NULL)
 				{
-/*************************************************************************************************/
-/**	BUGFIX (modified CityRadius) Sephi                                      					**/
-/**																								**/
-/**	makes sure an AI city only tries to work plots it can actually use 							**/
-/*************************************************************************************************/
-					if (iI<pLoopCity->getNumCityPlots())
+//>>>>Unofficial Bug Fix: Added by Denev 2010/04/05
+					if (::plotDistance(getX_INLINE(), getY_INLINE(), pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE()) <= pLoopCity->getPlotRadius())
 					{
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
+//<<<<Unofficial Bug Fix: End Add
 						if (pLoopCity->getOwnerINLINE() == getOwnerINLINE())
 						{
 							// XXX use getGameTurnAcquired() instead???
+//>>>>Better AI: Modified by Denev 2010/07/12
+//*** Settlements don't disturb regular cities.
+/*
 							if ((pBestCity == NULL) ||
 								  (GC.getCityPlotPriority()[iI] < GC.getCityPlotPriority()[iBestPlot]) ||
 								  ((GC.getCityPlotPriority()[iI] == GC.getCityPlotPriority()[iBestPlot]) &&
 								   ((pLoopCity->getGameTurnFounded() < pBestCity->getGameTurnFounded()) ||
 									((pLoopCity->getGameTurnFounded() == pBestCity->getGameTurnFounded()) &&
 									 (pLoopCity->getID() < pBestCity->getID())))))
+*/							bool bUpdateBest = false;
+
+							if (pBestCity == NULL)
+							{
+								bUpdateBest = true;
+							}
+							else
+							{
+								int iLoopPriority = (pLoopCity->isSettlement()) ? MAX_INT : GC.getCityPlotPriority()[iI];
+								int iBestPriority = (pBestCity->isSettlement()) ? MAX_INT : GC.getCityPlotPriority()[iBestPlot];
+
+								if (iLoopPriority < iBestPriority)
+								{
+									bUpdateBest = true;
+								}
+								else
+								if (iLoopPriority == iBestPriority)
+								{
+									int iLoopFoundedTurn = pLoopCity->getGameTurnFounded();
+									int iBestFoundedTurn = pBestCity->getGameTurnFounded();
+
+									if (iLoopFoundedTurn < iBestFoundedTurn)
+									{
+										bUpdateBest = true;
+									}
+									else
+									if (iLoopFoundedTurn == iBestFoundedTurn)
+									{
+										if (pLoopCity->getID() < pBestCity->getID())
+										{
+											bUpdateBest = true;
+										}
+									}
+								}
+							}
+
+							if (bUpdateBest)
+//<<<<Better AI: End Modify
 							{
 								iBestPlot = iI;
 								pBestCity = pLoopCity;
 							}
 						}
-/*************************************************************************************************/
-/**	BUGFIX (modified CityRadius) Sephi                                      					**/
-/**																								**/
-/**	makes sure an AI city only tries to work plots it can actually use 							**/
-/*************************************************************************************************/
+//>>>>Unofficial Bug Fix: Added by Denev 2010/04/05
 					}
-/*************************************************************************************************/
-/**	END	                                        												**/
-/*************************************************************************************************/
-
+//<<<<Unofficial Bug Fix: End Add
 				}
 			}
 		}

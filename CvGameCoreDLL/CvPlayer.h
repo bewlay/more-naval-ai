@@ -1300,6 +1300,9 @@ public:
 	void AI_doTowerMastery();
 // End Sephi AI
 
+//>>>>Unofficial Bug Fix: Added by Denev 2010/04/04
+	bool isRegularCityMaxedOut() const;
+	int getNextCityRadius() const;
 //>>>>Unofficial Bug Fix: Added by Denev 2009/09/29
 //*** Assimilated city produces a unit with original civilization artstyle.
 	UnitArtStyleTypes getUnitArtStyleType() const;

@@ -1506,7 +1506,10 @@ CvPlot* CvGame::normalizeFindLakePlot(PlayerTypes ePlayer)
 	{
 		if (!(pStartingPlot->isFreshWater()))
 		{
-			for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//			for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+			for (int iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				CvPlot* pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 
@@ -1565,7 +1568,10 @@ void CvGame::normalizeRemoveBadFeatures()
 
 			if (pStartingPlot != NULL)
 			{
-				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 
@@ -1583,7 +1589,10 @@ void CvGame::normalizeRemoveBadFeatures()
 				}
 
 				int iX, iY;
-				int iCityRange = CITY_PLOTS_RADIUS;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				int iCityRange = CITY_PLOTS_RADIUS;
+				int iCityRange = GET_PLAYER((PlayerTypes)iI).getNextCityRadius();
+//<<<<Unofficial Bug Fix: End Modify
 				int iExtraRange = 2;
 				int iMaxRange = iCityRange + iExtraRange;
 
@@ -1641,12 +1650,21 @@ void CvGame::normalizeRemoveBadTerrain()
 	int iPlotProduction;
 
 
+//>>>>Unofficial Bug Fix: Deleted by Denev 2010/04/04
+/*
 	int iCityRange = CITY_PLOTS_RADIUS;
 	int iExtraRange = 1;
 	int iMaxRange = iCityRange + iExtraRange;
+*/
+//<<<<Unofficial Bug Fix: End Delete
 
 	for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 	{
+//>>>>Unofficial Bug Fix: Added by Denev 2010/04/04
+		int iCityRange = GET_PLAYER((PlayerTypes)iI).getNextCityRadius();
+		int iExtraRange = 1;
+		int iMaxRange = iCityRange + iExtraRange;
+//<<<<Unofficial Bug Fix: End Add
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
 			pStartingPlot = GET_PLAYER((PlayerTypes)iI).getStartingPlot();
@@ -1758,7 +1776,10 @@ void CvGame::normalizeAddFoodBonuses()
 				int iFoodBonus = 0;
 				int iGoodNatureTileCount = 0;
 
-				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (int iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					CvPlot* pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 
@@ -1806,7 +1827,10 @@ void CvGame::normalizeAddFoodBonuses()
 				int iTargetFoodBonusCount = 3;
 				iTargetFoodBonusCount += (iGoodNatureTileCount == 0) ? 2 : 0;
 
-				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (int iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					if (iFoodBonus >= iTargetFoodBonusCount)
 					{
@@ -1881,7 +1905,10 @@ void CvGame::normalizeAddGoodTerrain()
 			{
 				iGoodPlot = 0;
 
-				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 
@@ -1898,7 +1925,10 @@ void CvGame::normalizeAddGoodTerrain()
 					}
 				}
 
-				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (iJ = 0; iJ < ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS); iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					if (iGoodPlot >= 4)
 					{
@@ -2021,12 +2051,22 @@ void CvGame::normalizeAddExtras()
 
 			if (pStartingPlot != NULL)
 			{
-                int iCount = 0;
+				int iCount = 0;
 				int iFeatureCount = 0;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
 				int aiShuffle[NUM_CITY_PLOTS];
 				shuffleArray(aiShuffle, NUM_CITY_PLOTS, getMapRand());
 
 				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+*/
+				const int iNumCityPlots = ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS);
+
+				int* aiShuffle = new int[iNumCityPlots];
+				shuffleArray(aiShuffle, iNumCityPlots, getMapRand());
+
+				for (int iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					if (GET_PLAYER((PlayerTypes)iI).AI_foundValue(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), -1, true) >= iTargetValue)
 					{
@@ -2073,7 +2113,10 @@ void CvGame::normalizeAddExtras()
 				int iOceanFoodCount = 0;
 				int iOtherCount = 0;
 				int iWaterCount = 0;
-				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (int iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					CvPlot* pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 					if (pLoopPlot != NULL)
@@ -2106,11 +2149,20 @@ void CvGame::normalizeAddExtras()
 					}
 				}
 
-			    bool bLandBias = (iWaterCount > NUM_CITY_PLOTS / 2);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
+				bool bLandBias = (iWaterCount > NUM_CITY_PLOTS / 2);
 
-                shuffleArray(aiShuffle, NUM_CITY_PLOTS, getMapRand());
+				shuffleArray(aiShuffle, NUM_CITY_PLOTS, getMapRand());
 
 				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+*/
+				bool bLandBias = (iWaterCount > iNumCityPlots / 2);
+
+				shuffleArray(aiShuffle, iNumCityPlots, getMapRand());
+
+				for (int iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 				    CvPlot* pLoopPlot = plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), aiShuffle[iJ]);
 
@@ -2205,9 +2257,16 @@ void CvGame::normalizeAddExtras()
 					}
 				}
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
 				shuffleArray(aiShuffle, NUM_CITY_PLOTS, getMapRand());
 
 				for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+*/
+				shuffleArray(aiShuffle, iNumCityPlots, getMapRand());
+
+				for (iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					if (GET_PLAYER((PlayerTypes)iI).AI_foundValue(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), -1, true) >= iTargetValue)
 					{
@@ -2247,7 +2306,10 @@ void CvGame::normalizeAddExtras()
 
 				int iHillsCount = 0;
 
-				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+				for (int iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					CvPlot* pLoopPlot =plotCity(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), iJ);
 					if (pLoopPlot != NULL)
@@ -2258,8 +2320,14 @@ void CvGame::normalizeAddExtras()
 						}
 					}
 				}
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+/*
 				shuffleArray(aiShuffle, NUM_CITY_PLOTS, getMapRand());
 				for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
+*/
+				shuffleArray(aiShuffle, iNumCityPlots, getMapRand());
+				for (int iJ = 0; iJ < iNumCityPlots; iJ++)
+//<<<<Unofficial Bug Fix: End Modify
 				{
 					if (iHillsCount >= 3)
 					{
@@ -4341,11 +4409,10 @@ void CvGame::initScoreCalculation()
 		int iNumSettlers = GC.getEraInfo(getStartEra()).getStartingUnitMultiplier();
 		m_iInitPopulation = getPopulationScore(iNumSettlers * (GC.getEraInfo(getStartEra()).getFreePopulation() + 1));
 
-//FfH: Modified by Kael 11/18/2007
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //		m_iInitLand = getLandPlotsScore(iNumSettlers *  NUM_CITY_PLOTS);
-		m_iInitLand = getLandPlotsScore(iNumSettlers *  21);
-//FfH: End Modify
-
+		m_iInitLand = getLandPlotsScore(iNumSettlers *  ::calculateNumCityPlots(CITY_PLOTS_DEFAULT_RADIUS));
+//<<<<Unofficial Bug Fix: End Modify
 	}
 	else
 	{

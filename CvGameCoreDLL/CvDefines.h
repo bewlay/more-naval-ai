@@ -100,16 +100,20 @@
 #define DIRECTION_RADIUS											(1)
 #define DIRECTION_DIAMETER										((DIRECTION_RADIUS * 2) + 1)
 
-//FfH: Modified by Kael 11/18/2007
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
 //#define NUM_CITY_PLOTS												(21)
 //#define CITY_HOME_PLOT												(0)
 //#define CITY_PLOTS_RADIUS											(2)
-#define NUM_CITY_PLOTS												(37)
 #define CITY_HOME_PLOT												(0)
-#define CITY_PLOTS_RADIUS											(3)
-//FfH: End Modify
+#define CITY_PLOTS_DEFAULT_RADIUS									(2)
+#define CITY_PLOTS_MAX_RADIUS										(3)
+#define NUM_MAX_CITY_PLOTS											(CITY_PLOTS_MAX_RADIUS * (CITY_PLOTS_MAX_RADIUS + 3) * 2 + 1)
+//<<<<Unofficial Bug Fix: End Modify
 
-#define CITY_PLOTS_DIAMETER										((CITY_PLOTS_RADIUS*2) + 1)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//#define CITY_PLOTS_DIAMETER										((CITY_PLOTS_RADIUS*2) + 1)
+#define CITY_PLOTS_MAX_DIAMETER										((CITY_PLOTS_MAX_RADIUS*2) + 1)
+//<<<<Unofficial Bug Fix: End Modify
 
 #define GAME_NAME															("Game")
 

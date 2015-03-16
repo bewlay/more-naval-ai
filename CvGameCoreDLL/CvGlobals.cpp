@@ -322,7 +322,10 @@ void CvGlobals::init()
 		0,	// CARDINALDIRECTION_WEST
 	};
 
-	int aiCityPlotX[NUM_CITY_PLOTS] =
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	int aiCityPlotX[NUM_CITY_PLOTS] =
+	int aiCityPlotX[NUM_MAX_CITY_PLOTS] =
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		0,
 		0, 1, 1, 1, 0,-1,-1,-1,
@@ -334,7 +337,10 @@ void CvGlobals::init()
 
 	};
 
-	int aiCityPlotY[NUM_CITY_PLOTS] =
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	int aiCityPlotY[NUM_CITY_PLOTS] =
+	int aiCityPlotY[NUM_MAX_CITY_PLOTS] =
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		0,
 		1, 1, 0,-1,-1,-1, 0, 1,
@@ -346,7 +352,10 @@ void CvGlobals::init()
 
 	};
 
-	int aiCityPlotPriority[NUM_CITY_PLOTS] =
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	int aiCityPlotPriority[NUM_CITY_PLOTS] =
+	int aiCityPlotPriority[NUM_MAX_CITY_PLOTS] =
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		0,
 		1, 2, 1, 2, 1, 2, 1, 2,
@@ -358,7 +367,10 @@ void CvGlobals::init()
 
 	};
 
-	int aaiXYCityPlot[CITY_PLOTS_DIAMETER][CITY_PLOTS_DIAMETER] =
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/05
+//	int aaiXYCityPlot[CITY_PLOTS_DIAMETER][CITY_PLOTS_DIAMETER] =
+	int aaiXYCityPlot[CITY_PLOTS_MAX_DIAMETER][CITY_PLOTS_MAX_DIAMETER] =
+//<<<<Unofficial Bug Fix: End Modify
 	{
 
 //FfH: Modified by Kael 11/18/2007
@@ -710,10 +722,18 @@ int* CvGlobals::getCityPlotPriority()
 
 int CvGlobals::getXYCityPlot(int i, int j)
 {
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/05
+/*
 	FAssertMsg(i < CITY_PLOTS_DIAMETER, "Index out of bounds");
 	FAssertMsg(i > -1, "Index out of bounds");
 	FAssertMsg(j < CITY_PLOTS_DIAMETER, "Index out of bounds");
 	FAssertMsg(j > -1, "Index out of bounds");
+*/
+	FAssertMsg(i < CITY_PLOTS_MAX_DIAMETER, "Index out of bounds");
+	FAssertMsg(i > -1, "Index out of bounds");
+	FAssertMsg(j < CITY_PLOTS_MAX_DIAMETER, "Index out of bounds");
+	FAssertMsg(j > -1, "Index out of bounds");
+//<<<<Unofficial Bug Fix: End Modify
 	return m_aaiXYCityPlot[i][j];
 }
 
@@ -3302,7 +3322,10 @@ int CvGlobals::getINVALID_PLOT_COORD()
 
 int CvGlobals::getNUM_CITY_PLOTS()
 {
-	return NUM_CITY_PLOTS;
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//	return NUM_CITY_PLOTS;
+	return ::calculateNumCityPlots(CITY_PLOTS_MAX_RADIUS);
+//<<<<Unofficial Bug Fix: End Modify
 }
 
 int CvGlobals::getCITY_HOME_PLOT()
