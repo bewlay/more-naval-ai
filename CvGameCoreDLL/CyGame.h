@@ -237,7 +237,10 @@ public:
 	bool isMPOption(int /*MultiplayerOptionTypes*/ eIndex);
 	bool isForcedControl(int /*ForceControlTypes*/ eIndex);
 	int getUnitCreatedCount(int /*UnitTypes*/ eIndex);
+	void incrementUnitCreatedCount(int /*UnitTypes*/ eIndex);
+	void decrementUnitCreatedCount(int /*UnitTypes*/ eIndex);
 	int getUnitClassCreatedCount(int /*UnitClassTypes*/ eIndex);
+	void decrementUnitClassCreatedCount(int /*UnitClassTypes*/ eIndex);
 	bool isUnitClassMaxedOut(int /*UnitClassTypes*/ eIndex, int iExtra);
 	int getBuildingClassCreatedCount(int /*BuildingClassTypes*/ eIndex);
 	bool isBuildingClassMaxedOut(int /*BuildingClassTypes*/ eIndex, int iExtra);
