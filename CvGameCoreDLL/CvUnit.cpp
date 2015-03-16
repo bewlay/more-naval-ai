@@ -12281,7 +12281,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 					bAnimalLair = true;
 				}
 
-                if (!isHuman() || kImprovementInfo.isPermanent() == false)
+                if (kImprovementInfo.isPermanent() == false)
                 {
                     if (atWar(getTeam(), GET_PLAYER(BARBARIAN_PLAYER).getTeam()) || (bAnimalLair && !isBarbarian()))
                     {
