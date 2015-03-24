@@ -1239,7 +1239,7 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc) const
 		{
 			pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-			if (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam()))
+			if (pLoopPlot->isRevealed(getTeam(), false) )//|| pLoopPlot->isAdjacentRevealed(getTeam()))
 			{
 				long lResult=-1;
 				if(GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK())
@@ -2967,6 +2967,8 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
     
     int iYieldLostHere = 0;
 
+	int iTotalProduction = 0;
+
 	for (iI = 0; iI < iNumCityPlots; iI++)
 	{
 		pLoopPlot = plotCity(iX, iY, iI);
@@ -2974,8 +2976,9 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		if (pLoopPlot == NULL)
 		{
 			iTakenTiles++;
+			iValue -= 100;
 		}
-		else if (pLoopPlot->isCityRadius() || abCitySiteRadius[iI])
+		else if (pLoopPlot->isCityRadius() || (pLoopPlot->getWorkingCity() != NULL)) // || abCitySiteRadius[iI])
 		{
 			iTakenTiles++;
 
@@ -2996,50 +2999,58 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			if (eBonus != NO_BONUS)
 			{
-				if (GC.getBonusInfo(eBonus).isMana())
-				{
-					iTempValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 250 : 100);
-				}
-				// dont value bonuses that have blocking features. working?
 				bool bCanWork = true;
-
-				if (eFeature != NO_FEATURE)
+				if  (iI == CITY_HOME_PLOT)
 				{
+					iValue -= AI_bonusVal(eBonus);
 					bCanWork = false;
-
-					if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
+				}
+				else
+				{
+					if (GC.getBonusInfo(eBonus).isMana())
 					{
-						bCanWork = true;
-						iTempValue += 10;
+						iTempValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 250 : 100);
 					}
-					else
+
+					// dont value bonuses that have blocking features. working?
+					if (eFeature != NO_FEATURE)
 					{
-						// find the Improvement that matches this Bonus
-						for (int iImprovements = 0; iImprovements < GC.getNumImprovementInfos(); iImprovements++)
+						bCanWork = false;
+
+						if (GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(eFeature))
 						{
-							ImprovementTypes eImprovement = ((ImprovementTypes)iI);
-							if ( eImprovement != NO_IMPROVEMENT )
+							bCanWork = true;
+							iTempValue += 10;
+						}
+						else
+						{
+							// find the Improvement that matches this Bonus
+							for (int iImprovements = 0; iImprovements < GC.getNumImprovementInfos(); iImprovements++)
 							{
-								if (GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(eBonus))
+								ImprovementTypes eImprovement = ((ImprovementTypes)iI);
+								if ( eImprovement != NO_IMPROVEMENT )
 								{
-									// find the Build for this Improvement
-									for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
+									if (GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(eBonus))
 									{
-										BuildTypes eBuild = ((BuildTypes)iJ);
-										if (eBuild != NO_BUILD)
+										// find the Build for this Improvement
+										for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
 										{
-											if (GC.getBuildInfo(eBuild).getImprovement() == eImprovement)
+											BuildTypes eBuild = ((BuildTypes)iJ);
+											if (eBuild != NO_BUILD)
 											{
-												// check feature tech
-												if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+												if (GC.getBuildInfo(eBuild).getImprovement() == eImprovement)
 												{
-													bCanWork = true;
-													break;
+													// check feature tech
+													if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getFeatureTech(eFeature)))
+													{
+														bCanWork = true;
+														break;
+													}
 												}
 											}
 										}
+										break;
 									}
-									break;
 								}
 							}
 						}
@@ -3174,6 +3185,8 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				}
 			}
 
+			iTotalProduction += aiYield[YIELD_PRODUCTION];
+
             if (iI == CITY_HOME_PLOT)
 			{
 				iTempValue += aiYield[YIELD_FOOD] * 60;
@@ -3206,6 +3219,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			if (pLoopPlot->isWater())
 			{
+				if (bPirate)
+				{
+					if (!pLoopPlot->isCityRadius() && pLoopPlot->isAdjacentToLand())
+					{
+	                    iTempValue +=150;
+					}
+				}
+
 				if (aiYield[YIELD_COMMERCE] > 1)
 				{
 /************************************************************************************************/
@@ -3233,15 +3254,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 					}
 				}
 
-				// pirates like water
-				if (bPirate)
-                {
-					if (!pLoopPlot->isCityRadius())
-					{
-	                    iTempValue +=100;
-					}
-                }
-
 				if (isSprawling())
 				{
 					iTempValue -= 100;
@@ -3250,14 +3262,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			if (pLoopPlot->isRiver())
 			{
-				//iTempValue += 10;
 				iTempValue += ((bFinancial || bStartingLoc) ? 20 : 10);
 				iTempValue += (pPlot->isRiver() ? 15 : 0);
 			}
 
 			if (iI == CITY_HOME_PLOT)
 			{
-				iTempValue *= 2;
+				//iTempValue *= 2;
 			}
 			else if ((pLoopPlot->getOwnerINLINE() == getID()) || (stepDistance(iX, iY, pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()) == 1))
 			{
@@ -3291,7 +3302,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 					}
 				}
 
-				if ((eBonus != NO_BONUS) && ((pLoopPlot->area() == pPlot->area()) ||
+				if ((iI == CITY_HOME_PLOT) && (eBonus != NO_BONUS) && ((pLoopPlot->area() == pPlot->area()) ||
 					(pLoopPlot->area()->getCitiesPerPlayer(getID()) > 0)))
 				{
                     paiBonusCount[eBonus]++;
@@ -3339,36 +3350,18 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 								iResourceValue -= 30;
 							}
 						}
-
-						/*
-                        if (pLoopPlot->isWater())
-                        {
-							if (!bIsCoastal)
-							{
-								iValue += -800;
-							}
-							else
-							{
-								iValue += (isSprawling() ? 15 : 25);
-								if (bPirate)
-								{
-									iValue += 100;
-								}
-							}
-							*/
-//                          iValue += (bIsCoastal ? 100 : -800);
-
-							/*
-							iValue += (bIsCoastal ? 50 : -800);
-							if (isPirate())
-							{
-								iValue += 100;
-							}
-                        }
-						*/
                     }
 				}
 			}
+		}
+	}
+
+	if (iTotalProduction < 3)
+	{
+		if (getNumCities() == 0 && !bStartingLoc)
+		{
+			//return -150;
+			return 0;
 		}
 	}
 
@@ -3382,16 +3375,17 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	iValue += std::max(0, iResourceValue);
 
-	if (iTakenTiles > (iNumCityPlots / 3) && iResourceValue < 250)
+	if ((iTakenTiles >= (iNumCityPlots / (bSprawlingExpand ? 4 : 3))) && (iResourceValue < 250))
 	{
 		return 0;
 	}
 
-	if (iTeammateTakenTiles > 1)
+	if (iTeammateTakenTiles > (iNumCityPlots / 3))
 	{
 		return 0;
 	}
 
+	iValue -= (iTakenTiles + iTeammateTakenTiles) * 50;
 	iValue += (iHealth / 5);
 
 	if (bIsCoastal)
@@ -3626,7 +3620,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 			else
 			{
-				
 				int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
 				int iNumCities = getNumCities();
 				
@@ -3636,14 +3629,12 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				}
 
 				/*
-				if (bSprawlingExpand)
+				if (iDistance > (bSprawlingExpand ? 6 : 5))
 				{
-					if (iDistance < 5)
-					{
-						iValue /= 2;
-					}
+		    		iValue -= (iDistance - 5) * 500;
 				}
 				*/
+
 				/*
 				iValue *= (8 + iNumCities * 4);
 				iValue /= (2 + (iNumCities * 4) + iDistance);
@@ -26005,10 +25996,12 @@ int CvPlayerAI::AI_getMinFoundValue() const
 	iValue *= iNetCommerce;
 	iValue /= std::max(std::max(1, iNetCommerce / 4), iNetCommerce - iNetExpenses);
 
+	/*
 	if (GET_TEAM(getTeam()).getAnyWarPlanCount(1) > 0)
 	{
 		iValue *= 2;
 	}
+	*/
 
 	// K-Mod. # of cities maintenance cost increase...
 	int iNumCitiesPercent = 100;
@@ -26028,8 +26021,14 @@ int CvPlayerAI::AI_getMinFoundValue() const
 	// But we're really going to have to fudge it anyway, because the city value is in arbitrary units
 	// lets just say each gold per turn is worth roughly 60 'value points'.
 	// In the future, this could be AI flavour based.
-	iValue += iNumCitiesPercent * getNumCities() * 60 / 100;
+	iValue += iNumCitiesPercent * getNumCities() * ((getNumCities() == 0) ? 60 : 50) / 100;
 	// K-Mod end
+
+	if (AI_isFinancialTrouble())
+	{
+		iValue *= 3;
+		iValue /= 2;
+	}
 	
 	return iValue;
 }

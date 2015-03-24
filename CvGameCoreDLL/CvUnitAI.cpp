@@ -2096,6 +2096,7 @@ void CvUnitAI::AI_settleMove()
 /* Gold AI                                                                                      */
 /************************************************************************************************/
 	// No new settling of colonies when AI is in financial trouble
+	/*
 	if( plot()->isCity() && (plot()->getOwnerINLINE() == getOwnerINLINE()) )
 	{
 		if( kOwner.AI_isFinancialTrouble() )
@@ -2103,6 +2104,7 @@ void CvUnitAI::AI_settleMove()
 			iOtherBestFoundValue = 0;
 		}
 	}
+	*/
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -2117,7 +2119,7 @@ void CvUnitAI::AI_settleMove()
 			}
 		}
 	}
-	
+	/*
 	if ((iAreaBestFoundValue > 0) && plot()->isBestAdjacentFound(getOwnerINLINE()))
 	{
 		if (canFound(plot()))
@@ -2131,6 +2133,7 @@ void CvUnitAI::AI_settleMove()
 			return;
 		}
 	}
+	*/
 
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_PEACE) && !GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) && !getGroup()->canDefend())
 	{
@@ -27070,9 +27073,9 @@ void CvUnitAI::AI_PatrolMove()
 		}
 	}
 
-	if (!bHero && (GET_TEAM(getTeam()).getAtWarCount(false) == 0))
+	if (!bHero)
 	{
-		if (!bDanger || !bInCity)
+		if ((GET_TEAM(getTeam()).getAtWarCount(false) == 0) || (!bDanger || !bInCity))
 		{
 			if (AI_group(UNITAI_SETTLE, 3, -1, -1, false, false, false, 3, false))
 			{
