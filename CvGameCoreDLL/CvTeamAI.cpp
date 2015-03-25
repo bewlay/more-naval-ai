@@ -3570,12 +3570,14 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	bool bLandTarget;
 	int iI;
 
+	CvTeam& kWarTeam = GET_TEAM(eWarTeam);
+
 	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
 	FAssertMsg(eWarTeam != getID(), "shouldn't call this function on ourselves");
-	FAssertMsg(GET_TEAM(eWarTeam).isAlive(), "GET_TEAM(eWarTeam).isAlive is expected to be true");
+	FAssertMsg(kWarTeam.isAlive(), "GET_TEAM(eWarTeam).isAlive is expected to be true");
 	FAssertMsg(!isAtWar(eWarTeam), "should be at peace with eWarTeam");
 
-	if (GET_TEAM(eWarTeam).isVassal(eTeam) || GET_TEAM(eWarTeam).isDefensivePact(eTeam))
+	if (kWarTeam.isVassal(eTeam) || kWarTeam.isDefensivePact(eTeam))
 	{
 		return DENIAL_JOKING;
 	}
@@ -3626,7 +3628,7 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	{
 		bLandTarget = AI_isAllyLandTarget(eWarTeam);
 
-		if ((GET_TEAM(eWarTeam).getDefensivePower() / ((bLandTarget) ? 2 : 1)) >
+		if ((kWarTeam.getDefensivePower() / ((bLandTarget) ? 2 : 1)) >
 			(getPower(true) + ((atWar(eWarTeam, eTeam)) ? GET_TEAM(eTeam).getPower(true) : 0)))
 		{
 			if (bLandTarget)
@@ -3695,7 +3697,7 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	
 	if (!atWar(eWarTeam, eTeam))
 	{
-		if (GET_TEAM(eWarTeam).getNumNukeUnits() > 0)
+		if (kWarTeam.getNumNukeUnits() > 0)
 		{
 			return DENIAL_JOKING;
 		}
