@@ -14854,7 +14854,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 
 		// calculate food and growth potential for use later in the function
 		iTotalFoodDifference += pLoopCity->foodDifference();
-		iTotalGrowingSpace += std::max(0, pLoopCity->AI_getTargetSize() - pLoopCity->getPopulation());
+		iTotalGrowingSpace += std::max(0, pLoopCity->AI_getTargetPopulation() - pLoopCity->getPopulation());
 		iMaxGrowingSpace += iTotalGrowingSpace;
 		iFreeCitizens += pLoopCity->getSpecialistCount((SpecialistTypes)(GC.getDefineINT("DEFAULT_SPECIALIST")));
 	}
@@ -25456,7 +25456,8 @@ void CvPlayerAI::AI_advancedStartRouteTerritory()
 				BonusTypes eBonus = pLoopPlot->getBonusType(getTeam());
 				if (eBonus != NO_BONUS)
 				{
-					if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isImprovementBonusTrade(eBonus))
+					//if (GC.getImprovementInfo(pLoopPlot->getImprovementType()).isImprovementBonusTrade(eBonus))
+					if (doesImprovementConnectBonus(pLoopPlot->getImprovementType(), eBonus))
 					{
 						int iBonusValue = AI_bonusVal(eBonus, 1);
 						if (iBonusValue > 9)

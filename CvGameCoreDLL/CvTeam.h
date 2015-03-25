@@ -398,6 +398,7 @@ public:
 
 	bool isParent(TeamTypes eTeam) const;		// Exposed to Python
 
+	bool doesImprovementConnectBonus(ImprovementTypes eImprovement, BonusTypes eBonus) const; // K-Mod
 	int getEspionagePointsAgainstTeam(TeamTypes eIndex) const;																							// Exposed to Python
 	void setEspionagePointsAgainstTeam(TeamTypes eIndex, int iValue);																							// Exposed to Python
 	void changeEspionagePointsAgainstTeam(TeamTypes eIndex, int iChange);																				// Exposed to Python

@@ -90,13 +90,13 @@ public:
 	CvCity* AI_getRouteToCity() const;
 	void AI_updateRouteToCity();
 
-	int AI_getEmphasizeYieldCount(YieldTypes eIndex);
-	bool AI_isEmphasizeYield(YieldTypes eIndex);
+	int AI_getEmphasizeYieldCount(YieldTypes eIndex) const;
+	bool AI_isEmphasizeYield(YieldTypes eIndex) const;
 
-	int AI_getEmphasizeCommerceCount(CommerceTypes eIndex);
-	bool AI_isEmphasizeCommerce(CommerceTypes eIndex);
+	int AI_getEmphasizeCommerceCount(CommerceTypes eIndex) const;
+	bool AI_isEmphasizeCommerce(CommerceTypes eIndex) const;
 
-	bool AI_isEmphasize(EmphasizeTypes eIndex);
+	bool AI_isEmphasize(EmphasizeTypes eIndex) const;
 	void AI_setEmphasize(EmphasizeTypes eIndex, bool bNewValue);
 	void AI_forceEmphasizeCulture(bool bNewValue);
 
@@ -104,21 +104,17 @@ public:
 	int AI_totalBestBuildValue(CvArea* pArea);
 
 	int AI_clearFeatureValue(int iIndex);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      07/25/09                                jdog5000      */
-/*                                                                                              */
-/* Debug                                                                                        */
-/************************************************************************************************/
-	int AI_getGoodTileCount();
-	int AI_countWorkedPoorTiles();
-	int AI_getTargetSize();
-	void AI_getYieldMultipliers();
-	int AI_getImprovementValue();
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
-	BuildTypes AI_getBestBuild(int iIndex);
-	int AI_countBestBuilds(CvArea* pArea);
+	// K-Mod
+	// note: some of the following functions existed in BBAI for debugging purposes. But the new K-Mod versions are an integral part of the AI.
+	bool AI_isGoodPlot(int iPlot, int* aiYields = 0) const;
+	int AI_countGoodPlots() const;
+	int AI_countWorkedPoorPlots() const;
+	int AI_getTargetPopulation() const;
+	void AI_getYieldMultipliers(int &iFoodMultiplier, int &iProductionMultiplier, int &iCommerceMultiplier, int &iDesiredFoodChange) const;
+	int AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovement, int iFoodPriority, int iProductionPriority, int iCommercePriority, int iDesiredFoodChange, int iClearFeatureValue = 0, bool bEmphasizeIrrigation = false, BuildTypes* peBestBuild = 0) const;
+	// K-Mod end
+	BuildTypes AI_getBestBuild(int iIndex) const;
+	int AI_countBestBuilds(CvArea* pArea) const;
 	void AI_updateBestBuild();
 
 	virtual int AI_cityValue() const;
@@ -127,7 +123,7 @@ public:
 
     int AI_getCityImportance(bool bEconomy, bool bMilitary);
 
-    int AI_yieldMultiplier(YieldTypes eYield);
+	int AI_yieldMultiplier(YieldTypes eYield) const;
     void AI_updateSpecialYieldMultiplier();
     int AI_specialYieldMultiplier(YieldTypes eYield);
 
@@ -254,17 +250,7 @@ protected:
 	int AI_experienceWeight();
 	int AI_buildUnitProb();
 
-	void AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peBestBuild, int iFoodPriority, int iProductionPriority, int iCommercePriority, bool bChop, int iHappyAdjust, int iHealthAdjust, int iFoodChange);
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                      06/25/09                                jdog5000      */
-/*                                                                                              */
-/* Debug                                                                                        */
-/************************************************************************************************/
-	int AI_getImprovementValue( CvPlot* pPlot, ImprovementTypes eImprovement, int iFoodPriority, int iProductionPriority, int iCommercePriority, int iFoodChange, bool bOriginal = false );
-	void AI_getYieldMultipliers( int &iFoodMultiplier, int &iProductionMultiplier, int &iCommerceMultiplier, int &iDesiredFoodChange );
-/************************************************************************************************/
-/* BETTER_BTS_AI_MOD                       END                                                  */
-/************************************************************************************************/
+	void AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peBestBuild, int iFoodPriority, int iProductionPriority, int iCommercePriority, bool bChop, int iHappyAdjust, int iHealthAdjust, int iDesiredFoodChange);
 
 	void AI_buildGovernorChooseProduction();
 
