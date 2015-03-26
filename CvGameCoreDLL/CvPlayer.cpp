@@ -5352,9 +5352,10 @@ int CvPlayer::countCityFeatures(FeatureTypes eFeature) const
 
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
-		// ALN FhfBugFix NextLine...
-		// for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
-		for (iI = 0; iI < pLoopCity->getNumCityPlots(); iI++)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/04/04
+//		for (iI = 0; iI < NUM_CITY_PLOTS; iI++)
+		for (iI = 0; iI < ::calculateNumCityPlots(getNextCityRadius()); iI++)
+//<<<<Unofficial Bug Fix: End Modify
 		{
 			pLoopPlot = plotCity(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iI);
 
