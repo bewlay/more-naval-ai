@@ -963,6 +963,12 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 
     GC.getGameINLINE().changeGlobalCounter(-1 * m_pUnitInfo->getModifyGlobalCounter());
 
+	if (bIllusion) // Make sure that we properly adjust the stats when an Illusionary unit is removed from the game
+	{
+		GC.getGameINLINE().decrementUnitCreatedCount(getUnitType());
+		GC.getGameINLINE().decrementUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType()));
+	}
+
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 	    if (isHasPromotion((PromotionTypes)iI))
@@ -983,7 +989,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	    }
 	}
 	if (isWorldUnitClass((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) && GC.getGameINLINE().getUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType())) == 1
-		&& !m_pUnitInfo->isObject())
+		&& !m_pUnitInfo->isObject() && !bIllusion)
 	{
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
