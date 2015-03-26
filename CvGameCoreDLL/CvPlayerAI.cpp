@@ -13339,6 +13339,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		break;
 
 	case UNITAI_ATTACK_CITY_LEMMING:
+	case UNITAI_LAIRGUARDIAN:
 		iValue += iCombatValue;
 		break;
 
