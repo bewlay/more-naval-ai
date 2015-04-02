@@ -8217,7 +8217,7 @@
             <DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
             <Invisible>NONE</Invisible>
             <SeeInvisible>NONE</SeeInvisible>
-            <Description>TXT_KEY_UNIT_ARCHER</Description>
+            <Description>TXT_KEY_UNIT_ARCHER_SCORPION_CLAN</Description>
             <Civilopedia>TXT_KEY_UNIT_ARCHER_PEDIA</Civilopedia>
             <Strategy>TXT_KEY_UNIT_ARCHER_STRATEGY</Strategy>
             <Advisor>ADVISOR_MILITARY</Advisor>
@@ -8278,6 +8278,10 @@
                 </UnitAI>
                 <UnitAI>
                     <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
             </UnitAIs>

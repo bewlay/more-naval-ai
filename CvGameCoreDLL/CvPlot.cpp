@@ -32,6 +32,9 @@
 /* General AI                                                                                   */
 /************************************************************************************************/
 #include "FAStarNode.h"
+
+// AI Logging
+#include "BetterBTSAI.h"
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
@@ -567,6 +570,7 @@ void CvPlot::doTurn()
                         {
                             if (!isVisibleOtherUnit(BARBARIAN_PLAYER))
                             {
+								logBBAI("%S spawning %S at plot %d, %d", GC.getImprovementInfo(eImprovement).getDescription(), GC.getUnitInfo((UnitTypes)iUnit).getDescription(), getX_INLINE(), getY_INLINE());
                                 CvUnit* pUnit;
                                 pUnit = GET_PLAYER(BARBARIAN_PLAYER).initUnit((UnitTypes)iUnit, getX_INLINE(), getY_INLINE(), UNITAI_ATTACK);
 
