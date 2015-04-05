@@ -11750,13 +11750,16 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 					// Bloom - not currently used for any selectable spell promotions in base FFH
 					if (kSpellInfo.getCreateFeatureType() != NO_FEATURE)
 					{
-						if (eUnitAI == UNITAI_TERRAFORMER)
+						if (plot()->getOwner() == getOwner())
 						{
-							iValue += 35;
-						}
-						else
-						{
-							iValue += 10;
+							if (eUnitAI == UNITAI_TERRAFORMER)
+							{
+								iValue += 35;
+							}
+							else
+							{
+								iValue += 10;
+							}
 						}
 					}
 
@@ -29640,6 +29643,18 @@ void CvUnitAI::AI_terraformerMove()
 		return;
 	}
 
+	if (GET_PLAYER(getOwnerINLINE()).getDisableSpellcasting() > 0)
+	{
+		if (AI_retreatToCity())
+		{
+			if( gUnitLogLevel >= 3)
+			{
+				logBBAI("       ...retreating to city due to disabled spellcasting\n");
+			}
+			return;
+		}
+	}
+
 	if (plot()->isCity() && (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3)))
 	{
         getGroup()->pushMission(MISSION_SKIP);
@@ -29683,8 +29698,13 @@ void CvUnitAI::AI_terraformerMove()
 				if (iSpell != NO_SPELL)
 				{
 					cast(iSpell);
+					return;
 				}
-				return;
+				else // we have someplace to go but no useful spell to cast at the moment
+				{
+					getGroup()->pushMission(MISSION_SKIP);
+					return;
+				}
 			}
 		}
 
@@ -29716,12 +29736,13 @@ void CvUnitAI::AI_terraformerMove()
 		return;
     }
 	// Tholal note: terraformers can get stuck in loop, if they've casted, are at a terraformable plot and have movement left
-	/*
+	
 	if (isHasCasted())
 	{
-		getGroup()->pushMission(MISSION_SKIP);
+		getGroup()->pushMission(MISSION_SENTRY);
+		//finishMoves();
 	}
-	*/
+	
 	return;
 }
 //returns true if the Unit can Summon stuff
