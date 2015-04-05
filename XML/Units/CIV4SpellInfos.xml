@@ -2381,6 +2381,7 @@
             <Help>TXT_KEY_SPELL_RELEASE_FROM_CAGE_HELP</Help>
             <ImprovementPrereq>IMPROVEMENT_CAGE</ImprovementPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>10</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <RemovePromotionType1>PROMOTION_HELD</RemovePromotionType1>
