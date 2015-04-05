@@ -3961,6 +3961,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		szBuffer.append(NEWLINE);
 		szBuffer.append(CvWString::format(L"Mojo Factor: %d", kPlayer.AI_getMojoFactor()));
 		szBuffer.append(NEWLINE);
+		szBuffer.append(CvWString::format(L"Golden Age Value: %d", kPlayer.AI_calculateGoldenAgeValue()));
+		szBuffer.append(NEWLINE);
 		szBuffer.append(CvWString::format(L"Highest Unit Tier: %d", kPlayer.getHighestUnitTier(false, true)));
 		szBuffer.append(NEWLINE);
 		szBuffer.append(NEWLINE);

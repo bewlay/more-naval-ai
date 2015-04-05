@@ -6238,7 +6238,8 @@ void CvUnitAI::AI_generalMove()
 void CvUnitAI::AI_merchantMove()
 {
 	PROFILE_FUNC();
-
+	logBBAI("    %S (%d) starting MerchantMove", getName().GetCString(), getID());
+	
 	if (AI_construct())
 	{
 		return;
@@ -14151,6 +14152,7 @@ bool CvUnitAI::AI_goldenAge()
 {
 	if (canGoldenAge(plot()))
 	{
+		logBBAI("    %S (%d) starting Golden Age (%d units used)", getName().GetCString(), getID(), GET_PLAYER(getOwnerINLINE()).unitsRequiredForGoldenAge());
 		getGroup()->pushMission(MISSION_GOLDEN_AGE);
 		return true;
 	}
@@ -24223,33 +24225,36 @@ bool CvUnitAI::AI_trade(int iValueThreshold)
 		{
 			for (pLoopCity = GET_PLAYER((PlayerTypes)iI).firstCity(&iLoop); pLoopCity != NULL; pLoopCity = GET_PLAYER((PlayerTypes)iI).nextCity(&iLoop))
 			{
-				if (AI_plotValid(pLoopCity->plot()))
+				if (pLoopCity->isRevealed(getTeam(), false))
 				{
-                    if (getTeam() != pLoopCity->getTeam())
-				    {
-                        iValue = getTradeGold(pLoopCity->plot());
+					if (AI_plotValid(pLoopCity->plot()))
+					{
+						if (getTeam() != pLoopCity->getTeam())
+						{
+							iValue = getTradeGold(pLoopCity->plot());
 
-                        if ((iValue >= iValueThreshold) && canTrade(pLoopCity->plot(), true))
-                        {
-                            if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
-                            {
-                                if (generatePath(pLoopCity->plot(), 0, true, &iPathTurns))
-                                {
-                                    FAssert(iPathTurns > 0);
+							if ((iValue >= iValueThreshold) && canTrade(pLoopCity->plot(), true))
+							{
+								if (!(pLoopCity->plot()->isVisibleEnemyUnit(this)))
+								{
+									if (generatePath(pLoopCity->plot(), 0, true, &iPathTurns))
+									{
+										FAssert(iPathTurns > 0);
 
-                                    iValue /= (4 + iPathTurns);
+										iValue /= (4 + iPathTurns);
 
-                                    if (iValue > iBestValue)
-                                    {
-                                        iBestValue = iValue;
-                                        pBestPlot = getPathEndTurnPlot();
-                                        pBestTradePlot = pLoopCity->plot();
-                                    }
-                                }
+										if (iValue > iBestValue)
+										{
+											iBestValue = iValue;
+											pBestPlot = getPathEndTurnPlot();
+											pBestTradePlot = pLoopCity->plot();
+										}
+									}
 
-                            }
-                        }
-				    }
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -24259,12 +24264,14 @@ bool CvUnitAI::AI_trade(int iValueThreshold)
 	{
 		if (atPlot(pBestTradePlot))
 		{
+			logBBAI("    %S (%d) starting Trade Mission at %d, %d", getName().GetCString(), getID(), pBestPlot->getX(), pBestPlot->getY());
 			getGroup()->pushMission(MISSION_TRADE);
 			return true;
 		}
 		else
 		{
 			FAssert(!atPlot(pBestPlot));
+			logBBAI("    %S (%d) moving to %d, %d for Trade Mission", getName().GetCString(), getID(), pBestPlot->getX(), pBestPlot->getY());
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 			return true;
 		}
@@ -28161,6 +28168,10 @@ void CvUnitAI::AI_ConquestMove()
 					}
 					else
 					{
+						if( gUnitLogLevel >= 3 )
+						{
+							logBBAI("       ...merging into group on plot");
+						}
 						getGroup()->mergeIntoGroup(pBestUnit->getGroup());
 	                    return;
 					}
@@ -29641,6 +29652,16 @@ void CvUnitAI::AI_terraformerMove()
     long lResult=-1;
     gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_MageTurn", argsList1.makeFunctionArgs(), &lResult);
     delete pyUnit1;	// python fxn must not hold on to this pointer
+	if( gUnitLogLevel >= 3)
+	{
+		logBBAI("     ...python result of %d\n", lResult);
+	
+		if (isHasCasted())
+		{
+			logBBAI("     ...unit has already cast a spell this turn\n");
+		}
+	}
+	
     if (lResult != 1)
     {
 		// lResult of 2 means that the unit has been told to move somewhere or 
@@ -29654,6 +29675,10 @@ void CvUnitAI::AI_terraformerMove()
 			}
 			else
 			{
+				if( gUnitLogLevel >= 3)
+				{
+					logBBAI("     ...choosing a spell...\n");
+				}				
 				int iSpell = chooseSpell();
 				if (iSpell != NO_SPELL)
 				{
