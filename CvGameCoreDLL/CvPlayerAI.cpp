@@ -8288,24 +8288,17 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 	iAttitude += AI_getTradeAttitude(ePlayer);
 	iAttitude += AI_getRivalTradeAttitude(ePlayer);
 
-//FfH: Added by Kael 08/15/2007
+	//FfH: Added by Kael 08/15/2007
     iAttitude += AI_getAlignmentAttitude(ePlayer);
     iAttitude += AI_getBadBonusAttitude(ePlayer);
     iAttitude += AI_getFavoriteWonderAttitude(ePlayer);
     iAttitude += AI_getGenderAttitude(ePlayer);
     iAttitude += AI_getTrustAttitude(ePlayer);
     iAttitude += AI_getCivicShareAttitude(ePlayer);
-//FfH: End Add
+	//FfH: End Add
 
-/************************************************************************************************/
-/* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-	iAttitude += AI_getEmbassyAttitude(ePlayer);
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+	iAttitude += AI_getPuppetAttitude(ePlayer); // MNAI - Puppet States
+	iAttitude += AI_getEmbassyAttitude(ePlayer); // Advanced Diplomacy - Afforess (07/29/10)
 
 	for (iI = 0; iI < NUM_MEMORY_TYPES; iI++)
 	{
