@@ -716,7 +716,8 @@ class CustomFunctions:
 					iRandom = CyGame().getSorenRandNum(1000, "Hell Terrain Volcanos")
 					if iRandom < 2:
 						iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_VOLCANO_CREATION')
-						triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
+						if pPlot.isOwned():
+							triggerData = pPlayer.initTriggeredData(iEvent, True, -1, pPlot.getX(), pPlot.getY(), -1, -1, -1, -1, -1, -1)
 
 			if iPlotCount < 10:
 				if iBonus == iToad:
