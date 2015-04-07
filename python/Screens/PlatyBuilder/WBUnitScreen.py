@@ -16,8 +16,8 @@ gc = CyGlobalContext()
 iChange = 1
 iCopyType = 0
 iOwnerType = 0
+iPlotType = 0
 iChangeType = 0
-iEditType = 0
 iCommandUnitType = 0
 iSelectedClass = -2
 iCargoType = 1#Magister##bCargo = True
@@ -48,8 +48,8 @@ class WBUnitScreen:
 		
 		screen.addDropDownBoxGFC("OwnerType", 20, self.iTable_Y - 90, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
-		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_OWNER", ()), 1, 1, 1 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()), 1, 1, 1 == iOwnerType)
 
 		screen.addDropDownBoxGFC("CopyType", 20, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iCopyType)
@@ -58,10 +58,10 @@ class WBUnitScreen:
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, 4 == iCopyType)
 
-		screen.addDropDownBoxGFC("EditType", 20, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_SINGLE_PLOT", ()), 0, 0, iEditType == 0)
-		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iEditType == 1)
-		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iEditType == 2)
+		screen.addDropDownBoxGFC("PlotType", 20, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_SINGLE_PLOT", ()), 0, 0, iPlotType == 0)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iPlotType == 1)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iPlotType == 2)
 
 		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 0, 0, True)
@@ -298,6 +298,8 @@ class WBUnitScreen:
 				sName = pPlayerX.getName()
 				if not pPlayerX.isAlive():
 					sName = "*" + sName
+				if pPlayerX.isTurnActive():
+					sText = "[" + sText + "]"
 				screen.addPullDownString("UnitOwner", sName, iPlayerX, iPlayerX, iPlayerX == pUnit.getOwner())
 
 		iY += 30
@@ -495,17 +497,17 @@ class WBUnitScreen:
 		global lUnits
 		lUnits = []
 		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
-			if iOwnerType == 1 and iPlayerX != pUnit.getOwner(): continue
-			if iOwnerType == 2 and iPlayerX != pUnit.getTeam(): continue
 			pPlayerX = gc.getPlayer(iPlayerX)
+			if iOwnerType == 1 and iPlayerX != pUnit.getOwner(): continue
+			if iOwnerType == 2 and pPlayerX.getTeam() != pUnit.getTeam(): continue
 			if pPlayerX.isAlive():
 				(loopUnit, iter) = pPlayerX.firstUnit(False)
 				while(loopUnit):
 					bCopy = True
-					if iEditType == 0:
+					if iPlotType == 0:
 						if loopUnit.getX() != pUnit.getX() or loopUnit.getY() != pUnit.getY():
 							bCopy = False
-					elif iEditType == 1:
+					elif iPlotType == 1:
 						if loopUnit.plot().getArea() != pUnit.plot().getArea():
 							bCopy = False
 					if iCopyType == 1:
@@ -678,9 +680,9 @@ class WBUnitScreen:
 		screen = CyGInterfaceScreen( "WBUnitScreen", CvScreenEnums.WB_UNIT)
 		global iChange
 		global iChangeType
-		global iEditType
-		global iCopyType
 		global iOwnerType
+		global iPlotType
+		global iCopyType
 		global iCommandUnitType
 		global iSelectedClass
 		global iCargoType#Magister##		global bCargo
@@ -717,8 +719,8 @@ class WBUnitScreen:
 			iOwnerType = screen.getPullDownData("OwnerType", screen.getSelectedPullDownID("OwnerType"))
 			self.sortUnits()
 
-		elif inputClass.getFunctionName() == "EditType":
-			iEditType = screen.getPullDownData("OwnerType", screen.getSelectedPullDownID("EditType"))
+		elif inputClass.getFunctionName() == "PlotType":
+			iPlotType = screen.getPullDownData("PlotType", screen.getSelectedPullDownID("PlotType"))
 			self.sortUnits()
 
 		elif inputClass.getFunctionName() == "CopyType":
@@ -981,7 +983,7 @@ class WBUnitScreen:
 			pUnitX.setScriptData("")
 			return True
 		elif iIndex == 2:
-			self.top.m_lMoveUnit.append(pUnitX.getID())
+			self.top.lMoveUnit.append(pUnitX.getID())
 			self.top.iPlayerAddMode = "MoveUnit"
 			self.top.m_iCurrentPlayer = pUnitX.getOwner()
 			return False

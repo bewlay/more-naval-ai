@@ -17,12 +17,18 @@ import CvEventManager
 gc = CyGlobalContext()
 
 iChangeType = 2
+iOwnerType = 0
+iPlotType = 2
 iSelectedClass = 0
 bApplyAll = False
 
 iBuildingFilter  = 0#Magister
 
 class WBBuildingScreen:
+
+	def __init__(self):
+		self.iTable_Y = 80
+		self.lCities = []
 
 	def interfaceScreen(self, pCityX):
 		screen = CyGInterfaceScreen("WBBuildingScreen", CvScreenEnums.WB_BUILDING)
@@ -35,7 +41,7 @@ class WBBuildingScreen:
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel("MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
-		
+
 		screen.setLabel("BuildingHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 5/8 - 10, screen.getYResolution()/2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.setLabel("WonderHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_CONCEPT_WONDERS", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 5/8 - 10, 20, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_GRANT_AVAILABLE", ()) + "</color></font>"
@@ -43,20 +49,16 @@ class WBBuildingScreen:
 		screen.setText("WonderAvailable", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() * 5/8 - 10, 50, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.setText("WBBuildingExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 
-		iHeight = (screen.getYResolution() - 42 - 50) / 24 * 24 + 2
 		iWidth = screen.getXResolution()/4 - 40
-		screen.addTableControlGFC( "CurrentCity", 1, 20, 80, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		screen.setTableColumnHeader("CurrentCity", 0, "", iWidth)
 
-		pPlayer = gc.getPlayer(iPlayer)
-		(loopCity, iter) = pPlayer.firstCity(False)
-		while(loopCity):
-			iRow = screen.appendTableRow("CurrentCity")
-			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if loopCity.getID() == pCity.getID():
-				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("CurrentCity", 0, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", gc.getCivilizationInfo(pCity.getCivilizationType()).getButton(), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayer, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY )
-			(loopCity, iter) = pPlayer.nextCity(iter, False)
+		screen.addDropDownBoxGFC("OwnerType", 20, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()), 1, 1, 1 == iOwnerType)
+
+		screen.addDropDownBoxGFC("PlotType", 20, self.iTable_Y - 30, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iPlotType == 1)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iPlotType == 2)
 
 #Magister Start
 		screen.addDropDownBoxGFC("BuildingClass", screen.getXResolution()/4,  screen.getYResolution()/2, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -94,7 +96,7 @@ class WBBuildingScreen:
 		if bApplyAll:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setText("ApplyAll", "Background", sColor + sText + "</color>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()/4, screen.getYResolution()/2 + 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 170, 20, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MODIFY", ("",)), 2, 2, 2 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, 1 == iChangeType)
@@ -104,7 +106,41 @@ class WBBuildingScreen:
 		screen.setText("BuildingAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, screen.getYResolution()/2 + 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.setText("WonderAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, 50, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
+		self.sortCities()
 		self.sortBuildings()
+
+	def sortCities(self):
+		self.lCities = []
+		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
+			pPlayerX = gc.getPlayer(iPlayerX)
+			if iOwnerType == 1 and iPlayerX != iPlayer: continue
+			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue
+			(loopCity, iter) = pPlayerX.firstCity(False)
+			while(loopCity):
+				if iPlotType == 2 or (iPlotType == 1 and loopCity.plot().getArea() == pCity.plot().getArea()):
+					sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+					if loopCity.getID() == pCity.getID() and iPlayerX == iPlayer:
+						sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+					self.lCities.append([loopCity, iPlayerX, sColor])
+				(loopCity, iter) = pPlayerX.nextCity(iter, False)
+		self.placeCityTable()
+
+	def placeCityTable(self):
+		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
+		iWidth = screen.getXResolution()/4 - 40
+		iHeight = (screen.getYResolution() - 40 - self.iTable_Y) / 24 * 24 + 2
+		screen.addTableControlGFC( "CurrentCity", 3, 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setTableColumnHeader("CurrentCity", 0, "", 24)
+		screen.setTableColumnHeader("CurrentCity", 1, "", 24)
+		screen.setTableColumnHeader("CurrentCity", 2, "", iWidth - 48)
+
+		for (loopCity, iPlayerX, sColor) in self.lCities:
+			iRow = screen.appendTableRow("CurrentCity")
+			iCiv = loopCity.getCivilizationType()
+			screen.setTableText("CurrentCity", 0, iRow, "", gc.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, CvUtil.FONT_LEFT_JUSTIFY)
+			iLeader = gc.getPlayer(iPlayerX).getLeaderType()
+			screen.setTableText("CurrentCity", 1, iRow, "", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, CvUtil.FONT_LEFT_JUSTIFY)
+			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY)
 
 	def sortBuildings(self):
 		global lBuilding
@@ -242,10 +278,10 @@ class WBBuildingScreen:
 
 
 		iWidth = screen.getXResolution() *3/4 - 20
-		iMaxRows = (screen.getYResolution()/2 - 80) / 24
+		iMaxRows = (screen.getYResolution()/2 - self.iTable_Y) / 24
 		nColumns = max(1, min(iWidth/180, (len(lWonders) + iMaxRows - 1)/iMaxRows))#Magister
 		iHeight = iMaxRows * 24 + 2
-		screen.addTableControlGFC("WBWonders", nColumns, screen.getXResolution()/4, 80, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.addTableControlGFC("WBWonders", nColumns, screen.getXResolution()/4, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		for i in xrange(nColumns):
 			screen.setTableColumnHeader( "WBWonders", i, "", iWidth/nColumns)
 
@@ -270,12 +306,14 @@ class WBBuildingScreen:
 		global bApplyAll
 		global iSelectedClass
 		global iChangeType
+		global iOwnerType
+		global iPlotType
 		global iBuildingFilter#Magister
 
 		if inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBCityEditScreen.WBCityEditScreen().interfaceScreen(pCity)
+				WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pCity)
 			elif iIndex == 1:
 				WBCityDataScreen.WBCityDataScreen().interfaceScreen(pCity)
 			elif iIndex == 3:
@@ -295,11 +333,22 @@ class WBBuildingScreen:
 			elif iIndex == 11:
 				WBInfoScreen.WBInfoScreen().interfaceScreen(iPlayer)
 
+		elif inputClass.getFunctionName() == "OwnerType":
+			iOwnerType = screen.getPullDownData("OwnerType", screen.getSelectedPullDownID("OwnerType"))
+			self.sortCities()
+
+		elif inputClass.getFunctionName() == "PlotType":
+			iPlotType = screen.getPullDownData("PlotType", screen.getSelectedPullDownID("PlotType"))
+			self.sortCities()
+
 		elif inputClass.getFunctionName() == "ChangeType":
 			iChangeType = screen.getPullDownData("ChangeType", screen.getSelectedPullDownID("ChangeType"))
 
 		elif inputClass.getFunctionName() == "CurrentCity":
-			self.interfaceScreen(gc.getPlayer(iPlayer).getCity(inputClass.getData2()))
+			iPlayerX = inputClass.getData1() - 7200
+			pPlayerX = gc.getPlayer(iPlayerX)
+			if pPlayerX:
+				self.interfaceScreen(pPlayerX.getCity(inputClass.getData2()))
 
 		elif inputClass.getFunctionName() == "WBBuilding":
 			bUpdate = self.editBuilding(inputClass.getData1(), gc.getPlayer(iPlayer), False, False)

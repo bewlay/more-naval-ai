@@ -74,7 +74,8 @@ class CvWorldBuilderScreen:
 		self.iSelection = -1
 		self.iSelectClass = -3#Magister##		self.iSelectClass = -2
 		self.bSensibility = True
-		self.m_lMoveUnit = []
+		self.lMoveUnit = []
+		self.iMoveCity = -1
 ## Platy Builder ##
 
 	def interfaceScreen (self):
@@ -1056,6 +1057,8 @@ class CvWorldBuilderScreen:
 						sName = gc.getPlayer(iPlayer).getName()
 						if not gc.getPlayer(iPlayer).isAlive():
 							sName = "*" + sName
+						if gc.getPlayer(iPlayer).isTurnActive():
+							sName = "[" + sName + "]"
 						screen.addPullDownString("WorldBuilderPlayerChoice", sName, iPlayer, iPlayer, self.m_iCurrentPlayer == iPlayer)
 				iX = screen.getXResolution() - iScreenWidth + 8
 				iY += iAdjust
@@ -1112,6 +1115,8 @@ class CvWorldBuilderScreen:
 						sName = gc.getPlayer(iPlayer).getName()
 						if not gc.getPlayer(iPlayer).isAlive():
 							sName = "*" + sName
+						if gc.getPlayer(iPlayer).isTurnActive():
+							sName = "[" + sName + "]"
 						screen.addPullDownString("WorldBuilderPlayerChoice", sName, iPlayer, iPlayer, self.m_iCurrentPlayer == iPlayer)
 
 				iX = iXStart + 8
@@ -1166,6 +1171,8 @@ class CvWorldBuilderScreen:
 						sName = gc.getPlayer(iPlayer).getName()
 						if not gc.getPlayer(iPlayer).isAlive():
 							sName = "*" + sName
+						if gc.getPlayer(iPlayer).isTurnActive():
+							sName = "[" + sName + "]"
 						screen.addPullDownString("WorldBuilderPlayerChoice", sName, iPlayer, iPlayer, self.m_iCurrentPlayer == iPlayer)
 				iX = iXStart + 8
 				iY += iAdjust
@@ -1673,6 +1680,7 @@ class CvWorldBuilderScreen:
 
 	def leftMouseDown (self, argsList):
 		bShift, bCtrl, bAlt = argsList
+		pPlayer = gc.getPlayer(self.m_iCurrentPlayer)
 		if CyInterface().isInAdvancedStart():
 			self.placeObject()
 		elif bAlt or self.iPlayerAddMode == "EditUnit":
@@ -1683,7 +1691,7 @@ class CvWorldBuilderScreen:
 				WBPromotionScreen.WBPromotionScreen().interfaceScreen(self.m_pCurrentPlot.getUnit(0))
 		elif bCtrl or self.iPlayerAddMode == "CityDataI":
 			if self.m_pCurrentPlot.isCity():
-				WBCityEditScreen.WBCityEditScreen().interfaceScreen(self.m_pCurrentPlot.getPlotCity())
+				WBCityEditScreen.WBCityEditScreen(self).interfaceScreen(self.m_pCurrentPlot.getPlotCity())
 		elif self.iPlayerAddMode == "CityDataII":
 			if self.m_pCurrentPlot.isCity():
 				WBCityDataScreen.WBCityDataScreen().interfaceScreen(self.m_pCurrentPlot.getPlotCity())
@@ -1698,20 +1706,140 @@ class CvWorldBuilderScreen:
 		elif self.iPlayerAddMode == "Events":
 			WBEventScreen.WBEventScreen().interfaceScreen(self.m_pCurrentPlot)
 		elif self.iPlayerAddMode == "StartingPlot":
-			gc.getPlayer(self.m_iCurrentPlayer).setStartingPlot(self.m_pCurrentPlot, True)
+			pPlayer.setStartingPlot(self.m_pCurrentPlot, True)
 			self.refreshStartingPlots()
 		elif self.iPlayerAddMode == "MoveUnit":
-			for i in self.m_lMoveUnit:
-				pUnit = gc.getPlayer(self.m_iCurrentPlayer).getUnit(i)
+			for i in self.lMoveUnit:
+				pUnit = pPlayer.getUnit(i)
 				if pUnit.isNone(): continue
 				pUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
+			self.lMoveUnit = []
 			self.iPlayerAddMode = "EditUnit"
-			self.m_lMoveUnit = []
+		elif self.iPlayerAddMode == "MoveCity" or self.iPlayerAddMode == "MoveCityPlus":
+			if self.m_pCurrentPlot.isCity(): return
+			pOldCity = pPlayer.getCity(self.iMoveCity)
+			if pOldCity:
+				pNewCity = pPlayer.initCity(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY())
+				sName = pOldCity.getName()
+				pOldCity.setName("ToBeRazed", False)
+				pNewCity.setName(sName, True)
+				self.copyCityStats(pOldCity, pNewCity, True)
+				pOldPlot = pOldCity.plot()
+				pOldCity.kill()
+				pOldPlot.setImprovementType(-1)
+				if self.iPlayerAddMode == "MoveCityPlus":
+					for i in self.lMoveUnit:
+						pUnit = pPlayer.getUnit(i)
+						if pUnit.isNone(): continue
+						pUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
+					self.lMoveUnit = []
+			self.iPlayerAddMode = "CityDataI"
+			self.iMoveCity = -1
+		elif self.iPlayerAddMode == "DuplicateCity" or self.iPlayerAddMode == "DuplicateCityPlus":
+			if self.m_pCurrentPlot.isCity(): return
+			pOldCity = pPlayer.getCity(self.iMoveCity)
+			if pOldCity:
+				pNewCity = pPlayer.initCity(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY())
+				self.copyCityStats(pOldCity, pNewCity, False)
+				if self.iPlayerAddMode == "DuplicateCityPlus":
+					for i in self.lMoveUnit:
+						pUnit = pPlayer.getUnit(i)
+						if pUnit.isNone(): continue
+						pNewUnit = pPlayer.initUnit(pUnit.getUnitType(), self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+						pNewUnit.setName(pUnit.getNameNoDesc())
+						pNewUnit.setLevel(pUnit.getLevel())
+						pNewUnit.setExperience(pUnit.getExperience(), -1)
+						pNewUnit.setBaseCombatStr(pUnit.baseCombatStr())
+						for iPromotion in xrange(gc.getNumPromotionInfos()):
+							pNewUnit.setHasPromotion(iPromotion, pUnit.isHasPromotion(iPromotion))
+						pNewUnit.setDamage(pUnit.getDamage(), -1)
+						pNewUnit.setMoves(pUnit.getMoves())
+						pNewUnit.setLeaderUnitType(pUnit.getLeaderUnitType())
+						pNewUnit.changeCargoSpace(pUnit.cargoSpace() - pNewUnit.cargoSpace())
+						pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
+						pNewUnit.setScriptData(pUnit.getScriptData())
 		elif self.useLargeBrush():
 			self.placeMultipleObjects()
 		else:
 			self.placeObject()
 		return 1
+
+	def copyCityStats(self, pOldCity, pNewCity, bMove):
+		pNewCity.setPopulation(pOldCity.getPopulation())
+		for iBuilding in xrange(gc.getNumBuildingInfos()):
+			pNewCity.setBuildingProduction(iBuilding, pOldCity.getBuildingProduction(iBuilding))
+			if gc.getBuildingInfo(iBuilding).isCapital() and not bMove: continue
+			pNewCity.setNumRealBuilding(iBuilding, pOldCity.getNumRealBuilding(iBuilding))
+		for iClass in xrange(gc.getNumBuildingClassInfos()):
+			for iCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
+				pNewCity.setBuildingCommerceChange(iClass, iCommerce, pOldCity.getBuildingCommerceChange(iClass, iCommerce))
+			for iYield in xrange(YieldTypes.NUM_YIELD_TYPES):
+				pNewCity.setBuildingYieldChange(iClass, iYield, pOldCity.getBuildingYieldChange(iClass, iYield))
+	##		pNewCity.setBuildingHappyChange(iClass, pOldCity.getBuildingHappyChange(iClass))
+	##		pNewCity.setBuildingHealthChange(iClass, pOldCity.getBuildingHealthChange(iClass))
+		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
+			pNewCity.setCultureTimes100(iPlayerX, pOldCity.getCultureTimes100(iPlayerX), False)
+		for iReligion in xrange(gc.getNumReligionInfos()):
+			pNewCity.setHasReligion(iReligion, pOldCity.isHasReligion(iReligion), False, False)
+			if bMove and pOldCity.isHolyCityByType(iReligion):
+				CyGame().setHolyCity(iReligion, pNewCity, False)
+			pNewCity.changeReligionInfluence(iReligion, pOldCity.getReligionInfluence(iReligion) - pNewCity.getReligionInfluence(iReligion))
+			pNewCity.changeStateReligionHappiness(iReligion, pOldCity.getStateReligionHappiness(iReligion) - pNewCity.getStateReligionHappiness(iReligion))
+		for iCorporation in xrange(gc.getNumCorporationInfos()):
+			pNewCity.setHasCorporation(iCorporation, pOldCity.isHasCorporation(iCorporation), False, False)
+			if bMove and pOldCity.isHeadquartersByType(iCorporation):
+				CyGame().setHeadquarters(iCorporation, pNewCity, False)
+		for iImprovement in xrange(gc.getNumImprovementInfos()):
+			pNewCity.changeImprovementFreeSpecialists(iImprovement, pOldCity.getImprovementFreeSpecialists(iImprovement) - pNewCity.getImprovementFreeSpecialists(iImprovement))
+		for iSpecialist in xrange(gc.getNumSpecialistInfos()):
+			pNewCity.setFreeSpecialistCount(iSpecialist, pOldCity.getFreeSpecialistCount(iSpecialist))
+			pNewCity.setForceSpecialistCount(iSpecialist, pOldCity.getForceSpecialistCount(iSpecialist))
+		for iUnit in xrange(gc.getNumUnitInfos()):
+			pNewCity.setUnitProduction(iUnit, pOldCity.getUnitProduction(iUnit))
+			pNewCity.setGreatPeopleUnitProgress(iUnit, pOldCity.getGreatPeopleUnitProgress(iUnit))
+		for iCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
+			pNewCity.changeSpecialistCommerce(iCommerce, pOldCity.getSpecialistCommerce(iCommerce) - pNewCity.getSpecialistCommerce(iCommerce))
+		for iBonus in xrange(gc.getNumBonusInfos()):
+			pNewCity.changeFreeBonus(iBonus, pOldCity.getFreeBonus(iBonus) - pNewCity.getFreeBonus(iBonus))
+			while pOldCity.isNoBonus(iBonus) != pNewCity.isNoBonus(iBonus):
+				if pOldCity.isNoBonus(iBonus):
+					pNewCity.changeNoBonusCount(iBonus, 1)
+				else:
+					pNewCity.changeNoBonusCount(iBonus, -1)
+		for iOrder in xrange(pOldCity.getOrderQueueLength()):
+			OrderData = pOldCity.getOrderFromQueue(iOrder)
+			pNewCity.pushOrder(OrderData.eOrderType, OrderData.iData1, OrderData.iData2, OrderData.bSave, False, True, False)
+		pNewCity.changeBaseGreatPeopleRate(pOldCity.getBaseGreatPeopleRate() - pNewCity.getBaseGreatPeopleRate())
+		pNewCity.changeConscriptAngerTimer(pOldCity.getConscriptAngerTimer() - pNewCity.getConscriptAngerTimer())
+		pNewCity.changeDefenseDamage(pOldCity.getDefenseDamage() - pNewCity.getDefenseDamage())
+		pNewCity.changeDefyResolutionAngerTimer(pOldCity.getDefyResolutionAngerTimer() - pNewCity.getDefyResolutionAngerTimer())
+		pNewCity.changeEspionageHappinessCounter(pOldCity.getEspionageHappinessCounter() - pNewCity.getEspionageHappinessCounter())
+		pNewCity.changeEspionageHealthCounter(pOldCity.getEspionageHealthCounter() - pNewCity.getEspionageHealthCounter())
+		pNewCity.changeExtraHappiness(pOldCity.getExtraHappiness() - pNewCity.getExtraHappiness())
+		pNewCity.changeExtraHealth(pOldCity.getExtraHealth() - pNewCity.getExtraHealth())
+		pNewCity.changeExtraTradeRoutes(pOldCity.getExtraTradeRoutes() - pNewCity.getExtraTradeRoutes())
+		pNewCity.changeGreatPeopleProgress(pOldCity.getGreatPeopleProgress() - pNewCity.getGreatPeopleProgress())
+		pNewCity.changeHappinessTimer(pOldCity.getHappinessTimer() - pNewCity.getHappinessTimer())
+		pNewCity.changeHurryAngerTimer(pOldCity.getHurryAngerTimer() - pNewCity.getHurryAngerTimer())
+		pNewCity.setAirliftTargeted(pOldCity.isAirliftTargeted())
+		pNewCity.setBombarded(pOldCity.isBombarded())
+		pNewCity.setCitizensAutomated(pOldCity.isCitizensAutomated())
+		pNewCity.setDrafted(pOldCity.isDrafted())
+		pNewCity.setFeatureProduction(pOldCity.getFeatureProduction())
+		pNewCity.setFood(pOldCity.getFood())
+		pNewCity.setHighestPopulation(pOldCity.getHighestPopulation())
+		pNewCity.setNeverLost(pOldCity.isNeverLost())
+		pNewCity.setOccupationTimer(pOldCity.getOccupationTimer())
+		pNewCity.setOverflowProduction(pOldCity.getOverflowProduction())
+		pNewCity.setPlundered(pOldCity.isPlundered())
+		pNewCity.setProduction(pOldCity.getProduction())
+		pNewCity.setProductionAutomated(pOldCity.isProductionAutomated())
+		pNewCity.setScriptData(pOldCity.getScriptData())
+		pNewCity.setWallOverride(pOldCity.isWallOverride())
+#Magister Start
+		pNewCity.setCivilizationType(pOldCity.getCivilizationType())
+		pNewCity.setRevolutionIndex(pOldCity.getRevolutionIndex())
+#Magister Stop
 
 	def rightMouseDown (self, argsList):
 		if CyInterface().isInAdvancedStart():

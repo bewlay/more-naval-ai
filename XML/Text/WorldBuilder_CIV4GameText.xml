@@ -2,6 +2,54 @@
 <!-- Game Text - New -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_WB_FORTIFY</Tag>
+		<English>Forifying</English>
+		<French>Forifying</French>
+		<German>Forifying</German>
+		<Italian>Forifying</Italian>
+		<Spanish>Forifying</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_DONE</Tag>
+		<English>Done</English>
+		<French>Done</French>
+		<German>Done</German>
+		<Italian>Done</Italian>
+		<Spanish>Done</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_WAIT</Tag>
+		<English>Waiting</English>
+		<French>Waiting</French>
+		<German>Waiting</German>
+		<Italian>Waiting</Italian>
+		<Spanish>Waiting</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_DUPLICATE_CITY</Tag>
+		<English>Duplicate City</English>
+		<French>Duplicate City</French>
+		<German>Duplicate City</German>
+		<Italian>Duplicate City</Italian>
+		<Spanish>Duplicate City</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_MOVE_CITY</Tag>
+		<English>Move City</English>
+		<French>Move City</French>
+		<German>Move City</German>
+		<Italian>Move City</Italian>
+		<Spanish>Move City</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_RAZE_CITY</Tag>
+		<English>Raze City</English>
+		<French>Raze City</French>
+		<German>Raze City</German>
+		<Italian>Raze City</Italian>
+		<Spanish>Raze City</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_WB_SENSIBILITY</Tag>
 		<English>Checks Prerequisites for Multiple Tiles Mode</English>
 		<French>Checks Prerequisites for Multiple Tiles Mode</French>
@@ -729,6 +777,14 @@
 		<Italian>Memory</Italian>
 		<Spanish>Memory</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_KILL</Tag>
+		<English>Kill</English>
+		<French>Tuer</French>
+		<German>Löschen</German>
+		<Italian>Kill</Italian>
+		<Spanish>Matar</Spanish>
+	</TEXT>
 
 <!-- FFH2 Specific-->
 	<TEXT>
@@ -1189,14 +1245,6 @@
 		<Spanish>All</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_WB_KILL</Tag>
-		<English>Kill</English>
-		<French>Tuer</French>
-		<German>Löschen</German>
-		<Italian>Kill</Italian>
-		<Spanish>Matar</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_WB_FEATS</Tag>
 		<English>Feats</English>
 		<French>Feats</French>
@@ -1211,6 +1259,30 @@
 		<German>Shrines</German>
 		<Italian>Shrines</Italian>
 		<Spanish>Shrines</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SANCTUARY_TIMER</Tag>
+		<English>Sanctuary Timer: %d1</English>
+		<French>Sanctuary Timer: %d1</French>
+		<German>Sanctuary Timer: %d1</German>
+		<Italian>Sanctuary Timer: %d1</Italian>
+		<Spanish>Sanctuary Timer: %d1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_TEMP_TIMER</Tag>
+		<English>Temporary Timer: %d1</English>
+		<French>Temporary Timer: %d1</French>
+		<German>Temporary Timer: %d1</German>
+		<Italian>Temporary Timer: %d1</Italian>
+		<Spanish>Temporary Timer: %d1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_REAL</Tag>
+		<English>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</English>
+		<French>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</French>
+		<German>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</German>
+		<Italian>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</Italian>
+		<Spanish>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</Spanish>
 	</TEXT>
 
 </Civ4GameText>

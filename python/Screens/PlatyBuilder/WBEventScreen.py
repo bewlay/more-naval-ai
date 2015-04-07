@@ -290,7 +290,7 @@ class WBEventScreen:
 				WBTeamScreen.WBTeamScreen().interfaceScreen(pPlot.getTeam())
 			elif iIndex == 4:
 				if pPlot.isCity():
-					WBCityEditScreen.WBCityEditScreen().interfaceScreen(pPlot.getPlotCity())
+					WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pPlot.getPlotCity())
 			elif iIndex == 5:
 				if iSelectedUnit > -1 and iEventPlayer > -1:
 					pUnit = gc.getPlayer(iEventPlayer).getUnit(iSelectedUnit)

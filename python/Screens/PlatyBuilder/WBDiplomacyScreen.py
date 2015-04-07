@@ -97,6 +97,8 @@ class WBDiplomacyScreen:
 				sText = pPlayerX.getName()
 				if not pPlayerX.isAlive():
 					sText = "*" + sText
+				if pPlayerX.isTurnActive():
+					sText = "[" + sText + "]"
 				screen.addPullDownString("CurrentPlayer", sText, iPlayerX, iPlayerX, iPlayerX == iSelectedPlayer)
 				if pPlayerX.getTeam() != iSelectedTeam:
 					lPlayers.append(iPlayerX)
@@ -163,6 +165,8 @@ class WBDiplomacyScreen:
 			sText = pPlayer.getName()
 			if not pPlayer.isAlive():
 				sText = "*" + sText
+			if pPlayer.isTurnActive():
+				sText = "[" + sText + "]"
 			screen.setTableText("WBDiplomacy", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, CvUtil.FONT_LEFT_JUSTIFY )
 			screen.setTableInt("WBDiplomacy", 2, iRow, "<font=3>" + sColor + str(iTeam) + "</font></color>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_CENTER_JUSTIFY )
 			
@@ -250,6 +254,8 @@ class WBDiplomacyScreen:
 			sText = pPlayer.getName()
 			if not pPlayer.isAlive():
 				sText = "*" + sText
+			if pPlayer.isTurnActive():
+				sText = "[" + sText + "]"
 			screen.setTableText("WBEspionage", 1, iRow, "<font=3>" + sColor + sText + "</font></color>", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, CvUtil.FONT_LEFT_JUSTIFY )
 			if bTowardsPlayer:
 				sMemory = str(pPlayer.AI_getMemoryCount(iSelectedPlayer, iSelectedMemory))

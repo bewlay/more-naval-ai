@@ -325,6 +325,8 @@ class WBTeamScreen:
 				sText += "*"
 				fType += 0.5
 			sText += pPlayerX.getName()
+			if pPlayerX.isTurnActive():
+				sText = "[" + sText + "]"
 			sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 			sText = "<font=3>" + sColor + sText + "</font></color>"
 			sCiv = "<font=3>" + sColor + pPlayerX.getCivilizationShortDescription(0) + "</font></color>"

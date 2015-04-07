@@ -21,6 +21,8 @@ iCounter = -1
 iCulturePlayer = 0
 iSelectedClass = -1
 
+bReal = False#Magister
+
 class WBPlotScreen:
 
 	def __init__(self):
@@ -32,7 +34,7 @@ class WBPlotScreen:
 		global iWidth
 		pPlot = pPlotX
 		iWidth = screen.getXResolution()/5 - 20
-		
+
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
@@ -58,7 +60,15 @@ class WBPlotScreen:
 		screen.addCheckBoxGFC("SensibilityCheck", ",Art/Interface/Buttons/WorldBuilder/Gems.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,1,16", CyArtFileMgr().getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(),
 					 iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 24, ButtonStyles.BUTTON_STYLE_LABEL)
 		screen.setState("SensibilityCheck", bSensibility)
-		screen.addDropDownBoxGFC("EditType", iX + iButtonWidth, iY, iWidth - iButtonWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+
+#Magister Start
+		screen.addCheckBoxGFC("RealType", ",Art/Interface/Buttons/WorldBuilder/Metamagic.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,1,16", CyArtFileMgr().getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(),
+					 iX+iButtonWidth, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_PYTHON, 1029, 35, ButtonStyles.BUTTON_STYLE_LABEL)
+		screen.setState("RealType", bReal)
+
+		screen.addDropDownBoxGFC("EditType", iX + 2*iButtonWidth, iY, iWidth - 2*iButtonWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)#magister
+##		screen.addDropDownBoxGFC("EditType", iX + iButtonWidth, iY, iWidth - iButtonWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+#Magister Stop
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_SINGLE_PLOT", ()), 0, 0, iEditType == 0)
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iEditType == 1)
 		screen.addPullDownString("EditType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iEditType == 2)
@@ -79,15 +89,11 @@ class WBPlotScreen:
 		if pPlot.isOwned():
 			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_PLAYER_DATA", ()), 2, 2, False)
 			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_TEAM_DATA", ()), 3, 3, False)
+			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 6, 6, False)
 			if pPlot.isCity():
 				screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_CITY_DATA", ()), 4, 4, False)
 		if pPlot.getNumUnits() > 0:
 			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_UNIT_DATA", ()), 5, 5, False)
-#Magister Start
-			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 6, 6, False)
-		elif pPlot.isCity():
-			screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ()) + " + " + CyTranslator().getText("TXT_KEY_CONCEPT_CITIES", ()), 6, 6, False)
-#Magister Stop
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
 		iIndex = -1
@@ -105,7 +111,7 @@ class WBPlotScreen:
 		screen.setLabel("PlotScreenHeaderB", "Background", "<font=4b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		sText = "<font=3b>%s, X: %d, Y: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_LATITUDE",(pPlot.getLatitude(),)), pPlot.getX(), pPlot.getY())
 		screen.setLabel("PlotLocation", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 70, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		screen.addDropDownBoxGFC("BonusClass", screen.getXResolution() *4/5 + 10, self.iTable_Y - 60, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -1, -1, True)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
@@ -207,7 +213,7 @@ class WBPlotScreen:
 				if iIndex > -1:
 					sText = CyEngine().getSignByIndex(iIndex).getCaption()
 				screen.setTableText("WBSigns", 3, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-		
+
 	def placeMap(self):
 		screen = CyGInterfaceScreen("WBPlotScreen", CvScreenEnums.WB_PLOT)
 		iMapHeight = min((screen.getYResolution()/2 - 30 - (self.iTable_Y + 48 + 24)), iWidth * 2/3)
@@ -354,8 +360,21 @@ class WBPlotScreen:
 		iX = screen.getXResolution() *3/5 + 10#Magister		iX = screen.getXResolution() *4/5 + 10
 		iY = screen.getYResolution()/2
 		iHeight = 3 * 24 + 2#Magister		iHeight = (screen.getYResolution() - 42 - iY) /24 * 24 + 2
-
 		iRoute = pPlot.getRouteType()
+#Magister Start
+		if bReal:
+			iRoute = pPlot.getRealRouteType()
+			iY2 = iY + iHeight
+			screen.setButtonGFC("RouteTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("RouteTempTimerMinus", "", "", iX + 25, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = CyTranslator().getText("TXT_KEY_WB_TEMP_TIMER", (pPlot.getTempRouteTimer(),))
+			screen.setLabel("RouteTempTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, iY2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		else:
+			screen.hide("RouteTempTimerPlus")
+			screen.hide("RouteTempTimerMinus")
+			screen.hide("RouteTempTimerText")
+#Magister Stop
+
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iRoute > -1:
@@ -381,6 +400,22 @@ class WBPlotScreen:
 		iHeight = (screen.getYResolution()/2 - 32 - iY) /24 * 24 + 2
 		iFeature = pPlot.getFeatureType()
 		iVariety = pPlot.getFeatureVariety()
+#Magister Start
+		if bReal:
+			iFeature = pPlot.getRealFeatureType()
+			iVariety = pPlot.getRealFeatureVariety()
+			iHeight -= 20
+			iY2 = iY + iHeight
+			screen.setButtonGFC("FeatureTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("FeatureTempTimerMinus", "", "", iX + 25, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = CyTranslator().getText("TXT_KEY_WB_TEMP_TIMER", (pPlot.getTempFeatureTimer(),))
+			screen.setLabel("FeatureTempTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, iY2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		else:
+			screen.hide("FeatureTempTimerPlus")
+			screen.hide("FeatureTempTimerMinus")
+			screen.hide("FeatureTempTimerText")
+#Magister Stop
+
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iFeature > -1:
@@ -400,7 +435,7 @@ class WBPlotScreen:
 			if iFeature == iType and iVariety == item[1] / 10000:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			screen.setTableText("WBPlotFeature", 0, iRow, "<font=3>" + sColor + item[0] + "</font></color>", gc.getFeatureInfo(iType).getButton(), WidgetTypes.WIDGET_PYTHON, 7874, item[1], CvUtil.FONT_LEFT_JUSTIFY )
-		
+
 	def placeImprovements(self):
 		screen = CyGInterfaceScreen( "WBPlotScreen", CvScreenEnums.WB_PLOT)
 		screen.hide("UpgradeTimePlus")
@@ -411,14 +446,31 @@ class WBPlotScreen:
 		iUpgrade_Y = screen.getYResolution() - 70
 		iHeight = (iUpgrade_Y - iY) /24 * 24 + 2
 		iImprovement = pPlot.getImprovementType()
+#Magister Start
+		if bReal:
+			iImprovement = pPlot.getRealImprovementType()
+			iHeight -= 20
+			iY2 = iY + iHeight
+			screen.setButtonGFC("ImprovementTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("ImprovementTempTimerMinus", "", "", iX + 25, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = CyTranslator().getText("TXT_KEY_WB_TEMP_TIMER", (pPlot.getTempImprovementTimer(),))
+			screen.setLabel("ImprovementTempTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, iY2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		else:
+			screen.hide("ImprovementTempTimerPlus")
+			screen.hide("ImprovementTempTimerMinus")
+			screen.hide("ImprovementTempTimerText")
+#Magister Stop
+
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iImprovement > -1:
-			if gc.getImprovementInfo(iImprovement).getUpgradeTime():
-				screen.setButtonGFC("UpgradeTimePlus", "", "", iX, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-				screen.setButtonGFC("UpgradeTimeMinus", "", "", iX + 25, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-				sText = CyTranslator().getText("TXT_KEY_WB_UPGRADE_PROGRESS", (pPlot.getUpgradeTimeLeft(iImprovement, pPlot.getOwner()),))
-				screen.setLabel("UpgradeTimeText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iUpgrade_Y + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			if not bReal:
+				if gc.getImprovementInfo(iImprovement).getUpgradeTime():
+					screen.setButtonGFC("UpgradeTimePlus", "", "", iX, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+					screen.setButtonGFC("UpgradeTimeMinus", "", "", iX + 25, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+					sText = CyTranslator().getText("TXT_KEY_WB_UPGRADE_PROGRESS", (pPlot.getUpgradeTimeLeft(iImprovement, pPlot.getOwner()),))
+					screen.setLabel("UpgradeTimeText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 55, iUpgrade_Y + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 			sText = gc.getImprovementInfo(iImprovement).getDescription()
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 		screen.setLabel("ImprovementHeader", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -450,6 +502,21 @@ class WBPlotScreen:
 		iY = self.iTable_Y
 		iHeight = (screen.getYResolution()/2 - 32 - iY) /24 * 24 + 2
 		iBonus = pPlot.getBonusType(-1)
+#Magister Start
+		if bReal:
+			iBonus = pPlot.getRealBonusType()
+			iHeight -= 20
+			iY2 = iY + iHeight
+			screen.setButtonGFC("BonusTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("BonusTempTimerMinus", "", "", iX + 25, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = CyTranslator().getText("TXT_KEY_WB_TEMP_TIMER", (pPlot.getTempBonusTimer(),))
+			screen.setLabel("BonusTempTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, iY2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		else:
+			screen.hide("BonusTempTimerPlus")
+			screen.hide("BonusTempTimerMinus")
+			screen.hide("BonusTempTimerText")
+#Magister Stop
+
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iBonus > -1:
@@ -476,10 +543,26 @@ class WBPlotScreen:
 ##		iX = screen.getXResolution() /5 + 10
 ##		iY = self.iTable_Y
 ##		iHeight = (screen.getYResolution()/2 - 32 - iY) /24 * 24 + 2
+##		iTerrain = pPlot.getTerrainType()
 
 		iX = screen.getXResolution() *3/5 + 10
 		iY = iPlotType_Y
-		iHeight = (screen.getYResolution() - 42 - iY) /24 * 24 + 2
+		iHeight = (screen.getYResolution() - 52 - iY) /24 * 24 + 2
+		iTerrain = pPlot.getTerrainType()
+
+		if bReal:
+			iTerrain = pPlot.getRealTerrainType()#This function is not exposed yet as it is supposed to be
+
+			iHeight -= 20
+			iY2 = iY + iHeight
+			screen.setButtonGFC("TerrainTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("TerrainTempTimerMinus", "", "", iX + 25, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = CyTranslator().getText("TXT_KEY_WB_TEMP_TIMER", (pPlot.getTempTerrainTimer(),))
+			screen.setLabel("TerrainTempTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iX + 50, iY2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		else:
+			screen.hide("TerrainTempTimerPlus")
+			screen.hide("TerrainTempTimerMinus")
+			screen.hide("TerrainTempTimerText")
 #Magister Stop
 
 		iTerrain = pPlot.getTerrainType()
@@ -487,6 +570,11 @@ class WBPlotScreen:
 		screen.setLabel("TerrainHeader", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotTerrain", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBPlotTerrain", 0, "", iWidth)
+
+		if bReal:
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			iRow = screen.appendTableRow("WBPlotTerrain")
+			screen.setTableText("WBPlotTerrain", 0, 0, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), WidgetTypes.WIDGET_PYTHON, 7875, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
 		for i in xrange(gc.getNumTerrainInfos()):
 			TerrainInfo = gc.getTerrainInfo(i)
@@ -507,13 +595,13 @@ class WBPlotScreen:
 		screen.setText("PlotEditScriptData", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iScript_Y, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addPanel( "ScriptPanel", "", "", False, False, screen.getXResolution()/2 - iWidth/2, iScript_Y + 25, iWidth, screen.getYResolution() - iScript_Y - 70, PanelStyles.PANEL_STYLE_IN)
 		screen.addMultilineText("GameScriptDataText", pPlot.getScriptData(), screen.getXResolution()/2 - iWidth/2, iScript_Y + 25, iWidth, screen.getYResolution() - iScript_Y - 70, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-		
+
 	def placePlotType(self):
 		screen = CyGInterfaceScreen( "WBPlotScreen", CvScreenEnums.WB_PLOT)
 		iX = screen.getXResolution() *2/5 + 10
 		iY = iPlotType_Y
 		iHeight = min(PlotTypes.NUM_PLOT_TYPES, (iScript_Y - iPlotType_Y)/24) * 24 + 2
-		
+
 		screen.addTableControlGFC("WBPlotType", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBPlotType", 0, "", iWidth)
 		for iTerrain in xrange(PlotTypes.NUM_PLOT_TYPES):
@@ -554,7 +642,7 @@ class WBPlotScreen:
 			sHeader = TerrainInfo.getDescription()
 		sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
 		screen.setTableText("WBPlotType", 0, 3, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, CvUtil.FONT_LEFT_JUSTIFY)
-		
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBPlotScreen", CvScreenEnums.WB_PLOT)
 		global bAdd
@@ -563,6 +651,7 @@ class WBPlotScreen:
 		global iChange
 		global iCulturePlayer
 		global iSelectedClass
+		global bReal #Magister
 
 		if inputClass.getFunctionName() == "ChangeBy":
 			iChange = screen.getPullDownData("ChangeBy", screen.getSelectedPullDownID("ChangeBy"))
@@ -579,33 +668,23 @@ class WBPlotScreen:
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
+			iPlayer = pPlot.getOwner()
 			if iIndex == 1:
 				WBEventScreen.WBEventScreen().interfaceScreen(pPlot)
 			elif iIndex == 2:
-				WBPlayerScreen.WBPlayerScreen().interfaceScreen(pPlot.getOwner())
+				WBPlayerScreen.WBPlayerScreen().interfaceScreen(iPlayer)
 			elif iIndex == 3:
 				WBTeamScreen.WBTeamScreen().interfaceScreen(pPlot.getTeam())
 			elif iIndex == 4:
 				if pPlot.isCity():
-					WBCityEditScreen.WBCityEditScreen().interfaceScreen(pPlot.getPlotCity())
+					WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pPlot.getPlotCity())
 			elif iIndex == 5:
 				pUnit = pPlot.getUnit(0)
 				if pUnit:
 					WBUnitScreen.WBUnitScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pUnit)
-
-#Magister Start
 			elif iIndex == 6:
-				if pPlot.isCity():
-					WBPlayerUnits.WBPlayerUnits().interfaceScreen(pPlot.getPlotCity().getOwner())
-				else:
-					pUnit = pPlot.getUnit(0)
-					if pUnit:
-						WBPlayerUnits.WBPlayerUnits().interfaceScreen(pUnit.getOwner())
-					elif pPlot.isOwned():
-						WBPlayerUnits.WBPlayerUnits().interfaceScreen(pPlot.getOwner())
-#Magister Stop
+				WBPlayerUnits.WBPlayerUnits().interfaceScreen(iPlayer)
 			elif iIndex == 11:
-				iPlayer = pPlot.getOwner()
 				if iPlayer == -1:
 					iPlayer = CyGame().getActivePlayer()
 				WBInfoScreen.WBInfoScreen().interfaceScreen(iPlayer)
@@ -712,18 +791,37 @@ class WBPlotScreen:
 
 		elif inputClass.getFunctionName() == "WBPlotTerrain":
 			iTerrain = inputClass.getData2()
-			if iEditType == 0:
-				pPlot.setTerrainType(iTerrain, True, True)
+
+			if bReal:
+				#pass# pPlot.getRealTerrainType() is not exposed yet like it should be
+
+
+				if iEditType == 0:
+					pPlot.setRealTerrainType(iTerrain)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1:
+							if pLoopPlot.getArea() == pPlot.getArea():
+								pLoopPlot.setRealTerrainType(iTerrain)
+						elif iEditType == 2:
+							if bSensibility and pLoopPlot.isWater() != pPlot.isWater(): continue
+							pLoopPlot.setRealTerrainType(iTerrain)
+
 			else:
-				for i in xrange(CyMap().numPlots()):
-					pLoopPlot = CyMap().plotByIndex(i)
-					if pLoopPlot.isNone(): continue
-					if iEditType == 1:
-						if pLoopPlot.getArea() == pPlot.getArea():
+				if iEditType == 0:
+					pPlot.setTerrainType(iTerrain, True, True)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1:
+							if pLoopPlot.getArea() == pPlot.getArea():
+								pLoopPlot.setTerrainType(iTerrain, True, True)
+						elif iEditType == 2:
+							if bSensibility and pLoopPlot.isWater() != pPlot.isWater(): continue
 							pLoopPlot.setTerrainType(iTerrain, True, True)
-					elif iEditType == 2:
-						if bSensibility and pLoopPlot.isWater() != pPlot.isWater(): continue
-						pLoopPlot.setTerrainType(iTerrain, True, True)
 			self.interfaceScreen(pPlot)
 
 		elif inputClass.getFunctionName() == "BonusClass":
@@ -732,105 +830,257 @@ class WBPlotScreen:
 
 		elif inputClass.getFunctionName() == "WBPlotBonus":
 			iBonus = inputClass.getData2()
-			if iEditType == 0:
-				if bAdd:
-					pPlot.setBonusType(iBonus)
-				else:
-					pPlot.setBonusType(-1)
-			else:
-				for i in xrange(CyMap().numPlots()):
-					pLoopPlot = CyMap().plotByIndex(i)
-					if pLoopPlot.isNone(): continue
-					if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
-					iOld = pLoopPlot.getBonusType(-1)
+##Magister Start
+			if bReal:
+				if iEditType == 0:
 					if bAdd:
-						pLoopPlot.setBonusType(-1)
-						if iBonus > -1 and bSensibility and not pLoopPlot.canHaveBonus(iBonus, False):
-							pLoopPlot.setBonusType(iOld)
-							continue
-						pLoopPlot.setBonusType(iBonus)
+						pPlot.setRealBonusType(iBonus)
 					else:
-						pLoopPlot.setBonusType(-1)
+						pPlot.setRealBonusType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						iOld = pLoopPlot.getRealBonusType()
+						if bAdd:
+							pLoopPlot.setRealBonusType(-1)
+							if iBonus > -1 and bSensibility and not pLoopPlot.canHaveBonus(iBonus, False):
+								pLoopPlot.setRealBonusType(iOld)
+								continue
+							pLoopPlot.setRealBonusType(iBonus)
+						else:
+							pLoopPlot.setRealBonusType(-1)
+
+			else:
+				if iEditType == 0:
+					if bAdd:
+						pPlot.setBonusType(iBonus)
+					else:
+						pPlot.setBonusType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						iOld = pLoopPlot.getBonusType(-1)
+						if bAdd:
+							pLoopPlot.setBonusType(-1)
+							if iBonus > -1 and bSensibility and not pLoopPlot.canHaveBonus(iBonus, False):
+								pLoopPlot.setBonusType(iOld)
+								continue
+							pLoopPlot.setBonusType(iBonus)
+						else:
+							pLoopPlot.setBonusType(-1)
+
+##Magister Stop
 			self.placeBonus()
 
 		elif inputClass.getFunctionName() == "WBPlotImprovement":
 			iImprovement = inputClass.getData2()
-			if iEditType == 0:
-				if bAdd:
-					pPlot.setImprovementType(iImprovement)
-				else:
-					pPlot.setImprovementType(-1)
-			else:
-				for i in xrange(CyMap().numPlots()):
-					pLoopPlot = CyMap().plotByIndex(i)
-					if pLoopPlot.isNone(): continue
-					if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+
+
+##Magister Start
+			if bReal:
+				if iEditType == 0:
 					if bAdd:
-						if iImprovement > -1 and bSensibility and not pLoopPlot.canHaveImprovement(iImprovement, -1, True): continue
-						pLoopPlot.setImprovementType(iImprovement)
+						pPlot.setRealImprovementType(iImprovement)
 					else:
-						pLoopPlot.setImprovementType(-1)
+						pPlot.setRealImprovementType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						if bAdd:
+							if iImprovement > -1 and bSensibility and not pLoopPlot.canHaveImprovement(iImprovement, -1, True): continue
+							pLoopPlot.setRealImprovementType(iImprovement)
+						else:
+							pLoopPlot.setRealImprovementType(-1)
+			else:
+				if iEditType == 0:
+					if bAdd:
+						pPlot.setImprovementType(iImprovement)
+					else:
+						pPlot.setImprovementType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						if bAdd:
+							if iImprovement > -1 and bSensibility and not pLoopPlot.canHaveImprovement(iImprovement, -1, True): continue
+							pLoopPlot.setImprovementType(iImprovement)
+						else:
+							pLoopPlot.setImprovementType(-1)
+##Magister Stop
 			self.placeImprovements()
 #Magister Start
 			self.placeBonus()#Needed to make sure that bonuses update when an improvement like a mana node changes the bonus
 			self.placeSigns()#Needed to update the landmarks placed on unique features in FfH2 or MNAI, or the signs from the Elohim or Celestial Compass in MagisterModmod
 			self.placeRoutes()#I think that I set some unique features to automatically have roads then created, which should be shown on this screen
+
+
+
+		elif inputClass.getFunctionName().find("ImprovementTempTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlot.changeTempImprovementTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlot.changeTempImprovementTimer(-min(iChange, pPlot.getTempImprovementTimer()))
+
+			self.placeImprovements()
+
+		elif inputClass.getFunctionName().find("FeatureTempTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlot.changeTempFeatureTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlot.changeTempFeatureTimer(-min(iChange, pPlot.getTempFeatureTimer()))
+			self.placeFeature()
+
+		elif inputClass.getFunctionName().find("BonusTempTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlot.changeTempBonusTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlot.changeTempBonusTimer(-min(iChange, pPlot.getTempBonusTimer()))
+			self.placeBonus()
+
+		elif inputClass.getFunctionName().find("RouteTempTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlot.changeTempRouteTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlot.changeTempRouteTimer(-min(iChange, pPlot.getTempRouteTimer()))
+			self.placeRoutes()
+
+		elif inputClass.getFunctionName().find("TerrainTempTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlot.changeTempTerrainTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlot.changeTempTerrainTimer(-min(iChange, pPlot.getTempTerrainTimer()))
+			self.placeTerrain()
+
+
+
+
 #Magister Stop
 		elif inputClass.getFunctionName().find("UpgradeTime") > -1:
-			if inputClass.getData1() == 1030:
-				pPlot.changeUpgradeProgress(- iChange)
-			elif inputClass.getData1() == 1031:
-				pPlot.changeUpgradeProgress(min(iChange, pPlot.getUpgradeTimeLeft(pPlot.getImprovementType(), pPlot.getOwner()) - 1))
-			self.placeImprovements()
+			if not bReal:
+				if inputClass.getData1() == 1030:
+					pPlot.changeUpgradeProgress(- iChange)
+				elif inputClass.getData1() == 1031:
+					pPlot.changeUpgradeProgress(min(iChange, pPlot.getUpgradeTimeLeft(pPlot.getImprovementType(), pPlot.getOwner()) - 1))
+				self.placeImprovements()
 
 		elif inputClass.getFunctionName() == "WBPlotFeature":
 			iFeature = inputClass.getData2() % 10000
 			iVariety = inputClass.getData2() / 10000
-			if iVariety < 0 or iFeature < 0:
-				iFeature = -1
-				iVariety = 0
-			if iEditType == 0:
-				if bAdd:
-					pPlot.setFeatureType(iFeature, iVariety)
-				else:
-					pPlot.setFeatureType(-1, 0)
-			else:
-				for i in xrange(CyMap().numPlots()):
-					pLoopPlot = CyMap().plotByIndex(i)
-					if pLoopPlot.isNone(): continue
-					if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
-					iOldFeature = pLoopPlot.getFeatureType()
-					iOldVariety = pLoopPlot.getFeatureVariety()
+
+			if bReal:
+				if iVariety < 0 or iFeature < 0:
+					iFeature = -1
+					iVariety = 0
+				if iEditType == 0:
 					if bAdd:
-						pLoopPlot.setFeatureType(-1, 0)
-						if iFeature > -1 and bSensibility and not pLoopPlot.canHaveFeature(iFeature):
-							pLoopPlot.setFeatureType(iOldFeature, iOldVariety)
-							continue
-						pLoopPlot.setFeatureType(iFeature, iVariety)
+						pPlot.setRealFeatureType(iFeature)
+						pPlot.setRealFeatureVariety(iVariety)
 					else:
-						pLoopPlot.setFeatureType(-1, 0)
+						pPlot.setRealFeatureType(-1)
+						pPlot.setRealFeatureVariety(0)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						iOldFeature = pLoopPlot.getRealFeatureType()
+						iOldVariety = pLoopPlot.getRealFeatureVariety()
+						if bAdd:
+
+							pLoopPlot.setRealFeatureType(-1)
+							pLoopPlot.setRealFeatureVariety(0)
+
+							if iFeature > -1 and bSensibility and not pLoopPlot.canHaveFeature(iFeature):
+
+								pLoopPlot.setRealFeatureType(iOldFeature)
+								pLoopPlot.setRealFeatureVariety(iOldVariety)
+								continue
+							pLoopPlot.setRealFeatureType(iFeature)
+							pLoopPlot.setRealFeatureVariety(iVariety)
+						else:
+							pLooppPlot.setRealFeatureType(-1)
+							pLooppPlot.setRealFeatureVariety(0)
+
+			else:
+
+				if iVariety < 0 or iFeature < 0:
+					iFeature = -1
+					iVariety = 0
+				if iEditType == 0:
+					if bAdd:
+						pPlot.setFeatureType(iFeature, iVariety)
+					else:
+						pPlot.setFeatureType(-1, 0)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						iOldFeature = pLoopPlot.getFeatureType()
+						iOldVariety = pLoopPlot.getFeatureVariety()
+						if bAdd:
+							pLoopPlot.setFeatureType(-1, 0)
+							if iFeature > -1 and bSensibility and not pLoopPlot.canHaveFeature(iFeature):
+								pLoopPlot.setFeatureType(iOldFeature, iOldVariety)
+								continue
+							pLoopPlot.setFeatureType(iFeature, iVariety)
+						else:
+							pLoopPlot.setFeatureType(-1, 0)
+
+
 			self.placeFeature()
 
 		elif inputClass.getFunctionName() == "WBPlotRoutes":
 			iRoute = inputClass.getData2()
-			if iEditType == 0:
-				if bAdd:
-					pPlot.setRouteType(iRoute)
-				else:
-					pPlot.setRouteType(-1)
-			else:
-				for i in xrange(CyMap().numPlots()):
-					pLoopPlot = CyMap().plotByIndex(i)
-					if pLoopPlot.isNone(): continue
-					if bSensibility:
-						if pLoopPlot.isImpassable(): continue
-						if pLoopPlot.isWater(): continue
-					if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+
+			if bReal:
+				if iEditType == 0:
 					if bAdd:
-						pLoopPlot.setRouteType(iRoute)
+						pPlot.setRealRouteType(iRoute)
 					else:
-						if pLoopPlot.getRouteType() == iRoute:
-							pLoopPlot.setRouteType(-1)
+						pPlot.setRealRouteType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if bSensibility:
+							if pLoopPlot.isImpassable(): continue
+							if pLoopPlot.isWater(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						if bAdd:
+							pLoopPlot.setRealRouteType(iRoute)
+						else:
+							if pLoopPlot.getRealRouteType() == iRoute:
+								pLoopPlot.setRealRouteType(-1)
+
+			else:
+				if iEditType == 0:
+					if bAdd:
+						pPlot.setRouteType(iRoute)
+					else:
+						pPlot.setRouteType(-1)
+				else:
+					for i in xrange(CyMap().numPlots()):
+						pLoopPlot = CyMap().plotByIndex(i)
+						if pLoopPlot.isNone(): continue
+						if bSensibility:
+							if pLoopPlot.isImpassable(): continue
+							if pLoopPlot.isWater(): continue
+						if iEditType == 1 and pLoopPlot.getArea() != pPlot.getArea(): continue
+						if bAdd:
+							pLoopPlot.setRouteType(iRoute)
+						else:
+							if pLoopPlot.getRouteType() == iRoute:
+								pLoopPlot.setRouteType(-1)
+
+
 			self.placeRoutes()
 
 		elif inputClass.getFunctionName() == "PlotEditScriptData":
@@ -861,9 +1111,22 @@ class WBPlotScreen:
 		elif inputClass.getFunctionName() == "SensibilityCheck":
 			bSensibility = not bSensibility
 			screen.setState("SensibilityCheck", bSensibility)
-			
+
 
 #Magister Start
+		elif inputClass.getFunctionName() == "RealType":
+			bReal = not bReal
+			screen.setState("RealType", bReal)
+
+			self.placeStats()
+			self.placeTerrain()
+			self.placeFeature()
+			self.placeImprovements()
+			self.placeBonus()
+			self.placeSigns()
+			self.placeRoutes()
+
+
 		elif inputClass.getFunctionName() == "MoveDisabledAIText":
 			pPlot.setMoveDisabledAI(not pPlot.isMoveDisabledAI())
 			self.placeStats()
@@ -912,6 +1175,7 @@ class WBPlotScreen:
 			elif inputClass.getData1() == 1031:
 				pPlot.setPortalExitY(max(0, pPlot.getPortalExitY() - iChange))
 			self.placeStats()
+
 #Magister Stop
 
 		return 1

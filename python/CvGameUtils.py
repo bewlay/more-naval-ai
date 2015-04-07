@@ -783,7 +783,7 @@ class CvGameUtils:
 				elif iData2 == 8:
 					return CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 				elif iData2 == 9:
-					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() +  "\nPlaty Builder\nVersion: 4.10"
+					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() +  "\nPlaty Builder\nVersion: 4.13"
 				elif iData2 == 10:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS",())
 				elif iData2 == 11:
@@ -830,10 +830,25 @@ class CvGameUtils:
 					return CyTranslator().getText("TXT_KEY_INFO_SCREEN", ())
 				elif iData2 == 34:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_TRADE", ())
+#Magister Start
+				elif iData2 == 35:
+					return CyTranslator().getText("TXT_KEY_WB_REAL",())
+#Magister Stop
 			elif iData1 > 1029 and iData1 < 1040:
 				if iData1 %2:
 					return "-"
 				return "+"
+			elif iData1 == 1041:
+				return CyTranslator().getText("TXT_KEY_WB_KILL",())
+			elif iData1 == 1042:
+				return CyTranslator().getText("TXT_KEY_MISSION_SKIP",())
+			elif iData1 == 1043:
+				if iData2 == 0:
+					return CyTranslator().getText("TXT_KEY_WB_DONE",())
+				elif iData2 == 1:
+					return CyTranslator().getText("TXT_KEY_WB_FORTIFY",())
+				elif iData2 == 2:
+					return CyTranslator().getText("TXT_KEY_WB_WAIT",())
 			elif iData1 == 6782:
 				return CyGameTextMgr().parseCorporationInfo(iData2, False)
 			elif iData1 == 6785:

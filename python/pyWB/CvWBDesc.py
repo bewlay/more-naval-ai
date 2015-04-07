@@ -9,7 +9,6 @@ gc = CyGlobalContext()
 version = 11
 fileencoding = "latin_1"	# aka "iso-8859-1"
 
-
 #Magister Start
 iNumPlayers = gc.getMAX_CIV_PLAYERS()
 iNumTeams = gc.getMAX_CIV_TEAMS()
@@ -1830,6 +1829,20 @@ class CvPlotDesc:
 		self.plotCounter = 0
 		self.portalExitX = 0
 		self.portalExitY = 0
+
+
+		self.realBonusType = None
+		self.realImprovementType = None
+		self.realFeatureType = None
+		self.realFeatureVariety = 0
+		self.realRouteType = None
+		self.realTerrainType = None
+
+		self.tempTimerFeature = 0
+		self.tempTimerRoute = 0
+		self.tempTimerTerrain = 0
+		self.tempTimerBonus = 0
+		self.tempTimerImprovement = 0
 #Magister Stop
 
 	def needToWritePlot(self, plot):
@@ -1898,6 +1911,39 @@ class CvPlotDesc:
 			f.write("\tPortalExitX=%d\n" %(plot.getPortalExitX()))
 		if plot.getPortalExitY() > 0:
 			f.write("\tPortalExitY=%d\n" %(plot.getPortalExitY()))
+
+
+
+		if (plot.getRealTerrainType()!=-1):
+			f.write("\tTerrainType=%s\n" %(gc.getTerrainInfo(plot.getRealTerrainType()).getType()) )
+		if plot.getTempTerrainTimer() > 0:
+			f.write("\tTempTerrainTimer=%d\n" %(plot.getTempTerrainTimer()))
+
+		if (plot.getRealBonusType()!=-1):
+			f.write("\tRealBonusType=%s\n" %(gc.getBonusInfo(plot.getRealBonusType()).getType()) )
+		if plot.getTempBonusTimer() > 0:
+			f.write("\tTempBonusTimer=%d\n" %(plot.getTempBonusTimer()))
+
+		if (plot.getRealImprovementType()!=-1):
+			f.write("\tRealImprovementType=%s\n" %(gc.getImprovementInfo(plot.getRealImprovementType()).getType()) )
+		if plot.getTempImprovementTimer() > 0:
+			f.write("\tTempImprovementTimer=%d\n" %(plot.getTempImprovementTimer()))
+
+		if (plot.getRealFeatureType()!=-1):
+			f.write("\tRealFeatureType=%s, RealFeatureVariety=%d\n"
+			%(gc.getFeatureInfo(plot.getRealFeatureType()).getType(), plot.getRealFeatureVariety(), ) )
+		if plot.getTempFeatureTimer() > 0:
+			f.write("\tTempFeatureTimer=%d\n" %(plot.getTempFeatureTimer()))
+
+		if (plot.getRealRouteType()!=-1):
+			f.write("\tRealRouteType=%s\n" %(gc.getRouteInfo(plot.getRealRouteType()).getType()) )
+		if plot.getTempRouteTimer() > 0:
+			f.write("\tTempRouteTimer=%d\n" %(plot.getTempRouteTimer()))
+
+
+
+
+
 #Magister Stop
 
 		# units
@@ -2061,6 +2107,64 @@ class CvPlotDesc:
 			if v!=-1:
 				self.portalExitY = int(v)
 				continue
+
+
+
+
+			v = parser.findTokenValue(toks, "RealBonusType")
+			if v!=-1:
+				self.realBonusType = v
+				continue
+
+			v = parser.findTokenValue(toks, "RealImprovementType")
+			if v!=-1:
+				self.realImprovementType = v
+				continue
+
+			v = parser.findTokenValue(toks, "RealFeatureType")
+			if v!=-1:
+				self.realFeatureType = v
+				v = parser.findTokenValue(toks, "RealFeatureVariety")
+				if v!=-1:
+					self.realFeatureVariety = int(v)
+				continue
+
+			v = parser.findTokenValue(toks, "RealRouteType")
+			if v!=-1:
+				self.realRouteType = v
+				continue
+
+			v = parser.findTokenValue(toks, "RealTerrainType")
+			if v!=-1:
+				self.terrainType = v
+				continue
+
+
+
+			v = parser.findTokenValue(toks, "TempFeatureTimer")
+			if v!=-1:
+				self.tempTimerFeature = int(v)
+				continue
+
+			v = parser.findTokenValue(toks, "TempRouteTimer")
+			if v!=-1:
+				self.tempTimerRoute = int(v)
+				continue
+
+			v = parser.findTokenValue(toks, "TempTerrainTimer")
+			if v!=-1:
+				self.tempTimerTerrain = int(v)
+				continue
+
+			v = parser.findTokenValue(toks, "TempBonusTimer")
+			if v!=-1:
+				self.tempTimerBonus = int(v)
+				continue
+
+			v = parser.findTokenValue(toks, "TempImprovementTimer")
+			if v!=-1:
+				self.tempTimerImprovement = int(v)
+				continue
 #Magister Stop
 
 			# Units
@@ -2141,6 +2245,39 @@ class CvPlotDesc:
 			plot.setPortalExitX(self.portalExitX)
 		if self.portalExitY > 0:
 			plot.setPortalExitY(self.portalExitY)
+
+
+
+		if (self.realTerrainType):
+			terrainTypeNum = CvUtil.findInfoTypeNum(gc.getBonusInfo, gc.getNumBonusInfos(), self.realTerrainType)
+			plot.setRealTerrainType(terrain)
+
+		if (self.realBonusType):
+			bonusTypeNum = CvUtil.findInfoTypeNum(gc.getBonusInfo, gc.getNumBonusInfos(), self.realBonusType)
+			plot.setRealBonusType(bonusTypeNum)
+		if (self.realImprovementType):
+			improvementTypeNum = CvUtil.findInfoTypeNum(gc.getImprovementInfo, gc.getNumImprovementInfos(), self.realImprovementType)
+			plot.setRealImprovementType(improvementTypeNum)
+		if (self.realFeatureType):
+			featureTypeNum = CvUtil.findInfoTypeNum(gc.getFeatureInfo, gc.getNumFeatureInfos(), self.realFeatureType)
+			plot.setRealFeatureType(featureTypeNum)
+			plot.setRealFeatureVariety(self.realFeatureVariety)
+		if (self.realRouteType):
+			routeTypeNum = CvUtil.findInfoTypeNum(gc.getRouteInfo, gc.getNumRouteInfos(), self.realRouteType)
+			plot.setRealRouteType(routeTypeNum)
+
+
+		if self.tempTimerFeature > 0:
+			plot.changeTempFeatureTimer(self.tempTimerFeature)
+		if self.tempTimerRoute > 0:
+			plot.changeTempRouteTimer(self.tempTimerRoute)
+		if self.tempTimerTerrain > 0:
+			plot.changeTempTerrainTimer(self.tempTimerTerrain)
+		if self.tempTimerBonus > 0:
+			plot.changeTempBonusTimer(self.tempTimerBonus)
+		if self.tempTimerImprovement > 0:
+			plot.changeTempImprovementTimer(self.tempTimerImprovement)
+
 #Magister Stop
 
 	def applyUnits(self):

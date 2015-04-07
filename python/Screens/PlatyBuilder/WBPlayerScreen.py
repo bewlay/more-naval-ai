@@ -53,6 +53,8 @@ class WBPlayerScreen:
 				sText = pPlayerX.getName()
 				if not pPlayerX.isAlive():
 					sText = "*" + sText
+				if pPlayerX.isTurnActive():
+					sText = "[" + sText + "]"
 				screen.addPullDownString("CurrentPlayer", sText, i, i, i == iPlayer)
 
 		iY += 30
@@ -203,7 +205,7 @@ class WBPlayerScreen:
 		sText = CyTranslator().getText("TXT_KEY_WB_COASTAL_TRADE", (pPlayer.getCoastalTradeRoutes(),))
 		screen.setLabel("CoastalTradeText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iXText, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		iY += 50
+		iY += 35
 		screen.setButtonGFC("DisableProductionPlus", "", "", iXPlus, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("DisableProductionMinus", "", "", iXMinus, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_MESSAGE_DISABLE_PRODUCTION",(pPlayer.getDisableProduction(),)) + "</font>"
@@ -220,6 +222,14 @@ class WBPlayerScreen:
 		screen.setButtonGFC("DisableSpellcastingMinus", "", "", iXMinus, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_MESSAGE_DISABLE_SPELLCASTING",(pPlayer.getDisableSpellcasting(),)) + "</font>"
 		screen.setLabel("DisableSpellcastingText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iXText, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		if not pPlayer.getCapitalCity().isNone():
+			iY += 25
+			screen.setButtonGFC("SanctuaryTimerPlus", "", "", iXPlus, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+			screen.setButtonGFC("SanctuaryTimerMinus", "", "", iXMinus, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+			sText = "<font=3>" + CyTranslator().getText("TXT_KEY_SANCTUARY_TIMER",(pPlayer.getSanctuaryTimer(),)) + "</font>"
+			screen.setLabel("SanctuaryTimerText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, iXText, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 
 		iY += 25
 #Magister Stop
@@ -615,6 +625,17 @@ class WBPlayerScreen:
 				pPlayer.changeDisableSpellcasting(- min(iChange, pPlayer.getDisableSpellcasting()))
 			self.placeStats()
 
+
+
+		elif inputClass.getFunctionName().find("SanctuaryTimer") > -1:
+			if inputClass.getData1() == 1030:
+				pPlayer.changeSanctuaryTimer(iChange)
+			elif inputClass.getData1() == 1031:
+				pPlayer.changeSanctuaryTimer(- min(iChange, pPlayer.getSanctuaryTimer()))
+			self.placeStats()
+
+
+
 		elif inputClass.getFunctionName() == "PlayerName":
 			popup = Popup.PyPopup(6666, EventContextTypes.EVENTCONTEXT_ALL)
 			popup.setUserData((iPlayer, True))
@@ -678,9 +699,6 @@ class WBPlayerScreen:
 				pPlayer.setAlive(False)
 			else:
 				pPlayer.setAlive(True)
-				screen.hideScreen()
-				self.top.m_iCurrentPlayer = iPlayer
-				self.top.normalPlayerTabModeCB()
 			screen.hideScreen()
 #Magister Stop
 

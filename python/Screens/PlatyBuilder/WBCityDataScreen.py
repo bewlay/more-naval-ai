@@ -12,9 +12,12 @@ import WBPlayerUnits
 import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
+import CvPlatyBuilderScreen
 gc = CyGlobalContext()
 
 iChange = 1
+iOwnerType = 0
+iPlotType = 2
 iSelectedClass = -1
 bRemove = False
 iBuildingFilter = 5#Magister##bWonder = False#Magister
@@ -23,6 +26,7 @@ iSelectedYield = 0
 class WBCityDataScreen:
 	def __init__(self):
 		self.iTable_Y = 80
+		self.lCities = []
 
 	def interfaceScreen(self, pCityX):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
@@ -39,20 +43,6 @@ class WBCityDataScreen:
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 		screen.setText("CityDataExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 
-		iHeight = (screen.getYResolution() - 40 - self.iTable_Y) / 24 * 24 + 2
-		screen.addTableControlGFC( "CurrentCity", 1, 20, self.iTable_Y, iWidth - 20, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		screen.setTableColumnHeader("CurrentCity", 0, "", iWidth - 20)
-
-		pPlayer = gc.getPlayer(iPlayer)
-		(loopCity, iter) = pPlayer.firstCity(False)
-		while(loopCity):
-			iRow = screen.appendTableRow("CurrentCity")
-			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if loopCity.getID() == pCity.getID():
-				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("CurrentCity", 0, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", gc.getCivilizationInfo(pCity.getCivilizationType()).getButton(), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayer, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY )
-			(loopCity, iter) = pPlayer.nextCity(iter, False)
-		
 		screen.addDropDownBoxGFC("CurrentPage", 20, screen.getYResolution() - 42, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_CITY_DATA", ()), 0, 0, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_WB_CITY_DATA2", ()), 1, 1, True)
@@ -66,11 +56,20 @@ class WBCityDataScreen:
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS", ()), 7, 7, False)
 		screen.addPullDownString("CurrentPage", CyTranslator().getText("TXT_KEY_INFO_SCREEN", ()), 11, 11, False)
 
-		screen.addDropDownBoxGFC("ChangeType", 20, self.iTable_Y - 60, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addDropDownBoxGFC("OwnerType", 20, self.iTable_Y - 60, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
+		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()), 1, 1, 1 == iOwnerType)
+
+		screen.addDropDownBoxGFC("PlotType", 20, self.iTable_Y - 30, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iPlotType == 1)
+		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iPlotType == 2)
+
+		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution()/4, self.iTable_Y - 60, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, not bRemove)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, bRemove)
-		
-		screen.addDropDownBoxGFC("ChangeBy", 20, self.iTable_Y - 30, iWidth - 20, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+
+		screen.addDropDownBoxGFC("ChangeBy", screen.getXResolution()/4, self.iTable_Y - 30, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		i = 1
 		while i < 10001:
 			screen.addPullDownString("ChangeBy", "(+/-) " + str(i), i, i, iChange == i)
@@ -78,7 +77,7 @@ class WBCityDataScreen:
 				i *= 5
 			else:
 				i *= 2
-		
+
 		screen.addDropDownBoxGFC("BonusClass", screen.getXResolution() * 3/4, self.iTable_Y - 30, 120, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -1, -1, True)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
@@ -90,11 +89,6 @@ class WBCityDataScreen:
 			sText = sText.capitalize()
 			screen.addPullDownString("BonusClass", sText, iBonusClass, iBonusClass, iBonusClass == iSelectedClass)
 			iBonusClass += 1
-
-		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</font></color>"
-		screen.setText("SpecialistAll", "Background",  sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution()/2 - 20, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setText("GreatPeopleProgressAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() * 3/4 - 20, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.setText("BonusAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		global lSpecialist
 		global lGreatPeople
@@ -126,11 +120,45 @@ class WBCityDataScreen:
 		lSpecialist.sort()
 		lGreatPeople.sort()
 
+		self.sortCities()
 		self.createBonusList()
 		self.placeGreatPeople()
 		self.placeBonus()
 		self.placeSpecialist()
 		self.sortBuildings()
+
+	def sortCities(self):
+		self.lCities = []
+		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
+			pPlayerX = gc.getPlayer(iPlayerX)
+			if iOwnerType == 1 and iPlayerX != iPlayer: continue
+			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue
+			(loopCity, iter) = pPlayerX.firstCity(False)
+			while(loopCity):
+				if iPlotType == 2 or (iPlotType == 1 and loopCity.plot().getArea() == pCity.plot().getArea()):
+					sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+					if loopCity.getID() == pCity.getID() and iPlayerX == iPlayer:
+						sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+					self.lCities.append([loopCity, iPlayerX, sColor])
+				(loopCity, iter) = pPlayerX.nextCity(iter, False)
+		self.placeCityTable()
+
+	def placeCityTable(self):
+		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
+		iWidth = screen.getXResolution()/4 - 40
+		iHeight = (screen.getYResolution() - 40 - self.iTable_Y) / 24 * 24 + 2
+		screen.addTableControlGFC( "CurrentCity", 3, 20, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setTableColumnHeader("CurrentCity", 0, "", 24)
+		screen.setTableColumnHeader("CurrentCity", 1, "", 24)
+		screen.setTableColumnHeader("CurrentCity", 2, "", iWidth - 48)
+
+		for (loopCity, iPlayerX, sColor) in self.lCities:
+			iRow = screen.appendTableRow("CurrentCity")
+			iCiv = loopCity.getCivilizationType()
+			screen.setTableText("CurrentCity", 0, iRow, "", gc.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, CvUtil.FONT_LEFT_JUSTIFY)
+			iLeader = gc.getPlayer(iPlayerX).getLeaderType()
+			screen.setTableText("CurrentCity", 1, iRow, "", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, CvUtil.FONT_LEFT_JUSTIFY)
+			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), CvUtil.FONT_LEFT_JUSTIFY)
 
 	def sortBuildings(self):
 		global lBuilding
@@ -200,11 +228,11 @@ class WBCityDataScreen:
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		iTableWidth = screen.getXResolution()/2 - 20
 		iX = screen.getXResolution()/4
-		iY = screen.getYResolution()/2
+		iY = self.iTable_Y - 30
 
 		sText = CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 		screen.setLabel("ModifyHeader", "Background", "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_MODIFY", (sText,)) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iTableWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		iY += 30
 		screen.addDropDownBoxGFC("BuildingType", iX, iY, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 
@@ -235,7 +263,7 @@ class WBCityDataScreen:
 	## Disabled because neither is working correctly with BTS dll ##
 
 		iY += 30
-		iHeight = (screen.getYResolution() - iY - 40) /24 * 24 + 2
+		iHeight = (screen.getYResolution()/2 - iY) / 24 * 24 + 2
 		screen.addTableControlGFC("WBModifyBuilding", 2, iX, iY, iTableWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		for i in xrange(2):
 			screen.setTableColumnHeader("WBModifyBuilding", i, "", iTableWidth/2)
@@ -268,15 +296,20 @@ class WBCityDataScreen:
 	def placeSpecialist(self):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		iX = screen.getXResolution()/4
-		iHeight = (screen.getYResolution()/2 - self.iTable_Y - 30) / 24 * 24 + 2
+		iY = screen.getYResolution()/2
 
 		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_BASE_RATE", (pCity.getBaseGreatPeopleRate(),)) + "</font>"
-		screen.setButtonGFC("GreatPeopleRatePlus", "", "", iX, screen.getYResolution()/2 - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("GreatPeopleRateMinus", "", "", iX + 25, screen.getYResolution()/2 - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		screen.setLabel("GreatPeopleRateText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, iX + 50, screen.getYResolution()/2 - 29, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setButtonGFC("GreatPeopleRatePlus", "", "", iX, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("GreatPeopleRateMinus", "", "", iX + 25, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		screen.setLabel("GreatPeopleRateText", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, iX + 50, screen.getYResolution() - 41, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		screen.setLabel("SpecialistHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_WB_FREE_SPECIALISTS", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.addTableControlGFC( "WBSpecialist", 1, screen.getXResolution()/4, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setLabel("SpecialistHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_WB_FREE_SPECIALISTS", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</font></color>"
+		screen.setText("SpecialistAll", "Background",  sText, CvUtil.FONT_RIGHT_JUSTIFY, iX + iWidth - 20, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		iHeight = (screen.getYResolution() - iY - 40) /24 * 24 + 2
+		screen.addTableControlGFC( "WBSpecialist", 1, screen.getXResolution()/4, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader("WBSpecialist", 0, "", iWidth)
 
 		for item in lSpecialist:
@@ -293,15 +326,20 @@ class WBCityDataScreen:
 	def placeGreatPeople(self):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		iX = screen.getXResolution()/2
-		iHeight = (screen.getYResolution()/2 - self.iTable_Y - 30) / 24 * 24 + 2
+		iY = screen.getYResolution()/2
 
 		sText = "<font=3b>" + CyTranslator().getText("TXT_KEY_WB_PROGRESS", (pCity.getGreatPeopleProgress(),)) + "/" + str(gc.getPlayer(iPlayer).greatPeopleThreshold(False)) + "</font>"
-		screen.setButtonGFC("GreatPeopleFlatPlus", "", "", iX, screen.getYResolution()/2 - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("GreatPeopleFlatMinus", "", "", iX + 25, screen.getYResolution()/2 - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		screen.setLabel("GreatPeopleFlat", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, iX + 50, screen.getYResolution()/2 - 29, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setButtonGFC("GreatPeopleFlatPlus", "", "", iX, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
+		screen.setButtonGFC("GreatPeopleFlatMinus", "", "", iX + 25, screen.getYResolution() - 42, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
+		screen.setLabel("GreatPeopleFlat", "Background", sText, CvUtil.FONT_LEFT_JUSTIFY, iX + 50, screen.getYResolution() - 41, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		screen.setLabel("GreatPeopleHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_CONCEPT_GREAT_PEOPLE", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		screen.addTableControlGFC("WBGreatPeople", 1, iX, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		screen.setLabel("GreatPeopleHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_CONCEPT_GREAT_PEOPLE", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</font></color>"
+		screen.setText("GreatPeopleProgressAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, iX + iWidth - 20, iY, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		iY += 30
+		iHeight = (screen.getYResolution() - iY - 40) /24 * 24 + 2
+		screen.addTableControlGFC("WBGreatPeople", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader("WBGreatPeople", 0, "", iWidth)
 
 		for item in lGreatPeople:
@@ -327,9 +365,13 @@ class WBCityDataScreen:
 	def placeBonus(self):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		iX = screen.getXResolution() * 3/4
+		iY = self.iTable_Y
 		iHeight = (screen.getYResolution() - 40 - self.iTable_Y) / 24 * 24 + 2
 
-		screen.setLabel("BonusHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BONUS", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setLabel("BonusHeader", "Background", u"<font=4b>" + CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BONUS", ()) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + iWidth/2, iY - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</font></color>"
+		screen.setText("BonusAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, iX + iWidth - 20, iY - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 		screen.addTableControlGFC( "WBBonus", 2, iX, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader( "WBBonus", 0, "", 24)
 		screen.setTableColumnHeader( "WBBonus", 1, "", iWidth - 24)
@@ -352,6 +394,8 @@ class WBCityDataScreen:
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
 		global iChange
+		global iOwnerType
+		global iPlotType
 		global bRemove
 		global iSelectedClass
 		global iBuildingFilter#Magister##		global bWonder#Magister
@@ -365,12 +409,15 @@ class WBCityDataScreen:
 			bRemove = not bRemove
 
 		elif inputClass.getFunctionName() == "CurrentCity":
-			self.interfaceScreen(gc.getPlayer(iPlayer).getCity(inputClass.getData2()))
+			iPlayerX = inputClass.getData1() - 7200
+			pPlayerX = gc.getPlayer(iPlayerX)
+			if pPlayerX:
+				self.interfaceScreen(pPlayerX.getCity(inputClass.getData2()))
 
 		elif inputClass.getFunctionName() == "CurrentPage":
 			iIndex = screen.getPullDownData("CurrentPage", screen.getSelectedPullDownID("CurrentPage"))
 			if iIndex == 0:
-				WBCityEditScreen.WBCityEditScreen().interfaceScreen(pCity)
+				WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pCity)
 			elif iIndex == 2:
 				WBBuildingScreen.WBBuildingScreen().interfaceScreen(pCity)
 			elif iIndex == 3:
@@ -389,6 +436,14 @@ class WBCityDataScreen:
 				WBCorporationScreen.WBCorporationScreen().interfaceScreen(iPlayer)
 			elif iIndex == 11:
 				WBInfoScreen.WBInfoScreen().interfaceScreen(iPlayer)
+
+		elif inputClass.getFunctionName() == "OwnerType":
+			iOwnerType = screen.getPullDownData("OwnerType", screen.getSelectedPullDownID("OwnerType"))
+			self.sortCities()
+
+		elif inputClass.getFunctionName() == "PlotType":
+			iPlotType = screen.getPullDownData("PlotType", screen.getSelectedPullDownID("PlotType"))
+			self.sortCities()
 
 		elif inputClass.getFunctionName() == "SpecialistAll":
 			for item in xrange(gc.getNumSpecialistInfos()):
@@ -417,7 +472,7 @@ class WBCityDataScreen:
 			elif inputClass.getData1() == 1031:
 				self.editGreatPeopleRate(-iChange)
 			self.placeSpecialist()
-			
+
 		elif inputClass.getFunctionName() == "WBGreatPeople":
 			self.editGreatPeopleProgress(inputClass.getData2())
 			self.placeGreatPeople()
