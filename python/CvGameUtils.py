@@ -17,8 +17,6 @@ cf = CustomFunctions.CustomFunctions()
 gc = CyGlobalContext()
 sf = ScenarioFunctions.ScenarioFunctions()
 
-
-
 import CvModName
 
 class CvGameUtils:
@@ -235,26 +233,23 @@ class CvGameUtils:
 		bIgnoreUpgrades = argsList[5]
 		ePlayer = pCity.getOwner()
 		pPlayer = gc.getPlayer(ePlayer)
-		eUnitClass = gc.getUnitInfo(eUnit).getUnitClassType()
-		eTeam = gc.getTeam(pPlayer.getTeam())
+##		eUnitClass = gc.getUnitInfo(eUnit).getUnitClassType()
+##		eTeam = gc.getTeam(pPlayer.getTeam())
+
+		if pPlayer.getCivics(gc.getInfoTypeForString('CIVICOPTION_CULTURAL_VALUES')) == gc.getInfoTypeForString('CIVIC_CRUSADE'):
+			if eUnit in [gc.getInfoTypeForString('UNIT_WORKER'), gc.getInfoTypeForString('UNIT_SETTLER'), gc.getInfoTypeForString('UNIT_WORKBOAT')]:
+				return True
 
 		if eUnit == gc.getInfoTypeForString('UNIT_BEAST_OF_AGARES'):
 			if pCity.getPopulation() <= 5:
 				return True
 
-		if pPlayer.getCivics(gc.getInfoTypeForString('CIVICOPTION_CULTURAL_VALUES')) == gc.getInfoTypeForString('CIVIC_CRUSADE'):
-			if eUnit == gc.getInfoTypeForString('UNIT_WORKER'):
-				return True
-			if eUnit == gc.getInfoTypeForString('UNIT_SETTLER'):
-				return True
-			if eUnit == gc.getInfoTypeForString('UNIT_WORKBOAT'):
-				return True
 
-		if eUnit == gc.getInfoTypeForString('UNIT_ACHERON'):
+		elif eUnit == gc.getInfoTypeForString('UNIT_ACHERON'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_ACHERON):
 				return True
 
-		if eUnit == gc.getInfoTypeForString('UNIT_DUIN'):
+		elif eUnit == gc.getInfoTypeForString('UNIT_DUIN'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_DUIN):
 				return True
 
@@ -280,69 +275,57 @@ class CvGameUtils:
 		bTestVisible = argsList[3]
 		bIgnoreCost = argsList[4]
 		pPlayer = gc.getPlayer(pCity.getOwner())
-		iBuildingClass = gc.getBuildingInfo(eBuilding).getBuildingClassType()
-		eTeam = gc.getTeam(pPlayer.getTeam())
+##		iBuildingClass = gc.getBuildingInfo(eBuilding).getBuildingClassType()
+##		eTeam = gc.getTeam(pPlayer.getTeam())
 
 		if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_AGNOSTIC')):
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_LEAVES'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_KILMORPH'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_EMPYREAN'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_OVERLORDS'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_VEIL'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_ORDER'):
+			if eBuilding in [	gc.getInfoTypeForString('BUILDING_TEMPLE_OF_LEAVES'),
+							gc.getInfoTypeForString('BUILDING_TEMPLE_OF_KILMORPH'), 
+							gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_EMPYREAN'),
+							gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_OVERLORDS'),
+							gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_VEIL'), 
+							gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_ORDER')
+							]:
 				return True
 
 		if pPlayer.getCivics(gc.getInfoTypeForString('CIVICOPTION_CULTURAL_VALUES')) == gc.getInfoTypeForString('CIVIC_CRUSADE'):
-			if eBuilding == gc.getInfoTypeForString('BUILDING_ELDER_COUNCIL'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_MARKET'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_MONUMENT'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_MONEYCHANGER'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_THEATRE'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_AQUEDUCT'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_PUBLIC_BATHS'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_HERBALIST'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_CARNIVAL'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_COURTHOUSE'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_GAMBLING_HOUSE'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_GRANARY'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_SMOKEHOUSE'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_LIBRARY'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_HARBOR'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_ALCHEMY_LAB'):
-				return True
-			if eBuilding == gc.getInfoTypeForString('BUILDING_BREWERY'):
+			if eBuilding in [	gc.getInfoTypeForString('BUILDING_ELDER_COUNCIL'),
+						gc.getInfoTypeForString('BUILDING_MARKET'),
+						gc.getInfoTypeForString('BUILDING_MONUMENT'),
+						gc.getInfoTypeForString('BUILDING_MONEYCHANGER'),
+						gc.getInfoTypeForString('BUILDING_THEATRE'),
+						gc.getInfoTypeForString('BUILDING_AQUEDUCT'),
+						gc.getInfoTypeForString('BUILDING_PUBLIC_BATHS'),
+						gc.getInfoTypeForString('BUILDING_HERBALIST'),
+						gc.getInfoTypeForString('BUILDING_CARNIVAL'),
+						gc.getInfoTypeForString('BUILDING_COURTHOUSE'),
+						gc.getInfoTypeForString('BUILDING_GAMBLING_HOUSE'),
+						gc.getInfoTypeForString('BUILDING_GRANARY'),
+						gc.getInfoTypeForString('BUILDING_SMOKEHOUSE'),
+						gc.getInfoTypeForString('BUILDING_LIBRARY'),
+						gc.getInfoTypeForString('BUILDING_HARBOR'),
+						gc.getInfoTypeForString('BUILDING_ALCHEMY_LAB'),
+						gc.getInfoTypeForString('BUILDING_BREWERY')
+						]:
 				return True
 
-		if eBuilding == gc.getInfoTypeForString('BUILDING_SHRINE_OF_THE_CHAMPION'):
-			iHero = cf.getHero(pPlayer)
-			if iHero == -1:
-				return True
-			if CyGame().isUnitClassMaxedOut(iHero, 0) == False:
-				return True
-			if pPlayer.getUnitClassCount(iHero) > 0:
-				return True
+		listAltars =[	gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'),
+				gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL')
+				]
 
-		if eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
+		if eBuilding in listAltars:
+			if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+				return True
+			for iAltar in listAltars[listAltars.index(eBuilding):]:
+				if pPlayer.countNumBuildings(iAltar) > 0:
+					return True
+
+		elif eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
 			if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_NO_HYBOREM_OR_BASIUM):
 				return True
 			if pPlayer.getStateReligion() == gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'):
@@ -350,54 +333,34 @@ class CvGameUtils:
 			if pCity.isCapital():
 				return True
 
-		iAltar1 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR')
-		iAltar2 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED')
-		iAltar3 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED')
-		iAltar4 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED')
-		iAltar5 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE')
-		iAltar6 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED')
-		iAltar7 = gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL')
-		if (eBuilding == iAltar1 or eBuilding == iAltar2 or eBuilding == iAltar3 or eBuilding == iAltar4 or eBuilding == iAltar5 or eBuilding == iAltar6 or eBuilding == iAltar7):
-			if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+		elif eBuilding == gc.getInfoTypeForString('BUILDING_SHRINE_OF_THE_CHAMPION'):
+			iHero = cf.getHero(pPlayer)
+			if iHero == -1:
 				return True
-			if eBuilding == iAltar1:
-				if (pPlayer.countNumBuildings(iAltar2) > 0 or pPlayer.countNumBuildings(iAltar3) > 0 or pPlayer.countNumBuildings(iAltar4) > 0 or pPlayer.countNumBuildings(iAltar5) > 0 or pPlayer.countNumBuildings(iAltar6) > 0 or pPlayer.countNumBuildings(iAltar7) > 0):
-					return True
-			if eBuilding == iAltar2:
-				if (pPlayer.countNumBuildings(iAltar3) > 0 or pPlayer.countNumBuildings(iAltar4) > 0 or pPlayer.countNumBuildings(iAltar5) > 0 or pPlayer.countNumBuildings(iAltar6) > 0 or pPlayer.countNumBuildings(iAltar7) > 0):
-					return True
-			if eBuilding == iAltar3:
-				if (pPlayer.countNumBuildings(iAltar4) > 0 or pPlayer.countNumBuildings(iAltar5) > 0 or pPlayer.countNumBuildings(iAltar6) > 0 or pPlayer.countNumBuildings(iAltar7) > 0):
-					return True
-			if eBuilding == iAltar4:
-				if (pPlayer.countNumBuildings(iAltar5) > 0 or pPlayer.countNumBuildings(iAltar6) > 0 or pPlayer.countNumBuildings(iAltar7) > 0):
-					return True
-			if eBuilding == iAltar5:
-				if (pPlayer.countNumBuildings(iAltar6) > 0 or pPlayer.countNumBuildings(iAltar7) > 0):
-					return True
-			if eBuilding == iAltar6:
-				if pPlayer.countNumBuildings(iAltar7) > 0:
-					return True
+			if not CyGame().isUnitClassMaxedOut(iHero, 0):
+				return True
+			if pPlayer.getUnitClassCount(iHero) > 0:
+				return True
+
+		elif eBuilding == gc.getInfoTypeForString('BUILDING_SMUGGLERS_PORT'):
+			if not pPlayer.isSmugglingRing():
+				return True
+
 
 ### Start AI restrictions ###
-		if pPlayer.isHuman() == False:
+		if not pPlayer.isHuman():
 			if eBuilding == gc.getInfoTypeForString('BUILDING_PROPHECY_OF_RAGNAROK'):
 				if pPlayer.getAlignment() != gc.getInfoTypeForString('ALIGNMENT_EVIL'):
 					return True
 
-			if eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
+			elif eBuilding == gc.getInfoTypeForString('BUILDING_MERCURIAN_GATE'):
+				if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
+					return True
 				if pCity.isHolyCity():
 					return True
 				if pCity.getAltarLevel() > 0:
 					return True
-				if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
-					return True
 ### End AI restrictions ###
-
-		if eBuilding == gc.getInfoTypeForString('BUILDING_SMUGGLERS_PORT'):
-			if pPlayer.isSmugglingRing() == False:
-				return True
-
 		return False
 
 	def canCreate(self,argsList):
@@ -413,10 +376,10 @@ class CvGameUtils:
 		bContinue = argsList[2]
 		bTestVisible = argsList[3]
 		pPlayer = gc.getPlayer(pCity.getOwner())
-		eTeam = gc.getTeam(pPlayer.getTeam())
+##		eTeam = gc.getTeam(pPlayer.getTeam())
 
 		if eProject == gc.getInfoTypeForString('PROJECT_PURGE_THE_UNFAITHFUL'):
-			if pPlayer.isHuman() == False:
+			if not pPlayer.isHuman():
 				return True
 			if pPlayer.getStateReligion() == -1:
 				return True
@@ -434,10 +397,14 @@ class CvGameUtils:
 				return True
 
 		if eProject == gc.getInfoTypeForString('PROJECT_SAMHAIN'):
-			if pPlayer.isHuman() == False:
+			if not pPlayer.isHuman():
 				if pPlayer.getNumCities() <= 3:
 					return True
 
+		if eProject == gc.getInfoTypeForString('PROJECT_THE_DRAW'):
+			if not pPlayer.isHuman():
+				if not pPlayer.isHasTech(gc.getInfoTypeForString('TECH_OMNISCIENCE')):
+					return True
 
 		return False
 
@@ -468,6 +435,11 @@ class CvGameUtils:
 
 		## AI catches for buildings and projects that have python-only effects
 		if not pPlayer.isHuman():
+
+			iCivType = pPlayer.getCivilizationType()
+			if pPlayer.hasTrait(gc.getInfoTypeForString('TRAIT_TOLERANT')):
+				iCivType = pCity.getCivilizationType()
+				
 			## Barbarians
 			if pPlayer.isBarbarian():
 				if pCity.canTrain(gc.getInfoTypeForString('UNIT_ACHERON'), True, False):
@@ -487,7 +459,7 @@ class CvGameUtils:
 					if (iBadTileCount >= 4):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'),-1, False, False, False, False)
 						return 1
-			
+
 				if pCity.findYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 3:
 					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'), True, True):
 						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'),-1, False, False, False, False)
@@ -496,13 +468,13 @@ class CvGameUtils:
 						pCity.pushOrder(OrderTypes.ORDER_CREATE,gc.getInfoTypeForString('PROJECT_ASCENSION'),-1, False, False, False, False)
 						return 1
 			## Clan should build Warrens
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
+			elif iCivType == gc.getInfoTypeForString('CIVILIZATION_CLAN_OF_EMBERS'):
 				if (pCity.getCultureLevel() > 1) and (pCity.getPopulation() > 3):
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_WARRENS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_WARRENS'),-1, False, False, False, False)
 						return 1
 			## Amurites should build Cave of Ancestors
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
+			elif iCivType == gc.getInfoTypeForString('CIVILIZATION_AMURITES'):
 				if (pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_MAGE_GUILD')) > 0):
 					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'), True, False, False):
 						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_CAVE_OF_ANCESTORS'),-1, False, False, False, False)
@@ -526,20 +498,22 @@ class CvGameUtils:
 		pPlot = pUnit.plot()
 		iUnitType = pUnit.getUnitType()
 		iPlayer = pUnit.getOwner()
+		pPlayer = gc.getPlayer(iPlayer)
 
-		if iUnitType == gc.getInfoTypeForString('UNIT_GIANT_SPIDER'):
-			iX = pUnit.getX()
-			iY = pUnit.getY()
-			for iiX in range(iX-1, iX+2, 1):
-				for iiY in range(iY-1, iY+2, 1):
-					pLoopPlot = CyMap().plot(iiX,iiY)
-					for i in range(pLoopPlot.getNumUnits()):
-						if pLoopPlot.getUnit(i).getOwner() != iPlayer:
-							return 0
-			pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-			return 1
+		if pPlayer.isBarbarian():
+			if iUnitType == gc.getInfoTypeForString('UNIT_GIANT_SPIDER'):
+				iX = pUnit.getX()
+				iY = pUnit.getY()
+				for iDirection in range(DirectionTypes.NUM_DIRECTION_TYPES):
+					pLoopPlot= plotDirection(iX, iY, DirectionTypes(iDirection))
+					if not pLoopPlot.isNone():
+						for i in range(pLoopPlot.getNumUnits()):
+							if pLoopPlot.getUnit(i).getOwner() != iPlayer:
+								return 0
+				pUnit.getGroup().pushMission(MissionTypes.MISSION_SKIP, 0, 0, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+				return 1
 
-		elif iUnitType == gc.getInfoTypeForString('UNIT_ACHERON'):
+		if iUnitType == gc.getInfoTypeForString('UNIT_ACHERON'):
 			if pPlot.isVisibleEnemyUnit(iPlayer):
 				pUnit.cast(gc.getInfoTypeForString('SPELL_BREATH_FIRE'))
 
@@ -619,7 +593,6 @@ class CvGameUtils:
 
 	def doCulture(self,argsList):
 		pCity = argsList[0]
-
 		pPlayer = gc.getPlayer(pCity.getOwner())
 		if pPlayer.isBarbarian():
 			if pCity.getNumRealBuilding(gc.getInfoTypeForString('BUILDING_THE_DRAGONS_HORDE')) == 0:
@@ -658,9 +631,7 @@ class CvGameUtils:
 		"controls the gold result of pillaging"
 		pPlot = argsList[0]
 		pUnit = argsList[1]
-
-		iPillageGold = 0
-		iPillageGold += CyGame().getSorenRandNum(gc.getImprovementInfo(pPlot.getImprovementType()).getPillageGold(), "Pillage Gold 1")
+		iPillageGold = CyGame().getSorenRandNum(gc.getImprovementInfo(pPlot.getImprovementType()).getPillageGold(), "Pillage Gold 1")
 		iPillageGold += CyGame().getSorenRandNum(gc.getImprovementInfo(pPlot.getImprovementType()).getPillageGold(), "Pillage Gold 2")
 		iPillageGold += (pUnit.getPillageChange() * iPillageGold) / 100
 		return iPillageGold
@@ -668,8 +639,7 @@ class CvGameUtils:
 	def doCityCaptureGold(self, argsList):
 		"controls the gold result of capturing a city"
 		pOldCity = argsList[0]
-		iCaptureGold = 0
-		iCaptureGold += gc.getDefineINT("BASE_CAPTURE_GOLD")
+		iCaptureGold = gc.getDefineINT("BASE_CAPTURE_GOLD")
 		iCaptureGold += (pOldCity.getPopulation() * gc.getDefineINT("CAPTURE_GOLD_PER_POPULATION"))
 		iCaptureGold += CyGame().getSorenRandNum(gc.getDefineINT("CAPTURE_GOLD_RAND1"), "Capture Gold 1")
 		iCaptureGold += CyGame().getSorenRandNum(gc.getDefineINT("CAPTURE_GOLD_RAND2"), "Capture Gold 2")
@@ -711,9 +681,9 @@ class CvGameUtils:
 
 	def getBuildingCostMod(self, argsList):
 		iPlayer, iCityID, iBuilding = argsList
+		iCostMod = -1 # Any value > 0 will be used
 		pPlayer = gc.getPlayer(iPlayer)
 		pCity = pPlayer.getCity(iCityID)
-		iCostMod = -1 # Any value > 0 will be used
 		if iBuilding == gc.getInfoTypeForString('BUILDING_GAMBLING_HOUSE'):
 			if pPlayer.isGamblingRing():
 				iCostMod = 25
@@ -909,7 +879,7 @@ class CvGameUtils:
 							if iProduction != 0:
 								sText += u" %+d" %(iProduction)
 						sText += u" (%s)" %(pCity.getProductionName())
-					
+
 					iGPRate = pCity.getGreatPeopleRate()
 					iProgress = pCity.getGreatPeopleProgress()
 					if iGPRate > 0 or iProgress > 0:
@@ -1053,7 +1023,6 @@ class CvGameUtils:
 	def getExperienceNeeded(self, argsList):
 		# use this function to set how much experience a unit needs
 		iLevel, iOwner = argsList
-		iExperienceNeeded = 0
 		# regular epic game experience
 		iExperienceNeeded = iLevel * iLevel + 1
 		iModifier = gc.getPlayer(iOwner).getLevelExperienceModifier()
@@ -1104,7 +1073,6 @@ class CvGameUtils:
 ##--------	Unofficial Bug Fix: End Add
 
 
-
 # Return 1 if a Mission was pushed
 	def AI_MageTurn(self, argsList):
 		pUnit = argsList[0]
@@ -1115,7 +1083,7 @@ class CvGameUtils:
 		iX = pUnit.getX()
 		iY = pUnit.getY()
 
-		if (pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER')):
+		if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
 
 #-----------------------------------
 #TERRAFORMING
@@ -1135,114 +1103,114 @@ class CvGameUtils:
 #-----------------------------------
 
 #INIT
-			smokeb = false #terraformer tries to put out smoke
-			desertb = false #terraformer tries to spring deserts
-			plainsb = false #terraformer tries to improve plains
-			snowb = false #terraformer tries to scorch snow to tundra
-			tundrab = false #terraformer tries to scorch tundra to plains
-			marshb = false #terraformer tries to scorch marsh to grassland
-			hellterrb = false #terraformer tries to remove hell terrain
-			treesb = false #terraformer tries to Create Trees
+			smokeb = False #terraformer tries to put out smoke
+			desertb = False #terraformer tries to spring deserts
+			plainsb = False #terraformer tries to improve plains
+			snowb = False #terraformer tries to scorch snow to tundra
+			tundrab = False #terraformer tries to scorch tundra to plains
+			marshb = False #terraformer tries to scorch marsh to grassland
+			hellterrb = False #terraformer tries to remove hell terrain
+			treesb = False #terraformer tries to Create Trees
 
 #CIV SPECIFICS
 #			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-#				smokeb = false
+#				smokeb = False
 #			if iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-#				snowb = false
+#				snowb = False
 #			if (iCiv == gc.getInfoTypeForString('CIVILIZATION_DOVIELLO') or iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS')):
-#				tundrab = false
+#				tundrab = False
 #			if iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-#				hellterrb = false
+#				hellterrb = False
 
 #UNIT SPECIFIC
 			if (pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT') or pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LIFE1'))):
 				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-					hellterrb = true #terraformer tries to remove hell terrain
+					hellterrb = True #terraformer tries to remove hell terrain
 
 			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
-				treesb = true #terraformer tries to Create Trees
-				treesimpb = false
+				treesb = True #terraformer tries to Create Trees
+				treesimpb = False
 				if (iCiv == gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR') or iCiv == gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR')):
-					treesimpb = true
+					treesimpb = True
 				if ((treesimpb == False) and (pPlayer.getStateReligion() != gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'))):
 					if not pPlayer.isHuman():
 						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
 						return 0
-			
+
 			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1')):
-				smokeb = true
-				desertb = true
+				smokeb = True
+				desertb = True
 
 			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
-				tundrab = true
-				marshb = true
+				tundrab = True
+				marshb = True
 				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-					snowb = true
+					snowb = True
 
 			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_NATURE3')):
-				desertb = true
-				plainsb = true
-				tundrab = true
-				marshb = true
+				desertb = True
+				plainsb = True
+				tundrab = True
+				marshb = True
 				if not iCiv == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-					snowb = true
+					snowb = True
 
 #TERRAFORMING CURRENT PLOT
 			if pPlot.getOwner() == pUnit.getOwner():
 				if (desertb and	pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
-					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
-							
+
 				if smokeb:
 					if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
-						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),false):
+						if pUnit.canCast(gc.getInfoTypeForString('SPELL_SPRING'),False):
 							pUnit.cast(gc.getInfoTypeForString('SPELL_SPRING'))
 
 				if (snowb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
 				if (tundrab and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
 				if (plainsb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
 				if (marshb and pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH')):
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SCORCH'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SCORCH'))
-					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),false):
+					elif pUnit.canCast(gc.getInfoTypeForString('SPELL_VITALIZE'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_VITALIZE'))
 
 				if hellterrb:
-					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SANCTIFY'),false):
+					if pUnit.canCast(gc.getInfoTypeForString('SPELL_SANCTIFY'),False):
 						pUnit.cast(gc.getInfoTypeForString('SPELL_SANCTIFY'))
 
 				if treesb:
 					if pPlot.getFeatureType() == -1:
-						if pUnit.canCast(gc.getInfoTypeForString('SPELL_BLOOM'),false):
+						if pUnit.canCast(gc.getInfoTypeForString('SPELL_BLOOM'),False):
 							if treesimpb or pPlot.getBonusType(-1) == -1:
 								pUnit.cast(gc.getInfoTypeForString('SPELL_BLOOM'))
 
 ## LOOK FOR WORK
 			if not pUnit.canMove():
 				return 2
-				
+
 			for isearch in range(1,searchdistance,1):
 				for iiX in range(iX-isearch, iX+isearch+1, 1):
 					for iiY in range(iY-isearch, iY+isearch+1, 1):
 						pPlot2 = CyMap().plot(iiX,iiY)
 						if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
 							if pPlot2.getOwner()==pUnit.getOwner() and pPlot2 != pUnit.plot():
-								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == True)):
 									if smokeb:
 										if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
 											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
@@ -1290,7 +1258,7 @@ class CvGameUtils:
 						pPlot2 = pCity.getCityIndexPlot(iI)
 						if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(pUnit.getOwner())):
 							if pPlot2.getOwner()==pUnit.getOwner():
-								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == true)):
+								if not (pPlot2.getImprovementType() != -1 and (gc.getImprovementInfo(pPlot2.getImprovementType()).isUnique() == True)):
 									if smokeb:
 										if (pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE')):
 											iCount=iCount+1
@@ -1316,10 +1284,10 @@ class CvGameUtils:
 													if (pPlot2.getImprovementType() == -1 or treesimpb):
 														iCount=iCount+1
 
-					if (iCount>iBestCount):
+					if iCount > iBestCount:
 						pBestCity=pCity
 						iBestCount=iCount
-			if (pBestCity!=0):
+			if pBestCity!=0:
 				pCPlot = pBestCity.plot()
 				CX = pCPlot.getX()
 				CY = pCPlot.getY()
@@ -1380,12 +1348,10 @@ class CvGameUtils:
 						pPlot2 = CyMap().plot(iiX,iiY)
 						if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(iPlayer)):
 							if pPlot2.getOwner() == iPlayer:
-
 								if pPlot2.getBonusType(-1) != -1:
 									iBonus = pPlot2.getBonusType(TeamTypes.NO_TEAM)
 									if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
 										bDispel = True
-
 										if pPlayer.getArcaneTowerVictoryFlag() == 0:
 											if CyGame().getSorenRandNum(50, "Don't have to Dispel all the Time"):
 												bDispel = False
@@ -1455,17 +1421,17 @@ class CvGameUtils:
 												return 1
 
 #Dispel more if we seek Tower Victory Condition
-			if pPlayer.getArcaneTowerVictoryFlag()>0:
+			if pPlayer.getArcaneTowerVictoryFlag() > 0:
 				iBestCount=0
 				pBestCity=0
 				for icity in range(pPlayer.getNumCities()):
 					pCity = pPlayer.getCity(icity)
 					if not pCity.isNone():
-						iCount=0
+						iCount = 0
 						for iI in range(1, 21):
 							pPlot2 = pCity.getCityIndexPlot(iI)
 							if not (pPlot2.isNone() or pPlot2.isImpassable() or pPlot2.isVisibleEnemyUnit(iPlayer)):
-								if pPlot2.getOwner()==iPlayer:
+								if pPlot2.getOwner() == iPlayer:
 									if pPlot2.getBonusType(-1) != -1:
 										iBonus = pPlot2.getBonusType(TeamTypes.NO_TEAM)
 										if gc.getBonusInfo(iBonus).getBonusClassType() == gc.getInfoTypeForString('BONUSCLASS_MANA'):
