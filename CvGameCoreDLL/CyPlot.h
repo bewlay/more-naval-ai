@@ -55,7 +55,10 @@ public:
 	CyPlot* getNearestLandPlot();
 	int seeThroughLevel();
 	bool canHaveBonus(int /*BonusTypes*/ eBonus, bool bIgnoreLatitude);
-	bool canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//	bool canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential);
+	bool canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*PlayerTypes*/ ePlayer, bool bPotential);
+//<<<<Unofficial Bug Fix: End Modify
 	bool canBuild(int /*BuildTypes*/ eBuild, int /*PlayerTypes*/ ePlayer, bool bTestVisible);
 	int getBuildTime(int /*BuildTypes*/ eBuild);
 	int getBuildTurnsLeft(int /*BuildTypes*/ eBuild, int iNowExtra, int iThenExtra);
@@ -205,9 +208,16 @@ public:
 	int getReconCount();
 	int getRiverCrossingCount();
 	int getYield(YieldTypes eIndex);
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+/*
 	int calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature = false);
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam);
 	int calculateTotalBestNatureYield(TeamTypes eTeam);
+*/
+	int calculateNatureYield(YieldTypes eIndex, PlayerTypes ePlayer, bool bIgnoreFeature = false);
+	int calculateBestNatureYield(YieldTypes eIndex, PlayerTypes ePlayer);
+	int calculateTotalBestNatureYield(PlayerTypes ePlayer);
+//<<<<Unofficial Bug Fix: End Modify
 	int calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield, int /*PlayerTypes*/ ePlayer, bool bOptimal);
 	int calculateYield(YieldTypes eIndex, bool bDisplay);
 	bool hasYield();

@@ -228,7 +228,10 @@ int CvArea::calculateTotalBestNatureYield() const
 
 		if (pLoopPlot->getArea() == getID())
 		{
-			iCount += pLoopPlot->calculateTotalBestNatureYield(NO_TEAM);
+//>>>>Better AI: Modified by Denev 2010/05/03
+//			iCount += pLoopPlot->calculateTotalBestNatureYield(NO_TEAM);
+			iCount += pLoopPlot->calculateTotalBestNatureYield(NO_PLAYER);
+//<<<<Better AI: End Modify
 		}
 	}
 

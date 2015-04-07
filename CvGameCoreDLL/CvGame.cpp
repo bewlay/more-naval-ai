@@ -1809,17 +1809,23 @@ void CvGame::normalizeAddFoodBonuses()
 									}
 								}
 							}
-							else if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) >= 2)
-						    {
-						        iGoodNatureTileCount++;
-						    }
+//>>>>Better AI: Modified by Denev 2010/05/03
+//							else if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) >= 2)
+							else if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, (PlayerTypes)iI) >= 2)
+//<<<<Better AI: End Modify
+							{
+								iGoodNatureTileCount++;
+							}
 						}
 						else
 						{
-                            if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) >= 3)
-						    {
-						        iGoodNatureTileCount++;
-						    }
+//>>>>Better AI: Modified by Denev 2010/05/03
+//							if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) >= 3)
+							if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, (PlayerTypes)iI) >= 3)
+//<<<<Better AI: End Modify
+							{
+								iGoodNatureTileCount++;
+							}
 						}
 					}
 				}
@@ -1916,8 +1922,14 @@ void CvGame::normalizeAddGoodTerrain()
 					{
 						if (pLoopPlot != pStartingPlot)
 						{
+//>>>>Better AI: Modified by Denev 2010/05/03
+/*
 							if ((pLoopPlot->calculateNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) >= GC.getFOOD_CONSUMPTION_PER_POPULATION()) &&
 								  (pLoopPlot->calculateNatureYield(YIELD_PRODUCTION, GET_PLAYER((PlayerTypes)iI).getTeam()) > 0))
+*/
+							if ((pLoopPlot->calculateNatureYield(YIELD_FOOD, (PlayerTypes)iI) >= GC.getFOOD_CONSUMPTION_PER_POPULATION()) &&
+								  (pLoopPlot->calculateNatureYield(YIELD_PRODUCTION, (PlayerTypes)iI) > 0))
+//<<<<Better AI: End Modify
 							{
 								iGoodPlot++;
 							}
@@ -1949,7 +1961,10 @@ void CvGame::normalizeAddGoodTerrain()
 									{
 										bChanged = false;
 
-										if (pLoopPlot->calculateNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) < GC.getFOOD_CONSUMPTION_PER_POPULATION())
+//>>>>Better AI: Modified by Denev 2010/05/03
+//										if (pLoopPlot->calculateNatureYield(YIELD_FOOD, GET_PLAYER((PlayerTypes)iI).getTeam()) < GC.getFOOD_CONSUMPTION_PER_POPULATION())
+										if (pLoopPlot->calculateNatureYield(YIELD_FOOD, (PlayerTypes)iI) < GC.getFOOD_CONSUMPTION_PER_POPULATION())
+//<<<<Better AI: End Modify
 										{
 											for (iK = 0; iK < GC.getNumTerrainInfos(); iK++)
 											{
@@ -1975,7 +1990,10 @@ void CvGame::normalizeAddGoodTerrain()
 											}
 										}
 
-										if (pLoopPlot->calculateNatureYield(YIELD_PRODUCTION, GET_PLAYER((PlayerTypes)iI).getTeam()) == 0)
+//>>>>Better AI: Modified by Denev 2010/05/03
+//										if (pLoopPlot->calculateNatureYield(YIELD_PRODUCTION, GET_PLAYER((PlayerTypes)iI).getTeam()) == 0)
+										if (pLoopPlot->calculateNatureYield(YIELD_PRODUCTION, (PlayerTypes)iI) == 0)
+//<<<<Better AI: End Modify
 										{
 											for (iK = 0; iK < GC.getNumFeatureInfos(); iK++)
 											{
@@ -4388,7 +4406,10 @@ void CvGame::initScoreCalculation()
 		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
 		if (!pPlot->isWater() || pPlot->isAdjacentToLand())
 		{
-			iMaxFood += pPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
+//>>>>Better AI: Modified by Denev 2010/05/03
+//			iMaxFood += pPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
+			iMaxFood += pPlot->calculateBestNatureYield(YIELD_FOOD, NO_PLAYER);
+//<<<<Better AI: End Modify
 		}
 	}
 	m_iMaxPopulation = getPopulationScore(iMaxFood / std::max(1, GC.getFOOD_CONSUMPTION_PER_POPULATION()));
@@ -6757,7 +6778,10 @@ void CvGame::doGlobalWarming()
 				}
 				else if (pPlot->getTerrainType() != eWarmingTerrain)
 				{
-					if (pPlot->calculateTotalBestNatureYield(NO_TEAM) > 1)
+//>>>>Better AI: Modified by Denev 2010/05/03
+//					if (pPlot->calculateTotalBestNatureYield(NO_TEAM) > 1)
+					if (pPlot->calculateTotalBestNatureYield(NO_PLAYER) > 1)
+//<<<<Better AI: End Modify
 					{
 						pPlot->setTerrainType(eWarmingTerrain);
 						bChanged = true;

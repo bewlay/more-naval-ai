@@ -8095,7 +8095,10 @@ int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovemen
 			// K-Mod note: these calculations currently do not take the 'financial' bonus into account.
 			// They probably should take that bonus into account. But it would be a bit messy to code and I don't want to do it right now.
 
-					int iCurYield = 2*(pPlot->calculateNatureYield(((YieldTypes)iJ), getTeam(), false));
+//>>>>Better AI: Modified by Denev 2010/05/03
+//					int iCurYield = 2*(pPlot->calculateNatureYield(((YieldTypes)iJ), getTeam(), false));
+					int iCurYield = 2*(pPlot->calculateNatureYield(((YieldTypes)iJ), getOwnerINLINE(), false));
+//<<<<Better AI: End Modify
 
 			if( eCurImprovement != NO_IMPROVEMENT )
 			{

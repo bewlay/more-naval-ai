@@ -57,7 +57,10 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("seeFromLevel", &CyPlot::seeFromLevel, "int (int eTeam)")
 		.def("seeThroughLevel", &CyPlot::seeThroughLevel, "int ()")
 		.def("canHaveBonus", &CyPlot::canHaveBonus, "bool (int /*BonusTypes*/ eBonus, bool bIgnoreLatitude)")
-		.def("canHaveImprovement", &CyPlot::canHaveImprovement, "bool (int (ImprovementTypes) eImprovement, int (TeamTypes) eTeam, bool bPotential)")
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//		.def("canHaveImprovement", &CyPlot::canHaveImprovement, "bool (int (ImprovementTypes) eImprovement, int (TeamTypes) eTeam, bool bPotential)")
+		.def("canHaveImprovement", &CyPlot::canHaveImprovement, "bool (int (ImprovementTypes) eImprovement, int (PlayerTypes) ePlayer, bool bPotential)")
+//<<<<Unofficial Bug Fix: End Modify
 		.def("canBuild", &CyPlot::canBuild, "bool (int (BuildTypes) eBuild, int (PlayerTypes) ePlayer, bool bTestVisible)")
 		.def("getBuildTime", &CyPlot::getBuildTime, "int (int /*BuildTypes*/ eBuild)")
 		.def("getBuildTurnsLeft", &CyPlot::getBuildTurnsLeft, "int (int (BuildTypes) eBuild, int iNowExtra, int iThenExtra)")
@@ -206,9 +209,16 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("getReconCount", &CyPlot::getReconCount, "int ()")
 		.def("getRiverCrossingCount", &CyPlot::getRiverCrossingCount, "int ()")
 		.def("getYield", &CyPlot::getYield, "int (YieldTypes eIndex)")
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+/*
 		.def("calculateNatureYield", &CyPlot::calculateNatureYield, "int (int (YieldTypes) eYield, int (TeamTypes) eTeam, bool bIgnoreFeature)")
 		.def("calculateBestNatureYield", &CyPlot::calculateBestNatureYield, "int (int (YieldTypes) eYield, int (TeamTypes) eTeam)")
 		.def("calculateTotalBestNatureYield", &CyPlot::calculateTotalBestNatureYield, "int (int (TeamTypes) eTeam)")
+*/
+		.def("calculateNatureYield", &CyPlot::calculateNatureYield, "int (int (YieldTypes) eYield, int (PlayerTypes) ePlayer, bool bIgnoreFeature)")
+		.def("calculateBestNatureYield", &CyPlot::calculateBestNatureYield, "int (int (YieldTypes) eYield, int (PlayerTypes) ePlayer)")
+		.def("calculateTotalBestNatureYield", &CyPlot::calculateTotalBestNatureYield, "int (int (PlayerTypes) ePlayer)")
+//<<<<Unofficial Bug Fix: End Modify
 		.def("calculateImprovementYieldChange", &CyPlot::calculateImprovementYieldChange, "int (int (ImprovementTypes) eImprovement, int (YieldTypes) eYield, int (PlayerTypes) ePlayer, bool bOptimal)")
 		.def("calculateYield", &CyPlot::calculateYield, "int (YieldTypes eYield, bool bDisplay)")
 		.def("hasYield", &CyPlot::hasYield, "bool ()")

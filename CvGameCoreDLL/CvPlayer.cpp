@@ -18865,7 +18865,10 @@ int CvPlayer::getAdvancedStartImprovementCost(ImprovementTypes eImprovement, boo
 		if (bAdd)
 		{
 			// Valid Plot
-			if (!pPlot->canHaveImprovement(eImprovement, getTeam(), false))
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//			if (!pPlot->canHaveImprovement(eImprovement, getTeam(), false))
+			if (!pPlot->canHaveImprovement(eImprovement, getID(), false))
+//<<<<Unofficial Bug Fix: End Modify
 			{
 				return -1;
 			}
@@ -27745,7 +27748,7 @@ int CvPlayer::countNumAvailablePlotsForImprovement(ImprovementTypes eImprovement
 
 		if (pLoopPlot->getOwnerINLINE() == getID())
 		{
-			if (pLoopPlot->canHaveImprovement(eImprovement, getTeam()))
+			if (pLoopPlot->canHaveImprovement(eImprovement, getID()))
 			{
 				iCount++;
 			}

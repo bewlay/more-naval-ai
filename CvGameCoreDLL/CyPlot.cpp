@@ -163,10 +163,16 @@ bool CyPlot::canHaveBonus(int /*BonusTypes*/ eBonus, bool bIgnoreLatitude)
 	return m_pPlot ? m_pPlot->canHaveBonus((BonusTypes)eBonus, bIgnoreLatitude) : false;
 }
 
-bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential)
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*TeamTypes*/ eTeam, bool bPotential)
+//{
+//	return m_pPlot ? m_pPlot->canHaveImprovement(((ImprovementTypes)eImprovement), ((TeamTypes)eTeam), bPotential) : false;
+//}
+bool CyPlot::canHaveImprovement(int /* ImprovementTypes */ eImprovement, int /*PlayerTypes*/ ePlayer, bool bPotential)
 {
-	return m_pPlot ? m_pPlot->canHaveImprovement(((ImprovementTypes)eImprovement), ((TeamTypes)eTeam), bPotential) : false;
+	return m_pPlot ? m_pPlot->canHaveImprovement((ImprovementTypes)eImprovement, (PlayerTypes)ePlayer, bPotential) : false;
 }
+//<<<<Unofficial Bug Fix: End Modify
 
 bool CyPlot::canBuild(int /*BuildTypes*/ eBuild, int /*PlayerTypes*/ ePlayer, bool bTestVisible)
 {
@@ -835,6 +841,8 @@ int CyPlot::getYield(YieldTypes eIndex)
 	return m_pPlot ? m_pPlot->getYield(eIndex) : -1;
 }
 
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+/*
 int CyPlot::calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature)
 {
 	return m_pPlot ? m_pPlot->calculateNatureYield(eIndex, eTeam, bIgnoreFeature) : -1;
@@ -849,6 +857,22 @@ int CyPlot::calculateTotalBestNatureYield(TeamTypes eTeam)
 {
 	return m_pPlot ? m_pPlot->calculateTotalBestNatureYield(eTeam) : -1;
 }
+*/
+int CyPlot::calculateNatureYield(YieldTypes eIndex, PlayerTypes ePlayer, bool bIgnoreFeature)
+{
+	return m_pPlot ? m_pPlot->calculateNatureYield(eIndex, ePlayer, bIgnoreFeature) : -1;
+}
+
+int CyPlot::calculateBestNatureYield(YieldTypes eIndex, PlayerTypes ePlayer)
+{
+	return m_pPlot ? m_pPlot->calculateBestNatureYield(eIndex, ePlayer) : -1;
+}
+
+int CyPlot::calculateTotalBestNatureYield(PlayerTypes ePlayer)
+{
+	return m_pPlot ? m_pPlot->calculateTotalBestNatureYield(ePlayer) : -1;
+}
+//<<<<Unofficial Bug Fix: End Modify
 
 int CyPlot::calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield, int /*PlayerTypes*/ ePlayer, bool bOptimal)
 {

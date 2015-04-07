@@ -181,7 +181,10 @@ bool CvMapGenerator::canPlaceGoodyAt(ImprovementTypes eImprovement, int iX, int 
 
 	pPlot = GC.getMapINLINE().plotINLINE(iX, iY);
 
-	if (!(pPlot->canHaveImprovement(eImprovement, NO_TEAM)))
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//	if (!(pPlot->canHaveImprovement(eImprovement, NO_TEAM)))
+	if (!(pPlot->canHaveImprovement(eImprovement, NO_PLAYER)))
+//<<<<Unofficial Bug Fix: End Modify
 	{
 		return false;
 	}
@@ -1270,7 +1273,10 @@ void CvMapGenerator::addImprovements()
                 {
                     for (int iJ = 0; iJ < GC.getNumImprovementInfos(); iJ++)
                     {
-						if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_TEAM))
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//						if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_TEAM))
+						if (pPlot->canHaveImprovement((ImprovementTypes)iJ, NO_PLAYER))
+//<<<<Unofficial Bug Fix: End Modify
 						{
 							int iImprovementChance = GC.getGameINLINE().getSorenRandNum(10000, "Spawn Improvement");
 							if (iImprovementChance < GC.getImprovementInfo((ImprovementTypes)iJ).getAppearanceProbability())

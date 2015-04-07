@@ -1845,7 +1845,10 @@ int CvCity::countNumImprovedPlots(ImprovementTypes eImprovement, bool bPotential
 				if (eImprovement != NO_IMPROVEMENT)
 				{
 					if (pLoopPlot->getImprovementType() == eImprovement ||
-						(bPotential && pLoopPlot->canHaveImprovement(eImprovement, getTeam())))
+//>>>>Unofficial Bug Fix: Modified by Denev 2010/05/04
+//						(bPotential && pLoopPlot->canHaveImprovement(eImprovement, getTeam())))
+						(bPotential && pLoopPlot->canHaveImprovement(eImprovement, getOwnerINLINE())))
+//<<<<Unofficial Bug Fix: End Modify
 					{
 						++iCount;
 					}
