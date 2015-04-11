@@ -26593,6 +26593,7 @@ void CvUnitAI::AI_chooseGroupflag()
             return;
             break;
 		case UNITAI_ATTACK_CITY:
+		case UNITAI_COUNTER:
 			AI_setGroupflag(GROUPFLAG_CONQUEST);
 			return;
 			break;
@@ -26620,7 +26621,10 @@ void CvUnitAI::AI_chooseGroupflag()
         }
     }
 
-	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) || (bombardRate() > 0) || bWarPlan || isRangedCollateral())
+	if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0) 
+		|| bWarPlan 
+		|| (bombardRate() > 0) 
+		|| isRangedCollateral())
 	{
 		AI_setGroupflag(GROUPFLAG_CONQUEST);
 
