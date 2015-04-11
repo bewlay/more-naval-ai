@@ -1197,7 +1197,7 @@ void CvCityAI::AI_chooseProduction()
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = ((kPlayer.AI_getMojoFactor() * 2) + iNumCities);
+	int iNeededMages = ((kPlayer.AI_getMojoFactor() / 2) + iNumCities);
 // End Tholal AI
 
     int iMaxSettlers = 0;
@@ -1938,6 +1938,10 @@ void CvCityAI::AI_chooseProduction()
 	{
 		int iWonderTime = ((kPlayer.AI_getNumRealCities() * 2) + 1) * (bSuperCity ? 4 : 1);
 		if( gCityLogLevel > 3 ) logBBAI("checking for wonder %d", iWonderTime);
+		if (bAtWar)
+		{
+			iWonderTime /= 2;
+		}
 		if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose QUICK WONDER", getName().GetCString());
@@ -2539,7 +2543,10 @@ void CvCityAI::AI_chooseProduction()
 				if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_MISSIONARY) > iNumCities)
 				{
 					if (AI_chooseUnit(UNITAI_MISSIONARY_SEA, 75))
-					return;
+					{
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_MISSIONARY_SEA (too many missionaries) ", getName().GetCString());
+						return;
+					}
 				}
 
 				if (AI_chooseUnit(eBestSpreadUnit, UNITAI_MISSIONARY))
@@ -3165,7 +3172,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= (bLandWar ? 0 : iMissionarySeaNeeded))
 			{
-				if (AI_chooseUnit(UNITAI_MISSIONARY_SEA,75))
+				if (AI_chooseUnit(UNITAI_MISSIONARY_SEA, 75))
 				{
 					if( gCityLogLevel >= 2 )
 					{
@@ -3465,7 +3472,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 	
-	if (bLandWar && !bDanger)
+	if (!bDanger)
 	{
 		if (iNumSettlers < iMaxSettlers)
 		{
