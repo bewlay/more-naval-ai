@@ -23998,8 +23998,19 @@ PlayerTypes CvPlayer::getPuppetPlayer() const
     return eNewPlayer;
 }
 
+/********************************************************************************/
+/* MinorPuppetLeaders	03/2015											lfgr	*/
+/********************************************************************************/
+/* old
 bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
 {
+*/
+bool CvPlayer::canMakePuppet( CvCity* pVassalCapital ) const
+{
+	PlayerTypes eFromPlayer = pVassalCapital->getOwnerINLINE();
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
 	// Puppet States are a type of Vassal
     if (GC.getGameINLINE().isOption(GAMEOPTION_NO_VASSAL_STATES))
     {
@@ -24042,12 +24053,31 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
     {
         return false;
     }
-
+	
+/********************************************************************************/
+/* MinorPuppetLeaders	03/2015											lfgr	*/
+/********************************************************************************/
+/* old
     CivLeaderArray aLeaders;
     if (!getPuppetLeaders(aLeaders))
     {
         return false;
     }
+*/
+
+	CyArgsList argsList;
+	argsList.add( this->getID() );
+	argsList.add( pVassalCapital->getOriginalOwner() );
+	argsList.add( pVassalCapital->getID() );
+	long lResult = 0;
+	gDLL->getPythonIFace()->callFunction( PYRevModule, "getPuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
+
+	if( (LeaderHeadTypes) (lResult % GC.getNumLeaderHeadInfos()) == NO_LEADER )
+		return false;
+		
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
 
     if (findPuppetPlayer(eFromPlayer) != NO_PLAYER)
     {
@@ -24084,70 +24114,7 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
     return true;
 }
 
-bool CvPlayer::getPuppetLeaders(CivLeaderArray& aLeaders) const
-{
-	aLeaders.clear();
-
-	for (int i = 0; i < GC.getNumCivilizationInfos(); ++i)
-	{
-		bool bValid = true;
-
-		if (getCivilizationType() == i)
-		{
-			bValid = false;
-		}
-
-		if (bValid)
-		{
-			if (!GC.getCivilizationInfo((CivilizationTypes)i).isPlayable() || !GC.getCivilizationInfo((CivilizationTypes)i).isAIPlayable())
-			{
-				bValid = false;
-			}
-		}
-
-		if (bValid)
-		{
-			for (int j = 0; j < MAX_CIV_PLAYERS; ++j)
-			{
-				if (getID() != j && GET_PLAYER((PlayerTypes)j).isEverAlive() && GET_PLAYER((PlayerTypes)j).getCivilizationType() == i)
-				{
-					bValid = false;
-					break;
-				}
-			}
-		}
-
-		if (bValid)
-		{
-			for (int j = 0; j < GC.getNumLeaderHeadInfos(); ++j)
-			{
-				bool bLeaderValid = true;
-				if (!GC.getCivilizationInfo((CivilizationTypes)i).isLeaders(j) && !GC.getGameINLINE().isOption(GAMEOPTION_LEAD_ANY_CIV))
-				{
-					bLeaderValid = false;
-				}
-
-				if (bLeaderValid)
-				{
-					for (int k = 0; k < MAX_CIV_PLAYERS; ++k)
-					{
-						if (GET_PLAYER((PlayerTypes)k).isEverAlive() && GET_PLAYER((PlayerTypes)k).getPersonalityType() == j)
-						{
-							bLeaderValid = false;
-						}
-					}
-				}
-
-				if (bLeaderValid)
-				{
-					aLeaders.push_back(std::make_pair((CivilizationTypes)i, (LeaderHeadTypes)j));
-				}
-			}
-		}
-	}
-
-	return (aLeaders.size() > 0);
-}
+// lfgr MinorPuppetLeaders 03/2015: removed getPuppetLeaders(). Now handled in python.
 
 bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 {
@@ -24155,7 +24122,16 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 
     int iI;
 
+/********************************************************************************/
+/* MinorPuppetLeaders	03/2015											lfgr	*/
+/********************************************************************************/
+/* old
     if (!canMakePuppet(eSplitPlayer))
+*/
+    if ( !canMakePuppet( pVassalCapital ) )
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
     {
         return false;
     }

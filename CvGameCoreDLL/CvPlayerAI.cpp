@@ -2044,7 +2044,16 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 	{
 		if ((iRazeValue < 150))
 		{
+		/********************************************************************************/
+		/* MinorPuppetLeaders	03/2015											lfgr	*/
+		/********************************************************************************/
+		/* old
 			if (canMakePuppet(pCity->getPreviousOwner()))
+		*/
+			if (canMakePuppet(pCity))
+		/********************************************************************************/
+		/* MinorPuppetLeaders	End												lfgr	*/
+		/********************************************************************************/
 			{
 				logBBAI("    ...decides to to create Puppet State in %S!!!", pCity->getName().GetCString() );
 				makePuppet(pCity->getPreviousOwner(), pCity);

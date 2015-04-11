@@ -1522,9 +1522,20 @@ bool CvDLLButtonPopup::launchRazeCityPopup(CvPopup* pPopup, CvPopupInfo &info)
 	bool bGift = ((eReceivingPlayer != NO_PLAYER)
 		&& (eReceivingPlayer != player.getID())
 		&& ((player.getTeam() == GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(player.getTeam()).isOpenBorders(GET_PLAYER(eReceivingPlayer).getTeam()) || GET_TEAM(GET_PLAYER(eReceivingPlayer).getTeam()).isVassal(player.getTeam())));
+/********************************************************************************/
+/* MinorPuppetLeaders	03/2015											lfgr	*/
+/********************************************************************************/
+/* old
 	bool bPuppet = (player.canMakePuppet(pNewCity->getPreviousOwner()) && 
 		!pNewCity->canJoinPuppetState(player.getID()) && 
 		!GET_PLAYER(pNewCity->getPreviousOwner()).isBarbarian());
+*/
+	bool bPuppet = (player.canMakePuppet(pNewCity) && 
+		!pNewCity->canJoinPuppetState(player.getID()) && 
+		!GET_PLAYER(pNewCity->getPreviousOwner()).isBarbarian());
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
 	bool bPuppetGift = false;
 
 	if (bPuppet)

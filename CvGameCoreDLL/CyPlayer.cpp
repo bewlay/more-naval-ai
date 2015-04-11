@@ -2653,7 +2653,11 @@ bool CyPlayer::makePuppet(int /*PlayerTypes*/ eSplitPlayer, CvCity* pVassalCapit
     return false;
 }
 
-bool CyPlayer::canMakePuppet(int /*PlayerTypes*/ eFromPlayer) const
+/********************************************************************************/
+/* MinorPuppetLeaders	03/2015											lfgr	*/
+/********************************************************************************/
+/* old
+bool CyPlayer::canMakePuppet(int eFromPlayer) const
 {
     if (m_pPlayer)
     {
@@ -2662,6 +2666,19 @@ bool CyPlayer::canMakePuppet(int /*PlayerTypes*/ eFromPlayer) const
 
     return false;
 }
+*/
+bool CyPlayer::canMakePuppet( CvCity* pVassalCapital ) const
+{
+    if (m_pPlayer)
+    {
+        return m_pPlayer->canMakePuppet( pVassalCapital );
+    }
+
+    return false;
+}
+/********************************************************************************/
+/* MinorPuppetLeaders	End												lfgr	*/
+/********************************************************************************/
 
 bool CyPlayer::isPuppetState() const
 {

@@ -70,7 +70,16 @@ void CyPlayerPythonInterface2(python::class_<CyPlayer>& x)
 
 		// MNAI - Puppet States
 		.def("makePuppet", &CyPlayer::makePuppet, "bool (int /*PlayerTypes*/ eSplitPlayer, int (CyCity* pVassalCapital)")
-		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int /*PlayerTypes*/ eFromPlayer)")
+	/********************************************************************************/
+	/* MinorPuppetLeaders	03/2015											lfgr	*/
+	/********************************************************************************/
+	/* old
+		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (int eFromPlayer)")
+	*/
+		.def("canMakePuppet", &CyPlayer::canMakePuppet, "bool (CvCity* pVassalCapital)")
+	/********************************************************************************/
+	/* MinorPuppetLeaders	End												lfgr	*/
+	/********************************************************************************/
 		.def("isPuppetState", &CyPlayer::isPuppetState, "bool ()")
 		// MNAI - End Puppet States
 		.def("assimilatePlayer", &CyPlayer::assimilatePlayer, "bool ( int iPlayer ) - acquire iPlayer's units and cities") // MNAI - Revolutions
