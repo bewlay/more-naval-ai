@@ -2048,6 +2048,8 @@ void CvGame::normalizeAddExtras()
 			if (pStartingPlot != NULL)
 			{
 				int iValue = GET_PLAYER((PlayerTypes)iI).AI_foundValue(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE(), -1, true);
+				//if (iValue < 0) // to account for debugging codes in the return values for AI_foundValue
+				//	iValue =0;
 				iTotalValue += iValue;
                 iPlayerCount++;
 
