@@ -139,6 +139,19 @@ bool CvWString::appendfmtv(CvWString& out, const wchar * fmt, va_list args)
 	return (len >= 0);
 }
 
+// Small hash intended for version checking only.
+unsigned short CvWStringBuffer::getShortHash() const
+{
+	unsigned short shortHash = 0;
+	for (int iI = 0; iI < m_iLength; iI++)
+	{
+		// Hashes shouldn't care about overflow.
+		shortHash = shortHash * 101 + m_pBuffer[iI];
+	}
+
+	return shortHash;
+}
+
 void CvWStringBuffer::_grow(int newCapacity)
 {
 	m_iCapacity = 2 * newCapacity; //grow by %100

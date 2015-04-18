@@ -40,6 +40,9 @@ def writeLog():
 	pFile.write(SEPERATOR)
 	pFile.write(SEPERATOR)
 
+	pFile.write(CvUtil.convertToStr(CyTranslator().getText("TXT_KEY_VERSION", ())))
+	pFile.write("\n\n")
+
 	pFile.write("  GLOBALS  \n")
 
 	pFile.write(SEPERATOR)
