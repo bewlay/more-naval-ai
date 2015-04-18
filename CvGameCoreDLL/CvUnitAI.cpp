@@ -2019,6 +2019,7 @@ void CvUnitAI::AI_settleMove()
 
 	if (iDanger > 0)
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("     ... in Danger Zone");
 		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroup()->getNumUnits()))
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
@@ -2042,6 +2043,7 @@ void CvUnitAI::AI_settleMove()
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
+				if( gUnitLogLevel > 3 ) logBBAI("    ...not enough defenders");
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
@@ -2051,9 +2053,14 @@ void CvUnitAI::AI_settleMove()
 	int iAreaBestFoundValue = 0;
 	int iOtherBestFoundValue = 0;
 
+	if( gUnitLogLevel > 3 ) logBBAI("    ...number of city sites: %d", kOwner.AI_getNumCitySites());
+	if( gUnitLogLevel > 3 ) logBBAI("    ...min found value: %d", kOwner.AI_getMinFoundValue());
+	
+
 	for (int iI = 0; iI < kOwner.AI_getNumCitySites(); iI++)
 	{
 		CvPlot* pCitySitePlot = kOwner.AI_getCitySite(iI);
+		if( gUnitLogLevel > 3 ) logBBAI("    ...checking site at %d, %d", pCitySitePlot->getX(), pCitySitePlot->getY());
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       01/10/09                                jdog5000      */
 /*                                                                                              */
@@ -2081,6 +2088,7 @@ void CvUnitAI::AI_settleMove()
 					return;
 				}
 			}
+			if( gUnitLogLevel > 3 ) logBBAI("   ...found value: %d", pCitySitePlot->getFoundValue(getOwnerINLINE()));
 			iAreaBestFoundValue = std::max(iAreaBestFoundValue, pCitySitePlot->getFoundValue(getOwnerINLINE()));
 
 		}
@@ -2090,6 +2098,7 @@ void CvUnitAI::AI_settleMove()
 		}
 	}
 
+	if( gUnitLogLevel > 3 ) logBBAI("    ...iAreaBestFoundValue: %d", iAreaBestFoundValue);
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/16/09                                jdog5000      */
 /*                                                                                              */

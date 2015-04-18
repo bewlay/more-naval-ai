@@ -2533,6 +2533,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (!canFound(iX, iY))
 	{
+		//return -100;
 		return 0;
 	}
 	
@@ -2541,6 +2542,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		if (GC.getBonusInfo((BonusTypes)pPlot->getBonusType()).isMana())
 		{
+			//return -101;
 			return 0;
 		}
     }
@@ -2557,6 +2559,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		if (!bIsCoastal && iNumAreaCities == 0)
 		{
+			//return -102;
 			return 0;
 		}
 	}
@@ -2633,6 +2636,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				{
 					if (pLoopPlot->plotCheck(PUF_isOtherTeam, getID()) != NULL)
 					{
+						//return -103;
 						return 0;
 					}
 				}
@@ -2644,6 +2648,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		if (pPlot->isGoody())
 		{
+			//return -104;
 			return 0;
 		}
 
@@ -2654,6 +2659,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			// dont start players near the map edge
 			if (pLoopPlot == NULL)
 			{
+				//return -105;
 				return 0;
 			}
 		}
@@ -2673,6 +2679,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (iOwnedTiles > (iNumCityPlots / 3))
 	{
+		//return -106;
 		return 0;
 	}
 
@@ -2848,6 +2855,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			if (!bHasGoodBonus)
 			{
+				//return -99;
 				return 0;
 			}
 		}
@@ -3383,14 +3391,17 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
     }
 
 	iValue += std::max(0, iResourceValue);
+	//logBBAI ("plot %d, %d (Resource Value: %d - Taken Tiles: %d - Teammate Take: %d)", iX, iY, iResourceValue, iTakenTiles, iTeammateTakenTiles);
 
 	if ((iTakenTiles >= (iNumCityPlots / (bSprawlingExpand ? 4 : 3))) && (iResourceValue < 250))
 	{
+		//return -98;
 		return 0;
 	}
 
 	if (iTeammateTakenTiles > (iNumCityPlots / 3))
 	{
+		//return -97;
 		return 0;
 	}
 

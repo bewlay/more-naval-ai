@@ -8094,7 +8094,7 @@ bool CvPlot::isBestAdjacentFound(PlayerTypes eIndex)
 
 	int iPlotValue = GET_PLAYER(eIndex).AI_foundValue(getX_INLINE(), getY_INLINE());
 
-	if (iPlotValue == 0)
+	if (iPlotValue <= 0)
 	{
 		return false;
 	}
