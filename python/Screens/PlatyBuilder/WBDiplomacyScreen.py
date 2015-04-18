@@ -431,6 +431,8 @@ class WBDiplomacyScreen:
 
 	def editWarStatus(self, iTeam, bCancel):
 		if not pSelectedTeam.isHasMet(iTeam): return
+		if gc.getTeam(iTeam).isVassal(iSelectedTeam): return
+		if pSelectedTeam.isVassal(iTeam): return
 		if bCancel:
 			pSelectedTeam.makePeace(iTeam)
 		else:
@@ -534,7 +536,7 @@ class WBDiplomacyScreen:
 		if bTowardsPlayer:
 			pPlayer1 = pPlayer
 			iPlayer2 = iSelectedPlayer
-		if self.RelationshipStatus(pPlayer1.getTeam(), gc.getPlayer(iPlayer2).getTeam()) == 0: return
+		if self.RelationshipStatus(pPlayer1.getTeam(), gc.getPlayer(iPlayer2).getTeam()) == 1: return
 		iCount = 1
 		iNewAttitude = min(pPlayer1.AI_getAttitude(iPlayer2) + 1, AttitudeTypes.NUM_ATTITUDE_TYPES - 1)
 		if bRemove:

@@ -447,7 +447,7 @@ class CvGameUtils:
 					return 1
 		
 			## Illians - make sure we build our best projects
-			elif pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
+			if iCivType == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'), True, False, False):
 					iBadTileCount = 0
 					for iiX in range(pCity.getX()-1, pCity.getX()+2, 1):
@@ -753,7 +753,7 @@ class CvGameUtils:
 				elif iData2 == 8:
 					return CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 				elif iData2 == 9:
-					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() +  "\nPlaty Builder\nVersion: 4.13"
+					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() +  "\nPlaty Builder\nVersion: 4.13b"
 				elif iData2 == 10:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS",())
 				elif iData2 == 11:
