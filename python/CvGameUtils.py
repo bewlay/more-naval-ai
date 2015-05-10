@@ -448,17 +448,18 @@ class CvGameUtils:
 		
 			## Illians - make sure we build our best projects
 			if iCivType == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-				if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'), True, False, False):
-					iBadTileCount = 0
-					for iiX in range(pCity.getX()-1, pCity.getX()+2, 1):
-						for iiY in range(pCity.getY()-1, pCity.getY()+2, 1):
-							pNearbyPlot = CyMap().plot(iiX,iiY)
-							if (not pNearbyPlot.isWater()):
-								if (pNearbyPlot.getYield(YieldTypes.YIELD_FOOD) < 2):
-									iBadTileCount += 1
-					if (iBadTileCount >= 4):
-						pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'),-1, False, False, False, False)
-						return 1
+				if pCity.getPopulation() > 3:
+					if pCity.canConstruct(gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'), True, False, False):
+						iBadTileCount = 0
+						for iiX in range(pCity.getX()-1, pCity.getX()+2, 1):
+							for iiY in range(pCity.getY()-1, pCity.getY()+2, 1):
+								pNearbyPlot = CyMap().plot(iiX,iiY)
+								if (not pNearbyPlot.isWater()):
+									if (pNearbyPlot.getYield(YieldTypes.YIELD_FOOD) < 2):
+										iBadTileCount += 1
+						if (iBadTileCount >= 4):
+							pCity.pushOrder(OrderTypes.ORDER_CONSTRUCT,gc.getInfoTypeForString('BUILDING_TEMPLE_OF_THE_HAND'),-1, False, False, False, False)
+							return 1
 
 				if pCity.findYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 3:
 					if pCity.canCreate(gc.getInfoTypeForString('PROJECT_THE_WHITE_HAND'), True, True):
