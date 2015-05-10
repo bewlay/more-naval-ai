@@ -904,7 +904,7 @@ class Revolution :
 
 		# Spawn rev units outside city
 		newUnitList = list()
-		for i in range(0,iNumUnits) :
+		for i in range(0,(iNumUnits*2)) :
 			newUnitID = spawnableUnits[game.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
 			if newUnitID != -1:
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
@@ -6712,7 +6712,7 @@ class Revolution :
 			localFactor = min([localRevIdx+2,1.5*self.badLocalThreshold])
 			if( pRevPlayer.getCivilizationType() == RevData.getCityVal(pCity, 'RevolutionCiv') ) :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Repeat revolution, increasing enlistment")
-				effPop = 1.2*pow(pCity.getPopulation(),.8) + 1.0
+				effPop = 2.0*pow(pCity.getPopulation(),.8) + 1.0
 			else :
 				effPop = pow(pCity.getPopulation(),.8) + 1.0
 			popMod = (revIdx/(1.0*self.alwaysViolentThreshold))
@@ -6925,7 +6925,7 @@ class Revolution :
 
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Spawning %d units for city of size %d"%(iNumUnits,pCity.getPopulation()))
 
-				for i in range(0,iNumUnits) :
+				for i in range(0,(iNumUnits*2)) :
 					newUnitID = spawnableUnits[game.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
 					if newUnitID != -1:
 						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - In %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
@@ -7047,7 +7047,7 @@ class Revolution :
 
 				# Spawn rev units outside city
 				newUnitList = list()
-				for i in range(0,iNumUnits) :
+				for i in range(0,(iNumUnits*2)) :
 					newUnitID = spawnableUnits[game.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
 					if newUnitID != -1:
 						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Outside of %s, spawning %s"%(pCity.getName(),PyInfo.UnitInfo(newUnitID).getDescription()))
