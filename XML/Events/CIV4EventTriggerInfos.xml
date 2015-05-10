@@ -13323,7 +13323,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16172,7 +16172,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16271,7 +16271,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16370,7 +16370,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16469,7 +16469,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16568,7 +16568,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16667,7 +16667,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -16766,7 +16766,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -25551,7 +25551,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27060,7 +27060,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27161,7 +27161,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27260,7 +27260,7 @@
             <bRecurring>1</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27360,7 +27360,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27460,7 +27460,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27562,7 +27562,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27662,7 +27662,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27763,7 +27763,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27863,7 +27863,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -27964,7 +27964,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
@@ -28065,7 +28065,7 @@
             <bRecurring>0</bRecurring>
             <bTeam>0</bTeam>
             <bGlobal>0</bGlobal>
-            <bPickPlayer>1</bPickPlayer>
+            <bPickPlayer>0</bPickPlayer>
             <bOtherPlayerWar>0</bOtherPlayerWar>
             <bOtherPlayerHasReligion>0</bOtherPlayerHasReligion>
             <bOtherPlayerHasOtherReligion>0</bOtherPlayerHasOtherReligion>
