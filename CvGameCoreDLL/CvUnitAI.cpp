@@ -15508,7 +15508,7 @@ bool CvUnitAI::AI_hurry()
 
 	if ((pBestPlot != NULL) && (pBestHurryPlot != NULL))
 	{
-		int iProdRemaining =  pBestHurryPlot->getPlotCity()->getProductionNeeded();
+		int iProdRemaining =  (pBestHurryPlot->getPlotCity()->getProductionNeeded() - pBestHurryPlot->getPlotCity()->getProduction());
 		if (atPlot(pBestHurryPlot))
 		{
 			getGroup()->pushMission(MISSION_HURRY);
@@ -27304,6 +27304,14 @@ void CvUnitAI::AI_PatrolMove()
 		return;
 	}
 
+	if (!isHuman())
+	{
+		if (AI_exploreLair(6))
+		{
+			return;
+		}
+	}
+
 	if (!noDefensiveBonus())
 	{
 		if (AI_guardCity(false, false))
@@ -28007,6 +28015,11 @@ void CvUnitAI::AI_ConquestMove()
 			}
 		}
 
+		if (AI_leaveAttack(1, 70, 175))
+		{
+			return;
+		}
+
 		if( bIgnoreFaster )
 		{
 			// BBAI TODO: split out slow units ... will need to test to make sure this doesn't cause loops
@@ -28179,12 +28192,12 @@ void CvUnitAI::AI_ConquestMove()
             {
                 if (atPlot(pBestUnit->plot()))
                 {
-					if( gUnitLogLevel >= 3 )
-					{
-						logBBAI("       ...joining group on plot");
-					}
 					if (getGroup()->getNumUnits() == 1)
 					{
+						if( gUnitLogLevel >= 3 )
+						{
+							logBBAI("       ...joining group on plot");
+						}
 	                    joinGroup(pBestUnit->getGroup());
 		                return;
 					}
@@ -29124,7 +29137,7 @@ bool CvUnitAI::AI_Lokimove()
 
 								if (pLoopCity->getCulture(pLoopCity->getOwnerINLINE())==0)
 								{
-									iValue *= 20;
+									iValue *= 10;
 								}
 								
 								iValue /= iPathTurns;
