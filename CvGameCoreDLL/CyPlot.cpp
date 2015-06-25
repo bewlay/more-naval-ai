@@ -329,6 +329,13 @@ bool CyPlot::isRevealedGoody(int /*TeamTypes*/ eTeam)
 	return m_pPlot ? m_pPlot->isRevealedGoody((TeamTypes) eTeam) : false;
 }
 
+
+//bool CyPlot::isCity(bool bCheckImprovement, int /*TeamTypes*/ eForTeam)
+/*{
+	return m_pPlot ? m_pPlot->isCity(bCheckImprovement,(TeamTypes) eForTeam) : false;
+}
+*/
+
 bool CyPlot::isCity()
 {
 	return m_pPlot ? m_pPlot->isCity() : false;

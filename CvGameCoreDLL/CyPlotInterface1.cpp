@@ -97,6 +97,7 @@ void CyPlotPythonInterface1(python::class_<CyPlot>& x)
 		.def("isGoody", &CyPlot::isGoody, "bool ()")
 		.def("isRevealedGoody", &CyPlot::isRevealedGoody, "bool (int (TeamTypes) eTeam)")
 
+//		.def("isCity", &CyPlot::isCity, "bool (bool bCheckImprovement, int /*TeamTypes*/ eForTeam)")
 		.def("isCity", &CyPlot::isCity, "bool ()")
 		.def("isFriendlyCity", &CyPlot::isFriendlyCity, "bool (CyUnit* pUnit, bool bCheckImprovement)")
 		.def("isEnemyCity", &CyPlot::isEnemyCity, "bool (CyUnit* pUnit)")

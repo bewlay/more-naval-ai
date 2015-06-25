@@ -96,6 +96,7 @@ public:
 	bool isGoody();
 	bool isRevealedGoody(int /*TeamTypes*/ eTeam);
 
+//	bool isCity(bool bCheckImprovement = false, int /*TeamTypes*/ eForTeam = NO_TEAM);
 	bool isCity();
 	bool isFriendlyCity(CyUnit* pUnit, bool bCheckImprovement);
 	bool isEnemyCity(CyUnit* pUnit);

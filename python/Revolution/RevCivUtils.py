@@ -233,8 +233,8 @@ class RevCivRule :
 					liBadLeaders.append( iLeader )
 					continue
 		
-		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
-			liResult = liBadLeaders
+#		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
+#			liResult = liBadLeaders
 		
 		return liResult
 

@@ -5827,6 +5827,11 @@ bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 	CvTeam& kOurTeam = GET_TEAM(getTeam());
 	CvTeam& kTheirTeam = GET_TEAM(GET_PLAYER(eWhoTo).getTeam());
 
+	if (!canContact(eWhoTo))
+	{
+		return false;
+	}
+
 	if (kTheirTeam.getNumCities() == 0)
 	{
 		if (getTeam() != GET_PLAYER(eWhoTo).getTeam())

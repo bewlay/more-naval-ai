@@ -3542,7 +3542,7 @@ bool CvUnit::canMoveInto(const CvPlot* pPlot, bool bAttack, bool bDeclareWar, bo
 	{
 		if (!bAttack)
 		{
-			if (pPlot->isEnemyCity(*this))
+			if (pPlot->isEnemyCity(*this) && !isHiddenNationality())
 			{
 				return false;
 			}

@@ -3405,7 +3405,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		return 0;
 	}
 
-	iValue -= (iTakenTiles + iTeammateTakenTiles) * 50;
+	//iValue -= (iTakenTiles + iTeammateTakenTiles) * 50;
 	iValue += (iHealth / 5);
 
 	if (bIsCoastal)
@@ -3631,14 +3631,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	if (pNearestCity != NULL)
 	{
-		if ((getCapitalCity() != NULL) &&
-			getCapitalCity()->getArea() == pNearestCity->getArea())
+		if (isBarbarian())
 		{
-			if (isBarbarian())
-			{
-				//iValue -= (std::max(0, (8 - plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE()))) * 200);
-			}
-			else
+			iValue -= (std::max(0, (12 - plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE()))) * 200);
+		}
+		else
+		{
+			if ((getCapitalCity() != NULL) &&
+				getCapitalCity()->getArea() == pNearestCity->getArea())
 			{
 				int iDistance = plotDistance(iX, iY, pNearestCity->getX_INLINE(), pNearestCity->getY_INLINE());
 				int iNumCities = getNumCities();
@@ -17041,9 +17041,56 @@ int CvPlayerAI::AI_calculateGoldenAgeValue() const
         iValue += iTempValue;
     }
 
-    iValue *= getTotalPopulation();
-    iValue *= GC.getGameINLINE().goldenAgeLength();
+    iValue *= getTotalPopulation() + (AI_getNumRealCities() * 2);
+	iValue *= getGoldenAgeLength();
     iValue /= 100;
+
+	// K-Mod. Add some value if we would use the opportunity to switch civics
+	// Note: this first "if" isn't necessary. It just saves us checking civics when we don't need to.
+	if (getMaxAnarchyTurns() != 0 && !isGoldenAge() && getAnarchyModifier() + 100 > 0)
+	{
+		std::vector<CivicTypes> aeBestCivics(GC.getNumCivicOptionInfos());
+		for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+		{
+			aeBestCivics[iI] = getCivics((CivicOptionTypes)iI);
+		}
+
+		for (int iI = 0; iI < GC.getNumCivicOptionInfos(); iI++)
+		{
+			int iCurrentValue = AI_civicValue(aeBestCivics[iI]);
+			int iBestValue;
+			CivicTypes eNewCivic = AI_bestCivic((CivicOptionTypes)iI, &iBestValue);
+			
+			// using a 10 percent thresold. (cf the higher threshold used in AI_doCivics)
+			if (aeBestCivics[iI] != NO_CIVIC && 100*iBestValue > 110*iCurrentValue)
+			{
+				aeBestCivics[iI] = eNewCivic;
+				//if (gPlayerLogLevel > 0) logBBAI("      %S wants a golden age to switch to %S (value: %d vs %d)", getCivilizationDescription(0), GC.getCivicInfo(eNewCivic).getDescription(0), iBestValue, iCurrentValue);
+			}
+		}
+
+		int iAnarchyLength = getCivicAnarchyLength(&aeBestCivics[0]);
+		if (iAnarchyLength > 0)
+		{
+			// we would switch; so what is the negation of anarchy worth?
+			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+			{
+				iTempValue = getCommerceRate((CommerceTypes)iI) * iAnarchyLength;
+				iTempValue *= AI_commerceWeight((CommerceTypes)iI);
+				iTempValue /= 100;
+				iValue += iTempValue;
+			}
+			// production and GGP matter too, but I don't really want to try to evaluate them properly. Sorry.
+			iValue += getTotalPopulation() * iAnarchyLength;
+			// On the other hand, I'm ignoring the negation of maintenance cost.
+		}
+	}
+	// K-Mod end
+
+	if (AI_isFinancialTrouble() || (GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+	{
+		iValue *= 2;
+	}
 
     return iValue;
 }

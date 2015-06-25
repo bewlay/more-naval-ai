@@ -2226,7 +2226,7 @@ void CvCityAI::AI_chooseProduction()
 		defensiveTypes.push_back(std::make_pair(UNITAI_COUNTER, 100));
 		defensiveTypes.push_back(std::make_pair(UNITAI_ATTACK, 200));
 		//defensiveTypes.push_back(std::make_pair(UNITAI_RESERVE, 60));
-		defensiveTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 60));
+		defensiveTypes.push_back(std::make_pair(UNITAI_COLLATERAL, 30));
 		defensiveTypes.push_back(std::make_pair(UNITAI_MAGE, 60));
 		if ( bDanger || (iTotalFloatingDefenders < (5*iNeededFloatingDefenders)/(bGetBetterUnits ? 6 : 4)))
 		{
@@ -2624,7 +2624,7 @@ void CvCityAI::AI_chooseProduction()
 
 			if (iPlotSettlerCount == 0 && !bDanger && !bRoomToGrow)
 			{
-				if (iNumSettlers < iMaxSettlers)
+				if ((iNumSettlers < iMaxSettlers) && !bSlowSettlerProduction)
 				{
 					if (AI_chooseUnit(UNITAI_SETTLE, bLandWar ? 50 : -1))
 					{

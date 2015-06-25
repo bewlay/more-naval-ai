@@ -439,9 +439,9 @@ void CvGame::setInitialItems()
 //FfH: Added by Kael 09/16/2008
     if (isOption(GAMEOPTION_BARBARIAN_WORLD))
     {
-        for (int iI = 0; iI < MAX_PLAYERS; iI++)
+        for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
         {
-            if (GET_PLAYER((PlayerTypes)iI).isAlive() && iI != BARBARIAN_PLAYER)
+            if (GET_PLAYER((PlayerTypes)iI).isAlive())// && iI != BARBARIAN_PLAYER)
             {
                 foundBarbarianCity();
             }
@@ -11034,26 +11034,18 @@ void CvGame::foundBarbarianCity()
                     if (pPlotI != NULL)
                     {
                         iDist = GC.getMapINLINE().calculatePathDistance(pPlotI, pLoopPlot);
-                        if (iDist == -1)
-                        {
-                            iValue += 100;
-                        }
-                        else if (iDist < 5)
+						if (iDist < 4)
                         {
                             bValid = false;
-                        }
-                        else
-                        {
-                            iValue += iDist * 10;
                         }
                     }
                 }
             }
             if (bValid)
             {
-                iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"));
-                iValue += pLoopPlot->area()->getNumOwnedTiles() + 10;
-                iValue += getSorenRandNum(250, "Barb City Found");
+                iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"), true);
+                //iValue += pLoopPlot->area()->getNumOwnedTiles() + 10;
+                iValue += getSorenRandNum(100, "Barb City Found");
                 if (iValue > iBestValue)
                 {
                     iBestValue = iValue;
@@ -11062,6 +11054,9 @@ void CvGame::foundBarbarianCity()
 			}
         }
 	}
+
+	logBBAI("BEST VALUE: %d", iBestValue);
+
 	if (pBestPlot != NULL)
 	{
 		GET_PLAYER(BARBARIAN_PLAYER).found(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
