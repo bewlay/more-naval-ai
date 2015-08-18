@@ -17109,6 +17109,23 @@ void CvCity::setPlotRadius(int iNewValue)
 		const int iOldPlotRadius = getPlotRadius();
 //<<<<Unofficial Bug Fix: End Add
 
+	// lfgr bugfix 08/2015: These must be updated on city radius change since Denev's changes:
+	// First unset... (see below)
+		if( plot()->getPlotCity() != NULL ) // only if city already assigned to plot
+		{
+			for( int i = 0; i < ::calculateNumCityPlots(getPlotRadius()); i++ )
+			{
+				CvPlot* pLoopPlot = plotCity( getX_INLINE(), getY_INLINE(), i );
+				
+				if (pLoopPlot != NULL)
+				{
+					pLoopPlot->changeCityRadiusCount( -1 );
+					pLoopPlot->changePlayerCityRadiusCount( getOwnerINLINE(), -1 );
+				}
+			}
+		}
+	// lfgr end
+
 	// lfgr bugfix 06/2015: moved further down, otherwise an assert is triggered in setWorkingPlot
 	//	m_iPlotRadius = iNewValue;
 	// lfgr end
@@ -17156,6 +17173,23 @@ void CvCity::setPlotRadius(int iNewValue)
 				pLoopPlot->updateWorkingCity();
 			}
 		}
+		
+	// lfgr bugfix 08/2015: These must be updated on city radius change since Denev's changes:
+	// ... then set again with new radius (see above)
+		if( plot()->getPlotCity() != NULL ) // only if city already assigned to plot
+		{
+			for( int i = 0; i < ::calculateNumCityPlots(getPlotRadius()); i++ )
+			{
+				CvPlot* pLoopPlot = plotCity( getX_INLINE(), getY_INLINE(), i );
+				
+				if (pLoopPlot != NULL)
+				{
+					pLoopPlot->changeCityRadiusCount( 1 );
+					pLoopPlot->changePlayerCityRadiusCount( getOwnerINLINE(), 1 );
+				}
+			}
+		}
+	// lfgr end
 
 		updateFeatureHealth();
 		updateFeatureHappiness();
