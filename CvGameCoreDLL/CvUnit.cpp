@@ -7498,21 +7498,19 @@ int CvUnit::getDiscoverResearch(TechTypes eTech) const
     }
 //FfH: End Add
 
-	int iResearch;
-
-    if (eTech != NO_TECH)
-    {
-        iResearch = std::min(GET_TEAM(getTeam()).getResearchLeft(eTech), iResearch);
-    }
-	else
-	{
-		iResearch = (m_pUnitInfo->getBaseDiscover() + (m_pUnitInfo->getDiscoverMultiplier() * GET_TEAM(getTeam()).getTotalPopulation()));
-
+	int iResearch = (m_pUnitInfo->getBaseDiscover() + (m_pUnitInfo->getDiscoverMultiplier() * GET_TEAM(getTeam()).getTotalPopulation()));
+	if (iResearch > 0) {
 		iResearch *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getUnitDiscoverPercent();
 		iResearch /= 100;
+		if (eTech != NO_TECH)
+		{
+			iResearch = std::min(GET_TEAM(getTeam()).getResearchLeft(eTech), iResearch);
+		}
+	} else if (iResearch < 0) {
+		iResearch = 0;
 	}
 
-	return std::max(0, iResearch);
+	return iResearch;
 }
 
 
