@@ -7516,16 +7516,18 @@ int CvUnit::getDiscoverResearch(TechTypes eTech) const
 
 bool CvUnit::canDiscover(const CvPlot* pPlot) const
 {
+	// The TechTypes parameter is only used for checking the maximum value that the discover research can take.
+	// In this case we only want to check if the unit can make any research at all, so the parameter is not needed.
+	if (getDiscoverResearch(NO_TECH) == 0)
+	{
+		return false;
+	}
+
 	TechTypes eTech;
 
 	eTech = getDiscoveryTech();
 
 	if (eTech == NO_TECH)
-	{
-		return false;
-	}
-
-	if (getDiscoverResearch(eTech) == 0)
 	{
 		return false;
 	}
