@@ -17072,7 +17072,11 @@ bool CvCity::isSettlement() const
 void CvCity::setSettlement(bool bNewValue)
 {
 //>>>>Advanced Rules: Added by Denev 2010/07/13
-	setPlotRadius(1);
+// lfgr fix
+//	setPlotRadius(1);
+	if( bNewValue )
+		setPlotRadius(1);
+// lfgr end
 //<<<<Advanced Rules: End Add
 
 	m_bSettlement = bNewValue;
