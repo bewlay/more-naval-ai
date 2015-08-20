@@ -78,7 +78,16 @@ public:
 	DllExport void parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, const wchar* pcNewline = NEWLINE);
 
 //FfH: Added by Kael 08/08/2007
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+/* old
 	DllExport void parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline = NEWLINE);
+*/
+	DllExport void parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline = NEWLINE, std::vector<CvUnit*>* pvpUnits = NULL );
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
 //FfH: End Add
 
 	DllExport void parseCivicInfo(CvWStringBuffer &szBuffer, CivicTypes eCivic, bool bCivilopediaText = false, bool bPlayerContext = false, bool bSkipName = false);
