@@ -7304,7 +7304,11 @@ void CvPlot::updateWorkingCity()
 
 	if (pOldWorkingCity != pBestCity)
 	{
-		if (pOldWorkingCity != NULL)
+	// lfgr bugfix 06/2015
+	// The old city may have a smaller radius by now.
+	//	if (pOldWorkingCity != NULL)
+		if ( pOldWorkingCity != NULL && pOldWorkingCity->getCityPlotIndex( this ) != -1 )
+	// lfgr end
 		{
 			pOldWorkingCity->setWorkingPlot(this, false);
 		}
@@ -7313,6 +7317,9 @@ void CvPlot::updateWorkingCity()
 		{
 			FAssertMsg(isOwned(), "isOwned is expected to be true");
 			FAssertMsg(!isBeingWorked(), "isBeingWorked did not return false as expected");
+			// lfgr assert
+			FAssertMsg( pBestCity->getCityPlotIndex( this ) != -1, "Plot assigned to invalid city" );
+			// lfgr end
 			m_workingCity = pBestCity->getIDInfo();
 		}
 		else

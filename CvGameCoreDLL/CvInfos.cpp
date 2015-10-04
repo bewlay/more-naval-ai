@@ -3693,6 +3693,17 @@ const TCHAR *CvSpellInfo::getPyAlternateReq() const
 }
 // MNAI end
 
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+const TCHAR* CvSpellInfo::getPyHelp() const
+{
+	return m_szPyHelp;
+}
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
+
 int CvSpellInfo::getCommandType() const
 {
 	return m_iCommandType;
@@ -3820,6 +3831,13 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->ReadString(m_szPyResult);
 	stream->ReadString(m_szPyRequirement);
 	stream->ReadString(m_szPyAlternateReq);	// MNAI
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	stream->ReadString(m_szPyHelp);
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
 	stream->Read(&m_iEffect);
 	stream->ReadString(m_szSound);
 	stream->Read(&m_iCommandType);
@@ -3933,6 +3951,13 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szPyResult);
 	stream->WriteString(m_szPyRequirement);
 	stream->WriteString(m_szPyAlternateReq);	// MNAI
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	stream->WriteString(m_szPyHelp);
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
 	stream->Write(m_iEffect);
 	stream->WriteString(m_szSound);
 	stream->Write(m_iCommandType);
@@ -4075,6 +4100,13 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(m_szPyResult, "PyResult");
 	pXML->GetChildXmlValByName(m_szPyRequirement, "PyRequirement");
 	pXML->GetChildXmlValByName(m_szPyAlternateReq, "PyAlternateReq");	// MNAI
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	pXML->GetChildXmlValByName(m_szPyHelp, "PyHelp");
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
 	pXML->GetChildXmlValByName(szTextVal, "Effect");
 	if (szTextVal != "") m_iEffect = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(m_szSound, "Sound");

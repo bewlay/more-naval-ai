@@ -3610,7 +3610,10 @@ CvSelectionGroup* CvPlayer::cycleSelectionGroups(CvUnit* pUnit, bool bForward, b
 
 bool CvPlayer::hasTrait(TraitTypes eTrait) const
 {
-	FAssertMsg((getLeaderType() >= 0), "getLeaderType() is less than zero");
+// lfgr bugfix 08/2015
+// Assert no longer valid. A leader type isn't needed to determine traits
+//	FAssertMsg((getLeaderType() >= 0), "getLeaderType() is less than zero");
+// lfgr end
 	FAssertMsg((eTrait >= 0), "eTrait is less than zero");
 
 //FfH: Scriptable Leader Traits: Modified by Kael 08/08/2007

@@ -898,6 +898,15 @@ public:
 	const TCHAR* getPyResult() const;
 	const TCHAR* getPyRequirement() const;
 	const TCHAR* getPyAlternateReq() const;	// MNAI
+	
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	const TCHAR* getPyHelp() const;
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
+
 	int getCommandType() const;
 	void setCommandType(int iNewType);
 	// MNAI begin
@@ -1002,6 +1011,15 @@ protected:
 	CvString m_szPyResult;
 	CvString m_szPyRequirement;
 	CvString m_szPyAlternateReq;	// MNAI
+	
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	CvString m_szPyHelp;
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
+
 	CvString m_szSound;
 	// MNAI begin
 	/*

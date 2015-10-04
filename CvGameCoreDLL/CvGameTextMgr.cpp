@@ -9716,7 +9716,16 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 }
 
 //FfH: Added by Kael 07/23/2007
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+/* old
 void CvGameTextMgr::parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline)
+*/
+void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline, std::vector<CvUnit*>* pvpUnits )
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
 {
 	PROFILE_FUNC();
 
@@ -10095,6 +10104,40 @@ void CvGameTextMgr::parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell,
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IMMOBILE_TURNS", kSpellInfo.getImmobileTurns()));
     }
+/********************************************************************************/
+/* SpellPyHelp                        11/2013                           lfgr    */
+/********************************************************************************/
+	if( pvpUnits != NULL && !CvString( GC.getSpellInfo( eSpell ).getPyHelp() ).empty() )
+	{
+		// Get owner of the units
+		int iOwner = -1;
+		int* aiUnitIDs = new int[pvpUnits->size()];
+		for( uint i = 0; i < pvpUnits->size(); i++ )
+		{
+			if( iOwner == -1 )
+				iOwner = pvpUnits->at( i )->getOwnerINLINE();
+			else
+				FAssertMsg( pvpUnits->at( i )->getOwnerINLINE() == iOwner, "Units with different onwers selected!" );
+			aiUnitIDs[i] = pvpUnits->at( i )->getID();
+		}
+
+		if( iOwner != -1 )
+		{
+			CyArgsList argsList;
+			argsList.add( (int) eSpell );
+			argsList.add( (int) iOwner );
+			argsList.add( aiUnitIDs, pvpUnits->size() );
+		
+			CvWString szHelp;
+			gDLL->getPythonIFace()->callFunction(PYSpellModule, "getSpellHelp", argsList.makeFunctionArgs(), &szHelp);
+		
+			szBuffer.append( pcNewline );
+			szBuffer.append( szHelp );
+		}
+	}
+/********************************************************************************/
+/* SpellPyHelp                                                          END     */
+/********************************************************************************/
     if (kSpellInfo.isSacrificeCaster())
     {
         szBuffer.append(pcNewline);
