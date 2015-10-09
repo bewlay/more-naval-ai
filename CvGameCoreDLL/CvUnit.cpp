@@ -15982,8 +15982,15 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
 		
-		// MNAI: Revolutions - Rebels cant cast World spells
+		// MNAI
+		// Revolutions - Rebels cant cast World spells
 		if (GET_PLAYER(getOwnerINLINE()).isRebel())
+		{
+			return false;
+		}
+
+		// Puppet States - Puppet States cant cast World spells
+		if (GET_PLAYER(getOwnerINLINE()).isPuppetState())
 		{
 			return false;
 		}
