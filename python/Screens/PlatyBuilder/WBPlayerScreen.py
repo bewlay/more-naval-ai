@@ -159,7 +159,7 @@ class WBPlayerScreen:
 			screen.setText("PlayerName", "Background", CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setText("CivilizationName", "Background", CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3>" + CyTranslator().getText("TXT_KEY_MENU_CIV_DESC", ()) + "\n" + pPlayer.getCivilizationDescription(iPlayer) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 55, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setText("CivilizationNameShort", "Background", CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3>" +CyTranslator().getText("TXT_KEY_MENU_CIV_SHORT_DESC", ()) + "\n" + pPlayer.getCivilizationShortDescription(iPlayer) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()*1/3, 55, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-			screen.setText("CivilizationAdj", "Background", CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3>" +CyTranslator().getText("TXT_KEY_MENU_CIV_ADJ", ()) +  "\n" + pPlayer.getCivilizationAdjective(iPlayer) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()*2/3, 55, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.setText("CivilizationAdj", "Background", CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=3>" +CyTranslator().getText("TXT_KEY_MENU_CIV_ADJ", ()) + "\n" + pPlayer.getCivilizationAdjective(iPlayer) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()*2/3, 55, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		else:
 			screen.setLabel("PlayerName", "Background", "<font=4b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setLabel("CivilizationName", "Background", "<font=4b>" + pPlayer.getCivilizationDescription(0) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -289,7 +289,7 @@ class WBPlayerScreen:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			elif iTrait == gc.getCivilizationInfo(pPlayer.getCivilizationType()).getCivTrait():
 				sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
-			elif gc.getLeaderHeadInfo(pPlayer.getLeaderType()).hasTrait(iTrait):#I thought it would be useful to show  what traits a leader lost and could regain if its avatar was ressureted
+			elif gc.getLeaderHeadInfo(pPlayer.getLeaderType()).hasTrait(iTrait):#I thought it would be useful to show what traits a leader lost and could regain if its avatar was ressureted
 				sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
 			screen.setTableText("WBPlayerTraits", iColumn, iRow, sColor + sText + "</color>", "", WidgetTypes.WIDGET_PYTHON, 9000, iTrait, CvUtil.FONT_LEFT_JUSTIFY)
 #Magister Stop

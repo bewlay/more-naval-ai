@@ -1085,7 +1085,7 @@
 		<Spanish>No Religion</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>INTERFACE_PANE_STRENGTH_DEFENSE</Tag>
+		<Tag>TXT_WB_STRENGTH_DEFENSE</Tag>
 		<English>Defensive Strength</English>
 		<French>Defensive Puissance</French>
 		<German>Defensive Strength</German>
@@ -1284,5 +1284,36 @@
 		<Italian>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</Italian>
 		<Spanish>Shows timers for temporary map items and allows the selection of the real types to which they revert when the timers expire</Spanish>
 	</TEXT>
-
+	<TEXT>
+		<Tag>TXT_KEY_WB_FORTIFY_TURNS</Tag>
+		<English>Fortify Turns</English>
+		<French>Fortify Turns</French>
+		<German>Fortify Turns</German>
+		<Italian>Fortify Turns</Italian>
+		<Spanish>Fortify Turns</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_TOGGLE</Tag>
+		<English>Toggle[SPACE]</English>
+		<French>Toggle[SPACE]</French>
+		<German>Toggle[SPACE]</German>
+		<Italian>Toggle[SPACE]</Italian>
+		<Spanish>Toggle[SPACE]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_UNIT_CLASS</Tag>
+		<English>Unit Class Type</English>
+		<French>Unit Class Type</French>
+		<German>Unit Class Type</German>
+		<Italian>Unit Class Type</Italian>
+		<Spanish>Unit Class Type</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_CAN_CAST</Tag>
+		<English>Can Cast</English>
+		<French>Can Cast</French>
+		<German>Can Cast</German>
+		<Italian>Can Cast</Italian>
+		<Spanish>Can Cast</Spanish>
+	</TEXT>
 </Civ4GameText>

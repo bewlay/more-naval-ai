@@ -38,12 +38,12 @@ class WBPromotionScreen:
 		screen.setRenderInterfaceOnly(True)
 		screen.addPanel( "MainBG", u"", u"", True, False, -10, -10, screen.getXResolution() + 20, screen.getYResolution() + 20, PanelStyles.PANEL_STYLE_MAIN )
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
-	
+
 		screen.setText("WBPromotionExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 		screen.setLabel("PromotionHeader", "Background", "<font=4b>" + pUnit.getName() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_KEY_WB_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), pUnit.getGroupID())
 		screen.setLabel("PromotionHeaderB", "Background", sText, CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		screen.addDropDownBoxGFC("OwnerType", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
@@ -98,14 +98,14 @@ class WBPromotionScreen:
 		if bApplyAll:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		screen.setText("ApplyAll", "Background", sColor + sText + "</color>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		screen.addDropDownBoxGFC("ChangeType", screen.getXResolution() - 120, self.iTable_Y - 30, 100, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_MODIFY", ("",)), 2, 2, 2 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_ADD", ()), 1, 1, 1 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_CITY_REMOVE", ()), 0, 0, 0 == iChangeType)
 		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</color></font>"
 		screen.setText("PromotionAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 120, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		
+
 		self.sortUnits()
 		self.sortPromotions()
 
@@ -144,7 +144,7 @@ class WBPromotionScreen:
 					(loopUnit, iter) = pPlayerX.nextUnit(iter, False)
 		lUnits.sort()
 		self.placeCurrentUnit()
-		
+
 	def placeCurrentUnit(self):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
 
@@ -187,7 +187,10 @@ class WBPromotionScreen:
 		iMana = gc.getInfoTypeForString('BONUSCLASS_MANA')
 
 		for i in xrange(gc.getNumPromotionInfos()):
-			if CvPlatyBuilderScreen.bHideInactive and not isPromotionValid(i, pUnit.getUnitType(), True): continue
+			if CvPlatyBuilderScreen.bHideInactive:
+				if not isPromotionValid(i, pUnit.getUnitType(), True):
+					if iCategory < 3:#effects, equipment, races, and of course hidden options would almost never be valid, but it is a haddle to go back to the main screen if you want to be able to see them
+						continue
 			if iStatus == 0:#All promptions
 				pass
 			elif iStatus == 1:#Availible promotions
@@ -214,6 +217,7 @@ class WBPromotionScreen:
 				if iPrereq == iChanneling2 or iPrereq == iChanneling3:continue#For MNAI, not MagisterModmod
 				lList.append([ItemInfo.getDescription(), i])
 			elif iCategory == 2:#Spell Spheres
+				if ItemInfo.isGraphicalOnly():continue
 				iBonus = ItemInfo.getBonusPrereq()
 				if iBonus != -1:
 					if gc.getBonusInfo(iBonus).getBonusClassType() == iMana:
@@ -222,9 +226,11 @@ class WBPromotionScreen:
 				if iPrereq == iChanneling2 or iPrereq == iChanneling3:#For MNAI, not MagisterModmod
 					lList.append([ItemInfo.getDescription(), i])
 			elif iCategory == 3:#Equipment
+				if ItemInfo.isGraphicalOnly():continue
 				if ItemInfo.isEquipment():
 					lList.append([ItemInfo.getDescription(), i])
 			elif iCategory == 4:#Effect
+				if ItemInfo.isGraphicalOnly():continue
 				if ItemInfo.getMinLevel() < 0:
 					lList.append([ItemInfo.getDescription(), i])
 			elif iCategory == 5:#Race

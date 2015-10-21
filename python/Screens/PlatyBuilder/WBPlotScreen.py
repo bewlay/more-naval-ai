@@ -551,8 +551,7 @@ class WBPlotScreen:
 		iTerrain = pPlot.getTerrainType()
 
 		if bReal:
-			iTerrain = pPlot.getRealTerrainType()#This function is not exposed yet as it is supposed to be
-
+			iTerrain = pPlot.getRealTerrainType()
 			iHeight -= 20
 			iY2 = iY + iHeight
 			screen.setButtonGFC("TerrainTempTimerPlus", "", "", iX, iY2, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
@@ -563,10 +562,14 @@ class WBPlotScreen:
 			screen.hide("TerrainTempTimerPlus")
 			screen.hide("TerrainTempTimerMinus")
 			screen.hide("TerrainTempTimerText")
-#Magister Stop
 
-		iTerrain = pPlot.getTerrainType()
-		sText = gc.getTerrainInfo(iTerrain).getDescription()
+		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
+		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		if iTerrain  > -1:
+			sText = gc.getTerrainInfo(iTerrain).getDescription()
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+
+#Magister Stop
 		screen.setLabel("TerrainHeader", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, iX + screen.getXResolution()/10 - 10, iY - 30, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.addTableControlGFC("WBPlotTerrain", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBPlotTerrain", 0, "", iWidth)
@@ -793,9 +796,6 @@ class WBPlotScreen:
 			iTerrain = inputClass.getData2()
 
 			if bReal:
-				#pass# pPlot.getRealTerrainType() is not exposed yet like it should be
-
-
 				if iEditType == 0:
 					pPlot.setRealTerrainType(iTerrain)
 				else:

@@ -1117,7 +1117,8 @@ class CvUnitDesc:
 			f.write("\t\tPatrol\n")
 		elif (unit.getGroup().getActivityType() == ActivityTypes.ACTIVITY_PLUNDER):
 			f.write("\t\tPlunder\n")
-		f.write("\t\tUnitAIType=%s\n" %(gc.getUnitAIInfo(unit.getUnitAIType()).getType()))
+		if unit.getUnitAIType() != -1:
+			f.write("\t\tUnitAIType=%s\n" %(gc.getUnitAIInfo(unit.getUnitAIType()).getType()))
 		if unit.getScriptData():
 			f.write("\t\tScriptData=%s\n" %unit.getScriptData())
 
@@ -1769,20 +1770,21 @@ class CvCityDesc:
 			self.city.changeDefenseDamage(self.iDamage)
 		if self.iOccupation > 0:
 			self.city.setOccupationTimer(self.iOccupation)
-		self.city.changeExtraHappiness(self.iExtraHappiness)
-		self.city.changeExtraHealth(self.iExtraHealth)
-		self.city.changeExtraTradeRoutes(self.iExtraTrade)
+		self.city.changeExtraHappiness(self.iExtraHappiness - self.city.getExtraHappiness())
+		self.city.changeExtraHealth(self.iExtraHealth - self.city.getExtraHealth())
+		self.city.changeExtraTradeRoutes(self.iExtraTrade - self.city.getExtraTradeRoutes())
 		for item in self.lBuildingYield:
-			self.city.setBuildingYieldChange(item[0], item[1], item[2])
+			self.city.setBuildingYieldChange(item[0], item[1], item[2] - self.city.getBuildingYieldChange(item[0], item[1]))
 		for item in self.lBuildingCommerce:
-			self.city.setBuildingCommerceChange(item[0], item[1], item[2])
+			self.city.setBuildingCommerceChange(item[0], item[1], item[2] - self.city.getBuildingCommerceChange(item[0], item[1]))
 		for item in self.lBuildingHappy:
-			self.city.setBuildingHappyChange(item[0], item[1])
+			self.city.setBuildingHappyChange(item[0], item[1] - self.city.getBuildingHappyChange(item[0]))
 		for item in self.lBuildingHealth:
-			self.city.setBuildingHealthChange(item[0], item[1])
+			self.city.setBuildingHealthChange(item[0], item[1] - self.city.getBuildingHealthChange(item[0]))
 		for item in self.lFreeBonus:
-			self.city.changeFreeBonus(item[0], item[1])
+			self.city.changeFreeBonus(item[0], item[1] - self.city.getFreeBonus(item[0]))
 		for item in self.lNoBonus:
+			if self.city.isNoBonus(item): continue
 			self.city.changeNoBonusCount(item, 1)
 
 #Magister Start
@@ -2646,7 +2648,7 @@ class CvWBDesc:
 			for item in pWBTeam.bDefensivePactWithTeamList:
 				pTeam.signDefensivePact(item)
 			for item in pWBTeam.bVassalOfTeamList:
-				pTeam.assignVassal(item, true)
+				gc.getTeam(item).assignVassal(iTeamLoop, True)
 			for project in pWBTeam.projectType:
 				projectTypeNum = CvUtil.findInfoTypeNum(gc.getProjectInfo, gc.getNumProjectInfos(), project)
 				pTeam.changeProjectCount(projectTypeNum, 1)
@@ -2666,14 +2668,14 @@ class CvWBDesc:
 			pTeam.changeIrrigationCount(pWBTeam.bIrrigation)
 			pTeam.changeIgnoreIrrigationCount(pWBTeam.bIgnoreIrrigation)
 			pTeam.changeWaterWorkCount(pWBTeam.bWaterWork)
-			pTeam.changeNukeInterception(pWBTeam.iNukeInterception)
-			pTeam.changeEnemyWarWearinessModifier(pWBTeam.iEnemyWarWeariness)
+			pTeam.changeNukeInterception(pWBTeam.iNukeInterception - pTeam.getNukeInterception())
+			pTeam.changeEnemyWarWearinessModifier(pWBTeam.iEnemyWarWeariness- pTeam.getEnemyWarWearinessModifier())
 			for item in pWBTeam.lDomainMoves:
-				pTeam.changeExtraMoves(item[0], item[1])
+				pTeam.changeExtraMoves(item[0], item[1] - pTeam.getExtraMoves(item[0]))
 			for item in pWBTeam.lRouteMoves:
-				pTeam.changeRouteChange(item[0], item[1])
+				pTeam.changeRouteChange(item[0], item[1] - pTeam.getRouteChange(item[0]))
 			for item in pWBTeam.lImprovementYield:
-				pTeam.changeImprovementYieldChange(item[0], item[1], item[2])
+				pTeam.changeImprovementYieldChange(item[0], item[1], item[2] - pTeam.getImprovementYieldChange(item[0], item[1]))
 
 	## Platy Builder ##
 		for iPlayerLoop in xrange(len(self.playersDesc)):
@@ -2704,12 +2706,12 @@ class CvWBDesc:
 				pPlayer.addCityName(item)
 
 		## Platy Builder ##
-			pPlayer.changeGoldenAgeTurns(pWBPlayer.iGoldenAge)
-			pPlayer.changeAnarchyTurns(pWBPlayer.iAnarchy)
+			pPlayer.changeGoldenAgeTurns(pWBPlayer.iGoldenAge - pPlayer.getGoldenAgeTurns())
+			pPlayer.changeAnarchyTurns(pWBPlayer.iAnarchy - pPlayer.getAnarchyTurns())
 			pPlayer.setCombatExperience(pWBPlayer.iCombatXP)
-			pPlayer.changeCoastalTradeRoutes(pWBPlayer.iCoastalTradeRoute)
-			pPlayer.changeStateReligionUnitProductionModifier(pWBPlayer.iStateReligionUnit)
-			pPlayer.changeStateReligionBuildingProductionModifier(pWBPlayer.iStateReligionBuilding)
+			pPlayer.changeCoastalTradeRoutes(pWBPlayer.iCoastalTradeRoute - pPlayer.getCoastalTradeRoutes())
+			pPlayer.changeStateReligionUnitProductionModifier(pWBPlayer.iStateReligionUnit - pPlayer.getStateReligionUnitProductionModifier())
+			pPlayer.changeStateReligionBuildingProductionModifier(pWBPlayer.iStateReligionBuilding - pPlayer.getStateReligionBuildingProductionModifier())
 			pPlayer.setScriptData(pWBPlayer.sScriptData)
 
 #Magister Start
