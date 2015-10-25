@@ -1236,7 +1236,7 @@ class CvGameUtils:
 				desertb = True
 
 			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
-				tundrab = True
+#				tundrab = True
 				marshb = True
 				if not iCiv == iIllians:
 					snowb = True
@@ -1319,7 +1319,7 @@ class CvGameUtils:
 								if iImprovement == iSmoke:
 									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
 									return 2
-							if desertb or pPlot.isRiver():
+							if desertb:
 								if iTerrain == iDesert and iFeature != iFlood:
 									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
 									return 2
@@ -1375,10 +1375,10 @@ class CvGameUtils:
 								if iTerrain == iDesert and iFeature != iFlood:
 									iCount += 1
 							if snowb:
-								if iTerrain in lSnows:
+								if iTerrain == iSnow:
 									iCount += 1
 							if tundrab:
-								if iTerrain in lTundras:
+								if iTerrain == iTundra:
 									iCount += 1
 							if marshb:
 								if iTerrain == iMarsh:
