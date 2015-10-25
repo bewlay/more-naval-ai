@@ -26086,7 +26086,7 @@ int CvPlayerAI::AI_getMinFoundValue() const
 	iValue += iNumCitiesPercent * getNumCities() * ((getNumCities() == 0) ? 60 : 50) / 100;
 	// K-Mod end
 
-	if (AI_isFinancialTrouble())
+	if (AI_isFinancialTrouble() || isSprawling())
 	{
 		iValue *= 3;
 		iValue /= 2;

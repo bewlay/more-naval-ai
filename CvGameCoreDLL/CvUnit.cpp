@@ -18863,7 +18863,11 @@ int CvUnit::chooseSpell()
 
 				if (kSpellInfo.getSpreadReligion() != NO_RELIGION)
 				{
-					if (kSpellInfo.getSpreadReligion() == GET_PLAYER(getOwner()).getStateReligion())
+					if (!GC.getGameINLINE().isReligionFounded(ReligionTypes(kSpellInfo.getSpreadReligion())))
+					{
+						iValue += 500;
+					}
+					else if (kSpellInfo.getSpreadReligion() == GET_PLAYER(getOwner()).getStateReligion())
 					{
 						iValue += 100;
 					}

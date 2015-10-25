@@ -3988,6 +3988,8 @@ void CvDLLWidgetData::parseContactCivHelp(CvWidgetDataStruct &widgetDataStruct, 
 		szBuffer.append(NEWLINE);
 		szBuffer.append(CvWString::format(L"Highest Unit Tier: %d", kPlayer.getHighestUnitTier(false, true)));
 		szBuffer.append(NEWLINE);
+		szBuffer.append(CvWString::format(L"Minimum Found Value: %d", kPlayer.AI_getMinFoundValue()));
+		szBuffer.append(NEWLINE);
 		szBuffer.append(NEWLINE);
 		
 		// Unit Costs

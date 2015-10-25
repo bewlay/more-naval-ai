@@ -2989,10 +2989,10 @@ void CvCityAI::AI_chooseProduction()
 
 				int iTransportViability = kPlayer.AI_calculateUnitAIViability(UNITAI_ASSAULT_SEA, DOMAIN_SEA);
 
-				int iDesiredEscorts = ((1 + 2 * iTransports) / 3);
+				int iDesiredEscorts = ((1 + 2 * iTransports));// / 3);
 				if( iTransportViability > 95 )
 				{
-					iDesiredEscorts /= 2;
+					//iDesiredEscorts /= 2;
 				}
 				
 				if ((iEscorts < iDesiredEscorts))
