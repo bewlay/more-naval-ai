@@ -2,10 +2,10 @@
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
 		<Tag>TXT_KEY_VERSION</Tag>
-		<English>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.62[COLOR_REVERT]</English>
-		<French>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.62[COLOR_REVERT]</French>
-		<German>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.62[COLOR_REVERT]</German>
-		<Italian>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.62[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.62[COLOR_REVERT]</Spanish>
+		<English>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.63[COLOR_REVERT]</English>
+		<French>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.63[COLOR_REVERT]</French>
+		<German>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.63[COLOR_REVERT]</German>
+		<Italian>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.63[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_ALT_HIGHLIGHT_TEXT]More Naval AI v2.63[COLOR_REVERT]</Spanish>
 	</TEXT>
 </Civ4GameText>
