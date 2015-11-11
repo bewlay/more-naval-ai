@@ -1782,18 +1782,20 @@ class CvEventManager:
 						pTeam = gc.getTeam(pInfernalPlayer.getTeam())
 
 						pBestPlot = -1
-						iBestPlot = -1
+						iBestPlotValue = -1
 						for iLoop in range (CyMap().numPlots()):
 							pPlot = CyMap().plotByIndex(iLoop)
 							iX = pPlot.getX()
 							iY = pPlot.getY()
-							iPlot = -1
+							iPlotValue = -1
 							if pInfernalPlayer.canFound(iX, iY):
 								if pPlot.getNumUnits() == 0:
-									iPlot = CyGame().getSorenRandNum(50, "Place Hyborem")
-									iPlot += 50
-									iPlot += pPlot.area().getNumTiles() * 2
-									iPlot += pPlot.area().getNumUnownedTiles() * 10
+									iPlotValue = CyGame().getSorenRandNum(50, "Place Hyborem")
+									iPlotValue += 50
+									iPlotValue += pPlot.area().getNumTiles() * 2
+									iPlotValue += pPlot.area().getNumUnownedTiles() * 10
+									if pPlot.isAdjacentOwned():
+										iPlotValue -= 250;
 
 									## Check Big Fat Cross for other players, resources and terrain
 									for iCityPlotX in range(iX-1, iX+2, 1):
@@ -1807,23 +1809,24 @@ class CvEventManager:
 												lPlayer = gc.getPlayer(jPlayer)
 												if lPlayer.isAlive():
 													if pCityPlot.getCulture(jPlayer) > 100:
-														iPlot -= 250
-											if pPlot.isAdjacentOwned():
-												iPlot -= 25
+														iPlotValue -= 150
+#											if pCityPlot.isOwned():
+#												iPlotValue -= 25
 											else:
-												iPlot += 15
+												iPlotValue += 15
 											if (iCityTerrain == gc.getInfoTypeForString('TERRAIN_SNOW')) or (iCityTerrain == gc.getInfoTypeForString("TERRAIN_DESERT")):
-												iPlot -= 25
+												iPlotValue -= 25
 											elif (iCityTerrain == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
-												iPlot -= 10
+												iPlotValue -= 10
 											if (pCityPlot.isWater()):
-												iPlot -= 25
+												iPlotValue -= 25
 											elif not iCityBonus == BonusTypes.NO_BONUS:
-												iPlot += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_PRODUCTION) * 25
-												iPlot += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_COMMERCE) * 15
+												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_PRODUCTION) * 25
+												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_COMMERCE) * 15
+												iPlotValue += gc.getBonusInfo(iCityBonus).getAIObjective() * 25
 
-							if iPlot > iBestPlot:
-								iBestPlot = iPlot
+							if iPlotValue > iBestPlotValue:
+								iBestPlotValue = iPlotValue
 								pBestPlot = pPlot
 
 						if pBestPlot != -1:
