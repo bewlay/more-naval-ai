@@ -2681,18 +2681,29 @@ def spellRingofFlames(caster):
 
 def reqRiverOfBlood(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
-	if pPlayer.getNumCities() == 0:
+	num_cities = pPlayer.getNumCities()
+	if num_cities == 0:
 		return False
-	if pPlayer.isHuman() == False:
-		map = gc.getMap()
-		if pPlayer.getNumCities() == 1:
-			pCasterCapital = pPlayer.getCapitalCity()
-			if not pCasterCapital.isNone():
-				if pCasterCapital.getPopulation() > 2:
-					if ((pCasterCapital.happyLevel() - pCasterCapital.unhappyLevel(0)) > 1):
-						return True
-		if pPlayer.getNumCities() < gc.getWorldInfo(map.getWorldSize()).getTargetNumCities():
+	if pPlayer.isHuman() == False:		
+		# the idea here is to a) cast it when it makes sense to do so and b) to be properly unpredictable about it
+		sum_benefit_x100 = 0
+		max_pop = 0
+		zturn = gc.getGame().getGameTurn() * 100 // gc.getGameSpeedInfo(CyGame().getGameSpeedType()).getVictoryDelayPercent()
+		zturn_mod = zturn
+		for pyCity in PyPlayer(caster.getOwner()).getCityList() :
+			pCity = pyCity.GetCy()
+			this_pop = pCity.getPopulation()
+			if this_pop > max_pop:
+				max_pop = this_pop
+			happies = pCity.happyLevel() - pCity.unhappyLevel(0)
+			sum_benefit_x100 = sum_benefit_x100 + min(max(happies * 100, 0), 250)
+			zturn_mod = zturn_mod + pCity.getY() * 19 + pCity.getX()
+		avg_benefit_x100 = sum_benefit_x100 // num_cities
+		quality = min(350, max_pop * 100) + avg_benefit_x100 + max(75, num_cities * 50) + max(zturn, 50) + (zturn_mod % 151) * 4
+#		print "q = %(grr)d, max_pop = %(aa)d, avg_benefit_x100 = %(bb)d, num_cities = %(cc)d, zturn = %(dd)d, zturn_mod = %(gg)d _ %(hh)d" % {"grr":quality,"aa":max_pop,"bb":avg_benefit_x100,"cc":num_cities,"dd":zturn,"gg":zturn_mod,"hh":zturn_mod % 151}
+		if quality < 500 + 650 + 25:
 			return False
+#		print "q = %(grr)d CAST_RIVER_OF_BLOOD_NOW at turn %(trn)d" % {"grr":quality,"trn":gc.getGame().getGameTurn()}
 	return True
 
 def spellRiverOfBlood(caster):
