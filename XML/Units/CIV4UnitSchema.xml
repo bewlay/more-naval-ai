@@ -141,6 +141,10 @@
 	<ElementType name="bLineOfSight" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bHiddenNationality" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAlwaysHostile" content="textOnly" dt:type="boolean"/>
+	<!-- Afforess Advanced Diplomacy -->
+	<ElementType name="bWorkerTrade" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bMilitaryTrade" content="textOnly" dt:type="boolean"/>
+	<!-- Afforess Advanced Diplomacy -->
 	<ElementType name="UnitClassUpgradeType" content="textOnly"/>
 	<ElementType name="bUnitClassUpgrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="UnitClassUpgrade" content="eltOnly">
@@ -620,6 +624,10 @@
 		<element type="bLineOfSight" minOccurs="0"/>
 		<element type="bHiddenNationality" minOccurs="0"/>
 		<element type="bAlwaysHostile" minOccurs="0"/>
+		<!-- Afforess Advanced Diplomacy -->
+		<element type="bWorkerTrade" minOccurs="0"/>
+		<element type="bMilitaryTrade" minOccurs="0"/>
+		<!-- Afforess Advanced Diplomacy -->
 		<element type="UnitClassUpgrades" minOccurs="0"/>
 		<element type="UnitClassTargets" minOccurs="0"/>
 		<element type="UnitCombatTargets" minOccurs="0"/>

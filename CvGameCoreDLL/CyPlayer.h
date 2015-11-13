@@ -50,6 +50,16 @@ public:
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
+/*************************************************************************************************/
+/** Advanced Diplomacy       START															     */
+/*************************************************************************************************/
+// RevolutionDCM start - new diplomacy option
+	bool isDoNotBotherStatus(int /*PlayerTypes*/ playerID);
+// RevolutionDCM end
+/*************************************************************************************************/
+/** Advanced Diplomacy       END																 */
+/*************************************************************************************************/
+
 	int startingPlotRange();
 	bool startingPlotWithinRange(CyPlot *pPlot, int /*PlayerTypes*/ ePlayer, int iRange, int iPass);
 
@@ -112,6 +122,13 @@ public:
 	std::wstring getStateReligionKey();
 	std::wstring getBestAttackUnitName(int iForm);
 	std::wstring getWorstEnemyName();
+/*************************************************************************************************/
+/** Advanced Diplomacy       START															     */
+/*************************************************************************************************/
+	std::wstring getClosestAllyName();
+/*************************************************************************************************/
+/** Advanced Diplomacy       END																 */
+/*************************************************************************************************/
 	std::wstring getBestAttackUnitKey();
 	int /*ArtStyleTypes*/ getArtStyleType();
 	std::string getUnitButton(int eUnit);

@@ -680,6 +680,51 @@ class CvTechChooser:
 		j = 0
 		k = 0
 
+## Start Advanced Diplomacy
+		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS):
+			# Embassy
+			if ( gc.getTechInfo(i).isEmbassyTrading() ):
+				szEmbassyButton = "Embassy" + str(i)
+				screen.addDDSGFCAt( szEmbassyButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_EMBASSY").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_EMBASSY, i, -1, False )
+				fX += X_INCREMENT
+
+			j = 0
+			k = 0
+	
+			# Limited Borders
+			if ( gc.getTechInfo(i).isLimitedBordersTrading() ):
+				szLimitedBordersButton = "LimitedBorders" + str(i)
+				screen.addDDSGFCAt( szLimitedBordersButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_LIMITED_BORDERS").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_RIGHT_PASSAGE, i, -1, False )
+				fX += X_INCREMENT
+
+			j = 0
+			k = 0
+
+			# Free Trade Agreement
+			if ( gc.getTechInfo(i).isFreeTradeAgreementTrading() ):
+				szFreeTradeAgreementButton = "FreeTradeAgreement" + str(i)
+				screen.addDDSGFCAt( szFreeTradeAgreementButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_FREE_TRADE_AGREEMENT").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_FREE_TRADE_AGREEMENT, i, -1, False )
+				fX += X_INCREMENT
+
+			j = 0
+			k = 0
+	
+			# Non-Agggression Pact
+			if ( gc.getTechInfo(i).isNonAggressionTrading() ):
+				szNonAggressionButton = "NonAggression" + str(i)
+				screen.addDDSGFCAt( szNonAggressionButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_NON_AGGRESSION").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_NON_AGGRESSION, i, -1, False )
+				fX += X_INCREMENT
+
+			j = 0
+			k = 0
+
+			# POW Exchange
+			if ( gc.getTechInfo(i).isPOWTrading() ):
+				szPOWButton = "POW" + str(i)
+				screen.addDDSGFCAt( szPOWButton , szTechRecord, ArtFileMgr.getInterfaceArtInfo("INTERFACE_TECH_POW").getPath(), iX + fX, iY + Y_ROW, TEXTURE_SIZE, TEXTURE_SIZE, WidgetTypes.WIDGET_HELP_POW, i, -1, False )
+				fX += X_INCREMENT
+## End Advanced Diplomacy
+
 		# Improvements
 		for j in range(gc.getNumBuildInfos()):
 			bTechFound = 0;

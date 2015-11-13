@@ -314,6 +314,17 @@ class CvDiplomacy:
 				self.addUserComment("USER_DIPLOCOMMENT_CURRENT_DEALS", -1, -1)
 
 			self.addUserComment("USER_DIPLOCOMMENT_SOMETHING_ELSE", -1, -1)
+###############Advanced Diplomacy START###############################
+			
+			#RevolutionDCM - start new diplomacy option
+			thePlayerContacted = gc.getPlayer(self.diploScreen.getWhoTradingWith())
+			if not thePlayerContacted == None and not gc.getGame().isNetworkMultiPlayer():
+				if not thePlayerContacted.isDoNotBotherStatus(gc.getGame().getActivePlayer()):
+					self.addUserComment("USER_DO_NOT_BOTHER_US", -1, -1)
+				else:
+					self.addUserComment("USER_RESUME_TALKS", -1, -1)
+			#RevolutionDCM - end
+###############Advanced Diplomacy END  ###############################
 
 			# Exit potential
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT", -1, -1)
@@ -365,9 +376,9 @@ class CvDiplomacy:
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_CIVIC_PRESSURE") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_JOIN_WAR") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_STOP_TRADING") or
-			  #Afforess Advanced Diplomacy Start
+###############Afforess Advanced Diplomacy Start###############################
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_MAKE_PEACE_WITH") or
-			   #Afforess Advanced Diplomacy End
+#####################Afforess Advanced Diplomacy End########################
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_ASK_FOR_HELP") or
 			   eComment == self.getCommentID("AI_DIPLOCOMMENT_DEMAND_TRIBUTE") ):
 			self.diploScreen.performHeadAction( LeaderheadAction.LEADERANIM_GREETING ) 
@@ -716,6 +727,36 @@ class CvDiplomacy:
 		elif (self.isComment(eComment, "USER_DIPLOCOMMENT_TARGET_CITY")):
 			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_TARGET_CITY, iData1, iData2)
 			self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_TARGET_CITY"))
+###############Advanced Diplomacy Start###############################	
+		# RevolutionDCM - start new diplomacy option
+		# If we have asked them to not bother us
+		elif (self.isComment(eComment, "USER_DO_NOT_BOTHER_US")):		
+			eAttitude = gc.getPlayer(self.diploScreen.getWhoTradingWith()).AI_getAttitude(gc.getGame().getActivePlayer())
+			if (eAttitude == AttitudeTypes.ATTITUDE_FURIOUS or eAttitude == AttitudeTypes.ATTITUDE_ANNOYED):
+				self.setAIComment(self.getCommentID("AI_ASSUME_REALLY_SNUFFED"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_DISAGREE)
+			elif (eAttitude == AttitudeTypes.ATTITUDE_CAUTIOUS):
+				self.setAIComment(self.getCommentID("AI_ASSUME_SNUFFED"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_AGREE)
+			else:
+				self.setAIComment(self.getCommentID("AI_ASSUME_NOT_SNUFFED"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_AGREE)
+			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_DO_NOT_BOTHER, gc.getGame().getActivePlayer(), iData2)
+		# If we have asked them to resume talks
+		elif (self.isComment(eComment, "USER_RESUME_TALKS")):
+			eAttitude = gc.getPlayer(self.diploScreen.getWhoTradingWith()).AI_getAttitude(gc.getGame().getActivePlayer())
+			if (eAttitude == AttitudeTypes.ATTITUDE_FURIOUS or eAttitude == AttitudeTypes.ATTITUDE_ANNOYED):
+				self.setAIComment(self.getCommentID("AI_RESUME_TALKS_RELUCTANT"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_DISAGREE)
+			elif (eAttitude == AttitudeTypes.ATTITUDE_CAUTIOUS):
+				self.setAIComment(self.getCommentID("AI_RESUME_TALKS"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_AGREE)
+			else:
+				self.setAIComment(self.getCommentID("AI_RESUME_TALKS_GLADLY"))
+				diploScreen.performHeadAction(LeaderheadAction.LEADERANIM_AGREE)
+			diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_RESUME_BOTHER, gc.getGame().getActivePlayer(), iData2)
+		# RevolutionDCM - end	
+###############Advanced Diplomacy End###############################
 
 		else:
 			diploScreen.closeScreen()

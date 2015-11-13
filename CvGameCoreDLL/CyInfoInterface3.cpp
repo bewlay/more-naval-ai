@@ -116,6 +116,20 @@ void CyInfoPythonInterface3()
 		.def("getBonusTradeAttitudeChangeLimit", &CvLeaderHeadInfo::getBonusTradeAttitudeChangeLimit, "int ()")
 		.def("getOpenBordersAttitudeDivisor", &CvLeaderHeadInfo::getOpenBordersAttitudeDivisor, "int ()")
 		.def("getOpenBordersAttitudeChangeLimit", &CvLeaderHeadInfo::getOpenBordersAttitudeChangeLimit, "int ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		.def("getLimitedBordersAttitudeDivisor", &CvLeaderHeadInfo::getLimitedBordersAttitudeDivisor, "int ()")
+		.def("getLimitedBordersAttitudeChangeLimit", &CvLeaderHeadInfo::getLimitedBordersAttitudeChangeLimit, "int ()")
+		.def("getEmbassyAttitudeDivisor", &CvLeaderHeadInfo::getEmbassyAttitudeDivisor, "int ()")
+		.def("getEmbassyAttitudeChangeLimit", &CvLeaderHeadInfo::getEmbassyAttitudeChangeLimit, "int ()")
+		.def("getFreeTradeAgreementAttitudeDivisor", &CvLeaderHeadInfo::getFreeTradeAgreementAttitudeDivisor, "int ()")
+		.def("getFreeTradeAgreementAttitudeChangeLimit", &CvLeaderHeadInfo::getFreeTradeAgreementAttitudeChangeLimit, "int ()")
+		.def("getNonAggressionAttitudeDivisor", &CvLeaderHeadInfo::getNonAggressionAttitudeDivisor, "int ()")
+		.def("getNonAggressionAttitudeChangeLimit", &CvLeaderHeadInfo::getNonAggressionAttitudeChangeLimit, "int ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 		.def("getDefensivePactAttitudeDivisor", &CvLeaderHeadInfo::getDefensivePactAttitudeDivisor, "int ()")
 		.def("getDefensivePactAttitudeChangeLimit", &CvLeaderHeadInfo::getDefensivePactAttitudeChangeLimit, "int ()")
 		.def("getShareWarAttitudeChange", &CvLeaderHeadInfo::getShareWarAttitudeChange, "int ()")
@@ -138,6 +152,17 @@ void CyInfoPythonInterface3()
 		.def("getAdoptCivicRefuseAttitudeThreshold", &CvLeaderHeadInfo::getAdoptCivicRefuseAttitudeThreshold, "int ()")
 		.def("getConvertReligionRefuseAttitudeThreshold", &CvLeaderHeadInfo::getConvertReligionRefuseAttitudeThreshold, "int ()")
 		.def("getOpenBordersRefuseAttitudeThreshold", &CvLeaderHeadInfo::getOpenBordersRefuseAttitudeThreshold, "int ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		.def("getContactRefuseAttitudeThreshold", &CvLeaderHeadInfo::getContactRefuseAttitudeThreshold, "int ()")
+		.def("getLimitedBordersRefuseAttitudeThreshold", &CvLeaderHeadInfo::getLimitedBordersRefuseAttitudeThreshold, "int ()")
+		.def("getEmbassyRefuseAttitudeThreshold", &CvLeaderHeadInfo::getEmbassyRefuseAttitudeThreshold, "int ()")
+		.def("getFreeTradeAgreementRefuseAttitudeThreshold", &CvLeaderHeadInfo::getFreeTradeAgreementRefuseAttitudeThreshold, "int ()")
+		.def("getNonAggressionRefuseAttitudeThreshold", &CvLeaderHeadInfo::getNonAggressionRefuseAttitudeThreshold, "int ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 		.def("getDefensivePactRefuseAttitudeThreshold", &CvLeaderHeadInfo::getDefensivePactRefuseAttitudeThreshold, "int ()")
 		.def("getPermanentAllianceRefuseAttitudeThreshold", &CvLeaderHeadInfo::getPermanentAllianceRefuseAttitudeThreshold, "int ()")
 		.def("getVassalRefuseAttitudeThreshold", &CvLeaderHeadInfo::getVassalRefuseAttitudeThreshold, "int ()")
@@ -203,6 +228,13 @@ void CyInfoPythonInterface3()
 		.def("isDefensivePact", &CvVoteInfo::isDefensivePact, "bool ()")
 		.def("isOpenBorders", &CvVoteInfo::isOpenBorders, "bool ()")
 		.def("isForcePeace", &CvVoteInfo::isForcePeace, "bool ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		.def("isTradeMap", &CvVoteInfo::isTradeMap, "bool ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
 		.def("isForceNoTrade", &CvVoteInfo::isForceNoTrade, "bool ()")
 		.def("isForceWar", &CvVoteInfo::isForceWar, "bool ()")
 		.def("isAssignCity", &CvVoteInfo::isAssignCity, "bool ()")

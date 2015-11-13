@@ -117,6 +117,14 @@
 	<ElementType name="bCityVoting" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCivVoting" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iMinVoters" content="textOnly" dt:type="int"/>
+	<!-- Advanced Diplomacy START -->
+	<ElementType name="CondemnCivics" content="eltOnly">
+		<element type="CivicType" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<ElementType name="BonusObsoletes" content="eltOnly">
+		<element type="BonusType" minOccurs="0" maxOccurs="*"/>
+	</ElementType>
+	<!-- Advanced Diplomacy END -->
 	<ElementType name="iStateReligionVotePercent" content="textOnly" dt:type="int"/>
 	<ElementType name="iTradeRoutes" content="textOnly" dt:type="int"/>
 	<ElementType name="bSecretaryGeneral" content="textOnly" dt:type="boolean"/>
@@ -129,6 +137,17 @@
 	<ElementType name="bForceNoTrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bForceWar" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAssignCity" content="textOnly" dt:type="boolean"/>
+	<!-- Advanced Diplomacy START -->
+	<ElementType name="bNoCapitalPunishment" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bMilitaryMedicineRights" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bPrisonerRights" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bTradeMap" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bBarbarianPeace" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bVictimRights" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bNoCityRazing" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bCultureNeedsEmptyRadius" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bPacificRule" content="textOnly" dt:type="boolean"/>
+	<!-- Advanced Diplomacy END -->
 	<ElementType name="CivicType" content="textOnly"/>
 	<ElementType name="bForce" content="textOnly" dt:type="boolean"/>
 	<ElementType name="ForceCivic" content="eltOnly">
@@ -160,6 +179,10 @@
 		<element type="bCityVoting"/>
 		<element type="bCivVoting"/>
 		<element type="iMinVoters"/>
+		<!-- Advanced Diplomacy START -->
+		<element type="CondemnCivics" minOccurs="0"/>
+		<element type="BonusObsoletes" minOccurs="0"/>
+		<!-- Advanced Diplomacy END -->	
 		<element type="iStateReligionVotePercent"/>
 		<element type="iTradeRoutes"/>
 		<element type="bSecretaryGeneral"/>
@@ -172,18 +195,29 @@
 		<element type="bForceNoTrade"/>
 		<element type="bForceWar"/>
 		<element type="bAssignCity"/>
-		<element type="ForceCivics"/>
-		<element type="DiploVotes"/>
-		<element type="bGamblingRing"/>
-		<element type="bNoOutsideTechTrades"/>
-		<element type="bSlaveTrade"/>
-		<element type="bSmugglingRing"/>
-		<element type="iCost"/>
-		<element type="iCrime"/>
-		<element type="iFreeUnits"/>
-		<element type="FreeUnitClass"/>
-		<element type="NoBonus"/>
-		<element type="PyResult"/>
+		<!-- Advanced Diplomacy START -->
+		<element type="bNoCapitalPunishment" minOccurs="0"/>
+		<element type="bMilitaryMedicineRights" minOccurs="0"/>
+		<element type="bPrisonerRights" minOccurs="0"/>
+		<element type="bTradeMap" minOccurs="0"/>
+		<element type="bBarbarianPeace" minOccurs="0"/>
+		<element type="bVictimRights" minOccurs="0"/>
+		<element type="bNoCityRazing" minOccurs="0"/>
+		<element type="bCultureNeedsEmptyRadius" minOccurs="0"/>
+		<element type="bPacificRule" minOccurs="0"/>
+		<!-- Advanced Diplomacy END -->
+		<element type="ForceCivics" minOccurs="0"/>
+		<element type="DiploVotes" minOccurs="0"/>
+		<element type="bGamblingRing" minOccurs="0"/>
+		<element type="bNoOutsideTechTrades" minOccurs="0"/>
+		<element type="bSlaveTrade" minOccurs="0"/>
+		<element type="bSmugglingRing" minOccurs="0"/>
+		<element type="iCost" minOccurs="0"/>
+		<element type="iCrime" minOccurs="0"/>
+		<element type="iFreeUnits" minOccurs="0"/>
+		<element type="FreeUnitClass" minOccurs="0"/>
+		<element type="NoBonus" minOccurs="0"/>
+		<element type="PyResult" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ProcessInfos" content="eltOnly">
 		<element type="ProcessInfo" maxOccurs="*"/>
@@ -704,6 +738,9 @@
 	<ElementType name="iCivicPercentAnger" content="textOnly" dt:type="int"/>
 	<ElementType name="bStateReligion" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bNoNonStateReligionSpread" content="textOnly" dt:type="boolean"/>
+	<!-- Advanced Diplomacy START -->
+	<ElementType name="bActiveSenate" content="textOnly" dt:type="boolean"/>
+	<!-- Advanced Diplomacy END -->
 	<ElementType name="iStateReligionHappiness" content="textOnly" dt:type="int"/>
 	<ElementType name="iNonStateReligionHappiness" content="textOnly" dt:type="int"/>
 	<ElementType name="iStateReligionUnitProductionModifier" content="textOnly" dt:type="int"/>
@@ -869,6 +906,9 @@
 		<element type="iCivicPercentAnger"/>
 		<element type="bStateReligion"/>
 		<element type="bNoNonStateReligionSpread"/>
+		<!-- Advanced Diplomacy START -->
+		<element type="bActiveSenate" minOccurs="0"/>
+		<!-- Advanced Diplomacy END -->
 		<element type="iStateReligionHappiness"/>
 		<element type="iNonStateReligionHappiness"/>
 		<element type="iStateReligionUnitProductionModifier"/>

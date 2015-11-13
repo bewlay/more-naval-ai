@@ -90,6 +90,10 @@ bool CvDllTranslator::replaceOur(const CvWString& szKey, int iForm, CvWString& s
 	{
 		szReplacement = player.getWorstEnemyName();
 	}
+	else if(szKey == L"[OUR_CLOSEST_ALLY")
+	{
+		szReplacement = player.getClosestAllyName();
+	}
 	else
 	{
 		FAssertMsg(false, "Unknown Diplomacy String");
@@ -128,6 +132,10 @@ bool CvDllTranslator::replaceCt(const CvWString& szKey, int iForm, CvWString& sz
 	else if(szKey == L"[CT_WORST_ENEMY")
 	{
 		szReplacement = player.getWorstEnemyName();
+	}
+	else if(szKey == L"[CT_CLOSEST_ALLY")
+	{
+		szReplacement = player.getClosestAllyName();
 	}
 	else
 	{

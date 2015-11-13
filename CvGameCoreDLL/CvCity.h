@@ -857,6 +857,15 @@ public:
 	void changeNumRevolts(PlayerTypes eIndex, int iChange);
 	int getRevoltTestProbability() const;
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	int getOriginalPopulation(PlayerTypes eIndex) const;
+	void setOriginalPopulation(PlayerTypes eIndex, int iNewValue);
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+	
 	bool isTradeRoute(PlayerTypes eIndex) const;																	// Exposed to Python
 	void setTradeRoute(PlayerTypes eIndex, bool bNewValue);
 
@@ -1375,6 +1384,13 @@ protected:
 	bool* m_abTradeRoute;
 	bool* m_abRevealed;
 	bool* m_abEspionageVisibility;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	std::vector<int> m_aiOriginalPopulation;/*int* m_aiAD; m_aiOriginalPopulation*/
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	CvWString m_szName;
 	CvString m_szScriptData;

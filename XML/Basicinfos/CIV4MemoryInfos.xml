@@ -1,9 +1,13 @@
-<?xml version="1.0"?>
-<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
-<!-- Sid Meier's Civilization 4 -->
-<!-- Copyright Firaxis Games 2005 -->
+<?xml version="1.0" ?>
+<!-- Sid Meier's Civilization 4 Beyond the Sword -->
+<!-- Modified by the World of Civilization Team -->
+<!-- Memory Infos -->
 <!-- -->
-<!-- Basic Infos -->
+<!-- MODDERS WARNING!	Memories are hard coded enumerated in the SDK -->
+<!-- MODDERS WARNING!	Memories are hard coded enumerated in the SDK -->
+<!-- MODDERS WARNING!	Memories are hard coded enumerated in the SDK -->
+<!-- MODDERS WARNING!	Memories are hard coded enumerated in the SDK -->
+<!-- MODDERS WARNING!	Memories are hard coded enumerated in the SDK -->
 <Civ4MemoryInfos xmlns="x-schema:CIV4BasicInfoSchema.xml">
 	<MemoryInfos>
 		<MemoryInfo>
@@ -150,11 +154,55 @@
 			<Type>MEMORY_SOMNIUM_DELAY</Type>
 			<Description>TXT_KEY_MEMORY_SOMNIUM</Description>
 		</MemoryInfo>
-		<!--Afforess Advanced Diplomacy-->
+		<!--Advanced Diplomacy-->
 		<!--Note to Mergers: This MUST BE IN EXACTLY THE SAME ORDER AS IN CvEnums.h!-->
 		<MemoryInfo>
 			<Type>MEMORY_RECALLED_AMBASSADOR</Type>
 			<Description>TXT_KEY_MEMORY_RECALLED_AMBASSADOR</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_WARMONGER</Type>
+			<Description>TXT_KEY_MEMORY_WARMONGER</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_MADE_PEACE</Type>
+			<Description>TXT_KEY_MEMORY_MADE_PEACE</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_BACKSTAB</Type>
+			<Description>TXT_KEY_MEMORY_BACKSTAB</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_BACKSTAB_FRIEND</Type>
+			<Description>TXT_KEY_MEMORY_BACKSTAB_FRIEND</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_CANCELLED_NON_AGGRESSION</Type>
+			<Description>TXT_KEY_MEMORY_CANCELLED_NON_AGGRESSION</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_CANCELLED_FREE_TRADE_AGREEMENT</Type>
+			<Description>TXT_KEY_MEMORY_CANCELLED_FREE_TRADE_AGREEMENT</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_TRADED_POW</Type>
+			<Description>TXT_KEY_MEMORY_TRADED_POW</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_KEPT_OUR_CITY</Type>
+			<Description>TXT_KEY_MEMORY_KEPT_OUR_CITY</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_WORKED_PLOT</Type>
+			<Description>TXT_KEY_MEMORY_WORKED_PLOT</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_YOU_POLLUTE</Type>
+			<Description>TXT_KEY_MEMORY_YOU_POLLUTE</Description>
+		</MemoryInfo>
+		<MemoryInfo>
+			<Type>MEMORY_BONUS_BAD_VOTE</Type>
+			<Description>TXT_KEY_MEMORY_BONUS_BAD_VOTE</Description>
 		</MemoryInfo>
 	</MemoryInfos>
 </Civ4MemoryInfos>

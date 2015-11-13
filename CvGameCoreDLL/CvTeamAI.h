@@ -167,6 +167,21 @@ public:
 	TeamTypes AI_getWorstEnemy() const;
 	void AI_updateWorstEnemy();
 
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	TeamTypes AI_getEnemy() const;
+	void AI_updateEnemy();
+	
+	TeamTypes AI_getClosestAlly() const;
+	void AI_updateClosestAlly();
+	
+	TeamTypes AI_getFriend() const;
+	void AI_updateFriend();
+/************************************************************************************************/
+/* Advanced Diplomacy                   END                                                   */
+/************************************************************************************************/
+	
 	int AI_getWarPlanStateCounter(TeamTypes eIndex) const;
 	void AI_setWarPlanStateCounter(TeamTypes eIndex, int iNewValue);
 	void AI_changeWarPlanStateCounter(TeamTypes eIndex, int iChange);
@@ -213,6 +228,32 @@ public:
 	bool AI_isSneakAttackReady(TeamTypes eIndex) const;
 	void AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar = true);
 
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	int AI_getLimitedBordersCounter(TeamTypes eIndex) const;
+	void AI_setLimitedBordersCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeLimitedBordersCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getEmbassyCounter(TeamTypes eIndex) const;
+	void AI_setEmbassyCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeEmbassyCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getFreeTradeAgreementCounter(TeamTypes eIndex) const;
+	void AI_setFreeTradeAgreementCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeFreeTradeAgreementCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getNonAggressionCounter(TeamTypes eIndex) const;
+	void AI_setNonAggressionCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeNonAggressionCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getPOWCounter(TeamTypes eIndex) const;
+	void AI_setPOWCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changePOWCounter(TeamTypes eIndex, int iChange);
+/************************************************************************************************/
+/* Advanced Diplomacy                   END                                                   */
+/************************************************************************************************/
+
 	int AI_teamCloseness(TeamTypes eIndex, int iMaxDistance = -1) const;
 	
 	bool AI_performNoWarRolls(TeamTypes eTeam);
@@ -229,22 +270,42 @@ public:
 	virtual void write(FDataStreamBase* pStream);
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-	int AI_embassyTradeVal(TeamTypes eTeam) const;
 	int AI_LimitedBordersTradeVal(TeamTypes eTeam) const;
-	
-	DenialTypes AI_embassyTrade(TeamTypes eTeam) const;
 	DenialTypes AI_LimitedBordersTrade(TeamTypes eTeam) const;
+	
+	int AI_embassyTradeVal(TeamTypes eTeam) const;
+	DenialTypes AI_embassyTrade(TeamTypes eTeam) const;
+
+    int AI_contactTradeVal(TeamTypes eContactTeam, TeamTypes eTeam) const;
+	DenialTypes AI_contactTrade(TeamTypes eContactTeam, TeamTypes eTeam) const;
+
+	int AI_FreeTradeAgreementVal(TeamTypes eTeam) const;
+	DenialTypes AI_FreeTradeAgreement(TeamTypes eTeam) const;
+
+	int AI_NonAggressionTradeVal(TeamTypes eTeam) const;
+	DenialTypes AI_NonAggressionTrade(TeamTypes eTeam) const;
+	
+	int AI_POWTradeVal(TeamTypes eTeam) const;
+	DenialTypes AI_POWTrade(TeamTypes eTeam) const;
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 protected:
 
 	static CvTeamAI* m_aTeams;
 
 	TeamTypes m_eWorstEnemy;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	TeamTypes m_eEnemy;
+	TeamTypes m_eClosestAlly;
+	TeamTypes m_eFriend;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/	
 
 	int* m_aiWarPlanStateCounter;
 	int* m_aiAtWarCounter;
@@ -256,19 +317,48 @@ protected:
 	int* m_aiWarSuccess;
 	int* m_aiEnemyPeacetimeTradeValue;
 	int* m_aiEnemyPeacetimeGrantValue;
-
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	int* m_aiLimitedBordersCounter;
+	int* m_aiEmbassyCounter;
+	int* m_aiFreeTradeAgreementCounter;
+	int* m_aiNonAggressionCounter;
+	int* m_aiPOWCounter;
+/* Afforess	                  Start		 		                                                */
+	int m_iNoTechTradeThreshold;
+	int m_iTechTradeKnownPercent;
+	int m_iMaxWarRand;
+	int m_iMaxWarNearbyPowerRatio;
+	int m_iMaxWarDistantPowerRatio;
+	int m_iMaxWarMinAdjacentLandPercent;
+	int m_iLimitedWarRand;
+	int m_iLimitedWarPowerRatio;
+	int m_iDogpileWarRand;
+	int m_iMakePeaceRand;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/	
+	//edited functions
 	WarPlanTypes* m_aeWarPlan;
 
-	int AI_noTechTradeThreshold() const;
-	int AI_techTradeKnownPercent() const;
-	int AI_maxWarRand() const;
-	int AI_maxWarNearbyPowerRatio() const;
-	int AI_maxWarDistantPowerRatio() const;
-	int AI_maxWarMinAdjacentLandPercent() const;
-	int AI_limitedWarRand() const;
-	int AI_limitedWarPowerRatio() const;
-	int AI_dogpileWarRand() const;
-	int AI_makePeaceRand() const;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/	
+/* Afforess	                  Start																*/
+	int AI_noTechTradeThreshold(bool bRecalculate = false) const;
+	int AI_techTradeKnownPercent(bool bRecalculate = false) const;
+	int AI_maxWarRand(bool bRecalculate = false) const;
+	int AI_maxWarNearbyPowerRatio(bool bRecalculate = false) const;
+	int AI_maxWarDistantPowerRatio(bool bRecalculate = false) const;
+	int AI_maxWarMinAdjacentLandPercent(bool bRecalculate = false) const;
+	int AI_limitedWarRand(bool bRecalculate = false) const;
+	int AI_limitedWarPowerRatio(bool bRecalculate = false) const;
+	int AI_dogpileWarRand(bool bRecalculate = false) const;
+	int AI_makePeaceRand(bool bRecalculate = false) const;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int AI_noWarAttitudeProb(AttitudeTypes eAttitude) const;
 
 	void AI_doCounter();

@@ -184,6 +184,22 @@ struct BuildingCommerceChange
 	void write(FDataStreamBase* pStream);
 };
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+struct VoteSourceCondemnedWar
+{
+	VoteSourceTypes eVoteSource;
+	TeamTypes eWarTeam;
+	int iCount;
+
+	void read(FDataStreamBase* pStream);
+	void write(FDataStreamBase* pStream);
+};
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 
 struct DllExport FOWVis
 {

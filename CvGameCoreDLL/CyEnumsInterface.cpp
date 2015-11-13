@@ -425,6 +425,18 @@ void CyEnumsPythonInterface()
 		.value("WIDGET_HELP_TRAIT", WIDGET_HELP_TRAIT)
 //<<<<BUGFfH: End Add
 		.value("WIDGET_HELP_PUPPET_STATE", WIDGET_HELP_PUPPET_STATE) // MNAI - Puppet States
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		.value("WIDGET_HELP_RIGHT_PASSAGE", WIDGET_HELP_RIGHT_PASSAGE)
+		.value("WIDGET_HELP_EMBASSY", WIDGET_HELP_EMBASSY)
+		.value("WIDGET_HELP_FREE_TRADE_AGREEMENT", WIDGET_HELP_FREE_TRADE_AGREEMENT)
+		.value("WIDGET_HELP_NON_AGGRESSION", WIDGET_HELP_NON_AGGRESSION)
+		.value("WIDGET_HELP_POW", WIDGET_HELP_POW)
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+		
 		.value("NUM_WIDGET_TYPES", NUM_WIDGET_TYPES)
 		;
 
@@ -994,6 +1006,14 @@ void CyEnumsPythonInterface()
 		.value("DENIAL_WORST_ENEMY", DENIAL_WORST_ENEMY)
 		.value("DENIAL_POWER_YOUR_ENEMIES", DENIAL_POWER_YOUR_ENEMIES)
 		.value("DENIAL_TOO_FAR", DENIAL_TOO_FAR)
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                              */
+/************************************************************************************************/
+		.value("DENIAL_YOU_ADVANCE", DENIAL_YOU_ADVANCE)
+		.value("DENIAL_WE_NEED_IT_MUCH", DENIAL_WE_NEED_IT_MUCH)
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                             */
+/************************************************************************************************/
 		;
 
 	python::enum_<DomainTypes>("DomainTypes")
@@ -1462,14 +1482,22 @@ void CyEnumsPythonInterface()
 		.value("TRADE_RELIGION", TRADE_RELIGION)
 /************************************************************************************************/
 /* Afforess	                  Start		 06/16/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 		.value("TRADE_EMBASSY", TRADE_EMBASSY)
+		.value("TRADE_WORKER", TRADE_WORKER)
 		.value("TRADE_MILITARY_UNIT", TRADE_MILITARY_UNIT)
+		.value("TRADE_CONTACT", TRADE_CONTACT)
+		.value("TRADE_CORPORATION", TRADE_CORPORATION)
+		.value("TRADE_SECRETARY_GENERAL_VOTE", TRADE_SECRETARY_GENERAL_VOTE)
 		.value("TRADE_RIGHT_OF_PASSAGE", TRADE_RIGHT_OF_PASSAGE)
+		.value("TRADE_FREE_TRADE_ZONE", TRADE_FREE_TRADE_ZONE)
+		.value("TRADE_NON_AGGRESSION", TRADE_NON_AGGRESSION)
+		.value("TRADE_WAR_PREPARE", TRADE_WAR_PREPARE)
+		.value("TRADE_POW", TRADE_POW)
+		.value("TRADE_WAR_REPARATIONS", TRADE_WAR_REPARATIONS)		
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 		.value("NUM_TRADEABLE_HEADINGS", NUM_TRADEABLE_HEADINGS)
 		.value("NUM_TRADEABLE_ITEMS", NUM_TRADEABLE_ITEMS)
@@ -1499,14 +1527,17 @@ void CyEnumsPythonInterface()
 		.value("DIPLOEVENT_TARGET_CITY", DIPLOEVENT_TARGET_CITY)
 		.value("DIPLOEVENT_MADE_DEMAND_VASSAL", DIPLOEVENT_MADE_DEMAND_VASSAL)
 /************************************************************************************************/
-/* Afforess	                  Start		 02/14/10                                               */
-/*                                                                                              */
-/*                                                                                              */
+/* Afforess	                  Start		 07/29/10                                               */
+/* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 		.value("DIPLOEVENT_MAKE_PEACE_WITH", DIPLOEVENT_MAKE_PEACE_WITH)
 		.value("DIPLOEVENT_NO_MAKE_PEACE_WITH", DIPLOEVENT_NO_MAKE_PEACE_WITH)
+        // RevolutionDCM start - new diplomacy option
+		.value("DIPLOEVENT_DO_NOT_BOTHER", DIPLOEVENT_DO_NOT_BOTHER)
+		.value("DIPLOEVENT_RESUME_BOTHER", DIPLOEVENT_RESUME_BOTHER)
+		// RevolutionDCM end
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 		.value("NUM_DIPLOEVENT_TYPES", NUM_DIPLOEVENT_TYPES)
 		;
@@ -1541,16 +1572,22 @@ void CyEnumsPythonInterface()
 		.value("CONTACT_TRADE_MAP", CONTACT_TRADE_MAP)
 /************************************************************************************************/
 /* Afforess	                  Start		 08/05/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 		.value("CONTACT_PEACE_PRESSURE", CONTACT_PEACE_PRESSURE)
 		.value("CONTACT_EMBASSY", CONTACT_EMBASSY)
 		.value("CONTACT_TRADE_STOP_TRADING", CONTACT_TRADE_STOP_TRADING)
 		.value("CONTACT_TRADE_JOIN_WAR", CONTACT_TRADE_JOIN_WAR)
+		.value("CONTACT_SECRETARY_GENERAL_VOTE", CONTACT_SECRETARY_GENERAL_VOTE)
 		.value("CONTACT_TRADE_MILITARY_UNITS", CONTACT_TRADE_MILITARY_UNITS)
+		.value("CONTACT_TRADE_WORKERS", CONTACT_TRADE_WORKERS)
+		.value("CONTACT_TRADE_CONTACTS", CONTACT_TRADE_CONTACTS)
+		.value("CONTACT_TRADE_CORPORATION", CONTACT_TRADE_CORPORATION)
+		.value("CONTACT_NON_AGGRESSION", CONTACT_NON_AGGRESSION)
+		.value("CONTACT_POW", CONTACT_POW)
+		.value("CONTACT_TRADE_WAR_REPARATIONS", CONTACT_TRADE_WAR_REPARATIONS)
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 		.value("NUM_CONTACT_TYPES", NUM_CONTACT_TYPES)
 		;
@@ -1598,14 +1635,23 @@ void CyEnumsPythonInterface()
 
 /************************************************************************************************/
 /* Afforess	                  Start		 08/05/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 		.value("MEMORY_RECALLED_AMBASSADOR", MEMORY_RECALLED_AMBASSADOR)
+		.value("MEMORY_WARMONGER", MEMORY_WARMONGER)
+		.value("MEMORY_MADE_PEACE", MEMORY_MADE_PEACE)
+		.value("MEMORY_BACKSTAB", MEMORY_BACKSTAB)
+		.value("MEMORY_BACKSTAB_FRIEND", MEMORY_BACKSTAB_FRIEND)
+		.value("MEMORY_CANCELLED_NON_AGGRESSION", MEMORY_CANCELLED_NON_AGGRESSION)
+		.value("MEMORY_CANCELLED_FREE_TRADE_AGREEMENT", MEMORY_CANCELLED_FREE_TRADE_AGREEMENT)
+		.value("MEMORY_TRADED_POW", MEMORY_TRADED_POW)
+		.value("MEMORY_KEPT_OUR_CITY", MEMORY_KEPT_OUR_CITY)
+		.value("MEMORY_WORKED_PLOT", MEMORY_WORKED_PLOT)
+		.value("MEMORY_YOU_POLLUTE", MEMORY_YOU_POLLUTE)
+		.value("MEMORY_BONUS_BAD_VOTE", MEMORY_BONUS_BAD_VOTE)
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
-
 		.value("NUM_MEMORY_TYPES", NUM_MEMORY_TYPES)
 		;
 

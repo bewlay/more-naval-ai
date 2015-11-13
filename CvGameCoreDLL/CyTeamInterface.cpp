@@ -144,6 +144,17 @@ void CyTeamPythonInterface()
 		.def("getWaterWorkCount", &CyTeam::getWaterWorkCount, "int ()")
 		.def("isWaterWork", &CyTeam::isWaterWork, "bool ()")
 		.def("changeWaterWorkCount", &CyTeam::changeWaterWorkCount, "void (iChange)")
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		.def("isLimitedBordersTrading", &CyTeam::isLimitedBordersTrading, "bool ()")
+		.def("isEmbassyTrading", &CyTeam::isEmbassyTrading, "bool ()")
+		.def("isFreeTradeAgreementTrading", &CyTeam::isFreeTradeAgreementTrading, "bool ()")
+		.def("isNonAggressionTrading", &CyTeam::isNonAggressionTrading, "bool ()")
+		.def("isPOWTrading", &CyTeam::isPOWTrading, "bool ()")
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 		.def("getVassalPower", &CyTeam::getVassalPower, "int ()")
 		.def("setVassalPower", &CyTeam::setVassalPower, "void (int)")
@@ -220,17 +231,19 @@ void CyTeamPythonInterface()
 
 		.def("isBarbarianAlly", &CyTeam::isBarbarianAlly, "bool ()")
 /************************************************************************************************/
-/* Afforess	                  Start		 03/10/10                                               */
-/*                                                                                              */
+/* Afforess	                  Start		 		                                                */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-		.def("isHasEmbassy", &CyTeam::isHasEmbassy, "bool (TeamTypes)")
-		.def("setHasEmbassy", &CyTeam::setHasEmbassy, "void (TeamTypes eIndex, bool bNewValue)")
 		.def("isLimitedBorders", &CyTeam::isLimitedBorders, "bool (TeamTypes)")
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+		.def("isHasEmbassy", &CyTeam::isHasEmbassy, "bool (TeamTypes)")
+		.def("isHasNonAggression", &CyTeam::isHasNonAggression, "bool (TeamTypes)")
+		.def("isHasPOW", &CyTeam::isHasPOW, "bool (TeamTypes)")
 
+		.def("signLimitedBorders", &CyTeam::signLimitedBorders, "void (int /*TeamTypes*/ eTeam)")
+		.def("setHasEmbassy", &CyTeam::setHasEmbassy, "void (int /*TeamTypes*/ eTeam)")
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 		.def("getVictoryCountdown", &CyTeam::getVictoryCountdown, "int (int /*VictoryTypes*/)")
 		.def("getVictoryDelay", &CyTeam::getVictoryDelay, "int (int /*VictoryTypes*/)")
 		.def("canLaunch", &CyTeam::canLaunch, "bool ()")

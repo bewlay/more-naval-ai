@@ -579,6 +579,17 @@ enum WidgetTypes					// Exposed to Python
 // MNAI - Puppet States
 	WIDGET_HELP_PUPPET_STATE,
 // MNAI - End Puppet States
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	WIDGET_HELP_RIGHT_PASSAGE,
+	WIDGET_HELP_EMBASSY,
+	WIDGET_HELP_FREE_TRADE_AGREEMENT,
+	WIDGET_HELP_NON_AGGRESSION,
+	WIDGET_HELP_POW,
+/************************************************************************************************/
+/* Advanced Diplomacy                   END                                                     */
+/************************************************************************************************/
 
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES
@@ -872,6 +883,17 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_REVOLUTIONS,
 	GAMEOPTION_ADVANCED_TACTICS,
 // MNAI End
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+//	GAMEOPTION_ADVANCED_TACTICS,
+//	GAMEOPTION_ACTIVE_SENATE,
+//	GAMEOPTION_NO_UN_OBSOLETE_BONUS,
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES
@@ -930,6 +952,13 @@ enum PlayerOptionTypes			// Exposed to Python
 	PLAYEROPTION_MODDER_1,
 	PLAYEROPTION_MODDER_2,
 	PLAYEROPTION_MODDER_3,
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/
+	PLAYEROPTION_NUCLEAR_DISSUASION,
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 #ifdef _USRDLL
 	NUM_PLAYEROPTION_TYPES
@@ -1375,7 +1404,17 @@ enum DenialTypes				// Exposed to Python
 	DENIAL_WAR_NOT_POSSIBLE_US,
 	DENIAL_WAR_NOT_POSSIBLE_YOU,
 	DENIAL_PEACE_NOT_POSSIBLE_US,
-	DENIAL_PEACE_NOT_POSSIBLE_YOU
+	DENIAL_PEACE_NOT_POSSIBLE_YOU,
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	DENIAL_YOU_ADVANCE,
+	DENIAL_WE_NEED_IT_MUCH,
+	DENIAL_SENATE_VETO,
+/************************************************************************************************/
+/* Advanced Diplomacy                   END                                                   */
+/************************************************************************************************/
+
 };
 
 enum DomainTypes			// Exposed to Python
@@ -2047,13 +2086,18 @@ enum TradeableItems						// Exposed to Python
 	TRADE_PEACE_TREATY,
 /************************************************************************************************/
 /* Afforess	                  Start		 06/26/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
+	TRADE_NON_AGGRESSION,
+	TRADE_POW,
 	TRADE_RIGHT_OF_PASSAGE,
+	TRADE_FREE_TRADE_ZONE,
+	TRADE_EMBASSY,
+	TRADE_WAR_REPARATIONS,
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
+
 #ifdef _USRDLL
 	NUM_BASIC_ITEMS,
 
@@ -2066,19 +2110,29 @@ enum TradeableItems						// Exposed to Python
 	TRADE_CITIES,
 	TRADE_PEACE,
 	TRADE_WAR,
+/*************************************************************************************************/
+/** Advanced Diplomacy       START															     */
+/*************************************************************************************************/
+	TRADE_WAR_PREPARE, //byFra
+/*************************************************************************************************/
+/** Advanced Diplomacy       END															     */
+/*************************************************************************************************/
 	TRADE_EMBARGO,
 	TRADE_CIVIC,
 	TRADE_RELIGION,
 /************************************************************************************************/
 /* Afforess	                  Start		 06/16/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-	TRADE_EMBASSY,
+	TRADE_WORKER,
 	TRADE_MILITARY_UNIT,
+	TRADE_CONTACT,
+	TRADE_CORPORATION,
+	TRADE_SECRETARY_GENERAL_VOTE,
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
+
 #ifdef _USRDLL
 	NUM_TRADEABLE_HEADINGS,
 
@@ -2112,15 +2166,18 @@ enum DiploEventTypes					// Exposed to Python
 	DIPLOEVENT_TARGET_CITY,
 	DIPLOEVENT_MADE_DEMAND_VASSAL,
 /************************************************************************************************/
-/* Afforess                                     12/7/09                                         */
-/*                                                                                              */
+/* Afforess	                  Start		  		                                                */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	DIPLOEVENT_MAKE_PEACE_WITH,
 	DIPLOEVENT_NO_MAKE_PEACE_WITH,
+	// RevolutionDCM start - new diplomacy option
+	DIPLOEVENT_DO_NOT_BOTHER,
+	DIPLOEVENT_RESUME_BOTHER,
+	// RevolutionDCM end
 /************************************************************************************************/
-/* Afforess	                         END                                                        */
-/************************************************************************************************/	
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 #ifdef _USRDLL
 	NUM_DIPLOEVENT_TYPES
@@ -2162,17 +2219,23 @@ enum ContactTypes							// Exposed to Python
 	CONTACT_TRADE_BONUS,
 	CONTACT_TRADE_MAP,
 /************************************************************************************************/
-/* Afforess                                     12/7/09                                         */
-/*                                                                                              */
-/* Advanced Diplomacy                                                                                             */
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	CONTACT_PEACE_PRESSURE,
 	CONTACT_EMBASSY,
+	CONTACT_NON_AGGRESSION, 
+	CONTACT_POW, 
 	CONTACT_TRADE_STOP_TRADING,
 	CONTACT_TRADE_JOIN_WAR,
+	CONTACT_SECRETARY_GENERAL_VOTE,
 	CONTACT_TRADE_MILITARY_UNITS,
+	CONTACT_TRADE_WORKERS,
+	CONTACT_TRADE_CONTACTS,
+	CONTACT_TRADE_CORPORATION,
+	CONTACT_TRADE_WAR_REPARATIONS,
 /************************************************************************************************/
-/* Afforess	                         END                                                        */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/	
 
 	NUM_CONTACT_TYPES
@@ -2224,14 +2287,27 @@ enum MemoryTypes							// Exposed to Python
 //	MEMORY_MADE_PUPPET,
 	/*** PUPPET STATES END ***/
 /************************************************************************************************/
-/* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
+/* Afforess/Stolenrays        Start		 07/29/10                                               */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	MEMORY_RECALLED_AMBASSADOR,
+	MEMORY_WARMONGER,
+	MEMORY_MADE_PEACE,
+	MEMORY_BACKSTAB,
+	MEMORY_BACKSTAB_FRIEND,
+	MEMORY_CANCELLED_NON_AGGRESSION,
+	MEMORY_CANCELLED_FREE_TRADE_AGREEMENT,
+	MEMORY_TRADED_POW,
+	/*** EXTRACONQUEST 4/21/08 by DPII ***/
+	MEMORY_KEPT_OUR_CITY,
+	/*************************************/
+	MEMORY_WORKED_PLOT,
+	MEMORY_YOU_POLLUTE,
+	MEMORY_BONUS_BAD_VOTE,
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
+
 	NUM_MEMORY_TYPES
 };
 

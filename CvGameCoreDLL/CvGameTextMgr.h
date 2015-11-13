@@ -176,6 +176,13 @@ public:
 	DllExport void setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType);
 	DllExport void setConvertHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, ReligionTypes eReligion);
 	DllExport void setRevolutionHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer);
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/
+	DllExport void setCondemnCivicHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, CivicTypes eCivic);
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                             */
+/************************************************************************************************/
 	DllExport void setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMaster, TeamTypes eVassal);
 	DllExport void setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, int iEventTriggeredId, PlayerTypes ePlayer);
 	DllExport void setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvCity* pCity);
@@ -228,13 +235,15 @@ public:
 	DllExport void buildBuildingRequiresString(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, bool bCivilopediaText, bool bTechChooserText, const CvCity* pCity);
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-	void buildEmbassyString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
-	void buildLimitedBordersString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	DllExport void buildLimitedBordersString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	DllExport void buildEmbassyString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	DllExport void buildFreeTradeAgreementString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	DllExport void buildNonAggressionString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	DllExport void buildPOWString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 	DllExport void buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity);
 	DllExport void buildCityBillboardCityNameString( CvWStringBuffer& szBuffer, CvCity* pCity);

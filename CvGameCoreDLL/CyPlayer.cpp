@@ -110,6 +110,23 @@ void CyPlayer::updateStabilityIndexAverage( )
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  Glider1      */
+/*************************************************************************************************/
+// RevolutionDCM start - new diplomacy option
+bool CyPlayer::isDoNotBotherStatus(int /*PlayerTypes*/ playerID)
+{
+	if( m_pPlayer )
+		return m_pPlayer->isDoNotBotherStatus((PlayerTypes)playerID);
+	else
+		return false;
+}
+// RevolutionDCM end
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    Glider1      */
+/*************************************************************************************************/
+
 int CyPlayer::startingPlotRange()
 {
 	return m_pPlayer ? m_pPlayer->startingPlotRange() : -1;

@@ -831,6 +831,26 @@
 			<Path>Art/Interface/Screens/TechTree/Open_Borders.dds</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_LIMITED_BORDERS</Type>
+			<Path>Art/Interface/Screens/TechTree/Open_Borders.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_EMBASSY</Type>
+			<Path>Art/Interface/Buttons/Embassy.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_FREE_TRADE_AGREEMENT</Type>
+			<Path>Art/Interface/Buttons/FreeTrade.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_NON_AGGRESSION</Type>
+			<Path>Art/Interface/Buttons/NonAggression.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
+			<Type>INTERFACE_TECH_POW</Type>
+			<Path>Art/Interface/Buttons/POW.dds</Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
 			<Type>INTERFACE_TECH_PERMALLIANCE</Type>
 			<Path>Art/Interface/Screens/TechTree/Permanent_Alliances.dds</Path>
 		</InterfaceArtInfo>

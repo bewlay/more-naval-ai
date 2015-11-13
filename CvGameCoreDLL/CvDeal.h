@@ -46,6 +46,14 @@ public:
 	void clearFirstTrades();
 	void insertAtEndFirstTrades(TradeData trade);
 	DllExport CLLNode<TradeData>* nextFirstTradesNode(CLLNode<TradeData>* pNode) const;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/17/10                                               */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	void removeFirstTradeNode(CLLNode<TradeData>* node);
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int getLengthFirstTrades() const;
 	DllExport CLLNode<TradeData>* headFirstTradesNode() const;
 	const CLinkList<TradeData>* getFirstTrades() const;
@@ -53,6 +61,14 @@ public:
 	void clearSecondTrades();
 	void insertAtEndSecondTrades(TradeData trade);
 	DllExport CLLNode<TradeData>* nextSecondTradesNode(CLLNode<TradeData>* pNode) const;
+/************************************************************************************************/
+/* Afforess	                  Start		 07/17/10                                               */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	void removeSecondTradeNode(CLLNode<TradeData>* node);
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int getLengthSecondTrades() const;
 	DllExport CLLNode<TradeData>* headSecondTradesNode() const;
 	const CLinkList<TradeData>* getSecondTrades() const;
@@ -72,12 +88,12 @@ public:
 
 /************************************************************************************************/
 /* Afforess	                  Start		 07/17/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
+	static bool isSingleOption(TradeableItems eItem);
 	bool isEmbassy();
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);

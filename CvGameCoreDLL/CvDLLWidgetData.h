@@ -247,6 +247,18 @@ public:
 	void doPediaTraitJump(CvWidgetDataStruct &widgetDataStruct);
 	void parseTraitHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 //<<<<BUGFfH: End Add
+
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	void parseLimitedBordersHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	void parseEmbassyHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	void parseFreeTradeAgreementHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	void parseNonAggressionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	void parsePOWHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+/************************************************************************************************/
+/* Advanced Diplomacy                   END                                                     */
+/************************************************************************************************/
 protected:
 
 	static CvDLLWidgetData* m_pInst;

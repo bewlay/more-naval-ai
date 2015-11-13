@@ -561,6 +561,14 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	m_aiOriginalPopulation.clear();
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	for (iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		m_aiSeaPlotYield[iI] = 0;
@@ -1181,7 +1189,23 @@ void CvCity::kill(bool bUpdatePlotGroups)
 			pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
 		}
 	}
-
+/************************************************************************************************/
+/* Advanced Diplomacy         Start                                                             */
+/************************************************************************************************/
+	//ls612: Embassy visibility fix (by Damgo)
+	if (bCapital)
+	{
+		for (iI = 0; iI < MAX_TEAMS; iI++)
+		{
+			if (GET_TEAM(GET_PLAYER(eOwner).getTeam()).isHasEmbassy((TeamTypes)iI))
+			{
+				pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
+			}
+		}
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	GET_PLAYER(eOwner).updateMaintenance();
 
 	GC.getMapINLINE().updateWorkingCity();
@@ -5422,6 +5446,18 @@ int CvCity::goodHealth() const
 		iTotalHealth += iHealth;
 	}
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	if (GC.getGameINLINE().isNoCapitalPunishment())
+	{
+		iTotalHealth *= 200;
+		iTotalHealth /= 100;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+	
 	iHealth = getFeatureGoodHealth();
 	if (iHealth > 0)
 	{
@@ -11209,6 +11245,45 @@ int CvCity::getNumRevolts(PlayerTypes eIndex) const
 	return m_aiNumRevolts[eIndex];
 }
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+int CvCity::getOriginalPopulation(PlayerTypes eIndex) const
+{
+	FAssertMsg((eIndex >= 0 && eIndex < MAX_PLAYERS), "eIndex is expected to be >= 0");
+
+	if (m_aiOriginalPopulation.size() <= 0)
+	{
+		return 0;
+	}
+
+	return m_aiOriginalPopulation[eIndex];
+}
+
+
+void CvCity::setOriginalPopulation(PlayerTypes eIndex, int iNewValue)
+{
+	FAssertMsg((eIndex >= 0 && eIndex < MAX_PLAYERS), "eIndex is expected to be >= 0");
+
+	if (iNewValue != getOriginalPopulation(eIndex))
+	{
+		if(m_aiOriginalPopulation.size() <= 0)
+		{
+			m_aiOriginalPopulation.clear();
+			for (int i = 0; i < MAX_PLAYERS; ++i)
+			{
+				m_aiOriginalPopulation.push_back(0);
+			}
+		}
+
+		m_aiOriginalPopulation[eIndex] = iNewValue;
+
+		FAssert(getOriginalPopulation(eIndex) >= 0);
+	}
+}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 void CvCity::changeNumRevolts(PlayerTypes eIndex, int iChange)
 {
@@ -14109,9 +14184,18 @@ void CvCity::doPlotCulture(bool bUpdate, PlayerTypes ePlayer, int iCultureRate)
 
 						if (pLoopPlot != NULL)
 						{
-							if (pLoopPlot->isPotentialCityWorkForArea(area()))
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/
+							if (!GC.getGameINLINE().isCultureNeedsEmptyRadius())
 							{
-								pLoopPlot->changeCulture(ePlayer, (((eCultureLevel - iCultureRange) * iFreeCultureRate) + iCultureRate + 1), (bUpdate || !(pLoopPlot->isOwned())));
+								if (pLoopPlot->isPotentialCityWorkForArea(area()))
+								{
+									pLoopPlot->changeCulture(ePlayer, (((eCultureLevel - iCultureRange) * iFreeCultureRate) + iCultureRate + 1), (bUpdate || !(pLoopPlot->isOwned())));
+								}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/						
 							}
 						}
 					}
@@ -14911,6 +14995,24 @@ void CvCity::read(FDataStreamBase* pStream)
 		pStream->Read(&iChange);
 		m_aBuildingHealthChange.push_back(std::make_pair((BuildingClassTypes)iBuildingClass, iChange));
 	}
+
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	{
+		m_aiOriginalPopulation.clear();
+		uint iSize;
+		pStream->Read(&iSize);
+		for (uint i = 0; i < iSize; i++)
+		{
+			int iValue;
+			pStream->Read(&iValue);
+			m_aiOriginalPopulation.push_back(iValue);
+		}
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 }
 
 void CvCity::write(FDataStreamBase* pStream)
@@ -15169,6 +15271,22 @@ void CvCity::write(FDataStreamBase* pStream)
 		pStream->Write((*it).first);
 		pStream->Write((*it).second);
 	}
+	
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	{
+		uint iSize = m_aiOriginalPopulation.size();
+		pStream->Write(iSize);
+		std::vector<int>::iterator it;
+		for (it = m_aiOriginalPopulation.begin(); it != m_aiOriginalPopulation.end(); ++it)
+		{
+			pStream->Write((*it));
+		}
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 }
 
 
@@ -16773,29 +16891,37 @@ bool CvCity::isAutoRaze() const
 {
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_RAZING))
 	{
-		if (getHighestPopulation() == 1)
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+		if (!GC.getGameINLINE().isNoCityRazing())
+		{
+			if (getHighestPopulation() == 1)
+			{
+				return true;
+			}
+
+			if (GC.getGameINLINE().getMaxCityElimination() > 0)
+			{
+				return true;
+			}
+		}
+		
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ONE_CITY_CHALLENGE) && isHuman())
 		{
 			return true;
 		}
 
-		if (GC.getGameINLINE().getMaxCityElimination() > 0)
+		//FfH: Added by Kael 11/03/2008
+		if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_RAZE))
 		{
-			return true;
+		    return true;
 		}
+		//FfH: End Add
 	}
-
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ONE_CITY_CHALLENGE) && isHuman())
-	{
-		return true;
-	}
-
-//FfH: Added by Kael 11/03/2008
-	if (GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_RAZE))
-	{
-	    return true;
-	}
-//FfH: End Add
-
 	return false;
 }
 

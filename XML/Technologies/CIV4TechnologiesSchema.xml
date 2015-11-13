@@ -27,6 +27,13 @@
 	<ElementType name="iPower" content="textOnly" dt:type="int"/>
 	<ElementType name="bRepeat" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bTrade" content="textOnly" dt:type="boolean"/>
+	<!--  Advanced Diplomacy--> 
+	<ElementType name="bLimitedBordersTrading" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bEmbassyTrading" content="textOnly" dt:type="boolean"/>	
+	<ElementType name="bFreeTradeAgreementTrading" content="textOnly" dt:type="boolean"/>	
+	<ElementType name="bNonAggressionTrading" content="textOnly" dt:type="boolean"/>	
+	<ElementType name="bPOWTrading" content="textOnly" dt:type="boolean"/>	
+	<!--  Advanced Diplomacy--> 
 	<ElementType name="bDisable" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bGoodyTech" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bExtraWaterSeeFrom" content="textOnly" dt:type="boolean"/>
@@ -35,10 +42,6 @@
 	<ElementType name="bMapTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bTechTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bGoldTrading" content="textOnly" dt:type="boolean"/>
-	<!-- Afforess Advanced Diplomacy--> 
-	<ElementType name="bLimitedBordersTrading" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bEmbassyTrading" content="textOnly" dt:type="boolean"/>	
-	<!-- Afforess Advanced Diplomacy--> 
 	<ElementType name="bOpenBordersTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDefensivePactTrading" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPermanentAllianceTrading" content="textOnly" dt:type="boolean"/>
@@ -126,6 +129,13 @@
 		<element type="iPower"/>
 		<element type="bRepeat"/>
 		<element type="bTrade"/>
+		<!--  Advanced Diplomacy--> 
+		<element type="bLimitedBordersTrading" minOccurs="0"/>
+		<element type="bEmbassyTrading" minOccurs="0"/>
+		<element type="bFreeTradeAgreementTrading" minOccurs="0"/>
+		<element type="bNonAggressionTrading" minOccurs="0"/>
+		<element type="bPOWTrading" minOccurs="0"/>
+		<!--  Advanced Diplomacy--> 
 		<element type="bDisable"/>
 		<element type="bGoodyTech"/>
 		<element type="bExtraWaterSeeFrom"/>
@@ -134,10 +144,6 @@
 		<element type="bMapTrading"/>
 		<element type="bTechTrading"/>
 		<element type="bGoldTrading"/>
-		<!-- Afforess Advanced Diplomacy--> 
-		<element type="bLimitedBordersTrading" minOccurs="0"/>
-		<element type="bEmbassyTrading" minOccurs="0"/>
-		<!-- Afforess Advanced Diplomacy--> 
 		<element type="bOpenBordersTrading"/>
 		<element type="bDefensivePactTrading"/>
 		<element type="bPermanentAllianceTrading"/>

@@ -1098,26 +1098,64 @@ int CyTeam::isBarbarianAlly() const
 // End FFH
 
 /************************************************************************************************/
-/* Afforess	                  Start		 03/10/10                                               */
-/*                                                                                              */
+/* Afforess	                  Start		 		                                                */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
+bool CyTeam::isLimitedBorders(int /*TeamTypes*/ eIndex)
+{
+	return m_pTeam ? m_pTeam->isLimitedBorders((TeamTypes)eIndex) : false;
+}
+
 bool CyTeam::isHasEmbassy(int /*TeamTypes*/ eTeam) const
 {
 	return m_pTeam ? m_pTeam->isHasEmbassy((TeamTypes)eTeam) : false;
 }
 
-void CyTeam::setHasEmbassy(int /*TeamTypes*/ eTeam, bool bNewValue) const
+bool CyTeam::isHasNonAggression(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam ? m_pTeam->isHasNonAggression((TeamTypes)eTeam) : false;
+}
+
+bool CyTeam::isHasPOW(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam ? m_pTeam->isHasPOW((TeamTypes)eTeam) : false;
+}
+
+bool CyTeam::isLimitedBordersTrading()
+{
+	return m_pTeam ? m_pTeam->isLimitedBordersTrading() : false;
+}
+
+bool CyTeam::isEmbassyTrading()
+{
+	return m_pTeam ? m_pTeam->isEmbassyTrading() : false;
+}
+
+bool CyTeam::isFreeTradeAgreementTrading()
+{
+	return m_pTeam ? m_pTeam->isFreeTradeAgreementTrading() : false;
+}
+
+bool CyTeam::isNonAggressionTrading()
+{
+	return m_pTeam ? m_pTeam->isNonAggressionTrading() : false;
+}
+
+bool CyTeam::isPOWTrading()
+{
+	return m_pTeam ? m_pTeam->isPOWTrading() : false;
+}
+
+void CyTeam::signLimitedBorders(int /*TeamTypes*/ eTeam)
 {
 	if (m_pTeam)
-		m_pTeam->setHasEmbassy((TeamTypes)eTeam, bNewValue);
+		m_pTeam->signLimitedBorders((TeamTypes)eTeam);
 }
 
-bool CyTeam::isLimitedBorders(int /*TeamTypes*/ eTeam) const
+void CyTeam::setHasEmbassy(int /*TeamTypes*/ eTeam)
 {
-	return m_pTeam ? m_pTeam->isLimitedBorders((TeamTypes)eTeam) : false;
-}
+	return m_pTeam ? m_pTeam->setHasEmbassy(((TeamTypes)eTeam), true) : false;
+}	
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
-

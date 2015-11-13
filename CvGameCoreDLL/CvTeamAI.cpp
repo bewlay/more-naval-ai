@@ -66,7 +66,17 @@ CvTeamAI::CvTeamAI()
 	m_aiEnemyPeacetimeTradeValue = new int[MAX_TEAMS];
 	m_aiEnemyPeacetimeGrantValue = new int[MAX_TEAMS];
 	m_aeWarPlan = new WarPlanTypes[MAX_TEAMS];
-
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	m_aiLimitedBordersCounter = new int[MAX_TEAMS];
+	m_aiEmbassyCounter = new int[MAX_TEAMS];
+	m_aiFreeTradeAgreementCounter = new int[MAX_TEAMS];
+	m_aiNonAggressionCounter = new int[MAX_TEAMS];
+	m_aiPOWCounter = new int[MAX_TEAMS];
+/*************************************************************************************************/
+/** Advanced Diplomacy       END	                                                 			 */
+/*************************************************************************************************/
 
 	AI_reset(true);
 }
@@ -87,6 +97,17 @@ CvTeamAI::~CvTeamAI()
 	SAFE_DELETE_ARRAY(m_aiEnemyPeacetimeTradeValue);
 	SAFE_DELETE_ARRAY(m_aiEnemyPeacetimeGrantValue);
 	SAFE_DELETE_ARRAY(m_aeWarPlan);
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	SAFE_DELETE_ARRAY(m_aiLimitedBordersCounter);
+	SAFE_DELETE_ARRAY(m_aiEmbassyCounter);
+	SAFE_DELETE_ARRAY(m_aiFreeTradeAgreementCounter);
+	SAFE_DELETE_ARRAY(m_aiNonAggressionCounter);
+	SAFE_DELETE_ARRAY(m_aiPOWCounter);
+/*************************************************************************************************/
+/** Advanced Diplomacy       END	                                                  			 */
+/*************************************************************************************************/
 }
 
 
@@ -109,7 +130,15 @@ void CvTeamAI::AI_reset(bool bConstructor)
 	AI_uninit();
 
 	m_eWorstEnemy = NO_TEAM;
-
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	m_eEnemy = NO_TEAM;
+	m_eClosestAlly = NO_TEAM;
+	m_eFriend = NO_TEAM;	
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		m_aiWarPlanStateCounter[iI] = 0;
@@ -123,6 +152,17 @@ void CvTeamAI::AI_reset(bool bConstructor)
 		m_aiEnemyPeacetimeTradeValue[iI] = 0;
 		m_aiEnemyPeacetimeGrantValue[iI] = 0;
 		m_aeWarPlan[iI] = NO_WARPLAN;
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+		m_aiLimitedBordersCounter[iI] = 0;
+		m_aiEmbassyCounter[iI] = 0;
+		m_aiFreeTradeAgreementCounter[iI] = 0;
+		m_aiNonAggressionCounter[iI] = 0;
+		m_aiPOWCounter[iI] = 0;
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
 
 		if (!bConstructor && getID() != NO_TEAM)
 		{
@@ -139,6 +179,17 @@ void CvTeamAI::AI_reset(bool bConstructor)
 			kLoopTeam.m_aiEnemyPeacetimeTradeValue[getID()] = 0;
 			kLoopTeam.m_aiEnemyPeacetimeGrantValue[getID()] = 0;
 			kLoopTeam.m_aeWarPlan[getID()] = NO_WARPLAN;
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+			kLoopTeam.m_aiLimitedBordersCounter[getID()] = 0;
+			kLoopTeam.m_aiEmbassyCounter[getID()] = 0;
+			kLoopTeam.m_aiFreeTradeAgreementCounter[getID()] = 0;
+			kLoopTeam.m_aiNonAggressionCounter[getID()] = 0;
+			kLoopTeam.m_aiPOWCounter[getID()] = 0;
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
 		}
 	}
 }
@@ -168,7 +219,16 @@ void CvTeamAI::AI_doTurnPre()
 void CvTeamAI::AI_doTurnPost()
 {
 	AI_updateWorstEnemy();
-
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	AI_updateEnemy();
+	AI_updateClosestAlly();
+	AI_updateFriend();	
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
+	
 	AI_updateAreaStragies(false);
 
 	if (isHuman())
@@ -1434,7 +1494,23 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 			break;
 		}
 	}
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	if (GET_TEAM(eTeam).isHasNonAggression(getID()))
+	{
+		iValue /= 2;
+	}
 	
+	if (GET_TEAM(eTeam).isHasPOW(getID()))
+	{
+		iValue /= 2;
+	}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END	                                                 			 */
+/*************************************************************************************************/
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/21/10                                jdog5000      */
 /*                                                                                              */
@@ -1473,6 +1549,18 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	{
 		iValue /= 2;
 	}
+	
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	if (!isWarPretextAgainst(eTeam))
+	{
+		iValue *= 90;
+		iValue /= 100;
+	}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
 
 	if (getPower(true) < 100)
 	{
@@ -1898,7 +1986,27 @@ DenialTypes CvTeamAI::AI_techTrade(TechTypes eTech, TeamTypes eTeam) const
 
 	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
 	
-	
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+    TechTypes eCurrentResearch = GET_PLAYER(getLeaderID()).getCurrentResearch();
+    TeamTypes eStrongestTeam = (TeamTypes)getID();
+    for (iI = 0; iI < MAX_PLAYERS; iI++)
+    {
+        if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+        {
+            if (GET_TEAM((GET_PLAYER((PlayerTypes)iI)).getTeam()).getPower(true) > GET_TEAM(eStrongestTeam).getPower(true))
+            {
+                eCurrentResearch = GET_PLAYER((PlayerTypes)iI).getCurrentResearch();
+                eStrongestTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+            }
+        }
+    }
+/************************************************************************************************/                  		  		                                                
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_TECH_BROKERING))
 	{
 		CvTeam& kTeam = GET_TEAM(eTeam);
@@ -3378,7 +3486,6 @@ DenialTypes CvTeamAI::AI_makePeaceTrade(TeamTypes ePeaceTeam, TeamTypes eTeam) c
 	FAssertMsg(isAtWar(ePeaceTeam), "should be at war with ePeaceTeam");
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
@@ -3389,8 +3496,9 @@ DenialTypes CvTeamAI::AI_makePeaceTrade(TeamTypes ePeaceTeam, TeamTypes eTeam) c
 		}
 	}
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
+
 	if (GET_TEAM(ePeaceTeam).isHuman())
 	{
 		return DENIAL_CONTACT_THEM;
@@ -3525,6 +3633,25 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 	iValue += GET_TEAM(eWarTeam).getNumNukeUnits() * 250;//Don't want to get nuked
 	iValue += GET_TEAM(eTeam).getNumNukeUnits() * 150;//Don't want to use nukes on another's behalf
 
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	// NonAggression - the AI is less likely to backstab
+	if (GET_TEAM(eWarTeam).isHasNonAggression(getID()))
+	{
+		iValue *= 3;
+		iValue /= 2;
+	}
+	
+	if (GET_TEAM(eWarTeam).isHasPOW(getID()))
+	{
+		iValue *= 3;
+		iValue /= 2;
+	}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
+
 	if (GET_TEAM(eWarTeam).getAtWarCount(false) == 0)
 	{
 		iValue *= 2;
@@ -3549,6 +3676,18 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 	iValue /= 100;
 
 	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	if (!isWarPretextAgainst(eWarTeam))
+	{
+		iValue *= 90;
+		iValue /= 100;
+	}
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
 
 	if (isHuman())
 	{
@@ -3576,6 +3715,17 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	FAssertMsg(eWarTeam != getID(), "shouldn't call this function on ourselves");
 	FAssertMsg(kWarTeam.isAlive(), "GET_TEAM(eWarTeam).isAlive is expected to be true");
 	FAssertMsg(!isAtWar(eWarTeam), "should be at peace with eWarTeam");
+/************************************************************************************************/
+/* Afforess	                  Start		 07/29/10                                               */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	if (AI_isChosenWar(eWarTeam) && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		return NO_DENIAL;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	if (kWarTeam.isVassal(eTeam) || kWarTeam.isDefensivePact(eTeam))
 	{
@@ -3597,7 +3747,13 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 		return NO_DENIAL;
 	}
 
-	if (!canDeclareWar(eWarTeam))
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	if (!canDeclareWarWithoutSenate(eWarTeam))
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	{
 		return DENIAL_VASSAL;
 	}
@@ -3718,6 +3874,26 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isSenateVeto(eWarTeam, !isHuman()))
+				{
+                    return DENIAL_SENATE_VETO;
+				}
+			}
+		}
+	}
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
 
 	return NO_DENIAL;
 }
@@ -3897,6 +4073,110 @@ DenialTypes CvTeamAI::AI_defensivePactTrade(TeamTypes eTeam) const
 }
 
 
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+DenialTypes CvTeamAI::AI_NonAggressionTrade(TeamTypes eTeam) const
+{
+	PROFILE_FUNC();
+
+	int iI;
+	AttitudeTypes eAttitude;
+
+	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
+
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+
+	if (AI_shareWar(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getWorstEnemy() == eTeam)
+	{
+		return DENIAL_WORST_ENEMY;
+	}
+	
+	if (AI_getMemoryCount(eTeam, MEMORY_CANCELLED_NON_AGGRESSION) > 0) 
+	{
+		return DENIAL_RECENT_CANCEL;
+	}
+	
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getNonAggressionRefuseAttitudeThreshold())
+				{
+					return DENIAL_ATTITUDE;
+				}
+			}
+		}
+	}
+
+	return NO_DENIAL;
+}
+
+
+DenialTypes CvTeamAI::AI_POWTrade(TeamTypes eTeam) const
+{
+	PROFILE_FUNC();
+
+	int iI;
+	AttitudeTypes eAttitude;
+
+	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
+
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+
+	if (AI_shareWar(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getPOWRefuseAttitudeThreshold())
+				{
+					return DENIAL_ATTITUDE;
+				}
+			}
+		}
+	}
+
+	return NO_DENIAL;
+}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
+
+
 DenialTypes CvTeamAI::AI_permanentAllianceTrade(TeamTypes eTeam) const
 {
 	PROFILE_FUNC();
@@ -3957,6 +4237,26 @@ TeamTypes CvTeamAI::AI_getWorstEnemy() const
 {
 	return m_eWorstEnemy;
 }
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+TeamTypes CvTeamAI::AI_getEnemy() const
+{
+	return m_eEnemy;
+}
+
+TeamTypes CvTeamAI::AI_getClosestAlly() const
+{
+	return m_eClosestAlly;
+}
+
+TeamTypes CvTeamAI::AI_getFriend() const
+{
+	return m_eFriend;
+}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 
 void CvTeamAI::AI_updateWorstEnemy()
@@ -3993,6 +4293,111 @@ void CvTeamAI::AI_updateWorstEnemy()
 
 	m_eWorstEnemy = eBestTeam;
 }
+
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+
+void CvTeamAI::AI_updateEnemy()
+{
+	PROFILE_FUNC();
+
+	TeamTypes eEnemy = NO_TEAM;
+
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		TeamTypes eLoopTeam = (TeamTypes) iI;
+		CvTeam& kLoopTeam = GET_TEAM(eLoopTeam);
+		if (kLoopTeam.isAlive())
+		{
+			if (iI != getID() && !kLoopTeam.isVassal(getID()))
+			{
+				if (isHasMet(eLoopTeam))
+				{
+					if (AI_getAttitude(eLoopTeam) < ATTITUDE_CAUTIOUS)
+					{
+						int iValue = AI_getAttitudeVal(eLoopTeam);
+						{
+							eEnemy = eLoopTeam;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	m_eEnemy = eEnemy;
+}
+
+void CvTeamAI::AI_updateClosestAlly()
+{
+	PROFILE_FUNC();
+
+	TeamTypes eBestTeam = NO_TEAM;
+	int iBestValue = MAX_INT;
+
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		TeamTypes eLoopTeam = (TeamTypes) iI;
+		CvTeam& kLoopTeam = GET_TEAM(eLoopTeam);
+		if (kLoopTeam.isAlive())
+		{
+			if (iI != getID() && !kLoopTeam.isVassal(getID()))
+			{
+				if (isHasMet(eLoopTeam))
+				{
+					if (AI_getAttitude(eLoopTeam) > ATTITUDE_CAUTIOUS)
+					{
+						int iValue = AI_getAttitudeVal(eLoopTeam);
+						if (iValue < iBestValue)
+						{
+							iBestValue = iValue;
+							eBestTeam = eLoopTeam;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	m_eClosestAlly = eBestTeam;
+}
+
+
+void CvTeamAI::AI_updateFriend()
+{
+	PROFILE_FUNC();
+	
+	TeamTypes eFriend = NO_TEAM;
+
+	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
+	{
+		TeamTypes eLoopTeam = (TeamTypes) iI;
+		CvTeam& kLoopTeam = GET_TEAM(eLoopTeam);
+		if (kLoopTeam.isAlive())
+		{
+			if (iI != getID() && !kLoopTeam.isVassal(getID()))
+			{
+				if (isHasMet(eLoopTeam))
+				{
+					if (AI_getAttitude(eLoopTeam) > ATTITUDE_CAUTIOUS)
+					{
+						int iValue = AI_getAttitudeVal(eLoopTeam);
+						{
+							eFriend = eLoopTeam;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	m_eFriend = eFriend;
+}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			 */
+/*************************************************************************************************/
 
 
 int CvTeamAI::AI_getWarPlanStateCounter(TeamTypes eIndex) const
@@ -4154,6 +4559,126 @@ void CvTeamAI::AI_changeShareWarCounter(TeamTypes eIndex, int iChange)
 {
 	AI_setShareWarCounter(eIndex, (AI_getShareWarCounter(eIndex) + iChange));
 }
+
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+int CvTeamAI::AI_getLimitedBordersCounter(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiLimitedBordersCounter[eIndex];
+}
+
+
+void CvTeamAI::AI_setLimitedBordersCounter(TeamTypes eIndex, int iNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_aiLimitedBordersCounter[eIndex] = iNewValue;
+	FAssert(AI_getLimitedBordersCounter(eIndex) >= 0);
+}
+
+
+void CvTeamAI::AI_changeLimitedBordersCounter(TeamTypes eIndex, int iChange)
+{
+	AI_setLimitedBordersCounter(eIndex, (AI_getLimitedBordersCounter(eIndex) + iChange));
+}
+
+
+int CvTeamAI::AI_getEmbassyCounter(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiEmbassyCounter[eIndex];
+}
+
+
+void CvTeamAI::AI_setEmbassyCounter(TeamTypes eIndex, int iNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_aiEmbassyCounter[eIndex] = iNewValue;
+	FAssert(AI_getEmbassyCounter(eIndex) >= 0);
+}
+
+
+void CvTeamAI::AI_changeEmbassyCounter(TeamTypes eIndex, int iChange)
+{
+	AI_setEmbassyCounter(eIndex, (AI_getEmbassyCounter(eIndex) + iChange));
+}
+
+
+int CvTeamAI::AI_getFreeTradeAgreementCounter(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiFreeTradeAgreementCounter[eIndex];
+}
+
+
+void CvTeamAI::AI_setFreeTradeAgreementCounter(TeamTypes eIndex, int iNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_aiFreeTradeAgreementCounter[eIndex] = iNewValue;
+	FAssert(AI_getFreeTradeAgreementCounter(eIndex) >= 0);
+}
+
+
+void CvTeamAI::AI_changeFreeTradeAgreementCounter(TeamTypes eIndex, int iChange)
+{
+	AI_setFreeTradeAgreementCounter(eIndex, (AI_getFreeTradeAgreementCounter(eIndex) + iChange));
+}
+
+
+int CvTeamAI::AI_getNonAggressionCounter(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiNonAggressionCounter[eIndex];
+}
+
+
+void CvTeamAI::AI_setNonAggressionCounter(TeamTypes eIndex, int iNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_aiNonAggressionCounter[eIndex] = iNewValue;
+	FAssert(AI_getNonAggressionCounter(eIndex) >= 0);
+}
+
+
+void CvTeamAI::AI_changeNonAggressionCounter(TeamTypes eIndex, int iChange)
+{
+	AI_setNonAggressionCounter(eIndex, (AI_getNonAggressionCounter(eIndex) + iChange));
+}
+
+
+int CvTeamAI::AI_getPOWCounter(TeamTypes eIndex) const
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	return m_aiPOWCounter[eIndex];
+}
+
+void CvTeamAI::AI_setPOWCounter(TeamTypes eIndex, int iNewValue)
+{
+	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
+	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
+	m_aiNonAggressionCounter[eIndex] = iNewValue;
+	FAssert(AI_getPOWCounter(eIndex) >= 0);
+}
+
+
+void CvTeamAI::AI_changePOWCounter(TeamTypes eIndex, int iChange)
+{
+	AI_setPOWCounter(eIndex, (AI_getPOWCounter(eIndex) + iChange));
+}
+/*************************************************************************************************/
+/** Advanced Diplomacy         END                                                  			 */
+/*************************************************************************************************/
 
 
 int CvTeamAI::AI_getWarSuccess(TeamTypes eIndex) const
@@ -4405,7 +4930,28 @@ void CvTeamAI::read(FDataStreamBase* pStream)
 	pStream->Read(MAX_TEAMS, m_aiEnemyPeacetimeGrantValue);
 
 	pStream->Read(MAX_TEAMS, (int*)m_aeWarPlan);
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	pStream->Read(MAX_TEAMS, m_aiLimitedBordersCounter);
+	pStream->Read(MAX_TEAMS, m_aiEmbassyCounter);
+	pStream->Read(MAX_TEAMS, m_aiFreeTradeAgreementCounter);
+	pStream->Read(MAX_TEAMS, m_aiNonAggressionCounter);
+	pStream->Read(MAX_TEAMS, m_aiPOWCounter);
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
 	pStream->Read((int*)&m_eWorstEnemy);
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	pStream->Read((int*)&m_eEnemy);
+	pStream->Read((int*)&m_eClosestAlly);
+	pStream->Read((int*)&m_eFriend);	
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
+	
 }
 
 
@@ -4428,13 +4974,44 @@ void CvTeamAI::write(FDataStreamBase* pStream)
 	pStream->Write(MAX_TEAMS, m_aiEnemyPeacetimeGrantValue);
 
 	pStream->Write(MAX_TEAMS, (int*)m_aeWarPlan);
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	pStream->Write(MAX_TEAMS, m_aiLimitedBordersCounter);
+	pStream->Write(MAX_TEAMS, m_aiEmbassyCounter);
+	pStream->Write(MAX_TEAMS, m_aiFreeTradeAgreementCounter);
+	pStream->Write(MAX_TEAMS, m_aiNonAggressionCounter);
+	pStream->Write(MAX_TEAMS, m_aiPOWCounter);
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
 	pStream->Write(m_eWorstEnemy);
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+	pStream->Write(m_eEnemy);
+	pStream->Write(m_eClosestAlly);
+	pStream->Write(m_eFriend);	
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
 }
 
 // Protected Functions...
-
-int CvTeamAI::AI_noTechTradeThreshold() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_noTechTradeThreshold(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iNoTechTradeThreshold;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4470,10 +5047,20 @@ int CvTeamAI::AI_noTechTradeThreshold() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_techTradeKnownPercent() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_techTradeKnownPercent(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iTechTradeKnownPercent;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4509,9 +5096,20 @@ int CvTeamAI::AI_techTradeKnownPercent() const
 	return iRand;
 }
 
-
-int CvTeamAI::AI_maxWarRand() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_maxWarRand(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iMaxWarRand;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4537,10 +5135,20 @@ int CvTeamAI::AI_maxWarRand() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_maxWarNearbyPowerRatio() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_maxWarNearbyPowerRatio(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iMaxWarNearbyPowerRatio;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4581,8 +5189,20 @@ int CvTeamAI::AI_maxWarNearbyPowerRatio() const
 }
 
 
-int CvTeamAI::AI_maxWarDistantPowerRatio() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_maxWarDistantPowerRatio(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iMaxWarDistantPowerRatio;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4617,10 +5237,20 @@ int CvTeamAI::AI_maxWarDistantPowerRatio() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_maxWarMinAdjacentLandPercent() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_maxWarMinAdjacentLandPercent(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iMaxWarMinAdjacentLandPercent;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4646,10 +5276,20 @@ int CvTeamAI::AI_maxWarMinAdjacentLandPercent() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_limitedWarRand() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_limitedWarRand(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iLimitedWarRand;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4676,10 +5316,20 @@ int CvTeamAI::AI_limitedWarRand() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_limitedWarPowerRatio() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_limitedWarPowerRatio(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iLimitedWarPowerRatio;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4706,10 +5356,20 @@ int CvTeamAI::AI_limitedWarPowerRatio() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_dogpileWarRand() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_dogpileWarRand(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iDogpileWarRand;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4736,10 +5396,20 @@ int CvTeamAI::AI_dogpileWarRand() const
 
 	return iRand;
 }
-
-
-int CvTeamAI::AI_makePeaceRand() const
+/************************************************************************************************/
+/* Afforess	                  Start		  		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+int CvTeamAI::AI_makePeaceRand(bool bRecalculate) const
 {
+	if (!bRecalculate)
+	{
+		return m_iMakePeaceRand;
+	}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	int iRand;
 	int iCount;
 	int iI;
@@ -4885,6 +5555,37 @@ void CvTeamAI::AI_doCounter()
 						AI_changeShareWarCounter(((TeamTypes)iI), 1);
 					}
 				}
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+				if (isLimitedBorders((TeamTypes)iI))
+				{
+					AI_changeLimitedBordersCounter(((TeamTypes)iI), 1);
+				}
+
+				if (isHasEmbassy((TeamTypes)iI))
+				{
+					AI_changeEmbassyCounter(((TeamTypes)iI), 1);
+				}
+
+				if (isFreeTradeAgreement((TeamTypes)iI))
+				{
+					AI_changeFreeTradeAgreementCounter(((TeamTypes)iI), 1);
+				}
+
+				if (isHasNonAggression((TeamTypes)iI))
+				{
+					AI_changeNonAggressionCounter(((TeamTypes)iI), 1);
+				}
+
+				if (isHasPOW((TeamTypes)iI))
+				{
+					AI_changePOWCounter(((TeamTypes)iI), 1);
+				}
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                    			 */
+/*************************************************************************************************/
+
 			}
 		}
 	}
@@ -5997,10 +6698,8 @@ bool CvTeamAI::AI_isWaterAreaRelevant(CvArea* pArea)
 
 // Private Functions...
 
-
 /************************************************************************************************/
 /* Afforess	                  Start		 08/6/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 DenialTypes CvTeamAI::AI_embassyTrade(TeamTypes eTeam) const
@@ -6052,12 +6751,112 @@ DenialTypes CvTeamAI::AI_embassyTrade(TeamTypes eTeam) const
 	return NO_DENIAL;
 }
 
-
 DenialTypes CvTeamAI::AI_LimitedBordersTrade(TeamTypes eTeam) const
 {
 	PROFILE_FUNC();
 
-	return AI_openBordersTrade(eTeam);
+	AttitudeTypes eAttitude;
+	int iI;
+
+	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
+
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+
+	if (AI_shareWar(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getMemoryCount(eTeam, MEMORY_CANCELLED_OPEN_BORDERS) > 0)
+	{
+		return DENIAL_RECENT_CANCEL;
+	}
+
+	if (AI_getWorstEnemy() == eTeam)
+	{
+		return DENIAL_WORST_ENEMY;
+	}
+
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getLimitedBordersRefuseAttitudeThreshold())
+				{
+					return DENIAL_ATTITUDE;
+				}
+			}
+		}
+	}
+
+	return NO_DENIAL;
+}
+
+//Returns the type of denial for trading contacts. eContactTeam is the team who we are trading the contact of
+//eTeam is the team we are trading the contact to.
+DenialTypes CvTeamAI::AI_contactTrade(TeamTypes eContactTeam, TeamTypes eTeam) const
+{
+	AttitudeTypes eAttitude;
+	int iI;
+
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getWorstEnemy() == eTeam)
+	{
+		return DENIAL_WORST_ENEMY;
+	}
+	
+	if (AI_getWorstEnemy() == eContactTeam)
+	{
+		return DENIAL_MYSTERY;
+	}
+
+	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	{
+		//Planning war against the team , no need to complicate matters
+		if (AI_getWarPlan(eContactTeam) != NO_WARPLAN)
+		{
+			return DENIAL_MYSTERY;
+		}
+	}
+
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getContactRefuseAttitudeThreshold())
+				{
+					return DENIAL_ATTITUDE;
+				}
+			}
+		}
+	}
+	
+    return NO_DENIAL;
 }
 
 
@@ -6073,6 +6872,29 @@ int CvTeamAI::AI_embassyTradeVal(TeamTypes eTeam) const
 	return std::max(0, iValue);
 }
 
+int CvTeamAI::AI_NonAggressionTradeVal(TeamTypes eTeam) const
+{
+	int iValue = 0;
+
+	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+
+	iValue *= 7;
+	iValue /= 5;
+
+	return std::max(0, iValue);
+}	
+
+int CvTeamAI::AI_POWTradeVal(TeamTypes eTeam) const
+{
+	int iValue = 0;
+
+	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+
+	iValue *= 7;
+	iValue /= 5;
+
+	return std::max(0, iValue);
+}	
 
 int CvTeamAI::AI_LimitedBordersTradeVal(TeamTypes eTeam) const
 {
@@ -6080,12 +6902,214 @@ int CvTeamAI::AI_LimitedBordersTradeVal(TeamTypes eTeam) const
 
 	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
 
-//	iValue *= 2;
-//	iValue /= 5;
+	iValue *= 2;
+	iValue /= 5;
 
 	return std::max(0, iValue);
 }
 
+
+int CvTeamAI::AI_contactTradeVal(TeamTypes eContactTeam, TeamTypes eTeam) const
+{
+    int iValue = 5;
+	int iAttitude = 0;
+	int iMetCount = 0;
+	int iPower = 0;
+	int iCountTeams = 0;
+
+	for (int iI = 0; iI < MAX_TEAMS; iI++)
+	{
+		if (GET_TEAM((TeamTypes)iI).isAlive())
+		{
+			if ((iI != eTeam) && (iI != eContactTeam))
+			{
+				iCountTeams++;
+				if (GET_TEAM(eTeam).isHasMet((TeamTypes)iI))
+				{
+					iAttitude += GET_TEAM((TeamTypes)iI).AI_getAttitudeVal(eTeam);
+					iPower += GET_TEAM((TeamTypes)iI).getPower(true);
+					iMetCount++;
+					if (!GET_TEAM((TeamTypes)iI).isHasMet(eContactTeam))
+					{
+						iValue += 10;
+					}
+				}
+			}
+		}
+	}
+
+	switch (iAttitude/iMetCount)
+	{
+	case ATTITUDE_FURIOUS:
+		iValue *= 5;
+		iValue /= 2;
+		break;
+
+	case ATTITUDE_ANNOYED:
+		iValue *= 2;
+		break;
+
+	case ATTITUDE_CAUTIOUS:
+		iValue *= 3;
+		iValue /= 2;
+		break;
+
+	case ATTITUDE_PLEASED:
+		iValue *= 4;
+		iValue /= 5;
+		break;
+
+	case ATTITUDE_FRIENDLY:
+		iValue *= 2;
+		iValue /= 3;
+		break;
+
+	default:
+		//FAssert(false);
+		break;
+	}
+
+	if (GET_TEAM(eTeam).getPower(true) > (iPower/iMetCount))
+	{
+		iValue *= 4;
+		iValue /= 5;
+	}
+
+	if (GET_TEAM(eTeam).isTechTrading())
+	{
+		iValue *= 3;
+		iValue /= 2;
+	}
+
+	if (GET_TEAM(eTeam).isGoldTrading())
+	{
+		iValue *= 3;
+		iValue /= 2;
+	}
+
+	if (GET_TEAM(eTeam).isOpenBordersTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+
+	if (GET_TEAM(eTeam).isNonAggressionTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+	
+	if (GET_TEAM(eTeam).isPOWTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+	
+	if (GET_TEAM(eTeam).isFreeTradeAgreementTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+	
+	if (GET_TEAM(eTeam).isEmbassyTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+	
+	if (GET_TEAM(eTeam).isLimitedBordersTrading())
+	{
+		iValue *= 4;
+		iValue /= 3;
+	}
+
+	if (GET_TEAM(eTeam).isMapTrading())
+	{
+		iValue *= 6;
+		iValue /= 5;
+	}
+	
+	iValue *= 100;
+	iValue /= iCountTeams;
+	iValue /= 5;
+
+	return iValue;
+}
+
+
+int CvTeamAI::AI_FreeTradeAgreementVal(TeamTypes eTeam) const
+{
+	int iValue = 0;
+
+	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+
+	if (isFreeTrade(eTeam))
+	{
+		iValue /= 2;
+	}
+
+	return std::max(0, iValue);
+}
+
+DenialTypes CvTeamAI::AI_FreeTradeAgreement(TeamTypes eTeam) const
+{
+	int iI;
+	AttitudeTypes eAttitude;
+
+	if (isHuman())
+	{
+		return NO_DENIAL;
+	}
+
+	if (isVassal(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getWorstEnemy() == eTeam)
+	{
+		return DENIAL_WORST_ENEMY;
+	}
+	
+	if (AI_shareWar(eTeam))
+	{
+		return NO_DENIAL;
+	}
+	
+	if (AI_getWarPlan(eTeam) != NO_WARPLAN)
+	{
+		return DENIAL_MYSTERY;
+	}
+	
+	if (GET_PLAYER(getLeaderID()).getCapitalCity() != NULL)
+	{
+		if (GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getCapitalCity() != NULL)
+		{
+			if (!GET_PLAYER(getLeaderID()).getCapitalCity()->isConnectedTo(GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getCapitalCity()))
+			{
+				return DENIAL_JOKING;
+			}
+		}
+	}
+
+	eAttitude = AI_getAttitude(eTeam);
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAlive())
+		{
+			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
+			{
+				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getFreeTradeAgreementRefuseAttitudeThreshold())
+				{
+					return DENIAL_ATTITUDE;
+				}
+			}
+		}
+	}
+	
+    return NO_DENIAL;
+}
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

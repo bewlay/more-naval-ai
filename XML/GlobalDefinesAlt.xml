@@ -971,4 +971,34 @@
 		<DefineName>PUPPET_CULTURE_MULTIPLIER</DefineName> 
 		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
+	<!--  Advanced Diplomacy -->
+	<Define>
+		<DefineName>EMBASSY_ESPIONAGE_MISSION_COST_MODIFIER</DefineName>
+		<iDefineIntVal>25</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>REMEMBER_WAR_ALLY_TURNS</DefineName>
+		<iDefineIntVal>15</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>FREE_TRADE_AGREEMENT_ESPIONAGE_MISSION_COST_MODIFIER</DefineName>
+		<iDefineIntVal>25</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>FREE_TRADE_AGREEMENT_TRADE_MODIFIER</DefineName>
+		<iDefineIntVal>50</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>POW_EXCHANGE_LENGTH</DefineName>
+		<iDefineIntVal>5</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>CAN_TRADE_WORKERS</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>CAN_TRADE_WAR_REPARATIONS</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
+<!--  Advanced Diplomacy -->
 </Civ4Defines>

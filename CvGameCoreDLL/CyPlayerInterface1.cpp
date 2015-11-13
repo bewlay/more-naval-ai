@@ -42,6 +42,17 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
+
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  			 */
+/*************************************************************************************************/
+// RevolutionDCM start - new diplomacy option
+		.def("isDoNotBotherStatus", &CyPlayer::isDoNotBotherStatus, "bool (int /*PlayerTypes*/ playerID ) - set if player instructed not to contact playerID" )
+// RevolutionDCM end
+/*************************************************************************************************/
+/** Advanced Diplomacy       END	                                                 			 */
+/*************************************************************************************************/
+
 		.def("startingPlotRange", &CyPlayer::startingPlotRange, "int ()")
 		.def("startingPlotWithinRange", &CyPlayer::startingPlotWithinRange, "bool (CyPlot *pPlot, int /*PlayerTypes*/ ePlayer, int iRange, int iPass)")
 

@@ -90,13 +90,20 @@
 		<ContactType>CONTACT_TRADE_TECH</ContactType>
 		<ContactType>CONTACT_TRADE_BONUS</ContactType>
 		<ContactType>CONTACT_TRADE_MAP</ContactType>
-		<!--Afforess Advanced Diplomacy-->
+		<!-- Advanced Diplomacy-->
 		<ContactType>CONTACT_PEACE_PRESSURE</ContactType>
 		<ContactType>CONTACT_EMBASSY</ContactType>
+		<ContactType>CONTACT_NON_AGGRESSION</ContactType>
+		<ContactType>CONTACT_POW</ContactType>
 		<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
 		<ContactType>CONTACT_TRADE_JOIN_WAR</ContactType>
+		<ContactType>CONTACT_SECRETARY_GENERAL_VOTE</ContactType>
 		<ContactType>CONTACT_TRADE_MILITARY_UNITS</ContactType>
-		<!--Afforess Advanced Diplomacy-->
+		<ContactType>CONTACT_TRADE_WORKERS</ContactType>
+		<ContactType>CONTACT_TRADE_CONTACTS</ContactType>
+		<ContactType>CONTACT_TRADE_CORPORATION</ContactType>
+		<ContactType>CONTACT_TRADE_WAR_REPARATIONS</ContactType>
+		<!-- Advanced Diplomacy-->
 	</ContactTypes>
 	<DiplomacyPowerTypes>
 		<!--Changes must be reflected in CvEnums.h-->

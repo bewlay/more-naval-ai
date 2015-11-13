@@ -38,6 +38,18 @@ protected:
 
 	void uninit();
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	int* m_aiLimitedBordersCounter;
+	int* m_aiEmbassyCounter;
+	int* m_aiFreeTradeAgreementCounter;
+	int* m_aiNonAggressionCounter;
+	int* m_aiPOWCounter;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 public:
 
 /********************************************************************************/
@@ -49,6 +61,15 @@ public:
 /********************************************************************************/
 /*		BETTER_BTS_AI_MOD						END								*/
 /********************************************************************************/
+
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	void AI_updateEnemy();
+	void AI_updateFriend();
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 
 	void addTeam(TeamTypes eTeam);																								// Exposed to Python
@@ -62,7 +83,17 @@ public:
 	void updatePowerHealth();
 	void updateCommerce();
 
-	bool canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal = false) const;																			// Exposed to Python
+	bool canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal = false) const;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	bool isSenateVeto(TeamTypes eTeam, bool bVerify);
+	int getSenateOppositionValue(TeamTypes eAgainstTeam) const;
+	bool isSenateWarOpposition(TeamTypes eAgainstTeam) const;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+																			// Exposed to Python
 	DllExport bool canDeclareWar(TeamTypes eTeam) const;																// Exposed to Python
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/16/10                                jdog5000      */
@@ -198,7 +229,69 @@ public:
 	int getMapTradingCount() const;																											// Exposed to Python
 	bool isMapTrading() const;																													// Exposed to Python
 	void changeMapTradingCount(int iChange);																			// Exposed to Python
+																																								
+/************************************************************************************************/
+/* Afforess	                  Start		 		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	int getEmbassyTradingCount() const;
+	bool isEmbassyTrading() const;
+	void changeEmbassyTradingCount(int iChange);
+	
+    bool isHasEmbassy(TeamTypes eIndex) const;
+    void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
+	int getLimitedBordersTradingCount() const;	
+	bool isLimitedBordersTrading() const;
+	void changeLimitedBordersTradingCount(int iChange);
 
+	void signLimitedBorders(TeamTypes eTeam);	
+	void signFreeTradeAgreement(TeamTypes eTeam);	
+	bool canSignOpenBorders(TeamTypes eTeam);
+
+	bool isHiredWarAlly(TeamTypes eIndex) const;
+	void setHiredWarAlly(TeamTypes eIndex, bool bNewVal);
+	
+	bool isFreeTradeAgreement(TeamTypes eIndex) const;
+	void setFreeTradeAgreement(TeamTypes eIndex, bool bNewValue);
+	bool canSignFreeTradeAgreement(TeamTypes eTeam);
+	int getFreeTradeAgreementTradingCount() const;
+	bool isFreeTradeAgreementTrading() const;
+	void changeFreeTradeAgreementTradingCount(int iChange);
+	
+	bool isLimitedBorders(TeamTypes eIndex) const;
+	void setLimitedBorders(TeamTypes eIndex, bool bNewValue);
+
+	bool isHasNonAggression(TeamTypes eIndex) const; 
+	void setHasNonAggression(TeamTypes eIndex, bool bNewValue); 
+	bool canSignNonAggression(TeamTypes eIndex) const; 
+
+	int getNonAggressionTradingCount() const;
+	bool isNonAggressionTrading() const;
+	void changeNonAggressionTradingCount(int iChange);
+	void signNonAggression(TeamTypes eIndex);
+	
+	bool isHasPrepareWar(TeamTypes eIndex) const; 
+	void setHasPrepareWar(TeamTypes eIndex, bool bNewValue); 
+	
+	bool isHasPOW(TeamTypes eIndex) const; 
+	void setHasPOW(TeamTypes eIndex, bool bNewValue); 
+	bool canSignPOW(TeamTypes eIndex) const; 
+	
+	int getPOWTradingCount() const;
+	bool isPOWTrading() const;
+	void changePOWTradingCount(int iChange);
+	void signPOW(TeamTypes eIndex);
+	
+	DllExport bool canDeclareWarWithoutSenate(TeamTypes eTeam) const;
+	bool isNuclearDissuasion(TeamTypes eTeam) const;
+	
+	bool isBarbarianPeace() const;
+	void setBarbarianPeace(bool bNewValue);
+	
+	bool canTradeMap() const;	
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int getTechTradingCount() const;																										// Exposed to Python
 	bool isTechTrading() const;																													// Exposed to Python
 	void changeTechTradingCount(int iChange);																			// Exposed to Python
@@ -271,6 +364,22 @@ public:
 	int getTechShareCount(int iIndex) const;																						// Exposed to Python
 	bool isTechShare(int iIndex) const;																									// Exposed to Python
 	void changeTechShareCount(int iIndex, int iChange);														// Exposed to Python
+
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	int getActiveSenateCount() const;
+	bool isAnyActiveSenate() const;
+	void changeActiveSenateCount(int iChange);
+	void updateActiveSenateCount();
+	
+	int getWarPretextAgainstCount(TeamTypes eIndex) const;																						// Exposed to Python
+	bool isWarPretextAgainst(TeamTypes eIndex) const;														// Exposed to Python
+	void setWarPretextAgainstCount(TeamTypes eIndex, int iNewValue);														// Exposed to Python
+	void changeWarPretextAgainstCount(TeamTypes eIndex, int iChange);														// Exposed to Python
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	int getCommerceFlexibleCount(CommerceTypes eIndex) const;														// Exposed to Python
 	bool isCommerceFlexible(CommerceTypes eIndex) const;																// Exposed to Python
@@ -381,6 +490,19 @@ public:
 
 	bool isNoTradeTech(TechTypes eIndex) const;																														// Exposed to Python
 	void setNoTradeTech(TechTypes eIndex, bool bNewValue);																					// Exposed to Python
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/
+	DllExport bool isVoteSourceCondemned(VoteSourceTypes eIndex) const;										// Exposed to Python																				// Exposed to Python	DllExport bool isVoteSourceCondemned(VoteSourceTypes eIndex) const;										// Exposed to Python
+
+	int getVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam) const;										// Exposed to Python
+	bool isVoteSourceCondemnedWarValidArray() const;
+	DllExport bool isVoteSourceCondemnedWar(VoteSourceTypes eVoteSource) const;
+	void changeVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iChange);		// Exposed to Python
+	void setVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iNewValue);		// Exposed to Python
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;										// Exposed to Python
 	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);		// Exposed to Python
@@ -463,29 +585,30 @@ public:
 	virtual bool AI_isSneakAttackReady(TeamTypes eIndex) const = 0;
 	virtual void AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar = true) = 0;
 /************************************************************************************************/
-/* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
+/* Afforess	                  Start		 		                                                */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-	int getEmbassyTradingCount() const;
-	bool isEmbassyTrading() const;
-	void changeEmbassyTradingCount(int iChange);
-	
-    bool isHasEmbassy(TeamTypes eIndex) const;
-    void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
-	
-	int getLimitedBordersTradingCount() const;	
-	bool isLimitedBordersTrading() const;
-	void changeLimitedBordersTradingCount(int iChange);
+	int AI_getLimitedBordersCounter(TeamTypes eIndex) const;
+	void AI_setLimitedBordersCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeLimitedBordersCounter(TeamTypes eIndex, int iChange);
 
-	void signLimitedBorders(TeamTypes eTeam);	
-	bool canSignOpenBorders(TeamTypes eTeam);
-	void sendAmbassador(TeamTypes eTeam);
-	
-	bool isLimitedBorders(TeamTypes eIndex) const;
-	void setLimitedBorders(TeamTypes eIndex, bool bNewValue);
+	int AI_getEmbassyCounter(TeamTypes eIndex) const;
+	void AI_setEmbassyCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeEmbassyCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getFreeTradeAgreementCounter(TeamTypes eIndex) const;
+	void AI_setFreeTradeAgreementCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeFreeTradeAgreementCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getNonAggressionCounter(TeamTypes eIndex) const;
+	void AI_setNonAggressionCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changeNonAggressionCounter(TeamTypes eIndex, int iChange);
+
+	int AI_getPOWCounter(TeamTypes eIndex) const;
+	void AI_setPOWCounter(TeamTypes eIndex, int iNewValue);
+	void AI_changePOWCounter(TeamTypes eIndex, int iChange);
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 protected:
 
@@ -500,7 +623,32 @@ protected:
 	int m_iMapTradingCount;
 	int m_iTechTradingCount;
 	int m_iGoldTradingCount;
+/************************************************************************************************/
+/* Afforess	                  Start		 		                                                */
+/* Advanced Diplomacy                                                                           */
+/************************************************************************************************/
+	bool* m_abLimitedBorders;
+	bool* m_abEmbassy;
+	bool* m_abFreeTradeAgreement;
+	int* m_aiHiredWarAlly;
+	bool* m_abHasNonAggression;
+	bool* m_abHasPrepareWar;
+	bool* m_abHasPOW;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int m_iOpenBordersTradingCount;
+/************************************************************************************************/
+/* Advanced Diplomacy                   START                                                   */
+/************************************************************************************************/
+	int m_iLimitedBordersTradingCount;
+	int m_iEmbassyTradingCount;
+	int m_iFreeTradeAgreementTradingCount;
+	int m_iNonAggressionTradingCount;
+	int m_iPOWTradingCount;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int m_iDefensivePactTradingCount;
 	int m_iPermanentAllianceTradingCount;
 	int m_iVassalTradingCount;
@@ -514,6 +662,13 @@ protected:
 	int m_iEnemyWarWearinessModifier;
 	int m_iRiverTradeCount;
 	int m_iEspionagePointsEver;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                   */
+/************************************************************************************************/
+	int m_iActiveSenateCount;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	bool m_bMapCentering;
 	bool m_bCapitulated;
@@ -523,11 +678,26 @@ protected:
     bool m_bNoCivicAnger;
 //FfH: End Add
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                   */
+/************************************************************************************************/
+	bool m_bBarbarianPeace;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 	TeamTypes m_eID;
 
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWeariness;
 	int* m_aiTechShareCount;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	std::vector<int> m_aiWarPretextAgainstCount;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 	int* m_aiCommerceFlexibleCount;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
@@ -573,6 +743,13 @@ protected:
 	int** m_ppaaiImprovementYieldChange;
 
 	std::vector<BonusTypes> m_aeRevealedBonuses;
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+	std::vector<VoteSourceCondemnedWar> m_aVoteSourceCondemnedWarCount;
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
 
 	void doWarWeariness();
 
@@ -588,18 +765,6 @@ protected:
 
 	virtual void read(FDataStreamBase* pStream);
 	virtual void write(FDataStreamBase* pStream);
-/************************************************************************************************/
-/* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-	int m_iEmbassyTradingCount;
-	int m_iLimitedBordersTradingCount;
-	bool* m_abEmbassy;
-	bool* m_abLimitedBorders;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 };
 
 #endif

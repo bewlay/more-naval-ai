@@ -203,6 +203,26 @@ void BuildingCommerceChange::write(FDataStreamBase* pStream)
 	pStream->Write(iChange);
 }
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                               */
+/************************************************************************************************/
+void VoteSourceCondemnedWar::read(FDataStreamBase* pStream)
+{
+	pStream->Read((int*)&eVoteSource);
+	pStream->Read((int*)&eWarTeam);
+	pStream->Read(&iCount);
+}
+
+void VoteSourceCondemnedWar::write(FDataStreamBase* pStream)
+{
+	pStream->Write(eVoteSource);
+	pStream->Write(eWarTeam);
+	pStream->Write(iCount);
+}
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                               */
+/************************************************************************************************/
+
 void checkBattleUnitType(BattleUnitTypes unitType)
 {
 	FAssertMsg((unitType >= 0) && (unitType < BATTLE_UNIT_COUNT), "[Jason] Invalid battle unit type.");

@@ -143,6 +143,23 @@ public:
 	int AI_calculateStolenCityRadiusPlots(PlayerTypes ePlayer) const;
 	int AI_getCloseBordersAttitude(PlayerTypes ePlayer) const;
 
+/************************************************************************************************/
+/* Advanced Diplomacy         START                                                             */
+/************************************************************************************************/
+	int AI_getLimitedBordersAttitude(PlayerTypes ePlayer) const;
+  	int AI_getEmbassyAttitude(PlayerTypes ePlayer) const;
+	int AI_getFreeTradeAgreementAttitude(PlayerTypes ePlayer) const;
+	int AI_getNonAggressionAttitude(PlayerTypes ePlayer) const;
+//FfH: Added by Kael 08/15/2007
+//    int AI_getCivicShareAttitude(PlayerTypes ePlayer) const;
+//    int AI_getFavoriteWonderAttitude(PlayerTypes ePlayer) const;
+//FfH: End Add
+	int AI_getCondemnCivicAttitude(PlayerTypes ePlayer, CivicTypes eCivic) const;
+	int AI_getSharedEnemyAttitude(PlayerTypes ePlayer) const;
+	int AI_getSharedFriendAttitude(PlayerTypes ePlayer) const;	
+/************************************************************************************************/
+/* Advanced Diplomacy         END                                                             */
+/************************************************************************************************/
 	int AI_getWarAttitude(PlayerTypes ePlayer) const;
 	int AI_getPeaceAttitude(PlayerTypes ePlayer) const;
 	int AI_getSameReligionAttitude(PlayerTypes ePlayer) const;
@@ -468,17 +485,20 @@ public:
 
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
-/*                                                                                              */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-  	int AI_getEmbassyAttitude(PlayerTypes ePlayer) const;
+	int AI_workerTradeVal(CvUnit* pUnit) const;
 	int AI_militaryUnitTradeVal(CvUnit* pUnit) const;
+	int AI_corporationTradeVal(CorporationTypes eCorporation, PlayerTypes ePlayer) const;
+	int AI_secretaryGeneralTradeVal(VoteSourceTypes eVoteSource, PlayerTypes ePlayer) const;
+
 	TeamTypes AI_bestJoinWarTeam(PlayerTypes ePlayer);
 	TeamTypes AI_bestMakePeaceTeam(PlayerTypes ePlayer);
 	TeamTypes AI_bestStopTradeTeam(PlayerTypes ePlayer);
 	int AI_militaryBonusVal(BonusTypes eBonus);
+	int AI_tradeWarReparationsVal(PlayerTypes ePlayer) const;
 /************************************************************************************************/
-/* Afforess	                     END                                                            */
+/* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 
 /************************************************************************************************/
@@ -599,6 +619,15 @@ protected:
 	void AI_doCivics();
 	void AI_doReligion();
 	void AI_doDiplo();
+/*************************************************************************************************/
+/** Advanced Diplomacy       START                                                  Glider1      */
+/*************************************************************************************************/
+	// RevolutionDCM - new diplomacy option
+	void AI_beginDiplomacy(CvDiploParameters* pDiploParams, PlayerTypes ePlayer);
+	// RevolutionDCM - end
+/*************************************************************************************************/
+/** Advanced Diplomacy       END                                                  			     */
+/*************************************************************************************************/
 	void AI_doSplit();
 	void AI_doCheckFinancialTrouble();
 
