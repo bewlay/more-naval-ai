@@ -461,10 +461,12 @@ void CvGame::setInitialItems()
 //FfH: Added by Kael 09/16/2008
     if (isOption(GAMEOPTION_BARBARIAN_WORLD))
     {
+		logBBAI("IS BARBARIAN WORLD");
         for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
         {
             if (GET_PLAYER((PlayerTypes)iI).isAlive())// && iI != BARBARIAN_PLAYER)
             {
+				logBBAI("   Looking for city site %d", iI);
                 foundBarbarianCity();
             }
         }
@@ -11845,6 +11847,7 @@ void CvGame::foundBarbarianCity()
         }
         if (bValid)
         {
+			//logBBAI("   ...checking plot %d, %d for nearby players", pLoopPlot->getX(), pLoopPlot->getY());
             for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
             {
                 if (GET_PLAYER((PlayerTypes)iI).isAlive())
@@ -11853,7 +11856,7 @@ void CvGame::foundBarbarianCity()
                     if (pPlotI != NULL)
                     {
                         iDist = GC.getMapINLINE().calculatePathDistance(pPlotI, pLoopPlot);
-						if (iDist < 4)
+						if (iDist < 4 && iDist > -1)
                         {
                             bValid = false;
                         }
@@ -11862,7 +11865,7 @@ void CvGame::foundBarbarianCity()
             }
             if (bValid)
             {
-                iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"), true);
+                //iValue += GET_PLAYER(BARBARIAN_PLAYER).AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), GC.getDefineINT("MIN_BARBARIAN_CITY_STARTING_DISTANCE"), true);
                 //iValue += pLoopPlot->area()->getNumOwnedTiles() + 10;
                 iValue += getSorenRandNum(100, "Barb City Found");
                 if (iValue > iBestValue)
@@ -11874,7 +11877,7 @@ void CvGame::foundBarbarianCity()
         }
 	}
 
-	logBBAI("BEST VALUE: %d", iBestValue);
+	logBBAI("    BEST VALUE: %d", iBestValue);
 
 	if (pBestPlot != NULL)
 	{
