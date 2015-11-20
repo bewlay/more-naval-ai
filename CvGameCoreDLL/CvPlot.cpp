@@ -11429,7 +11429,7 @@ bool CvPlot::canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer) const
 
 		for (int i = 0; i < kTrigger.getNumTerrainsRequired(); ++i)
 		{
-			if (kTrigger.getTerrainRequired(i) == getTerrainType())
+			if (kTrigger.getTerrainRequired(i) == getTerrainType() && !isPeak()) // MNAI - added Peak check (peaks hide terrain)
 			{
 				bFoundValid = true;
 				break;
@@ -11637,6 +11637,8 @@ bool CvPlot::canApplyEvent(EventTypes eEvent) const
 void CvPlot::applyEvent(EventTypes eEvent)
 {
 	CvEventInfo& kEvent = GC.getEventInfo(eEvent);
+
+	logBBAI("Applying Event %S at plot %d, %d", kEvent.getTextKeyWide(), getX(), getY());
 
 	if (kEvent.getFeatureChange() > 0)
 	{
