@@ -807,6 +807,44 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 		iValue += ((getMilitaryProductionModifier() * iExperience * 8) / 100);
 	}
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/12/09                                            */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/	
+	int iSpecialistHealth = GC.getSpecialistInfo(eSpecialist).getHealth();
+	int iSpecialistHappiness = GC.getSpecialistInfo(eSpecialist).getHappiness();
+	int iHappinessLevel = happyLevel() - unhappyLevel(1);
+	int iAngryPopulation = range(-iHappinessLevel, 0, (getPopulation() + 1));
+	int iHealthLevel = goodHealth() - badHealth(/*bNoAngry*/ false, std::max(0, (iHappinessLevel + 1) / 2));
+	int iBadHealth = std::max(0, -iHealthLevel);
+
+	int iHappyModifier = (iHappinessLevel >= iHealthLevel && iHappinessLevel <= 6) ? 6 : 3;
+	int iHealthModifier = (iHealthLevel > iHappinessLevel && iHealthLevel <= 4) ? 4 : 2;
+	if (iHappinessLevel >= 10)
+	{
+		iHappyModifier = 1;
+	}
+	if (iHealthModifier >= 8)
+	{
+		iHealthModifier = 0;
+	}
+
+	if (iSpecialistHealth != 0)
+	{
+		iValue += (std::min(iSpecialistHealth, iBadHealth) * 12)
+			+ (std::max(0, iSpecialistHealth - iBadHealth) * iHealthModifier);
+	}
+	
+	if (iSpecialistHappiness != 0)
+	{
+		iValue += (std::min(iSpecialistHappiness, iAngryPopulation) * 10) 
+			+ (std::max(0, iSpecialistHappiness - iAngryPopulation) * iHappyModifier);
+	}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                        */
+/*************************************************************************************************/
+
 	return (iValue * 100);
 }
 

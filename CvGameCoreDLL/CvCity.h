@@ -438,6 +438,24 @@ public:
 	int getFeatureGoodHealth() const;																			// Exposed to Python
 	int getFeatureBadHealth() const;														// Exposed to Python
 	void updateFeatureHealth();
+
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	int getSpecialistGoodHealth() const;																			// Exposed to Python
+	int getSpecialistBadHealth() const;														// Exposed to Python
+	int getSpecialistHappiness() const;																			// Exposed to Python
+	int getSpecialistUnhappiness() const;														// Exposed to Python
+	void changeSpecialistGoodHealth(int iChange);
+	void changeSpecialistBadHealth(int iChange);
+	void changeSpecialistHappiness(int iChange);
+	void changeSpecialistUnhappiness(int iChange);
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
+
 // BUG - Feature Health - start
 	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
 	void calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot = NULL) const;
@@ -1241,6 +1259,18 @@ protected:
 	int m_iFreshWaterBadHealth;
 	int m_iFeatureGoodHealth;
 	int m_iFeatureBadHealth;
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	int m_iSpecialistGoodHealth;
+	int m_iSpecialistBadHealth;
+	int m_iSpecialistHappiness;
+	int m_iSpecialistUnhappiness;
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	int m_iBuildingGoodHealth;
 	int m_iBuildingBadHealth;
 	int m_iPowerGoodHealth;

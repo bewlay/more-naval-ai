@@ -8865,6 +8865,35 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 		}
 // BUG - Specialist Actual Effects - end
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		if (GC.getSpecialistInfo(eSpecialist).getHealth() > 0)
+		{
+			szHelpString.append(NEWLINE);
+			szHelpString.append(gDLL->getText("TXT_KEY_SPECIALIST_HEALTHY", GC.getSpecialistInfo(eSpecialist).getHealth()));
+		}
+		if (GC.getSpecialistInfo(eSpecialist).getHealth() < 0)
+		{
+			szHelpString.append(NEWLINE);
+			szHelpString.append(gDLL->getText("TXT_KEY_SPECIALIST_UNHEALTHY", -(GC.getSpecialistInfo(eSpecialist).getHealth())));
+		}
+		if (GC.getSpecialistInfo(eSpecialist).getHappiness() > 0)
+		{
+			szHelpString.append(NEWLINE);
+			szHelpString.append(gDLL->getText("TXT_KEY_SPECIALIST_HAPPY", GC.getSpecialistInfo(eSpecialist).getHappiness()));
+		}
+		if (GC.getSpecialistInfo(eSpecialist).getHappiness() < 0)
+		{
+			szHelpString.append(NEWLINE);
+			szHelpString.append(gDLL->getText("TXT_KEY_SPECIALIST_UNHAPPY", -(GC.getSpecialistInfo(eSpecialist).getHappiness())));
+		}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
+
 		if (!CvWString(GC.getSpecialistInfo(eSpecialist).getHelp()).empty() && !bCivilopediaText)
 		{
 			szHelpString.append(NEWLINE);
@@ -15520,6 +15549,20 @@ void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 			szBuffer.append(NEWLINE);
 		}
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		iHealth = -(city.getSpecialistBadHealth());
+		if (iHealth > 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_BAD_HEALTH_FROM_SPECIALISTS", iHealth));
+			szBuffer.append(NEWLINE);
+		}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 		iHealth = city.getEspionageHealthCounter();
 		if (iHealth > 0)
 		{
@@ -15632,6 +15675,20 @@ void CvGameTextMgr::setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 			szBuffer.append(NEWLINE);
 		}
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		iHealth = city.getSpecialistGoodHealth();
+		if (iHealth > 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_GOOD_HEALTH_FROM_SPECIALISTS", iHealth));
+			szBuffer.append(NEWLINE);
+		}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 		iHealth = city.getPowerGoodHealth();
 		if (iHealth > 0)
 		{
@@ -15947,6 +16004,23 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		}
 		iOldAnger = iNewAnger;
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		iNewAnger -= std::min(0, city.getSpecialistUnhappiness());
+		iAnger = ((iNewAnger - iOldAnger) + std::min(0, iOldAnger));
+		if (iAnger > 0)
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_UNHAPPY_SPECIALISTS", iAnger));
+			szBuffer.append(NEWLINE);
+		}
+		iOldAnger = iNewAnger;
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
+
 		iNewAnger -= std::min(0, city.getReligionBadHappiness());
 		iAnger = ((iNewAnger - iOldAnger) + std::min(0, iOldAnger));
 		if (iAnger > 0)
@@ -16091,6 +16165,22 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 			szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_BONUS", iHappy));
 			szBuffer.append(NEWLINE);
 		}
+
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		iHappy = city.getSpecialistHappiness();
+		if (iHappy > 0)
+		{
+			iTotalHappy += iHappy;
+			szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_SPECIALISTS", iHappy));
+			szBuffer.append(NEWLINE);
+		}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 
 		iHappy = city.getReligionGoodHappiness();
 		if (iHappy > 0)

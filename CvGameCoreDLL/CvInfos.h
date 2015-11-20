@@ -247,6 +247,16 @@ public:
 	int getGreatPeopleRateChange() const;		// Exposed to Python
 	int getMissionType() const;							// Exposed to Python
 	void setMissionType(int iNewType);
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	int getHealth() const;							// Exposed to Python
+	int getHappiness() const;							// Exposed to Python
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	int getExperience() const;				// Exposed to Python
 
 	bool isVisible() const;				// Exposed to Python
@@ -270,6 +280,16 @@ protected:
 	int m_iGreatPeopleUnitClass;		// Exposed to Python
 	int m_iGreatPeopleRateChange;		// Exposed to Python
 	int m_iMissionType;
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	int m_iHealth;
+	int m_iHappiness;
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/ 
 	int m_iExperience;
 
 	bool m_bVisible;				// Exposed to Python

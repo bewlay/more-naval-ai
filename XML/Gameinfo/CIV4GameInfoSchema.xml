@@ -351,6 +351,10 @@
 	<ElementType name="iMapOffset" content="textOnly" dt:type="int"/>
 	<ElementType name="iMapRange" content="textOnly" dt:type="int"/>
 	<ElementType name="iMapProb" content="textOnly" dt:type="int"/>
+<!-- SPECIALIST ENHANCEMENTS				10/09/2009			SUPERCHEESE		-->
+	<ElementType name="iHealth" content="textOnly" dt:type="int"/>
+	<ElementType name="iHappiness" content="textOnly" dt:type="int"/>
+<!-- SPECIALIST ENHANCEMENTS				END							-->	
 	<ElementType name="iExperience" content="textOnly" dt:type="int"/>
 	<ElementType name="iHealing" content="textOnly" dt:type="int"/>
 	<ElementType name="iDamagePrereq" content="textOnly" dt:type="int"/>
@@ -1119,6 +1123,10 @@
 		<element type="iGreatPeopleRateChange"/>
 		<element type="Yields"/>
 		<element type="Commerces"/>
+<!-- SPECIALIST ENHANCEMENTS				10/09/2009			SUPERCHEESE		-->
+		<element type="iHealth" minOccurs="0"/>
+		<element type="iHappiness" minOccurs="0"/>
+<!-- SPECIALIST ENHANCEMENTS				END							-->		
 		<element type="iExperience"/>
 		<element type="Flavors"/>
 		<element type="HotKey"/>

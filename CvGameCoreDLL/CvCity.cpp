@@ -442,6 +442,18 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFreshWaterBadHealth = 0;
 	m_iFeatureGoodHealth = 0;
 	m_iFeatureBadHealth = 0;
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/	
+	m_iSpecialistGoodHealth = 0;
+	m_iSpecialistBadHealth = 0;
+	m_iSpecialistHappiness = 0;
+	m_iSpecialistUnhappiness = 0;
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	m_iBuildingGoodHealth = 0;
 	m_iBuildingBadHealth = 0;
 	m_iPowerGoodHealth = 0;
@@ -4811,6 +4823,31 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 
 	updateExtraSpecialistYield();
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	if (GC.getSpecialistInfo(eSpecialist).getHealth() > 0)
+	{
+		changeSpecialistGoodHealth(GC.getSpecialistInfo(eSpecialist).getHealth() * iChange);
+	}
+	else
+	{
+		changeSpecialistBadHealth(GC.getSpecialistInfo(eSpecialist).getHealth() * iChange);
+	}
+	if (GC.getSpecialistInfo(eSpecialist).getHappiness() > 0)
+	{
+		changeSpecialistHappiness(GC.getSpecialistInfo(eSpecialist).getHappiness() * iChange);
+	}
+	else
+	{
+		changeSpecialistUnhappiness(GC.getSpecialistInfo(eSpecialist).getHappiness() * iChange);
+	}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
+
 	changeSpecialistFreeExperience(GC.getSpecialistInfo(eSpecialist).getExperience() * iChange);
 }
 
@@ -5293,6 +5330,15 @@ int CvCity::unhappyLevel(int iExtra) const
 		iUnhappiness -= std::min(0, getMilitaryHappiness());
 		iUnhappiness -= std::min(0, getCurrentStateReligionHappiness());
 		iUnhappiness -= std::min(0, getBuildingBadHappiness());
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+		iUnhappiness -= std::min(0, getSpecialistUnhappiness());
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 		iUnhappiness -= std::min(0, getExtraBuildingBadHappiness());
 		iUnhappiness -= std::min(0, getFeatureBadHappiness());
 		iUnhappiness -= std::min(0, getBonusBadHappiness());
@@ -5339,6 +5385,15 @@ int CvCity::happyLevel() const
 	iHappiness += std::max(0, (getExtraHappiness() + GET_PLAYER(getOwnerINLINE()).getExtraHappiness()));
 	iHappiness += std::max(0, GC.getHandicapInfo(getHandicapType()).getHappyBonus());
 	iHappiness += std::max(0, getVassalHappiness());
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	iHappiness += std::max(0, getSpecialistHappiness());
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 
 	if (getHappinessTimer() > 0)
 	{
@@ -5464,6 +5519,20 @@ int CvCity::goodHealth() const
 		iTotalHealth += iHealth;
 	}
 
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	iHealth = getSpecialistGoodHealth();
+	if (iHealth > 0)
+	{
+		iTotalHealth += iHealth;
+	}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
+
 	iHealth = getPowerGoodHealth();
 	if (iHealth > 0)
 	{
@@ -5522,6 +5591,20 @@ int CvCity::badHealth(bool bNoAngry, int iExtra) const
 	{
 		iTotalHealth += iHealth;
 	}
+
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	iHealth = getSpecialistBadHealth();
+	if (iHealth < 0)
+	{
+		iTotalHealth += iHealth;
+	}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 
 	iHealth = getPowerBadHealth();
 	if (iHealth < 0)
@@ -7364,6 +7447,104 @@ int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 	return 0;
 }
 // BUG - Actual Effects - start
+
+
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+int CvCity::getSpecialistGoodHealth() const
+{
+	return m_iSpecialistGoodHealth;
+}
+
+
+int CvCity::getSpecialistBadHealth() const
+{
+	return m_iSpecialistBadHealth;
+}
+
+int CvCity::getSpecialistHappiness() const
+{
+	return m_iSpecialistHappiness;
+}
+
+
+int CvCity::getSpecialistUnhappiness() const
+{
+	return m_iSpecialistUnhappiness;
+}
+
+void CvCity::changeSpecialistGoodHealth(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iSpecialistGoodHealth += iChange;
+		FAssert(getSpecialistGoodHealth() >= 0);
+
+		AI_setAssignWorkDirty(true);
+
+		if (getTeam() == GC.getGameINLINE().getActiveTeam())
+		{
+			setInfoDirty(true);
+		}
+	}
+}
+
+
+void CvCity::changeSpecialistBadHealth(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iSpecialistBadHealth += iChange;
+		FAssert(getSpecialistBadHealth() <= 0);
+
+		AI_setAssignWorkDirty(true);
+
+		if (getTeam() == GC.getGameINLINE().getActiveTeam())
+		{
+			setInfoDirty(true);
+		}
+	}
+}
+
+
+void CvCity::changeSpecialistHappiness(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iSpecialistHappiness += iChange;
+		FAssert(getSpecialistHappiness() >= 0);
+
+		AI_setAssignWorkDirty(true);
+
+		if (getTeam() == GC.getGameINLINE().getActiveTeam())
+		{
+			setInfoDirty(true);
+		}
+	}
+}
+
+
+void CvCity::changeSpecialistUnhappiness(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iSpecialistUnhappiness += iChange;
+		FAssert(getSpecialistUnhappiness() <= 0);
+
+		AI_setAssignWorkDirty(true);
+
+		if (getTeam() == GC.getGameINLINE().getActiveTeam())
+		{
+			setInfoDirty(true);
+		}
+	}
+}
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 
 
 int CvCity::getBuildingGoodHealth() const
@@ -14759,6 +14940,16 @@ void CvCity::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iFreshWaterBadHealth);
 	pStream->Read(&m_iFeatureGoodHealth);
 	pStream->Read(&m_iFeatureBadHealth);
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	pStream->Read(&m_iSpecialistGoodHealth);
+	pStream->Read(&m_iSpecialistBadHealth);
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	pStream->Read(&m_iBuildingGoodHealth);
 	pStream->Read(&m_iBuildingBadHealth);
 	pStream->Read(&m_iPowerGoodHealth);
@@ -14780,6 +14971,16 @@ void CvCity::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iDefyResolutionAngerTimer);
 	pStream->Read(&m_iHappinessTimer);
 	pStream->Read(&m_iMilitaryHappinessUnits);
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	pStream->Read(&m_iSpecialistHappiness);
+	pStream->Read(&m_iSpecialistUnhappiness);
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	pStream->Read(&m_iBuildingGoodHappiness);
 	pStream->Read(&m_iBuildingBadHappiness);
 	pStream->Read(&m_iExtraBuildingGoodHappiness);
@@ -15053,6 +15254,16 @@ void CvCity::write(FDataStreamBase* pStream)
 	pStream->Write(m_iFreshWaterBadHealth);
 	pStream->Write(m_iFeatureGoodHealth);
 	pStream->Write(m_iFeatureBadHealth);
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	pStream->Write(m_iSpecialistGoodHealth);
+	pStream->Write(m_iSpecialistBadHealth);
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	pStream->Write(m_iBuildingGoodHealth);
 	pStream->Write(m_iBuildingBadHealth);
 	pStream->Write(m_iPowerGoodHealth);
@@ -15074,6 +15285,16 @@ void CvCity::write(FDataStreamBase* pStream)
 	pStream->Write(m_iDefyResolutionAngerTimer);
 	pStream->Write(m_iHappinessTimer);
 	pStream->Write(m_iMilitaryHappinessUnits);
+/*************************************************************************************************/
+/** Specialists Enhancements, by Supercheese 10/9/09                                                   */
+/**                                                                                              */
+/**                                                                                              */
+/*************************************************************************************************/
+	pStream->Write(m_iSpecialistHappiness);
+	pStream->Write(m_iSpecialistUnhappiness);
+/*************************************************************************************************/
+/** Specialists Enhancements                          END                                              */
+/*************************************************************************************************/
 	pStream->Write(m_iBuildingGoodHappiness);
 	pStream->Write(m_iBuildingBadHappiness);
 	pStream->Write(m_iExtraBuildingGoodHappiness);
