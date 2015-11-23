@@ -19055,16 +19055,16 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iOpenBordersAttitudeDivisor, "iOpenBordersAttitudeDivisor",30);
 	pXML->GetChildXmlValByName(&m_iOpenBordersAttitudeChangeLimit, "iOpenBordersAttitudeChangeLimit",1);
 /************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
+/* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	pXML->GetChildXmlValByName(&m_iLimitedBordersAttitudeDivisor, "iLimitedBordersAttitudeDivisor");
-	pXML->GetChildXmlValByName(&m_iLimitedBordersAttitudeChangeLimit, "iLimitedBordersAttitudeChangeLimit");
-	pXML->GetChildXmlValByName(&m_iEmbassyAttitudeDivisor, "iEmbassyAttitudeDivisor");
-	pXML->GetChildXmlValByName(&m_iEmbassyAttitudeChangeLimit, "iEmbassyAttitudeChangeLimit");
-	pXML->GetChildXmlValByName(&m_iFreeTradeAgreementAttitudeDivisor, "iFreeTradeAgreementAttitudeDivisor");
-	pXML->GetChildXmlValByName(&m_iFreeTradeAgreementAttitudeChangeLimit, "iFreeTradeAgreementAttitudeChangeLimit");
-	pXML->GetChildXmlValByName(&m_iNonAggressionAttitudeDivisor, "iNonAggressionAttitudeDivisor");
-	pXML->GetChildXmlValByName(&m_iNonAggressionAttitudeChangeLimit, "iNonAggressionAttitudeChangeLimit");
+	pXML->GetChildXmlValByName(&m_iLimitedBordersAttitudeDivisor, "iLimitedBordersAttitudeDivisor",25);
+	pXML->GetChildXmlValByName(&m_iLimitedBordersAttitudeChangeLimit, "iLimitedBordersAttitudeChangeLimit",2);
+	pXML->GetChildXmlValByName(&m_iEmbassyAttitudeDivisor, "iEmbassyAttitudeDivisor",25);
+	pXML->GetChildXmlValByName(&m_iEmbassyAttitudeChangeLimit, "iEmbassyAttitudeChangeLimit",2);
+	pXML->GetChildXmlValByName(&m_iFreeTradeAgreementAttitudeDivisor, "iFreeTradeAgreementAttitudeDivisor",25);
+	pXML->GetChildXmlValByName(&m_iFreeTradeAgreementAttitudeChangeLimit, "iFreeTradeAgreementAttitudeChangeLimit",2);
+	pXML->GetChildXmlValByName(&m_iNonAggressionAttitudeDivisor, "iNonAggressionAttitudeDivisor",25);
+	pXML->GetChildXmlValByName(&m_iNonAggressionAttitudeChangeLimit, "iNonAggressionAttitudeChangeLimit",2);
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -19125,34 +19125,34 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 /* Afforess	                  Start		 07/29/10                                               */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-	pXML->GetChildXmlValByName(szTextVal, "ContactRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "ContactRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iContactRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "MilitaryUnitRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "MilitaryUnitRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iMilitaryUnitRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "WorkerRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "WorkerRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iWorkerRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "CorporationRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "CorporationRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iCorporationRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "EmbassyRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "EmbassyRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iEmbassyRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 	
-	pXML->GetChildXmlValByName(szTextVal, "SecretaryGeneralVoteRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "SecretaryGeneralVoteRefuseAttitudeThreshold","ATTITUDE_PLEASED");
 	m_iSecretaryGeneralVoteRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "LimitedBordersRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "LimitedBordersRefuseAttitudeThreshold","ATTITUDE_PLEASED");
 	m_iLimitedBordersRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "FreeTradeAgreementRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "FreeTradeAgreementRefuseAttitudeThreshold","ATTITUDE_CAUTIOUS");
 	m_iFreeTradeAgreementRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "NonAggressionRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "NonAggressionRefuseAttitudeThreshold","ATTITUDE_CAUTIOUS");
 	m_iNonAggressionRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "POWRefuseAttitudeThreshold");
+	pXML->GetChildXmlValByName(szTextVal, "POWRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iPOWRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
