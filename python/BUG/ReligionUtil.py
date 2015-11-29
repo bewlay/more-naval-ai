@@ -429,9 +429,9 @@ def init():
 	
 	for iReligion in range(NUM_RELIGIONS):
 		for index in range(NUM_BUILDING_TYPES):
-			BugUtil.debug("FUCK - %i bldg %i = %i", iReligion, index, getBuilding(iReligion, index))
+			BugUtil.debug("Religion %i bldg %i = %i", iReligion, index, getBuilding(iReligion, index))
 		for index in range(NUM_UNIT_TYPES):
-			BugUtil.debug("FUCK - %i unit %i = %i", iReligion, index, getUnit(iReligion, index))
+			BugUtil.debug("Religion %i unit %i = %i", iReligion, index, getUnit(iReligion, index))
 
 
 ## Building and Unit Types

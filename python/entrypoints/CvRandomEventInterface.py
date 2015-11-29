@@ -60,6 +60,7 @@ def doArmageddonApocalypse(argsList):
 			iPop = int(iPop / 2)
 			if iPop == 0:
 				iPop = 1
+			CvUtil.pyPrint('ARMAGEDDON! Setting %s to %d population' %(pyCity.getName(), iPop))
 			pCity.setPopulation(iPop)
 	pyPlayer = PyPlayer(iPlayer)
 	apUnitList = pyPlayer.getUnitList()

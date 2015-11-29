@@ -889,7 +889,7 @@
 	</TEXT>     
 	<!-- RevolutionDCM - end -->
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_CONDAMN_UN_SLAVERY</Tag>
+		<Tag>TXT_KEY_VOTE_CONDEMN_UN_SLAVERY</Tag>
 		<English>Condemn Slavery Civic</English>
 		<French>Condamner Etat Policier</French>
 	</TEXT>
