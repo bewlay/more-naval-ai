@@ -19962,38 +19962,7 @@ void CvUnit::updateTerraformer()
 
 bool CvUnit::isTerraformer() const
 {
-    bool bTerraformer = false;
-    for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
-    {
-        if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAutomateTerrain())
-        {
-			//if (canCast(iSpell, false))
-			bTerraformer = true;
-
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-			{
-				if (!isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-				{
-					bTerraformer = false;
-				}
-            }
-
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-			{
-				if (!isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				{
-					bTerraformer = false;
-				}
-            }
-
-			if (bTerraformer)
-			{
-				break;
-			}
-        }
-    }
-
-	return bTerraformer;
+	return m_bTerraformer;
 }
 
 bool CvUnit::withdrawlToNearestValidPlot(bool bKillUnit)
