@@ -365,6 +365,7 @@ void CvPlayerAI::AI_reset(bool bConstructor)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+/*
 int CvPlayerAI::AI_getCondemnCivicAttitude(PlayerTypes ePlayer, CivicTypes eCivic) const
 {
 	int iAttitude = 0;
@@ -397,6 +398,7 @@ int CvPlayerAI::AI_getCondemnCivicAttitude(PlayerTypes ePlayer, CivicTypes eCivi
 
 	return iAttitude;
 }
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -8499,14 +8501,16 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+	/*
 	int numCivicInfos = GC.getNumCivicInfos();
-	if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid())
+	//if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid())
 	{
 		for (iI = 0; iI < numCivicInfos; iI++)
 		{
 			iAttitude += AI_getCondemnCivicAttitude(ePlayer, (CivicTypes)iI);
 		}
 	}
+	*/
 	//Ruthless AI: The Enemy of Our Enemy is our Friend!   
 	iAttitude += AI_getSharedEnemyAttitude(ePlayer);
 	//Ruthless AI: The Friend of Our Friend is our Friend! 	
@@ -9331,6 +9335,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+		/*
 		if (bValid)
 		{
 			for (iI = 0; iI < GC.getVoteInfo(eVote).getNumCondemnCivicTypes(); iI++)
@@ -9369,6 +9374,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				}
 			}
 		}
+		*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -9724,70 +9730,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 					if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
 					{
 						bDefy = true;
-					}
-				}
-			}
-		}
-		
-		// Obsolete Bonuses
-		if (bValid)
-		{
-			for (iI = 0; iI < GC.getVoteInfo(eVote).getNumBonusObsoleteTypes(); iI++)
-			{
-				BonusTypes eTempBonus = (BonusTypes)GC.getVoteInfo(eVote).getBonusObsolete(iI);
-				if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)(GC.getBonusInfo(eTempBonus).getTechReveal()))))
-				{
-					bValid = false;
-					break;
-				}
-				else
-				{
-					if (GC.getBonusInfo(eTempBonus).getHealth() < 0)
-					{
-						int iTempValue = countOwnedBonuses(eTempBonus);
-
-						for (iI = 0; iI < MAX_PLAYERS; iI++)
-						{
-							if (GET_PLAYER((PlayerTypes)iI).isAlive())
-							{
-								if ((PlayerTypes)iI != getID() && !GET_PLAYER((PlayerTypes)iI).isBarbarian() && !GET_PLAYER((PlayerTypes)iI).isMinorCiv())
-								{
-									iTempValue += ((GET_PLAYER((PlayerTypes)iI).countOwnedBonuses(eTempBonus) * std::max(0, (AI_getAttitudeVal((PlayerTypes)iI) / 2))) / std::max(1, (5 - (int)AI_getAttitude((PlayerTypes)iI))));
-								}
-							}
-						}
-						if (iTempValue > 0)
-						{
-							bValid = false;
-							if (iTempValue >= GC.getGameINLINE().getSorenRandNum(10, "BonusObsolete Choice"))
-							{
-								bDefy = true;
-							}
-							break;
-						}
-					}
-					else
-					{
-						int iTempValue = countOwnedBonuses(eTempBonus);
-						for (iI = 0; iI < MAX_PLAYERS; iI++)
-						{
-							if (GET_PLAYER((PlayerTypes)iI).isAlive())
-							{
-								if ((PlayerTypes)iI != getID() && !GET_PLAYER((PlayerTypes)iI).isBarbarian() && !GET_PLAYER((PlayerTypes)iI).isMinorCiv())
-								{
-									iTempValue += ((GET_PLAYER((PlayerTypes)iI).countOwnedBonuses(eTempBonus) * std::max(0, (AI_getAttitudeVal((PlayerTypes)iI) / 2))) / std::max(1, (5 - (int)AI_getAttitude((PlayerTypes)iI))));
-								}
-							}
-						}
-						if (iTempValue > 0)
-						{
-							bValid = false;
-							if (iTempValue >= GC.getGameINLINE().getSorenRandNum(10, "BonusObsolete Choice2"))
-							{
-								bDefy = true;
-							}
-							break;
-						}
 					}
 				}
 			}
@@ -16677,7 +16619,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /************************************************************************************************/
 	int iAttitudeChangeValue = 0;
 
-	if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid()) // getCondemnCivicCountTotalArray() != NULL
+/*	if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid()) // getCondemnCivicCountTotalArray() != NULL
 	{
 		int iBaseAttitude = GC.getLeaderHeadInfo(getPersonalityType()).getBaseAttitude() * 2;
 
@@ -16686,10 +16628,11 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			iAttitudeChangeValue += GET_PLAYER(PlayerTypes(iI)).AI_getCondemnCivicAttitude(getID(), eCivic) * iBaseAttitude;
 		}
 	}
-
+*/
 	iValue += iAttitudeChangeValue / 2;
+	/*
 	//bool bNoCondemned = false;
-	if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid()) 
+	//if (GC.getGameINLINE().isCondemnCivicCountTotalArrayValid()) 
 	{
 		for (iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
 		{
@@ -16704,6 +16647,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 			}
 		}
 	}
+	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/

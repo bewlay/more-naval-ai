@@ -10203,6 +10203,7 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+	/*
 	if (GC.getGameINLINE().isNetworkMultiPlayer())
 	{
 		if (GC.getGameINLINE().isCondemnCivic(eCivic))
@@ -10210,6 +10211,7 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 			return false;
 		}
 	}
+	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END																*/
 /************************************************************************************************/
@@ -25821,9 +25823,10 @@ int CvPlayer::getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+/*
 bool CvPlayer::isCivicCondemned() const
 {
-	if (GC.getGameINLINE().isCondemnCivicCountArrayValid()) 
+	//if (GC.getGameINLINE().isCondemnCivicCountArrayValid()) 
 	{
 		int numCivicOptionInfos = GC.getNumCivicOptionInfos();
 		for (int iI = 0; iI < numCivicOptionInfos; iI++)
@@ -25837,6 +25840,7 @@ bool CvPlayer::isCivicCondemned() const
 
 	return false;
 }
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/

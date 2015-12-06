@@ -441,18 +441,10 @@ public:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	int getCondemnCivicCount(CivicTypes eIndex) const;										// Exposed to Python
-	bool isCondemnCivic(CivicTypes eIndex) const;
-	void changeCondemnCivicCount(CivicTypes eIndex, int iChange);		// Exposed to Python
-	
-	bool isCondemnCivicCountArrayValid() const;
-	bool isCondemnCivicCountTotalArrayValid() const;
-	void setCondemnCivicCount(CivicTypes eIndex, int iNewValue);		// Exposed to Python
-	
-	int getBonusObsoleteCount(BonusTypes eIndex) const;														// Exposed to Python
-	bool isBonusObsolete(BonusTypes eIndex) const;																	// Exposed to Python
-	void setBonusObsoleteCount(BonusTypes eIndex, int iNewValue);
-	void changeBonusObsoleteCount(BonusTypes eIndex, int iChange);
+	//int getCondemnCivicCount(CivicTypes eIndex) const;										// Exposed to Python
+	//bool isCondemnCivic(CivicTypes eIndex) const;
+	//void changeCondemnCivicCount(CivicTypes eIndex, int iChange);		// Exposed to Python
+	//void setCondemnCivicCount(CivicTypes eIndex, int iNewValue);		// Exposed to Python
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -819,8 +811,7 @@ protected:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	int* m_paiCondemnCivicCount;
-	std::vector<int> m_paiBonusObsoleteCount;/*int* m_paiO; m_paiBonusObsoleteCount*/
+	//int* m_paiCondemnCivicCount;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/

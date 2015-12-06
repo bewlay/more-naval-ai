@@ -179,7 +179,7 @@ public:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	DllExport void setCondemnCivicHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, CivicTypes eCivic);
+	//DllExport void setCondemnCivicHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, CivicTypes eCivic);
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/

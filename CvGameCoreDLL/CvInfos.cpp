@@ -19624,8 +19624,7 @@ m_iMinVoters(0),
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-m_iNumCondemnCivicTypes(0),
-m_iNumBonusObsoleteTypes(0),
+//m_iNumCondemnCivicTypes(0),
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -19866,6 +19865,7 @@ bool CvVoteInfo::isPacificRule() const
 	return m_bPacificRule;
 }
 
+/*
 int CvVoteInfo::getNumCondemnCivicTypes() const
 {
 	return m_iNumCondemnCivicTypes;
@@ -19913,39 +19913,7 @@ void CvVoteInfo::reducesValues()
 		}
 	}
 }
-
-int CvVoteInfo::getNumBonusObsoleteTypes() const
-{
-	return m_iNumBonusObsoleteTypes;
-}
-
-int CvVoteInfo::getBonusObsolete(int i) const
-{
-	FAssertMsg(i < getNumBonusObsoleteTypes(), "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
-	return m_piBonusObsolete.size() > 0 ? m_piBonusObsolete[i] : -1;
-}
-
-bool CvVoteInfo::isBonusObsolete(int i) const
-{
-	FAssertMsg(i < GC.getNumBonusInfos(), "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
-
-	for (int j = 0; j < getNumBonusObsoleteTypes(); j++)
-	{
-		if (getBonusObsolete(j) == i)
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool CvVoteInfo::isValidBonusObsoleteArray() const
-{
-	return (getNumBonusObsoleteTypes() > 0);
-}
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -19975,104 +19943,6 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iStateReligionVotePercent, "iStateReligionVotePercent");
 	pXML->GetChildXmlValByName(&m_iTradeRoutes, "iTradeRoutes");
 	pXML->GetChildXmlValByName(&m_iMinVoters, "iMinVoters");
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                            */
-/************************************************************************************************/
-	/* m_piCondemnCivic */
-	int* paiTemp = NULL;
-	bool* pabTemp = NULL;
-	int i;
-	CvString szTextVal;
-
-	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"CondemnCivics"))
-	{
-		if (pXML->SkipToNextVal())
-		{
-			int iNumSibs = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
-			m_iNumCondemnCivicTypes = iNumSibs;
-
-			if (0 < iNumSibs)
-			{
-				FAssertMsg((0 < iNumSibs) ,"Allocating zero or less memory in SetGlobalUnitInfo");
-				pXML->InitList(&paiTemp, iNumSibs, -1);
-				if (pXML->GetChildXmlVal(szTextVal))
-				{
-					for (int j = 0; j < iNumSibs; ++j)
-					{
-						paiTemp[j] = GC.getInfoTypeForString(szTextVal);
-						if (!pXML->GetNextXmlVal(szTextVal))
-						{
-							break;
-						}
-					}
-
-					gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-				}
-			}
-		}
-
-		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-	}
-	// Convert
-	m_piCondemnCivic.clear();
-	int iTempValue = m_iNumCondemnCivicTypes;
-	if (paiTemp != NULL)
-	{
-		for (i = 0; i < iTempValue; i++)
-		{
-			m_piCondemnCivic.push_back(paiTemp[i]);
-		}
-	}
-	SAFE_DELETE_ARRAY(paiTemp);
-	/**/
-
-	/* m_piBonusObsolete */
-	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"BonusObsoletes"))
-	{
-		if (pXML->SkipToNextVal())
-		{
-			int iNumSibs = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
-			m_iNumBonusObsoleteTypes = iNumSibs;
-
-			if (0 < iNumSibs)
-			{
-				FAssertMsg((0 < iNumSibs) ,"Allocating zero or less memory in SetGlobalUnitInfo");
-				pXML->InitList(&paiTemp, iNumSibs, -1);
-
-				if (pXML->GetChildXmlVal(szTextVal))
-				{
-					for (int j = 0; j < iNumSibs; ++j)
-					{
-						paiTemp[j] = GC.getInfoTypeForString(szTextVal);
-						if (!pXML->GetNextXmlVal(szTextVal))
-						{
-							break;
-						}
-					}
-
-					gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-				}
-			}
-		}
-
-		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
-	}
-	// Convert
-	m_piBonusObsolete.clear();
-	int iTempValue1 = m_iNumBonusObsoleteTypes;
-	if (paiTemp != NULL)
-	{
-		for (i = 0; i < iTempValue1; i++)
-		{
-			m_piBonusObsolete.push_back(paiTemp[i]);
-		}
-	}
-	SAFE_DELETE_ARRAY(paiTemp);
-	/**/
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
-
 	pXML->GetChildXmlValByName(&m_bSecretaryGeneral, "bSecretaryGeneral");
 	pXML->GetChildXmlValByName(&m_bVictory, "bVictory");
 	pXML->GetChildXmlValByName(&m_bFreeTrade, "bFreeTrade");
@@ -20106,13 +19976,13 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                            */
 /************************************************************************************************/
-	reducesValues();
+//	reducesValues();
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
 
 //FfH: Added by Kael 11/14/2007
-	//CvString szTextVal;
+	CvString szTextVal;
 	pXML->GetChildXmlValByName(&m_bGamblingRing, "bGamblingRing");
 	pXML->GetChildXmlValByName(&m_bNoOutsideTechTrades, "bNoOutsideTechTrades");
 	pXML->GetChildXmlValByName(&m_bSlaveTrade, "bSlaveTrade");

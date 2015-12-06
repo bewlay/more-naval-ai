@@ -4954,8 +4954,7 @@ public:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	int getNumCondemnCivicTypes() const;						// Exposed to Python
-	int getNumBonusObsoleteTypes() const;						// Exposed to Python
+	//int getNumCondemnCivicTypes() const;						// Exposed to Python
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -4998,13 +4997,10 @@ public:
 	bool isNoCityRazing() const;						// Exposed to Python
 	bool isCultureNeedsEmptyRadius() const;						// Exposed to Python
 	bool isPacificRule() const;						// Exposed to Python
-	int getCondemnCivic(int i) const;			// Exposed to Python
-	bool isCondemnCivic(int i) const;			// Exposed to Python
-	bool isValidCondemnCivicArray() const;			// Exposed to Python
-	int getBonusObsolete(int i) const;			// Exposed to Python
-	bool isBonusObsolete(int i) const;			// Exposed to Python
-	bool isValidBonusObsoleteArray() const;
-	void reducesValues();
+//	int getCondemnCivic(int i) const;			// Exposed to Python
+//	bool isCondemnCivic(int i) const;			// Exposed to Python
+//	bool isValidCondemnCivicArray() const;			// Exposed to Python
+//	void reducesValues();
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                              */
 /************************************************************************************************/
@@ -5025,8 +5021,7 @@ protected:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	int m_iNumCondemnCivicTypes;
-	int m_iNumBonusObsoleteTypes;
+//	int m_iNumCondemnCivicTypes;;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -5069,8 +5064,7 @@ protected:
 	bool m_bNoCityRazing;
 	bool m_bCultureNeedsEmptyRadius;
 	bool m_bPacificRule;
-	std::vector<int> m_piCondemnCivic;
-	std::vector<int> m_piBonusObsolete;
+	//std::vector<int> m_piCondemnCivic;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

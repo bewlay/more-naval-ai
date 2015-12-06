@@ -154,7 +154,7 @@ public:
 //    int AI_getCivicShareAttitude(PlayerTypes ePlayer) const;
 //    int AI_getFavoriteWonderAttitude(PlayerTypes ePlayer) const;
 //FfH: End Add
-	int AI_getCondemnCivicAttitude(PlayerTypes ePlayer, CivicTypes eCivic) const;
+	//int AI_getCondemnCivicAttitude(PlayerTypes ePlayer, CivicTypes eCivic) const;
 	int AI_getSharedEnemyAttitude(PlayerTypes ePlayer) const;
 	int AI_getSharedFriendAttitude(PlayerTypes ePlayer) const;	
 /************************************************************************************************/

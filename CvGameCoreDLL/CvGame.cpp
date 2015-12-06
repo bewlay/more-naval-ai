@@ -67,7 +67,7 @@ CvGame::CvGame()
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
-	m_paiCondemnCivicCount = NULL;
+	//m_paiCondemnCivicCount = NULL;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -622,10 +622,12 @@ void CvGame::uninit()
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
 	//SAFE_DELETE_ARRAY(m_paiCondemnCivicCount);
+	/*
 	if (m_paiCondemnCivicCount != NULL)
 	{
 		SAFE_DELETE_ARRAY(m_paiCondemnCivicCount);
 	}
+	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -729,14 +731,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	m_eGameState = GAMESTATE_ON;
 
 	m_szScriptData = "";
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                              */
-/************************************************************************************************/
-	m_paiBonusObsoleteCount.clear();
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 //FfH: Added by Kael 08/07/2007
 	m_iCrime = 10;
@@ -880,6 +874,15 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 		}
+
+		/*
+		FAssertMsg(m_paiCondemnCivicCount==NULL, "about to leak memory, CvGame::m_paiCondemnCivicCount");
+		m_paiCondemnCivicCount = new int[GC.getNumCivicInfos()];
+		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
+		{
+			m_paiCondemnCivicCount[iI] = 0;
+		}
+		*/
 
 		FAssertMsg(m_pabSpecialUnitValid==NULL, "about to leak memory, CvGame::m_pabSpecialUnitValid");
 		m_pabSpecialUnitValid = new bool[GC.getNumSpecialUnitInfos()];
@@ -6070,10 +6073,12 @@ bool CvGame::isForceCivic(CivicTypes eIndex) const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+/*
 bool CvGame::isCondemnCivic(CivicTypes eIndex) const
 {
 	return (getCondemnCivicCount(eIndex) > 0);
 }
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -6120,6 +6125,7 @@ void CvGame::changeForceCivicCount(CivicTypes eIndex, int iChange)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
 /************************************************************************************************/
+/*
 void CvGame::changeCondemnCivicCount(CivicTypes eIndex, int iChange)
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
@@ -6134,31 +6140,8 @@ int CvGame::getCondemnCivicCount(CivicTypes eIndex) const
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumCivicInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
 
-	if (m_paiCondemnCivicCount == NULL)
-	{
-		return 0;
-	}
-
 	return m_paiCondemnCivicCount[eIndex];
 }
-
-bool CvGame::isCondemnCivicCountArrayValid() const
-{
-	if (m_paiCondemnCivicCount != NULL)
-	{
-		return (m_paiCondemnCivicCount != NULL);
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool CvGame::isCondemnCivicCountTotalArrayValid() const
-{
-	return (m_paiCondemnCivicCount != NULL);
-}
-
 
 void CvGame::setCondemnCivicCount(CivicTypes eIndex, int iNewValue)
 {
@@ -6219,97 +6202,7 @@ void CvGame::setCondemnCivicCount(CivicTypes eIndex, int iNewValue)
 		}
 	}
 }
-
-int CvGame::getBonusObsoleteCount(BonusTypes eIndex) const
-{
-	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
-	FAssertMsg(eIndex < GC.getNumBonusInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-
-	if (m_paiBonusObsoleteCount.size() <= 0)
-	{
-		return 0;
-	}
-
-	return m_paiBonusObsoleteCount[eIndex];
-}
-
-
-bool CvGame::isBonusObsolete(BonusTypes eIndex) const
-{
-	return (getBonusObsoleteCount(eIndex) > 0);
-}
-
-void CvGame::setBonusObsoleteCount(BonusTypes eIndex, int iNewValue)
-{
-	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
-	FAssertMsg(eIndex < GC.getNumBonusInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-
-	CvPlot* pLoopPlot;
-	CvCity* pCity;
-	CvWString szBuffer;
-	bool bOldBonusObsolete;
-	int iI;
-
-	if (iNewValue != getBonusObsoleteCount(eIndex))
-	{
-		bOldBonusObsolete = isBonusObsolete(eIndex);
-
-		if(m_paiBonusObsoleteCount.size() <= 0)
-		{
-			m_paiBonusObsoleteCount.clear();
-			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			{
-				m_paiBonusObsoleteCount.push_back(0);
-			}
-		}
-
-		m_paiBonusObsoleteCount[eIndex] = iNewValue;
-		FAssert(getBonusObsoleteCount(eIndex) >= 0);
-
-		if (bOldBonusObsolete != isBonusObsolete(eIndex))
-		{
-			int num_plots = GC.getMapINLINE().numPlotsINLINE();
-			for (iI = 0; iI < num_plots; iI++)
-			{
-				pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-				if (pLoopPlot->getBonusType() == eIndex)
-				{
-					pLoopPlot->setBonusType((isBonusObsolete(eIndex)) ? NO_BONUS : eIndex);
-
-					pCity =GC.getMapINLINE().findCity(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-					if (isBonusObsolete(eIndex) && pLoopPlot->getOwnerINLINE() != NO_PLAYER && pCity != NULL)
-					{
-						if (GET_PLAYER(pLoopPlot->getOwnerINLINE()).isHuman())
-						{
-							szBuffer = gDLL->getText("TXT_KEY_MISC_BONUS_BECOME_OBSOLETE", GC.getBonusInfo(eIndex).getTextKeyWide(), pCity->getNameKey());
-							gDLL->getInterfaceIFace()->addMessage(pLoopPlot->getOwnerINLINE(), false, GC.getDefineINT("EVENT_MESSAGE_TIME_LONG"), szBuffer, NULL, MESSAGE_TYPE_INFO, GC.getBonusInfo(eIndex).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-						}
-					}
-					if (!(isBonusObsolete(eIndex)) && pLoopPlot->getOwnerINLINE() != NO_PLAYER && pCity != NULL)
-					{
-						if (GET_PLAYER(pLoopPlot->getOwnerINLINE()).isHuman())
-						{
-							szBuffer = gDLL->getText("TXT_KEY_MISC_BONUS_BECOME_OBSOLETE2", GC.getBonusInfo(eIndex).getTextKeyWide(), pCity->getNameKey());
-							gDLL->getInterfaceIFace()->addMessage(pLoopPlot->getOwnerINLINE(), false, GC.getDefineINT("EVENT_MESSAGE_TIME_LONG"), szBuffer, NULL, MESSAGE_TYPE_INFO, GC.getBonusInfo(eIndex).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-void CvGame::changeBonusObsoleteCount(BonusTypes eIndex, int iChange)
-{
-	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
-	FAssertMsg(eIndex < GC.getNumBonusInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-
-	if (iChange != 0)
-	{
-		setBonusObsoleteCount(eIndex, getBonusObsoleteCount(eIndex)+iChange);
-	}
-}
-
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -6839,28 +6732,6 @@ void CvGame::castVote(PlayerTypes eOwnerIndex, int iVoteId, PlayerVoteTypes ePla
 				}
 			}
 		}
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                              */
-/************************************************************************************************/
-		for (int iI = 0; iI < GC.getVoteInfo(pTriggeredData->kVoteOption.eVote).getNumBonusObsoleteTypes(); iI++)
-		{
-			BonusTypes eTempBonus = (BonusTypes)GC.getVoteInfo(pTriggeredData->kVoteOption.eVote).getBonusObsolete(iI);
-			
-			for (iI = 0; iI < MAX_PLAYERS; iI++)
-			{
-				if (GET_PLAYER((PlayerTypes)iI).isAlive() && !(GET_PLAYER((PlayerTypes)iI).isBarbarian()) && !(GET_PLAYER((PlayerTypes)iI).isMinorCiv()))
-				{
-					if (GET_PLAYER((PlayerTypes)iI).countOwnedBonuses(eTempBonus) != 0)
-					{
-						GET_PLAYER((PlayerTypes)iI).AI_changeMemoryCount(eOwnerIndex, MEMORY_BONUS_BAD_VOTE, GET_PLAYER((PlayerTypes)iI).countOwnedBonuses(eTempBonus));
-					}
-				}
-			}
-		}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                              */
-/************************************************************************************************/
 		setPlayerVote(eOwnerIndex, iVoteId, ePlayerVote);
 	}
 }
@@ -8981,16 +8852,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 	changeNoCityRazingCount(kVote.isNoCityRazing() ? iChange : 0);
 	changeCultureNeedsEmptyRadiusCount(kVote.isCultureNeedsEmptyRadius() ? iChange : 0);
 	setPacificVoteSource(kData.eVoteSource, (GC.getVoteInfo(kData.kVoteOption.eVote).isPacificRule() ? (iChange > 0) : isPacificVoteSource(kData.eVoteSource)));
-
-	for (int iI = 0; iI < GC.getVoteInfo(kData.kVoteOption.eVote).getNumBonusObsoleteTypes(); iI++)
-	{
-		changeBonusObsoleteCount(((BonusTypes)GC.getVoteInfo(kData.kVoteOption.eVote).getBonusObsolete(iI)), iChange);
-	}
-	
-	for (iI = 0; iI < GC.getVoteInfo(kData.kVoteOption.eVote).getNumCondemnCivicTypes(); iI++)
-	{
-		changeCondemnCivicCount((CivicTypes)GC.getVoteInfo(kData.kVoteOption.eVote).getCondemnCivic(iI), iChange);
-	}
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -9629,6 +9490,8 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iNoCityRazingCount);
 	pStream->Read(&m_iCultureNeedsEmptyRadiusCount);
 	
+	//pStream->Read(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
+	/*
 	int iJ;
 	int iK;
 	pStream->Read(&iJ);
@@ -9650,6 +9513,7 @@ void CvGame::read(FDataStreamBase* pStream)
 			}
 		}
 	}
+	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -9885,26 +9749,6 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	
-	{
-		m_paiBonusObsoleteCount.clear();
-		uint iSize;
-		pStream->Read(&iSize);
-		for (uint i = 0; i < iSize; i++)
-		{
-			int iValue;
-			pStream->Read(&iValue);
-			m_paiBonusObsoleteCount.push_back(iValue);
-		}
-	}
-
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 }
 
 
@@ -9948,7 +9792,8 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(m_iVictimRightsCount);
 	pStream->Write(m_iNoCityRazingCount);
 	pStream->Write(m_iCultureNeedsEmptyRadiusCount);
-
+	//pStream->Read(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
+	/*
 	if (NULL == m_paiCondemnCivicCount)
 	{
 		pStream->Write(0);
@@ -9965,7 +9810,7 @@ void CvGame::write(FDataStreamBase* pStream)
 			pStream->Write(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
 		}
 	}
-
+	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -10148,24 +9993,6 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-
-	{
-		uint iSize = m_paiBonusObsoleteCount.size();
-		pStream->Write(iSize);
-		std::vector<int>::iterator it;
-		for (it = m_paiBonusObsoleteCount.begin(); it != m_paiBonusObsoleteCount.end(); ++it)
-		{
-			pStream->Write((*it));
-		}
-	}
-
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                              */
-/************************************************************************************************/
 }
 
 void CvGame::writeReplay(FDataStreamBase& stream, PlayerTypes ePlayer)

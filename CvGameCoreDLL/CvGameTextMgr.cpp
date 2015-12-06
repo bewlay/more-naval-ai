@@ -16625,18 +16625,6 @@ void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBon
 			break;
 		}
 	}
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                              */
-/************************************************************************************************/
-    if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER && GC.getGameINLINE().isBonusObsolete(eBonus))
-    {
-        szBuffer.append(NEWLINE);
-        szBuffer.append(gDLL->getText("TXT_KEY_BONUS_IS_OBSO"));
-    }
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
 	
 	if (GC.getBonusInfo(eBonus).getHealth() != 0)
 	{
@@ -18779,7 +18767,8 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/		
+/************************************************************************************************/	
+		/*
 		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
 			iAttitudeChange = GET_PLAYER(ePlayer).AI_getCondemnCivicAttitude(eTargetPlayer, (CivicTypes)iI);
@@ -18790,6 +18779,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 				szBuffer.append(szTempBuffer);
 			}
 		}
+		*/
 		
 		iAttitudeChange = GET_PLAYER(ePlayer).AI_getSharedEnemyAttitude(eTargetPlayer);
 		if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
@@ -24383,6 +24373,7 @@ void CvGameTextMgr::buildPOWString(CvWStringBuffer &szBuffer, TechTypes eTech, b
 	}
 }
 
+/*
 void CvGameTextMgr::setCondemnCivicHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, CivicTypes eCivic)
 {
 	CvWString szTempBuffer;
@@ -24397,7 +24388,7 @@ void CvGameTextMgr::setCondemnCivicHelp(CvWStringBuffer& szBuffer, PlayerTypes e
 		szBuffer.append(szTempBuffer);
 	}
 }
-
+*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
