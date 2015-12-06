@@ -240,7 +240,7 @@ void CyTeamPythonInterface()
 		.def("isHasPOW", &CyTeam::isHasPOW, "bool (TeamTypes)")
 
 		.def("signLimitedBorders", &CyTeam::signLimitedBorders, "void (int /*TeamTypes*/ eTeam)")
-		.def("setHasEmbassy", &CyTeam::setHasEmbassy, "void (int /*TeamTypes*/ eTeam)")
+		.def("setHasEmbassy", &CyTeam::setHasEmbassy, "void (int /*TeamTypes*/ eTeam, bool bNewValue)")
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

@@ -1152,9 +1152,11 @@ void CyTeam::signLimitedBorders(int /*TeamTypes*/ eTeam)
 		m_pTeam->signLimitedBorders((TeamTypes)eTeam);
 }
 
-void CyTeam::setHasEmbassy(int /*TeamTypes*/ eTeam)
+void CyTeam::setHasEmbassy(int /*TeamTypes*/ eTeam,bool bNewValue)
 {
-	return m_pTeam ? m_pTeam->setHasEmbassy(((TeamTypes)eTeam), true) : false;
+	if (m_pTeam)
+		m_pTeam->setHasEmbassy(((TeamTypes)eTeam), bNewValue);
+	//return m_pTeam ? m_pTeam->setHasEmbassy(((TeamTypes)eTeam), bNewValue) : false;
 }	
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */

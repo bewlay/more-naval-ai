@@ -270,7 +270,7 @@ public:
 	bool isLimitedBorders(int /*TeamTypes*/ eIndex);
 
 	void signLimitedBorders(int /*TeamTypes*/ eTeam);
-	void setHasEmbassy(int /*TeamTypes*/ eTeam);
+	void setHasEmbassy(int /*TeamTypes*/ eTeam, bool bNewValue);
 
 	int getFreeTradeAgreementTradingCount();
 	bool isFreeTradeAgreementTrading();
