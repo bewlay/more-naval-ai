@@ -553,7 +553,7 @@ class WBInfoScreen:
 					WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).interfaceScreen(pCity)				
 			elif iMode < 11:
 				pPlot = CyMap().plot(lSelectedItem[0], lSelectedItem[1])
-				if pPlot:
+				if not pPlot.isNone():
 					WBPlotScreen.WBPlotScreen().interfaceScreen(pPlot)
 			elif iMode == 11:
 				WBPlayerScreen.WBPlayerScreen().interfaceScreen(lSelectedItem[0])

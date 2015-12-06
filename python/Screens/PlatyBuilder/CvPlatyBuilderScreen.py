@@ -30,6 +30,7 @@ gc = CyGlobalContext()
 iChange = 1
 bPython = True
 bHideInactive = True
+Activities = ["AWAKE", "HOLD", "SLEEP", "HEAL", "SENTRY", "INTERCEPT", "MISSION", "PATROL", "PLUNDER"]
 
 class CvWorldBuilderScreen:
 
@@ -67,7 +68,7 @@ class CvWorldBuilderScreen:
 ## Platy Builder ##
 		self.PlayerMode = ["Ownership", "Units", "Buildings", "City", "StartingPlot"]
 		self.MapMode = ["AddLandMark", "PlotData", "River", "Improvements", "Bonus", "PlotType", "Terrain", "Routes", "Features"]
-		self.RevealMode = ["RevealPlot", "INVISIBLE_SUBMARINE", "INVISIBLE_STEALTH"]
+		self.RevealMode = ["RevealPlot", "INVISIBLE_SUBMARINE", "INVISIBLE_STEALTH", "Blockade"]
 		self.iBrushWidth = 1
 		self.iBrushHeight = 1
 		self.iPlayerAddMode = "Units"
@@ -76,6 +77,9 @@ class CvWorldBuilderScreen:
 		self.bSensibility = True
 		self.lMoveUnit = []
 		self.iMoveCity = -1
+		self.iTargetPlotX = -1
+		self.iTargetPlotY = -1
+		self.TempInfo = []
 ## Platy Builder ##
 
 	def interfaceScreen (self):
@@ -195,7 +199,7 @@ class CvWorldBuilderScreen:
 		for iPlayerX in xrange(gc.getMAX_PLAYERS()):
 			pPlayerX = gc.getPlayer(iPlayerX)
 			pPlot = pPlayerX.getStartingPlot()
-			if pPlot:
+			if not pPlot.isNone():
 				sColor = "COLOR_MAGENTA"
 				if iPlayerX == self.m_iCurrentPlayer:
 					sColor = "COLOR_BLACK"
@@ -1161,6 +1165,7 @@ class CvWorldBuilderScreen:
 				screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_PLOT",()), 0, 0, self.iPlayerAddMode == self.RevealMode[0])
 				screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_SUBMARINE",()), 1, 1, self.iPlayerAddMode == self.RevealMode[1])
 				screen.addPullDownString("RevealMode", CyTranslator().getText("TXT_KEY_REVEAL_STEALTH",()), 2, 2, self.iPlayerAddMode == self.RevealMode[2])
+				screen.addPullDownString("RevealMode", gc.getMissionInfo(gc.getInfoTypeForString("MISSION_PLUNDER")).getDescription(), 3, 3, self.iPlayerAddMode == self.RevealMode[3])
 
 				iY += iAdjust
 				screen.setImageButton("WorldBuilderRevealAll", CyArtFileMgr().getInterfaceArtInfo("WORLDBUILDER_REVEAL_ALL_TILES").getPath(), iX, iY, iButtonWidth, iButtonWidth, WidgetTypes.WIDGET_WB_REVEAL_ALL_BUTTON, -1, -1)
@@ -1580,6 +1585,7 @@ class CvWorldBuilderScreen:
 		return
 
 	def RevealCurrentPlot(self, bReveal, pPlot):
+		if self.iPlayerAddMode == "Blockade": return
 		iType = gc.getInfoTypeForString(self.iPlayerAddMode)
 		if iType == -1:
 			if bReveal or (not pPlot.isVisible(self.m_iCurrentTeam, False)):
@@ -1601,6 +1607,13 @@ class CvWorldBuilderScreen:
 		elif self.iPlayerAddMode == "INVISIBLE_STEALTH":
 			if pPlot.getInvisibleVisibilityCount(self.m_iCurrentTeam, gc.getInfoTypeForString(self.iPlayerAddMode)) == 0:
 				CyEngine().fillAreaBorderPlotAlt(pPlot.getX(), pPlot.getY(), AreaBorderLayers.AREA_BORDER_LAYER_REVEALED_PLOTS, "COLOR_BLUE", 1.0)
+		elif self.iPlayerAddMode == "Blockade":
+			if pPlot.isTradeNetwork(self.m_iCurrentTeam): return
+			if gc.getTeam(self.m_iCurrentTeam).isAtWar(pPlot.getTeam()): return
+			if pPlot.isTradeNetworkImpassable(self.m_iCurrentTeam): return
+			if not pPlot.isOwned() and not pPlot.isRevealed(self.m_iCurrentTeam, False): return
+			if not pPlot.isBonusNetwork(self.m_iCurrentTeam): return
+			CyEngine().fillAreaBorderPlotAlt(pPlot.getX(), pPlot.getY(), AreaBorderLayers.AREA_BORDER_LAYER_REVEALED_PLOTS, "COLOR_MAGENTA", 1.0)
 		return
 ## Platy Reveal Mode End ##
 
@@ -1699,7 +1712,7 @@ class CvWorldBuilderScreen:
 			if self.m_pCurrentPlot.isCity():
 				WBBuildingScreen.WBBuildingScreen().interfaceScreen(self.m_pCurrentPlot.getPlotCity())
 		elif self.iPlayerAddMode in self.RevealMode:
-			if self.m_pCurrentPlot:
+			if not self.m_pCurrentPlot.isNone():
 				self.setMultipleReveal(True)
 		elif self.iPlayerAddMode == "PlotData":
 			WBPlotScreen.WBPlotScreen().interfaceScreen(self.m_pCurrentPlot)
@@ -1708,13 +1721,26 @@ class CvWorldBuilderScreen:
 		elif self.iPlayerAddMode == "StartingPlot":
 			pPlayer.setStartingPlot(self.m_pCurrentPlot, True)
 			self.refreshStartingPlots()
-		elif self.iPlayerAddMode == "MoveUnit":
-			for i in self.lMoveUnit:
-				pUnit = pPlayer.getUnit(i)
-				if pUnit.isNone(): continue
-				pUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
-			self.lMoveUnit = []
+		elif self.iPlayerAddMode == "TargetPlot":
+			self.iTargetPlotX = self.m_pCurrentPlot.getX()
+			self.iTargetPlotY = self.m_pCurrentPlot.getY()
 			self.iPlayerAddMode = "EditUnit"
+			if len(self.TempInfo) >= 2:
+				pPlayerX = gc.getPlayer(self.TempInfo[0])
+				if pPlayerX:
+					pUnitX = pPlayerX.getUnit(self.TempInfo[1])
+					if pUnitX:
+						WBUnitScreen.WBUnitScreen(self).interfaceScreen(pUnitX)
+		elif self.iPlayerAddMode == "MoveUnits":
+			if len(self.lMoveUnit) > 0:
+				for item in self.lMoveUnit:
+					loopUnit = gc.getPlayer(item[0]).getUnit(item[1])
+					if loopUnit.isNone(): continue
+					loopUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
+				pUnitX = gc.getPlayer(self.lMoveUnit[0][0]).getUnit(self.lMoveUnit[0][1])
+				self.lMoveUnit = []
+				self.iPlayerAddMode = "EditUnit"
+				WBUnitScreen.WBUnitScreen(self).interfaceScreen(pUnitX)
 		elif self.iPlayerAddMode == "MoveCity" or self.iPlayerAddMode == "MoveCityPlus":
 			if self.m_pCurrentPlot.isCity(): return
 			pOldCity = pPlayer.getCity(self.iMoveCity)
@@ -1728,10 +1754,10 @@ class CvWorldBuilderScreen:
 				pOldCity.kill()
 				pOldPlot.setImprovementType(-1)
 				if self.iPlayerAddMode == "MoveCityPlus":
-					for i in self.lMoveUnit:
-						pUnit = pPlayer.getUnit(i)
-						if pUnit.isNone(): continue
-						pUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
+					for item in self.lMoveUnit:
+						loopUnit = gc.getPlayer(item[0]).getUnit(item[1])
+						if loopUnit.isNone(): continue
+						loopUnit.setXY(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), True, True, False)
 					self.lMoveUnit = []
 			self.iPlayerAddMode = "CityDataI"
 			self.iMoveCity = -1
@@ -1742,22 +1768,22 @@ class CvWorldBuilderScreen:
 				pNewCity = pPlayer.initCity(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY())
 				self.copyCityStats(pOldCity, pNewCity, False)
 				if self.iPlayerAddMode == "DuplicateCityPlus":
-					for i in self.lMoveUnit:
-						pUnit = pPlayer.getUnit(i)
-						if pUnit.isNone(): continue
-						pNewUnit = pPlayer.initUnit(pUnit.getUnitType(), self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-						pNewUnit.setName(pUnit.getNameNoDesc())
-						pNewUnit.setLevel(pUnit.getLevel())
-						pNewUnit.setExperience(pUnit.getExperience(), -1)
-						pNewUnit.setBaseCombatStr(pUnit.baseCombatStr())
+					for item in self.lMoveUnit:
+						loopUnit = gc.getPlayer(item[0]).getUnit(item[1])
+						if loopUnit.isNone(): continue
+						pNewUnit = pPlayer.initUnit(loopUnit.getUnitType(), self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+						pNewUnit.setName(loopUnit.getNameNoDesc())
+						pNewUnit.setLevel(loopUnit.getLevel())
+						pNewUnit.setExperience(loopUnit.getExperience(), -1)
+						pNewUnit.setBaseCombatStr(loopUnit.baseCombatStr())
 						for iPromotion in xrange(gc.getNumPromotionInfos()):
-							pNewUnit.setHasPromotion(iPromotion, pUnit.isHasPromotion(iPromotion))
-						pNewUnit.setDamage(pUnit.getDamage(), -1)
-						pNewUnit.setMoves(pUnit.getMoves())
-						pNewUnit.setLeaderUnitType(pUnit.getLeaderUnitType())
-						pNewUnit.changeCargoSpace(pUnit.cargoSpace() - pNewUnit.cargoSpace())
-						pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
-						pNewUnit.setScriptData(pUnit.getScriptData())
+							pNewUnit.setHasPromotion(iPromotion, loopUnit.isHasPromotion(iPromotion))
+						pNewUnit.setDamage(loopUnit.getDamage(), -1)
+						pNewUnit.setMoves(loopUnit.getMoves())
+						pNewUnit.setLeaderUnitType(loopUnit.getLeaderUnitType())
+						pNewUnit.changeCargoSpace(loopUnit.cargoSpace() - pNewUnit.cargoSpace())
+						pNewUnit.setImmobileTimer(loopUnit.getImmobileTimer())
+						pNewUnit.setScriptData(loopUnit.getScriptData())
 		elif self.useLargeBrush():
 			self.placeMultipleObjects()
 		else:
@@ -1845,7 +1871,7 @@ class CvWorldBuilderScreen:
 		if CyInterface().isInAdvancedStart():
 			self.removeObject()
 		elif self.iPlayerAddMode in self.RevealMode:
-			if self.m_pCurrentPlot:
+			if not self.m_pCurrentPlot.isNone():
 				self.setMultipleReveal(False)
 		elif self.useLargeBrush():
 			self.removeMultipleObjects()

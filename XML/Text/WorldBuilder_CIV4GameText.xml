@@ -2,6 +2,30 @@
 <!-- Game Text - New -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_WB_TARGET_PLOT</Tag>
+		<English>Target Plot</English>
+		<French>Target Plot</French>
+		<German>Target Plot</German>
+		<Italian>Target Plot</Italian>
+		<Spanish>Target Plot</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_PUSH_MISSION</Tag>
+		<English>Push Mission</English>
+		<French>Push Mission</French>
+		<German>Push Mission</German>
+		<Italian>Push Mission</Italian>
+		<Spanish>Push Mission</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_ACTIVITY</Tag>
+		<English>Activity</English>
+		<French>Activity</French>
+		<German>Activity</German>
+		<Italian>Activity</Italian>
+		<Spanish>Activity</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_WB_FORTIFY</Tag>
 		<English>Forifying</English>
 		<French>Forifying</French>
@@ -784,6 +808,63 @@
 		<German>Löschen</German>
 		<Italian>Kill</Italian>
 		<Spanish>Matar</Spanish>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_HIDE_INACTIVE</Tag>
+		<English>Hide Inactive</English>
+		<French>Hide Inactive</French>
+		<German>Hide Inactive</German>
+		<Italian>Hide Inactive</Italian>
+		<Spanish>Hide Inactive</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_CATEGORY_ROUTE</Tag>
+		<English>Routes</English>
+		<French>Routes</French>
+		<German>Routes</German>
+		<Italian>Routes</Italian>
+		<Spanish>Routes</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PEDIA_DOMAIN</Tag>
+		<English>Domain</English>
+		<French>Domain</French>
+		<German>Domain</German>
+		<Italian>Domain</Italian>
+		<Spanish>Domain</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_PEDIA_NATIONAL_STUFF</Tag>
+		<English>National %s1</English>
+		<French>National %s1</French>
+		<German>National %s1</German>
+		<Italian>National %s1</Italian>
+		<Spanish>National %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_PEDIA_TEAM_STUFF</Tag>
+		<English>Team %s1</English>
+		<French>Team %s1</French>
+		<German>Team %s1</German>
+		<Italian>Team %s1</Italian>
+		<Spanish>Team %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_PEDIA_WORLD_STUFF</Tag>
+		<English>World %s1</English>
+		<French>World %s1</French>
+		<German>World %s1</German>
+		<Italian>World %s1</Italian>
+		<Spanish>World %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_PEDIA_NON_COMBAT</Tag>
+		<English>Non-Combat Units</English>
+		<French>Unit&#233;s sans type de combat</French>
+		<German>Zivile Einheiten</German>
+		<Italian>Unit?non da combattimento</Italian>
+		<Spanish>Unidades sin tipo de combate</Spanish>
 	</TEXT>
 
 <!-- FFH2 Specific-->

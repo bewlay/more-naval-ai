@@ -595,16 +595,18 @@ class WBCityEditScreen:
 					self.top.iPlayerAddMode = "DuplicateCity"
 				elif iIndex == 3:
 					self.top.iPlayerAddMode = "MoveCityPlus"
+					self.top.lMoveUnit = []
 					for i in xrange(pPlot.getNumUnits()):
 						pUnitX = pPlot.getUnit(i)
 						if pUnitX.getOwner() == iPlayer:
-							self.top.lMoveUnit.append(pUnitX.getID())
+							self.top.lMoveUnit.append([iPlayer, pUnitX.getID()])
 				elif iIndex == 4:
 					self.top.iPlayerAddMode = "DuplicateCityPlus"
+					self.top.lMoveUnit = []
 					for i in xrange(pPlot.getNumUnits()):
 						pUnitX = pPlot.getUnit(i)
 						if pUnitX.getOwner() == iPlayer:
-							self.top.lMoveUnit.append(pUnitX.getID())
+							self.top.lMoveUnit.append([iPlayer, pUnitX.getID()])
 			screen.hideScreen()
 		return 1
 

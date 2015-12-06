@@ -24,6 +24,7 @@ iUnitOwner = -1
 iCopyType = 0
 iOwnerType = 1
 iPlotType = 2
+iActivityType = 0
 
 class WBPlayerUnits:
 	def __init__(self):
@@ -44,9 +45,10 @@ class WBPlayerUnits:
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 		screen.setText("WBExit", "Background", "<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 
+		iX = 20
 		iY = 20
-		iWidth = screen.getXResolution()/5
-		screen.addDropDownBoxGFC("CurrentPlayer", 20, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iWidth = (screen.getXResolution() - 40)/5
+		screen.addDropDownBoxGFC("CurrentPlayer", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(gc.getMAX_PLAYERS()):
 			pPlayerX = gc.getPlayer(i)
 			if pPlayerX.isEverAlive():
@@ -57,34 +59,46 @@ class WBPlayerUnits:
 					sText = "[" + sText + "]"
 				screen.addPullDownString("CurrentPlayer", sText, i, i, i == iPlayer)
 
-		screen.addDropDownBoxGFC("OwnerType", screen.getXResolution()/2 - iWidth, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iX += iWidth
+		screen.addDropDownBoxGFC("OwnerType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 2, 2, 2 == iOwnerType)
 		screen.addPullDownString("OwnerType", CyTranslator().getText("TXT_KEY_MAIN_MENU_PLAYER", ()), 1, 1, 1 == iOwnerType)
 
-		screen.addDropDownBoxGFC("PlotType", screen.getXResolution()/2, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iX += iWidth
+		screen.addDropDownBoxGFC("PlotType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_SINGLE_PLOT", ()), 0, 0, iPlotType == 0)
 		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_AREA_PLOTS", ()), 1, 1, iPlotType == 1)
 		screen.addPullDownString("PlotType", CyTranslator().getText("TXT_KEY_WB_ALL_PLOTS", ()), 2, 2, iPlotType == 2)
 
-		screen.addDropDownBoxGFC("CopyType", screen.getXResolution() - iWidth - 20, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		iX += iWidth
+		screen.addDropDownBoxGFC("CopyType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()), 0, 0, 0 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_SPACE_SHIP_SCREEN_TYPE_BUTTON", ()), 1, 1, 1 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT_COMBAT", ()), 2, 2, 2 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_DOMAIN", ()), 3, 3, 3 == iCopyType)
 		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_GROUP", ()), 4, 4, 4 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_ACTIVITY", ()), 5, 5, 5 == iCopyType)
 #Magister Start
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_UNIT_AI", ()), 5, 5, 5 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_UNIT_CLASS", ()), 6, 6, 6 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_IMMOBILE_TIMER", ()), 7, 7, 7 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_DURATION", ()), 8, 8, 8 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_FORTIFY_TURNS", ()), 9, 9, 9 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_RACES", ()), 10, 10, 10 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_HAS_CAST", ()), 11, 11, 11 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_SUMMON", ()), 12, 12, 12 == iCopyType)
-		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ()), 13, 13, 13 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_UNIT_AI", ()), 6, 6, 6 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_UNIT_CLASS", ()), 7, 7, 7 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_IMMOBILE_TIMER", ()), 8, 8, 8 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_DURATION", ()), 9, 9, 9 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_FORTIFY_TURNS", ()), 10, 10, 10 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_RACES", ()), 11, 11, 11 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_HAS_CAST", ()), 12, 12, 12 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_SUMMON", ()), 13, 13, 13 == iCopyType)
+		screen.addPullDownString("CopyType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ()), 14, 14, 14 == iCopyType)
+#Magister Stop
 
+		iX += iWidth
+		screen.addDropDownBoxGFC("ActivityType", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for i in xrange(len(CvPlatyBuilderScreen.Activities)):
+			screen.addPullDownString("ActivityType", CvPlatyBuilderScreen.Activities[i], i, i, i == iActivityType)
+		if iCopyType != 5:
+			screen.hide("ActivityType")
 
+#Magister Start
 ##		iY = self.iTable_Y - 30
 ##		sKillButton = "Art/Interface/Buttons/Actions/Delete.dds"
 ##		sSkipButton = gc.getMissionInfo(MissionTypes.MISSION_SKIP).getButton()
@@ -156,33 +170,37 @@ class WBPlayerUnits:
 					elif iCopyType == 4:
 						if loopUnit.getGroupID() != pUnit.getGroupID() or loopUnit.getOwner() != pUnit.getOwner():
 							bCopy = False
-#Magister Start
 					elif iCopyType == 5:
+						loopGroup = loopUnit.getGroup()
+						if loopGroup.getActivityType() != iActivityType:
+							bCopy = False
+#Magister Start
+					elif iCopyType == 6:
 						if loopUnit.getUnitAIType() != pUnit.getUnitAIType():
 							bCopy = False
-					elif iCopyType == 6:
+					elif iCopyType == 7:
 						if loopUnit.getUnitClassType() != pUnit.getUnitClassType():
 							bCopy = False
-					elif iCopyType == 7:
+					elif iCopyType == 8:
 						if loopUnit.getImmobileTimer() != pUnit.getImmobileTimer():
 							bCopy = False
-					elif iCopyType == 8:
+					elif iCopyType == 9:
 						if loopUnit.getDuration() != pUnit.getDuration():
 							bCopy = False
-					elif iCopyType == 9:
+					elif iCopyType == 10:
 						if loopUnit.getFortifyTurns() != pUnit.getFortifyTurns():
 							bCopy = False
-					elif iCopyType == 10:
+					elif iCopyType == 11:
 						if loopUnit.getRace() != pUnit.getRace():
 							bCopy = False
-					elif iCopyType == 11:
+					elif iCopyType == 12:
 						if loopUnit.isHasCasted() != pUnit.isHasCasted():
 							bCopy = False
-					elif iCopyType == 12:
+					elif iCopyType == 13:
 						if loopUnit.getSummoner() == -1:
 							if not loopUnit.isPermanentSummon():
 								bCopy = False
-					elif iCopyType == 13:
+					elif iCopyType == 14:
 						if loopUnit.getScenarioCounter() != pUnit.getScenarioCounter():
 							bCopy = False
 #Magister Stop
@@ -476,6 +494,10 @@ class WBPlayerUnits:
 
 	def getUnitData(self, pUnit):
 		sText = CyGameTextMgr().getSpecificUnitHelp(pUnit, True, False)
+		pGroup = pUnit.getGroup()
+		iActivity = pGroup.getActivityType()
+		if iActivity > -1 and iActivity < len(CvPlatyBuilderScreen.Activities):
+			sText += "\n" + CvPlatyBuilderScreen.Activities[iActivity]
 #Magister Start
 		i = pUnit.getScenarioCounter()
 		if -1 < i < gc.getNumUnitInfos():
@@ -548,6 +570,7 @@ class WBPlayerUnits:
 		global iCopyType
 		global iOwnerType
 		global iPlotType
+		global iActivityType
 		global iPlayer
 		global iCityOwner
 		global iUnitOwner
@@ -613,6 +636,13 @@ class WBPlayerUnits:
 
 		elif sName == "CopyType":
 			iCopyType = screen.getPullDownData("CopyType", screen.getSelectedPullDownID("CopyType"))
+			self.sortUnits()
+			screen.hide("ActivityType")
+			if iCopyType == 5:
+				screen.show("ActivityType")
+
+		elif sName == "ActivityType":
+			iActivityType = screen.getPullDownData("ActivityType", screen.getSelectedPullDownID("ActivityType"))
 			self.sortUnits()
 
 		elif sName == "GoToCity":

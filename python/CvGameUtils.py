@@ -754,7 +754,7 @@ class CvGameUtils:
 				elif iData2 == 8:
 					return CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 				elif iData2 == 9:
-					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.14b"
+					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.17"
 				elif iData2 == 10:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS",())
 				elif iData2 == 11:
@@ -990,6 +990,9 @@ class CvGameUtils:
 ## Commerce Text##
 			elif iData1 == 7881:
 				return gc.getCommerceInfo(iData2).getDescription()
+## Build Text##
+			elif iData1 == 7882:
+				return gc.getBuildInfo(iData2).getDescription()
 ## Corporation Screen ##
 			elif iData1 == 8201:
 				return CyGameTextMgr().parseCorporationInfo(iData2, False)
@@ -1054,7 +1057,6 @@ class CvGameUtils:
 				return CyGameTextMgr().parseTraits(iData2, CivilizationTypes.NO_CIVILIZATION, False )
 			elif iData1 == 9001:
 				return CyGameTextMgr().getSpellHelp(iData2, False)
-
 			elif iData1 == 9002:
 				return CyTranslator().getText("TXT_KEY_WB_TOGGLE",()) + CyTranslator().getText("TXT_KEY_WB_HAS_CAST",())
 			elif iData1 == 9003:
