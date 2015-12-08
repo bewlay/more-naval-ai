@@ -869,7 +869,7 @@
 			<Description>TXT_KEY_VOTE_UN_NO_CAPITAL_PUNISHMENT</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -907,7 +907,7 @@
 			<Description>TXT_KEY_VOTE_UN_MILITARY_MEDICINE</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -945,7 +945,7 @@
 			<Description>TXT_KEY_VOTE_UN_PRISONER_RIGHTS</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -983,7 +983,7 @@
 			<Description>TXT_KEY_VOTE_UN_TRADE_MAP</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -1021,7 +1021,7 @@
 			<Description>TXT_KEY_VOTE_UN_BARBARIAN_PEACE</Description>
 			<iPopulationThreshold>62</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -1059,7 +1059,7 @@
 			<Description>TXT_KEY_VOTE_UN_VICTIMS_RIGHTS</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -1097,7 +1097,7 @@
 			<Description>TXT_KEY_VOTE_UN_NO_CITY_RAZING</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -1135,7 +1135,7 @@
 			<Description>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
@@ -1173,7 +1173,7 @@
 			<Description>TXT_KEY_VOTE_UN_PACIFICSM</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
-			<bCivVoting>0</bCivVoting>
+			<bCivVoting>1</bCivVoting>
 			<iMinVoters>3</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
