@@ -868,6 +868,9 @@ def reqCrewBuccaneers(caster):
 	pPlot = caster.plot()
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_BUCCANEERS')):
 		return False
+	## Make sure we dont end up with more cargo than cargo space
+	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SKELETON_CREW')) and caster.isFull():
+		return False
 	if caster.maxMoves() <= 1:
 		return False
 	if caster.baseCombatStr() < 1:
@@ -884,8 +887,13 @@ def reqCrewLongshoremen(caster):
 	pPlot = caster.plot()
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LONGSHOREMEN')):
 		return False
-	if caster.cargoSpaceAvailable(-1, gc.getInfoTypeForString('DOMAIN_LAND')) == 0:
-		return False
+	## Make sure we dont end up with more cargo than cargo space		
+	req_cargo = 1
+	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SKELETON_CREW')):
+		req_cargo = req_cargo + 1
+	if caster.cargoSpaceAvailable(-1, gc.getInfoTypeForString('DOMAIN_LAND')) < req_cargo:
+		return False		
+
 	if caster.baseCombatStr() < 1:
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
@@ -903,6 +911,9 @@ def reqCrewLongshoremen(caster):
 def reqCrewNormalCrew(caster):
 	pPlot = caster.plot()
 	if (caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_BUCCANEERS')) == False and caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SKELETON_CREW')) == False and caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_LONGSHOREMEN')) == False):
+		return False
+	## Make sure we dont end up with more cargo than cargo space
+	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SKELETON_CREW')) and caster.isFull():
 		return False
 	pPlayer = gc.getPlayer(caster.getOwner())
 	if pPlayer.isHuman() == False:
