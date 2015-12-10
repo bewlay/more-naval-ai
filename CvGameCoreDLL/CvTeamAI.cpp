@@ -4998,20 +4998,8 @@ void CvTeamAI::write(FDataStreamBase* pStream)
 }
 
 // Protected Functions...
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_noTechTradeThreshold(bool bRecalculate) const
+int CvTeamAI::AI_noTechTradeThreshold() const
 {
-	if (!bRecalculate)
-	{
-		return m_iNoTechTradeThreshold;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	int iRand;
 	int iCount;
 	int iI;
@@ -5047,20 +5035,9 @@ int CvTeamAI::AI_noTechTradeThreshold(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_techTradeKnownPercent(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iTechTradeKnownPercent;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_techTradeKnownPercent() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5096,20 +5073,8 @@ int CvTeamAI::AI_techTradeKnownPercent(bool bRecalculate) const
 	return iRand;
 }
 
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_maxWarRand(bool bRecalculate) const
+int CvTeamAI::AI_maxWarRand() const
 {
-	if (!bRecalculate)
-	{
-		return m_iMaxWarRand;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	int iRand;
 	int iCount;
 	int iI;
@@ -5135,20 +5100,9 @@ int CvTeamAI::AI_maxWarRand(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_maxWarNearbyPowerRatio(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iMaxWarNearbyPowerRatio;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_maxWarNearbyPowerRatio() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5188,21 +5142,8 @@ int CvTeamAI::AI_maxWarNearbyPowerRatio(bool bRecalculate) const
 	return iRand;
 }
 
-
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_maxWarDistantPowerRatio(bool bRecalculate) const
+int CvTeamAI::AI_maxWarDistantPowerRatio() const
 {
-	if (!bRecalculate)
-	{
-		return m_iMaxWarDistantPowerRatio;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	int iRand;
 	int iCount;
 	int iI;
@@ -5237,20 +5178,9 @@ int CvTeamAI::AI_maxWarDistantPowerRatio(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_maxWarMinAdjacentLandPercent(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iMaxWarMinAdjacentLandPercent;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_maxWarMinAdjacentLandPercent() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5276,20 +5206,9 @@ int CvTeamAI::AI_maxWarMinAdjacentLandPercent(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_limitedWarRand(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iLimitedWarRand;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_limitedWarRand() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5316,20 +5235,9 @@ int CvTeamAI::AI_limitedWarRand(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_limitedWarPowerRatio(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iLimitedWarPowerRatio;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_limitedWarPowerRatio() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5356,20 +5264,9 @@ int CvTeamAI::AI_limitedWarPowerRatio(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_dogpileWarRand(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iDogpileWarRand;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_dogpileWarRand() const
+{
 	int iRand;
 	int iCount;
 	int iI;
@@ -5396,20 +5293,9 @@ int CvTeamAI::AI_dogpileWarRand(bool bRecalculate) const
 
 	return iRand;
 }
-/************************************************************************************************/
-/* Afforess	                  Start		  		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-int CvTeamAI::AI_makePeaceRand(bool bRecalculate) const
-{
-	if (!bRecalculate)
-	{
-		return m_iMakePeaceRand;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
+int CvTeamAI::AI_makePeaceRand() const
+{
 	int iRand;
 	int iCount;
 	int iI;
