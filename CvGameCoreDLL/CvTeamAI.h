@@ -342,23 +342,16 @@ protected:
 	//edited functions
 	WarPlanTypes* m_aeWarPlan;
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/	
-/* Afforess	                  Start																*/
-	int AI_noTechTradeThreshold(bool bRecalculate = false) const;
-	int AI_techTradeKnownPercent(bool bRecalculate = false) const;
-	int AI_maxWarRand(bool bRecalculate = false) const;
-	int AI_maxWarNearbyPowerRatio(bool bRecalculate = false) const;
-	int AI_maxWarDistantPowerRatio(bool bRecalculate = false) const;
-	int AI_maxWarMinAdjacentLandPercent(bool bRecalculate = false) const;
-	int AI_limitedWarRand(bool bRecalculate = false) const;
-	int AI_limitedWarPowerRatio(bool bRecalculate = false) const;
-	int AI_dogpileWarRand(bool bRecalculate = false) const;
-	int AI_makePeaceRand(bool bRecalculate = false) const;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
+	int AI_noTechTradeThreshold() const;
+	int AI_techTradeKnownPercent() const;
+	int AI_maxWarRand() const;
+	int AI_maxWarNearbyPowerRatio() const;
+	int AI_maxWarDistantPowerRatio() const;
+	int AI_maxWarMinAdjacentLandPercent() const;
+	int AI_limitedWarRand() const;
+	int AI_limitedWarPowerRatio() const;
+	int AI_dogpileWarRand() const;
+	int AI_makePeaceRand() const;
 	int AI_noWarAttitudeProb(AttitudeTypes eAttitude) const;
 
 	void AI_doCounter();
