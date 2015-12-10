@@ -18824,7 +18824,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
-		
+		/*
 		for (iI = 0; iI < NUM_MEMORY_TYPES; ++iI)
 		{
 			iAttitudeChange = kPlayer.AI_getMemoryAttitude(eTargetPlayer, ((MemoryTypes)iI));
@@ -18835,6 +18835,7 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 				szBuffer.append(szTempBuffer);
 			}
 		}
+		*/
 		
 // FFH Start
 		iAttitudeChange = GET_PLAYER(ePlayer).AI_getFavoriteWonderAttitude(eTargetPlayer);
