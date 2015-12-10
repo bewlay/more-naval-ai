@@ -19143,7 +19143,7 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "SecretaryGeneralVoteRefuseAttitudeThreshold","ATTITUDE_PLEASED");
 	m_iSecretaryGeneralVoteRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
-	pXML->GetChildXmlValByName(szTextVal, "LimitedBordersRefuseAttitudeThreshold","ATTITUDE_PLEASED");
+	pXML->GetChildXmlValByName(szTextVal, "LimitedBordersRefuseAttitudeThreshold","ATTITUDE_ANNOYED");
 	m_iLimitedBordersRefuseAttitudeThreshold = pXML->FindInInfoClass(szTextVal);
 
 	pXML->GetChildXmlValByName(szTextVal, "FreeTradeAgreementRefuseAttitudeThreshold","ATTITUDE_CAUTIOUS");
