@@ -2132,31 +2132,6 @@ void CvUnit::updateCombat(bool bQuick)
 
 	//FAssertMsg((pPlot == pDefender->plot()), "There is not expected to be a defender or the defender's plot is expected to be pPlot (the attack plot)");
 
-//FfH: Added by Kael 07/30/2007
-    if (!isImmuneToDefensiveStrike())
-    {
-        pDefender->doDefensiveStrike(this);
-    }
-    if (pDefender->isFear())
-    {
-        if (!isImmuneToFear())
-        {
-            int iChance = baseCombatStr() + 20 + getLevel() - pDefender->baseCombatStr() - pDefender->getLevel();
-            if (iChance < 4)
-            {
-                iChance = 4;
-            }
-            if (GC.getGameINLINE().getSorenRandNum(40, "Im afeared!") > iChance)
-            {
-                setMadeAttack(true);
-                changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
-                szBuffer = gDLL->getText("TXT_KEY_MESSAGE_IM_AFEARED", getNameKey());
-                gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)getOwner()), false, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_DISCOVERBONUS", MESSAGE_TYPE_MAJOR_EVENT, "Art/Interface/Buttons/Promotions/Fear.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
-                bFinish = true;
-            }
-        }
-    }
-//FfH: End Add
 
 	//if not finished and not fighting yet, set up combat damage and mission
 	if (!bFinish)
@@ -2186,6 +2161,34 @@ void CvUnit::updateCombat(bool bQuick)
 
 			setCombatUnit(pDefender, true);
 			pDefender->setCombatUnit(this, false);
+
+		//FfH: Added by Kael 07/30/2007
+		    if (!isImmuneToDefensiveStrike())
+		    {
+				logBBAI("    %S (%d)checking for defensive strike against %S (%d)!", pDefender->getName().GetCString(), pDefender->getID(), getName().GetCString(), getID());
+		        pDefender->doDefensiveStrike(this);
+		    }
+		    if (pDefender->isFear())
+		    {
+		        if (!isImmuneToFear())
+		        {
+		            int iChance = baseCombatStr() + 20 + getLevel() - pDefender->baseCombatStr() - pDefender->getLevel();
+		            if (iChance < 4)
+		            {
+		                iChance = 4;
+		            }
+		            if (GC.getGameINLINE().getSorenRandNum(40, "Im afeared!") > iChance)
+		            {
+		                setMadeAttack(true);
+		                changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
+		                szBuffer = gDLL->getText("TXT_KEY_MESSAGE_IM_AFEARED", getNameKey());
+		                gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)getOwner()), false, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_DISCOVERBONUS", MESSAGE_TYPE_MAJOR_EVENT, "Art/Interface/Buttons/Promotions/Fear.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
+		                bFinish = true;
+		            }
+		        }
+		    }
+		//FfH: End Add
+
 
 			pDefender->getGroup()->clearMissionQueue();
 
