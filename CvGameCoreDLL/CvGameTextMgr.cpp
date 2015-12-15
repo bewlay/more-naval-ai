@@ -789,22 +789,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			szTempBuffer.Format(L"<img=%S size=16></img>", GC.getPromotionInfo((PromotionTypes)iI).getButton());
 			szString.append(szTempBuffer);
 		}
-	}
-	
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-/*	if (pUnit->isPrisoner())
-	{
-		if (!pUnit->isSpy())
-		{
-			szString.append(NEWLINE);
-			szString.append(gDLL->getText("TXT_KEY_MISC_IS_PRISONER", GET_PLAYER(pUnit->getOriginalOwner()).getCivilizationAdjectiveKey()));
-		}
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                              */
-/************************************************************************************************/
+	}	
 
     if (bAlt && (gDLL->getChtLvl() > 0))
     {

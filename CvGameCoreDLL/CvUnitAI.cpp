@@ -2124,6 +2124,10 @@ void CvUnitAI::AI_settleMove()
 		{
 			if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, NO_UNITAI, -1, -1, -1, 0, MOVE_SAFE_TERRITORY))
 			{
+				if( gUnitLogLevel >= 2 )
+				{
+					logBBAI("    ... boarding a transport because we have better site in another area");
+				}
 				return;
 			}
 		}
@@ -8739,6 +8743,11 @@ void CvUnitAI::AI_settlerSeaMove()
 	PROFILE_FUNC();
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d, cargo %d) starting settleSeaMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits(), getGroup()->getCargo());
+	}
+
 	bool bEmpty = !getGroup()->hasCargo();
 
 /********************************************************************************/

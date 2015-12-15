@@ -19148,13 +19148,14 @@ void CvPlayerAI::AI_doDiplo()
 	{
 		for (iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 		{
-			if (GET_PLAYER((PlayerTypes)iI).isAlive())
+			CvPlayer &kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (kLoopPlayer.isAlive())
 			{
-				if (GET_PLAYER((PlayerTypes)iI).isHuman() == (iPass == 1))
+				if (kLoopPlayer.isHuman() == (iPass == 1))
 				{
 					if (iI != getID())
 					{
-						if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam())
+						if (kLoopPlayer.getTeam() != getTeam())
 						{
 							for(pLoopDeal = GC.getGameINLINE().firstDeal(&iLoop); pLoopDeal != NULL; pLoopDeal = GC.getGameINLINE().nextDeal(&iLoop))
 							{
@@ -19166,7 +19167,7 @@ void CvPlayerAI::AI_doDiplo()
 
 										if ((pLoopDeal->getFirstPlayer() == getID()) && (pLoopDeal->getSecondPlayer() == ((PlayerTypes)iI)))
 										{
-											if (GET_PLAYER((PlayerTypes)iI).isHuman())
+											if (kLoopPlayer.isHuman())
 											{
 												if (!AI_considerOffer(((PlayerTypes)iI), pLoopDeal->getSecondTrades(), pLoopDeal->getFirstTrades(), -1))
 												{
@@ -19187,7 +19188,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 										else if ((pLoopDeal->getFirstPlayer() == ((PlayerTypes)iI)) && (pLoopDeal->getSecondPlayer() == getID()))
 										{
-											if (GET_PLAYER((PlayerTypes)iI).isHuman())
+											if (kLoopPlayer.isHuman())
 											{
 												if (!AI_considerOffer(((PlayerTypes)iI), pLoopDeal->getFirstTrades(), pLoopDeal->getSecondTrades(), -1))
 												{
@@ -19211,7 +19212,7 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (canContact((PlayerTypes)iI) && AI_isWillingToTalk((PlayerTypes)iI))
 											{
-												if (GET_PLAYER((PlayerTypes)iI).isHuman())
+												if (kLoopPlayer.isHuman())
 												{
 													ourList.clear();
 													theirList.clear();
@@ -19279,7 +19280,7 @@ void CvPlayerAI::AI_doDiplo()
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/													}
 													}
-													abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+													abContacted[kLoopPlayer.getTeam()] = true;
 												}
 											}
 /*************************************************************************************************/
@@ -19317,7 +19318,7 @@ void CvPlayerAI::AI_doDiplo()
 
 						if (canContact((PlayerTypes)iI) && AI_isWillingToTalk((PlayerTypes)iI))
 						{
-							if (GET_PLAYER((PlayerTypes)iI).getTeam() == getTeam() || GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()))
+							if (kLoopPlayer.getTeam() == getTeam() || GET_TEAM(kLoopPlayer.getTeam()).isVassal(getTeam()))
 							{
 								// XXX will it cancel this deal if it loses it's first resource???
 
@@ -19328,8 +19329,8 @@ void CvPlayerAI::AI_doDiplo()
 								{
 									if (getNumTradeableBonuses((BonusTypes)iJ) > 1)
 									{
-										if ((GET_PLAYER((PlayerTypes)iI).AI_bonusTradeVal(((BonusTypes)iJ), getID(), 1) > 0)
-											&& (GET_PLAYER((PlayerTypes)iI).AI_bonusVal((BonusTypes)iJ, 1) > AI_bonusVal((BonusTypes)iJ, -1)))
+										if ((kLoopPlayer.AI_bonusTradeVal(((BonusTypes)iJ), getID(), 1) > 0)
+											&& (kLoopPlayer.AI_bonusVal((BonusTypes)iJ, 1) > AI_bonusVal((BonusTypes)iJ, -1)))
 										{
 											setTradeItem(&item, TRADE_RESOURCES, iJ);
 
@@ -19355,9 +19356,9 @@ void CvPlayerAI::AI_doDiplo()
 									setTradeItem(&item, TRADE_RESOURCES, eBestGiveBonus);
 									ourList.insertAtEnd(item);
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman())
+									if (kLoopPlayer.isHuman())
 									{
-										if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+										if (!(abContacted[kLoopPlayer.getTeam()]))
 										{
 											pDiplo = new CvDiploParameters(getID());
 											FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
@@ -19375,8 +19376,8 @@ void CvPlayerAI::AI_doDiplo()
 											// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/											abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-											abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/
+											abContacted[kLoopPlayer.getTeam()] = true;
 										}
 									}
 									else
@@ -19386,7 +19387,7 @@ void CvPlayerAI::AI_doDiplo()
 								}
 							}
 
-							if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam() && GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()))
+							if (kLoopPlayer.getTeam() != getTeam() && GET_TEAM(kLoopPlayer.getTeam()).isVassal(getTeam()))
 							{
 								iBestValue = 0;
 								eBestGiveTech = NO_TECH;
@@ -19397,11 +19398,11 @@ void CvPlayerAI::AI_doDiplo()
 /* Diplomacy                                                                                    */
 /************************************************************************************************/
 								// Don't give techs for free to advanced vassals ...
-								if( GET_PLAYER((PlayerTypes)iI).getTechScore()*10 < getTechScore()*9 )
+								if( kLoopPlayer.getTechScore()*10 < getTechScore()*9 )
 								{
 									for (iJ = 0; iJ < GC.getNumTechInfos(); iJ++)
 									{
-										if (GET_TEAM(getTeam()).AI_techTrade((TechTypes)iJ, GET_PLAYER((PlayerTypes)iI).getTeam()) == NO_DENIAL)
+										if (GET_TEAM(getTeam()).AI_techTrade((TechTypes)iJ, kLoopPlayer.getTeam()) == NO_DENIAL)
 										{
 											setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
@@ -19430,9 +19431,9 @@ void CvPlayerAI::AI_doDiplo()
 									setTradeItem(&item, TRADE_TECHNOLOGIES, eBestGiveTech);
 									ourList.insertAtEnd(item);
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman())
+									if (kLoopPlayer.isHuman())
 									{
-										if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+										if (!(abContacted[kLoopPlayer.getTeam()]))
 										{
 											pDiplo = new CvDiploParameters(getID());
 											FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
@@ -19450,8 +19451,8 @@ void CvPlayerAI::AI_doDiplo()
 											// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/											abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-											abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/											abContacted[kLoopPlayer.getTeam()] = true;
+											abContacted[kLoopPlayer.getTeam()] = true;
 										}
 									}
 									else
@@ -19461,19 +19462,19 @@ void CvPlayerAI::AI_doDiplo()
 								}
 							}
 
-							if (GET_PLAYER((PlayerTypes)iI).getTeam() != getTeam() && !(GET_TEAM(getTeam()).isHuman()) && (GET_PLAYER((PlayerTypes)iI).isHuman() || !(GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHuman())))
+							if (kLoopPlayer.getTeam() != getTeam() && !(GET_TEAM(getTeam()).isHuman()) && (kLoopPlayer.isHuman() || !(GET_TEAM(kLoopPlayer.getTeam()).isHuman())))
 							{
-								FAssertMsg(!(GET_PLAYER((PlayerTypes)iI).isBarbarian()), "(GET_PLAYER((PlayerTypes)iI).isBarbarian()) did not return false as expected");
+								FAssertMsg(!(kLoopPlayer.isBarbarian()), "(kLoopPlayer.isBarbarian()) did not return false as expected");
 								FAssertMsg(iI != getID(), "iI is not expected to be equal with getID()");
 
-								if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isVassal(getTeam()))
+								if (GET_TEAM(kLoopPlayer.getTeam()).isVassal(getTeam()))
 								{
 									iBestValue = 0;
 									eBestGiveBonus = NO_BONUS;
 
 									for (iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 									{
-										if (GET_PLAYER((PlayerTypes)iI).getNumTradeableBonuses((BonusTypes)iJ) > 0 && getNumAvailableBonuses((BonusTypes)iJ) == 0)
+										if (kLoopPlayer.getNumTradeableBonuses((BonusTypes)iJ) > 0 && getNumAvailableBonuses((BonusTypes)iJ) == 0)
 										{
 											iValue = AI_bonusTradeVal((BonusTypes)iJ, (PlayerTypes)iI, 1);
 
@@ -19493,15 +19494,15 @@ void CvPlayerAI::AI_doDiplo()
 										setTradeItem(&item, TRADE_RESOURCES, eBestGiveBonus);
 										theirList.insertAtEnd(item);
 
-										if (GET_PLAYER((PlayerTypes)iI).isHuman())
+										if (kLoopPlayer.isHuman())
 										{
-											if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+											if (!(abContacted[kLoopPlayer.getTeam()]))
 											{
 												CvPopupInfo* pInfo = new CvPopupInfo(BUTTONPOPUP_VASSAL_GRANT_TRIBUTE, getID(), eBestGiveBonus);
 												if (pInfo)
 												{
 													gDLL->getInterfaceIFace()->addPopup(pInfo, (PlayerTypes)iI);
-													abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+													abContacted[kLoopPlayer.getTeam()] = true;
 												}
 											}
 										}
@@ -19512,7 +19513,7 @@ void CvPlayerAI::AI_doDiplo()
 									}
 								}
 
-								if (!(GET_TEAM(getTeam()).isAtWar(GET_PLAYER((PlayerTypes)iI).getTeam())))
+								if (!(GET_TEAM(getTeam()).isAtWar(kLoopPlayer.getTeam())))
 								{
 									if (AI_getAttitude((PlayerTypes)iI) >= ATTITUDE_CAUTIOUS)
 									{
@@ -19527,7 +19528,7 @@ void CvPlayerAI::AI_doDiplo()
 
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
 //													for (iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
-													for (iJ = 0; iJ < ::calculateNumCityPlots(GET_PLAYER((PlayerTypes)iI).getNextCityRadius()); iJ++)
+													for (iJ = 0; iJ < ::calculateNumCityPlots(kLoopPlayer.getNextCityRadius()); iJ++)
 //<<<<Unofficial Bug Fix: End Modify
 													{
 														pLoopPlot = plotCity(pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE(), iJ);
@@ -19553,9 +19554,9 @@ void CvPlayerAI::AI_doDiplo()
 
 															ourList.insertAtEnd(item);
 
-															if (GET_PLAYER((PlayerTypes)iI).isHuman())
+															if (kLoopPlayer.isHuman())
 															{
-																//if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																//if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	pDiplo = new CvDiploParameters(getID());
 																	FAssertMsg(pDiplo != NULL, "pDiplo must be valid");
@@ -19574,7 +19575,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 															else
@@ -19597,7 +19598,7 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												setTradeItem(&item, TRADE_PERMANENT_ALLIANCE);
 
-												if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+												if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 												{
 													ourList.clear();
 													theirList.clear();
@@ -19607,9 +19608,9 @@ void CvPlayerAI::AI_doDiplo()
 
 													bOffered = true;
 
-													if (GET_PLAYER((PlayerTypes)iI).isHuman())
+													if (kLoopPlayer.isHuman())
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_PERMANENT_ALLIANCE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_PERMANENT_ALLIANCE));
 															pDiplo = new CvDiploParameters(getID());
@@ -19629,8 +19630,8 @@ void CvPlayerAI::AI_doDiplo()
 															// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/															abContacted[kLoopPlayer.getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 													else
@@ -19652,9 +19653,9 @@ void CvPlayerAI::AI_doDiplo()
 
 													ourList.insertAtEnd(item);
 
-													if (GET_PLAYER((PlayerTypes)iI).isHuman())
+													if (kLoopPlayer.isHuman())
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_PERMANENT_ALLIANCE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_PERMANENT_ALLIANCE));
 															pDiplo = new CvDiploParameters(getID());
@@ -19674,14 +19675,14 @@ void CvPlayerAI::AI_doDiplo()
 															// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/															abContacted[kLoopPlayer.getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 													else
 													{
 														bool bAccepted = true;
-														TeamTypes eMasterTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+														TeamTypes eMasterTeam = kLoopPlayer.getTeam();
 														for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; iTeam++)
 														{
 															if (GET_TEAM((TeamTypes)iTeam).isAlive())
@@ -19707,7 +19708,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam()))
 									{
 /*************************************************************************************************/
 /** BETTER AI (Better Diplomatics) Sephi		                	    						**/
@@ -19721,13 +19722,13 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 
 										{
-											if (GET_PLAYER((PlayerTypes)iI).canConvert(getStateReligion()))
+											if (kLoopPlayer.canConvert(getStateReligion()))
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_RELIGION_PRESSURE) == 0)
 												{
 													if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_RELIGION_PRESSURE), "AI Diplo Religion Pressure") == 0 || AI_isDoVictoryStrategy(AI_VICTORY_RELIGION3))
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_RELIGION_PRESSURE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_RELIGION_PRESSURE));
 															pDiplo = new CvDiploParameters(getID());
@@ -19745,8 +19746,8 @@ void CvPlayerAI::AI_doDiplo()
 															// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/															abContacted[kLoopPlayer.getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 												}
@@ -19754,7 +19755,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam()))
 									{
 										eFavoriteCivic = ((CivicTypes)(GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteCivic()));
 
@@ -19762,15 +19763,15 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (isCivic(eFavoriteCivic))
 											{
-												if (GET_PLAYER((PlayerTypes)iI).canDoCivics(eFavoriteCivic) && !(GET_PLAYER((PlayerTypes)iI).isCivic(eFavoriteCivic)))
+												if (kLoopPlayer.canDoCivics(eFavoriteCivic) && !(kLoopPlayer.isCivic(eFavoriteCivic)))
 												{
-													if (GET_PLAYER((PlayerTypes)iI).canRevolution(NULL))
+													if (kLoopPlayer.canRevolution(NULL))
 													{
 														if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE) == 0)
 														{
 															if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_CIVIC_PRESSURE), "AI Diplo Civic Pressure") == 0)
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_CIVIC_PRESSURE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_CIVIC_PRESSURE));
 																	pDiplo = new CvDiploParameters(getID());
@@ -19789,7 +19790,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 														}
@@ -19799,7 +19800,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 										if ((AI_getMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR) == 0) && (AI_getMemoryCount(((PlayerTypes)iI), MEMORY_HIRED_WAR_ALLY) == 0))
 										{
@@ -19814,11 +19815,11 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														if (GET_TEAM((TeamTypes)iJ).isAlive())
 														{
-															if (atWar(((TeamTypes)iJ), getTeam()) && !atWar(((TeamTypes)iJ), GET_PLAYER((PlayerTypes)iI).getTeam()))
+															if (atWar(((TeamTypes)iJ), getTeam()) && !atWar(((TeamTypes)iJ), kLoopPlayer.getTeam()))
 															{
-																if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHasMet((TeamTypes)iJ))
+																if (GET_TEAM(kLoopPlayer.getTeam()).isHasMet((TeamTypes)iJ))
 																{
-																	if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).canDeclareWar((TeamTypes)iJ))
+																	if (GET_TEAM(kLoopPlayer.getTeam()).canDeclareWar((TeamTypes)iJ))
 																	{
 																		iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Joining War"));
 
@@ -19835,7 +19836,7 @@ void CvPlayerAI::AI_doDiplo()
 
 													if (eBestTeam != NO_TEAM)
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_JOIN_WAR, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_JOIN_WAR));
 															pDiplo = new CvDiploParameters(getID());
@@ -19855,7 +19856,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/	
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 												}
@@ -19863,7 +19864,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam()))
 									{
 										if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_STOP_TRADING) == 0)
 										{
@@ -19885,14 +19886,14 @@ void CvPlayerAI::AI_doDiplo()
 /* Advanced Diplomacy            END                                                            */
 /************************************************************************************************/
 
-												if ((eBestTeam != NO_TEAM) && GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).isHasMet(eBestTeam) && !GET_TEAM(eBestTeam).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam()))
+												if ((eBestTeam != NO_TEAM) && GET_TEAM(kLoopPlayer.getTeam()).isHasMet(eBestTeam) && !GET_TEAM(eBestTeam).isVassal(kLoopPlayer.getTeam()))
 												{
-													if (GET_PLAYER((PlayerTypes)iI).canStopTradingWithTeam(eBestTeam))
+													if (kLoopPlayer.canStopTradingWithTeam(eBestTeam))
 													{
-														FAssert(!atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), eBestTeam));
-														FAssert(GET_PLAYER((PlayerTypes)iI).getTeam() != eBestTeam);
+														FAssert(!atWar(kLoopPlayer.getTeam(), eBestTeam));
+														FAssert(kLoopPlayer.getTeam() != eBestTeam);
 
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_STOP_TRADING, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_STOP_TRADING));
 															pDiplo = new CvDiploParameters(getID());
@@ -19912,7 +19913,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/	
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 												}
@@ -19920,11 +19921,11 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
-										if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getAssets() < (GET_TEAM(getTeam()).getAssets() / 2))
+										if (GET_TEAM(kLoopPlayer.getTeam()).getAssets() < (GET_TEAM(getTeam()).getAssets() / 2))
 										{
-											if (AI_getAttitude((PlayerTypes)iI) > GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getNoGiveHelpAttitudeThreshold())
+											if (AI_getAttitude((PlayerTypes)iI) > GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getNoGiveHelpAttitudeThreshold())
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_GIVE_HELP) == 0)
 												{
@@ -19958,7 +19959,7 @@ void CvPlayerAI::AI_doDiplo()
 															setTradeItem(&item, TRADE_TECHNOLOGIES, eBestGiveTech);
 															ourList.insertAtEnd(item);
 
-															if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+															if (!(abContacted[kLoopPlayer.getTeam()]))
 															{
 																AI_changeContactTimer(((PlayerTypes)iI), CONTACT_GIVE_HELP, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_GIVE_HELP));
 																pDiplo = new CvDiploParameters(getID());
@@ -19978,7 +19979,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																
-																abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																abContacted[kLoopPlayer.getTeam()] = true;
 															}
 														}
 													}
@@ -19991,20 +19992,20 @@ void CvPlayerAI::AI_doDiplo()
 /**                                     		                	    						**/
 /** Add ability for AI to give Techs to friendy AIs             	    						**/
 /*************************************************************************************************/
-									if (!GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (!kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
-										if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getAssets() < (GET_TEAM(getTeam()).getAssets() / 2))
+										if (GET_TEAM(kLoopPlayer.getTeam()).getAssets() < (GET_TEAM(getTeam()).getAssets() / 2))
 										{
                                             int iMod=0;
-                                            if (GET_PLAYER((PlayerTypes)iI).getAlignment()==getAlignment())
+                                            if (kLoopPlayer.getAlignment()==getAlignment())
                                             {
                                                 iMod++;
                                             }
-                                            if (GET_PLAYER((PlayerTypes)iI).getFavoriteReligion()==getFavoriteReligion())
+                                            if (kLoopPlayer.getFavoriteReligion()==getFavoriteReligion())
                                             {
                                                 iMod++;
                                             }
-                                            if (AI_getAttitude((PlayerTypes)iI) +iMod > GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getNoGiveHelpAttitudeThreshold())
+                                            if (AI_getAttitude((PlayerTypes)iI) +iMod > GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getNoGiveHelpAttitudeThreshold())
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_GIVE_HELP) == 0)
 												{
@@ -20051,9 +20052,9 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** End															    							**/
 /*************************************************************************************************/
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
-										if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getAssets() > (GET_TEAM(getTeam()).getAssets() / 2))
+										if (GET_TEAM(kLoopPlayer.getTeam()).getAssets() > (GET_TEAM(getTeam()).getAssets() / 2))
 										{
 											if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_ASK_FOR_HELP) == 0)
 											{
@@ -20082,7 +20083,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
-														if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Asking For Help"));
 
@@ -20101,7 +20102,7 @@ void CvPlayerAI::AI_doDiplo()
 														setTradeItem(&item, TRADE_TECHNOLOGIES, eBestReceiveTech);
 														theirList.insertAtEnd(item);
 
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_ASK_FOR_HELP, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_ASK_FOR_HELP));
 															pDiplo = new CvDiploParameters(getID());
@@ -20119,7 +20120,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/															
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 												}
@@ -20133,7 +20134,7 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix, Diplomacy AI                                                                         */
 /************************************************************************************************/
 									// Reduced duplication so easier to maintain
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20141,24 +20142,24 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 										{
-											if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
+											if (GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
 											{
-												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
 														if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_DEMAND_TRIBUTE), "AI Diplo Demand Tribute") == 0)
 														{
-															iReceiveGold = std::min(std::max(0, (GET_PLAYER((PlayerTypes)iI).getGold() - 50)), GET_PLAYER((PlayerTypes)iI).AI_goldTarget());
+															iReceiveGold = std::min(std::max(0, (kLoopPlayer.getGold() - 50)), GET_PLAYER((PlayerTypes)iI).AI_goldTarget());
 
 															iReceiveGold -= (iReceiveGold % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
 
@@ -20169,7 +20170,7 @@ void CvPlayerAI::AI_doDiplo()
 																setTradeItem(&item, TRADE_GOLD, iReceiveGold);
 																theirList.insertAtEnd(item);
 
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_DEMAND_TRIBUTE));
 																	pDiplo = new CvDiploParameters(getID());
@@ -20187,7 +20188,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 														}
@@ -20202,7 +20203,7 @@ void CvPlayerAI::AI_doDiplo()
 /**                                     		                	    						**/
 /** Add ability for AI to make Demands(Gold) from hostile AIs      	    						**/
 /*************************************************************************************************/
-									if (!GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (!kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20210,31 +20211,31 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if ((GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
+											if ((GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
 											{
                                                 int iMod=0;
-                                                if (GET_PLAYER((PlayerTypes)iI).getAlignment()==getAlignment() ||
-                                                    GET_PLAYER((PlayerTypes)iI).getFavoriteReligion()==getFavoriteReligion())
+                                                if (kLoopPlayer.getAlignment()==getAlignment() ||
+                                                    kLoopPlayer.getFavoriteReligion()==getFavoriteReligion())
                                                 {
                                                     iMod++;
                                                 }
-												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
 														if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_DEMAND_TRIBUTE), "AI Diplo Demand Tribute") == 0)
 														{
-															iReceiveGold = std::min(std::max(0, (GET_PLAYER((PlayerTypes)iI).getGold() - 50)), GET_PLAYER((PlayerTypes)iI).AI_goldTarget()-AI_getGoldTreasury(true,true,false,true));
+															iReceiveGold = std::min(std::max(0, (kLoopPlayer.getGold() - 50)), GET_PLAYER((PlayerTypes)iI).AI_goldTarget()-AI_getGoldTreasury(true,true,false,true));
 
 															iReceiveGold -= (iReceiveGold % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
 
@@ -20259,7 +20260,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20267,32 +20268,32 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
+											if (GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
 											{
-												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
 														if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_DEMAND_TRIBUTE), "AI Diplo Demand Tribute") == 0)
 														{
-															if (GET_TEAM(getTeam()).AI_mapTradeVal(GET_PLAYER((PlayerTypes)iI).getTeam()) > 100)
+															if (GET_TEAM(getTeam()).AI_mapTradeVal(kLoopPlayer.getTeam()) > 100)
 															{
 																theirList.clear();
 
 																setTradeItem(&item, TRADE_MAPS);
 																theirList.insertAtEnd(item);
 
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_DEMAND_TRIBUTE));
 																	pDiplo = new CvDiploParameters(getID());
@@ -20310,7 +20311,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 														}
@@ -20325,7 +20326,7 @@ void CvPlayerAI::AI_doDiplo()
 /**                                     		                	    						**/
 /** Add ability for AI to make Demands(Maps) from hostile AIs      	    						**/
 /*************************************************************************************************/
-									if (!GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (!kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20333,31 +20334,31 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if ((GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
+											if ((GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
 											{
                                                 int iMod=0;
-                                                if (GET_PLAYER((PlayerTypes)iI).getAlignment()==getAlignment() ||
-                                                    GET_PLAYER((PlayerTypes)iI).getFavoriteReligion()==getFavoriteReligion())
+                                                if (kLoopPlayer.getAlignment()==getAlignment() ||
+                                                    kLoopPlayer.getFavoriteReligion()==getFavoriteReligion())
                                                 {
                                                     iMod++;
                                                 }
-												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
 														if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_DEMAND_TRIBUTE), "AI Diplo Demand Tribute") == 0)
 														{
-															if (GET_TEAM(getTeam()).AI_mapTradeVal(GET_PLAYER((PlayerTypes)iI).getTeam()) > 100)
+															if (GET_TEAM(getTeam()).AI_mapTradeVal(kLoopPlayer.getTeam()) > 100)
 															{
 																theirList.clear();
 																ourList.clear();
@@ -20377,7 +20378,7 @@ void CvPlayerAI::AI_doDiplo()
 /** End															    							**/
 /*************************************************************************************************/
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20385,19 +20386,19 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
+											if (GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
 											{
-												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
@@ -20410,7 +20411,7 @@ void CvPlayerAI::AI_doDiplo()
 															{
 																setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	if (GC.getGameINLINE().countKnownTechNumTeams((TechTypes)iJ) > 1)
 																	{
@@ -20432,7 +20433,7 @@ void CvPlayerAI::AI_doDiplo()
 																setTradeItem(&item, TRADE_TECHNOLOGIES, eBestReceiveTech);
 																theirList.insertAtEnd(item);
 
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_DEMAND_TRIBUTE));
 																	pDiplo = new CvDiploParameters(getID());
@@ -20450,7 +20451,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 														}
@@ -20465,7 +20466,7 @@ void CvPlayerAI::AI_doDiplo()
 /**                                     		                	    						**/
 /** Add ability for AI to make Demands(Techs) from hostile AIs     	    						**/
 /*************************************************************************************************/
-									if (!GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (!kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20473,25 +20474,25 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if ((GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
+											if ((GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower()/2) < GET_TEAM(getTeam()).getPower(true))
 											{
                                                 int iMod=0;
-                                                if (GET_PLAYER((PlayerTypes)iI).getAlignment()==getAlignment() ||
-                                                    GET_PLAYER((PlayerTypes)iI).getFavoriteReligion()==getFavoriteReligion())
+                                                if (kLoopPlayer.getAlignment()==getAlignment() ||
+                                                    kLoopPlayer.getFavoriteReligion()==getFavoriteReligion())
                                                 {
                                                     iMod++;
                                                 }
-												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI)+iMod <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
@@ -20504,7 +20505,7 @@ void CvPlayerAI::AI_doDiplo()
 															{
 																setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	if (GC.getGameINLINE().countKnownTechNumTeams((TechTypes)iJ) > 1)
 																	{
@@ -20539,7 +20540,7 @@ void CvPlayerAI::AI_doDiplo()
 /** End															    							**/
 /*************************************************************************************************/
 
-									if (GET_PLAYER((PlayerTypes)iI).isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (kLoopPlayer.isHuman() && (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                       05/06/09                                jdog5000      */
@@ -20547,19 +20548,19 @@ void CvPlayerAI::AI_doDiplo()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isSneakAttackPreparing(kLoopPlayer.getTeam()))
 */
 										// Bug fix: when team was sneak attack ready but hadn't declared, could demand tribute
 										// If other team accepted, it blocked war declaration for 10 turns but AI didn't react.
-										if (GET_TEAM(getTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)iI).getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(GET_PLAYER((PlayerTypes)iI).getTeam()))
+										if (GET_TEAM(getTeam()).canDeclareWar(kLoopPlayer.getTeam()) && !GET_TEAM(getTeam()).AI_isChosenWar(kLoopPlayer.getTeam()))
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 
 										{
-											if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
+											if (GET_TEAM(kLoopPlayer.getTeam()).getDefensivePower() < GET_TEAM(getTeam()).getPower(true))
 											{
-												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDemandTributeAttitudeThreshold())
+												if (AI_getAttitude((PlayerTypes)iI) <= GC.getLeaderHeadInfo(kLoopPlayer.getPersonalityType()).getDemandTributeAttitudeThreshold())
 												{
 													if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE) == 0)
 													{
@@ -20570,13 +20571,13 @@ void CvPlayerAI::AI_doDiplo()
 
 															for (iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 															{
-																if (GET_PLAYER((PlayerTypes)iI).getNumTradeableBonuses((BonusTypes)iJ) > 1)
+																if (kLoopPlayer.getNumTradeableBonuses((BonusTypes)iJ) > 1)
 																{
 																	if (AI_bonusTradeVal(((BonusTypes)iJ), ((PlayerTypes)iI), 1) > 0)
 																	{
 																		setTradeItem(&item, TRADE_RESOURCES, iJ);
 
-																		if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																		if (kLoopPlayer.canTradeItem(getID(), item, true))
 																		{
 																			iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Demanding Tribute (Bonus)"));
 
@@ -20597,7 +20598,7 @@ void CvPlayerAI::AI_doDiplo()
 																setTradeItem(&item, TRADE_RESOURCES, eBestReceiveBonus);
 																theirList.insertAtEnd(item);
 
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_DEMAND_TRIBUTE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_DEMAND_TRIBUTE));
 																	pDiplo = new CvDiploParameters(getID());
@@ -20615,7 +20616,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 														}
@@ -20636,7 +20637,7 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												setTradeItem(&item, TRADE_OPEN_BORDERS);
 
-												if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+												if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 												{
 													ourList.clear();
 													theirList.clear();
@@ -20644,9 +20645,9 @@ void CvPlayerAI::AI_doDiplo()
 													ourList.insertAtEnd(item);
 													theirList.insertAtEnd(item);
 
-													if (GET_PLAYER((PlayerTypes)iI).isHuman())
+													if (kLoopPlayer.isHuman())
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_OPEN_BORDERS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_OPEN_BORDERS));
 															pDiplo = new CvDiploParameters(getID());
@@ -20665,7 +20666,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/															
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 													else
@@ -20685,7 +20686,7 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												setTradeItem(&item, TRADE_DEFENSIVE_PACT);
 
-												if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+												if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 												{
 													ourList.clear();
 													theirList.clear();
@@ -20693,9 +20694,9 @@ void CvPlayerAI::AI_doDiplo()
 													ourList.insertAtEnd(item);
 													theirList.insertAtEnd(item);
 
-													if (GET_PLAYER((PlayerTypes)iI).isHuman())
+													if (kLoopPlayer.isHuman())
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_DEFENSIVE_PACT, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_DEFENSIVE_PACT));
 															pDiplo = new CvDiploParameters(getID());
@@ -20716,7 +20717,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/												
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 													else
@@ -20728,7 +20729,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (GET_TEAM(getTeam()).getLeaderID() == getID()))
+									if (!(kLoopPlayer.isHuman()) || (GET_TEAM(getTeam()).getLeaderID() == getID()))
 									{
 										if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_TRADE_TECH) == 0)
 										{
@@ -20763,7 +20764,7 @@ void CvPlayerAI::AI_doDiplo()
 												{
 													setTradeItem(&item, TRADE_TECHNOLOGIES, iJ);
 
-													if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+													if (kLoopPlayer.canTradeItem(getID(), item, true))
 													{
 														iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Tech Trading #1"));
 
@@ -20796,10 +20797,10 @@ void CvPlayerAI::AI_doDiplo()
 														}
 													}
 
-													iOurValue = GET_TEAM(getTeam()).AI_techTradeVal(eBestReceiveTech, GET_PLAYER((PlayerTypes)iI).getTeam());
+													iOurValue = GET_TEAM(getTeam()).AI_techTradeVal(eBestReceiveTech, kLoopPlayer.getTeam());
 													if (eBestGiveTech != NO_TECH)
 													{
-														iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+														iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 													}
 													else
 													{
@@ -20818,13 +20819,13 @@ void CvPlayerAI::AI_doDiplo()
 															iGoldData++;
 														}
 
-														iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+														iGold = std::min(iGoldData, kLoopPlayer.AI_maxGoldTrade(getID()));
 
 														if (iGold > 0)
 														{
 															setTradeItem(&item, TRADE_GOLD, iGold);
 
-															if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+															if (kLoopPlayer.canTradeItem(getID(), item, true))
 															{
 																iReceiveGold = iGold;
 																iOurValue += (iGold * iGoldValuePercent) / 100;
@@ -20849,7 +20850,7 @@ void CvPlayerAI::AI_doDiplo()
 														}
 													}
 
-													if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+													if (!(kLoopPlayer.isHuman()) || (iOurValue >= iTheirValue))
 													{
 														if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
 														{
@@ -20877,9 +20878,9 @@ void CvPlayerAI::AI_doDiplo()
 																theirList.insertAtEnd(item);
 															}
 
-															if (GET_PLAYER((PlayerTypes)iI).isHuman())
+															if (kLoopPlayer.isHuman())
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_TECH, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_TECH));
 																	pDiplo = new CvDiploParameters(getID());
@@ -20900,7 +20901,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																	
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 															else
@@ -20920,7 +20921,7 @@ void CvPlayerAI::AI_doDiplo()
 									if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 									{
 										//Purchase War Ally
-										if (GET_PLAYER((PlayerTypes)iI).isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam())))
+										if (kLoopPlayer.isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam())))
 										{
 											if ((AI_getMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR) == 0) && (AI_getMemoryCount(((PlayerTypes)iI), MEMORY_HIRED_WAR_ALLY) == 0))
 											{
@@ -20932,7 +20933,7 @@ void CvPlayerAI::AI_doDiplo()
 
 														if (eBestWarTeam != NO_TEAM)
 														{
-															if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
+															if (GET_TEAM(kLoopPlayer.getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
 															{
 																//if (GET_TEAM(eBestWarTeam).getPower(true) > (GET_TEAM(getTeam()).getPower(true) * 0.75))
 																{
@@ -20955,10 +20956,10 @@ void CvPlayerAI::AI_doDiplo()
 																		}
 																	}
 
-																	iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestWarTeam, GET_PLAYER((PlayerTypes)iI).getTeam());
+																	iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestWarTeam, kLoopPlayer.getTeam());
 																	if (eBestGiveTech != NO_TECH)
 																	{
-																		iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+																		iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 																	}
 																	else
 																	{
@@ -20977,13 +20978,13 @@ void CvPlayerAI::AI_doDiplo()
 																			iGoldData++;															
 																		}
 
-																		iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+																		iGold = std::min(iGoldData, kLoopPlayer.AI_maxGoldTrade(getID()));
 
 																		if (iGold > 0)
 																		{
 																			setTradeItem(&item, TRADE_GOLD, iGold);
 
-																			if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																			if (kLoopPlayer.canTradeItem(getID(), item, true))
 																			{
 																				iReceiveGold = iGold;
 																				iOurValue += (iGold * iGoldValuePercent) / 100;
@@ -21008,7 +21009,7 @@ void CvPlayerAI::AI_doDiplo()
 																		}
 																	}
 
-																	if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+																	if (!(kLoopPlayer.isHuman()) || (iOurValue >= iTheirValue))
 																	{
 																		if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
 																		{
@@ -21036,9 +21037,9 @@ void CvPlayerAI::AI_doDiplo()
 																				theirList.insertAtEnd(item);
 																			}
 
-																			if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																			if (kLoopPlayer.isHuman())
 																			{
-																				if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																				if (!(abContacted[kLoopPlayer.getTeam()]))
 																				{
 																					AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_JOIN_WAR, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_JOIN_WAR));
 																					pDiplo = new CvDiploParameters(getID());
@@ -21051,15 +21052,15 @@ void CvPlayerAI::AI_doDiplo()
 																					AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																					// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																					// RevolutionDCM end
-																					abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																					abContacted[kLoopPlayer.getTeam()] = true;
 																				}
 																			}
 																			else
 																			{
-																				if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
+																				if (GET_TEAM(kLoopPlayer.getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
 																				{
 																					GC.getGameINLINE().implementDeal(getID(), ((PlayerTypes)iI), &ourList, &theirList);
-																					CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_HIRED_WAR_ALLY", getCivilizationAdjectiveKey(), GET_PLAYER((PlayerTypes)iI).getCivilizationAdjectiveKey());
+																					CvWString szBuffer = gDLL->getText("TXT_KEY_MISC_HIRED_WAR_ALLY", getCivilizationAdjectiveKey(), kLoopPlayer.getCivilizationAdjectiveKey());
 																					for (int i = 0; i < MAX_CIV_PLAYERS; i++)
 																					{
 																						if (GET_PLAYER((PlayerTypes)i).getTeam() == eBestWarTeam)
@@ -21080,8 +21081,8 @@ void CvPlayerAI::AI_doDiplo()
 										}
 										if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 										{
-										//Preapre For War
-											if (GET_PLAYER((PlayerTypes)iI).isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam())))
+										//Prepare For War
+											if (kLoopPlayer.isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam())))
 											{
 												if ((AI_getMemoryCount(((PlayerTypes)iI), MEMORY_DECLARED_WAR) == 0) && (AI_getMemoryCount(((PlayerTypes)iI), MEMORY_HIRED_WAR_ALLY) == 0))
 												{
@@ -21093,7 +21094,7 @@ void CvPlayerAI::AI_doDiplo()
 	
 															if (eBestWarTeam != NO_TEAM)
 															{
-																if (GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
+																if (GET_TEAM(kLoopPlayer.getTeam()).AI_declareWarTrade(eBestWarTeam, getTeam(), true) == NO_DENIAL)
 																{
 																	//if (GET_TEAM(eBestWarTeam).getPower(true) > (GET_TEAM(getTeam()).getPower(true) * 0.75))
 																	{
@@ -21117,10 +21118,10 @@ void CvPlayerAI::AI_doDiplo()
 																			}
 																		}
 	
-																		iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestWarTeam, GET_PLAYER((PlayerTypes)iI).getTeam());
+																		iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestWarTeam, kLoopPlayer.getTeam());
 																		if (eBestGiveTech != NO_TECH)
 																		{
-																			iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+																			iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 																		}
 																		else
 																		{
@@ -21139,13 +21140,13 @@ void CvPlayerAI::AI_doDiplo()
 																				iGoldData++;															
 																			}
 	
-																			iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+																			iGold = std::min(iGoldData, kLoopPlayer.AI_maxGoldTrade(getID()));
 	
 																			if (iGold > 0)
 																			{
 																				setTradeItem(&item, TRADE_GOLD, iGold);
 	
-																				if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																				if (kLoopPlayer.canTradeItem(getID(), item, true))
 																				{
 																					iReceiveGold = iGold;
 																					iOurValue += (iGold * iGoldValuePercent) / 100;
@@ -21170,7 +21171,7 @@ void CvPlayerAI::AI_doDiplo()
 																			}
 																		}
 	
-																		if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+																		if (!(kLoopPlayer.isHuman()) || (iOurValue >= iTheirValue))
 																		{
 																			if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
 																			{
@@ -21199,9 +21200,9 @@ void CvPlayerAI::AI_doDiplo()
 																					theirList.insertAtEnd(item);
 																				}
 	
-																				if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																				if (kLoopPlayer.isHuman())
 																				{
-																					if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																					if (!(abContacted[kLoopPlayer.getTeam()]))
 																					{
 	
 																						AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_JOIN_WAR, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_JOIN_WAR));
@@ -21215,7 +21216,7 @@ void CvPlayerAI::AI_doDiplo()
 																						AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																						// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																						// RevolutionDCM end
-																						abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																						abContacted[kLoopPlayer.getTeam()] = true;
 																					}
 																				}
 																													
@@ -21247,9 +21248,9 @@ void CvPlayerAI::AI_doDiplo()
 
 													if (eBestTeam != NO_TEAM)
 													{
-														if (GET_PLAYER((PlayerTypes)iI).isHuman())
+														if (kLoopPlayer.isHuman())
 														{
-															if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+															if (!(abContacted[kLoopPlayer.getTeam()]))
 															{
 
 																AI_changeContactTimer(((PlayerTypes)iI), CONTACT_PEACE_PRESSURE, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_PEACE_PRESSURE));
@@ -21262,7 +21263,7 @@ void CvPlayerAI::AI_doDiplo()
 																AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																// RevolutionDCM end
-																abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																abContacted[kLoopPlayer.getTeam()] = true;
 															}
 														}
 														else
@@ -21274,7 +21275,7 @@ void CvPlayerAI::AI_doDiplo()
 											}
 										}
 										//Purchase Trade Embargo
-										if (GET_PLAYER((PlayerTypes)iI).isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(GET_PLAYER((PlayerTypes)iI).getTeam())))
+										if (kLoopPlayer.isHuman() || ((GET_TEAM(getTeam()).getLeaderID() == getID()) && !GET_TEAM(getTeam()).isVassal(kLoopPlayer.getTeam())))
 										{
 											if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_TRADE_STOP_TRADING) == 0)
 											{
@@ -21307,7 +21308,7 @@ void CvPlayerAI::AI_doDiplo()
 														iOurValue = AI_stopTradingTradeVal(eBestStopTradeTeam, ((PlayerTypes)iI));
 														if (eBestGiveTech != NO_TECH)
 														{
-															iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+															iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 														}
 														else
 														{
@@ -21326,13 +21327,13 @@ void CvPlayerAI::AI_doDiplo()
 																iGoldData++;															
 															}
 																	
-															iGold = std::min(iGoldData, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+															iGold = std::min(iGoldData, kLoopPlayer.AI_maxGoldTrade(getID()));
 
 															if (iGold > 0)
 															{
 																setTradeItem(&item, TRADE_GOLD, iGold);
 
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	iReceiveGold = iGold;
 																	iOurValue += (iGold * iGoldValuePercent) / 100;
@@ -21356,7 +21357,7 @@ void CvPlayerAI::AI_doDiplo()
 															}
 														}
 
-														if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (iOurValue >= iTheirValue))
+														if (!(kLoopPlayer.isHuman()) || (iOurValue >= iTheirValue))
 														{
 															if ((iOurValue > ((iTheirValue * 2) / 3)) && (iTheirValue > ((iOurValue * 2) / 3)))
 															{
@@ -21384,9 +21385,9 @@ void CvPlayerAI::AI_doDiplo()
 																	theirList.insertAtEnd(item);
 																}
 
-																if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																if (kLoopPlayer.isHuman())
 																{
-																	if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																	if (!(abContacted[kLoopPlayer.getTeam()]))
 																	{
 																		AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_STOP_TRADING, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_STOP_TRADING));
 																		pDiplo = new CvDiploParameters(getID());
@@ -21399,7 +21400,7 @@ void CvPlayerAI::AI_doDiplo()
 																		AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// RevolutionDCM end
-																		abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																		abContacted[kLoopPlayer.getTeam()] = true;
 																	}
 																}
 																else
@@ -21414,9 +21415,9 @@ void CvPlayerAI::AI_doDiplo()
 										}
 
 										//Establish Embassy
-										if (GET_TEAM(getTeam()).getLeaderID() == getID())
+										if (GET_TEAM(getTeam()).getLeaderID() == getID() && GET_TEAM(getTeam()).isEmbassyTrading())
 										{
-											if (!GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER((PlayerTypes)iI).getTeam()))
+											if (!GET_TEAM(getTeam()).isHasEmbassy(kLoopPlayer.getTeam()))
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_EMBASSY) == 0)
 												{
@@ -21424,7 +21425,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														setTradeItem(&item, TRADE_EMBASSY);
 
-														if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															ourList.clear();
 															theirList.clear();
@@ -21432,9 +21433,9 @@ void CvPlayerAI::AI_doDiplo()
 															ourList.insertAtEnd(item);
 															theirList.insertAtEnd(item);
 
-															if (GET_PLAYER((PlayerTypes)iI).isHuman())
+															if (kLoopPlayer.isHuman())
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_EMBASSY, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_EMBASSY));
 																	pDiplo = new CvDiploParameters(getID());
@@ -21447,7 +21448,7 @@ void CvPlayerAI::AI_doDiplo()
 																	AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// RevolutionDCM end
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 															else
@@ -21463,7 +21464,7 @@ void CvPlayerAI::AI_doDiplo()
 										//NonAggression
 										if (GET_TEAM(getTeam()).getLeaderID() == getID())
 										{
-											if (!GET_TEAM(getTeam()).isHasNonAggression(GET_PLAYER((PlayerTypes)iI).getTeam()))
+											if (!GET_TEAM(getTeam()).isHasNonAggression(kLoopPlayer.getTeam()))
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_NON_AGGRESSION) == 0)
 												{
@@ -21471,7 +21472,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														setTradeItem(&item, TRADE_NON_AGGRESSION);
 
-														if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															ourList.clear();
 															theirList.clear();
@@ -21479,9 +21480,9 @@ void CvPlayerAI::AI_doDiplo()
 															ourList.insertAtEnd(item);
 															theirList.insertAtEnd(item);
 
-															if (GET_PLAYER((PlayerTypes)iI).isHuman())
+															if (kLoopPlayer.isHuman())
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_NON_AGGRESSION, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_NON_AGGRESSION));
 																	pDiplo = new CvDiploParameters(getID());
@@ -21494,7 +21495,7 @@ void CvPlayerAI::AI_doDiplo()
 																	AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// RevolutionDCM end
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 															else
@@ -21511,7 +21512,7 @@ void CvPlayerAI::AI_doDiplo()
 
 										if (GET_TEAM(getTeam()).getLeaderID() == getID())
 										{
-											if (!GET_TEAM(getTeam()).isHasPOW(GET_PLAYER((PlayerTypes)iI).getTeam()))
+											if (!GET_TEAM(getTeam()).isHasPOW(kLoopPlayer.getTeam()))
 											{
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_POW) == 0)
 												{
@@ -21519,7 +21520,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														setTradeItem(&item, TRADE_POW);
 
-														if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															ourList.clear();
 															theirList.clear();
@@ -21527,9 +21528,9 @@ void CvPlayerAI::AI_doDiplo()
 															ourList.insertAtEnd(item);
 															theirList.insertAtEnd(item);
 
-															if (GET_PLAYER((PlayerTypes)iI).isHuman())
+															if (kLoopPlayer.isHuman())
 															{
-																if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																if (!(abContacted[kLoopPlayer.getTeam()]))
 																{
 																	AI_changeContactTimer(((PlayerTypes)iI), CONTACT_POW, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_POW));
 																	pDiplo = new CvDiploParameters(getID());
@@ -21542,7 +21543,7 @@ void CvPlayerAI::AI_doDiplo()
 																	AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																	// RevolutionDCM end
-																	abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																	abContacted[kLoopPlayer.getTeam()] = true;
 																}
 															}
 															else
@@ -21564,7 +21565,7 @@ void CvPlayerAI::AI_doDiplo()
 												{
 													setTradeItem(&item, TRADE_RIGHT_OF_PASSAGE);
 
-													if (canTradeItem(((PlayerTypes)iI), item, true) && GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+													if (canTradeItem(((PlayerTypes)iI), item, true) && kLoopPlayer.canTradeItem(getID(), item, true))
 													{
 														ourList.clear();
 														theirList.clear();
@@ -21572,9 +21573,9 @@ void CvPlayerAI::AI_doDiplo()
 														ourList.insertAtEnd(item);
 														theirList.insertAtEnd(item);
 
-														if (GET_PLAYER((PlayerTypes)iI).isHuman())
+														if (kLoopPlayer.isHuman())
 														{
-															if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+															if (!(abContacted[kLoopPlayer.getTeam()]))
 															{
 																AI_changeContactTimer(((PlayerTypes)iI), CONTACT_OPEN_BORDERS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_OPEN_BORDERS));
 																pDiplo = new CvDiploParameters(getID());
@@ -21587,7 +21588,7 @@ void CvPlayerAI::AI_doDiplo()
 																AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																// RevolutionDCM end
-																abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																abContacted[kLoopPlayer.getTeam()] = true;
 															}
 														}
 														else
@@ -21623,14 +21624,14 @@ void CvPlayerAI::AI_doDiplo()
 													}
 													if (eBestTeam != NO_TEAM)
 													{
-														iOurValue = GET_TEAM(getTeam()).AI_contactTradeVal(eBestTeam, GET_PLAYER((PlayerTypes)iI).getTeam());
+														iOurValue = GET_TEAM(getTeam()).AI_contactTradeVal(eBestTeam, kLoopPlayer.getTeam());
 
-														iGold = std::max(0, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+														iGold = std::max(0, kLoopPlayer.AI_maxGoldTrade(getID()));
 														if (iOurValue <= iGold && iOurValue > 0)
 														{
 															setTradeItem(&item, TRADE_GOLD, iOurValue);
 
-															if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+															if (kLoopPlayer.canTradeItem(getID(), item, true))
 															{
 																ourList.clear();
 																theirList.clear();
@@ -21641,9 +21642,9 @@ void CvPlayerAI::AI_doDiplo()
 																setTradeItem(&item, TRADE_GOLD, iOurValue);
 																theirList.insertAtEnd(item);
 
-																if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																if (kLoopPlayer.isHuman())
 																{
-																	if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																	if (!(abContacted[kLoopPlayer.getTeam()]))
 																	{
 																		AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_CONTACTS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_CONTACTS));
 																		pDiplo = new CvDiploParameters(getID());
@@ -21656,7 +21657,7 @@ void CvPlayerAI::AI_doDiplo()
 																		AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// RevolutionDCM end
-																		abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																		abContacted[kLoopPlayer.getTeam()] = true;
 																	}
 																}
 																else
@@ -21667,23 +21668,23 @@ void CvPlayerAI::AI_doDiplo()
 																	switch (AI_getAttitude(GET_TEAM(eBestTeam).getLeaderID()))
 																	{
 																	case ATTITUDE_FURIOUS:
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_FURIOUS", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_FURIOUS", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	case ATTITUDE_ANNOYED:
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_ANNOYED", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_ANNOYED", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	case ATTITUDE_CAUTIOUS:
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_CAUTIOUS", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_CAUTIOUS", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	case ATTITUDE_PLEASED:
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_PLEASED", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_PLEASED", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	case ATTITUDE_FRIENDLY:
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_FRIENDLY", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_FRIENDLY", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	default:
 																		FAssertMsg(false, "No Valid Attitude");
-																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_CAUTIOUS", getCivilizationDescription(), GET_PLAYER((PlayerTypes)iI).getCivilizationDescription());
+																		szBuffer = gDLL->getText("TXT_KEY_MISC_TRADED_CONTACT_CAUTIOUS", getCivilizationDescription(), kLoopPlayer.getCivilizationDescription());
 																		break;
 																	}
 																	
@@ -21709,7 +21710,7 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_TRADE_WORKERS), "AI Diplo Trade Workers") == 0)
 												{
-													if (GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER((PlayerTypes)iI).getTeam()))
+													if (GET_TEAM(getTeam()).isHasEmbassy(kLoopPlayer.getTeam()))
 													{
 														CvUnit* pWorker = NULL;
 														int iNeededWorkers = 0;
@@ -21725,13 +21726,13 @@ void CvPlayerAI::AI_doDiplo()
 														//if we need workers
 														if (iNeededWorkers > 0)
 														{
-															for (CvUnit* pLoopUnit = GET_PLAYER((PlayerTypes)iI).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER((PlayerTypes)iI).nextUnit(&iLoop))
+															for (CvUnit* pLoopUnit = kLoopPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kLoopPlayer.nextUnit(&iLoop))
 															{
 																if (pLoopUnit->canTradeUnit(getID()))
 																{
 																	setTradeItem(&item, TRADE_WORKER, pLoopUnit->getID());
 																	//if they can trade the worker to us
-																	if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																	if (kLoopPlayer.canTradeItem(getID(), item, true))
 																	{
 																		pWorker = pLoopUnit;
 																		break;
@@ -21759,9 +21760,9 @@ void CvPlayerAI::AI_doDiplo()
 																	setTradeItem(&item, TRADE_WORKER, pWorker->getID());
 																	theirList.insertAtEnd(item);
 
-																	if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																	if (kLoopPlayer.isHuman())
 																	{
-																		if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																		if (!(abContacted[kLoopPlayer.getTeam()]))
 																		{
 																			AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_WORKERS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_WORKERS));
 																			pDiplo = new CvDiploParameters(getID());
@@ -21774,7 +21775,7 @@ void CvPlayerAI::AI_doDiplo()
 																			AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																			// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																			// RevolutionDCM end
-																			abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																			abContacted[kLoopPlayer.getTeam()] = true;
 																		}
 																	}
 																	else
@@ -21794,25 +21795,25 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_TRADE_MILITARY_UNITS) / std::max(1, GET_TEAM(getTeam()).getAnyWarPlanCount(true)), "AI Diplo Trade Military Units") == 0)
 											{
-												if (GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER((PlayerTypes)iI).getTeam()) )
+												if (GET_TEAM(getTeam()).isHasEmbassy(kLoopPlayer.getTeam()) )
 												{
 													if (!AI_isFinancialTrouble())
 													{
 														int* paiMilitaryUnits;
 														CvUnit* pLoopUnit;
-														paiMilitaryUnits = new int[GET_PLAYER((PlayerTypes)iI).getNumUnits()];
-														for (iJ = 0; iJ < GET_PLAYER((PlayerTypes)iI).getNumUnits(); iJ++)
+														paiMilitaryUnits = new int[kLoopPlayer.getNumUnits()];
+														for (iJ = 0; iJ < kLoopPlayer.getNumUnits(); iJ++)
 														{
 															paiMilitaryUnits[iJ] = -1;
 														}
 														CvUnit* pBestUnit = NULL;
 														int iNumTradableUnits = 0;
-														for (iJ = 0, pLoopUnit = GET_PLAYER((PlayerTypes)iI).firstUnit(&iLoop); pLoopUnit != NULL; iJ++, pLoopUnit = GET_PLAYER((PlayerTypes)iI).nextUnit(&iLoop))
+														for (iJ = 0, pLoopUnit = kLoopPlayer.firstUnit(&iLoop); pLoopUnit != NULL; iJ++, pLoopUnit = kLoopPlayer.nextUnit(&iLoop))
 														{
 															if (pLoopUnit->canTradeUnit(getID()))
 															{
 																setTradeItem(&item, TRADE_MILITARY_UNIT, pLoopUnit->getID());
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	paiMilitaryUnits[iJ] = pLoopUnit->getID();
 																	iNumTradableUnits++;
@@ -21844,8 +21845,8 @@ void CvPlayerAI::AI_doDiplo()
 														if (eBestTech != NO_TECH)
 														{
 															int iUnitValue = 0;
-															int iTechValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestTech, getTeam());
-															for (iJ = 0; iJ < GET_PLAYER((PlayerTypes)iI).getNumUnits(); iJ++)
+															int iTechValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestTech, getTeam());
+															for (iJ = 0; iJ < kLoopPlayer.getNumUnits(); iJ++)
 															{
 																if (paiMilitaryUnits[iJ] > 0)
 																{
@@ -21855,7 +21856,7 @@ void CvPlayerAI::AI_doDiplo()
 																	}
 																	else
 																	{
-																		iUnitValue += AI_militaryUnitTradeVal(GET_PLAYER((PlayerTypes)iI).getUnit(paiMilitaryUnits[iJ]));
+																		iUnitValue += AI_militaryUnitTradeVal(kLoopPlayer.getUnit(paiMilitaryUnits[iJ]));
 																	}
 																}
 															}
@@ -21879,10 +21880,10 @@ void CvPlayerAI::AI_doDiplo()
 															//The tech is worth more than the units
 															else if (iNeededGold < 0)
 															{
-																iGold = GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID());
+																iGold = kLoopPlayer.AI_maxGoldTrade(getID());
 																
 																setTradeItem(&item, TRADE_GOLD, std::min(-iNeededGold, iGold));
-																if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+																if (kLoopPlayer.canTradeItem(getID(), item, true))
 																{
 																	setTradeItem(&item, TRADE_GOLD, std::min(-iNeededGold, iGold));
 																	theirList.insertAtEnd(item);
@@ -21891,7 +21892,7 @@ void CvPlayerAI::AI_doDiplo()
 															//The difference is too large, the trade isn't worth it
 															if ( std::max(iNeededGold, -iNeededGold) - iGold < 300)
 															{
-																for (iJ = 0; iJ < GET_PLAYER((PlayerTypes)iI).getNumUnits(); iJ++)
+																for (iJ = 0; iJ < kLoopPlayer.getNumUnits(); iJ++)
 																{
 																	if (paiMilitaryUnits[iJ] > 0)
 																	{
@@ -21903,9 +21904,9 @@ void CvPlayerAI::AI_doDiplo()
 																setTradeItem(&item, TRADE_TECHNOLOGIES, eBestTech);
 																ourList.insertAtEnd(item);
 
-																if (GET_PLAYER((PlayerTypes)iI).isHuman())
+																if (kLoopPlayer.isHuman())
 																{
-																	if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+																	if (!(abContacted[kLoopPlayer.getTeam()]))
 																	{
 																		AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_MILITARY_UNITS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_MILITARY_UNITS));
 																		pDiplo = new CvDiploParameters(getID());
@@ -21918,7 +21919,7 @@ void CvPlayerAI::AI_doDiplo()
 																		AI_beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// gDLL->beginDiplomacy(pDiplo, (PlayerTypes)iI);
 																		// RevolutionDCM end
-																		abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																		abContacted[kLoopPlayer.getTeam()] = true;
 																	}
 																}
 																else
@@ -21946,7 +21947,7 @@ void CvPlayerAI::AI_doDiplo()
 
 											for (iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
 											{
-												if (GET_PLAYER((PlayerTypes)iI).getNumTradeableBonuses((BonusTypes)iJ) > 1)
+												if (kLoopPlayer.getNumTradeableBonuses((BonusTypes)iJ) > 1)
 												{
 													if (GET_PLAYER((PlayerTypes)iI).AI_corporationBonusVal((BonusTypes)iJ) == 0)
 													{
@@ -21954,7 +21955,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														setTradeItem(&item, TRADE_RESOURCES, iJ);
 
-														if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															/*** DIPLOMACY 09/25/09 by DPII
 															iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Bonus Trading #1"));
@@ -21982,7 +21983,7 @@ void CvPlayerAI::AI_doDiplo()
 													{
 														if (getNumTradeableBonuses((BonusTypes)iJ) > 1)
 														{
-															if (GET_PLAYER((PlayerTypes)iI).AI_bonusTradeVal(((BonusTypes)iJ), getID(), 1) > 0)
+															if (kLoopPlayer.AI_bonusTradeVal(((BonusTypes)iJ), getID(), 1) > 0)
 															{
 																setTradeItem(&item, TRADE_RESOURCES, iJ);
 
@@ -22003,7 +22004,7 @@ void CvPlayerAI::AI_doDiplo()
 
 												if (eBestGiveBonus != NO_BONUS)
 												{
-													if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (AI_bonusTradeVal(eBestReceiveBonus, ((PlayerTypes)iI), -1) >= GET_PLAYER((PlayerTypes)iI).AI_bonusTradeVal(eBestGiveBonus, getID(), 1)))
+													if (!(kLoopPlayer.isHuman()) || (AI_bonusTradeVal(eBestReceiveBonus, ((PlayerTypes)iI), -1) >= kLoopPlayer.AI_bonusTradeVal(eBestGiveBonus, getID(), 1)))
 													{
 														ourList.clear();
 														theirList.clear();
@@ -22014,9 +22015,9 @@ void CvPlayerAI::AI_doDiplo()
 														setTradeItem(&item, TRADE_RESOURCES, eBestReceiveBonus);
 														theirList.insertAtEnd(item);
 
-														if (GET_PLAYER((PlayerTypes)iI).isHuman())
+														if (kLoopPlayer.isHuman())
 														{
-															if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+															if (!(abContacted[kLoopPlayer.getTeam()]))
 															{
 																AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_BONUS, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_BONUS));
 																pDiplo = new CvDiploParameters(getID());
@@ -22037,7 +22038,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
 /*************************************************************************************************/																
-																abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+																abContacted[kLoopPlayer.getTeam()] = true;
 															}
 														}
 														else
@@ -22056,9 +22057,9 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											setTradeItem(&item, TRADE_MAPS);
 
-											if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true) && canTradeItem(((PlayerTypes)iI), item, true))
+											if (kLoopPlayer.canTradeItem(getID(), item, true) && canTradeItem(((PlayerTypes)iI), item, true))
 											{
-												if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || (GET_TEAM(getTeam()).AI_mapTradeVal(GET_PLAYER((PlayerTypes)iI).getTeam()) >= GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_mapTradeVal(getTeam())))
+												if (!(kLoopPlayer.isHuman()) || (GET_TEAM(getTeam()).AI_mapTradeVal(kLoopPlayer.getTeam()) >= GET_TEAM(kLoopPlayer.getTeam()).AI_mapTradeVal(getTeam())))
 												{
 													ourList.clear();
 													theirList.clear();
@@ -22069,9 +22070,9 @@ void CvPlayerAI::AI_doDiplo()
 													setTradeItem(&item, TRADE_MAPS);
 													theirList.insertAtEnd(item);
 
-													if (GET_PLAYER((PlayerTypes)iI).isHuman())
+													if (kLoopPlayer.isHuman())
 													{
-														if (!(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+														if (!(abContacted[kLoopPlayer.getTeam()]))
 														{
 															AI_changeContactTimer(((PlayerTypes)iI), CONTACT_TRADE_MAP, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_MAP));
 															pDiplo = new CvDiploParameters(getID());
@@ -22091,8 +22092,8 @@ void CvPlayerAI::AI_doDiplo()
 															// RevolutionDCM end
 /*************************************************************************************************/
 /** REVOLUTIONDCM_MOD                         END                                 Glider1        */
-/*************************************************************************************************/															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
-															abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()] = true;
+/*************************************************************************************************/															abContacted[kLoopPlayer.getTeam()] = true;
+															abContacted[kLoopPlayer.getTeam()] = true;
 														}
 													}
 													else
@@ -22104,7 +22105,7 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									if (!(GET_PLAYER((PlayerTypes)iI).isHuman()) || !(abContacted[GET_PLAYER((PlayerTypes)iI).getTeam()]))
+									if (!(kLoopPlayer.isHuman()) || !(abContacted[kLoopPlayer.getTeam()]))
 									{
 										int iDeclareWarTradeRand = GC.getLeaderHeadInfo(getPersonalityType()).getDeclareWarTradeRand();
 										int iMinAtWarCounter = MAX_INT;
@@ -22156,13 +22157,13 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												if (GET_TEAM((TeamTypes)iJ).isAlive())
 												{
-													if (atWar(((TeamTypes)iJ), getTeam()) && !atWar(((TeamTypes)iJ), GET_PLAYER((PlayerTypes)iI).getTeam()))
+													if (atWar(((TeamTypes)iJ), getTeam()) && !atWar(((TeamTypes)iJ), kLoopPlayer.getTeam()))
 													{
 														if (GET_TEAM((TeamTypes)iJ).getAtWarCount(true) < std::max(2, (GC.getGameINLINE().countCivTeamsAlive() / 2)))
 														{
 															setTradeItem(&item, TRADE_WAR, iJ);
 
-															if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+															if (kLoopPlayer.canTradeItem(getID(), item, true))
 															{
 																iValue = (1 + GC.getGameINLINE().getSorenRandNum(1000, "AI Declare War Trading"));
 
@@ -22203,10 +22204,10 @@ void CvPlayerAI::AI_doDiplo()
 													}
 												}
 
-												iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestTeam, GET_PLAYER((PlayerTypes)iI).getTeam());
+												iOurValue = GET_TEAM(getTeam()).AI_declareWarTradeVal(eBestTeam, kLoopPlayer.getTeam());
 												if (eBestGiveTech != NO_TECH)
 												{
-													iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
+													iTheirValue = GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
 												}
 												else
 												{
@@ -22241,7 +22242,7 @@ void CvPlayerAI::AI_doDiplo()
 
 													if (eBestGiveTech2 != NO_TECH)
 													{
-														iTheirValue += GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech2, getTeam());
+														iTheirValue += GET_TEAM(kLoopPlayer.getTeam()).AI_techTradeVal(eBestGiveTech2, getTeam());
 													}
 												}
 
@@ -22250,13 +22251,13 @@ void CvPlayerAI::AI_doDiplo()
 
 												if (iTheirValue > iOurValue)
 												{
-													iGold = std::min(((iTheirValue - iOurValue) * 100) / iGoldValuePercent, GET_PLAYER((PlayerTypes)iI).AI_maxGoldTrade(getID()));
+													iGold = std::min(((iTheirValue - iOurValue) * 100) / iGoldValuePercent, kLoopPlayer.AI_maxGoldTrade(getID()));
 
 													if (iGold > 0)
 													{
 														setTradeItem(&item, TRADE_GOLD, iGold);
 
-														if (GET_PLAYER((PlayerTypes)iI).canTradeItem(getID(), item, true))
+														if (kLoopPlayer.canTradeItem(getID(), item, true))
 														{
 															iReceiveGold = iGold;
 															iOurValue += (iGold * iGoldValuePercent) / 100;
