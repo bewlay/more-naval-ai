@@ -14365,19 +14365,35 @@ void CvCity::doPlotCulture(bool bUpdate, PlayerTypes ePlayer, int iCultureRate)
 
 						if (pLoopPlot != NULL)
 						{
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-							if (!GC.getGameINLINE().isCultureNeedsEmptyRadius())
+							// Advanced Diplomacy Start
+							bool bCultureBlocked = false;
+							if (GET_PLAYER(getOwnerINLINE()).isCultureNeedsEmptyRadius())
 							{
+								if (pLoopPlot->isOwned())
+								{
+									bCultureBlocked = true;
+									if (pLoopPlot->getOwner() == getOwner() || // can always add culture to our own plots
+										pLoopPlot->isBarbarian() && !GET_TEAM(getTeam()).isBarbarianAlly() || // and barbarians if we are not allies
+										!GET_PLAYER(pLoopPlot->getOwner()).isCultureNeedsEmptyRadius()) // and the restriction must be mutual
+									{
+										bCultureBlocked = false;
+									}
+								}
+							}
+							if (!bCultureBlocked)
+							{
+								// Original Code
 								if (pLoopPlot->isPotentialCityWorkForArea(area()))
 								{
 									pLoopPlot->changeCulture(ePlayer, (((eCultureLevel - iCultureRange) * iFreeCultureRate) + iCultureRate + 1), (bUpdate || !(pLoopPlot->isOwned())));
 								}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/						
+								// End Original Code
 							}
+							else
+							{
+								logBBAI("....SKIPPING CULTURE ON PLOT %d, %d Due to Resolution", pLoopPlot->getX(), pLoopPlot->getY());
+							}
+							// End Advanced Diplomacy
 						}
 					}
 				}
