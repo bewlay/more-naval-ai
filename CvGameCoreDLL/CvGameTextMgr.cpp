@@ -1284,6 +1284,12 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 			}
 //BUGFfH: End Add
 
+			if (pUnit->getUnitInfo().getCultureGarrisonValue() > 0)
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_UNIT_CULTURE_GARRISON_VALUE", pUnit->getUnitInfo().getCultureGarrisonValue()));
+			}
+
 //BUGFfH: Moved from below(*3) by Denev 2009/09/06
 			if (pUnit->isEnemyRoute())
 			{

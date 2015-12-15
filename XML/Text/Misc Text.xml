@@ -19,4 +19,13 @@
 		<Spanish>Hasta</Spanish>
 		<Finnish>Asti</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CULTURE_GARRISON_VALUE</Tag>
+		<English>[ICON_BULLET]Garrison Value: %d1</English>
+		<French>[ICON_BULLET]Garrison Value: %d1</French>
+		<German>[ICON_BULLET]Garrison Value: %d1</German>
+		<Italian>[ICON_BULLET]Garrison Value: %d1</Italian>
+		<Spanish>[ICON_BULLET]Garrison Value: %d1</Spanish>
+		<Finnish>[ICON_BULLET]Garrison Value: %d1</Finnish>
+	</TEXT>		
 </Civ4GameText>
