@@ -130,11 +130,7 @@
 	<ElementType name="bForceWar" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAssignCity" content="textOnly" dt:type="boolean"/>
 	<!-- Advanced Diplomacy START -->
-	<ElementType name="bNoCapitalPunishment" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bMilitaryMedicineRights" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bPrisonerRights" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bTradeMap" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bBarbarianPeace" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bVictimRights" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bNoCityRazing" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCultureNeedsEmptyRadius" content="textOnly" dt:type="boolean"/>
@@ -184,12 +180,7 @@
 		<element type="bForceWar"/>
 		<element type="bAssignCity"/>
 		<!-- Advanced Diplomacy START -->
-		<element type="bNoCapitalPunishment" minOccurs="0"/>
-		<element type="bMilitaryMedicineRights" minOccurs="0"/>
-		<element type="bPrisonerRights" minOccurs="0"/>
 		<element type="bTradeMap" minOccurs="0"/>
-		<element type="bBarbarianPeace" minOccurs="0"/>
-		<element type="bVictimRights" minOccurs="0"/>
 		<element type="bNoCityRazing" minOccurs="0"/>
 		<element type="bCultureNeedsEmptyRadius" minOccurs="0"/>
 		<element type="bPacificRule" minOccurs="0"/>

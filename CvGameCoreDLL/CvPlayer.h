@@ -754,6 +754,11 @@ public:
 	int getActiveSenateCount() const;
 	DllExport bool isActiveSenate() const;																												// Exposed to Python
 	void changeActiveSenateCount(int iChange);
+
+	//MNAI Additions
+	bool isNoCityRazing() const;
+	bool isCultureNeedsEmptyRadius() const;
+	// End MNAI
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

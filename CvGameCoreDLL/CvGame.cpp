@@ -59,18 +59,16 @@ CvGame::CvGame()
 	m_pabSmugglingRing = NULL;
 //FfH: End Add
 
+	// Advanced Diplomacy
+	m_pabCultureNeedsEmptyRadius = NULL;
+	m_pabNoCityRazing = NULL;
+	// End Advanced Diplomacy
+
 	m_paiUnitCreatedCount = NULL;
 	m_paiUnitClassCreatedCount = NULL;
 	m_paiBuildingClassCreatedCount = NULL;
 	m_paiProjectCreatedCount = NULL;
 	m_paiForceCivicCount = NULL;
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	//m_paiCondemnCivicCount = NULL;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
 	m_paiVoteOutcome = NULL;
 	m_paiReligionGameTurnFounded = NULL;
 	m_paiCorporationGameTurnFounded = NULL;
@@ -611,6 +609,11 @@ void CvGame::uninit()
 	SAFE_DELETE_ARRAY(m_pabSmugglingRing);
 //FfH: End Add
 
+	// Advanced Diplomacy
+	SAFE_DELETE_ARRAY(m_pabCultureNeedsEmptyRadius);
+	SAFE_DELETE_ARRAY(m_pabNoCityRazing);
+	// End Advanced Diplomacy
+
 	SAFE_DELETE_ARRAY(m_aiShrineBuilding);
 	SAFE_DELETE_ARRAY(m_aiShrineReligion);
 	SAFE_DELETE_ARRAY(m_paiUnitCreatedCount);
@@ -618,19 +621,6 @@ void CvGame::uninit()
 	SAFE_DELETE_ARRAY(m_paiBuildingClassCreatedCount);
 	SAFE_DELETE_ARRAY(m_paiProjectCreatedCount);
 	SAFE_DELETE_ARRAY(m_paiForceCivicCount);
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	//SAFE_DELETE_ARRAY(m_paiCondemnCivicCount);
-	/*
-	if (m_paiCondemnCivicCount != NULL)
-	{
-		SAFE_DELETE_ARRAY(m_paiCondemnCivicCount);
-	}
-	*/
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
 	SAFE_DELETE_ARRAY(m_paiVoteOutcome);
 	SAFE_DELETE_ARRAY(m_paiReligionGameTurnFounded);
 	SAFE_DELETE_ARRAY(m_paiCorporationGameTurnFounded);
@@ -701,13 +691,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	m_iCurrentVoteID = 0;
-	m_iNoCapitalPunishmentCount = 0;
-	m_iMilitaryMedicineRightsCount = 0;
-	m_iPrisonerRightsCount = 0;
-	m_iBarbarianPeaceCount = 0;
-	m_iVictimRightsCount = 0;
-	m_iNoCityRazingCount = 0;
-	m_iCultureNeedsEmptyRadiusCount = 0;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -816,6 +799,18 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		}
 //FfH: End Add
 
+		// Advanced Diplomacy
+		m_pabCultureNeedsEmptyRadius = new bool[GC.getNumVoteSourceInfos()];
+		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
+		{
+			m_pabCultureNeedsEmptyRadius[iI] = false;
+		}
+		m_pabNoCityRazing = new bool[GC.getNumVoteSourceInfos()];
+		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
+		{
+			m_pabNoCityRazing[iI] = false;
+		}
+		// End Advanced Diplomacy
 		FAssertMsg(m_paiUnitCreatedCount==NULL, "about to leak memory, CvGame::m_paiUnitCreatedCount");
 		m_paiUnitCreatedCount = new int[GC.getNumUnitInfos()];
 		for (iI = 0; iI < GC.getNumUnitInfos(); iI++)
@@ -4394,217 +4389,6 @@ void CvGame::changeSecretaryGeneralTimer(VoteSourceTypes eVoteSource, int iChang
 {
 	setSecretaryGeneralTimer(eVoteSource, getSecretaryGeneralTimer(eVoteSource) + iChange);
 }
-
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                              */
-/************************************************************************************************/
-int CvGame::getNoCapitalPunishmentCount() const
-{
-	return m_iNoCapitalPunishmentCount;
-}
-
-
-bool CvGame::isNoCapitalPunishment() const
-{
-	return (getNoCapitalPunishmentCount() > 0);
-}
-
-
-void CvGame::changeNoCapitalPunishmentCount(int iChange)
-{
-	bool bOldNoCapitalPunishment;
-
-	if (iChange != 0)
-	{
-		bOldNoCapitalPunishment = isNoCapitalPunishment();
-
-		m_iNoCapitalPunishmentCount += iChange;
-		FAssert(getNoCapitalPunishmentCount() >= 0);
-	}
-}
-
-
-
-int CvGame::getMilitaryMedicineRightsCount() const
-{
-	return m_iMilitaryMedicineRightsCount;
-}
-
-
-bool CvGame::isMilitaryMedicineRights() const
-{
-	return (getMilitaryMedicineRightsCount() > 0);
-}
-
-
-void CvGame::changeMilitaryMedicineRightsCount(int iChange)
-{
-	bool bOldMilitaryMedicineRights;
-
-	if (iChange != 0)
-	{
-		bOldMilitaryMedicineRights = isMilitaryMedicineRights();
-
-		m_iMilitaryMedicineRightsCount += iChange;
-		FAssert(getMilitaryMedicineRightsCount() >= 0);
-	}
-}
-
-
-int CvGame::getPrisonerRightsCount() const
-{
-	return m_iPrisonerRightsCount;
-}
-
-
-bool CvGame::isPrisonerRights() const
-{
-	return (getPrisonerRightsCount() > 0);
-}
-
-
-void CvGame::changePrisonerRightsCount(int iChange)
-{
-	bool bOldPrisonerRights;
-
-	if (iChange != 0)
-	{
-		bOldPrisonerRights = isPrisonerRights();
-
-		m_iPrisonerRightsCount += iChange;
-		FAssert(getPrisonerRightsCount() >= 0);
-	}
-}
-
-
-int CvGame::getBarbarianPeaceCount() const
-{
-	return m_iBarbarianPeaceCount;
-}
-
-
-bool CvGame::isBarbarianPeace() const
-{
-	return (getBarbarianPeaceCount() > 0);
-}
-
-
-void CvGame::changeBarbarianPeaceCount(int iChange)
-{
-	bool bOldBarbarianPeace;
-
-	if (iChange != 0)
-	{
-		bOldBarbarianPeace = isBarbarianPeace();
-
-		m_iBarbarianPeaceCount += iChange;
-		FAssert(getBarbarianPeaceCount() >= 0);
-
-		if (bOldBarbarianPeace)
-		{
-			if (!isBarbarianPeace())
-			{
-				for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
-				{
-					if (!GET_TEAM((TeamTypes)iTeam).isBarbarianPeace())
-					{
-						GET_TEAM((TeamTypes)iTeam).declareWar(BARBARIAN_TEAM, false, NO_WARPLAN);
-					}
-				}
-			}
-		}
-		else
-		{
-			if (isBarbarianPeace())
-			{
-				for (int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam)
-				{
-					if (!GET_TEAM((TeamTypes)iTeam).isBarbarianPeace())
-					{
-						GET_TEAM((TeamTypes)iTeam).makePeace(BARBARIAN_TEAM, true);
-					}
-				}
-			}
-		}
-	}
-}
-
-
-int CvGame::getVictimRightsCount() const
-{
-	return m_iVictimRightsCount;
-}
-
-
-bool CvGame::isVictimRights() const
-{
-	return (getVictimRightsCount() > 0);
-}
-
-
-void CvGame::changeVictimRightsCount(int iChange)
-{
-	bool bOldVictimRights;
-
-	if (iChange != 0)
-	{
-		bOldVictimRights = isVictimRights();
-
-		m_iVictimRightsCount += iChange;
-		FAssert(getVictimRightsCount() >= 0);
-	}
-}
-
-
-int CvGame::getNoCityRazingCount() const
-{
-	return m_iNoCityRazingCount;
-}
-
-
-bool CvGame::isNoCityRazing() const
-{
-	if (isOption(GAMEOPTION_NO_CITY_RAZING))
-	{
-		return true;
-	}
-	return (getNoCityRazingCount() > 0);
-}
-
-
-void CvGame::changeNoCityRazingCount(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iNoCityRazingCount += iChange;
-		FAssert(getNoCityRazingCount() >= 0);
-	}
-}
-
-int CvGame::getCultureNeedsEmptyRadiusCount() const
-{
-	return m_iCultureNeedsEmptyRadiusCount;
-}
-
-
-bool CvGame::isCultureNeedsEmptyRadius() const
-{
-	return (getCultureNeedsEmptyRadiusCount() > 0);
-}
-
-
-void CvGame::changeCultureNeedsEmptyRadiusCount(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCultureNeedsEmptyRadiusCount += iChange;
-		FAssert(getCultureNeedsEmptyRadiusCount() >= 0);
-	}
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 int CvGame::getVoteTimer(VoteSourceTypes eVoteSource) const
 {
@@ -8844,13 +8628,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-	changeNoCapitalPunishmentCount(kVote.isNoCapitalPunishment() ? iChange : 0);
-	changeMilitaryMedicineRightsCount(kVote.isMilitaryMedicineRights() ? iChange : 0);
-	changePrisonerRightsCount(kVote.isPrisonerRights() ? iChange : 0);
-	changeBarbarianPeaceCount(kVote.isBarbarianPeace() ? iChange : 0);
-	changeVictimRightsCount(kVote.isVictimRights() ? iChange : 0);
-	changeNoCityRazingCount(kVote.isNoCityRazing() ? iChange : 0);
-	changeCultureNeedsEmptyRadiusCount(kVote.isCultureNeedsEmptyRadius() ? iChange : 0);
 	setPacificVoteSource(kData.eVoteSource, (GC.getVoteInfo(kData.kVoteOption.eVote).isPacificRule() ? (iChange > 0) : isPacificVoteSource(kData.eVoteSource)));
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
@@ -8911,6 +8688,14 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     {
         changeCrime(kVote.getCrime());
     }
+
+	// Advanced Diplomacy
+	if (kVote.isCultureNeedsEmptyRadius())
+    {
+        setCultureNeedsEmptyRadius(kData.eVoteSource, bChange);
+    }
+	// End Advanced Diplomacy
+
 	if (!CvString(kVote.getPyResult()).empty())
     {
         CyArgsList argsList;
@@ -9482,38 +9267,6 @@ void CvGame::read(FDataStreamBase* pStream)
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	pStream->Read(&m_iCurrentVoteID);
-	pStream->Read(&m_iNoCapitalPunishmentCount);
-	pStream->Read(&m_iMilitaryMedicineRightsCount);
-	pStream->Read(&m_iPrisonerRightsCount);
-	pStream->Read(&m_iBarbarianPeaceCount);
-	pStream->Read(&m_iVictimRightsCount);
-	pStream->Read(&m_iNoCityRazingCount);
-	pStream->Read(&m_iCultureNeedsEmptyRadiusCount);
-	
-	//pStream->Read(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
-	/*
-	int iJ;
-	int iK;
-	pStream->Read(&iJ);
-	if (iJ > 0)
-	{
-		m_paiCondemnCivicCount = new int[iJ];
-		for (int iI = 0; iI < iJ; ++iI)
-		{
-			pStream->Read(&iK);
-			if (iK > 0)
-			{
-				m_paiCondemnCivicCount = new int[iK];
-				pStream->Read(iK, m_paiCondemnCivicCount);
-			}
-			else
-			{
-				m_paiCondemnCivicCount[iI] = NULL;
-				m_paiCondemnCivicCount = NULL;
-			}
-		}
-	}
-	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -9749,6 +9502,11 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
+
+	// Advanced Diplomacy
+	pStream->Read(GC.getNumVoteSourceInfos(), m_pabCultureNeedsEmptyRadius);
+	pStream->Read(GC.getNumVoteSourceInfos(), m_pabNoCityRazing);
+	// End Advanced Diplomacy
 }
 
 
@@ -9785,32 +9543,6 @@ void CvGame::write(FDataStreamBase* pStream)
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	pStream->Write(m_iCurrentVoteID);
-	pStream->Write(m_iNoCapitalPunishmentCount);
-	pStream->Write(m_iMilitaryMedicineRightsCount);
-	pStream->Write(m_iPrisonerRightsCount);
-	pStream->Write(m_iBarbarianPeaceCount);
-	pStream->Write(m_iVictimRightsCount);
-	pStream->Write(m_iNoCityRazingCount);
-	pStream->Write(m_iCultureNeedsEmptyRadiusCount);
-	//pStream->Read(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
-	/*
-	if (NULL == m_paiCondemnCivicCount)
-	{
-		pStream->Write(0);
-	}
-	else
-	{
-		if (NULL == m_paiCondemnCivicCount)
-		{
-			pStream->Write(0);
-		}
-		else
-		{
-			pStream->Write(GC.getNumCivicInfos());
-			pStream->Write(GC.getNumCivicInfos(), m_paiCondemnCivicCount);
-		}
-	}
-	*/
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -9993,6 +9725,11 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
+
+	// Advanced Diplomacy
+	pStream->Write(GC.getNumVoteSourceInfos(), m_pabCultureNeedsEmptyRadius);
+	pStream->Write(GC.getNumVoteSourceInfos(), m_pabNoCityRazing);
+	// End Advanced Diplomacy
 }
 
 void CvGame::writeReplay(FDataStreamBase& stream, PlayerTypes ePlayer)
@@ -11974,6 +11711,28 @@ void CvGame::setPreviousRequest(PlayerTypes ePlayer, bool bNewValue)
 	FAssertMsg(ePlayer < MAX_PLAYERS, "ePlayer is expected to be within maximum bounds (invalid Index)");
 	m_abPreviousRequest[ePlayer] = bNewValue;
 }
+
+bool CvGame::isCultureNeedsEmptyRadius(VoteSourceTypes eIndex) const
+{
+	return m_pabCultureNeedsEmptyRadius[eIndex];
+}
+
+void CvGame::setCultureNeedsEmptyRadius(VoteSourceTypes eIndex, bool bNewValue)
+{
+	m_pabCultureNeedsEmptyRadius[eIndex] = bNewValue;
+}
+
+bool CvGame::isNoCityRazing(VoteSourceTypes eIndex) const
+{
+	return m_pabNoCityRazing[eIndex];
+}
+
+void CvGame::setNoCityRazing(VoteSourceTypes eIndex, bool bNewValue)
+{
+	m_pabNoCityRazing[eIndex] = bNewValue;
+}
+
+
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

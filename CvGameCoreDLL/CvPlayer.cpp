@@ -2859,18 +2859,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	pNewCity->setNeverLost(false);
 	pNewCity->changeDefenseDamage(iDamage);
 
-/*************************************************************************************************/
-/** Advanced Diplomacy       START                                                  			 */
-/*************************************************************************************************/
-	if (bRecapture && GC.getGameINLINE().isVictimRights())
-	{
-		pNewCity->setPopulation(std::max(pNewCity->getPopulation(), pNewCity->getOriginalPopulation(getID())));
-	}
-/*************************************************************************************************/
-/** Advanced Diplomacy       EBD                                                 			 */
-/*************************************************************************************************/
-
-
 //FfH: Added by Kael 07/05/2008
 	if (iCiv != NO_CIVILIZATION)
 	{
@@ -28978,6 +28966,37 @@ DenialTypes CvPlayer::AI_tradeWarReparations(PlayerTypes ePlayer) const
 	}
 
 	return DENIAL_JOKING;
+}
+
+// Advanced Diplomacy - added by MNAI
+bool CvPlayer::isNoCityRazing() const
+{
+   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
+	{
+	    if (isFullMember((VoteSourceTypes)iI))
+	    {
+	        if (GC.getGameINLINE().isNoCityRazing((VoteSourceTypes)iI))
+	        {
+	            return true;
+	        }
+	    }
+	}
+    return false;
+}
+
+bool CvPlayer::isCultureNeedsEmptyRadius() const
+{
+   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
+	{
+	    if (isFullMember((VoteSourceTypes)iI))
+	    {
+	        if (GC.getGameINLINE().isCultureNeedsEmptyRadius((VoteSourceTypes)iI))
+	        {
+	            return true;
+	        }
+	    }
+	}
+    return false;
 }
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */

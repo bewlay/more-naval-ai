@@ -284,10 +284,7 @@ public:
 	
 	DllExport bool canDeclareWarWithoutSenate(TeamTypes eTeam) const;
 	bool isNuclearDissuasion(TeamTypes eTeam) const;
-	
-	bool isBarbarianPeace() const;
-	void setBarbarianPeace(bool bNewValue);
-	
+		
 	bool canTradeMap() const;	
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
@@ -677,14 +674,6 @@ protected:
     bool m_bBarbarianAlly;
     bool m_bNoCivicAnger;
 //FfH: End Add
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                   */
-/************************************************************************************************/
-	bool m_bBarbarianPeace;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 	TeamTypes m_eID;
 

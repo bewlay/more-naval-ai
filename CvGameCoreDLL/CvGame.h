@@ -292,33 +292,6 @@ public:
 protected:
 	bool* m_abPreviousRequest;
 public:
-	int getNoCapitalPunishmentCount() const;																// Exposed to Python
-	bool isNoCapitalPunishment() const;																			// Exposed to Python
-	void changeNoCapitalPunishmentCount(int iChange);												// Exposed to Python
-	
-	int getMilitaryMedicineRightsCount() const;																// Exposed to Python
-	bool isMilitaryMedicineRights() const;																			// Exposed to Python
-	void changeMilitaryMedicineRightsCount(int iChange);	
-
-	int getPrisonerRightsCount() const;																// Exposed to Python
-	bool isPrisonerRights() const;																			// Exposed to Python
-	void changePrisonerRightsCount(int iChange);												// Exposed to Python								
-
-	int getBarbarianPeaceCount() const;																// Exposed to Python
-	bool isBarbarianPeace() const;																			// Exposed to Python
-	void changeBarbarianPeaceCount(int iChange);												// Exposed to Python
-
-	int getVictimRightsCount() const;																// Exposed to Python
-	bool isVictimRights() const;																			// Exposed to Python
-	void changeVictimRightsCount(int iChange);												// Exposed to Python
-
-	int getNoCityRazingCount() const;																// Exposed to Python
-	bool isNoCityRazing() const;																			// Exposed to Python
-	void changeNoCityRazingCount(int iChange);												// Exposed to Python
-
-	int getCultureNeedsEmptyRadiusCount() const;																// Exposed to Python
-	bool isCultureNeedsEmptyRadius() const;																			// Exposed to Python
-	void changeCultureNeedsEmptyRadiusCount(int iChange);
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -703,6 +676,13 @@ public:
 	bool isReligionDisabled(int iReligion) const;
 //FfH: End Add
 
+	// Advanced Diplomacy
+    bool isCultureNeedsEmptyRadius(VoteSourceTypes eIndex) const;
+    void setCultureNeedsEmptyRadius(VoteSourceTypes eIndex, bool bNewValue);
+    bool isNoCityRazing(VoteSourceTypes eIndex) const;
+    void setNoCityRazing(VoteSourceTypes eIndex, bool bNewValue);
+	// End Advanced Diplomacy
+
 	// Tholal AI
 	int getCurrentPeriod() const;
 	// End Tholal AI
@@ -745,13 +725,6 @@ protected:
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
 	int m_iCurrentVoteID;
-	int m_iNoCapitalPunishmentCount;
-	int m_iMilitaryMedicineRightsCount;
-	int m_iPrisonerRightsCount;
-	int m_iBarbarianPeaceCount;
-	int m_iVictimRightsCount;
-	int m_iNoCityRazingCount;
-	int m_iCultureNeedsEmptyRadiusCount;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -795,6 +768,11 @@ protected:
 	bool* m_pabSlaveTrade;
 	bool* m_pabSmugglingRing;
 //FfH: End Add
+
+	// Advanced Diplomacy
+	bool* m_pabCultureNeedsEmptyRadius;
+	bool* m_pabNoCityRazing;
+	// End Advanced Diplomacy
 
 	int* m_aiRankPlayer;        // Ordered by rank...
 	int* m_aiPlayerRank;        // Ordered by player ID...

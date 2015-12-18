@@ -19643,12 +19643,7 @@ m_bAssignCity(false),
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-m_bNoCapitalPunishment(false),
-m_bMilitaryMedicineRights(false),
-m_bPrisonerRights(false),
 m_bTradeMap(false),
-m_bBarbarianPeace(false),
-m_bVictimRights(false),
 m_bNoCityRazing(false),
 m_bCultureNeedsEmptyRadius(false),
 m_bPacificRule(false),
@@ -19820,34 +19815,9 @@ const TCHAR *CvVoteInfo::getPyResult() const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-bool CvVoteInfo::isNoCapitalPunishment() const
-{
-	return m_bNoCapitalPunishment;
-}
-
-bool CvVoteInfo::isMilitaryMedicineRights() const
-{
-	return m_bMilitaryMedicineRights;
-}
-
-bool CvVoteInfo::isPrisonerRights() const
-{
-	return m_bPrisonerRights;
-}
-
 bool CvVoteInfo::isTradeMap() const
 {
 	return m_bTradeMap;
-}
-	
-bool CvVoteInfo::isBarbarianPeace() const
-{
-	return m_bBarbarianPeace;
-}
-
-bool CvVoteInfo::isVictimRights() const
-{
-	return m_bVictimRights;
 }
 
 bool CvVoteInfo::isNoCityRazing() const
@@ -19958,12 +19928,7 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-	pXML->GetChildXmlValByName(&m_bNoCapitalPunishment, "bNoCapitalPunishment");
-	pXML->GetChildXmlValByName(&m_bMilitaryMedicineRights, "bMilitaryMedicineRights");
-	pXML->GetChildXmlValByName(&m_bPrisonerRights, "bPrisonerRights");
 	pXML->GetChildXmlValByName(&m_bTradeMap, "bTradeMap");
-	pXML->GetChildXmlValByName(&m_bBarbarianPeace, "bBarbarianPeace");
-	pXML->GetChildXmlValByName(&m_bVictimRights, "bVictimRights");
 	pXML->GetChildXmlValByName(&m_bNoCityRazing, "bNoCityRazing");
 	pXML->GetChildXmlValByName(&m_bCultureNeedsEmptyRadius, "bCultureNeedsEmptyRadius");
 	pXML->GetChildXmlValByName(&m_bPacificRule, "bPacificRule");

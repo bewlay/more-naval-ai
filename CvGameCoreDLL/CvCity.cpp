@@ -5501,18 +5501,6 @@ int CvCity::goodHealth() const
 		iTotalHealth += iHealth;
 	}
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	if (GC.getGameINLINE().isNoCapitalPunishment())
-	{
-		iTotalHealth *= 200;
-		iTotalHealth /= 100;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-	
 	iHealth = getFeatureGoodHealth();
 	if (iHealth > 0)
 	{
@@ -17131,7 +17119,7 @@ bool CvCity::isAutoRaze() const
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-		if (!GC.getGameINLINE().isNoCityRazing())
+		if (!GET_PLAYER(getOwner()).isNoCityRazing())
 		{
 			if (getHighestPopulation() == 1)
 			{

@@ -1174,17 +1174,6 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
             }
 //FfH: End Add
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/	
-			/*if (GC.getGameINLINE().isPrisonerRights())
-			{
-				pkCapturedUnit->setOriginalOwner(getOwnerINLINE());
-			}*/
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 			if (pkCapturedUnit != NULL)
 			{
 // BUG - Unit Captured Event - start
@@ -1240,22 +1229,6 @@ void CvUnit::doTurn()
 
 	FAssertMsg(!isDead(), "isDead did not return false as expected");
 	FAssertMsg(getGroup() != NULL, "getGroup() is not expected to be equal with NULL");
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/	
-/*
-	if (isPrisoner())
-	{
-		if (!GET_PLAYER(getOriginalOwner()).isAlive())
-		{
-			setOriginalOwner(NO_PLAYER);
-		}
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/	
-
 
 //FfH Spell System: Added by Kael 07/23/2007
     int iI;
@@ -4211,17 +4184,6 @@ bool CvUnit::canScrap() const
     }
 //FfH: End Add
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/	
-/*	if (isPrisoner())
-	{
-		return false;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/	
-
 	return true;
 }
 
@@ -5076,17 +5038,6 @@ int CvUnit::healRate(const CvPlot* pPlot) const
 	iTotalHeal += iBestHeal;
 	// XXX
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	if (GC.getGameINLINE().isMilitaryMedicineRights())
-	{
-		iTotalHeal *= 130;
-		iTotalHeal /= 100;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 //FfH: Added by Kael 10/29/2007
     if (pPlot->getImprovementType() != NO_IMPROVEMENT)
@@ -8608,13 +8559,7 @@ bool CvUnit::lead(int iUnitId)
 	else
 	{
 		CvUnit* pUnit = GET_PLAYER(getOwnerINLINE()).getUnit(iUnitId);
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/	
-		if (!pUnit || !pUnit->canPromote(eLeaderPromotion, getID()))// || isPrisoner())
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/	
+		if (!pUnit || !pUnit->canPromote(eLeaderPromotion, getID()))	
 		{
 			return false;
 		}
@@ -9455,32 +9400,6 @@ bool CvUnit::isHuman() const
 {
 	return GET_PLAYER(getOwnerINLINE()).isHuman();
 }
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/	
-/*
-bool CvUnit::isPrisoner() const
-{
-	if (getOriginalOwner() == NO_PLAYER)
-	{
-		return false;
-	}
-	else
-	{
-		if (getOriginalOwner() != getOwnerINLINE())
-		{
-			if (GET_PLAYER(getOriginalOwner()).isAlive())
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/	
 
 int CvUnit::visibilityRange() const
 {

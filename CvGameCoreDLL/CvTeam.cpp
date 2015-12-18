@@ -305,13 +305,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 
 	m_bMapCentering = false;
 	m_bCapitulated = false;
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	m_bBarbarianPeace = false;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 //FfH Traits: Added by Kael 08/02/2007
     m_bBarbarianAlly = false;
@@ -1637,17 +1630,6 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 		return false;
 	}
 	
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	if (isBarbarian() && (GET_TEAM(eTeam).isBarbarianPeace() || GC.getGameINLINE().isBarbarianPeace()))
-	{
-		return false;
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	if (isAtWar(eTeam))
 	{
 		return false;
@@ -1725,17 +1707,21 @@ bool CvTeam::canDeclareWarWithoutSenate(TeamTypes eTeam) const
 {
 	FAssert(eTeam != NO_TEAM);
 
+	if (!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
+	{
+		return true;
+	}
+
+	return true;
+
+//THOLAL NOTE - Figure out how this was meant to be used and decide it it can fit into FFH
+
 	if (eTeam == getID())
 	{
 		return false;
 	}
 
 	if (!(isAlive()) || !(GET_TEAM(eTeam).isAlive()))
-	{
-		return false;
-	}
-
-	if (isBarbarian() && (GET_TEAM(eTeam).isBarbarianPeace() || GC.getGameINLINE().isBarbarianPeace()))
 	{
 		return false;
 	}
@@ -2555,42 +2541,6 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 				if ((GET_PLAYER((PlayerTypes)iI).getTeam() == getID()) || (GET_PLAYER((PlayerTypes)iI).getTeam() == eTeam))
 				{
 					GET_PLAYER((PlayerTypes)iI).updateWarWearinessPercentAnger();
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-/*					PlayerTypes eOwner;
-					CvUnit* pLoopUnit;
-					CvUnit* pGiftUnit;
-					int iLoop;
-					
-					for(pLoopUnit = GET_PLAYER((PlayerTypes)iI).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER((PlayerTypes)iI).nextUnit(&iLoop))
-					{
-						if (pLoopUnit->isPrisoner())
-						{
-							if (!pLoopUnit->isSpy())
-							{
-								pGiftUnit = GET_PLAYER(pLoopUnit->getOriginalOwner()).initUnit(pLoopUnit->getUnitType(), pLoopUnit->getX_INLINE(), pLoopUnit->getY_INLINE(), pLoopUnit->AI_getUnitAIType());
-								FAssertMsg(pGiftUnit != NULL, "GiftUnit is not assigned a valid value");
-								eOwner = pLoopUnit->getOriginalOwner();
-								pGiftUnit->convert(pLoopUnit);
-
-								if (GET_PLAYER(pGiftUnit->getOwnerINLINE()).isHuman())
-								{
-									szBuffer = gDLL->getText("TXT_KEY_MISC_GIFTED_UNIT_TO_YOU2", GET_PLAYER(eOwner).getNameKey(), pGiftUnit->getNameKey());
-									gDLL->getInterfaceIFace()->addMessage(pGiftUnit->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITGIFTED", MESSAGE_TYPE_INFO, GC.getUnitInfo(pGiftUnit->getUnitType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pGiftUnit->getX_INLINE(), pGiftUnit->getY_INLINE(), true, true);
-								}
-
-								if (GET_PLAYER(eOwner).isHuman())
-								{
-									szBuffer = gDLL->getText("TXT_KEY_MISC_GIFTED_UNIT_TO_YOU3", GET_PLAYER(pGiftUnit->getOwnerINLINE()).getNameKey(), pGiftUnit->getNameKey());
-									gDLL->getInterfaceIFace()->addMessage(eOwner, false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITGIFTED", MESSAGE_TYPE_INFO, GC.getUnitInfo(pGiftUnit->getUnitType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), pGiftUnit->getX_INLINE(), pGiftUnit->getY_INLINE(), true, true);
-								}
-							}
-						}
-					}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 				}
 			}
 		}
@@ -6307,27 +6257,6 @@ bool CvTeam::isCapitulated() const
 }
 
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-bool CvTeam::isBarbarianPeace() const
-{
-	return m_bBarbarianPeace;
-}
-
-
-void CvTeam::setBarbarianPeace(bool bNewValue)
-{
-	if (m_bBarbarianPeace != bNewValue)
-	{
-		m_bBarbarianPeace = bNewValue;
-	}
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
-
 int CvTeam::getRouteChange(RouteTypes eIndex) const
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
@@ -8616,14 +8545,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	pStream->Read(&m_bNoCivicAnger);
 //FfH: End Add
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	pStream->Read(&m_bBarbarianPeace);
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	pStream->Read((int*)&m_eID);
 
 	pStream->Read(MAX_TEAMS, m_aiStolenVisibilityTimer);
@@ -8808,14 +8729,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	pStream->Write(m_bBarbarianAlly);
 	pStream->Write(m_bNoCivicAnger);
 //FfH: End Add
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	pStream->Write(m_bBarbarianPeace);
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 	pStream->Write(m_eID);
 

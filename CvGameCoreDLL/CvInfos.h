@@ -4988,12 +4988,7 @@ public:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-	bool isNoCapitalPunishment() const;						// Exposed to Python
-	bool isMilitaryMedicineRights() const;						// Exposed to Python
-	bool isPrisonerRights() const;						// Exposed to Python
 	bool isTradeMap() const;							// Exposed to Python
-	bool isBarbarianPeace() const;						// Exposed to Python
-	bool isVictimRights() const;						// Exposed to Python
 	bool isNoCityRazing() const;						// Exposed to Python
 	bool isCultureNeedsEmptyRadius() const;						// Exposed to Python
 	bool isPacificRule() const;						// Exposed to Python
@@ -5055,12 +5050,7 @@ protected:
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-	bool m_bNoCapitalPunishment;
-	bool m_bMilitaryMedicineRights;
-	bool m_bPrisonerRights;
 	bool m_bTradeMap;
-	bool m_bBarbarianPeace;
-	bool m_bVictimRights;
 	bool m_bNoCityRazing;
 	bool m_bCultureNeedsEmptyRadius;
 	bool m_bPacificRule;
@@ -5391,13 +5381,6 @@ public:
 
 	int getHealth() const;				// Exposed to Python
 	int getHappiness() const;				// Exposed to Python
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	bool isBarbarianPeace() const;				// Exposed to Python
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	int getMaxAnarchy() const;				// Exposed to Python
 	int getUpkeepModifier() const;				// Exposed to Python
 	int getLevelExperienceModifier() const;				// Exposed to Python
@@ -5445,13 +5428,6 @@ protected:
 
 	int m_iHealth;
 	int m_iHappiness;
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	bool m_bBarbarianPeace;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	int m_iMaxAnarchy;
 	int m_iUpkeepModifier;
 	int m_iLevelExperienceModifier;
