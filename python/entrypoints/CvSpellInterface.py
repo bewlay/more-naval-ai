@@ -2786,20 +2786,11 @@ def spellRobGrave(caster):
 	pPlot = caster.plot()
 	pPlot.setImprovementType(-1)
 	pPlayer = gc.getPlayer(caster.getOwner())
-	lList = ['LOW_GOLD', 'HIGH_GOLD', 'SPAWN_SKELETONS', 'SPAWN_SPECTRE']
+	lList = ['GOODY_GRAVE_LOW_GOLD', 'GOODY_GRAVE_HIGH_GOLD', 'GOODY_GRAVE_SKELETONS', 'GOODY_GRAVE_SPECTRE']
 	if pPlayer.canReceiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_TECH'), caster):
-		lList = lList + ['TECH']
-	sGoody = lList[CyGame().getSorenRandNum(len(lList), "Pick Goody")-1]
-	if sGoody == 'LOW_GOLD':
-		pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_LOW_GOLD'), caster)
-	if sGoody == 'HIGH_GOLD':
-		pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_HIGH_GOLD'), caster)
-	if sGoody == 'TECH':
-		pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_TECH'), caster)
-	if sGoody == 'SPAWN_SKELETONS':
-		pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_SKELETONS'), caster)
-	if sGoody == 'SPAWN_SPECTRE':
-		pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_GRAVE_SPECTRE'), caster)
+		lList = lList + ['GOODY_GRAVE_TECH']
+	sGoody = lList[CyGame().getSorenRandNum(len(lList), "Pick Goody")]
+	pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString(sGoody), caster)
 
 def spellSacrificeAltar(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
