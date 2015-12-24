@@ -6751,6 +6751,7 @@ int CvTeamAI::AI_embassyTradeVal(TeamTypes eTeam) const
 	int iValue = 0;
 
 	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
+	iValue += AI_openBordersTradeVal(eTeam);
 
 	iValue *= 7;
 	iValue /= 5;

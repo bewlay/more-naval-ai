@@ -152,7 +152,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -232,7 +232,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -804,7 +804,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -884,7 +884,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -1456,7 +1456,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -1536,7 +1536,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -2132,7 +2132,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -2212,7 +2212,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -2828,7 +2828,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -2908,7 +2908,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -3520,7 +3520,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -3600,7 +3600,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -4240,7 +4240,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -4320,7 +4320,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -4928,7 +4928,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -5008,7 +5008,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -5636,7 +5636,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -5716,7 +5716,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -6344,7 +6344,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -6424,7 +6424,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -7032,7 +7032,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -7112,7 +7112,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -7712,7 +7712,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -7792,7 +7792,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -8396,7 +8396,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -8476,7 +8476,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -9104,7 +9104,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -9184,7 +9184,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -9820,7 +9820,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -9900,7 +9900,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -10504,7 +10504,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -10584,7 +10584,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -11188,7 +11188,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -11268,7 +11268,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -11880,7 +11880,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -11960,7 +11960,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -12596,7 +12596,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -12676,7 +12676,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -13300,7 +13300,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -13380,7 +13380,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -13984,7 +13984,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -14064,7 +14064,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -14640,7 +14640,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -14720,7 +14720,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -15304,7 +15304,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -15384,7 +15384,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -16012,7 +16012,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -16092,7 +16092,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -16732,7 +16732,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -16812,7 +16812,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -17452,7 +17452,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -17532,7 +17532,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -18168,7 +18168,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -18248,7 +18248,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -18872,7 +18872,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -18952,7 +18952,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -19572,7 +19572,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -19652,7 +19652,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -20268,7 +20268,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -20348,7 +20348,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -20960,7 +20960,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -21040,7 +21040,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -21656,7 +21656,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -21736,7 +21736,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -22352,7 +22352,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -22432,7 +22432,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -23032,7 +23032,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -23112,7 +23112,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -23732,7 +23732,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -23812,7 +23812,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -24440,7 +24440,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -24520,7 +24520,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -25124,7 +25124,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -25204,7 +25204,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -25828,7 +25828,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -25908,7 +25908,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -26536,7 +26536,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -26616,7 +26616,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -27244,7 +27244,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -27324,7 +27324,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -27944,7 +27944,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -28024,7 +28024,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -28648,7 +28648,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -28728,7 +28728,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -29328,7 +29328,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -29408,7 +29408,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -30012,7 +30012,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -30092,7 +30092,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -30712,7 +30712,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -30792,7 +30792,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -31408,7 +31408,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -31488,7 +31488,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -32112,7 +32112,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -32192,7 +32192,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -32816,7 +32816,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -32896,7 +32896,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -33512,7 +33512,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -33592,7 +33592,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -34228,7 +34228,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -34308,7 +34308,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -34924,7 +34924,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -35004,7 +35004,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -35612,7 +35612,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -35692,7 +35692,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -36320,7 +36320,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -36400,7 +36400,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -37024,7 +37024,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -37104,7 +37104,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -37744,7 +37744,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -37824,7 +37824,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -38436,7 +38436,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -38516,7 +38516,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -39120,7 +39120,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -39200,7 +39200,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -39812,7 +39812,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -39892,7 +39892,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -40516,7 +40516,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -40596,7 +40596,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -41196,7 +41196,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -41276,7 +41276,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -41900,7 +41900,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -41980,7 +41980,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -42588,7 +42588,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -42668,7 +42668,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -43300,7 +43300,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -43380,7 +43380,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -44012,7 +44012,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -44092,7 +44092,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -44664,7 +44664,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -44744,7 +44744,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -45364,7 +45364,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -45444,7 +45444,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -46064,7 +46064,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -46144,7 +46144,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -46772,7 +46772,7 @@
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactRand>25</iContactRand>
+					<iContactRand>5</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>
@@ -46852,7 +46852,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_EMBASSY</ContactType>
-					<iContactDelay>25</iContactDelay>
+					<iContactDelay>20</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_TRADE_STOP_TRADING</ContactType>

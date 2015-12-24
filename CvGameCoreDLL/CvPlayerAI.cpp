@@ -5284,7 +5284,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 	/* Advanced Diplomacy                        END                                                */
 	/************************************************************************************************/
 	
-	if (kTech.isOpenBordersTrading())
+	if (kTech.isOpenBordersTrading() || kTech.isEmbassyTrading())
 	{
 		if (iHasMetCount > 0)
 		{
