@@ -1596,7 +1596,7 @@ void CvCityAI::AI_chooseProduction()
 							iEscorts += kPlayer.AI_totalAreaUnitAIs(pWaterArea, UNITAI_ESCORT_SEA);
 
 							// Escorts
-							if ((iEscorts < ((1 + 2 * iTransports) / 3)) && (GC.getGame().getSorenRandNum(2, "AI train escort sea") == 0))
+							if ((iEscorts < ((2 * iTransports))) && (GC.getGame().getSorenRandNum(2, "AI train escort sea") == 0))
 							{
 								if (AI_chooseUnit(UNITAI_ESCORT_SEA))
 								{
@@ -2023,7 +2023,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				iAttackNeeded++;
 
-				if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+				if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3))
 				{
 					iAttackNeeded++;
 				}
@@ -3035,7 +3035,7 @@ void CvCityAI::AI_chooseProduction()
 				
 				if ((iEscorts < iDesiredEscorts))
 				{
-					if (AI_chooseUnit(UNITAI_ESCORT_SEA, (iEscorts < iDesiredEscorts/3) ? -1 : 50))
+					if (AI_chooseUnit(UNITAI_ESCORT_SEA, (iEscorts < iDesiredEscorts/2) ? -1 : 50))
 					{
 						AI_chooseBuilding(BUILDINGFOCUS_DOMAINSEA, 12);
 						return;
@@ -3186,9 +3186,12 @@ void CvCityAI::AI_chooseProduction()
 	int iMissionarySeaNeeded = 0;
 	if (!kPlayer.isAgnostic() && !bFinancialTrouble && isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
 	{
-		if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
+		if (kPlayer.getFavoriteReligion() != NO_RELIGION)
 		{
-			iMissionarySeaNeeded++;
+			if (kPlayer.getStateReligion() == kPlayer.getFavoriteReligion())
+			{
+				iMissionarySeaNeeded++;
+			}
 		}
 
 		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_RELIGION1))
@@ -5076,6 +5079,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 					int iNumBuildings = kOwner.getBuildingClassCountPlusMaking(eBuildingClass);
 
+					bool bFavoriteUnitClass = false;
 					for (int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++)
 					{
 						const UnitTypes eLoopUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iUnitClass);
@@ -5163,6 +5167,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
 									{
+										bFavoriteUnitClass = true;
 										iUnitTempValue *= 5;
 									}
 
@@ -5182,7 +5187,10 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						}
 					}
 
-					iTempValue -= iNumBuildings * 2;
+					if (!bFavoriteUnitClass)
+					{
+						iTempValue -= iNumBuildings * 2;
+					}
 
 					// Divide by total number of units from this building to average the score out
 					if (iTotalUnits > 1)
