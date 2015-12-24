@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_UN_FORCE_PEACE</Tag>
+		<English>Force Peace</English>
+		<French>Maintien de la paix des Nations Unies</French>
+		<German>V.N.-Friedenstruppen</German>
+		<Italian>Forze di pace ONU</Italian>
+		<Spanish>Pacificaci&#243;n de la ONU</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UN_VOTE_FORCE_NO_TRADE</Tag>
+		<English>Trade Embargo</English>
+		<French>Embargo commercial des Nations Unies</French>
+		<German>V.N.-Handelsembargo</German>
+		<Italian>Embargo commerciale ONU</Italian>
+		<Spanish>Embargo comercial de la ONU</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UN_VOTE_FORCE_WAR</Tag>
+		<English>Call to Arms</English>
+		<French>R&#233;solution pour la guerre des Nations Unies</French>
+		<German>V.N.-Kriegsresolution</German>
+		<Italian>Risoluzione di guerra ONU</Italian>
+		<Spanish>Resoluci&#243;n de guerra de la ONU</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_UN_ASSIGN_CITY</Tag>
+		<English>Assign City Ownership</English>
+		<French>Mandat des Nations Unies pour la possession d'une ville</French>
+		<German>V.N.-Mandat f&#252;r Stadt&#252;bernahme</German>
+		<Italian>Mandato ONU di assegnazione della citt&#224;</Italian>
+		<Spanish>Mandato de la ONU de cesi&#243;n de ciudad</Spanish>
+	</TEXT>
+</Civ4GameText>
