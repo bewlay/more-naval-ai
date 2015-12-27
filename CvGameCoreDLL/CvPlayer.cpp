@@ -13297,6 +13297,19 @@ void CvPlayer::setCombatExperience(int iExperience)
 
 				if (pBestCity)
 				{
+// edead: start unit class fix for Great Generals
+					int iI;
+					for (iI = 0; iI < GC.getNumUnitInfos(); iI++)
+					{
+						if (GC.getUnitInfo((UnitTypes)iI).getLeaderExperience() > 0 || GC.getUnitInfo((UnitTypes)iI).getLeaderPromotion() != NO_PROMOTION)
+						{
+							break;
+						}
+					}
+					UnitTypes eGreatGeneralType = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits((UnitClassTypes)(GC.getUnitInfo((UnitTypes)iI).getUnitClassType()))));
+					pBestCity->createGreatPeople(eGreatGeneralType, false, true);
+					setCombatExperience(getCombatExperience() - iExperienceThreshold);
+					/* Leoreth: original code, replaced by edead's adjustment to achieve unique GGs
 					int iRandOffset = GC.getGameINLINE().getSorenRandNum(GC.getNumUnitInfos(), "Warlord Unit Generation");
 					for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 					{
@@ -13307,7 +13320,7 @@ void CvPlayer::setCombatExperience(int iExperience)
 							setCombatExperience(getCombatExperience() - iExperienceThreshold);
 							break;
 						}
-					}
+					}*/
 				}
 			}
 		}
