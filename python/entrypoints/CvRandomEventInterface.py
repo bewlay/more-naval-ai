@@ -65,7 +65,7 @@ def doArmageddonApocalypse(argsList):
 	pyPlayer = PyPlayer(iPlayer)
 	apUnitList = pyPlayer.getUnitList()
 	for pUnit in apUnitList:
-		if (CyGame().getSorenRandNum(100, "Apocalypse") <= iPercent):
+		if (CyGame().getSorenRandNum(100, "Apocalypse") < iPercent):
 			if pUnit.isAlive():
 				pUnit.kill(False, PlayerTypes.NO_PLAYER)
 				CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_APOCALYPSE_KILLED", ()),'',1,'Art/Interface/Buttons/Apocalypse.dds',ColorTypes(7),pUnit.getX(),pUnit.getY(),True,True)
@@ -123,7 +123,7 @@ def doArmageddonHellfire(argsList):
 			if not pPlot.isWater():
 				if pPlot.getNumUnits() == 0:
 					if not pPlot.isCity():
-						if pPlot.isFlatlands():
+						if pPlot.isFlatlands() and not pPlot.isImpassable():
 							if pPlot.getBonusType(-1) == -1:
 								if CyGame().getSorenRandNum(10000, "Hellfire") <= iHellfireChance:
 									iImprovement = pPlot.getImprovementType()
@@ -984,13 +984,13 @@ def doOrderVsVeilTemple1(argsList):
 	if pCity.isHolyCityByType(iVeil) == False:
 		if gc.getGame().getSorenRandNum(100, "Order vs Veil Temple 1") < 50:
 			pCity.setHasReligion(iVeil, False, False, False)
-	(loopCity, iter) = player.firstCity(false)
+	(loopCity, iter) = pPlayer.firstCity(false)
 	while(loopCity):
 		if loopCity.isHasReligion(iOrder):
 			loopCity.changeHappinessTimer(5)
 		if loopCity.isHasReligion(iVeil):
 			loopCity.changeHurryAngerTimer(5)
-		(loopCity, iter) = player.nextCity(iter, false)
+		(loopCity, iter) = pPlayer.nextCity(iter, false)
 
 def doOrderVsVeilTemple2(argsList):
 	iEvent = argsList[0]
