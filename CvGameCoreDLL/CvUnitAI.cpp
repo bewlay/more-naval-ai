@@ -7761,7 +7761,7 @@ void CvUnitAI::AI_escortSeaMove()
 		return;
 	}
 
-	if (AI_group(UNITAI_ASSAULT_SEA, -1, /*iMaxOwnUnitAI*/ 0, -1, /*bIgnoreFaster*/ true, false, false, /*iMaxPath*/ 3))
+	if (AI_group(UNITAI_ASSAULT_SEA, -1, /*iMaxOwnUnitAI*/ -1, -1, /*bIgnoreFaster*/ false, false, false, /*iMaxPath*/ 3))
 	{
 		return;
 	}
@@ -7781,7 +7781,7 @@ void CvUnitAI::AI_escortSeaMove()
 		return;
 	}
 
-	if (AI_group(UNITAI_ASSAULT_SEA, 1, /*iMaxOwnUnitAI*/ 0, /*iMinUnitAI*/ -1, /*bIgnoreFaster*/ true))
+	if (AI_group(UNITAI_ASSAULT_SEA, 1, /*iMaxOwnUnitAI*/ -1, /*iMinUnitAI*/ -1, /*bIgnoreFaster*/ true))
 	{
 		return;
 	}
@@ -18786,7 +18786,10 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 {
 	PROFILE_FUNC();
 
-	logBBAI("    ...starting assaultSeaTransport");
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_assaultSeaTransport", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 	bool bIsAttackCity = (getUnitAICargo(UNITAI_ATTACK_CITY) > 0);
 
 	FAssert(getGroup()->hasCargo());
@@ -18794,6 +18797,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 
 	if (!canCargoAllMove())
 	{
+		if( gUnitLogLevel >= 4 ) logBBAI("       ...CANT MOVE!");
 		return false;
 	}
 
@@ -18801,10 +18805,12 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 	{
 		if (getPathEndTurnPlot() != NULL)
 		{
+			if( gUnitLogLevel >= 4 ) logBBAI("    ...continuing mission to plot %d, %d", getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY());
 			getGroup()->pushMission(MISSION_MOVE_TO, getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
 		}
 		else
 		{
+			if( gUnitLogLevel >= 4 ) logBBAI("    ...continuing mission to assault plot %d, %d", getGroup()->AI_getMissionAIPlot()->getX(), getGroup()->AI_getMissionAIPlot()->getY());
 			getGroup()->pushMission(MISSION_MOVE_TO, getGroup()->AI_getMissionAIPlot()->getX(), getGroup()->AI_getMissionAIPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
 		}
 		return true;
@@ -18832,12 +18838,12 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-		//if (pLoopPlot->isCoastalLand())
 		if (pLoopPlot->isRevealed(getTeam(), false) && pLoopPlot->isCoastalLand()) // K-Mod
 		{
 			if (pLoopPlot->isOwned())
 			{
-				if (((bBarbarian || !pLoopPlot->isBarbarian())) || GET_PLAYER(getOwnerINLINE()).isMinorCiv())
+				//if (((bBarbarian || !pLoopPlot->isBarbarian())) || GET_PLAYER(getOwnerINLINE()).isMinorCiv())
+				//if (!(bBarbarian && pLoopPlot->isBarbarian()))
 				{
 					if (isPotentialEnemy(pLoopPlot->getTeam(), pLoopPlot))
 					{
@@ -19107,6 +19113,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 				/* original bts code
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
 				*/
+				if( gUnitLogLevel >= 4 ) logBBAI("    ...moving to assault %d, %d", pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE());
 				getGroup()->pushMission(MISSION_MOVE_TO, pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
 				// BETTER_BTS_AI_MOD END
 				return true;
@@ -19119,12 +19126,13 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 			/* original bts code
 			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
 			*/
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
+			//getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestAssaultPlot->getX_INLINE(), pBestAssaultPlot->getY_INLINE(), MOVE_AVOID_ENEMY_WEIGHT_3, false, false, MISSIONAI_ASSAULT, pBestAssaultPlot);
 			// BETTER_BTS_AI_MOD END
 			return true;
 		}
 	}
-
+	if( gUnitLogLevel >= 4 ) logBBAI("    ...failing assault sea transport check");
 	return false;
 }
 
@@ -19177,7 +19185,12 @@ bool CvUnitAI::AI_assaultSeaReinforce(bool bBarbarian)
 	int iOurFightersHere;
 	int iPathTurns;
 	int iValue;
-
+	
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_assaultSeaReinforce", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+	
 	// Loop over nearby plots for groups in enemy territory to reinforce
 	int iRange = 2*baseMoves();
 	int iDX, iDY;
@@ -19594,6 +19607,11 @@ bool CvUnitAI::AI_settlerSeaTransport()
 	{
 		return false;
 	}
+	
+	if (gUnitLogLevel >= 2)
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_settlerSeaTransport", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	//New logic should allow some new tricks like
 	//unloading settlers when a better site opens up locally
@@ -19633,9 +19651,13 @@ bool CvUnitAI::AI_settlerSeaTransport()
 	for (iI = 0; iI < GET_PLAYER(getOwnerINLINE()).AI_getNumCitySites(); iI++)
 	{
 		CvPlot* pCitySitePlot = GET_PLAYER(getOwnerINLINE()).AI_getCitySite(iI);
+		int iPathTurns;
+		if (generatePath(pCitySitePlot, 0, true, &iPathTurns))
+		{
 		if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pCitySitePlot, MISSIONAI_FOUND, getGroup()) == 0)
 		{
 			iValue = pCitySitePlot->getFoundValue(getOwnerINLINE());
+			if( gUnitLogLevel >= 4 ) logBBAI("...city plot %d, %d valued at %d", pCitySitePlot->getX(), pCitySitePlot->getY(), iValue);
 
 /*************************************************************************************************/
 /** BETTER_BTS_AI_MOD merged Sephi 0.41k   01/13/09                                jdog5000      */
@@ -19668,6 +19690,7 @@ bool CvUnitAI::AI_settlerSeaTransport()
 				}
 			}
 		}
+		}
 	}
 	if ((0 == iAreaBestFoundValue) && (0 == iOtherAreaBestFoundValue))
 	{
@@ -19679,6 +19702,12 @@ bool CvUnitAI::AI_settlerSeaTransport()
 		//let the settler walk.
 		getGroup()->unloadAll();
 		getGroup()->pushMission(MISSION_SKIP);
+		return true;
+	}
+
+	if (iOtherAreaBestFoundValue > 0)
+	{
+		getGroup()->pushMission(MISSION_MOVE_TO, pOtherAreaBestPlot->getX_INLINE(), pOtherAreaBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_FOUND, pOtherAreaBestPlot);
 		return true;
 	}
 
@@ -19697,14 +19726,17 @@ bool CvUnitAI::AI_settlerSeaTransport()
 				if (generatePath(pCitySitePlot, 0, true, &iPathTurns))
 				{
 					iValue = pCitySitePlot->getFoundValue(getOwnerINLINE());
-					iValue *= 1000;
-					iValue /= (2 + iPathTurns);
-
-					if (iValue > iBestValue)
+					if (iValue >= GET_PLAYER(getOwnerINLINE()).AI_getMinFoundValue())
 					{
-						iBestValue = iValue;
-						pBestPlot = getPathEndTurnPlot();
-						pBestFoundPlot = pCitySitePlot;
+						iValue *= 1000;
+						iValue /= (2 + iPathTurns);
+
+						if (iValue > iBestValue)
+						{
+							iBestValue = iValue;
+							pBestPlot = getPathEndTurnPlot();
+							pBestFoundPlot = pCitySitePlot;
+						}
 					}
 				}
 			}
@@ -19731,7 +19763,7 @@ bool CvUnitAI::AI_settlerSeaTransport()
 		else
 		{
 			FAssert(!atPlot(pBestPlot));
-			getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_FOUND, pBestFoundPlot);
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestFoundPlot->getX_INLINE(), pBestFoundPlot->getY_INLINE(), 0, false, false, MISSIONAI_FOUND, pBestFoundPlot);
 			return true;
 		}
 	}
