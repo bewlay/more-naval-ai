@@ -1,6 +1,5 @@
 # README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
+Forum - http://forums.civfanatics.com/forumdisplay.php?f=476
 
 ### What is this repository for? ###
 
