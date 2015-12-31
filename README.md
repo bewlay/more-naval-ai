@@ -21,9 +21,8 @@ Forum - http://forums.civfanatics.com/forumdisplay.php?f=476
 
 ### Contribution guidelines ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* Report bugs and suggestions on the forums
+* Code contributions can be submitted here via a branch or on the forums
 
 ### Who do I talk to? ###
 
