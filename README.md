@@ -8,12 +8,8 @@ Forum - http://forums.civfanatics.com/forumdisplay.php?f=476
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Requirements: Civ4 BTS 3.19; Fall From Heaven II version 0.41 (with patch O) - http://forums.civfanatics.com/showthread.php?t=308020
+* Simply unzip the installer file and run it.
 
 ### Contribution guidelines ###
 
@@ -23,5 +19,4 @@ Forum - http://forums.civfanatics.com/forumdisplay.php?f=476
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Mod Owner - Tholal
