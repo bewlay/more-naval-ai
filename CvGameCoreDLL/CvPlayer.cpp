@@ -4410,6 +4410,22 @@ void CvPlayer::doTurn()
 		{
 			setPuppetState(false);
 			findNewCapital();
+
+			CvWString szBuffer;
+			szBuffer = gDLL->getText("TXT_KEY_MISC_PUPPET_STATE_LEGITIMIZED", getCivilizationDescriptionKey());
+			GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szBuffer, getCapitalCity()->getX(), getCapitalCity()->getY(), (ColorTypes)GC.getInfoTypeForString("COLOR_BUILDING_TEXT"));
+
+			for (iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAlive())
+				{
+					if (GET_TEAM(getTeam()).isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()) || (getTeam() == GET_PLAYER((PlayerTypes)iI).getTeam()))
+					{
+						szBuffer = gDLL->getText("TXT_KEY_MISC_PUPPET_STATE_LEGITIMIZED", getCivilizationDescriptionKey());
+						gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_WONDER_BUILDING_BUILD", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_PLAYER_LIGHT_ORANGE_TEXT"), getCapitalCity()->getX(), getCapitalCity()->getY(), true, true);
+					}
+				}
+			}
 		}
 	}
 	// MNAI - End Puppet States

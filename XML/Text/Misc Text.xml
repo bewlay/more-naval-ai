@@ -27,5 +27,13 @@
 		<Italian>[ICON_BULLET]Garrison Value: %d1</Italian>
 		<Spanish>[ICON_BULLET]Garrison Value: %d1</Spanish>
 		<Finnish>[ICON_BULLET]Garrison Value: %d1</Finnish>
-	</TEXT>		
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_PUPPET_STATE_LEGITIMIZED</Tag>
+		<English>The %s1_CivName have been recognized as a legitimate nation!</English>
+		<French>The %s1_CivName have been recognized as a legitimate nation!</French>
+		<German>The %s1_CivName have been recognized as a legitimate nation!</German>
+		<Italian>The %s1_CivName have been recognized as a legitimate nation!</Italian>
+		<Spanish>The %s1_CivName have been recognized as a legitimate nation!</Spanish>
+	</TEXT>
 </Civ4GameText>
