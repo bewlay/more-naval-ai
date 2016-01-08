@@ -1116,6 +1116,23 @@ bool CyTeam::isHasNonAggression(int /*TeamTypes*/ eTeam) const
 	return m_pTeam ? m_pTeam->isHasNonAggression((TeamTypes)eTeam) : false;
 }
 
+void CyTeam::setHasNonAggression(int /*TeamTypes*/ eTeam, bool bNewValue)
+{
+	if (m_pTeam)
+		m_pTeam->setHasNonAggression(((TeamTypes)eTeam), bNewValue);
+}
+
+bool CyTeam::isHasPrepareWar(int /*TeamTypes*/ eTeam) const
+{
+	return m_pTeam ? m_pTeam->isHasPrepareWar((TeamTypes)eTeam) : false;
+}
+
+void CyTeam::setHasPrepareWar(int /*TeamTypes*/ eTeam, bool bNewValue)
+{
+	if (m_pTeam)
+		m_pTeam->setHasPrepareWar(((TeamTypes)eTeam), bNewValue);
+}
+
 bool CyTeam::isHasPOW(int /*TeamTypes*/ eTeam) const
 {
 	return m_pTeam ? m_pTeam->isHasPOW((TeamTypes)eTeam) : false;

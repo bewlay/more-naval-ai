@@ -277,6 +277,9 @@ public:
 	void changeFreeTradeAgreementTradingCount(int iChange);
 												
 	bool isHasNonAggression(int /*TeamTypes*/ eIndex) const;
+	void setHasNonAggression(int /*TeamTypes*/ eTeam, bool bNewValue);
+	bool isHasPrepareWar(int /*TeamTypes*/ eIndex) const;
+	void setHasPrepareWar(int /*TeamTypes*/ eIndex, bool bNewValue);
 	bool isHasPOW(int /*TeamTypes*/ eIndex) const;
 	
 	bool isLimitedBordersTrading();
