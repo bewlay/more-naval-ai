@@ -20523,12 +20523,17 @@ bool CvUnit::canTradeUnit(PlayerTypes eReceivingPlayer)
 	{
 		return false;
 	}
-	
-	if (!isMechUnit() && !isAnimal())
+
+	if (!(m_pUnitInfo->isMilitaryTrade() || m_pUnitInfo->isWorkerTrade()))
 	{
 		return false;
 	}
 	
+	if (m_pUnitInfo->isAbandon())
+	{
+		return false;
+	}
+
 	if (getDuration() > 0 || isPermanentSummon())
 	{
 		return false;
