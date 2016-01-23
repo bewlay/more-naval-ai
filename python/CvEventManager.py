@@ -1812,18 +1812,18 @@ class CvEventManager:
 														iPlotValue -= 150
 #											if pCityPlot.isOwned():
 #												iPlotValue -= 25
-											else:
-												iPlotValue += 15
+#											else:
+											iPlotValue += 15
 											if (iCityTerrain == gc.getInfoTypeForString('TERRAIN_SNOW')) or (iCityTerrain == gc.getInfoTypeForString("TERRAIN_DESERT")):
 												iPlotValue -= 25
 											elif (iCityTerrain == gc.getInfoTypeForString('TERRAIN_TUNDRA')):
 												iPlotValue -= 10
-											if (pCityPlot.isWater()):
-												iPlotValue -= 25
-											elif not iCityBonus == BonusTypes.NO_BONUS:
-												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_PRODUCTION) * 25
-												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_COMMERCE) * 15
-												iPlotValue += gc.getBonusInfo(iCityBonus).getAIObjective() * 25
+#											if (pCityPlot.isWater()):
+#												iPlotValue -= 25
+#											if not iCityBonus == BonusTypes.NO_BONUS:
+#												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_PRODUCTION) * 25
+#												iPlotValue += gc.getBonusInfo(iCityBonus).getYieldChange(YieldTypes.YIELD_COMMERCE) * 15
+#												iPlotValue += gc.getBonusInfo(iCityBonus).getAIObjective() * 25
 
 							if iPlotValue > iBestPlotValue:
 								iBestPlotValue = iPlotValue
