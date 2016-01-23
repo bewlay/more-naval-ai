@@ -968,7 +968,7 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 	}
 
 //FfH: Added by Kael 07/23/2008
-    if (isImmortal() && !bIllusion)
+    if (isImmortal() && !bIllusion && !isCargo())
     {
 		if (GET_PLAYER(getOwnerINLINE()).getCapitalCity() != NULL)
 		{
