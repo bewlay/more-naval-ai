@@ -2348,6 +2348,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 		}*/
 
 //FfH: Added by Kael 11/03/2007
+		// Religion
 		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
 			if (pCity->isHasReligion((ReligionTypes)iI))

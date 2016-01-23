@@ -19156,6 +19156,7 @@ void CvPlayerAI::AI_doDiplo()
 /*************************************************************************************************/
 											if (bEmbassyCanceled)
 											{
+												if( gPlayerLogLevel >= 3 ) logBBAI ("CANCELLING EMBASSY!");
 												for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
 												{
 													if (GET_PLAYER((PlayerTypes)iPlayer).isAlive())
@@ -21279,8 +21280,10 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (!GET_TEAM(getTeam()).isHasEmbassy(kLoopPlayer.getTeam()))
 											{
+												if( gPlayerLogLevel >= 3 ) logBBAI("considering embassy 1 with %s", kLoopPlayer.getName());
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_EMBASSY) == 0)
 												{
+													if( gPlayerLogLevel >= 3 ) logBBAI("considering embassy 2");
 													if (GC.getGameINLINE().getSorenRandNum(GC.getLeaderHeadInfo(getPersonalityType()).getContactRand(CONTACT_EMBASSY), "AI Diplo Open Borders") == 0)
 													{
 														setTradeItem(&item, TRADE_EMBASSY);
@@ -27842,6 +27845,8 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 	int iValue;
 	int iI;
 
+	if( gPlayerLogLevel >= 2 ) logBBAI("Updating City Sites (Minvalue: %d)", iMinFoundValueThreshold);
+
 	int iPass = 0;
 	while (iPass < iMaxSites)
 	{
@@ -27857,6 +27862,7 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 				iValue = pLoopPlot->getFoundValue(getID());
 				if (iValue > iMinFoundValueThreshold)
 				{
+				//	logBBAI("potential city site at %d, %d (value: %d)", pLoopPlot->getX(), pLoopPlot->getY(), iValue);
 					if (!AI_isPlotCitySite(pLoopPlot))
 					{
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
@@ -27874,6 +27880,7 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 		}
 		if (pBestFoundPlot != NULL)
 		{
+			if( gPlayerLogLevel >= 2 ) logBBAI("adding city site #%d at %d, %d (value: %d)", iPass, pBestFoundPlot->getX(), pBestFoundPlot->getY(), iBestFoundValue);
 			m_aiAICitySites.push_back(GC.getMapINLINE().plotNum(pBestFoundPlot->getX_INLINE(), pBestFoundPlot->getY_INLINE()));
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
 //			AI_recalculateFoundValues(pBestFoundPlot->getX_INLINE(), pBestFoundPlot->getY_INLINE(), CITY_PLOTS_RADIUS, 2 * CITY_PLOTS_RADIUS);
@@ -29792,7 +29799,10 @@ TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes ePlayer)
 		{
 			// MAKE SURE ITS NOT US
 			//if we are at war, or they have backstabbed a friend, or they are a mutual enemy
-			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()) || (AI_getMemoryCount(ePlayer, MEMORY_BACKSTAB_FRIEND) > 0) || (GET_PLAYER(ePlayer).AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS && AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS))
+			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()) || 
+				(AI_getMemoryCount(ePlayer, MEMORY_BACKSTAB_FRIEND) > 0) || 
+				(GET_PLAYER(ePlayer).AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS && AI_getAttitude((PlayerTypes)iI) < ATTITUDE_CAUTIOUS)
+				)
 			{
 				if (GET_TEAM(GET_PLAYER(ePlayer).getTeam()).canDeclareWar(kLoopPlayer.getTeam()))
 				{

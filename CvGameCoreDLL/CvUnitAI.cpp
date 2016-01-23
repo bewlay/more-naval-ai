@@ -2120,6 +2120,7 @@ void CvUnitAI::AI_settleMove()
 
 	if ((iOtherBestFoundValue * 100) > (iAreaBestFoundValue * 110))
 	{
+		// Tholal TODO - Make sure we dont board a ship for a distant location unless the ship can take us there
 		if (plot()->getOwnerINLINE() == getOwnerINLINE())
 		{
 			if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, NO_UNITAI, -1, -1, -1, 0, MOVE_SAFE_TERRITORY))

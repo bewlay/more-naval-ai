@@ -6219,6 +6219,7 @@ CvArea* CvCity::sharedWaterArea(CvCity* pOtherCity) const
 	return NULL;
 }
 
+// MNAI Note - This function is for AI purposes only
 bool CvCity::isBlockaded() const
 {
 	int iI;

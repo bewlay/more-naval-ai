@@ -8494,6 +8494,7 @@ void CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 			}
 
 			//update graphics models
+			// Set civ-specific art here
 			m_eLeaderUnitType = pWarlord->getUnitType();
 			reloadEntity();
 		}
@@ -19233,6 +19234,7 @@ void CvUnit::doDefensiveStrike(CvUnit* pAttacker)
         }
 	    if (iDmg > 0)
 	    {
+			if (gUnitLogLevel >= 4) logBBAI("    %S (%d) takes %d damage from a defensive strike from %S (Unit %d)", pAttacker->getName().GetCString(), pAttacker->getID(), iDmg, pBestUnit->getName().GetCString(), pBestUnit->getID());
             pAttacker->changeDamage(iDmg, pBestUnit->getOwner());
             CvWString szMessage = gDLL->getText("TXT_KEY_MESSAGE_DEFENSIVE_STRIKE_BY", GC.getUnitInfo((UnitTypes)pAttacker->getUnitType()).getDescription(), iDmg, GC.getUnitInfo((UnitTypes)pBestUnit->getUnitType()).getDescription());
             gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)pAttacker->getOwner()), true, GC.getDefineINT("EVENT_MESSAGE_TIME"), szMessage, "", MESSAGE_TYPE_MAJOR_EVENT, GC.getUnitInfo((UnitTypes)pBestUnit->getUnitType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pAttacker->getX(), pAttacker->getY(), true, true);

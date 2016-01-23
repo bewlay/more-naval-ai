@@ -1555,6 +1555,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 /*************************************************************************************************/
 	if (!isWarPretextAgainst(eTeam))
 	{
+		if( gTeamLogLevel >= 4 ) logBBAI("     No War Pretext");
 		iValue *= 90;
 		iValue /= 100;
 	}
