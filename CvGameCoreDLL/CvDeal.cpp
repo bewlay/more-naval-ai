@@ -1179,7 +1179,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 /* Afforess	                  Start		 06/16/10                                               */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-			endTeamTrade(TRADE_RIGHT_OF_PASSAGE, GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eToPlayer).getTeam());
+			//endTeamTrade(TRADE_RIGHT_OF_PASSAGE, GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eToPlayer).getTeam());
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -1469,7 +1469,7 @@ void CvDeal::endTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eToP
 /* Afforess	                  Start		 06/16/10                                               */
 /* Advanced Diplomacy                                                                           */
 /************************************************************************************************/
-			endTeamTrade(TRADE_RIGHT_OF_PASSAGE, GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eToPlayer).getTeam());
+			//endTeamTrade(TRADE_RIGHT_OF_PASSAGE, GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eToPlayer).getTeam());
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

@@ -1402,6 +1402,13 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	iValue += AI_calculateBonusWarValue(eTeam);
 	if( gTeamLogLevel >= 4 ) logBBAI("     After Bonus War Value: %d", iValue);
 
+	if (GET_TEAM(eTeam).isHasNonAggression(getID()))
+	{
+		if( gTeamLogLevel >= 4 ) logBBAI("     Non-agression pact");
+		iValue *= 2;
+		iValue /= 3;
+	}
+
 	// Target other teams close to victory
 	if( kTeam.AI_isAnyMemberDoVictoryStrategyLevel3() )
 	{
@@ -1498,7 +1505,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 /*************************************************************************************************/
 /** Advanced Diplomacy       START                                                  			 */
 /*************************************************************************************************/
-	if (GET_TEAM(eTeam).isHasNonAggression(getID()))
+/*	if (GET_TEAM(eTeam).isHasNonAggression(getID()))
 	{
 		iValue /= 2;
 	}
@@ -1507,6 +1514,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 	{
 		iValue /= 2;
 	}
+	*/
 /*************************************************************************************************/
 /** Advanced Diplomacy       END	                                                 			 */
 /*************************************************************************************************/
@@ -6790,8 +6798,8 @@ int CvTeamAI::AI_LimitedBordersTradeVal(TeamTypes eTeam) const
 
 	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
 
-	iValue *= 2;
-	iValue /= 5;
+	//iValue *= 2;
+	//siValue /= 5;
 
 	return std::max(0, iValue);
 }
