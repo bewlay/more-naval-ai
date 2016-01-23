@@ -10850,13 +10850,14 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 
 	iTemp = kPromotion.getFirstStrikesChange() * 2;
 	iTemp += kPromotion.getChanceFirstStrikesChange();
+	/*
 	if ((eUnitAI == UNITAI_RESERVE) ||
 		  (eUnitAI == UNITAI_COUNTER) ||
 			(eUnitAI == UNITAI_CITY_DEFENSE) ||
 			(eUnitAI == UNITAI_CITY_COUNTER) ||
 			(eUnitAI == UNITAI_CITY_SPECIAL) ||
 			(eUnitAI == UNITAI_ATTACK) ||
-			(eUnitAI == UNITAI_HERO))
+			(eUnitAI == UNITAI_HERO))*/
 	{
 		iTemp *= iLevel;
 		iExtra = getExtraChanceFirstStrikes() + getExtraFirstStrikes() * 2;
@@ -10864,10 +10865,12 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		iTemp /= 100;
 		iValue += iTemp;
 	}
+	/*
 	else
 	{
 		iValue += (iTemp * 5);
 	}
+	*/
 
 
 	iTemp = kPromotion.getWithdrawalChange();
