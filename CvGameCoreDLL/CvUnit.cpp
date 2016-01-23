@@ -19022,9 +19022,9 @@ int CvUnit::chooseSpell()
 
 				if (kSpellInfo.getChangePopulation() != 0)
 				{
-					// ToDo - make this actually look at the city and see if it needs population
+					// ToDo - make this actually look at the city and see if it needs population (check health, happy)
 					// also need to make sure we dont break spells that reduce pop
-					iValue += 500 * kSpellInfo.getChangePopulation();
+					iValue += (500 * kSpellInfo.getChangePopulation() - (plot()->getPlotCity()->getPopulation() * 5));
 				}
 
 				if (kSpellInfo.getCost() != 0)

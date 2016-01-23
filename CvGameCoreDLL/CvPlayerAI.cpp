@@ -25455,7 +25455,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		iCrushValue += std::min(0, kTeam.AI_getWarSuccessRating()/15);
 		// note: flavor military is between 0 and 45
 		// K-Mod end
-		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3))
+		if (AI_isDoVictoryStrategy(AI_VICTORY_CONQUEST3) || AI_isDoVictoryStrategy(AI_VICTORY_DOMINATION3))
 		{
 			iCrushValue += 1;
 		}
@@ -27848,7 +27848,7 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 	if( gPlayerLogLevel >= 2 ) logBBAI("Updating City Sites (Minvalue: %d)", iMinFoundValueThreshold);
 
 	int iPass = 0;
-	while (iPass < iMaxSites)
+	while (iPass <= iMaxSites)
 	{
 		//Add a city to the list.
 		int iBestFoundValue = 0;
@@ -27857,7 +27857,7 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 		for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 		{
 			CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
-			if (pLoopPlot->isRevealed(getTeam(), false) || pLoopPlot->isAdjacentRevealed(getTeam()))
+			if (pLoopPlot->isRevealed(getTeam(), false))// || pLoopPlot->isAdjacentRevealed(getTeam()))
 			{
 				iValue = pLoopPlot->getFoundValue(getID());
 				if (iValue > iMinFoundValueThreshold)
@@ -27867,7 +27867,7 @@ void CvPlayerAI::AI_updateCitySites(int iMinFoundValueThreshold, int iMaxSites) 
 					{
 //>>>>Unofficial Bug Fix: Modified by Denev 2010/04/06
 //						iValue *= std::min(NUM_CITY_PLOTS * 2, pLoopPlot->area()->getNumUnownedTiles());
-						iValue *= std::min(::calculateNumCityPlots(getNextCityRadius()) * 2, pLoopPlot->area()->getNumUnownedTiles());
+						//iValue *= std::min(::calculateNumCityPlots(getNextCityRadius()) * 2, pLoopPlot->area()->getNumUnownedTiles());
 //<<<<Unofficial Bug Fix: End Modify
 						if (iValue > iBestFoundValue)
 						{
