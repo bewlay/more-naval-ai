@@ -28241,7 +28241,7 @@ void CvUnitAI::AI_ConquestMove()
 					{
 						if( gUnitLogLevel >= 3 )
 						{
-							logBBAI("       ...joining group on plot");
+							logBBAI("       ...joining group %d on plot", pBestUnit->getGroup());
 						}
 	                    joinGroup(pBestUnit->getGroup());
 		                return;
@@ -28250,7 +28250,7 @@ void CvUnitAI::AI_ConquestMove()
 					{
 						if( gUnitLogLevel >= 3 )
 						{
-							logBBAI("       ...merging into group on plot");
+							logBBAI("       ...merging into group %d on plot", pBestUnit->getGroup());
 						}
 						getGroup()->mergeIntoGroup(pBestUnit->getGroup());
 	                    return;
