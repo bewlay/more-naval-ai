@@ -283,7 +283,6 @@ public:
 	void signPOW(TeamTypes eIndex);
 	
 	DllExport bool canDeclareWarWithoutSenate(TeamTypes eTeam) const;
-	bool isNuclearDissuasion(TeamTypes eTeam) const;
 		
 	bool canTradeMap() const;	
 /************************************************************************************************/

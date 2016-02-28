@@ -811,18 +811,7 @@
 		<Tag>TXT_KEY_POPUP_DOES_THIS_MEAN_WAR_PACIFIC</Tag>
 		<T>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</T>	
 	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PLAYER_OPTION_NUCLEAR_DISSUASION</Tag>
-		<English>Nuclear Dissuasion</English>
-		<French>Sénat actif</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PLAYER_OPTION_NUCLEAR_DISSUASION_HELP</Tag>
-		<English>The possession of nuclear weapons reduces the chances that your rivals will consider a conflict against you. </English>
-		<French>Sénat actif</French>
-	</TEXT>
 	<!-- RevolutionDCM - start diplomacy text -->
-
 	<TEXT>
 		<Tag>USER_STOP_BOTHERING</Tag>
 		<English>Cease bothering us!</English>

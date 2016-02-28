@@ -3035,63 +3035,6 @@ int CvTeam::getEnemyPower() const
 	return iCount;
 }
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-bool CvTeam::isNuclearDissuasion(TeamTypes eTeam) const
-{
-	FAssertMsg(eTeam != getID(), "shouldn't call this function on ourselves");
-
-	if (GET_TEAM(eTeam).getNumNukeUnits() <= 0)
-	{
-		return false;
-	}
-
-	if (!GET_PLAYER(GC.getGameINLINE().getActivePlayer()).isOption(PLAYEROPTION_NUCLEAR_DISSUASION))
-	{
-		return false;
-	}
-	
-	int iValue;
-	
-	switch (GET_TEAM(getID()).AI_getAttitude(eTeam))
-	{
-	case ATTITUDE_FURIOUS:
-		iValue = 500;
-		break;
-
-	case ATTITUDE_ANNOYED:
-		iValue = 350;
-		break;
-
-	case ATTITUDE_CAUTIOUS:
-		iValue = 200;
-		break;
-
-	case ATTITUDE_PLEASED:
-		iValue = 75;
-		break;
-
-	case ATTITUDE_FRIENDLY:
-		iValue = 25;
-		break;
-
-	default:
-		FAssert(false);
-		break;
-	}
-	
-	if (GC.getGameINLINE().getSorenRandNum(iValue, "Nuclear Dissuasion") < ((GET_TEAM(eTeam).getNumNukeUnits() * 50 * (100 - std::min(90, ((getNukeInterception() / 2) + getNumNukeUnits())))) / 100))
-	{
-		return true;
-	}
-	
-	return false;
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 int CvTeam::getNumNukeUnits() const
 {
 	int iCount;

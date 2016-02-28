@@ -952,13 +952,6 @@ enum PlayerOptionTypes			// Exposed to Python
 	PLAYEROPTION_MODDER_1,
 	PLAYEROPTION_MODDER_2,
 	PLAYEROPTION_MODDER_3,
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	PLAYEROPTION_NUCLEAR_DISSUASION,
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 #ifdef _USRDLL
 	NUM_PLAYEROPTION_TYPES
