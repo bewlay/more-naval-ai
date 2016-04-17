@@ -585,6 +585,13 @@ def initTradeableItems():
 	addPlainTrade("limited borders", TradeableItems.TRADE_RIGHT_OF_PASSAGE, "TXT_KEY_TRADE_LIMITED_BORDERS_STRING")
 	addPlainTrade("embassy", TradeableItems.TRADE_EMBASSY, "TXT_KEY_TRADE_EMBASSY_STRING")
 	addComplexTrade("units", TradeableItems.TRADE_MILITARY_UNIT, getTradeUnits)
+	addPlainTrade("non-aggression", TradeableItems.TRADE_NON_AGGRESSION, "TXT_KEY_TRADE_NON_AGGRESSION")
+	addPlainTrade("pow exchange", TradeableItems.TRADE_POW, "TXT_KEY_TRADE_POW")
+	addPlainTrade("free trade zone", TradeableItems.TRADE_FREE_TRADE_ZONE, "TXT_KEY_TRADE_FREE_TRADE_ZONE")
+	addPlainTrade("war reparations", TradeableItems.TRADE_WAR_REPARATIONS, "TXT_KEY_TRADE_WAR_REPARATIONS")
+	addComplexTrade("prepare for war", TradeableItems.TRADE_WAR_PREPARE, getTradePlayer)
+	addPlainTrade("worker", TradeableItems.TRADE_WORKER, "TXT_KEY_TRADE_WORKER")
+	addComplexTrade("contact", TradeableItems.TRADE_CONTACT, getTradePlayer)
 	#Afforess End
 	
 def addPlainTrade(name, type, key):
