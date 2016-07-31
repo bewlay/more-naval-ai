@@ -726,90 +726,145 @@
 		<Tag>TXT_KEY_VOTE_UN_NO_CAPITAL_PUNISHMENT</Tag>
 		<English>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</German>
+		<Italian>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</Italian>
+		<Spanish>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_MILITARY_MEDICINE</Tag>
 		<English>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</German>
+		<Italian>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</Italian>
+		<Spanish>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_PRISONER_RIGHTS</Tag>
 		<English>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</German>
+		<Italian>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</Italian>
+		<Spanish>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_TRADE_MAP</Tag>
 		<English>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</German>
+		<Italian>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</Italian>
+		<Spanish>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_BARBARIAN_PEACE</Tag>
 		<English>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</German>
+		<Italian>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</Italian>
+		<Spanish>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_NO_CITY_RAZING</Tag>
 		<English>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</German>
+		<Italian>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</Italian>
+		<Spanish>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Tag>
 		<English>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </German>
+		<Italian>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Italian>
+		<Spanish>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_PACIFICSM</Tag>
 		<English>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</German>
+		<Italian>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</Italian>
+		<Spanish>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_VICTIMS_RIGHTS</Tag>
 		<English>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
+		<German>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</German>
+		<Italian>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</Italian>
+		<Spanish>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DENIAL_SENATE_VETO</Tag>
 		<English>&quot;Our Senate opposes the action.&quot;</English>
 		<French>&quot;Notre sénat s'y oppose.&quot;</French>
+		<German>&quot;Our Senate opposes the action.&quot;</German>
+		<Italian>&quot;Our Senate opposes the action.&quot;</Italian>
+		<Spanish>&quot;Our Senate opposes the action.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ACTIVE_SENATE</Tag>
 		<English>Active Senate</English>
 		<French><Text>Sénat</Text><Gender>Male</Gender><Plural>0</Plural></French>
+		<German>Active Senate</German>
+		<Italian>Active Senate</Italian>
+		<Spanish>Active Senate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ACTIVE_SENATE_PEDIA</Tag>
 		<English>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</English>
 		<French>[H1]Sénat[\H1][PARAGRAPH:2]Sous certains régimes ([LINK=CIVIC_REPRESENTATION]Réprésentation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Suffrage Universel[\LINK]), le Sénat peut s'ingérer dans votre politique militaire. Ainsi, il peut annuler vos déclarations de guerre et/ou vous forcer à signer un traité de paix avec vos ennemis.[PARAGRAPH:2]Les décisions du Sénat dépendent notamment de l'ampleur du conflit, qu'il soit éventuel ou effectif, et de son réel intéret. Ainsi, mener une politique militaire sous régime démocratique devient plus ardu.[PARAGRAPH:2]Cependant, lorsqu'un adversaire agit d'une façon déplaisante à l'égard de votre nation, par un boycott, un vote défavorable, une mission d'espionnage, etc..., vous disposez d'un prétexte suffisant pour mener ou subir une guerre sans que le Sénat intervienne. Tout prétexte est valable un tour, puis tout au long du conflit en cas de déclaration de guerre. Bien entendu, les actes malveillants des ennemis qui sont déjà en guerre contre vous ne sauraient être des prétextes pour contourner le sénat.[NEWLINE][NEWLINE]</French>
+		<German>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</German>
+		<Italian>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</Italian>
+		<Spanish>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_ACTIVE_SENATE</Tag>
 		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</English>
 		<French>[ICON_BULLET]Le [COLOR_HIGHLIGHT_TEXT]Sénat[COLOR_REVERT] peut entraver vos projets militaires</French>
+		<German>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</German>
+		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</Italian>
+		<Spanish>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SENATE_CANCEL_WAR</Tag>
 		<English>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</English>
 		<French>Le [COLOR_HIGHLIGHT_TEXT]Sénat[COLOR_REVERT] annule votre déclaration de guerre contre %s1_TeamName (%s2_TeamCiv)</French>
+		<German>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</German>
+		<Italian>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</Italian>
+		<Spanish>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HELP_CURRENT_PRETEXT</Tag>
 		<English>Valid pretext for War</English>
 		<French>Prétexte valable en cours</French>
+		<German>Valid pretext for War</German>
+		<Italian>Valid pretext for War</Italian>
+		<Spanish>Valid pretext for War</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_ACTIVE_SENATE</Tag>
 		<English>Active Senate</English>
 		<French>Sénat actif</French>
+		<German>Active Senate</German>
+		<Italian>Active Senate</Italian>
+		<Spanish>Active Senate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_ACTIVE_SENATE_HELP</Tag>
 		<English>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</English>
 		<French>Sénat actif</French>
+		<German>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</German>
+		<Italian>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</Italian>
+		<Spanish>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_DOES_THIS_MEAN_WAR_PACIFIC</Tag>
-		<T>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</T>	
+		<English>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</English>
+		<French>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</French>
+		<German>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</German>
+		<Italian>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Italian>
+		<Spanish>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Spanish>
 	</TEXT>
 	<!-- RevolutionDCM - start diplomacy text -->
 	<TEXT>
@@ -881,130 +936,241 @@
 		<Tag>TXT_KEY_VOTE_CONDEMN_UN_SLAVERY</Tag>
 		<English>Condemn Slavery Civic</English>
 		<French>Condamner Etat Policier</French>
+		<German>Condemn Slavery Civic</German>
+		<Italian>Condemn Slavery Civic</Italian>
+		<Spanish>Condemn Slavery Civic</Spanish>
 	</TEXT>
 		<TEXT>
 		<Tag>TXT_KEY_MISC_CONDEMN_CIVIC</Tag>
 		<English>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</English>
 		<French>Les Nations Unies condamnent [NUM1:le:la:les:les] %s1_Civic ! Les Civilisations qui ont choisi cette doctrine perdent l'estime des autres.</French>
+		<German>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</German>
+		<Italian>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</Italian>
+		<Spanish>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CONDEMN_CIVIC_END</Tag>
 		<English>United Nations no longer condemns %s1_Civic!</English>
 		<French>United Nations no longer condemns %s1_Civic!</French>
+		<German>United Nations no longer condemns %s1_Civic!</German>
+		<Italian>United Nations no longer condemns %s1_Civic!</Italian>
+		<Spanish>United Nations no longer condemns %s1_Civic!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_CONDEMNED_CIVIC</Tag>
 		<English>%D1: &quot;You are using Condemned Civics!&quot;</English>
 		<French>%D1: &quot;You are using Condemned Civics!&quot;</French>
+		<German>%D1: &quot;You are using Condemned Civics!&quot;</German>
+		<Italian>%D1: &quot;You are using Condemned Civics!&quot;</Italian>
+		<Spanish>%D1: &quot;You are using Condemned Civics!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_CONDAMN_CIVIC_PEDIA</Tag>
 		<English>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</English>
 		<French>[H1]Doctrine condamnée[\H1][PARAGRAPH:2]Les autorités apostoliques et les Nations-Unies peuvent faire voter des résolution de condamnation d'une doctrine. Si et seulement si cette doctrine est adoptée par un des joueurs votants. Ne sont condamnables par l'ONU, que certaines doctrines parmi les plus extrêmistes. Et ne sont condamnables par le palais apostolique, que les doctrines religieuses impliquant le choix d'une religion d'Etat.[PARAGRAPH:2]Opter pour une cotrine condamnée génère un malus diplomatique de la part des membres votants, et exclue la civilisation du clan des membres aptes à voter, ce qui, en soi, n'est pas toujours une mauvaise chose (à vous de jauger les risques et les avantages d'une telle situation).[PARAGRAPH:2]Il se peut qu'un joueur IA propose ce genre de résolution et qu'elle passe, auquel cas cela peut influer sur le cours de la partie. Mais d'un point de vue humain, l'intéret est plus subtil. Il permet notamment de retourner certaines civilisations contre une autre. Notamment dans le cadre du palais apostolique. En effet, si vous souhaitez attaquer un adversaire qui a une religion d'Etat partagée par vous et par vos alliés, mais qu'il a choisi une doctrine religieuse différente, vous pouvez tenter de la condamner afin d'en faire un pariat et de l'attaquer sans froisser vos frères de foi, voire même avec leur concours.[PARAGRAPH:2]D'un point de vue historique, l'intéret est, à la base, de pouvoir condamner la réforme, ou les croisades, notamment.[NEWLINE][NEWLINE]</French>
+		<German>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</German>
+		<Italian>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</Italian>
+		<Spanish>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_CONDAMN_CIVIC</Tag>
 		<English>Condemned civic</English>
 		<French><Text>Doctrine condamnée</Text><Gender>Male</Gender><Plural>1</Plural></French>
+		<German>Condemned civic</German>
+		<Italian>Condemned civic</Italian>
+		<Spanish>Condemned civic</Spanish>
 	</TEXT>		
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_ELECTION_NUM_VOTERS_WITH_COND_CIVIC0</Tag>
 		<English>%d1 voting [NUM1:player:players] chose this civic.</English>
 		<French>%d1 [NUM1:votant:votants] [NUM1:a:ont] choisi cette doctrine.</French>
+		<German>%d1 voting [NUM1:player:players] chose this civic.</German>
+		<Italian>%d1 voting [NUM1:player:players] chose this civic.</Italian>
+		<Spanish>%d1 voting [NUM1:player:players] chose this civic.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_ELECTION_NUM_VOTERS_WITH_COND_CIVIC</Tag>
 		<English> --- %d1 voting [NUM1:player:players] chose this civic.</English>
 		<French> --- %d1 [NUM1:votant:votants] [NUM1:a:ont] choisi cette doctrine.</French>
+		<German> --- %d1 voting [NUM1:player:players] chose this civic.</German>
+		<Italian> --- %d1 voting [NUM1:player:players] chose this civic.</Italian>
+		<Spanish> --- %d1 voting [NUM1:player:players] chose this civic.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CIVIC_IS_COND_BY_ONU</Tag>
 		<English>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</English>
 		<French>[COLOR_NEGATIVE_TEXT]Doctrine condamnée par les Nations Unies[COLOR_REVERT]</French>
+		<German>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</German>
+		<Italian>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_UN_OBSOLETE_BONUS</Tag>
 		<English>No prohibition resolution in UN</English>
+		<French>No prohibition resolution in UN</French>
+		<German>No prohibition resolution in UN</German>
+		<Italian>No prohibition resolution in UN</Italian>
+		<Spanish>No prohibition resolution in UN</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_UN_OBSOLETE_BONUS_HELP</Tag>
 		<English>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</English>
+		<French>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</French>
+		<German>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</German>
+		<Italian>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</Italian>
+		<Spanish>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL</Tag>
 		<English>Prohibition of Coal</English>
+		<French>Prohibition of Coal</French>
+		<German>Prohibition of Coal</German>
+		<Italian>Prohibition of Coal</Italian>
+		<Spanish>Prohibition of Coal</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL_HELP</Tag>
 		<English>U.N. Resolution: [BOLD]Prohibition of Coal[\BOLD]</English>
+		<French>U.N. Resolution: [BOLD]Prohibition of Coal[\BOLD]</French>
+		<German>U.N. Resolution: [BOLD]Prohibition of Coal[\BOLD]</German>
+		<Italian>U.N. Resolution: [BOLD]Prohibition of Coal[\BOLD]</Italian>
+		<Spanish>U.N. Resolution: [BOLD]Prohibition of Coal[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</English>
+		<French>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</French>
+		<German>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</German>
+		<Italian>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</Italian>
+		<Spanish>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR</Tag>
 		<English>Prohibition of Fur</English>
+		<French>Prohibition of Fur</French>
+		<German>Prohibition of Fur</German>
+		<Italian>Prohibition of Fur</Italian>
+		<Spanish>Prohibition of Fur</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR_HELP</Tag>
 		<English>U.N. Resolution: [BOLD]Prohibition of Fur[\BOLD]</English>
+		<French>U.N. Resolution: [BOLD]Prohibition of Fur[\BOLD]</French>
+		<German>U.N. Resolution: [BOLD]Prohibition of Fur[\BOLD]</German>
+		<Italian>U.N. Resolution: [BOLD]Prohibition of Fur[\BOLD]</Italian>
+		<Spanish>U.N. Resolution: [BOLD]Prohibition of Fur[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</English>
+		<French>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</French>
+		<German>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</German>
+		<Italian>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</Italian>
+		<Spanish>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY</Tag>
 		<English>Prohibition of Ivory</English>
+		<French>Prohibition of Ivory</French>
+		<German>Prohibition of Ivory</German>
+		<Italian>Prohibition of Ivory</Italian>
+		<Spanish>Prohibition of Ivory</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY_HELP</Tag>
 		<English>U.N. Resolution: [BOLD]Prohibition of Ivory[\BOLD]</English>
+		<French>U.N. Resolution: [BOLD]Prohibition of Ivory[\BOLD]</French>
+		<German>U.N. Resolution: [BOLD]Prohibition of Ivory[\BOLD]</German>
+		<Italian>U.N. Resolution: [BOLD]Prohibition of Ivory[\BOLD]</Italian>
+		<Spanish>U.N. Resolution: [BOLD]Prohibition of Ivory[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</English>
+		<French>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</French>
+		<German>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</German>
+		<Italian>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</Italian>
+		<Spanish>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE</Tag>
 		<English>Prohibition of Whale Fishing</English>
+		<French>Prohibition of Whale Fishing</French>
+		<German>Prohibition of Whale Fishing</German>
+		<Italian>Prohibition of Whale Fishing</Italian>
+		<Spanish>Prohibition of Whale Fishing</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE_HELP</Tag>
 		<English>U.N. Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</English>
+		<French>U.N. Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</French>
+		<German>U.N. Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</German>
+		<Italian>U.N. Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</Italian>
+		<Spanish>U.N. Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</English>
+		<French>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</French>
+		<German>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</German>
+		<Italian>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Italian>
+		<Spanish>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_BONUS_BAD_VOTE</Tag>
 		<English>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</English>
+		<French>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</French>
+		<German>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</German>
+		<Italian>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Italian>
+		<Spanish>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_BONUS_BECOME_OBSOLETE</Tag>
-		<T>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</T>
+		<English>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</English>
+		<French>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</French>
+		<German>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</German>
+		<Italian>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</Italian>
+		<Spanish>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_BONUS_BECOME_OBSOLETE2</Tag>
-		<T>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</T>
+		<English>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</English>
+		<French>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</French>
+		<German>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</German>
+		<Italian>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</Italian>
+		<Spanish>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_IS_OBSO</Tag>
-		<T>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</T>
+		<English>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CLOSEST_ALLY_OF</Tag>
 		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</English>
+		<French>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</French>
+		<German>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</German>
+		<Italian>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</Italian>
+		<Spanish>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_SHARED_ENEMY</Tag>
 		<English>%D1: &quot;We share common rivals.&quot;</English>
+		<French>%D1: &quot;We share common rivals.&quot;</French>
+		<German>%D1: &quot;We share common rivals.&quot;</German>
+		<Italian>%D1: &quot;We share common rivals.&quot;</Italian>
+		<Spanish>%D1: &quot;We share common rivals.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_SHARED_FRIEND</Tag>
 		<English>%D1: &quot;We have friends in common.&quot;</English>
+		<French>%D1: &quot;We have friends in common.&quot;</French>
+		<German>%D1: &quot;We have friends in common.&quot;</German>
+		<Italian>%D1: &quot;We have friends in common.&quot;</Italian>
+		<Spanish>%D1: &quot;We have friends in common.&quot;</Spanish>
 	</TEXT>	
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_WAR_REPARATIONS_STRING</Tag>
