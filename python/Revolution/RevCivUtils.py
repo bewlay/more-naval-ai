@@ -140,7 +140,7 @@ class RevCivRule :
 
 	def getScore( self, iOldCivilization, iCultureRace, iSplitType, iReligion, iPlotX, iPlotY ) :
 		# check if any leaders are available
-		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 ) :
+		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 and iSplitType != SPLIT_PUPPET ) :
 			print "\SCORE_NOT_AVAILABLE: No more leaders"
 			return SCORE_NOT_AVAILABLE
 
@@ -233,8 +233,8 @@ class RevCivRule :
 					liBadLeaders.append( iLeader )
 					continue
 		
-#		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
-#			liResult = liBadLeaders
+		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
+			liResult = liBadLeaders
 		
 		return liResult
 
