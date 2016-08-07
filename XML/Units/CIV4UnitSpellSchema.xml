@@ -74,6 +74,9 @@
 	<ElementType name="bPush" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bRemoveHasCasted" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bSacrificeCaster" content="textOnly" dt:type="boolean"/>
+<!--	Spell Interrupt Unit Cycling: Added by Denev	-->
+	<ElementType name="bNoInterruptUnitCycling" content="textOnly" dt:type="boolean"/>
+<!--	Spell Interrupt Unit Cycling: End Add
 	<ElementType name="iChangePopulation" content="textOnly" dt:type="int"/>
 	<ElementType name="iCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iDelay" content="textOnly" dt:type="int"/>
@@ -171,6 +174,9 @@
 		<element type="bPush" minOccurs="0"/>
 		<element type="bRemoveHasCasted" minOccurs="0"/>
 		<element type="bSacrificeCaster" minOccurs="0"/>
+<!--	Spell Interrupt Unit Cycling: Added by Denev	-->
+		<element type="bNoInterruptUnitCycling" minOccurs="0"/>
+<!--	Spell Interrupt Unit Cycling: End Add			-->
 		<element type="iChangePopulation" minOccurs="0"/>
 		<element type="iCost" minOccurs="0"/>
 		<element type="iDelay" minOccurs="0"/>

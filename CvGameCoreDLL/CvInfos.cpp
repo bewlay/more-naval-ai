@@ -3318,6 +3318,9 @@ m_bDispel(false),
 m_bPush(false),
 m_bRemoveHasCasted(false),
 m_bSacrificeCaster(false),
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+m_bNoInterruptUnitCycling(false),
+//<<<<Spell Interrupt Unit Cycling: End Add
 m_bRemoveInvalidFeature(false),	// MNAI
 m_iChangePopulation(0),
 m_iCost(0),
@@ -3601,6 +3604,13 @@ bool CvSpellInfo::isSacrificeCaster() const
 	return m_bSacrificeCaster;
 }
 
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+bool CvSpellInfo::isNoInterruptUnitCycling() const
+{
+	return m_bNoInterruptUnitCycling;
+}
+//<<<<Spell Interrupt Unit Cycling: End Add
+
 // MNAI begin
 bool CvSpellInfo::isRemoveInvalidFeature() const
 {
@@ -3883,6 +3893,9 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bPush);
 	stream->Read(&m_bRemoveHasCasted);
 	stream->Read(&m_bSacrificeCaster);
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+	stream->Read(&m_bNoInterruptUnitCycling);
+//<<<<Spell Interrupt Unit Cycling: End Add
 	stream->Read(&m_bRemoveInvalidFeature);	// MNAI
 	stream->Read(&m_iChangePopulation);
 	stream->Read(&m_iCost);
@@ -4003,6 +4016,9 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bPush);
 	stream->Write(m_bRemoveHasCasted);
 	stream->Write(m_bSacrificeCaster);
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+	stream->Write(m_bNoInterruptUnitCycling);
+//<<<<Spell Interrupt Unit Cycling: End Add
 	stream->Write(m_bRemoveInvalidFeature);	// MNAI
 	stream->Write(m_iChangePopulation);
 	stream->Write(m_iCost);
@@ -4151,6 +4167,9 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bPush, "bPush");
 	pXML->GetChildXmlValByName(&m_bRemoveHasCasted, "bRemoveHasCasted");
 	pXML->GetChildXmlValByName(&m_bSacrificeCaster, "bSacrificeCaster");
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+	pXML->GetChildXmlValByName(&m_bNoInterruptUnitCycling, "bNoInterruptUnitCycling");
+//<<<<Spell Interrupt Unit Cycling: End Add
 	pXML->GetChildXmlValByName(&m_bRemoveInvalidFeature, "bRemoveInvalidFeature");	// MNAI
 	pXML->GetChildXmlValByName(&m_iChangePopulation, "iChangePopulation");
 	pXML->GetChildXmlValByName(&m_iCost, "iCost");
