@@ -61,22 +61,22 @@ class RevCivUtils :
 			iScore = self.rcd.lpCivRules[iCiv].getScore( iOldCivType, iRace, iSplitType, iReligion, iPlotX, iPlotY )
 			if( iScore == SCORE_NOT_ALLOWED ) :
 				liNotAllowedCivs.append( iCiv )
-				if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has not-allowed score(%d)" % ( iCiv, iScore )
+				if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has not-allowed score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 			else :
 				if( iScore > iBestScore ) :
 					iBestScore = iScore
 					liGoodCivs.extend( liBestCivs )
 					liBestCivs = list()
 					liBestCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has best score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has best score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 				elif( iScore == iBestScore ) :
 					liBestCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has good score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has good score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 				elif( iScore >= 0 ) :
 					liGoodCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has okay score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has okay score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 				else :
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %d has bad score(%d)" % ( iCiv, iScore )
+					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has bad score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 		
 		# shuffle and put lists together
 		random.shuffle( liBestCivs )
@@ -100,15 +100,15 @@ class RevCivUtils :
 			liMinorLeaders = list()
 			for iLeader in liLeaders :
 				if( iLeader in self.rcd.liMinorLeaders[iNewCiv] ) :
-					if( LOG_DEBUG ) : print "leader %i is minor leader" % ( iLeader )
+					if( LOG_DEBUG ) : print "leader %s is minor leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() )
 					liMinorLeaders.append( iLeader )
 				else :
-					if( LOG_DEBUG ) : print "leader %i is major leader" % ( iLeader )
+					if( LOG_DEBUG ) : print "leader %s is major leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() )
 
 			if( len( liMinorLeaders ) > 0 ) :
 				if( LOG_DEBUG ) : print "Choosing minor leader"
 				iNewLeader = liMinorLeaders[game.getSorenRandNum( len( liMinorLeaders ), 'RevCivUtils: pick leader from minor leaders list' )]
-				if( LOG_DEBUG ) : print "RevCivUtils: Leader %i chosen" % ( iNewLeader )
+				if( LOG_DEBUG ) : print "RevCivUtils: Leader %s chosen" % ( gc.getLeaderHeadInfo( iNewLeader ).getType() )
 				return ( iNewCiv, iNewLeader )
 			elif( len( liLeaders ) > 0 ) :
 				if( LOG_DEBUG ) : print "Choosing major leader"
@@ -140,13 +140,13 @@ class RevCivRule :
 
 	def getScore( self, iOldCivilization, iCultureRace, iSplitType, iReligion, iPlotX, iPlotY ) :
 		# check if any leaders are available
-		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 ) :
-			print "\SCORE_NOT_AVAILABLE: No more leaders"
+		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 and iSplitType != SPLIT_PUPPET ) :
+			print "\tSCORE_NOT_AVAILABLE: No more leaders"
 			return SCORE_NOT_AVAILABLE
 
 		# check if civ is blocked as rebel
 		if( self.bNoRevolt ) :
-			print "\SCORE_NOT_AVAILABLE: Civ cannot revolt"
+			print "\tSCORE_NOT_AVAILABLE: Civ cannot revolt"
 			return SCORE_NOT_AVAILABLE
 
 		# check if civ is same as parent and split is not allowed
@@ -176,33 +176,33 @@ class RevCivRule :
 		iScore = 0
 		
 		if( ( iSplitType == SPLIT_FORCED or iSplitType == SPLIT_PUPPET ) and self.iCiv == iOldCivilization ) :
-			print "\Score: +%d: SPLIT_FORCED addition" % ( SCORE_SPLIT_FORCED )
+			print "\tScore: +%d: SPLIT_FORCED addition" % ( SCORE_SPLIT_FORCED )
 			iScore += SCORE_SPLIT_FORCED
 		elif( iSplitType == SPLIT_ALLOWED and self.iCiv == iOldCivilization ) :
-			print "\Score: +%d: SPLIT_ALLOWED addition" % ( SCORE_SPLIT_ALLOWED )
+			print "\tScore: +%d: SPLIT_ALLOWED addition" % ( SCORE_SPLIT_ALLOWED )
 			iScore += SCORE_SPLIT_ALLOWED
 
 		if( iReligion in self.liReligions ) :
-			print "\Score: +%d: Religion addition" % ( SCORE_RELIGION )
+			print "\tScore: +%d: Religion addition" % ( SCORE_RELIGION )
 			iScore += SCORE_RELIGION
 
 		if( self.iRace != None ) :
 			if( iCultureRace == self.iRace ) :
-				print "\Score: +%d: Same race addition" % ( SCORE_SAME_RACE )
+				print "\tScore: +%d: Same race addition" % ( SCORE_SAME_RACE )
 				iScore += SCORE_SAME_RACE
 
 		if( iCultureRace in self.liGoodRaces ) :
-			print "\Score: +%d: Aligned race addition" % ( SCORE_GOOD_RACE )
+			print "\tScore: +%d: Aligned race addition" % ( SCORE_GOOD_RACE )
 			iScore += SCORE_GOOD_RACE
 
 		iAreaRadius = 3
 		fTerrainScore = TerrainFlavorUtil.getPlotScore( self.iCiv, iPlotX, iPlotY, self.pCivTerrainPreference, iAreaRadius )
 		fTerrainScore *= TERRAIN_SCORE_FACTOR
 		if( fTerrainScore > 0 ) :
-			print "\Score: +%d: Terrain addition" % ( int( fTerrainScore + 0.5 ) )
+			print "\tScore: +%d: Terrain addition" % ( int( fTerrainScore + 0.5 ) )
 			iScore += int( fTerrainScore + 0.5 )
 		else :
-			print "\Score: %d: Terrain subtraction" % ( int( fTerrainScore + 0.5 ) )
+			print "\tScore: %d: Terrain subtraction" % ( int( fTerrainScore + 0.5 ) )
 			iScore += int( fTerrainScore - 0.5 )
 
 		if( iScore >= 0 ) :
@@ -233,8 +233,8 @@ class RevCivRule :
 					liBadLeaders.append( iLeader )
 					continue
 		
-#		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
-#			liResult = liBadLeaders
+		if( iSplitType == SPLIT_PUPPET and len( liResult ) == 0 ) :
+			liResult = liBadLeaders
 		
 		return liResult
 
