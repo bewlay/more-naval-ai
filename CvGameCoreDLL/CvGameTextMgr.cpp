@@ -16693,6 +16693,28 @@ void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBon
         szBuffer.append(NEWLINE);
         szBuffer.append(gDLL->getText("TXT_KEY_BONUS_RESEARCH_MODIFIER", GC.getBonusInfo(eBonus).getResearchModifier()));
 	}
+
+// BonusPedia 08/2016 lfgr
+	if( GC.getBonusInfo( eBonus ).getBadAttitude() < 0 )
+	{
+        szBuffer.append( NEWLINE );
+        szBuffer.append( gDLL->getText( "TXT_KEY_BONUS_BAD_ATTITUDE" ) );
+	}
+
+	if( GC.getBonusInfo( eBonus ).getFreePromotion() != NO_PROMOTION )
+	{
+		CvPromotionInfo& kPromotion = GC.getPromotionInfo( (PromotionTypes) GC.getBonusInfo( eBonus ).getFreePromotion() );
+        szBuffer.append( NEWLINE );
+		szBuffer.append( gDLL->getText( "TXT_KEY_BONUS_FREE_PROMOTION", kPromotion.getDescription() ) );
+	}
+
+	if( GC.getBonusInfo( eBonus ).getMutateChance() != 0 )
+	{
+		szBuffer.append( NEWLINE );
+		szBuffer.append( gDLL->getText( "TXT_KEY_BONUS_MUTATE_CHANCE", GC.getBonusInfo( eBonus ).getMutateChance() ) );
+	}
+// BonusPedia END
+
 	if (GC.getBonusInfo(eBonus).isModifierPerBonus())
 	{
         szBuffer.append(NEWLINE);
