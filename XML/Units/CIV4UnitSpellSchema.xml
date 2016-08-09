@@ -76,7 +76,7 @@
 	<ElementType name="bSacrificeCaster" content="textOnly" dt:type="boolean"/>
 <!--	Spell Interrupt Unit Cycling: Added by Denev	-->
 	<ElementType name="bNoInterruptUnitCycling" content="textOnly" dt:type="boolean"/>
-<!--	Spell Interrupt Unit Cycling: End Add
+<!--	Spell Interrupt Unit Cycling: End Add			-->
 	<ElementType name="iChangePopulation" content="textOnly" dt:type="int"/>
 	<ElementType name="iCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iDelay" content="textOnly" dt:type="int"/>
