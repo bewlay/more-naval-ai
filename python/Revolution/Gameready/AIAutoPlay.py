@@ -298,7 +298,7 @@ class AIAutoPlay :
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
-		if( not pPlayer is None and not pPlayer.isAlive()) :
+		if not pPlayer is None and not pPlayer.isAlive() and game.countCivPlayersAlive() > 0:
 			popup = PyPopup.PyPopup(RevDefs.pickHumanPopup,contextType = EventContextTypes.EVENTCONTEXT_ALL, bDynamic = False)
 			popup.setHeaderString( localText.getText("TXT_KEY_AIAUTOPLAY_PICK_CIV", ()) )
 			popup.setBodyString( localText.getText("TXT_KEY_AIAUTOPLAY_CIV_DIED", ()) )

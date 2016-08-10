@@ -1742,6 +1742,10 @@ def reqInquisition(caster):
 
 def spellInquisition(caster):
 	pPlot = caster.plot()
+	# The city may have been razed while the spell is being cast.
+	if not pPlot.isCity():
+		return
+
 	pCity = pPlot.getPlotCity()
 	pPlayer = gc.getPlayer(caster.getOwner())
 	StateBelief = gc.getPlayer(pCity.getOwner()).getStateReligion()
