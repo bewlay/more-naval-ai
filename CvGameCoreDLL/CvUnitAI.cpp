@@ -1545,9 +1545,13 @@ int CvUnitAI::AI_getBarbLeadership(int& iFollowers) const
 		iFollowers = 1;
 	}
 	
-	// limit group sizes in the begining of the game
+	// limit group sizes in the beginning of the game
 	int iCivCities = GC.getGameINLINE().getNumCivCities();
 	int iCivs = GC.getGameINLINE().countCivPlayersAlive();
+	// Bugfix: Prevent a crash when playing with require complete kills.
+	if (iCivs <= 0) {
+		iCivs = 1;
+	}
 	iFollowers = std::min((iCivCities / (iCivs + (iCivs / 2))) + 1, iFollowers);
 	
 	return iLeadership;

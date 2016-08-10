@@ -62,6 +62,9 @@ public:
 	int getCargo() const;
 	DllExport bool canAllMove();																																				// Exposed to Python
 	bool canAnyMove();																																									// Exposed to Python
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+	bool canAnyCast(bool bInterruptUnitCycling = true);
+//>>>>Spell Interrupt Unit Cycling: End Add
 	bool hasMoved();																																										// Exposed to Python
 	bool canEnterTerritory(TeamTypes eTeam, bool bIgnoreRightOfPassage = false) const;									// Exposed to Python
 	bool canEnterArea(TeamTypes eTeam, const CvArea* pArea, bool bIgnoreRightOfPassage = false) const;									// Exposed to Python
@@ -132,6 +135,9 @@ public:
 
 	DllExport bool readyToSelect(bool bAny = false);																										// Exposed to Python
 	bool readyToMove(bool bAny = false);																																// Exposed to Python
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+	bool readyToCast();
+//>>>>Spell Interrupt Unit Cycling: End Add
 	bool readyToAuto();																																									// Exposed to Python
 
 	int getID() const;																																												// Exposed to Python

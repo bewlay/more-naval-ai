@@ -2732,6 +2732,46 @@ bool CvSelectionGroup::canAnyMove()
 	return false;
 }
 
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+/*	Casting spell triggers unit cycling	*/
+bool CvSelectionGroup::canAnyCast(bool bInterruptUnitCycling)
+{
+	CLLNode<IDInfo>* pUnitNode;
+	CvUnit* pLoopUnit;
+
+	pUnitNode = headUnitNode();
+
+	while (pUnitNode != NULL)
+	{
+		pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = nextUnitNode(pUnitNode);
+
+		if (!pLoopUnit->isHasCasted())
+		{
+			for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
+			{
+				if (pLoopUnit->canCast(iSpell, false))
+				{
+					if (bInterruptUnitCycling)
+					{
+						if (!GC.getSpellInfo((SpellTypes)iSpell).isNoInterruptUnitCycling())
+						{
+							return true;
+						}
+					}
+					else
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+	return false;
+}
+//>>>>Spell Interrupt Unit Cycling: End Add
+
 bool CvSelectionGroup::hasMoved()
 {
 	CLLNode<IDInfo>* pUnitNode;
@@ -4356,7 +4396,11 @@ bool CvSelectionGroup::groupAmphibMove(CvPlot* pPlot, int iFlags)
 
 bool CvSelectionGroup::readyToSelect(bool bAny)
 {
-	return (readyToMove(bAny) && !isAutomated());
+//>>>>Spell Interrupt Unit Cycling: Modified by Denev 2009/10/17
+/*	Casting spell triggers unit cycling	*/
+//	return (readyToMove(bAny) && !isAutomated());
+	return ((readyToMove(bAny) || readyToCast()) && !isAutomated());
+//>>>>Spell Interrupt Unit Cycling: End Modify
 }
 
 
@@ -4365,6 +4409,13 @@ bool CvSelectionGroup::readyToMove(bool bAny)
 	return (((bAny) ? canAnyMove() : canAllMove()) && (headMissionQueueNode() == NULL) && (getActivityType() == ACTIVITY_AWAKE) && !isBusy() && !isCargoBusy());
 }
 
+//>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
+/*	Casting spell triggers unit cycling	*/
+bool CvSelectionGroup::readyToCast()
+{
+	return (canAnyCast() && (getActivityType() == ACTIVITY_AWAKE) && !isBusy() && !isCargoBusy());
+}
+//>>>>Spell Interrupt Unit Cycling: End Add
 
 bool CvSelectionGroup::readyToAuto()
 {
