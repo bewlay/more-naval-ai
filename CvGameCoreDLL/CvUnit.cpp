@@ -17276,21 +17276,22 @@ void CvUnit::cast(int spell)
         gDLL->getPythonIFace()->callFunction(PYSpellModule, "cast", argsList.makeFunctionArgs()); //, &lResult
         delete pyUnit; // python fxn must not hold on to this pointer
     }
-    gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-    if (kSpellInfo.isSacrificeCaster())
-    {
-        kill(false);
-    }
 
 //>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
 /*	Casting spell triggers unit cycling	*/
-	if (!getGroup()->readyToSelect(true) && !getGroup()->isBusy())
+	if (isInGroup() && !getGroup()->readyToSelect(true) && !getGroup()->isBusy())
 	{
 //		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 //		gDLL->getInterfaceIFace()->changeCycleSelectionCounter((GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_QUICK_MOVES)) ? 1 : 2);
 		GC.getGameINLINE().updateSelectionList();
 	}
 //<<<<Spell Interrupt Unit Cycling: End Add
+
+	gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+	if (kSpellInfo.isSacrificeCaster())
+	{
+		kill(false);
+	}
 }
 
 void CvUnit::castAddPromotion(int spell)
