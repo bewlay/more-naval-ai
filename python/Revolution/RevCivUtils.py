@@ -45,11 +45,13 @@ class RevCivUtils :
 	def __init__( self ) :
 		self.rcd = RevCivDefines()
 
-	def chooseNewCivAndLeader( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
-		if( LOG_DEBUG ) : print "RevCivUtils.chooseNewCivAndLeader( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
-		
+
+	# Returns the chosen civilization type and a list of possible leaders. It does not perform any random number calls.
+	def getNewCivAndLeaderList( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
+		if( LOG_DEBUG ) : print "RevCivUtils.getNewCivAndLeaderList( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
+
 		# find available civs
-		
+
 		liNotAllowedCivs = list()
 		liGoodCivs = list()
 		liBestCivs = list()
@@ -77,25 +79,25 @@ class RevCivUtils :
 					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has okay score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
 				else :
 					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has bad score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
-		
+
 		# shuffle and put lists together
 		random.shuffle( liBestCivs )
 		random.shuffle( liGoodCivs )
-		
+
 		liCivs = liBestCivs
 		liCivs.extend( liGoodCivs )
-		
+
 		if( USE_NOT_ALLOWED ) :
 			random.shuffle( liNotAllowedCivs )
 			liCivs.extend( liNotAllowedCivs )
-		
+
 		print "RevCivUtils: liCivs:"
 		print liCivs
-		
+
 		for iNewCiv in liCivs :
 			if( LOG_DEBUG ) : print "RevCivUtils: Trying Civ %d" % ( iNewCiv )
 			liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iSplitType, iReligion )
-			
+
 			# prefer minor leaders
 			liMinorLeaders = list()
 			for iLeader in liLeaders :
@@ -105,19 +107,30 @@ class RevCivUtils :
 				else :
 					if( LOG_DEBUG ) : print "leader %s is major leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() )
 
+			liNewLeaders = []
 			if( len( liMinorLeaders ) > 0 ) :
-				if( LOG_DEBUG ) : print "Choosing minor leader"
-				iNewLeader = liMinorLeaders[game.getSorenRandNum( len( liMinorLeaders ), 'RevCivUtils: pick leader from minor leaders list' )]
-				if( LOG_DEBUG ) : print "RevCivUtils: Leader %s chosen" % ( gc.getLeaderHeadInfo( iNewLeader ).getType() )
-				return ( iNewCiv, iNewLeader )
+				if( LOG_DEBUG ) : print "Choosing minor leader list"
+				liNewLeaders = liMinorLeaders
 			elif( len( liLeaders ) > 0 ) :
-				if( LOG_DEBUG ) : print "Choosing major leader"
-				iNewLeader = liLeaders[game.getSorenRandNum( len( liLeaders ), 'RevCivUtils: pick leader from leaders list' )]
+				if( LOG_DEBUG ) : print "Choosing major leader list"
+				liNewLeaders = liLeaders
 
-			return ( iNewCiv, iNewLeader )
-		
-		if( LOG_DEBUG ) : print 'RevCivUtils: No civ available, returning (-1, -1)'
-		return ( -1, -1 )
+			return iNewCiv, liNewLeaders
+
+		if( LOG_DEBUG ) : print 'RevCivUtils: No civ available, returning (-1, [])'
+		return -1, []
+
+
+	# Returns the chosen civilization type and a possible leader. It performs random number calls.
+	def chooseNewCivAndLeader( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
+		if LOG_DEBUG: print "RevCivUtils.chooseNewCivAndLeader( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
+		iNewCivIdx, liNewLeaders = self.getNewCivAndLeaderList(iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY)
+		iNewLeader = -1
+		if len(liNewLeaders) > 0:
+			iNewLeader = liNewLeaders[game.getSorenRandNum(len(liNewLeaders), 'RevCivUtils: pick leader from chosen leaders list')]
+		if LOG_DEBUG: print "RevCivUtils: Returning Civ %d and Leader %d" % (iNewCivIdx, iNewLeader)
+		return iNewCivIdx, iNewLeader
+
 
 class RevCivRule :
 	def __init__( self, rcd, iCiv ) :

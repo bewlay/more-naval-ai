@@ -24866,11 +24866,12 @@ bool CvPlayer::canMakePuppet( CvCity* pVassalCapital ) const
 	argsList.add( pVassalCapital->getOriginalOwner() );
 	argsList.add( pVassalCapital->getID() );
 	long lResult = 0;
-	gDLL->getPythonIFace()->callFunction( PYRevModule, "getPuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
+	// Use canHavePuppetCivLeader, which does not perform random number calls.
+	gDLL->getPythonIFace()->callFunction( PYRevModule, "canHavePuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
 
-	if( (LeaderHeadTypes) (lResult % GC.getNumLeaderHeadInfos()) == NO_LEADER )
+	if (lResult == 0)
 		return false;
-		
+
 /********************************************************************************/
 /* MinorPuppetLeaders	End												lfgr	*/
 /********************************************************************************/
