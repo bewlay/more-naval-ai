@@ -1235,6 +1235,9 @@ enum TaskTypes				// Exposed to Python
 	TASK_RALLY_PLOT,
 	TASK_CLEAR_RALLY_PLOT,
 	TASK_LIBERATE,
+	// MNAI - Puppet States (OOS fix)
+	TASK_MAKE_PUPPET,
+	// End MNAI
 
 #ifdef _USRDLL
 	NUM_TASK_TYPES
