@@ -1829,10 +1829,7 @@ class CvInfoScreen:
 
 				iTurnYear = CyGame().getTurnYear(pCity.getGameTurnFounded())
 
-				if (iTurnYear < 0):
-					szTurnFounded = localText.getText("TXT_KEY_TIME_BC", (-iTurnYear,))#"%d %s" %(-iTurnYear, self.TEXT_BC)
-				else:
-					szTurnFounded = localText.getText("TXT_KEY_TIME_AD", (iTurnYear,))#"%d %s" %(iTurnYear, self.TEXT_AD)
+				szTurnFounded = localText.getText("TXT_KEY_TIME_TURN_STANDALONE", (iTurnYear,))
 
 				if (pCity.isRevealed(gc.getGame().getActiveTeam()) or gc.getTeam(pPlayer.getTeam()).isHasMet(gc.getGame().getActiveTeam())):
 					self.szCityNames[iRankLoop] = pCity.getName().upper()
@@ -2142,10 +2139,7 @@ class CvInfoScreen:
 				szDateBuilt = ""
 
 				if (iTurnYear != -9999):	# -9999 used for wonders in progress
-					if (iTurnYear < 0):
-						szTurnFounded = localText.getText("TXT_KEY_TIME_BC", (-iTurnYear,))
-					else:
-						szTurnFounded = localText.getText("TXT_KEY_TIME_AD", (iTurnYear,))
+					szTurnFounded = localText.getText("TXT_KEY_TIME_TURN_STANDALONE", (iTurnYear,))
 
 					szDateBuilt = (", %s" %(szTurnFounded))
 
@@ -2576,7 +2570,7 @@ class CvInfoScreen:
 			if iTurnYearBuilt == -9999:
 				szTurnYearBuilt = u""
 			else:
-				szTurnYearBuilt = BugUtil.getDisplayYear(iTurnYearBuilt)
+				szTurnYearBuilt = str(iTurnYearBuilt)
 
 			# Check to see if active player can see this city
 			if pCity and pCity.isRevealed(gc.getGame().getActiveTeam()):
@@ -2910,10 +2904,7 @@ class CvInfoScreen:
 
 		year = CyGame().getTurnYear(turn)
 
-		if (year < 0):
-			return localText.getText("TXT_KEY_TIME_BC", (-year,))
-		else:
-			return localText.getText("TXT_KEY_TIME_AD", (year,))
+		return localText.getText("TXT_KEY_TIME_TURN_STANDALONE", (year,))
 
 	def lineName(self,i):
 		return self.LINE_ID + str(i)

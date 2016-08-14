@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_CITY_FOUNDED</Tag>
+		<English>Founded: %s1</English>
+		<French>Fondation de: %s1</French>
+		<German>Gegr&#252;ndet: %s1</German>
+		<Italian>Fondata: %s1</Italian>
+		<Spanish>Fundada: %s1</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MISC_SOMEONE_CREATED_UNIT</Tag>
 		<English>%s1_PlyrName has created %s2_UnitName!</English>
 		<French>%s1_PlyrName a cr&#233;&#233; 1 %s2_UnitName !</French>
@@ -175,6 +183,22 @@
 			<Gender>Male</Gender>
 			<Plural>1</Plural>
 		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TIME_TURN_SAVE</Tag>
+		<English>TURN-%s1_TurnNum</English>
+		<French>TOUR-%s1_TurnNum</French>
+		<German>RUNDE-%s1_TurnNum</German>
+		<Italian>TURNO-%s1_TurnNum</Italian>
+		<Spanish>TURNO-%s1_TurnNum</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TIME_TURN_STANDALONE</Tag>
+		<English>turn %d1_TurnNum</English>
+		<French>tour %d1_TurnNum</French>
+		<German>runde %d1_TurnNum</German>
+		<Italian>turno %d1_TurnNum</Italian>
+		<Spanish>turno %d1_TurnNum</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WB_PROMOTIONS</Tag>
