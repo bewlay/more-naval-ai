@@ -7557,7 +7557,16 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, PlayerTypes ePlayer, bool bI
 	// Take into account civilization specific changes to terrain yields.
 	if (isOwned())
 	{
-		iYield += GC.getCivilizationInfo(GET_PLAYER(getOwnerINLINE()).getCivilizationType()).getTerrainYieldChanges(getTerrainType(), eYield, isRiver());
+		CivilizationTypes eOwnerType = GET_PLAYER(getOwnerINLINE()).getCivilizationType();
+		CvCity* pWorkingCity = getWorkingCity();
+
+		// For tolerant civilizations, the terrain yield changes of the civilization of the city is used instead.
+		if (pWorkingCity != NULL && pWorkingCity->getCivilizationType() != NO_CIVILIZATION)
+		{
+			eOwnerType = pWorkingCity->getCivilizationType();
+		}
+
+		iYield += GC.getCivilizationInfo(eOwnerType).getTerrainYieldChanges(getTerrainType(), eYield, isRiver());
 	}
 
 	return std::max(0, iYield);
