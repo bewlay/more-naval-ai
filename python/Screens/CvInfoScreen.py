@@ -2838,39 +2838,44 @@ class CvInfoScreen:
 #BUG: improvements - end
 
 		# Add Units to table
+		iRow = 0
 		for iUnitLoop in range(iNumUnits):
-			iRow = iUnitLoop
-
-			iCol = 0
-			szUnitName = gc.getUnitInfo(iUnitLoop).getDescription()
-			screen.setTableText(szUnitsTable, iCol, iRow, szUnitName, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-			iCol = 1
 			iNumUnitsCurrent = aiUnitsCurrent[iUnitLoop]
-			screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsCurrent), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-			iCol = 2
 			iNumUnitsBuilt = aiUnitsBuilt[iUnitLoop]
-			screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsBuilt), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-			iCol = 3
 			iNumUnitsKilled = aiUnitsKilled[iUnitLoop]
-			screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsKilled), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-			iCol = 4
 			iNumUnitsLost = aiUnitsLost[iUnitLoop]
-			screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsLost), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+			if (iNumUnitsCurrent > 0 or iNumUnitsBuilt > 0 or iNumUnitsKilled > 0 or iNumUnitsLost > 0):
+				iCol = 0
+				szUnitName = gc.getUnitInfo(iUnitLoop).getDescription()
+				screen.setTableText(szUnitsTable, iCol, iRow, szUnitName, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+				iCol = 1
+				screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsCurrent), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+				iCol = 2
+				screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsBuilt), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+				iCol = 3
+				screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsKilled), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+				iCol = 4
+				screen.setTableInt(szUnitsTable, iCol, iRow, str(iNumUnitsLost), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+
+				iRow += 1
 
 		# Add Buildings to table
+		iRow = 0
 		for iBuildingLoop in range(iNumBuildings):
-			iRow = iBuildingLoop
-
-			iCol = 0
-			szBuildingName = gc.getBuildingInfo(iBuildingLoop).getDescription()
-			screen.setTableText(szBuildingsTable, iCol, iRow, szBuildingName, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-			iCol = 1
 			iNumBuildingsBuilt = aiBuildingsBuilt[iBuildingLoop]
-			screen.setTableInt(szBuildingsTable, iCol, iRow, str(iNumBuildingsBuilt), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+			if (iNumBuildingsBuilt > 0):
+
+				iCol = 0
+				szBuildingName = gc.getBuildingInfo(iBuildingLoop).getDescription()
+				screen.setTableText(szBuildingsTable, iCol, iRow, szBuildingName, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				iCol = 1
+				screen.setTableInt(szBuildingsTable, iCol, iRow, str(iNumBuildingsBuilt), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+				iRow += 1
 
 #BUG: improvements - start
 		if AdvisorOpt.isShowImprovements():
