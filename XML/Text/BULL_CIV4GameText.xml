@@ -170,21 +170,21 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_DOUBLE_COMMERCE_NEXT_YEAR</Tag>
-		<English>[ICON_BULLET]Double %s1_commerce_type next year</English>
-		<French>[ICON_BULLET]Double %s1_commerce_type next year</French>
-		<German>[ICON_BULLET]Doppelte %s1_commerce_type im n&#228;chsten Jahr</German>
-		<Italian>[ICON_BULLET]Double %s1_commerce_type next year</Italian>
-		<Spanish>[ICON_BULLET]Double %s1_commerce_type next year</Spanish>
-		<Finnish>[ICON_BULLET]Double %s1_commerce_type next year</Finnish>
+		<English>[ICON_BULLET]Double %s1_commerce_type next turn</English>
+		<French>[ICON_BULLET]Double %s1_commerce_type next turn</French>
+		<German>[ICON_BULLET]Doppelte %s1_commerce_type im n&#228;chsten runde</German>
+		<Italian>[ICON_BULLET]Double %s1_commerce_type next turn</Italian>
+		<Spanish>[ICON_BULLET]Double %s1_commerce_type next turn</Spanish>
+		<Finnish>[ICON_BULLET]Double %s1_commerce_type next turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_DOUBLE_COMMERCE_YEARS</Tag>
-		<English>[ICON_BULLET]Double %s1_commerce_type in %d2 years</English>
-		<French>[ICON_BULLET]Double %s1_commerce_type in %d2 years</French>
-		<German>[ICON_BULLET]Doppelte %s1_commerce_type f&#252;r %d2 Jahre</German>
-		<Italian>[ICON_BULLET]Double %s1_commerce_type in %d2 years</Italian>
-		<Spanish>[ICON_BULLET]Double %s1_commerce_type in %d2 years</Spanish>
-		<Finnish>[ICON_BULLET]Double %s1_commerce_type in %d2 years</Finnish>
+		<English>[ICON_BULLET]Double %s1_commerce_type in %d2 turns</English>
+		<French>[ICON_BULLET]Double %s1_commerce_type in %d2 turns</French>
+		<German>[ICON_BULLET]Doppelte %s1_commerce_type f&#252;r %d2 runde</German>
+		<Italian>[ICON_BULLET]Double %s1_commerce_type in %d2 turns</Italian>
+		<Spanish>[ICON_BULLET]Double %s1_commerce_type in %d2 turns</Spanish>
+		<Finnish>[ICON_BULLET]Double %s1_commerce_type in %d2 turns</Finnish>
 	</TEXT>
 
 <!-- Production Decay -->

@@ -14544,6 +14544,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 
 				if (iYear != MIN_INT)
 				{
+					/*
 					// year built
 					CvWString szYear;
 
@@ -14559,6 +14560,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 					{
 						szYear = gDLL->getText("TXT_KEY_TIME_AD", 1);
 					}
+					*/
 
 					szBuffer.append(NEWLINE);
 					//szBuffer.append(gDLL->getText("TXT_KEY_BUG_YEAR_BUILT", szYear.GetCString()));
@@ -14569,7 +14571,11 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 					{
 						for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 						{
-							int iDoubleTime = kBuilding.getCommerceChangeDoubleTime(iI);
+							// Fix - display times as calculated by the Fix CommerceChangeDoubleTime addon by Sephi
+							int iDoubleTime = kBuilding.getCommerceChangeDoubleTime(iI) * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent();
+							iDoubleTime /= 100;
+							// Fix - End
+
 							int iAge = GC.getGameINLINE().getGameTurnYear() - iYear;
 							
 							if (iAge < iDoubleTime)
