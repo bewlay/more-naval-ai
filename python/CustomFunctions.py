@@ -15,29 +15,36 @@ PyPlayer = PyHelpers.PyPlayer
 class CustomFunctions:
 
 
-	# Set up cached data.
+	# Set up containers for cached data.
 	def __init__(self):
-		self.siIgnoreFire = set()
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_ABUNDANT'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_EMPTY'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_FULL'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_LOW'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_OVERFLOWING'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_STOCKED'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_ALTERATION'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_DIVINATION'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_MASTERY'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY'))
-		self.siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS'))
+		self.__siIgnoreFire = set()
+
+	@property
+	def siIgnoreFire(self):
+		# Cached data is initialized the first time that it is read. This prevents assertions while the game is loading.
+		if len(self.__siIgnoreFire) > 0:
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_ABUNDANT'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_EMPTY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_FULL'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_LOW'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_OVERFLOWING'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_STOCKED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_ALTERATION'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_DIVINATION'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_MASTERY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS'))
+
+		return self.__siIgnoreFire
 
 
 	def addBonus(self, iBonus, iNum, sIcon):
