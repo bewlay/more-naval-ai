@@ -443,7 +443,9 @@ class CvEventManager:
 							if iTerrain == iDesert:
 								pPlot.setTempTerrainType(iPlains, CyGame().getSorenRandNum(90, "Bob") + 10)
 			'''
-			FLAT_WORLDS = ["ErebusWrap", "Erebus"]			# map scripts with wrapping but no equator
+			FLAT_WORLDS = [ # map scripts with wrapping but no equator
+				"ErebusWrap", "Erebus", "Erebus_mst",
+			]
 			MAX_EOW_PERCENTAGE = 0.25 						# percentage of EoW on total game turns 
 			THAW_DELAY_PERCENTAGE = 0.05 					# don't start thawing for x percent of EoW
 
