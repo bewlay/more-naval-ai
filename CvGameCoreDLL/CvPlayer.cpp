@@ -6202,6 +6202,12 @@ bool CvPlayer::canReceiveTradeCity() const
 
 bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial) const
 {
+	// Bugfix: Cannot trade items with enemies while in crusade.
+	if(isNoDiplomacyWithEnemies() && GET_TEAM(getTeam()).isAtWar(GET_PLAYER(eWhoTo).getTeam()))
+	{
+		return false;
+	}
+
 	CvCity *pOurCapitalCity;
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
