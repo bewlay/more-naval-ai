@@ -123,38 +123,13 @@ void CvGameTextMgr::setYearStr(CvWString& szString, int iGameTurn, bool bSave, C
 {
 	int iTurnYear = getTurnYearForGame(iGameTurn, iStartYear, eCalendar, eSpeed);
 
-	if (iTurnYear < 0)
+	if (bSave)
 	{
-		if (bSave)
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_BC_SAVE", CvWString::format(L"%04d", -iTurnYear).GetCString());
-		}
-		else
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_BC", -(iTurnYear));
-		}
-	}
-	else if (iTurnYear > 0)
-	{
-		if (bSave)
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_AD_SAVE", CvWString::format(L"%04d", iTurnYear).GetCString());
-		}
-		else
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_AD", iTurnYear);
-		}
+		szString = gDLL->getText("TXT_KEY_TIME_TURN_SAVE", CvWString::format(L"%04d", iTurnYear).GetCString());
 	}
 	else
 	{
-		if (bSave)
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_AD_SAVE", L"0001");
-		}
-		else
-		{
-			szString = gDLL->getText("TXT_KEY_TIME_AD", 1);
-		}
+		szString = gDLL->getText("TXT_KEY_TIME_TURN_STANDALONE", iTurnYear);
 	}
 }
 
@@ -5170,8 +5145,8 @@ It is fine for a human player mouse-over (which is what it is used for).
 void createTestFontString(CvWStringBuffer& szString)
 {
 	int iI;
-	szString.assign(L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[×]^_`abcdefghijklmnopqrstuvwxyz\n");
-	szString.append(L"{}~\\ßÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖØÙÚÛÜİŞŸßàáâãäåæçèéêëìíîïğñòóôõö÷øùúûüışÿ¿¡«»°ŠŒšœ™©®€£¢”‘“…’");
+	szString.assign(L"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[ï¿½]^_`abcdefghijklmnopqrstuvwxyz\n");
+	szString.append(L"{}~\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ŞŸï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	for (iI=0;iI<NUM_YIELD_TYPES;++iI)
 		szString.append(CvWString::format(L"%c", GC.getYieldInfo((YieldTypes) iI).getChar()));
 
@@ -14569,6 +14544,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 
 				if (iYear != MIN_INT)
 				{
+					/*
 					// year built
 					CvWString szYear;
 
@@ -14584,6 +14560,7 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 					{
 						szYear = gDLL->getText("TXT_KEY_TIME_AD", 1);
 					}
+					*/
 
 					szBuffer.append(NEWLINE);
 					//szBuffer.append(gDLL->getText("TXT_KEY_BUG_YEAR_BUILT", szYear.GetCString()));
@@ -14594,7 +14571,11 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 					{
 						for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 						{
-							int iDoubleTime = kBuilding.getCommerceChangeDoubleTime(iI);
+							// Fix - display times as calculated by the Fix CommerceChangeDoubleTime addon by Sephi
+							int iDoubleTime = kBuilding.getCommerceChangeDoubleTime(iI) * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent();
+							iDoubleTime /= 100;
+							// Fix - End
+
 							int iAge = GC.getGameINLINE().getGameTurnYear() - iYear;
 							
 							if (iAge < iDoubleTime)

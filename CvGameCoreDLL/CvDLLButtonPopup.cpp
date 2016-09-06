@@ -413,21 +413,10 @@ void CvDLLButtonPopup::OnOkClicked(CvPopup* pPopup, PopupReturn *pPopupReturn, C
 /************************************************************************************************/
 
 		}
-		// MNAI - Puppet States
+		// MNAI - Puppet States (OOS fix)
 		else if (pPopupReturn->getButtonClicked() == 4)
 		{
-		    bool bValid;
-		    CvCity* pCity = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCity(info.getData1());
-		    if (NULL != pCity)
-		    {
-                bValid = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).makePuppet(pCity->getPreviousOwner(), pCity);
-
-                if (!bValid)
-                {
-                    pCity->chooseProduction();
-                    CvEventReporter::getInstance().cityAcquiredAndKept(GC.getGameINLINE().getActivePlayer(), pCity);
-                }
-		    }
+			CvMessageControl::getInstance().sendDoTask(info.getData1(), TASK_MAKE_PUPPET, -1, -1, false, false, false, false);
 		}
 		// MNAI - End Puppet States
 		break;

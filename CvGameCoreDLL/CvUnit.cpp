@@ -6336,6 +6336,11 @@ bool CvUnit::pillage()
 	{
 		eTempRoute = pPlot->getRouteType();
 		pPlot->setRouteType(NO_ROUTE, true); // XXX downgrade rail???
+
+		// Show messages when roads are pillaged. Based on code by The_J.
+		szBuffer = gDLL->getText("TXT_KEY_MISC_IMP_DESTROYED", GC.getRouteInfo(eTempRoute).getTextKeyWide(), getNameKey(), getVisualCivAdjective(pPlot->getTeam()));
+		gDLL->getInterfaceIFace()->addMessage(pPlot->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+		// Show messages when roads are pillaged END
 	}
 
 	changeMoves(GC.getMOVE_DENOMINATOR());
@@ -17276,21 +17281,22 @@ void CvUnit::cast(int spell)
         gDLL->getPythonIFace()->callFunction(PYSpellModule, "cast", argsList.makeFunctionArgs()); //, &lResult
         delete pyUnit; // python fxn must not hold on to this pointer
     }
-    gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-    if (kSpellInfo.isSacrificeCaster())
-    {
-        kill(false);
-    }
 
 //>>>>Spell Interrupt Unit Cycling: Added by Denev 2009/10/17
 /*	Casting spell triggers unit cycling	*/
-	if (!getGroup()->readyToSelect(true) && !getGroup()->isBusy())
+	if (isInGroup() && !getGroup()->readyToSelect(true) && !getGroup()->isBusy())
 	{
 //		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 //		gDLL->getInterfaceIFace()->changeCycleSelectionCounter((GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_QUICK_MOVES)) ? 1 : 2);
 		GC.getGameINLINE().updateSelectionList();
 	}
 //<<<<Spell Interrupt Unit Cycling: End Add
+
+	gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+	if (kSpellInfo.isSacrificeCaster())
+	{
+		kill(false);
+	}
 }
 
 void CvUnit::castAddPromotion(int spell)

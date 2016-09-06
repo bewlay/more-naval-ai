@@ -14,6 +14,39 @@ PyPlayer = PyHelpers.PyPlayer
 
 class CustomFunctions:
 
+
+	# Set up containers for cached data.
+	def __init__(self):
+		self.__siIgnoreFire = set()
+
+	@property
+	def siIgnoreFire(self):
+		# Cached data is initialized the first time that it is read. This prevents assertions while the game is loading.
+		if len(self.__siIgnoreFire) > 0:
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_ANOINTED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_BLESSED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_CONSECRATED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_DIVINE'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_EXALTED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_ABUNDANT'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_EMPTY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_FULL'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_LOW'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_OVERFLOWING'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_STOCKED'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_ALTERATION'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_DIVINATION'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_MASTERY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_NECROMANCY'))
+			self.__siIgnoreFire.add(gc.getInfoTypeForString('BUILDING_TOWER_OF_THE_ELEMENTS'))
+
+		return self.__siIgnoreFire
+
+
 	def addBonus(self, iBonus, iNum, sIcon):
 		listPlots = []
 		for i in range (CyMap().numPlots()):
@@ -609,20 +642,25 @@ class CustomFunctions:
 
 	def doCityFire(self, pCity):
 		iCount = 0
-		iDemon = gc.getInfoTypeForString('BUILDING_DEMONIC_CITIZENS')
+
 		for iBuilding in range(gc.getNumBuildingInfos()):
-			if iBuilding != iDemon:
-				if pCity.getNumRealBuilding(iBuilding) > 0:
-					if gc.getBuildingInfo(iBuilding).getConquestProbability() != 100:
+			kBuilding = gc.getBuildingInfo(iBuilding)
+			# Evaluate getNumRealBuilding first, no need to check conditions for buildings that are not present.
+			if pCity.getNumRealBuilding(iBuilding) > 0 and iBuilding not in self.siIgnoreFire and \
+					not kBuilding.isRequiresCaster() and \
+					kBuilding.getBuildingClassType() != gc.getInfoTypeForString('BUILDINGCLASS_PALACE') and \
+					kBuilding.getConquestProbability() != 100:
 ##--------		Unofficial Bug Fix: Modified by Denev	--------##
-#						if CyGame().getSorenRandNum(100, "City Fire") <= 10:
-						if CyGame().getSorenRandNum(100, "City Fire") < 10:
+#				if CyGame().getSorenRandNum(100, "City Fire") <= 10:
+				if CyGame().getSorenRandNum(100, "City Fire") < 10:
 ##--------		Unofficial Bug Fix: End Modify			--------##
-							pCity.setNumRealBuilding(iBuilding, 0)
-							CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_CITY_FIRE",(gc.getBuildingInfo(iBuilding).getDescription(), )),'',1,gc.getBuildingInfo(iBuilding).getButton(),ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
-							iCount += 1
+					pCity.setNumRealBuilding(iBuilding, 0)
+					CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_CITY_FIRE",(kBuilding.getDescription(), )),'',1,kBuilding.getButton(),ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
+					iCount += 1
+
 		if iCount == 0:
 			CyInterface().addMessage(pCity.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_CITY_FIRE_NO_DAMAGE",()),'AS2D_SPELL_FIRE_ELEMENTAL',1,'Art/Interface/Buttons/Fire.dds',ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
+
 
 	def doHellTerrain(self):
 		iAshenVeil = gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL')

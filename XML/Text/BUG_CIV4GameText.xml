@@ -1368,12 +1368,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WONDER_DATE</Tag>
-		<English>Date</English>
-		<French>Date</French>
-		<German>Errichtet</German>
-		<Italian>Data</Italian>
-		<Spanish>Fecha</Spanish>
-		<Finnish>Date</Finnish>
+		<English>Turn</English>
+		<French>Tour</French>
+		<German>Runde</German>
+		<Italian>Turno</Italian>
+		<Spanish>Turno</Spanish>
+		<Finnish>Vuoro</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WONDER_OWNER</Tag>

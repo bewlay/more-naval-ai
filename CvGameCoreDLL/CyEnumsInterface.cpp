@@ -903,6 +903,9 @@ void CyEnumsPythonInterface()
 		.value("TASK_RALLY_PLOT", TASK_RALLY_PLOT)
 		.value("TASK_CLEAR_RALLY_PLOT", TASK_CLEAR_RALLY_PLOT)
 		.value("TASK_LIBERATE", TASK_LIBERATE)
+		// MNAI - Puppet States (OOS fix)
+		.value("TASK_MAKE_PUPPET", TASK_MAKE_PUPPET)
+		// End MNAI
 		.value("NUM_TASK_TYPES", NUM_TASK_TYPES)
 		;
 

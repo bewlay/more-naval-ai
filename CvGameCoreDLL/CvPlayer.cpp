@@ -6202,6 +6202,12 @@ bool CvPlayer::canReceiveTradeCity() const
 
 bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial) const
 {
+	// Bugfix: Cannot trade items with enemies while in crusade.
+	if(isNoDiplomacyWithEnemies() && GET_TEAM(getTeam()).isAtWar(GET_PLAYER(eWhoTo).getTeam()))
+	{
+		return false;
+	}
+
 	CvCity *pOurCapitalCity;
 /************************************************************************************************/
 /* Afforess	                  Start		 07/29/10                                               */
@@ -24866,11 +24872,12 @@ bool CvPlayer::canMakePuppet( CvCity* pVassalCapital ) const
 	argsList.add( pVassalCapital->getOriginalOwner() );
 	argsList.add( pVassalCapital->getID() );
 	long lResult = 0;
-	gDLL->getPythonIFace()->callFunction( PYRevModule, "getPuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
+	// Use canHavePuppetCivLeader, which does not perform random number calls.
+	gDLL->getPythonIFace()->callFunction( PYRevModule, "canHavePuppetCivLeader", argsList.makeFunctionArgs(), &lResult );
 
-	if( (LeaderHeadTypes) (lResult % GC.getNumLeaderHeadInfos()) == NO_LEADER )
+	if (lResult == 0)
 		return false;
-		
+
 /********************************************************************************/
 /* MinorPuppetLeaders	End												lfgr	*/
 /********************************************************************************/
