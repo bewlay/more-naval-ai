@@ -7,19 +7,19 @@
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_REVOLUTIONS</Tag>
-		<English>Revolutions</English>
-		<French>Revolutions</French>
-		<German>Revolutions</German>
-		<Italian>Revolutions</Italian>
-		<Spanish>Revoluciones</Spanish>
+		<English>Revolutions (Experimental)</English>
+		<French>Revolutions (Experimental)</French>
+		<German>Revolutions (Experimental)</German>
+		<Italian>Revolutions (Experimental)</Italian>
+		<Spanish>Revoluciones(Experimental)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_REVOLUTIONS_HELP</Tag>
-		<English>Allows the possibility of Revolutions</English>
-		<French>Allows the possibility of Revolutions</French>
-		<German>Allows the possibility of Revolutions</German>
-		<Italian>Allows the possibility of Revolutions</Italian>
-		<Spanish>Permite la posibilidad de Revoluciones</Spanish>
+		<English>Allows the possibility of Revolutions (Experimental)</English>
+		<French>Allows the possibility of Revolutions (Experimental)</French>
+		<German>Allows the possibility of Revolutions (Experimental)</German>
+		<Italian>Allows the possibility of Revolutions (Experimental)</Italian>
+		<Spanish>Permite la posibilidad de Revoluciones (Experimental)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_REVOLUTIONS</Tag>

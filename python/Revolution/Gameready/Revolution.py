@@ -5135,7 +5135,7 @@ class Revolution :
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
 			# had to remove. is this important?
-			game.setForcedAIAutoPlay(iPlayerID, 1, true) # Releases this player turn to the AI, human player changed below so that human now will control rebels
+			#game.setForcedAIAutoPlay(iPlayerID, 1, true) # Releases this player turn to the AI, human player changed below so that human now will control rebels
 #-------------------------------------------------------------------------------------------------
 # END Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
