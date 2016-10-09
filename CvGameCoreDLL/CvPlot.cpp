@@ -3112,10 +3112,46 @@ int CvPlot::getFeatureProduction(BuildTypes eBuild, TeamTypes eTeam, CvCity** pp
 
 	*ppCity = getWorkingCity();
 
-	if (*ppCity == NULL)
+	// Bugfix: Do not send production from chopping to settlements
+	//if (*ppCity == NULL)
+	//{
+	//	*ppCity = GC.getMapINLINE().findCity(getX_INLINE(), getY_INLINE(), NO_PLAYER, eTeam, false);
+	//}
+
+	if (*ppCity == NULL || (*ppCity)->isSettlement())
 	{
-		*ppCity = GC.getMapINLINE().findCity(getX_INLINE(), getY_INLINE(), NO_PLAYER, eTeam, false);
+		// Search for the closest city.
+		CvCity* pLoopCity;
+		CvCity* pBestCity;
+		int iValue;
+		int iBestValue = MAX_INT;
+		int iLoop;
+		int iX = getX_INLINE();
+		int iY = getY_INLINE();
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (kPlayer.isAlive() && kPlayer.getTeam() == eTeam)
+			{
+				for (pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+				{
+					if (!pLoopCity->isSettlement())
+					{
+						iValue = plotDistance(iX, iY, pLoopCity->getX_INLINE(), pLoopCity->getY_INLINE());
+
+						if (iValue < iBestValue)
+						{
+							iBestValue = iValue;
+							pBestCity = pLoopCity;
+						}
+					}
+				}
+			}
+		}
+		*ppCity = pBestCity;
 	}
+
+	// Bugfix end
 
 	if (*ppCity == NULL)
 	{

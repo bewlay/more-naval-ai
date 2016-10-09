@@ -8690,7 +8690,13 @@ void CvCityAI::AI_updateBestBuild()
 							CvCity* pCity;
 							iValue += pLoopPlot->getFeatureProduction(m_aeBestBuild[iI], getTeam(), &pCity) * 2;
 							// note: the scale of iValue here is roughly 4x commerce per turn. So a boost of 40 would be signficant.
-							FAssert(pCity == this);
+
+							// Bugfix: Do not send production from chopping to settlements
+							// FAssert(pCity == this);
+							// pCity can only be different than this if it is a settlement. Settlements are not allowed
+							// to receive production this way.
+							FAssert(pCity == this || this->isSettlement());
+							// Bugfix end
 						}
 						// make some minor adjustments to prioritize plots that are easy to access, and plots which aren't already improved.
 						if (iValue > 0)
@@ -11518,7 +11524,12 @@ void CvCityAI::AI_bestPlotBuild(CvPlot* pPlot, int* piBestValue, BuildTypes* peB
 					{
 						CvCity* pCity;
 						int iValue = (pPlot->getFeatureProduction(eBuild, getTeam(), &pCity)) * 10;
-						FAssert(pCity == this);
+						// Bugfix: Do not send production from chopping to settlements
+						// FAssert(pCity == this);
+						// pCity can only be different than this if it is a settlement. Settlements are not allowed
+						// to receive production this way.
+						FAssert(pCity == this || this->isSettlement());
+						// Bugfix end
 
 						if (iValue > 0)
 						{
