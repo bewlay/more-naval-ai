@@ -893,7 +893,9 @@ enum GameOptionTypes				// Exposed to Python
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
-
+//Multiple Production: Added by Denev 07/10/2009
+			GAMEOPTION_MULTIPLE_PRODUCTION,
+//Multiple Production: End Add
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES

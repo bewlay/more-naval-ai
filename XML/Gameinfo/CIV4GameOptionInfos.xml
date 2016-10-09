@@ -608,5 +608,12 @@
 			<bDefault>0</bDefault>
 			<bVisible>1</bVisible>
 		</GameOptionInfo>
+		<GameOptionInfo>
+			<Type>GAMEOPTION_MULTIPLE_PRODUCTION</Type>
+			<Description>TXT_KEY_GAME_OPTION_MULTIPLE_PRODUCTION</Description>
+			<Help>TXT_KEY_GAME_OPTION_MULTIPLE_PRODUCTION_HELP</Help>
+			<bDefault>0</bDefault>
+			<bVisible>1</bVisible>
+		</GameOptionInfo>
 	</GameOptionInfos>
 </Civ4GameOptionInfos>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_MULTIPLE_PRODUCTION</Tag>
+		<English>Multiple Production</English>
+		<French>Multiple Production</French>
+		<German>Multiple Production</German>
+		<Italian>Multiple Production</Italian>
+		<Spanish>
+			<Text>Producción Múltiple</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONCEPT_MULTIPLE_PRODUCTION_PEDIA</Tag>
+		<English>[H1]Multiple Production[\H1][PARAGRAPH:2]This game option changes how production overflow is handled in cities. When production overflow floods from overflow capacity, it is used in the next queue item immediately, not converted into gold. When the production overflow in a city is high enough to finish the next item or items in the production queue, they will be finished in the same turn too.[PARAGRAPH:2]This rule is not applied to Rituals and Wonders, as it could allow to accumulate overflow in order to build them faster once that their requirements are met. Production overflow isn't carried from normal production to items produced using food or viceversa, as that would allow to prevent halting city growth by accumulating enough overflow. Production overflow is carried between items produced with food in the same way it happens for normal production.</English>
+		<French>[H1]Multiple Production[\H1][PARAGRAPH:2]This game option changes how production overflow is handled in cities. When production overflow floods from overflow capacity, it is used in the next queue item immediately, not converted into gold. When the production overflow in a city is high enough to finish the next item or items in the production queue, they will be finished in the same turn too.[PARAGRAPH:2]This rule is not applied to Rituals and Wonders, as it could allow to accumulate overflow in order to build them faster once that their requirements are met. Production overflow isn't carried from normal production to items produced using food or viceversa, as that would allow to prevent halting city growth by accumulating enough overflow. Production overflow is carried between items produced with food in the same way it happens for normal production.</French>
+		<German>[H1]Multiple Production[\H1][PARAGRAPH:2]This game option changes how production overflow is handled in cities. When production overflow floods from overflow capacity, it is used in the next queue item immediately, not converted into gold. When the production overflow in a city is high enough to finish the next item or items in the production queue, they will be finished in the same turn too.[PARAGRAPH:2]This rule is not applied to Rituals and Wonders, as it could allow to accumulate overflow in order to build them faster once that their requirements are met. Production overflow isn't carried from normal production to items produced using food or viceversa, as that would allow to prevent halting city growth by accumulating enough overflow. Production overflow is carried between items produced with food in the same way it happens for normal production.</German>
+		<Italian>[H1]Multiple Production[\H1][PARAGRAPH:2]This game option changes how production overflow is handled in cities. When production overflow floods from overflow capacity, it is used in the next queue item immediately, not converted into gold. When the production overflow in a city is high enough to finish the next item or items in the production queue, they will be finished in the same turn too.[PARAGRAPH:2]This rule is not applied to Rituals and Wonders, as it could allow to accumulate overflow in order to build them faster once that their requirements are met. Production overflow isn't carried from normal production to items produced using food or viceversa, as that would allow to prevent halting city growth by accumulating enough overflow. Production overflow is carried between items produced with food in the same way it happens for normal production.</Italian>
+		<Spanish>[H1]Multiple Production[\H1][PARAGRAPH:2]This game option changes how production overflow is handled in cities. When production overflow floods from overflow capacity, it is used in the next queue item immediately, not converted into gold. When the production overflow in a city is high enough to finish the next item or items in the production queue, they will be finished in the same turn too.[PARAGRAPH:2]This rule is not applied to Rituals and Wonders, as it could allow to accumulate overflow in order to build them faster once that their requirements are met. Production overflow isn't carried from normal production to items produced using food or viceversa, as that would allow to prevent halting city growth by accumulating enough overflow. Production overflow is carried between items produced with food in the same way it happens for normal production.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_MULTIPLE_PRODUCTION</Tag>
+		<English>Multiple Production</English>
+		<French>Production Multiple</French>
+		<German>Mehrfache Produktion</German>
+		<Italian>Produzione Multipla</Italian>
+		<Spanish>Producción Múltiple</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_MULTIPLE_PRODUCTION_HELP</Tag>
+		<English>When a city production is enough to finish more than one item, it can produce multiple items per turn.</English>
+		<French>When a city production is enough to finish more than one item, it can produce multiple items per turn.</French>
+		<German>When a city production is enough to finish more than one item, it can produce multiple items per turn.</German>
+		<Italian>When a city production is enough to finish more than one item, it can produce multiple items per turn.</Italian>
+		<Spanish>When a city production is enough to finish more than one item, it can produce multiple items per turn.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_LOST_PROD_CONVERTED</Tag>
+		<English>%s1_CityName can't carry over [ICON_PRODUCTION] overflow any more. The lost %d2_NumProduction[ICON_PRODUCTION] is converted into %d3_NumGold[ICON_GOLD]!</English>
+		<French>%s1_CityName can't carry over [ICON_PRODUCTION] overflow any more. The lost %d2_NumProduction[ICON_PRODUCTION] is converted into %d3_NumGold[ICON_GOLD]!</French>
+		<German>%s1_CityName can't carry over [ICON_PRODUCTION] overflow any more. The lost %d2_NumProduction[ICON_PRODUCTION] is converted into %d3_NumGold[ICON_GOLD]!</German>
+		<Italian>%s1_CityName can't carry over [ICON_PRODUCTION] overflow any more. The lost %d2_NumProduction[ICON_PRODUCTION] is converted into %d3_NumGold[ICON_GOLD]!</Italian>
+		<Spanish>%s1_CityName no puede continuar preservando [ICON_PRODUCTION] sobrante. Los %d2_NumProduction[ICON_PRODUCTION] perdidos se han convertido en %d3_NumGold[ICON_GOLD]!</Spanish>
+	</TEXT>
+</Civ4GameText>

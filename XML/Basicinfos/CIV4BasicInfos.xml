@@ -62,6 +62,11 @@
 			<Civilopedia>TXT_KEY_CONCEPT_MANA_PEDIA</Civilopedia>
 		</ConceptInfo>
 		<ConceptInfo>
+			<Type>CONCEPT_MULTIPLE_PRODUCTION</Type>
+			<Description>TXT_KEY_CONCEPT_MULTIPLE_PRODUCTION</Description>
+			<Civilopedia>TXT_KEY_CONCEPT_MULTIPLE_PRODUCTION_PEDIA</Civilopedia>
+		</ConceptInfo>
+		<ConceptInfo>
 			<Type>CONCEPT_NAVAL_CREWS</Type>
 			<Description>TXT_KEY_CONCEPT_NAVAL_CREWS</Description>
 			<Civilopedia>TXT_KEY_CONCEPT_NAVAL_CREWS_PEDIA</Civilopedia>

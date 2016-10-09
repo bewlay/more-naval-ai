@@ -659,7 +659,9 @@ void CyEnumsPythonInterface()
 		.value("GAMEOPTION_PUPPET_STATES", GAMEOPTION_PUPPET_STATES) // added by Tholal
 		.value("GAMEOPTION_REVOLUTIONS", GAMEOPTION_REVOLUTIONS) // added by Tholal
 		.value("GAMEOPTION_ADVANCED_TACTICS", GAMEOPTION_ADVANCED_TACTICS) // added by Tholal
-
+//Multiple Production: Added by Denev 07/10/2009
+		.value("GAMEOPTION_MULTIPLE_PRODUCTION", GAMEOPTION_MULTIPLE_PRODUCTION)
+//Multiple Production: End Add
 		.value("NUM_GAMEOPTION_TYPES", NUM_GAMEOPTION_TYPES)
 		;
 
