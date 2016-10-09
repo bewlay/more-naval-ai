@@ -605,6 +605,7 @@
 	<ElementType name="iModifyGlobalCounter" content="textOnly" dt:type="int"/>
 	<ElementType name="iPrereqGlobalCounter" content="textOnly" dt:type="int"/>
 	<ElementType name="PrereqCivilization" content="textOnly"/>
+	<ElementType name="bHiddenAnnouncement" content="textOnly" dt:type="boolean"/>
 	<ElementType name="ProjectInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -635,6 +636,7 @@
 		<element type="iModifyGlobalCounter" minOccurs="0"/>
 		<element type="iPrereqGlobalCounter" minOccurs="0"/>
 		<element type="PrereqCivilization" minOccurs="0"/>
+		<element type="bHiddenAnnouncement" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ProjectInfos" content="eltOnly">
 		<element type="ProjectInfo" minOccurs="0" maxOccurs="*"/>

@@ -5116,6 +5116,10 @@ public:
 	int getPrereqGlobalCounter() const;
 //FfH: End Add
 
+// Hidden announcement projects: Added by Terkhen 09/10/2016
+	bool isHiddenAnnouncement() const;
+// Hidden announcement projects: End
+
 	// Arrays
 
 	int getBonusProductionModifier(int i) const;	// Exposed to Python
@@ -5158,6 +5162,10 @@ protected:
 	int m_iPrereqCivilization;
 	int m_iPrereqGlobalCounter;
 //FfH: End Add
+
+// Hidden announcement projects: Added by Terkhen 09/10/2016
+	bool m_bHiddenAnnouncement;
+// Hidden announcement projects: End
 
 	// Arrays
 

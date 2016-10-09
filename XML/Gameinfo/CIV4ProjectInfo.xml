@@ -534,6 +534,7 @@
 			<CreateSound/>
 			<MovieDefineTag/>
 			<iAIWeight>300</iAIWeight>
+			<bHiddenAnnouncement>1</bHiddenAnnouncement>
 		</ProjectInfo>
 	</ProjectInfos>
 </Civ4ProjectInfo>

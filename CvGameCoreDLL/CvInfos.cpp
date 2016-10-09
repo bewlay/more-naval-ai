@@ -20019,9 +20019,12 @@ m_piProjectsNeeded(NULL),
 m_iAIWeight(0),
 m_iModifyGlobalCounter(0),
 m_iPrereqCivilization(NO_CIVILIZATION),
-m_iPrereqGlobalCounter(0)
+m_iPrereqGlobalCounter(0),
 //FfH: End Add
 
+// Hidden announcement projects: Added by Terkhen 09/10/2016
+m_bHiddenAnnouncement(false)
+// Hidden announcement projects: End
 {
 }
 
@@ -20152,6 +20155,13 @@ int CvProjectInfo::getPrereqGlobalCounter() const
 }
 //FfH: End Add
 
+// Hidden announcement projects: Added by Terkhen 09/10/2016
+bool CvProjectInfo::isHiddenAnnouncement() const
+{
+	return m_bHiddenAnnouncement;
+}
+// Hidden announcement projects: End
+
 // Arrays
 
 int CvProjectInfo::getBonusProductionModifier(int i) const
@@ -20234,6 +20244,10 @@ bool CvProjectInfo::read(CvXMLLoadUtility* pXML)
 	m_aszExtraXMLforPass3.push_back(szTextVal);
 	pXML->GetChildXmlValByName(&m_iPrereqGlobalCounter, "iPrereqGlobalCounter");
 //FfH: End Add
+
+// Hidden announcement projects: Added by Terkhen 09/10/2016
+	pXML->GetChildXmlValByName(&m_bHiddenAnnouncement, "bHiddenAnnouncement");
+// Hidden announcement projects: End
 
 	return true;
 }
