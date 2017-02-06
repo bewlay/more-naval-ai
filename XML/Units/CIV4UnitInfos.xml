@@ -65057,7 +65057,7 @@
             <iTier>1</iTier>
             <UpgradeCiv>CIVILIZATION_CLAN_OF_EMBERS</UpgradeCiv>
             <bCanMoveLimitedBorders>1</bCanMoveLimitedBorders>
-            <PythonPostCombatWon>postCombatWolfRider(pCaster,pOpponent)</PythonPostCombatWon>
+            <PythonPostCombatWon>postCombatScorpionClan(pCaster,pOpponent)</PythonPostCombatWon>
             <DamageTypeCombats>
                 <DamageTypeCombat>
                     <DamageType>DAMAGE_POISON</DamageType>
