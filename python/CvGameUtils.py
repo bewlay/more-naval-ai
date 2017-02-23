@@ -754,7 +754,7 @@ class CvGameUtils:
 				elif iData2 == 8:
 					return CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 				elif iData2 == 9:
-					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.17"
+					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.17b"
 				elif iData2 == 10:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS",())
 				elif iData2 == 11:

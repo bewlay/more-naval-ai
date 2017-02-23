@@ -27,11 +27,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WB_FORTIFY</Tag>
-		<English>Forifying</English>
-		<French>Forifying</French>
-		<German>Forifying</German>
-		<Italian>Forifying</Italian>
-		<Spanish>Forifying</Spanish>
+		<English>Fortifying</English>
+		<French>Fortifying</French>
+		<German>Fortifying</German>
+		<Italian>Fortifying</Italian>
+		<Spanish>Fortifying</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WB_DONE</Tag>
@@ -1396,5 +1396,13 @@
 		<German>Can Cast</German>
 		<Italian>Can Cast</Italian>
 		<Spanish>Can Cast</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_WAR_PLAN</Tag>
+		<English>Planning War</English>
+		<French>Planning War</French>
+		<German>Planning War</German>
+		<Italian>Planning War</Italian>
+		<Spanish>Planning War</Spanish>
 	</TEXT>
 </Civ4GameText>

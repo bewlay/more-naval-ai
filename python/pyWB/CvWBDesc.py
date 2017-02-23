@@ -324,7 +324,7 @@ class CvTeamDesc:
 		pTeam = gc.getTeam(idx)
 
 		# Team ID (to make things easier to mess with in the text)
-		f.write("\tTeamID=%d, (%s)\n" %(idx, pTeam.getName()))
+		f.write("\tTeamID=%d, (%s)\n" %(idx, pTeam.getName().encode(fileencoding)))
 
 		# write techs
 		for i in range(gc.getNumTechInfos()):
@@ -337,7 +337,7 @@ class CvTeamDesc:
 		# write Espionage against other teams
 		for i in range(iNumTeams):
 			if pTeam.getEspionagePointsAgainstTeam(i) > 0:
-				f.write("\tEspionageTeam=%d, EspionageAmount=%d, (%s)\n" %(i, pTeam.getEspionagePointsAgainstTeam(i), gc.getTeam(i).getName()))
+				f.write("\tEspionageTeam=%d, EspionageAmount=%d, (%s)\n" %(i, pTeam.getEspionagePointsAgainstTeam(i), gc.getTeam(i).getName().encode(fileencoding)))
 
 		# write Espionage Ever against other teams
 		if pTeam.getEspionagePointsEver() > 0:
@@ -347,36 +347,36 @@ class CvTeamDesc:
 			if i == idx: continue
 			if gc.getTeam(i).isBarbarian(): continue
 			if pTeam.isHasMet(i):
-				f.write("\tContactWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName()))
+				f.write("\tContactWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName().encode(fileencoding)))
 	## Platy Builder ##
 		# write warring teams
 		for i in range(iNumTeams):
 			if pTeam.isAtWar(i):
-				f.write("\tAtWar=%d, (%s)\n" %(i, gc.getTeam(i).getName()))
+				f.write("\tAtWar=%d, (%s)\n" %(i, gc.getTeam(i).getName().encode(fileencoding)))
 
 		# write permanent war/peace teams
 		for i in range(iNumTeams):
 			if pTeam.isPermanentWarPeace(i):
-				f.write("\tPermanentWarPeace=%d, (%s)\n" %(i, gc.getTeam(i).getName()))
+				f.write("\tPermanentWarPeace=%d, (%s)\n" %(i, gc.getTeam(i).getName().encode(fileencoding)))
 
 		# write open borders other teams
 		for i in range(iNumTeams):
 			if pTeam.isOpenBorders(i):
-				f.write("\tOpenBordersWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName()))
+				f.write("\tOpenBordersWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName().encode(fileencoding)))
 
 		# write defensive pact other teams
 		for i in range(iNumTeams):
 			if pTeam.isDefensivePact(i):
-				f.write("\tDefensivePactWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName()))
+				f.write("\tDefensivePactWithTeam=%d, (%s)\n" %(i, gc.getTeam(i).getName().encode(fileencoding)))
 
 		# write vassal state
 		for i in range(iNumTeams):
 			if pTeam.isVassal(i):
 				iType = self.getRelationshipStatus(idx, i)
 				if iType == 1:
-					f.write("\tVassalOfTeam=%d, Type=%s, (%s)\n" %(i, "FREE", gc.getTeam(i).getName()))
+					f.write("\tVassalOfTeam=%d, Type=%s, (%s)\n" %(i, "FREE", gc.getTeam(i).getName().encode(fileencoding)))
 				elif iType == 0:
-					f.write("\tVassalOfTeam=%d, Type=%s, (%s)\n" %(i, "CAP", gc.getTeam(i).getName()))
+					f.write("\tVassalOfTeam=%d, Type=%s, (%s)\n" %(i, "CAP", gc.getTeam(i).getName().encode(fileencoding)))
 
 		for i in range(gc.getNumProjectInfos()):
 			for j in range(pTeam.getProjectCount(i)):
@@ -712,7 +712,7 @@ class CvPlayerDesc:
 			# write Attitude Extra
 			for i in range(iNumPlayers):
 				if pPlayer.AI_getAttitudeExtra(i) != 0:
-					f.write("\tAttitudePlayer=%d, AttitudeExtra=%d\n, (%s)" %(i, pPlayer.AI_getAttitudeExtra(i), gc.getPlayer(i).getName()))
+					f.write("\tAttitudePlayer=%d, AttitudeExtra=%d\n, (%s)" %(i, pPlayer.AI_getAttitudeExtra(i), gc.getPlayer(i).getName().encode(fileencoding)))
 
 			# write City List
 			for i in range(pPlayer.getNumCityNames()):
@@ -1127,7 +1127,7 @@ class CvUnitDesc:
 		"save unit desc to a file"
 		Info = gc.getUnitInfo(unit.getUnitType())
 		f.write("\tBeginUnit\n")
-		f.write("\t\tUnitType=%s, UnitOwner=%d, (%s)\n" %(Info.getType(), unit.getOwner(), gc.getPlayer(unit.getOwner()).getName()))
+		f.write("\t\tUnitType=%s, UnitOwner=%d, (%s)\n" %(Info.getType(), unit.getOwner(), gc.getPlayer(unit.getOwner()).getName().encode(fileencoding)))
 		if (len(unit.getNameNoDesc()) > 0):
 			f.write("\t\tUnitName=%s\n" %(unit.getNameNoDesc().encode(fileencoding),))
 		if unit.getLeaderUnitType() != -1:
@@ -1477,8 +1477,8 @@ class CvCityDesc:
 		city = plot.getPlotCity()
 		CvUtil.pyAssert(city.isNone()==0, "null city?")
 		f.write("\tBeginCity\n")
-		f.write("\t\tCityOwner=%d, (%s)\n" %(city.getOwner(), gc.getPlayer(city.getOwner()).getName()))
-		f.write("\t\tCityName=%s\n" %(city.getNameKey().encode(fileencoding),))
+		f.write("\t\tCityOwner=%d, (%s)\n" %(city.getOwner(), gc.getPlayer(city.getOwner()).getName().encode(fileencoding)))
+		f.write("\t\tCityName=%s\n" %(city.getName().encode(fileencoding),))
 		f.write("\t\tCityPopulation=%d\n" %(city.getPopulation(),))
 		if (city.isProductionUnit()):
 			f.write("\t\tProductionUnit=%s\n" %(gc.getUnitInfo(city.getProductionUnit()).getType(),))
@@ -1516,7 +1516,7 @@ class CvCityDesc:
 		for iPlayerLoop in range(iNumPlayers):
 			iPlayerCulture = city.getCulture(iPlayerLoop)
 			if (iPlayerCulture > 0):
-				f.write("\t\tPlayer%dCulture=%d, (%s)\n" %(iPlayerLoop, iPlayerCulture, gc.getPlayer(iPlayerLoop).getName()))
+				f.write("\t\tPlayer%dCulture=%d, (%s)\n" %(iPlayerLoop, iPlayerCulture, gc.getPlayer(iPlayerLoop).getName().encode(fileencoding)))
 		if city.getDefenseDamage() > 0:
 			f.write("\t\tDamage=%d\n" %(city.getDefenseDamage(),))
 		if city.getOccupationTimer() > 0:
@@ -1999,7 +1999,7 @@ class CvPlotDesc:
 		for iPlayerLoop in xrange(iNumPlayers):#Magister
 			iPlayerCulture = plot.getCulture(iPlayerLoop)
 			if iPlayerCulture > 0:
-				f.write("\tPlayer%dCulture=%d, (%s)\n" %(iPlayerLoop, iPlayerCulture, gc.getPlayer(iPlayerLoop).getName()))
+				f.write("\tPlayer%dCulture=%d, (%s)\n" %(iPlayerLoop, iPlayerCulture, gc.getPlayer(iPlayerLoop).getName().encode(fileencoding)))
 
 		f.write("EndPlot\n")
 
@@ -2133,8 +2133,6 @@ class CvPlotDesc:
 			if v!=-1:
 				self.portalExitY = int(v)
 				continue
-
-
 
 
 			v = parser.findTokenValue(toks, "RealBonusType")
@@ -2475,7 +2473,7 @@ class CvSignDesc:
 		f.write("\tplotX=%d\n" %(sign.getPlot().getX(),))
 		f.write("\tplotY=%d\n" %(sign.getPlot().getY(),))
 		if sign.getPlayerType() > -1:
-			f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), gc.getPlayer(sign.getPlayerType()).getName()))
+			f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), gc.getPlayer(sign.getPlayerType()).getName().encode(fileencoding)))
 		f.write("\tcaption=%s\n" %(sign.getCaption(),))
 		f.write("EndSign\n")
 
@@ -2540,10 +2538,10 @@ class CvWBDesc:
 		CvUtil.pyPrint( 'saveDesc:%s, curDir:%s' %(fileName,os.getcwd()) )
 
 		f = file(self.getDescFileName(fileName), "w")		# open text file
-##	## Platy Builder ##
+	## Platy Builder ##
 		f.write("%s\n" %("Platy Builder"))
 		f.write("bLoadSpecial=1\n")
-##	## Platy Builder ##
+	## Platy Builder ##
 		f.write("Version=%d\n" %(self.getVersion(),))
 		self.gameDesc.write(f)	# write game info
 

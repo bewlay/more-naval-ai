@@ -112,16 +112,20 @@ class WBDiplomacyScreen:
 
 	def setGeneralPage(self):
 		screen = CyGInterfaceScreen( "WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
-		sText = "%s: %s\t" %(CyTranslator().getText("[ICON_ANGRYPOP]", ()), CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_CONTACT", ()))
-		sText += "%s: %s\t" %(CyTranslator().getText("[ICON_OPENBORDERS]", ()), CyTranslator().getText("TXT_KEY_MISC_OPEN_BORDERS", ()))
-		sText += "%s: %s\t" %(CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), CyTranslator().getText("TXT_KEY_MISC_DEFENSIVE_PACT", ()))
-		sText += "%s: %s" %(CyTranslator().getText("[ICON_OCCUPATION]", ()), CyTranslator().getText("TXT_KEY_CONCEPT_WAR", ()))
-		screen.setLabel("LegendText", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()/5 + 20, screen.getYResolution() - 40, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		sText = "%s:%s\t" %(CyTranslator().getText("[ICON_ANGRYPOP]", ()), CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_CONTACT", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_STAR]", ()), CyTranslator().getText("TXT_KEY_MISC_EMBASSY", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_TRADE]", ()), CyTranslator().getText("TXT_KEY_MISC_LIMITED_BORDERS", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_OPENBORDERS]", ()), CyTranslator().getText("TXT_KEY_MISC_OPEN_BORDERS", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), CyTranslator().getText("TXT_KEY_MISC_DEFENSIVE_PACT", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_MAP]", ()), CyTranslator().getText("TXT_KEY_MISC_NON_AGGRESSION", ()))
+		sText += "%s:%s\t" %(CyTranslator().getText("[ICON_POWER]", ()), CyTranslator().getText("TXT_KEY_MISC_WAR_PLAN", ()))
+		sText += "%s:%s" %(CyTranslator().getText("[ICON_OCCUPATION]", ()), CyTranslator().getText("TXT_KEY_CONCEPT_WAR", ()))
+		screen.setLabel("LegendText", "Background", "<font=3>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()/5 + 20, 5, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iWidth = screen.getXResolution() - 40
 		iHeight = screen.getYResolution() - self.iTable_Y - 40
-		screen.addTableControlGFC( "WBDiplomacy", 10, 20, self.iTable_Y, iWidth, iHeight, True, True, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
-		iWidth -= 150
+		screen.addTableControlGFC( "WBDiplomacy", 14, 20, self.iTable_Y, iWidth, iHeight, True, True, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+		iWidth -= 250
 		iWidth1 = iWidth /6
 		iWidth2 = iWidth /4
 		screen.setTableColumnHeader("WBDiplomacy", 0, CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_CIV", ()), iWidth2)
@@ -129,25 +133,62 @@ class WBDiplomacyScreen:
 		screen.setTableColumnHeader("WBDiplomacy", 2, CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 50)
 		screen.setTableColumnHeader("WBDiplomacy", 3, CyTranslator().getText("TXT_KEY_WB_ATTITUDE", ()), iWidth1)
 		screen.setTableColumnHeader("WBDiplomacy", 4, CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_RELATIONS", ()), iWidth1)
-		screen.setTableColumnHeader("WBDiplomacy", 5, CyTranslator().getText("[ICON_ANGRYPOP]", ()), 25)
-		screen.setTableColumnHeader("WBDiplomacy", 6, CyTranslator().getText("[ICON_OPENBORDERS]", ()), 25)
-		screen.setTableColumnHeader("WBDiplomacy", 7, CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), 25)
-		screen.setTableColumnHeader("WBDiplomacy", 8, CyTranslator().getText("[ICON_OCCUPATION]", ()), 25)
-		screen.setTableColumnHeader("WBDiplomacy", 9, CyTranslator().getText("TXT_KEY_CONCEPT_WAR_WEARINESS", ()), iWidth1)
+		screen.setTableColumnHeader("WBDiplomacy", 5, CyTranslator().getText("[ICON_ANGRYPOP]", ()), 25)#Contact
+		screen.setTableColumnHeader("WBDiplomacy", 6, CyTranslator().getText("[ICON_STAR]", ()), 25)#Embassy
+		screen.setTableColumnHeader("WBDiplomacy", 7, CyTranslator().getText("[ICON_TRADE]", ()), 25)#Limited Borders
+		screen.setTableColumnHeader("WBDiplomacy", 8, CyTranslator().getText("[ICON_OPENBORDERS]", ()), 25)#Open Borders
+		screen.setTableColumnHeader("WBDiplomacy", 9, CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), 25)#Defensive Pact
+		screen.setTableColumnHeader("WBDiplomacy", 10, CyTranslator().getText("[ICON_MAP]", ()), 25)#Non-Aggression Pact
+		screen.setTableColumnHeader("WBDiplomacy", 11, CyTranslator().getText("[ICON_POWER]", ()), 25)#War Plan
+		screen.setTableColumnHeader("WBDiplomacy", 12, CyTranslator().getText("[ICON_OCCUPATION]", ()), 25)#War
+		screen.setTableColumnHeader("WBDiplomacy", 13, CyTranslator().getText("TXT_KEY_CONCEPT_WAR_WEARINESS", ()), iWidth1)
+
+##		screen = CyGInterfaceScreen( "WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
+##		sText = "%s: %s\t" %(CyTranslator().getText("[ICON_ANGRYPOP]", ()), CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_CONTACT", ()))
+##		sText += "%s: %s\t" %(CyTranslator().getText("[ICON_OPENBORDERS]", ()), CyTranslator().getText("TXT_KEY_MISC_OPEN_BORDERS", ()))
+##		sText += "%s: %s\t" %(CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), CyTranslator().getText("TXT_KEY_MISC_DEFENSIVE_PACT", ()))
+##		sText += "%s: %s" %(CyTranslator().getText("[ICON_OCCUPATION]", ()), CyTranslator().getText("TXT_KEY_CONCEPT_WAR", ()))
+##		screen.setLabel("LegendText", "Background", "<font=3b>" + sText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, screen.getXResolution()/5 + 20, screen.getYResolution() - 40, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+##
+##		iWidth = screen.getXResolution() - 40
+##		iHeight = screen.getYResolution() - self.iTable_Y - 40
+##		screen.addTableControlGFC( "WBDiplomacy", 10, 20, self.iTable_Y, iWidth, iHeight, True, True, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
+##		iWidth -= 150
+##		iWidth1 = iWidth /6
+##		iWidth2 = iWidth /4
+##		screen.setTableColumnHeader("WBDiplomacy", 0, CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_CIV", ()), iWidth2)
+##		screen.setTableColumnHeader("WBDiplomacy", 1, CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_LEADER", ()), iWidth2)
+##		screen.setTableColumnHeader("WBDiplomacy", 2, CyTranslator().getText("TXT_KEY_PITBOSS_TEAM", ()), 50)
+##		screen.setTableColumnHeader("WBDiplomacy", 3, CyTranslator().getText("TXT_KEY_WB_ATTITUDE", ()), iWidth1)
+##		screen.setTableColumnHeader("WBDiplomacy", 4, CyTranslator().getText("TXT_KEY_FOREIGN_ADVISOR_RELATIONS", ()), iWidth1)
+##		screen.setTableColumnHeader("WBDiplomacy", 5, CyTranslator().getText("[ICON_ANGRYPOP]", ()), 25)
+##		screen.setTableColumnHeader("WBDiplomacy", 6, CyTranslator().getText("[ICON_OPENBORDERS]", ()), 25)
+##		screen.setTableColumnHeader("WBDiplomacy", 7, CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()), 25)
+##		screen.setTableColumnHeader("WBDiplomacy", 8, CyTranslator().getText("[ICON_OCCUPATION]", ()), 25)
+##		screen.setTableColumnHeader("WBDiplomacy", 9, CyTranslator().getText("TXT_KEY_CONCEPT_WAR_WEARINESS", ()), iWidth1)
+#Magister Stop
 
 		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + " (+/-)</font></color>"
 		iX = 20 + iWidth2 * 2 + 50 + iWidth1
 		screen.setText("AttitudeAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, iX, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iX += iWidth1
-		screen.addTableControlGFC("DiplomacyAll", 4, iX, self.iTable_Y - 30, 125, 50, False, True, 24, 24, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addTableControlGFC("DiplomacyAll", 8, iX, self.iTable_Y - 30, 225, 50, False, True, 24, 24, TableStyles.TABLE_STYLE_EMPTY)
 		screen.appendTableRow("DiplomacyAll")
-		for i in xrange(4):
+#Magister
+		for i in xrange(8):
 			screen.setTableColumnHeader("DiplomacyAll", i, "", 24)
-		screen.setTableText("DiplomacyAll", 0, 0, "<font=4>" + CyTranslator().getText("[ICON_ANGRYPOP]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 0, CvUtil.FONT_CENTER_JUSTIFY)
-		screen.setTableText("DiplomacyAll", 1, 0, "<font=4>" + CyTranslator().getText("[ICON_OPENBORDERS]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 1, CvUtil.FONT_CENTER_JUSTIFY)
-		screen.setTableText("DiplomacyAll", 2, 0, "<font=4>" + CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 2, CvUtil.FONT_CENTER_JUSTIFY)
-		screen.setTableText("DiplomacyAll", 3, 0, "<font=4>" + CyTranslator().getText("[ICON_OCCUPATION]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 3, CvUtil.FONT_CENTER_JUSTIFY)
+		screen.setTableText("DiplomacyAll", 0, 0, "<font=4>" + CyTranslator().getText("[ICON_ANGRYPOP]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 0, CvUtil.FONT_CENTER_JUSTIFY)#Has Met
+		screen.setTableText("DiplomacyAll", 1, 0, "<font=4>" + CyTranslator().getText("[ICON_STAR]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 1, CvUtil.FONT_CENTER_JUSTIFY)#Embassy
+		screen.setTableText("DiplomacyAll", 2, 0, "<font=4>" + CyTranslator().getText("[ICON_TRADE]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 2, CvUtil.FONT_CENTER_JUSTIFY)#Rite of Passage
+		screen.setTableText("DiplomacyAll", 3, 0, "<font=4>" + CyTranslator().getText("[ICON_OPENBORDERS]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 3, CvUtil.FONT_CENTER_JUSTIFY)#Open Borders
+		screen.setTableText("DiplomacyAll", 4, 0, "<font=4>" + CyTranslator().getText("[ICON_DEFENSIVEPACT]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 4, CvUtil.FONT_CENTER_JUSTIFY)#Defensive Pact
+		screen.setTableText("DiplomacyAll", 5, 0, "<font=4>" + CyTranslator().getText("[ICON_MAP]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 5, CvUtil.FONT_CENTER_JUSTIFY)#Non-Aggression
+		screen.setTableText("DiplomacyAll", 6, 0, "<font=4>" + CyTranslator().getText("[ICON_POWER]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 6, CvUtil.FONT_CENTER_JUSTIFY)#War Plan
+		screen.setTableText("DiplomacyAll", 7, 0, "<font=4>" + CyTranslator().getText("[ICON_OCCUPATION]", ()) + "<\font>", "", WidgetTypes.WIDGET_PYTHON, 1030, 7, CvUtil.FONT_CENTER_JUSTIFY)#Is at War
+
+#Magister
+
 		screen.setLabel("DiplomacyAllText", "Background", "<font=4b>" + CyTranslator().getText("TXT_KEY_WB_CITY_ALL", ()) + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, iX, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		screen.setText("WearinessAll", "Background", sText, CvUtil.FONT_RIGHT_JUSTIFY, screen.getXResolution() - 20, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -196,20 +237,43 @@ class WBDiplomacyScreen:
 			if pTeam.isHasMet(iSelectedTeam):
 				sText = CyTranslator().getText("[ICON_ANGRYPOP]",())
 			screen.setTableText("WBDiplomacy", 5, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1032, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
+#Magister Start
+			sText = ""
+			if pTeam.isHasEmbassy(iSelectedTeam):
+				sText = CyTranslator().getText("[ICON_STAR]",())
+			screen.setTableText("WBDiplomacy", 6, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1040, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
+			sText = ""
+			if pTeam.isLimitedBorders(iSelectedTeam):
+				sText = CyTranslator().getText("[ICON_TRADE]",())
+			screen.setTableText("WBDiplomacy", 7, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1038, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
 			sText = ""
 			if pTeam.isOpenBorders(iSelectedTeam):
 				sText = CyTranslator().getText("[ICON_OPENBORDERS]",())
-			screen.setTableText("WBDiplomacy", 6, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1033, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+			screen.setTableText("WBDiplomacy", 8, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1033, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
 			sText = ""
 			if pTeam.isDefensivePact(iSelectedTeam):
 				sText = CyTranslator().getText("[ICON_DEFENSIVEPACT]",())
-			screen.setTableText("WBDiplomacy", 7, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1034, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+			screen.setTableText("WBDiplomacy", 9, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1034, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
+			sText = ""
+			if pTeam.isHasNonAggression(iSelectedTeam):
+				sText = CyTranslator().getText("[ICON_MAP]",())
+			screen.setTableText("WBDiplomacy", 10, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1039, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
+			sText = ""
+			if pTeam.isHasPrepareWar(iSelectedTeam):
+				sText = CyTranslator().getText("[ICON_POWER]",())
+			screen.setTableText("WBDiplomacy", 11, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1037, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+
 			sText = ""
 			if pTeam.isAtWar(iSelectedTeam):
 				sText = CyTranslator().getText("[ICON_OCCUPATION]",())
-			screen.setTableText("WBDiplomacy", 8, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1035, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
-			screen.setTableText("WBDiplomacy", 9, iRow, "<font=3>" + sWeariness + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1036, iTeam, CvUtil.FONT_RIGHT_JUSTIFY)
-
+			screen.setTableText("WBDiplomacy", 12, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1035, iTeam , CvUtil.FONT_CENTER_JUSTIFY)
+			screen.setTableText("WBDiplomacy", 13, iRow, "<font=3>" + sWeariness + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1036, iTeam, CvUtil.FONT_RIGHT_JUSTIFY)
+#Magister Stop
 	def setEspionagePage(self):
 		screen = CyGInterfaceScreen( "WBDiplomacyScreen", CvScreenEnums.WB_DIPLOMACY)
 		screen.addDropDownBoxGFC("CurrentMemory", screen.getXResolution()/5 + 20, screen.getYResolution() - 40, 450, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -362,14 +426,32 @@ class WBDiplomacyScreen:
 					pPlayerX = gc.getPlayer(iPlayerX)
 					iTeamX = pPlayerX.getTeam()
 					if iPlayerX != gc.getTeam(iTeamX).getLeaderID(): continue
+#Magister Start
 					if inputClass.getData2() == 0:
 						self.editContact(iTeamX)
+
 					if inputClass.getData2() == 1:
-						self.editOpenBorders(iTeamX, bRemove)
+						self.editHasEmbassy(iTeamX, bRemove)
+
 					if inputClass.getData2() == 2:
-						self.editDefensivePact(iTeamX, bRemove)
+						self.editLimitedBorders(iTeamX, bRemove)
+
 					if inputClass.getData2() == 3:
+						self.editOpenBorders(iTeamX, bRemove)
+
+					if inputClass.getData2() == 4:
+						self.editDefensivePact(iTeamX, bRemove)
+
+					if inputClass.getData2() == 5:
+						self.editNonAggression(iTeamX, bRemove)
+
+					if inputClass.getData2() == 6:
+						self.editWarPlan(iTeamX, bRemove)
+
+					if inputClass.getData2() == 7:
 						self.editWarStatus(iTeamX, bRemove)
+#Magister Stop
+
 			elif inputClass.getFunctionName() == "WearinessAll":
 				for iPlayerX in lPlayers:
 					pPlayerX = gc.getPlayer(iPlayerX)
@@ -391,6 +473,21 @@ class WBDiplomacyScreen:
 				self.editWarStatus(inputClass.getData2(), pSelectedTeam.isAtWar(inputClass.getData2()))
 			elif inputClass.getData1() == 1036:
 				self.editWarWeariness(iSelectedTeam, inputClass.getData2())
+
+#Magister Start
+			elif inputClass.getData1() == 1037:
+				self.editWarPlan(iSelectedTeam, inputClass.getData2())
+
+			elif inputClass.getData1() == 1038:
+				self.editLimitedBorders(inputClass.getData2(), pSelectedTeam.isLimitedBorders(inputClass.getData2()))
+
+			elif inputClass.getData1() == 1039:
+				self.editNonAggression(inputClass.getData2(), pSelectedTeam.isHasNonAggression(inputClass.getData2()))
+
+			elif inputClass.getData1() == 1040:
+				self.editHasEmbassy(inputClass.getData2(), pSelectedTeam.isHasEmbassy(inputClass.getData2()))
+#Magister Stop
+
 			self.setGeneralPage()
 		return 1
 
@@ -437,6 +534,72 @@ class WBDiplomacyScreen:
 			pSelectedTeam.makePeace(iTeam)
 		else:
 			pSelectedTeam.declareWar(iTeam, True, -1)
+
+#Magister Start
+	def editHasEmbassy(self, iTeam, bCancel):
+		if not pSelectedTeam.isHasMet(iTeam): return
+		if pSelectedTeam.isAtWar(iTeam): return
+		if not (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS)):
+			return False
+		if bCancel:
+			pSelectedTeam.setHasEmbassy(iTeam, False)
+		else:
+			pSelectedTeam.setHasEmbassy(iTeam, True)
+
+	def editWarPlan(self, iTeam, bCancel):
+##		if not pSelectedTeam.isHasMet(iTeam): return
+		if pSelectedTeam.isAtWar(iTeam): return
+		if bCancel:
+			pSelectedTeam.setHasPrepareWar(iTeam, False)
+		else:
+			pSelectedTeam.setHasPrepareWar(iTeam, True)
+
+	def editLimitedBorders(self, iTeam, bCancel):
+		if not pSelectedTeam.isHasMet(iTeam): return
+		if pSelectedTeam.isOpenBorders(iTeam):
+			return False
+		if not (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS)):
+			return False
+		if bCancel:
+			for i in xrange(CyGame().getIndexAfterLastDeal()):
+				pDeal = CyGame().getDeal(i)
+				iPlayer1 = pDeal.getFirstPlayer()
+				iPlayer2 = pDeal.getSecondPlayer()
+				if iPlayer1 == -1 or iPlayer2 == -1: continue
+				iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
+				iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
+				if (iTeam1 == iTeam and iTeam2 == iSelectedTeam) or (iTeam2 == iTeam and iTeam1 == iSelectedTeam):
+					for j in xrange(pDeal.getLengthFirstTrades()):
+						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_RIGHT_OF_PASSAGE:
+							pDeal.kill()
+							return
+		else:
+			pSelectedTeam.signLimitedBorders(iTeam)
+
+	def editNonAggression(self, iTeam, bCancel):
+		if not (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_TACTICS)):
+			return False
+		if not pSelectedTeam.isHasMet(iTeam): return
+		if pSelectedTeam.isAtWar(iTeam):return
+		if bCancel:
+			for i in xrange(CyGame().getIndexAfterLastDeal()):
+				pDeal = CyGame().getDeal(i)
+				iPlayer1 = pDeal.getFirstPlayer()
+				iPlayer2 = pDeal.getSecondPlayer()
+				if iPlayer1 == -1 or iPlayer2 == -1: continue
+				iTeam1 = gc.getPlayer(pDeal.getFirstPlayer()).getTeam()
+				iTeam2 = gc.getPlayer(pDeal.getSecondPlayer()).getTeam()
+				if (iTeam1 == iTeam and iTeam2 == iSelectedTeam) or (iTeam2 == iTeam and iTeam1 == iSelectedTeam):
+					for j in xrange(pDeal.getLengthFirstTrades()):
+						if pDeal.getFirstTrade(j).ItemType == TradeableItems.TRADE_NON_AGGRESSION:
+							pDeal.kill()
+							self.interfaceScreen(iSelectedPlayer)
+							return
+
+#			pSelectedTeam.setHasNonAggression(iTeam, False)
+		else:
+			pSelectedTeam.setHasNonAggression(iTeam, True)
+#Magister Stop
 
 	def editDefensivePact(self, iTeam, bCancel):
 		if not pSelectedTeam.isHasMet(iTeam): return
