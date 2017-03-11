@@ -10580,10 +10580,10 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	if (iChange < 0)
 	{
-		return (iTheirValue * 110 >= iOurValue * 100);
+		return (iTheirValue * 120 >= iOurValue * 100);
 	}
-
-	return (iTheirValue >= iOurValue);
+	return (iTheirValue * 110 >= iOurValue * 100);
+	//return (iTheirValue >= iOurValue);
 }
 
 

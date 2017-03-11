@@ -5109,6 +5109,11 @@ void CvUnitAI::AI_cityDefenseMove()
 		{
 			return;
 		}
+		else if (isBarbarian() && plot()->isCity())
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+			return;
+		}
 	}
 
 	if (AI_guardCityBestDefender())

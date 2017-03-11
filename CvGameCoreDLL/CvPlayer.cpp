@@ -21631,31 +21631,31 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 				}
 			}
 		}
+		//}
+
+	//FfH: Modified by Kael 09/25/2008
+	//	if (!isEmpty(kTrigger.getPythonCallback()))
+	//	{
+	//		long lResult;
+	//		CyArgsList argsList;
+	//		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
+	//		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
+	//	}
+		if (isAlive())
+		{
+			if (!CvString(kTrigger.getPythonCallback()).empty())
+			{
+				long lResult;
+
+				CyArgsList argsList;
+				argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
+				argsList.add(getID());	// Player ID
+				gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
+			}
+		}
+		GC.getGameINLINE().setEventTriggered((EventTriggerTypes)kTriggeredData.m_eTrigger, true);
+	//FfH: End Modify
 	}
-
-//FfH: Modified by Kael 09/25/2008
-//	if (!isEmpty(kTrigger.getPythonCallback()))
-//	{
-//		long lResult;
-//		CyArgsList argsList;
-//		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-//		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-//	}
-    if (isAlive())
-    {
-		if (!CvString(kTrigger.getPythonCallback()).empty())
-        {
-            long lResult;
-
-            CyArgsList argsList;
-            argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-            argsList.add(getID());	// Player ID
-            gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-        }
-    }
-    GC.getGameINLINE().setEventTriggered((EventTriggerTypes)kTriggeredData.m_eTrigger, true);
-//FfH: End Modify
-
 	if (bAnnounce)
 	{
 		CvPlot* pPlot = GC.getMapINLINE().plot(kTriggeredData.m_iPlotX, kTriggeredData.m_iPlotY);

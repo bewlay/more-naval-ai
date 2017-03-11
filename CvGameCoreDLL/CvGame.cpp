@@ -7543,6 +7543,7 @@ void CvGame::createBarbarianCities()
 	if (pBestPlot != NULL)
 	{
 		GET_PLAYER(BARBARIAN_PLAYER).found(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+		logBBAI("Barbarian city created at plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 	}
 }
 
@@ -8693,6 +8694,10 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 	if (kVote.isCultureNeedsEmptyRadius())
     {
         setCultureNeedsEmptyRadius(kData.eVoteSource, bChange);
+    }
+	if (kVote.isNoCityRazing())
+    {
+        setNoCityRazing(kData.eVoteSource, bChange);
     }
 	// End Advanced Diplomacy
 
