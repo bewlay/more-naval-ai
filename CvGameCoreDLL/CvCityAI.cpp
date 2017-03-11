@@ -4361,6 +4361,21 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 
 									//iValue *= (iPromotionValue + 100);
 									//iValue /= 100;
+
+
+									// MNAI - include freepromotions
+									for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+									{
+										if (getNumBuilding((BuildingTypes)iI) > 0)
+										{
+											if (GC.getBuildingInfo((BuildingTypes)iI).getFreePromotionPick() > 0)
+											{
+												iPromotionValue += 10;
+											}
+										}
+									}
+									// End MNAI
+
 									iValue += iPromotionValue;
 								}
 

@@ -3057,19 +3057,6 @@ int CvCity::getProductionExperience(UnitTypes eUnit)
 		}
 	}
 
-	// MNAI - include freepromotions
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		if (getNumBuilding((BuildingTypes)iI) > 0)
-		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getFreePromotionPick() > 0)
-			{
-				iExperience += 5;
-			}
-		}
-	}
-	// End MNAI
-
 	return std::max(0, iExperience);
 }
 
