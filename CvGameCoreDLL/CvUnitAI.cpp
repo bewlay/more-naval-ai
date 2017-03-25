@@ -128,15 +128,6 @@ bool CvUnitAI::AI_update()
 	// TODO: make this section better
 	if (!GET_PLAYER(getOwnerINLINE()).isHuman())
     {
-		if (getUnitClassType() == GC.getDefineINT("UNITCLASS_FREAK"))
-		{
-			if (canConstruct(plot(),(BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW")))
-			{
-				construct((BuildingTypes)GC.getDefineINT("BUILDING_FREAK_SHOW"));
-				return false;
-			}
-		}
-
 		// Tholal AI - Shades
 		if (getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_SHADE"))
 		{
