@@ -29785,6 +29785,7 @@ int CvPlayerAI::AI_secretaryGeneralTradeVal(VoteSourceTypes eVoteSource, PlayerT
 }
 
 
+// Note: ePlayer is the Player we want someone to declare war against
 TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes ePlayer)
 {
 	int iValue = 0;
@@ -29795,9 +29796,8 @@ TeamTypes CvPlayerAI::AI_bestJoinWarTeam(PlayerTypes ePlayer)
 	{
 		CvPlayerAI &kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
 
-		if (getID() != iI && kLoopPlayer.isAlive())
+		if (getID()!= iI && ePlayer != iI && kLoopPlayer.isAlive())
 		{
-			// MAKE SURE ITS NOT US
 			//if we are at war, or they have backstabbed a friend, or they are a mutual enemy
 			if (atWar(GET_PLAYER((PlayerTypes)iI).getTeam(), getTeam()) || 
 				(AI_getMemoryCount(ePlayer, MEMORY_BACKSTAB_FRIEND) > 0) || 
