@@ -17100,7 +17100,7 @@ void CvUnit::cast(int spell)
 
 	if( gUnitLogLevel > 2 )
 	{
-		logBBAI("     %S casting %S (plot %d, %d)\n",  getName().GetCString(), kSpellInfo.getDescription(), getX(), getY());
+		logBBAI("     %S (%d) casting %S (plot %d, %d)\n",  getName().GetCString(), getID(), kSpellInfo.getDescription(), getX(), getY());
 	}
 
     if (kSpellInfo.isHasCasted())

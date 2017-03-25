@@ -3135,9 +3135,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			iTempValue = 0;
 
 			eFeature = pLoopPlot->getFeatureType();
-			//eBonus = pLoopPlot->getBonusType((bStartingLoc) ? NO_TEAM : getTeam());
-			// this call checks for tech reveal limitations
-			eBonus = pLoopPlot->getBonusType(getTeam());
+			eBonus = pLoopPlot->getBonusType(getTeam()); // this call checks for tech reveal limitations on the bonus
 			eBonusImprovement = NO_IMPROVEMENT;
 
 			if (eBonus != NO_BONUS)
@@ -3155,7 +3153,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 						iTempValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 250 : 100);
 					}
 
-					// dont value bonuses that have blocking features. working?
+					// dont value bonuses that have blocking features
 					if (eFeature != NO_FEATURE)
 					{
 						bCanWork = false;

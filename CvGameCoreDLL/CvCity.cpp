@@ -170,6 +170,10 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	if( gCityLogLevel >= 3 )
 	{
 		logBBAI("    Player %d City %d built at %d:%d", eOwner, iID, iX, iY );
+		if (pPlot->getBonusType() != NO_BONUS)
+		{
+			if( gPlayerLogLevel >= 3 ) {logBBAI("       ... City Founded on top of Bonus!!!");}
+		}
 	}
 
 	//--------------------------------

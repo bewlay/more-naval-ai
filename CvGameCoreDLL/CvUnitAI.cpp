@@ -15341,7 +15341,7 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 
 	if ((pBestPlot != NULL) && (pBestConstructPlot != NULL) && (eBestBuilding != NO_BUILDING))
 	{
-		logBBAI("  %S constructing %S at %d, %d (value: %d)", getName().GetCString(), GC.getBuildingInfo(eBestBuilding).getText(), pBestPlot->getX(), pBestPlot->getY(), iBestValue);
+		logBBAI("  %S (%d)constructing %S at %d, %d (value: %d)", getName().GetCString(), getID(), GC.getBuildingInfo(eBestBuilding).getText(), pBestPlot->getX(), pBestPlot->getY(), iBestValue);
 		if (atPlot(pBestConstructPlot))
 		{
 			getGroup()->pushMission(MISSION_CONSTRUCT, eBestBuilding);
@@ -27119,6 +27119,7 @@ void CvUnitAI::AI_PatrolMove()
 		{
 			if (getGroup()->getNumUnits() > ((GET_PLAYER(getOwnerINLINE()).getNumCities() + 1) * 3))
 			{
+				if( gUnitLogLevel > 3 ) logBBAI("       ...switching to GROUPFLAG_CONQUEST");
 				AI_setGroupflag(GROUPFLAG_CONQUEST);
 				return;
 			}
@@ -27233,6 +27234,7 @@ void CvUnitAI::AI_PatrolMove()
 	// Guard a city we're in if it needs it
 	if (AI_guardCity(true))
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...Patrol - Guard City 1");
 		return;
 	}
 
@@ -28072,6 +28074,7 @@ void CvUnitAI::AI_ConquestMove()
 
 		if (AI_guardCity(false)) // note. this will eject a unit to defend the city rather then using the whole group
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("       ...guarding city on plot");}
 			return;
 		}
 
