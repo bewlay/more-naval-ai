@@ -2629,31 +2629,6 @@ def spellRevelry(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	pPlayer.changeGoldenAgeTurns(CyGame().goldenAgeLength() * 2)
 
-def reqRevelation(caster):
-	pPlayer = gc.getPlayer(caster.getOwner())
-	iTeam = pPlayer.getTeam()
-	iX = caster.getX()
-	iY = caster.getY()
-	iHidden = gc.getInfoTypeForString('PROMOTION_HIDDEN')
-	iHiddenNationality = gc.getInfoTypeForString('PROMOTION_HIDDEN_NATIONALITY')
-	iIllusion = gc.getInfoTypeForString('PROMOTION_ILLUSION')
-	iInvisible = gc.getInfoTypeForString('PROMOTION_INVISIBLE')
-	for iiX in range(iX-3, iX+4, 1):
-		for iiY in range(iY-3, iY+4, 1):
-			pPlot = CyMap().plot(iiX,iiY)
-			for iUnit in range(pPlot.getNumUnits()):
-				pUnit = pPlot.getUnit(iUnit)
-				if pUnit.getTeam() != iTeam:
-					if pUnit.isHasPromotion(iHidden):
-						return True
-					if pUnit.isHasPromotion(iHiddenNationality):
-						return True
-					if pUnit.isHasPromotion(iInvisible):
-						return True
-					if pUnit.isHasPromotion(iIllusion):
-						return True
-	return False
-
 def spellRevelation(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())
 	iTeam = pPlayer.getTeam()
