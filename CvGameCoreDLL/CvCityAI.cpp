@@ -5141,7 +5141,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 									iUnitTempValue = (iCombatValue * 2);
 
 									// Harcode - ToDo - fix this
-									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
+									if (kUnitInfo.getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
 									{
 										iUnitTempValue += (kOwner.AI_getMojoFactor() * 5);
 									}
@@ -5155,7 +5155,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 											{
 												if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
 												{
-													if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+													if ((kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
 													{
 														iUnitTempValue += 3;
 													}
@@ -5166,21 +5166,30 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 									if (bCulturalVictory2 || bAltarVictory2 || bTowerVictory2)
 									{
-										iUnitTempValue += GC.getUnitInfo(eLoopUnit).getCombatDefense() * 2;
+										iUnitTempValue += kUnitInfo.getCombatDefense() * 2;
 									}
 
-									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getTier() * 3;
-									iUnitTempValue += GC.getUnitInfo(eLoopUnit).getWeaponTier();
+									iUnitTempValue += kUnitInfo.getTier() * 3;
+									iUnitTempValue += kUnitInfo.getWeaponTier();
 
-									if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() != NO_CIVILIZATION)
+									if (GET_PLAYER(getOwner()).getHighestUnitTier(false,true) > kUnitInfo.getTier())
 									{
-										if (GC.getUnitInfo(eLoopUnit).getPrereqCiv() == getCivilizationType())
+										iUnitTempValue += kUnitInfo.getTier() * 10;
+									}
+									else
+									{
+										iUnitTempValue += kUnitInfo.getTier() * 3;
+									}
+
+									if (kUnitInfo.getPrereqCiv() != NO_CIVILIZATION)
+									{
+										if (kUnitInfo.getPrereqCiv() == getCivilizationType())
 										{
 											iUnitTempValue *= 2;
 										}
 									}
 
-									if (GC.getUnitInfo(eLoopUnit).getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
+									if (kUnitInfo.getUnitCombatType() == (UnitCombatTypes)GC.getLeaderHeadInfo(getPersonalityType()).getFavoriteUnitCombat())
 									{
 										bFavoriteUnitClass = true;
 										iUnitTempValue *= 5;
