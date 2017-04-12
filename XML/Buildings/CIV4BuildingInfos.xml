@@ -9983,7 +9983,7 @@
 			<iResistMagic>0</iResistMagic>
 			<FreeBonus2>NONE</FreeBonus2>
 			<FreeBonus3>NONE</FreeBonus3>
-			<PrereqCiv></PrereqCiv>
+			<PrereqCiv>CIVILIZATION_INFERNAL</PrereqCiv>
 			<PrereqTrait>NONE</PrereqTrait>
 			<RemovePromotion>NONE</RemovePromotion>
 			<SpecialistCommerceChanges>
