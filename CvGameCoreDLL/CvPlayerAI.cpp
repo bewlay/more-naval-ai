@@ -2995,7 +2995,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	iGreed = 100;
 	// K-Mod
 	// some trait information that will influence where we settle
-	bool bEasyCulture = bStartingLoc; // easy for us to pop the culture to the 2nd border
+	bool bEasyCulture = (getNumCities() == 0) ? true: false; // easy for us to pop the culture to the 2nd border
 	bool bAmbitious = false; // expectation of taking foreign land, either by culture or by force
 	bool bFinancial = false; // more value for rivers
 	bool bDefensive = false; // more value for settlings on hills
@@ -3012,7 +3012,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		{
 			if (GC.getTraitInfo((TraitTypes)iTrait).getCommerceChange(COMMERCE_CULTURE) > 0)
 			{
-				//bEasyCulture = true;
+				bEasyCulture = true;
 
 				if (GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight() <= 5)
 				{
@@ -3145,6 +3145,10 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				{
 					iValue -= AI_bonusVal(eBonus);
 					bCanWork = false;
+				}
+				else if (!pLoopPlot->isWater() && (pLoopPlot->area() != pArea) || (pLoopPlot->area()->getCitiesPerPlayer(getID()) == 0))
+				{
+					bCanWork = false;  // devalue tiles across water. AI cant improve them (yet)
 				}
 				else
 				{
@@ -3340,7 +3344,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				iTempValue += aiYield[YIELD_PRODUCTION] * 40;
 				iTempValue += aiYield[YIELD_COMMERCE] * 30;
 
-				if (bStartingLoc)
+				if (getNumCities() == 0)
 				{
 					iTempValue *= 2;
 				}
@@ -3366,6 +3370,10 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 					{
 	                    iTempValue +=150;
 					}
+				}
+				else if (!GET_TEAM(getTeam()).isWaterWork())
+				{
+					iTempValue -= 25;
 				}
 
 				if (aiYield[YIELD_COMMERCE] > 1)
@@ -3541,6 +3549,10 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				if (bNeutralTerritory)
 				{
 					iValue += (iResourceValue > 0) ? 800 : 100;
+					if (bPirate)
+					{
+						iValue += 50 * getNumCities();
+					}
 				}
 			}
 			else
@@ -3589,6 +3601,13 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	if (pPlot->isHills())
 	{
 		iValue += (bDefensive ? 400 : 200);
+	}
+
+	iValue += AI_getPlotCanalValue(pPlot) * ((getNumCities() > 0) ? 25 : 10);
+
+	if (getNumCities() > 0 && AI_getPlotCanalValue(pPlot) == 0) // Canal points are often also choke points so dont double up the value here
+	{
+		iValue += AI_getPlotChokeValue(pPlot) * (bDefensive ? 25 : 10);
 	}
 
 	if (pPlot->isRiver())
@@ -3734,13 +3753,14 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			}
 
 			iValue /= 10;
-
-			if (pPlot->getBonusType() != NO_BONUS)
-			{
-				iValue /= 2;
-			}
 		}
 	}
+
+
+    if (pPlot->getBonusType() != NO_BONUS)
+    {
+        iValue /= 2;
+    }
 
 	if (bAdvancedStart)
 	{
