@@ -24809,7 +24809,8 @@ bool CvPlayer::canMakePuppet(PlayerTypes eFromPlayer) const
 */
 bool CvPlayer::canMakePuppet( CvCity* pVassalCapital ) const
 {
-	PlayerTypes eFromPlayer = pVassalCapital->getOwnerINLINE();
+	//PlayerTypes eFromPlayer = pVassalCapital->getOwnerINLINE();
+	PlayerTypes eFromPlayer = pVassalCapital->getPreviousOwner();
 /********************************************************************************/
 /* MinorPuppetLeaders	End												lfgr	*/
 /********************************************************************************/
@@ -24925,16 +24926,7 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 
     int iI;
 
-/********************************************************************************/
-/* MinorPuppetLeaders	03/2015											lfgr	*/
-/********************************************************************************/
-/* old
-    if (!canMakePuppet(eSplitPlayer))
-*/
     if ( !canMakePuppet( pVassalCapital ) )
-/********************************************************************************/
-/* MinorPuppetLeaders	End												lfgr	*/
-/********************************************************************************/
     {
         return false;
     }
@@ -24957,36 +24949,6 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
         LeaderHeadTypes eBestLeader = NO_LEADER;
         CivilizationTypes eBestCiv = NO_CIVILIZATION;
 
-/********************************************************************************/
-/* MinorPuppetLeaders	02/27/12										lfgr	*/
-/********************************************************************************/
-		/* OLD
-		eBestCiv = GET_PLAYER(pVassalCapital->getOriginalOwner()).getCivilizationType();
-
-
-        for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); iLeader++)
-        {
-            if (GC.getCivilizationInfo(eBestCiv).isLeaders(iLeader))
-            {
-                iValue = 40000 + GC.getGameINLINE().getSorenRandNum(1000, "Random Leader");
-                for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
-                {
-                    if (GC.getInitCore().getLeader((PlayerTypes)iI) == iLeader)
-                    {
-                        iValue -= 2000;
-                    }
-				}
-				if (iValue > iBestValue)
-                {
-                    iBestLeader = iLeader;
-                    iBestValue = iValue;
-                }
-			}
-		}
-		
-		eBestLeader = (LeaderHeadTypes)iBestLeader;
-		*/
-
 		CyArgsList argsList;
 		argsList.add( this->getID() );
 		argsList.add( pVassalCapital->getOriginalOwner() );
@@ -24996,34 +24958,6 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
 
 		eBestLeader = (LeaderHeadTypes) (lResult % GC.getNumLeaderHeadInfos());
 		eBestCiv = (CivilizationTypes) (lResult / GC.getNumLeaderHeadInfos());
-		
-/********************************************************************************/
-/* MinorPuppetLeaders	End												lfgr	*/
-/********************************************************************************/
-
-		/*
-        CivLeaderArray aLeaders;
-        if (getPuppetLeaders(aLeaders))
-        {
-            CivLeaderArray::iterator it;
-            for (it = aLeaders.begin(); it != aLeaders.end(); ++it)
-            {
-                int iValue = (1 + GC.getGameINLINE().getSorenRandNum(100, "Choosing Split Personality"));
-
-                if (GC.getCivilizationInfo(GET_PLAYER(eSplitPlayer).getCivilizationType()).getDerivativeCiv() == it->first)
-                {
-                    iValue += 1000;
-                }
-
-                if (iValue > iBestValue)
-                {
-					iBestValue = iValue;
-					eBestLeader = it->second;
-					eBestCiv = it->first;
-				}
-			}
-		}
-		*/
 
 		if (eBestLeader == NO_LEADER || eBestCiv == NO_CIVILIZATION)
 		{
@@ -25120,7 +25054,7 @@ bool CvPlayer::makePuppet(PlayerTypes eSplitPlayer, CvCity* pVassalCapital)
             	pCity->setOccupationTimer(0);
 		        pCity->setCultureTimes100(eNewPlayer, iCulture, true, true);
 
-	            for (int i = 0; i < (GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS") * 2); ++i)
+	            for (int i = 0; i < (GC.getDefineINT("COLONY_NUM_FREE_DEFENDERS") * 4); ++i)
 	            {
 	                pCity->initConscriptedUnit();
 	            }
