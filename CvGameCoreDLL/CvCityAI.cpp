@@ -8052,7 +8052,7 @@ int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovemen
 
 			if (pPlot->getFeatureType() != NO_FEATURE)
 			{
-				if (GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pPlot->getFeatureType()))
+				if (GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pPlot->getFeatureType()) && !GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pPlot->getFeatureType()))
 				{
 					bIgnoreFeature = true;
 
@@ -8443,7 +8443,9 @@ int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovemen
 			}
 		}
 		// K-Mod. Feature value. (moved from the 'no improvement' block above.)
-		if (pPlot->getFeatureType() != NO_FEATURE && eBestTempBuild != NO_BUILD && GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pPlot->getFeatureType()))
+		if (pPlot->getFeatureType() != NO_FEATURE && eBestTempBuild != NO_BUILD && 
+			(GC.getBuildInfo(eBestTempBuild).isFeatureRemove(pPlot->getFeatureType()) && !GC.getCivilizationInfo(getCivilizationType()).isMaintainFeatures(pPlot->getFeatureType()))
+			)
 		{
 			//CvCity* pCity;
 			//iValue += pPlot->getFeatureProduction(eBestTempBuild, getTeam(), &pCity) * 2; // handle chop value elsewhere
