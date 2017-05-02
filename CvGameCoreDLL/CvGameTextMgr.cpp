@@ -20694,31 +20694,13 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 			if (city.hasBonus((BonusTypes)i))
 			{
 				CvBonusInfo& bonus = GC.getBonusInfo((BonusTypes)i);
-				int iBonusMod = bonus.getResearchModifier();
+				int iBonusMod = bonus.getResearchModifier() * (bonus.isModifierPerBonus() ? city.getNumBonuses((BonusTypes)i) : 1);
 				if (0 != iBonusMod)
 				{
-					int iTotalBonusMod = iBonusMod;
-					if (bonus.isModifierPerBonus())
-					{
-						iTotalBonusMod = iBonusMod * city.getNumBonuses((BonusTypes)i);
-					}
 
-					int iFinalResearchBonusValue = ((iTotalBonusMod * city.getCommerceRateTimes100(COMMERCE_RESEARCH)) / 100);
-
-					if (iFinalResearchBonusValue < 0)
-					{
-						iFinalResearchBonusValue *= -1;
-						CvWString szMaint = CvWString::format(L"-%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
-						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", iBonusMod, bonus.getTextKeyWide()));
 						szBuffer.append(NEWLINE);
-					}
-					else
-					{
-						CvWString szMaint = CvWString::format(L"+%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
-						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
-						szBuffer.append(NEWLINE);
-					}
-					iModifier += iTotalBonusMod;
+						iModifier += iBonusMod;
 				}
 			}
 		}
