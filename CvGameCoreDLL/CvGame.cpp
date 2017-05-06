@@ -8858,6 +8858,11 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /************************************************************************************************/
 		else if (GC.getVoteInfo(kData.kVoteOption.eVote).isTradeMap())
 		{
+			if( gTeamLogLevel >= 1 )
+			{
+				logBBAI("  Vote for war Map Trading passes!" );
+			}
+
 			for (int iTeam1 = 0; iTeam1 < MAX_CIV_PLAYERS; ++iTeam1)
 			{
 				if (GET_TEAM((TeamTypes)iTeam1).isVotingMember(kData.eVoteSource))

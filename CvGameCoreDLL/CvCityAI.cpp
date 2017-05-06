@@ -1975,7 +1975,7 @@ void CvCityAI::AI_chooseProduction()
 	if (iProductionRank <= std::max(1, (iNumCities / 3)))
 	{
 		int iWonderTime = ((kPlayer.AI_getNumRealCities() * 2) + 1) * (bSuperCity ? 4 : 1);
-		if( gCityLogLevel > 3 ) logBBAI("checking for wonder %d", iWonderTime);
+		if( gCityLogLevel > 3 ) logBBAI("      ...checking for wonder build - time limit: %d", iWonderTime);
 		if (bAtWar)
 		{
 			iWonderTime /= 2;
@@ -1990,7 +1990,7 @@ void CvCityAI::AI_chooseProduction()
 	if (iProductionRank <= std::max(1, (iNumCities / 3)))
 	{
 		int iHeroOdds = (GET_TEAM(getTeam()).getTotalPopulation() * (iNumCities + 1)) * (bSuperCity ? 5 : 2);
-		if( gCityLogLevel > 3 ) logBBAI("checking for hero %d", iHeroOdds);
+		if( gCityLogLevel > 3 ) logBBAI("      ...checking for hero build - odds: %d", iHeroOdds);
 		if (AI_chooseUnit(UNITAI_HERO, iHeroOdds))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose UNITAI_HERO", getName().GetCString());
@@ -3640,6 +3640,7 @@ void CvCityAI::AI_chooseProduction()
 	    {
 			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20, 0, 3*getPopulation()))
             {
+				if( gCityLogLevel >= 2 ){logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE", getName().GetCString());}
                 return;
             }
 	    }
@@ -3660,6 +3661,7 @@ void CvCityAI::AI_chooseProduction()
 	    {
             if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, 20, 0, 2*getPopulation()))
             {
+				if( gCityLogLevel >= 2 ){logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE (Danger)", getName().GetCString());}
                 return;
             }
 	    }

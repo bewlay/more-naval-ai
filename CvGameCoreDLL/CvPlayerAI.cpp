@@ -6732,7 +6732,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 	if ((gPlayerLogLevel > 3) && bDebugLog)
 	{
-		logBBAI("Final Value: %d (%d turns)\n \n", iValue, iTurnsLeft);
+		logBBAI("Final Value: %d (%d turns)\n \n", iValue, (iTurnsLeft/100));
 	}
 
 
@@ -11525,6 +11525,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iValue -= (kBonusInfo.getMaintenanceModifier() * getNumCities());
 			if (kBonusInfo.getFreePromotion() != NO_PROMOTION)
 			{
+				//ToDo - value the promotion rather than just adding a flat number
 				iValue += 100;
 			}
 			iValue += (kBonusInfo.getResearchModifier() * 25);
@@ -19218,11 +19219,11 @@ void CvPlayerAI::AI_doDiplo()
 											{
 												iValue = (1 + GC.getGameINLINE().getSorenRandNum(10000, "AI Bonus Trading #1"));
 
-																if (iValue > iBestValue)
-											{
-												iBestValue = iValue;
-												eBestGiveBonus = ((BonusTypes)iJ);
-											}
+												if (iValue > iBestValue)
+												{
+													iBestValue = iValue;
+													eBestGiveBonus = ((BonusTypes)iJ);
+												}
 											}
 										}
 									}
@@ -29102,11 +29103,15 @@ int CvPlayerAI::AI_magicCombatValue(UnitTypes eUnit) const
 			}
 
 			iTempValue += (GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCollateralDamage() / 10);
+			// bonus affinities
 
 			iSpellBonus += iTempValue * 5;
 		}
 
 		iSpellBonus += kSpellInfo.getImmobileTurns() * 20;
+		// promotions - buffs and debuffs
+
+		// how to account for python effects?!
 	}
 	//iMagicCombat += iSpellBonus / 10;
 

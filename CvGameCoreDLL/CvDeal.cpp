@@ -809,7 +809,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 
 		if( gTeamLogLevel >= 2 )
 		{
-			logBBAI("      Player %d (%S) trades bonus type %S (value: %d) due to TRADE_RESOURCES with %d (%S)", eFromPlayer, GET_PLAYER(eFromPlayer).getCivilizationDescription(0), GC.getBonusInfo((BonusTypes)trade.m_iData).getDescription(), GET_PLAYER(eFromPlayer).AI_bonusVal((BonusTypes)trade.m_iData), eToPlayer, GET_PLAYER(eToPlayer).getCivilizationDescription(0) );
+			logBBAI("      Player %d (%S) trades bonus type %S (value(us/them): %d/%d) due to TRADE_RESOURCES with %d (%S)", eFromPlayer, GET_PLAYER(eFromPlayer).getCivilizationDescription(0), GC.getBonusInfo((BonusTypes)trade.m_iData).getDescription(), GET_PLAYER(eFromPlayer).AI_bonusVal((BonusTypes)trade.m_iData), GET_PLAYER(eToPlayer).AI_bonusVal((BonusTypes)trade.m_iData), eToPlayer, GET_PLAYER(eToPlayer).getCivilizationDescription(0) );
 		}
 
 		bSave = true;

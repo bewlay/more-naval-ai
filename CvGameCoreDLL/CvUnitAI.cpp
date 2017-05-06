@@ -1902,6 +1902,7 @@ void CvUnitAI::AI_settleMove()
         GET_PLAYER(getOwnerINLINE()).AI_updateFoundValues(false);
 	}
 
+	// TODO - figure out why the AI does a poor job of settling without this section
 	if (kOwner.getNumCities() == 0)
 	{
 	    if (GC.getGameINLINE().getGameTurn()==0)
@@ -2083,7 +2084,7 @@ void CvUnitAI::AI_settleMove()
 					return;
 				}
 			}
-			if( gUnitLogLevel > 3 ) logBBAI("   ...found value: %d", pCitySitePlot->getFoundValue(getOwnerINLINE()));
+			if( gUnitLogLevel > 3 ) logBBAI("     ...found value: %d", pCitySitePlot->getFoundValue(getOwnerINLINE()));
 			iAreaBestFoundValue = std::max(iAreaBestFoundValue, pCitySitePlot->getFoundValue(getOwnerINLINE()));
 
 		}
@@ -2094,6 +2095,8 @@ void CvUnitAI::AI_settleMove()
 	}
 
 	if( gUnitLogLevel > 3 ) logBBAI("    ...iAreaBestFoundValue: %d", iAreaBestFoundValue);
+	if( gUnitLogLevel > 3 ) logBBAI("    ...iOtherBestFoundValue: %d", iOtherBestFoundValue);
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/16/09                                jdog5000      */
 /*                                                                                              */
@@ -2148,6 +2151,7 @@ void CvUnitAI::AI_settleMove()
 	{
 		if (AI_retreatToCity())
 		{
+			if( gUnitLogLevel >= 2 ){logBBAI("    ... retreating to city due to lack of defense");}
 			return;
 		}
 	}
