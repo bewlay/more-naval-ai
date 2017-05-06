@@ -2170,21 +2170,13 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 	{
 		if ((iRazeValue < 150))
 		{
-		/********************************************************************************/
-		/* MinorPuppetLeaders	03/2015											lfgr	*/
-		/********************************************************************************/
-		/* old
-			if (canMakePuppet(pCity->getPreviousOwner()))
-		*/
-			if (canMakePuppet(pCity))
-		/********************************************************************************/
-		/* MinorPuppetLeaders	End												lfgr	*/
-		/********************************************************************************/
+			if (canMakePuppet(pCity)) // consider making a Puppet State
 			{
 				logBBAI("    ...decides to to create Puppet State in %S!!!", pCity->getName().GetCString() );
 				makePuppet(pCity->getPreviousOwner(), pCity);
+				return; // our work is done here
 			}
-			else
+			else // check for handing control over
 			{
 				if ((eHighestCulturePlayer != NO_PLAYER) &&
 					(eHighestCulturePlayer != getID()) &&
@@ -2194,15 +2186,16 @@ void CvPlayerAI::AI_conquerCity(CvCity* pCity)
 				{
 					logBBAI("    ...decides to to hand over control of %S!!!", pCity->getName().GetCString() );
 					GET_PLAYER(eHighestCulturePlayer).acquireCity(pCity, false, true, true);
+					return; // our work is done here
 				}
 			}
 
 		}
-		else
-		{
-			logBBAI("    ...decides to to raze city %S!!!", pCity->getName().GetCString() );
-			pCity->doTask(TASK_RAZE);
-		}
+
+		// checks above failed so Raze this city
+		logBBAI("    ...decides to to raze city %S!!!", pCity->getName().GetCString() );
+		pCity->doTask(TASK_RAZE);
+		return; // our work is done here
 	}
 	else
 	{
