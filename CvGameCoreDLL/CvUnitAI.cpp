@@ -7032,7 +7032,7 @@ void CvUnitAI::AI_pirateSeaMove()
 
 	if (plot()->isOwned() && (plot()->getTeam() == getTeam()))
 	{
-		if (AI_anyAttack(2, 40))
+		if (AI_anyAttack(2, 55))
 		{
 			return;			
 		}
@@ -7178,12 +7178,12 @@ void CvUnitAI::AI_attackSeaMove()
 		return;
 	}
 
-	if (AI_anyAttack(1, 35))
+	if (AI_anyAttack(1, 55))
 	{
 		return;
 	}
 
-	if (AI_anyAttack(2, 40))
+	if (AI_anyAttack(2, 60))
 	{
 		return;
 	}
@@ -7584,7 +7584,7 @@ void CvUnitAI::AI_reserveSeaMove()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	if (AI_anyAttack(3, 45))
+	if (AI_anyAttack(3, 65))
 	{
 		return;
 	}
@@ -7596,7 +7596,7 @@ void CvUnitAI::AI_reserveSeaMove()
 
 	if (!isNeverInvisible())
 	{
-		if (AI_anyAttack(5, 35))
+		if (AI_anyAttack(5, 55))
 		{
 			return;
 		}
@@ -8135,10 +8135,6 @@ void CvUnitAI::AI_assaultSeaMove()
 		{
 			return;
 		}
-		/*if (AI_anyAttack(1, 45))
-		{
-			return;
-		}*/ // disabled by K-Mod. (redundant)
 	}
 
 	bool bReinforce = false;
@@ -8804,10 +8800,6 @@ void CvUnitAI::AI_settlerSeaMove()
 	if (bEmpty)
 	{
 		if (AI_anyAttack(1, 65))
-		{
-			return;
-		}
-		if (AI_anyAttack(1, 40))
 		{
 			return;
 		}		
@@ -26525,6 +26517,7 @@ void CvUnitAI::AI_summonAttackMove()
 	}
 
 	bool bBombard = (bombardRate() > 0);
+	bool bCollateral = (getUnitInfo().isExplodeInCombat() || (collateralDamage() > 0));
 
     if (getDuration() > 0)
     {
@@ -26551,7 +26544,7 @@ void CvUnitAI::AI_summonAttackMove()
 			}
 		}
 		
-        if (AI_anyAttack(getDuration()*baseMoves(), 0))
+		if (AI_anyAttack(getDuration()*baseMoves(), (bCollateral ? 0 : 25)))
         {
             return;
         }	
@@ -26559,7 +26552,7 @@ void CvUnitAI::AI_summonAttackMove()
 
     else
     {
-        if (AI_anyAttack(baseMoves(), 0))
+		if (AI_anyAttack(baseMoves(), (bCollateral ? 0: 10)))
         {
             return;
         }
@@ -27152,14 +27145,33 @@ void CvUnitAI::AI_PatrolMove()
 	}
 
 	// check for easy targets in the area
-	if (getGroup()->getNumUnits() == 1 && !bAtWar)
+	if (getGroup()->getNumUnits() <= 3)// && !bAtWar)
 	{
+		if (AI_pickupEquipment(3))
+		{
+			return;
+		}
+
 		if (AI_anyAttack(1, (bInCity ? 60 : 80)))
 		{
 			return;
 		}
 
-		if (AI_anyAttack(2, 90))
+		if (!bDanger)
+		{
+			int iAttackRange = ((plot()->getOwner() == getOwner()) ? 4: 2);
+			if (AI_anyAttack(iAttackRange,90))
+			{
+				return;
+			}
+		}
+
+		if (AI_exploreLair(1))
+		{
+			return;
+		}
+
+		if (AI_exploreLairSea(1))
 		{
 			return;
 		}
@@ -27226,6 +27238,7 @@ void CvUnitAI::AI_PatrolMove()
 			return;
 		}
 
+		/*
 		if( iOurDefense > 2*iEnemyOffense )
 		{
 			if (AI_anyAttack(2, 30))
@@ -27233,6 +27246,7 @@ void CvUnitAI::AI_PatrolMove()
 				return;
 			}
 		}
+		*/
 	}
 
 	// Guard a city we're in if it needs it
@@ -27341,7 +27355,7 @@ void CvUnitAI::AI_PatrolMove()
 			return;
 		}
 
-		if (collateralDamage() > 0)
+		if (collateralDamage() > 0 || getUnitInfo().isExplodeInCombat())
 		{
 			if (AI_anyAttack(1, 45, 3))
 			{
@@ -27447,7 +27461,7 @@ void CvUnitAI::AI_PatrolMove()
 			return;
 		}
 
-		if (AI_anyAttack(1, 45))
+		if (AI_anyAttack(1, 55))
 		{
 			return;
 		}
@@ -27475,7 +27489,7 @@ void CvUnitAI::AI_PatrolMove()
 			return;
 		}
 
-		if (AI_anyAttack(2, 40))
+		if (AI_anyAttack(2, 60))
 		{
 			return;
 		}
@@ -28636,7 +28650,7 @@ void CvUnitAI::AI_ConquestMove()
 	}
 
 	// BBAI TODO: Stack v stack combat ... definitely want to do in own territory, but what about enemy territory?
-	if (collateralDamage() > 0 && plot()->getOwnerINLINE() == getOwnerINLINE())
+	if (collateralDamage() > 0 && plot()->getOwnerINLINE() == getOwnerINLINE()) // note: this requires that the group leader has collateralDamage; doesnt check whole stack
 	{
 		if (AI_anyAttack(1, 45, 3, false))
 		{
