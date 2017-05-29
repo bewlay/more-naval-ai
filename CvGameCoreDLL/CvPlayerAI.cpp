@@ -29518,6 +29518,61 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 	return iBestTowerManaValue;
 }
 
+int CvPlayerAI::AI_getMagicAffinity() const
+{
+	int iValue = 0;
+	
+	// Count amount of mana
+	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
+	{
+		//if (GC.getBonusInfo((BonusTypes)iK).getBonusClassType() == (GC.getDefineINT("BONUSCLASS_MANA")))
+		if (GC.getBonusInfo((BonusTypes)iK).isMana())
+		{
+			//iValue += getNumAvailableBonuses((BonusTypes)iK) * 2;
+			if (getNumAvailableBonuses((BonusTypes)iK) > 0)
+			{
+				iValue += 1;
+				if (getNumAvailableBonuses((BonusTypes)iK) > 1)
+				{
+					iValue += 4;
+				}
+			}
+		}
+	}
+	
+	// value traits that give us magic-related promotions
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
+	{
+		if (hasTrait((TraitTypes)iTrait))
+		{
+			for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++)
+			{
+				if (GC.getTraitInfo((TraitTypes)iTrait).isFreePromotion(iPromotion))
+				{
+					if (GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionSummonPerk() != NO_PROMOTION)
+					{
+						iValue += 2;
+					}
+
+					iValue += (GC.getPromotionInfo((PromotionTypes)iPromotion).getSpellCasterXP() / 5);
+					
+				}
+			}
+		}
+	}
+
+	iValue += getSummonDuration();
+
+	if (getCivilizationType() == GC.getDefineINT("CIVILIZATION_KHAZAD"))
+	{
+		iValue /= 2;
+	}
+
+	return iValue;
+}
+
+// int CvPlayerAI::AI_getMagicInterest() const
+
 // Used to approximate how much this player might be interested in magic techs and units
 int CvPlayerAI::AI_getMojoFactor() const
 {
