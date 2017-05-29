@@ -29203,7 +29203,14 @@ bool CvUnitAI::AI_Lokimove()
 
 								if (pLoopCity->getCulture(pLoopCity->getOwnerINLINE())==0)
 								{
-									iValue *= 10;
+									if (pLoopCity->plot()->isAdjacentPlayer(getOwner()))
+									{
+										iValue *= 10;
+									}
+									else
+									{
+										iValue *= 2;
+									}
 								}
 								
 								iValue /= iPathTurns;
@@ -29389,6 +29396,31 @@ void CvUnitAI::AI_upgrademanaMove()
 {
 
 	logBBAI("    %S (unit %d), starting AI_upgrademanaMove (size %d)", getName().GetCString(), getID(), getGroup()->getNumUnits());
+
+	if (GET_PLAYER(getOwnerINLINE()).AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+	{
+		if (GET_PLAYER(getOwnerINLINE()).countOwnedBonuses((BonusTypes)GC.getDefineINT("BONUSCLASS_MANA_RAW")) == 1)
+		{
+			if (GET_PLAYER(getOwnerINLINE()).countOwnedBonuses((BonusTypes)GC.getInfoTypeForString("BONUS_MANA_METAMAGIC")) == 0)
+			{
+				if( gUnitLogLevel > 2 ) logBBAI("     ...reserving a raw mana for Metamagic");
+				if (plot()->isCity())
+				{
+					if( gUnitLogLevel > 3 ) logBBAI("     ...fortifying in city");
+					getGroup()->pushMission(MISSION_FORTIFY);
+					return;
+				}
+				else
+				{
+					if( gUnitLogLevel > 3 ) logBBAI("     ...retreating to city");
+					if (AI_retreatToCity())
+					return;
+				}
+
+			}
+		}
+	}
+
 	bool bDanger = (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(plot(), 3));
 
 	if (bDanger)
