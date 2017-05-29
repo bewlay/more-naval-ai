@@ -28718,6 +28718,10 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
+		if (pLoopCity->isNoUnhappiness())
+		{
+			continue;
+		}
 		int iCityHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel(iExtraPop);
 
 		iCityHappy -= std::max(0, pLoopCity->getCommerceHappiness());
@@ -28759,6 +28763,11 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 
 int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 {
+	if (isNoUnhealthyPopulation())
+	{
+		return 0;
+	}
+
 	int iWorstHealth = 0;
 	int iBestHealth = 0;
 	int iTotalUnhappy = 0;
@@ -28774,6 +28783,10 @@ int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
+		if (pLoopCity->isNoUnhealthyPopulation())
+		{
+			continue;
+		}
 		int iCityHealth = pLoopCity->goodHealth() - pLoopCity->badHealth(false, iExtraPop);
 
 		int iHealthNow = iCityHealth;
