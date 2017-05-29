@@ -8701,6 +8701,8 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     }
 	// End Advanced Diplomacy
 
+	// setForcedOpenBorder(kData.eVoteSource, bChange); // TODO - make this
+
 	if (!CvString(kVote.getPyResult()).empty())
     {
         CyArgsList argsList;
@@ -8891,6 +8893,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 					}
 				}
 			}
+			setVoteOutcome(kData, NO_PLAYER_VOTE);
 		}
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
