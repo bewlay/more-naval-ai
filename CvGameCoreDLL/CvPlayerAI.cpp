@@ -11492,8 +11492,8 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
-			iValue += kBonusInfo.getHappiness() * ((bDemon ? 0 : 20) * iNumCities);
-			iValue += kBonusInfo.getHealth() * ((isIgnoreFood() ? 0 : 10) * iNumCities);
+			iValue += AI_getHappinessWeight(kBonusInfo.getHappiness(),1);
+			iValue += AI_getHealthWeight(kBonusInfo.getHealth(),1);
 
 			// Tholal ToDo - better valuation of yield changes
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
@@ -11512,22 +11512,24 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				iValue += (50 * kBonusInfo.getGreatPeopleRateModifier());
 			}
 
+			CvCity* pCapital = getCapitalCity();
+			int iCityCount = AI_getNumRealCities();
+			int iCoastalCityCount = countNumCoastalCities();
+
 			// new FFH tags
 			iValue += (kBonusInfo.getHealChange() * (bAtWar ? 10 : 5));
 			iValue += (kBonusInfo.getHealChangeEnemy() * (bAtWar ? -20 : -10));
-			iValue -= (kBonusInfo.getMaintenanceModifier() * getNumCities());
+			iValue -= (kBonusInfo.getMaintenanceModifier() * iCityCount);
 			if (kBonusInfo.getFreePromotion() != NO_PROMOTION)
 			{
 				//ToDo - value the promotion rather than just adding a flat number
 				iValue += 100;
 			}
-			iValue += (kBonusInfo.getResearchModifier() * 25);
+			iValue += (AI_commerceWeight(COMMERCE_RESEARCH) * kBonusInfo.getResearchModifier()/10);
 
 			CvTeam& kTeam = GET_TEAM(getTeam());
 
-			CvCity* pCapital = getCapitalCity();
-			int iCityCount = AI_getNumRealCities();
-			int iCoastalCityCount = countNumCoastalCities();
+
 
 			// find the first coastal city
 			CvCity* pCoastalCity = NULL;
@@ -11853,6 +11855,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 			if (bMana)
 			{
+				iValue += 100;
 				int iNumBonuses = countOwnedBonuses(eBonus);
 				/*
 				if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
@@ -11872,13 +11875,19 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					if (kSpellInfo.getPromotionPrereq1() != NO_PROMOTION)
 					{
 						if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getPromotionPrereq1()).getBonusPrereq() == eBonus)
+							// ERROR - THIS DOESNT HIT LEVEL 2 and 3 SPELLS AS THEY DONT HAVE A BONUSPREREQ
 						{
-							iValue += 25;
+							iValue += 25; // base spell value
 							
 							// summons
 							if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 							{
 								iValue += 25 + (bSummonChange * 50);// ToDo - extract some info about the unit and how useful it will be to us
+								CvUnitInfo& kLoopUnit = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType());
+								if (kLoopUnit.getBonusAffinity((BonusTypes)eBonus) != 0)
+								{
+									iValue += 25 + (50 * iNumBonuses);
+								}
 							}
 							
 							//Todo - find a way to check for actual need (ie Water mana for desert)
@@ -11887,7 +11896,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 								iValue += (iCityCount - 1) * 10;
 								if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_WATER"))
 								{
-									iValue += (countNumOwnedTerrainTypes((TerrainTypes)GC.getInfoTypeForString("TERRAIN_DESERT")) * 5);
+									iValue += (countNumOwnedTerrainTypes((TerrainTypes)GC.getInfoTypeForString("TERRAIN_DESERT")) * 10);
 								}
 							}
 
@@ -11971,11 +11980,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					if (getCivilizationType() == GC.getInfoTypeForString("CIVILIZATION_SHEAIM") ||
 						iNumBonuses > 0)
 					{
-						iValue += 150;
+						iValue += 350;
 					}
 				}
 
-				iValue += (kBonusInfo.getDiscoverRandModifier() * (bKhazad ? 5 : 2));
+				iValue += (kBonusInfo.getDiscoverRandModifier() * (countNumOwnedHills()/5));
 
 				iValue += 100 * AI_getTowerManaValue(eBonus);
 
