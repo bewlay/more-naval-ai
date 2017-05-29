@@ -18965,13 +18965,15 @@ int CvUnit::chooseSpell()
 				}
 				if (kSpellInfo.getRemovePromotionType2() != NO_PROMOTION)
 				{
-					if (isImmuneTeamSpell)
+					if (isImmuneTeamSpell) // affects enemies
 					{
-						iValue += AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2());
+						//ToDo - actually check for the promotions in nearby enemies
+						iValue += AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2()) * iAdjacentEnemyCount;
 					}
 					else
 					{
-						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2()) * iAdjacentEnemyCount;
+						//ToDo - actually check for the promotions in nearby friends
+						iValue -= AI_promotionValue((PromotionTypes)kSpellInfo.getRemovePromotionType2()) * plot()->getNumDefenders(getOwner());
 					}
 				}
 				if (kSpellInfo.getRemovePromotionType3() != NO_PROMOTION)
