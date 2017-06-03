@@ -24329,12 +24329,14 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	*/
 
 	//TODO - reference getMojoFactor() instead?
+	/*
 	if (AI_getMojoFactor() > 10)
 	{
 		return 1;
 	}
+	*/
 	// Count amount of mana
-	/*
+	
 	int iTotalMana = 0;
 	for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 	{
@@ -24352,7 +24354,7 @@ int CvPlayerAI::AI_getTowerMasteryVictoryStage() const
 	{
 		return 1;
 	}
-	*/
+	
 
 	if (bHasMageTrait)
 	{
@@ -24379,10 +24381,12 @@ int CvPlayerAI::AI_getAltarVictoryStage() const
 		return 4;
 	}
 
+	/*
 	if (canConstruct((BuildingTypes)GC.getInfoTypeForString("BUILDING_ALTAR_OF_THE_LUONNOTAR_FINAL"), true))
 	{
 		return 4;
 	}
+	*/
 
 	if (getBuildingClassCount((BuildingClassTypes)GC.getInfoTypeForString("BUILDINGCLASS_ALTAR_OF_THE_LUONNOTAR_EXALTED")) > 0)
 	{
@@ -29070,6 +29074,11 @@ int CvPlayerAI::AI_magicCombatValue(UnitTypes eUnit) const
 	{
 		CvSpellInfo& kSpellInfo = GC.getSpellInfo((SpellTypes)iSpell);
 
+		if (kSpellInfo.isGlobal())
+		{
+			continue;
+		}
+
 		if (kSpellInfo.getPromotionPrereq1() != NO_PROMOTION)
 		{
 			if (!kUnitInfo.getFreePromotions(kSpellInfo.getPromotionPrereq1()))
@@ -29107,8 +29116,7 @@ int CvPlayerAI::AI_magicCombatValue(UnitTypes eUnit) const
 		}
 
 		// ok, we're now past the prereqs, so now we have to find out if this spell is useful in combat
-
-		iSpellBonus += kSpellInfo.getDamage();
+		iSpellBonus += (kSpellInfo.getDamage() * kSpellInfo.getRange()); // base damage
 		if (kSpellInfo.getCreateUnitType() != NO_UNIT)
 		{
 			int iTempValue = GC.getUnitInfo((UnitTypes)kSpellInfo.getCreateUnitType()).getCombat();
@@ -29131,7 +29139,7 @@ int CvPlayerAI::AI_magicCombatValue(UnitTypes eUnit) const
 	//iMagicCombat += iSpellBonus / 10;
 
 	// divide by something
-	iMagicCombat /= 20;
+	iMagicCombat /= 10;
 
 	return iMagicCombat;
 
@@ -29284,6 +29292,10 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 		return 0;
 	}
 
+	if (!AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
+	{
+		return 0;
+	}
 	// Don't count mana that we can't use due to Overcouncil resolutions
 	/*
 	if (isFullMember((VoteSourceTypes)0))
