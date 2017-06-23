@@ -10362,7 +10362,8 @@ void CvPlot::doCulture()
 
 		if (eCulturalOwner != NO_PLAYER)
 		{
-			if (GET_PLAYER(eCulturalOwner).getTeam() != getTeam())
+			if (GET_PLAYER(eCulturalOwner).getTeam() != getTeam() &&
+				!(pCity->isBarbarian() && (pCity->getCulture(pCity->getOwner()) > 0))) // dont culture flip Acheron's city
 			{
 				if (!(pCity->isOccupation()))
 				{
@@ -12866,3 +12867,5 @@ void CvPlot::changeTempRouteTimer(int iChange)
 	}
 }
 // End Temporary Map Items
+
+//void CvPlot::countNumUnitAIType(UnitAITypes eUnitAI, PlayerTypes ePlayer)
