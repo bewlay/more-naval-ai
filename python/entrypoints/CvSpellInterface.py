@@ -2471,6 +2471,11 @@ def spellRecruitMercenary(caster):
 	if caster.getUnitType() == gc.getInfoTypeForString('UNIT_MAGNADINE'):
 		newUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_LOYALTY'), True)
 
+def reqReleaseFromCage(caster):
+	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_HELD')):
+			return False;
+	return True;
+	
 def spellReleaseFromCage(caster):
 	pPlot = caster.plot()
 	pPlot.setImprovementType(-1)
