@@ -2435,7 +2435,7 @@ int CvPlayerAI::AI_commerceWeight(CommerceTypes eCommerce, CvCity* pCity) const
 		if (getCommercePercent(COMMERCE_GOLD) > 70)
 		{
 			//avoid strikes
-			if (getGoldPerTurn() < -getGold()/100)
+			//if (getGoldPerTurn() < -getGold()/100)
 			{
 				iWeight += 15;
 			}
@@ -3749,12 +3749,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 	}
 
-
-    if (pPlot->getBonusType() != NO_BONUS)
-    {
-        iValue /= 2;
-    }
-
 	if (bAdvancedStart)
 	{
 		if (pPlot->getBonusType() != NO_BONUS)
@@ -4269,7 +4263,7 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 		iValue /= 3;
 	}
 
-	if (pCity->isAutoRaze())
+	if (pCity->isAutoRaze() && !pCity->isBarbarian())
 	{
 		iValue /= 10;
 	}
@@ -10593,10 +10587,10 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	if (iChange < 0)
 	{
-		return (iTheirValue * 120 >= iOurValue * 100);
+		return (iTheirValue * 110 >= iOurValue * 100);
 	}
-	return (iTheirValue * 110 >= iOurValue * 100);
-	//return (iTheirValue >= iOurValue);
+	//return (iTheirValue * 110 >= iOurValue * 100);
+	return (iTheirValue >= iOurValue);
 }
 
 

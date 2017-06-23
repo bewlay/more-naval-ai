@@ -989,7 +989,31 @@ void CvCityAI::AI_chooseProduction()
 
 	if (isProduction())
 	{
-		if (getProduction() > 0)
+		eProductionUnit = getProductionUnit();
+		bool bMakingMilitary =false;
+		bool bClearQueue = false;
+		if (eProductionUnit != NO_UNIT)
+		{
+			if (GC.getUnitInfo(eProductionUnit).getCombat() > 0)
+			{
+				bMakingMilitary = true;
+				return;
+			}
+		}
+
+		if (plot()->getNumDefenders(getOwnerINLINE()) < 2)
+		{
+			if (bMakingMilitary)
+			{
+				return;
+			}
+			else
+			{
+				bClearQueue = true;
+			}
+		}
+
+		if (getProduction() > 0 && !bDanger && !bClearQueue)
 		{
 
 			// if less than 3 turns left, keep building current item
@@ -1235,7 +1259,7 @@ void CvCityAI::AI_chooseProduction()
 	if(hasTrait((TraitTypes)iSpiritualTrait))
 		iNeededPriests *= 2;
 
-	int iNeededMages = ((kPlayer.AI_getMojoFactor() / 2) + iNumCities);
+	int iNeededMages = iNumCities;
 // End Tholal AI
 
     int iMaxSettlers = 0;
@@ -1780,7 +1804,7 @@ void CvCityAI::AI_chooseProduction()
 */
 	
 	//minimal defense.
-	if (!bLandWar && !bCrushStrategy)
+	if (!bLandWar && !bCrushStrategy && !bFinancialTrouble)
 	{
 		if (iPlotCityDefenderCount <= (iPlotSettlerCount * 5))
 		{
@@ -2132,6 +2156,30 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
     
+
+	if (bAtWar && !bFinancialTrouble)
+	{
+		int iWarSuccessModifier = abs(GET_TEAM(getTeam()).AI_getWarSuccessRating()/15) * kPlayer.AI_getConquestVictoryStage();
+		int iNeedConq = (iNumCities * 2) + iWarSuccessModifier;
+		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < iNeedConq)
+		{
+			if (kPlayer.AI_getNumAIUnits(UNITAI_WARWIZARD) < (kPlayer.AI_getMagicAffinity() * 2))
+			{
+				if (AI_chooseUnit(UNITAI_WARWIZARD, (kPlayer.AI_getMagicAffinity()*5)))
+				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses Conquest Warwizard pick! (have/want %d/%d conquest units - magic affinity: %d))",getName().GetCString(),GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST), iNeedConq, kPlayer.AI_getMagicAffinity());
+					return;
+				}
+			}
+
+			if (AI_chooseUnit(UNITAI_ATTACK_CITY, (iBuildUnitProb + (iWarSuccessModifier * 5))))
+			{
+				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses Conquest pick! (have/want %d/%d conquest units - modifier: %d))",getName().GetCString(),GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST), iNeedConq, iWarSuccessModifier);
+				return;
+			}
+		}
+	}
+
 	// -------------------- BBAI Notes -------------------------
 	// Top normal priorities
 	
@@ -2211,7 +2259,7 @@ void CvCityAI::AI_chooseProduction()
 	
 	if (!bDanger)
 	{
-		if (iExistingWorkers < iNumCities)
+		if (iExistingWorkers < iNumCitiesInArea)
 		{
 			if (AI_chooseUnit(UNITAI_WORKER))
 			{
@@ -2519,6 +2567,72 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
+	bool bRoomToGrow = false;
+	if (countNumImprovedPlots() > getPopulation() &&
+		happyLevel() > unhappyLevel() &&
+		iNumCities > 1)
+	{
+		bRoomToGrow = true;
+	}
+
+	if( !(bDefenseWar && iWarSuccessRatio < -25) )
+	{
+		if ((iAreaBestFoundValue > iMinFoundValue) || (iWaterAreaBestFoundValue > iMinFoundValue))
+		{
+			// BBAI TODO: Needs logic to check for early settler builds, settler builds in small cities, whether settler sea exists for water area sites?
+			if (pWaterArea != NULL)
+			{
+				int iSettlerSeaNeeded = std::min(iNumWaterAreaCitySites, ((iNumCities + 4) / 8) + 1);
+				if (kPlayer.getCapitalCity() != NULL)
+				{
+					int iOverSeasColonies = iNumCities - kPlayer.getCapitalCity()->area()->getCitiesPerPlayer(getOwnerINLINE());
+					int iLoop = 2;
+					int iExtras = 0;
+					while (iOverSeasColonies >= iLoop)
+					{
+						iExtras++;
+						iLoop += iLoop + 2;
+					}
+					iSettlerSeaNeeded += std::min(kPlayer.AI_totalUnitAIs(UNITAI_WORKER) / 4, iExtras);
+				}
+				if (bAssault)
+				{
+					iSettlerSeaNeeded = std::min(1, iSettlerSeaNeeded);
+				}
+				
+				if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_SETTLER_SEA) < iSettlerSeaNeeded)
+				{
+					if (AI_chooseUnit(UNITAI_SETTLER_SEA))
+					{
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses main settler sea", getName().GetCString());
+						return;
+					}
+				}
+			}
+
+			if (iPlotSettlerCount == 0 && (!bDanger || plot()->getNumDefenders(getOwnerINLINE()) >= 4)&& !bRoomToGrow)
+			{
+				if ((iNumSettlers < iMaxSettlers) && !bSlowSettlerProduction)
+				{
+					if (AI_chooseUnit(UNITAI_SETTLE, bLandWar ? 50 : -1))
+					{
+						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses BUILD_SETTLER_1", getName().GetCString());
+						return;
+					}
+				}
+			}
+
+			if (kPlayer.getNumMilitaryUnits() <= iNumCities + 1)
+			{
+				if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
+				{
+					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1 extra quick defense", getName().GetCString());
+					return;
+				}
+			}
+		}
+	}
+
 	// Tholal AI - early check for Priests and Mages
 	if (iNumPriests == 0)
 	{
@@ -2615,70 +2729,6 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose project 1", getName().GetCString());
 				return;
-			}
-		}
-	}
-	
-	if( !(bDefenseWar && iWarSuccessRatio < -25) )
-	{
-		if ((iAreaBestFoundValue > iMinFoundValue) || (iWaterAreaBestFoundValue > iMinFoundValue))
-		{
-			// BBAI TODO: Needs logic to check for early settler builds, settler builds in small cities, whether settler sea exists for water area sites?
-			if (pWaterArea != NULL)
-			{
-				int iSettlerSeaNeeded = std::min(iNumWaterAreaCitySites, ((iNumCities + 4) / 8) + 1);
-				if (kPlayer.getCapitalCity() != NULL)
-				{
-					int iOverSeasColonies = iNumCities - kPlayer.getCapitalCity()->area()->getCitiesPerPlayer(getOwnerINLINE());
-					int iLoop = 2;
-					int iExtras = 0;
-					while (iOverSeasColonies >= iLoop)
-					{
-						iExtras++;
-						iLoop += iLoop + 2;
-					}
-					iSettlerSeaNeeded += std::min(kPlayer.AI_totalUnitAIs(UNITAI_WORKER) / 4, iExtras);
-				}
-				if (bAssault)
-				{
-					iSettlerSeaNeeded = std::min(1, iSettlerSeaNeeded);
-				}
-				
-				if (kPlayer.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_SETTLER_SEA) < iSettlerSeaNeeded)
-				{
-					if (AI_chooseUnit(UNITAI_SETTLER_SEA))
-					{
-						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses main settler sea", getName().GetCString());
-						return;
-					}
-				}
-			}
-			bool bRoomToGrow = false;
-			if (countNumImprovedPlots() > getPopulation() &&
-				happyLevel() > unhappyLevel())
-			{
-				bRoomToGrow = true;
-			}
-
-			if (iPlotSettlerCount == 0 && !bDanger && !bRoomToGrow)
-			{
-				if ((iNumSettlers < iMaxSettlers) && !bSlowSettlerProduction)
-				{
-					if (AI_chooseUnit(UNITAI_SETTLE, bLandWar ? 50 : -1))
-					{
-						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses BUILD_SETTLER_1", getName().GetCString());
-						return;
-					}
-				}
-			}
-
-			if (kPlayer.getNumMilitaryUnits() <= iNumCities + 1)
-			{
-				if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
-				{
-					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses build settler 1 extra quick defense", getName().GetCString());
-					return;
-				}
 			}
 		}
 	}
@@ -4874,7 +4924,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 
 				iValue += ((kBuilding.getAllCityDefenseModifier() * iNumCities) / 5);
 
-				iValue += kBuilding.getAirlift() * 25;
+				iValue += kBuilding.getAirlift() * 50;
 			}
 
 			if ((iFocusFlags & BUILDINGFOCUS_ESPIONAGE) || (iPass > 0))
@@ -6018,9 +6068,10 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 				{
 					iTempValue = 0;
+					int iCommerceWeight = GET_PLAYER(getOwnerINLINE()).AI_commerceWeight((CommerceTypes)iI);
 
-					iTempValue += (kBuilding.getCommerceChange(iI) * 4);
-					iTempValue += (kBuilding.getObsoleteSafeCommerceChange(iI) * 4);
+					iTempValue += (kBuilding.getCommerceChange(iI) * (iCommerceWeight / 5));
+					iTempValue += (kBuilding.getObsoleteSafeCommerceChange(iI) * (iCommerceWeight / 5));
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/13/10                              jdog5000        */
 /*                                                                                              */
@@ -6035,25 +6086,6 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 /************************************************************************************************/
 					iTempValue *= (100 * kBuilding.getCommerceModifier(iI));
 					iTempValue /= 100;
-
-					// Tholal AI - More value for research
-					if ((CommerceTypes)iI == COMMERCE_RESEARCH)
-					{
-						iTempValue *= 2; //5;
-					}
-					if ((CommerceTypes)iI == COMMERCE_GOLD)
-					{
-						iTempValue *= (bFinancialTrouble ? 4 : 2); //5;
-					}
-					// End Tholal AI
-
-					if ((CommerceTypes)iI == COMMERCE_CULTURE)
-					{
-					    if (bCulturalVictory1)
-					    {
-					        iTempValue *= 2;
-					    }
-					}
 
 					if (kBuilding.getCommerceChangeDoubleTime(iI) > 0)
 					{
@@ -8214,6 +8246,8 @@ int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovemen
 		FAssert(iCorrectedFoodPriority == iFoodPriority || (iCorrectedFoodPriority < iFoodPriority == aiDiffYields[YIELD_FOOD] > 0));
 		// This corrected priority isn't perfect, but I think it will be better than nothing.
 		// K-Mod end
+
+		if (GET_PLAYER(getOwnerINLINE()).isIgnoreFood()){iCorrectedFoodPriority = 0;}
 
 		iValue += aiDiffYields[YIELD_FOOD] * 100 * iCorrectedFoodPriority / 100;
 		iValue += aiDiffYields[YIELD_PRODUCTION] * 80 * iProductionPriority / 100; // was 60
