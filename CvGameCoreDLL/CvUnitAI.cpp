@@ -2015,11 +2015,13 @@ void CvUnitAI::AI_settleMove()
 
 	if (iDanger > 0)
 	{
-		if( gUnitLogLevel > 3 ) logBBAI("     ... in Danger Zone");
-		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroup()->getNumUnits()))
+		if( gUnitLogLevel > 3 ) logBBAI("     ... in Danger (%d) Zone at plot %d, %d", iDanger, plot()->getX(), plot()->getY());
+		if ((plot()->getOwnerINLINE() == getOwnerINLINE()) || (iDanger > getGroup()->getNumUnits()) || !getGroup()->canDefend())
 		{
-			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
+			//if (getGroup()->getNumUnits() < iNeededSettleDefenders)
+			if (plot()->getNumDefenders(getOwnerINLINE()) < iNeededSettleDefenders)
 			{
+				if( gUnitLogLevel > 3 ) logBBAI("     ... not enough defenders; seeking safety (H/N: %d/%d)", plot()->getNumDefenders(getOwnerINLINE()), iNeededSettleDefenders);
 				if (AI_retreatToCity())
 				{
 					return;
@@ -2097,6 +2099,13 @@ void CvUnitAI::AI_settleMove()
 	if( gUnitLogLevel > 3 ) logBBAI("    ...iAreaBestFoundValue: %d", iAreaBestFoundValue);
 	if( gUnitLogLevel > 3 ) logBBAI("    ...iOtherBestFoundValue: %d", iOtherBestFoundValue);
 
+	if (iAreaBestFoundValue > 0 && kOwner.getNumCities() == 0)
+	{
+		if (AI_found())
+		{
+			return;
+		}
+	}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      01/16/09                                jdog5000      */
 /*                                                                                              */
@@ -2172,6 +2181,7 @@ void CvUnitAI::AI_settleMove()
 		{
 			if (getGroup()->getNumUnits() < iNeededSettleDefenders)
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... staying in place due to lack of defense");}
 				getGroup()->pushMission(MISSION_SKIP);
 				return;
 			}
@@ -2190,6 +2200,7 @@ void CvUnitAI::AI_settleMove()
 	{
 		if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, NO_UNITAI, -1, -1, -1, 0, MOVE_NO_ENEMY_TERRITORY))
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... loading onto a Settler transport");}
 			return;
 		}
 
@@ -2203,15 +2214,20 @@ void CvUnitAI::AI_settleMove()
 		{
 			if ((GET_TEAM(getTeam()).getAtWarCount(false) > 0) && (iDanger > 0))
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... breaking up Settler group");}
 				joinGroup(NULL, true);
 				return;
 			}
 		}
 	}
 
-	if (AI_retreatToCity())
+	if (!plot()->isCity())
 	{
-		return;
+		if (AI_retreatToCity())
+		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... retreating to city");}
+			return;
+		}
 	}
 
 /************************************************************************************************/
@@ -2223,6 +2239,7 @@ void CvUnitAI::AI_settleMove()
 	{
 		if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, NO_UNITAI, -1, -1, -1, -1, MOVE_NO_ENEMY_TERRITORY, 1))
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... loading onto ship due to Stranded status");}
 			return;
 		}
 	}
