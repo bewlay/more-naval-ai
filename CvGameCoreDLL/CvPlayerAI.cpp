@@ -5540,7 +5540,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			{
 				CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
 
-				int iPossiblePlots = countNumAvailablePlotsForImprovement(eImprovement);
+				int iPossiblePlots = countNumAvailablePlotsForImprovement((ImprovementTypes)(GC.getBuildInfo((BuildTypes)iJ).getImprovement()));
 				
 				int iImprovementValue = 300;
 
@@ -5585,7 +5585,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if (kImprovement.getYieldChange(iK) > 3)
 						{
-							iTempValue *= 3;
+							iTempValue *= 5;
 							//iTempValue /= 2;
 						}
 
@@ -5598,7 +5598,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iTempValue *= AI_yieldWeight((YieldTypes)iK);
 					iTempValue /= 100;
 
-					iTempValue *= iPossiblePlots;
+					iTempValue *= std::min(1,iPossiblePlots);
 					iTempValue /= 3;
 
 					iImprovementValue += iTempValue;
@@ -5818,7 +5818,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 		if (bIsFeatureRemove)
 		{
 			iBuildValue += 200;
-			// ToDo - add value if we have resources that this feature is blocking
 
 			CvPlot *pLoopPlot;
 			// check for blocked bonuses in the 2nd culture ring
@@ -5829,9 +5828,9 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					pLoopPlot = plotCity(pCapitalCity->getX(), pCapitalCity->getY(), iI);
 					if (pLoopPlot != NULL)
 					{
-						if ((pLoopPlot->getBonusType() != NO_BONUS) && (pLoopPlot->getFeatureType() == iJ))
+						if ((pLoopPlot->getBonusType(getTeam()) != NO_BONUS) && (pLoopPlot->getFeatureType() == iJ))
 						{
-							iBuildValue += 400; // TODo better evaluation
+							iBuildValue += AI_bonusVal((BonusTypes)pLoopPlot->getBonusType()) * 5;
 						}
 					}
 				}
@@ -6298,7 +6297,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							{
 								logBBAI("     FAVORITE RELIGION");
 							}
-							iReligionValue += 3000 * (getNumCities() / 2);
+							iReligionValue += 1000 * (getNumCities() / 2);
 						}
 					}
 					
@@ -6894,6 +6893,8 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				iBuildingValue += ((kLoopBuilding.getGlobalFreeExperience() * (bWarPlan ? 10 : 5)) * iCityCount);
 				iBuildingValue += (kLoopBuilding.getFreePromotionPick() * 100);
 				iBuildingValue -= kLoopBuilding.getCrime();
+				iBuildingValue += kLoopBuilding.getTradeRoutes() * 100;
+				iBuildingValue += kLoopBuilding.getAirlift() * 20;
 				if (kLoopBuilding.isUnhappyProduction())
 				{
 					iBuildingValue += 50 * (bIsLimitedWonder ? (getTotalPopulation() / std::max(1, iCityCount)) : getTotalPopulation());
@@ -7024,6 +7025,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 					iBuildingValue += (-kLoopBuilding.getMaintenanceModifier()) * 15;
 					iBuildingValue += kLoopBuilding.getYieldModifier(YIELD_COMMERCE) * 8;
 					iBuildingValue += kLoopBuilding.getCommerceModifier(COMMERCE_GOLD) * 15;
+					iBuildingValue += kLoopBuilding.getTradeRoutes() * 50;
 				}
 
 
