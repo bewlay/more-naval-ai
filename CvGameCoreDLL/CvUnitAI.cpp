@@ -4554,10 +4554,10 @@ void CvUnitAI::AI_pillageMove()
 		}
 	}
 	
-	/*if (AI_cityAttack(1, 55))
+	if (AI_cityAttack(1, 75))
 	{
 		return;
-	}*/
+	}
 
 	if (AI_anyAttack(1, 65))
 	{
@@ -12096,7 +12096,7 @@ bool CvUnitAI::AI_group(UnitAITypes eUnitAI, int iMaxGroup, int iMaxOwnUnitAI, i
 																{
 																	if (iPathTurns <= iMaxPath)
 																	{
-																		iValue = 1000 * (iPathTurns + 1);
+																		iValue = 1000 / (iPathTurns + 1);
 																		iValue *= 4 + pLoopGroup->getCargo();
 																		iValue /= pLoopGroup->getNumUnits();
 
@@ -15310,6 +15310,15 @@ bool CvUnitAI::AI_construct(int iMaxCount, int iMaxSingleBuildingCount, int iThr
 									{
 										iValue = pLoopCity->AI_buildingValue(eBuilding);
 
+										if (plot()->isCity())
+										{
+											if ((GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot()) > 0))
+											{
+												if (baseCombatStr() > 0)
+													iValue = 0;
+											}
+										}
+
 										// Sephi AI (Religion Victory)
 										/*
 										if (AI_getUnitAIType()==UNITAI_PROPHET)
@@ -16824,6 +16833,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											iValue = kOwner.AI_targetCityValue(pLoopCity, true, true);
 										}
 
+										if (isBarbarian())
+										{
+											iValue += GC.getGameINLINE().getSorenRandNum(100, "AI Barbarian Modifier");
+										}
+
 										if( gUnitLogLevel > 3 )
 										{
 											logBBAI("     ...valuing city %S (initial value: %d)", pLoopCity->getName().GetCString(), iValue);
@@ -16865,6 +16879,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											iValue /= 4;
 										}
 
+										if (pLoopCity->isRevealed(getTeam(), false) && pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner()) == 0)
+										{
+											iValue *= 4;
+										}
+
 										// If stack has poor bombard, direct towards lower defense cities
 										iPathTurns += std::min(12, getGroup()->getBombardTurns(pLoopCity)/4);
 
@@ -16875,6 +16894,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 										{
 											int iModifier = 2;
 
+											if (!pLoopCity->plot()->isVisible(getTeam(),false))
+											{
+												iModifier++;
+											}
+
 											// if we don't already have a warplan for this foe, make sure we overwhelm them
 											if (GET_TEAM(getTeam()).AI_getWarPlan(pLoopCity->getTeam()) == NO_WARPLAN)
 											{
@@ -16882,7 +16906,7 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 											}
 
 											// if we're already at war - need to be really powerful to start a new one
-											if ((GET_TEAM(getTeam()).getAtWarCount(true) > 0))
+											if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
 											{
 												iModifier *= 2;
 											}
@@ -16897,11 +16921,11 @@ CvCity* CvUnitAI::AI_pickTargetCity(int iFlags, int iMaxPathTurns, bool bHuntBar
 												iGroupSize = getGroup()->getNumUnits();
 											}
 
-											if (iGroupSize < (iModifier * pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner())))
+											if (iGroupSize <= (iModifier * pLoopCity->plot()->getNumDefenders(pLoopCity->getOwner())))
 											{
 												if( gUnitLogLevel > 3 )
 												{
-													logBBAI("     ...zeroing out city value (modifier %d - groupsize %d)", iModifier, iGroupSize);
+													logBBAI("     ...zeroing out city value due to small group size(modifier %d - groupsize %d)", iModifier, iGroupSize);
 												}
 												iValue = 0;
 											}
@@ -25519,6 +25543,11 @@ int CvUnitAI::AI_finalOddsThreshold(CvPlot* pPlot, int iOddsThreshold)
 */
 	int iDefenders = pPlot->getNumVisiblePotentialEnemyDefenders(this);
 
+	if (iDefenders = 0 && pPlot->isVisible(getTeam(), false))
+	{
+		return 1;
+	}
+
 	// More aggressive if only one enemy defending city
 	if (iDefenders == 1 && pCity != NULL)
 	{
@@ -26410,9 +26439,9 @@ bool CvUnitAI::AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const
 /* Unit AI, Efficiency                                                                          */
 /************************************************************************************************/
 		//if (GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(pPlot, 3) > 0)
-		if (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(pPlot, 3))
+		if (GET_PLAYER(getOwnerINLINE()).AI_getAnyPlotDanger(pPlot, 3)) // Tholal NOte - Why is this here?
 		{
-			return false;
+			//return false;
 		}
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
@@ -26561,7 +26590,7 @@ void CvUnitAI::AI_summonAttackMove()
 			}
 		}
 		
-		if (AI_anyAttack(getDuration()*baseMoves(), (bCollateral ? 0 : 25)))
+		if (AI_anyAttack(getDuration(), (bCollateral ? 0 : 25)))
         {
             return;
         }	
@@ -27161,11 +27190,29 @@ void CvUnitAI::AI_PatrolMove()
 		}
 	}
 
-	// check for easy targets in the area
+	// Jobs for small patrols
 	if (getGroup()->getNumUnits() <= 3)// && !bAtWar)
 	{
+		//if( gUnitLogLevel > 3 ) logBBAI("       ...checking small group options");
+		if (plot()->getOwnerINLINE() != getOwnerINLINE())
+		{
+			//if( gUnitLogLevel > 3 ) logBBAI("       ...looking for Settlers to group with");
+			if (AI_group(UNITAI_SETTLE, 5, -1, -1, false, false, false, 0, true))
+			{
+				if( gUnitLogLevel > 3 ) logBBAI("       ...grouping with Settler in foreign territory");
+				return;
+			}
+		}
+
+		if (AI_cityAttack(1, 75))
+		{
+			if( gUnitLogLevel > 3 ) logBBAI("       ...opportunistic city attack");
+			return;
+		}
+
 		if (AI_pickupEquipment(3))
 		{
+			if( gUnitLogLevel > 3 ) logBBAI("       ...picking up equipment");
 			return;
 		}
 
@@ -27176,7 +27223,7 @@ void CvUnitAI::AI_PatrolMove()
 
 		if (!bDanger)
 		{
-			int iAttackRange = ((plot()->getOwner() == getOwner()) ? 4: 2);
+			int iAttackRange = ((plot()->getOwner() == getOwner()) ? 3: 2);
 			if (AI_anyAttack(iAttackRange,90))
 			{
 				return;
@@ -27362,7 +27409,7 @@ void CvUnitAI::AI_PatrolMove()
 
 	if (bDanger)
 	{
-		if (AI_cityAttack(1, 55))
+		if (AI_cityAttack(1, 65))
 		{
 			return;
 		}
@@ -27473,7 +27520,7 @@ void CvUnitAI::AI_PatrolMove()
 			return;
 		}
 
-		if (AI_cityAttack(1, 35))
+		if (AI_cityAttack(1, 55))
 		{
 			return;
 		}
@@ -27501,7 +27548,7 @@ void CvUnitAI::AI_PatrolMove()
 			}
 		}
 		
-		if (AI_cityAttack(4, 30))
+		if (AI_cityAttack(4, 80))
 		{
 			return;
 		}
@@ -28453,7 +28500,8 @@ void CvUnitAI::AI_ConquestMove()
 
 		int iStepDistToTarget = stepDistance(pTargetCity->getX_INLINE(), pTargetCity->getY_INLINE(), getX_INLINE(), getY_INLINE());
 		//int iAttackRatio = std::max(100, GC.getBBAI_ATTACK_CITY_STACK_RATIO());
-		int iAttackRatio = 105; //Todo - find better way to come up with an AttackRatio - should vary based on situation
+		int iAttackRatio = 150; //Todo - find better way to come up with an AttackRatio - should vary based on situation
+		// loop through units. Add level Subtract if melee or collateral or explodeincombat. Add if mage or UNITAI_HERO
 
 		int iComparePostBombard = 0;
 		// AI gets a 1-tile sneak peak to compensate for lack of memory
@@ -28552,7 +28600,7 @@ void CvUnitAI::AI_ConquestMove()
 					
 					if( getGroup()->getNumUnits() == 1 )
 					{
-						if( AI_cityAttack(1, 50) )
+						if( AI_cityAttack(1, 70) )
 						{
 							logBBAI("      ...solo city attack");
 							return;
