@@ -5192,6 +5192,11 @@ class CvMainInterface:
 														szBuffer = szBuffer + szTempBuffer
 														if (bAlignIcons):
 															scores.setBorders()
+													if (gc.getTeam(eTeam).isHasEmbassy(gc.getGame().getActiveTeam())):
+														szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.STAR_CHAR))
+														szBuffer = szBuffer + szTempBuffer
+														if (bAlignIcons):
+															scores.setEmbassy()
 													if (gc.getTeam(eTeam).isDefensivePact(gc.getGame().getActiveTeam())):
 														szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.DEFENSIVE_PACT_CHAR))
 														szBuffer = szBuffer + szTempBuffer
