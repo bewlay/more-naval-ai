@@ -295,21 +295,21 @@
 		<Finnish>Enter the user defined naming convention for combat units 'ADEPT'.</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_BEAST_TEXT</Tag>
-		<English>Naming Convention: Combat[BEAST]</English>
-		<French>Convention des Noms: Combat[BEAST]</French>
-		<German>Benennungsregel: Kampf[BEAST]</German>
-		<Italian>- per le Unit&#224; di Combattimento da BEAST</Italian>
-		<Spanish>Nomenclatura: Combat[BEAST]</Spanish>
-		<Finnish>Naming Convention: Combat[BEAST]</Finnish>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_ANIMAL_TEXT</Tag>
+		<English>Naming Convention: Combat[ANIMAL]</English>
+		<French>Convention des Noms: Combat[ANIMAL]</French>
+		<German>Benennungsregel: Kampf[ANIMAL]</German>
+		<Italian>- per le Unit&#224; di Combattimento da ANIMAL</Italian>
+		<Spanish>Nomenclatura: Combat[ANIMAL]</Spanish>
+		<Finnish>Naming Convention: Combat[ANIMAL]</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_BEAST_HOVER</Tag>
-		<English>Enter the user defined naming convention for combat units 'BEAST'.</English>
-		<French>Entrez la convention des noms pour les unit&#233;s 'BEAST'.</French>
-		<German>Eingabe der benutzerdefinierten Benennungsregel f&#252;r Belagerungswaffen</German>
-		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unit&#224; di Combattimento da Assedio ('Combat[BEAST]').</Italian>
-		<Spanish>Introduce la nomenclatura personal para la definici&#243;n de nombres para las unidades de combate 'BEAST'.</Spanish>
-		<Finnish>Enter the user defined naming convention for combat units 'BEAST'.</Finnish>
+		<Tag>TXT_KEY_BUG_OPT_UNITNAMING__COMBAT_ANIMAL_HOVER</Tag>
+		<English>Enter the user defined naming convention for combat units 'ANIMAL'.</English>
+		<French>Entrez la convention des noms pour les unit&#233;s 'ANIMAL'.</French>
+		<German>Eingabe der benutzerdefinierten Benennungsregel f&#252;r ANIMAL</German>
+		<Italian>Inserisci la tua convenzione di denominazione personalizzata per le Unit&#224; di Combattimento da Assedio ('Combat[ANIMAL]').</Italian>
+		<Spanish>Introduce la nomenclatura personal para la definici&#243;n de nombres para las unidades de combate 'ANIMAL'.</Spanish>
+		<Finnish>Enter the user defined naming convention for combat units 'ANIMAL'.</Finnish>
 	</TEXT>
 </Civ4GameText>
