@@ -2269,6 +2269,11 @@ void CvUnitAI::AI_workerMove()
 	bNextCity = false;
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting workerMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
+
 	if (AI_construct())
 	{
 		return;
@@ -2308,6 +2313,7 @@ void CvUnitAI::AI_workerMove()
 		{
 			if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, UNITAI_SETTLE, 2, -1, -1, 0, MOVE_SAFE_TERRITORY))
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... loading onto Settler ship");}
 				return;
 			}
 		}
@@ -6786,6 +6792,11 @@ void CvUnitAI::AI_workerSeaMove()
 	CvCity* pCity;
 
 	int iI;
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting workerSeaMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	if (!(getGroup()->canDefend()))
 	{
@@ -21645,7 +21656,8 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 			eBestBuild = AI_betterPlotBuild(pBestPlot, eBestBuild);
 			getGroup()->pushMission(eBestMission, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_BUILD, pBestPlot);
 			getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, (getGroup()->getLengthMissionQueue() > 0), false, MISSIONAI_BUILD, pBestPlot);
-
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... improving bonus at %d, %d with %S (value: %d)", pBestPlot->getX(), pBestPlot->getY(), GC.getBuildInfo((BuildTypes)eBestBuild).getTextKeyWide(), iBestValue);}
+		
 			return true;
 		}
 		else if (bBestBuildIsRoute)
@@ -27193,7 +27205,7 @@ void CvUnitAI::AI_PatrolMove()
 	// Jobs for small patrols
 	if (getGroup()->getNumUnits() <= 3)// && !bAtWar)
 	{
-		//if( gUnitLogLevel > 3 ) logBBAI("       ...checking small group options");
+		if( gUnitLogLevel > 3 ) logBBAI("       ...checking small group options");
 		if (plot()->getOwnerINLINE() != getOwnerINLINE())
 		{
 			//if( gUnitLogLevel > 3 ) logBBAI("       ...looking for Settlers to group with");
@@ -27254,12 +27266,14 @@ void CvUnitAI::AI_PatrolMove()
 
 	if (AI_groupMergeRange(UNITAI_HERO, 0, true, true))
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...merging with UNITAI_HERO");
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
 
 	if (AI_groupMergeRange(UNITAI_ATTACK, 0, true, true))
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...merging with UNITAI_ATTACK");
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
@@ -27285,6 +27299,7 @@ void CvUnitAI::AI_PatrolMove()
 		{
 			if (AI_guardCity(true))
 			{
+				if( gUnitLogLevel > 3 ) logBBAI("       ...guarding city");
 				return;
 			}
 		}
@@ -27324,6 +27339,7 @@ void CvUnitAI::AI_PatrolMove()
 	{
 		if (AI_poach())
 		{
+			if( gUnitLogLevel > 3 ) logBBAI("       ...poaching");
 			return;
 		}
 	}
@@ -27351,6 +27367,7 @@ void CvUnitAI::AI_PatrolMove()
 
 	if (AI_heal(30, 1))
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...healing");
 		return;
 	}
 
@@ -27628,11 +27645,13 @@ void CvUnitAI::AI_PatrolMove()
 
 	if (AI_defend())
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...AI_defend");
 		return;
 	}
 
 	if (AI_travelToUpgradeCity())
 	{
+		if( gUnitLogLevel > 3 ) logBBAI("       ...travelling to upgrade city");
 		return;
 	}
 	
@@ -27640,6 +27659,7 @@ void CvUnitAI::AI_PatrolMove()
 	{
 		if (AI_load(UNITAI_ASSAULT_SEA, MISSIONAI_LOAD_ASSAULT, NO_UNITAI, -1, -1, -1, -1, MOVE_NO_ENEMY_TERRITORY, 1))
 		{
+			if( gUnitLogLevel > 3 ) logBBAI("       ...loading on ship due to Stranded status");
 			return;
 		}
 	}
@@ -27647,6 +27667,7 @@ void CvUnitAI::AI_PatrolMove()
 	if( !bDanger && !isHuman() && plot()->isCoastalLand() && GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_PICKUP) > 0 )
 	{
 		// If no other desireable actions, wait for pickup
+		if( gUnitLogLevel > 3 ) logBBAI("       ...waiting for pickup");
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
@@ -27657,6 +27678,7 @@ void CvUnitAI::AI_PatrolMove()
 		if (bAtWar || bAnyWarPlan)
 		{
 			AI_setGroupflag(GROUPFLAG_CONQUEST);
+			if( gUnitLogLevel > 3 ) logBBAI("       ...switching to GROUPFLAG_CONQUEST");
 			//AI_setUnitAIType(UNITAI_ATTACK_CITY);
 			return;
 		}
@@ -27670,6 +27692,7 @@ void CvUnitAI::AI_PatrolMove()
 	{
 		if (AI_patrol())
 		{
+			if( gUnitLogLevel > 3 ) logBBAI("       ...patrolling");
 			return;
 		}
 	}
@@ -27684,12 +27707,18 @@ void CvUnitAI::AI_PatrolMove()
 		return;
 	}
 
+	if( gUnitLogLevel > 3 ) logBBAI("       ...ERROR? NOTHING TO DO!");
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
 }
 
 void CvUnitAI::AI_HiddenNationalityMove()
 {
+
+	if( gUnitLogLevel >= 2 )
+	{
+		logBBAI("    Stack %d (led by %S (%d), size %d) starting HiddenNationalityMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
+	}
 
 	if (!isHiddenNationality())
     {
