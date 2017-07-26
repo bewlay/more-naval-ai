@@ -5598,9 +5598,6 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					iImprovementValue += iTempValue;
 				}
 
-				// Tholal - kind of a hack to get AI to pursue education earlier
-				iImprovementValue += (kImprovement.getPillageGold() * (50 * getNumCities()));
-
 				int iNumTotalBonuses = 0;
 				for (int iK = 0; iK < GC.getNumBonusInfos(); iK++)
 				{

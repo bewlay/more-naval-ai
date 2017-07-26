@@ -3259,7 +3259,8 @@ void CvCityAI::AI_chooseProduction()
 			iMissionarySeaNeeded++;
 		}
 
-		if (iMissionarySeaNeeded > 0)
+		if (iMissionarySeaNeeded > 0 &&
+			kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY) > kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA))
 		{
 			if (kPlayer.AI_totalUnitAIs(UNITAI_MISSIONARY_SEA) <= (bLandWar ? 0 : iMissionarySeaNeeded))
 			{
