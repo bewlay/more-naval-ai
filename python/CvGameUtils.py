@@ -1315,9 +1315,10 @@ class CvGameUtils:
 					for iiY in range(iY-isearch, iY+isearch+1, 1):
 						pPlot2 = CyMap().plot(iiX,iiY)
 						if pPlot2.isNone():continue
-						if pPlot2.isImpassable():continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						if pPlot2.getOwner() != iPlayer:continue
+						if pPlot2.isImpassable():continue
+						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
 							iTerrain = pPlot2.getTerrainType()
@@ -1368,9 +1369,10 @@ class CvGameUtils:
 					for iI in range(1, 21):
 						pPlot2 = pCity.getCityIndexPlot(iI)
 						if pPlot2.isNone():continue
-						if pPlot2.isImpassable():continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						if pPlot2.getOwner() != iPlayer:continue
+						if pPlot2.isImpassable():continue
+						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
 							iTerrain = pPlot2.getTerrainType()

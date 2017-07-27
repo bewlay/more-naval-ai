@@ -1797,7 +1797,7 @@ class CvEventManager:
 									iPlotValue += pPlot.area().getNumTiles() * 2
 									iPlotValue += pPlot.area().getNumUnownedTiles() * 10
 									if pPlot.isAdjacentOwned():
-										iPlotValue -= 250;
+										iPlotValue -= 150;
 
 									## Check Big Fat Cross for other players, resources and terrain
 									for iCityPlotX in range(iX-1, iX+2, 1):
