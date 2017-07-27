@@ -51,7 +51,7 @@
 					type="string" default="DEFAULT"/>
 			<option id="Combat_ADEPT" key="CombatADEPT" 
 					type="string" default="DEFAULT"/>	  
-			<option id="Combat_BEAST" key="CombatBEAST" 
+			<option id="Combat_ANIMAL" key="CombatANIMAL" 
 					type="string" default="DEFAULT"/>
 			<accessor get="getByCombatType" set="setByCombatType" 
 					  args="combatType" id="Combat_%s"/>
