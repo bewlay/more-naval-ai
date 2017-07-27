@@ -2504,7 +2504,7 @@ void CvUnitAI::AI_workerMove()
 	
 	bool bBuildFort = false;
 	
-	if (GC.getGame().getSorenRandNum(5, "AI Worker build Fort with Priority"))
+	if (GC.getGame().getSorenRandNum(5, "AI Worker build Fort with Priority") == 1)
 	{
 		// Super Forts begin *canal* *choke*
 		//CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
@@ -6789,7 +6789,7 @@ void CvUnitAI::AI_workerSeaMove()
 {
 	PROFILE_FUNC();
 
-	CvCity* pCity;
+	//CvCity* pCity;
 
 	int iI;
 
@@ -6869,6 +6869,7 @@ void CvUnitAI::AI_workerSeaMove()
 		}
 	}
 
+	/*
 	if (!(isHuman()) && (AI_getUnitAIType() == UNITAI_WORKER_SEA))
 	{
 		pCity = plot()->getPlotCity();
@@ -6897,6 +6898,7 @@ void CvUnitAI::AI_workerSeaMove()
 			}
 		}
 	}
+	*/
 
 	if (AI_retreatToCity())
 	{
@@ -21484,7 +21486,7 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 														iValue /= 100;
 														iValue *= std::max(0, (100-GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getImprovementWeightModifier((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement())));
 													}
-													iValue -= GC.getGameINLINE().getSorenRandNum(4000, "AIBonus");
+													//iValue -= GC.getGameINLINE().getSorenRandNum(4000, "AIBonus");
 	//FfH: End Add
 
 													// XXX feature production???
