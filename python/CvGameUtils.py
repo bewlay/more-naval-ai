@@ -392,6 +392,11 @@ class CvGameUtils:
 			if pPlayer.getPlayersKilled() == 0:
 				return True
 
+		if eProject == gc.getInfoTypeForString('PROJECT_GLORY_EVERLASTING'):
+			if not pPlayer.isHuman():
+				if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNALS'):
+					return True
+
 		if eProject == gc.getInfoTypeForString('PROJECT_ASCENSION'):
 			if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
 				return True
@@ -754,7 +759,7 @@ class CvGameUtils:
 				elif iData2 == 8:
 					return CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_BUILDING",())
 				elif iData2 == 9:
-					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.17"
+					return CvModName.getName() + '\nVersion: ' + CvModName.getVersion() + "\nPlaty Builder\nVersion: 4.17b"
 				elif iData2 == 10:
 					return CyTranslator().getText("TXT_KEY_CONCEPT_EVENTS",())
 				elif iData2 == 11:
@@ -1310,9 +1315,10 @@ class CvGameUtils:
 					for iiY in range(iY-isearch, iY+isearch+1, 1):
 						pPlot2 = CyMap().plot(iiX,iiY)
 						if pPlot2.isNone():continue
-						if pPlot2.isImpassable():continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						if pPlot2.getOwner() != iPlayer:continue
+						if pPlot2.isImpassable():continue
+						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
 							iTerrain = pPlot2.getTerrainType()
@@ -1363,9 +1369,10 @@ class CvGameUtils:
 					for iI in range(1, 21):
 						pPlot2 = pCity.getCityIndexPlot(iI)
 						if pPlot2.isNone():continue
-						if pPlot2.isImpassable():continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						if pPlot2.getOwner() != iPlayer:continue
+						if pPlot2.isImpassable():continue
+						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
 							iTerrain = pPlot2.getTerrainType()

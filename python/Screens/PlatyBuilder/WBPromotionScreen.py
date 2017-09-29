@@ -189,7 +189,7 @@ class WBPromotionScreen:
 		for i in xrange(gc.getNumPromotionInfos()):
 			if CvPlatyBuilderScreen.bHideInactive:
 				if not isPromotionValid(i, pUnit.getUnitType(), True):
-					if iCategory < 3:#effects, equipment, races, and of course hidden options would almost never be valid, but it is a haddle to go back to the main screen if you want to be able to see them
+					if iCategory < 3:#effects, equipment, races, and of course hidden options would almost never be valid, but it is a hassle to go back to the main screen if you want to be able to see them
 						continue
 			if iStatus == 0:#All promptions
 				pass

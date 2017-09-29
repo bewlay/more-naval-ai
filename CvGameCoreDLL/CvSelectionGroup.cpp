@@ -4926,7 +4926,7 @@ void CvSelectionGroup::mergeIntoGroup(CvSelectionGroup* pSelectionGroup)
 
 			if (pLoopUnit != NULL)
 			{
-				if (pLoopUnit->AI_getUnitAIType() != UNITAI_HERO) // heroes are exempt from this check
+				if (pLoopUnit->AI_getUnitAIType() != UNITAI_HERO && pLoopUnit->AI_getGroupflag() != GROUPFLAG_CONQUEST) // heroes are exempt from this check
 				{
 					UnitAITypes eUnitAI = pLoopUnit->AI_getUnitAIType();
 

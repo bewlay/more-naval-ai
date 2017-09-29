@@ -7543,6 +7543,7 @@ void CvGame::createBarbarianCities()
 	if (pBestPlot != NULL)
 	{
 		GET_PLAYER(BARBARIAN_PLAYER).found(pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
+		logBBAI("Barbarian city created at plot %d, %d", pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE());
 	}
 }
 
@@ -8694,7 +8695,13 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     {
         setCultureNeedsEmptyRadius(kData.eVoteSource, bChange);
     }
+	if (kVote.isNoCityRazing())
+    {
+        setNoCityRazing(kData.eVoteSource, bChange);
+    }
 	// End Advanced Diplomacy
+
+	// setForcedOpenBorder(kData.eVoteSource, bChange); // TODO - make this
 
 	if (!CvString(kVote.getPyResult()).empty())
     {
@@ -8853,6 +8860,11 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 /************************************************************************************************/
 		else if (GC.getVoteInfo(kData.kVoteOption.eVote).isTradeMap())
 		{
+			if( gTeamLogLevel >= 1 )
+			{
+				logBBAI("  Vote for war Map Trading passes!" );
+			}
+
 			for (int iTeam1 = 0; iTeam1 < MAX_CIV_PLAYERS; ++iTeam1)
 			{
 				if (GET_TEAM((TeamTypes)iTeam1).isVotingMember(kData.eVoteSource))
@@ -8881,6 +8893,7 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 					}
 				}
 			}
+			setVoteOutcome(kData, NO_PLAYER_VOTE);
 		}
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */

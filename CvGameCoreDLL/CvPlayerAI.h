@@ -389,7 +389,8 @@ public:
 	//Tower Mana
 	int AI_getTowerManaValue(BonusTypes eBonus) const;
 
-	// Magic factor
+	// Magic factors
+	int AI_getMagicAffinity() const;
 	int AI_getMojoFactor() const;
 
 	// City count that doesnt include Settlements

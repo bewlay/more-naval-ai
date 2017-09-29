@@ -170,6 +170,10 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	if( gCityLogLevel >= 3 )
 	{
 		logBBAI("    Player %d City %d built at %d:%d", eOwner, iID, iX, iY );
+		if (pPlot->getBonusType() != NO_BONUS)
+		{
+			if( gPlayerLogLevel >= 3 ) {logBBAI("       ... City Founded on top of Bonus!!!");}
+		}
 	}
 
 	//--------------------------------
@@ -3056,19 +3060,6 @@ int CvCity::getProductionExperience(UnitTypes eUnit)
 			iExperience += GET_PLAYER(getOwnerINLINE()).getStateReligionFreeExperience();
 		}
 	}
-
-	// MNAI - include freepromotions
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		if (getNumBuilding((BuildingTypes)iI) > 0)
-		{
-			if (GC.getBuildingInfo((BuildingTypes)iI).getFreePromotionPick() > 0)
-			{
-				iExperience += 5;
-			}
-		}
-	}
-	// End MNAI
 
 	return std::max(0, iExperience);
 }

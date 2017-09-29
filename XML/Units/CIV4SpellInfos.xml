@@ -2453,6 +2453,7 @@
             <bImmuneEnemy>1</bImmuneEnemy>
             <bAbility>1</bAbility>
             <PyResult>spellReleaseFromCage(pCaster)</PyResult>
+            <PyRequirement>reqReleaseFromCage(pCaster)</PyRequirement>
             <Effect>EFFECT_CREATION</Effect>
             <Sound>AS3D_SPELL_BLESS</Sound>
             <bGraphicalOnly>1</bGraphicalOnly>
@@ -2558,7 +2559,6 @@
             <iRange>3</iRange>
             <bDispel>1</bDispel>
             <PyResult>spellRevelation(pCaster)</PyResult>
-            <PyRequirement>reqRevelation(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_REVELATION</Sound>
             <Button>Art/Interface/Buttons/Spells/Revelation.dds</Button>

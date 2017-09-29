@@ -5354,6 +5354,10 @@
                     <bFreePromotion>1</bFreePromotion>
                 </FreePromotion>
                 <FreePromotion>
+                    <PromotionType>PROMOTION_IMMUNE_DISEASE</PromotionType>
+                    <bFreePromotion>1</bFreePromotion>
+                </FreePromotion>
+                <FreePromotion>
                     <PromotionType>PROMOTION_DRAGON</PromotionType>
                     <bFreePromotion>1</bFreePromotion>
                 </FreePromotion>
@@ -5574,6 +5578,10 @@
             <FreePromotions>
                 <FreePromotion>
                     <PromotionType>PROMOTION_MAGIC_IMMUNE</PromotionType>
+                    <bFreePromotion>1</bFreePromotion>
+                </FreePromotion>
+                <FreePromotion>
+                    <PromotionType>PROMOTION_IMMUNE_DISEASE</PromotionType>
                     <bFreePromotion>1</bFreePromotion>
                 </FreePromotion>
                 <FreePromotion>
@@ -15770,6 +15778,14 @@
                     <UnitAIType>UNITAI_ATTACK_CITY</UnitAIType>
                     <bUnitAI>1</bUnitAI>
                 </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_ATTACK</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
+                <UnitAI>
+                    <UnitAIType>UNITAI_COUNTER</UnitAIType>
+                    <bUnitAI>1</bUnitAI>
+                </UnitAI>
             </UnitAIs>
             <NotUnitAIs>
             </NotUnitAIs>
@@ -24997,7 +25013,7 @@
                     <iFlavor>4</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>-20</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>60</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -25232,7 +25248,7 @@
                     <iFlavor>4</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>-20</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>60</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -25704,7 +25720,7 @@
                     <iFlavor>4</iFlavor>
                 </Flavor>
             </Flavors>
-            <iAIWeight>-20</iAIWeight>
+            <iAIWeight>0</iAIWeight>
             <iCost>60</iCost>
             <iHurryCostModifier>0</iHurryCostModifier>
             <iAdvancedStartCost>100</iAdvancedStartCost>
@@ -27261,6 +27277,10 @@
             <FreePromotions>
                 <FreePromotion>
                     <PromotionType>PROMOTION_MAGIC_IMMUNE</PromotionType>
+                    <bFreePromotion>1</bFreePromotion>
+                </FreePromotion>
+                <FreePromotion>
+                    <PromotionType>PROMOTION_IMMUNE_DISEASE</PromotionType>
                     <bFreePromotion>1</bFreePromotion>
                 </FreePromotion>
                 <FreePromotion>
@@ -30260,6 +30280,10 @@
             <FreePromotions>
                 <FreePromotion>
                     <PromotionType>PROMOTION_MAGIC_IMMUNE</PromotionType>
+                    <bFreePromotion>1</bFreePromotion>
+                </FreePromotion>
+                <FreePromotion>
+                    <PromotionType>PROMOTION_IMMUNE_DISEASE</PromotionType>
                     <bFreePromotion>1</bFreePromotion>
                 </FreePromotion>
                 <FreePromotion>
@@ -73519,7 +73543,7 @@
             <bRivalTerritory>0</bRivalTerritory>
             <bMilitaryHappiness>0</bMilitaryHappiness>
             <bMilitarySupport>1</bMilitarySupport>
-            <bMilitaryProduction>1</bMilitaryProduction>
+            <bMilitaryProduction>0</bMilitaryProduction>
             <bPillage>0</bPillage>
             <bSpy>0</bSpy>
             <bSabotage>0</bSabotage>

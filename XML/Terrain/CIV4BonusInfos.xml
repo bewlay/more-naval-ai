@@ -1957,7 +1957,7 @@
                 <iYieldChange>0</iYieldChange>
             </YieldChanges>
             <iAITradeModifier>50</iAITradeModifier>
-            <iAIObjective>10</iAIObjective>
+            <iAIObjective>50</iAIObjective>
             <iHealth>0</iHealth>
             <iHappiness>0</iHappiness>
             <iPlacementOrder>2</iPlacementOrder>

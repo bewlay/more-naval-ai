@@ -40,4 +40,4 @@ class BugUnitNameOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_SIEGE")
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_DISCIPLE")
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_ADEPT")
-		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_BEAST")
+		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_ANIMAL")

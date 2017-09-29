@@ -6752,7 +6752,9 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 //				}
                 if (GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization() == NO_CIVILIZATION ||
                  GC.getGameINLINE().getActivePlayer() == NO_PLAYER ||
-                 GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
+				 //GC.getGameINLINE().isDebugMode() ||
+                 //GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
+				 GET_PLAYER(pPlot->getOwner()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
                 {
                     // Super Forts begin *text* *upgrade*
 					if ((pPlot->getUpgradeProgress() > 0) || (pPlot->isBeingWorked() && !GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify()))
@@ -20694,31 +20696,13 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 			if (city.hasBonus((BonusTypes)i))
 			{
 				CvBonusInfo& bonus = GC.getBonusInfo((BonusTypes)i);
-				int iBonusMod = bonus.getResearchModifier();
+				int iBonusMod = bonus.getResearchModifier() * (bonus.isModifierPerBonus() ? city.getNumBonuses((BonusTypes)i) : 1);
 				if (0 != iBonusMod)
 				{
-					int iTotalBonusMod = iBonusMod;
-					if (bonus.isModifierPerBonus())
-					{
-						iTotalBonusMod = iBonusMod * city.getNumBonuses((BonusTypes)i);
-					}
 
-					int iFinalResearchBonusValue = ((iTotalBonusMod * city.getCommerceRateTimes100(COMMERCE_RESEARCH)) / 100);
-
-					if (iFinalResearchBonusValue < 0)
-					{
-						iFinalResearchBonusValue *= -1;
-						CvWString szMaint = CvWString::format(L"-%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
-						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
+						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", iBonusMod, bonus.getTextKeyWide()));
 						szBuffer.append(NEWLINE);
-					}
-					else
-					{
-						CvWString szMaint = CvWString::format(L"+%d.%02d", iFinalResearchBonusValue/100, iFinalResearchBonusValue%100);
-						szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_RESEARCH", szMaint.GetCString(), bonus.getTextKeyWide()));
-						szBuffer.append(NEWLINE);
-					}
-					iModifier += iTotalBonusMod;
+						iModifier += iBonusMod;
 				}
 			}
 		}
@@ -21767,12 +21751,12 @@ void CvGameTextMgr::setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, i
 				if (kEvent.isCityEffect() || kEvent.isOtherPlayerCityEffect())
 				{
 					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_EVENT_UNHEALTH", -kEvent.getHealth(), szCity.GetCString()));
+					szBuffer.append(gDLL->getText("TXT_KEY_EVENT_UNHEALTH_CITY", -kEvent.getHealth(), szCity.GetCString()));
 				}
 				else
 				{
 					szBuffer.append(NEWLINE);
-					szBuffer.append(gDLL->getText("TXT_KEY_EVENT_UNHEALTH_CITY", -kEvent.getHealth()));
+					szBuffer.append(gDLL->getText("TXT_KEY_EVENT_UNHEALTH", -kEvent.getHealth()));
 				}
 			}
 		}

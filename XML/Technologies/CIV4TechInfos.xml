@@ -6347,7 +6347,7 @@
             <bEmbassyTrading>1</bEmbassyTrading>
 	    <bFreeTradeAgreementTrading>1</bFreeTradeAgreementTrading>
 	    <bNonAggressionTrading>1</bNonAggressionTrading>
-	    <bPOWTrading>1</bPOWTrading>
+	    <bPOWTrading>0</bPOWTrading>
             <!--Afforess Advanced Diplomacy-->
             <bDisable>0</bDisable>
             <bGoodyTech>0</bGoodyTech>

@@ -116,7 +116,7 @@ def init():
 	columns.append(Column('N', TRADE, FIXED, smallSymbol(FontSymbols.TRADE_CHAR)))
 	columns.append(Column('B', BORDERS, FIXED, smallSymbol(FontSymbols.OPEN_BORDERS_CHAR)))
 	#Afforess Advanced Diplomacy
-	columns.append(Column('@', EMBASSY, FIXED, smallSymbol(FontSymbols.MAP_CHAR)))
+	columns.append(Column('@', EMBASSY, FIXED, smallSymbol(FontSymbols.STAR_CHAR)))
 	#Afforess Advanced Diplomacy
 	columns.append(Column('D', PACT, FIXED, smallSymbol(FontSymbols.DEFENSIVE_PACT_CHAR)))
 	columns.append(Column('R', RELIGION, DYNAMIC))
@@ -279,10 +279,12 @@ class Scoreboard:
 		
 	def setBorders(self):
 		self._set(BORDERS, True, self._getDealWidget(TradeableItems.TRADE_OPEN_BORDERS))
+		
 	#Afforess Advanced Diplomacy
 	def setEmbassy(self):
 		self._set(EMBASSY, True, self._getDealWidget(TradeableItems.TRADE_EMBASSY))
 	#Afforess Advanced Diplomacy
+	
 	def setPact(self):
 		self._set(PACT, True, self._getDealWidget(TradeableItems.TRADE_DEFENSIVE_PACT))
 		
