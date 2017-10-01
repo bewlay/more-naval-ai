@@ -27382,7 +27382,25 @@ void CvPlayer::getGlobeLayerColors(GlobeLayerTypes eGlobeLayerType, int iOption,
 		getResourceLayerColors((GlobeLayerResourceOptionTypes) iOption, aColors, aIndicators);
 		break;
 	case GLOBE_LAYER_RELIGION:
-		getReligionLayerColors((ReligionTypes) iOption, aColors, aIndicators);
+		// Hide Council of Esus in the Religion globe layer START
+		// getReligionLayerColors((ReligionTypes) iOption, aColors, aIndicators);
+		{
+			int realNumber = 0;
+			int optionNumber = 0;
+			while (realNumber < GC.getNumReligionInfos())
+			{
+                if (canSeeReligion((ReligionTypes) realNumber, NULL))
+				{
+					if (optionNumber == iOption) {
+						break;
+					}
+					optionNumber++;
+				}
+				realNumber++;
+			}
+			getReligionLayerColors((ReligionTypes) realNumber, aColors, aIndicators);
+		}
+		// Hide Council of Esus in the Religion globe layer END
 		break;
 	case GLOBE_LAYER_CULTURE:
 		getCultureLayerColors(aColors, aIndicators);

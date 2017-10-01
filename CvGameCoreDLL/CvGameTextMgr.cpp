@@ -23328,7 +23328,25 @@ void CvGameTextMgr::getGlobeLayerName(GlobeLayerTypes eType, int iOption, CvWStr
 		}
 		break;
 	case GLOBE_LAYER_RELIGION:
-		strName = GC.getReligionInfo((ReligionTypes) iOption).getDescription();
+		// Hide Council of Esus in the Religion globe layer START
+		// strName = GC.getReligionInfo((ReligionTypes) iOption).getDescription();
+		{
+			int realNumber = 0;
+			int optionNumber = 0;
+			while (realNumber < GC.getNumReligionInfos())
+			{
+				if (GET_PLAYER(GC.getGameINLINE().getActivePlayer()).canSeeReligion((ReligionTypes) realNumber, NULL))
+				{
+					if (optionNumber == iOption) {
+						break;
+					}
+					optionNumber++;
+				}
+				realNumber++;
+			}
+			strName = GC.getReligionInfo((ReligionTypes) realNumber).getDescription();
+		}
+		// Hide Council of Esus in the Religion globe layer END
 		break;
 	case GLOBE_LAYER_CULTURE:
 	case GLOBE_LAYER_TRADE:
