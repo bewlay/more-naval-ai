@@ -2375,7 +2375,6 @@ void CvGame::getGlobeLayers(std::vector<CvGlobeLayerData>& aLayers) const
 			numReligions++;
 		}
 	}
-    logReal("CvGame::getGlobeLayers numReligions: %d", numReligions);
 	kReligion.m_iNumOptions = numReligions;
 	// Hide Council of Esus in the Religion globe layer END
 	kReligion.m_bShouldCitiesZoom = true;
