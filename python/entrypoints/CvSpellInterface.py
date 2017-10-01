@@ -2602,6 +2602,13 @@ def spellRessurection(caster):
 		if newUnit.isHasPromotion(iProm):
 			if gc.getPromotionInfo(iProm).isEquipment():
 				newUnit.setHasPromotion(iProm, False)
+	# Bugfix: When a unit that is the avatar of the civilization leader is resurrected, restore lost traits START
+	if iUnit in (gc.getInfoTypeForString('UNIT_BASIUM'), gc.getInfoTypeForString('UNIT_HYBOREM')):
+		kLeaderInfo = gc.getLeaderHeadInfo(pPlayer.getLeaderType())
+		for iTrait in range(gc.getNumTraitInfos()):
+			if kLeaderInfo.hasTrait(iTrait):
+				pPlayer.setHasTrait(iTrait, True)
+	# Bugfix: When a unit that is the avatar of the civilization leader is resurrected, restore lost traits END
 	CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_HERO_RESSURECTED", ()),'AS2D_CHARM_PERSON',1,'Art/Interface/Buttons/Spells/Ressurection.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
 
 def spellRessurectionGraveyard(caster):
