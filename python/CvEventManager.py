@@ -2178,29 +2178,7 @@ class CvEventManager:
 		if CyGame().GetWorldBuilderMode() and not CvPlatyBuilderScreen.bPython: return
 	## Platy Builder ##
 		'Player changes his state religion'
-		iPlayer, iNewReligion, iOldReligion = argsList
-		if iNewReligion != iOldReligion:
-			pPlayer = gc.getPlayer(iPlayer)
-			if iNewReligion == -1:
-				iCurrentEra = pPlayer.getCurrentEra()
-				iEra = iCurrentEra
-				if not (iCurrentEra == gc.getInfoTypeForString('ERA_ANCIENT') or iCurrentEra == gc.getInfoTypeForString('ERA_CLASSICAL') or iCurrentEra == gc.getInfoTypeForString('ERA_MEDIEVAL')):
-					iEra = gc.getGame().getStartEra()
-					pPlayer.setCurrentEra(iEra)
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_ORDER'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_ORDE'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_EMPYREAN'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_EMPY'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_RUNES_OF_KILMORPH'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_RUNE'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_LEAF'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_OCTOPUS_OVERLORDS'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_OCTO'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_COUNCIL_OF_ESUS'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_COUN'))
-			elif iNewReligion == gc.getInfoTypeForString('RELIGION_THE_ASHEN_VEIL'):
-				pPlayer.setCurrentEra(gc.getInfoTypeForString('ERA_VEIL'))
+	# ERA_FIX 09/2017 lfgr: removed era change, now handled in DLL
 
 	def onPlayerGoldTrade(self, argsList):
 		'Player Trades gold to another player'

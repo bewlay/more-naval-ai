@@ -6067,7 +6067,7 @@ void CvUnitAI::AI_scientistMove()
 	{
 		return;
 	}
-	if (GC.getGameINLINE().getCurrentPeriod() < 3)
+	if (GC.getGameINLINE().getCurrentEra() < 3)
 	{
 		if (AI_join(2))
 		{
@@ -6075,7 +6075,7 @@ void CvUnitAI::AI_scientistMove()
 		}
 	}
 
-	if (GC.getGameINLINE().getCurrentPeriod() <= (GC.getNumEraInfos() / 2))
+	if (GC.getGameINLINE().getCurrentEra() <= (GC.getNumRealEras() / 2))
 	{
 		if (AI_construct())
 		{
@@ -25599,7 +25599,7 @@ int CvUnitAI::AI_finalOddsThreshold(CvPlot* pPlot, int iOddsThreshold)
 
 int CvUnitAI::AI_stackOfDoomExtra()
 {
-	return ((AI_getBirthmark() % (1 + GC.getGameINLINE().getCurrentPeriod())) + 4);
+	return ((AI_getBirthmark() % (1 + GC.getGameINLINE().getCurrentEra())) + 4);
 }
 
 bool CvUnitAI::AI_stackAttackCity(int iRange, int iPowerThreshold, bool bFollow)

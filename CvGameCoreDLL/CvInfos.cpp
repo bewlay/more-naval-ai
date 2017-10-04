@@ -1602,6 +1602,10 @@ bool CvTechInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "Era");
 	m_iEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( GC.getEraInfo( (EraTypes) m_iEra ).isRealEra(), "Technology can't have non-real era" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "FirstFreeUnitClass");
 	m_iFirstFreeUnitClass = pXML->FindInInfoClass(szTextVal);
@@ -6506,11 +6510,11 @@ void CvUnitInfo::updateArtDefineButton()
 
 const CvArtInfoUnit* CvUnitInfo::getArtInfo(int i, EraTypes eEra, UnitArtStyleTypes eStyle) const
 {
-	if ((eEra > GC.getNumEraInfos() / 2) && !CvString(getLateArtDefineTag(i, eStyle)).empty())
+	if ((eEra > GC.getNumRealEras() / 2) && !CvString(getLateArtDefineTag(i, eStyle)).empty())
 	{
 		return ARTFILEMGR.getUnitArtInfo(getLateArtDefineTag(i, eStyle));
 	}
-	else if ((eEra > GC.getNumEraInfos() / 4) && !CvString(getMiddleArtDefineTag(i, eStyle)).empty())
+	else if ((eEra > GC.getNumRealEras() / 4) && !CvString(getMiddleArtDefineTag(i, eStyle)).empty())
 	{
 		return ARTFILEMGR.getUnitArtInfo(getMiddleArtDefineTag(i, eStyle));
 	}
@@ -11392,9 +11396,19 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "FreeStartEra");
 	m_iFreeStartEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( m_iFreeStartEra == NO_ERA || GC.getEraInfo( (EraTypes) m_iFreeStartEra ).isRealEra(),
+			"Building can't have non-real FreeStartEra" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "MaxStartEra");
 	m_iMaxStartEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( m_iMaxStartEra == NO_ERA || GC.getEraInfo( (EraTypes) m_iMaxStartEra ).isRealEra(),
+			"Building can't have non-real MaxStartEra" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "ObsoleteTech");
 	m_iObsoleteTech = pXML->FindInInfoClass(szTextVal);
@@ -20323,6 +20337,9 @@ m_iAlignmentWorst(NO_ALIGNMENT)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+// ERA_FIX 09/2017 lfgr
+, m_PseudoEra( NO_ERA )
+// ERA_FIX end
 {
 	reset();
 }
@@ -20575,6 +20592,13 @@ TechTypes CvReligionInfo::getReligionTech2() const
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+// ERA_FIX 09/2017 lfgr
+EraTypes CvReligionInfo::getPseudoEra() const
+{
+	return m_PseudoEra;
+}
+// ERA_FIX end
+
 //
 // read from xml
 //
@@ -20673,6 +20697,11 @@ bool CvReligionInfo::read(CvXMLLoadUtility* pXML)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	pXML->GetChildXmlValByName(szTextVal, "PseudoEra");
+	m_PseudoEra = (EraTypes) pXML->FindInInfoClass(szTextVal);
+// ERA_FIX end
 
 	return true;
 }
@@ -23426,6 +23455,9 @@ m_bNoAnimals(false),
 m_bNoBarbUnits(false),
 m_bNoBarbCities(false),
 m_bFirstSoundtrackFirst(false),
+// ERA_FIX 09/2017 lfgr 
+m_bRealEra( false ),
+// ERA_FIX end
 m_paiCitySoundscapeSciptIds(NULL),
 m_paiSoundtracks(NULL)
 {
@@ -23537,6 +23569,13 @@ bool CvEraInfo::isFirstSoundtrackFirst() const
 	return m_bFirstSoundtrackFirst;
 }
 
+// ERA_FIX 09/2017 lfgr 
+bool CvEraInfo::isRealEra() const
+{
+	return m_bRealEra;
+}
+// ERA_FIX end
+
 int CvEraInfo::getNumSoundtracks() const
 {
 	return m_iNumSoundtracks;
@@ -23620,6 +23659,9 @@ bool CvEraInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iEventChancePerTurn, "iEventChancePerTurn");
 	pXML->GetChildXmlValByName(&m_iSoundtrackSpace, "iSoundtrackSpace");
 	pXML->GetChildXmlValByName(&m_bFirstSoundtrackFirst, "bFirstSoundtrackFirst");
+// ERA_FIX 09/2017 lfgr
+	pXML->GetChildXmlValByName( &m_bRealEra, "bRealEra" );
+// ERA_FIX end
 	pXML->GetChildXmlValByName(m_szAudioUnitVictoryScript, "AudioUnitVictoryScript");
 	pXML->GetChildXmlValByName(m_szAudioUnitDefeatScript, "AudioUnitDefeatScript");
 
@@ -26272,7 +26314,14 @@ bool CvEventTriggerInfo::read(CvXMLLoadUtility* pXML)
 						{
 							m_aszText.push_back(szTextVal);
 							pXML->GetNextXmlVal(szTextVal);
-							m_aiTextEra.push_back(pXML->FindInInfoClass(szTextVal));
+						// ERA_FIX 09/2017 lfgr
+						// Verify
+						//	m_aiTextEra.push_back(pXML->FindInInfoClass(szTextVal));
+							int iEra = pXML->FindInInfoClass(szTextVal);
+							FAssertMsg( iEra == NO_ERA || GC.getEraInfo( (EraTypes) iEra ).isRealEra(),
+									"Event can't reference non-real Era" )
+							m_aiTextEra.push_back( iEra );
+						// ERA_FIX end
 
 							gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
 

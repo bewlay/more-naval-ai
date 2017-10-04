@@ -352,6 +352,10 @@ public:
 	void setIsBug(bool bIsBug) { GC.setIsBug(bIsBug); }										// Exposed to Python
 // BUG - BUG Info - end
 
+// ERA_FIX 09/2017 lfgr
+	int getNumRealEras() const { return GC.getNumRealEras(); }
+// ERA_FIX end
+
 // BUFFY - DLL Info - start
 #ifdef _BUFFY
 	bool isBuffy() const { return GC.isBuffy(); }

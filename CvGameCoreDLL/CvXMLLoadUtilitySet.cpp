@@ -880,6 +880,31 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 //FfH: End Add
 
 	LoadGlobalClassInfo(GC.getEraInfo(), "CIV4EraInfos", "GameInfo", "Civ4EraInfos/EraInfos/EraInfo", false);
+// ERA_FIX 09/2017 lfgr 
+// Verify XML
+	bool bGotPseudo = false;
+	for( int i = 0; i < GC.getNumEraInfos(); i++ )
+	{
+		CvEraInfo& kEra = GC.getEraInfo( (EraTypes) i );
+		if( ! kEra.isRealEra() )
+			bGotPseudo = true;
+		else
+		{
+			FAssertMsg( !bGotPseudo, "Real eras must precede non-real eras in XML" );
+		}
+	}
+
+	// Set CvGlobals cache: find number of real eras
+	int iNumRealEras = 0;
+	for( int iEra = 0; iEra < GC.getNumEraInfos(); iEra++ )
+	{
+		if( GC.getEraInfo( (EraTypes) iEra ).isRealEra() )
+		{
+			iNumRealEras++;
+		}
+	}
+	GC.setNumRealEras( iNumRealEras );
+// ERA_FIX end
 	LoadGlobalClassInfo(GC.getUnitClassInfo(), "CIV4UnitClassInfos", "Units", "Civ4UnitClassInfos/UnitClassInfos/UnitClassInfo", false);
 	LoadGlobalClassInfo(GC.getSpecialistInfo(), "CIV4SpecialistInfos", "GameInfo", "Civ4SpecialistInfos/SpecialistInfos/SpecialistInfo", false);
 	LoadGlobalClassInfo(GC.getVoteSourceInfo(), "CIV4VoteSourceInfos", "GameInfo", "Civ4VoteSourceInfos/VoteSourceInfos/VoteSourceInfo", false);

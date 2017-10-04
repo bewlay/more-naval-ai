@@ -585,6 +585,14 @@ public:
 	DllExport int getNumEraInfos();
 	std::vector<CvEraInfo*>& getEraInfo();
 	DllExport CvEraInfo& getEraInfo(EraTypes eEraNum);
+// ERA_FIX 09/2017 lfgr
+	/**
+	 * Returns the number of eras with the "real" flag set.
+	 * Note: not named "getNumRealEraInfos" to prevent confusion.
+	 */
+	int getNumRealEras() const;
+	void setNumRealEras( int iNumRealEras );
+// ERA_FIX end
 
 	int getNumHurryInfos();
 	std::vector<CvHurryInfo*>& getHurryInfo();
@@ -1102,6 +1110,9 @@ protected:
 	std::vector<CvCivicInfo*> m_paCivicInfo;
 	std::vector<CvDiplomacyInfo*> m_paDiplomacyInfo;
 	std::vector<CvEraInfo*> m_aEraInfo;	// [NUM_ERA_TYPES];
+// ERA_FIX 09/2017 lfgr
+	int m_iNumRealEras;
+// ERA_FIX end
 	std::vector<CvHurryInfo*> m_paHurryInfo;
 	std::vector<CvVictoryInfo*> m_paVictoryInfo;
 	std::vector<CvRouteModelInfo*> m_paRouteModelInfo;

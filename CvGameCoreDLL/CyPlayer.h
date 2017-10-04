@@ -474,6 +474,9 @@ public:
 	int /*LeaderHeadTypes*/ getPersonalityType();
 	void setPersonalityType(int /*LeaderHeadTypes*/ eNewValue);
 	int /*ErasTypes*/ getCurrentEra();
+// ERA_FIX 09/2017 lfgr
+	int /*ErasTypes*/ getCurrentRealEra();
+// ERA_FIX end
 	void setCurrentEra(int /*EraTypes*/ iNewValue);
 
 	int /*ReligonTypes*/ getStateReligion();

@@ -1647,7 +1647,7 @@ void CvPlayer::changeCiv( CivilizationTypes eNewCiv )
 		GC.getInitCore().setArtStyle( getID(), (ArtStyleTypes)GC.getCivilizationInfo(eNewCiv).getArtStyleType() );
 
 		// Forces update of units flags
-		EraTypes eEra = getCurrentEra();
+		EraTypes eEra = getCurrentRealEra();
 		bool bAuto = m_bDisableHuman;
 		m_bDisableHuman = true;
 		//setCurrentEra((EraTypes)((eEra + 1)%GC.getNumEraInfos()));
@@ -4363,7 +4363,7 @@ const TCHAR* CvPlayer::getUnitButton(UnitTypes eUnit) const
 //>>>>Unofficial Bug Fix: Modified by Denev 2009/09/28
 //*** Assimilated city produces a unit with original civilization artstyle.
 //	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), (UnitArtStyleTypes) GC.getCivilizationInfo(getCivilizationType()).getUnitArtStyleType())->getButton();
-	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), getUnitArtStyleType())->getButton();
+	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentRealEra(), getUnitArtStyleType())->getButton();
 //<<<<Unofficial Bug Fix: End Modify
 }
 
@@ -5427,7 +5427,8 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus, bool bCheckBlockingFeatures) 
 	int iI;
 	//int iLoop;
 
-    bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentEra() < 3);
+	// lfgr note: (getCurrentRealEra() < 3) always true in FfH/MNAI. What is this even supposed to do (same in vanilla bts)?
+    bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentRealEra() < 3);
 	bool bCanWork;
 
 	iCount = 0;
@@ -8791,7 +8792,7 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -8856,7 +8857,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -8903,7 +8904,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -9202,7 +9203,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 	{
 		if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getTechPrereq())))
 		{
-			if ((!bTestEra && !bTestVisible) || ((getCurrentEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild).getTechPrereq()).getEra()))
+			if ((!bTestEra && !bTestVisible) || ((getCurrentRealEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild).getTechPrereq()).getEra()))
 			{
 				return false;
 			}
@@ -9524,7 +9525,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 		iSupport *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitCostPercent();
 		iSupport /= 100;
 
-		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iSupport /= 100;
 	}
 
@@ -9595,7 +9596,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 		iSupply *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitSupplyPercent();
 		iSupply /= 100;
 
-		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iSupply /= 100;
 	}
 
@@ -9648,7 +9649,7 @@ int CvPlayer::calculateInflationRate() const
 	if (!isHuman() && !isBarbarian())
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
-		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iAIModifier /= 100;
 
 		iModifier += iAIModifier - 100;
@@ -12613,7 +12614,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 		iWarWearinessPercentAnger *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWarWearinessPercent();
 		iWarWearinessPercentAnger /= 100;
 
-		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iWarWearinessPercentAnger /= 100;
 	}
 
@@ -14229,13 +14230,33 @@ void CvPlayer::setPersonalityType(LeaderHeadTypes eNewValue)
 
 EraTypes CvPlayer::getCurrentEra() const
 {
+// ERA_FIX 09/2017 lfgr
+	if( getStateReligion() != NO_RELIGION )
+	{
+		CvReligionInfo& kStateReligion = GC.getReligionInfo( getStateReligion() );
+		if( kStateReligion.getPseudoEra() != NO_ERA )
+			return kStateReligion.getPseudoEra();
+	}
+	return m_eCurrentEra;
+// ERA_FIX end
+}
+
+
+// ERA_FIX 09/2017 lfgr
+EraTypes CvPlayer::getCurrentRealEra() const
+{
 	return m_eCurrentEra;
 }
+// ERA_FIX end
 
 
 
 void CvPlayer::setCurrentEra(EraTypes eNewValue)
 {
+// ERA_FIX 09/2017 lfgr
+	FAssertMsg( eNewValue == NO_ERA || GC.getEraInfo( eNewValue ).isRealEra(),
+		"Can't set current era to a non-real era! These have to declared as PseudoEra of a religion to function!" );
+// ERA_FIX end
 	CvCity* pLoopCity;
 	CvUnit* pLoopUnit;
 	CvPlot* pLoopPlot;
@@ -14287,7 +14308,7 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
-		if (isHuman() && (getCurrentEra() != GC.getGameINLINE().getStartEra()) && !GC.getGameINLINE().isNetworkMultiPlayer())
+		if (isHuman() && (getCurrentRealEra() != GC.getGameINLINE().getStartEra()) && !GC.getGameINLINE().isNetworkMultiPlayer())
 		{
 			if (GC.getGameINLINE().isFinalInitialized() && !(gDLL->GetWorldBuilderMode()))
 			{
@@ -15874,7 +15895,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 		iUpkeep *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
 		iUpkeep /= 100;
 
-		iUpkeep *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iUpkeep *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iUpkeep /= 100;
 	}
 
@@ -22171,7 +22192,7 @@ EventTriggeredData* CvPlayer::initTriggeredData(EventTriggerTypes eEventTrigger,
 	std::vector<CvWString> aszTexts;
 	for (int i = 0; i < kTrigger.getNumTexts(); ++i)
 	{
-		if (NO_ERA == kTrigger.getTextEra(i) || kTrigger.getTextEra(i) == getCurrentEra())
+		if (NO_ERA == kTrigger.getTextEra(i) || kTrigger.getTextEra(i) == getCurrentRealEra())
 		{
 			aszTexts.push_back(kTrigger.getText(i));
 		}
@@ -23566,7 +23587,7 @@ void CvPlayer::doEvents()
 
 //FfH: Modifed by Kael 09/26/2007
 //		if (GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("EVENT_PROBABILITY_ROLL_SIDES"), "Global event check") >= GC.getEraInfo(getCurrentEra()).getEventChancePerTurn())
-        int iChance = GC.getEraInfo(getCurrentEra()).getEventChancePerTurn();
+        int iChance = GC.getEraInfo(getCurrentRealEra()).getEventChancePerTurn();
         if (GC.getGameINLINE().isOption(GAMEOPTION_DOUBLE_EVENTS))
         {
             iChance *= 2;
@@ -26430,7 +26451,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 		iThreshold *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIGrowthPercent();
 		iThreshold /= 100;
 
-		iThreshold *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iThreshold *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iThreshold /= 100;
 	}
 
@@ -27827,7 +27848,7 @@ const CvArtInfoUnit* CvPlayer::getUnitArtInfo(UnitTypes eUnit, int iMeshGroup) c
 		eCivilization = (CivilizationTypes) GC.getDefineINT("BARBARIAN_CIVILIZATION");
 	}
 	UnitArtStyleTypes eStyle = (UnitArtStyleTypes) GC.getCivilizationInfo(eCivilization).getUnitArtStyleType();
-	EraTypes eEra = getCurrentEra();
+	EraTypes eEra = getCurrentRealEra();
 	if (eEra == NO_ERA)
 	{
 		eEra = (EraTypes) 0;

@@ -161,7 +161,7 @@ class DynamicCivNames :
 			
 			if( pPlayer.isAlive() and not SDTK.sdObjectExists( "BarbarianCiv", pPlayer )) :
 				if( 'Tribe' in pPlayer.getCivilizationDescription(0) ) :
-					if( pPlayer.getCurrentEra() > 0 or pPlayer.getTotalPopulation() >= 3 ) :
+					if( pPlayer.getCurrentRealEra() > 0 or pPlayer.getTotalPopulation() >= 3 ) :
 						# Graduate from game start name
 						CvUtil.pyPrint("  Name - Graduating from game start name Player %d"%(iPlayer))
 						self.setNewNameByCivics(iPlayer)
@@ -307,8 +307,8 @@ class DynamicCivNames :
 		pPlayer = gc.getPlayer(iPlayer)
 		currentEra = 0
 		for i in range(0,gc.getMAX_CIV_PLAYERS()) :
-			if( gc.getPlayer(i).getCurrentEra() > currentEra ) :
-				currentEra = gc.getPlayer(i).getCurrentEra()
+			if( gc.getPlayer(i).getCurrentRealEra() > currentEra ) :
+				currentEra = gc.getPlayer(i).getCurrentRealEra()
 
 		curDesc = pPlayer.getCivilizationDescription(0)
 		curShort = pPlayer.getCivilizationShortDescription(0)
@@ -451,7 +451,7 @@ class DynamicCivNames :
 
 		pPlayer = gc.getPlayer( iPlayer )
 		pCapital = pPlayer.getCapitalCity()
-		playerEra = pPlayer.getCurrentEra()
+		playerEra = pPlayer.getCurrentRealEra()
 		iTeam = pPlayer.getTeam()
 		pTeam = gc.getTeam( iTeam )
 		

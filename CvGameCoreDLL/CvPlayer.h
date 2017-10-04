@@ -843,7 +843,28 @@ public:
 	LeaderHeadTypes getPersonalityType() const;																												// Exposed to Python
 	void setPersonalityType(LeaderHeadTypes eNewValue);																					// Exposed to Python
 
+	/**
+	 * Gets the player's current pseudo era. This is used for graphics and sound.
+	 * As long as the player has a state religion with an assigned PseudoEra, the
+	 * current pseudo era is equal to this era. Otherwise, it's equal to the player's
+	 * real era.
+	 */
 	DllExport EraTypes getCurrentEra() const;																										// Exposed to Python
+
+// ERA_FIX 09/2017 lfgr
+	/**
+	 * Gets the player's current real era. This is used for everything besides graphics
+	 * and sound, like AI or Handicap calculations.
+	 * The real era is determined by technology (as in vanilla Bts) and is equal to the
+	 * last value set by setCurrentEra().
+	 */
+	EraTypes getCurrentRealEra() const;
+// ERA_FIX end
+
+	/**
+	 * Sets the player's current technical era. If the given era is real, the player's
+	 * current real era is also set.
+	 */
 	void setCurrentEra(EraTypes eNewValue);
 
 	ReligionTypes getLastStateReligion() const;

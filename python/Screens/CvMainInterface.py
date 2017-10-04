@@ -3258,17 +3258,15 @@ class CvMainInterface:
 				if (((gc.getPlayer(ePlayer).calculateGoldRate() != 0) and not (gc.getPlayer(ePlayer).isAnarchy())) or (gc.getPlayer(ePlayer).getGold() != 0)):
 					screen.show( "GoldText" )
 
-# Commented out by Tholal - Eras not used in same way in FFH
 # BUG - NJAGC - start
-#				if (ClockOpt.isEnabled()
-#				and ClockOpt.isShowEra()):
-#					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getDescription(), ))
-#					if(ClockOpt.isUseEraColor()):
-#						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
-#						if (iEraColor >= 0):
-#							szText = localText.changeTextColor(szText, iEraColor)
-#					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-#					screen.show( "EraText" )
+				if True :
+					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentRealEra()).getDescription(), ))
+					if(ClockOpt.isUseEraColor()):
+						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentRealEra()).getType())
+						if (iEraColor >= 0):
+							szText = localText.changeTextColor(szText, iEraColor)
+					screen.setLabel( "EraText", "Background", szText, CvUtil.FONT_RIGHT_JUSTIFY, 250, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+					screen.show( "EraText" )
 # BUG - NJAGC - end
 				
 				if (gc.getPlayer(ePlayer).isAnarchy()):
@@ -3478,7 +3476,7 @@ class CvMainInterface:
 					g_szTimeText += u" - "
 				szDateGA = unicode(CyGameTextMgr().getInterfaceTimeStr(ePlayer))
 				if(ClockOpt.isUseEraColor()):
-					iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentEra()).getType())
+					iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentRealEra()).getType())
 					if (iEraColor >= 0):
 						szDateGA = localText.changeTextColor(szDateGA, iEraColor)
 				g_szTimeText += szDateGA

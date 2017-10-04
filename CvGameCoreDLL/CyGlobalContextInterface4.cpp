@@ -175,5 +175,8 @@ void CyGlobalContextPythonInterface4(python::class_<CyGlobalContext>& x)
 		.def("getContactTypes", &CyGlobalContext::getContactTypes, "string () - Returns enum string")
 
 		.def("getDiplomacyPowerTypes", &CyGlobalContext::getDiplomacyPowerTypes, "string () - Returns enum string")
+// ERA_FIX 09/2017 lfgr
+		.def("getNumRealEras", &CyGlobalContext::getNumRealEras, "int () - Number of real (non-pseudo) eras")
+// ERA_FIX end
 		;
 }

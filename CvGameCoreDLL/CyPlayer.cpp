@@ -1818,6 +1818,13 @@ int /*ErasTypes*/ CyPlayer::getCurrentEra()
 	return m_pPlayer ? (int) m_pPlayer->getCurrentEra() : NO_ERA;
 }
 
+// ERA_FIX 09/2017 lfgr
+int /*ErasTypes*/ CyPlayer::getCurrentRealEra()
+{
+	return m_pPlayer ? (int) m_pPlayer->getCurrentRealEra() : NO_ERA;
+}
+// ERA_FIX end
+
 void CyPlayer::setCurrentEra(int /*EraTypes*/ iNewValue)
 {
 	if (m_pPlayer)

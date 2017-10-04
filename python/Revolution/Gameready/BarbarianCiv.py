@@ -571,7 +571,7 @@ class BarbarianCiv :
 				iTechPower = tech.getPowerValue()
 				iTechEra = tech.getEra()
 
-				if( not newTeam.isHasTech(techID) and iTechEra <= newPlayer.getCurrentEra() + 1 and tech.getEra() < gc.getNumEraInfos() ) :
+				if( not newTeam.isHasTech(techID) and iTechEra <= newPlayer.getCurrentRealEra() + 1 and tech.getEra() < gc.getNumRealEras() ) :
 					iTechCost = newTeam.getResearchCost(techID)
 					iResearchProgress = newTeam.getResearchProgress(techID)
 					iThreshold = iTechCost/2
@@ -810,7 +810,7 @@ class BarbarianCiv :
 			unitTypes = list()
 			barbUnits = RevUtils.getPlayerUnits( pPlot.getX(), pPlot.getY(), gc.getBARBARIAN_PLAYER(), domain = DomainTypes.DOMAIN_LAND )
 			for unit in barbUnits :
-				if( not unit.isAnimal() and not unit.isCargo() and len(unitTypes) < (4 + newPlayer.getCurrentEra()) ) :
+				if( not unit.isAnimal() and not unit.isCargo() and len(unitTypes) < (4 + newPlayer.getCurrentRealEra()) ) :
 					unitTypes.append( unit.getUnitType() )
 					unit.kill(False, -1)
 
@@ -1039,7 +1039,7 @@ class BarbarianCiv :
 
 			# Adjust Population
 			iPop = pCity.getPopulation()
-			pCity.setPopulation( max([self.minPopulation, min([iPop, self.minPopulation + 1 + 2*newPlayer.getCurrentEra() - i])]) )
+			pCity.setPopulation( max([self.minPopulation, min([iPop, self.minPopulation + 1 + 2*newPlayer.getCurrentRealEra() - i])]) )
 			if( bNewWorldScenario and self.iNewWorldPolicy > 0 ) :
 				if( self.iNewWorldPolicy > 1 and not bNonBarbCivUnits ) :
 					if( len(closeTeams) < 2 and iEra < 2 ) :
@@ -1257,7 +1257,7 @@ class BarbarianCiv :
 						self.settleMinorCiv( iPlayer )
 						return
 
-					iSettleMilUnits = int( self.militaryStrength*( playerI.getNumCities()*gc.getHandicapInfo(game.getHandicapType()).getBarbarianInitialDefenders() + 2.0*(3 + min([3,playerI.getCurrentEra()])) ) )
+					iSettleMilUnits = int( self.militaryStrength*( playerI.getNumCities()*gc.getHandicapInfo(game.getHandicapType()).getBarbarianInitialDefenders() + 2.0*(3 + min([3,playerI.getCurrentRealEra()])) ) )
 					if( playerI.getNumMilitaryUnits() > iSettleMilUnits ) :
 						if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("  BC - Minor civ %s has huge miltary, %d units"%(playerI.getCivilizationDescription(0),playerI.getNumMilitaryUnits()))
 						self.settleMinorCiv( iPlayer, style = "Military" )
@@ -1458,7 +1458,7 @@ class BarbarianCiv :
 
 			SDTK.sdObjectSetVal( 'BarbarianCiv', newPlayer, 'iReinforcementType', iReinforcementType )
 
-		iEra = newPlayer.getCurrentEra()
+		iEra = newPlayer.getCurrentRealEra()
 		
 		# Great person
 		iProphet = CvUtil.findInfoTypeNum(gc.getUnitInfo,gc.getNumUnitInfos(),RevDefs.sXMLProphet)
@@ -1638,11 +1638,11 @@ class BarbarianCiv :
 				if( pyCapital.canConstruct( iMarket ) ) :
 					if( self.LOG_DEBUG and bVerbose ) : CvUtil.pyPrint("  BC - Constructing %s in %s"%(PyInfo.BuildingInfo(iMarket).getDescription(),capital.getName()))
 					pyCapital.setNumRealBuildingIdx(iMarket,1)
-				if( newPlayer.getCurrentEra() > 1 and (not bNewWorldScenario or bForeignCivCities or self.iNewWorldPolicy == 0) and (iWorker != -1) ) :
+				if( newPlayer.getCurrentRealEra() > 1 and (not bNewWorldScenario or bForeignCivCities or self.iNewWorldPolicy == 0) and (iWorker != -1) ) :
 					pyNewPlayer.initUnit(iWorker,capital.getX(),capital.getY(),1)
 					pyNewPlayer.initUnit(iBestDefender,capital.getX(),capital.getY(),1)
 			elif( style == "Military" ) :
-				if( (len(cityList) == 1 or newPlayer.getCurrentEra() > 2) ) : # Military extra stuff if small or late
+				if( (len(cityList) == 1 or newPlayer.getCurrentRealEra() > 2) ) : # Military extra stuff if small or late
 					pyNewPlayer.initUnit(iCounter,cityX,cityY,1)
 					if( bNonBarbCivUnits or len(closeTeams) > 0 ) :
 						pyNewPlayer.initUnit(iMobile,cityX,cityY,1)
@@ -2030,7 +2030,7 @@ class BarbarianCiv :
 									capital = newOwner.getCapitalCity()
 									iNumBarbDefenders = gc.getHandicapInfo( game.getHandicapType() ).getBarbarianInitialDefenders()
 
-									for i in range(max([1,2*iNumBarbDefenders - iCityCount/2 + newOwner.getCurrentEra()])) :
+									for i in range(max([1,2*iNumBarbDefenders - iCityCount/2 + newOwner.getCurrentRealEra()])) :
 										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  BC - Barbciv Reinforcement: Giving %s an attack city %s in their capital"%(newOwner.getCivilizationDescription(0),PyInfo.UnitInfo(iReinforcementType).getDescription()))
 										unit = newOwner.initUnit(iReinforcementType,capital.getX(),capital.getY(),UnitAITypes.UNITAI_ATTACK_CITY,DirectionTypes.DIRECTION_SOUTH)
 										unit.changeExperience(2 + game.getSorenRandNum(6,'BarbarianCiv: unit experience'), -1, False, False, False)
