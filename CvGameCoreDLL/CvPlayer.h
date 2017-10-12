@@ -842,7 +842,8 @@ public:
 
 	LeaderHeadTypes getPersonalityType() const;																												// Exposed to Python
 	void setPersonalityType(LeaderHeadTypes eNewValue);																					// Exposed to Python
-
+	
+// ERA_FIX 09/2017 lfgr
 	/**
 	 * Gets the player's current pseudo era. This is used for graphics and sound.
 	 * As long as the player has a state religion with an assigned PseudoEra, the
@@ -851,21 +852,32 @@ public:
 	 */
 	DllExport EraTypes getCurrentEra() const;																										// Exposed to Python
 
-// ERA_FIX 09/2017 lfgr
 	/**
 	 * Gets the player's current real era. This is used for everything besides graphics
 	 * and sound, like AI or Handicap calculations.
 	 * The real era is determined by technology (as in vanilla Bts) and is equal to the
-	 * last value set by setCurrentEra().
+	 * last value set by setCurrentRealEra().
 	 */
 	EraTypes getCurrentRealEra() const;
-// ERA_FIX end
 
 	/**
-	 * Sets the player's current technical era. If the given era is real, the player's
-	 * current real era is also set.
+	 * Sets the player's current pseudo era (see CvPlayer::getCurrentEra()) and updates
+	 * graphics and sound. This only be used internally.
 	 */
 	void setCurrentEra(EraTypes eNewValue);
+
+	/**
+	 * Sets the player's current real era (see CvPlayer::getCurrentEra()).
+	 * Parameter must not be a pseudo era.
+	 */
+	void setCurrentRealEra(EraTypes eNewValue);
+
+	/**
+	 * Updates the player's current pseudo era (see CvPlayer::getCurrentEra()). This is
+	 * called in setCurrentRealEra() and setLastStateReligion()
+	 */
+	void updateCurrentEra();
+// ERA_FIX end
 
 	ReligionTypes getLastStateReligion() const;
 	DllExport ReligionTypes getStateReligion() const;																									// Exposed to Python
@@ -1679,6 +1691,9 @@ protected:
 	PlayerTypes m_eID;
 	LeaderHeadTypes m_ePersonalityType;
 	EraTypes m_eCurrentEra;
+// ERA_FIX 09/2017 lfgr
+	EraTypes m_eCurrentRealEra;
+// ERA_FIX end
 	ReligionTypes m_eLastStateReligion;
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;

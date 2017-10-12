@@ -1014,6 +1014,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_ePersonalityType = NO_LEADER;
 	}
 	m_eCurrentEra = ((EraTypes)0);  //??? Is this repeated data???
+// ERA_FIX 09/2017 lfgr
+	m_eCurrentRealEra = (EraTypes) 0;
+// ERA_FIX end
 	m_eLastStateReligion = NO_RELIGION;
 	m_eParent = NO_PLAYER;
 /************************************************************************************************/
@@ -14230,22 +14233,14 @@ void CvPlayer::setPersonalityType(LeaderHeadTypes eNewValue)
 
 EraTypes CvPlayer::getCurrentEra() const
 {
-// ERA_FIX 09/2017 lfgr
-	if( getStateReligion() != NO_RELIGION )
-	{
-		CvReligionInfo& kStateReligion = GC.getReligionInfo( getStateReligion() );
-		if( kStateReligion.getPseudoEra() != NO_ERA )
-			return kStateReligion.getPseudoEra();
-	}
 	return m_eCurrentEra;
-// ERA_FIX end
 }
 
 
 // ERA_FIX 09/2017 lfgr
 EraTypes CvPlayer::getCurrentRealEra() const
 {
-	return m_eCurrentEra;
+	return m_eCurrentRealEra;
 }
 // ERA_FIX end
 
@@ -14253,10 +14248,6 @@ EraTypes CvPlayer::getCurrentRealEra() const
 
 void CvPlayer::setCurrentEra(EraTypes eNewValue)
 {
-// ERA_FIX 09/2017 lfgr
-	FAssertMsg( eNewValue == NO_ERA || GC.getEraInfo( eNewValue ).isRealEra(),
-		"Can't set current era to a non-real era! These have to declared as PseudoEra of a religion to function!" );
-// ERA_FIX end
 	CvCity* pLoopCity;
 	CvUnit* pLoopUnit;
 	CvPlot* pLoopPlot;
@@ -14324,6 +14315,36 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 	}
 }
 
+// ERA_FIX 09/2017 lfgr
+void CvPlayer::setCurrentRealEra( EraTypes eNewValue )
+{
+	FAssertMsg( eNewValue == NO_ERA || GC.getEraInfo( eNewValue ).isRealEra(),
+		"Can't set current real era to a non-real era! These have to declared as \
+		PseudoEra of a religion to work properly." );
+
+	m_eCurrentRealEra = eNewValue;
+	updateCurrentEra();
+}
+
+void CvPlayer::updateCurrentEra()
+{
+	EraTypes eNewEra = NO_ERA;
+	
+	// Pseudo era takes precendence
+	if( getStateReligion() != NO_RELIGION )
+	{
+		// Note: eNewEra remains NO_ERA if religion has no pseudo era.
+		eNewEra = GC.getReligionInfo( getStateReligion() ).getPseudoEra();
+	}
+
+	// If no pseudo era was found, use the real era
+	if( eNewEra == NO_ERA )
+		eNewEra = getCurrentRealEra();
+
+	setCurrentEra( eNewEra );
+}
+// ERA_FIX end
+
 
 ReligionTypes CvPlayer::getLastStateReligion() const
 {
@@ -14371,6 +14392,11 @@ void CvPlayer::setLastStateReligion(ReligionTypes eNewValue)
 		GC.getGameINLINE().AI_makeAssignWorkDirty();
 
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+
+	// ERA_FIX 09/2017 lfgr
+	// In case the previous or new religion triggers an era change
+		updateCurrentEra();
+	// ERA_FIX end
 
 		if (GC.getGameINLINE().isFinalInitialized())
 		{
@@ -20434,6 +20460,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read((int*)&m_eID);
 	pStream->Read((int*)&m_ePersonalityType);
 	pStream->Read((int*)&m_eCurrentEra);
+// ERA_FIX 09/2017 lfgr
+	pStream->Read((int*)&m_eCurrentRealEra);
+// ERA_FIX end
 	pStream->Read((int*)&m_eLastStateReligion);
 	pStream->Read((int*)&m_eParent);
 	updateTeamType(); //m_eTeamType not saved
@@ -21067,6 +21096,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_eID);
 	pStream->Write(m_ePersonalityType);
 	pStream->Write(m_eCurrentEra);
+// ERA_FIX 09/2017 lfgr
+	pStream->Write(m_eCurrentRealEra);
+// ERA_FIX end
 	pStream->Write(m_eLastStateReligion);
 	pStream->Write(m_eParent);
 	//m_eTeamType not saved
