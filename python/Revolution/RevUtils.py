@@ -537,8 +537,7 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 
 		owner = gc.getPlayer( pCity.getOwner() )
 		ownerPy = PyPlayer( pCity.getOwner() )
-#		iOwnerEra = owner.getCurrentEra()
-		iOwnerEra = gc.getGame().getCurrentPeriod()
+		iOwnerEra = owner.getCurrentRealEra()
 
 		bIsBarb = pRevPlayer.isBarbarian()
 		enemyPy = None

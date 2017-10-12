@@ -5438,7 +5438,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						// A bigger problem is that the value of a golden age can change a lot depending on the state of the civilzation.
 						// The upshot is that the value here is going to be rough...
 						// Tholal AI - had to shoehorn in the '8' since FFH doesnt use Eras normally
-						iGoldenPercent += 3 * kBuilding.getGoldenAgeModifier() * (8 - GC.getGameINLINE().getCurrentPeriod()) / (GC.getNumEraInfos() + 1);
+						iGoldenPercent += 3 * kBuilding.getGoldenAgeModifier() * (GC.getNumRealEras() - GC.getGameINLINE().getCurrentPeriod()) / (GC.getNumRealEras() + 1);
 					}
 					if (iGoldenPercent > 0)
 					{
