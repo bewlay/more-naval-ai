@@ -3259,7 +3259,7 @@ class CvMainInterface:
 					screen.show( "GoldText" )
 
 # BUG - NJAGC - start
-				if True :
+				if ClockOpt.isEnabled() and ClockOpt.isShowEra() :
 					szText = localText.getText("TXT_KEY_BUG_ERA", (gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentRealEra()).getDescription(), ))
 					if(ClockOpt.isUseEraColor()):
 						iEraColor = ClockOpt.getEraColor(gc.getEraInfo(gc.getPlayer(ePlayer).getCurrentRealEra()).getType())
