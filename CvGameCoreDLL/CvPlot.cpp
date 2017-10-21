@@ -597,11 +597,11 @@ void CvPlot::doTurn()
                 }
             }
         }
-        if (GC.getImprovementInfo(getImprovementType()).getFeatureUpgrade() != NO_FEATURE)
+        if (GC.getImprovementInfo(eImprovement).getFeatureUpgrade() != NO_FEATURE)
         {
             if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
             {
-                setFeatureType((FeatureTypes)GC.getImprovementInfo(getImprovementType()).getFeatureUpgrade());
+                setFeatureType((FeatureTypes)GC.getImprovementInfo(eImprovement).getFeatureUpgrade());
                 setImprovementType(NO_IMPROVEMENT);
             }
         }
