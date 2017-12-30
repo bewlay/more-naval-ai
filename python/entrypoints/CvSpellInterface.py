@@ -166,6 +166,9 @@ def postCombatIra(pCaster, pOpponent):
 			pCaster.setBaseCombatStrDefense(pCaster.baseCombatStrDefense() - pCaster.getTotalDamageTypeCombat() + 1)
 
 def postCombatMimic(pCaster, pOpponent):
+	iNaval = gc.getInfoTypeForString('UNITCOMBAT_NAVAL')
+	iSiege = gc.getInfoTypeForString('UNITCOMBAT_SIEGE')
+
 	iBronze = gc.getInfoTypeForString('PROMOTION_BRONZE_WEAPONS')
 	iChanneling3 = gc.getInfoTypeForString('PROMOTION_CHANNELING3')
 	iDivine = gc.getInfoTypeForString('PROMOTION_DIVINE')
@@ -176,6 +179,8 @@ def postCombatMimic(pCaster, pOpponent):
 	iRusted = gc.getInfoTypeForString('PROMOTION_RUSTED')
 	listProms = []
 	iCount = 0
+	if pOpponent.getUnitCombatType() == iNaval or pOpponent.getUnitCombatType == iSiege:
+		return
 	for iProm in range(gc.getNumPromotionInfos()):
 		if pCaster.isHasPromotion(iProm):
 			iCount += 1
