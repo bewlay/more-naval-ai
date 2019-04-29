@@ -2364,7 +2364,19 @@ void CvGame::getGlobeLayers(std::vector<CvGlobeLayerData>& aLayers) const
 	kReligion.m_strName = "RELIGION";
 	kReligion.m_strButtonHelpTag = "TXT_KEY_GLOBELAYER_RELIGION";
 	kReligion.m_strButtonStyle = "Button_HUDGlobeReligion_Style";
-	kReligion.m_iNumOptions = GC.getNumReligionInfos();
+	// Hide Council of Esus in the Religion globe layer START
+	//kReligion.m_iNumOptions = GC.getNumReligionInfos();
+	// Determine the number of non-hidden religions.
+	int numReligions = 0;
+	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+	{
+		if (GET_PLAYER(getActivePlayer()).canSeeReligion((ReligionTypes) iI, NULL))
+		{
+			numReligions++;
+		}
+	}
+	kReligion.m_iNumOptions = numReligions;
+	// Hide Council of Esus in the Religion globe layer END
 	kReligion.m_bShouldCitiesZoom = true;
 	aLayers.push_back(kReligion);
 }

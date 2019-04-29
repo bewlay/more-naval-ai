@@ -597,11 +597,11 @@ void CvPlot::doTurn()
                 }
             }
         }
-        if (GC.getImprovementInfo(getImprovementType()).getFeatureUpgrade() != NO_FEATURE)
+        if (GC.getImprovementInfo(eImprovement).getFeatureUpgrade() != NO_FEATURE)
         {
             if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
             {
-                setFeatureType((FeatureTypes)GC.getImprovementInfo(getImprovementType()).getFeatureUpgrade());
+                setFeatureType((FeatureTypes)GC.getImprovementInfo(eImprovement).getFeatureUpgrade());
                 setImprovementType(NO_IMPROVEMENT);
             }
         }
@@ -3122,7 +3122,7 @@ int CvPlot::getFeatureProduction(BuildTypes eBuild, TeamTypes eTeam, CvCity** pp
 	{
 		// Search for the closest city.
 		CvCity* pLoopCity;
-		CvCity* pBestCity;
+		CvCity* pBestCity = NULL;
 		int iValue;
 		int iBestValue = MAX_INT;
 		int iLoop;

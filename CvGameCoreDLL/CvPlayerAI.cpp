@@ -5806,7 +5806,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 		if (bIsFeatureRemove)
 		{
-			iBuildValue += 200;
+			int iFeatureRemoveValue = 200;
+			//iBuildValue += 200;
 
 			CvPlot *pLoopPlot;
 			// check for blocked bonuses in the 2nd culture ring
@@ -5819,7 +5820,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 					{
 						if ((pLoopPlot->getBonusType(getTeam()) != NO_BONUS) && (pLoopPlot->getFeatureType() == iJ))
 						{
-							iBuildValue += AI_bonusVal((BonusTypes)pLoopPlot->getBonusType()) * 5;
+							iFeatureRemoveValue += AI_bonusVal((BonusTypes)pLoopPlot->getBonusType()) * 5;
 						}
 					}
 				}
@@ -5828,19 +5829,26 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			if ((GC.getFeatureInfo(FeatureTypes(iJ)).getHealthPercent() < 0) ||
 				((GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_FOOD) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_PRODUCTION) + GC.getFeatureInfo(FeatureTypes(iJ)).getYieldChange(YIELD_COMMERCE)) < 0))
 			{
-				iBuildValue += 200;
-				iBuildValue += 40 * (countCityFeatures((FeatureTypes)iJ) * (iCityCount == 1 ? 35: 10));
+				iFeatureRemoveValue += 200;
+				iFeatureRemoveValue += 40 * (countCityFeatures((FeatureTypes)iJ) * (iCityCount == 1 ? 35: 10));
 			}
 			else
 			{
-				iBuildValue += 10 * (countCityFeatures((FeatureTypes)iJ) * 10);
+				iFeatureRemoveValue += 10 * (countCityFeatures((FeatureTypes)iJ) * 20);
 			}
+
+			if ((gPlayerLogLevel > 3) && bDebugLog)
+			{
+				logBBAI("     Feature Remove Value: %d", iFeatureRemoveValue);
+			}
+
+			iBuildValue += iFeatureRemoveValue;
 		}
 	}
 
 	if ((gPlayerLogLevel > 3) && bDebugLog && (iBuildValue > 0))
 	{
-		logBBAI("     Build Value: %d", iBuildValue);
+		logBBAI("     Full Build Value: %d", iBuildValue);
 	}
 	iValue += iBuildValue;
 
@@ -7380,7 +7388,7 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					{
 						if (kLoopUnit.getUnitCombatType() == eFavoriteUnitCombat)
 						{
-							iUnitValue += 1250;
+							iUnitValue += (bAtWar ? 1250: 1000);
 							if (gPlayerLogLevel > 3 && bDebugLog)
 							{
 								logBBAI("       FAVORITE UNITCOMBAT");
