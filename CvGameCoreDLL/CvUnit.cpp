@@ -19070,7 +19070,7 @@ int CvUnit::chooseSpell()
 
 				if (kSpellInfo.isResistable())
 				{
-					iValue /= 2 + (kSpellInfo.getResistModify() / 10);
+					iValue /= 2 + std::max( 0, kSpellInfo.getResistModify() / 10 );
 				}
 
 				iValue += kSpellInfo.getAIWeight();
