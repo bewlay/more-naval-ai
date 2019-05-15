@@ -984,10 +984,6 @@ class CustomFunctions:
 #					pPlot.setFeatureType(iTemp, 0)
 
 	def snowgenesis(self, iPlayer):
-		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
-		iFields = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
-		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
-		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
 		iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 		iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 		iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
@@ -1003,12 +999,12 @@ class CustomFunctions:
 			pPlot = CyMap().plotByIndex(i)
 			if pPlot.getOwner() == iPlayer:
 			
-				# Change terrain
+				# Remove blight, change terrain
 				iTerrain = pPlot.getTerrainType()
 				pPlot.changePlotCounter(-100)
-				if (iTerrain == iGrass or iTerrain == iPlains or iTerrain == iBrokenLands or iTerrain == iTundra or iTerrain == iFields):
+				if (iTerrain == iGrass or iTerrain == iPlains or iTerrain == iTundra):
 					pPlot.setTerrainType(iSnow,True,True)
-				elif (iTerrain == iDesert or iTerrain == iBurningSands or iTerrain == iMarsh or iTerrain == iShallows):
+				elif (iTerrain == iDesert or iTerrain == iMarsh):
 					pPlot.setTerrainType(iTundra,True,True)
 					
 				#Put out fire and smoke
@@ -1020,9 +1016,6 @@ class CustomFunctions:
 				# Grow Forests
 				if (pPlot.getTerrainType() == iTundra and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
 					pPlot.setFeatureType(iForest, 1)
-
-				# Remove blight
-				pPlot.changePlotCounter(-100)
 
 ##--------		Tweaked Hyborem: Added by Denev	--------##
 	def getAshenVeilCities(self, iCasterPlayer, iCasterID, iNum):
