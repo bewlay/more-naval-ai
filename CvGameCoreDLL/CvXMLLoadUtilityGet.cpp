@@ -20,6 +20,123 @@ int CvXMLLoadUtility::GetNumProgressSteps()
 	return 20;	// the function UpdateProgressCB() is called 20 times by CvXMLLoadUtilitySet
 }
 
+// Helper functions
+
+// Get the value from the last located node. Returns true if successful.
+// Otherwise, get default value, show assert and return false.
+// These functions specifically check if the node is empty for non-string values.
+
+bool SafeGetLastNodeValue( FXml* xml, std::string& pszVal, char* pszDefault ) {
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, pszVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value, probably not a string" );
+		if( pszDefault ) {
+			pszVal = pszDefault;
+		}
+		else {
+			pszVal.clear();
+		}
+		return false;
+	}
+}
+
+bool SafeGetLastNodeValue( FXml* xml, std::wstring& pszVal, wchar* pszDefault )  {
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, pszVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value, probably not a wstring" );
+		if( pszDefault ) {
+			pszVal = pszDefault;
+		}
+		else {
+			pszVal.clear();
+		}
+		return false;
+	}
+}
+
+bool SafeGetLastNodeValue( FXml* xml, bool* pbVal, bool bDefault ) {
+	// Check whether node is empty
+	if( gDLL->getXMLIFace()->GetLastNodeTextSize( xml ) == 0 ) {
+		FAssertMsg( false, "Error getting bool, empty element" );
+		*pbVal = bDefault;
+		return false;
+	}
+
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, pbVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value" );
+		*pbVal = bDefault;
+		return false;
+	}
+}
+
+bool SafeGetLastNodeValue( FXml* xml, int* piVal, int iDefault ) {
+	// Check whether node is empty
+	if( gDLL->getXMLIFace()->GetLastNodeTextSize( xml ) == 0 ) {
+		FAssertMsg( false, "Error getting int, empty element" );
+		*piVal = iDefault;
+		return false;
+	}
+
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, piVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value" );
+		*piVal = iDefault;
+		return false;
+	}
+}
+
+bool SafeGetLastNodeValue( FXml* xml, float* pfVal, float fDefault ) {
+	// Check whether node is empty
+	if( gDLL->getXMLIFace()->GetLastNodeTextSize( xml ) == 0 ) {
+		FAssertMsg( false, "Error getting float, empty element" );
+		*pfVal = fDefault;
+		return false;
+	}
+
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, pfVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value" );
+		*pfVal = fDefault;
+		return false;
+	}
+}
+
+bool SafeGetLastNodeValue( FXml* xml, unsigned int* puiVal, unsigned int uiDefault ) {
+	// Check whether node is empty
+	if( gDLL->getXMLIFace()->GetLastNodeTextSize( xml ) == 0 ) {
+		FAssertMsg( false, "Error getting uint, empty element" );
+		*puiVal = uiDefault;
+		return false;
+	}
+
+	bool success = gDLL->getXMLIFace()->GetLastNodeValue( xml, puiVal );
+	if( success ) {
+		return true;
+	}
+	else {
+		FAssertMsg( false, "Error getting value" );
+		*puiVal = uiDefault;
+		return false;
+	}
+}
+
+
 //------------------------------------------------------------------------------------------------------
 //
 //  FUNCTION:   GetXmlVal(char* pszVal, char* pszDefault = NULL)
@@ -111,8 +228,7 @@ bool CvXMLLoadUtility::GetXmlVal(std::string& pszVal, char* pszDefault)
 	if (SkipToNextVal())
 	{
 		// get the string value of the current xml node
-		gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-		return true;
+		return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 	}
 	// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 	else
@@ -146,8 +262,7 @@ bool CvXMLLoadUtility::GetXmlVal(std::wstring& pszVal, wchar* pszDefault)
 	if (SkipToNextVal())
 	{
 		// get the string value of the current xml node
-		gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-		return true;
+		return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 	}
 	// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 	else
@@ -174,8 +289,7 @@ bool CvXMLLoadUtility::GetXmlVal(int* piVal, int iDefault)
 	if (SkipToNextVal())
 	{
 		// get the string value of the current xml node
-		gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,piVal);
-		return true;
+		return SafeGetLastNodeValue(m_pFXml,piVal,iDefault);
 	}
 	// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 	else
@@ -202,8 +316,7 @@ bool CvXMLLoadUtility::GetXmlVal(float* pfVal, float fDefault)
 	if (SkipToNextVal())
 	{
 		// get the string value of the current xml node
-		gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pfVal);
-		return true;
+		return SafeGetLastNodeValue(m_pFXml,pfVal,fDefault);
 	}
 	// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 	else
@@ -230,8 +343,7 @@ bool CvXMLLoadUtility::GetXmlVal(bool* pbVal, bool bDefault)
 	if (SkipToNextVal())
 	{
 		// get the string value of the current xml node
-		gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pbVal);
-		return true;
+		return SafeGetLastNodeValue(m_pFXml,pbVal,bDefault);
 	}
 	// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 	else
@@ -268,8 +380,7 @@ bool CvXMLLoadUtility::GetNextXmlVal(std::string& pszVal, char* pszDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -311,8 +422,7 @@ bool CvXMLLoadUtility::GetNextXmlVal(std::wstring& pszVal, wchar* pszDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -434,8 +544,7 @@ bool CvXMLLoadUtility::GetNextXmlVal(int* piVal, int iDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,piVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,piVal, iDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -471,8 +580,7 @@ bool CvXMLLoadUtility::GetNextXmlVal(float* pfVal, float fDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pfVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pfVal, fDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -508,8 +616,7 @@ bool CvXMLLoadUtility::GetNextXmlVal(bool* pbVal, bool bDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pbVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pbVal,bDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -551,8 +658,7 @@ bool CvXMLLoadUtility::GetChildXmlVal(std::string& pszVal, char* pszDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -595,8 +701,7 @@ bool CvXMLLoadUtility::GetChildXmlVal(std::wstring& pszVal, wchar* pszDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -722,8 +827,7 @@ bool CvXMLLoadUtility::GetChildXmlVal(int* piVal, int iDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,piVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,piVal,iDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -760,8 +864,7 @@ bool CvXMLLoadUtility::GetChildXmlVal(float* pfVal, float fDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pfVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pfVal,fDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -798,8 +901,7 @@ bool CvXMLLoadUtility::GetChildXmlVal(bool* pbVal, bool bDefault)
 		if (SkipToNextVal())
 		{
 			// get the string value of the current xml node
-			gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pbVal);
-			return true;
+			return SafeGetLastNodeValue(m_pFXml,pbVal,bDefault);
 		}
 		// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 		else
@@ -851,9 +953,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(wchar* pszVal, const TCHAR* szName, 
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
+				bool success = gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -912,9 +1014,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(char* pszVal, const TCHAR* szName, c
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
+				bool success = gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -974,9 +1076,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(std::string& pszVal, const TCHAR* sz
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
+				bool success = SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -1028,9 +1130,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(std::wstring& pszVal, const TCHAR* s
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pszVal);
+				bool success = SafeGetLastNodeValue(m_pFXml,pszVal,pszDefault);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -1082,9 +1184,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(int* piVal, const TCHAR* szName, int
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,piVal);
+				bool success = SafeGetLastNodeValue(m_pFXml,piVal,iDefault);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -1136,9 +1238,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(float* pfVal, const TCHAR* szName, f
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pfVal);
+				bool success = SafeGetLastNodeValue(m_pFXml,pfVal,fDefault);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
@@ -1191,9 +1293,9 @@ bool CvXMLLoadUtility::GetChildXmlValByName(bool* pbVal, const TCHAR* szName, bo
 			if (SkipToNextVal())
 			{
 				// get the string value of the current xml node
-				gDLL->getXMLIFace()->GetLastNodeValue(m_pFXml,pbVal);
+				bool success = SafeGetLastNodeValue(m_pFXml,pbVal,bDefault);
 				gDLL->getXMLIFace()->SetToParent(m_pFXml);
-				return true;
+				return success;
 			}
 			// otherwise we can't find a non-comment node on this level so we will FAssert and return false
 			else
