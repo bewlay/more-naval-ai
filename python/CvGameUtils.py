@@ -1380,7 +1380,7 @@ class CvGameUtils:
 							if smokeb:
 								if iImprovement == iSmoke:
 									iCount += 1
-							if desertb or pPlot.isRiver():
+							if desertb:
 								if iTerrain == iDesert and iFeature != iFlood:
 									iCount += 1
 							if snowb:
