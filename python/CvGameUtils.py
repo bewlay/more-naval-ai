@@ -1137,7 +1137,6 @@ class CvGameUtils:
 		pPlot = pUnit.plot()
 		iPlayer = pUnit.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
-		eTeam = gc.getTeam(pPlayer.getTeam())
 		iCiv = pPlayer.getCivilizationType()
 		iX = pUnit.getX()
 		iY = pUnit.getY()
@@ -1164,14 +1163,12 @@ class CvGameUtils:
 #INIT
 			iIllians = gc.getInfoTypeForString('CIVILIZATION_ILLIANS')
 			iInfernal = gc.getInfoTypeForString('CIVILIZATION_INFERNAL')
-			iDoviello = gc.getInfoTypeForString('CIVILIZATION_DOVIELLO')
 			iLjosalfar = gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR')
 			iSvartalfar = gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR')
 
 			iFoL = gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES')
 
 			iLife1 = gc.getInfoTypeForString('PROMOTION_LIFE1')
-			iNature2 = gc.getInfoTypeForString('PROMOTION_NATURE2')
 			iNature3 = gc.getInfoTypeForString('PROMOTION_NATURE3')
 			iSun1 = gc.getInfoTypeForString('PROMOTION_SUN1')
 			iWater1 = gc.getInfoTypeForString('PROMOTION_WATER1')
@@ -1231,18 +1228,18 @@ class CvGameUtils:
 			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
 				treesb = True #terraformer tries to Create Trees
 				treesimpb = False
-				if iCiv in [gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR'), gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR')]:
+				if iCiv in [iLjosalfar, iSvartalfar]:
 					treesimpb = True
 				if not (treesimpb or pPlayer.getStateReligion() == iFoL):
 					if not pPlayer.isHuman():
 						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
 						return 0
 
-			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WATER1')):
+			if pUnit.isHasPromotion(iWater1):
 				smokeb = True
 				desertb = True
 
-			if pUnit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_SUN1')):
+			if pUnit.isHasPromotion(iSun1):
 #				tundrab = True
 				marshb = True
 				if not iCiv == iIllians:
@@ -1425,10 +1422,8 @@ class CvGameUtils:
 # 3) Look for mana to dispel, and do it!
 #-----------------------------------
 
-		pPlot = pUnit.plot()
 		iPlayer = pUnit.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
-		eTeam = gc.getTeam(pPlayer.getTeam())
 		iX = pUnit.getX()
 		iY = pUnit.getY()
 
