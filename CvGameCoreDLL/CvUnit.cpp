@@ -12901,7 +12901,7 @@ void CvUnit::getCargoUnits(std::vector<CvUnit*>& aUnits) const
 		}
 	}
 
-	FAssert(getCargo() == aUnits.size());
+	FAssertMsg(getCargo() == aUnits.size(), "(May occur erroneously when moving a ship containing some unit that can see some invisible type)");
 }
 
 CvPlot* CvUnit::getAttackPlot() const
