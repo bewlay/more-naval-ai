@@ -18857,7 +18857,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 
 	if (getGroup()->AI_getMissionAIType() == MISSIONAI_ASSAULT)
 	{
-		if (getPathEndTurnPlot() != NULL)
+		if (getPathLastNode() != NULL)
 		{
 			if( gUnitLogLevel >= 4 ) logBBAI("    ...continuing mission to plot %d, %d", getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY());
 			getGroup()->pushMission(MISSION_MOVE_TO, getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
