@@ -1317,7 +1317,7 @@ class CvGameUtils:
 						if pPlot2.isNone():continue
 						if pPlot2.getOwner() != iPlayer:continue
 						if pPlot2.isImpassable():continue
-						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if not pUnit.generatePath(pPlot2,0,False,None):continue
 						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
@@ -1371,7 +1371,7 @@ class CvGameUtils:
 						if pPlot2.isNone():continue
 						if pPlot2.getOwner() != iPlayer:continue
 						if pPlot2.isImpassable():continue
-						if not pUnit.canMoveInto(pPlot2,False,False,False):continue
+						if not pUnit.generatePath(pPlot2,0,False,None):continue
 						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
 						iImprovement = pPlot2.getImprovementType()
 						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
