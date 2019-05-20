@@ -1652,13 +1652,6 @@
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
-			<SoundID>SONG_ALEXANDER</SoundID>
-			<Filename>Sounds/Soundtrack/Alexander</Filename>
-			<LoadType>STREAMED</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
 			<SoundID>SONG_CHINESE_ADAM</SoundID>
 			<Filename>Sounds/Soundtrack/ChineseAdam</Filename>
 			<LoadType>STREAMED</LoadType>
@@ -12287,13 +12280,6 @@
 		<SoundData>
 			<SoundID>SND_TUTORIAL_BUILD_QUARRY_3</SoundID>
 			<Filename>Sounds/Tutorial/Tut_49D</Filename>
-			<LoadType>DYNAMIC_RES</LoadType>
-			<bIsCompressed>1</bIsCompressed>
-			<bInGeneric>1</bInGeneric>
-		</SoundData>
-		<SoundData>
-			<SoundID>SND_TUTORIAL_BUILD_QUARRY_0</SoundID>
-			<Filename>Sounds/Tutorial/Tut_50A</Filename>
 			<LoadType>DYNAMIC_RES</LoadType>
 			<bIsCompressed>1</bIsCompressed>
 			<bInGeneric>1</bInGeneric>
