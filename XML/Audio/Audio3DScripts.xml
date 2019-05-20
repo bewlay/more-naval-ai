@@ -26338,35 +26338,6 @@
 		<iNotPlayPercent>0</iNotPlayPercent>
 	</Script3DSound>
 	<Script3DSound>
-		<ScriptID>AS3D_SPELL_HASTE</ScriptID>
-		<SoundID>SND_SPELL_HASTE</SoundID>
-		<SoundType>GAME_SFX</SoundType>
-		<iMinVolume>80</iMinVolume>
-		<iMaxVolume>80</iMaxVolume>
-		<iPitchChangeDown>0</iPitchChangeDown>
-		<iPitchChangeUp>0</iPitchChangeUp>
-		<bLooping>0</bLooping>
-		<iMinTimeDelay>0</iMinTimeDelay>
-		<iMaxTimeDelay>0</iMaxTimeDelay>
-		<StartPosition>FRONT</StartPosition>
-		<EndPosition>FRONT</EndPosition>
-		<iMinVelocity>0</iMinVelocity>
-		<iMaxVelocity>0</iMaxVelocity>
-		<iMinDistanceFromListener>0</iMinDistanceFromListener>
-		<iMaxDistanceFromListener>0</iMaxDistanceFromListener>
-		<iMinDistanceForMaxVolume>100000</iMinDistanceForMaxVolume>
-		<iMaxDistanceForMaxVolume>100000</iMaxDistanceForMaxVolume>
-		<iMinCutoffDistance>100000</iMinCutoffDistance>
-		<iMaxCutoffDistance>100000</iMaxCutoffDistance>
-		<bTaperForSoundtracks>0</bTaperForSoundtracks>
-		<iLengthOfSound>0</iLengthOfSound>
-		<fMinDryLevel>1.0</fMinDryLevel>
-		<fMaxDryLevel>1.0</fMaxDryLevel>
-		<fMinWetLevel>0.0</fMinWetLevel>
-		<fMaxWetLevel>0.0</fMaxWetLevel>
-		<iNotPlayPercent>0</iNotPlayPercent>
-	</Script3DSound>
-	<Script3DSound>
 		<ScriptID>AS3D_ORC_SELECT</ScriptID>
 		<SoundID>SND_ORC_SELECT</SoundID>
 		<SoundType>GAME_SPEECH</SoundType>

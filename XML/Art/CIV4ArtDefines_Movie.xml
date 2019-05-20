@@ -171,10 +171,6 @@
 			<Path>Art/Movies/Wonders/GreatLibrary.bik</Path>
 		</MovieArtInfo>
 		<MovieArtInfo>
-			<Type>ART_DEF_MOVIE_GREAT_LIGHTHOUSE</Type>
-			<Path>Art/Movies/Wonders/GreatLighthouse.bik</Path>
-		</MovieArtInfo>
-		<MovieArtInfo>
 			<Type>ART_DEF_MOVIE_HAGIA_SOPHIA</Type>
 			<Path>Art/Movies/Wonders/HagiaSophia.bik</Path>
 		</MovieArtInfo>
