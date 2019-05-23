@@ -3927,10 +3927,12 @@ int CvTeamAI::AI_openBordersTradeVal(TeamTypes eTeam) const
 		}
 	}
 
-	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION1))
+	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION4))
 	{
 		iValue *= 2;
 	}
+	// TODO: Also add something for AI_VICTORY_RELIGION3?
+	// TODO: What if all our cities are already converted?
 
 	return iValue;
 /************************************************************************************************/
