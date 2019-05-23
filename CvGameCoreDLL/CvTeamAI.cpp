@@ -6760,7 +6760,12 @@ int CvTeamAI::AI_embassyTradeVal(TeamTypes eTeam) const
 	int iValue = 0;
 
 	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
-	iValue += AI_openBordersTradeVal(eTeam);
+
+	// lfgr: Commented out. This leads to AI players canceling embassy if they feel open borders is more
+	//   advantageous for the other player than to them, which is obviously bad: they should just not do
+	//   or cancel open borders.
+	//iValue += AI_openBordersTradeVal(eTeam);
+	// TODO: This means AI always takes embassy deals.
 
 	iValue *= 7;
 	iValue /= 5;
