@@ -5490,18 +5490,21 @@ int CvPlot::getFeatureVariety() const
 }
 
 
+// Since how many turns the owner controls this plot.
 int CvPlot::getOwnershipDuration() const
 {
 	return m_iOwnershipDuration;
 }
 
 
+// Whether this plot is counted as score. True if owner controlled it since OWNERSHIP_SCORE_DURATION_THRESHOLD turns.
 bool CvPlot::isOwnershipScore() const
 {
 	return (getOwnershipDuration() >= GC.getDefineINT("OWNERSHIP_SCORE_DURATION_THRESHOLD"));
 }
 
 
+// Set since how many turns the owner controls this plot.
 void CvPlot::setOwnershipDuration(int iNewValue)
 {
 	bool bOldOwnershipScore;
@@ -6495,6 +6498,11 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 			{
 				GET_PLAYER(getOwnerINLINE()).changeTotalLand((isWater()) ? -1 : 1);
 				GET_TEAM(getTeam()).changeTotalLand((isWater()) ? -1 : 1);
+			}
+
+			// lfgr bugfix 2019: Also update player scores
+			if( isOwnershipScore() ) {
+				GET_PLAYER(getOwnerINLINE()).changeTotalLandScored((isWater()) ? -1 : 1);
 			}
 
 			if (bRecalculate)
