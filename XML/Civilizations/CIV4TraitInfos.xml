@@ -320,7 +320,7 @@
 			<Type>TRAIT_ORGANIZED</Type>
 			<Description>TXT_KEY_TRAIT_ORGANIZED</Description>
 			<ShortDescription>TXT_KEY_TRAIT_ORGANIZED_SHORT</ShortDescription>
-			<Help/>
+			<Help>TXT_KEY_EVENT_TRAIT_ORGANIZED_HELP</Help>
 			<iHealth>0</iHealth>
 			<iHappiness>0</iHappiness>
 			<iMaxAnarchy>-1</iMaxAnarchy>
