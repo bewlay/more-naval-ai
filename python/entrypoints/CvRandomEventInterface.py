@@ -1535,14 +1535,15 @@ def canTriggerSageKeep(argsList):
 
 def doSailorsDirge(argsList):
 	kTriggeredData = argsList[0]
-	iUnit = gc.getInfoTypeForString('UNIT_SAILORS_DIRGE')
-	if CyGame().getUnitCreatedCount(iUnit) == 0:
+	eUnit = gc.getInfoTypeForString('UNIT_SAILORS_DIRGE')
+	eIce = gc.getInfoTypeForString('FEATURE_ICE')
+	if CyGame().getUnitCreatedCount(eUnit) == 0:
 		pBestPlot = -1
 		iBestPlot = -1
 		for i in range (CyMap().numPlots()):
 			pPlot = CyMap().plotByIndex(i)
 			iPlot = -1
-			if pPlot.isWater():
+			if pPlot.isWater() and pPlot.getFeatureType() != eIce:
 				if pPlot.getNumUnits() == 0:
 					iPlot = CyGame().getSorenRandNum(500, "Sailors Dirge")
 					iPlot = iPlot + (pPlot.area().getNumTiles() * 10)
@@ -1553,7 +1554,7 @@ def doSailorsDirge(argsList):
 						pBestPlot = pPlot
 		if iBestPlot != -1:
 			bPlayer = gc.getPlayer(gc.getBARBARIAN_PLAYER())
-			newUnit = bPlayer.initUnit(iUnit, pBestPlot.getX(), pBestPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			newUnit = bPlayer.initUnit(eUnit, pBestPlot.getX(), pBestPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			iSkeleton = gc.getInfoTypeForString('UNIT_SKELETON')
 			bPlayer.initUnit(iSkeleton, newUnit.getX(), newUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 			bPlayer.initUnit(iSkeleton, newUnit.getX(), newUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
