@@ -665,10 +665,18 @@ public:
     void foundBarbarianCity();
     bool isEventTriggered(EventTriggerTypes eTrigger) const;
     void setEventTriggered(EventTriggerTypes eTrigger, bool bNewValue);
+
     bool isGamblingRing(VoteSourceTypes eIndex) const;
     void setGamblingRing(VoteSourceTypes eIndex, bool bNewValue);
-    bool isNoBonus(BonusTypes eIndex) const;
-    void setNoBonus(BonusTypes eIndex, bool bNewValue);
+	
+	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	/**
+	  * Indicates whether the specified bonus is forbidden by the specified vote source.
+	  */
+    bool isNoBonus(VoteSourceTypes eVoteSource, BonusTypes eBonus) const;
+	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+    void setNoBonus(VoteSourceTypes eVoteSource, BonusTypes eBonus, bool bNewValue);
+
     bool isNoOutsideTechTrades(VoteSourceTypes eIndex) const;
     void setNoOutsideTechTrades(VoteSourceTypes eIndex, bool bNewValue);
     bool isSlaveTrade(VoteSourceTypes eIndex) const;
@@ -772,10 +780,13 @@ protected:
 	int m_iScenarioCounter;
 	bool* m_pabEventTriggered;
 	bool* m_pabGamblingRing;
-	bool* m_pabNoBonus;
 	bool* m_pabNoOutsideTechTrades;
 	bool* m_pabSlaveTrade;
 	bool* m_pabSmugglingRing;
+
+	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	// Stores a 2-dimensional array in a simple array. For access, see CvGame::isNoBonus().
+	bool* m_ppbNoBonusByVoteSource;
 //FfH: End Add
 
 	// Advanced Diplomacy

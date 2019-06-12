@@ -7074,13 +7074,17 @@ int CvPlayer::getNumAvailableBonuses(BonusTypes eBonus) const
 {
 
 //FfH: Added by Kael 11/14/2007
-    if (isFullMember((VoteSourceTypes)0))
-    {
-        if (GC.getGameINLINE().isNoBonus(eBonus))
-        {
-            return 0;
-        }
-    }
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	for( int eVoteSource = 0; eVoteSource < GC.getNumVoteSourceInfos(); eVoteSource++ )
+	{
+		if( isFullMember( (VoteSourceTypes) eVoteSource ) )
+		{
+			if( GC.getGameINLINE().isNoBonus( (VoteSourceTypes) eVoteSource, eBonus ) )
+			{
+				return 0;
+			}
+		}
+	}
 //FfH: End Add
 
 	CvPlotGroup* pPlotGroup;

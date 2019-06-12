@@ -15631,21 +15631,25 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 	*/
 
 	// MNAI - devalue overcouncil if mana ban is interfering with Tower Victory
+	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
 	{
-		 //if (isFullMember((VoteSourceTypes)0))
-		if (GC.getVoteSourceInfo((VoteSourceTypes)0).getCivic() == eCivic)
-		//if (kCivic.getType() == "CIVIC_OVERCOUNCIL") // HARDCODE
+		for( int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); iVoteSource++ )
 		{
-			for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); iBonus++)
+			VoteSourceTypes eVoteSource = (VoteSourceTypes) iVoteSource;
+			if( GC.getVoteSourceInfo( eVoteSource ).getCivic() == eCivic
+				&& isFullMember(eVoteSource ) )
 			{
-				BonusTypes eBonus = (BonusTypes)iBonus;
-
-				if (GC.getGameINLINE().isNoBonus(eBonus))
+				for( int iBonus = 0; iBonus < GC.getNumBonusInfos(); iBonus++ )
 				{
-					if (AI_getTowerManaValue(eBonus) > 0)
+					BonusTypes eBonus = (BonusTypes) iBonus;
+
+					if (GC.getGameINLINE().isNoBonus( eVoteSource, eBonus ) )
 					{
-						return -20;
+						if (AI_getTowerManaValue(eBonus) > 0)
+						{
+							return -20;
+						}
 					}
 				}
 			}

@@ -53,7 +53,7 @@ CvGame::CvGame()
 //FfH: Added by Kael 11/14/2007
 	m_pabEventTriggered = NULL;
 	m_pabGamblingRing = NULL;
-	m_pabNoBonus = NULL;
+	m_ppbNoBonusByVoteSource = NULL; // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	m_pabNoOutsideTechTrades = NULL;
 	m_pabSlaveTrade = NULL;
 	m_pabSmugglingRing = NULL;
@@ -603,7 +603,7 @@ void CvGame::uninit()
 //FfH: Added by Kael 11/14/2007
 	SAFE_DELETE_ARRAY(m_pabEventTriggered);
 	SAFE_DELETE_ARRAY(m_pabGamblingRing);
-	SAFE_DELETE_ARRAY(m_pabNoBonus);
+	SAFE_DELETE_ARRAY(m_ppbNoBonusByVoteSource); // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	SAFE_DELETE_ARRAY(m_pabNoOutsideTechTrades);
 	SAFE_DELETE_ARRAY(m_pabSlaveTrade);
 	SAFE_DELETE_ARRAY(m_pabSmugglingRing);
@@ -777,11 +777,14 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		{
 			m_pabGamblingRing[iI] = false;
 		}
-		m_pabNoBonus = new bool[GC.getNumBonusInfos()];
-		for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
+
+		// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+		m_ppbNoBonusByVoteSource = new bool[GC.getNumVoteSourceInfos() * GC.getNumBonusInfos()];
+		for( int i = 0; i < GC.getNumVoteSourceInfos() * GC.getNumBonusInfos(); i++)
 		{
-			m_pabNoBonus[iI] = false;
+			m_ppbNoBonusByVoteSource[i] = false;
 		}
+
 		m_pabNoOutsideTechTrades = new bool[GC.getNumVoteSourceInfos()];
 		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
 		{
@@ -8645,9 +8648,12 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     {
         bChange = true;
     }
+
     if (kVote.getNoBonus() != NO_BONUS)
     {
-        setNoBonus((BonusTypes)kVote.getNoBonus(), bChange);
+	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+		setNoBonus(kData.eVoteSource, (BonusTypes)kVote.getNoBonus(), bChange);
+	// lfgr end
     }
     if (kVote.isGamblingRing())
     {
@@ -9510,7 +9516,9 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iScenarioCounter);
 	pStream->Read(GC.getNumEventTriggerInfos(), m_pabEventTriggered);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabGamblingRing);
-	pStream->Read(GC.getNumBonusInfos(), m_pabNoBonus);
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	pStream->Read( GC.getNumVoteSourceInfos() * GC.getNumBonusInfos(), m_ppbNoBonusByVoteSource );
+// lfgr end
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
@@ -9733,7 +9741,9 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(m_iScenarioCounter);
 	pStream->Write(GC.getNumEventTriggerInfos(), m_pabEventTriggered);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabGamblingRing);
-	pStream->Write(GC.getNumBonusInfos(), m_pabNoBonus);
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	pStream->Write( GC.getNumVoteSourceInfos() * GC.getNumBonusInfos(), m_ppbNoBonusByVoteSource );
+// lfgr end
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
@@ -10597,6 +10607,7 @@ VoteTriggeredData* CvGame::getVoteTriggered(int iID) const
 	return ((VoteTriggeredData*)(m_votesTriggered.getAt(iID)));
 }
 
+// lfgr: seems to be unused, remove?
 VoteTriggeredData* CvGame::addVoteTriggered(const VoteSelectionData& kData, int iChoice)
 {
 	if (-1 == iChoice || iChoice >= (int)kData.aVoteOptions.size())
@@ -11482,14 +11493,16 @@ void CvGame::setGamblingRing(VoteSourceTypes eIndex, bool bNewValue)
 	m_pabGamblingRing[eIndex] = bNewValue;
 }
 
-bool CvGame::isNoBonus(BonusTypes eIndex) const
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+bool CvGame::isNoBonus(VoteSourceTypes eVoteSource, BonusTypes eBonus) const
 {
-	return m_pabNoBonus[eIndex];
+	return m_ppbNoBonusByVoteSource[eVoteSource * GC.getNumBonusInfos() + eBonus];
 }
 
-void CvGame::setNoBonus(BonusTypes eIndex, bool bNewValue)
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+void CvGame::setNoBonus(VoteSourceTypes eVoteSource, BonusTypes eBonus, bool bNewValue)
 {
-	m_pabNoBonus[eIndex] = bNewValue;
+	m_ppbNoBonusByVoteSource[eVoteSource * GC.getNumBonusInfos() + eBonus] = bNewValue;
 }
 
 bool CvGame::isNoOutsideTechTrades(VoteSourceTypes eIndex) const
