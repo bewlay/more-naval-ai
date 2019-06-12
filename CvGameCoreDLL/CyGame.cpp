@@ -1029,6 +1029,35 @@ int CyGame::getPlayerVote(int /*PlayerTypes*/ eOwnerIndex, int iVoteId)
 	return m_pGame ? m_pGame->getPlayerVote((PlayerTypes) eOwnerIndex, iVoteId) : NO_PLAYER_VOTE;
 }
 
+// lfgr 06/2019: exposed
+void CyGame::castVote( int /*PlayerTypes*/ eOwnerIndex, int iVoteId, int /*PlayerVoteTypes*/ ePlayerVote ) {
+	if( m_pGame ) {
+		m_pGame->castVote( (PlayerTypes) eOwnerIndex, iVoteId, (PlayerVoteTypes) ePlayerVote );
+	}
+}
+
+// lfgr 06/2019: exposed
+/**
+  * Returns the vote ID to be used in castVote() and getPlayerVote(), or -1 if this game instance is invalid.
+  */
+int CyGame::addVoteTriggered( int /*VoteSourceTypes*/ eVoteSource, int /*VoteTypes*/ eVote, int/*PlayerTypes*/ ePlayer,
+			int iCityId, int /*PlayerTypes*/ eOtherPlayer, std::wstring szText ) {
+	if( m_pGame ) {
+		VoteSelectionSubData kOptionData;
+		kOptionData.eVote = (VoteTypes) eVote;
+		kOptionData.ePlayer = (PlayerTypes) ePlayer;
+		kOptionData.iCityId = iCityId;
+		kOptionData.eOtherPlayer = (PlayerTypes) eOtherPlayer;
+		kOptionData.szText = szText;
+		VoteTriggeredData* pTriggeredData = m_pGame->addVoteTriggered( (VoteSourceTypes) eVoteSource, kOptionData );
+		return pTriggeredData->getID();
+	}
+	else {
+		return -1;
+	}
+}
+
+
 std::string CyGame::getScriptData() const
 {
 	return m_pGame ? m_pGame->getScriptData() : "";

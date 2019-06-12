@@ -268,7 +268,15 @@ void CyGamePythonInterface()
 		.def("setHeadquarters", &CyGame::setHeadquarters, "void (int eIndex, CyCity *pNewValue, bAnnounce) - Sets headquarters for corporation eIndex to pNewValue")
 		.def("clearHeadquarters", &CyGame::clearHeadquarters, "void (int eIndex) - clears the headquarters for corporation eIndex")
 
-		.def("getPlayerVote", &CyGame::getPlayerVote)
+		// lfgr 06/2019: added documentation
+		.def("getPlayerVote", &CyGame::getPlayerVote, "int (int /*PlayerTypes*/ eOwnerIndex, int iVoteId)")
+		// lfgr 06/2019: exposed
+		.def("castVote", &CyGame::castVote,
+				"void (int /*PlayerTypes*/ eOwnerIndex, int iVoteId, int /*PlayerVoteTypes*/ ePlayerVote)")
+		// lfgr 06/2019: exposed
+		.def("addVoteTriggered", &CyGame::addVoteTriggered,
+				"int(int /*VoteSourceTypes*/ eVoteSource, int /*VoteTypes*/ eVote, int/*PlayerTypes*/ ePlayer, "
+				"int iCityId, int /*PlayerTypes*/ eOtherPlayer, std::wstring szText)")
 
 		.def("getScriptData", &CyGame::getScriptData, "str () - Returns ScriptData member (used to store custom data)")
 		.def("setScriptData", &CyGame::setScriptData, "void (str) - Sets ScriptData member (used to store custom data)")
