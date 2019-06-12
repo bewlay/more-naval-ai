@@ -92,6 +92,7 @@
 	<ElementType name="DamageInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
+		<element type="Button"/>
 	</ElementType>
 	<ElementType name="DamageInfos" content="eltOnly">
 		<element type="DamageInfo" maxOccurs="*"/>
