@@ -121,13 +121,4 @@
 		<Spanish>[NEWLINE][ICON_BULLET]Solo puede ser construido en %s1_Name y &#201;pocas anteriores</Spanish>
 		<Finnish>[NEWLINE][ICON_BULLET]Can only be Built on %s1_Name and Earlier Starts</Finnish>
 	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUILDING_UNIT_UPGRADE_COST_MOD</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] to Upgrade Units</English>
-		<French>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] to Upgrade Units</French>
-		<German>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] um Einheiten zu modernisieren</German>
-		<Italian>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] per Aggiornare la/le Unit&#224;</Italian>
-		<Spanish>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] para Actualizar Unidades</Spanish>
-		<Finnish>[ICON_BULLET]%D1_Mod%% [ICON_GOLD] to Upgrade Units</Finnish>
-	</TEXT>
 </Civ4GameText>

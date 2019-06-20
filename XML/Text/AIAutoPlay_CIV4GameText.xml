@@ -77,15 +77,6 @@
 		<Finnish>K&#228;yt&#228; teko&#228;lyautomaatiota?</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_AIAUTOPLAY_TURNS</Tag>
-		<English>How many turns would you like the AI to control?</English>
-		<French>Combien de tours vous aimez l'AI pour commander</French>
-		<German>Wieviele Runden m&#246;chten Sie die KI kontrollieren lassen?</German>
-		<Italian>Per quanti turni vuoi lasciare il controllo all'IA?</Italian>
-		<Spanish>&#191;Cu&#225;ntos turnos quieres que coja el control la IA?</Spanish>
-		<Finnish>Kuinka monta vuoroa haluat k&#228;ytt&#228;&#228; teko&#228;ly&#228;?</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_AIAUTOPLAY_AUTOMATION</Tag>
 		<English>Choose type of automation</English>
 		<French>Choisissez le type d'automation</French>

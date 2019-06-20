@@ -6750,15 +6750,6 @@
 		<Finnish>Immigrants are flowing to %s2_city inspired by stories of its culture!</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_EVENT_IMMIGRANTS_1</Tag>
-		<English>We are pleased at their new choice of residence.</English>
-		<French>Nous sommes ravis de leur decision de s'installer ici.</French>
-		<German>Unsere lebendige Kultur erf&#252;llt mich mit Freude.</German>
-		<Italian>Siamo soddisfatti per la loro scelta di trasferirsi nella citt&#224;.</Italian>
-		<Spanish>Nos agrada que hayan elegido residir all&#237;.</Spanish>
-		<Finnish>We are pleased at their new choice of residence.</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_EVENTTRIGGER_HEALING_PLANT</Tag>
 		<English>%s1_civ_adjective herbalists have discovered a plant that might result in better illness treatment.</English>
 		<French>Les botanistes %s1_civ_adjective ont decouvert une plante qui pourrait ameliorer le traitement de certaines maladies.</French>
@@ -6829,15 +6820,6 @@
 		<Italian>I nostri esperimenti hanno avuto un successo straordinario! Abbiamo ora a nostra disposizione cure molto migliori per alcune malattie!</Italian>
 		<Spanish>Nuestros experimentos han sido un &#233;xito rotundo! Ahora poseemos tratamientos mucho mejores!</Spanish>
 		<Finnish>Our experiments have been a resounding success! We now posess much better treatments!</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENTTRIGGER_GREAT_BEAST</Tag>
-		<English>%s1_civ_adjective hunters have discovered a great beast lurking near one of their camps.</English>
-		<French>Les chasseurs %s1_civ_adjective ont decouvert une enorme bete rodant pres d'un de leurs camps.</French>
-		<German>Von %s1:2_civ_adjective J&#228;gern gibt es Berichte &#252;ber ein riesiges Tier, das sich in der N&#228;he eines Lagers gezeigt haben soll.</German>
-		<Italian>Cacciatori %s1_civ_adjective hanno avvistato un grande animale appostato nei dintorni di un loro accampamento.</Italian>
-		<Spanish>Cazadores %s1_civ_adjective han descubierto una gran bestia acechando uno de sus campamentos.</Spanish>
-		<Finnish>%s1_civ_adjective hunters have discovered a great beast lurking near one of their camps.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_GREAT_BEAST</Tag>
