@@ -619,12 +619,12 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 						CvEventTriggerInfo& kTrigger = GC.getEventTriggerInfo(pEvent->m_eTrigger);
 						if( kTrigger.isGlobal() )
 						{
-							setTriggerFired( *pEvent, false, false );
+							setTriggerFired( *pEvent, false, false, false );
 							break;
 						}
 						else if( kTrigger.isTeam() && GET_PLAYER((PlayerTypes)iJ).getTeam() == getTeam() )
 						{
-							setTriggerFired( *pEvent, false, false );
+							setTriggerFired( *pEvent, false, false, false );
 							break;
 						}
 					}
@@ -21593,7 +21593,7 @@ void CvPlayer::resetTriggerFired(EventTriggerTypes eTrigger)
 	}
 }
 
-void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers, bool bAnnounce)
+void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers, bool bAnnounce, bool bDoEffects)
 {
 	FAssert(kTriggeredData.m_eTrigger >= 0 && kTriggeredData.m_eTrigger < GC.getNumEventTriggerInfos());
 
@@ -21615,7 +21615,7 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 //						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
                         if (GET_PLAYER((PlayerTypes)i).isAlive())
                         {
-                            GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
+                            GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false, bDoEffects);
                         }
 
 					}
@@ -21627,7 +21627,7 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 				{
 					if (i != getID() && getTeam() == GET_PLAYER((PlayerTypes)i).getTeam())
 					{
-						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
+						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false, bDoEffects);
 					}
 				}
 			}
@@ -21635,28 +21635,23 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 		//}
 
 	//FfH: Modified by Kael 09/25/2008
-	//	if (!isEmpty(kTrigger.getPythonCallback()))
-	//	{
-	//		long lResult;
-	//		CyArgsList argsList;
-	//		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-	//		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-	//	}
-		if (isAlive())
-		{
-			if (!CvString(kTrigger.getPythonCallback()).empty())
-			{
-				long lResult;
-
-				CyArgsList argsList;
-				argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-				argsList.add(getID());	// Player ID
-				gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-			}
-		}
+		// lfgr 06/2019: Moved callback
 		GC.getGameINLINE().setEventTriggered((EventTriggerTypes)kTriggeredData.m_eTrigger, true);
 	//FfH: End Modify
 	}
+	
+	// lfgr 06/2019: Apply python effects if and only if bDoEffects
+	if( bDoEffects && isAlive() && !CvString(kTrigger.getPythonCallback()).empty())
+	{
+		long lResult;
+
+		CyArgsList argsList;
+		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
+		argsList.add(getID());	// Player ID
+		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
+	}
+	// lfgr END
+
 	if (bAnnounce)
 	{
 		CvPlot* pPlot = GC.getMapINLINE().plot(kTriggeredData.m_iPlotX, kTriggeredData.m_iPlotY);
