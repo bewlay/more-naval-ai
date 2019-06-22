@@ -6597,7 +6597,13 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 /*************************************************************************************************/
 /** Advanced Diplomacy       START															     */
 /*************************************************************************************************/
-						if (GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)))
+					// lfgr 06/2019: Cannot trade war against somebody with whom we are already at war
+					//	if (GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)))
+						// LFGR_TODO: canDeclareWarWithoutSenate does nothing at the moment. Figure that out,
+						//   see tholal's note in that function
+						if( !atWar(getTeam(), ((TeamTypes)(item.m_iData))) &&
+							GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)) )
+					// lfgr END
 						{
 /*************************************************************************************************/
 /** Advanced Diplomacy       END															     */
