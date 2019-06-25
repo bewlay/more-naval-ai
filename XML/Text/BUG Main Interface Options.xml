@@ -369,25 +369,6 @@
 		<Spanish>Peque&#241;o|Mediano|Grande</Spanish>
 		<Finnish>Small|Medium|Large</Finnish>
 	</TEXT>
-	
-	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__EVENTSWITHIMAGES_TEXT</Tag>
-		<English>Events with Images</English>
-		<French>Events with Images</French>
-		<German>Ereignisse mit Bildern</German>
-		<Italian>Events with Images</Italian>
-		<Spanish>Events with Images</Spanish>
-		<Finnish>Events with Images</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__EVENTSWITHIMAGES_HOVER</Tag>
-		<English>When checked and the required images are present, shows pictures on the random event screens.</English>
-		<French>When checked and the required images are present, shows pictures on the random event screens.</French>
-		<German>F&#252;gt den Nachrichten &#252;ber Zuf&#228;llige Ereignisse Bilder hinzu, sofern vorhanden.</German>
-		<Italian>When checked and the required images are present, shows pictures on the random event screens.</Italian>
-		<Spanish>When checked and the required images are present, shows pictures on the random event screens.</Spanish>
-		<Finnish>When checked and the required images are present, shows pictures on the random event screens.</Finnish>
-	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__UNITCOMBATICONS_TEXT</Tag>
 		<English>Unit Combat Icons</English>

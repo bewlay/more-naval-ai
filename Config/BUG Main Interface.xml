@@ -111,10 +111,6 @@
 				<choice id="Medium" get="isBuildIconSizeMedium"/>
 				<choice id="Large" get="isBuildIconSizeLarge"/>
 			</list>
-
-			<!-- Events with Images -->
-			<option id="EventsWithImages" key="Events with Images" 
-					type="boolean" default="False" dll="5"/>
 		</section>
 	</options>
 	
