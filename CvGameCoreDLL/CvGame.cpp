@@ -843,8 +843,10 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		}
 
 		FAssertMsg(m_paiForceCivicCount==NULL, "about to leak memory, CvGame::m_paiForceCivicCount");
-		m_paiForceCivicCount = new int[GC.getNumCivicInfos()];
-		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
+	// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+		m_paiForceCivicCount = new int[GC.getNumVoteSourceInfos() * GC.getNumCivicInfos()];
+		for (iI = 0; iI < GC.getNumVoteSourceInfos() * GC.getNumCivicInfos(); iI++)
+	// lfgr end
 		{
 			m_paiForceCivicCount[iI] = 0;
 		}
@@ -5844,17 +5846,21 @@ void CvGame::incrementProjectCreatedCount(ProjectTypes eIndex, int iExtra)
 }
 
 
-int CvGame::getForceCivicCount(CivicTypes eIndex) const
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+int CvGame::getForceCivicCount(VoteSourceTypes eVoteSource, CivicTypes eIndex) const
 {
+	FAssertMsg(eVoteSource >= 0, "eVoteSource is expected to be non-negative (invalid Index)");
+	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eVoteSource is expected to be within maximum bounds (invalid Index)");
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumCivicInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-	return m_paiForceCivicCount[eIndex];
+	return m_paiForceCivicCount[eVoteSource * GC.getNumCivicInfos() + eIndex];
 }
 
 
-bool CvGame::isForceCivic(CivicTypes eIndex) const
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+bool CvGame::isForceCivic(VoteSourceTypes eVoteSource, CivicTypes eIndex) const
 {
-	return (getForceCivicCount(eIndex) > 0);
+	return (getForceCivicCount(eVoteSource, eIndex) > 0);
 }
 
 /************************************************************************************************/
@@ -5870,7 +5876,8 @@ bool CvGame::isCondemnCivic(CivicTypes eIndex) const
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
 
-bool CvGame::isForceCivicOption(CivicOptionTypes eCivicOption) const
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+bool CvGame::isForceCivicOption(VoteSourceTypes eVoteSource, CivicOptionTypes eCivicOption) const
 {
 	int iI;
 
@@ -5878,7 +5885,7 @@ bool CvGame::isForceCivicOption(CivicOptionTypes eCivicOption) const
 	{
 		if (GC.getCivicInfo((CivicTypes)iI).getCivicOptionType() == eCivicOption)
 		{
-			if (isForceCivic((CivicTypes)iI))
+			if (isForceCivic(eVoteSource, (CivicTypes)iI))
 			{
 				return true;
 			}
@@ -5889,7 +5896,8 @@ bool CvGame::isForceCivicOption(CivicOptionTypes eCivicOption) const
 }
 
 
-void CvGame::changeForceCivicCount(CivicTypes eIndex, int iChange)
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+void CvGame::changeForceCivicCount(VoteSourceTypes eVoteSource, CivicTypes eIndex, int iChange)
 {
 	bool bOldForceCivic;
 
@@ -5898,12 +5906,12 @@ void CvGame::changeForceCivicCount(CivicTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		bOldForceCivic = isForceCivic(eIndex);
+		bOldForceCivic = isForceCivic(eVoteSource, eIndex);
 
-		m_paiForceCivicCount[eIndex] += iChange;
-		FAssert(getForceCivicCount(eIndex) >= 0);
+		m_paiForceCivicCount[eVoteSource * GC.getNumCivicInfos() + eIndex] += iChange;
+		FAssert(getForceCivicCount(eVoteSource, eIndex) >= 0);
 
-		if (bOldForceCivic != isForceCivic(eIndex))
+		if (bOldForceCivic != isForceCivic(eVoteSource, eIndex))
 		{
 			verifyCivics();
 		}
@@ -8639,7 +8647,8 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 
 	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
-		changeForceCivicCount((CivicTypes)iI, kVote.isForceCivic(iI) ? iChange : 0);
+		// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+		changeForceCivicCount(kData.eVoteSource, (CivicTypes)iI, kVote.isForceCivic(iI) ? iChange : 0);
 	}
 
 //FfH: Added by Kael 11/14/2007
@@ -9336,7 +9345,9 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumUnitClassInfos(), m_paiUnitClassCreatedCount);
 	pStream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingClassCreatedCount);
 	pStream->Read(GC.getNumProjectInfos(), m_paiProjectCreatedCount);
-	pStream->Read(GC.getNumCivicInfos(), m_paiForceCivicCount);
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+	pStream->Read(GC.getNumVoteSourceInfos() * GC.getNumCivicInfos(), m_paiForceCivicCount);
+// lfgr end
 	pStream->Read(GC.getNumVoteInfos(), (int*)m_paiVoteOutcome);
 	pStream->Read(GC.getNumReligionInfos(), m_paiReligionGameTurnFounded);
 	pStream->Read(GC.getNumCorporationInfos(), m_paiCorporationGameTurnFounded);
@@ -9609,7 +9620,9 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumUnitClassInfos(), m_paiUnitClassCreatedCount);
 	pStream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingClassCreatedCount);
 	pStream->Write(GC.getNumProjectInfos(), m_paiProjectCreatedCount);
-	pStream->Write(GC.getNumCivicInfos(), m_paiForceCivicCount);
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+	pStream->Write(GC.getNumVoteSourceInfos() * GC.getNumCivicInfos(), m_paiForceCivicCount);
+// lfgr end
 	pStream->Write(GC.getNumVoteInfos(), (int*)m_paiVoteOutcome);
 	pStream->Write(GC.getNumReligionInfos(), m_paiReligionGameTurnFounded);
 	pStream->Write(GC.getNumCorporationInfos(), m_paiCorporationGameTurnFounded);

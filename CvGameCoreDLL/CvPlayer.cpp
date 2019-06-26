@@ -10251,20 +10251,19 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 /************************************************************************************************/	
 
 	CvCivicInfo &kCivic = GC.getCivicInfo(eCivic);
-	
-//FfH: Added by Kael 11/23/2007
-    if (isFullMember((VoteSourceTypes)0))
-    {
-//FfH: End Add
 
-        if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)(kCivic.getCivicOptionType())))
-        {
-            return GC.getGameINLINE().isForceCivic(eCivic);
-        }
-
-//FfH: Added by Kael 11/23/2007
-    }
-//FfH: End Add
+// lfgr 06/2019 / Kael 11/2007: ForceCivic applies only to the respective VoteSource
+	for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
+	{
+		VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
+		if( isFullMember( eVoteSource )
+				&& GC.getGameINLINE().isForceCivicOption(
+						eVoteSource, (CivicOptionTypes) kCivic.getCivicOptionType() ) )
+		{
+			return GC.getGameINLINE().isForceCivic( eVoteSource, eCivic );
+		}
+	}
+// lfgr end
 
 	if(GC.getUSE_CAN_DO_CIVIC_CALLBACK())
 	{
@@ -10371,23 +10370,19 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 	{
 		for (iI = 0; iI < GC.getNumCivicOptionInfos(); ++iI)
 		{
-
-//FfH: Added by Kael 12/30/2007
-            if (isFullMember((VoteSourceTypes)0))
-            {
-//FfH: End Add
-
-			if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)iI))
+		// lfgr 06/2019 / Kael 12/2007: ForceCivic applies only to the respective VoteSource
+			for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
 			{
-				if (!GC.getGameINLINE().isForceCivic(paeNewCivics[iI]))
+				VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
+				if( isFullMember( eVoteSource )
+						&& GC.getGameINLINE().isForceCivicOption(
+								eVoteSource, (CivicOptionTypes) iI )
+						&& GC.getGameINLINE().isForceCivic( eVoteSource, paeNewCivics[iI] ) )
 				{
 					return false;
 				}
 			}
-
-//FfH: Added by Kael 12/30/2007
-            }
-//FfH: End Add
+		// lfgr end
 
 			if (getCivics((CivicOptionTypes)iI) != paeNewCivics[iI])
 			{

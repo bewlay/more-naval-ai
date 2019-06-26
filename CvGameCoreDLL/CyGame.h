@@ -248,9 +248,15 @@ public:
 	int getProjectCreatedCount(int /*ProjectTypes*/ eIndex);
 	bool isProjectMaxedOut(int /*ProjectTypes*/ eIndex, int iExtra);
 
-	int getForceCivicCount(int /*CivicTypes*/ eIndex);
-	bool isForceCivic(int /*CivicTypes*/ eIndex);
-	bool isForceCivicOption(int /*CivicOptionTypes*/ eCivicOption);
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+	int getForceCivicCount(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex);
+
+	// Indicates whether the specified civic is forced by the specified vote source
+	bool isForceCivic(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex);
+	
+	// Indicates whether the specified civic option has a civic that is forced by the specified vote source
+	bool isForceCivicOption(int /*VoteSourceTypes*/ eVoteSource, int /*CivicOptionTypes*/ eCivicOption);
+// lfgr end
 
 	int /*PlayerVoteTypes*/ getVoteOutcome(int /*VoteTypes*/ eIndex);
 

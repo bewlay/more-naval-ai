@@ -236,9 +236,15 @@ void CyGamePythonInterface()
 		.def("getProjectCreatedCount", &CyGame::getProjectCreatedCount, "int (ProjectTypes eIndex)")
 		.def("isProjectMaxedOut", &CyGame::isProjectMaxedOut, "bool (ProjectTypes eIndex)")
 
-		.def("getForceCivicCount", &CyGame::getForceCivicCount, "int (CivicTypes eIndex)")
-		.def("isForceCivic", &CyGame::isForceCivic, "bool (CivicTypes eIndex)")
-		.def("isForceCivicOption", &CyGame::isForceCivicOption, "bool (CivicOptionTypes eCivicOption)")
+	// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+		.def("getForceCivicCount", &CyGame::getForceCivicCount, "int (VoteSourceTypes eVoteSource, CivicTypes eIndex)")
+		.def("isForceCivic", &CyGame::isForceCivic,
+				"bool (VoteSourceTypes eVoteSource, CivicTypes eIndex)"
+				" - Indicates whether the specified civic is forced by the specified vote source")
+		.def("isForceCivicOption", &CyGame::isForceCivicOption,
+				"bool (VoteSourceTypes eVoteSource, CivicOptionTypes eCivicOption)"
+				" - Indicates whether the specified civic option has a civic that is forced by the specified vote source")
+	// lfgr end
 
 		.def("getVoteOutcome", &CyGame::getVoteOutcome, "int (VoteTypes eIndex)")
 

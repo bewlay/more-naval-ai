@@ -406,10 +406,17 @@ public:
 	bool isProjectMaxedOut(ProjectTypes eIndex, int iExtra = 0);								// Exposed to Python
 	void incrementProjectCreatedCount(ProjectTypes eIndex, int iExtra = 1);
 
-	int getForceCivicCount(CivicTypes eIndex) const;														// Exposed to Python
-	bool isForceCivic(CivicTypes eIndex) const;																	// Exposed to Python
-	bool isForceCivicOption(CivicOptionTypes eCivicOption) const;								// Exposed to Python
-	void changeForceCivicCount(CivicTypes eIndex, int iChange);
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+	int getForceCivicCount(VoteSourceTypes eVoteSource, CivicTypes eIndex) const; // Exposed to Python
+
+	// Indicates whether the specified civic is forced by the specified vote source
+	bool isForceCivic(VoteSourceTypes eVoteSource, CivicTypes eIndex) const; // Exposed to Python
+
+	// Indicates whether the specified civic option has a civic that is forced by the specified vote source
+	bool isForceCivicOption(VoteSourceTypes eVoteSource, CivicOptionTypes eCivicOption) const; // Exposed to Python
+
+	void changeForceCivicCount(VoteSourceTypes eVoteSource, CivicTypes eIndex, int iChange);
+// lfgr end
 
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
@@ -805,6 +812,9 @@ protected:
 	int* m_paiUnitClassCreatedCount;
 	int* m_paiBuildingClassCreatedCount;
 	int* m_paiProjectCreatedCount;
+	
+	// lfgr 06/2019: Fix ForceCivic to apply to correct VoteSource
+	// Stores a 2-dimensional array in a simple array. For access, see CvGame::isForceCivic().
 	int* m_paiForceCivicCount;
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                             */
