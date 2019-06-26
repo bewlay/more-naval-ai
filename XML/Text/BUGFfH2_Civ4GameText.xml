@@ -230,14 +230,6 @@
         <Spanish>Modificador de Casilla:</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BONUS_FREE_PROMOTION</Tag>
-        <English>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</English>
-        <French>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</French>
-        <German>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</German>
-        <Italian>[ICON_BULLET]Free %s1_promotion for new units belonging to available category in the city</Italian>
-        <Spanish>[ICON_BULLET]%s1_promotion gratis para las nuevas unidades pertenecientes a la categoría disponible en la ciudad</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BONUS_FREE_PROMOTION_CHANCE</Tag>
         <English>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</English>
         <French>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</French>
@@ -261,14 +253,6 @@
 		<German>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</German>
 		<Italian>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</Italian>
 		<Spanish>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_REPLACES_BUILDING</Tag>
-		<English>Replaces %s1_default_building</English>
-		<French>Remplace : %s1_default_building</French>
-		<German>Ersetzt %s1_default_building</German>
-		<Italian>Sostituisce l'unit&#224; %s1_default_building</Italian>
-		<Spanish>Reemplaza a la unidad de %s1_default_building</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_IGNORE_REQUIREMENT</Tag>

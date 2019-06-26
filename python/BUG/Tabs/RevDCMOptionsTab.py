@@ -25,12 +25,6 @@ class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 		left, right = self.addTwoColumnLayout(screen, column, "Options", False)
 	
 		if not networkGame:
-			self.addLabel(screen, left, "RevDCM__RevDCMInterface", localText.getText("TXT_KEY_REVDCMTAB_INTERFACE_OPTIONS", ()))
-			col1, col2 = self.addMultiColumnLayout(screen, right, 2, "interfaceOptions")
-			self.addCheckbox(screen, col1, "RevDCM__RevDCMHiddenAttitude")
-			screen.attachHSeparator(left, left + "SepInterface1")
-			screen.attachHSeparator(right, right + "SepInterface2")
-
 			#Config
 			if(game.isDebugMode()):
 				self.addLabel(screen, left, "Revolution__RevConfig", "RevConfig:")
@@ -256,9 +250,4 @@ class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 		else:
 			self.addLabel(screen, left, "RevDCM_network_game", localText.getText("TXT_KEY_MULTIPLAYER_GAME_DETECTED", ()))
 			self.addLabel(screen, right, "RevDCM_network_game1", localText.getText("TXT_KEY_MULTIPLAYER_GAME_DETECTED_DESCRIPTION", ()))
-			
-		
-		#On screen information
-		self.addLabel(screen, left, "RevDCM_info", localText.getText("TXT_KEY_REVDCM_NOTES", ()))
-		self.addLabel(screen, right, "RevolutionDCMHelp", localText.getText("TXT_KEY_REVDCM_TAB_HELP", ()))
 	

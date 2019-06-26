@@ -601,11 +601,6 @@
 <DefineName>BBAI_VICTORY_STRATEGY_DIPLOMACY</DefineName>
 <iDefineIntVal>0</iDefineIntVal>
 </Define>
-<!-- Show Hidden Attitude Mod -->
-<Define>
-	<DefineName>SHOW_HIDDEN_ATTITUDE</DefineName>
-	<iDefineIntVal>0</iDefineIntVal>
-</Define>
 
 <!-- City Bar -->
 
