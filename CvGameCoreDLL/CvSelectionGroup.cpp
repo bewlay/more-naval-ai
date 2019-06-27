@@ -481,7 +481,7 @@ void CvSelectionGroup::playActionSound()
 	pHeadUnit = getHeadUnit();
 	if ( pHeadUnit )
 	{
-		iScriptId = pHeadUnit->getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentEra())->getActionSoundScriptId();
+		iScriptId = pHeadUnit->getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentRealEra())->getActionSoundScriptId();
 	}
 
 	if ( (iScriptId == -1) && pHeadUnit )

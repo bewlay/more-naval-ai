@@ -700,7 +700,7 @@ class CvPlayerDesc:
 			if pPlayerReligionInfo:
 				f.write("\tStateReligion=%s\n" %(pPlayerReligionInfo.getType()))
 
-			f.write("\tStartingEra=%s\n" %(gc.getEraInfo(pPlayer.getCurrentEra()).getType()))
+			f.write("\tStartingEra=%s\n" %(gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()))
 
 			f.write("\tRandomStartLocation=false\n")
 

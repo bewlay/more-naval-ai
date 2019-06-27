@@ -14160,7 +14160,7 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 		if (eTrainUnit != NO_UNIT)
 		{
 			swprintf(szBuffer, gDLL->getText(((isLimitedUnitClass((UnitClassTypes)(GC.getUnitInfo(eTrainUnit).getUnitClassType()))) ? "TXT_KEY_MISC_TRAINED_UNIT_IN_LIMITED" : "TXT_KEY_MISC_TRAINED_UNIT_IN"), GC.getUnitInfo(eTrainUnit).getTextKeyWide(), getNameKey()).GetCString());
-			strcpy( szSound, GC.getUnitInfo(eTrainUnit).getArtInfo(0,GET_PLAYER(getOwnerINLINE()).getCurrentEra(), NO_UNIT_ARTSTYLE)->getTrainSound() );
+			strcpy( szSound, GC.getUnitInfo(eTrainUnit).getArtInfo(0,GET_PLAYER(getOwnerINLINE()).getCurrentRealEra(), NO_UNIT_ARTSTYLE)->getTrainSound() );
 //>>>>Unofficial Bug Fix: Modified by Denev 2009/09/28
 //*** Assimilated city produces a unit with original civilization artstyle.
 //			szIcon = GET_PLAYER(getOwnerINLINE()).getUnitButton(eTrainUnit);
@@ -17827,7 +17827,7 @@ UnitArtStyleTypes CvCity::getUnitArtStyleType() const
 
 const TCHAR* CvCity::getUnitArtStyleButton(UnitTypes eUnit) const
 {
-	return GC.getUnitInfo(eUnit).getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentEra(), getUnitArtStyleType())->getButton();
+	return GC.getUnitInfo(eUnit).getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentRealEra(), getUnitArtStyleType())->getButton();
 }
 //<<<<Unofficial Bug Fix: End Add
 

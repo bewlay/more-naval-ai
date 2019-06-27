@@ -12244,7 +12244,7 @@ bool CvPlot::checkLateEra() const
 		}
 	}
 
-	return (GET_PLAYER(ePlayer).getCurrentEra() > GC.getNumEraInfos() / 2);
+	return (GET_PLAYER(ePlayer).getCurrentRealEra() > GC.getNumRealEras() / 2);
 }
 
 //FfH: Added by Kael 08/15/2007

@@ -36,6 +36,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>0</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>1</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_ANCIENT_SOUNDTRACK_1</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_ANCIENT_SOUNDTRACK_2</EraInfoSoundtrack>
@@ -98,6 +99,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>400</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>1</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_SONG_ALEXANDER</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_SONG_VIKING</EraInfoSoundtrack>
@@ -175,6 +177,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>200</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>1</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_ALLEGRI_MISERERE</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_ANONYMOUS_AY_SANTA_MARIA</EraInfoSoundtrack>
@@ -253,6 +256,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_OCKEGHEM_INTEMERATA</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_OCKEGHEM_KYRIE</EraInfoSoundtrack>
@@ -325,6 +329,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_ALLEGRI_MISERERE</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_CHANT_DEUS</EraInfoSoundtrack>
@@ -408,6 +413,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_ANONYMOUS_AY_SANTA_MARIA</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_ANONYMOUS_LA_GAMBA</EraInfoSoundtrack>
@@ -480,6 +486,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_CHCONNE</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_DESPREZ_EL_GRILLO</EraInfoSoundtrack>
@@ -555,6 +562,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_BRUMEL_GLORIA</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_ANFORTAS_WOUND</EraInfoSoundtrack>
@@ -628,6 +636,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_INNOCENT_CHILD</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_LOVE_ETERNAL</EraInfoSoundtrack>
@@ -694,6 +703,7 @@
 			<iEventChancePerTurn>4</iEventChancePerTurn>
 			<iSoundtrackSpace>160</iSoundtrackSpace>
 			<bFirstSoundtrackFirst>0</bFirstSoundtrackFirst>
+			<bRealEra>0</bRealEra>
 			<EraInfoSoundtracks>
 				<EraInfoSoundtrack>AS2D_ANGEL_OF_SORROW</EraInfoSoundtrack>
 				<EraInfoSoundtrack>AS2D_LE_SERPENT_ROUGE</EraInfoSoundtrack>

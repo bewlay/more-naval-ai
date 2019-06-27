@@ -265,6 +265,9 @@ m_paMainMenus(NULL)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+// ERA_FIX 09/2017 lfgr
+, m_iNumRealEras( -1 )
+// ERA_FIX end
 
 {
 }
@@ -2324,6 +2327,17 @@ CvEraInfo& CvGlobals::getEraInfo(EraTypes eEraNum)
 	FAssert(eEraNum < GC.getNumEraInfos());
 	return *(m_aEraInfo[eEraNum]);
 }
+// ERA_FIX 09/2017 lfgr
+int CvGlobals::getNumRealEras() const
+{
+	return m_iNumRealEras;
+}
+
+void CvGlobals::setNumRealEras( int iNumRealEras )
+{
+	m_iNumRealEras = iNumRealEras;
+}
+// ERA_FIX end
 
 int CvGlobals::getNumHurryInfos()
 {

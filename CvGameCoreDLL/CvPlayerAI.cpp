@@ -2392,9 +2392,7 @@ int CvPlayerAI::AI_yieldWeight(YieldTypes eYield) const
 {
 	if (eYield == YIELD_PRODUCTION)
 	{
-		//int iProductionModifier = 100 + (30 * std::max(0, GC.getGame().getCurrentEra() - 1) / std::max(1, (GC.getNumEraInfos() - 2)));
-		// Tholal AI - era fix
-		int iProductionModifier = 100 + (30 * std::max(0, GC.getGameINLINE().getCurrentPeriod() - 1) / std::max(1, (GC.getNumEraInfos() - 2)));
+		int iProductionModifier = 100 + (30 * std::max(0, GC.getGame().getCurrentEra() - 1) / std::max(1, (GC.getNumRealEras() - 2)));
 		return (GC.getYieldInfo(eYield).getAIWeightPercent() * iProductionModifier) / 100;
 	}
 	return GC.getYieldInfo(eYield).getAIWeightPercent();
@@ -5636,7 +5634,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 							}
 							*/
 							
-							if (bAdvancedStart && getCurrentEra() < 2)
+							if (bAdvancedStart && getCurrentRealEra() < 2)
 							{
 								iValue *= (iL == YIELD_FOOD) ? 3 : 2;
 							}
@@ -6168,7 +6166,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 				}
 			}
 			
-			iCivicTechValue += 200;//  + (GC.getGameINLINE().getCurrentPeriod() * 50);
+			iCivicTechValue += 200;//  + (GC.getGameINLINE().getCurrentEra() * 50);
 
 			int iCivicOpt = (GC.getCivicInfo(eNewCivic).getCivicOptionType());
 			CivicTypes eCurrCivic = getCivics((CivicOptionTypes)iCivicOpt);
@@ -6180,8 +6178,8 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 
 				if (iNewCivicValue > iCurrentCivicValue)
 				{
-					//iCivicTechValue += std::min((4000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
-					iCivicTechValue += std::min((5000 * (GC.getGameINLINE().getCurrentPeriod() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+					//iCivicTechValue += std::min((4000 * (GC.getGameINLINE().getCurrentEra() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
+					iCivicTechValue += std::min((5000 * (GC.getGameINLINE().getCurrentEra() + 1)), (250 * (iNewCivicValue - (iCurrentCivicValue - 1))));
 				}
 				
 				/*
@@ -6306,7 +6304,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						{
 							logBBAI("     RELIGION - %S: SLOT OPEN", GC.getReligionInfo(eReligion).getDescription());
 						}
-						iReligionValue += (GC.getGameINLINE().getCurrentPeriod() + 1) * 2500;
+						iReligionValue += (GC.getGameINLINE().getCurrentEra() + 1) * 2500;
 						iReligionValue += getNumCities() * (bHasReligion ? 500 : 1000);
 					}
 
@@ -6394,7 +6392,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 						iReligionValue /= 2;
 					}
 
-					//iReligionValue *= (1 + GC.getGameINLINE().getCurrentPeriod());
+					//iReligionValue *= (1 + GC.getGameINLINE().getCurrentEra());
 					//iReligionValue /= 2;
 					if ((gPlayerLogLevel > 3) && bDebugLog)
 					{
@@ -6957,7 +6955,7 @@ int CvPlayerAI::AI_techBuildingValue( TechTypes eTech, int iPathLength, bool &bE
 				}
 
 				// free techs (ie, Grimoire)
-				iBuildingValue += kLoopBuilding.getFreeTechs() * (3000 * GC.getGameINLINE().getCurrentPeriod());
+				iBuildingValue += kLoopBuilding.getFreeTechs() * (3000 * GC.getGameINLINE().getCurrentEra());
 
 				if (!isIgnoreFood())
 				{
@@ -11621,7 +11619,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						if (kLoopUnit.getPrereqAndTech() != NO_TECH)
 						{
-							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentPeriod());
+							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopUnit.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentEra());
 
 							if (iDiff == 0)
 							{
@@ -11724,7 +11722,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						if (kLoopBuilding.getPrereqAndTech() != NO_TECH)
 						{
-							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentPeriod());
+							iDiff = abs(GC.getTechInfo((TechTypes)(kLoopBuilding.getPrereqAndTech())).getEra() - GC.getGameINLINE().getCurrentEra());
 
 							if (iDiff == 0)
 							{
@@ -11766,7 +11764,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 					if (kLoopProject.getTechPrereq() != NO_TECH)
 					{
-						iDiff = abs(GC.getTechInfo((TechTypes)(kLoopProject.getTechPrereq())).getEra() - getCurrentEra());
+						iDiff = abs(GC.getTechInfo((TechTypes)(kLoopProject.getTechPrereq())).getEra() - getCurrentRealEra());
 
 						if (iDiff == 0)
 						{
@@ -23620,7 +23618,7 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	int iNonsense = AI_getStrategyRand() + 10;
 	// Tholal: Era fix
 	//if (getCurrentEra() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
-	if (GC.getGameINLINE().getCurrentPeriod() >= (GC.getNumEraInfos() - (2 + iNonsense % 2)))
+	if (GC.getGameINLINE().getCurrentEra() >= (GC.getNumRealEras() - (2 + iNonsense % 2)))
 	{
 		bool bAt3 = false;
 		
@@ -23658,7 +23656,7 @@ int CvPlayerAI::AI_getCultureVictoryStage() const
 	}
 
 	//if (getCurrentEra() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
-	if (GC.getGameINLINE().getCurrentPeriod() >= ((GC.getNumEraInfos() / 3) + iNonsense % 2))
+	if (GC.getGameINLINE().getCurrentEra() >= ((GC.getNumRealEras() / 3) + iNonsense % 2))
 	{
 	    return 2;
 	}
@@ -23849,7 +23847,7 @@ int CvPlayerAI::AI_getSpaceVictoryStage() const
 
 		if (iValue >= 100)
 		{
-			if( getCurrentEra() >= GC.getNumEraInfos() - 3 )
+			if( getCurrentRealEra() >= GC.getNumRealEras() - 3 )
 			{
 				return 2;
 			}
@@ -23955,7 +23953,7 @@ int CvPlayerAI::AI_getConquestVictoryStage() const
 			}
 		}
 
-		if (getCurrentEra() >= ((GC.getNumEraInfos() / 3)))
+		if (getCurrentRealEra() >= ((GC.getNumRealEras() / 3)))
 		{
 			if( iOurPowerRank <= 1 + (GET_TEAM(getTeam()).getHasMetCivCount(true)/7) )
 			{
@@ -25133,9 +25131,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		}
 	}
 	
-	// Tholal AI - era fix - maybe not do it here?
-	//int iCurrentEra = getCurrentEra();
-	int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
+	int iCurrentEra = getCurrentRealEra();
 	int iParanoia = 0;
 	int iCloseTargets = 0;
 	int iOurDefensivePower = kTeam.getDefensivePower();
@@ -25268,8 +25264,8 @@ int CvPlayerAI::AI_getStrategyHash() const
 
 	// K-Mod. You call that scaling for "later eras/larger games"? It isn't scaling, and it doesn't use the map size.
 	// Lets try something else. Rough and ad hoc, but hopefully a bit better.
-	iParanoia *= (3*GC.getNumEraInfos() - 2*iCurrentEra);
-	iParanoia /= 3*(std::max(1, GC.getNumEraInfos()));
+	iParanoia *= (3*GC.getNumRealEras() - 2*iCurrentEra);
+	iParanoia /= 3*(std::max(1, GC.getNumRealEras()));
 	// That starts as a factor of 1, and drop to 1/3.  And now for game size...
 	iParanoia *= 14;
 	iParanoia /= (7+std::max(kTeam.getHasMetCivCount(true), GC.getWorldInfo(GC.getMapINLINE().getWorldSize()).getDefaultPlayers()));
@@ -26551,12 +26547,8 @@ int CvPlayerAI::AI_getTotalFloatingDefendersNeeded(CvArea* pArea) const
 {
 	PROFILE_FUNC();
 	int iDefenders;
-	int iCurrentEra = getCurrentEra();
+	int iCurrentEra = getCurrentRealEra();
 	int iAreaCities = pArea->getCitiesPerPlayer(getID());
-
-	// Tholal AI - era fix
-	//iCurrentEra = std::max(0, iCurrentEra - GC.getGame().getStartEra() / 2);
-	iCurrentEra = (GC.getGameINLINE().getCurrentPeriod() / 2);
 	
 	iDefenders = 1 + ((iCurrentEra + ((GC.getGameINLINE().getMaxCityElimination() > 0) ? 3 : 2)) * iAreaCities);
 	iDefenders /= 3;
@@ -27113,7 +27105,7 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(CvPlot* pPlot)
 		}
 	}
 
-	int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
+	int iTargetPopulation = pCity->happyLevel() + (getCurrentRealEra() / 2);
 
 	while (iPlotsImproved < iTargetPopulation)
 	{
@@ -27556,7 +27548,7 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 	int iTechRand = 90 + GC.getGame().getSorenRandNum(20, "AI AS Buy Tech 1");
 	int iTotalTechSpending = 0;
 
-	if (getCurrentEra() == 0)
+	if (getCurrentRealEra() == 0)
 	{
 		TechTypes eTech = AI_bestTech(1);
 		if ((eTech != NO_TECH) && !GC.getTechInfo(eTech).isRepeat())
@@ -27668,7 +27660,7 @@ void CvPlayerAI::AI_doAdvancedStart(bool bNoExit)
 	{
 		//Land
 		AI_advancedStartPlaceExploreUnits(true);
-		if (getCurrentEra() > 2)
+		if (getCurrentRealEra() > 2)
 		{
 			//Sea
 			AI_advancedStartPlaceExploreUnits(false);
@@ -28315,7 +28307,7 @@ void CvPlayerAI::AI_doEnemyUnitData()
 
 			TechTypes eTech = (TechTypes)GC.getUnitInfo((UnitTypes)iI).getPrereqAndTech();
 
-			int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, getCurrentEra() - GC.getTechInfo(eTech).getEra());
+			int iEraDiff = (eTech == NO_TECH) ? 4 : std::min(4, getCurrentRealEra() - GC.getTechInfo(eTech).getEra());
 
 			if (iEraDiff > 1)
 			{

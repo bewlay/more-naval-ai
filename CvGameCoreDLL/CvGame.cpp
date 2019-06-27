@@ -3772,7 +3772,7 @@ EraTypes CvGame::getHighestEra() const
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
-			iLoopEra = GET_PLAYER((PlayerTypes)iI).getCurrentEra();
+			iLoopEra = GET_PLAYER((PlayerTypes)iI).getCurrentRealEra();
 
 			if(iLoopEra > iHighestEra)
 			{
@@ -3821,7 +3821,7 @@ EraTypes CvGame::getCurrentEra() const
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
-			iEra += GET_PLAYER((PlayerTypes)iI).getCurrentEra();
+			iEra += GET_PLAYER((PlayerTypes)iI).getCurrentRealEra();
 			iCount++;
 		}
 	}

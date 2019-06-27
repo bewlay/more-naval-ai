@@ -5251,6 +5251,10 @@ public:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	EraTypes getPseudoEra() const;
+// ERA_FIX end
 
 	bool read(CvXMLLoadUtility* pXML);
 
@@ -5295,6 +5299,11 @@ protected:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	EraTypes m_PseudoEra;
+// ERA_FIX end
+
 	// Arrays
 
 	int* m_paiGlobalReligionCommerce;
@@ -6490,6 +6499,9 @@ public:
 	bool isNoBarbUnits() const;				//	Exposed to Python
 	bool isNoBarbCities() const;			//	Exposed to Python
 	bool isFirstSoundtrackFirst() const;			//	Exposed to Python
+// ERA_FIX 09/2017 lfgr 
+	bool isRealEra() const;
+// ERA_FIX end
 
 	// Arrays
 
@@ -6528,6 +6540,9 @@ protected:
 	bool m_bNoBarbUnits;
 	bool m_bNoBarbCities;
 	bool m_bFirstSoundtrackFirst;
+// ERA_FIX 09/2017 lfgr 
+	bool m_bRealEra;
+// ERA_FIX end
 
 	// Arrays
 
