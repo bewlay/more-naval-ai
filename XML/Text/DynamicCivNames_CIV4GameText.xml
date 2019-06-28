@@ -47,9 +47,9 @@
 	<TEXT>
 		<Tag>TXT_KEY_MOD_DCN_REBELS_OF</Tag>
 		<English>%s Rebels of %s</English>
-		<French></French>
+		<French>%s Rebels of %s</French>
 		<German>%s Rebellen von %s</German>
-		<Italian></Italian>
+		<Italian>%s Rebels of %s</Italian>
 		<Spanish>Ej&#233;rcito rebelde %s de %s</Spanish>
 		<Finnish>Kapinallinen %s-%s</Finnish>
 	</TEXT>
