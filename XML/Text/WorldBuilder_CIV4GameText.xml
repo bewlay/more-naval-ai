@@ -1332,4 +1332,13 @@
 		<Italian>Planning War</Italian>
 		<Spanish>Planning War</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESOLUTIONS</Tag>
+		<English>Resolutions</English>
+		<French>Resolutions</French>
+		<German>Resolutions</German>
+		<Italian>Resolutions</Italian>
+		<Spanish>Resolutions</Spanish>
+	</TEXT>
+
 </Civ4GameText>
