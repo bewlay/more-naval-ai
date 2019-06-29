@@ -387,4 +387,22 @@
 		<Spanish>When checked, shows the Unit Combat icon in the Unit help display.</Spanish>
 		<Finnish>When checked, shows the Unit Combat icon in the Unit help display.</Finnish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINIMAPWATEROVERLAY_TEXT</Tag>
+		<English>Overlay Minimap Water Tiles</English>
+		<French>Overlay Minimap Water Tiles</French>
+		<German>Overlay Minimap Water Tiles</German>
+		<Italian>Overlay Minimap Water Tiles</Italian>
+		<Spanish>Overlay Minimap Water Tiles</Spanish>
+		<Finnish>Overlay Minimap Water Tiles</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MAININTERFACE__MINIMAPWATEROVERLAY_HOVER</Tag>
+		<English>When checked, overlays water tiles in the minimap with their owner's color.</English>
+		<French>When checked, overlays water tiles in the minimap with their owner's color.</French>
+		<German>When checked, overlays water tiles in the minimap with their owner's color.</German>
+		<Italian>When checked, overlays water tiles in the minimap with their owner's color.</Italian>
+		<Spanish>When checked, overlays water tiles in the minimap with their owner's color.</Spanish>
+		<Finnish>When checked, overlays water tiles in the minimap with their owner's color.</Finnish>
+	</TEXT>
 </Civ4GameText>

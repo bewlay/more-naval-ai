@@ -38,6 +38,10 @@
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+// lfgr 06/2019: BUG options
+#include "CvBugOptions.h"
+
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
 /*************************************************************************************************/
@@ -10607,7 +10611,10 @@ ColorTypes CvPlot::plotMinimapColor()
 			}
 		}
 
-		if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER) && !isRevealedBarbarian())
+		// lfgr 06/2019: Hide minimap ownership overlay on water, if option disabled
+		//if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER) && !isRevealedBarbarian())
+		if( getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER && !isRevealedBarbarian()
+				&& ( getBugOptionBOOL( "MainInterface__MinimapWaterOverlay" ) || !isWater() ) )
 		{
 			return ((ColorTypes)(GC.getPlayerColorInfo(GET_PLAYER(getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true)).getPlayerColor()).getColorTypePrimary()));
 		}

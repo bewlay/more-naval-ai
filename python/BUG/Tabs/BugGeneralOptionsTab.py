@@ -101,3 +101,5 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, panel, "MainInterface__ProgressBarsTickMarks")
 		self.addTextDropdown(screen, panel, panel, "MainInterface__BuildIconSize", True)
 		self.addCheckbox(screen, panel, "MainInterface__CityArrows")
+		# lfgr 06/2019: Option to hide minimap ownership overlay on water
+		self.addCheckbox(screen, panel, "MainInterface__MinimapWaterOverlay")
