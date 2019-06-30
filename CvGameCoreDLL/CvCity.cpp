@@ -11838,7 +11838,7 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 
 //FfH: Added by Kael 11/14/2007
 // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
-	for( int eVoteSource; eVoteSource < GC.getNumVoteSourceInfos(); eVoteSource++ )
+	for( int eVoteSource = 0; eVoteSource < GC.getNumVoteSourceInfos(); eVoteSource++ )
 	{
 		if( GET_PLAYER(getOwnerINLINE()).isFullMember( (VoteSourceTypes) eVoteSource ) )
 		{
