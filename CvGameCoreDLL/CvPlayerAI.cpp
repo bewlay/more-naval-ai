@@ -1649,21 +1649,10 @@ void CvPlayerAI::AI_unitUpdate()
 
 				if (NULL != pLoopSelectionGroup)  // group might have been killed by a previous group update
 				{
-// TEMPFIX Sephi
-/**
 					if (pLoopSelectionGroup->AI_update())
 					{
 						break; // pointers could become invalid...
 					}
-**/
-					if (pLoopSelectionGroup->AI_update())
-					{
-					    if(getID()<MAX_CIV_PLAYERS)
-					    {
-							break; // pointers could become invalid...
-					    }
-					}
-// TEMPFIX Sephi
 				}
 
 				pCurrUnitNode = finalGroupCycle.next(pCurrUnitNode);
