@@ -7351,12 +7351,12 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iHurryCostModifier, "iHurryCostModifier");
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost");
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCostIncrease, "iAdvancedStartCostIncrease");
-	pXML->GetChildXmlValByName(&m_iMinAreaSize, "iMinAreaSize");
+	pXML->GetChildXmlValByName(&m_iMinAreaSize, "iMinAreaSize", -1); // lfgr 06/2019: Default -1
 	pXML->GetChildXmlValByName(&m_iMoves, "iMoves");
 	pXML->GetChildXmlValByName(&m_iAirRange, "iAirRange");
 	pXML->GetChildXmlValByName(&m_iAirUnitCap, "iAirUnitCap");
 	pXML->GetChildXmlValByName(&m_iDropRange, "iDropRange");
-	pXML->GetChildXmlValByName(&m_iNukeRange, "iNukeRange");
+	pXML->GetChildXmlValByName(&m_iNukeRange, "iNukeRange", -1); // lfgr 06/2019: Default -1
 	pXML->GetChildXmlValByName(&m_iWorkRate, "iWorkRate");
 	pXML->GetChildXmlValByName(&m_iBaseDiscover, "iBaseDiscover");
 	pXML->GetChildXmlValByName(&m_iDiscoverMultiplier, "iDiscoverMultiplier");
@@ -7371,7 +7371,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_pbFeatureImpassable, "FeatureImpassables", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos(), false);
 
 	pXML->GetChildXmlValByName(&m_iCombat, "iCombat");
-	pXML->GetChildXmlValByName(&m_iCombatLimit, "iCombatLimit");
+	pXML->GetChildXmlValByName(&m_iCombatLimit, "iCombatLimit", 100); // lfgr 06/2019: Default 100
 	pXML->GetChildXmlValByName(&m_iAirCombat, "iAirCombat");
 	pXML->GetChildXmlValByName(&m_iAirCombatLimit, "iAirCombatLimit");
 	pXML->GetChildXmlValByName(&m_iXPValueAttack, "iXPValueAttack");
