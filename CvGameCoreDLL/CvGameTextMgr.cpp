@@ -11829,7 +11829,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		if (kUnitInfo.getFeatureImpassable(iI))
 		{
 			CvWString szFeature;
-			TechTypes eTech = (TechTypes)kUnitInfo.getTerrainPassableTech(iI);
+			TechTypes eTech = (TechTypes)kUnitInfo.getFeaturePassableTech(iI); // lfgr bugfix 06/2019: "Feature" instead of "Terrain"
 			if (NO_TECH == eTech)
 			{
 				szFeature.Format(L"<link=literal>%s</link>", GC.getFeatureInfo((FeatureTypes)iI).getDescription());
