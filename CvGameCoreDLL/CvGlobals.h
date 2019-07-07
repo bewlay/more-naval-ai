@@ -702,6 +702,10 @@ public:
 	// lfgr comment: Current XML file (only used for reporting in error messages)
 	CvString& getCurrentXMLFile();
 	void setCurrentXMLFile(const TCHAR* szFileName);
+	// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType, too
+	CvString& getCurrentXMLInfoType();
+	void setCurrentXMLInfoType(const TCHAR* szInfoType);
+	// BETTER_ASSERTS end
 
 	//
 	///////////////// BEGIN global defines
@@ -1181,6 +1185,10 @@ protected:
 	int m_iNumFootstepAudioTags;
 
 	CvString m_szCurrentXMLFile;
+	// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType
+	CvString m_szCurrentXMLInfoType;
+	// BETTER_ASSERTS end
+
 	//////////////////////////////////////////////////////////////////////////
 	// Formerly Global Defines
 	//////////////////////////////////////////////////////////////////////////

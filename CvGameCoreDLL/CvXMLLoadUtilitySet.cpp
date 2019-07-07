@@ -1895,6 +1895,10 @@ void CvXMLLoadUtility::LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* 
 	{
 		gDLL->destroyCache(pCache);
 	}
+
+	// BETTER_ASSERTS 07/2019 lfgr: Reset current InfoType
+	GC.setCurrentXMLInfoType( "(None/unknown)" );
+	// BETTER_ASSERTS end
 }
 
 

@@ -268,7 +268,10 @@ m_paMainMenus(NULL)
 // ERA_FIX 09/2017 lfgr
 , m_iNumRealEras( -1 )
 // ERA_FIX end
-
+// BETTER_ASSERTS 07/2019 lfgr: Properly initialize current XML file/InfoType
+, m_szCurrentXMLFile( "(None)" )
+, m_szCurrentXMLInfoType( "(None/unknown)" )
+// BETTER_ASSERTS end
 {
 }
 
@@ -2730,6 +2733,18 @@ CvString& CvGlobals::getCurrentXMLFile()
 {
 	return m_szCurrentXMLFile;
 }
+
+// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType in addition to current XML file
+void CvGlobals::setCurrentXMLInfoType(const TCHAR* szInfoType)
+{
+	m_szCurrentXMLInfoType = szInfoType;
+}
+
+CvString& CvGlobals::getCurrentXMLInfoType()
+{
+	return m_szCurrentXMLInfoType;
+}
+// BETTER_ASSERTS end
 
 FVariableSystem* CvGlobals::getDefinesVarSystem()
 {

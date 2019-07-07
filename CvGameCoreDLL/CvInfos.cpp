@@ -200,6 +200,10 @@ bool CvInfoBase::read(CvXMLLoadUtility* pXML)
 
 	// TYPE
 	pXML->GetChildXmlValByName(m_szType, "Type");
+	
+	// BETTER_ASSERTS 07/2019 lfgr: Store InfoType
+	GC.setCurrentXMLInfoType( m_szType );
+	// BETTER_ASSERTS end
 
 	// DESCRIPTION
 	pXML->GetChildXmlValByName(m_szTextKey, "Description");
