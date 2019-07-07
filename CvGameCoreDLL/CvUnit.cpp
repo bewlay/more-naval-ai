@@ -3938,6 +3938,7 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 	FeatureTypes featureType = pPlot->getFeatureType();
 	if(featureType != NO_FEATURE)
 	{
+		// lfgr_todo: read to int in pass2
 		CvString featureString(GC.getFeatureInfo(featureType).getOnUnitChangeTo());
 		if(!featureString.IsEmpty())
 		{

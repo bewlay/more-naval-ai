@@ -43,6 +43,10 @@ CvInfoBase::~CvInfoBase()
 
 void CvInfoBase::read(FDataStreamBase* pStream)
 {
+	// lfgr 07/2019: safeguard
+	FAssertMsg( false, "Cached XML not supported" );
+	// lfgr end
+
 	reset();
 
 	pStream->Read(&m_bGraphicalOnly);

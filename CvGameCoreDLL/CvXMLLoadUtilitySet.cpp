@@ -1825,6 +1825,7 @@ void CvXMLLoadUtility::LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* 
 	CvCacheObject* pCache = NULL;
 	GC.addToInfosVectors(&aInfos);
 
+	// lfgr_todo: disable cache completely
 	if (NULL != pArgFunction)
 	{
 		pCache = (gDLL->*pArgFunction)(CvString::format("%s.dat", szFileRoot));	// cache file name
