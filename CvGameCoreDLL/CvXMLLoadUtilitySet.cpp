@@ -1173,6 +1173,12 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	LoadGlobalClassInfo(GC.getEspionageMissionInfo(), "CIV4EspionageMissionInfo", "GameInfo", "Civ4EspionageMissionInfo/EspionageMissionInfos/EspionageMissionInfo", false);
 
 	DestroyFXml();
+
+	// lfgr 06/2019: Make asserts no longer refer to CIV4EspionageMissionInfo.xml
+	//   in later GC.getInfoTypeForString() asserts
+	GC.setCurrentXMLFile( "(None)" );
+	// lfgr end
+
 	return true;
 }
 
