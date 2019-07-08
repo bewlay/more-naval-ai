@@ -12846,6 +12846,10 @@ void CvUnit::setLevel(int iNewValue)
 {
 	if (getLevel() != iNewValue)
 	{
+		// MORE_ASSERTS 07/2019 lfgr: Check that level is positive
+		FAssertMsg(iNewValue > 0, "New level must be greater than zero");
+		// MORE_ASSERTS end
+
 		// MNAI - True Power calculations
 		int iNetPowerChange = iNewValue - getLevel();
 		GET_PLAYER(getOwnerINLINE()).changePower(iNetPowerChange);

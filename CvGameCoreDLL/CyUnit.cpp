@@ -1214,6 +1214,14 @@ int CyUnit::getLevel()
 
 void CyUnit::setLevel(int iNewLevel)
 {
+	// MORE_ASSERTS 07/2019 lfgr: Check that level is positive
+#ifdef FASSERT_ENABLE
+	if( iNewLevel <= 0 ) {
+		throw std::exception( "New level must be positive" ); // for python stacktrace message
+	}
+#endif
+	// MORE_ASSERTS end
+
 	if (m_pUnit)
 		m_pUnit->setLevel(iNewLevel);
 }
