@@ -7357,7 +7357,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAIWeight, "iAIWeight");
 	pXML->GetChildXmlValByName(&m_iProductionCost, "iCost");
 	pXML->GetChildXmlValByName(&m_iHurryCostModifier, "iHurryCostModifier");
-	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost");
+	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost", 100); // lfgr 07/2019: Default 100
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCostIncrease, "iAdvancedStartCostIncrease");
 	pXML->GetChildXmlValByName(&m_iMinAreaSize, "iMinAreaSize", -1); // lfgr 06/2019: Default -1
 	pXML->GetChildXmlValByName(&m_iMoves, "iMoves");

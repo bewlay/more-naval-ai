@@ -1237,7 +1237,6 @@
                 </Flavor>
             </Flavors>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>3</iCombat>
@@ -1392,7 +1391,6 @@
                 </Flavor>
             </Flavors>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>3</iCombat>
@@ -1562,7 +1560,6 @@
                 </Flavor>
             </Flavors>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>3</iCombat>
@@ -1786,7 +1783,6 @@
             <bFirstStrikeImmune>1</bFirstStrikeImmune>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -2062,7 +2058,6 @@
                      <BonusType>BONUS_MANA_FIRE</BonusType>
             </PrereqBonuses>
             <iCost>250</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>3</iMoves>
             <iCombat>8</iCombat>
@@ -2146,7 +2141,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ARCHERY</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -2219,7 +2213,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ARCHERY</PrereqTech>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -2298,7 +2291,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ARCHERY</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -2387,7 +2379,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ARCHERY</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -2517,7 +2508,6 @@
             </Flavors>
             <iAIWeight>300</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>400</iWorkRate>
             <iCombat>5</iCombat>
@@ -2669,7 +2659,6 @@
             </Flavors>
             <iAIWeight>300</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>400</iWorkRate>
             <iCombat>5</iCombat>
@@ -2743,7 +2732,6 @@
             <PrereqTech>TECH_BLASTING_POWDER</PrereqTech>
             <BonusType>BONUS_GUNPOWDER</BonusType>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>10</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3075,7 +3063,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3161,7 +3148,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3259,7 +3245,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3342,7 +3327,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3436,7 +3420,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3525,7 +3508,6 @@
             </UnitAIs>
             <PrereqTech>TECH_POISONS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3785,7 +3767,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3869,7 +3850,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -3934,7 +3914,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -4026,7 +4005,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -4110,7 +4088,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -4177,7 +4154,6 @@
             <PrereqBuilding>BUILDING_SCULPTORS_STUDIO</PrereqBuilding>
             <PrereqTech>TECH_CONSTRUCTION</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -4736,7 +4712,6 @@
             <PrereqBuilding>BUILDING_TEMPLE_OF_THE_VEIL</PrereqBuilding>
             <PrereqTech>TECH_MALEVOLENT_DESIGNS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -4811,7 +4786,6 @@
             <PrereqBuilding>BUILDING_GROVE</PrereqBuilding>
             <PrereqTech>TECH_ANIMAL_MASTERY</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>14</iCombat>
@@ -4884,7 +4858,6 @@
             <PrereqBuilding>BUILDING_GROVE</PrereqBuilding>
             <PrereqTech>TECH_ANIMAL_MASTERY</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>14</iCombat>
@@ -4963,7 +4936,6 @@
             <PrereqBuilding>BUILDING_GROVE</PrereqBuilding>
             <PrereqTech>TECH_ANIMAL_MASTERY</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>14</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5080,7 +5052,6 @@
             </UnitAIs>
             <PrereqTech>TECH_RAGE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5158,7 +5129,6 @@
             </UnitAIs>
             <PrereqTech>TECH_RAGE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5218,7 +5188,6 @@
             </UnitAIs>
             <PrereqTech>TECH_RAGE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5301,7 +5270,6 @@
             </UnitAIs>
             <PrereqTech>TECH_RAGE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5360,7 +5328,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MACHINERY</PrereqTech>
             <iCost>360</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>15</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5682,7 +5649,6 @@
             <PrereqTech>TECH_BLASTING_POWDER</PrereqTech>
             <BonusType>BONUS_GUNPOWDER</BonusType>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5743,7 +5709,6 @@
             <PrereqTech>TECH_BLASTING_POWDER</PrereqTech>
             <BonusType>BONUS_GUNPOWDER</BonusType>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>10</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -5800,7 +5765,6 @@
             </UnitAIs>
             <PrereqTech>TECH_OPTICS</PrereqTech>
             <iCost>100</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>5</iMoves>
             <iCombat>4</iCombat>
@@ -5868,7 +5832,6 @@
             <PrereqBuilding>BUILDING_SIEGE_WORKSHOP</PrereqBuilding>
             <PrereqTech>TECH_CONSTRUCTION</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iCombatLimit>75</iCombatLimit>
@@ -5933,7 +5896,6 @@
             <PrereqBuilding>BUILDING_SIEGE_WORKSHOP</PrereqBuilding>
             <PrereqTech>TECH_CONSTRUCTION</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iCombatLimit>75</iCombatLimit>
@@ -6113,7 +6075,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6217,7 +6178,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6328,7 +6288,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6426,7 +6385,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6522,7 +6480,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>10</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6619,7 +6576,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6700,7 +6656,6 @@
             </UnitAIs>
             <PrereqTech>TECH_IRON_WORKING</PrereqTech>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6789,7 +6744,6 @@
             <PrereqBuilding>BUILDING_GOVERNORS_MANOR</PrereqBuilding>
             <PrereqTech>TECH_FEUDALISM</PrereqTech>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -6930,7 +6884,6 @@
                     <PrereqTech>TECH_CONSTRUCTION</PrereqTech>
             </TechTypes>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -7006,7 +6959,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -7079,7 +7031,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -7353,7 +7304,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MACHINERY</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -7423,7 +7373,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MACHINERY</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -7675,7 +7624,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iGreatWorkCulture>20</iGreatWorkCulture>
             <iCombat>3</iCombat>
@@ -7762,7 +7710,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iGreatWorkCulture>20</iGreatWorkCulture>
             <iCombat>3</iCombat>
@@ -7849,7 +7796,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iGreatWorkCulture>20</iGreatWorkCulture>
             <iCombat>3</iCombat>
@@ -7907,7 +7853,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -8015,7 +7960,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iGreatWorkCulture>20</iGreatWorkCulture>
             <iCombat>3</iCombat>
@@ -8106,7 +8050,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iBaseDiscover>15</iBaseDiscover>
             <iCombat>3</iCombat>
@@ -8193,7 +8136,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iGreatWorkCulture>20</iGreatWorkCulture>
             <iCombat>3</iCombat>
@@ -8263,7 +8205,6 @@
             <PrereqReligion>RELIGION_THE_ASHEN_VEIL</PrereqReligion>
             <PrereqTech>TECH_CORRUPTION_OF_SPIRIT</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -8646,7 +8587,6 @@
             <PrereqReligion>RELIGION_OCTOPUS_OVERLORDS</PrereqReligion>
             <PrereqTech>TECH_MESSAGE_FROM_THE_DEEP</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <TerrainImpassables>
                 <TerrainImpassable>
@@ -8730,7 +8670,6 @@
             <PrereqTech>TECH_COMMUNE_WITH_NATURE</PrereqTech>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>8</iCombat>
@@ -8822,7 +8761,6 @@
             <PrereqTech>TECH_COMMUNE_WITH_NATURE</PrereqTech>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>8</iCombat>
@@ -8918,7 +8856,6 @@
             <PrereqTech>TECH_COMMUNE_WITH_NATURE</PrereqTech>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>8</iCombat>
@@ -9011,7 +8948,6 @@
             <PrereqTech>TECH_STRENGTH_OF_WILL</PrereqTech>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>100</iWorkRate>
             <iCombat>10</iCombat>
@@ -9157,7 +9093,6 @@
             <PrereqReligion>RELIGION_RUNES_OF_KILMORPH</PrereqReligion>
             <PrereqTech>TECH_WAY_OF_THE_EARTHMOTHER</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>200</iWorkRate>
             <iBaseHurry>45</iBaseHurry>
@@ -9279,7 +9214,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -9669,7 +9603,6 @@
             <PrereqReligion>RELIGION_FELLOWSHIP_OF_LEAVES</PrereqReligion>
             <PrereqTech>TECH_WAY_OF_THE_FORESTS</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -10043,7 +9976,6 @@
             <PrereqTech>TECH_FESTIVALS</PrereqTech>
             <iAIWeight>100</iAIWeight>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -10121,7 +10053,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>4</iMoves>
             <iCombat>10</iCombat>
@@ -10174,7 +10105,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -10231,7 +10161,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -10293,7 +10222,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -10442,7 +10370,6 @@
                 </Flavor>
             </Flavors>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>6</iCombat>
@@ -10528,7 +10455,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>4</iMoves>
             <iCombat>6</iCombat>
@@ -10604,7 +10530,6 @@
             </UnitAIs>
             <PrereqTech>TECH_SAILING</PrereqTech>
             <iCost>50</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>2</iMoves>
             <TerrainImpassables>
@@ -11271,7 +11196,6 @@
             <PrereqBuilding>BUILDING_INFIRMARY</PrereqBuilding>
             <PrereqTech>TECH_MEDICINE</PrereqTech>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -11702,7 +11626,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ANIMAL_MASTERY</PrereqTech>
             <iCost>0</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>14</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -11754,7 +11677,6 @@
             <bNoDefensiveBonus>1</bNoDefensiveBonus>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -11822,7 +11744,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -11908,7 +11829,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -11988,7 +11908,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12078,7 +11997,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12164,7 +12082,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12250,7 +12167,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12332,7 +12248,6 @@
             </Flavors>
             <iAIWeight>16</iAIWeight>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12520,7 +12435,6 @@
                     <PrereqTech>TECH_ARCHERY</PrereqTech>
             </TechTypes>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12598,7 +12512,6 @@
                     <PrereqTech>TECH_ARCHERY</PrereqTech>
             </TechTypes>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12680,7 +12593,6 @@
             </TechTypes>
             <BonusType>BONUS_DEER</BonusType>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12767,7 +12679,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12846,7 +12757,6 @@
                     <PrereqTech>TECH_ARCHERY</PrereqTech>
             </TechTypes>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -12924,7 +12834,6 @@
             <PrereqTech>TECH_HORSEBACK_RIDING</PrereqTech>
             <BonusType>BONUS_PIG</BonusType>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13014,7 +12923,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HORSEBACK_RIDING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13104,7 +13012,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13178,7 +13085,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HORSEBACK_RIDING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13242,7 +13148,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HORSEBACK_RIDING</PrereqTech>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13326,7 +13231,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HUNTING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>4</iCombat>
@@ -13402,7 +13306,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HUNTING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>3</iCombat>
@@ -13479,7 +13382,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HUNTING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>4</iCombat>
@@ -13554,7 +13456,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HUNTING</PrereqTech>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>4</iCombat>
@@ -13799,7 +13700,6 @@
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <BonusType>BONUS_IVORY</BonusType>
             <iCost>360</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>13</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13870,7 +13770,6 @@
             </UnitAIs>
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -13932,7 +13831,6 @@
             </UnitAIs>
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14001,7 +13899,6 @@
             </UnitAIs>
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14062,7 +13959,6 @@
             </UnitAIs>
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14279,7 +14175,6 @@
             <PrereqBuilding>BUILDING_STABLE</PrereqBuilding>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14335,7 +14230,6 @@
             </UnitAIs>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14406,7 +14300,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14492,7 +14385,6 @@
             <PrereqBuilding>BUILDING_STABLE</PrereqBuilding>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14562,7 +14454,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14620,7 +14511,6 @@
             <PrereqBuilding>BUILDING_SIEGE_WORKSHOP</PrereqBuilding>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -14947,7 +14837,6 @@
                 </Flavor>
             </Flavors>
             <iCost>60</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -15283,7 +15172,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BOWYERS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -15353,7 +15241,6 @@
             <PrereqBuilding>BUILDING_SCULPTORS_STUDIO</PrereqBuilding>
             <PrereqTech>TECH_ENGINEERING</PrereqTech>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -15436,7 +15323,6 @@
             </UnitAIs>
             <PrereqTech>TECH_BOWYERS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -15620,7 +15506,6 @@
             <PrereqBuilding>BUILDING_ASYLUM</PrereqBuilding>
             <PrereqTech>TECH_MIND_STAPLING</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -15776,7 +15661,6 @@
                 </Flavor>
             </Flavors>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>4</iCombat>
@@ -15941,7 +15825,6 @@
                 </Flavor>
             </Flavors>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>4</iCombat>
@@ -16102,7 +15985,6 @@
                 </Flavor>
             </Flavors>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iWorkRate>300</iWorkRate>
             <iCombat>4</iCombat>
@@ -16255,7 +16137,6 @@
             </TechTypes>
             <BonusType>BONUS_GUNPOWDER</BonusType>
             <iCost>225</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>5</iMoves>
             <iCombat>13</iCombat>
@@ -16620,7 +16501,6 @@
             </UnitAIs>
             <PrereqTech>TECH_PRECISION</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -17486,7 +17366,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>32</iXPValueAttack>
@@ -17584,7 +17463,6 @@
                 </Flavor>
             </Flavors>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -17741,7 +17619,6 @@
             <PrereqReligion>RELIGION_COUNCIL_OF_ESUS</PrereqReligion>
             <PrereqTech>TECH_BOWYERS</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -17820,7 +17697,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>0</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -17959,7 +17835,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>11</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18058,7 +17933,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18119,7 +17993,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MITHRIL_WEAPONS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>13</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18191,7 +18064,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MITHRIL_WEAPONS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18249,7 +18121,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MITHRIL_WEAPONS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>14</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18318,7 +18189,6 @@
             </UnitAIs>
             <PrereqTech>TECH_MITHRIL_WEAPONS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18472,7 +18342,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18581,7 +18450,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18690,7 +18558,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18805,7 +18672,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -18924,7 +18790,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -19037,7 +18902,6 @@
             </Flavors>
             <iAIWeight>25</iAIWeight>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -19110,7 +18974,6 @@
                 </UnitClassUpgrade>
             </UnitClassUpgrades>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -19218,7 +19081,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>100</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>4</iMoves>
             <iCombat>8</iCombat>
@@ -19294,7 +19156,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>100</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>4</iMoves>
             <iCombat>8</iCombat>
@@ -19606,7 +19467,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>300</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>3</iMoves>
             <iCombat>3</iCombat>
@@ -19675,7 +19535,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>225</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>3</iMoves>
             <iCombat>9</iCombat>
@@ -19749,7 +19608,6 @@
             <PrereqReligion>RELIGION_THE_EMPYREAN</PrereqReligion>
             <PrereqTech>TECH_HONOR</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>4</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -19821,7 +19679,6 @@
             <PrereqBuilding>BUILDING_CARNIVAL</PrereqBuilding>
             <PrereqTech>TECH_ANIMAL_HANDLING</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>6</iCombat>
@@ -19886,7 +19743,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ANIMAL_HANDLING</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>7</iCombat>
@@ -19964,7 +19820,6 @@
             </UnitAIs>
             <PrereqTech>TECH_ANIMAL_HANDLING</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>200</iWorkRate>
             <iCombat>7</iCombat>
@@ -20108,7 +19963,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -20311,7 +20165,6 @@
             </UnitAIs>
             <PrereqTech>TECH_WARHORSES</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -20788,7 +20641,6 @@
             <PrereqReligion>RELIGION_FELLOWSHIP_OF_LEAVES</PrereqReligion>
             <PrereqTech>TECH_ANIMAL_HANDLING</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21079,7 +20931,6 @@
                 </UnitAI>
             </NotUnitAIs>
             <iCost>15</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21140,7 +20991,6 @@
                 </UnitAI>
             </NotUnitAIs>
             <iCost>-1</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21221,7 +21071,6 @@
                 </UnitAI>
             </NotUnitAIs>
             <iCost>25</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>2</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21326,7 +21175,6 @@
             </UnitAIs>
             <PrereqTech>TECH_RAGE</PrereqTech>
             <iCost>0</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21412,7 +21260,6 @@
                 </ProductionTrait>
             </ProductionTraits>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iAdvancedStartCostIncrease>50</iAdvancedStartCostIncrease>
             <iMoves>2</iMoves>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21579,7 +21426,6 @@
             <PrereqReligion>RELIGION_COUNCIL_OF_ESUS</PrereqReligion>
             <PrereqTech>TECH_GUILDS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21658,7 +21504,6 @@
             <PrereqReligion>RELIGION_COUNCIL_OF_ESUS</PrereqReligion>
             <PrereqTech>TECH_GUILDS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21743,7 +21588,6 @@
             <PrereqReligion>RELIGION_COUNCIL_OF_ESUS</PrereqReligion>
             <PrereqTech>TECH_GUILDS</PrereqTech>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>8</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -21827,7 +21671,6 @@
                     <BonusType>NONE</BonusType>
             </PrereqBonuses>
             <iCost>240</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>9</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -22412,7 +22255,6 @@
             <PrereqBuilding>BUILDING_TEMPLE_OF_THE_OVERLORDS</PrereqBuilding>
             <PrereqTech>TECH_FANATICISM</PrereqTech>
             <iCost>120</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>5</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -22700,7 +22542,6 @@
             <bIgnoreBuildingDefense>1</bIgnoreBuildingDefense>
             <PrereqTech>TECH_BLASTING_POWDER</PrereqTech>
             <iCost>180</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -22922,7 +22763,6 @@
                     <PrereqTech>TECH_BRONZE_WORKING</PrereqTech>
             </TechTypes>
             <iCost>75</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMinAreaSize>20</iMinAreaSize>
             <iMoves>3</iMoves>
             <TerrainImpassables>
@@ -22970,7 +22810,6 @@
             <bPillage>1</bPillage>
             <PrereqTech>TECH_TRADE</PrereqTech>
             <iCost>150</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>3</iMoves>
             <iCombat>12</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23109,7 +22948,6 @@
             </UnitAIs>
             <PrereqTech>TECH_DIVINE_ESSENCE</PrereqTech>
             <iCost>10</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>6</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23181,7 +23019,6 @@
             </UnitAIs>
             <PrereqTech>TECH_HORSEBACK_RIDING</PrereqTech>
             <iCost>90</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iCombat>7</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23306,7 +23143,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>25</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23374,7 +23210,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>25</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23441,7 +23276,6 @@
                 </UnitAI>
             </UnitAIs>
             <iCost>25</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>1</iMoves>
             <iCombat>3</iCombat>
             <iXPValueAttack>8</iXPValueAttack>
@@ -23843,7 +23677,6 @@
             </Builds>
             <PrereqTech>TECH_FISHING</PrereqTech>
             <iCost>30</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <TerrainImpassables>
@@ -23948,7 +23781,6 @@
                 </Build>
             </Builds>
             <iCost>100</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>150</iWorkRate>
             <iXPValueAttack>8</iXPValueAttack>
@@ -24058,7 +23890,6 @@
                 </Build>
             </Builds>
             <iCost>75</iCost>
-            <iAdvancedStartCost>100</iAdvancedStartCost>
             <iMoves>2</iMoves>
             <iWorkRate>100</iWorkRate>
             <iXPValueAttack>8</iXPValueAttack>
