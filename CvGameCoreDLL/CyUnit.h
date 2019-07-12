@@ -362,6 +362,7 @@ public:
 	bool isPromotionReady();
 	void setPromotionReady(bool bNewValue);
 	void setBlockading(bool bNewValue);
+	bool isBlockading() const; // exposed 07/2019 lfgr
 	int getOwner();
 	int getVisualOwner();
 	int getCombatOwner(int /* TeamTypes*/ iForTeam);

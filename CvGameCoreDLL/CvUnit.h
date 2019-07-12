@@ -644,7 +644,7 @@ public:
 	DllExport bool isInfoBarDirty() const;
 	DllExport void setInfoBarDirty(bool bNewValue);
 
-	bool isBlockading() const;
+	bool isBlockading() const; // Exposed to Python 07/2019 lfgr
 	void setBlockading(bool bNewValue);        //Exposed to Python
 	void collectBlockadeGold();
 

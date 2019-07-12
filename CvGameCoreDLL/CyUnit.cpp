@@ -1489,6 +1489,11 @@ void CyUnit::setBlockading(bool bNewValue)
 		m_pUnit->setBlockading(bNewValue);
 }
 
+// exposed 07/2019 lfgr
+bool CyUnit::isBlockading() const {
+	return m_pUnit && m_pUnit->isBlockading();
+}
+
 int CyUnit::getOwner()
 {
 	return m_pUnit ? m_pUnit->getOwnerINLINE() : -1;
