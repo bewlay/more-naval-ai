@@ -1038,6 +1038,11 @@ public:
 	void changeUpgradeOutsideBorders(int iNewValue);
 	// End MNAI
 
+	// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+	bool isPromotionImmune( PromotionTypes ePromotion ) const;
+	void changePromotionImmune( PromotionTypes ePromotion, int iChange );
+	// XML_LISTS end
+
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
 //FfH: End Add
 
@@ -1213,6 +1218,8 @@ protected:
 	int* m_paiExtraFeatureAttackPercent;
 	int* m_paiExtraFeatureDefensePercent;
 	int* m_paiExtraUnitCombatModifier;
+
+	int* m_paiPromotionImmune; // XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
 
 	bool canAdvance(const CvPlot* pPlot, int iThreshold) const;
 	void collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit = NULL);

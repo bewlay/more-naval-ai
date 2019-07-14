@@ -928,6 +928,12 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 		for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 		{
+			// XML_LISTS 07/2019 lfgr
+			if( pUnit->isPromotionImmune( (PromotionTypes) iI ) ) {
+				szTempBuffer = GC.getPromotionInfo( (PromotionTypes) iI ).getDescription();
+				aszPromotionImmune.push_back(szTempBuffer);
+			}
+			// XML_LISTS end
 			if (pUnit->isHasPromotion((PromotionTypes) iI))
 			{
 				if (GC.getPromotionInfo((PromotionTypes) iI).getBetrayalChance() != 0)
@@ -940,25 +946,6 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				{
 					szTempBuffer = GC.getPromotionInfo(ePromotionRandomApply).getDescription();
 					aszPromotionRandomApply.push_back(szTempBuffer);
-				}
-
-				const PromotionTypes ePromotionImmune1 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune1();
-				if (ePromotionImmune1 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune1).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
-				}
-				const PromotionTypes ePromotionImmune2 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune2();
-				if (ePromotionImmune2 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune2).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
-				}
-				const PromotionTypes ePromotionImmune3 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune3();
-				if (ePromotionImmune3 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune3).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
 				}
 
 				const PromotionTypes ePromotionSummonPerk = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionSummonPerk();
@@ -9596,21 +9583,15 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE_TO_FEAR_PEDIA"));
     }
-    if (kPromotionInfo.getPromotionImmune1() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune1()).getDescription()));
-    }
-    if (kPromotionInfo.getPromotionImmune2() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune2()).getDescription()));
-    }
-    if (kPromotionInfo.getPromotionImmune3() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune3()).getDescription()));
-    }
+	// XML_LISTS 07/2019 lfgr
+	for( int eImmunePromotion = 0; eImmunePromotion < GC.getNumPromotionInfos(); eImmunePromotion++ ) {
+		if( kPromotionInfo.isPromotionImmune( eImmunePromotion ) ) {
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE",
+					GC.getPromotionInfo((PromotionTypes) eImmunePromotion).getDescription()));
+		}
+	}
+	// XML_LISTS end
     if (kPromotionInfo.isInvisible())
     {
         szBuffer.append(pcNewline);

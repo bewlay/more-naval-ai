@@ -1901,9 +1901,6 @@ m_iSpellDamageModify(0),
 m_iWorkRateModify(0),
 m_iCaptureUnitCombat(NO_UNITCOMBAT),
 m_iPromotionCombatApply(NO_PROMOTION),
-m_iPromotionImmune1(NO_PROMOTION),
-m_iPromotionImmune2(NO_PROMOTION),
-m_iPromotionImmune3(NO_PROMOTION),
 m_iPromotionRandomApply(NO_PROMOTION),
 m_iPromotionSummonPerk(NO_PROMOTION),
 m_iBonusPrereq(NO_BONUS),
@@ -1918,6 +1915,7 @@ m_piBonusAffinity(NULL),
 m_piDamageTypeCombat(NULL),
 m_piDamageTypeResist(NULL),
 //FfH: End Add
+m_pbPromotionImmune(NULL), // XML_LISTS 07/2019 lfgr
 
 // MNAI - additional promotion tags
 m_bAllowsMoveImpassable(false),
@@ -1956,6 +1954,8 @@ CvPromotionInfo::~CvPromotionInfo()
 	SAFE_DELETE_ARRAY(m_pbTerrainDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbFeatureDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbUnitCombat);
+	
+	SAFE_DELETE_ARRAY(m_pbPromotionImmune); // XML_LISTS 07/2019 lfgr
 }
 
 int CvPromotionInfo::getLayerAnimationPath() const
@@ -2499,21 +2499,6 @@ int CvPromotionInfo::getPromotionCombatApply() const
 	return m_iPromotionCombatApply;
 }
 
-int CvPromotionInfo::getPromotionImmune1() const
-{
-	return m_iPromotionImmune1;
-}
-
-int CvPromotionInfo::getPromotionImmune2() const
-{
-	return m_iPromotionImmune2;
-}
-
-int CvPromotionInfo::getPromotionImmune3() const
-{
-	return m_iPromotionImmune3;
-}
-
 int CvPromotionInfo::getPromotionRandomApply() const
 {
 	return m_iPromotionRandomApply;
@@ -2682,6 +2667,13 @@ bool CvPromotionInfo::getUnitCombat(int i) const
 	return m_pbUnitCombat ? m_pbUnitCombat[i] : false;
 }
 
+// XML_LISTS 07/2019 lfgr
+bool CvPromotionInfo::isPromotionImmune( int /*PromotionTypes*/ ePromotion ) {
+	FAssertMsg(ePromotion < GC.getNumPromotionInfos(), "Index out of bounds");
+	FAssertMsg(ePromotion > -1, "Index out of bounds");
+	return m_pbPromotionImmune ? m_pbPromotionImmune[ePromotion] : false;
+}
+
 void CvPromotionInfo::read(FDataStreamBase* stream)
 {
 	CvHotkeyInfo::read(stream);
@@ -2797,9 +2789,6 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iWorkRateModify);
 	stream->Read(&m_iCaptureUnitCombat);
 	stream->Read(&m_iPromotionCombatApply);
-	stream->Read(&m_iPromotionImmune1);
-	stream->Read(&m_iPromotionImmune2);
-	stream->Read(&m_iPromotionImmune3);
 	stream->Read(&m_iPromotionRandomApply);
 	stream->Read(&m_iPromotionSummonPerk);
 	stream->Read(&m_iBonusPrereq);
@@ -2871,6 +2860,8 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_pbUnitCombat);
 	m_pbUnitCombat = new bool[GC.getNumUnitCombatInfos()];
 	stream->Read(GC.getNumUnitCombatInfos(), m_pbUnitCombat);
+
+	// XML_LISTS: reading/writing from cache not supported
 }
 
 void CvPromotionInfo::write(FDataStreamBase* stream)
@@ -2988,9 +2979,6 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iWorkRateModify);
 	stream->Write(m_iCaptureUnitCombat);
 	stream->Write(m_iPromotionCombatApply);
-	stream->Write(m_iPromotionImmune1);
-	stream->Write(m_iPromotionImmune2);
-	stream->Write(m_iPromotionImmune3);
 	stream->Write(m_iPromotionRandomApply);
 	stream->Write(m_iPromotionSummonPerk);
 	stream->Write(m_iBonusPrereq);
@@ -3027,6 +3015,8 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumTerrainInfos(), m_pbTerrainDoubleMove);
 	stream->Write(GC.getNumFeatureInfos(), m_pbFeatureDoubleMove);
 	stream->Write(GC.getNumUnitCombatInfos(), m_pbUnitCombat);
+
+	// XML_LISTS: reading/writing from cache not supported
 }
 
 bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
@@ -3197,15 +3187,19 @@ bool CvPromotionInfo::readPass2(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "PromotionPrereqOr2");
 	m_iPrereqOrPromotion2 = GC.getInfoTypeForString(szTextVal);
 
+	// XML_LISTS 07/2019 lfgr
+	pXML->SetVariableList( &m_pbPromotionImmune, "PromotionImmunes", GC.getNumPromotionInfos() );
+	// XML_LISTS end
+
 //FfH: Modified by Kael 02/24/2008
 	pXML->GetChildXmlValByName(szTextVal, "PromotionCombatApply");
 	m_iPromotionCombatApply = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune1");
-	m_iPromotionImmune1 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune2");
-	m_iPromotionImmune2 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune3");
-	m_iPromotionImmune3 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionRandomApply");
 	m_iPromotionRandomApply = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PromotionSummonPerk");

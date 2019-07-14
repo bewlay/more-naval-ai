@@ -65,6 +65,8 @@ CvUnit::CvUnit()
 	m_paiExtraFeatureDefensePercent = NULL;
 	m_paiExtraUnitCombatModifier = NULL;
 
+	m_paiPromotionImmune = NULL; // XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+
 	CvDLLEntity::createUnitEntity(this);		// create and attach entity to unit
 
 	reset(0, NO_UNIT, NO_PLAYER, true);
@@ -364,6 +366,8 @@ void CvUnit::uninit()
 	SAFE_DELETE_ARRAY(m_paiExtraFeatureAttackPercent);
 	SAFE_DELETE_ARRAY(m_paiExtraFeatureDefensePercent);
 	SAFE_DELETE_ARRAY(m_paiExtraUnitCombatModifier);
+
+	SAFE_DELETE_ARRAY(m_paiPromotionImmune);// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
 }
 
 
@@ -541,6 +545,14 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
             m_paiBonusAffinity[iI] = 0;
             m_paiBonusAffinityAmount[iI] = 0;
         }
+		
+		// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+		m_paiPromotionImmune = new int[GC.getNumPromotionInfos()];
+        for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+        {
+            m_paiPromotionImmune[iI] = 0;
+        }
+		// XML_LISTS end
 	}
 //FfH: End Add
 	m_combatUnit.reset();
@@ -14372,24 +14384,13 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 	        return false;
 	    }
 	}
-    for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-    {
-        if (isHasPromotion((PromotionTypes)iI))
-        {
-            if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune1() == ePromotion)
-            {
-                return false;
-            }
-            if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune2() == ePromotion)
-            {
-                return false;
-            }
-            if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune3() == ePromotion)
-            {
-                return false;
-            }
-        }
-    }
+
+	// XML_LISTS 07/2019 lfgr
+	if( isPromotionImmune( ePromotion ) ) {
+		return false;
+	}
+	// XML_LISTS end
+
 	if (kPromotion.isPrereqAlive())
 	{
 	    if (!isAlive())
@@ -14505,24 +14506,12 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 //FfH: Added by Kael 07/28/2008
     if (bNewValue)
     {
-        for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-        {
-            if (isHasPromotion((PromotionTypes)iI))
-            {
-                if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune1() == eIndex)
-                {
-                    return;
-                }
-                if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune2() == eIndex)
-                {
-                    return;
-                }
-                if (GC.getPromotionInfo((PromotionTypes)iI).getPromotionImmune3() == eIndex)
-                {
-                    return;
-                }
-            }
-        }
+		// XML_LISTS 07/2019 lfgr
+		// lfgr_todo: Maybe remove this
+		if( isPromotionImmune( eIndex ) ) {
+			return;
+		}
+		// XML_LISTS end
     }
 //FfH: End Add
 
@@ -14652,6 +14641,12 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue)
 		changeGiftingBlocked((kPromotionInfo.isBlocksGifting()) ? iChange : 0);
 		changeUpgradeOutsideBorders((kPromotionInfo.isUpgradeOutsideBorders()) ? iChange : 0);
 		// End MNAI
+		
+		// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+		for( int ePromotion = 0; ePromotion < GC.getNumPromotionInfos(); ePromotion++ ) {
+			changePromotionImmune( (PromotionTypes) ePromotion, kPromotionInfo.isPromotionImmune( ePromotion ) ? iChange : 0);
+		}
+		// XML_LISTS end
 
 		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
 		{
@@ -20063,6 +20058,22 @@ void CvUnit::changeUpgradeOutsideBorders(int iNewValue)
     }
 }
 // End MNAI
+
+// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+bool CvUnit::isPromotionImmune( PromotionTypes ePromotion ) const
+{
+    FAssertMsg(ePromotion >= 0, "Index out of bounds");
+    FAssertMsg(ePromotion < GC.getNumPromotionInfos(), "Index out of bounds");
+	return m_paiPromotionImmune[ePromotion] > 0;
+}
+
+void CvUnit::changePromotionImmune( PromotionTypes ePromotion, int iChange )
+{
+    FAssertMsg(ePromotion >= 0, "Index out of bounds");
+    FAssertMsg(ePromotion < GC.getNumPromotionInfos(), "Index out of bounds");
+	m_paiPromotionImmune[ePromotion] += iChange;
+}
+// XML_LISTS end
 
 void CvUnit::read(FDataStreamBase* pStream)
 {

@@ -3050,6 +3050,45 @@ void CvXMLLoadUtility::SetVariableListTagPair(CvString **ppszList, const TCHAR* 
 	}
 }
 
+// XML_LISTS 07/2019 lfgr
+// Loads a list of type strings into a bool array.
+void CvXMLLoadUtility::SetVariableList( bool **ppbList, const TCHAR* szRootagName, int iInfoBaseLength, bool bDefaultListVal )
+{
+	CvString szTextVal;
+
+	*ppbList = new bool[iInfoBaseLength];
+	for( int i = 0; i < iInfoBaseLength; i++ )
+		(*ppbList)[i] = bDefaultListVal;
+
+	if( gDLL->getXMLIFace()->SetToChildByTagName( GetXML(), szRootagName ) )
+	{
+		if( SkipToNextVal() )
+		{
+			int iNumSibs = gDLL->getXMLIFace()->GetNumChildren( GetXML() );
+
+			if( 0 < iNumSibs )
+			{
+				if( GetChildXmlVal( szTextVal ) )
+				{
+					for( int i = 0; i < iNumSibs; i++ )
+					{
+						int eValue = FindInInfoClass( szTextVal );
+						if( eValue > -1 && eValue < iInfoBaseLength )
+							(*ppbList)[eValue] = true;
+						if( !GetNextXmlVal( szTextVal ) )
+							break;
+					}
+
+					gDLL->getXMLIFace()->SetToParent( GetXML() );
+				}
+			}
+		}
+
+		gDLL->getXMLIFace()->SetToParent( GetXML() );
+	}
+}
+// XML_LISTS end
+
 DllExport bool CvXMLLoadUtility::LoadPlayerOptions()
 {
 	if (!CreateFXml())
