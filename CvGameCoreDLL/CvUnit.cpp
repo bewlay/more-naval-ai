@@ -20261,6 +20261,8 @@ void CvUnit::read(FDataStreamBase* pStream)
 	pStream->Read(GC.getNumFeatureInfos(), m_paiExtraFeatureAttackPercent);
 	pStream->Read(GC.getNumFeatureInfos(), m_paiExtraFeatureDefensePercent);
 	pStream->Read(GC.getNumUnitCombatInfos(), m_paiExtraUnitCombatModifier);
+	
+	pStream->Read(GC.getNumPromotionInfos(), m_paiPromotionImmune); // XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
 }
 
 
@@ -20437,6 +20439,8 @@ void CvUnit::write(FDataStreamBase* pStream)
 	pStream->Write(GC.getNumFeatureInfos(), m_paiExtraFeatureAttackPercent);
 	pStream->Write(GC.getNumFeatureInfos(), m_paiExtraFeatureDefensePercent);
 	pStream->Write(GC.getNumUnitCombatInfos(), m_paiExtraUnitCombatModifier);
+
+	pStream->Write(GC.getNumPromotionInfos(), m_paiPromotionImmune); // XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
 }
 
 // Protected Functions...
