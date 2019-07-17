@@ -3582,12 +3582,18 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	{
 		iValue += (bDefensive ? 400 : 200);
 	}
+	
+	if( getNumCities() > 0 ) {
+		// lfgr_todo: cache
+		int iNormalChokeCanalValue = GC.getDefineINT( "SUPER_FORTS_AI_CHOKE_CANAL_CITY_FOUND_VALUE", 5 );
+		int iDefensiveChokeCanalValue = GC.getDefineINT( "SUPER_FORTS_AI_CHOKE_CANAE_CITY_FOUND_VALUE_DEFENSIVE", 7 );
+		int iChokeCanalValueCap = GC.getDefineINT( "SUPER_FORTS_AI_MAX_CONSIDERED_CHOKE_CANAL_VALUE_FOR_FOUNDING", 100 );
 
-	iValue += AI_getPlotCanalValue(pPlot) * ((getNumCities() > 0) ? 25 : 10);
+		// Cap choke/canal value by 100 to avoid going overboard with the choke point cities
+		int iChokeCanalValue = std::min( iChokeCanalValueCap,
+				std::max( AI_getPlotCanalValue(pPlot), AI_getPlotChokeValue(pPlot) ) );
 
-	if (getNumCities() > 0 && AI_getPlotCanalValue(pPlot) == 0) // Canal points are often also choke points so dont double up the value here
-	{
-		iValue += AI_getPlotChokeValue(pPlot) * (bDefensive ? 25 : 10);
+		iValue += iChokeCanalValue * (bDefensive ? iDefensiveChokeCanalValue : iNormalChokeCanalValue);
 	}
 
 	if (pPlot->isRiver())
