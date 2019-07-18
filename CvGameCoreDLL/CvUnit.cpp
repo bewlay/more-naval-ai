@@ -16721,21 +16721,21 @@ bool CvUnit::canAddPromotion(int spell)
     {
         if (ePromotion1 != NO_PROMOTION)
         {
-            if (!isHasPromotion(ePromotion1))
+			if (!isHasPromotion(ePromotion1) && !isPromotionImmune(ePromotion1))
             {
                 return true;
             }
         }
         if (ePromotion2 != NO_PROMOTION)
         {
-            if (!isHasPromotion(ePromotion2))
+            if (!isHasPromotion(ePromotion2) && !isPromotionImmune(ePromotion2))
             {
                 return true;
             }
         }
         if (ePromotion3 != NO_PROMOTION)
         {
-            if (!isHasPromotion(ePromotion3))
+            if (!isHasPromotion(ePromotion3) && !isPromotionImmune(ePromotion3))
             {
                 return true;
             }
@@ -16765,7 +16765,8 @@ bool CvUnit::canAddPromotion(int spell)
                             {
                                 if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
                                 {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion1))
+                                    if (!pLoopUnit->isHasPromotion(ePromotion1)
+											&& !pLoopUnit->isPromotionImmune(ePromotion1))
                                     {
                                         return true;
                                     }
@@ -16778,7 +16779,8 @@ bool CvUnit::canAddPromotion(int spell)
                             {
                                 if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
                                 {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion2))
+                                    if (!pLoopUnit->isHasPromotion(ePromotion2)
+											&& !pLoopUnit->isPromotionImmune(ePromotion2))
                                     {
                                         return true;
                                     }
@@ -16791,7 +16793,8 @@ bool CvUnit::canAddPromotion(int spell)
                             {
                                 if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
                                 {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion3))
+                                    if (!pLoopUnit->isHasPromotion(ePromotion3)
+											&& !pLoopUnit->isPromotionImmune(ePromotion3))
                                     {
                                         return true;
                                     }
