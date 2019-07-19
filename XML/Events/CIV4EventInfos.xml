@@ -12399,7 +12399,7 @@
             <PythonCallback></PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo></PythonCanDo>
-            <PythonHelp>getHelpFarmBandit2</PythonHelp>
+            <PythonHelp></PythonHelp>
             <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
             <iAIValue>200</iAIValue>
             <iCrime>0</iCrime>
@@ -17197,7 +17197,7 @@
             </EventTimes>
             <ClearEvents>
             </ClearEvents>
-            <PythonCallback>applyHeresy2</PythonCallback>
+            <PythonCallback></PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo></PythonCanDo>
             <PythonHelp></PythonHelp>
@@ -37556,7 +37556,7 @@
             </EventTimes>
             <ClearEvents>
             </ClearEvents>
-            <PythonCallback>applyTowerShield</PythonCallback>
+            <PythonCallback></PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo></PythonCanDo>
             <PythonHelp></PythonHelp>
@@ -46315,7 +46315,7 @@
             </EventTimes>
             <ClearEvents>
             </ClearEvents>
-            <PythonCallback>applyWBSplinteredCourtDefeatedAmelanchier3</PythonCallback>
+            <PythonCallback>applyWBSplinteredCourtDefeatedThessa3</PythonCallback>
             <PythonExpireCheck></PythonExpireCheck>
             <PythonCanDo></PythonCanDo>
             <PythonHelp></PythonHelp>
