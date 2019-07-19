@@ -1012,5 +1012,12 @@
 		<DefineName>CAN_TRADE_WAR_REPARATIONS</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
-<!--  Advanced Diplomacy -->
+<!--  Advanced Diplomacy end -->
+	<!-- Enables the custom profiler even if profiling wasn't enabled via the in-game
+		debug menu (Ctrl-D). Only works if the DLL was compiled with /DCUSTOM_PROFILER.
+		See doc/custom_profiler.md for more information. -->
+	<Define>
+		<DefineName>FORCE_ENABLE_CUSTOM_PROFILER</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
 </Civ4Defines>
