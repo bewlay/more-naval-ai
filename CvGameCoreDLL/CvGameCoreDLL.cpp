@@ -2,7 +2,7 @@
 
 #include "CvGameCoreDLLUndefNew.h"
 
-#include <algorithm>
+#include <algorithm> // CUSTOM_PROFILER
 #include <new>
 
 #include "CvGlobals.h"
@@ -147,19 +147,13 @@ namespace custom_profiler
 	std::map<std::string, ProfileSample*> samples;
 	LARGE_INTEGER measurementFreq;
 
-	// Called when a sample is created
-	void registerSample( ProfileSample* pSample )
-	{
-		samples[std::string( pSample->Name )] = pSample;
-	}
-
 	// Start measurement for with the sample
 	void beginSample( ProfileSample* pSample )
 	{
-		// TODO: performance hit to large?
-		if( samples.find( std::string( pSample->Name ) ) == samples.end() )
+		if( ! pSample->bRegistered )
 		{
-			registerSample( pSample );
+			samples[std::string( pSample->Name )] = pSample;
+			pSample->bRegistered = true;
 		}
 
 		pSample->ProfileInstances++;

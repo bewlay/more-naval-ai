@@ -22,7 +22,6 @@
 #ifdef CUSTOM_PROFILER
 namespace custom_profiler
 {
-	void registerSample( ProfileSample* pSample );
 	void beginSample( ProfileSample* pSample );
 	void endSample( ProfileSample* pSample );
 }
@@ -34,7 +33,9 @@ struct ProfileSample
 {
 	ProfileSample(char *name) {
 		strcpy(Name, name);
-#ifndef CUSTOM_PROFILER
+#ifdef CUSTOM_PROFILER
+		bRegistered = false;
+#else
 		Added=false;
 		Parent=-1;
 #endif
@@ -45,8 +46,9 @@ struct ProfileSample
 	unsigned int	ProfileInstances;		// # of times ProfileBegin Called
 	int				OpenProfiles;			// # of time ProfileBegin called w/o ProfileEnd
 #ifdef CUSTOM_PROFILER
-	LONGLONG StartTime;
-	LONGLONG Accumulator;
+	LONGLONG StartTime; // The current open profile start time
+	LONGLONG Accumulator; // All samples this frame added together
+	bool bRegistered; // True if this sample is registered at the profiler
 #else
 	double			StartTime;				// The current open profile start time
 	double			Accumulator;			// All samples this frame added together
