@@ -21128,9 +21128,18 @@ bool CvUnitAI::AI_irrigateTerritory()
 	return false;
 }
 
+
+// Tries to build a fort. Only in own territory if SuperForts/AdvancedTactics isn't enabled.
+// Returns true if a mission was pushed.
 bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 {
 	PROFILE_FUNC();
+	
+	// lfgr 07/2019: Barbarians don't build forts
+	if( GET_PLAYER(getOwnerINLINE()).isBarbarian() ) {
+		return false;
+	}
+	// lfgr end
 
 	int iBestValue = 0;
 	BuildTypes eBestBuild = NO_BUILD;
