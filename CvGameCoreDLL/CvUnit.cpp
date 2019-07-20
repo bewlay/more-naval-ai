@@ -1179,8 +1179,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 		{
 			CvUnit* pkCapturedUnit = GET_PLAYER(eCapturingPlayer).initUnit(eCaptureUnitType, pPlot->getX_INLINE(), pPlot->getY_INLINE());
 
-//FfH: Added by Kael 08/18/2008
-            if (pkCapturedUnit->getRace() != NO_PROMOTION)
+//FfH: Added by Kael 08/18/2008; LFGR_TODO: move into pkCaptureUnit != NULL ?
+            if (pkCapturedUnit->getRace() != NO_PROMOTION) // LFGR_TODO: Unnecessary?
             {
                 pkCapturedUnit->setHasPromotion((PromotionTypes)pkCapturedUnit->getRace(), false);
             }

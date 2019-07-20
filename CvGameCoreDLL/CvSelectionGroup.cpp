@@ -4156,7 +4156,6 @@ bool CvSelectionGroup::groupBuild(BuildTypes eBuild)
 // BUG - Pre-Chop - start
 			if (bCheckChop && pPlot->getBuildTurnsLeft(eBuild, getOwnerINLINE()) == 1)
 			{
-				// TODO: stop other worker groups
 				CvCity* pCity;
 				int iProduction = plot()->getFeatureProduction(eBuild, getTeam(), &pCity);
 

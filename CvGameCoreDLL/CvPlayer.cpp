@@ -5430,7 +5430,7 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus, bool bCheckBlockingFeatures) 
 	int iI;
 	//int iLoop;
 
-	// lfgr note: (getCurrentRealEra() < 3) always true in FfH/MNAI. What is this even supposed to do (same in vanilla bts)?
+	// lfgr_todo: (getCurrentRealEra() < 3) always true in FfH/MNAI. What is this even supposed to do (same in vanilla bts)?
     bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentRealEra() < 3);
 	bool bCanWork;
 
