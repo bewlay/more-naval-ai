@@ -633,6 +633,15 @@
 		<Finnish>(Rapidly Worsening)</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_REV_WATCH_THIS_TURN_AND_AFTER_ADJUSTMENTS</Tag>
+		<English>This turn: %D1 (%D2 after game speed adjustments)</English>
+		<French>This turn: %D1 (%D2 after game speed adjustments)</French>
+		<German>Dieser Zug: %D1 (%D2 nach Anpassungen wegen Spielgeschwindigkeit)</German>
+		<Italian>This turn: %D1 (%D2 after game speed adjustments)</Italian>
+		<Spanish>This turn: %D1 (%D2 after game speed adjustments)</Spanish>
+		<Finnish>This turn: %D1 (%D2 after game speed adjustments)</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_POSITIVE</Tag>
 		<English>Good factors:</English>
 		<French>Bon:</French>

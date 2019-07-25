@@ -1025,10 +1025,10 @@ class RevolutionWatchAdvisor:
 			player = city.getOwner()
 			turn = CyGame().getGameTurn()
 			revText = RevInstances.RevolutionInst.updateLocalRevIndices(turn, player, [city], true)
-			revText += "xxx" + RevInstances.RevolutionInst.updateCivStability(turn, player, true, true)
-			revText = revText.strip('\n')
-			revText = revText.replace('\n', ' ')			
-			revText = revText.replace("xxx", "\n")			
+			revText += "\n" + RevInstances.RevolutionInst.updateCivStability(turn, player, true, true)
+			#revText = revText.strip('\n')
+			#while "\n\n" in revText :
+			#	revText.replace( "\n\n", "\n" )
 			screen.attachMultilineText( self.LEGEND_PANEL, "Text", revText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 			if RevUtils.isCanBribeCity(city)[0]:
 				screen.setText(self.REVOLUTION_BRIBE_TEXT, "Background", localText.getText("TXT_ADVISOR_BRIBE",()) + " " + city.getName(), CvUtil.FONT_LEFT_JUSTIFY, self.revBribeTextX, self.revBribeTextY, self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)

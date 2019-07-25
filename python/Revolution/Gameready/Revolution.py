@@ -60,7 +60,6 @@ class Revolution :
 		# Debug settings
 		self.LOG_DEBUG = RevOpt.isRevDebugMode()
 		self.DEBUG_MESS = RevOpt.isShowDebugMessages()
-		self.showRevIndexInPopup = RevOpt.isShowRevIndexInPopup()
 
 		self.maxCivs = RevOpt.getRevMaxCivs()
 		if( self.maxCivs <= 0 ) :
@@ -314,7 +313,7 @@ class Revolution :
 					else :
 						danger += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : danger += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : danger += "  \t(%d)"%(revIdx)
 					danger += "\n"
 				elif( revIdx >= int(math.floor(self.revReadyFrac*self.revInstigatorThreshold + .5)) ) :
 					if( deltaTrend > self.showTrend ) :
@@ -322,7 +321,7 @@ class Revolution :
 					else :
 						warning += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : warning += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : warning += "  \t(%d)"%(revIdx)
 					warning += "\n"
 				else :
 					if( deltaTrend > self.showTrend ) :
@@ -330,7 +329,7 @@ class Revolution :
 					else :
 						safe += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : safe += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : safe += "  \t(%d)"%(revIdx)
 					safe += "\n"
 
 			# Additions by Caesium et al
@@ -1107,7 +1106,11 @@ class Revolution :
 				pCity.changeReinforcementCounter(-1)
 
 	def updateLocalRevIndices( self, iGameTurn, iPlayer, subCityList = None, bIsRevWatch = False ) :
-		# Updates the revolution effects local to each city
+		"""
+		Updates the revolution effects local to each city
+		If bIsRevWatch, returns a string showing the factors for city stability.
+		If subCityList is not None, only consider the cities in subCityList
+		"""
 
 		pPlayer = gc.getPlayer(iPlayer)
 		if( pPlayer.getNumCities() == 0 ) :
@@ -1143,7 +1146,7 @@ class Revolution :
 		if( subCityList == None ) :
 			cityList = playerPy.getCityList()
 			totalString = localText.getText("TXT_KEY_REV_WATCH_CITY_BY_CITY",())
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				totalString += '  ' + localText.getText("TXT_KEY_REV_WATCH_DEBUG_NOTE",())
 		else :
 			cityList = subCityList
@@ -1186,7 +1189,7 @@ class Revolution :
 
 			culturePercent = 0
 			maxCult = 0
-			maxCultPlayer = -1
+			maxCultPlayer = -1 # Player with highest plot culture
 			for idx in range(0,gc.getMAX_CIV_PLAYERS()) :
 				if( pPlayer.getTeam() == gc.getPlayer(idx).getTeam() ) :
 					culturePercent += pCity.plot().calculateCulturePercent(idx)
@@ -1334,32 +1337,21 @@ class Revolution :
 
 			if( civSizeRawVal > 2.0 ) :
 				locationRevIdx += int(math.floor(2.0*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.5 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.6 ) :
 				locationRevIdx += int(math.floor(1.65*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.6 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.4 ) :
 				locationRevIdx += int(math.floor(1.45*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.7 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.2 ) :
 				locationRevIdx += int(math.floor(1.25*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.8 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.0 ) :
 				locationRevIdx += int(math.floor(cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.9 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > .7 ) :
 				locationRevIdx += int(math.floor(.75*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 2.2 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			else :
 				locationRevIdx += int(math.floor(.5*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 3.0 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
+			
+			if( bIsRevWatch and locationRevIdx != 0 ) :
+				negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 
 			locationRevIdx = int(math.floor( locationRevIdx + .5 ))
 			localRevIdx += locationRevIdx
@@ -1475,11 +1467,11 @@ class Revolution :
 					relGoodIdx = int(math.floor( self.religionModifier*(relGoodIdx) + .5 ))
 					relBadIdx = int(math.floor( self.religionModifier*(relBadIdx) + .5 ))
 
-					if( hasSciMethod ) :
+					if( hasSciMethod ) : # TODO: XMLify
 						relIdx = relIdx/3
 						relGoodIdx /=3
 						relBadIdx /= 3
-					elif( hasLiberalism ) :
+					elif( hasLiberalism ) : # TODO: XMLify
 						relIdx = relIdx/2
 						relGoodIdx /= 2
 						relBadIdx /= 2
@@ -1500,7 +1492,7 @@ class Revolution :
 			cultIdx = int(math.floor( self.cultureRateModifier*cultIdx + .5 ))
 			if( bWarWithMaxCult and not pPlayer.isRebel() ) :
 				cultIdx /= 2
-			if( bIsRevWatch and cultIdx < -1 ) : posList.append( (cultIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
+			if( bIsRevWatch and cultIdx != 0 ) : posList.append( (cultIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
 			localRevIdx += cultIdx
 
 			# Nationality
@@ -1566,7 +1558,7 @@ class Revolution :
 
 			# Garrison
 			garIdx = 0
-			if( hasLiberalism ) :
+			if( hasLiberalism ) : # LFGR_TODO: XMLify
 				garIdx = -int( 2*pow(pCity.plot().getNumDefenders(iPlayer)/2.0, .5) - .5 )
 			else :
 				if( pCity.getBuildingDefense() > 75 ) :
@@ -1579,7 +1571,7 @@ class Revolution :
 			garIdx = int(math.floor( self.garrisonModifier*garIdx + .5 ))
 
 			if( natIdx > 0 ) :
-				garIdx = max([garIdx,-5])
+				garIdx = max([garIdx,-5]) # LFGR_TODO: Make configurable
 			else :
 				garIdx = max([garIdx,-8])
 
@@ -1599,10 +1591,10 @@ class Revolution :
 			if( pCity.getPopulation() < 2 + min([pPlayer.getCurrentRealEra(),3]) ) :
 				if( pCity.isCapital() and pPlayer.getCurrentRealEra() - game.getStartEra() > 2 ) :
 					# To help remove late game tiny civs
-					localRevIdx += 4
+					localRevIdx += 4 # LFGR_TODO?
 				elif( pCity.getHighestPopulation() > 7 ) :
 					# City has starved a lot, don't forgive and forget
-					localRevIdx += 2
+					localRevIdx += 2 # LFGR_TODO?
 				else :
 					# Small cities don't get worked up as quickly
 					if( localRevIdx > 0 ) :
@@ -1688,6 +1680,7 @@ class Revolution :
 
 			# Adjust index accumulation for varying game speeds
 			gameSpeedMod = RevUtils.getGameSpeedMod()
+			iOrigLocalRevIdx = localRevIdx # lfgr: Also show before adjustment
 			localRevIdx = int(math.floor( gameSpeedMod*self.revIdxModifier*localRevIdx + self.revIdxOffset + .5 ))
 
 			if( pPlayer.isHuman() ) :
@@ -1740,7 +1733,7 @@ class Revolution :
 			#if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : RevUtils.computeBribeCosts( pCity, bSilent = False )
 
 			# RevolutionDCM - city advisor text conditioning
-			cityString = '\n\n' + pCity.getName()# + " \t"
+			cityString = pCity.getName()# + " \t"
 			if( revIdx >= self.alwaysViolentThreshold ) :
 				cityString += ':  ' + "<color=230,0,0,255>"   + localText.getText("TXT_KEY_REV_WATCH_DANGER",()) + " " + "<color=255,255,255,255>"
 			elif( revIdx >= self.revInstigatorThreshold ) :
@@ -1751,21 +1744,26 @@ class Revolution :
 			else :
 				#RevolutionDCM - city advisor text conditioning
 				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				cityString += " (%d)"%(revIdx)
 				
 			#RevolutionDCM - city advisor text conditioning
 			cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
-				cityString += " (%d) "%((revIdx - revIdxAvg))
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
+				cityString += " %d "%((revIdx - revIdxAvg))
 			if( (revIdx - revIdxAvg) <= -self.showTrend ) :
 				cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
 			elif( (revIdx - revIdxAvg) > self.showTrend ) :
 				cityString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
 			else :
 				cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( game.isDebugMode() ) :
 				cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
+			
+			# lfgr 07/2019: Show current effects summary
+			if RevOpt.isShowRevIndexInPopup :
+				cityString += "\n" + localText.getText("TXT_KEY_REV_WATCH_THIS_TURN_AND_AFTER_ADJUSTMENTS", (iOrigLocalRevIdx, localRevIdx) )
+			# lfgr end
 
 			# Enable only for debugging rev index histories
 			if( False ) :
@@ -1791,7 +1789,7 @@ class Revolution :
 					else :
 						cityString += "<color=150,230,150,255>"
 					cityString += pos[1]
-					if( self.showRevIndexInPopup or game.isDebugMode() ) :
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(pos[0])
 
 				negList.sort()
@@ -1814,7 +1812,7 @@ class Revolution :
 					else :
 						cityString += "<color=225,150,150,255>"
 					cityString += neg[1]
-					if( self.showRevIndexInPopup or game.isDebugMode() ) :
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(neg[0])
 
 			cityString += "<color=255,255,255,255>"
@@ -1823,7 +1821,10 @@ class Revolution :
 		return totalString
 
 	def updateCivStability( self, iGameTurn, iPlayer, bIsRevWatch = False, bVerbose = False ) :
-		# Update the revolution effects for the entire empire
+		"""
+		Update the revolution effects for the entire empire.
+		If bIsRevWatch, returns a string showing the factors for civ stability.
+		"""
 
 		posList = list()
 		negList = list()
@@ -2029,7 +2030,7 @@ class Revolution :
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE",())
 
-		if( self.showRevIndexInPopup or game.isDebugMode() ) :
+		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 			civString += " (%d)  Net: %d"%(iStablity,civStabilityIdx)
 		#RevolutionDCM - text conditioning
 		civString += "  "
@@ -2041,7 +2042,7 @@ class Revolution :
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 
-		if( self.showRevIndexInPopup or game.isDebugMode() ) :
+		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 			civString += " (%d)"%(iStablity - pPlayer.getStabilityIndexAverage())
 
 		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
@@ -2062,7 +2063,7 @@ class Revolution :
 			else :
 				civString += "<color=150,230,150,255>"
 			civString += pos[1]
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(pos[0])
 
 		civString += "\n<color=255,0,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_NEGATIVE",())
@@ -2084,7 +2085,7 @@ class Revolution :
 			else :
 				civString += "<color=255,150,150,255>"
 			civString += neg[1]
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(neg[0])
 
 		civString += "<color=255,255,255,255>"
