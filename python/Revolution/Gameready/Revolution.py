@@ -1655,26 +1655,17 @@ class Revolution :
 
 			# lfgr start
 			# Crime
-			iMinCityCrime = 20
-			iMaxCityCrime = 100
+			iUsualCityCrime = 20 # This crime level means no stability bonus/malus
+			iCrimeCap = 100 # No crime above this will be counted
 			fCrimeFactor = 0.1
-			iCityCrime = pCity.getCrime()
-			if( iCityCrime >= iMinCityCrime ) :
-				if( iCityCrime > iMaxCityCrime ) :
-					iCityCrime = iMaxCityCrime
-				iRandCrime = game.getSorenRandNum( iMaxCityCrime - iMinCityCrime, "Rev/Crime" )
-				iCrimeFactor = 0
-				if( iRandCrime < iCityCrime ) :
-					iCrimeFactor = ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
-#					localRevIdx += ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
-					localRevIdx += iCrimeFactor
-
-				iAverageRandCrime = ( iMaxCityCrime - iMinCityCrime ) / 2
-				iAverageRevIdxInc = ( pCity.getCrime() - iMinCityCrime - iAverageRandCrime ) * fCrimeFactor
-
-#				negList.append( ( iAverageRevIdxInc, "Crime" ) )
-				if iCrimeFactor > 0:
-					negList.append( ( iCrimeFactor, "Crime" ) )
+			iCityCrime = min( pCity.getCrime(), iCrimeCap )
+			iCrimeIdx = int( ( iCityCrime - iUsualCityCrime ) * fCrimeFactor )
+			if bIsRevWatch :
+				if iCrimeIdx > 0 :
+					negList.append( ( iCrimeIdx, "Crime" ) )
+				elif iCrimeIdx < 0 :
+					posList.append( ( iCrimeIdx, "Low Crime" ) )
+			localRevIdx += iCrimeIdx
 			# lfgr end
 
 
