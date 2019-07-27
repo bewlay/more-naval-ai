@@ -11095,6 +11095,12 @@ void CvPlayer::killGoldenAgeUnits(CvUnit* pUnitAlive)
 		if (pBestUnit != NULL)
 		{
 			pabUnitUsed[pBestUnit->getUnitType()] = true;
+			
+			// lfgr 07/2019: transport units unload cargo when they start a golden age
+			if (pBestUnit->getCargo() > 0)
+			{
+				pBestUnit->unloadAll();
+			}
 
 			pBestUnit->kill(true);
 
