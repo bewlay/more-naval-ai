@@ -2013,3 +2013,11 @@ void CyUnit::joinGroup(CySelectionGroup* pNewGroup)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+
+
+// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+bool CyUnit::isPromotionImmune( int /*PromotionTypes*/ ePromotion ) const
+{
+	return m_pUnit ? m_pUnit->isPromotionImmune( (PromotionTypes) ePromotion ) : false;
+}
+// XML_LISTS end

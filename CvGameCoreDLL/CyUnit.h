@@ -478,6 +478,10 @@ public:
 
 	bool isPermanentSummon() const;
     void setPermanentSummon(bool newvalue);
+	
+	// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+	bool isPromotionImmune( int /*PromotionTypes*/ ePromotion ) const;
+	// XML_LISTS end
 
 	// Python Helper Functions
 

@@ -477,5 +477,9 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("setPermanentSummon", &CyUnit::setPermanentSummon, "void (bool bNewValue)")
 //FfH: End Add
 
+// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+		.def("isPromotionImmune", &CyUnit::isPromotionImmune,
+				"void (PromotionTypes ePromotion) - Whether the unit is immune to the given promotion")
+// XML_LISTS end
 		;
 }
