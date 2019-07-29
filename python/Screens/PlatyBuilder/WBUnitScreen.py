@@ -109,6 +109,8 @@ class WBUnitScreen:
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_PROMOTION_AVATAR", ()), 19, 19, 19 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_SCENARIO_COUNTER_UNIT", ()), 20, 20, 20 == iChangeType)
 		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_FORTIFY_TURNS", ()), 21, 21, 21 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_IGNORE_HIDE", ()), 22, 22, 22 == iChangeType)
+		screen.addPullDownString("ChangeType", CyTranslator().getText("TXT_KEY_WB_BLOCKADING", ()), 23, 23, 23 == iChangeType)
 #Magister Stop
 
 		iX += iWidth/2#Magister		iX += iWidth
@@ -435,6 +437,20 @@ class WBUnitScreen:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		sText = CyTranslator().getText("TXT_KEY_WB_IS_PERMANENT_SUMMON", ())
 		screen.setText("IsPermanentSummon", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 22#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isIgnoreHide():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_IGNORE_HIDE", ())
+		screen.setText("IsIgnoreHide", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
+		iY += 22#Magister
+		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+		if pUnit.isBlockading():
+			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+		sText = CyTranslator().getText("TXT_KEY_WB_BLOCKADING", ())
+		screen.setText("IsBlockading", "Background", "<font=3>" + sColor + sText + "</color></font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		if -1 < pUnit.getScenarioCounter() < gc.getNumUnitInfos():
 			iY += 22
@@ -941,7 +957,7 @@ class WBUnitScreen:
 			if inputClass.getData1() == 1030:
 				pUnit.setLevel(pUnit.getLevel() + iChange)
 			elif inputClass.getData1() == 1031:
-				pUnit.setLevel(max(0, pUnit.getLevel() - iChange))
+				pUnit.setLevel(max(1, pUnit.getLevel() - iChange))
 			self.placeStats()
 
 		elif sName.find("UnitExperience") > -1:
@@ -1090,6 +1106,14 @@ class WBUnitScreen:
 			pUnit.setPermanentSummon(not pUnit.isPermanentSummon())
 			self.placeDirection()
 
+		elif inputClass.getFunctionName() == "IsIgnoreHide":
+			pUnit.setIgnoreHide(not pUnit.isIgnoreHide())
+			self.placeDirection()
+
+		elif inputClass.getFunctionName() == "IsBlockading":
+			pUnit.setBlockading(not pUnit.isBlockading())
+			self.placeDirection()
+
 		elif inputClass.getFunctionName() == "SwitchToAlternateType":
 			self.changeUnitType(pUnit, pUnit.getScenarioCounter(), 1)
 #MagisterModmod werewolf/sluagh stuff does not matter in base MNAI
@@ -1229,6 +1253,8 @@ class WBUnitScreen:
 				pNewUnit.setHasCasted(pUnitX.isHasCasted())
 				pNewUnit.setSummoner(pUnitX.getSummoner())
 				pNewUnit.setPermanentSummon(pUnitX.isPermanentSummon())
+				pNewUnit.setIgnoreHide(pUnitX.isIgnoreHide())
+				pNewUnit.setBlockading(pUnitX.isBlockading())
 				pNewUnit.setReligion(pUnitX.getReligion())
 				pNewUnit.setBaseCombatStrDefense(pUnitX.baseCombatStrDefense())
 				pNewUnit.setUnitArtStyleType(pUnitX.getUnitArtStyleType())
@@ -1297,7 +1323,7 @@ class WBUnitScreen:
 		self.interfaceScreen(pNewUnit)
 
 	def changeUnitType(self, pUnit, iUnitType, iListType):##Magister	def changeUnitType(self, pUnit, iUnitType, bUnitType):
-		if iListType == 1:##Magister 		if bUnitType:
+		if iListType == 1:##Magister		if bUnitType:
 			pNewUnit = gc.getPlayer(pUnit.getOwner()).initUnit(iUnitType, pUnit.getX(), pUnit.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 ##Magister Start
 			pNewUnit.setImmobileTimer(pUnit.getImmobileTimer())
@@ -1389,6 +1415,10 @@ class WBUnitScreen:
 				loopUnit.setScenarioCounter(pUnit.getScenarioCounter())
 			elif iChangeType == 21:
 				loopUnit.setFortifyTurns(pUnit.getFortifyTurns())
+			elif iChangeType == 22:
+				loopUnit.setIgnoreHide(pUnit.isIgnoreHide())
+			elif iChangeType == 23:
+				loopUnit.setBlockading(pUnit.isBlockading())
 #Magister Stop
 
 	def update(self, fDelta):

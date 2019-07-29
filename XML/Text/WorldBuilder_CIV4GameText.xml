@@ -1340,5 +1340,21 @@
 		<Italian>Resolutions</Italian>
 		<Spanish>Resolutions</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_IGNORE_HIDE</Tag>
+		<English>Ignore Hide</English>
+		<French>Ignore Hide</French>
+		<German>Ignore Hide</German>
+		<Italian>Ignore Hide</Italian>
+		<Spanish>Ignore Hide</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_BLOCKADING</Tag>
+		<English>Blockading</English>
+		<French>Blockading</French>
+		<German>Blockading</German>
+		<Italian>Blockading</Italian>
+		<Spanish>Blockading</Spanish>
+	</TEXT>
 
 </Civ4GameText>
