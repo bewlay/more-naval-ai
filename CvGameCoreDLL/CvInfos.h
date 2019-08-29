@@ -848,7 +848,6 @@ public:
 	int getPromotionInStackPrereq() const;
 	int getReligionPrereq() const;
 	int getStateReligionPrereq() const;
-	int getUnitReligionPrereq() const; // MNAI
 	int getTechPrereq() const;
 	int getRange() const;
     int getEffect() const;
