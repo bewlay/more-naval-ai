@@ -1308,13 +1308,13 @@ def spellExploreLair(caster):
 	iDestroyLair = 0
 	if iRnd < 14:
 		iDestroyLair = cf.exploreLairBigBad(caster)
-	if iRnd >= 14 and iRnd < 44:
+	elif iRnd < 44:
 		iDestroyLair = cf.exploreLairBad(caster)
-	if iRnd >= 44 and iRnd < 74:
+	elif iRnd < 74:
 		iDestroyLair = cf.exploreLairNeutral(caster)
-	if iRnd >= 74 and iRnd < 94:
+	elif iRnd < 94:
 		iDestroyLair = cf.exploreLairGood(caster)
-	if iRnd >= 94:
+	else:
 		iDestroyLair = cf.exploreLairBigGood(caster)
 	if iDestroyLair > CyGame().getSorenRandNum(100, "Explore Lair"):
 		CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_LAIR_DESTROYED", ()),'AS2D_POSITIVE_DINK',1,'Art/Interface/Buttons/Spells/Explore Lair.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
