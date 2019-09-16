@@ -6279,9 +6279,10 @@ bool CvUnit::pillage()
 						}
 					}
 
-					if (iCultureChange > iLoopPlayerPlotCulture)
+					// lfgr 09/2019: Cannot reduce culture to 0 (otherwise plot may become unowned)
+					if (iCultureChange >= iLoopPlayerPlotCulture)
 					{
-						iCultureChange = iLoopPlayerPlotCulture;
+						iCultureChange = iLoopPlayerPlotCulture - 1;
 					}
 
 					pPlot->changeCulture((PlayerTypes)iPlayer, -iCultureChange, true);
