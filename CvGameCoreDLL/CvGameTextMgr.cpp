@@ -9732,16 +9732,43 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 
 	CvSpellInfo &kSpellInfo = GC.getSpellInfo(eSpell);
 
+	// +++ Misc (important) +++
+	
     if (kSpellInfo.isGlobal())
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_GLOBAL"));
     }
+    
+    // lfgr 09/2019: Can be casted even after another spell has been casted this turn
+    if (kSpellInfo.isIgnoreHasCasted())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IGNORE_HAS_CASTED"));
+    }
+
+	// +++ Requirements +++
+	
     if (kSpellInfo.isPrereqSlaveTrade())
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_SLAVE_TRADE"));
     }
+    
+    // lfgr 09/2019: Caster must be alive
+    if (kSpellInfo.isCasterMustBeAlive())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_CASTER_ALIVE"));
+    }
+    
+    // lfgr 09/2019: Caster must not be temporary
+    if (kSpellInfo.isCasterNoDuration())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_CASTER_NO_DURATION"));
+    }
+    
     if (kSpellInfo.getCasterMinLevel() != 0)
     {
         szBuffer.append(pcNewline);
@@ -9825,6 +9852,38 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_UNIT_IN_STACK_PREREQ", GC.getUnitInfo((UnitTypes)kSpellInfo.getUnitInStackPrereq()).getDescription()));
     }
+    if (kSpellInfo.isAdjacentToWaterOnly()) // lfgr 09/2019: moved here
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_ADJACENT_TO_WATER_ONLY"));
+    }
+    if (kSpellInfo.isInBordersOnly() && kSpellInfo.isInCityOnly()) // lfgr 09/2019: moved here
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_AND_CITY_ONLY"));
+    }
+    else
+    {
+        if (kSpellInfo.isInBordersOnly())
+        {
+            szBuffer.append(pcNewline);
+            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_ONLY"));
+        }
+        if (kSpellInfo.isInCityOnly())
+        {
+            szBuffer.append(pcNewline);
+            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_CITY_ONLY"));
+        }
+    }
+    
+    // lfgr 09/2019: Requires n+1 pop to remove n pop
+	if( kSpellInfo.getChangePopulation() < 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_PREREQ_POPULATION", 1 - kSpellInfo.getChangePopulation() ) );
+	}
+
+	// +++ Effects +++
+	
     if (kSpellInfo.getCreateUnitType() != NO_UNIT)
     {
         szBuffer.append(pcNewline);
@@ -9993,29 +10052,6 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
             szBuffer.append(gDLL->getText("TXT_KEY_SPELL_RESIST"));
         }
     }
-    if (kSpellInfo.isAdjacentToWaterOnly())
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_ADJACENT_TO_WATER_ONLY"));
-    }
-    if (kSpellInfo.isInBordersOnly() && kSpellInfo.isInCityOnly())
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_AND_CITY_ONLY"));
-    }
-    else
-    {
-        if (kSpellInfo.isInBordersOnly())
-        {
-            szBuffer.append(pcNewline);
-            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_ONLY"));
-        }
-        if (kSpellInfo.isInCityOnly())
-        {
-            szBuffer.append(pcNewline);
-            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_CITY_ONLY"));
-        }
-    }
     if (kSpellInfo.isImmuneTeam() && !kSpellInfo.isImmuneNeutral() && !kSpellInfo.isImmuneEnemy())
     {
         szBuffer.append(pcNewline);
@@ -10098,6 +10134,17 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IMMOBILE_TURNS", kSpellInfo.getImmobileTurns()));
     }
+    
+    // lfgr 09/2019: Adds/removes n pop
+	if( kSpellInfo.getChangePopulation() > 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_ADD_POPULATION", kSpellInfo.getChangePopulation() ) );
+	}
+	else if( kSpellInfo.getChangePopulation() < 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_REMOVE_POPULATION", -kSpellInfo.getChangePopulation() ) );
+	}
+    
 /********************************************************************************/
 /* SpellPyHelp                        11/2013                           lfgr    */
 /********************************************************************************/

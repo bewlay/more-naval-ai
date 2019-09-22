@@ -10,7 +10,6 @@
             <Type>SPELL_ADD_TO_CITY</Type>
             <Description>TXT_KEY_SPELL_ADD_TO_CITY</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
-            <Help>TXT_KEY_SPELL_ADD_TO_CITY_HELP</Help>
             <UnitClassPrereq>UNITCLASS_MANES</UnitClassPrereq>
             <bAllowAI>1</bAllowAI>
             <bInBordersOnly>1</bInBordersOnly>
@@ -499,7 +498,6 @@
             <Type>SPELL_CONSUME_SOUL</Type>
             <Description>TXT_KEY_SPELL_CONSUME_SOUL</Description>
             <Civilopedia>TXT_KEY_SPELL_PLACEHOLDER_PEDIA</Civilopedia>
-            <Help>TXT_KEY_SPELL_CONSUME_SOUL_HELP</Help>
             <UnitPrereq>UNIT_EATER_OF_DREAMS</UnitPrereq>
             <bInBordersOnly>1</bInBordersOnly>
             <bInCityOnly>1</bInCityOnly>
