@@ -7,7 +7,7 @@ import CvScreenEnums
 import CvScreensInterface
 
 # lfgr 09/2019: Full-screen Advisors
-from InterfaceUtils import GenericAdvisor
+from InterfaceUtils import GenericAdvisorScreen
 
 TEXTURE_SIZE = 24
 X_START = 6
@@ -80,7 +80,7 @@ def buildTechPrefsHover(key, lTechs):
 	return szText
 # BUG - GP Tech Prefs - end
 
-class CvTechChooser( GenericAdvisor ) : # lfgr 09/2019: Full-screen Advisors
+class CvTechChooser( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Advisors
 	"Tech Chooser Screen"
 
 	def __init__(self):
@@ -179,6 +179,7 @@ class CvTechChooser( GenericAdvisor ) : # lfgr 09/2019: Full-screen Advisors
 		
 		# Background, header and footer
 		self.addBackgroundHeaderFooter( localText.getText("TXT_KEY_TECH_CHOOSER_TITLE", ()).upper() )
+		self.addExitButton()
 
 		# Make the scrollable area for the city list...
 		if BugOpt.isShowGPTechPrefs():
@@ -201,10 +202,6 @@ class CvTechChooser( GenericAdvisor ) : # lfgr 09/2019: Full-screen Advisors
 		if BugOpt.isShowGPTechPrefs():
 			screen.addPanel("GPTechPref", u"", u"", True, False, 0, 51, 80, yPanelHeight - 95, PanelStyles.PANEL_STYLE_MAIN_WHITE )
 # BUG - GP Tech Prefs - end
-
-		# Add the Highlight
-		#screen.addDDSGFC( "TechHighlight", ArtFileMgr.getInterfaceArtInfo("TECH_HIGHLIGHT").getPath(), 0, 0, self.getXStart() + 6, 12 + ( self.BOX_INCREMENT_HEIGHT * self.PIXEL_INCREMENT ), WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		#screen.hide( "TechHighlight" )
 
 		self.X_SELECT_TAB = 30
 		self.X_TRADE_TAB = 165
