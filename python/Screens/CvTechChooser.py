@@ -6,6 +6,9 @@ import ScreenInput
 import CvScreenEnums
 import CvScreensInterface
 
+# lfgr 09/2019: Full-screen Advisors
+from InterfaceUtils import GenericAdvisor
+
 TEXTURE_SIZE = 24
 X_START = 6
 X_INCREMENT = 27
@@ -77,7 +80,7 @@ def buildTechPrefsHover(key, lTechs):
 	return szText
 # BUG - GP Tech Prefs - end
 
-class CvTechChooser:
+class CvTechChooser( GenericAdvisor ) : # lfgr 09/2019: Full-screen Advisors
 	"Tech Chooser Screen"
 
 	def __init__(self):
@@ -156,14 +159,7 @@ class CvTechChooser:
 # lfgr 09/2019: Full-screen Advisors
 		screen.showWindowBackground( False )
 		
-		if (BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024):
-			xPanelWidth = max( 1024, screen.getXResolution() )
-			yPanelHeight = max( 768, screen.getYResolution() )
-			screen.setDimensions(0, 0, xPanelWidth, yPanelHeight)
-		else:
-			xPanelWidth = 1024
-			yPanelHeight = 768
-			screen.setDimensions((screen.getXResolution() - xPanelWidth) / 2, screen.centerY(0), xPanelWidth, yPanelHeight)
+		xPanelWidth, yPanelHeight = self.initDimensions()
 # BUG - Tech Screen Resolution - end
 
 		# Advanced Start
@@ -180,18 +176,9 @@ class CvTechChooser:
 			szText = localText.getText("TXT_KEY_WB_AS_ADD_TECH", ())
 			screen.setButtonGFC( "AddTechButton", szText, "", self.X_ADD_TECH_BUTTON, self.Y_ADD_TECH_BUTTON, self.W_ADD_TECH_BUTTON, self.H_ADD_TECH_BUTTON, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
 			screen.hide("AddTechButton")
-
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, xPanelWidth, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addDDSGFC("TechBG", ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(), 0, 51, xPanelWidth, yPanelHeight - 96, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, yPanelHeight - 55, xPanelWidth, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
-		screen.setText( "TechChooserExit", "Background", u"<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, xPanelWidth - 30, yPanelHeight - 42, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-		screen.setActivation( "TechChooserExit", ActivationTypes.ACTIVATE_MIMICPARENTFOCUS )
-
-		# Header...
-		szText = u"<font=4>"
-		szText = szText + localText.getText("TXT_KEY_TECH_CHOOSER_TITLE", ()).upper()
-		szText = szText + u"</font>"
-		screen.setLabel( "TechTitleHeader", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xPanelWidth / 2, 8, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		
+		# Background, header and footer
+		self.addBackgroundHeaderFooter( localText.getText("TXT_KEY_TECH_CHOOSER_TITLE", ()).upper() )
 
 		# Make the scrollable area for the city list...
 		if BugOpt.isShowGPTechPrefs():
@@ -201,7 +188,7 @@ class CvTechChooser:
 			iX = 0
 			iW = xPanelWidth
 
-		self.TabPanels = ["TechList", "TechTrade"]
+		self.TabPanels = ["TechList", "TechTrade"] # LFGR_TODO: Remove second, unfinished (?) tab
 
 #		screen.addScrollPanel(self.TabPanels[0], u"", iX, 64, iW, yPanelHeight - 142, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.addScrollPanel(self.TabPanels[0], u"", iX, 56, iW, yPanelHeight - 134, PanelStyles.PANEL_STYLE_EXTERNAL )
