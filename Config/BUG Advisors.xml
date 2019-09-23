@@ -2,6 +2,7 @@
 <!--
 	BUG Advisors
 	by Taelis, Cammagno, Requies, Ruff_Hi, Sevo, EmperorFool
+	Modified by lfgr for MNAI-U
 	
 	Collects all of the various advisor-based mods.
 
@@ -16,6 +17,11 @@
 	 
 	<options id="Advisors" file="BUG Advisors.ini">
 		<section id="Advisors">
+			<!-- Full Screen Advisors by lfgr -->
+			<option id="FullScreenAdvisors" key="Full Screen Advisors"
+					type="boolean" default="True" 
+					get="isFullScreenAdvisors"/>
+			
 			<!-- Finance Advisor by EmperorFool -->
 			<option id="BugFinanceAdvisor" key="BUG Finance Advisor" 
 					type="boolean" default="True" 
@@ -47,9 +53,6 @@
 			<option id="GPTechPrefs" key="GP Tech Prefs" 
 					type="boolean" default="True" 
 					get="isShowGPTechPrefs"/>
-			<option id="WideTechScreen" key="Wide Tech Screen" 
-					type="boolean" default="True" 
-					get="isWideTechScreen"/>
 			<option id="ShowTechEra" key="Show Tech Era" 
 					type="boolean" default="False"
 					get="isShowTechEra"/>

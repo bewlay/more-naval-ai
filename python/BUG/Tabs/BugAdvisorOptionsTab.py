@@ -18,6 +18,8 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		tab = self.createTab(screen)
 		panel = self.createMainPanel(screen)
 		left, center, right = self.addThreeColumnLayout(screen, panel, panel, True)
+		
+		self.addCheckbox(screen, left, "Advisors__FullScreenAdvisors") # lfgr 09/2019
 
 		self.addLabel(screen, left, "Domestic_Advisor", "Domestic [F1]:")
 		self.addCheckbox(screen, left, "CustDomAdv__Enabled")
@@ -47,7 +49,6 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, center, "Technology_Advisor", "Technology [F6]:")
 		self.addCheckbox(screen, center, "Advisors__GPTechPrefs")
 		self.addCheckbox(screen, center, "MiscHover__SpedUpTechs")
-		self.addCheckbox(screen, center, "Advisors__WideTechScreen")
 		self.addCheckbox(screen, center, "Advisors__ShowTechEra")
 
 		self.addLabel(screen, center, "Religious_Advisor", "Religion [F7]:")

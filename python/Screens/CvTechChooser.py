@@ -152,13 +152,27 @@ class CvTechChooser:
 		self.aiCurrentState = []
 		screen.setPersistent( True )
 
+# BUG - Tech Screen Resolution - start
+# lfgr 09/2019: Full-screen Advisors
+		screen.showWindowBackground( False )
+		
+		if (BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024):
+			xPanelWidth = max( 1024, screen.getXResolution() )
+			yPanelHeight = max( 768, screen.getYResolution() )
+			screen.setDimensions(0, 0, xPanelWidth, yPanelHeight)
+		else:
+			xPanelWidth = 1024
+			yPanelHeight = 768
+			screen.setDimensions((screen.getXResolution() - xPanelWidth) / 2, screen.centerY(0), xPanelWidth, yPanelHeight)
+# BUG - Tech Screen Resolution - end
+
 		# Advanced Start
 		if (gc.getPlayer(self.iCivSelected).getAdvancedStartPoints() >= 0):
 
 			self.m_bSelectedTechDirty = true
 
 			self.X_ADD_TECH_BUTTON = 10
-			self.Y_ADD_TECH_BUTTON = 731
+			self.Y_ADD_TECH_BUTTON = yPanelHeight - 35 # lfgr 09/2019: Full-screen Advisors
 			self.W_ADD_TECH_BUTTON = 150
 			self.H_ADD_TECH_BUTTON = 30
 			self.X_ADVANCED_START_TEXT = self.X_ADD_TECH_BUTTON + self.W_ADD_TECH_BUTTON + 20
@@ -166,17 +180,6 @@ class CvTechChooser:
 			szText = localText.getText("TXT_KEY_WB_AS_ADD_TECH", ())
 			screen.setButtonGFC( "AddTechButton", szText, "", self.X_ADD_TECH_BUTTON, self.Y_ADD_TECH_BUTTON, self.W_ADD_TECH_BUTTON, self.H_ADD_TECH_BUTTON, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
 			screen.hide("AddTechButton")
-
-# BUG - Tech Screen Resolution - start
-		if (BugOpt.isWideTechScreen() and screen.getXResolution() > 1024):
-			xPanelWidth = screen.getXResolution() - 60
-		else:
-			xPanelWidth = 1024
-		yPanelHeight = 768
-
-		screen.showWindowBackground( False )
-		screen.setDimensions((screen.getXResolution() - xPanelWidth) / 2, screen.centerY(0), xPanelWidth, yPanelHeight)
-# BUG - Tech Screen Resolution - end
 
 		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, xPanelWidth, 55, PanelStyles.PANEL_STYLE_TOPBAR )
 		screen.addDDSGFC("TechBG", ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(), 0, 51, xPanelWidth, yPanelHeight - 96, WidgetTypes.WIDGET_GENERAL, -1, -1 )

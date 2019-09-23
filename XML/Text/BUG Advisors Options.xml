@@ -154,13 +154,22 @@
 		<Finnish>When checked, displays the technology each type of great person will research.</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_ADVISORS__WIDETECHSCREEN_TEXT</Tag>
-		<English>Widescreen</English>
-		<French>Ecran Large</French>
-		<German>Breitbild</German>
-		<Italian>Schermo ampio</Italian>
-		<Spanish>Pantalla Ancha</Spanish>
-		<Finnish>Widescreen</Finnish>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__FULLSCREENADVISORS_TEXT</Tag>
+		<English>Full Screen Advisors</English>
+		<French>Full Screen Advisors</French>
+		<German>Full Screen Advisors</German>
+		<Italian>Full Screen Advisors</Italian>
+		<Spanish>Full Screen Advisors</Spanish>
+		<Finnish>Full Screen Advisors</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__FULLSCREENADVISORS_HOVER</Tag>
+		<English>When checked, some (WIP) advisors will be full-screen (requires restart).</English>
+		<French>When checked, some (WIP) advisors will be full-screen (requires restart).</French>
+		<German>When checked, some (WIP) advisors will be full-screen (requires restart).</German>
+		<Italian>When checked, some (WIP) advisors will be full-screen (requires restart).</Italian>
+		<Spanish>When checked, some (WIP) advisors will be full-screen (requires restart).</Spanish>
+		<Finnish>When checked, some (WIP) advisors will be full-screen (requires restart).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__WIDETECHSCREEN_HOVER</Tag>
