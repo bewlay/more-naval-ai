@@ -10372,22 +10372,30 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 	}
 	else
 	{
-		for (iI = 0; iI < GC.getNumCivicOptionInfos(); ++iI)
+	// lfgr 06/2019 / Kael 12/2007: ForceCivic applies only to the respective VoteSource LFGR_TODO: Optimize by putting isFullMember first?
+		// Check that we honor forced civics
+		for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
 		{
-		// lfgr 06/2019 / Kael 12/2007: ForceCivic applies only to the respective VoteSource
-			for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
+			VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
+			if( isFullMember( eVoteSource )  )
 			{
-				VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
-				if( isFullMember( eVoteSource )
-						&& GC.getGameINLINE().isForceCivicOption(
-								eVoteSource, (CivicOptionTypes) iI )
-						&& GC.getGameINLINE().isForceCivic( eVoteSource, paeNewCivics[iI] ) )
+				for( int iCivicOption = 0; iCivicOption < GC.getNumCivicOptionInfos(); ++iCivicOption )
 				{
-					return false;
+					if( GC.getGameINLINE().isForceCivicOption(
+								eVoteSource, (CivicOptionTypes) iCivicOption )
+						&& ! GC.getGameINLINE().isForceCivic( eVoteSource, paeNewCivics[iCivicOption] ) )
+					{
+						// CivicOption is forced to another civic than the one we want to switch to
+						return false;
+					}
 				}
 			}
-		// lfgr end
+		}
+	// lfgr end
 
+		// Check that we actually want to change something
+		for (iI = 0; iI < GC.getNumCivicOptionInfos(); ++iI)
+		{
 			if (getCivics((CivicOptionTypes)iI) != paeNewCivics[iI])
 			{
 				return true;
