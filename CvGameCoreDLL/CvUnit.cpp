@@ -12511,7 +12511,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
                     CyArgsList argsList;
                     argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
                     argsList.add(gDLL->getPythonIFace()->makePythonObject(pyPlot));	// pass in plot class
-                    argsList.add(iImprovement);//the promotion #
+                    argsList.add(iImprovement);//the improvement #
                     gDLL->getPythonIFace()->callFunction(PYSpellModule, "onMove", argsList.makeFunctionArgs()); //, &lResult
                     delete pyUnit; // python fxn must not hold on to this pointer
                     delete pyPlot;	// python fxn must not hold on to this pointer

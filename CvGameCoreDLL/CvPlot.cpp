@@ -6977,7 +6977,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), -1);
 				// Super Forts begin *culture*
-				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity()) // TODO: Should be getCultureRange()?
 				{
 					changeCultureRangeFortsWithinRange(getOwnerINLINE(), -1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 				}

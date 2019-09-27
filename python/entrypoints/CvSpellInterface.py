@@ -3943,8 +3943,8 @@ def onMoveAncientForest(pCaster, pPlot):
 							CyInterface().addMessage(pPlot.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_TREANT",()),'AS2D_FEATUREGROWTH',1,'Art/Interface/Buttons/Units/Treant.dds',ColorTypes(8),newUnit.getX(),newUnit.getY(),True,True)
 
 def onMoveBlizzard(pCaster, pPlot):
-	if pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')) == False:
-		pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), false)
+	if not pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')):
+		pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), False)
 
 def onMoveLetumFrigus(pCaster, pPlot):
 	pPlayer = gc.getPlayer(pCaster.getOwner())
