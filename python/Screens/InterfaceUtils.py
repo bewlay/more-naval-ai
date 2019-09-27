@@ -17,11 +17,50 @@ def updateMinimap( *args ) :
 	CyMap().updateMinimapColor()
 
 
+def font( font, text ) :
+	return u"<font=%s>%s</font>" % ( font, text )
+
+
+def makeTableColWidths( wTotal, lfWeights ) :
+	wTotal -= 5 * ( len( lfWeights ) - 1 ) # Column separators (?)
+	fTotalWeight = sum( lfWeights )
+	
+	wUsed = 0
+	for fWeight in lfWeights[:-1] :
+		wCol = int( wTotal * fWeight / fTotalWeight )
+		wUsed += wCol
+		yield wCol
+	
+	yield wTotal - wUsed # Last column
+
+def setTableColHeaders( screen, szTable, wTable, lfWeights, lszHeaders = None ) :
+	if lszHeaders is None :
+		lszHeaders = [""] * len( lfWeights )
+	for i, wCol in enumerate( makeTableColWidths( wTable, lfWeights ) ) :
+		screen.setTableColumnHeader( szTable, i, lszHeaders[i], wCol )
+	
+
+
+def addTableRow( screen, szTable, lszCellText, leCellAlignments = None ) :
+	iRow = screen.appendTableRow( szTable )
+	
+	if isinstance( lszCellText, str ) or isinstance( lszCellText, unicode ) : # Allow lszCellText to be a single string
+		lszCellText = [lszCellText]
+	
+	if leCellAlignments is None : # Everything left-aligned by default
+		leCellAlignments = [CvUtil.FONT_LEFT_JUSTIFY] * len( lszCellText )
+	
+	for iCol, szText in enumerate( lszCellText ) :
+		screen.setTableText( szTable, iCol, iRow, szText, "", WidgetTypes.WIDGET_GENERAL, -1, -1,
+				leCellAlignments[iCol] )
+
 # lfgr 09/2019: Full-screen Advisors
-class GenericAdvisorScreen :
+class GenericAdvisorScreen( object ) :
 	"""
 	Generic Advisor screen class with with helper functions, in particular for full-screen advisors.
 	"""
+	
+	EXIT_ID = "Exit"
 	
 	def getScreen( self ) :
 		raise NotImplementedError( "Subclasses of GenericAdvisor must implement getScreen()" )
@@ -66,8 +105,8 @@ class GenericAdvisorScreen :
 		screen = self.getScreen()
 		
 		szExitText = CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper()
-		screen.setText( "Exit", "Background", u"<font=4>" + szExitText + "</font>",
+		screen.setText( self.EXIT_ID, "Background", u"<font=4>" + szExitText + "</font>",
 				CvUtil.FONT_RIGHT_JUSTIFY, xPanelWidth - 30, yPanelHeight - 42, 0,
 				FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-		screen.setActivation( "Exit", ActivationTypes.ACTIVATE_MIMICPARENTFOCUS )
+		screen.setActivation( self.EXIT_ID, ActivationTypes.ACTIVATE_MIMICPARENTFOCUS )
 

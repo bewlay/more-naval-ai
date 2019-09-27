@@ -251,12 +251,12 @@
 
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGVICTORIESTAB_TEXT</Tag>
-		<English>Victories tab</English>
-		<French>Victories tab</French>
+		<English>BUG Victories tab</English>
+		<French>BUG Victories tab</French>
 		<German>BUG Siegbedingungen</German>
-		<Italian>Scheda Vittorie</Italian>
-		<Spanish>Pesta&#241;a de Victoria</Spanish>
-		<Finnish>Victories tab</Finnish>
+		<Italian>BUG Scheda Vittorie</Italian>
+		<Spanish>BUG Pesta&#241;a de Victoria</Spanish>
+		<Finnish>BUG Victories tab</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGVICTORIESTAB_HOVER</Tag>
@@ -269,12 +269,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGMEMBERSTAB_TEXT</Tag>
-		<English>Members tab</English>
-		<French>Members tab</French>
+		<English>BUG Members tab</English>
+		<French>BUG Members tab</French>
 		<German>BUG Mitglieder</German>
-		<Italian>Scheda Membri</Italian>
-		<Spanish>Pesta&#241;a Miembros</Spanish>
-		<Finnish>Members tab</Finnish>
+		<Italian>BUG Scheda Membri</Italian>
+		<Spanish>BUG Pesta&#241;a Miembros</Spanish>
+		<Finnish>BUG Members tab</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGMEMBERSTAB_HOVER</Tag>

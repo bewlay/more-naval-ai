@@ -2,9 +2,9 @@
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
 import CvUtil
-import ScreenInput
 import PyHelpers
-import time
+
+from InterfaceUtils import addTableRow, font, setTableColHeaders, GenericAdvisorScreen  # lfgr 09/2019
 
 # BUG - start
 import AttitudeUtil
@@ -49,7 +49,7 @@ GAME_SETTINGS_SCREEN = 1
 UN_RESOLUTION_SCREEN = 2
 UN_MEMBERS_SCREEN = 3
 
-class CvVictoryScreen:
+class CvVictoryScreen( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen advisors
 	"Keeps track of victory conditions"
 
 	def __init__(self, screenId):
@@ -72,29 +72,7 @@ class CvVictoryScreen:
 		self.Z_CONTROLS = self.Z_BACKGROUND - 0.2
 		self.DZ = -0.2
 
-		self.X_SCREEN = 500
-		self.Y_SCREEN = 396
-		self.W_SCREEN = 1024
-		self.H_SCREEN = 768
 		self.Y_TITLE = 12
-		
-		self.X_EXIT = 994
-		self.Y_EXIT = 726
-		
-		self.X_AREA = 10
-		self.Y_AREA = 60
-		self.W_AREA = 1010
-		self.H_AREA = 650
-		
-		self.TABLE_WIDTH_0 = 350
-		self.TABLE_WIDTH_1 = 80
-		self.TABLE_WIDTH_2 = 180
-		self.TABLE_WIDTH_3 = 100
-		self.TABLE_WIDTH_4 = 180
-		self.TABLE_WIDTH_5 = 100
-
-		self.TABLE2_WIDTH_0 = 740
-		self.TABLE2_WIDTH_1 = 265
 
 # BUG Additions Start
 		self.TABLE3_WIDTH_0 = 450
@@ -115,17 +93,7 @@ class CvVictoryScreen:
 		self.Vote_UN_ID = "BUGVoteUN_Widget"
 # BUG Additions End
 
-		self.X_LINK = 100
-		self.DX_LINK = 220
-		self.Y_LINK = 726
 		self.MARGIN = 20
-		
-		self.SETTINGS_PANEL_X1 = 50
-		self.SETTINGS_PANEL_X2 = 355
-		self.SETTINGS_PANEL_X3 = 660
-		self.SETTINGS_PANEL_Y = 150
-		self.SETTINGS_PANEL_WIDTH = 300
-		self.SETTINGS_PANEL_HEIGHT = 500
 
 		## Start HOF MOD V1.61.001  2/8
 		self.HOF_WARNING_PANEL_X = 50
@@ -160,23 +128,43 @@ class CvVictoryScreen:
 		screen = self.getScreen()
 		if screen.isActive():
 			return
-		screen.setRenderInterfaceOnly(True);
+		screen.setRenderInterfaceOnly(True)
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 
 		self.iActivePlayer = CyGame().getActivePlayer()
 		if self.iScreen == -1:
 			self.iScreen = VICTORY_CONDITION_SCREEN
 
+		# Initialize dimensions and positions
+		wScreen, hScreen = self.initDimensions()
+		self.xExit = wScreen - 30 # Orig: 994 # TODO: remove
+		self.yExit = hScreen - 60 # Orig: 726 # TODO: remove
+		self.xTabLink = 100
+		self.xTabLinkDelta = 220
+		self.yTabLink = hScreen - 42 # Orig: 726
+		
+		# Table for victories, resolutions and members tab
+		self.xTableArea = 10
+		self.yTableArea = 60
+		self.wTableArea = wScreen - 14 # Orig: 1010
+		self.hTableArea = hScreen - 118 # Orig: 650
+		
+		# Settings tab
+		xMargin = 50
+		xSpace = 5
+		self.ySettingsPanels = 150
+		self.wSettingsPanels = int( round( ( wScreen - 2*xMargin - 2*xSpace) / 3 ) ) # Orig: 300
+		self.hSettingsPanels = hScreen - 268 # Orig: 500
+		self.xSettingsPanel = xMargin # Orig: 50
+		self.xOptionsPanel = self.xSettingsPanel + self.wSettingsPanels + xSpace # Orig: 355
+		self.xRivalsMetPanel = self.xOptionsPanel + self.wSettingsPanels + xSpace # Orig: 660
+		
 		# Set the background widget and exit button
-		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("MAINMENU_SLIDESHOW_LOAD").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, 713, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
+		# TODO: ArtFileMgr.getInterfaceArtInfo("MAINMENU_SLIDESHOW_LOAD").getPath() ?
+		self.addBackgroundHeaderFooter( font( u"4b", localText.getText("TXT_KEY_VICTORY_SCREEN_TITLE", ()).upper() ) )
+		self.addExitButton()
+		
 		screen.showWindowBackground( False )
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
-		screen.setText(self.EXIT_ID, "Background", u"<font=4>" + localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_CONTROLS, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-
-		# Header...
-		screen.setLabel(self.HEADER_ID, "Background", u"<font=4b>" + localText.getText("TXT_KEY_VICTORY_SCREEN_TITLE", ()).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.Y_TITLE, self.Z_CONTROLS, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		if self.iScreen == VICTORY_CONDITION_SCREEN:
 			self.showVictoryConditionScreen()
@@ -190,80 +178,117 @@ class CvVictoryScreen:
 	def drawTabs(self):
 		screen = self.getScreen()
 
-		xLink = self.X_LINK
+		xLink = self.xTabLink
 		if (self.iScreen != VICTORY_CONDITION_SCREEN):
-			screen.setText(self.VC_TAB_ID, "", u"<font=4>" + localText.getText("TXT_KEY_MAIN_MENU_VICTORIES", ()).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			szLinkText = localText.getText("TXT_KEY_MAIN_MENU_VICTORIES", ()).upper()
 		else:
-			screen.setText(self.VC_TAB_ID, "", u"<font=4>" + localText.getColorText("TXT_KEY_MAIN_MENU_VICTORIES", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		xLink += self.DX_LINK
+			szLinkText = localText.getColorText("TXT_KEY_MAIN_MENU_VICTORIES", (),
+					gc.getInfoTypeForString("COLOR_YELLOW")).upper()
+		screen.setText( self.VC_TAB_ID, "", font( "4", szLinkText ), CvUtil.FONT_CENTER_JUSTIFY, xLink,
+				self.yTabLink, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		xLink += self.xTabLinkDelta
 
 		if (self.iScreen != GAME_SETTINGS_SCREEN):
-			screen.setText(self.SETTINGS_TAB_ID, "", u"<font=4>" + localText.getText("TXT_KEY_MAIN_MENU_SETTINGS", ()).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			szLinkText = localText.getText("TXT_KEY_MAIN_MENU_SETTINGS", ()).upper()
 		else:
-			screen.setText(self.SETTINGS_TAB_ID, "", u"<font=4>" + localText.getColorText("TXT_KEY_MAIN_MENU_SETTINGS", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		xLink += self.DX_LINK
+			szLinkText = localText.getColorText("TXT_KEY_MAIN_MENU_SETTINGS", (),
+					gc.getInfoTypeForString("COLOR_YELLOW")).upper()
+		screen.setText( self.SETTINGS_TAB_ID, "", font( "4", szLinkText ), CvUtil.FONT_CENTER_JUSTIFY, xLink,
+				self.yTabLink, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		xLink += self.xTabLinkDelta
 
 		if self.bVoteTab:
 			if (self.iScreen != UN_RESOLUTION_SCREEN):
-				screen.setText(self.UN_RESOLUTION_TAB_ID, "", u"<font=4>" + localText.getText("TXT_KEY_VOTING_TITLE", ()).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				szLinkText = localText.getText("TXT_KEY_VOTING_TITLE", ()).upper()
 			else:
-				screen.setText(self.UN_RESOLUTION_TAB_ID, "", u"<font=4>" + localText.getColorText("TXT_KEY_VOTING_TITLE", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-			xLink += self.DX_LINK
+				szLinkText = localText.getColorText("TXT_KEY_VOTING_TITLE", (),
+						gc.getInfoTypeForString("COLOR_YELLOW")).upper()
+			screen.setText( self.UN_RESOLUTION_TAB_ID, "", font( "4", szLinkText ), CvUtil.FONT_CENTER_JUSTIFY, xLink,
+					self.yTabLink, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+			xLink += self.xTabLinkDelta
 
 			if (self.iScreen != UN_MEMBERS_SCREEN):
-				screen.setText(self.UN_MEMBERS_TAB_ID, "", u"<font=4>" + localText.getText("TXT_KEY_MEMBERS_TITLE", ()).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				szLinkText = localText.getText("TXT_KEY_MEMBERS_TITLE", ()).upper()
 			else:
-				screen.setText(self.UN_MEMBERS_TAB_ID, "", u"<font=4>" + localText.getColorText("TXT_KEY_MEMBERS_TITLE", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>", CvUtil.FONT_CENTER_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-			xLink += self.DX_LINK
+				szLinkText = localText.getColorText("TXT_KEY_MEMBERS_TITLE", (),
+						gc.getInfoTypeForString("COLOR_YELLOW")).upper()
+			screen.setText( self.UN_MEMBERS_TAB_ID, "", font( "4", szLinkText ), CvUtil.FONT_CENTER_JUSTIFY, xLink,
+					self.yTabLink, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+			xLink += self.xTabLinkDelta
 
-	def showVotingScreen(self):
+	def showVotingScreen(self): # lfgr 09/2019: modified
 		self.deleteAllWidgets()
 
-		activePlayer = gc.getPlayer(self.iActivePlayer)
-		iActiveTeam = activePlayer.getTeam()
-
-		# lfgr removed diplovote buildingclass display and check
+		#activePlayer = gc.getPlayer(self.iActivePlayer)
+		#iActiveTeam = activePlayer.getTeam()
 
 		screen = self.getScreen()
+		
+		# Table setup and header
 
-		screen.addPanel(self.getNextWidgetName(), "", "", False, False, self.X_AREA-10, self.Y_AREA-15, self.W_AREA+20, self.H_AREA+30, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel( self.getNextWidgetName(), "", "", False, False, self.xTableArea - 10, self.yTableArea - 15, self.wTableArea + 20, self.hTableArea + 30, PanelStyles.PANEL_STYLE_BLUE50 )
 		szTable = self.getNextWidgetName()
-		screen.addTableControlGFC(szTable, 2, self.X_AREA, self.Y_AREA, self.W_AREA, self.H_AREA, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
-		screen.enableSelect(szTable, False)		
-		screen.setTableColumnHeader(szTable, 0, "", self.TABLE2_WIDTH_0)
-		screen.setTableColumnHeader(szTable, 1, "", self.TABLE2_WIDTH_1)
-
-		# lfgr removed diplovote buildingclass display
-
-		for i in range(gc.getNumVoteSourceInfos()):
-			# lfgr: show council name
-			iRow = screen.appendTableRow(szTable)
-			screen.setTableText(szTable, 0, iRow, u"<font=4b>" + gc.getVoteSourceInfo(i).getDescription().upper() + u"</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-			# lfgr end
+		screen.addTableControlGFC( szTable, 2, self.xTableArea, self.yTableArea, self.wTableArea, self.hTableArea, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+		screen.enableSelect(szTable, False)
+		setTableColHeaders( screen, szTable, self.wTableArea, [3,1] ) # Orig: 740, 265
+		
+		bAnyVoteSourceHasMembers = False
+		for eVoteSource in range(gc.getNumVoteSourceInfos()) :
+			# Check if vote source has any members
+			bHasMembers = False
+			for ePlayer in range( gc.getMAX_CIV_PLAYERS() ) :
+				if gc.getPlayer( ePlayer ).isFullMember( eVoteSource ) :
+					bHasMembers = True
+					break
 			
-			if (gc.getGame().canHaveSecretaryGeneral(i) and -1 != gc.getGame().getSecretaryGeneral(i)):
-				# lfgr: suppress display of undercouncil members if not self member
-				if( gc.getActivePlayer().isFullMember(i) or i != gc.getInfoTypeForString( 'DIPLOVOTE_UNDERCOUNCIL' ) ) :
-				# lfgr end
-				# lfgr indention
-					iRow = screen.appendTableRow(szTable)
-					screen.setTableText(szTable, 0, iRow, gc.getVoteSourceInfo(i).getSecretaryGeneralText(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-					screen.setTableText(szTable, 1, iRow, gc.getTeam(gc.getGame().getSecretaryGeneral(i)).getName(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-				# lfgr indention end
-
-			for iLoop in range(gc.getNumVoteInfos()):
-				if gc.getGame().countPossibleVote(iLoop, i) > 0:
-					info = gc.getVoteInfo(iLoop)
-					if gc.getGame().isChooseElection(iLoop):
-						iRow = screen.appendTableRow(szTable)
-						screen.setTableText(szTable, 0, iRow, info.getDescription(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						if gc.getGame().isVotePassed(iLoop):
-							screen.setTableText(szTable, 1, iRow, localText.getText("TXT_KEY_POPUP_PASSED", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						else:
-							screen.setTableText(szTable, 1, iRow, localText.getText("TXT_KEY_POPUP_ELECTION_OPTION", (u"", gc.getGame().getVoteRequired(iLoop, i), gc.getGame().countPossibleVote(iLoop, i))), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-			# lfgr: gap between councils
-			iRow = screen.appendTableRow(szTable)
-			# lfgr end
+			if not bHasMembers :
+				continue # Skip this
+			
+			if bAnyVoteSourceHasMembers :
+				# This is not the first, add separator row
+				screen.appendTableRow(szTable)
+			bAnyVoteSourceHasMembers = True
+			
+			# Show council name
+			szHeading = u"<font=4b>" + gc.getVoteSourceInfo(eVoteSource).getDescription().upper() + u"</font>"
+			addTableRow( screen, szTable, szHeading )
+			
+			# Suppress some undecouncil stuff is active player is not member
+			bSuppressUndercouncil = ( eVoteSource == gc.getInfoTypeForString( 'DIPLOVOTE_UNDERCOUNCIL' )
+						and not gc.getActivePlayer().isFullMember(eVoteSource) )
+			
+			# Show "Secretary General"
+			if gc.getGame().canHaveSecretaryGeneral(eVoteSource) :
+				# Title
+				szSecGenTitle = gc.getVoteSourceInfo(eVoteSource).getSecretaryGeneralText()
+				# Name
+				if bSuppressUndercouncil :
+					szSecGenName = localText.getText( "TXT_KEY_SECRETARY_GENERAL_UNKNOWN", () )
+				elif gc.getGame().getSecretaryGeneral(eVoteSource) == -1 :
+					szSecGenName = localText.getText( "TXT_KEY_SECRETARY_GENERAL_VACANT", () )
+				else :
+					szSecGenName = gc.getTeam(gc.getGame().getSecretaryGeneral(eVoteSource)).getName()
+				
+				addTableRow( screen, szTable, [szSecGenTitle, szSecGenName] )
+			
+			# Show resolutions
+			if not bSuppressUndercouncil :
+				for iLoop in range(gc.getNumVoteInfos()):
+					if gc.getGame().countPossibleVote(iLoop, eVoteSource) > 0:
+						info = gc.getVoteInfo(iLoop)
+						if gc.getGame().isChooseElection(iLoop):
+							szDesc = info.getDescription()
+							if gc.getGame().isVotePassed(iLoop):
+								szElectionText = localText.getText("TXT_KEY_POPUP_PASSED", ())
+							else:
+								szElectionText = localText.getText("TXT_KEY_POPUP_ELECTION_OPTION",
+										(u"", gc.getGame().getVoteRequired(iLoop, eVoteSource),
+												gc.getGame().countPossibleVote(iLoop, eVoteSource)))
+							
+							addTableRow( screen, szTable, [szDesc, szElectionText] )
+		
+		if not bAnyVoteSourceHasMembers :
+			addTableRow( screen, szTable, localText.getText( "TXT_KEY_NO_ACTIVE_VOTE_SOURCES", () ) )
 	
 		self.drawTabs()
 
@@ -329,11 +354,11 @@ class CvVictoryScreen:
 
 		screen = self.getScreen()
 
-		screen.addPanel(self.getNextWidgetName(), "", "", False, False, self.X_AREA-10, self.Y_AREA-15, self.W_AREA+20, self.H_AREA+30, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel( self.getNextWidgetName(), "", "", False, False, self.xTableArea - 10, self.yTableArea - 15, self.wTableArea + 20, self.hTableArea + 30, PanelStyles.PANEL_STYLE_BLUE50 )
 
 		# set up the header row
 		szHeading = self.getNextWidgetName()
-		screen.addTableControlGFC(szHeading, 3, self.X_AREA, self.Y_AREA, self.W_AREA, 30, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
+		screen.addTableControlGFC( szHeading, 3, self.xTableArea, self.yTableArea, self.wTableArea, 30, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader(szHeading, 0, "", self.TABLE3_WIDTH_0)
 		screen.setTableColumnHeader(szHeading, 1, "", self.TABLE3_WIDTH_1 + self.TABLE3_WIDTH_2)
 		screen.setTableColumnHeader(szHeading, 2, "", self.TABLE3_WIDTH_3 + self.TABLE3_WIDTH_4)
@@ -375,7 +400,7 @@ class CvVictoryScreen:
 
 		# set up the member table
 		szTable = self.getNextWidgetName()
-		screen.addTableControlGFC(szTable, 6, self.X_AREA, self.Y_AREA + 30, self.W_AREA, self.H_AREA-20-30, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
+		screen.addTableControlGFC( szTable, 6, self.xTableArea, self.yTableArea + 30, self.wTableArea, self.hTableArea - 20 - 30, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 		screen.enableSelect(szTable, False)
 		screen.setTableColumnHeader(szTable, 0, "", self.TABLE3_WIDTH_0)
 		screen.setTableColumnHeader(szTable, 1, "", self.TABLE3_WIDTH_1)
@@ -386,7 +411,7 @@ class CvVictoryScreen:
 		iRow = screen.appendTableRow(szTable)
 
 		# set up the vote selection texts
-		iX = self.X_EXIT
+		iX = self.xExit
 		sText = gc.getVoteSourceInfo(iActiveVote).getSecretaryGeneralText()
 		if self.VoteType == 1: sText = BugUtil.colorText(sText, "COLOR_YELLOW")
 		screen.setText(self.Vote_Pope_ID, "", sText, CvUtil.FONT_RIGHT_JUSTIFY, iX, self.Vote_Y, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -603,19 +628,26 @@ class CvVictoryScreen:
 
 		screen = self.getScreen()
 
-		screen.addPanel(self.getNextWidgetName(), "", "", False, False, self.X_AREA-10, self.Y_AREA-15, self.W_AREA+20, self.H_AREA+30, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel( self.getNextWidgetName(), "", "", False, False, self.xTableArea - 10, self.yTableArea - 15, self.wTableArea + 20, self.hTableArea + 30, PanelStyles.PANEL_STYLE_BLUE50 )
 		szTable = self.getNextWidgetName()
-		screen.addTableControlGFC(szTable, 2, self.X_AREA, self.Y_AREA, self.W_AREA, self.H_AREA, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
+		screen.addTableControlGFC( szTable, 2, self.xTableArea, self.yTableArea, self.wTableArea, self.hTableArea, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
 		screen.enableSelect(szTable, False)
-		screen.setTableColumnHeader(szTable, 0, "", self.TABLE2_WIDTH_0)
-		screen.setTableColumnHeader(szTable, 1, "", self.TABLE2_WIDTH_1)
+		setTableColHeaders( screen, szTable, self.wTableArea, [3,1] )
 
+		bIsFirstDisplayedVoteSource = True # Prevent blank line at the end
 		for i in range(gc.getNumVoteSourceInfos()):
 			if gc.getGame().isDiploVote(i):
 				# lfgr: suppress display of undercouncil members if not self member
-				if( not gc.getActivePlayer().isFullMember(i) and i == gc.getInfoTypeForString( 'DIPLOVOTE_UNDERCOUNCIL' ) ) :
+				if( not gc.getActivePlayer().isFullMember(i)
+						and i == gc.getInfoTypeForString( 'DIPLOVOTE_UNDERCOUNCIL' ) ) :
 					continue
 				# lfgr end
+				
+				if bIsFirstDisplayedVoteSource :
+					bIsFirstDisplayedVoteSource = False
+				else :
+					screen.appendTableRow( szTable )
+				
 				kVoteSource = gc.getVoteSourceInfo(i)
 				iRow = screen.appendTableRow(szTable)
 				screen.setTableText(szTable, 0, iRow, u"<font=4b>" + kVoteSource.getDescription().upper() + u"</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
@@ -625,15 +657,11 @@ class CvVictoryScreen:
 				iSecretaryGeneralVote = -1
 				if (gc.getGame().canHaveSecretaryGeneral(i) and -1 != gc.getGame().getSecretaryGeneral(i)):
 					for j in range(gc.getNumVoteInfos()):
-						print j
 						if gc.getVoteInfo(j).isVoteSourceType(i):
-							print "votesource"
 							if gc.getVoteInfo(j).isSecretaryGeneral():
-								print "secgen"
 								iSecretaryGeneralVote = j
 								break
 
-				print iSecretaryGeneralVote
 				for j in range(gc.getMAX_PLAYERS()):
 					if gc.getPlayer(j).isAlive() and not gc.getPlayer(j).isBarbarian() and gc.getTeam(iActiveTeam).isHasMet(gc.getPlayer(j).getTeam()):
 						szPlayerText = gc.getPlayer(j).getName()
@@ -651,8 +679,6 @@ class CvVictoryScreen:
 							iRow = screen.appendTableRow(szTable)
 							screen.setTableText(szTable, 0, iRow, szPlayerText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 							screen.setTableText(szTable, 1, iRow, localText.getText("TXT_KEY_VOTESOURCE_VOTING_MEMBER", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-
-				iRow = screen.appendTableRow(szTable)
 
 	def formatPercent(self, f):
 		return "%.1f%%" % f
@@ -717,7 +743,7 @@ class CvVictoryScreen:
 			return ColorUtil.keyToType("COLOR_GREEN")
 		return -1
 
-	def showGameSettingsScreen(self):
+	def showGameSettingsScreen(self): # lfgr 09/2019: modified
 		self.deleteAllWidgets()	
 		screen = self.getScreen()
 
@@ -734,9 +760,9 @@ class CvVictoryScreen:
 		activePlayer = gc.getPlayer(self.iActivePlayer)
 
 		szSettingsPanel = self.getNextWidgetName()
-		screen.addPanel(szSettingsPanel, localText.getText("TXT_KEY_MAIN_MENU_SETTINGS", ()).upper(), "", True, True, self.SETTINGS_PANEL_X1, self.SETTINGS_PANEL_Y - 10, self.SETTINGS_PANEL_WIDTH, self.SETTINGS_PANEL_HEIGHT, PanelStyles.PANEL_STYLE_MAIN)
+		screen.addPanel( szSettingsPanel, localText.getText("TXT_KEY_MAIN_MENU_SETTINGS", ()).upper(), "", True, True, self.xSettingsPanel, self.ySettingsPanels - 10, self.wSettingsPanels, self.hSettingsPanels, PanelStyles.PANEL_STYLE_MAIN )
 		szSettingsTable = self.getNextWidgetName()
-		screen.addListBoxGFC(szSettingsTable, "", self.SETTINGS_PANEL_X1 + self.MARGIN, self.SETTINGS_PANEL_Y + self.MARGIN, self.SETTINGS_PANEL_WIDTH - 2*self.MARGIN, self.SETTINGS_PANEL_HEIGHT - 2*self.MARGIN, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addListBoxGFC( szSettingsTable, "", self.xSettingsPanel + self.MARGIN, self.ySettingsPanels + self.MARGIN, self.wSettingsPanels - 2 * self.MARGIN, self.hSettingsPanels - 2 * self.MARGIN, TableStyles.TABLE_STYLE_EMPTY )
 		screen.enableSelect(szSettingsTable, False)
 		
 		if showHOFSettingChecks and BugPath.isMac():
@@ -745,7 +771,8 @@ class CvVictoryScreen:
 			screen.appendListBoxStringNoUpdate(szSettingsTable, self.BuffyWarningMac, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 				
 		screen.appendListBoxStringNoUpdate(szSettingsTable, localText.getText("TXT_KEY_LEADER_CIV_DESCRIPTION", (activePlayer.getNameKey(), activePlayer.getCivilizationShortDescriptionKey())), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
-		screen.appendListBoxStringNoUpdate(szSettingsTable, u"     (" + CyGameTextMgr().parseLeaderTraits(activePlayer.getLeaderType(), activePlayer.getCivilizationType(), True, False) + ")", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+		# lfgr 09/2019: Don't show leader traits
+		#screen.appendListBoxStringNoUpdate(szSettingsTable, u"     (" + CyGameTextMgr().parseLeaderTraits(activePlayer.getLeaderType(), activePlayer.getCivilizationType(), True, False) + ")", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 		screen.appendListBoxStringNoUpdate(szSettingsTable, " ", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 		screen.appendListBoxStringNoUpdate(szSettingsTable, localText.getText("TXT_KEY_SETTINGS_DIFFICULTY", (gc.getHandicapInfo(activePlayer.getHandicapType()).getTextKey(), )), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
@@ -810,9 +837,9 @@ class CvVictoryScreen:
 		screen.updateListBox(szSettingsTable)
 
 		szOptionsPanel = self.getNextWidgetName()
-		screen.addPanel(szOptionsPanel, localText.getText("TXT_KEY_MAIN_MENU_CUSTOM_SETUP_OPTIONS", ()).upper(), "", True, True, self.SETTINGS_PANEL_X2, self.SETTINGS_PANEL_Y - 10, self.SETTINGS_PANEL_WIDTH, self.SETTINGS_PANEL_HEIGHT, PanelStyles.PANEL_STYLE_MAIN)
+		screen.addPanel( szOptionsPanel, localText.getText("TXT_KEY_MAIN_MENU_CUSTOM_SETUP_OPTIONS", ()).upper(), "", True, True, self.xOptionsPanel, self.ySettingsPanels - 10, self.wSettingsPanels, self.hSettingsPanels, PanelStyles.PANEL_STYLE_MAIN )
 		szOptionsTable = self.getNextWidgetName()
-		screen.addListBoxGFC(szOptionsTable, "", self.SETTINGS_PANEL_X2 + self.MARGIN, self.SETTINGS_PANEL_Y + self.MARGIN, self.SETTINGS_PANEL_WIDTH - 2*self.MARGIN, self.SETTINGS_PANEL_HEIGHT - 2*self.MARGIN, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addListBoxGFC( szOptionsTable, "", self.xOptionsPanel + self.MARGIN, self.ySettingsPanels + self.MARGIN, self.wSettingsPanels - 2 * self.MARGIN, self.hSettingsPanels - 2 * self.MARGIN, TableStyles.TABLE_STYLE_EMPTY )
 		screen.enableSelect(szOptionsTable, False)
 
 		## Start HOF MOD V1.61.001  6/8
@@ -874,10 +901,10 @@ class CvVictoryScreen:
 		screen.updateListBox(szOptionsTable)
 
 		szCivsPanel = self.getNextWidgetName()
-		screen.addPanel(szCivsPanel, localText.getText("TXT_KEY_RIVALS_MET", ()).upper(), "", True, True, self.SETTINGS_PANEL_X3, self.SETTINGS_PANEL_Y - 10, self.SETTINGS_PANEL_WIDTH, self.SETTINGS_PANEL_HEIGHT, PanelStyles.PANEL_STYLE_MAIN)
+		screen.addPanel( szCivsPanel, localText.getText("TXT_KEY_RIVALS_MET", ()).upper(), "", True, True, self.xRivalsMetPanel, self.ySettingsPanels - 10, self.wSettingsPanels, self.hSettingsPanels, PanelStyles.PANEL_STYLE_MAIN )
 
 		szCivsTable = self.getNextWidgetName()
-		screen.addListBoxGFC(szCivsTable, "", self.SETTINGS_PANEL_X3 + self.MARGIN, self.SETTINGS_PANEL_Y + self.MARGIN, self.SETTINGS_PANEL_WIDTH - 2*self.MARGIN, self.SETTINGS_PANEL_HEIGHT - 2*self.MARGIN, TableStyles.TABLE_STYLE_EMPTY)
+		screen.addListBoxGFC( szCivsTable, "", self.xRivalsMetPanel + self.MARGIN, self.ySettingsPanels + self.MARGIN, self.wSettingsPanels - 2 * self.MARGIN, self.hSettingsPanels - 2 * self.MARGIN, TableStyles.TABLE_STYLE_EMPTY )
 		screen.enableSelect(szCivsTable, False)
 
 		## Start HOF MOD V1.61.001  7/8
@@ -914,8 +941,9 @@ class CvVictoryScreen:
 			player = gc.getPlayer(iLoopPlayer)
 			if (player.isEverAlive() and iLoopPlayer != self.iActivePlayer and (gc.getTeam(player.getTeam()).isHasMet(activePlayer.getTeam()) or gc.getGame().isDebugMode()) and not player.isBarbarian() and not player.isMinorCiv()):
 				screen.appendListBoxStringNoUpdate(szCivsTable, localText.getText("TXT_KEY_LEADER_CIV_DESCRIPTION", (player.getNameKey(), player.getCivilizationShortDescriptionKey())), WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
-				screen.appendListBoxStringNoUpdate(szCivsTable, u"     (" + CyGameTextMgr().parseLeaderTraits(player.getLeaderType(), player.getCivilizationType(), True, False) + ")", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
-				screen.appendListBoxStringNoUpdate(szCivsTable, " ", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+				# lfgr 09/2019: Don't show leader traits
+				#screen.appendListBoxStringNoUpdate(szCivsTable, u"     (" + CyGameTextMgr().parseLeaderTraits(player.getLeaderType(), player.getCivilizationType(), True, False) + ")", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+				#screen.appendListBoxStringNoUpdate(szCivsTable, " ", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
 		screen.updateListBox(szCivsTable)
 
@@ -1066,15 +1094,10 @@ class CvVictoryScreen:
 		screen = self.getScreen()
 
 		# Start filling in the table below
-		screen.addPanel(self.getNextWidgetName(), "", "", False, False, self.X_AREA-10, self.Y_AREA-15, self.W_AREA+20, self.H_AREA+30, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel( self.getNextWidgetName(), "", "", False, False, self.xTableArea - 10, self.yTableArea - 15, self.wTableArea + 20, self.hTableArea + 30, PanelStyles.PANEL_STYLE_BLUE50 )
 		szTable = self.getNextWidgetName()
-		screen.addTableControlGFC(szTable, 6, self.X_AREA, self.Y_AREA, self.W_AREA, self.H_AREA, False, False, 32,32, TableStyles.TABLE_STYLE_STANDARD)
-		screen.setTableColumnHeader(szTable, 0, "", self.TABLE_WIDTH_0)
-		screen.setTableColumnHeader(szTable, 1, "", self.TABLE_WIDTH_1)
-		screen.setTableColumnHeader(szTable, 2, "", self.TABLE_WIDTH_2)
-		screen.setTableColumnHeader(szTable, 3, "", self.TABLE_WIDTH_3)
-		screen.setTableColumnHeader(szTable, 4, "", self.TABLE_WIDTH_4)
-		screen.setTableColumnHeader(szTable, 5, "", self.TABLE_WIDTH_5)
+		screen.addTableControlGFC( szTable, 6, self.xTableArea, self.yTableArea, self.wTableArea, self.hTableArea, False, False, 32, 32, TableStyles.TABLE_STYLE_STANDARD )
+		setTableColHeaders( screen, szTable, self.wTableArea, [35, 8, 18, 10, 18, 18] )
 		screen.appendTableRow(szTable)
 
 		for iLoopVC in range(gc.getNumVictoryInfos()):
