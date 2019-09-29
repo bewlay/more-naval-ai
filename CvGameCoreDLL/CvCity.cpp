@@ -9854,6 +9854,21 @@ int CvCity::getAdditionalBaseYieldRateByBuilding(YieldTypes eIndex, BuildingType
 				iExtraRate += getAdditionalBaseYieldRateBySpecialist(eIndex, (SpecialistTypes)iI, kBuilding.getFreeSpecialistCount((SpecialistTypes)iI));
 			}
 		}
+
+		// lfgr 09/2019: UnhappyProduction
+		if( eIndex == YIELD_PRODUCTION ) {
+			if( !isUnhappyProduction() && kBuilding.isUnhappyProduction() ) {
+				// Adding unhappy production
+				iExtraRate += unhappyLevel();
+			}
+			if( isUnhappyProduction() || kBuilding.isUnhappyProduction() ) {
+				// Adding unhappiness when city has or will have unhappy production
+				int iGood = 0;
+				int iBad = 0;
+				getAdditionalHappinessByBuilding(eBuilding, iGood, iBad);
+				iExtraRate += iBad;
+			}
+		}
 	}
 
 	return iExtraRate;
