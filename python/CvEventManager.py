@@ -1489,7 +1489,13 @@ class CvEventManager:
 
 		if CyGame().getWBMapScript():
 			sf.onUnitCreated(unit)
-
+		
+		# lfgr 09/2019: Blizzard damage on unit creation is handled here.
+		#   damage on movement is handled in CvSpellInterface.onMoveBlizzard
+		if unit.plot().getFeatureType() == gc.getInfoTypeForString( "FEATURE_BLIZZARD" ) :
+			if not unit.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')):
+				unit.doDamage(10, 50, unit, gc.getInfoTypeForString('DAMAGE_COLD'), False)
+	
 		if not self.__LOG_UNITBUILD:
 			return
 

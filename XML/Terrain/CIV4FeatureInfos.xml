@@ -1702,7 +1702,7 @@
 			<bFlammable>0</bFlammable>
 			<FeatureUpgrade>NONE</FeatureUpgrade>
 			<PrereqStateReligion>NONE</PrereqStateReligion>
-            <PythonOnMove>onMoveBlizzard(pCaster, pPlot)</PythonOnMove>
+            <PythonOnMove>onMoveBlizzard(pCaster, pPlot, bUnitCreation)</PythonOnMove>
 			<RequireResist>NONE</RequireResist>
 		</FeatureInfo>
 		<FeatureInfo>

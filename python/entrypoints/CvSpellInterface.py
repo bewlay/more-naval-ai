@@ -3943,9 +3943,12 @@ def onMoveAncientForest(pCaster, pPlot):
 							CyInterface().addMessage(pCaster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_TREANT_ENEMY",()),'AS2D_FEATUREGROWTH',1,'Art/Interface/Buttons/Units/Treant.dds',ColorTypes(7),newUnit.getX(),newUnit.getY(),True,True)
 							CyInterface().addMessage(pPlot.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_TREANT",()),'AS2D_FEATUREGROWTH',1,'Art/Interface/Buttons/Units/Treant.dds',ColorTypes(8),newUnit.getX(),newUnit.getY(),True,True)
 
-def onMoveBlizzard(pCaster, pPlot):
-	if not pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')):
-		pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), False)
+def onMoveBlizzard(pCaster, pPlot, bUnitCreation):
+	# lfgr 09/2019: Blizzard damage on unit creation is not handled here, as the Winterborn promotion is not yet given
+	#   instead, CvEventManager.onUnitCreated is used for that
+	if not bUnitCreation :
+		if not pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')):
+			pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), False)
 
 def onMoveLetumFrigus(pCaster, pPlot):
 	pPlayer = gc.getPlayer(pCaster.getOwner())
