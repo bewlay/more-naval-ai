@@ -46,7 +46,8 @@ def onMove(argsList):
 	eval(imp.getPythonOnMove())
 
 def onMoveFeature(argsList):
-	pCaster, pPlot, eFeature = argsList
+	# lfgr 09/2019: Added bUnitCreation, indicating whether the unit was just created
+	pCaster, pPlot, eFeature, bUnitCreation = argsList
 	feature = gc.getFeatureInfo(eFeature)
 	eval(feature.getPythonOnMove())
 

@@ -147,10 +147,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 	//--------------------------------
 	// Init pre-setup() data
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
-//	setXY(iX, iY, false, false);
-	setXY(iX, iY, false, false, false, false, bPushOutExistingUnit);
-//<<<<Unofficial Bug Fix: End Modify
+// Denev 02/2010, lfgr 09/2019: Unofficial Bug Fix (added bPushOutExistingUnit), added bUnitCreation
+	setXY(iX, iY, false, false, false, false, bPushOutExistingUnit, true);
 
 	//--------------------------------
 	// Init non-saved data
@@ -11945,10 +11943,9 @@ int CvUnit::getY() const
 }
 
 
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
-//void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool bCheckPlotVisible)
-void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool bCheckPlotVisible, bool bPushOutExistingUnit)
-//<<<<Unofficial Bug Fix: End Modify
+// Denev 02/2010, lfgr 09/2019: Unofficial Bug Fix (added bPushOutExistingUnit), added bUnitCreation
+void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool bCheckPlotVisible,
+		bool bPushOutExistingUnit, bool bUnitCreation)
 {
 	CLLNode<IDInfo>* pUnitNode;
 	CvCity* pOldCity;
@@ -12553,6 +12550,8 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
                 argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
                 argsList.add(gDLL->getPythonIFace()->makePythonObject(pyPlot));	// pass in plot class
                 argsList.add(pNewPlot->getFeatureType());
+				// lfgr 09/2019: Add bUnitCreation, to indicated whether unit was just created
+				argsList.add(bUnitCreation);
                 gDLL->getPythonIFace()->callFunction(PYSpellModule, "onMoveFeature", argsList.makeFunctionArgs()); //, &lResult
                 delete pyUnit; // python fxn must not hold on to this pointer
                 delete pyPlot;	// python fxn must not hold on to this pointer
