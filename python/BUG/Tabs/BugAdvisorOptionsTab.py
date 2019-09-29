@@ -18,6 +18,8 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		tab = self.createTab(screen)
 		panel = self.createMainPanel(screen)
 		left, center, right = self.addThreeColumnLayout(screen, panel, panel, True)
+
+		# lfgr 09/2019: Commented out espionage stuff, rearranged a bit
 		
 		self.addCheckbox(screen, left, "Advisors__FullScreenAdvisors") # lfgr 09/2019
 
@@ -42,9 +44,8 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, left, "MiscHover__TechTradeDenial")
 		self.addCheckbox(screen, left, "MiscHover__BonusTradeDenial")
 
-		self.addLabel(screen, left, "Military_Advisor", "Military [F5]:")
-		self.addCheckbox(screen, left, "Advisors__BugMA")
-
+		self.addLabel(screen, center, "Military_Advisor", "Military [F5]:")
+		self.addCheckbox(screen, center, "Advisors__BugMA")
 
 		self.addLabel(screen, center, "Technology_Advisor", "Technology [F6]:")
 		self.addCheckbox(screen, center, "Advisors__GPTechPrefs")
@@ -55,22 +56,23 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, center, "Advisors__BugReligiousTab")
 		self.addTextDropdown(screen, center, center, "Advisors__ShowReligions", True)
 
-		self.addLabel(screen, center, "Victory_Conditions", "Victory [F8]:")
-		self.addCheckbox(screen, center, "Advisors__BugVictoriesTab")
-		self.addCheckbox(screen, center, "Advisors__BugMembersTab")
 
-		self.addLabel(screen, center, "Info_Screens", "Info [F9]:")
-		self.addCheckbox(screen, center, "Advisors__BugGraphsTab")
-		self.addCheckbox(screen, center, "Advisors__BugGraphsLogScale")
-		self.addCheckbox(screen, center, "Advisors__BugStatsTab")
-		self.addCheckbox(screen, center, "Advisors__BugInfoWonders")
-		self.addCheckbox(screen, center, "Advisors__BugInfoWondersPlayerColor", True)
+		self.addLabel(screen, right, "Victory_Conditions", "Victory [F8]:")
+		self.addCheckbox(screen, right, "Advisors__BugVictoriesTab")
+		self.addCheckbox(screen, right, "Advisors__BugMembersTab")
 
+		self.addLabel(screen, right, "Info_Screens", "Info [F9]:")
+		self.addCheckbox(screen, right, "Advisors__BugGraphsTab")
+		self.addCheckbox(screen, right, "Advisors__BugGraphsLogScale")
+		self.addCheckbox(screen, right, "Advisors__BugStatsTab")
+		self.addCheckbox(screen, right, "Advisors__BugInfoWonders")
+		self.addCheckbox(screen, right, "Advisors__BugInfoWondersPlayerColor", True)
 
 		self.addLabel(screen, right, "Sevopedia", "Sevopedia [F12]:")
 		self.addCheckbox(screen, right, "Advisors__Sevopedia")
 		self.addCheckbox(screen, right, "Advisors__SevopediaSortItemList")
-
+		
+		"""
 		self.addLabel(screen, right, "Espionage_Screen", "Espionage [CTRL + E]:")
 		self.addCheckbox(screen, right, "BetterEspionage__Enabled")
 		self.addCheckbox(screen, right, "BetterEspionage__ShowCalculatedInformation")
@@ -88,5 +90,6 @@ class BugAdvisorOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__PossibleMissionColor", True)
 		self.addFloatDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionPercent", True, "LAYOUT_LEFT")
 		self.addColorDropdown(screen, rightL, rightR, "BetterEspionage__CloseMissionColor", True)
-
+		"""
+		
 		self.addSpacer(screen, right, "Advisors_Tab")
