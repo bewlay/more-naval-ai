@@ -7470,7 +7470,8 @@ void CvGame::createBarbarianCities()
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-		if (!(pLoopPlot->isWater()))
+		// lfgr 09/2019: Honor isFoundDisabled
+		if( ! pLoopPlot->isWater() && ! pLoopPlot->isFoundDisabled() )
 		{
 			if (!(pLoopPlot->isVisibleToCivTeam()))
 			{
