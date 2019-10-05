@@ -13102,7 +13102,11 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 // BUG - Production Decay - start
 				if (getBugOptionBOOL("CityScreen__ProductionDecayHover", true, "BUG_PRODUCTION_DECAY_HOVER"))
 				{
-					setProductionDecayHelp(szBuffer, pCity->getUnitProductionDecayTurns(eUnit), getBugOptionINT("CityScreen__ProductionDecayHoverUnitThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_UNIT_THRESHOLD"), pCity->getUnitProductionDecay(eUnit), pCity->getProductionUnit() == eUnit);
+					// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+					setProductionDecayHelp(szBuffer, pCity->getUnitProductionDecayTurns(eUnit),
+							getBugOptionINT("CityScreen__ProductionDecayHoverUnitThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_UNIT_THRESHOLD"),
+							pCity->getUnitProductionDecay(eUnit), pCity->getProductionUnit() == eUnit,
+							GET_PLAYER(ePlayer).getDisableProduction() != 0);
 				}
 // BUG - Production Decay - end
 			}
@@ -14698,7 +14702,11 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 // BUG - Production Decay - start
 				if (getBugOptionBOOL("CityScreen__ProductionDecayHover", true, "BUG_PRODUCTION_DECAY_HOVER"))
 				{
-					setProductionDecayHelp(szBuffer, pCity->getBuildingProductionDecayTurns(eBuilding), getBugOptionINT("CityScreen__ProductionDecayHoverBuildingThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_BUILDING_THRESHOLD"), pCity->getBuildingProductionDecay(eBuilding), pCity->getProductionBuilding() == eBuilding);
+					// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+					setProductionDecayHelp(szBuffer, pCity->getBuildingProductionDecayTurns(eBuilding),
+						getBugOptionINT("CityScreen__ProductionDecayHoverBuildingThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_BUILDING_THRESHOLD"),
+						pCity->getBuildingProductionDecay(eBuilding), pCity->getProductionBuilding() == eBuilding,
+							GET_PLAYER(ePlayer).getDisableProduction() != 0);
 				}
 // BUG - Production Decay - end
 			}
@@ -15149,11 +15157,18 @@ void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, Build
 }
 
 // BUG - Production Decay - start
-void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurnsLeft, int iThreshold, int iDecay, bool bProducing)
+// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurnsLeft, int iThreshold, int iDecay,
+		bool bProducing, bool bDisableProduction)
 {
 	if (iTurnsLeft <= 1)
 	{
-		if (bProducing)
+		if( bDisableProduction )
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_PRODUCING_PRODUCTION_DISABLED", iDecay));
+		}
+		else if (bProducing)
 		{
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_PRODUCING", iDecay));
@@ -15164,20 +15179,22 @@ void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurns
 			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY", iDecay));
 		}
 	}
-	else
+	else if (iTurnsLeft <= iThreshold)
 	{
-		if (iTurnsLeft <= iThreshold)
+		if( bDisableProduction )
 		{
-			if (bProducing)
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING", iDecay, iTurnsLeft));
-			}
-			else
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS", iDecay, iTurnsLeft));
-			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING_PRODUCTION_DISABLED", iDecay, iTurnsLeft));
+		}
+		else if (bProducing)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING", iDecay, iTurnsLeft));
+		}
+		else
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS", iDecay, iTurnsLeft));
 		}
 	}
 }

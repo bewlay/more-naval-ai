@@ -208,6 +208,15 @@
 		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced this turn[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_DECAY_PRODUCING_PRODUCTION_DISABLED</Tag>
+		<English>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]%d1[ICON_PRODUCTION] gehen verloren, falls nicht produziert wird, sobald Produktion wieder angeschaltet ist[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Spanish>
+		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_PRODUCTION_DECAY_TURNS</Tag>
 		<English>[COLOR_NEGATIVE_TEXT]Will lose %d1[ICON_PRODUCTION] in %d2 [NUM2:turn:turns][COLOR_REVERT]</English>
 		<French>[COLOR_NEGATIVE_TEXT]Will lose %d1[ICON_PRODUCTION] in %d2 [NUM2:turn:turns][COLOR_REVERT]</French>
@@ -224,6 +233,15 @@
 		<Italian>[COLOR_WARNING_TEXT]Perder&#224;  %d1[ICON_PRODUCTION] se non viene prodotto per %d2 [NUM2:Turno:turni][COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_WARNING_TEXT]Perder&#225; %d1[ICON_PRODUCTION] si no es producido en %d2 [NUM2:turno:turnos][COLOR_REVERT]</Spanish>
 		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns][COLOR_REVERT]</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING_PRODUCTION_DISABLED</Tag>
+		<English>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]%d1[ICON_PRODUCTION] gehen verloren, falls f&#252;r %d2 [NUM2:Runde:Runden] nicht produziert wird, wenn Produktion wieder angeschaltet ist[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Spanish>
+		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Finnish>
 	</TEXT>
 
 <!-- Leaderhead Hover -->
