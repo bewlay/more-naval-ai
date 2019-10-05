@@ -36,8 +36,8 @@ public:
 	void reportFirstContact(TeamTypes iTeamID1, TeamTypes iTeamID2);						
 	void reportCombatResult(CvUnit* pWinner, CvUnit* pLoser);					
 // BUG - Combat Events - start
-	void reportCombatRetreat(CvUnit* pAttacker, CvUnit* pDefender);
-	void reportCombatWithdrawal(CvUnit* pAttacker, CvUnit* pDefender);
+	// lfgr 09/2019: Merged reportCombatRetreat() and reportCombatDefenderRetreat
+	void reportCombatEvent(const char* szEventName, CvUnit* pAttacker, CvUnit* pDefender);
 	void reportCombatLogCollateral(CvUnit* pAttacker, CvUnit* pDefender, int iDamage);
 	void reportCombatLogFlanking(CvUnit* pAttacker, CvUnit* pDefender, int iDamage);
 // BUG - Combat Events - start

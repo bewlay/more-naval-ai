@@ -1955,7 +1955,10 @@ void CvUnit::resolveCombat(CvUnit* pDefender, CvPlot* pPlot, CvBattleDefinition&
                     if (!pPlot->isCity())
                     {
                         if (GC.getGameINLINE().getSorenRandNum(100, "Withdrawal") < pDefender->getWithdrawlProbDefensive())
-                        {
+						{
+							// lfgr 09/2019: Added combatDefenderRetreat to BUG Combat Events
+							CvEventReporter::getInstance().combatDefenderRetreat(this, pDefender);
+
                             pDefender->setFleeWithdrawl(true);
                             break;
                         }
@@ -2316,7 +2319,7 @@ void CvUnit::updateCombat(bool bQuick)
 		if (pDefender->isFleeWithdrawl())
 		{
 			pDefender->joinGroup(NULL);
-			pDefenderCannotFlee = !pDefender->withdrawlToNearestValidPlot(false);
+			pDefenderCannotFlee = !pDefender->withdrawlToNearestValidPlot(false); // LFGR_TODO: bDefenderCannotFlee
 		}
 		// Bugfix end
 

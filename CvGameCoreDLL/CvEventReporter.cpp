@@ -135,12 +135,18 @@ void CvEventReporter::combatResult(CvUnit* pWinner, CvUnit* pLoser)
 // BUG - Combat Events - start
 void CvEventReporter::combatRetreat(CvUnit* pAttacker, CvUnit* pDefender)
 {
-	m_kPythonEventMgr.reportCombatRetreat(pAttacker, pDefender);
+	m_kPythonEventMgr.reportCombatEvent("combatRetreat", pAttacker, pDefender); // lfgr 09/2019
+}
+
+// lfgr 09/2019
+void CvEventReporter::combatDefenderRetreat(CvUnit* pAttacker, CvUnit* pDefender)
+{
+	m_kPythonEventMgr.reportCombatEvent("combatDefenderRetreat", pAttacker, pDefender);
 }
 
 void CvEventReporter::combatWithdrawal(CvUnit* pAttacker, CvUnit* pDefender)
 {
-	m_kPythonEventMgr.reportCombatWithdrawal(pAttacker, pDefender);
+	m_kPythonEventMgr.reportCombatEvent("combatWithdrawal", pAttacker, pDefender); // lfgr 09/2019
 }
 
 void CvEventReporter::combatLogCollateral(CvUnit* pAttacker, CvUnit* pDefender, int iDamage)

@@ -248,31 +248,14 @@ void CvDllPythonEvents::reportCombatResult(CvUnit* pWinner, CvUnit* pLoser)
 }
 
 // BUG - Combat Events - start
-void CvDllPythonEvents::reportCombatRetreat(CvUnit* pAttacker, CvUnit* pDefender)
+
+// lfgr 09/2019
+void CvDllPythonEvents::reportCombatEvent(const char* szEventName, CvUnit* pAttacker, CvUnit* pDefender)
 {
 	if (preEvent())
 	{
 		CyArgsList eventData;
-		eventData.add("combatRetreat");				// add key to lookup python handler fxn
-
-		CyUnit* pCyAttacker = new CyUnit(pAttacker);
-		eventData.add(gDLL->getPythonIFace()->makePythonObject(pCyAttacker));
-
-		CyUnit* pCyDefender = new CyUnit(pDefender);
-		eventData.add(gDLL->getPythonIFace()->makePythonObject(pCyDefender));
-
-		postEvent(eventData);
-		delete pCyDefender;
-		delete pCyAttacker;
-	}
-}
-
-void CvDllPythonEvents::reportCombatWithdrawal(CvUnit* pAttacker, CvUnit* pDefender)
-{
-	if (preEvent())
-	{
-		CyArgsList eventData;
-		eventData.add("combatWithdrawal");			// add key to lookup python handler fxn
+		eventData.add(szEventName);			// add key to lookup python handler fxn
 
 		CyUnit* pCyAttacker = new CyUnit(pAttacker);
 		eventData.add(gDLL->getPythonIFace()->makePythonObject(pCyAttacker));
