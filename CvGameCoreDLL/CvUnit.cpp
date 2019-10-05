@@ -19634,7 +19634,8 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 			if (isBoarding() && !pLoser->plot()->isCity() && !bActsAsCity)
 			{
 				// boarded ships stay in their plot
-				pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, pLoser->plot()->getX_INLINE(), pLoser->plot()->getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, true);
+				// lfgr 09/2019: Don't push out existing units (i.e. the loser!)
+				pUnit = GET_PLAYER(getOwnerINLINE()).initUnit((UnitTypes)iUnit, pLoser->plot()->getX_INLINE(), pLoser->plot()->getY_INLINE(), NO_UNITAI, DIRECTION_SOUTH, false);
 				pUnit->load();
 			}
 			else
