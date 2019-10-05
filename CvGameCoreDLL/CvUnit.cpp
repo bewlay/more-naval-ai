@@ -19374,7 +19374,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 {
 	PromotionTypes ePromotion;
 	bool bConvert = false;
-	int iUnit = NO_UNIT;
+	int iUnit = NO_UNIT; // The unit the winning player gets (capture slave, convert, ...)
 	CLLNode<IDInfo>* pUnitNode;
 	CvUnit* pLoopUnit;
 	CvPlot* pPlot;
@@ -19613,7 +19613,7 @@ void CvUnit::combatWon(CvUnit* pLoser, bool bAttacking)
 	CvWString szBuffer;
 	
 	if (iUnit != NO_UNIT)
-	{
+	{ // We will create a unit from combat (e.g. by converting the old one)
 		if ((!pLoser->isImmuneToCapture() && !isNoCapture() && !pLoser->isImmortal())
 		  || GC.getUnitInfo((UnitTypes)pLoser->getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
 		{

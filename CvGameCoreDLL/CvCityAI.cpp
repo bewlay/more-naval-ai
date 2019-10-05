@@ -825,7 +825,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	{
 		iHappyModifier = 1;
 	}
-	if (iHealthModifier >= 8)
+	if (iHealthModifier >= 8) // LFGR_TODO: iHealthLevel?
 	{
 		iHealthModifier = 0;
 	}
