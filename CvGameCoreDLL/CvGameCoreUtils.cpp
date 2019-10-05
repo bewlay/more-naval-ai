@@ -1348,7 +1348,9 @@ bool PUF_isEnemy(const CvUnit* pUnit, int iData1, int iData2)
 bool PUF_isVisible(const CvUnit* pUnit, int iData1, int iData2)
 {
 	FAssertMsg(iData1 != -1, "Invalid data argument, should be >= 0");
-	return !(pUnit->isInvisible(GET_PLAYER((PlayerTypes)iData1).getTeam(), false));
+	// lfgr 09/2019: Delayed death units are not counted as visible
+	// (old) return !(pUnit->isInvisible(GET_PLAYER((PlayerTypes)iData1).getTeam(), false));
+	return !(pUnit->isDelayedDeath()) && !(pUnit->isInvisible(GET_PLAYER((PlayerTypes)iData1).getTeam(), false));
 }
 
 bool PUF_isVisibleDebug(const CvUnit* pUnit, int iData1, int iData2)
