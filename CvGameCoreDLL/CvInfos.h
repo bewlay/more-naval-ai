@@ -641,6 +641,7 @@ public:
 	int getUnitArtStyleType() const;
 	int getPromotionCombatType() const;
 	int getPromotionCombatMod() const;
+	int getMiscastChance() const; // MiscastPromotions 10/2019 lfgr
 	int getBonusAffinity(int i) const;
 	int getDamageTypeCombat(int i) const;
 	int getDamageTypeResist(int i) const;
@@ -788,6 +789,7 @@ protected:
 	int m_iUnitArtStyleType;
 	int m_iPromotionCombatType;
 	int m_iPromotionCombatMod;
+	int m_iMiscastChance; // MiscastPromotions 10/2019 lfgr
 	int* m_piBonusAffinity;
 	int* m_piDamageTypeCombat;
 	int* m_piDamageTypeResist;

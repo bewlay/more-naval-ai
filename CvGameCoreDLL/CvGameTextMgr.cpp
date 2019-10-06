@@ -1255,6 +1255,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 /*************************************************************************************************/
 /**	END																							**/
 /*************************************************************************************************/
+
+			// MiscastPromotions 10/2019 lfgr
+			if( pUnit->getMiscastChance() != 0 )
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", pUnit->getMiscastChance()));
+			}
+			// MiscastPromotions end
 		}
 
 		if (pUnit->maxFirstStrikes() > 0)
@@ -9637,6 +9645,13 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CASTER_RESIST_MODIFY", kPromotionInfo.getCasterResistModify()));
     }
+	// MiscastPromotions 10/2019 lfgr
+    if (kPromotionInfo.getMiscastChance() != 0)
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", kPromotionInfo.getMiscastChance()));
+    }
+	// MiscastPromotions end
 	for (iI = 0; iI < GC.getNumSpellInfos(); iI++)
 	{
 	    if (GC.getSpellInfo((SpellTypes)iI).getPromotionPrereq1() == ePromotion)
@@ -10124,11 +10139,35 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_DELAY", kSpellInfo.getDelay()));
     }
-    if (kSpellInfo.getMiscastChance() != 0)
-    {
+
+	
+	// MiscastPromotions 10/2019 lfgr
+	// If units are selected, possibly display a range of miscast chances
+	int iMinMiscastChance = 100;
+	int iMaxMiscastChance = 0;
+	
+	if( pvpUnits != NULL ) {
+		for( size_t i = 0; i < pvpUnits->size(); i++ ) {
+			int iUnitMiscastChance = pvpUnits->at( i )->getMiscastChance();
+			iMinMiscastChance = std::min( iMinMiscastChance, kSpellInfo.getMiscastChance() + iUnitMiscastChance );
+			iMaxMiscastChance = std::max( iMaxMiscastChance, kSpellInfo.getMiscastChance() + iUnitMiscastChance );
+		}
+	}
+	else {
+		iMinMiscastChance = std::min( 100, std::max( 0, kSpellInfo.getMiscastChance() ) );
+		iMaxMiscastChance = iMinMiscastChance;
+	}
+
+	if( iMinMiscastChance != iMaxMiscastChance ) {
         szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE", kSpellInfo.getMiscastChance()));
-    }
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_RANGE", iMinMiscastChance, iMaxMiscastChance));
+	}
+	else if( iMinMiscastChance != 0 ) {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE", iMinMiscastChance));
+	}
+	// MiscastPromotions end
+
     if (kSpellInfo.getImmobileTurns() != 0)
     {
         szBuffer.append(pcNewline);
@@ -12578,6 +12617,14 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			}
 		}
 	}
+	
+	// MiscastPromotions 10/2019 lfgr
+    if (kUnitInfo.getMiscastChance() != 0)
+    {
+        szBuffer.append(NEWLINE);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", kUnitInfo.getMiscastChance()));
+    }
+	// MiscastPromotions end
 
 //FfH: Added by Kael 08/04/2007
 	for (iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)

@@ -1911,6 +1911,7 @@ m_iPromotionNextLevel(NO_PROMOTION),
 m_iUnitArtStyleType(NO_UNIT_ARTSTYLE),
 m_iPromotionCombatType(NO_PROMOTION),
 m_iPromotionCombatMod(0),
+m_iMiscastChance(0), // MiscastPromotions 10/2019 lfgr
 m_piBonusAffinity(NULL),
 m_piDamageTypeCombat(NULL),
 m_piDamageTypeResist(NULL),
@@ -2549,6 +2550,13 @@ int CvPromotionInfo::getPromotionCombatMod() const
 	return m_iPromotionCombatMod;
 }
 
+// MiscastPromotions 10/2019 lfgr
+int CvPromotionInfo::getMiscastChance() const
+{
+	return m_iMiscastChance;
+}
+// MiscastPromotions end
+
 const TCHAR *CvPromotionInfo::getPyPerTurn() const
 {
 	return m_szPyPerTurn;
@@ -3159,6 +3167,7 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "UnitArtStyleType");
 	m_aszExtraXMLforPass3.push_back(szTextVal);
 	pXML->GetChildXmlValByName(&m_iPromotionCombatMod, "iPromotionCombatMod");
+	pXML->GetChildXmlValByName(&m_iMiscastChance, "iMiscastChance"); // MiscastPromotions 10/2019 lfgr
 	pXML->SetVariableListTagPair(&m_piBonusAffinity, "BonusAffinities", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piDamageTypeResist, "DamageTypeResists", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());

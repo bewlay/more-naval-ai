@@ -1043,6 +1043,8 @@ public:
 	bool isPromotionImmune( PromotionTypes ePromotion ) const; // Exposed to python
 	void changePromotionImmune( PromotionTypes ePromotion, int iChange );
 	// XML_LISTS end
+	
+	int getMiscastChance() const; // MiscastPromotions 10/2019 lfgr
 
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
 //FfH: End Add

@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for general spell help and messages. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_MESSAGE_SPELL_CAST</Tag>
+		<English>%s1_UnitName casts %s2</English>
+		<French>%s1_UnitName jets %s2</French>
+		<German>%s1_UnitName wirkt %s2</German>
+		<Italian>%s1_UnitName tiri %s2</Italian>
+		<Spanish>%s1_UnitName lanza %s2</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MESSAGE_SPELL_MISCAST</Tag>
+		<English>%s1_UnitName miscasts %s2</English>
+		<French>%s1_UnitName miscasts %s2</French>
+		<German>%s1_UnitName schlägt fehl beim Wirken von %s2</German>
+		<Italian>%s1_UnitName miscasts %s2</Italian>
+		<Spanish>%s1_UnitName lanza mal %s2</Spanish>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_IGNORE_HAS_CASTED</Tag>
 		<English>[ICON_BULLET]Can be casted even after another spell has been casted this turn by the same caster</English>
@@ -47,6 +64,30 @@
 		<German>[ICON_BULLET]Verringert die Bevölkerungzahl der Stadt um %d1</German>
 		<Italian>[ICON_BULLET]Reduces the population of the city by %d1</Italian>
 		<Spanish>[ICON_BULLET]Reduce la población de la ciudad por %d1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_MISCAST_CHANCE</Tag>
+		<English>[ICON_BULLET]%d1% to be miscast</English>
+		<French>[ICON_BULLET]%d1% de rater le sort</French>
+		<German>[ICON_BULLET]%d1% dass der Zauber fehlschlägt</German>
+		<Italian>[ICON_BULLET]%d1% to be miscast</Italian>
+		<Spanish>[ICON_BULLET]%d1% de ser lanzado mal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_MISCAST_CHANCE_RANGE</Tag>
+		<English>[ICON_BULLET]%d1-%d2% to be miscast</English>
+		<French>[ICON_BULLET]%d1-%d2% de rater le sort</French>
+		<German>[ICON_BULLET]%d1-%d2% dass der Zauber fehlschlägt</German>
+		<Italian>[ICON_BULLET]%d1-%d2% to be miscast</Italian>
+		<Spanish>[ICON_BULLET]%d1-%d2% de ser lanzado mal</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY</Tag>
+		<English>[ICON_BULLET]%D1% to the miscasting rate</English>
+		<French>[ICON_BULLET]%D1% to the miscasting rate</French>
+		<German>[ICON_BULLET]%D1% zur Fehlschlagsrate von Zaubern</German>
+		<Italian>[ICON_BULLET]%D1% to the miscasting rate</Italian>
+		<Spanish>[ICON_BULLET]%D1% to the miscasting rate</Spanish>
 	</TEXT>
 <!-- End Puppet States -->
 </Civ4GameText>

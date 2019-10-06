@@ -1133,6 +1133,7 @@
 		<element type="iSpellCasterXP" minOccurs="0"/>
 		<element type="iSpellDamageModify" minOccurs="0"/>
 		<element type="iWorkRateModify" minOccurs="0"/>		
+		<element type="iMiscastChance" minOccurs="0"/> <!-- MiscastChance 10/2019 lfgr -->
 		<element type="CaptureUnitCombat" minOccurs="0"/>
 		<element type="PromotionCombatApply" minOccurs="0"/>
 		<element type="PromotionImmune1" minOccurs="0"/>

@@ -17190,7 +17190,7 @@ void CvUnit::cast(int spell)
 		    }
 		}
     }
-    int iMiscastChance = kSpellInfo.getMiscastChance() + m_pUnitInfo->getMiscastChance();
+    int iMiscastChance = kSpellInfo.getMiscastChance() + getMiscastChance(); // MiscastPromotions 10/2019 lfgr
     if (iMiscastChance > 0)
     {
         if (GC.getGameINLINE().getSorenRandNum(100, "Miscast") < iMiscastChance)
@@ -17204,7 +17204,11 @@ void CvUnit::cast(int spell)
                 gDLL->getPythonIFace()->callFunction(PYSpellModule, "miscast", argsList.makeFunctionArgs()); //, &lResult
                 delete pyUnit; // python fxn must not hold on to this pointer
             }
-            gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MESSAGE_SPELL_MISCAST"), "AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/spells/miscast.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"), getX_INLINE(), getY_INLINE(), true, true);
+			// MiscastPromotions 10/2019 lfgr: fixed message
+            gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+					gDLL->getText("TXT_KEY_MESSAGE_SPELL_MISCAST", getName().GetCString(), kSpellInfo.getDescription()),
+					"AS2D_WONDER_UNIT_BUILD", MESSAGE_TYPE_MAJOR_EVENT, "art/interface/buttons/spells/miscast.dds",
+					(ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
             gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
             return;
         }
@@ -20119,6 +20123,20 @@ void CvUnit::changePromotionImmune( PromotionTypes ePromotion, int iChange )
 	m_paiPromotionImmune[ePromotion] += iChange;
 }
 // XML_LISTS end
+
+// MiscastPromotions 10/2019 lfgr
+int CvUnit::getMiscastChance() const {
+	int iMiscastChance = GC.getUnitInfo( getUnitType() ).getMiscastChance();
+
+	// LFGR_TODO: Make more efficient for next savegame-breaking release
+	for( int ePromotion = 0; ePromotion < GC.getNumPromotionInfos(); ePromotion++ ) {
+		if( isHasPromotion( (PromotionTypes) ePromotion ) ) {
+			iMiscastChance += GC.getPromotionInfo( (PromotionTypes) ePromotion ).getMiscastChance();
+		}
+	}
+
+	return std::max( 0, iMiscastChance );
+}
 
 void CvUnit::read(FDataStreamBase* pStream)
 {
