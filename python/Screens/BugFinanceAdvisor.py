@@ -102,7 +102,7 @@ class BugFinanceAdvisor( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Ad
 
 		szTreasuryPanel = self.getNextWidgetName()
 		screen.addPanel( szTreasuryPanel, u"", "", True, True, self.X_ROOT_MARGIN, self.Y_TREASURY,
-				self.xPanelWidth - 2 * self.X_ROOT_MARGIN, self.H_TREASURY, PanelStyles.PANEL_STYLE_MAIN )
+				self.wScreen - 2 * self.X_ROOT_MARGIN, self.H_TREASURY, PanelStyles.PANEL_STYLE_MAIN )
 		szText = localText.getText("TXT_KEY_FINANCIAL_ADVISOR_TREASURY", (gold, )).upper()
 		if gold < 0:
 			if goldPerTurn != 0:

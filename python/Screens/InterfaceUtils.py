@@ -69,19 +69,23 @@ class GenericAdvisorScreen( object ) :
 		screen = self.getScreen()
 		
 		if (BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024):
-			self.xPanelWidth = max( 1024, screen.getXResolution() )
-			self.yPanelHeight = max( 768, screen.getYResolution() )
-			screen.setDimensions(0, 0, self.xPanelWidth, self.yPanelHeight)
+			self.wScreen = max( 1024, screen.getXResolution() )
+			self.hScreen = max( 768, screen.getYResolution() )
+			screen.setDimensions( 0, 0, self.wScreen, self.hScreen )
 		else:
-			self.xPanelWidth = 1024
-			self.yPanelHeight = 768
+			self.wScreen = 1024
+			self.hScreen = 768
 			screen.setDimensions( screen.centerX(0), screen.centerY(0),
-					self.xPanelWidth, self.yPanelHeight)
+								  self.wScreen, self.hScreen )
 		
-		return self.xPanelWidth, self.yPanelHeight # For convenience
+		# Update other dimensions
+		self.xExitButton = self.wScreen - 30
+		self.yExitButton = self.hScreen - 42
+		
+		return self.wScreen, self.hScreen # For convenience
 	
 	def addBackgroundHeaderFooter( self, szHeaderText ) :
-		xPanelWidth, yPanelHeight = self.xPanelWidth, self.yPanelHeight
+		xPanelWidth, yPanelHeight = self.wScreen, self.hScreen
 		screen = self.getScreen()
 		
 		# Background
@@ -101,12 +105,12 @@ class GenericAdvisorScreen( object ) :
 				xPanelWidth, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
 	
 	def addExitButton( self ) :
-		xPanelWidth, yPanelHeight = self.xPanelWidth, self.yPanelHeight
+		xPanelWidth, yPanelHeight = self.wScreen, self.hScreen
 		screen = self.getScreen()
 		
 		szExitText = CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper()
 		screen.setText( self.EXIT_ID, "Background", u"<font=4>" + szExitText + "</font>",
-				CvUtil.FONT_RIGHT_JUSTIFY, xPanelWidth - 30, yPanelHeight - 42, 0,
+				CvUtil.FONT_RIGHT_JUSTIFY, self.xExitButton, self.yExitButton, 0,
 				FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 		screen.setActivation( self.EXIT_ID, ActivationTypes.ACTIVATE_MIMICPARENTFOCUS )
 

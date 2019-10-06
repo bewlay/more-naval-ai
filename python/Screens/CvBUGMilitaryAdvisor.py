@@ -19,11 +19,11 @@
 ##
 ## Author: Ruff_Hi (Situation Report tab)
 ##         EmperorFool (Deployment and Strategic Advantages tabs)
+##         lfgr (full screen, tweaks)
 
 from CvPythonExtensions import *
 import CvUtil
 import PyHelpers
-import time
 import re
 
 import IconGrid_BUG
@@ -33,6 +33,9 @@ import BugDll
 import PlayerUtil
 import UnitGrouper
 import UnitUtil
+
+# lfgr 10/2019: Full-screen Advisors
+from InterfaceUtils import GenericAdvisorScreen
 
 # BUG - Mac Support - start
 BugUtil.fixSets(globals())
@@ -49,7 +52,7 @@ UNIT_LOCATION_SCREEN = 0
 SITUATION_REPORT_SCREEN = 1
 STRATEGIC_ADVANTAGES_SCREEN = 2
 
-class CvMilitaryAdvisor:
+class CvMilitaryAdvisor( GenericAdvisorScreen ) : # lfgr 10/2019: Full-screen Advisors
 	"Shows the BUG Version of the Military Advisor"
 
 	def __init__(self, screenId):
@@ -64,16 +67,7 @@ class CvMilitaryAdvisor:
 		self.Y_GROUP_LIST = 190
 		self.W_GROUP_LIST = 280
 		
-		self.X_MAP = 20
-		self.Y_MAP = 220      # 190
-		self.W_MAP = 580
-		self.H_MAP_MAX = 470  # 500
 		self.MAP_MARGIN = 20
-
-		self.X_TEXT = 625
-		self.Y_TEXT = 190
-		self.W_TEXT = 380
-		self.H_TEXT = 500
 						
 		self.X_LEADERS = 20
 		self.Y_LEADERS = 80
@@ -120,19 +114,9 @@ class CvMilitaryAdvisor:
 		self.Z_CONTROLS = self.Z_BACKGROUND - 0.2
 #		self.DZ = -0.2
 
-		self.X_SCREEN = 500
-		self.Y_SCREEN = 396
-		self.W_SCREEN = 1024
-		self.H_SCREEN = 768
-		self.Y_TITLE = 12
-		self.L_SCREEN = 20
-
-		self.X_EXIT = 994
-		self.Y_EXIT = 726
-
 		self.X_LINK = 100
 		self.DX_LINK = 220
-		self.Y_LINK = 726
+		#self.Y_LINK = 726
 		self.MARGIN = 20
 		self.SPACING = 40
 		
@@ -185,16 +169,22 @@ class CvMilitaryAdvisor:
 		if screen.isActive():
 			return
 
-		# over-ride screen width, height
-		self.W_SCREEN = screen.getXResolution() - 40
-		self.X_SCREEN = (screen.getXResolution() - 24) / 2
-		self.L_SCREEN = 20
-
-		if self.W_SCREEN < 1024:
-			self.W_SCREEN = 1024
-			self.L_SCREEN = 0
-		
-		self.X_EXIT = self.W_SCREEN - 30
+		# Setup dimensions and locations
+		self.initDimensions()
+		# Deployment tab
+		self.xMap = 20
+		self.yMap = 220 # Bts: 190
+		self.wMap = self.wScreen / 2 + 65 # Orig: 580
+		self.hMapMax = self.hScreen - 298 # Orig: 470, Bts: 500
+		self.xText = self.xMap + self.wMap + 20 # Orig: 625
+		self.yText = 190
+		self.wText = self.wScreen - self.xText - 20
+		self.hText = self.hScreen - 268 # Orig: 500
+		# Other tabs
+		self.xPanel = 10
+		self.yPanel = 60
+		self.wPanel = self.wScreen - 20
+		self.hPanel = self.hScreen - 120
 		#self.Y_EXIT = 726
 		#self.H_SCREEN = screen.getYResolution()
 			
@@ -204,18 +194,11 @@ class CvMilitaryAdvisor:
 		self.iActivePlayer = CyGame().getActivePlayer()
 		if self.iScreen == -1:
 			self.iScreen = UNIT_LOCATION_SCREEN
-
-		# Set the background widget and exit button
-		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("MAINMENU_SLIDESHOW_LOAD").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, 713, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
+		
+		# Background and stuff
+		self.addBackgroundHeaderFooter( localText.getText("TXT_KEY_MILITARY_ADVISOR_TITLE", ()).upper() )
+		self.addExitButton()
 		screen.showWindowBackground( False )
-		#screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
-		screen.setDimensions(self.L_SCREEN, screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
-		screen.setText(self.EXIT_ID, "Background", u"<font=4>" + localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_CONTROLS, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-
-		# Header...
-		screen.setLabel(self.HEADER_ID, "Background", u"<font=4b>" + localText.getText("TXT_KEY_MILITARY_ADVISOR_TITLE", ()).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.Y_TITLE, self.Z_CONTROLS, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
 		self.iconGrid = None
 		self.unitLocationInitDone = False
@@ -236,21 +219,21 @@ class CvMilitaryAdvisor:
 			szText = u"<font=4>" + localText.getText("TXT_KEY_MILITARY_UNIT_LOCATION", ()).upper() + "</font>"
 		else:
 			szText = u"<font=4>" + localText.getColorText("TXT_KEY_MILITARY_UNIT_LOCATION", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>"
-		screen.setText(self.UNIT_LOC_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setText(self.UNIT_LOC_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.yExitButton, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		xLink += CyInterface().determineWidth(szText) + self.SPACING
 
 		if (self.iScreen != SITUATION_REPORT_SCREEN):
 			szText = u"<font=4>" + localText.getText("TXT_KEY_MILITARY_SITUATION_REPORT", ()).upper() + "</font>"
 		else:
 			szText = u"<font=4>" + localText.getColorText("TXT_KEY_MILITARY_SITUATION_REPORT", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>"
-		screen.setText(self.SIT_REP_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setText(self.SIT_REP_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.yExitButton, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		xLink += CyInterface().determineWidth(szText) + self.SPACING
 
 		if (self.iScreen != STRATEGIC_ADVANTAGES_SCREEN):
 			szText = u"<font=4>" + localText.getText("TXT_KEY_MILITARY_STRATEGIC_ADVANTAGES", ()).upper() + "</font>"
 		else:
 			szText = u"<font=4>" + localText.getColorText("TXT_KEY_MILITARY_STRATEGIC_ADVANTAGES", (), gc.getInfoTypeForString("COLOR_YELLOW")).upper() + "</font>"
-		screen.setText(self.STRAT_ADV_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.Y_LINK, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setText(self.STRAT_ADV_TAB_ID, "", szText, CvUtil.FONT_LEFT_JUSTIFY, xLink, self.yExitButton, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 #### Situation Report Tab ####
 
@@ -263,7 +246,7 @@ class CvMilitaryAdvisor:
 		# get Player arrays
 		pVassals = [[]] * gc.getMAX_PLAYERS()
 		pDefPacts = [[]] * gc.getMAX_PLAYERS()
-		bVassals = False
+		bVassals = False # LFGR_TODO?
 		bDefPacts = False
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
 			pPlayer = gc.getPlayer(iLoopPlayer)
@@ -283,21 +266,14 @@ class CvMilitaryAdvisor:
 				if len(pDefPacts[iLoopPlayer]) > 0:
 					bDefPacts = True
 
-		bVassals = True
-		bDefPacts = True
+		#bVassals = True
+		#bDefPacts = True
 		self.initIconGrid(screen, bVassals, bDefPacts)
 		self.initPower()
 		
-		activePlayer = gc.getPlayer(self.iActivePlayer)		
-		
 		# Assemble the panel
-		iPANEL_X = 5
-		iPANEL_Y = 60
-		iPANEL_WIDTH = self.W_SCREEN - 20
-		iPANEL_HEIGHT = self.H_SCREEN - 120
-
 		self.tradePanel = self.getNextWidgetName()
-		screen.addPanel(self.tradePanel, "", "", True, True, iPANEL_X, iPANEL_Y, iPANEL_WIDTH, iPANEL_HEIGHT, PanelStyles.PANEL_STYLE_MAIN )
+		screen.addPanel(self.tradePanel, "", "", True, True, self.xPanel, self.yPanel, self.wPanel, self.hPanel, PanelStyles.PANEL_STYLE_MAIN )
 		
 		self.iconGrid.createGrid()
 		self.iconGrid.clearData()
@@ -430,10 +406,10 @@ class CvMilitaryAdvisor:
 						IconGrid_BUG.GRID_MULTI_LIST_COLUMN,
 						IconGrid_BUG.GRID_MULTI_LIST_COLUMN)
 
-		gridX = self.MIN_LEFT_RIGHT_SPACE + 10
-		gridY = self.MIN_TOP_BOTTOM_SPACE + self.SITREP_PANEL_SPACE + self.TABLE_CONTROL_HEIGHT + self.TITLE_HEIGHT + 10
-		gridWidth = self.W_SCREEN - 10 # - self.MIN_LEFT_RIGHT_SPACE * 2 - 20
-		gridHeight = self.H_SCREEN - self.MIN_TOP_BOTTOM_SPACE * 2 - self.SITREP_PANEL_SPACE - self.TITLE_HEIGHT - 20
+		gridX = self.xPanel + self.MIN_LEFT_RIGHT_SPACE
+		gridWidth = self.wPanel - self.MIN_LEFT_RIGHT_SPACE * 2
+		gridY = self.yPanel + self.MIN_TOP_BOTTOM_SPACE
+		gridHeight = self.hPanel - self.MIN_TOP_BOTTOM_SPACE * 2
 		self.iconGrid = IconGrid_BUG.IconGrid_BUG(self.getNextWidgetName(), screen, gridX, gridY, gridWidth, gridHeight,
 													columns, True, self.SHOW_LEADER_NAMES, self.SHOW_ROW_BORDERS)
 
@@ -468,15 +444,13 @@ class CvMilitaryAdvisor:
 		self.iconGrid.setTextColWidth(self.Col_WHEOOH, 25)
 		self.iconGrid.setStackedBarColWidth(self.Col_Threat, 120)
 				
-		gridWidth = self.iconGrid.getPrefferedWidth()
-		gridHeight = self.iconGrid.getPrefferedHeight()
-		self.SITREP_LEFT_RIGHT_SPACE = (self.W_SCREEN - gridWidth - 20) / 2
-		self.SITREP_TOP_BOTTOM_SPACE = (self.H_SCREEN - gridHeight - 20) / 2
-		gridX = self.SITREP_LEFT_RIGHT_SPACE + 10
-		gridY = self.SITREP_TOP_BOTTOM_SPACE + 10
+		#gridWidth = self.iconGrid.getPrefferedWidth()
+		#gridHeight = self.iconGrid.getPrefferedHeight()
+		#gridX = (self.wScreen - gridWidth) / 2
+		#gridY = (self.hScreen - gridHeight) / 2
 
-		self.iconGrid.setPosition(gridX, gridY)
-		self.iconGrid.setSize(gridWidth, gridHeight)
+		#self.iconGrid.setPosition(gridX, gridY)
+		#self.iconGrid.setSize(gridWidth, gridHeight)
 
 	def initPower(self):
 		# active player power
@@ -588,16 +562,6 @@ class CvMilitaryAdvisor:
 			#						ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), 35, 
 			#						WidgetTypes.WIDGET_GENERAL, -1)
 
-	def GetDeclareWar(self, iRow, iPlayer):
-		# this module will check if the iPlayer will declare war
-		# on the other leaders.  We cannot check if the iPlayer, the iActivePlayer
-		# and the iTargetPlayer don't all know each other.
-		# However, the code wouldn't have got this far if the iPlayer didn't know the iActivePlayer
-		# so we only need to check if the iPlayer and the iActivePlayer both know the iTargetPlayer.
-
-		# also need to check on vassal state - will do that later
-		return iLeaderWars
-
 
 #### Strategic Advantages Tab ####
 
@@ -607,12 +571,8 @@ class CvMilitaryAdvisor:
 		screen = self.getScreen()
 		
 		# Assemble the panel
-		iPANEL_X = 5
-		iPANEL_Y = 60
-		iPANEL_WIDTH = self.W_SCREEN - 20
-		iPANEL_HEIGHT = self.H_SCREEN - 120
 		self.tradePanel = self.getNextWidgetName()
-		screen.addPanel(self.tradePanel, "", "", True, True, iPANEL_X, iPANEL_Y, iPANEL_WIDTH, iPANEL_HEIGHT, PanelStyles.PANEL_STYLE_MAIN )
+		screen.addPanel(self.tradePanel, "", "", True, True, self.xPanel, self.yPanel, self.wPanel, self.hPanel, PanelStyles.PANEL_STYLE_MAIN )
 		
 		self.initStratAdvGrid(screen)
 		self.fillStratAdvGrid()
@@ -639,11 +599,11 @@ class CvMilitaryAdvisor:
 			IconGrid_BUG.GRID_MULTI_LIST_COLUMN,
 			IconGrid_BUG.GRID_MULTI_LIST_COLUMN,
 		)
-		
-		gridX = self.MIN_LEFT_RIGHT_SPACE + 10
-		gridY = self.MIN_TOP_BOTTOM_SPACE + self.SITREP_PANEL_SPACE + self.TABLE_CONTROL_HEIGHT + self.TITLE_HEIGHT + 10
-		gridWidth = self.W_SCREEN - 10 # - self.MIN_LEFT_RIGHT_SPACE * 2 - 20
-		gridHeight = self.H_SCREEN - self.MIN_TOP_BOTTOM_SPACE * 2 - self.SITREP_PANEL_SPACE - self.TITLE_HEIGHT - 20
+
+		gridX = self.xPanel + self.MIN_LEFT_RIGHT_SPACE
+		gridWidth = self.wPanel - self.MIN_LEFT_RIGHT_SPACE * 2
+		gridY = self.yPanel + self.MIN_TOP_BOTTOM_SPACE
+		gridHeight = self.hPanel - self.MIN_TOP_BOTTOM_SPACE * 2
 		self.iconGrid = IconGrid_BUG.IconGrid_BUG(
 				self.getNextWidgetName(), screen, gridX, gridY, gridWidth, gridHeight,
 				columns, True, self.SHOW_LEADER_NAMES, self.SHOW_ROW_BORDERS)
@@ -668,15 +628,6 @@ class CvMilitaryAdvisor:
 		self.iconGrid.createColumnGroup(localText.getText("TXT_KEY_MILITARY_STRATADV_OUR_UNITS", ()), 2)
 		self.iconGrid.createColumnGroup(localText.getText("TXT_KEY_MILITARY_STRATADV_THEIR_UNITS", ()), 2)
 		
-		gridWidth = self.iconGrid.getPrefferedWidth()
-		gridHeight = self.iconGrid.getPrefferedHeight()
-		self.SITREP_LEFT_RIGHT_SPACE = (self.W_SCREEN - gridWidth - 20) / 2
-		self.SITREP_TOP_BOTTOM_SPACE = (self.H_SCREEN - gridHeight - 20) / 2
-		gridX = self.SITREP_LEFT_RIGHT_SPACE + 10
-		gridY = self.SITREP_TOP_BOTTOM_SPACE + 10
-
-		self.iconGrid.setPosition(gridX, gridY)
-		self.iconGrid.setSize(gridWidth, gridHeight)
 		self.iconGrid.createGrid()
 	
 	def fillStratAdvGrid(self):
@@ -780,29 +731,6 @@ class CvMilitaryAdvisor:
 		yesUnits -= UnitUtil.findObsoleteUnits(yesUnits)
 		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Them_Yes, yesUnits)
 		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Them_Maybe, maybeUnits)
-		
-#		iRivalYesUnits, iRivalNoUnits = UnitUtil.getKnownTrainableUnits(player.getID(), self.iActivePlayer, self.iHumanKnowableUnits, True)
-#		
-#		# determine units that both the player and rival can build for sure
-#		removeUnits = set()
-#		for iUnit in self.iHumanYesUnits:
-#			if UnitUtil.isUnitOrUpgradeInSet(iUnit, iRivalYesUnits):
-#				removeUnits.add(iUnit)
-#		for iUnit in iRivalYesUnits:
-#			if UnitUtil.isUnitOrUpgradeInSet(iUnit, self.iHumanYesUnits):
-#				removeUnits.add(iUnit)
-#		
-#		iHumanYesUnits = self.iHumanActualYesUnits - removeUnits
-#		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Us_Yes, iHumanYesUnits)
-#		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Us_Maybe, self.iHumanNoUnits)
-#		
-#		BugUtil.debug("-----------------------")
-#		for eUnit in UnitUtil.findObsoleteUnits(iRivalYesUnits):
-#			BugUtil.debug("  obs %s", gc.getUnitInfo(eUnit).getDescription())
-#		iRivalYesUnits -= UnitUtil.findObsoleteUnits(iRivalYesUnits)
-#		iRivalYesUnits -= removeUnits
-#		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Them_Yes, iRivalYesUnits)
-#		self.addStratAdvUnitIcons(iRow, self.SA_Col_Unit_Them_Maybe, iRivalNoUnits)
 
 	def addStratAdvUnitIcons(self, iRow, iCol, iUnits):
 		if iUnits:
@@ -838,16 +766,16 @@ class CvMilitaryAdvisor:
 		# Minimap initialization
 		self.timer.start()
 		map = CyMap()
-		iMap_W = map.getGridWidth()
-		iMap_H = map.getGridHeight()
-		self.H_MAP = (self.W_MAP * iMap_H) / iMap_W
-		if (self.H_MAP > self.H_MAP_MAX):
-			self.W_MAP = (self.H_MAP_MAX * iMap_W) / iMap_H
-			self.H_MAP = self.H_MAP_MAX
+		iMapGridWidth = map.getGridWidth()
+		iMapGridHeight = map.getGridHeight()
+		self.hMap = (self.wMap * iMapGridHeight) / iMapGridWidth
+		if (self.hMap > self.hMapMax):
+			self.wMap = (self.hMapMax * iMapGridWidth) / iMapGridHeight
+			self.hMap = self.hMapMax
 
 		szPanel_ID = self.MINIMAP_PANEL
-		screen.addPanel(szPanel_ID, u"", "", False, False, self.X_MAP, self.Y_MAP, self.W_MAP, self.H_MAP, PanelStyles.PANEL_STYLE_MAIN)
-		screen.initMinimap(self.X_MAP + self.MAP_MARGIN, self.X_MAP + self.W_MAP - self.MAP_MARGIN, self.Y_MAP + self.MAP_MARGIN, self.Y_MAP + self.H_MAP - self.MAP_MARGIN, self.Z_CONTROLS)
+		screen.addPanel( szPanel_ID, u"", "", False, False, self.xMap, self.yMap, self.wMap, self.hMap, PanelStyles.PANEL_STYLE_MAIN )
+		screen.initMinimap( self.xMap + self.MAP_MARGIN, self.xMap + self.wMap - self.MAP_MARGIN, self.yMap + self.MAP_MARGIN, self.yMap + self.hMap - self.MAP_MARGIN, self.Z_CONTROLS )
 		screen.updateMinimapSection(False, False)
 		screen.updateMinimapColorFromMap(MinimapModeTypes.MINIMAPMODE_TERRITORY, 0.3)
 		screen.setMinimapMode(MinimapModeTypes.MINIMAPMODE_MILITARY)
@@ -885,7 +813,7 @@ class CvMilitaryAdvisor:
 		if bRedraw:
 			# Set scrollable area for unit buttons
 			szPanel_ID = self.getNextWidgetName()
-			screen.addPanel(szPanel_ID, "", "", True, True, self.X_TEXT, self.Y_TEXT, self.W_TEXT, self.H_TEXT, PanelStyles.PANEL_STYLE_MAIN)
+			screen.addPanel( szPanel_ID, "", "", True, True, self.xText, self.yText, self.wText, self.hText, PanelStyles.PANEL_STYLE_MAIN )
 			
 			# Set scrollable area for leaders
 			szPanel_ID = self.getNextWidgetName()
@@ -929,8 +857,8 @@ class CvMilitaryAdvisor:
 		screen.minimapClearAllFlashingTiles()
 		
 		if (bRedraw):
-			iBtn_X = self.X_TEXT + self.MAP_MARGIN
-			iBtn_Y = self.Y_TEXT + self.MAP_MARGIN / 2
+			iBtn_X = self.xText + self.MAP_MARGIN
+			iBtn_Y = self.yText + self.MAP_MARGIN / 2
 			iTxt_X = iBtn_X + 22
 			iTxt_Y = iBtn_Y + 2
 			if (self.bUnitDetails):
@@ -964,7 +892,7 @@ class CvMilitaryAdvisor:
 		if (bAllSelected):
 			szText = localText.changeTextColor(u"<u>" + szText + u"</u>", gc.getInfoTypeForString("COLOR_YELLOW"))
 		if (bRedraw):
-			screen.addListBoxGFC(self.UNIT_LIST_ID, "", self.X_TEXT + self.MAP_MARGIN, self.Y_TEXT + self.MAP_MARGIN + 15, self.W_TEXT - 2 * self.MAP_MARGIN, self.H_TEXT - 2 * self.MAP_MARGIN - 15, TableStyles.TABLE_STYLE_STANDARD)
+			screen.addListBoxGFC( self.UNIT_LIST_ID, "", self.xText + self.MAP_MARGIN, self.yText + self.MAP_MARGIN + 15, self.wText - 2 * self.MAP_MARGIN, self.hText - 2 * self.MAP_MARGIN - 15, TableStyles.TABLE_STYLE_STANDARD )
 			screen.enableSelect(self.UNIT_LIST_ID, False)
 			screen.setStyle(self.UNIT_LIST_ID, "Table_StandardCiv_Style")
 			screen.appendListBoxString(self.UNIT_LIST_ID, szText, WidgetTypes.WIDGET_MINIMAP_HIGHLIGHT, 1, iGroupID, CvUtil.FONT_LEFT_JUSTIFY)
@@ -1110,8 +1038,8 @@ class CvMilitaryAdvisor:
 			# move GG progress bar to lower panel
 			# by stmartin 02.18.09
 			iPanel_X = self.X_LINK + self.DX_LINK * 5 / 2 + 20
-			iPanel_Y = self.Y_EXIT - 5
-			iPanel_W = self.X_EXIT - iPanel_X - 100
+			iPanel_Y = self.yExitButton - 5
+			iPanel_W = self.xExitButton - iPanel_X - 100
 			iPanel_H = 45
 					
 #			szPanel_ID = self.getNextWidgetName()
