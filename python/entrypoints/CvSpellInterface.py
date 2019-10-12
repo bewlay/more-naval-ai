@@ -3315,7 +3315,7 @@ def spellTakeEquipmentUnit(caster,unit):
 				pHolder = pUnit
 	if pHolder != -1:
 		pHolder.setHasCasted(True)
-		pHolder.kill(True, PlayerTypes.NO_PLAYER)
+		pHolder.kill(False, PlayerTypes.NO_PLAYER)
 
 def reqTaunt(caster):
 	iX = caster.getX()
