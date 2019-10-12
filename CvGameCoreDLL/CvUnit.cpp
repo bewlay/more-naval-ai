@@ -20028,8 +20028,11 @@ bool CvUnit::withdrawlToNearestValidPlot(bool bKillUnit)
 	else
 	{
 		// Bugfix: Defenders that flee can be killed after combat
+		// lfgr 10/2019: Kill delayed, as withdrawlToNearestValidPlot() might be called in all sorts of situations
 		if (bKillUnit) {
-			kill(false);
+			logBBAI("    Killing %S (delayed) -- cannot withdraw to nearest valid plot (Unit %d - plot: %d, %d)",
+					getName().GetCString(), getID(), getX(), getY());
+			kill(true);
 		}
 		// Bugfix end
 		bValid = false;

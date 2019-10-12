@@ -21299,7 +21299,7 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											if (!GET_TEAM(getTeam()).isHasEmbassy(kLoopPlayer.getTeam()))
 											{
-												if( gPlayerLogLevel >= 3 ) logBBAI("considering embassy 1 with %s", kLoopPlayer.getName());
+												if( gPlayerLogLevel >= 3 ) logBBAI("considering embassy 1 with %S", kLoopPlayer.getName());
 												if (AI_getContactTimer(((PlayerTypes)iI), CONTACT_EMBASSY) == 0)
 												{
 													if( gPlayerLogLevel >= 3 ) logBBAI("considering embassy 2");
@@ -23411,6 +23411,8 @@ bool CvPlayerAI::AI_disbandUnit(int iExpThreshold, bool bObsolete)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+		logBBAI("    Killing %S -- disbanded (Unit %d - plot: %d, %d)",
+				pBestUnit->getName().GetCString(), pBestUnit->getID(), pBestUnit->getX(), pBestUnit->getY());
 		pBestUnit->kill(false);
 		return true;
 	}
