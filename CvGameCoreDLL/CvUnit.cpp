@@ -20098,9 +20098,18 @@ bool CvUnit::withdrawlToNearestValidPlot(bool bKillUnit)
 		// Bugfix: Defenders that flee can be killed after combat
 		// lfgr 10/2019: Kill delayed, as withdrawlToNearestValidPlot() might be called in all sorts of situations
 		if (bKillUnit) {
-			logBBAI("    Killing %S (delayed) -- cannot withdraw to nearest valid plot (Unit %d - plot: %d, %d)",
-					getName().GetCString(), getID(), getX(), getY());
-			kill(true);
+			if( !isDelayedDeath() ) {
+				// Show message
+				gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), true, GC.getEVENT_MESSAGE_TIME(),
+						gDLL->getText( "TXT_KEY_MESSAGE_UNIT_KILLED_CANNOT_WITHDRAW", getNameKey() ),
+						GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(),
+						MESSAGE_TYPE_INFO, m_pUnitInfo->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"),
+						getX_INLINE(), getY_INLINE(), false, false);
+				
+				logBBAI("    Killing %S (delayed) -- cannot withdraw to nearest valid plot (Unit %d - plot: %d, %d)",
+						getName().GetCString(), getID(), getX(), getY());
+				kill(true);
+			}
 		}
 		// Bugfix end
 		bValid = false;
