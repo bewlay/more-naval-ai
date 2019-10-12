@@ -2507,7 +2507,9 @@ void CvUnit::updateCombat(bool bQuick)
 
 			if (pPlot->getNumVisibleEnemyDefenders(this) == 0)
 			{
-				getGroup()->groupMove(pPlot, true, ((bAdvance) ? this : NULL));
+				if( !atPlot( pPlot ) ) { // Unit might have already fled to this plot when it became visible after combat
+					getGroup()->groupMove(pPlot, true, ((bAdvance) ? this : NULL));
+				}
 			}
 
 			// This is is put before the plot advancement, the unit will always try to walk back
