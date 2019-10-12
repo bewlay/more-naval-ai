@@ -12106,23 +12106,6 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 					{
 						if (!pLoopUnit->canCoexistWithEnemyUnit(getTeam()))
 						{
-							// lfgr fix 07/2019
-							// If the unit is in the process of dieing (delayed death), finish that
-							int iLoopID = pLoopUnit->getID(); // Just for logging
-							CvWString szLoopName = pLoopUnit->getName(); // Just for logging
-							if( pLoopUnit->doDelayedDeath() ) {
-								// Unit was killed
-								logBBAI( "Delayed death unit %d (%S) killed off when an enemy unit moved on its plot",
-										iLoopID, szLoopName.c_str() );
-								continue;
-							}
-
-							// Now the unit should not be delayed death
-							FAssertMsg( ! pLoopUnit->isDelayedDeath(),
-									"Unsuccessfully tried to kill of delayed death unit before another units moved on its plot. "
-									"Could it still be fighting?" );
-							// lfgr end
-
 							if (NO_UNITCLASS == pLoopUnit->getUnitInfo().getUnitCaptureClassType() && pLoopUnit->canDefend(pNewPlot))
 							{
 
