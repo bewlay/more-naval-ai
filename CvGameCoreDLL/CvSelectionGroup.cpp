@@ -3921,27 +3921,11 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 	{
 		pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = nextUnitNode(pUnitNode);
-
-/*************************************************************************************************/
-/**	Alertness								11/30/08	Written: Pep		Imported: Xienwolf	**/
-/**	ADDON (Alertness) merged Sephi	    														**/
-/**			Prevents annoying accidental attacks when moving into non-visible tiles				**/
-/*************************************************************************************************/
-/**								---- Start Original Code ----									**
-		if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
-		{
-			pLoopUnit->move(pPlot, true);
-		}
-/**								----  End Original Code  ----									**/
-
-
+		
 		if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
 		{
             pLoopUnit->move(pPlot, true);
 		}
-/*************************************************************************************************/
-/**	Alertness								END													**/
-/*************************************************************************************************/
 
 		else
 		{
