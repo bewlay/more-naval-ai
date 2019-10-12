@@ -13215,6 +13215,25 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 		}
 	}
 
+	// lfgr 10/2019: UnitPyInfoHelp
+	if( strlen( kUnitInfo.getPyInfoHelp() ) > 0 )
+	{
+		CyCity* pyCity = pCity ? new CyCity(pCity) : NULL;
+		CyArgsList argsList;
+		argsList.add( eUnit );
+		argsList.add( bCivilopediaText );
+		argsList.add( bStrategyText );
+		argsList.add( bTechChooserText );
+		argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity)); // Might be None
+		
+		CvWString szHelp;
+		gDLL->getPythonIFace()->callFunction(PYSpellModule, "getUnitInfoHelp", argsList.makeFunctionArgs(), &szHelp);
+		szBuffer.append( NEWLINE );
+		szBuffer.append( szHelp );
+		SAFE_DELETE( pyCity ); // python fxn must not hold on to this pointer
+	}
+	// lfgr end
+
 	if (bStrategyText)
 	{
 		if (!CvWString(kUnitInfo.getStrategy()).empty())

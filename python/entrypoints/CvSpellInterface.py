@@ -82,6 +82,13 @@ def getSpellHelp( argsList ) :
 	return eval( pSpell.getPyHelp() )
 # SpellPyHelp END
 
+# UnitPyInfoHelp 10/2019 lfgr
+def getUnitInfoHelp( argsList ) :
+	eUnit, bCivilopediaText, bStrategyText, bTechChooserText, pCity = argsList
+	pUnitInfo = gc.getUnitInfo( eUnit )
+	return eval( pUnitInfo.getPyInfoHelp() )
+# UnitPyInfoHelp END
+
 def findClearPlot(pUnit, plot):
 	BestPlot = -1
 	iBestPlot = 0

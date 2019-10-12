@@ -361,6 +361,7 @@ void CyInfoPythonInterface1()
 		.def("getPrereqCivic", &CvUnitInfo::getPrereqCivic, "int ()")
 		.def("getPyPostCombatLost", &CvUnitInfo::getPyPostCombatLost, "string ()")
 		.def("getPyPostCombatWon", &CvUnitInfo::getPyPostCombatWon, "string ()")
+		.def("getPyInfoHelp", &CvUnitInfo::getPyInfoHelp, "string ()") // lfgr 10/2019: UnitPyInfoHelp
 		.def("getTier", &CvUnitInfo::getTier, "int ()")
 		.def("getWeaponTier", &CvUnitInfo::getWeaponTier, "int ()")
 		.def("isAbandon", &CvUnitInfo::isAbandon, "bool ()")

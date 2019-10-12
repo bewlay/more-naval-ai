@@ -1441,6 +1441,7 @@ public:
 	int getPromotionFromCombat() const;
 	const TCHAR* getPyPostCombatLost() const;
 	const TCHAR* getPyPostCombatWon() const;
+	const TCHAR* getPyInfoHelp() const; // lfgr 10/2019: UnitPyInfoHelp
 	int getUnitConvertFromCombat() const;
 	int getUnitConvertFromCombatChance() const;
 	int getUnitCreateFromCombat() const;
@@ -1712,6 +1713,7 @@ protected:
 	int* m_piDamageTypeCombat;
 	CvString m_szPyPostCombatLost;
 	CvString m_szPyPostCombatWon;
+	CvString m_szPyInfoHelp; // lfgr 10/2019: UnitPyInfoHelp
 	CvString m_szImage;
 	std::vector<CvString> m_aszExtraXML2forPass3;
 //FfH: End Add

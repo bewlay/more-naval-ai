@@ -555,6 +555,7 @@
 	<ElementType name="bCanMoveLimitedBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PythonPostCombatLost" content="textOnly"/>
 	<ElementType name="PythonPostCombatWon" content="textOnly"/>
+	<ElementType name="PythonInfoHelp" content="textOnly"/> <!-- UnitPyInfoHelp 10/2019 lfgr -->
 	<ElementType name="DamageType" content="textOnly"/>
 	<ElementType name="DamageTypeCombat" content="eltOnly">
 		<element type="DamageType"/>
@@ -771,6 +772,7 @@
 		<element type="bCanMoveLimitedBorders" minOccurs="0"/>
 		<element type="PythonPostCombatLost" minOccurs="0"/>
 		<element type="PythonPostCombatWon" minOccurs="0"/>
+		<element type="PythonInfoHelp" minOccurs="0"/> <!-- UnitPyInfoHelp 10/2019 lfgr -->
 		<element type="DamageTypeCombats" minOccurs="0"/>
 		<element type="BonusAffinities" minOccurs="0"/>
 		<element type="iOrderPriority" minOccurs="0"/>

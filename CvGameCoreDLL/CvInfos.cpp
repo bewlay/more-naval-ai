@@ -6029,6 +6029,12 @@ const TCHAR *CvUnitInfo::getPyPostCombatWon() const
 	return m_szPyPostCombatWon;
 }
 
+// lfgr 10/2019: UnitPyInfoHelp
+const TCHAR *CvUnitInfo::getPyInfoHelp() const
+{
+	return m_szPyInfoHelp;
+}
+
 int CvUnitInfo::getTier() const
 {
 	return m_iTier;
@@ -7527,6 +7533,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iWithdrawlProbDefensive,"iWithdrawlProbDefensive");
 	pXML->GetChildXmlValByName(m_szPyPostCombatLost, "PythonPostCombatLost");
 	pXML->GetChildXmlValByName(m_szPyPostCombatWon, "PythonPostCombatWon");
+	pXML->GetChildXmlValByName(m_szPyInfoHelp, "PythonInfoHelp");// lfgr 10/2019: UnitPyInfoHelp
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piBonusAffinity, "BonusAffinities", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 //FfH: End Add
