@@ -971,7 +971,41 @@
 
 
 <!-- Fractional Trade -->
+<!-- Trade route UI improvements 10/2019 lfgr -->
 
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL_PROFIT</Tag>
+		<English>%s1 [ICON_COMMERCE]: Total profit</English>
+		<French>%s1 [ICON_COMMERCE] : Total profit</French>
+		<German>%s1 [ICON_COMMERCE]: Gesamtprofit</German>
+		<Italian>%s1 [ICON_COMMERCE]: Total profit</Italian>
+		<Spanish>%s1 [ICON_COMMERCE]: Total profit</Spanish>
+		<Finnish>%s1 [ICON_COMMERCE]: Total profit</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_MOD_CIVIC</Tag>
+		<English>%D2%%: for %s1</English>
+		<French>%D2%% : pour %s1</French>
+		<German>%D2%%: f&#252;r %s1</German>
+		<Italian>%D2%%: per %s1</Italian>
+		<Spanish>%D2%%: Por %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_MOD_TRAIT</Tag>
+		<English>%D2%%: for %s1</English>
+		<French>%D2%% : pour %s1</French>
+		<German>%D2%%: f&#252;r %s1</German>
+		<Italian>%D2%%: per %s1</Italian>
+		<Spanish>%D2%%: Por %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_TRADE_YIELD_MODIFIERS</Tag>
+		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield from Trade Routes ([ICON_TRADE])</English>
+		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield des routes commerciales ([ICON_TRADE])</French>
+		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield von Handelswegen ([ICON_TRADE])</German>
+		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield dalle rotte commerciali ([ICON_TRADE])</Italian>
+		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield por rutas comerciales ([ICON_TRADE])</Spanish>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL</Tag>
 		<English>%s1 [ICON_COMMERCE]: Total</English>

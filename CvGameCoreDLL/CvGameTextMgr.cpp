@@ -22795,24 +22795,64 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 			}
 
 			FAssert(pCity->totalTradeModifier(pOtherCity) == iModifier);
-
+			
+			// lfgr 10/2019, BUG: Show final trade route yield; Fractional Trade Routes
 			iProfit *= iModifier;
-// BUG - Fractional Trade Routes - start
 			iProfit /= 100;
 			FAssert(iProfit == pCity->calculateTradeProfitTimes100(pOtherCity));
-			// iProfit /= 10000;
-			// FAssert(iProfit == pCity->calculateTradeProfit(pOtherCity));
-// BUG - Fractional Trade Routes - end
+
+			// For some reason, trait and civic modifiers are applied later
+
+			int iPlayerYieldModifier = 100; // Percent
+
+			CvWStringBuffer szPlayerModBuffer;
+
+			// Traits
+			for( int eTrait = 0; eTrait < GC.getNumTraitInfos(); eTrait++ ) {
+				if( GET_PLAYER( pCity->getOwnerINLINE() ).hasTrait( (TraitTypes) eTrait ) ) {
+					CvTraitInfo& kTrait = GC.getTraitInfo( (TraitTypes) eTrait );
+					int iMod = kTrait.getTradeYieldModifier( YIELD_COMMERCE );
+					if( iMod != 0 ) {
+						szPlayerModBuffer.append(NEWLINE);
+						szPlayerModBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_MOD_TRAIT", kTrait.getTextKeyWide(), iMod));
+						iPlayerYieldModifier += iMod;
+					}
+				}
+			}
+
+			// Civics
+			for( int eCivic = 0; eCivic < GC.getNumCivicInfos(); eCivic++ ) {
+				if( GET_PLAYER( pCity->getOwnerINLINE() ).isCivic( (CivicTypes) eCivic ) ) {
+					CvCivicInfo& kCivic = GC.getCivicInfo( (CivicTypes) eCivic );
+					int iMod = kCivic.getTradeYieldModifier( YIELD_COMMERCE );
+					if( iMod != 0 ) {
+						szPlayerModBuffer.append(NEWLINE);
+						szPlayerModBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_MOD_CIVIC", kCivic.getTextKeyWide(), iMod));
+						iPlayerYieldModifier += iMod;
+					}
+				}
+			}
+
+			int iYield = (std::max( 0, iProfit ) * std::max( 0, iPlayerYieldModifier )) / 100;
+			FAssert( iPlayerYieldModifier == GET_PLAYER(pCity->getOwnerINLINE()).getTradeYieldModifier(YIELD_COMMERCE) );
+			FAssert(iYield == pCity->calculateTradeYield(YIELD_COMMERCE, iProfit));
+
+			if( ! szPlayerModBuffer.isEmpty() ) {
+				szBuffer.append(SEPARATOR);
+				szBuffer.append(NEWLINE);
+				CvWString szProfit;
+				szProfit.Format(L"%d.%02d", iProfit / 100, iProfit % 100);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL_PROFIT", szProfit.GetCString()));
+
+				szBuffer.append( szPlayerModBuffer );
+			}
 
 			szBuffer.append(SEPARATOR);
-
 			szBuffer.append(NEWLINE);
-// BUG - Fractional Trade Routes - start
-			CvWString szProfit;
-			szProfit.Format(L"%d.%02d", iProfit / 100, iProfit % 100);
-			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL", szProfit.GetCString()));
-			// szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL", iProfit));
-// BUG - Fractional Trade Routes - end
+			CvWString szYield;
+			szYield.Format(L"%d.%02d", iYield / 100, iYield % 100);
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL", szYield.GetCString()));
+			// lfgr, BUG end
 		}
 	}
 }
