@@ -881,7 +881,9 @@ void CvUnit::convert(CvUnit* pUnit)
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- Converted (Unit %d - plot: %d, %d)",
+			pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 	pUnit->kill(true, NO_PLAYER, true);
 }
 
@@ -930,7 +932,9 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 				{
 					pLoopUnit->setCapturingPlayer(NO_PLAYER);
 				}
-
+				
+				logBBAI("    Killing %S -- Transporting unit killed (Unit %d - plot: %d, %d)",
+						pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 				pLoopUnit->kill(false, ePlayer);
 
 				oldUnits = tempUnits;
@@ -1225,6 +1229,8 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 
 						  )
 						{
+							logBBAI("    Killing %S -- AI kills captured units (Unit %d - plot: %d, %d)",
+									pkCapturedUnit->getName().GetCString(), pkCapturedUnit->getID(), pkCapturedUnit->getX(), pkCapturedUnit->getY());
 							pkCapturedUnit->kill(false);
 						}
 					}
@@ -1304,6 +1310,8 @@ void CvUnit::doTurn()
             if (bValid == false)
             {
                 gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwnerINLINE(), true, GC.getDefineINT("EVENT_MESSAGE_TIME"), gDLL->getText("TXT_KEY_MESSAGE_UNIT_ABANDON", getNameKey()), GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, m_pUnitInfo->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), plot()->getX_INLINE(), plot()->getY_INLINE());
+				logBBAI("    Killing %S (delayed) -- abandoned owner (Unit %d - plot: %d, %d)",
+						getName().GetCString(), getID(), getX(), getY());
                 kill(true);
                 GC.getGameINLINE().decrementUnitCreatedCount(getUnitType());
                 GC.getGameINLINE().decrementUnitClassCreatedCount((UnitClassTypes)(m_pUnitInfo->getUnitClassType()));
@@ -1399,7 +1407,9 @@ void CvUnit::doTurn()
 			{
 				unloadAll();
 			}
-
+			
+			logBBAI("    Killing %S (delayed) -- Duration over (Unit %d - plot: %d, %d)",
+					getName().GetCString(), getID(), getX(), getY());
             kill(true);
 	    }
 	}
@@ -1587,6 +1597,8 @@ void CvUnit::updateAirStrike(CvPlot* pPlot, bool bQuick, bool bFinish)
 
 	if (isSuicide() && !isDead())
 	{
+		logBBAI("    Killing %S (delayed) -- suicide air strike (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 		kill(true);
 	}
 }
@@ -1839,6 +1851,8 @@ void CvUnit::updateAirCombat(bool bQuick)
 
 		if (!isDead() && isSuicide())
 		{
+			logBBAI("    Killing %S (delayed) -- suicide air combad (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 			kill(true);
 		}
 	}
@@ -2426,8 +2440,12 @@ void CvUnit::updateCombat(bool bQuick)
 
 			if (isSuicide())
 			{
+				logBBAI("    Killing %S (delayed) -- performed suicide attack (Unit %d - plot: %d, %d)",
+						getName().GetCString(), getID(), getX(), getY());
 				kill(true);
-
+				
+				logBBAI("    Killing %S -- slain by suicide attack (Unit %d - plot: %d, %d)",
+					pDefender->getName().GetCString(), pDefender->getID(), pDefender->getX(), pDefender->getY());
 				pDefender->kill(false);
 				pDefender = NULL;
 			}
@@ -2448,7 +2466,9 @@ void CvUnit::updateCombat(bool bQuick)
 						pDefender->setCapturingPlayer(getOwnerINLINE());
 					}
 				}
-
+				
+				logBBAI("    Killing %S -- slain by attack (Unit %d - plot: %d, %d)",
+					pDefender->getName().GetCString(), pDefender->getID(), pDefender->getX(), pDefender->getY());
 				pDefender->kill(false);
 				pDefender = NULL;
 
@@ -4070,6 +4090,8 @@ bool CvUnit::jumpToNearestValidPlot()
 	}
 	else
 	{
+		logBBAI("    Killing %S -- Cannot jumpToNearestValidPlot, no valid plot (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(false);
 		bValid = false;
 	}
@@ -4229,7 +4251,9 @@ void CvUnit::scrap()
         }
 	}
 //FfH: End Add
-
+	
+	logBBAI("    Killing %S (delayed) -- scrapped (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 }
 
@@ -5431,7 +5455,9 @@ bool CvUnit::nuke(int iX, int iY)
 			// Add the intercepted mission (defender is not NULL)
 			gDLL->getEntityIFace()->AddMission(&kDefiniton);
 		}
-
+		
+		logBBAI("    Killing %S (delayed) -- nuke intercepted (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true);
 		return true; // Intercepted!!! (XXX need special event for this...)
 	}
@@ -5528,6 +5554,8 @@ bool CvUnit::nuke(int iX, int iY)
 
 	if (isSuicide())
 	{
+		logBBAI("    Killing %S (delayed) -- suicide nuking (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true);
 	}
 
@@ -5891,6 +5919,8 @@ bool CvUnit::airBomb(int iX, int iY)
 
 	if (isSuicide())
 	{
+		logBBAI("    Killing %S (delayed) -- suicide air bomb (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true);
 	}
 
@@ -6119,6 +6149,8 @@ bool CvUnit::bombard()
 //FfH: Added by Kael 08/30/2007
     if (isSuicide())
     {
+		logBBAI("    Killing %S (delayed) -- suicide bombard (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
         kill(true);
     }
 //FfH: End Add
@@ -6671,7 +6703,9 @@ bool CvUnit::sabotage()
 				GET_PLAYER(pPlot->getOwnerINLINE()).AI_changeMemoryCount(getOwnerINLINE(), MEMORY_SPY_CAUGHT, 1);
 			}
 		}
-
+		
+		logBBAI("    Killing %S (delayed) -- did sabotage (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true, pPlot->getOwnerINLINE());
 	}
 
@@ -6850,7 +6884,9 @@ bool CvUnit::destroy()
 		{
 			GET_PLAYER(pCity->getOwnerINLINE()).AI_changeMemoryCount(getOwnerINLINE(), MEMORY_SPY_CAUGHT, 1);
 		}
-
+		
+		logBBAI("    Killing %S (delayed) -- destroyed (by espionage?) (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true, pCity->getOwnerINLINE());
 	}
 
@@ -7007,7 +7043,9 @@ bool CvUnit::stealPlans()
 		{
 			GET_PLAYER(pCity->getOwnerINLINE()).AI_changeMemoryCount(getOwnerINLINE(), MEMORY_SPY_CAUGHT, 1);
 		}
-
+		
+		logBBAI("    Killing %S (delayed) -- stole plans (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 		kill(true, pCity->getOwnerINLINE());
 	}
 
@@ -7060,7 +7098,9 @@ bool CvUnit::found()
 	{
 		NotifyEntity(MISSION_FOUND);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- founded city (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7232,7 +7272,9 @@ bool CvUnit::spread(ReligionTypes eReligion)
 	{
 		NotifyEntity(MISSION_SPREAD);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- spread religion (Unit %d - plot: %d, %d)",
+		getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7398,7 +7440,9 @@ bool CvUnit::spreadCorporation(CorporationTypes eCorporation)
 	{
 		NotifyEntity(MISSION_SPREAD_CORPORATION);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- spread corporation (Unit %d - plot: %d, %d)",
+		getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7477,7 +7521,9 @@ bool CvUnit::join(SpecialistTypes eSpecialist)
 	{
 		NotifyEntity(MISSION_JOIN);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- joined city as a specialist (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7566,7 +7612,9 @@ bool CvUnit::construct(BuildingTypes eBuilding)
 	{
 		NotifyEntity(MISSION_CONSTRUCT);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- constructed building (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7656,7 +7704,9 @@ bool CvUnit::discover()
 	{
 		unloadAll();
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- discovered tech (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7772,7 +7822,9 @@ bool CvUnit::hurry()
 	{
 		unloadAll();
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- Hurried production (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7886,7 +7938,9 @@ bool CvUnit::trade()
 	{
 		unloadAll();
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- traded (Unit %d - plot: %d, %d)",
+		getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -7984,7 +8038,9 @@ bool CvUnit::greatWork()
 	{
 		unloadAll();
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- created great work (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -8053,7 +8109,9 @@ bool CvUnit::infiltrate()
 	{
 		NotifyEntity(MISSION_INFILTRATE);
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- infiltrated (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -8249,6 +8307,9 @@ bool CvUnit::testSpyIntercepted(PlayerTypes eTargetPlayer, int iModifier)
 		NotifyEntity(MISSION_SURRENDER);
 	}
 
+	
+	logBBAI("    Killing %S (delayed) -- spy intercepted (Unit %d - plot: %d, %d)",
+		getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 	
 /*************************************************************************************************/
@@ -8362,7 +8423,9 @@ bool CvUnit::goldenAge()
 	{
 		unloadAll();
 	}
-
+	
+	logBBAI("    Killing %S (delayed) -- started golden age (Unit %d - plot: %d, %d)",
+			getName().GetCString(), getID(), getX(), getY());
 	kill(true);
 
 	return true;
@@ -8445,6 +8508,8 @@ bool CvUnit::build(BuildTypes eBuild)
 
 		if (GC.getBuildInfo(eBuild).isKill())
 		{
+			logBBAI("    Killing %S (delayed) -- building improvement (Unit %d - plot: %d, %d)",
+					getName().GetCString(), getID(), getX(), getY());
 			kill(true);
 		}
 
@@ -8631,7 +8696,9 @@ bool CvUnit::lead(int iUnitId)
 		{
 			NotifyEntity(MISSION_LEAD);
 		}
-
+		
+		logBBAI("    Killing %S (delayed) -- starting to lead (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true);
 
 		return true;
@@ -12098,7 +12165,9 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
                                     }
 								}
 //FfH: End Modify
-
+								
+								logBBAI("    Killing %S -- can't defend, enemy unit moved on it (Unit %d - plot: %d, %d)",
+									pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 								pLoopUnit->kill(false, getOwnerINLINE());
 							}
 						}
@@ -12763,6 +12832,8 @@ void CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, bool bNotifyEntity)
 
 	if (isDead())
 	{
+		logBBAI("    Killing %S (delayed) -- received deadly damage (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(true, ePlayer);
 	}
 }
@@ -13746,6 +13817,8 @@ bool CvUnit::doDelayedDeath()
 {
 	if (m_bDeathDelay && !isFighting())
 	{
+		logBBAI("    Killing %S -- delayed death (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(false);
 		return true;
 	}
@@ -15059,7 +15132,9 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 			gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitVictoryScript(), MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
 			szBuffer = gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_DIED_BY_FLANKING", pUnit->getNameKey(), getNameKey(), getVisualCivAdjective(pUnit->getTeam()));
 			gDLL->getInterfaceIFace()->addMessage(pUnit->getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE());
-
+			
+			logBBAI("    Killing %S -- Unit killed by flanking damage (Unit %d - plot: %d, %d)",
+					getName().GetCString(), getID(), getX(), getY());
 			pUnit->kill(false);
 		}
 // BUG - Combat Events - start
@@ -15912,6 +15987,8 @@ void CvUnit::applyEvent(EventTypes eEvent)
 
 	if (kEvent.isDisbandUnit())
 	{
+		logBBAI("    Killing %S -- disbanded from event (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(false);
 	}
 }
@@ -17361,6 +17438,8 @@ void CvUnit::cast(int spell)
 	gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 	if (kSpellInfo.isSacrificeCaster())
 	{
+		logBBAI("    Killing %S -- Sacrificed for spell (Unit %d - plot: %d, %d)",
+				getName().GetCString(), getID(), getX(), getY());
 		kill(false);
 	}
 }
@@ -19222,6 +19301,8 @@ void CvUnit::doDamage(int iDmg, int iDmgLimit, CvUnit* pAttacker, int iDmgType, 
 				changeDamage(iDmg, pAttacker->getOwner());
 				if (getDamage() >= GC.getMAX_HIT_POINTS())
 				{
+					logBBAI("    Killing %S (delayed) -- received deadly damage from attacker in doDamage() (Unit %d - plot: %d, %d)",
+							getName().GetCString(), getID(), getX(), getY());
 					kill(true,pAttacker->getOwner());
 				}
 				if (bStartWar)
@@ -19266,6 +19347,8 @@ void CvUnit::doDamage(int iDmg, int iDmgLimit, CvUnit* pAttacker, int iDmgType, 
                 changeDamage(iDmg, NO_PLAYER);
                 if (getDamage() >= GC.getMAX_HIT_POINTS())
                 {
+					logBBAI("    Killing %S (delayed) -- received deadly damage in doDamage() (Unit %d - plot: %d, %d)",
+							getName().GetCString(), getID(), getX(), getY());
                     kill(true,NO_PLAYER);
                 }
             }

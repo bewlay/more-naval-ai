@@ -2564,6 +2564,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		{
 			if (pLoopUnit->getDomainType() == DOMAIN_IMMOBILE)
 			{
+				logBBAI("    Killing %S -- immobile in acquired city (Unit %d - plot: %d, %d)",
+						pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 				pLoopUnit->kill(false, getID());
 			}
 		}
@@ -3528,7 +3530,9 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 		gDLL->getInterfaceIFace()->addMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITDISBANDED", MESSAGE_TYPE_MINOR_EVENT, pBestUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), true, true);
 
 		FAssert(!(pBestUnit->isGoldenAge()));
-
+		
+		logBBAI("    Killing %S -- disbanded, no money (Unit %d - plot: %d, %d)",
+				pBestUnit->getName().GetCString(), pBestUnit->getID(), pBestUnit->getX(), pBestUnit->getY());
 		pBestUnit->kill(false);
 	}
 }
@@ -3561,6 +3565,8 @@ void CvPlayer::killUnits()
         }
         if (pLoopUnit->canScrap())
         {
+			logBBAI("    Killing %S -- scrappable unit with eliminated owner (Unit %d - plot: %d, %d)",
+					pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
             pLoopUnit->kill(false);
         }
         else
@@ -3568,6 +3574,8 @@ void CvPlayer::killUnits()
 			// HARDCODE - kill treasure chests on civ elimination
 			if (pLoopUnit->getUnitClassType() == GC.getInfoTypeForString("EQUIPMENTCLASS_TREASURE"))
 			{
+				logBBAI("    Killing %S -- treasure chest with eliminated owner (Unit %d - plot: %d, %d)",
+						pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 				pLoopUnit->kill(false);
 			}
 			else
@@ -4631,6 +4639,8 @@ void CvPlayer::doTurnUnits()
             {
                 if (pLoopUnit->getSpecialUnitType() == iSpell)
                 {
+					logBBAI("    Killing %S -- SPECIALUNIT_SPELL killed each turn (Unit %d - plot: %d, %d)",
+							pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
                     pLoopUnit->kill(false);
                 }
             }
@@ -11109,7 +11119,9 @@ void CvPlayer::killGoldenAgeUnits(CvUnit* pUnitAlive)
 			{
 				pBestUnit->unloadAll();
 			}
-
+			
+			logBBAI("    Killing %S (delayed) -- golden age (Unit %d - plot: %d, %d)",
+					pBestUnit->getName().GetCString(), pBestUnit->getID(), pBestUnit->getX(), pBestUnit->getY());
 			pBestUnit->kill(true);
 
 			//play animations
@@ -18086,6 +18098,8 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			{
 				FAssert(pUnit->plot() == pPlot);
 				szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_SOMETHING_DESTROYED", pUnit->getNameKey()).GetCString();
+				logBBAI("    Killing %S -- destroyed unit by espionage (Unit %d - plot: %d, %d)",
+						pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 				pUnit->kill(false, getID());
 
 				bSomethingHappened = true;
@@ -18114,6 +18128,8 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 				UnitTypes eUnitType = pUnit->getUnitType();
 				int iX = pUnit->getX_INLINE();
 				int iY = pUnit->getY_INLINE();
+				logBBAI("    Killing %S -- Bought unit by espionage (Unit %d - plot: %d, %d)",
+						pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 				pUnit->kill(false, getID());
 				initUnit(eUnitType, iX, iY, NO_UNITAI);
 
@@ -18578,6 +18594,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 						if (pLoopUnit->getUnitType() == eUnit)
 						{
+							logBBAI("    Killing %S -- Removed advanced start unit (Unit %d - plot: %d, %d)",
+									pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 							pLoopUnit->kill(false);
 							changeAdvancedStartPoints(iCost);
 							return;
@@ -18593,6 +18611,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 					iCost = getAdvancedStartUnitCost(pUnit->getUnitType(), false);
 					FAssertMsg(iCost != -1, "If this is -1 then that means it's going to try to delete a unit which shouldn't exist");
+					logBBAI("    Killing %S -- Removed advanced start unit (Unit %d - plot: %d, %d)",
+							pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 					pUnit->kill(false);
 					changeAdvancedStartPoints(iCost);
 				}

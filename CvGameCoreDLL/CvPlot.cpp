@@ -376,6 +376,8 @@ void CvPlot::erase()
 
 		if (pLoopUnit != NULL)
 		{
+			logBBAI("    Killing %S -- Plot erased (Unit %d - plot: %d, %d)",
+					pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 			pLoopUnit->kill(false);
 		}
 	}
@@ -1339,6 +1341,8 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 								}
 								else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
 								{
+									logBBAI("    Killing %S -- nuke explosion (Unit %d - plot: %d, %d)",
+											pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 									pLoopUnit->kill(false, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 								}
 							}
@@ -6130,6 +6134,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 						if (pLoopUnit->isEnemy(GET_PLAYER(eNewValue).getTeam(), this))
 						{
 							FAssert(pLoopUnit->getTeam() != GET_PLAYER(eNewValue).getTeam());
+							logBBAI("    Killing %S -- in city acquired by setting plot owner (Unit %d - plot: %d, %d)",
+								pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 							pLoopUnit->kill(false, eNewValue);
 						}
 					}
