@@ -6,13 +6,12 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
 from CvPythonExtensions import *
 import CvUtil
-import ScreenInput
 import SevoScreenEnums
 
 gc = CyGlobalContext()
@@ -27,7 +26,11 @@ class SevoPediaBuilding:
 
 ##--------	BUGFfH: Modified by Denev 2009/10/08
 		self.iBuildingClass = BuildingClassTypes.NO_BUILDINGCLASS
+##--------	BUGFfH: End Modify
+	
 
+	def initPositions( self ) :
+##--------	BUGFfH: Modified by Denev 2009/10/08
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
 
@@ -77,8 +80,8 @@ class SevoPediaBuilding:
 ##--------	BUGFfH: End Modify
 
 
-
 	def interfaceScreen(self, iBuilding):
+		self.initPositions()
 		self.iBuilding = iBuilding
 ##--------	BUGFfH: Added by Denev 2009/10/09
 		self.iBuildingClass = gc.getBuildingInfo(iBuilding).getBuildingClassType()

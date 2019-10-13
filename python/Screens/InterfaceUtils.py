@@ -2,6 +2,7 @@
 from CvPythonExtensions import *
 
 import BugCore
+import BugUtil
 import CvUtil
 
 
@@ -68,15 +69,19 @@ class GenericAdvisorScreen( object ) :
 	def initDimensions( self ) :
 		screen = self.getScreen()
 		
-		if (BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024):
+		if BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024 :
 			self.wScreen = max( 1024, screen.getXResolution() )
 			self.hScreen = max( 768, screen.getYResolution() )
 			screen.setDimensions( 0, 0, self.wScreen, self.hScreen )
+			BugUtil.debug( "Initializing %s with fulls-screen resolution %dx%d" \
+					% ( self.__class__.__name__, self.wScreen, self.hScreen ) )
 		else:
 			self.wScreen = 1024
 			self.hScreen = 768
 			screen.setDimensions( screen.centerX(0), screen.centerY(0),
 								  self.wScreen, self.hScreen )
+			BugUtil.debug( "Initializing %s with normal resolution %dx%d" \
+					% ( self.__class__.__name__, self.wScreen, self.hScreen ) )
 		
 		# Update other dimensions
 		self.xExitButton = self.wScreen - 30
@@ -85,27 +90,26 @@ class GenericAdvisorScreen( object ) :
 		return self.wScreen, self.hScreen # For convenience
 	
 	def addBackgroundHeaderFooter( self, szHeaderText ) :
-		xPanelWidth, yPanelHeight = self.wScreen, self.hScreen
+		wScreen, hScreen = self.wScreen, self.hScreen
 		screen = self.getScreen()
 		
 		# Background
 		screen.addDDSGFC("BackgroundPicture",
 				ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(),
-				0, 0, xPanelWidth, yPanelHeight, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+				0, 0, wScreen, hScreen, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 		# Header
-		screen.addPanel( "TopPanel", u"", u"", True, False, 0, 0, xPanelWidth, 55,
+		screen.addPanel( "TopPanel", u"", u"", True, False, 0, 0, wScreen, 55,
 				PanelStyles.PANEL_STYLE_TOPBAR )
 		screen.setLabel( "TitleHeader", "Background", u"<font=4>" + szHeaderText + u"</font>",
-				CvUtil.FONT_CENTER_JUSTIFY, xPanelWidth / 2, 8, 0, FontTypes.TITLE_FONT,
+				CvUtil.FONT_CENTER_JUSTIFY, wScreen / 2, 8, 0, FontTypes.TITLE_FONT,
 				WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 		# Footer
-		screen.addPanel( "BottomPanel", u"", u"", True, False, 0, yPanelHeight - 55,
-				xPanelWidth, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
+		screen.addPanel( "BottomPanel", u"", u"", True, False, 0, hScreen - 55,
+				wScreen, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
 	
 	def addExitButton( self ) :
-		xPanelWidth, yPanelHeight = self.wScreen, self.hScreen
 		screen = self.getScreen()
 		
 		szExitText = CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper()

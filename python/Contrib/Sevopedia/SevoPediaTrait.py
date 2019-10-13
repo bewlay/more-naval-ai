@@ -2,6 +2,8 @@
 #
 # Copyright (c) 2008 The BUG Mod.
 
+# Modified by lfgr 10/2019
+
 from CvPythonExtensions import *
 import CvUtil
 import ScreenInput
@@ -22,6 +24,8 @@ class SevoPediaTrait:
 		self.iTrait = -1
 		self.top = main
 
+
+	def initPositions( self ) :
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
 		self.Y_MAIN_PANE = self.top.Y_PEDIA_PAGE
 #		self.W_MAIN_PANE = 200
@@ -62,6 +66,8 @@ class SevoPediaTrait:
 #BUGFfH: Modified by Denev 2009/09/10
 #	def interfaceScreen(self, iConcept):
 	def interfaceScreen(self, iTrait):
+		self.initPositions()
+		
 #BUGFfH: End Modify
 		self.iLeader = -1
 #BUGFfH: Modified by Denev 2009/09/10

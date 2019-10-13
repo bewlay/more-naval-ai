@@ -25,6 +25,8 @@ class SevoPediaUnitChart:
 		self.iGroup = -1
 		self.top = main
 
+
+	def initPositions( self ) :
 		self.MARGIN = 20
 		self.X_UNITS = self.top.X_PEDIA_PAGE
 		self.Y_UNITS = self.top.Y_PEDIA_PAGE
@@ -36,6 +38,7 @@ class SevoPediaUnitChart:
 
 
 	def interfaceScreen(self, iGroup):
+		self.initPositions()
 		self.iGroup = iGroup
 		screen = self.top.getScreen()
 		self.placeUnitTable()

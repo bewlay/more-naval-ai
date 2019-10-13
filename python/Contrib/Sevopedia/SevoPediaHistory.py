@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -24,6 +24,7 @@ class SevoPediaHistory:
 	def __init__(self, main):
 		self.top = main
 
+	def initPositions( self ) :
 		self.BUTTON_SIZE = 48
 
 		self.X_TEXT = self.top.X_PEDIA_PAGE
@@ -34,6 +35,8 @@ class SevoPediaHistory:
 
 
 	def interfaceScreen(self, iEntry):
+		self.initPositions()
+		
 		self.placeText(iEntry)
 
 

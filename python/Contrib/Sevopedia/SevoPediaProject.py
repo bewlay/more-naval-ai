@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -24,7 +24,9 @@ class SevoPediaProject:
 	def __init__(self, main):
 		self.iProject = -1
 		self.top = main
-
+	
+	
+	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/04
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
@@ -62,8 +64,8 @@ class SevoPediaProject:
 ##--------	BUGFfH: End Modify
 
 
-
 	def interfaceScreen(self, iProject):
+		self.initPositions()
 		self.iProject = iProject
 		screen = self.top.getScreen()
 
