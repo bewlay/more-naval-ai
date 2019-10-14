@@ -35,6 +35,8 @@
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+#include "CvInfoCache.h" // AI optimizations 10/2019 lfgr
+
 #define DANGER_RANGE						(4)
 #define GREATER_FOUND_RANGE			(5)
 #define CIVIC_CHANGE_DELAY			(25)
@@ -14246,69 +14248,34 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		{
 			if (hasTrait((TraitTypes)iI))
 			{
-				for (int iK = 0; iK < GC.getNumPromotionInfos(); iK++)
-				{
-					if (GC.getTraitInfo((TraitTypes) iI).isFreePromotion(iK))
-					{
-						if ((kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iI).isFreePromotionUnitCombat(kUnitInfo.getUnitCombatType()))
-						{
-							iTraitMod += 10;
-						}
-					}
-				}
+				// InfoCache 10/2019 lfgr
+				iTraitMod += getInfoCache().AI_getUnitValueFromTrait(
+						(UnitCombatTypes) kUnitInfo.getUnitCombatType(), (TraitTypes) iI );
 			}
 		}
 
 		iValue *= (100 + iTraitMod);
 		iValue /= 100;
 
-
-		int iPromotionMod = 0;
-		for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
-		{
-			if (kUnitInfo.getFreePromotions(iI))
+		// InfoCache 10/2019 lfgr
+		if( getInfoCache().AI_isUnitAmphib( eUnit ) ) {
+			if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
 			{
-				CvPromotionInfo& kPromotionInfo = GC.getPromotionInfo((PromotionTypes)iI);
-
-				if (kPromotionInfo.isAmphib())
+				if (pArea != NULL)
 				{
-					if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY)
+					AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
+					if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
 					{
-						if (pArea != NULL)
-						{
-							AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
-							if (eAreaAI == AREAAI_ASSAULT || eAreaAI == AREAAI_ASSAULT_MASSING)
-							{
-								iValue *= 133;
-								iValue /= 100;
-								break;
-							}
-						}
-					}
-				}
-
-				if (eUnitAI == UNITAI_CITY_DEFENSE || eUnitAI == UNITAI_CITY_COUNTER || eUnitAI == UNITAI_COUNTER)
-				{
-					iPromotionMod += (kPromotionInfo.getBetterDefenderThanPercent() / 5);
-					if (kPromotionInfo.isTargetWeakestUnitCounter())
-					{
-						iPromotionMod += 20;
-					}
-					iPromotionMod += kPromotionInfo.getFriendlyHealChange();
-				}
-
-				if (eUnitAI == UNITAI_ATTACK || eUnitAI == UNITAI_ATTACK_CITY || eUnitAI == UNITAI_COUNTER)
-				{
-					iPromotionMod += kPromotionInfo.getEnemyHealChange();
-					iPromotionMod += kPromotionInfo.getNeutralHealChange();
-					iPromotionMod += kPromotionInfo.getCombatPercent();
-					if (kPromotionInfo.isBlitz() || kPromotionInfo.isWaterWalking() || kPromotionInfo.isTargetWeakestUnit())
-					{
-						iPromotionMod += (kUnitInfo.getMoves() * 10);
+						iValue *= 133;
+						iValue /= 100;
+						// lfgr: In vanilla FfH, after this, iPromotionMod increases from promotions that are
+						// defined after the amphibious promotion are skipped, which makes no sense.
 					}
 				}
 			}
 		}
+
+		int iPromotionMod = getInfoCache().AI_getUnitValueFromFreePromotions( eUnit, eUnitAI );
 		
 		iValue *= (100 + iPromotionMod);
 		iValue /= 100;

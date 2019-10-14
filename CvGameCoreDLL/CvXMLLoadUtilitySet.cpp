@@ -14,6 +14,8 @@
 #include "FVariableSystem.h"
 #include "CvGameCoreUtils.h"
 
+#include "CvInfoCache.h" // InfoCache 10/2019 lfgr
+
 // Macro for Setting Global Art Defines
 #define INIT_XML_GLOBAL_LOAD(xmlInfoPath, infoArray, numInfos)  SetGlobalClassInfo(infoArray, xmlInfoPath, numInfos);
 
@@ -1178,6 +1180,8 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	//   in later GC.getInfoTypeForString() asserts
 	GC.setCurrentXMLFile( "(None)" );
 	// lfgr end
+
+	getInfoCache().init(); // InfoCache 10/2019 lfgr
 
 	return true;
 }
