@@ -4,46 +4,16 @@
 
 #include "CvInfoCache.h"
 
-CvInfoCache::CvInfoCache() :
-		m_aiUnitValueFromTraitCache( NULL ),
-		m_aiUnitValueFromFreePromotionsCache( NULL ),
-		m_aiUnitAmphibCache( NULL )
+CvInfoCache::CvInfoCache()
 {}
 
 CvInfoCache::~CvInfoCache() {
-	SAFE_DELETE_ARRAY( m_aiUnitValueFromTraitCache );
-	SAFE_DELETE_ARRAY( m_aiUnitValueFromFreePromotionsCache );
-	SAFE_DELETE_ARRAY( m_aiUnitAmphibCache );
 }
 
 void CvInfoCache::init() {
-	FAssertMsg( m_aiUnitValueFromTraitCache == NULL, "CvInfoCache already initialized!" );
-	if( m_aiUnitValueFromTraitCache != NULL ) {
-		return;
-	}
-
-	// TODO: Use something like Nightingale's template info arrays here
-
-	m_aiUnitValueFromTraitCache = new int[GC.getNumUnitCombatInfos() * GC.getNumTraitInfos()];
-	for( int eUnitCombat = 0; eUnitCombat < GC.getNumUnitCombatInfos(); eUnitCombat++ ) {
-		for( int eTrait = 0; eTrait < GC.getNumTraitInfos(); eTrait++ ) {
-			m_aiUnitValueFromTraitCache[eUnitCombat * GC.getNumTraitInfos() + eTrait] \
-				= info_ai::AI_calcUnitValueFromTrait( (UnitCombatTypes) eUnitCombat, (TraitTypes) eTrait );
-		}
-	}
-
-	m_aiUnitValueFromFreePromotionsCache = new int[GC.getNumUnitInfos() * NUM_UNITAI_TYPES];
-	for( int eUnit = 0; eUnit < GC.getNumUnitInfos(); eUnit++ ) {
-		for( int eUnitAI = 0; eUnitAI < NUM_UNITAI_TYPES; eUnitAI++ ) {
-			m_aiUnitValueFromFreePromotionsCache[eUnit * NUM_UNITAI_TYPES + eUnitAI] \
-				= info_ai::AI_calcUnitValueFromFreePromotions( (UnitTypes) eUnit, (UnitAITypes) eUnitAI );
-		}
-	}
-
-	m_aiUnitAmphibCache = new int[GC.getNumUnitInfos()];
-	for( int eUnit = 0; eUnit < GC.getNumUnitInfos(); eUnit++ ) {
-		m_aiUnitAmphibCache[eUnit] = false;
-	}
+	m_aiUnitValueFromTraitCache.init( info_ai::AI_calcUnitValueFromTrait );
+	m_aiUnitValueFromFreePromotionsCache.init( info_ai::AI_calcUnitValueFromFreePromotions );
+	m_aiUnitAmphibCache.init( info_ai::AI_checkUnitAmphib );
 }
 
 
@@ -51,7 +21,7 @@ int CvInfoCache::AI_getUnitValueFromTrait( UnitCombatTypes eUnitCombat, TraitTyp
 #ifdef NO_CACHING
 	return info_ai::AI_calcUnitValueFromTrait( eUnitCombat, eTrait );
 #else
-	return m_aiUnitValueFromTraitCache[eUnitCombat * GC.getNumTraitInfos() + eTrait];
+	return m_aiUnitValueFromTraitCache.at( eUnitCombat, eTrait );
 #endif
 }
 
@@ -59,7 +29,7 @@ int CvInfoCache::AI_getUnitValueFromFreePromotions( UnitTypes eUnit, UnitAITypes
 #ifdef NO_CACHING
 	return info_ai::AI_calcUnitValueFromFreePromotions( eUnit, eUnitAI );
 #else
-	return m_aiUnitValueFromFreePromotionsCache[eUnit * NUM_UNITAI_TYPES + eUnitAI];
+	return m_aiUnitValueFromFreePromotionsCache.at( eUnit, eUnitAI );
 #endif
 }
 
@@ -67,7 +37,7 @@ bool CvInfoCache::AI_isUnitAmphib( UnitTypes eUnit ) const {
 #ifdef NO_CACHING
 	return info_ai::AI_checkUnitAmphib; // TODO
 #else
-	return m_aiUnitAmphibCache[eUnit];
+	return m_aiUnitAmphibCache.at( eUnit );
 #endif
 }
 
