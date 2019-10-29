@@ -88,8 +88,6 @@
 			<list id="RevMaxCivs" key="MaxCivs" type="int" default="-1"
 				values="-1,0,1,2,3,4,5,10,15,20,25,30,35,40,45"
 				get="getRevMaxCivs" set="setRevMaxCivs"/>
-			<option id="RebelTypes" key="RebelTypes" type="boolean" default="True"
-				get="isRebelTypes" set="setRebelTypes"/>
 			<option id="ArtStyleTypes" key="ArtStyleTypes" type="boolean" default="True"
 				get="isArtStyleTypes" set="setArtStyleTypes"/>
 			<option id="OfferDefectToRevs" key="OfferDefectToRevs" type="boolean" default="True"

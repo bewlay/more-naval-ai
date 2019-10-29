@@ -623,24 +623,6 @@
 		<Finnish>Max Score Lines displayed on Scoreboard (-1 for Maximum)</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__REBELTYPES_TEXT</Tag>
-		<English>Rebel Types</English>
-		<French>Rebel Types</French>
-		<German>Rebel Types</German>
-		<Italian>Rebel Types</Italian>
-		<Spanish>Rebel Types</Spanish>
-		<Finnish>Rebel Types</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__REBELTYPES_HOVER</Tag>
-		<English>Use RebelTypes file when setting up rebelions</English>
-		<French>Use RebelTypes file when setting up rebelions</French>
-		<German>Use RebelTypes file when setting up rebelions</German>
-		<Italian>Use RebelTypes file when setting up rebelions</Italian>
-		<Spanish>Use RebelTypes file when setting up rebelions</Spanish>
-		<Finnish>Use RebelTypes file when setting up rebelions</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__ARTSTYLETYPES_TEXT</Tag>
 		<English>ArtStyle Types</English>
 		<French>ArtStyle Types</French>

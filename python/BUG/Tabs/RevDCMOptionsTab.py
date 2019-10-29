@@ -113,7 +113,6 @@ class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 					self.addIntDropdown(screen, col3, col4, "Revolution__RevMaxCivs")
 					self.addLabel(screen, left, "Revolution__Revolution", "Style Types:")
 					col1, col2 = self.addMultiColumnLayout(screen, right, 2, "Style Types")
-					self.addCheckbox(screen, col1, "Revolution__RebelTypes")
 					self.addCheckbox(screen, col2, "Revolution__ArtStyleTypes")
 					self.addLabel(screen, left, "Revolution__Revolution", "User Options:")
 					col1, col2, col3, col4, col5, col6 = self.addMultiColumnLayout(screen, right, 6, "User Options")

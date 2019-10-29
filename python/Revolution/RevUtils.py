@@ -33,7 +33,7 @@ LOG_DEBUG = True
 revCultureModifier = 1.0
 endWarsOnDeath = True
 gameSpeedMod = None
-RevOpt = None
+RevOpt = None # LFGR_TODO?
 
 # Promotions used
 iCommando = None
