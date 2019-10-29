@@ -11800,6 +11800,7 @@ void CvPlot::applyEvent(EventTypes eEvent)
 	}
 }
 
+// bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
 bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 {
 	CvCity* pCity = getPlotCity();
