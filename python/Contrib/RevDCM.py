@@ -60,10 +60,6 @@ def changedOC_RESPAWN_HOLY_CITIES (option, value):
 	gc.setDefineINT("OC_RESPAWN_HOLY_CITIES", RevDCMOpt.isOC_RESPAWN_HOLY_CITIES())
 def changedLIMITED_RELIGIONS_EXCEPTIONS (option, value):
 	gc.setDefineINT("LIMITED_RELIGIONS_EXCEPTIONS", RevDCMOpt.isLIMITED_RELIGIONS_EXCEPTIONS())
-
-#Dynamic Civ Names
-def changedDYNAMIC_CIV_NAMES(option, value):
-	gc.setDefineINT("DYNAMIC_CIV_NAMES", ScoreOpt.isDYNAMIC_CIV_NAMES())
 	
 
 def setXMLOptionsfromIniFile():
@@ -72,8 +68,6 @@ def setXMLOptionsfromIniFile():
 	#Religion
 	gc.setDefineINT("OC_RESPAWN_HOLY_CITIES", RevDCMOpt.isOC_RESPAWN_HOLY_CITIES())
 	gc.setDefineINT("LIMITED_RELIGIONS_EXCEPTIONS", RevDCMOpt.isLIMITED_RELIGIONS_EXCEPTIONS())
-	#Dynamic Civ Names
-	gc.setDefineINT("DYNAMIC_CIV_NAMES", ScoreOpt.isDYNAMIC_CIV_NAMES())
 
 
 def resetOptions():

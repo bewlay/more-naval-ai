@@ -717,8 +717,6 @@ public:
 
 	// ***** EXPOSED TO PYTHON *****
 
-	bool isDYNAMIC_CIV_NAMES();
-
 	DllExport int getDefineINT( const char * szName ) const;
 	DllExport float getDefineFLOAT( const char * szName ) const;
 	DllExport const char * getDefineSTRING( const char * szName ) const;
@@ -1194,9 +1192,6 @@ protected:
 	//////////////////////////////////////////////////////////////////////////
 
 	FVariableSystem* m_VarSystem;
-
-
-	bool m_bDYNAMIC_CIV_NAMES;
 
 	int m_iMOVE_DENOMINATOR;
 	int m_iNUM_UNIT_PREREQ_OR_BONUSES;

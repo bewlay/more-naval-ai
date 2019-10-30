@@ -943,11 +943,6 @@
 		<DefineName>ACO_SHOW_SHIFT_INSTRUCTIONS</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 </Define>
-<!-- Dynamic Civ Names-->
-	<Define>
-		<DefineName>DYNAMIC_CIV_NAMES</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
-	</Define>
 <!-- Super Forts begin -->
 	<Define>
 		<DefineName>AI_WORKER_MAX_DISTANCE_FROM_CITY_OUT_BORDERS</DefineName>

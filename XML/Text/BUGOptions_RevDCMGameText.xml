@@ -41,24 +41,6 @@
 		<Finnish>When checked, enables the Hidden Attitude Mod by DaveMcW</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_SCORES__DYNAMIC_CIV_NAMES_TEXT</Tag>
-		<English>Dynamic Civ Names</English>
-		<French>Mod de DynamicCivNames</French>
-		<German>DynamicCivNames MOD</German>
-		<Italian>MOD "DynamicCivNames"</Italian>
-		<Spanish>Nombres din&#225;micos de la civilizaci&#243;n</Spanish>
-		<Finnish>DynamicCivNames Mod</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_SCORES__DYNAMIC_CIV_NAMES_HOVER</Tag>
-		<English>Enable Dynamic Civ Names: renames civs based on their civics and other properties. (Only works in English)</English>
-		<French>Permettez le composant de mod de DynamicCivNames : retitre des civs bas&#233;s sur leur &#233;ducation civique et d'autres propri&#233;t&#233;s.  Travaille seulement en anglais.</French>
-		<German>Aktivieren Sie den DynamicCivNames-MOD-Baustein: benennt Civs basierend auf ihre Staatsformen und sonstige Eigenschaften um.  Funktioniert nur auf englisch einwandfrei.</German>
-		<Italian>Attiva il componente "Definizioni Dinamiche" (DynamicCivNames): rinomina le civilt&#224; in base a forma di governo ed altre propriet&#224; (in inglese).</Italian>
-		<Spanish>Activado componente de Revolution Mod: Renombra las civilizaciones basandose en sus principios y otras propiedades (Mod)</Spanish>
-		<Finnish>Enable the DynamicCivNames mod component: renames civs based on their civics and other properties.  Only works in English.</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__OC_RESPAWN_HOLY_CITIES_TEXT</Tag>
 		<English>Holy City Relocation</English>
 		<French>Holy City Relocation</French>
