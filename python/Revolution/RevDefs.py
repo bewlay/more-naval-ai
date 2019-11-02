@@ -6,7 +6,6 @@
 from CvPythonExtensions import *
 import CvUtil
 import PyHelpers
-import BugCore
 
 
 # #globals
@@ -15,7 +14,6 @@ gc = CyGlobalContext()
 # PyInfo = PyHelpers.PyInfo
 game = CyGame()
 localText = CyTranslator()
-RevOpt = BugCore.game.Revolution
 
 LOG_DEBUG = True
 config = None

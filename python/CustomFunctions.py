@@ -5,8 +5,6 @@ from CvPythonExtensions import *
 import CvUtil
 import Popup as PyPopup
 import PyHelpers
-import CvScreenEnums
-import CvCameraControls
 
 # globals
 gc = CyGlobalContext()

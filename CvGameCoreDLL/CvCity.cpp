@@ -14488,6 +14488,8 @@ void CvCity::doPlotCulture(bool bUpdate, PlayerTypes ePlayer, int iCultureRate)
 							bool bCultureBlocked = false;
 							if (GET_PLAYER(getOwnerINLINE()).isCultureNeedsEmptyRadius())
 							{
+								// LFGR_TODO: simplify check
+								// LFGR_TODO: Barb check seems to be redundant, as barbarians are in no council.
 								if (pLoopPlot->isOwned())
 								{
 									bCultureBlocked = true;
