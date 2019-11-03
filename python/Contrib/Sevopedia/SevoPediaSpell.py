@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -24,7 +24,9 @@ class SevoPediaSpell:
 	def __init__(self, main):
 		self.iSpell = -1
 		self.top = main
-
+		
+	
+	def initPositions( self ) :
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
 
@@ -87,6 +89,8 @@ class SevoPediaSpell:
 
 
 	def interfaceScreen(self, iSpell):
+		self.initPositions()
+		
 		self.iSpell = iSpell
 		screen = self.top.getScreen()
 

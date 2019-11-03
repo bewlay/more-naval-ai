@@ -20,6 +20,8 @@ class SevoPediaIndex:
 	def __init__(self, main):
 		self.top = main
 
+
+	def initPositions( self ) :
 		self.LIST_BUTTON_SIZE = 24
 		self.X_INDEX = self.top.X_CATEGORIES
 		self.Y_INDEX = self.top.Y_CATEGORIES
@@ -33,8 +35,9 @@ class SevoPediaIndex:
 		self.index = None
 		self.letterTextIDs = None
 
-	def interfaceScreen(self):
 
+	def interfaceScreen(self):
+		self.initPositions()
 ##--------	BUGFfH: Added by Denev 2009/08/16
 		# Header...
 		screen = self.top.getScreen()

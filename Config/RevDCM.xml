@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!--
-	Civ4lerts
-	by Dr. Elmer Jiggle, EmperorFool
-
-	Copyright (c) 2008 The BUG Mod.
--->
 <mod id="RevDCM" 
 	 name="RevDCM" 
 	 author="glider1" 
@@ -20,13 +14,6 @@
 				type="boolean" default="False"
 				get="isReset" set="setReset">
 				<change module="RevDCM" function="changedReset"/>
-			</option>
-		</section>
-		<section id="RevDCMInterface">
-			<option id="RevDCMHiddenAttitude" key="RevDCMHiddenAttitude"
-				type="boolean" default="False"
-				get="isHiddenAttitude" set="setHiddenAttitude">
-				<change module="RevDCM" function="changedHiddenAttitude"/>
 			</option>
 		</section>
 		<section id="Religion">

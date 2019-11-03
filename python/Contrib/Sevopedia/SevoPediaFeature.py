@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -25,7 +25,9 @@ class SevoPediaFeature:
 	def __init__(self, main):
 		self.iFeature = -1
 		self.top = main
-
+	
+	
+	def initPositions( self ) :
 ##--------	BUGFfH: Added by Denev 2009/10/07
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
@@ -80,8 +82,9 @@ class SevoPediaFeature:
 		self.H_SPECIAL_PANE = self.top.B_PEDIA_PAGE - self.Y_SPECIAL_PANE
 
 
-
 	def interfaceScreen(self, iFeature):
+		self.initPositions()
+		
 		self.iFeature = iFeature
 		screen = self.top.getScreen()
 

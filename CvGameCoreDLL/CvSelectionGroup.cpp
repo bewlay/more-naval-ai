@@ -481,7 +481,7 @@ void CvSelectionGroup::playActionSound()
 	pHeadUnit = getHeadUnit();
 	if ( pHeadUnit )
 	{
-		iScriptId = pHeadUnit->getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentEra())->getActionSoundScriptId();
+		iScriptId = pHeadUnit->getArtInfo(0, GET_PLAYER(getOwnerINLINE()).getCurrentRealEra())->getActionSoundScriptId();
 	}
 
 	if ( (iScriptId == -1) && pHeadUnit )
@@ -1039,6 +1039,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 		case MISSION_END_COMBAT:
 		case MISSION_AIRSTRIKE:
 		case MISSION_SURRENDER:
+		case MISSION_CAPTURED:
 		case MISSION_IDLE:
 		case MISSION_DIE:
 		case MISSION_DAMAGE:
@@ -3920,27 +3921,11 @@ void CvSelectionGroup::groupMove(CvPlot* pPlot, bool bCombat, CvUnit* pCombatUni
 	{
 		pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = nextUnitNode(pUnitNode);
-
-/*************************************************************************************************/
-/**	Alertness								11/30/08	Written: Pep		Imported: Xienwolf	**/
-/**	ADDON (Alertness) merged Sephi	    														**/
-/**			Prevents annoying accidental attacks when moving into non-visible tiles				**/
-/*************************************************************************************************/
-/**								---- Start Original Code ----									**
-		if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
-		{
-			pLoopUnit->move(pPlot, true);
-		}
-/**								----  End Original Code  ----									**/
-
-
+		
 		if ((pLoopUnit->canMove() && ((bCombat && (!(pLoopUnit->isNoCapture()) || !(pPlot->isEnemyCity(*pLoopUnit)))) ? pLoopUnit->canMoveOrAttackInto(pPlot) : pLoopUnit->canMoveInto(pPlot))) || (pLoopUnit == pCombatUnit))
 		{
             pLoopUnit->move(pPlot, true);
 		}
-/*************************************************************************************************/
-/**	Alertness								END													**/
-/*************************************************************************************************/
 
 		else
 		{
@@ -4102,6 +4087,36 @@ bool CvSelectionGroup::groupBuild(BuildTypes eBuild)
 //			}
 		}
 	}
+	
+// BUG - Pre-Chop - start
+	bool bCheckChop = false;
+	bool bStopOtherWorkers = false;
+
+	FeatureTypes eFeature = pPlot->getFeatureType();
+	CvBuildInfo& kBuildInfo = GC.getBuildInfo(eBuild);
+// FIX 07/2019 lfgr, Denev
+// Use CvPlot::isFeatureRemove() to also consider MaintainFeatures
+//	if (eFeature != NO_FEATURE && isHuman() && kBuildInfo.isFeatureRemove(eFeature) && kBuildInfo.getFeatureProduction(eFeature) != 0)
+	if (eFeature != NO_FEATURE && isHuman() && pPlot->isFeatureRemove( eBuild ) && kBuildInfo.getFeatureProduction(eFeature) != 0)
+// FIX end
+	{
+		if (kBuildInfo.getImprovement() == NO_IMPROVEMENT)
+		{
+			// clearing a forest or jungle
+			if (getBugOptionBOOL("Actions__PreChopForests", true, "BUG_PRECHOP_FORESTS"))
+			{
+				bCheckChop = true;
+			}
+		}
+		else
+		{
+			if (getBugOptionBOOL("Actions__PreChopImprovements", true, "BUG_PRECHOP_IMPROVEMENTS"))
+			{
+				bCheckChop = true;
+			}
+		}
+	}
+// BUG - Pre-Chop - end
 
 	pUnitNode = headUnitNode();
 
@@ -4121,8 +4136,46 @@ bool CvSelectionGroup::groupBuild(BuildTypes eBuild)
 				bContinue = false;
 				break;
 			}
+
+// BUG - Pre-Chop - start
+			if (bCheckChop && pPlot->getBuildTurnsLeft(eBuild, getOwnerINLINE()) == 1)
+			{
+				CvCity* pCity;
+				int iProduction = plot()->getFeatureProduction(eBuild, getTeam(), &pCity);
+
+				if (iProduction > 0)
+				{
+					CvWString szBuffer = gDLL->getText("TXT_KEY_BUG_PRECLEARING_FEATURE_BONUS", GC.getFeatureInfo(eFeature).getTextKeyWide(), iProduction, pCity->getNameKey());
+					gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer,  ARTFILEMGR.getInterfaceArtInfo("WORLDBUILDER_CITY_EDIT")->getPath(), MESSAGE_TYPE_INFO, GC.getFeatureInfo(eFeature).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX(), getY(), true, true);
+				}
+				bContinue = false;
+				bStopOtherWorkers = true;
+				break;
+			}
+// BUG - Pre-Chop - end
 		}
 	}
+
+// BUG - Pre-Chop - start
+	if (bStopOtherWorkers)
+	{
+		pUnitNode = pPlot->headUnitNode();
+
+		while (pUnitNode != NULL)
+		{
+			pLoopUnit = ::getUnit(pUnitNode->m_data);
+			pUnitNode = pPlot->nextUnitNode(pUnitNode);
+			CvSelectionGroup* pSelectionGroup = pLoopUnit->getGroup();
+
+			if (pSelectionGroup != NULL && pSelectionGroup != this && pSelectionGroup->getOwnerINLINE() == getOwnerINLINE()
+					&& pSelectionGroup->getActivityType() == ACTIVITY_MISSION && pSelectionGroup->getLengthMissionQueue() > 0 
+					&& pSelectionGroup->getMissionType(0) == kBuildInfo.getMissionType() && pSelectionGroup->getMissionData1(0) == eBuild)
+			{
+				pSelectionGroup->deleteMissionQueueNode(pSelectionGroup->headMissionQueueNode());
+			}
+		}
+	}
+// BUG - Pre-Chop - end
 
 	return bContinue;
 }

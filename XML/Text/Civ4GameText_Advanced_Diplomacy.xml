@@ -6,7 +6,7 @@
 		<French>Votre inhumanité ne sera pas oubliée de si tôt...</French>
 		<German>Eure Unmenschlichkeit wird nicht leicht vergessen werden...</German>
 		<Italian>Your inhumanity will not be soon forgotten...</Italian>
-		<Spanish>Your inhumanity will not be soon forgotten...</Spanish>
+		<Spanish>Tu falta de compasión no será olvidada...</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_DENIED_2</Tag>
@@ -14,7 +14,7 @@
 		<French>Fidélité avec honneur, Courage avec Valeur, Bellicisme avec Colère, et Folie avec Destruction!</French>
 		<German>Loyalität mit Ehre, Mut mit Tapferkeit, Kriegstreiberei mit Zorn,  und Torheit mit Untergang!</German>
 		<Italian>Loyalty with Honor, Courage with Valor, Warmongering with Wrath,  and Folly with Doom!</Italian>
-		<Spanish>Loyalty with Honor, Courage with Valor, Warmongering with Wrath,  and Folly with Doom!</Spanish>
+		<Spanish>¡Lealtad con honor, coraje con valor, belicismo con ira, y disparates con perdición!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_DENIED_3</Tag>
@@ -22,7 +22,7 @@
 		<French>Ce sera la défaite de nous tous!</French>
 		<German>Das bedeutet das Ende für uns alle!</German>
 		<Italian>This will be the undoing of us all!</Italian>
-		<Spanish>This will be the undoing of us all!</Spanish>
+		<Spanish>¡Ésto nos destruirá a todos!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_WITH_1</Tag>
@@ -30,7 +30,7 @@
 		<French>Nous ne pouvons plus rester là et regarde le carnage! Vous devez arrêter votre Guerre contre %s1!</French>
 		<German>Wir können dem Gemetzel nicht länger zusehen und tatenlos bleiben! Ihr müßt den Krieg mit den %s1 beenden!</German>
 		<Italian>We can no longer stand by and watch the carnage!  You must end your war with the %s1!</Italian>
-		<Spanish>We can no longer stand by and watch the carnage!  You must end your war with the %s1!</Spanish>
+		<Spanish>¡No podemos seguir contemplando esta carnicería!. ¡Debes de terminar tu guerra con los %s1!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_WITH_2</Tag>
@@ -38,7 +38,7 @@
 		<French>La Guerre a durée assez longtemps!  Faire la paix avec %s1.</French>
 		<German>Der Krieg hat lange genug gedauert!  Macht Frieden mit %s1.</German>
 		<Italian>The war has gone on long enough!  Make peace with %s1.</Italian>
-		<Spanish>The war has gone on long enough!  Make peace with %s1.</Spanish>
+		<Spanish>¡La guerra ha durado suficiente!. Hacer la paz con los %s1.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_EXPORTS_PLAYER</Tag>
@@ -68,7 +68,7 @@
 		<Tag>TXT_KEY_ESPIONAGE_EMBASSY_MOD</Tag>
 		<English>%d1%: For Having an Embassy in their Nation.</English>
 		<French>%d1%: pour avoir une Ambassade dans leur Nation.</French>
-		<German>%d1%: Für eine Botschaft in ihrer Nation.</German>
+		<German>%d1%: F&#252;r eine Botschaft in ihrer Nation.</German>
 		<Italian>%d1%: For Having an Embassy in their Nation.</Italian>
 		<Spanish>%d1%: For Having an Embassy in their Nation.</Spanish>
 	</TEXT>
@@ -152,7 +152,7 @@
 		<French>Vous avez rappelé votre ambassadeur!</French>
 		<German>&quot;Du hast Deinen Botschafter abberufen!&quot;</German>
 		<Italian>&quot;You recalled your ambassador!&quot;</Italian>
-		<Spanish>&quot;You recalled your ambassador!&quot;</Spanish>
+		<Spanish>&quot;¡Llamaste a consultas a tu embajador!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_TRADED_POW</Tag>
@@ -219,14 +219,6 @@
 		<Spanish>&quot;You are a Warmongerer!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_MISC_ATTITUDE_CIVIC_SHARE</Tag>
-		<English>%D1: &quot;We share the same philosophies.&quot;</English>
-		<French>%D1: &quot;Nous partageons les mêmes philosophies&quot;</French>
-		<German>%D1: &quot;Wir haben die gleiche Weltanschauung&quot;</German>
-		<Italian>%D1: &quot;We share the same philosophies&quot;</Italian>
-		<Spanish>%D1: &quot;We share the same philosophies&quot;</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_NON_AGGRESSION</Tag>
 		<English>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</English>
 		<French>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</French>
@@ -245,10 +237,10 @@
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_EMBASSY</Tag>
 		<English>%D1: &quot;You let our ambassadors in.&quot;</English>
-		<French>%D1: &quot;You let our ambassadors in&quot;</French>
-		<German>%D1: &quot;You let our ambassadors in&quot;</German>
+		<French>%D1: &quot;Vous avez accueilli notre Ambassadeur&quot;</French>
+		<German>%D1: &quot;Du erlaubst uns eine Botschaft&quot;</German>
 		<Italian>%D1: &quot;You let our ambassadors in&quot;</Italian>
-		<Spanish>%D1: &quot;You let our ambassadors in&quot;</Spanish>
+		<Spanish>%D1: &quot;Permitiste entrar a nuestros embajadores&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_RIGHT_PASSAGE</Tag>
@@ -272,7 +264,7 @@
 		<French>Embassade</French>
 		<German>Botschaft</German>
 		<Italian>Embassy</Italian>
-		<Spanish>Embassy</Spanish>
+		<Spanish>Embajada</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_PREPARE_WAR</Tag>
@@ -286,9 +278,9 @@
 		<Tag>TXT_KEY_MISC_ENABLES_EMBASSIES</Tag>
 		<English>[ICON_BULLET]Enables Embassy Trading</English>
 		<French>[ICON_BULLET]Permet l'établissement d'Ambassades</French>
-		<German>[ICON_BULLET]Ermöglicht Botschaften-Handel</German>
+		<German>[ICON_BULLET]Erm&#246;glicht Botschaften-Handel</German>
 		<Italian>[ICON_BULLET]Enables Embassy Trading</Italian>
-		<Spanish>[ICON_BULLET]Enables Embassy Trading</Spanish>
+		<Spanish>[ICON_BULLET]Permite establecimiento de embajadas</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_LIMITED_BORDERS</Tag>
@@ -296,7 +288,7 @@
 		<French>[ICON_BULLET]Enables Right of Passage</French>
 		<German>[ICON_BULLET]Enables Right of Passage</German>
 		<Italian>[ICON_BULLET]Enables Right of Passage</Italian>
-		<Spanish>[ICON_BULLET]Enables Right of Passage</Spanish>
+		<Spanish>[ICON_BULLET]Permite derecho de paso</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_FREE_TRADE_ZONE</Tag>
@@ -332,11 +324,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HIRED_WAR_ALLY</Tag>
-		<English>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
+		<English>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
 		<French>Les sournois %s1_CivAdj ont convaincu les traîtres %s2_CivAdj de nous déclarer la Guerre!</French>
-		<German>Die bösartigen %s1_CivAdj haben die hinterhältigen %s2_CivAdj davon überzeugt, uns den Krieg zu erklären!</German>
-		<Italian>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
-		<Spanish>The evil %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Spanish>
+		<German>Die b&#246;sartigen %s1_CivAdj haben die hinterh&#228;ltigen %s2_CivAdj davon &#252;berzeugt, uns den Krieg zu erkl&#228;ren!</German>
+		<Italian>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
+		<Spanish>¡Los malvados %s1_CivAdj han convencido a los traicioneros %s2_CivAdj para que nos declaren la guerra!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CANCELLED_NON_AGGRESSION</Tag>
@@ -360,7 +352,7 @@
 		<French>Droit de Passage</French>
 		<German>Passiererlaubnis</German>
 		<Italian>Right of Passage</Italian>
-		<Spanish>Right of Passage</Spanish>
+		<Spanish>Derecho de Paso</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_NON_AGGRESSION</Tag>
@@ -464,15 +456,15 @@
 		<French>%s1 vous a vendu [NUM2:un:une:des:des] %s2.</French>
 		<German>%s1 hat einen %s2 an Dich verkauft.</German>
 		<Italian>%s1 has traded a %s2 to you.</Italian>
-		<Spanish>%s1 has traded a %s2 to you.</Spanish>
+		<Spanish>%s1 ha intercambiado [NUM1:un:una:unos:unas] %s2 contigo.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADABLE_UNIT</Tag>
-		<English>[ICON_BULLET]This Unit is Tradable</English>
-		<French>[ICON_BULLET]Cette unité peut être vendue</French>
-		<German>[ICON_BULLET]Diese Einheit kann gehandelt werden</German>
-		<Italian>[ICON_BULLET]This Unit is Tradable</Italian>
-		<Spanish>[ICON_BULLET]This Unit is Tradable</Spanish>
+		<English>[ICON_BULLET]Unit can be Traded</English>
+		<French>[ICON_BULLET]Unité peut être négociée</French>
+		<German>[ICON_BULLET]Einheit kann gehandelt werden</German>
+		<Italian>[ICON_BULLET]Unità possono essere scambiati</Italian>
+		<Spanish>[ICON_BULLET]Unidad puede negociarse</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_BUY</Tag>
@@ -480,7 +472,7 @@
 		<French>Vendre</French>
 		<German>Verkaufen</German>
 		<Italian>Sell</Italian>
-		<Spanish>Sell</Spanish>
+		<Spanish>Vender</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_BUY_CORPORATION</Tag>
@@ -508,19 +500,19 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_EMBASSY</Tag>
-		<English>Embassies allow more advanced form of diplomacy.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Open Borders [COLOR_REVERT]Agreements.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Defensive Pacts.[COLOR_REVERT][NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Free Trade Agreements.[COLOR_REVERT][NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Non-Aggression Pacts.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Improves[COLOR_REVERT] Diplomatic Relations Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Workers[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Certain Military Units[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows players to see inside the other nation's capital city.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]If Recalled, Players Will Sour Diplomatic Relations Between Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Enemy Spy Missions are More Likely to Succeed, Due to the Increased Familiarity Between Your Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Allows the other player to see into your capital city![COLOR_REVERT]</English>
+		<English>Embassies allow more advanced form of diplomacy.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Open Borders [COLOR_REVERT]Agreements.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Defensive Pacts.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Improves[COLOR_REVERT] Diplomatic Relations Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Certain Military Units[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows players to see inside the other nation's capital city.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]If Recalled, Players Will Sour Diplomatic Relations Between Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Enemy Spy Missions are More Likely to Succeed, Due to the Increased Familiarity Between Your Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Allows the other player to see into your capital city![COLOR_REVERT]</English>
 		<French>Les Ambassades permettent une forme plus avancée de diplomatie.[NEWLINE][ICON_BULLET]Peut signer des Traités de [COLOR_HIGHLIGHT_TEXT]Libre Passage[COLOR_REVERT].[NEWLINE][ICON_BULLET]Peut signer des [COLOR_HIGHLIGHT_TEXT]Pactes Défensifs.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Améliore[COLOR_REVERT] les Relations diplomatique entre les Etats.[NEWLINE][ICON_BULLET]Permet l'échange d' [COLOR_GREEN]Ouvriers[COLOR_REVERT] entre Etats.[NEWLINE][ICON_BULLET]Permet l'échange d' [COLOR_GREEN]Unités militaires[COLOR_REVERT] entre Etats.[NEWLINE][ICON_BULLET]Permet aux joueurs de voir la Capitale de l'autre Nation.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Si L'Ambassadeur est rappelé, créé de la tension diplomatique entre les Etats.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Les Mission d'espionnage ont plus de chance de succès, en raison de la proximité entre les Etats.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Votre Capitale est du coup visible par l'autre Nation![COLOR_REVERT]</French>
-		<German>Botschaften ermöglichen eine fortgeschrittenere Form der Diplomatie.[NEWLINE][ICON_BULLET]Kann [COLOR_HIGHLIGHT_TEXT]Offene Grenzen [COLOR_REVERT]beschließen.[NEWLINE][ICON_BULLET]Kann [COLOR_HIGHLIGHT_TEXT]Defensivpakte[COLOR_REVERT]beschließen.[NEWLINE][ICON_BULLET][COLOR_GREEN]Verbessert[COLOR_REVERT] diplomatische Beziehungen zwischen den Nationen.[NEWLINE][ICON_BULLET]Ermöglicht den [COLOR_GREEN]Handel mit Bautrupps[COLOR_REVERT] zwischen den Nationen.[NEWLINE][ICON_BULLET]Ermöglicht den [COLOR_GREEN]Handel mit bestimmten Militäreinheiten[COLOR_REVERT] zwischen den Nationen. [NEWLINE][ICON_BULLET]Ermöglicht es den Spielern in die Hauptstadt einer anderen Nation zu sehen.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Wenn der Botschafter abberufen wird verschlechtert dich das diplomatische Verhältnis.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Feindliche Spionagemissionen sind öfter erfolgreich durch die verbesserten Kenntnisse der Länder voneinander.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Ermöglicht es dem anderen Spieler in deine Hauptstadt zu sehen![COLOR_REVERT]</German>
+		<German>Botschaften erm&#246;glichen eine fortgeschrittenere Form der Diplomatie.[NEWLINE][ICON_BULLET]Kann [COLOR_HIGHLIGHT_TEXT]Offene Grenzen [COLOR_REVERT]beschlie&#223;en.[NEWLINE][ICON_BULLET]Kann [COLOR_HIGHLIGHT_TEXT]Defensivpakte[COLOR_REVERT]beschlie&#223;en.[NEWLINE][ICON_BULLET][COLOR_GREEN]Verbessert[COLOR_REVERT] diplomatische Beziehungen zwischen den Nationen.[NEWLINE][ICON_BULLET]Erm&#246;glicht den [COLOR_GREEN]Handel mit Bautrupps[COLOR_REVERT] zwischen den Nationen.[NEWLINE][ICON_BULLET]Erm&#246;glicht den [COLOR_GREEN]Handel mit bestimmten Milit&#228;reinheiten[COLOR_REVERT] zwischen den Nationen. [NEWLINE][ICON_BULLET]Erm&#246;glicht es den Spielern in die Hauptstadt einer anderen Nation zu sehen.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Wenn der Botschafter abberufen wird verschlechtert dich das diplomatische Verh&#228;ltnis.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Feindliche Spionagemissionen sind &#246;fter erfolgreich durch die verbesserten Kenntnisse der L&#228;nder voneinander.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Erm&#246;glicht es dem anderen Spieler in deine Hauptstadt zu sehen![COLOR_REVERT]</German>
 		<Italian>Embassies allow more advanced form of diplomacy.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Open Borders [COLOR_REVERT]Agreements.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Defensive Pacts.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Improves[COLOR_REVERT] Diplomatic Relations Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Workers[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Certain Military Units[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows players to see inside the other nation's capital city.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]If Recalled, Players Will Sour Diplomatic Relations Between Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Enemy Spy Missions are More Likely to Succeed, Due to the Increased Familiarity Between Your Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Allows the other player to see into your capital city![COLOR_REVERT]</Italian>
-		<Spanish>Embassies allow more advanced form of diplomacy.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Open Borders [COLOR_REVERT]Agreements.[NEWLINE][ICON_BULLET]Can Sign [COLOR_HIGHLIGHT_TEXT]Defensive Pacts.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Improves[COLOR_REVERT] Diplomatic Relations Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Workers[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows For the [COLOR_GREEN]Trade of Certain Military Units[COLOR_REVERT] Between Countries.[NEWLINE][ICON_BULLET]Allows players to see inside the other nation's capital city.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]If Recalled, Players Will Sour Diplomatic Relations Between Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Enemy Spy Missions are More Likely to Succeed, Due to the Increased Familiarity Between Your Countries.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Allows the other player to see into your capital city![COLOR_REVERT]</Spanish>
+		<Spanish>Las embajadas permiten formas más avanzadas de diplomacia.[NEWLINE][ICON_BULLET]Se pueden firmar acuerdos de [COLOR_HIGHLIGHT_TEXT]Apertura de Fronteras[COLOR_REVERT].[NEWLINE][ICON_BULLET]Se pueden firmar [COLOR_HIGHLIGHT_TEXT]Acuerdos de protección.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_GREEN]Mejora [COLOR_REVERT]las relaciones diplomáticas entre civilizaciones.[NEWLINE][ICON_BULLET]Permite el [COLOR_GREEN]Intercambio de Trabajadores[COLOR_REVERT] entre civilizaciones.[NEWLINE][ICON_BULLET]Permite intercambiar cierto tipo de [COLOR_GREEN]Unidades Militares[COLOR_REVERT] entre civilizaciones.[NEWLINE][ICON_BULLET]Permite a los jugadores ver la capital de la civilización.[NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]Si se llama a consultas a los embajadores, las relaciones diplomáticas sufrirán.[COLOR_REVERT][NEWLINE][ICON_BULLET][COLOR_WARNING_TEXT]¡Permite al otro jugador ver tu capital![COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_EMBASSY_STRING</Tag>
 		<English>Establish Embassy</English>
 		<French>Etablir une Embassade</French>
-		<German>Botschaft eröffnen</German>
+		<German>Botschaft er&#246;ffnen</German>
 		<Italian>Establish Embassy</Italian>
-		<Spanish>Establish Embassy</Spanish>
+		<Spanish>Establecer Embajada</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_FREE_TRADE_ZONE</Tag>
@@ -534,9 +526,9 @@
 		<Tag>TXT_KEY_TRADE_LIMITED_BORDERS</Tag>
 		<English>A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.</English>
 		<French>Un Droit de Passage permet uniquement aux unités civiles de passer aux travers des frontières des civilisations, incluant le commerce. Pratique lorsque les joueurs veulent continuer les échanges commerciaux tout en stoppant les mouvement de troupes ennemis.</French>
-		<German>Eine Passiererlaubnis ermöglicht nichtmilitärischen Einheiten durch Deine Zivilisation zu ziehen und auch den Handel. Das ist sinnvoll für Spieler, die den Handel weiterführen aber den Durchzug der feindlichen Truppen unterbinden möchten.</German>
+		<German>Eine Passiererlaubnis erm&#246;glicht nichtmilit&#228;rischen Einheiten durch Deine Zivilisation zu ziehen und auch den Handel. Das ist sinnvoll f&#252;r Spieler, die den Handel weiterf&#252;hren aber den Durchzug der feindlichen Truppen unterbinden m&#246;chten.</German>
 		<Italian>A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.</Italian>
-		<Spanish>A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.</Spanish>
+		<Spanish>Un acuerdo de Derecho de Paso permite pasar solamente a las unidades no agresivas de la otra civilización, incluyendo el comercio. Es útil cuando se desea mantener el comercio pero evitar el paso de tropas enemigas.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_LIMITED_BORDERS_STRING</Tag>
@@ -544,7 +536,7 @@
 		<French>Droit de Passage</French>
 		<German>Passiererlaubnis</German>
 		<Italian>Right of Passage</Italian>
-		<Spanish>Right of Passage</Spanish>
+		<Spanish>Derecho de Paso</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_MAKE_CONTACT_WITH</Tag>
@@ -566,9 +558,9 @@
 		<Tag>TXT_KEY_TRADE_MILITARY_UNIT</Tag>
 		<English>Military Units</English>
 		<French>Unités Militaires</French>
-		<German>Militäreinheiten</German>
+		<German>Milit&#228;reinheiten</German>
 		<Italian>Military Units</Italian>
-		<Spanish>Military Units</Spanish>
+		<Spanish>Unidades Militares</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_NON_AGGRESSION</Tag>
@@ -664,7 +656,7 @@
 		<French>Oui!  Faisons la Paix.</French>
 		<German>Ja!  Laßt uns Frieden machen.</German>
 		<Italian>Yes!  Let's make peace.</Italian>
-		<Spanish>Yes!  Let's make peace.</Spanish>
+		<Spanish>¡Si!. Tengamos la paz.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_MAKE_PEACE_WITH_2</Tag>
@@ -672,7 +664,7 @@
 		<French>Paix il y a...</French>
 		<German>So soll es Frieden sein...</German>
 		<Italian>Peace it is...</Italian>
-		<Spanish>Peace it is...</Spanish>
+		<Spanish>Tendremos la paz...</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_NO_MAKE_PEACE_WITH_1</Tag>
@@ -680,7 +672,7 @@
 		<French>Non!  Il faut leur donner une leçon!</French>
 		<German>Nein!  Sie müssen ihre Lektion lernen!</German>
 		<Italian>No!  They must be taught a lesson!</Italian>
-		<Spanish>No!  They must be taught a lesson!</Spanish>
+		<Spanish>¡No!. ¡Hay que darles una lección!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_NO_MAKE_PEACE_WITH_2</Tag>
@@ -688,7 +680,7 @@
 		<French>certaines Guerres doivent être menées...</French>
 		<German>Manche Kriege sind es wert zu kämpfen...</German>
 		<Italian>Some wars are worth fighting...</Italian>
-		<Spanish>Some wars are worth fighting...</Spanish>
+		<Spanish>Algunas guerras merecen ser luchadas...</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_NO_MAKE_PEACE_WITH_3</Tag>
@@ -696,7 +688,7 @@
 		<French>Pas avant que leur sang remplisse les rues de leur Capitale!</French>
 		<German>Nicht bis das Blut die Straßen ihrer Hauptstadt füllt!</German>
 		<Italian>Not until their blood fills the streets of their capital city!</Italian>
-		<Spanish>Not until their blood fills the streets of their capital city!</Spanish>
+		<Spanish>¡No hasta que su sangre llene las calles de su capital!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_NO_MAKE_PEACE_WITH_4</Tag>
@@ -704,23 +696,7 @@
 		<French>N'abandonnerai Jamais! Jamais je ne me rendrai!</French>
 		<German>Gib niemals auf!  Kapituliere niemals!</German>
 		<Italian>Never Give Up!  Never Surrender!</Italian>
-		<Spanish>Never Give Up!  Never Surrender!</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_MISC_ATTITUDE_FAVORITE_WONDER</Tag>
-		<English>%D1: &quot;You own the %s2.&quot;</English>
-		<French>%D1: &quot;Vous possédez le %s2.&quot;</French>
-		<German>%D1: &quot;Euch gehört das %s2.&quot;</German>
-		<Italian>%D1: &quot;You own the %s2.&quot;</Italian>
-		<Spanish>%D1: &quot;Posees [NUM1:el:la:los:las] %s2.&quot;</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_MISC_FAVORITE_WONDER</Tag>
-		<English>Favorite Wonder:</English>
-		<French>Merveille Préférée:</French>
-		<German>Lieblings-Wunder</German>
-		<Italian>Favorite Wonder:</Italian>
-		<Spanish>Maravilla Favorita:</Spanish>
+		<Spanish>¡Nunca retroceder! ¡Nunca rendirse!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_NO_CAPITAL_PUNISHMENT</Tag>
@@ -866,72 +842,6 @@
 		<Italian>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Italian>
 		<Spanish>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Spanish>
 	</TEXT>
-	<!-- RevolutionDCM - start diplomacy text -->
-	<TEXT>
-		<Tag>USER_STOP_BOTHERING</Tag>
-		<English>Cease bothering us!</English>
-		<French>Cease bothering us!</French>
-		<German>Cease bothering us!</German>
-		<Italian>Cease bothering us!</Italian>
-		<Spanish>Cease bothering us!</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>ASSUME_SNUFFED</Tag>
-		<English>So be it. But if we need you at the table, your absense may not be to your advantage.</English>
-		<French>So be it. But if we need you at the table, your absense may not be to your advantage.</French>
-		<German>So be it. But if we need you at the table, your absense may not be to your advantage.</German>
-		<Italian>So be it. But if we need you at the table, your absense may not be to your advantage.</Italian>
-		<Spanish>So be it. But if we need you at the table, your absense may not be to your advantage.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>ASSUME_REALLY_SNUFFED</Tag>
-		<English>So be it. But the next time we meet, it may be on the battlefield!</English>
-		<French>So be it. But the next time we meet, it may be on the battlefield!</French>
-		<German>So be it. But the next time we meet, it may be on the battlefield!</German>
-		<Italian>So be it. But the next time we meet, it may be on the battlefield!</Italian>
-		<Spanish>So be it. But the next time we meet, it may be on the battlefield!</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>ASSUME_NOT_SNUFFED</Tag>
-		<English>What a shame. My diplomats enjoyed your openness and all it revealed about you.</English>
-		<French>What a shame. My diplomats enjoyed your openness and all it revealed about you.</French>
-		<German>What a shame. My diplomats enjoyed your openness and all it revealed about you.</German>
-		<Italian>What a shame. My diplomats enjoyed your openness and all it revealed about you.</Italian>
-		<Spanish>What a shame. My diplomats enjoyed your openness and all it revealed about you.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>USER_LETS_TALK</Tag>
-		<English>We wish to resume talks...</English>
-		<French>We wish to resume talks...</French>
-		<German>We wish to resume talks...</German>
-		<Italian>We wish to resume talks...</Italian>
-		<Spanish>We wish to resume talks...</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>RESUME_TALKS</Tag>
-		<English>If you wish. I will contact you when it suits me.</English>
-		<French>If you wish. I will contact you when it suits me.</French>
-		<German>If you wish. I will contact you when it suits me.</German>
-		<Italian>If you wish. I will contact you when it suits me.</Italian>
-		<Spanish>If you wish. I will contact you when it suits me.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>RESUME_TALKS_RELUCTANT</Tag>
-		<English>If you insist. But I have enjoyed your absense.</English>
-		<French>If you insist. But I have enjoyed your absense.</French>
-		<German>If you insist. But I have enjoyed your absense.</German>
-		<Italian>If you insist. But I have enjoyed your absense.</Italian>
-		<Spanish>If you insist. But I have enjoyed your absense.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>RESUME_TALKS_GLADLY</Tag>
-		<English>Excellent! There are many things you have to offer us.</English>
-		<French>Excellent! There are many things you have to offer us.</French>
-		<German>Excellent! There are many things you have to offer us.</German>
-		<Italian>Excellent! There are many things you have to offer us.</Italian>
-		<Spanish>Excellent! There are many things you have to offer us.</Spanish>
-	</TEXT>
-	<!-- RevolutionDCM - end -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_CONDEMN_UN_SLAVERY</Tag>
 		<English>Condemn Slavery Civic</English>

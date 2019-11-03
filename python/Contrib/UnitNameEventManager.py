@@ -153,7 +153,7 @@ class UnitNameEventManager:
 		pCity = pPlayer.getCity(0)
 		lUnitReName = UnitReName()
 
-		zsEra = gc.getEraInfo(pPlayer.getCurrentEra()).getType()
+		zsEra = gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()
 		zsUnitCombat = lUnitReName.getUnitCombat(pUnit)
 		zsUnitClass = gc.getUnitClassInfo(pUnit.getUnitClassType()).getType()
 
@@ -233,7 +233,7 @@ class BuildUnitName(AbstractBuildUnitName):
 
 		#BUGPrint("onUnitBuild-C")
 
-		zsEra = gc.getEraInfo(pPlayer.getCurrentEra()).getType()
+		zsEra = gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()
 		zsUnitCombat = lUnitReName.getUnitCombat(pUnit)
 		zsUnitClass = gc.getUnitClassInfo(pUnit.getUnitClassType()).getType()
 
@@ -265,7 +265,7 @@ class BuildUnitName(AbstractBuildUnitName):
 		and UnitNamingOpt.isEnabled()):
 			return
 		lUnitReName = UnitReName()
-		zsEra = gc.getEraInfo(pPlayer.getCurrentEra()).getType()
+		zsEra = gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()
 		for pUnit in PlayerUtil.playerUnits(pPlayer):
 			if pUnit.getNameNoDesc() == "":
 				zsUnitCombat = lUnitReName.getUnitCombat(pUnit)
@@ -293,7 +293,7 @@ class BuildUnitName(AbstractBuildUnitName):
 							return self.name
 					pCity = EmpireAsCity(pPlayer.getCivilizationAdjective(0))
 				lUnitReName = UnitReName()
-				zsEra = gc.getEraInfo(pPlayer.getCurrentEra()).getType()
+				zsEra = gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()
 				for i in range(pPlot.getNumUnits()):
 					pUnit = pPlot.getUnit(i)
 					if pUnit and not pUnit.isNone() and pUnit.getOwner() == iPlayer:

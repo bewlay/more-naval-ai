@@ -184,9 +184,9 @@ def pyPrint(stuff):
 	sys.stdout.write(stuff)
 
 def pyAssert(cond, msg):
-	if (cond==False):
+	if not cond :
 		sys.stderr.write(msg)
-	assert(cond, msg)
+	assert cond, msg
 
 def getScoreComponent(iRawScore, iInitial, iMax, iFactor, bExponential, bFinal, bVictory):
 
@@ -233,7 +233,17 @@ def findInfoTypeNum(infoGetter, numInfos, typeStr):
 		return -1
 	idx = gc.getInfoTypeForString(typeStr)
 	pyAssert(idx != -1, "Can't find type enum for type tag %s" %(typeStr,))
+	pyAssert(idx < numInfos, "Not the right type: %s (index too high)" %(typeStr,))
+	pyAssert( infoGetter( idx ).getType() == typeStr, "Not the right type: %s" %(typeStr,) )
 	return idx
+
+# lfgr 10/2019
+def findCivilizationNum( sTypeStr ) :
+	return findInfoTypeNum( gc.getCivilizationInfo, gc.getNumCivilizationInfos(), sTypeStr )
+	
+def findLeaderNum( sTypeStr ) :
+	return findInfoTypeNum( gc.getLeaderHeadInfo, gc.getNumLeaderHeadInfos(), sTypeStr )
+# lfgr end
 
 def getInfo(strInfoType, strInfoName):	# returns info for InfoType
 	#set Type to lowercase

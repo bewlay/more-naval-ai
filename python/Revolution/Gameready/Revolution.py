@@ -19,16 +19,9 @@ import SdToolKitCustom
 import CvScreensInterface
 # lfgr
 import RevCivUtils
-
-# lfgr: must load RebelTypes
-
-#try:
-#	import RebelTypes
-#except:
-#	pass
-import RebelTypes
-
 # lfgr end
+
+# lfgr: removed RebelTypes stuff
 
 import RevInstances
 from TextUtils import getCityTextList
@@ -60,7 +53,6 @@ class Revolution :
 		# Debug settings
 		self.LOG_DEBUG = RevOpt.isRevDebugMode()
 		self.DEBUG_MESS = RevOpt.isShowDebugMessages()
-		self.showRevIndexInPopup = RevOpt.isShowRevIndexInPopup()
 
 		self.maxCivs = RevOpt.getRevMaxCivs()
 		if( self.maxCivs <= 0 ) :
@@ -68,7 +60,6 @@ class Revolution :
 
 		self.offerDefectToRevs = RevOpt.isOfferDefectToRevs()
 
-		self.bRebelTypes = RevOpt.isRebelTypes()
 		self.bArtStyleTypes = RevOpt.isArtStyleTypes()
 
 		self.bAllowBreakVassal = RevOpt.isAllowBreakVassal()
@@ -251,11 +242,6 @@ class Revolution :
 		# Function loads info required by other components
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint( "  Loading revolution data" )
 
-		try :
-			if( self.bRebelTypes ) :
-				RebelTypes.setup()
-		except :
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint( "Error:  Could not run RebelTypes.setup()" )
 
 		self.iNationalismTech = CvUtil.findInfoTypeNum(gc.getTechInfo,gc.getNumTechInfos(), RevDefs.sXMLNationalism)
 		self.iLiberalismTech = CvUtil.findInfoTypeNum(gc.getTechInfo,gc.getNumTechInfos(), RevDefs.sXMLLiberalism)
@@ -314,7 +300,7 @@ class Revolution :
 					else :
 						danger += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : danger += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : danger += "  \t(%d)"%(revIdx)
 					danger += "\n"
 				elif( revIdx >= int(math.floor(self.revReadyFrac*self.revInstigatorThreshold + .5)) ) :
 					if( deltaTrend > self.showTrend ) :
@@ -322,7 +308,7 @@ class Revolution :
 					else :
 						warning += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : warning += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : warning += "  \t(%d)"%(revIdx)
 					warning += "\n"
 				else :
 					if( deltaTrend > self.showTrend ) :
@@ -330,7 +316,7 @@ class Revolution :
 					else :
 						safe += "  %s"%(pCity.getName())
 
-					if( self.showRevIndexInPopup or game.isDebugMode() ) : safe += "  \t(%d)"%(revIdx)
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : safe += "  \t(%d)"%(revIdx)
 					safe += "\n"
 
 			# Additions by Caesium et al
@@ -952,13 +938,13 @@ class Revolution :
 						pSpy.setFortifyTurns(gc.getDefineINT("MAX_FORTIFY_TURNS"))
 
 			# Give a little boost to espionage
-			pRevTeam.changeEspionagePointsAgainstTeam( owner.getTeam(), game.getSorenRandNum((10+pRevPlayer.getCurrentEra())*iNumUnits, 'Revolt - Esp') )
+			pRevTeam.changeEspionagePointsAgainstTeam( owner.getTeam(), game.getSorenRandNum((10+pRevPlayer.getCurrentRealEra())*iNumUnits, 'Revolt - Esp') )
 
 		if( pRevPlayer.isRebel() ) :
 			# Set reinforcement timer again
 			iReinforceTurns = int(math.floor( self.baseReinforcementTurns*(2.0/(revStrength)) + .5 ))
 
-			minReinfTurns = max([self.minReinforcementTurns, 4 - owner.getCurrentEra(), 9 - pCity.getPopulation()])
+			minReinfTurns = max([self.minReinforcementTurns, 4 - owner.getCurrentRealEra(), 9 - pCity.getPopulation()])
 
 			iReinforceTurns = max([iReinforceTurns,minReinfTurns])
 			if( pCity.getRevolutionCounter() == 0 ) :
@@ -1107,7 +1093,11 @@ class Revolution :
 				pCity.changeReinforcementCounter(-1)
 
 	def updateLocalRevIndices( self, iGameTurn, iPlayer, subCityList = None, bIsRevWatch = False ) :
-		# Updates the revolution effects local to each city
+		"""
+		Updates the revolution effects local to each city
+		If bIsRevWatch, returns a string showing the factors for city stability.
+		If subCityList is not None, only consider the cities in subCityList
+		"""
 
 		pPlayer = gc.getPlayer(iPlayer)
 		if( pPlayer.getNumCities() == 0 ) :
@@ -1134,7 +1124,7 @@ class Revolution :
 		civSizeValue *= self.civSizeModifier
 		[civSizeRawVal, iCivEffRadRaw] = RevUtils.computeCivSizeRaw(iPlayer)
 		civSizeRawVal *= self.civSizeModifier
-		if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have civ size value %.2f, era mod %.2f"%(pPlayer.getCivilizationDescription(0),civSizeValue,max( [0, 0.85-0.20*pPlayer.getCurrentEra()] )))
+		if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have civ size value %.2f, era mod %.2f"%(pPlayer.getCivilizationDescription(0),civSizeValue,max( [0, 0.85-0.20*pPlayer.getCurrentRealEra()] )))
 		#phungus -end
 
 		# Prepare string that holds RevWatch text for cities
@@ -1143,7 +1133,7 @@ class Revolution :
 		if( subCityList == None ) :
 			cityList = playerPy.getCityList()
 			totalString = localText.getText("TXT_KEY_REV_WATCH_CITY_BY_CITY",())
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				totalString += '  ' + localText.getText("TXT_KEY_REV_WATCH_DEBUG_NOTE",())
 		else :
 			cityList = subCityList
@@ -1186,7 +1176,7 @@ class Revolution :
 
 			culturePercent = 0
 			maxCult = 0
-			maxCultPlayer = -1
+			maxCultPlayer = -1 # Player with highest plot culture
 			for idx in range(0,gc.getMAX_CIV_PLAYERS()) :
 				if( pPlayer.getTeam() == gc.getPlayer(idx).getTeam() ) :
 					culturePercent += pCity.plot().calculateCulturePercent(idx)
@@ -1334,32 +1324,21 @@ class Revolution :
 
 			if( civSizeRawVal > 2.0 ) :
 				locationRevIdx += int(math.floor(2.0*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.5 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.6 ) :
 				locationRevIdx += int(math.floor(1.65*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.6 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.4 ) :
 				locationRevIdx += int(math.floor(1.45*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.7 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.2 ) :
 				locationRevIdx += int(math.floor(1.25*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.8 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > 1.0 ) :
 				locationRevIdx += int(math.floor(cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 1.9 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			elif( civSizeRawVal > .7 ) :
 				locationRevIdx += int(math.floor(.75*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 2.2 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 			else :
 				locationRevIdx += int(math.floor(.5*cityDistModifier*distMod + .5))
-				if( bIsRevWatch and cityDistModifier > 3.0 ) :
-					negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
+			
+			if( bIsRevWatch and locationRevIdx != 0 ) :
+				negList.append( (locationRevIdx, localText.getText("TXT_KEY_REV_WATCH_DISTANT",())) )
 
 			locationRevIdx = int(math.floor( locationRevIdx + .5 ))
 			localRevIdx += locationRevIdx
@@ -1402,7 +1381,7 @@ class Revolution :
 				if( recentlyAcquired or pPlayer.isRebel() ) :
 					connIdx = 3
 				else :
-					connIdx = min([5 + pPlayer.getCurrentEra() + pCity.getPopulation()/3, 10])
+					connIdx = min([5 + pPlayer.getCurrentRealEra() + pCity.getPopulation()/3, 10])
 
 				if( bIsRevWatch ) : negList.append( (connIdx, localText.getText("TXT_KEY_REV_WATCH_NOT_CONNECTED",())) )
 				colonyIdx += connIdx
@@ -1475,11 +1454,11 @@ class Revolution :
 					relGoodIdx = int(math.floor( self.religionModifier*(relGoodIdx) + .5 ))
 					relBadIdx = int(math.floor( self.religionModifier*(relBadIdx) + .5 ))
 
-					if( hasSciMethod ) :
+					if( hasSciMethod ) : # TODO: XMLify
 						relIdx = relIdx/3
 						relGoodIdx /=3
 						relBadIdx /= 3
-					elif( hasLiberalism ) :
+					elif( hasLiberalism ) : # TODO: XMLify
 						relIdx = relIdx/2
 						relGoodIdx /= 2
 						relBadIdx /= 2
@@ -1495,12 +1474,12 @@ class Revolution :
 			#if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s religious index: %d, total: %d"%(pCity.getName(),relIdx,localRevIdx))
 
 			# Culture
-			adjCultRate = max([pCity.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) - pPlayer.getCurrentEra(), 0])
-			cultIdx = -min([int( pow(abs(adjCultRate/(1.5+pPlayer.getCurrentEra()/3.0)), .7) + 0.5 ), 10])
+			adjCultRate = max([pCity.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) - pPlayer.getCurrentRealEra(), 0])
+			cultIdx = -min([int( pow(abs(adjCultRate/(1.5+pPlayer.getCurrentRealEra()/3.0)), .7) + 0.5 ), 10])
 			cultIdx = int(math.floor( self.cultureRateModifier*cultIdx + .5 ))
 			if( bWarWithMaxCult and not pPlayer.isRebel() ) :
 				cultIdx /= 2
-			if( bIsRevWatch and cultIdx < -1 ) : posList.append( (cultIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
+			if( bIsRevWatch and cultIdx != 0 ) : posList.append( (cultIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
 			localRevIdx += cultIdx
 
 			# Nationality
@@ -1566,7 +1545,7 @@ class Revolution :
 
 			# Garrison
 			garIdx = 0
-			if( hasLiberalism ) :
+			if( hasLiberalism ) : # LFGR_TODO: XMLify
 				garIdx = -int( 2*pow(pCity.plot().getNumDefenders(iPlayer)/2.0, .5) - .5 )
 			else :
 				if( pCity.getBuildingDefense() > 75 ) :
@@ -1579,7 +1558,7 @@ class Revolution :
 			garIdx = int(math.floor( self.garrisonModifier*garIdx + .5 ))
 
 			if( natIdx > 0 ) :
-				garIdx = max([garIdx,-5])
+				garIdx = max([garIdx,-5]) # LFGR_TODO: Make configurable
 			else :
 				garIdx = max([garIdx,-8])
 
@@ -1596,17 +1575,17 @@ class Revolution :
 				localRevIdx += spiritIdx
 
 			# Size
-			if( pCity.getPopulation() < 2 + min([pPlayer.getCurrentEra(),3]) ) :
-				if( pCity.isCapital() and pPlayer.getCurrentEra() - game.getStartEra() > 2 ) :
+			if( pCity.getPopulation() < 2 + min([pPlayer.getCurrentRealEra(),3]) ) :
+				if( pCity.isCapital() and pPlayer.getCurrentRealEra() - game.getStartEra() > 2 ) :
 					# To help remove late game tiny civs
-					localRevIdx += 4
+					localRevIdx += 4 # LFGR_TODO?
 				elif( pCity.getHighestPopulation() > 7 ) :
 					# City has starved a lot, don't forgive and forget
-					localRevIdx += 2
+					localRevIdx += 2 # LFGR_TODO?
 				else :
 					# Small cities don't get worked up as quickly
 					if( localRevIdx > 0 ) :
-						sizeIdx = -3 + pCity.getPopulation() - min([pPlayer.getCurrentEra(),3])
+						sizeIdx = -3 + pCity.getPopulation() - min([pPlayer.getCurrentRealEra(),3])
 						if( bIsRevWatch ) : posList.append( (sizeIdx, localText.getText("TXT_KEY_REV_WATCH_SMALL_CITY",())) )
 						localRevIdx += sizeIdx
 						localRevIdx = max([localRevIdx,0])
@@ -1663,31 +1642,23 @@ class Revolution :
 
 			# lfgr start
 			# Crime
-			iMinCityCrime = 20
-			iMaxCityCrime = 100
+			iUsualCityCrime = 20 # This crime level means no stability bonus/malus
+			iCrimeCap = 100 # No crime above this will be counted
 			fCrimeFactor = 0.1
-			iCityCrime = pCity.getCrime()
-			if( iCityCrime >= iMinCityCrime ) :
-				if( iCityCrime > iMaxCityCrime ) :
-					iCityCrime = iMaxCityCrime
-				iRandCrime = game.getSorenRandNum( iMaxCityCrime - iMinCityCrime, "Rev/Crime" )
-				iCrimeFactor = 0
-				if( iRandCrime < iCityCrime ) :
-					iCrimeFactor = ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
-#					localRevIdx += ( iCityCrime - iMinCityCrime - iRandCrime ) * fCrimeFactor
-					localRevIdx += iCrimeFactor
-
-				iAverageRandCrime = ( iMaxCityCrime - iMinCityCrime ) / 2
-				iAverageRevIdxInc = ( pCity.getCrime() - iMinCityCrime - iAverageRandCrime ) * fCrimeFactor
-
-#				negList.append( ( iAverageRevIdxInc, "Crime" ) )
-				if iCrimeFactor > 0:
-					negList.append( ( iCrimeFactor, "Crime" ) )
+			iCityCrime = min( pCity.getCrime(), iCrimeCap )
+			iCrimeIdx = int( ( iCityCrime - iUsualCityCrime ) * fCrimeFactor )
+			if bIsRevWatch :
+				if iCrimeIdx > 0 :
+					negList.append( ( iCrimeIdx, "Crime" ) )
+				elif iCrimeIdx < 0 :
+					posList.append( ( iCrimeIdx, "Low Crime" ) )
+			localRevIdx += iCrimeIdx
 			# lfgr end
 
 
 			# Adjust index accumulation for varying game speeds
 			gameSpeedMod = RevUtils.getGameSpeedMod()
+			iOrigLocalRevIdx = localRevIdx # lfgr: Also show before adjustment
 			localRevIdx = int(math.floor( gameSpeedMod*self.revIdxModifier*localRevIdx + self.revIdxOffset + .5 ))
 
 			if( pPlayer.isHuman() ) :
@@ -1740,7 +1711,7 @@ class Revolution :
 			#if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : RevUtils.computeBribeCosts( pCity, bSilent = False )
 
 			# RevolutionDCM - city advisor text conditioning
-			cityString = '\n\n' + pCity.getName()# + " \t"
+			cityString = pCity.getName()# + " \t"
 			if( revIdx >= self.alwaysViolentThreshold ) :
 				cityString += ':  ' + "<color=230,0,0,255>"   + localText.getText("TXT_KEY_REV_WATCH_DANGER",()) + " " + "<color=255,255,255,255>"
 			elif( revIdx >= self.revInstigatorThreshold ) :
@@ -1751,21 +1722,26 @@ class Revolution :
 			else :
 				#RevolutionDCM - city advisor text conditioning
 				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				cityString += " (%d)"%(revIdx)
 				
 			#RevolutionDCM - city advisor text conditioning
 			cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
-				cityString += " (%d) "%((revIdx - revIdxAvg))
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
+				cityString += " %d "%((revIdx - revIdxAvg))
 			if( (revIdx - revIdxAvg) <= -self.showTrend ) :
 				cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
 			elif( (revIdx - revIdxAvg) > self.showTrend ) :
 				cityString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
 			else :
 				cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( game.isDebugMode() ) :
 				cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
+			
+			# lfgr 07/2019: Show current effects summary
+			if RevOpt.isShowRevIndexInPopup :
+				cityString += "\n" + localText.getText("TXT_KEY_REV_WATCH_THIS_TURN_AND_AFTER_ADJUSTMENTS", (iOrigLocalRevIdx, localRevIdx) )
+			# lfgr end
 
 			# Enable only for debugging rev index histories
 			if( False ) :
@@ -1791,7 +1767,7 @@ class Revolution :
 					else :
 						cityString += "<color=150,230,150,255>"
 					cityString += pos[1]
-					if( self.showRevIndexInPopup or game.isDebugMode() ) :
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(pos[0])
 
 				negList.sort()
@@ -1814,7 +1790,7 @@ class Revolution :
 					else :
 						cityString += "<color=225,150,150,255>"
 					cityString += neg[1]
-					if( self.showRevIndexInPopup or game.isDebugMode() ) :
+					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 						cityString += " %d"%(neg[0])
 
 			cityString += "<color=255,255,255,255>"
@@ -1823,7 +1799,10 @@ class Revolution :
 		return totalString
 
 	def updateCivStability( self, iGameTurn, iPlayer, bIsRevWatch = False, bVerbose = False ) :
-		# Update the revolution effects for the entire empire
+		"""
+		Update the revolution effects for the entire empire.
+		If bIsRevWatch, returns a string showing the factors for civ stability.
+		"""
 
 		posList = list()
 		negList = list()
@@ -1837,7 +1816,7 @@ class Revolution :
 			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
 
 		pTeam = gc.getTeam( pPlayer.getTeam() )
-		iEra = pPlayer.getCurrentEra()
+		iEra = pPlayer.getCurrentRealEra()
 
 		civRevIdx = 0
 		revIdxHistEvents = 0
@@ -2029,7 +2008,7 @@ class Revolution :
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE",())
 
-		if( self.showRevIndexInPopup or game.isDebugMode() ) :
+		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 			civString += " (%d)  Net: %d"%(iStablity,civStabilityIdx)
 		#RevolutionDCM - text conditioning
 		civString += "  "
@@ -2041,7 +2020,7 @@ class Revolution :
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 
-		if( self.showRevIndexInPopup or game.isDebugMode() ) :
+		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 			civString += " (%d)"%(iStablity - pPlayer.getStabilityIndexAverage())
 
 		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
@@ -2062,7 +2041,7 @@ class Revolution :
 			else :
 				civString += "<color=150,230,150,255>"
 			civString += pos[1]
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(pos[0])
 
 		civString += "\n<color=255,0,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_NEGATIVE",())
@@ -2084,7 +2063,7 @@ class Revolution :
 			else :
 				civString += "<color=255,150,150,255>"
 			civString += neg[1]
-			if( self.showRevIndexInPopup or game.isDebugMode() ) :
+			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				civString += " %d"%(neg[0])
 
 		civString += "<color=255,255,255,255>"
@@ -2544,7 +2523,7 @@ class Revolution :
 					for city in PyPlayer(pPlayer.getID()).getCityList() :
 						pCity = city.GetCy()
 						if( RevData.getCityVal(pCity, 'RevolutionCiv') == revCivType ) :
-							if( pCity.getReinforcementCounter() > 0 and pCity.getReinforcementCounter() < 9 - pRevPlayer.getCurrentEra()/2 ) :
+							if( pCity.getReinforcementCounter() > 0 and pCity.getReinforcementCounter() < 9 - pRevPlayer.getCurrentRealEra()/2 ) :
 								if( self.LOG_DEBUG ) :
 									bInRev = False
 									for pRevCity in revCities :
@@ -2775,7 +2754,7 @@ class Revolution :
 							if( pTeam.canChangeWarPeace(cultTeam.getID()) ) :
 								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Ask for end to hostilities")
 
-						if( pPlayer.getCurrentEra() - cultPlayer.getCurrentEra() > 1 ) :
+						if( pPlayer.getCurrentRealEra() - cultPlayer.getCurrentRealEra() > 1 ) :
 							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Tech divide with cultural player, ask for charity")
 
 					# ask to join other civ, if denied get angrier
@@ -3005,8 +2984,8 @@ class Revolution :
 						totalRevIdx = 0
 						for pCity in relCities :
 							totalRevIdx += pCity.getRevolutionIndex()
-						iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
-						#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(relCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+						iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
+						#iBuyOffCost = (60 + 12*pPlayer.getCurrentRealEra())*len(relCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 						bodStr += ' ' + localText.getText("TXT_KEY_REV_REL_CHANGE",()) + ' ' + gc.getReligionInfo( revRel ).getDescription() + '.'
@@ -3056,11 +3035,11 @@ class Revolution :
 
 					bodStr = getCityTextList(indCities, bPreCity = True, bPostIs = True)
 
-					#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(indCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+					#iBuyOffCost = (60 + 12*pPlayer.getCurrentRealEra())*len(indCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 					totalRevIdx = 0
 					for pCity in indCities :
 						totalRevIdx += pCity.getRevolutionIndex()
-					iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+					iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 					if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 					iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/12 + game.getSorenRandNum(50,'Rev')] )
 
@@ -3238,11 +3217,11 @@ class Revolution :
 	
 							bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
 	
-							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (50 + 10*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(gc.getCivicInfo(newCivic).getDescription()) + localText.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
@@ -3328,11 +3307,11 @@ class Revolution :
 	
 							bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
 	
-							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (50 + 10*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(gc.getCivicInfo(newCivic).getDescription())
@@ -3388,11 +3367,11 @@ class Revolution :
 								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to representation")
 								bodStr += "  " + localText.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(gc.getCivicInfo(newCivic).getDescription()) +localText.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
 	
-							#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (75 + 12*pPlayer.getCurrentRealEra())*len(foreignCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in foreignCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(15-pPlayer.getCurrentEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(15-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
@@ -3437,11 +3416,11 @@ class Revolution :
 					if( laborLevel < 0 and newLaborLevel > 5 and not newCivic == None ):
 						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to %s, %d"%(gc.getCivicInfo(newCivic).getDescription(),newCivic))
 
-						#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+						#iBuyOffCost = (50 + 12*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 						totalRevIdx = 0
 						for pCity in revCities :
 							totalRevIdx += pCity.getRevolutionIndex()
-						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 						bodStr += ' ' + localText.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(gc.getCivicInfo(newCivic).getDescription()) + localText.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
@@ -3504,11 +3483,11 @@ class Revolution :
 								if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Asking change to representation, %d"%(newCivic))
 								bodStr += "  " + localText.getText("TXT_KEY_REV_CAP_VOTE_CRIES",()) + " %s!' "%(gc.getCivicInfo(newCivic).getDescription()) +localText.getText("TXT_KEY_REV_CAP_VOTE_MARCH",())
 
-							#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(150+15*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (50 + 15*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(150+15*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(100+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += '\n\n' + localText.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
@@ -3539,11 +3518,11 @@ class Revolution :
 
 							bodStr = getCityTextList(revCities, bPreCity = True, bPostIs = True)
 
-							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (50 + 10*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+12*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+12*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += ' ' + localText.getText("TXT_KEY_REV_CAP_SPEECH_REQUEST",()) + ' %s.'%(gc.getCivicInfo(newCivic).getDescription())
@@ -3579,11 +3558,11 @@ class Revolution :
 								[newLeaderType,newLeaderName] = self.chooseRevolutionLeader( revCities )
 
 								bIsElection = False
-								#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+								#iBuyOffCost = (50 + 15*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentRealEra(),'Rev')
 								totalRevIdx = 0
 								for pCity in revCities :
 									totalRevIdx += pCity.getRevolutionIndex()
-								iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
+								iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentRealEra(),'Rev')
 								if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 								iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/10 + game.getSorenRandNum(50,'Rev')] )
 								bodStr += '  ' + localText.getText("TXT_KEY_REV_CAP_LEAD_CEDE",()) + ' %s.'%(newLeaderName)
@@ -3612,11 +3591,11 @@ class Revolution :
 							[newLeaderType,newLeaderName] = self.chooseRevolutionLeader( revCities )
 
 							bIsElection = True
-							#iBuyOffCost = (30 + 10*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (30 + 10*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(25-pPlayer.getCurrentEra()) + game.getSorenRandNum(90+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(25-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(90+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/12 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += '  ' + localText.getText("TXT_KEY_REV_CAP_LEAD_ELECTION",()) + ' %s!'%(newLeaderName)
@@ -3671,11 +3650,11 @@ class Revolution :
 
 						else :
 							bIsElection = True
-							#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
+							#iBuyOffCost = (50 + 12*pPlayer.getCurrentRealEra())*len(revCities) + game.getSorenRandNum(100+10*pPlayer.getCurrentRealEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
 								totalRevIdx += pCity.getRevolutionIndex()
-							iBuyOffCost = totalRevIdx/(22-pPlayer.getCurrentEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
+							iBuyOffCost = totalRevIdx/(22-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(80+10*pPlayer.getCurrentRealEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
 							bodStr += '  ' + localText.getText("TXT_KEY_REV_CAP_RULE_ELECTION",()) + ' %s!'%(newLeaderName)
@@ -3744,13 +3723,13 @@ class Revolution :
 					giveRelType = -1
 			# lfgr note: split allowed
 			[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = True, bSpreadRebels = True, giveRelType = giveRelType, bMatchCivics = True )
-			#iBuyOffCost = (100 + 20*pPlayer.getCurrentEra())*len(indCities) + game.getSorenRandNum(100+20*pPlayer.getCurrentEra(),'Rev')
+			#iBuyOffCost = (100 + 20*pPlayer.getCurrentRealEra())*len(indCities) + game.getSorenRandNum(100+20*pPlayer.getCurrentRealEra(),'Rev')
 			totalRevIdx = 0
 			totalPop = 0
 			for pCity in indCities :
 				totalRevIdx += pCity.getRevolutionIndex()
 				totalPop += pCity.getPopulation()
-			iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
+			iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentRealEra()) + game.getSorenRandNum(50+10*pPlayer.getCurrentRealEra(),'Rev')
 			if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 			iBuyOffCost = max( [iBuyOffCost,pPlayer.getGold()/8 + game.getSorenRandNum(50,'Rev')] )
 
@@ -3834,9 +3813,6 @@ class Revolution :
 	# TODO: Remove RebelType stuff
 	def chooseRevolutionCiv( self, cityList, bJoinCultureWar = True, bReincarnate = True, bJoinRebels = True, bSpreadRebels = False, pNotThisCiv = None, giveTechs = True, giveRelType = -1, bMatchCivics = False, iSplitType = RevCivUtils.SPLIT_ALLOWED, iForcedCivilization = -1 ) :
 		# All cities should have same owner
-
-		if( self.bRebelTypes ) :
-			RebelTypes.setup()
 
 		pRevPlayer = None
 		bIsJoinWar = False
@@ -4054,172 +4030,7 @@ class Revolution :
 				return [pRevPlayer, bIsJoinWar]
 			# end lfgr
 
-			# lfgr: commented out
-#			# Create list of available civs and similar civ types
-#			cultPlayer = None
-#			if( pCity.countTotalCultureTimes100() > 50*100 ) :
-#				cultPlayer = gc.getPlayer( pCity.findHighestCulture() )
-#				if( cultPlayer.getID() == owner.getID() ) :
-#					cultPlayer = None
-#
-#			# Don't incarnate as either of these
-#			iMinor = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLMinor)
-#			iBarbarian = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),RevDefs.sXMLBarbarian)
-#
-#			# lfgr
-#			# TODO: use RevDefs.sXMLRandom or similar
-#			iRandom = CvUtil.findInfoTypeNum(gc.getCivilizationInfo,gc.getNumCivilizationInfos(),'CIVILIZATION_RANDOM')
-#			# end lfgr
-#
-#			# Civs not currently in the game
-#			availableCivs = list()
-#			# Civs with similar style to cultOwner, if they exist
-#			similarStyleCivs = list()
-#			similarOwnerStyleCivs = list()
-#			for civType in range(0,gc.getNumCivilizationInfos()) :
-#				if( not civType == iBarbarian ) and (not civType == gc.getInfoTypeForString('CIVILIZATION_INFERNAL')) and (not civType == gc.getInfoTypeForString('CIVILIZATION_MERCURIANS')):
-#					if( not civType == iMinor ) :
-#					# lfgr
-#						if( not civType == iRandom ) :
-#							if( giveRelType == -1 or ( not self.bRebelTypes ) or ( not ( civType in RebelTypes.BlockedReligiousRebels[giveRelType] ) ) ) :
-#					# end lfgr
-#							# lfgr indention (x2)
-#								taken = False
-#								for i in range(0,gc.getMAX_CIV_PLAYERS()) :
-#									if( civType == gc.getPlayer(i).getCivilizationType() ) :
-#										# Switch in preparation for defining regions of the world for different rebel civ types
-#										#if( gc.getPlayer(i).isAlive() or gc.getPlayer(i).isFoundedFirstCity() or gc.getPlayer(i).getCitiesLost() > 0 ) :
-#										if( gc.getPlayer(i).isEverAlive() or RevData.revObjectExists(gc.getPlayer(i)) ) :
-#											taken = True
-#											break
-#								if( not taken ) :
-#									availableCivs.append(civType)
-#									if( not cultPlayer == None ) :
-#										if( gc.getCivilizationInfo( cultPlayer.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
-#											if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from culture: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
-#											similarStyleCivs.append(civType)
-#									if( gc.getCivilizationInfo( owner.getCivilizationType() ).getArtStyleType() == gc.getCivilizationInfo(civType).getArtStyleType() ) :
-#										if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Potential similar style civ from owner: %s (%d)"%(gc.getCivilizationInfo(civType).getShortDescription(0),civType))
-#										similarOwnerStyleCivs.append(civType)
-#							# lfgr indention end
-#
-#			if( len(availableCivs) < 1 ) :
-#				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No available civs, spawning as Barbarians")
-#				pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
-#				return [pRevPlayer, bIsJoinWar]
-#
-#			newCivIdx = None
-#
-#
-#			# If city has a revolutionary civ type, if that type is available choose it
-#			if( RevData.getCityVal(pCity, 'RevolutionCiv') in availableCivs ) :
-#				# City previously rebelled as available civ type
-#				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Respawning previous rebel civ type for this city")
-#				newCivIdx = RevData.getCityVal(pCity, 'RevolutionCiv')
-#			else :
-#				chosenCivs = list()
-#
-#				# lfgr: check for religion specific rebels
-#				# put this on top and generally prevent agnostic civs from being spawned when revolt is "religious"
-#				#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking if revolution is religious")
-#				#liReligionScores = list()
-#				#for iReligion in xrange( gc.getNumReligionInfos() ) :
-#				#	liReligionScores.append( 0 )
-#				#
-#				#for pCity in closeCityList :
-#				#	for iReligion in xrange( gc.getNumReligionInfos() ) :
-#				#		if( pCity.isHasReligion( iReligion ) ) :
-#				#			liReligionScores[iReligion] += 1
-#				#			if( pCity.isHolyCity() ) :
-#				#				liReligionScores[iReligion] += 2
-#				#
-#				#iMinScore = len( closeCityList ) / 2
-#				#iRebelReligion = -1
-#				#iBestScore = 0
-#				#for iReligion in xrange( gc.getNumReligionInfos() ) :
-#				#	if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Religion %s has a %i points"%(gc.getReligionInfo(iReligion).getDescription(), liReligionScores[iReligion]))
-#				#	if( liReligionScores[iReligion] >= iMinScore ) :
-#				#		if( liReligionScores[iReligion] > iBestScore ) :
-#				#			iBestScore = liReligionScores[iReligion]
-#				#			iRebelReligion = iReligion
-#
-#				if( giveRelType != -1 ) :
-#					for iBlockedCiv in RebelTypes.BlockedReligiousRebels :
-#						if( iBlockedCiv in availableCivs ) :
-#							availableCivs.remove( iBlockedCiv )
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using religion %s for short list"%(gc.getReligionInfo(giveRelType).getDescription()))
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(giveRelType,len(RebelTypes.ReligiousRebels)))
-#					rebList = RebelTypes.ReligiousRebels[giveRelType]
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this religion"%(len(rebList)))
-#					for civType in rebList :
-#						if( civType in availableCivs ) :
-#							chosenCivs.append(civType)
-#
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
-#
-#				else :
-#				# lfgr end
-#				# lfgr indention
-#					try :
-#						if( not cultPlayer == None ) :
-#							shortListType = cultPlayer.getCivilizationType()
-#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Using cultural owner %s for short list"%(gc.getReligionInfo(shortListType).getDescription()))
-#						else :
-#							shortListType = owner.getCivilizationType()
-#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - looking up %d in list of length %d"%(shortListType,len(RebelTypes.RebelTypeList)))
-#						rebList = RebelTypes.RebelTypeList[shortListType]
-#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %d civs on short list for this type"%(len(rebList)))
-#						for civType in rebList :
-#							if( civType in availableCivs ) :
-#								chosenCivs.append(civType)
-#
-#						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found %d civs available from short list"%(len(chosenCivs)))
-#					except :
-#						pass
-#				# lfgr indention end
-#
-#				if( self.bRebelTypes and len(chosenCivs) > 0 ) :
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a civ from short list")
-#					availableCivs = chosenCivs
-#				else :
-#					if( self.bArtStyleTypes ) :
-#						if( len(similarStyleCivs) > 0 ) :
-#							# Create a civ using style of cultural owner of city
-#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to cultural owner %s"%(cultPlayer.getCivilizationDescription(0)))
-#							availableCivs = similarStyleCivs
-#						elif( len(similarOwnerStyleCivs) > 0 ) :
-#							# Create a civ using style of owner of city
-#							if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Creating a similar style civ to owner %s"%(owner.getCivilizationDescription(0)))
-#							availableCivs = similarOwnerStyleCivs
-#
-#				newCivIdx = availableCivs[game.getSorenRandNum(len(availableCivs),'Revolution: pick unused civ type')]
-#
-#			# lfgr minor rebel leaders
-#			if( self.bRebelTypes ) :
-#				bestLeaderList = RebelTypes.MinorLeaders[newCivIdx]
-#
-#			if( len(bestLeaderList) > 0 ) :
-#				newLeaderIdx = bestLeaderList[game.getSorenRandNum(len(bestLeaderList),'Revolution: pick leader from minor leader list')]
-#			else :
-#			# end lfgr
-#
-#				leaderList = list()
-#				for leaderType in range(0,gc.getNumLeaderHeadInfos()) :
-#					if( gc.getCivilizationInfo(newCivIdx).isLeaders(leaderType) or game.isOption( GameOptionTypes.GAMEOPTION_LEAD_ANY_CIV ) ) :
-#						taken = False
-#						for jdx in range(0,gc.getMAX_PLAYERS()) :
-#							if( gc.getPlayer(jdx).getLeaderType() == leaderType and not newPlayerIdx == jdx  ) :
-#								taken = True
-#								break
-#						if( not taken ) : leaderList.append(leaderType)
-#
-#				if( len(leaderList) < 1 ) :
-#					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Unexpected lack of possible leaders, spawning as Barbarians")
-#					pRevPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
-#					return [pRevPlayer, bIsJoinWar]
-#
-#				newLeaderIdx = leaderList[game.getSorenRandNum(len(leaderList),'Revolution: pick leader')]
-			# end lfgr
+			# lfgr: removed RebelTypes stuff
 
 			game.addPlayer( newPlayerIdx, newLeaderIdx, newCivIdx, false )
 #			gc.getPlayer(game.getActivePlayer()).initNewEmpire(newLeaderIdx, newPlayerIdx)
@@ -5214,7 +5025,7 @@ class Revolution :
 				iSpiritual = CvUtil.findInfoTypeNum(gc.getTraitInfo,gc.getNumTraitInfos(),RevDefs.sXMLSpiritual)
 				pPlayer.changeRevolutionTimer(5)
 				if( not pPlayer.hasTrait(iSpiritual) ) :
-					if( pPlayer.getCurrentEra() > gc.getNumEraInfos()/2 ) :
+					if( pPlayer.getCurrentRealEra() > gc.getNumRealEras()/2 ) :
 						pPlayer.changeAnarchyTurns(2)
 					else :
 						pPlayer.changeAnarchyTurns(1)
@@ -6144,8 +5955,8 @@ class Revolution :
 
 		#if( revData.dict.get( 'bIsElection', False ) ) :
 		#	pPlayer.changeAnarchyTurns(1)
-		#elif( pPlayer.getCurrentEra() > gc.getNumEraInfos()/2 ) :
-		if( pPlayer.getCurrentEra() > gc.getNumEraInfos()/2 ) :
+		#elif( pPlayer.getCurrentRealEra() > gc.getNumRealEras()/2 ) :
+		if( pPlayer.getCurrentRealEra() > gc.getNumRealEras()/2 ) :
 			pPlayer.changeAnarchyTurns(3)
 		else :
 			pPlayer.changeAnarchyTurns(2)
@@ -6898,7 +6709,7 @@ class Revolution :
 
 #****************************************************************
 
-				if( pCity.getPopulation() > 3 + pPlayer.getCurrentEra() ) :
+				if( pCity.getPopulation() > 3 + pPlayer.getCurrentRealEra() ) :
 					pCity.setOccupationTimer(3)
 				else :
 					pCity.setOccupationTimer(2)
@@ -7133,8 +6944,8 @@ class Revolution :
 							iReinforceTurns = max([iReinforceTurns,4 - (pCity.getPopulation()/2)])
 
 					minReinfTurns = self.minReinforcementTurns
-					if( pPlayer.getCurrentEra() < 4 ) :
-						minReinfTurns += 2 - pPlayer.getCurrentEra()/2
+					if( pPlayer.getCurrentRealEra() < 4 ) :
+						minReinfTurns += 2 - pPlayer.getCurrentRealEra()/2
 					iReinforceTurns = max([iReinforceTurns,self.minReinforcementTurns])
 					iReinforceTurns = min([iReinforceTurns,10])
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s reinforcement counter set to %d"%(pCity.getName(),iReinforceTurns))

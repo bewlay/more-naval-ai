@@ -27,25 +27,6 @@
 	</TEXT>
 
 	<TEXT>
-		<Tag>TXT_KEY_REVDCM_NOTES</Tag>
-		<English>RevDCM Notes:</English>
-		<French>Notes RevDCM:</French>
-		<German>RevDCM Notizen:</German>
-		<Italian>RevDCM Note:</Italian>
-		<Spanish>RevDCM Notas:</Spanish>
-		<Finnish>RevDCM Huomautuksia:</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_REVDCM_TAB_HELP</Tag>
-		<English>In depth information about this mod can be found in in the Docs folder of this mod: (Your Computer's Path to Civ4)/Beyond the Sword/Mods/RevolutionDCM/Docs</English>
-		<French>Vous pouvez trouver des informations plus detaillees de ce mod dans le dossier Documents dans le mod: (Route Civ4 sur votre ordinateur)/Beyond the Sword/Mods/RevolutionDCM/Docs</French>
-		<German>Vertiefte Informationen zu diesm Mod k&#246;nnen im zugeh&#246;rigen Docs-Verzeichnis gefunden werden: (Ihr Computer-Pfad zu Civ4)/Beyond the Sword/Mods/RevolutionDCM/Docs</German>
-		<Italian>Potete trovare informazioni piu dettagliate di questo mod nella cartella Documenti nel mod: (Route Civ4 sul computer)/Beyond the Sword/Mods/RevolutionDCM/Docs</Italian>
-		<Spanish>Se puede encontrar informacion mas detallada de este Mod en la carpeta de Docs en el mod: (Ruta de Civ4 en tu computadora)/Beyond the Sword/Mods/RevolutionDCM/Docs</Spanish>
-		<Finnish>Syv&#228;llist&#228; tietoa t&#228;st&#228; mod l&#246;ytyy asiakirjamallien kansioon t&#228;m&#228; modi: (Tietokoneen Polku Civ4)/Beyond the Sword/Mods/RevolutionDCM/Docs</Finnish>
-	</TEXT>
-
-	<TEXT>
 		<Tag>TXT_KEY_REVDCMTAB_INTERFACE_OPTIONS</Tag>
 		<English>Interface Options:</English>
 		<French>Options de l'interface:</French>

@@ -897,19 +897,22 @@ bool CyGame::isProjectMaxedOut(int /*ProjectTypes*/ eIndex, int iExtra)
 	return m_pGame ? m_pGame->isProjectMaxedOut((ProjectTypes)eIndex, iExtra) : false;
 }
 
-int CyGame::getForceCivicCount(int /*CivicTypes*/ eIndex)
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+int CyGame::getForceCivicCount(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex)
 {
-	return m_pGame ? m_pGame->getForceCivicCount((CivicTypes) eIndex) : -1;
+	return m_pGame ? m_pGame->getForceCivicCount((VoteSourceTypes) eVoteSource, (CivicTypes) eIndex) : -1;
 }
 
-bool CyGame::isForceCivic(int /*CivicTypes*/ eIndex)
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+bool CyGame::isForceCivic(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex)
 {
-	return m_pGame ? m_pGame->isForceCivic((CivicTypes)eIndex) : false;
+	return m_pGame ? m_pGame->isForceCivic((VoteSourceTypes) eVoteSource, (CivicTypes) eIndex) : false;
 }
 
-bool CyGame::isForceCivicOption(int /*CivicOptionTypes*/ eCivicOption)
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+bool CyGame::isForceCivicOption(int /*VoteSourceTypes*/ eVoteSource, int /*CivicOptionTypes*/ eCivicOption)
 {
-	return m_pGame ? m_pGame->isForceCivicOption((CivicOptionTypes)eCivicOption) : false;
+	return m_pGame ? m_pGame->isForceCivicOption((VoteSourceTypes) eVoteSource, (CivicOptionTypes) eCivicOption) : false;
 }
 
 int CyGame::getVoteOutcome(int /*VoteTypes*/ eIndex)
@@ -1028,6 +1031,35 @@ int CyGame::getPlayerVote(int /*PlayerTypes*/ eOwnerIndex, int iVoteId)
 {
 	return m_pGame ? m_pGame->getPlayerVote((PlayerTypes) eOwnerIndex, iVoteId) : NO_PLAYER_VOTE;
 }
+
+// lfgr 06/2019: exposed
+void CyGame::castVote( int /*PlayerTypes*/ eOwnerIndex, int iVoteId, int /*PlayerVoteTypes*/ ePlayerVote ) {
+	if( m_pGame ) {
+		m_pGame->castVote( (PlayerTypes) eOwnerIndex, iVoteId, (PlayerVoteTypes) ePlayerVote );
+	}
+}
+
+// lfgr 06/2019: exposed
+/**
+  * Returns the vote ID to be used in castVote() and getPlayerVote(), or -1 if this game instance is invalid.
+  */
+int CyGame::addVoteTriggered( int /*VoteSourceTypes*/ eVoteSource, int /*VoteTypes*/ eVote, int/*PlayerTypes*/ ePlayer,
+			int iCityId, int /*PlayerTypes*/ eOtherPlayer, std::wstring szText ) {
+	if( m_pGame ) {
+		VoteSelectionSubData kOptionData;
+		kOptionData.eVote = (VoteTypes) eVote;
+		kOptionData.ePlayer = (PlayerTypes) ePlayer;
+		kOptionData.iCityId = iCityId;
+		kOptionData.eOtherPlayer = (PlayerTypes) eOtherPlayer;
+		kOptionData.szText = szText;
+		VoteTriggeredData* pTriggeredData = m_pGame->addVoteTriggered( (VoteSourceTypes) eVoteSource, kOptionData );
+		return pTriggeredData->getID();
+	}
+	else {
+		return -1;
+	}
+}
+
 
 std::string CyGame::getScriptData() const
 {

@@ -630,9 +630,6 @@ public:
 	int getWorkRateModify() const;
 	int getCaptureUnitCombat() const;
 	int getPromotionCombatApply() const;
-	int getPromotionImmune1() const;
-	int getPromotionImmune2() const;
-	int getPromotionImmune3() const;
 	int getPromotionRandomApply() const;
 	int getPromotionSummonPerk() const;
 	int getBonusPrereq() const;
@@ -644,6 +641,7 @@ public:
 	int getUnitArtStyleType() const;
 	int getPromotionCombatType() const;
 	int getPromotionCombatMod() const;
+	int getMiscastChance() const; // MiscastPromotions 10/2019 lfgr
 	int getBonusAffinity(int i) const;
 	int getDamageTypeCombat(int i) const;
 	int getDamageTypeResist(int i) const;
@@ -656,6 +654,8 @@ public:
 	bool isBlocksGifting() const;
 	bool isUpgradeOutsideBorders() const;
 	// End MNAI
+	
+	bool isPromotionImmune( int /*PromotionTypes*/ ePromotion ); // XML_LISTS 07/2019 lfgr
 
 	bool readPass3();
 //FfH: End Add
@@ -778,9 +778,6 @@ protected:
 	int m_iWorkRateModify;
 	int m_iCaptureUnitCombat;
 	int m_iPromotionCombatApply;
-	int m_iPromotionImmune1;
-	int m_iPromotionImmune2;
-	int m_iPromotionImmune3;
 	int m_iPromotionRandomApply;
 	int m_iPromotionSummonPerk;
 	int m_iBonusPrereq;
@@ -792,6 +789,7 @@ protected:
 	int m_iUnitArtStyleType;
 	int m_iPromotionCombatType;
 	int m_iPromotionCombatMod;
+	int m_iMiscastChance; // MiscastPromotions 10/2019 lfgr
 	int* m_piBonusAffinity;
 	int* m_piDamageTypeCombat;
 	int* m_piDamageTypeResist;
@@ -818,7 +816,7 @@ protected:
 	bool* m_pbTerrainDoubleMove;
 	bool* m_pbFeatureDoubleMove;
 	bool* m_pbUnitCombat;
-
+	bool* m_pbPromotionImmune; // XML_LISTS 07/2019 lfgr
 };
 
 //FfH Spell System: Added by Kael 07/23/2007
@@ -852,7 +850,6 @@ public:
 	int getPromotionInStackPrereq() const;
 	int getReligionPrereq() const;
 	int getStateReligionPrereq() const;
-	int getUnitReligionPrereq() const; // MNAI
 	int getTechPrereq() const;
 	int getRange() const;
     int getEffect() const;
@@ -1444,6 +1441,7 @@ public:
 	int getPromotionFromCombat() const;
 	const TCHAR* getPyPostCombatLost() const;
 	const TCHAR* getPyPostCombatWon() const;
+	const TCHAR* getPyInfoHelp() const; // lfgr 10/2019: UnitPyInfoHelp
 	int getUnitConvertFromCombat() const;
 	int getUnitConvertFromCombatChance() const;
 	int getUnitCreateFromCombat() const;
@@ -1715,6 +1713,7 @@ protected:
 	int* m_piDamageTypeCombat;
 	CvString m_szPyPostCombatLost;
 	CvString m_szPyPostCombatWon;
+	CvString m_szPyInfoHelp; // lfgr 10/2019: UnitPyInfoHelp
 	CvString m_szImage;
 	std::vector<CvString> m_aszExtraXML2forPass3;
 //FfH: End Add
@@ -5251,6 +5250,10 @@ public:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	EraTypes getPseudoEra() const;
+// ERA_FIX end
 
 	bool read(CvXMLLoadUtility* pXML);
 
@@ -5295,6 +5298,11 @@ protected:
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	EraTypes m_PseudoEra;
+// ERA_FIX end
+
 	// Arrays
 
 	int* m_paiGlobalReligionCommerce;
@@ -6490,6 +6498,9 @@ public:
 	bool isNoBarbUnits() const;				//	Exposed to Python
 	bool isNoBarbCities() const;			//	Exposed to Python
 	bool isFirstSoundtrackFirst() const;			//	Exposed to Python
+// ERA_FIX 09/2017 lfgr 
+	bool isRealEra() const;
+// ERA_FIX end
 
 	// Arrays
 
@@ -6528,6 +6539,9 @@ protected:
 	bool m_bNoBarbUnits;
 	bool m_bNoBarbCities;
 	bool m_bFirstSoundtrackFirst;
+// ERA_FIX 09/2017 lfgr 
+	bool m_bRealEra;
+// ERA_FIX end
 
 	// Arrays
 

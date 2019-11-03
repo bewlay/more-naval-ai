@@ -842,9 +842,42 @@ public:
 
 	LeaderHeadTypes getPersonalityType() const;																												// Exposed to Python
 	void setPersonalityType(LeaderHeadTypes eNewValue);																					// Exposed to Python
-
+	
+// ERA_FIX 09/2017 lfgr
+	/**
+	 * Gets the player's current pseudo era. This is used for graphics and sound.
+	 * As long as the player has a state religion with an assigned PseudoEra, the
+	 * current pseudo era is equal to this era. Otherwise, it's equal to the player's
+	 * real era.
+	 */
 	DllExport EraTypes getCurrentEra() const;																										// Exposed to Python
+
+	/**
+	 * Gets the player's current real era. This is used for everything besides graphics
+	 * and sound, like AI or Handicap calculations.
+	 * The real era is determined by technology (as in vanilla Bts) and is equal to the
+	 * last value set by setCurrentRealEra().
+	 */
+	EraTypes getCurrentRealEra() const;
+
+	/**
+	 * Sets the player's current pseudo era (see CvPlayer::getCurrentEra()) and updates
+	 * graphics and sound. This only be used internally.
+	 */
 	void setCurrentEra(EraTypes eNewValue);
+
+	/**
+	 * Sets the player's current real era (see CvPlayer::getCurrentEra()).
+	 * Parameter must not be a pseudo era.
+	 */
+	void setCurrentRealEra(EraTypes eNewValue);
+
+	/**
+	 * Updates the player's current pseudo era (see CvPlayer::getCurrentEra()). This is
+	 * called in setCurrentRealEra() and setLastStateReligion()
+	 */
+	void updateCurrentEra();
+// ERA_FIX end
 
 	ReligionTypes getLastStateReligion() const;
 	DllExport ReligionTypes getStateReligion() const;																									// Exposed to Python
@@ -1137,7 +1170,10 @@ public:
 	bool isTriggerFired(EventTriggerTypes eEventTrigger) const;
 	void setEventOccured(EventTypes eEvent, const EventTriggeredData& kEventTriggered, bool bOthers = true);
 	void resetEventOccured(EventTypes eEvent, bool bAnnounce = true);													// Exposed to Python
-	void setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers = true, bool bAnnounce = true);
+// lfgr 06/2019: Added bDoEffects flag to manually control python effect execution
+	void setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers = true, bool bAnnounce = true,
+			bool bDoEffects = true);
+// lfgr END
 	void resetTriggerFired(EventTriggerTypes eEventTrigger);
 	void trigger(EventTriggerTypes eEventTrigger);													// Exposed to Python
 	void trigger(const EventTriggeredData& kData);
@@ -1658,6 +1694,9 @@ protected:
 	PlayerTypes m_eID;
 	LeaderHeadTypes m_ePersonalityType;
 	EraTypes m_eCurrentEra;
+// ERA_FIX 09/2017 lfgr
+	EraTypes m_eCurrentRealEra;
+// ERA_FIX end
 	ReligionTypes m_eLastStateReligion;
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;

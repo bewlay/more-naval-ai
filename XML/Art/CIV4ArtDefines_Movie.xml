@@ -171,10 +171,6 @@
 			<Path>Art/Movies/Wonders/GreatLibrary.bik</Path>
 		</MovieArtInfo>
 		<MovieArtInfo>
-			<Type>ART_DEF_MOVIE_GREAT_LIGHTHOUSE</Type>
-			<Path>Art/Movies/Wonders/GreatLighthouse.bik</Path>
-		</MovieArtInfo>
-		<MovieArtInfo>
 			<Type>ART_DEF_MOVIE_HAGIA_SOPHIA</Type>
 			<Path>Art/Movies/Wonders/HagiaSophia.bik</Path>
 		</MovieArtInfo>
@@ -321,7 +317,6 @@
 		<MovieArtInfo>
 			<Type>ART_DEF_MOVIE_SHRINE_TAOIST</Type>
 			<Path>Art/Movies/Religion/Taoism/Shrine_Tao_dwg_512.dds</Path>
-			<KFM>None</KFM>
 		</MovieArtInfo>
 		<MovieArtInfo>
 			<Type>ART_DEF_MOVIE_APOSTOLIC_PALACE</Type>

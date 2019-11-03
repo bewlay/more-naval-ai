@@ -56,18 +56,26 @@ class WBEventScreen:
 		global lReligions
 		global lCorporations
 		global lBuildings
+#MagisterCultuum start
+		global lVotes
+
+		lVotes = []
+		for i in range(gc.getNumVoteInfos()):
+			ItemInfo = gc.getVoteInfo(i)
+			lVotes.append([ItemInfo.getDescription(), i])
+##		lVotes.sort()
 
 		lCorporations = []
 		for i in xrange(gc.getNumCorporationInfos()):
 			ItemInfo = gc.getCorporationInfo(i)
 			lCorporations.append([ItemInfo.getDescription(), i])
-		lCorporations.sort()
+##		lCorporations.sort()
 
 		lBuildings = []
 		for i in xrange(gc.getNumBuildingInfos()):
 			ItemInfo = gc.getBuildingInfo(i)
 			lBuildings.append([ItemInfo.getDescription(), i])
-		lBuildings.sort()
+##		lBuildings.sort()
 
 		lEvents = []
 		for i in xrange(gc.getNumEventTriggerInfos()):
@@ -82,7 +90,7 @@ class WBEventScreen:
 		for i in xrange(gc.getNumReligionInfos()):
 			ItemInfo = gc.getReligionInfo(i)
 			lReligions.append([ItemInfo.getDescription(), i])
-		lReligions.sort()
+##		lReligions.sort()
 
 		self.placeEventPlayers()
 		self.placeEvents()
@@ -92,6 +100,7 @@ class WBEventScreen:
 		self.placeReligions()
 		self.placeCorporations()
 		self.placeUnits()
+		self.placeVotes()#MagisterCultuum
 
 	def placeEventPlayers(self):
 		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
@@ -123,11 +132,13 @@ class WBEventScreen:
 
 	def placeUnits(self):
 		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
-		iHeight = (screen.getYResolution() - self.iTable_Y - 42) / 24 * 24 + 2
+##		iHeight = (screen.getYResolution() - self.iTable_Y - 42) / 24 * 24 + 2
+		iHeight = (screen.getYResolution()/2 - 72) / 24 * 24 + 2#MagisterCultuum
 
 		sHeader = CyTranslator().getText("TXT_KEY_PEDIA_CATEGORY_UNIT", ())
 		nColumns = 3
-		screen.addTableControlGFC("WBEventUnit", nColumns, screen.getXResolution() * 4/5 + 10, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+##		screen.addTableControlGFC("WBEventUnit", nColumns, screen.getXResolution() * 4/5 + 10, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		screen.addTableControlGFC("WBEventUnit", nColumns, screen.getXResolution() * 4/5 + 10, screen.getYResolution()/2 + 30, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)#MagisterCultuum
 		screen.setTableColumnHeader("WBEventUnit", 0, "", 24)
 		screen.setTableColumnHeader("WBEventUnit", 1, "", 24)
 		screen.setTableColumnHeader("WBEventUnit", 2, "", iWidth - 48)
@@ -150,7 +161,8 @@ class WBEventScreen:
 			iCiv = pUnitX.getCivilizationType()
 			screen.setTableText("WBEventUnit", 0, iRow, "", gc.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, CvUtil.FONT_LEFT_JUSTIFY )
 			screen.setTableText("WBEventUnit", 1, iRow, "", gc.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, CvUtil.FONT_LEFT_JUSTIFY )
-		screen.setLabel("EventUnitText", "Background", "<font=3b>" + sHeader + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() *9/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+##		screen.setLabel("EventUnitText", "Background", "<font=3b>" + sHeader + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() *9/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		screen.setLabel("EventUnitText", "Background", "<font=3b>" + sHeader + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution() *9/10, screen.getYResolution()/2, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )#MagisterCultuum
 
 	def placeCorporations(self):
 		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
@@ -269,6 +281,51 @@ class WBEventScreen:
 			sText = "<font=4b>" + CyTranslator().getText("[COLOR_BLACK]", ()) + CyTranslator().getText("TXT_KEY_WB_TRIGGER_EVENT", (sHeader,)).upper() + "</color></font>"
 			screen.setButtonGFC("TriggerEvent", sText, "", screen.getXResolution()/4, 20, screen.getXResolution()/2, 30, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 
+#MagisterCultuum start
+	def placeVotes(self):
+		screen = CyGInterfaceScreen("WBEventScreen", CvScreenEnums.WB_EVENT)
+		iHeight = (screen.getYResolution()/2 - self.iTable_Y - 2) / 24 * 24 + 2
+		screen.addTableControlGFC("WBEventVote", 2, screen.getXResolution() * 4/5 + 10, self.iTable_Y, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
+		screen.setTableColumnHeader("WBEventVote", 0, "", 24)
+		screen.setTableColumnHeader("WBEventVote", 1, "", iWidth - 24)
+		sHeader = CyTranslator().getText("TXT_KEY_RESOLUTIONS", ())
+		iOver = gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')
+		iUnder = gc.getInfoTypeForString('DIPLOVOTE_UNDERCOUNCIL')
+		iNoM = gc.getInfoTypeForString('CIVIC_NO_MEMBERSHIP')
+		iOverM = gc.getInfoTypeForString('CIVIC_OVERCOUNCIL')
+		iUnderM = gc.getInfoTypeForString('CIVIC_UNDERCOUNCIL')
+		for item in lVotes:
+			iVote = item[1]
+			ItemInfo = gc.getVoteInfo(iVote)
+			iMembership = iNoM
+			if ItemInfo.isVoteSourceType(iOver):
+				iMembership = iOverM
+			elif ItemInfo.isVoteSourceType(iUnder):
+				iMembership = iUnderM
+			szText = item[0]
+
+			if iOtherPlayer != -1:
+				pOtherPlayer = gc.getPlayer(iOtherPlayer)
+				if ItemInfo.isForceWar():
+					szText += ' against: ' + pOtherPlayer.getName()
+				if ItemInfo.isForcePeace() or ItemInfo.isForceNoTrade():
+					szText += ' with: ' + pOtherPlayer.getName()
+				if ItemInfo.isAssignCity():
+					if iOtherCity != -1:
+						if iEventPlayer != -1:
+							pEventPlayer = gc.getPlayer(iEventPlayer)
+							pOtherCity = pOtherPlayer.getCity(iOtherCity)
+							if not pOtherCity.isNone():
+								szText += ': ' + pOtherCity.getName() + ' to '  + pEventPlayer.getName()+ ' from ' + pOtherPlayer.getName()
+			iRow = screen.appendTableRow("WBEventVote")
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			if gc.getGame().isVotePassed(item[1]):
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+			screen.setTableText("WBEventVote", 0, iRow, "", gc.getCivicInfo(iMembership).getButton(), WidgetTypes.WIDGET_PYTHON, 8205, iMembership, CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableText("WBEventVote", 1, iRow, "<font=3>" + sColor + szText + "</font></color>", "", WidgetTypes.WIDGET_PYTHON, 1030, item[1], CvUtil.FONT_LEFT_JUSTIFY )
+		screen.setLabel("WBEventVoteText", "Background", "<font=3b>" + sHeader + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()*9/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+#MagisterCultuum stop
+
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBEventScreen", CvScreenEnums.WB_EVENT)
 		global iSelectedEvent
@@ -319,6 +376,7 @@ class WBEventScreen:
 				self.placeOtherPlayers()
 				self.placeOtherCities()
 				self.placeUnits()
+				self.placeVotes()#MagisterCultuum
 
 		elif inputClass.getFunctionName() == "WBOtherPlayer":
 			if inputClass.getData1() == 7876 or inputClass.getData1() == 7872:
@@ -330,6 +388,7 @@ class WBEventScreen:
 				iOtherCity = -1
 				self.placeOtherPlayers()
 				self.placeOtherCities()
+				self.placeVotes()#MagisterCultuum
 
 		elif inputClass.getFunctionName() == "WBOtherCity":
 			iTemp = inputClass.getData2()
@@ -338,6 +397,7 @@ class WBEventScreen:
 			else:
 				iOtherCity = iTemp
 			self.placeOtherCities()
+			self.placeVotes()#MagisterCultuum
 
 		elif inputClass.getFunctionName() == "WBEventReligion":
 			iTemp = inputClass.getData1()
@@ -387,6 +447,37 @@ class WBEventScreen:
 				iCity = pPlot.getPlotCity().getID()
 			triggerData = pPlayer.initTriggeredData(iSelectedEvent, True, iCity, pPlot.getX(), pPlot.getY(), iOtherPlayer, iOtherCity, iSelectedReligion, iSelectedCorporation, iSelectedUnit, iSelectedBuilding)
 			screen.hideScreen()
+
+#MagisterCultuum start
+		elif inputClass.getFunctionName() == "WBEventVote":
+			eVote = inputClass.getData2()
+			ItemInfo = gc.getVoteInfo(eVote)
+			if ItemInfo.isVoteSourceType(gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')):
+				eVoteSource = gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')
+			if ItemInfo.isVoteSourceType(gc.getInfoTypeForString('DIPLOVOTE_UNDERCOUNCIL')):
+				eVoteSource = gc.getInfoTypeForString('DIPLOVOTE_UNDERCOUNCIL')
+			ePlayer = iEventPlayer
+			iCityId = iOtherCity
+			eOtherPlayer = iOtherPlayer
+			szText = ItemInfo.getDescription()
+
+			if iOtherPlayer != -1:
+				pOtherPlayer = gc.getPlayer(iOtherPlayer)
+				if ItemInfo.isForceWar():
+					szText += ' against: ' + pOtherPlayer.getName()
+				if ItemInfo.isForcePeace() or ItemInfo.isForceNoTrade():
+					szText += ' with: ' + pOtherPlayer.getName()
+				if ItemInfo.isAssignCity():
+					if iOtherCity != -1:
+						if iEventPlayer != -1:
+							pEventPlayer = gc.getPlayer(iEventPlayer)
+							pOtherCity = pOtherPlayer.getCity(iOtherCity)
+							if not pOtherCity.isNone():
+								szText += ': ' + pOtherCity.getName() + ' to '  + pEventPlayer.getName()+ ' from ' + pOtherPlayer.getName()
+			gc.getGame().addVoteTriggered(eVoteSource, eVote, iOtherPlayer, iOtherCity, iEventPlayer, szText)
+			screen.hideScreen()
+#MagisterCultuum stop
+
 		return 1
 
 	def update(self, fDelta):

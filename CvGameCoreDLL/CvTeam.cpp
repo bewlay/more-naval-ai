@@ -7050,9 +7050,9 @@ void CvTeam::setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, b
 			{
 				if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
 				{
-					if (GET_PLAYER((PlayerTypes)iI).getCurrentEra() < GC.getTechInfo(eIndex).getEra())
+					if (GET_PLAYER((PlayerTypes)iI).getCurrentRealEra() < GC.getTechInfo(eIndex).getEra())
 					{
-						GET_PLAYER((PlayerTypes)iI).setCurrentEra((EraTypes)(GC.getTechInfo(eIndex).getEra()));
+						GET_PLAYER((PlayerTypes)iI).setCurrentRealEra((EraTypes)(GC.getTechInfo(eIndex).getEra()));
 					}
 				}
 			}

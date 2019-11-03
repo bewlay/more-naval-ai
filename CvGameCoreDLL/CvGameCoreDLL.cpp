@@ -2,6 +2,7 @@
 
 #include "CvGameCoreDLLUndefNew.h"
 
+#include <algorithm> // CUSTOM_PROFILER
 #include <new>
 
 #include "CvGlobals.h"
@@ -140,24 +141,140 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 	return TRUE;	// success
 }
 
+#ifdef CUSTOM_PROFILER
+namespace custom_profiler
+{
+	std::map<std::string, ProfileSample*> samples;
+	LARGE_INTEGER measurementFreq;
+
+	// Start measurement for with the sample
+	void beginSample( ProfileSample* pSample )
+	{
+		if( ! pSample->bRegistered )
+		{
+			samples[std::string( pSample->Name )] = pSample;
+			pSample->bRegistered = true;
+		}
+
+		pSample->ProfileInstances++;
+		pSample->OpenProfiles++;
+	
+		LARGE_INTEGER time;
+		QueryPerformanceCounter( &time );
+		pSample->StartTime = time.QuadPart;
+	}
+
+	void endSample( ProfileSample* pSample )
+	{
+		pSample->OpenProfiles--;
+	
+		LARGE_INTEGER time;
+		QueryPerformanceCounter( &time );
+		pSample->Accumulator += time.QuadPart - pSample->StartTime;
+	}
+
+	void startProfiling()
+	{
+		for( std::map<std::string, ProfileSample*>::iterator it = samples.begin();
+			it != samples.end(); it++ )
+		{
+			it->second->ProfileInstances = 0;
+			it->second->OpenProfiles = 0;
+			it->second->Accumulator = 0;
+		}
+	}
+
+	void stopProfiling()
+	{
+		CvString buffer; // For formatting strings
+		
+		// Get tick frequency.
+		QueryPerformanceFrequency( &measurementFreq );
+		if( measurementFreq.QuadPart == 0 )
+		{
+			measurementFreq.QuadPart = 1;
+			gDLL->logMsg( "custom_profile.log", "Unknown frequency!", false, false );
+		}
+		
+		std::vector<ProfileSample*> vpSamples;
+		for( std::map<std::string, ProfileSample*>::iterator it = samples.begin();
+			it != samples.end(); it++ )
+		{
+			vpSamples.push_back( it->second );
+		}
+		
+		// Sort vpSamples by time (descending) with insertionsort
+		for( size_t i = 1; i < vpSamples.size(); i++ )
+		{
+			for( size_t j = i; j > 0; j-- )
+			{
+				if( vpSamples.at( j-1 )->Accumulator < vpSamples.at( j )->Accumulator )
+				{
+					std::swap( vpSamples.at(j-1), vpSamples.at(j) );
+				}
+				else
+				{
+					break;
+				}
+			}		
+		}
+
+		gDLL->logMsg( "custom_profile.log", "-----------------------------------", false, false );
+		gDLL->logMsg( "custom_profile.log", "total time - # called - # unclosed calls - name", false, false );
+		buffer.Format( "%d samples", samples.size() );
+		gDLL->logMsg( "custom_profile.log", buffer.c_str() );
+		for( size_t i = 0; i < vpSamples.size(); i++ )
+		{
+			buffer.Format( "%7ld\t%7u\t%3d\t%s",
+				(long) (vpSamples.at(i)->Accumulator * 1000 / measurementFreq.QuadPart), // ms
+				vpSamples.at(i)->ProfileInstances,
+				vpSamples.at(i)->OpenProfiles,
+				vpSamples.at(i)->Name );
+			gDLL->logMsg( "custom_profile.log", buffer.c_str(), false, false );
+		}
+	}
+	
+	// Special "total turn time" sample
+	ProfileSample turnSample( "Turn" );
+	
+} // end namespace custom_profiler
+#endif // CUSTOM_PROFILER
+
 //
 // enable dll profiler if necessary, clear history
 //
 void startProfilingDLL()
 {
+#ifdef CUSTOM_PROFILER
+	if( GC.isDLLProfilerEnabled() || GC.getDefineINT( "FORCE_ENABLE_CUSTOM_PROFILER", 1 ) )
+	{
+		custom_profiler::startProfiling();
+		custom_profiler::beginSample( &custom_profiler::turnSample );
+	}
+#else
 	if (GC.isDLLProfilerEnabled())
 	{
 		gDLL->ProfilerBegin();
 	}
+#endif
 }
 
 //
 // dump profile stats on-screen
+// CUSTOM_PROFILER logs profile stats to custom_profile.log
 //
 void stopProfilingDLL()
 {
+#ifdef CUSTOM_PROFILER
+	if( GC.isDLLProfilerEnabled() || GC.getDefineINT( "FORCE_ENABLE_CUSTOM_PROFILER", 1 ) )
+	{
+		custom_profiler::endSample( &custom_profiler::turnSample );
+		custom_profiler::stopProfiling();
+	}
+#else
 	if (GC.isDLLProfilerEnabled())
 	{
 		gDLL->ProfilerEnd();
 	}
+#endif
 }

@@ -2014,7 +2014,6 @@
             <Type>PROMOTION_DRAGON_SLAYING</Type>
             <Description>TXT_KEY_PROMOTION_DRAGON_SLAYING</Description>
             <Sound>AS2D_IF_LEVELUP</Sound>
-            <PromotionPrereq>PROMOTION_COMBAT5</PromotionPrereq>
             <Button>Art/Interface/Buttons/Promotions/Dragonslaying.dds</Button>
             <PromotionCombatType>PROMOTION_DRAGON</PromotionCombatType>
             <iPromotionCombatMod>40</iPromotionCombatMod>

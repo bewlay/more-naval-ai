@@ -145,8 +145,8 @@
 			</BonusProductionModifiers>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<iPrereqGlobalCounter>70</iPrereqGlobalCounter>
 			<iAIWeight>300</iAIWeight>
+			<iPrereqGlobalCounter>70</iPrereqGlobalCounter>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_RITES_OF_OGHMA</Type>
@@ -240,9 +240,9 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_SHEAIM</PrereqCivilization>
 			<iAIWeight>0</iAIWeight>
 			<iModifyGlobalCounter>5</iModifyGlobalCounter>
+			<PrereqCivilization>CIVILIZATION_SHEAIM</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_HALLOWING_OF_THE_ELOHIM</Type>
@@ -270,10 +270,10 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ELOHIM</PrereqCivilization>
-			<iPrereqGlobalCounter>1</iPrereqGlobalCounter>
 			<iAIWeight>0</iAIWeight>
 			<iModifyGlobalCounter>-5</iModifyGlobalCounter>
+			<iPrereqGlobalCounter>1</iPrereqGlobalCounter>
+			<PrereqCivilization>CIVILIZATION_ELOHIM</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_PURGE_THE_UNFAITHFUL</Type>
@@ -358,8 +358,8 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>100</iAIWeight>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_THE_WHITE_HAND</Type>
@@ -387,8 +387,8 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>500</iAIWeight>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_THE_DEEPENING</Type>
@@ -416,8 +416,8 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>300</iAIWeight>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_STIR_FROM_SLUMBER</Type>
@@ -445,8 +445,8 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>300</iAIWeight>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_THE_DRAW</Type>
@@ -474,9 +474,9 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>300</iAIWeight>
 			<iModifyGlobalCounter>10</iModifyGlobalCounter>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_ASCENSION</Type>
@@ -504,8 +504,8 @@
 			<BonusProductionModifiers/>
 			<CreateSound/>
 			<MovieDefineTag/>
-			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 			<iAIWeight>1000</iAIWeight>
+			<PrereqCivilization>CIVILIZATION_ILLIANS</PrereqCivilization>
 		</ProjectInfo>
 		<ProjectInfo>
 			<Type>PROJECT_PACT_OF_THE_NILHORN</Type>

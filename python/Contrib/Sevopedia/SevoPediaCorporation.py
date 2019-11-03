@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -25,7 +25,9 @@ class SevoPediaCorporation:
 	def __init__(self, main):
 		self.iCorporation = -1
 		self.top = main
-
+	
+	
+	def initPositions( self ) :
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
 		self.Y_MAIN_PANE = self.top.Y_PEDIA_PAGE
 		self.W_MAIN_PANE = 200
@@ -54,8 +56,9 @@ class SevoPediaCorporation:
 		self.H_TEXT = self.top.B_PEDIA_PAGE - self.Y_TEXT
 
 
-
 	def interfaceScreen(self, iCorporation):
+		self.initPositions()
+		
 		self.iCorporation = iCorporation
 		screen = self.top.getScreen()
 

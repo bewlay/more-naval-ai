@@ -585,6 +585,14 @@ public:
 	DllExport int getNumEraInfos();
 	std::vector<CvEraInfo*>& getEraInfo();
 	DllExport CvEraInfo& getEraInfo(EraTypes eEraNum);
+// ERA_FIX 09/2017 lfgr
+	/**
+	 * Returns the number of eras with the "real" flag set.
+	 * Note: not named "getNumRealEraInfos" to prevent confusion.
+	 */
+	int getNumRealEras() const;
+	void setNumRealEras( int iNumRealEras );
+// ERA_FIX end
 
 	int getNumHurryInfos();
 	std::vector<CvHurryInfo*>& getHurryInfo();
@@ -691,8 +699,13 @@ public:
 	CvString*& getFootstepAudioTags();
 	DllExport CvString& getFootstepAudioTags(int i);
 
+	// lfgr comment: Current XML file (only used for reporting in error messages)
 	CvString& getCurrentXMLFile();
 	void setCurrentXMLFile(const TCHAR* szFileName);
+	// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType, too
+	CvString& getCurrentXMLInfoType();
+	void setCurrentXMLInfoType(const TCHAR* szInfoType);
+	// BETTER_ASSERTS end
 
 	//
 	///////////////// BEGIN global defines
@@ -703,8 +716,6 @@ public:
 	DllExport void cacheGlobals();
 
 	// ***** EXPOSED TO PYTHON *****
-
-	bool isDYNAMIC_CIV_NAMES();
 
 	DllExport int getDefineINT( const char * szName ) const;
 	DllExport float getDefineFLOAT( const char * szName ) const;
@@ -1102,6 +1113,9 @@ protected:
 	std::vector<CvCivicInfo*> m_paCivicInfo;
 	std::vector<CvDiplomacyInfo*> m_paDiplomacyInfo;
 	std::vector<CvEraInfo*> m_aEraInfo;	// [NUM_ERA_TYPES];
+// ERA_FIX 09/2017 lfgr
+	int m_iNumRealEras;
+// ERA_FIX end
 	std::vector<CvHurryInfo*> m_paHurryInfo;
 	std::vector<CvVictoryInfo*> m_paVictoryInfo;
 	std::vector<CvRouteModelInfo*> m_paRouteModelInfo;
@@ -1169,14 +1183,15 @@ protected:
 	int m_iNumFootstepAudioTags;
 
 	CvString m_szCurrentXMLFile;
+	// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType
+	CvString m_szCurrentXMLInfoType;
+	// BETTER_ASSERTS end
+
 	//////////////////////////////////////////////////////////////////////////
 	// Formerly Global Defines
 	//////////////////////////////////////////////////////////////////////////
 
 	FVariableSystem* m_VarSystem;
-
-
-	bool m_bDYNAMIC_CIV_NAMES;
 
 	int m_iMOVE_DENOMINATOR;
 	int m_iNUM_UNIT_PREREQ_OR_BONUSES;

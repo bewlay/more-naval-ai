@@ -50,14 +50,6 @@
 		<Spanish>Todas las unidades militares construidas en una ciudad con el edificio de [COLOR_BUILDING_TEXT]West Point[COLOR_REVERT] empezar&#225;n con cuatro puntos de experiencia m&#225;s. Adem&#225;s, ser&#225; m&#225;s probable que dicha ciudad genere un [COLOR_UNIT_TEXT]Gran esp&#237;a[COLOR_REVERT].</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVIC_MERCANTILISM_STRATEGY</Tag>
-		<English>Free specialist in each city but no foreign trade routes; foreign corporations have no effect</English>
-		<French>Un sp&#233;cialiste gratuit dans chaque ville, mais aucune route commerciale avec l'&#233;tranger. Les soci&#233;t&#233;s commerciales &#233;trang&#232;res n'ont aucun effet.</French>
-		<German>Bonus-Spezialist in allen St&#228;dten, aber keine Handelswege; fremde Kapitalgesellschaften ohne Auswirkung</German>
-		<Italian>Specialisti extra in ogni citt&#224;, ma nessuna rotta commerciale straniera; le corporazioni straniere non hanno effetto.</Italian>
-		<Spanish>Un especialista gratis en cada ciudad, pero no hay rutas comerciales con el extranjero; las corporaciones extranjeras no tienen efecto</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_CIVIC_POLICE_STATE_STRATEGY</Tag>
 		<English>Faster military unit production; less war anger; increased espionage output</English>
 		<French>Acc&#233;l&#232;re la production des unit&#233;s militaires. R&#233;duit le m&#233;contentement d&#251; &#224; la guerre. Augmente la production de l'espionnage.</French>
@@ -114,14 +106,6 @@
 		<Spanish>&#161;%s1_PlyrName ha demostrado que el mundo es redondo!</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_CANNOT_CAPTURE</Tag>
-		<English>[ICON_BULLET]Cannot Capture Enemy Cities or Units</English>
-		<French>[ICON_BULLET]Ne peut pas capturer de villes ou d'unit&#233;s ennemies.</French>
-		<German>[ICON_BULLET]Kann keine feindlichen St&#228;dte oder Einheiten erobern</German>
-		<Italian>[ICON_BULLET]Non pu&#242; conquistare citt&#224; o unit&#224; nemiche</Italian>
-		<Spanish>[ICON_BULLET]No es posible capturar ciudades o unidades enemigas</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_IMPROVEMENT_PILLAGE_YIELDS</Tag>
 		<English>[ICON_BULLET]Pillage yields %d1_Num[ICON_GOLD] on average</English>
 		<French>[ICON_BULLET]Le pillage rapporte en moyenne %d1_Num[ICON_GOLD].</French>
@@ -160,14 +144,6 @@
 		<German>[TAB]Die meisten Menschen waren in allen Zeitaltern der Geschichte Arbeiter. Als Bauern, H&#228;ndler oder Fabrikarbeiter pr&#228;gten sie stets die wirtschaftliche Infrastruktur ihres Landes. Im Laufe der Jahrhunderte beuteten Arbeiter Minen aus, rodeten riesige W&#228;lder und verwandelten Trockengebiete durch gezielte Bew&#228;sserung in fruchtbares Ackerland. Heute ist klar, dass die Abholzung der Urw&#228;lder und die Luftverschmutzung durch die Schwerindustrie das nat&#252;rliche Gleichgewicht der Erde empfindlich st&#246;rt.</German>
 		<Italian>[TAB]Nel corso della storia, la maggior parte della popolazione delle civilt&#224; &#232; sempre stata impiegata come forza lavoro nell'agricoltura, nel commercio o nell'industria; grazie al loro lavoro, &#232; stato possibile creare infrastrutture economiche in grado di far fiorire una nazione. Nel corso del tempo, l'opera continua dei lavoratori ha prodotto molte modifiche sul territorio, con gli scavi di miniere, il disboscamento di grandi zone e l'irrigazione del terreno ostile fino a renderlo coltivabile. Verso la fine del 20&#176; secolo, &#232; diventato chiaro che l'eccessivo disboscamento e l'inquinamento delle fabbriche potevano rappresentare un serio pericolo per l'equilibrio ambientale del pianeta. </Italian>
 		<Spanish>[TAB]A lo largo de la historia, la mayor&#237;a de los hombres de todas las civilizaciones han sido trabajadores. Ya sea en la agricultura, el comercio o la industria, su actividad conforma la infraestructura econ&#243;mica sin la que ninguna naci&#243;n puede prosperar. Con el tiempo, la acci&#243;n incansable de los trabajadores ha cambiado la mism&#237;sima faz de la tierra, al horadar colinas, talar grandes superficies forestales e irrigar el terreno yermo para convertirlo en f&#233;rtiles cultivos. A finales del siglo XX se ha hecho patente que la deforestaci&#243;n excesiva y la contaminaci&#243;n debida a la industria pesada suponen una amenaza para el medio ambiente a nivel mundial. </Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_HINT_73</Tag>
-		<English>To found a Corporation, you must have the correct type of Great Person, have researched the appropriate technologies and build it in a city with one or more of the resources that the Corporation demands. See the "Corporations" entry under the "Beyond the Sword Concepts" section for more details.</English>
-		<French>Pour fonder une soci&#233;t&#233; commerciale, vous devez disposer du bon type de personnages illustres, avoir recherch&#233; les technologies appropri&#233;es, et la construire dans une ville disposant d'au moins une des ressources dont elle a besoin. Consultez l'entr&#233;e "Soci&#233;t&#233;s commerciales" dans la rubrique "Concepts de Beyond the Sword" pour en savoir plus.</French>
-		<German>Um eine Kapitalgesellschaft zu gr&#252;nden, m&#252;sst Ihr &#252;ber die richtige Gro&#223;e Pers&#246;nlichkeit verf&#252;gen, die entsprechenden Technologien erforscht haben und sie in einer Stadt errichten, die eine oder mehr der f&#252;r die Kapitalgesellschaft erforderlichen Ressourcen hat. Weitere Informationen findet Ihr unter "Kapitalgesellschaften" im Abschnitt "Beyond The Sword-Konzepte".</German>
-		<Italian>Per fondare una corporazione devi avere il giusto tipo di Grande Personaggio, aver ricercato le tecnologie giuste e devi costruirla in una citt&#224; con una o pi&#249; delle risorse necessarie alla corporazione stessa. Consulta la voce "Corporazioni" nella sezione "Nozioni di Beyond the Sword" per ulteriori dettagli.</Italian>
-		<Spanish>Para fundar una corporaci&#243;n, debes tener el tipo correcto de gran personaje, haber investigado las tecnolog&#237;as apropiadas y crearla en una ciudad con uno o m&#225;s de los recursos que la corporaci&#243;n necesita. Encontrar&#225;s m&#225;s detalles en la secci&#243;n "Corporaciones" del apartado "Conceptos de Beyond the Sword".</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_SPANISH_CONQUISTADOR_STRATEGY</Tag>

@@ -7,6 +7,8 @@ import CvScreenEnums
 import string
 import CvScreensInterface
 
+from InterfaceUtils import GenericAdvisorScreen
+
 # globals
 gc = CyGlobalContext()
 game = gc.getGame()
@@ -20,7 +22,7 @@ cf = CustomFunctions.CustomFunctions()
 PyPlayer = PyHelpers.PyPlayer
 #FfH: End Add
 
-class CvCivicsScreen:
+class CvCivicsScreen( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Advisors
 	"Civics Screen"
 
 	def __init__(self):
@@ -37,7 +39,6 @@ class CvCivicsScreen:
 		self.BACKGROUND_ID = "CivicsBackground"
 		self.HELP_HEADER_NAME = "CivicsScreenHeaderName"
 
-		self.HEADINGS_WIDTH = 199
 #		self.HEADINGS_TOP = 70
 		self.HEADINGS_TOP = 50
 #		self.HEADINGS_SPACING = 5
@@ -46,27 +47,14 @@ class CvCivicsScreen:
 		self.HEADINGS_BOTTOM = 307
 #		self.HELP_TOP = 350
 		self.HELP_TOP = 375
-#		self.HELP_BOTTOM = 610
-		self.HELP_BOTTOM = 638
 #		self.TEXT_MARGIN = 15
 		self.TEXT_MARGIN = 12
 		self.BUTTON_SIZE = 24
 		self.BIG_BUTTON_SIZE = 64
-#		self.BOTTOM_LINE_TOP = 630
-		self.BOTTOM_LINE_TOP = 650
-		self.BOTTOM_LINE_WIDTH = 1014
 		self.BOTTOM_LINE_HEIGHT = 60
-
-		self.X_EXIT = 994
-		self.Y_EXIT = 726
-
-		self.X_CANCEL = 552
-		self.Y_CANCEL = 726
 
 		self.X_SCREEN = 600
 		self.Y_SCREEN = 396
-		self.W_SCREEN = 1024
-		self.H_SCREEN = 768
 		self.Z_SCREEN = -6.1
 		self.Y_TITLE = 8		
 		self.Z_TEXT = self.Z_SCREEN - 0.2
@@ -109,24 +97,36 @@ class CvCivicsScreen:
 			self.m_paeDisplayCivics.append(activePlayer.getCivics(i));
 			self.m_paeOriginalCivics.append(activePlayer.getCivics(i));
 
+	# lfgr 09/2019: Cleaned up, updated to allow for full-screen
 	def interfaceScreen (self):
-
 		screen = self.getScreen()
 		if screen.isActive():
 			return
-		screen.setRenderInterfaceOnly(True);
+		screen.setRenderInterfaceOnly(True)
 		screen.showScreen( PopupStates.POPUPSTATE_IMMEDIATE, False)
-	
-		# Set the background and exit button, and show the screen
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
-		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, 713, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
-		screen.showWindowBackground(False)
-		screen.setText(self.CANCEL_NAME, "Background", u"<font=4>" + localText.getText("TXT_KEY_SCREEN_CANCEL", ()).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_CANCEL, self.Y_CANCEL, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)
 
-		# Header...
-		screen.setText(self.TITLE_NAME, "Background", u"<font=4b>" + localText.getText("TXT_KEY_CIVICS_SCREEN_TITLE", ()).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.Y_TITLE, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.showWindowBackground(False)
+		
+		# Init dimensions and button positions
+		xPanelWidth, yPanelHeight = self.initDimensions()
+		self.xHeadingsWidth = ( xPanelWidth - 5 - self.HEADINGS_SPACING * (gc.getNumCivicOptionInfos() - 1) ) \
+				/ gc.getNumCivicOptionInfos() # Orig: 199
+		self.xBottomLineWidth = xPanelWidth - 10 # Orig: 1014
+		self.yHelpBottom = yPanelHeight - 130 # Orig: 638
+		self.yBottomLineTop = self.yHelpBottom + 12 # Orig: 650
+		self.xCancel = xPanelWidth - 472 # Orig: 552
+		self.yCancel = yPanelHeight - 42 # Orig: 726
+		self.xExit = xPanelWidth - 30 # Orig: 994
+		self.yExit = yPanelHeight - 42 # Orig: 726
+		
+		# Background, header and footer
+		self.addBackgroundHeaderFooter( localText.getText("TXT_KEY_CIVICS_SCREEN_TITLE", ()).upper() )
+		
+		# Cancel button
+		screen.setText(self.CANCEL_NAME, "Background",
+				u"<font=4>" + localText.getText("TXT_KEY_SCREEN_CANCEL", ()).upper() + u"</font>",
+				CvUtil.FONT_CENTER_JUSTIFY, self.xCancel, self.yCancel, self.Z_TEXT,
+				FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)
 		
 		self.setActivePlayer(gc.getGame().getActivePlayer())						
 
@@ -137,7 +137,7 @@ class CvCivicsScreen:
 				if (gc.getPlayer(j).isAlive()):
 					screen.addPullDownString(self.szDropdownName, gc.getPlayer(j).getName(), j, j, False )
 
-		screen.addPanel("CivicsBottomLine", "", "", True, True, self.HEADINGS_SPACING, self.BOTTOM_LINE_TOP, self.BOTTOM_LINE_WIDTH, self.BOTTOM_LINE_HEIGHT, PanelStyles.PANEL_STYLE_MAIN)
+		screen.addPanel("CivicsBottomLine", "", "", True, True, self.HEADINGS_SPACING, self.yBottomLineTop, self.xBottomLineWidth, self.BOTTOM_LINE_HEIGHT, PanelStyles.PANEL_STYLE_MAIN )
 
 		# Draw Contents
 		self.drawContents()
@@ -180,13 +180,13 @@ class CvCivicsScreen:
 
 		for i in range(gc.getNumCivicOptionInfos()):
 		
-			fX = self.HEADINGS_SPACING  + (self.HEADINGS_WIDTH + self.HEADINGS_SPACING) * i
+			fX = self.HEADINGS_SPACING + (self.xHeadingsWidth + self.HEADINGS_SPACING) * i
 			fY = self.HEADINGS_TOP
 			szAreaID = self.AREA_NAME + str(i)
 			screen = self.getScreen()
-			screen.addPanel(szAreaID, "", "", True, True, fX, fY, self.HEADINGS_WIDTH, self.HEADINGS_BOTTOM - self.HEADINGS_TOP, PanelStyles.PANEL_STYLE_MAIN)
+			screen.addPanel( szAreaID, "", "", True, True, fX, fY, self.xHeadingsWidth, self.HEADINGS_BOTTOM - self.HEADINGS_TOP, PanelStyles.PANEL_STYLE_MAIN )
 #			screen.setLabel("", "Background",  u"<font=3>" + gc.getCivicOptionInfo(i).getDescription().upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, fX + self.HEADINGS_WIDTH/2, self.HEADINGS_TOP + self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-			screen.setLabel("", "Background",  u"<font=3>" + gc.getCivicOptionInfo(i).getDescription() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, fX + self.HEADINGS_WIDTH/2, self.HEADINGS_TOP + self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+			screen.setLabel("", "Background",  u"<font=3>" + gc.getCivicOptionInfo(i).getDescription() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, fX + self.xHeadingsWidth / 2, self.HEADINGS_TOP + self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 			fY += self.TEXT_MARGIN
 			
@@ -291,28 +291,28 @@ class CvCivicsScreen:
 
 		szHelpText += CyGameTextMgr().parseCivicInfo(iCivic, False, True, True)
 
-		fX = self.HEADINGS_SPACING  + (self.HEADINGS_WIDTH + self.HEADINGS_SPACING) * iCivicOption
+		fX = self.HEADINGS_SPACING + (self.xHeadingsWidth + self.HEADINGS_SPACING) * iCivicOption
 
-		screen.setLabel(self.HELP_HEADER_NAME + str(iCivicOption), "Background",  u"<font=3>" + gc.getCivicInfo(self.m_paeDisplayCivics[iCivicOption]).getDescription() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, fX + self.HEADINGS_WIDTH/2, self.HELP_TOP + self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		screen.setLabel( self.HELP_HEADER_NAME + str(iCivicOption), "Background",  u"<font=3>" + gc.getCivicInfo(self.m_paeDisplayCivics[iCivicOption]).getDescription() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, fX + self.xHeadingsWidth / 2, self.HELP_TOP + self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		fY = self.HELP_TOP - self.BIG_BUTTON_SIZE
 		szHelpImageID = self.HELP_IMAGE_NAME + str(iCivicOption)		
-		screen.setImageButton(szHelpImageID, gc.getCivicInfo(iCivic).getButton(), fX + self.HEADINGS_WIDTH/2 - self.BIG_BUTTON_SIZE/2, fY, self.BIG_BUTTON_SIZE, self.BIG_BUTTON_SIZE, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iCivic, 1)
+		screen.setImageButton( szHelpImageID, gc.getCivicInfo(iCivic).getButton(), fX + self.xHeadingsWidth / 2 - self.BIG_BUTTON_SIZE / 2, fY, self.BIG_BUTTON_SIZE, self.BIG_BUTTON_SIZE, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, iCivic, 1 )
 
 		fY = self.HELP_TOP + 3 * self.TEXT_MARGIN
 		szHelpAreaID = self.HELP_AREA_NAME + str(iCivicOption)		
-		screen.addMultilineText(szHelpAreaID, u"<font=2>" + szHelpText + u"</font>", fX+5, fY, self.HEADINGS_WIDTH-7, self.HELP_BOTTOM - fY-2, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)				
+		screen.addMultilineText( szHelpAreaID, u"<font=2>" + szHelpText + u"</font>", fX + 5, fY, self.xHeadingsWidth - 7, self.yHelpBottom - fY - 2, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 		
 		
 	# Will draw the help text
 	def drawAllHelpText(self):
 		for i in range (gc.getNumCivicOptionInfos()):		
 
-			fX = self.HEADINGS_SPACING  + (self.HEADINGS_WIDTH + self.HEADINGS_SPACING) * i
+			fX = self.HEADINGS_SPACING + (self.xHeadingsWidth + self.HEADINGS_SPACING) * i
 
 			szPaneID = "CivicsHelpTextBackground" + str(i)
 			screen = self.getScreen()
-			screen.addPanel(szPaneID, "", "", True, True, fX, self.HELP_TOP, self.HEADINGS_WIDTH, self.HELP_BOTTOM - self.HELP_TOP, PanelStyles.PANEL_STYLE_MAIN)
+			screen.addPanel( szPaneID, "", "", True, True, fX, self.HELP_TOP, self.xHeadingsWidth, self.yHelpBottom - self.HELP_TOP, PanelStyles.PANEL_STYLE_MAIN )
 
 			self.drawHelpText(i)
 
@@ -334,10 +334,10 @@ class CvCivicsScreen:
 		# Make the revolution button
 		screen.deleteWidget(self.EXIT_NAME)
 		if (activePlayer.canRevolution(0) and bChange):			
-			screen.setText(self.EXIT_NAME, "Background", u"<font=4>" + localText.getText("TXT_KEY_CONCEPT_REVOLUTION", ( )).upper() + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_REVOLUTION, 1, 0)
+			screen.setText( self.EXIT_NAME, "Background", u"<font=4>" + localText.getText("TXT_KEY_CONCEPT_REVOLUTION", ( )).upper() + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.xExit, self.yExit, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_REVOLUTION, 1, 0 )
 			screen.show(self.CANCEL_NAME)
 		else:
-			screen.setText(self.EXIT_NAME, "Background", u"<font=4>" + localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ( )).upper() + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, -1)
+			screen.setText( self.EXIT_NAME, "Background", u"<font=4>" + localText.getText("TXT_KEY_PEDIA_SCREEN_EXIT", ( )).upper() + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, self.xExit, self.yExit, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, -1 )
 			screen.hide(self.CANCEL_NAME)
 
 		# Anarchy
@@ -348,11 +348,11 @@ class CvCivicsScreen:
 		else:
 			szText = CyGameTextMgr().setRevolutionHelp(self.iActivePlayer)
 
-		screen.setLabel("CivicsRevText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.BOTTOM_LINE_TOP + self.TEXT_MARGIN//2, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setLabel("CivicsRevText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.yBottomLineTop + self.TEXT_MARGIN // 2, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		# Maintenance		
 		szText = localText.getText("TXT_KEY_CIVIC_SCREEN_UPKEEP", (activePlayer.getCivicUpkeep(self.m_paeDisplayCivics, True), ))
-		screen.setLabel("CivicsUpkeepText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.BOTTOM_LINE_TOP + self.BOTTOM_LINE_HEIGHT - 2 * self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setLabel("CivicsUpkeepText", "Background", u"<font=3>" + szText + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.yBottomLineTop + self.BOTTOM_LINE_HEIGHT - 2 * self.TEXT_MARGIN, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 	# Revolution!!!
 	def Revolution(self, inputClass):

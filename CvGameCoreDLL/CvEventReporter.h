@@ -61,6 +61,7 @@ public:
 	void combatResult(CvUnit* pWinner, CvUnit* pLoser);					
 // BUG - Combat Events - start
 	void combatRetreat(CvUnit* pAttacker, CvUnit* pDefender);
+	void combatDefenderRetreat(CvUnit* pAttacker, CvUnit* pDefender); // lfgr 09/2019
 	void combatWithdrawal(CvUnit* pAttacker, CvUnit* pDefender);
 	void combatLogCollateral(CvUnit* pAttacker, CvUnit* pDefender, int iDamage);
 	void combatLogFlanking(CvUnit* pAttacker, CvUnit* pDefender, int iDamage);

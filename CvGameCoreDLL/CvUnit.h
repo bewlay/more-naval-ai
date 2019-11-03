@@ -452,10 +452,11 @@ public:
 		return m_iY;
 	}
 #endif
-//>>>>Unofficial Bug Fix: Modified by Denev 2010/02/22
-//	void setXY(int iX, int iY, bool bGroup = false, bool bUpdate = true, bool bShow = false, bool bCheckPlotVisible = false);	// Exposed to Python
-	void setXY(int iX, int iY, bool bGroup = false, bool bUpdate = true, bool bShow = false, bool bCheckPlotVisible = false, bool bPushOutExistingUnit = true);
-//<<<<Unofficial Bug Fix: End Modify
+// Denev 02/2010, lfgr 09/2019: Unofficial Bug Fix (added bPushOutExistingUnit), added bUnitCreation
+	// bUnitCreation indicates whether the unit was just created (instead of moving from a different plot)
+	void setXY(int iX, int iY, bool bGroup = false, bool bUpdate = true, bool bShow = false,
+		bool bCheckPlotVisible = false, bool bPushOutExistingUnit = true, bool bUnitCreation = false); 	// Exposed to Python
+
 	bool at(int iX, int iY) const;																														// Exposed to Python
 	DllExport bool atPlot(const CvPlot* pPlot) const;																					// Exposed to Python
 	DllExport CvPlot* plot() const;																														// Exposed to Python
@@ -644,7 +645,7 @@ public:
 	DllExport bool isInfoBarDirty() const;
 	DllExport void setInfoBarDirty(bool bNewValue);
 
-	bool isBlockading() const;
+	bool isBlockading() const; // Exposed to Python 07/2019 lfgr
 	void setBlockading(bool bNewValue);        //Exposed to Python
 	void collectBlockadeGold();
 
@@ -1038,6 +1039,13 @@ public:
 	void changeUpgradeOutsideBorders(int iNewValue);
 	// End MNAI
 
+	// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+	bool isPromotionImmune( PromotionTypes ePromotion ) const; // Exposed to python
+	void changePromotionImmune( PromotionTypes ePromotion, int iChange );
+	// XML_LISTS end
+	
+	int getMiscastChance() const; // MiscastPromotions 10/2019 lfgr
+
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
 //FfH: End Add
 
@@ -1213,6 +1221,8 @@ protected:
 	int* m_paiExtraFeatureAttackPercent;
 	int* m_paiExtraFeatureDefensePercent;
 	int* m_paiExtraUnitCombatModifier;
+
+	int* m_paiPromotionImmune; // XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
 
 	bool canAdvance(const CvPlot* pPlot, int iThreshold) const;
 	void collateralCombat(const CvPlot* pPlot, CvUnit* pSkipUnit = NULL);

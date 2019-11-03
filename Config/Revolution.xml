@@ -88,8 +88,6 @@
 			<list id="RevMaxCivs" key="MaxCivs" type="int" default="-1"
 				values="-1,0,1,2,3,4,5,10,15,20,25,30,35,40,45"
 				get="getRevMaxCivs" set="setRevMaxCivs"/>
-			<option id="RebelTypes" key="RebelTypes" type="boolean" default="True"
-				get="isRebelTypes" set="setRebelTypes"/>
 			<option id="ArtStyleTypes" key="ArtStyleTypes" type="boolean" default="True"
 				get="isArtStyleTypes" set="setArtStyleTypes"/>
 			<option id="OfferDefectToRevs" key="OfferDefectToRevs" type="boolean" default="True"
@@ -270,11 +268,25 @@
 
 		<section id="DynamicCivNames">
 			<option id="DynamicNamesDebugMode" key="DebugMode" type="boolean" default="False"
-				get="isDynamicNamesDebugMode" set="setDynamicNamesDebugMode"/>
+				get="isDynamicNamesDebugMode" set="setDynamicNamesDebugMode">
+				<change module="DynamicCivNames" function="setOption"/>
+			</option>
+			<list   id="DNCLevel" key="DNCLevel" 
+					type="int" default="0" listType="string" 
+					values="Off|Minimal|Medium|High"
+					get="getDNCLevel">
+				<change module="DynamicCivNames" function="setOption"/>
+			</list>
 			<option id="TeamNaming" key="TeamNaming" type="boolean" default="True"
-				get="isTeamNaming" set="setTeamNaming"/>
+				get="isTeamNaming" set="setTeamNaming">
+				<change module="DynamicCivNames" function="setOption"/>
+			</option>
 			<option id="LeaveHumanPlayerName" key="LeaveHumanPlayerName" type="boolean" default="False"
 				get="isLeaveHumanPlayerName" set="setLeaveHumanPlayerName"/>
+			<option id="EmpireDefaultName" key="EmpireDefaultName" type="boolean" default="True"
+				get="isEmpireDefaultName" set="setEmpireDefaultName">
+				<change module="DynamicCivNames" function="setOption"/>
+			</option>
 		</section>
 	</options>
 	<events module="RevolutionInit" function="RevolutionInit"/>

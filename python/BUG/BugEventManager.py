@@ -63,10 +63,14 @@
 ##       Fired when a unit is captured
 ##
 ##   - combatWithdrawal(pAttacker, pDefender)
-##       Fired when a unit withdraws from combat after doing maximum damage
+##       Fired when an attacker withdraws from combat after doing maximum damage
 ##
 ##   - combatRetreat(pAttacker, pDefender)
-##       Fired when a unit retreats from combat, escaping death
+##       Fired when an attacker retreats from combat, escaping death
+##
+##   - combatDefenderRetreat(pAttacker, pDefender)
+##       Fired when a defender retreats from combat, escaping death
+##       (added by lfgr 09/2019)
 ##
 ##   - combatLogCollateral(pAttacker, pDefender, iDamage)
 ##       Fired when a unit inflicts collateral damage to another unit
@@ -196,6 +200,7 @@ class BugEventManager(CvEventManager.CvEventManager):
 		self.addEvent("unitCaptured")
 		self.addEvent("combatWithdrawal")
 		self.addEvent("combatRetreat")
+		self.addEvent("combatDefenderRetreat") # lfgr 09/2019
 		self.addEvent("combatLogCollateral")
 		self.addEvent("combatLogFlanking")
 		self.addEvent("playerRevolution")
@@ -507,16 +512,22 @@ class BugEventManager(CvEventManager.CvEventManager):
 				pNewUnit.getName(), gc.getPlayer(pNewUnit.getOwner()).getName())
 	
 	def onCombatWithdrawal(self, argsList):
-		"""Fired when a unit withdraws from combat after doing maximum damage."""
+		"""Fired when an attacker withdraws from combat after doing maximum damage."""
 		pAttacker, pDefender = argsList
 		BugUtil.debug("%s withdraws from %s", 
 				pAttacker.getName(), pDefender.getName())
 	
 	def onCombatRetreat(self, argsList):
-		"""Fired when a unit retreats from combat, escaping death."""
+		"""Fired when an attacker retreats from combat, escaping death."""
 		pAttacker, pDefender = argsList
 		BugUtil.debug("%s retreats from %s", 
 				pAttacker.getName(), pDefender.getName())
+	
+	def onCombatDefenderRetreat(self, argsList):
+		"""Fired when a defender retreats from combat, escaping death."""
+		pAttacker, pDefender = argsList
+		BugUtil.debug("defender %s retreats from %s", 
+				pDefender.getName(), pAttacker.getName())
 	
 	def onCombatLogCollateral(self, argsList):
 		"""Fired when a unit inflicts collateral damage to another unit."""

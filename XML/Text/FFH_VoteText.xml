@@ -3,33 +3,57 @@
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_FORCE_PEACE</Tag>
 		<English>Force Peace</English>
-		<French>Maintien de la paix des Nations Unies</French>
-		<German>V.N.-Friedenstruppen</German>
-		<Italian>Forze di pace ONU</Italian>
-		<Spanish>Pacificaci&#243;n de la ONU</Spanish>
+		<French>Maintien de la paix</French>
+		<German>Friedenstruppen</German>
+		<Italian>Forze di pace</Italian>
+		<Spanish>Pacificaci&#243;n</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UN_VOTE_FORCE_NO_TRADE</Tag>
 		<English>Trade Embargo</English>
-		<French>Embargo commercial des Nations Unies</French>
-		<German>V.N.-Handelsembargo</German>
-		<Italian>Embargo commerciale ONU</Italian>
-		<Spanish>Embargo comercial de la ONU</Spanish>
+		<French>Embargo commercial</French>
+		<German>Handelsembargo</German>
+		<Italian>Embargo commerciale</Italian>
+		<Spanish>Embargo comercial</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UN_VOTE_FORCE_WAR</Tag>
 		<English>Call to Arms</English>
-		<French>R&#233;solution pour la guerre des Nations Unies</French>
-		<German>V.N.-Kriegsresolution</German>
-		<Italian>Risoluzione di guerra ONU</Italian>
-		<Spanish>Resoluci&#243;n de guerra de la ONU</Spanish>
+		<French>R&#233;solution pour la guerre</French>
+		<German>Kriegsresolution</German>
+		<Italian>Risoluzione di guerra</Italian>
+		<Spanish>Resoluci&#243;n de guerra</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_ASSIGN_CITY</Tag>
 		<English>Assign City Ownership</English>
-		<French>Mandat des Nations Unies pour la possession d'une ville</French>
-		<German>V.N.-Mandat f&#252;r Stadt&#252;bernahme</German>
-		<Italian>Mandato ONU di assegnazione della citt&#224;</Italian>
-		<Spanish>Mandato de la ONU de cesi&#243;n de ciudad</Spanish>
+		<French>Mandat pour la possession d'une ville</French>
+		<German>Mandat f&#252;r Stadt&#252;bernahme</German>
+		<Italian>Mandato di assegnazione della citt&#224;</Italian>
+		<Spanish>Mandato de cesi&#243;n de ciudad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NO_ACTIVE_VOTE_SOURCES</Tag>
+		<English>No active councils</English>
+		<French>No active councils</French>
+		<German>Keine aktiven Räte</German>
+		<Italian>No active councils</Italian>
+		<Spanish>No hay concilios activos</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SECRETARY_GENERAL_UNKNOWN</Tag>
+		<English>Unknown</English>
+		<French>Unknown</French>
+		<German>Unbekannt</German>
+		<Italian>Unknown</Italian>
+		<Spanish>Desconocido</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SECRETARY_GENERAL_VACANT</Tag>
+		<English>Vacant</English>
+		<French>Vacant</French>
+		<German>Unbesetzt</German>
+		<Italian>Vacant</Italian>
+		<Spanish>Vacante</Spanish>
 	</TEXT>
 </Civ4GameText>

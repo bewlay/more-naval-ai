@@ -248,11 +248,17 @@ public:
 	int getProjectCreatedCount(int /*ProjectTypes*/ eIndex);
 	bool isProjectMaxedOut(int /*ProjectTypes*/ eIndex, int iExtra);
 
-	int getForceCivicCount(int /*CivicTypes*/ eIndex);
-	bool isForceCivic(int /*CivicTypes*/ eIndex);
-	bool isForceCivicOption(int /*CivicOptionTypes*/ eCivicOption);
+// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
+	int getForceCivicCount(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex);
 
-	int getVoteOutcome(int /*VoteTypes*/ eIndex);
+	// Indicates whether the specified civic is forced by the specified vote source
+	bool isForceCivic(int /*VoteSourceTypes*/ eVoteSource, int /*CivicTypes*/ eIndex);
+	
+	// Indicates whether the specified civic option has a civic that is forced by the specified vote source
+	bool isForceCivicOption(int /*VoteSourceTypes*/ eVoteSource, int /*CivicOptionTypes*/ eCivicOption);
+// lfgr end
+
+	int /*PlayerVoteTypes*/ getVoteOutcome(int /*VoteTypes*/ eIndex);
 
 	int getReligionGameTurnFounded(int /*ReligionTypes*/ eIndex);
 	bool isReligionFounded(int /*ReligionTypes*/ eIndex);
@@ -278,6 +284,13 @@ public:
 	void clearHeadquarters(int /*CorporationTypes*/ eIndex);
 
 	int getPlayerVote(int /*PlayerTypes*/ eOwnerIndex, int iVoteId);
+
+// lfgr 06/2019: exposed
+	void castVote(int /*PlayerTypes*/ eOwnerIndex, int iVoteId, int /*PlayerVoteTypes*/ ePlayerVote);
+	// returns the vote ID to be used in castVote() and getPlayerVote()
+	int addVoteTriggered(int /*VoteSourceTypes*/ eVoteSource, int /*VoteTypes*/ eVote, int/*PlayerTypes*/ ePlayer,
+			int iCityId, int /*PlayerTypes*/ eOtherPlayer, std::wstring szText);
+// lfgr end
 
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);

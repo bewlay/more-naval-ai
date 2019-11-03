@@ -609,6 +609,7 @@
 		<element type="Help" minOccurs="0"/>
 		<element type="Hero" minOccurs="0"/>
 		<element type="MaintainFeatures" minOccurs="0"/>
+		<element type="TerrainYieldChanges" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="CivilizationInfos" content="eltOnly">
 		<element type="CivilizationInfo" maxOccurs="*"/>

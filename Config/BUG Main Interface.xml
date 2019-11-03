@@ -111,10 +111,11 @@
 				<choice id="Medium" get="isBuildIconSizeMedium"/>
 				<choice id="Large" get="isBuildIconSizeLarge"/>
 			</list>
-
-			<!-- Events with Images -->
-			<option id="EventsWithImages" key="Events with Images" 
-					type="boolean" default="False" dll="5"/>
+			<!-- Show (or hide) minimap ownership overlay on water by lfgr 06/2019 -->
+			<option id="MinimapWaterOverlay" key="Minimap Water Overlay" 
+					type="boolean" default="true" dirtyBit="MinimapSection">
+				<change module="InterfaceUtils" function="updateMinimap"/>
+			</option>
 		</section>
 	</options>
 	

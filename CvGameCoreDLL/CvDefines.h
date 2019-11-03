@@ -200,8 +200,4 @@
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-// Revolutions Mod Components
-#define USE_DYNAMIC_CIV_NAMES							GC.isDYNAMIC_CIV_NAMES() // DYNAMIC_CIV_NAMES
-// End Revolutions
-
 #endif	// CVDEFINES_H

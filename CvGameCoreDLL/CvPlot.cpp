@@ -38,6 +38,10 @@
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
+
+// lfgr 06/2019: BUG options
+#include "CvBugOptions.h"
+
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
 /*************************************************************************************************/
@@ -372,6 +376,8 @@ void CvPlot::erase()
 
 		if (pLoopUnit != NULL)
 		{
+			logBBAI("    Killing %S -- Plot erased (Unit %d - plot: %d, %d)",
+					pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 			pLoopUnit->kill(false);
 		}
 	}
@@ -1335,6 +1341,8 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 								}
 								else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
 								{
+									logBBAI("    Killing %S -- nuke explosion (Unit %d - plot: %d, %d)",
+											pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 									pLoopUnit->kill(false, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 								}
 							}
@@ -5490,18 +5498,21 @@ int CvPlot::getFeatureVariety() const
 }
 
 
+// Since how many turns the owner controls this plot.
 int CvPlot::getOwnershipDuration() const
 {
 	return m_iOwnershipDuration;
 }
 
 
+// Whether this plot is counted as score. True if owner controlled it since OWNERSHIP_SCORE_DURATION_THRESHOLD turns.
 bool CvPlot::isOwnershipScore() const
 {
 	return (getOwnershipDuration() >= GC.getDefineINT("OWNERSHIP_SCORE_DURATION_THRESHOLD"));
 }
 
 
+// Set since how many turns the owner controls this plot.
 void CvPlot::setOwnershipDuration(int iNewValue)
 {
 	bool bOldOwnershipScore;
@@ -6123,6 +6134,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 						if (pLoopUnit->isEnemy(GET_PLAYER(eNewValue).getTeam(), this))
 						{
 							FAssert(pLoopUnit->getTeam() != GET_PLAYER(eNewValue).getTeam());
+							logBBAI("    Killing %S -- in city acquired by setting plot owner (Unit %d - plot: %d, %d)",
+								pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 							pLoopUnit->kill(false, eNewValue);
 						}
 					}
@@ -6495,6 +6508,11 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 			{
 				GET_PLAYER(getOwnerINLINE()).changeTotalLand((isWater()) ? -1 : 1);
 				GET_TEAM(getTeam()).changeTotalLand((isWater()) ? -1 : 1);
+			}
+
+			// lfgr bugfix 2019: Also update player scores
+			if( isOwnershipScore() ) {
+				GET_PLAYER(getOwnerINLINE()).changeTotalLandScored((isWater()) ? -1 : 1);
 			}
 
 			if (bRecalculate)
@@ -6965,7 +6983,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 			{
 				GET_PLAYER(getOwnerINLINE()).changeImprovementCount(getImprovementType(), -1);
 				// Super Forts begin *culture*
-				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+				if (GC.getImprovementInfo(getImprovementType()).isActsAsCity()) // TODO: Should be getCultureRange()?
 				{
 					changeCultureRangeFortsWithinRange(getOwnerINLINE(), -1, GC.getImprovementInfo(getImprovementType()).getCultureRange(), true);
 				}
@@ -10599,7 +10617,10 @@ ColorTypes CvPlot::plotMinimapColor()
 			}
 		}
 
-		if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER) && !isRevealedBarbarian())
+		// lfgr 06/2019: Hide minimap ownership overlay on water, if option disabled
+		//if ((getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER) && !isRevealedBarbarian())
+		if( getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true) != NO_PLAYER && !isRevealedBarbarian()
+				&& ( getBugOptionBOOL( "MainInterface__MinimapWaterOverlay" ) || !isWater() ) )
 		{
 			return ((ColorTypes)(GC.getPlayerColorInfo(GET_PLAYER(getRevealedOwner(GC.getGameINLINE().getActiveTeam(), true)).getPlayerColor()).getColorTypePrimary()));
 		}
@@ -11779,6 +11800,7 @@ void CvPlot::applyEvent(EventTypes eEvent)
 	}
 }
 
+// bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
 bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 {
 	CvCity* pCity = getPlotCity();
@@ -12236,7 +12258,7 @@ bool CvPlot::checkLateEra() const
 		}
 	}
 
-	return (GET_PLAYER(ePlayer).getCurrentEra() > GC.getNumEraInfos() / 2);
+	return (GET_PLAYER(ePlayer).getCurrentRealEra() > GC.getNumRealEras() / 2);
 }
 
 //FfH: Added by Kael 08/15/2007

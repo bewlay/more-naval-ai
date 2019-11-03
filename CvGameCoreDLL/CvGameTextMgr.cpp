@@ -928,6 +928,12 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 
 		for (iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 		{
+			// XML_LISTS 07/2019 lfgr
+			if( pUnit->isPromotionImmune( (PromotionTypes) iI ) ) {
+				szTempBuffer = GC.getPromotionInfo( (PromotionTypes) iI ).getDescription();
+				aszPromotionImmune.push_back(szTempBuffer);
+			}
+			// XML_LISTS end
 			if (pUnit->isHasPromotion((PromotionTypes) iI))
 			{
 				if (GC.getPromotionInfo((PromotionTypes) iI).getBetrayalChance() != 0)
@@ -940,25 +946,6 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				{
 					szTempBuffer = GC.getPromotionInfo(ePromotionRandomApply).getDescription();
 					aszPromotionRandomApply.push_back(szTempBuffer);
-				}
-
-				const PromotionTypes ePromotionImmune1 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune1();
-				if (ePromotionImmune1 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune1).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
-				}
-				const PromotionTypes ePromotionImmune2 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune2();
-				if (ePromotionImmune2 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune2).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
-				}
-				const PromotionTypes ePromotionImmune3 = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionImmune3();
-				if (ePromotionImmune3 != NO_PROMOTION)
-				{
-					szTempBuffer = GC.getPromotionInfo(ePromotionImmune3).getDescription();
-					aszPromotionImmune.push_back(szTempBuffer);
 				}
 
 				const PromotionTypes ePromotionSummonPerk = (PromotionTypes) GC.getPromotionInfo((PromotionTypes) iI).getPromotionSummonPerk();
@@ -1268,6 +1255,14 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 /*************************************************************************************************/
 /**	END																							**/
 /*************************************************************************************************/
+
+			// MiscastPromotions 10/2019 lfgr
+			if( pUnit->getMiscastChance() != 0 )
+			{
+				szString.append(NEWLINE);
+				szString.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", pUnit->getMiscastChance()));
+			}
+			// MiscastPromotions end
 		}
 
 		if (pUnit->maxFirstStrikes() > 0)
@@ -9596,21 +9591,15 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE_TO_FEAR_PEDIA"));
     }
-    if (kPromotionInfo.getPromotionImmune1() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune1()).getDescription()));
-    }
-    if (kPromotionInfo.getPromotionImmune2() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune2()).getDescription()));
-    }
-    if (kPromotionInfo.getPromotionImmune3() != NO_PROMOTION)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE", GC.getPromotionInfo((PromotionTypes)kPromotionInfo.getPromotionImmune3()).getDescription()));
-    }
+	// XML_LISTS 07/2019 lfgr
+	for( int eImmunePromotion = 0; eImmunePromotion < GC.getNumPromotionInfos(); eImmunePromotion++ ) {
+		if( kPromotionInfo.isPromotionImmune( eImmunePromotion ) ) {
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_IMMUNE",
+					GC.getPromotionInfo((PromotionTypes) eImmunePromotion).getDescription()));
+		}
+	}
+	// XML_LISTS end
     if (kPromotionInfo.isInvisible())
     {
         szBuffer.append(pcNewline);
@@ -9656,6 +9645,13 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CASTER_RESIST_MODIFY", kPromotionInfo.getCasterResistModify()));
     }
+	// MiscastPromotions 10/2019 lfgr
+    if (kPromotionInfo.getMiscastChance() != 0)
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", kPromotionInfo.getMiscastChance()));
+    }
+	// MiscastPromotions end
 	for (iI = 0; iI < GC.getNumSpellInfos(); iI++)
 	{
 	    if (GC.getSpellInfo((SpellTypes)iI).getPromotionPrereq1() == ePromotion)
@@ -9751,16 +9747,43 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 
 	CvSpellInfo &kSpellInfo = GC.getSpellInfo(eSpell);
 
+	// +++ Misc (important) +++
+	
     if (kSpellInfo.isGlobal())
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_GLOBAL"));
     }
+    
+    // lfgr 09/2019: Can be casted even after another spell has been casted this turn
+    if (kSpellInfo.isIgnoreHasCasted())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IGNORE_HAS_CASTED"));
+    }
+
+	// +++ Requirements +++
+	
     if (kSpellInfo.isPrereqSlaveTrade())
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_SLAVE_TRADE"));
     }
+    
+    // lfgr 09/2019: Caster must be alive
+    if (kSpellInfo.isCasterMustBeAlive())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_CASTER_ALIVE"));
+    }
+    
+    // lfgr 09/2019: Caster must not be temporary
+    if (kSpellInfo.isCasterNoDuration())
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_CASTER_NO_DURATION"));
+    }
+    
     if (kSpellInfo.getCasterMinLevel() != 0)
     {
         szBuffer.append(pcNewline);
@@ -9844,6 +9867,38 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_UNIT_IN_STACK_PREREQ", GC.getUnitInfo((UnitTypes)kSpellInfo.getUnitInStackPrereq()).getDescription()));
     }
+    if (kSpellInfo.isAdjacentToWaterOnly()) // lfgr 09/2019: moved here
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_ADJACENT_TO_WATER_ONLY"));
+    }
+    if (kSpellInfo.isInBordersOnly() && kSpellInfo.isInCityOnly()) // lfgr 09/2019: moved here
+    {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_AND_CITY_ONLY"));
+    }
+    else
+    {
+        if (kSpellInfo.isInBordersOnly())
+        {
+            szBuffer.append(pcNewline);
+            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_ONLY"));
+        }
+        if (kSpellInfo.isInCityOnly())
+        {
+            szBuffer.append(pcNewline);
+            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_CITY_ONLY"));
+        }
+    }
+    
+    // lfgr 09/2019: Requires n+1 pop to remove n pop
+	if( kSpellInfo.getChangePopulation() < 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_PREREQ_POPULATION", 1 - kSpellInfo.getChangePopulation() ) );
+	}
+
+	// +++ Effects +++
+	
     if (kSpellInfo.getCreateUnitType() != NO_UNIT)
     {
         szBuffer.append(pcNewline);
@@ -10012,29 +10067,6 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
             szBuffer.append(gDLL->getText("TXT_KEY_SPELL_RESIST"));
         }
     }
-    if (kSpellInfo.isAdjacentToWaterOnly())
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_ADJACENT_TO_WATER_ONLY"));
-    }
-    if (kSpellInfo.isInBordersOnly() && kSpellInfo.isInCityOnly())
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_AND_CITY_ONLY"));
-    }
-    else
-    {
-        if (kSpellInfo.isInBordersOnly())
-        {
-            szBuffer.append(pcNewline);
-            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_BORDERS_ONLY"));
-        }
-        if (kSpellInfo.isInCityOnly())
-        {
-            szBuffer.append(pcNewline);
-            szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IN_CITY_ONLY"));
-        }
-    }
     if (kSpellInfo.isImmuneTeam() && !kSpellInfo.isImmuneNeutral() && !kSpellInfo.isImmuneEnemy())
     {
         szBuffer.append(pcNewline);
@@ -10107,16 +10139,51 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_DELAY", kSpellInfo.getDelay()));
     }
-    if (kSpellInfo.getMiscastChance() != 0)
-    {
+
+	
+	// MiscastPromotions 10/2019 lfgr
+	// If units are selected, possibly display a range of miscast chances
+	int iMinMiscastChance = 100;
+	int iMaxMiscastChance = 0;
+	
+	if( pvpUnits != NULL ) {
+		for( size_t i = 0; i < pvpUnits->size(); i++ ) {
+			int iUnitMiscastChance = pvpUnits->at( i )->getMiscastChance();
+			iMinMiscastChance = std::min( iMinMiscastChance, kSpellInfo.getMiscastChance() + iUnitMiscastChance );
+			iMaxMiscastChance = std::max( iMaxMiscastChance, kSpellInfo.getMiscastChance() + iUnitMiscastChance );
+		}
+	}
+	else {
+		iMinMiscastChance = std::min( 100, std::max( 0, kSpellInfo.getMiscastChance() ) );
+		iMaxMiscastChance = iMinMiscastChance;
+	}
+
+	if( iMinMiscastChance != iMaxMiscastChance ) {
         szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE", kSpellInfo.getMiscastChance()));
-    }
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_RANGE", iMinMiscastChance, iMaxMiscastChance));
+	}
+	else if( iMinMiscastChance != 0 ) {
+        szBuffer.append(pcNewline);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE", iMinMiscastChance));
+	}
+	// MiscastPromotions end
+
     if (kSpellInfo.getImmobileTurns() != 0)
     {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_IMMOBILE_TURNS", kSpellInfo.getImmobileTurns()));
     }
+    
+    // lfgr 09/2019: Adds/removes n pop
+	if( kSpellInfo.getChangePopulation() > 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_ADD_POPULATION", kSpellInfo.getChangePopulation() ) );
+	}
+	else if( kSpellInfo.getChangePopulation() < 0 ) {
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_REMOVE_POPULATION", -kSpellInfo.getChangePopulation() ) );
+	}
+    
 /********************************************************************************/
 /* SpellPyHelp                        11/2013                           lfgr    */
 /********************************************************************************/
@@ -11829,7 +11896,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		if (kUnitInfo.getFeatureImpassable(iI))
 		{
 			CvWString szFeature;
-			TechTypes eTech = (TechTypes)kUnitInfo.getTerrainPassableTech(iI);
+			TechTypes eTech = (TechTypes)kUnitInfo.getFeaturePassableTech(iI); // lfgr bugfix 06/2019: "Feature" instead of "Terrain"
 			if (NO_TECH == eTech)
 			{
 				szFeature.Format(L"<link=literal>%s</link>", GC.getFeatureInfo((FeatureTypes)iI).getDescription());
@@ -12550,6 +12617,14 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			}
 		}
 	}
+	
+	// MiscastPromotions 10/2019 lfgr
+    if (kUnitInfo.getMiscastChance() != 0)
+    {
+        szBuffer.append(NEWLINE);
+        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", kUnitInfo.getMiscastChance()));
+    }
+	// MiscastPromotions end
 
 //FfH: Added by Kael 08/04/2007
 	for (iI = 0; iI < GC.getNumDamageTypeInfos(); iI++)
@@ -13052,6 +13127,25 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 		}
 	}
 
+	// lfgr 10/2019: UnitPyInfoHelp
+	if( strlen( kUnitInfo.getPyInfoHelp() ) > 0 )
+	{
+		CyCity* pyCity = pCity ? new CyCity(pCity) : NULL;
+		CyArgsList argsList;
+		argsList.add( eUnit );
+		argsList.add( bCivilopediaText );
+		argsList.add( bStrategyText );
+		argsList.add( bTechChooserText );
+		argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity)); // Might be None
+		
+		CvWString szHelp;
+		gDLL->getPythonIFace()->callFunction(PYSpellModule, "getUnitInfoHelp", argsList.makeFunctionArgs(), &szHelp);
+		szBuffer.append( NEWLINE );
+		szBuffer.append( szHelp );
+		SAFE_DELETE( pyCity ); // python fxn must not hold on to this pointer
+	}
+	// lfgr end
+
 	if (!bCivilopediaText && GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
 	{
 		if (pCity == NULL)
@@ -13074,7 +13168,11 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 // BUG - Production Decay - start
 				if (getBugOptionBOOL("CityScreen__ProductionDecayHover", true, "BUG_PRODUCTION_DECAY_HOVER"))
 				{
-					setProductionDecayHelp(szBuffer, pCity->getUnitProductionDecayTurns(eUnit), getBugOptionINT("CityScreen__ProductionDecayHoverUnitThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_UNIT_THRESHOLD"), pCity->getUnitProductionDecay(eUnit), pCity->getProductionUnit() == eUnit);
+					// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+					setProductionDecayHelp(szBuffer, pCity->getUnitProductionDecayTurns(eUnit),
+							getBugOptionINT("CityScreen__ProductionDecayHoverUnitThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_UNIT_THRESHOLD"),
+							pCity->getUnitProductionDecay(eUnit), pCity->getProductionUnit() == eUnit,
+							GET_PLAYER(ePlayer).getDisableProduction() != 0);
 				}
 // BUG - Production Decay - end
 			}
@@ -14670,7 +14768,11 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 // BUG - Production Decay - start
 				if (getBugOptionBOOL("CityScreen__ProductionDecayHover", true, "BUG_PRODUCTION_DECAY_HOVER"))
 				{
-					setProductionDecayHelp(szBuffer, pCity->getBuildingProductionDecayTurns(eBuilding), getBugOptionINT("CityScreen__ProductionDecayHoverBuildingThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_BUILDING_THRESHOLD"), pCity->getBuildingProductionDecay(eBuilding), pCity->getProductionBuilding() == eBuilding);
+					// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+					setProductionDecayHelp(szBuffer, pCity->getBuildingProductionDecayTurns(eBuilding),
+						getBugOptionINT("CityScreen__ProductionDecayHoverBuildingThreshold", 5, "BUG_PRODUCTION_DECAY_HOVER_BUILDING_THRESHOLD"),
+						pCity->getBuildingProductionDecay(eBuilding), pCity->getProductionBuilding() == eBuilding,
+							GET_PLAYER(ePlayer).getDisableProduction() != 0);
 				}
 // BUG - Production Decay - end
 			}
@@ -15121,11 +15223,18 @@ void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, Build
 }
 
 // BUG - Production Decay - start
-void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurnsLeft, int iThreshold, int iDecay, bool bProducing)
+// lfgr 09/2019: Tweaked with DisableProduction (Stasis) effects.
+void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurnsLeft, int iThreshold, int iDecay,
+		bool bProducing, bool bDisableProduction)
 {
 	if (iTurnsLeft <= 1)
 	{
-		if (bProducing)
+		if( bDisableProduction )
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_PRODUCING_PRODUCTION_DISABLED", iDecay));
+		}
+		else if (bProducing)
 		{
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_PRODUCING", iDecay));
@@ -15136,20 +15245,22 @@ void CvGameTextMgr::setProductionDecayHelp(CvWStringBuffer &szBuffer, int iTurns
 			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY", iDecay));
 		}
 	}
-	else
+	else if (iTurnsLeft <= iThreshold)
 	{
-		if (iTurnsLeft <= iThreshold)
+		if( bDisableProduction )
 		{
-			if (bProducing)
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING", iDecay, iTurnsLeft));
-			}
-			else
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS", iDecay, iTurnsLeft));
-			}
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING_PRODUCTION_DISABLED", iDecay, iTurnsLeft));
+		}
+		else if (bProducing)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING", iDecay, iTurnsLeft));
+		}
+		else
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_DECAY_TURNS", iDecay, iTurnsLeft));
 		}
 	}
 }
@@ -18945,10 +19056,59 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 				szBuffer.append(szTempBuffer);
 			}
 		}
+
+		// Hidden Attitude: Show additional attitude modifiers // glider1 02/10
+		if (getBugOptionBOOL("MiscHover__LeaderheadHiddenAttitude", true, "BUG_LEADERHEAD_HOVER_HIDDEN_ATTITUDE"))
+		{
+			iAttitudeChange = kPlayer.AI_getBetterRankDifferenceAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_BETTER_RANK", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+
+			iAttitudeChange = kPlayer.AI_getWorseRankDifferenceAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_WORSE_RANK", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+
+			iAttitudeChange = kPlayer.AI_getLowRankAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_LOW_RANK", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+
+			iAttitudeChange = kPlayer.AI_getLostWarAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_LOST_WAR", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+
+			iAttitudeChange = kPlayer.AI_getTeamSizeAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_TEAM_SIZE", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+
+			iAttitudeChange = kPlayer.AI_getFirstImpressionAttitude(eTargetPlayer);
+			if ((iPass == 0) ? (iAttitudeChange > 0) : (iAttitudeChange < 0))
+			{
+				szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR((iAttitudeChange > 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_MISC_ATTITUDE_FIRST_IMPRESSION", iAttitudeChange).GetCString());
+				szBuffer.append(NEWLINE);
+				szBuffer.append(szTempBuffer);
+			}
+		} // End Hidden Attitude
 	}
-/*************************************************************************************************/
-/** Advanced Diplomacy       END                                                  				 */
-/*************************************************************************************************/
 
 	if (NO_PLAYER != eTargetPlayer)
 	{
@@ -22635,24 +22795,64 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 			}
 
 			FAssert(pCity->totalTradeModifier(pOtherCity) == iModifier);
-
+			
+			// lfgr 10/2019, BUG: Show final trade route yield; Fractional Trade Routes
 			iProfit *= iModifier;
-// BUG - Fractional Trade Routes - start
 			iProfit /= 100;
 			FAssert(iProfit == pCity->calculateTradeProfitTimes100(pOtherCity));
-			// iProfit /= 10000;
-			// FAssert(iProfit == pCity->calculateTradeProfit(pOtherCity));
-// BUG - Fractional Trade Routes - end
+
+			// For some reason, trait and civic modifiers are applied later
+
+			int iPlayerYieldModifier = 100; // Percent
+
+			CvWStringBuffer szPlayerModBuffer;
+
+			// Traits
+			for( int eTrait = 0; eTrait < GC.getNumTraitInfos(); eTrait++ ) {
+				if( GET_PLAYER( pCity->getOwnerINLINE() ).hasTrait( (TraitTypes) eTrait ) ) {
+					CvTraitInfo& kTrait = GC.getTraitInfo( (TraitTypes) eTrait );
+					int iMod = kTrait.getTradeYieldModifier( YIELD_COMMERCE );
+					if( iMod != 0 ) {
+						szPlayerModBuffer.append(NEWLINE);
+						szPlayerModBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_MOD_TRAIT", kTrait.getTextKeyWide(), iMod));
+						iPlayerYieldModifier += iMod;
+					}
+				}
+			}
+
+			// Civics
+			for( int eCivic = 0; eCivic < GC.getNumCivicInfos(); eCivic++ ) {
+				if( GET_PLAYER( pCity->getOwnerINLINE() ).isCivic( (CivicTypes) eCivic ) ) {
+					CvCivicInfo& kCivic = GC.getCivicInfo( (CivicTypes) eCivic );
+					int iMod = kCivic.getTradeYieldModifier( YIELD_COMMERCE );
+					if( iMod != 0 ) {
+						szPlayerModBuffer.append(NEWLINE);
+						szPlayerModBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_MOD_CIVIC", kCivic.getTextKeyWide(), iMod));
+						iPlayerYieldModifier += iMod;
+					}
+				}
+			}
+
+			int iYield = (std::max( 0, iProfit ) * std::max( 0, iPlayerYieldModifier )) / 100;
+			FAssert( iPlayerYieldModifier == GET_PLAYER(pCity->getOwnerINLINE()).getTradeYieldModifier(YIELD_COMMERCE) );
+			FAssert(iYield == pCity->calculateTradeYield(YIELD_COMMERCE, iProfit));
+
+			if( ! szPlayerModBuffer.isEmpty() ) {
+				szBuffer.append(SEPARATOR);
+				szBuffer.append(NEWLINE);
+				CvWString szProfit;
+				szProfit.Format(L"%d.%02d", iProfit / 100, iProfit % 100);
+				szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL_PROFIT", szProfit.GetCString()));
+
+				szBuffer.append( szPlayerModBuffer );
+			}
 
 			szBuffer.append(SEPARATOR);
-
 			szBuffer.append(NEWLINE);
-// BUG - Fractional Trade Routes - start
-			CvWString szProfit;
-			szProfit.Format(L"%d.%02d", iProfit / 100, iProfit % 100);
-			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL", szProfit.GetCString()));
-			// szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL", iProfit));
-// BUG - Fractional Trade Routes - end
+			CvWString szYield;
+			szYield.Format(L"%d.%02d", iYield / 100, iYield % 100);
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL", szYield.GetCString()));
+			// lfgr, BUG end
 		}
 	}
 }

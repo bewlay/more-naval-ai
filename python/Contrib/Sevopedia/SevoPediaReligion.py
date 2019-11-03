@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -26,6 +26,8 @@ class SevoPediaReligion:
 		self.iReligion = -1
 		self.top = main
 
+
+	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/08
 		"""
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
@@ -103,6 +105,8 @@ class SevoPediaReligion:
 
 
 	def interfaceScreen(self, iReligion):
+		self.initPositions()
+		
 		self.iReligion = iReligion
 		screen = self.top.getScreen()
 

@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -26,6 +26,8 @@ class SevoPediaTerrain:
 		self.iTerrain = -1
 		self.top = main
 
+
+	def initPositions( self ) :
 ##--------	BUGFfH: Added by Denev 2009/10/07
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
@@ -82,6 +84,8 @@ class SevoPediaTerrain:
 
 
 	def interfaceScreen(self, iTerrain):
+		self.initPositions()
+		
 		self.iTerrain = iTerrain
 		screen = self.top.getScreen()
 

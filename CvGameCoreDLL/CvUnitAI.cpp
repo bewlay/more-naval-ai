@@ -6067,7 +6067,7 @@ void CvUnitAI::AI_scientistMove()
 	{
 		return;
 	}
-	if (GC.getGameINLINE().getCurrentPeriod() < 3)
+	if (GC.getGameINLINE().getCurrentEra() < 3)
 	{
 		if (AI_join(2))
 		{
@@ -6075,7 +6075,7 @@ void CvUnitAI::AI_scientistMove()
 		}
 	}
 
-	if (GC.getGameINLINE().getCurrentPeriod() <= (GC.getNumEraInfos() / 2))
+	if (GC.getGameINLINE().getCurrentEra() <= (GC.getNumRealEras() / 2))
 	{
 		if (AI_construct())
 		{
@@ -18857,7 +18857,7 @@ bool CvUnitAI::AI_assaultSeaTransport(bool bBarbarian)
 
 	if (getGroup()->AI_getMissionAIType() == MISSIONAI_ASSAULT)
 	{
-		if (getPathEndTurnPlot() != NULL)
+		if (getPathLastNode() != NULL)
 		{
 			if( gUnitLogLevel >= 4 ) logBBAI("    ...continuing mission to plot %d, %d", getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY());
 			getGroup()->pushMission(MISSION_MOVE_TO, getPathEndTurnPlot()->getX(), getPathEndTurnPlot()->getY(), MOVE_AVOID_ENEMY_WEIGHT_3);
@@ -21128,9 +21128,18 @@ bool CvUnitAI::AI_irrigateTerritory()
 	return false;
 }
 
+
+// Tries to build a fort. Only in own territory if SuperForts/AdvancedTactics isn't enabled.
+// Returns true if a mission was pushed.
 bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 {
 	PROFILE_FUNC();
+	
+	// lfgr 07/2019: Barbarians don't build forts
+	if( GET_PLAYER(getOwnerINLINE()).isBarbarian() ) {
+		return false;
+	}
+	// lfgr end
 
 	int iBestValue = 0;
 	BuildTypes eBestBuild = NO_BUILD;
@@ -25599,7 +25608,7 @@ int CvUnitAI::AI_finalOddsThreshold(CvPlot* pPlot, int iOddsThreshold)
 
 int CvUnitAI::AI_stackOfDoomExtra()
 {
-	return ((AI_getBirthmark() % (1 + GC.getGameINLINE().getCurrentPeriod())) + 4);
+	return ((AI_getBirthmark() % (1 + GC.getGameINLINE().getCurrentEra())) + 4);
 }
 
 bool CvUnitAI::AI_stackAttackCity(int iRange, int iPowerThreshold, bool bFollow)
@@ -28253,6 +28262,8 @@ void CvUnitAI::AI_ConquestMove()
 	{
 		if (getGroup()->isStranded() && (getLevel() < 3) && bFinancialTrouble)
 		{
+			logBBAI("    Killing %S (delayed) -- disbanded because stranded and financial trouble (Unit %d - plot: %d, %d)",
+					getName().GetCString(), getID(), getX(), getY());
 			kill(true);
 			return;
 		}

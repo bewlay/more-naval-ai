@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -25,6 +25,8 @@ class SevoPediaEquipment:
 		self.iEquipment = -1
 		self.top = main
 	
+	
+	def initPositions( self ):
 		self.BUTTON_SIZE = 46
 		
 		self.X_UNIT_PANE = self.top.X_PEDIA_PAGE
@@ -60,6 +62,8 @@ class SevoPediaEquipment:
 
 
 	def interfaceScreen(self, iEquipment):
+		self.initPositions()
+		
 		self.iEquipment = iEquipment
 		screen = self.top.getScreen()
 

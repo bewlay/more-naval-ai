@@ -5,8 +5,6 @@ from CvPythonExtensions import *
 import CvUtil
 import Popup as PyPopup
 import PyHelpers
-import CvScreenEnums
-import CvCameraControls
 
 # globals
 gc = CyGlobalContext()
@@ -154,46 +152,79 @@ class CustomFunctions:
 			return True
 		return False
 
+	# lfgr 08/2019: utility function
+	def filterBarbarianUnitSpawnList( self, lList ) :
+		"""
+		Takes a list that has elements of the form "UnitType" or ("UnitType", "TechType").
+		Removes all elements with a tech the barbarians don't have, converts the other
+		("UnitType", "TechType") elements from tuples to simple "UnitType" strings.
+		"""
+		pBarbPlayer = gc.getPlayer( gc.getBARBARIAN_PLAYER() )
+		for item in lList :
+			if isinstance( item, str ) :
+				yield item
+			else :
+				sUnit, sTech = item
+				if pBarbPlayer.isHasTech( gc.getInfoTypeForString( sTech ) ) :
+					yield sUnit
+		
+	# lfgr 08/2019: Added tech prereqs
 	def exploreLairBigBad(self, caster):
 		iPlayer = caster.getOwner()
 		pPlot = caster.plot()
-		pPlayer = gc.getPlayer(caster.getOwner())
-
-		lList = ['UNIT_AZER']
+		
+		# lList and lHenchmanList format: "UnitType" or ("UnitType", "PrereqTechs")
+		
+		lList = [('UNIT_AZER', 'TECH_KNOWLEDGE_OF_THE_ETHER')]
 		lPromoList = ['PROMOTION_MUTATED', 'PROMOTION_CANNIBALIZE', 'PROMOTION_MOBILITY1', 'PROMOTION_STRONG', 'PROMOTION_BLITZ', 'PROMOTION_COMMAND1', 'PROMOTION_HEROIC_STRENGTH', 'PROMOTION_HEROIC_DEFENSE', 'PROMOTION_MAGIC_IMMUNE', 'PROMOTION_STONESKIN', 'PROMOTION_VALOR', 'PROMOTION_VILE_TOUCH']
 		lHenchmanList = ['UNIT_GRIFFON']
-		if self.grace() == False:
-			lList = lList + ['UNIT_AIR_ELEMENTAL']
+		if not self.grace() :
+			lList.extend( [('UNIT_AIR_ELEMENTAL', 'TECH_SORCERY')] )
 		if not pPlot.isWater():
-			lList = lList + ['UNIT_ASSASSIN', 'UNIT_OGRE', 'UNIT_GIANT_SPIDER', 'UNIT_HILL_GIANT', 'UNIT_SPECTRE', 'UNIT_SCORPION']
-			lHenchmanList = lHenchmanList + ['UNIT_AXEMAN', 'UNIT_WOLF', 'UNIT_CHAOS_MARAUDER', 'UNIT_WOLF_RIDER', 'UNIT_MISTFORM', 'UNIT_LION', 'UNIT_TIGER', 'UNIT_BABY_SPIDER', 'UNIT_FAWN', 'UNIT_SCORPION']
-			if self.grace() == False:
-				lList = lList + ['UNIT_EARTH_ELEMENTAL', 'UNIT_FIRE_ELEMENTAL', 'UNIT_GARGOYLE', 'UNIT_VAMPIRE', 'UNIT_MYCONID', 'UNIT_EIDOLON', 'UNIT_LICH', 'UNIT_OGRE_WARCHIEF', 'UNIT_SATYR', 'UNIT_WEREWOLF']
-				lPromoList = lPromoList + ['PROMOTION_FIRE2', 'PROMOTION_AIR2', 'PROMOTION_HERO', 'PROMOTION_MARKSMAN', 'PROMOTION_SHADOWWALK']
-				lHenchmanList = lHenchmanList + ['UNIT_OGRE']
-				if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST'):
-					lList = lList + ['UNIT_TREANT']
+			lList.extend( [('UNIT_ASSASSIN', 'TECH_HUNTING'), ('UNIT_OGRE', 'TECH_BRONZE_WORKING'),
+					'UNIT_GIANT_SPIDER', 'UNIT_HILL_GIANT', 'UNIT_SPECTRE', 'UNIT_SCORPION'] )
+			lHenchmanList.extend( ['UNIT_AXEMAN', 'UNIT_WOLF', 'UNIT_CHAOS_MARAUDER', 'UNIT_WOLF_RIDER',
+					('UNIT_MISTFORM', 'TECH_ARCANE_LORE'), 'UNIT_LION', 'UNIT_TIGER', 'UNIT_BABY_SPIDER', 'UNIT_FAWN',
+					'UNIT_SCORPION'] )
+			if not self.grace() :
+				lList.extend( [('UNIT_EARTH_ELEMENTAL', 'TECH_SORCERY'), ('UNIT_FIRE_ELEMENTAL', 'TECH_SORCERY'),
+						('UNIT_GARGOYLE', 'TECH_CONSTRUCTION'), 'UNIT_VAMPIRE',
+						('UNIT_MYCONID', 'TECH_ANIMAL_HANDLING'), ('UNIT_EIDOLON', 'TECH_PRIESTHOOD'),
+						('UNIT_LICH', 'TECH_SORCERY'), ('UNIT_OGRE_WARCHIEF', 'TECH_IRON_WORKING'),
+						('UNIT_SATYR', 'TECH_HUNTING'), ('UNIT_WEREWOLF', 'TECH_HUNTING')] )
+				lPromoList.extend( ['PROMOTION_FIRE2', 'PROMOTION_AIR2', 'PROMOTION_HERO', 'PROMOTION_MARKSMAN',
+						'PROMOTION_SHADOWWALK'] )
+				lHenchmanList.extend( [('UNIT_OGRE', 'TECH_IRON_WORKING')] )
+				if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FOREST'): # TODO: Or ancient forest?
+					lList.extend( [('UNIT_TREANT', 'TECH_ANIMAL_HANDLING')] )
 			if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
-				lHenchmanList = lHenchmanList + ['UNIT_FROSTLING_ARCHER', 'UNIT_FROSTLING_WOLF_RIDER', 'UNIT_POLAR_BEAR']
+				lHenchmanList.extend( ['UNIT_FROSTLING_ARCHER', 'UNIT_FROSTLING_WOLF_RIDER', 'UNIT_POLAR_BEAR'] )
 			if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_BARROW'):
-				lPromoList = lPromoList + ['PROMOTION_DEATH2']
-				lHenchmanList = lHenchmanList + ['UNIT_SKELETON', 'UNIT_PYRE_ZOMBIE']
-				if self.grace() == False:
-					lList = lList + ['UNIT_WRAITH']
+				lPromoList.extend( ['PROMOTION_DEATH2'] )
+				lHenchmanList.extend( ['UNIT_SKELETON', 'UNIT_PYRE_ZOMBIE'] )
+				if not self.grace() :
+					lList.extend( [('UNIT_WRAITH', 'TECH_SORCERY')] )
 			if pPlot.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_RUINS'):
-				lPromoList = lPromoList + ['PROMOTION_POISONED_BLADE']
-				lHenchmanList = lHenchmanList + ['UNIT_LIZARDMAN', 'UNIT_GORILLA']
-				if self.grace() == False:
-					lList = lList + ['UNIT_MANTICORE']
+				lPromoList.extend( ['PROMOTION_POISONED_BLADE'] )
+				lHenchmanList.extend( ['UNIT_LIZARDMAN', 'UNIT_GORILLA'] )
+				if not self.grace() :
+					lList.extend( [('TECH_ANIMAL_HANDLING', 'UNIT_MANTICORE')] )
 			if CyGame().getGlobalCounter() > 40:
-				lList = lList + ['UNIT_PIT_BEAST', 'UNIT_DEATH_KNIGHT', 'UNIT_BALOR']
-				lPromoList = lPromoList + ['PROMOTION_FEAR']
-				lHenchmanList = lHenchmanList + ['UNIT_IMP', 'UNIT_HELLHOUND']
-		if pPlot.isWater():
-			lList = lList + ['UNIT_SEA_SERPENT', 'UNIT_STYGIAN_GUARD', 'UNIT_PIRATE']
-			lHenchmanList = lHenchmanList + ['UNIT_DROWN']
-			if self.grace() == False:
-				lList = lList + ['UNIT_WATER_ELEMENTAL', 'UNIT_KRAKEN']
+				lList.extend( ['UNIT_PIT_BEAST', ('UNIT_DEATH_KNIGHT', 'TECH_IRON_WORKING'), ('UNIT_BALOR',
+						'TECH_IRON_WORKING')] )
+				lPromoList.extend( ['PROMOTION_FEAR'] )
+				lHenchmanList.extend( ['UNIT_IMP', 'UNIT_HELLHOUND'] )
+		else :
+			lList.extend( ['UNIT_SEA_SERPENT', ('UNIT_STYGIAN_GUARD', 'TECH_PRIESTHOOD'), 'UNIT_PIRATE'] )
+			lHenchmanList.extend( ['UNIT_DROWN'] )
+			if not self.grace() :
+				lList.extend( [('UNIT_WATER_ELEMENTAL', 'TECH_SORCERY'), ('UNIT_KRAKEN', 'TECH_SORCERY')] )
+		
+		lList = list( self.filterBarbarianUnitSpawnList( lList ) )
+		lHenchmanList = list( self.filterBarbarianUnitSpawnList( lHenchmanList ) )
+		
+		if len( lList ) == 0 :
+			return 0
 
 		sMonster = lList[CyGame().getSorenRandNum(len(lList), "Pick Monster")-1]
 		sHenchman = lHenchmanList[CyGame().getSorenRandNum(len(lHenchmanList), "Pick Henchman")-1]
@@ -984,10 +1015,6 @@ class CustomFunctions:
 #					pPlot.setFeatureType(iTemp, 0)
 
 	def snowgenesis(self, iPlayer):
-		iBrokenLands = gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS')
-		iFields = gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')
-		iBurningSands = gc.getInfoTypeForString('TERRAIN_BURNING_SANDS')
-		iShallows = gc.getInfoTypeForString('TERRAIN_SHALLOWS')
 		iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
 		iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
 		iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
@@ -1003,12 +1030,12 @@ class CustomFunctions:
 			pPlot = CyMap().plotByIndex(i)
 			if pPlot.getOwner() == iPlayer:
 			
-				# Change terrain
+				# Remove blight, change terrain
 				iTerrain = pPlot.getTerrainType()
 				pPlot.changePlotCounter(-100)
-				if (iTerrain == iGrass or iTerrain == iPlains or iTerrain == iBrokenLands or iTerrain == iTundra or iTerrain == iFields):
+				if (iTerrain == iGrass or iTerrain == iPlains or iTerrain == iTundra):
 					pPlot.setTerrainType(iSnow,True,True)
-				elif (iTerrain == iDesert or iTerrain == iBurningSands or iTerrain == iMarsh or iTerrain == iShallows):
+				elif (iTerrain == iDesert or iTerrain == iMarsh):
 					pPlot.setTerrainType(iTundra,True,True)
 					
 				#Put out fire and smoke
@@ -1020,9 +1047,6 @@ class CustomFunctions:
 				# Grow Forests
 				if (pPlot.getTerrainType() == iTundra and pPlot.getImprovementType() == -1 and pPlot.getFeatureType() != iForestAncient and pPlot.isPeak() == False and pPlot.isCity() == False):
 					pPlot.setFeatureType(iForest, 1)
-
-				# Remove blight
-				pPlot.changePlotCounter(-100)
 
 ##--------		Tweaked Hyborem: Added by Denev	--------##
 	def getAshenVeilCities(self, iCasterPlayer, iCasterID, iNum):

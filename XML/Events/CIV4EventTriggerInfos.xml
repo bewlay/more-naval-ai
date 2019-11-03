@@ -12911,6 +12911,7 @@
             </PrereqEvents>
             <bPrereqEventPlot>0</bPrereqEventPlot>
             <OrPreReqs>
+                <PrereqTech>TECH_SORCERY</PrereqTech>
             </OrPreReqs>
             <AndPreReqs>
             </AndPreReqs>

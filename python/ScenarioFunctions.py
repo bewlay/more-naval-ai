@@ -2178,6 +2178,8 @@ class ScenarioFunctions:
 
 	def openChest(self, caster, pPlot):
 		if gc.getGame().isOption(GameOptionTypes.GAMEOPTION_WB_GIFT_OF_KYLORIN):
+			if not gc.getPlayer( caster.getOwner() ).isHuman() :
+				return False
 			if caster.getUnitType() != gc.getInfoTypeForString('UNIT_ARCHMAGE'):
 				cf.addPopup(CyTranslator().getText("TXT_KEY_WB_GIFT_OF_KYLORIN_TREASURE_LOCKED",()),'art/interface/popups/Dain.dds')
 				return False

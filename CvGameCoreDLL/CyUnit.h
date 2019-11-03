@@ -362,6 +362,7 @@ public:
 	bool isPromotionReady();
 	void setPromotionReady(bool bNewValue);
 	void setBlockading(bool bNewValue);
+	bool isBlockading() const; // exposed 07/2019 lfgr
 	int getOwner();
 	int getVisualOwner();
 	int getCombatOwner(int /* TeamTypes*/ iForTeam);
@@ -477,6 +478,10 @@ public:
 
 	bool isPermanentSummon() const;
     void setPermanentSummon(bool newvalue);
+	
+	// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+	bool isPromotionImmune( int /*PromotionTypes*/ ePromotion ) const;
+	// XML_LISTS end
 
 	// Python Helper Functions
 

@@ -218,6 +218,9 @@ bool CvSelectionGroupAI::AI_update()
 			CvPlot* pPlot = pHeadUnit->plot();
 			if (NULL != pHeadUnit)
 			{
+				// lfgr comment: Beware that this may happen if two units try to attack from or to the same tile simultaneously.
+				//   One busy-waits for the other to be done and loses its moves here.
+				//   Attacking simulateously is a bug.
 				if( gUnitLogLevel >= 1 )
 				{
 					CvWString szTempString;

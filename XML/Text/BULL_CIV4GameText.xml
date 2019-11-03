@@ -208,6 +208,15 @@
 		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced this turn[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_DECAY_PRODUCING_PRODUCTION_DISABLED</Tag>
+		<English>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]%d1[ICON_PRODUCTION] gehen verloren, falls nicht produziert wird, sobald Produktion wieder angeschaltet ist[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Spanish>
+		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced as soon as production is enabled again[COLOR_REVERT]</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_PRODUCTION_DECAY_TURNS</Tag>
 		<English>[COLOR_NEGATIVE_TEXT]Will lose %d1[ICON_PRODUCTION] in %d2 [NUM2:turn:turns][COLOR_REVERT]</English>
 		<French>[COLOR_NEGATIVE_TEXT]Will lose %d1[ICON_PRODUCTION] in %d2 [NUM2:turn:turns][COLOR_REVERT]</French>
@@ -224,6 +233,15 @@
 		<Italian>[COLOR_WARNING_TEXT]Perder&#224;  %d1[ICON_PRODUCTION] se non viene prodotto per %d2 [NUM2:Turno:turni][COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_WARNING_TEXT]Perder&#225; %d1[ICON_PRODUCTION] si no es producido en %d2 [NUM2:turno:turnos][COLOR_REVERT]</Spanish>
 		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns][COLOR_REVERT]</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_DECAY_TURNS_PRODUCING_PRODUCTION_DISABLED</Tag>
+		<English>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]%d1[ICON_PRODUCTION] gehen verloren, falls f&#252;r %d2 [NUM2:Runde:Runden] nicht produziert wird, wenn Produktion wieder angeschaltet ist[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Spanish>
+		<Finnish>[COLOR_WARNING_TEXT]Will lose %d1[ICON_PRODUCTION] if not produced for %d2 [NUM2:turn:turns] after production is enabled again[COLOR_REVERT]</Finnish>
 	</TEXT>
 
 <!-- Leaderhead Hover -->
@@ -953,7 +971,41 @@
 
 
 <!-- Fractional Trade -->
+<!-- Trade route UI improvements 10/2019 lfgr -->
 
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL_PROFIT</Tag>
+		<English>%s1 [ICON_COMMERCE]: Total profit</English>
+		<French>%s1 [ICON_COMMERCE] : Total profit</French>
+		<German>%s1 [ICON_COMMERCE]: Gesamtprofit</German>
+		<Italian>%s1 [ICON_COMMERCE]: Total profit</Italian>
+		<Spanish>%s1 [ICON_COMMERCE]: Total profit</Spanish>
+		<Finnish>%s1 [ICON_COMMERCE]: Total profit</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_MOD_CIVIC</Tag>
+		<English>%D2%%: for %s1</English>
+		<French>%D2%% : pour %s1</French>
+		<German>%D2%%: f&#252;r %s1</German>
+		<Italian>%D2%%: per %s1</Italian>
+		<Spanish>%D2%%: Por %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_MOD_TRAIT</Tag>
+		<English>%D2%%: for %s1</English>
+		<French>%D2%% : pour %s1</French>
+		<German>%D2%%: f&#252;r %s1</German>
+		<Italian>%D2%%: per %s1</Italian>
+		<Spanish>%D2%%: Por %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_TRADE_YIELD_MODIFIERS</Tag>
+		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield from Trade Routes ([ICON_TRADE])</English>
+		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield des routes commerciales ([ICON_TRADE])</French>
+		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield von Handelswegen ([ICON_TRADE])</German>
+		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield dalle rotte commerciali ([ICON_TRADE])</Italian>
+		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1%%%F2_yield por rutas comerciales ([ICON_TRADE])</Spanish>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_ROUTE_TOTAL_FRACTIONAL</Tag>
 		<English>%s1 [ICON_COMMERCE]: Total</English>

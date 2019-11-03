@@ -108,9 +108,6 @@ CvGlobals gGlobals;
 // CONSTRUCTOR
 //
 CvGlobals::CvGlobals() :
-
-m_bDYNAMIC_CIV_NAMES(false),
-
 m_bGraphicsInitialized(false),
 m_bLogging(false),
 m_bRandLogging(false),
@@ -265,7 +262,13 @@ m_paMainMenus(NULL)
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-
+// ERA_FIX 09/2017 lfgr
+, m_iNumRealEras( -1 )
+// ERA_FIX end
+// BETTER_ASSERTS 07/2019 lfgr: Properly initialize current XML file/InfoType
+, m_szCurrentXMLFile( "(None)" )
+, m_szCurrentXMLInfoType( "(None/unknown)" )
+// BETTER_ASSERTS end
 {
 }
 
@@ -2324,6 +2327,17 @@ CvEraInfo& CvGlobals::getEraInfo(EraTypes eEraNum)
 	FAssert(eEraNum < GC.getNumEraInfos());
 	return *(m_aEraInfo[eEraNum]);
 }
+// ERA_FIX 09/2017 lfgr
+int CvGlobals::getNumRealEras() const
+{
+	return m_iNumRealEras;
+}
+
+void CvGlobals::setNumRealEras( int iNumRealEras )
+{
+	m_iNumRealEras = iNumRealEras;
+}
+// ERA_FIX end
 
 int CvGlobals::getNumHurryInfos()
 {
@@ -2717,6 +2731,18 @@ CvString& CvGlobals::getCurrentXMLFile()
 	return m_szCurrentXMLFile;
 }
 
+// BETTER_ASSERTS 07/2019 lfgr: Store current InfoType in addition to current XML file
+void CvGlobals::setCurrentXMLInfoType(const TCHAR* szInfoType)
+{
+	m_szCurrentXMLInfoType = szInfoType;
+}
+
+CvString& CvGlobals::getCurrentXMLInfoType()
+{
+	return m_szCurrentXMLInfoType;
+}
+// BETTER_ASSERTS end
+
 FVariableSystem* CvGlobals::getDefinesVarSystem()
 {
 	return m_VarSystem;
@@ -2724,9 +2750,6 @@ FVariableSystem* CvGlobals::getDefinesVarSystem()
 
 void CvGlobals::cacheGlobals()
 {
-
-	m_bDYNAMIC_CIV_NAMES = (getDefineINT("DYNAMIC_CIV_NAMES") > 0) ? true : false;
-
 	m_iMOVE_DENOMINATOR = getDefineINT("MOVE_DENOMINATOR");
 	m_iNUM_UNIT_PREREQ_OR_BONUSES = getDefineINT("NUM_UNIT_PREREQ_OR_BONUSES");
 	m_iNUM_BUILDING_PREREQ_OR_BONUSES = getDefineINT("NUM_BUILDING_PREREQ_OR_BONUSES");
@@ -3924,11 +3947,3 @@ int CvGlobals::getTECH_COST_MODIFIER()
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
-
-
-
-bool CvGlobals::isDYNAMIC_CIV_NAMES()
-{
-	return m_bDYNAMIC_CIV_NAMES;
-}
-

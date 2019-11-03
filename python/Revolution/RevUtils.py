@@ -33,7 +33,7 @@ LOG_DEBUG = True
 revCultureModifier = 1.0
 endWarsOnDeath = True
 gameSpeedMod = None
-RevOpt = None
+RevOpt = None # LFGR_TODO?
 
 # Promotions used
 iCommando = None
@@ -537,8 +537,7 @@ def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
 
 		owner = gc.getPlayer( pCity.getOwner() )
 		ownerPy = PyPlayer( pCity.getOwner() )
-#		iOwnerEra = owner.getCurrentEra()
-		iOwnerEra = gc.getGame().getCurrentPeriod()
+		iOwnerEra = owner.getCurrentRealEra()
 
 		bIsBarb = pRevPlayer.isBarbarian()
 		enemyPy = None

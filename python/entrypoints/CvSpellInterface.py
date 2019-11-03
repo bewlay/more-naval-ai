@@ -46,7 +46,8 @@ def onMove(argsList):
 	eval(imp.getPythonOnMove())
 
 def onMoveFeature(argsList):
-	pCaster, pPlot, eFeature = argsList
+	# lfgr 09/2019: Added bUnitCreation, indicating whether the unit was just created
+	pCaster, pPlot, eFeature, bUnitCreation = argsList
 	feature = gc.getFeatureInfo(eFeature)
 	eval(feature.getPythonOnMove())
 
@@ -80,6 +81,13 @@ def getSpellHelp( argsList ) :
 		lpUnits.append( pPlayer.getUnit( eUnit ) )
 	return eval( pSpell.getPyHelp() )
 # SpellPyHelp END
+
+# UnitPyInfoHelp 10/2019 lfgr
+def getUnitInfoHelp( argsList ) :
+	eUnit, bCivilopediaText, bStrategyText, bTechChooserText, pCity = argsList
+	pUnitInfo = gc.getUnitInfo( eUnit )
+	return eval( pUnitInfo.getPyInfoHelp() )
+# UnitPyInfoHelp END
 
 def findClearPlot(pUnit, plot):
 	BestPlot = -1
@@ -1308,13 +1316,13 @@ def spellExploreLair(caster):
 	iDestroyLair = 0
 	if iRnd < 14:
 		iDestroyLair = cf.exploreLairBigBad(caster)
-	if iRnd >= 14 and iRnd < 44:
+	elif iRnd < 44:
 		iDestroyLair = cf.exploreLairBad(caster)
-	if iRnd >= 44 and iRnd < 74:
+	elif iRnd < 74:
 		iDestroyLair = cf.exploreLairNeutral(caster)
-	if iRnd >= 74 and iRnd < 94:
+	elif iRnd < 94:
 		iDestroyLair = cf.exploreLairGood(caster)
-	if iRnd >= 94:
+	else:
 		iDestroyLair = cf.exploreLairBigGood(caster)
 	if iDestroyLair > CyGame().getSorenRandNum(100, "Explore Lair"):
 		CyInterface().addMessage(caster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_LAIR_DESTROYED", ()),'AS2D_POSITIVE_DINK',1,'Art/Interface/Buttons/Spells/Explore Lair.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
@@ -3314,7 +3322,7 @@ def spellTakeEquipmentUnit(caster,unit):
 				pHolder = pUnit
 	if pHolder != -1:
 		pHolder.setHasCasted(True)
-		pHolder.kill(True, PlayerTypes.NO_PLAYER)
+		pHolder.kill(False, PlayerTypes.NO_PLAYER)
 
 def reqTaunt(caster):
 	iX = caster.getX()
@@ -3942,9 +3950,12 @@ def onMoveAncientForest(pCaster, pPlot):
 							CyInterface().addMessage(pCaster.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_TREANT_ENEMY",()),'AS2D_FEATUREGROWTH',1,'Art/Interface/Buttons/Units/Treant.dds',ColorTypes(7),newUnit.getX(),newUnit.getY(),True,True)
 							CyInterface().addMessage(pPlot.getOwner(),True,25,CyTranslator().getText("TXT_KEY_MESSAGE_TREANT",()),'AS2D_FEATUREGROWTH',1,'Art/Interface/Buttons/Units/Treant.dds',ColorTypes(8),newUnit.getX(),newUnit.getY(),True,True)
 
-def onMoveBlizzard(pCaster, pPlot):
-	if pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')) == False:
-		pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), false)
+def onMoveBlizzard(pCaster, pPlot, bUnitCreation):
+	# lfgr 09/2019: Blizzard damage on unit creation is not handled here, as the Winterborn promotion is not yet given
+	#   instead, CvEventManager.onUnitCreated is used for that
+	if not bUnitCreation :
+		if not pCaster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_WINTERBORN')):
+			pCaster.doDamage(10, 50, pCaster, gc.getInfoTypeForString('DAMAGE_COLD'), False)
 
 def onMoveLetumFrigus(pCaster, pPlot):
 	pPlayer = gc.getPlayer(pCaster.getOwner())

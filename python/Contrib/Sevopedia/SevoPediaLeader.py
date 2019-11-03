@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -25,7 +25,9 @@ class SevoPediaLeader:
 	def __init__(self, main):
 		self.iLeader = -1
 		self.top = main
-
+	
+	
+	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/04
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
@@ -62,8 +64,9 @@ class SevoPediaLeader:
 ##--------	BUGFfH: End Modify
 
 
-
 	def interfaceScreen(self, iLeader):
+		self.initPositions()
+		
 		self.iLeader = iLeader
 		screen = self.top.getScreen()
 

@@ -11,8 +11,13 @@ import BugOptions
 import BugUtil
 
 AdvisorOpt = BugCore.game.Advisors
-enabledOption = None
-sortOption = None
+
+# lfgr 10/2019: Sevopedia is full-screen in Main menu
+if not AdvisorOpt._hasOption("FullScreenAdvisors"):
+	BugUtil.debug("BUG: creating stub FullScreenAdvisors option")
+	fullScreenOption = BugOptions.UnsavedOption(AdvisorOpt, BugOptions.qualify(AdvisorOpt._getID(), "FullScreenAdvisors"), "boolean", True)
+	fullScreenOption.createGetter()
+	AdvisorOpt._addOption(fullScreenOption)
 
 if not AdvisorOpt._hasOption("Sevopedia"):
 	BugUtil.debug("BUG: creating stub Sevopedia option")

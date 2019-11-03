@@ -700,7 +700,7 @@ class CvPlayerDesc:
 			if pPlayerReligionInfo:
 				f.write("\tStateReligion=%s\n" %(pPlayerReligionInfo.getType()))
 
-			f.write("\tStartingEra=%s\n" %(gc.getEraInfo(pPlayer.getCurrentEra()).getType()))
+			f.write("\tStartingEra=%s\n" %(gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()))
 
 			f.write("\tRandomStartLocation=false\n")
 
@@ -807,7 +807,10 @@ class CvPlayerDesc:
 		"read in player data"
 		self.__init__()
 		parser = CvWBParser()
-		if (parser.findNextTokenValue(f, "BeginPlayer")!=-1):
+		# lfgr 07/2019: fail early
+		if parser.findNextTokenValue(f, "BeginPlayer") == -1 :
+			raise RuntimeError( "Could not read player" )
+		else :
 			while (true):
 				nextLine = parser.getNextLine(f)
 				toks = parser.getTokens(nextLine)
@@ -2366,8 +2369,7 @@ class CvMapDesc:
 		self.__init__()
 		parser = CvWBParser()
 		if parser.findNextToken(f, "BeginMap")==false:
-			print "can't find map"
-			return
+			raise RuntimeError( "can't find map" ) # lfgr 07/2019: fail early
 		while (true):
 			nextLine = parser.getNextLine(f)
 			toks = parser.getTokens(nextLine)
@@ -2460,7 +2462,7 @@ class CvSignDesc:
 	def __init__(self):
 		self.iPlotX = 0
 		self.iPlotY = 0
-		self.playerType = 0
+		self.playerType = -1 # lfgr 07/2019: fix
 		self.szCaption = ""
 
 	def apply(self):
@@ -2474,7 +2476,7 @@ class CvSignDesc:
 		f.write("\tplotY=%d\n" %(sign.getPlot().getY(),))
 		if sign.getPlayerType() > -1:
 			f.write("\tplayerType=%d, (%s)\n" %(sign.getPlayerType(), gc.getPlayer(sign.getPlayerType()).getName().encode(fileencoding)))
-		f.write("\tcaption=%s\n" %(sign.getCaption(),))
+		f.write("\tcaption=%s\n" %(sign.getCaption().encode(fileencoding),)) # lfgr 07/2019 encoding fix
 		f.write("EndSign\n")
 
 	def read(self, f):
@@ -2507,7 +2509,7 @@ class CvSignDesc:
 
 			v = parser.findTokenValue(toks, "caption")
 			if v!=-1:
-				self.szCaption = v
+				self.szCaption = v # lfgr 07/2019 encoding fix
 				continue
 
 			if parser.findTokenValue(toks, "EndSign")!=-1:
@@ -2809,13 +2811,17 @@ class CvWBDesc:
 		self.bSpecial = 1
 		parser = CvWBParser()
 		filePos = f.tell()
-		iNumPlayers = gc.getMAX_CIV_PLAYERS()
-		iNumTeams = gc.getMAX_CIV_TEAMS()
+		# lfgr 07/2019 fix: We never want to read barbarians
+		#iNumPlayers = gc.getMAX_CIV_PLAYERS()
+		#iNumTeams = gc.getMAX_CIV_TEAMS()
 		line = parser.getNextLine(f)
 		if line.find("Platy") > -1:
-			iNumPlayers = gc.getMAX_PLAYERS()
-			iNumTeams = gc.getMAX_TEAMS()
+			CvUtil.pyPrint( "Scenario built with Platybuilder" )
+			# lfgr 07/2019 fix: We never want to read barbarians
+			#iNumPlayers = gc.getMAX_PLAYERS()
+			#iNumTeams = gc.getMAX_TEAMS()
 		else:
+			CvUtil.pyPrint( "Scenario not built with Platybuilder" )
 			f.seek(filePos)
 		filePos = f.tell()
 		line = parser.getNextLine(f)

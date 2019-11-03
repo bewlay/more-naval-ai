@@ -14,6 +14,8 @@
 #include "FVariableSystem.h"
 #include "CvGameCoreUtils.h"
 
+#include "CvInfoCache.h" // InfoCache 10/2019 lfgr
+
 // Macro for Setting Global Art Defines
 #define INIT_XML_GLOBAL_LOAD(xmlInfoPath, infoArray, numInfos)  SetGlobalClassInfo(infoArray, xmlInfoPath, numInfos);
 
@@ -880,6 +882,31 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 //FfH: End Add
 
 	LoadGlobalClassInfo(GC.getEraInfo(), "CIV4EraInfos", "GameInfo", "Civ4EraInfos/EraInfos/EraInfo", false);
+// ERA_FIX 09/2017 lfgr 
+// Verify XML
+	bool bGotPseudo = false;
+	for( int i = 0; i < GC.getNumEraInfos(); i++ )
+	{
+		CvEraInfo& kEra = GC.getEraInfo( (EraTypes) i );
+		if( ! kEra.isRealEra() )
+			bGotPseudo = true;
+		else
+		{
+			FAssertMsg( !bGotPseudo, "Real eras must precede non-real eras in XML" );
+		}
+	}
+
+	// Set CvGlobals cache: find number of real eras
+	int iNumRealEras = 0;
+	for( int iEra = 0; iEra < GC.getNumEraInfos(); iEra++ )
+	{
+		if( GC.getEraInfo( (EraTypes) iEra ).isRealEra() )
+		{
+			iNumRealEras++;
+		}
+	}
+	GC.setNumRealEras( iNumRealEras );
+// ERA_FIX end
 	LoadGlobalClassInfo(GC.getUnitClassInfo(), "CIV4UnitClassInfos", "Units", "Civ4UnitClassInfos/UnitClassInfos/UnitClassInfo", false);
 	LoadGlobalClassInfo(GC.getSpecialistInfo(), "CIV4SpecialistInfos", "GameInfo", "Civ4SpecialistInfos/SpecialistInfos/SpecialistInfo", false);
 	LoadGlobalClassInfo(GC.getVoteSourceInfo(), "CIV4VoteSourceInfos", "GameInfo", "Civ4VoteSourceInfos/VoteSourceInfos/VoteSourceInfo", false);
@@ -1148,6 +1175,14 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	LoadGlobalClassInfo(GC.getEspionageMissionInfo(), "CIV4EspionageMissionInfo", "GameInfo", "Civ4EspionageMissionInfo/EspionageMissionInfos/EspionageMissionInfo", false);
 
 	DestroyFXml();
+
+	// lfgr 06/2019: Make asserts no longer refer to CIV4EspionageMissionInfo.xml
+	//   in later GC.getInfoTypeForString() asserts
+	GC.setCurrentXMLFile( "(None)" );
+	// lfgr end
+
+	getInfoCache().init(); // InfoCache 10/2019 lfgr
+
 	return true;
 }
 
@@ -1794,6 +1829,7 @@ void CvXMLLoadUtility::LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* 
 	CvCacheObject* pCache = NULL;
 	GC.addToInfosVectors(&aInfos);
 
+	// lfgr_todo: disable cache completely
 	if (NULL != pArgFunction)
 	{
 		pCache = (gDLL->*pArgFunction)(CvString::format("%s.dat", szFileRoot));	// cache file name
@@ -1864,6 +1900,10 @@ void CvXMLLoadUtility::LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* 
 	{
 		gDLL->destroyCache(pCache);
 	}
+
+	// BETTER_ASSERTS 07/2019 lfgr: Reset current InfoType
+	GC.setCurrentXMLInfoType( "(None/unknown)" );
+	// BETTER_ASSERTS end
 }
 
 
@@ -3013,6 +3053,45 @@ void CvXMLLoadUtility::SetVariableListTagPair(CvString **ppszList, const TCHAR* 
 		gDLL->getXMLIFace()->SetToParent(m_pFXml);
 	}
 }
+
+// XML_LISTS 07/2019 lfgr
+// Loads a list of type strings into a bool array.
+void CvXMLLoadUtility::SetVariableList( bool **ppbList, const TCHAR* szRootagName, int iInfoBaseLength, bool bDefaultListVal )
+{
+	CvString szTextVal;
+
+	*ppbList = new bool[iInfoBaseLength];
+	for( int i = 0; i < iInfoBaseLength; i++ )
+		(*ppbList)[i] = bDefaultListVal;
+
+	if( gDLL->getXMLIFace()->SetToChildByTagName( GetXML(), szRootagName ) )
+	{
+		if( SkipToNextVal() )
+		{
+			int iNumSibs = gDLL->getXMLIFace()->GetNumChildren( GetXML() );
+
+			if( 0 < iNumSibs )
+			{
+				if( GetChildXmlVal( szTextVal ) )
+				{
+					for( int i = 0; i < iNumSibs; i++ )
+					{
+						int eValue = FindInInfoClass( szTextVal );
+						if( eValue > -1 && eValue < iInfoBaseLength )
+							(*ppbList)[eValue] = true;
+						if( !GetNextXmlVal( szTextVal ) )
+							break;
+					}
+
+					gDLL->getXMLIFace()->SetToParent( GetXML() );
+				}
+			}
+		}
+
+		gDLL->getXMLIFace()->SetToParent( GetXML() );
+	}
+}
+// XML_LISTS end
 
 DllExport bool CvXMLLoadUtility::LoadPlayerOptions()
 {

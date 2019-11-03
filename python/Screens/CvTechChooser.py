@@ -6,6 +6,9 @@ import ScreenInput
 import CvScreenEnums
 import CvScreensInterface
 
+# lfgr 09/2019: Full-screen Advisors
+from InterfaceUtils import GenericAdvisorScreen
+
 TEXTURE_SIZE = 24
 X_START = 6
 X_INCREMENT = 27
@@ -77,7 +80,7 @@ def buildTechPrefsHover(key, lTechs):
 	return szText
 # BUG - GP Tech Prefs - end
 
-class CvTechChooser:
+class CvTechChooser( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Advisors
 	"Tech Chooser Screen"
 
 	def __init__(self):
@@ -152,13 +155,20 @@ class CvTechChooser:
 		self.aiCurrentState = []
 		screen.setPersistent( True )
 
+# BUG - Tech Screen Resolution - start
+# lfgr 09/2019: Full-screen Advisors
+		screen.showWindowBackground( False )
+		
+		xPanelWidth, yPanelHeight = self.initDimensions()
+# BUG - Tech Screen Resolution - end
+
 		# Advanced Start
 		if (gc.getPlayer(self.iCivSelected).getAdvancedStartPoints() >= 0):
 
 			self.m_bSelectedTechDirty = true
 
 			self.X_ADD_TECH_BUTTON = 10
-			self.Y_ADD_TECH_BUTTON = 731
+			self.Y_ADD_TECH_BUTTON = yPanelHeight - 35 # lfgr 09/2019: Full-screen Advisors
 			self.W_ADD_TECH_BUTTON = 150
 			self.H_ADD_TECH_BUTTON = 30
 			self.X_ADVANCED_START_TEXT = self.X_ADD_TECH_BUTTON + self.W_ADD_TECH_BUTTON + 20
@@ -166,29 +176,10 @@ class CvTechChooser:
 			szText = localText.getText("TXT_KEY_WB_AS_ADD_TECH", ())
 			screen.setButtonGFC( "AddTechButton", szText, "", self.X_ADD_TECH_BUTTON, self.Y_ADD_TECH_BUTTON, self.W_ADD_TECH_BUTTON, self.H_ADD_TECH_BUTTON, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD )
 			screen.hide("AddTechButton")
-
-# BUG - Tech Screen Resolution - start
-		if (BugOpt.isWideTechScreen() and screen.getXResolution() > 1024):
-			xPanelWidth = screen.getXResolution() - 60
-		else:
-			xPanelWidth = 1024
-		yPanelHeight = 768
-
-		screen.showWindowBackground( False )
-		screen.setDimensions((screen.getXResolution() - xPanelWidth) / 2, screen.centerY(0), xPanelWidth, yPanelHeight)
-# BUG - Tech Screen Resolution - end
-
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, xPanelWidth, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addDDSGFC("TechBG", ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(), 0, 51, xPanelWidth, yPanelHeight - 96, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, yPanelHeight - 55, xPanelWidth, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
-		screen.setText( "TechChooserExit", "Background", u"<font=4>" + CyTranslator().getText("TXT_KEY_PEDIA_SCREEN_EXIT", ()).upper() + "</font>", CvUtil.FONT_RIGHT_JUSTIFY, xPanelWidth - 30, yPanelHeight - 42, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
-		screen.setActivation( "TechChooserExit", ActivationTypes.ACTIVATE_MIMICPARENTFOCUS )
-
-		# Header...
-		szText = u"<font=4>"
-		szText = szText + localText.getText("TXT_KEY_TECH_CHOOSER_TITLE", ()).upper()
-		szText = szText + u"</font>"
-		screen.setLabel( "TechTitleHeader", "Background", szText, CvUtil.FONT_CENTER_JUSTIFY, xPanelWidth / 2, 8, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		
+		# Background, header and footer
+		self.addBackgroundHeaderFooter( localText.getText("TXT_KEY_TECH_CHOOSER_TITLE", ()).upper() )
+		self.addExitButton()
 
 		# Make the scrollable area for the city list...
 		if BugOpt.isShowGPTechPrefs():
@@ -198,7 +189,7 @@ class CvTechChooser:
 			iX = 0
 			iW = xPanelWidth
 
-		self.TabPanels = ["TechList", "TechTrade"]
+		self.TabPanels = ["TechList", "TechTrade"] # LFGR_TODO: Remove second, unfinished (?) tab
 
 #		screen.addScrollPanel(self.TabPanels[0], u"", iX, 64, iW, yPanelHeight - 142, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.addScrollPanel(self.TabPanels[0], u"", iX, 56, iW, yPanelHeight - 134, PanelStyles.PANEL_STYLE_EXTERNAL )
@@ -211,10 +202,6 @@ class CvTechChooser:
 		if BugOpt.isShowGPTechPrefs():
 			screen.addPanel("GPTechPref", u"", u"", True, False, 0, 51, 80, yPanelHeight - 95, PanelStyles.PANEL_STYLE_MAIN_WHITE )
 # BUG - GP Tech Prefs - end
-
-		# Add the Highlight
-		#screen.addDDSGFC( "TechHighlight", ArtFileMgr.getInterfaceArtInfo("TECH_HIGHLIGHT").getPath(), 0, 0, self.getXStart() + 6, 12 + ( self.BOX_INCREMENT_HEIGHT * self.PIXEL_INCREMENT ), WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		#screen.hide( "TechHighlight" )
 
 		self.X_SELECT_TAB = 30
 		self.X_TRADE_TAB = 165

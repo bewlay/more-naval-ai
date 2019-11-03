@@ -77,15 +77,6 @@
 		<Finnish>BTS-konseptit</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIQUE_BUILDINGS</Tag>
-		<English>Unique Buildings</English>
-		<French>B&#226;timents Uniques</French>
-		<German>Einzigartige Geb&#228;ude</German>
-		<Italian>Edifici Unici</Italian>
-		<Spanish>Edificios Únicos</Spanish>
-		<Finnish>Uniikit rakennukset</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_PEDIA_FAV_CIVIC_AND_RELIGION</Tag>
 		<English>Favorite Civic and Religion</English>
 		<French>Doctrine et Religion Pr&#233;f&#233;r&#233;e</French>

@@ -790,7 +790,7 @@
 		</VoteInfo>
 		<VoteInfo>
 			<!-- Improved Councils 07/2013 lfgr -->
-			<Type>TXT_KEY_VOTE_VICTORY_OVERCOUNCIL</Type>
+			<Type>VOTE_VICTORY_OVERCOUNCIL</Type>
 			<Description>TXT_KEY_VOTE_VICTORY_OVERCOUNCIL</Description>
 			<iPopulationThreshold>62</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
@@ -828,7 +828,7 @@
 		</VoteInfo>
 		<VoteInfo>
 			<!-- Improved Councils 07/2013 lfgr -->
-			<Type>TXT_KEY_VOTE_VICTORY_UNDERCOUNCIL</Type>
+			<Type>VOTE_VICTORY_UNDERCOUNCIL</Type>
 			<Description>TXT_KEY_VOTE_VICTORY_UNDERCOUNCIL</Description>
 			<iPopulationThreshold>62</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>

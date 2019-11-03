@@ -250,7 +250,10 @@
 	<ElementType name="ReligionHero1" content="textOnly"/>	
 	<ElementType name="ReligionHero2" content="textOnly"/>		
 	<ElementType name="ReligionTech1" content="textOnly"/>		
-	<ElementType name="ReligionTech2" content="textOnly"/>		
+	<ElementType name="ReligionTech2" content="textOnly"/>
+	<ElementType name="PseudoEra" content="textOnly">
+		<description>The pseudo era associated with this event, (possibly) dtermining city and improvement artstyle as well as music.</description>
+	</ElementType>
 	<ElementType name="ReligionInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -282,6 +285,7 @@
 		<element type="ReligionTech1" minOccurs="0"/>		
 		<element type="ReligionTech2" minOccurs="0"/>		
 		<element type="iOrderPriority" minOccurs="0"/>
+		<element type="PseudoEra" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ReligionInfos" content="eltOnly">
 		<element type="ReligionInfo" maxOccurs="*"/>
@@ -1058,6 +1062,7 @@
 		<element type="Type"/>
 		<element type="Description"/>
 		<element type="iCityDefenseModifier"/>
+		<element type="SpeedThresholds"/>
 	</ElementType>
 	<ElementType name="CultureLevelInfos" content="eltOnly">
 		<element type="CultureLevelInfo" maxOccurs="*"/>
@@ -1187,7 +1192,10 @@
 	<ElementType name="iFreePopulation" content="textOnly" dt:type="int"/>
 	<ElementType name="iStartPercent" content="textOnly" dt:type="int"/>
 	<ElementType name="iSoundtrackSpace" content="textOnly" dt:type="int"/>
-	<ElementType name="bFirstSoundtrackFirst" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bFirstSoundtrackFirst" content="textOnly" dt:type="boolean">
+		<description>0 if this is just a utility era to change art style and music, and can be ignored by gameplay mechanics.</description>
+	</ElementType>
+	<ElementType name="bRealEra" content="textOnly" dt:type="boolean"/>
 	<ElementType name="EraInfoSoundtrack" content="textOnly"/>
 	<ElementType name="EraInfoSoundtracks" content="eltOnly">
 		<element type="EraInfoSoundtrack" minOccurs="0" maxOccurs="*"/>
@@ -1233,6 +1241,7 @@
 		<element type="iEventChancePerTurn"/>
 		<element type="iSoundtrackSpace"/>
 		<element type="bFirstSoundtrackFirst"/>
+		<element type="bRealEra" />
 		<element type="EraInfoSoundtracks"/>
 		<element type="CitySoundscapes"/>
 		<element type="AudioUnitVictoryScript"/>

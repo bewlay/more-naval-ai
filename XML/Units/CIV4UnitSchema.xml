@@ -555,6 +555,7 @@
 	<ElementType name="bCanMoveLimitedBorders" content="textOnly" dt:type="boolean"/>
 	<ElementType name="PythonPostCombatLost" content="textOnly"/>
 	<ElementType name="PythonPostCombatWon" content="textOnly"/>
+	<ElementType name="PythonInfoHelp" content="textOnly"/> <!-- UnitPyInfoHelp 10/2019 lfgr -->
 	<ElementType name="DamageType" content="textOnly"/>
 	<ElementType name="DamageTypeCombat" content="eltOnly">
 		<element type="DamageType"/>
@@ -771,6 +772,7 @@
 		<element type="bCanMoveLimitedBorders" minOccurs="0"/>
 		<element type="PythonPostCombatLost" minOccurs="0"/>
 		<element type="PythonPostCombatWon" minOccurs="0"/>
+		<element type="PythonInfoHelp" minOccurs="0"/> <!-- UnitPyInfoHelp 10/2019 lfgr -->
 		<element type="DamageTypeCombats" minOccurs="0"/>
 		<element type="BonusAffinities" minOccurs="0"/>
 		<element type="iOrderPriority" minOccurs="0"/>
@@ -983,6 +985,12 @@
 	<ElementType name="PromotionImmune1" content="textOnly"/>
 	<ElementType name="PromotionImmune2" content="textOnly"/>
 	<ElementType name="PromotionImmune3" content="textOnly"/>
+<!-- XML_LISTS 07/2019 lfgr -->
+	<ElementType name="PromotionImmune" content="textOnly"/> 
+	<ElementType name="PromotionImmunes" content="eltOnly">
+		<element type="PromotionImmune"/>
+	</ElementType>
+<!-- XML_LISTS end -->
 	<ElementType name="PromotionRandomApply" content="textOnly"/>
 	<ElementType name="PromotionSummonPerk" content="textOnly"/>
 	<ElementType name="PromotionPrereqOr3" content="textOnly"/>
@@ -1127,11 +1135,15 @@
 		<element type="iSpellCasterXP" minOccurs="0"/>
 		<element type="iSpellDamageModify" minOccurs="0"/>
 		<element type="iWorkRateModify" minOccurs="0"/>		
+		<element type="iMiscastChance" minOccurs="0"/> <!-- MiscastChance 10/2019 lfgr -->
 		<element type="CaptureUnitCombat" minOccurs="0"/>
 		<element type="PromotionCombatApply" minOccurs="0"/>
 		<element type="PromotionImmune1" minOccurs="0"/>
 		<element type="PromotionImmune2" minOccurs="0"/>
 		<element type="PromotionImmune3" minOccurs="0"/>
+<!-- XML_LISTS 07/2019 lfgr -->
+		<element type="PromotionImmunes" minOccurs="0"/>
+<!-- XML_LISTS end -->
 		<element type="PromotionRandomApply" minOccurs="0"/>
 		<element type="PromotionSummonPerk" minOccurs="0"/>
 		<element type="BonusPrereq" minOccurs="0"/>

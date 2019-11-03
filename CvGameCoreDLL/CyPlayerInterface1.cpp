@@ -410,6 +410,9 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getPersonalityType", &CyPlayer::getPersonalityType, "int ()")
 		.def("setPersonalityType", &CyPlayer::setPersonalityType, "void (int /*LeaderHeadTypes*/ eNewValue)")
 		.def("getCurrentEra", &CyPlayer::getCurrentEra, "int ()")
+	// ERA_FIX 09/2017 lfgr
+		.def("getCurrentRealEra", &CyPlayer::getCurrentRealEra, "int ()")
+	// ERA_FIX end
 		.def("setCurrentEra", &CyPlayer::setCurrentEra, "void (int /*EraTypes*/ iNewValue)")
 		.def("getStateReligion", &CyPlayer::getStateReligion, "int ()")
 		.def("setLastStateReligion", &CyPlayer::setLastStateReligion, "void (int iReligionID) - Sets the player's state religion to iReligionID")

@@ -358,7 +358,8 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("getVisualOwner", &CyUnit::getVisualOwner, "int ()")
 		.def("getCombatOwner", &CyUnit::getCombatOwner, "int (int)")
 		.def("getTeam", &CyUnit::getTeam, "int ()")
-		.def("setBlockading", &CyUnit::setBlockading, "void (int iNewValue)")
+		.def("setBlockading", &CyUnit::setBlockading, "void (bool bNewValue)")
+		.def("isBlockading", &CyUnit::isBlockading, "bool ()") // exposed 07/2019 lfgr
 		.def("getUnitType", &CyUnit::getUnitType, "int ()")
 		.def("getUnitClassType", &CyUnit::getUnitClassType, "int ()")
 		.def("getLeaderUnitType", &CyUnit::getLeaderUnitType, "int ()")
@@ -404,6 +405,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 
 		.def("getArtInfo", &CyUnit::getArtInfo,  python::return_value_policy<python::reference_existing_object>(), "CvArtInfoUnit* (int i, eEra)")
 		.def("getButton", &CyUnit::getButton, "std::string ()")
+		
 
 //FfH Spell System: Added by Kael 07/23/2007
 		.def("attack", &CyUnit::attack, "void (CyPlot* pPlot, bool bQuick)")
@@ -475,5 +477,9 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("setPermanentSummon", &CyUnit::setPermanentSummon, "void (bool bNewValue)")
 //FfH: End Add
 
+// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+		.def("isPromotionImmune", &CyUnit::isPromotionImmune,
+				"void (PromotionTypes ePromotion) - Whether the unit is immune to the given promotion")
+// XML_LISTS end
 		;
 }

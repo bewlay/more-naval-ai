@@ -675,9 +675,8 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 			}
 		}
 
-		//int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
-		int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
-		int iTotalEras = GC.getNumEraInfos();
+		int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentRealEra();
+		int iTotalEras = GC.getNumRealEras();
 		
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      03/08/10                                jdog5000      */
@@ -704,6 +703,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 /************************************************************************************************/
 
         if (!isHuman()
+			// TODO: Eras work now, still commented out?
 			//&& (iCurrentEra <= ((iTotalEras * 2) / 3)) // Tholal AI - commented out for FFH2
 			)
         {
@@ -825,7 +825,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 	{
 		iHappyModifier = 1;
 	}
-	if (iHealthModifier >= 8)
+	if (iHealthModifier >= 8) // LFGR_TODO: iHealthLevel?
 	{
 		iHealthModifier = 0;
 	}
@@ -1777,7 +1777,7 @@ void CvCityAI::AI_chooseProduction()
 	// Tholal AI - Era fix
 	//if( kPlayer.getCurrentEra() == 0 )
 	/*
-	if (GC.getGameINLINE().getCurrentPeriod() <= 1)
+	if (GC.getGameINLINE().getCurrentEra() <= 1)
 	{
 		if( kPlayer.AI_totalUnitAIs(UNITAI_CITY_DEFENSE) <= iNumCities)
 		{
@@ -2029,7 +2029,7 @@ void CvCityAI::AI_chooseProduction()
 		// Minimal attack force, both land and sea
 		int iAttackNeeded = 1;
 
-		if (GC.getGameINLINE().getCurrentPeriod() > 0)
+		if (GC.getGameINLINE().getCurrentEra() > 0)
 		{
 			iAttackNeeded++;
 		}
@@ -2230,9 +2230,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 	// End Tholal AI
 
-	// Tholal AI: Era fix
-	//if (!bDanger && ((kPlayer.getCurrentEra() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (kPlayer.getCurrentEra() > (GC.getNumEraInfos() / 2)))
-	if (!bDanger && ((GC.getGameINLINE().getCurrentPeriod() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (GC.getGameINLINE().getCurrentPeriod() > (GC.getNumEraInfos() / 2)))
+	if (!bDanger && ((GC.getGameINLINE().getCurrentEra() > (GC.getGame().getStartEra() + iProductionRank / 2))) || (GC.getGameINLINE().getCurrentEra() > (GC.getNumRealEras() / 2)))
 	{
 		if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20 - iWarTroubleThreshold, (15 * (kPlayer.AI_isDoStrategy(AI_STRATEGY_PRODUCTION) ? 2 : 1)), ((bLandWar || bAssault) ? 25 : -1)))
 		{
@@ -2414,7 +2412,7 @@ void CvCityAI::AI_chooseProduction()
 
 	if (bGetBetterUnits)
 	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 10, 33))
+		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentEra() > 1) ? 0 : 10, 33))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses BUILDINGFOCUS_EXPERIENCE GetBetterUnits", getName().GetCString());
 			return;
@@ -2452,9 +2450,7 @@ void CvCityAI::AI_chooseProduction()
 		//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (findYieldRateRank(YIELD_PRODUCTION) > 4))
 		if (findYieldRateRank(YIELD_PRODUCTION) < 4)
 		{
-			 // Tholal AI - era fix
-    		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
-			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 7, 33))
+			if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses special BUILDINGFOCUS_EXPERIENCE 1a", getName().GetCString());
 				return;
@@ -2883,7 +2879,7 @@ void CvCityAI::AI_chooseProduction()
 		if (kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_ALTAR1) || kPlayer.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1))
 		{
 //			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, 60))
-			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 5 : 10, 33))
+			if (AI_chooseBuilding(BUILDINGFOCUS_SPECIALIST, (GC.getGameINLINE().getCurrentEra() > 1) ? 5 : 10, 33))
             {
 				if( gCityLogLevel >= 2 )
 				{
@@ -2907,8 +2903,7 @@ void CvCityAI::AI_chooseProduction()
 	//if ((getDomainFreeExperience(DOMAIN_LAND) == 0) && (getYieldRate(YIELD_PRODUCTION) > 4))
 	if (findYieldRateRank(YIELD_PRODUCTION) < 4)
 	{
-		//if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
-    	if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (GC.getGameINLINE().getCurrentPeriod() > 1) ? 0 : 7, 33))
+		if (AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (kPlayer.getCurrentEra() > 1) ? 0 : 7, 33))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S uses special BUILDINGFOCUS_EXPERIENCE 1", getName().GetCString());
 			return;
@@ -3672,7 +3667,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
-	if ((bWarPlan || bAtWar) && !bFinancialTrouble)// && (GC.getGameINLINE().getCurrentPeriod() > 1))
+	if ((bWarPlan || bAtWar) && !bFinancialTrouble)// && (GC.getGameINLINE().getCurrentEra() > 1))
 	{
 		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * (kPlayer.AI_getFundedPercent() / 6)))
 		{
@@ -5443,7 +5438,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 						// A bigger problem is that the value of a golden age can change a lot depending on the state of the civilzation.
 						// The upshot is that the value here is going to be rough...
 						// Tholal AI - had to shoehorn in the '8' since FFH doesnt use Eras normally
-						iGoldenPercent += 3 * kBuilding.getGoldenAgeModifier() * (8 - GC.getGameINLINE().getCurrentPeriod()) / (GC.getNumEraInfos() + 1);
+						iGoldenPercent += 3 * kBuilding.getGoldenAgeModifier() * (GC.getNumRealEras() - GC.getGameINLINE().getCurrentPeriod()) / (GC.getNumRealEras() + 1);
 					}
 					if (iGoldenPercent > 0)
 					{
@@ -7146,16 +7141,13 @@ int CvCityAI::AI_minDefenders()
 {
 	int iDefenders = 1;
 	
-	// Tholal AI - Era fix
-	//int iEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
-	int iEra = GC.getGameINLINE().getCurrentPeriod();
-	// End Tholal AI
+	int iEra = GET_PLAYER(getOwnerINLINE()).getCurrentRealEra();
 
 	if (iEra > 0)
 	{
 		iDefenders++;
 	}
-	if (((iEra - GC.getGame().getStartEra() / 2) >= GC.getNumEraInfos() / 2) && isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
+	if (((iEra - GC.getGame().getStartEra() / 2) >= GC.getNumRealEras() / 2) && isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
 	{
 		iDefenders++;
 	}
@@ -8300,8 +8292,7 @@ int CvCityAI::AI_getImprovementValue(CvPlot* pPlot, ImprovementTypes eImprovemen
 			{
 				if ((aiDiffYields[YIELD_PRODUCTION] > 0) && (aiFinalYields[YIELD_FOOD]+aiFinalYields[YIELD_PRODUCTION] > 3))
 				{
-					//if (iFoodPriority < 100 || GET_PLAYER(getOwnerINLINE()).getCurrentEra() < 2)
-					if (iFoodPriority < 100 || GC.getGameINLINE().getCurrentPeriod() < 2)
+					if (iFoodPriority < 100 || GET_PLAYER(getOwnerINLINE()).getCurrentEra() < 2)
 					{
 						//value booster for mines on hills
 						iValue *= (100 + 25 * aiDiffYields[YIELD_PRODUCTION]);
@@ -12962,9 +12953,7 @@ int CvCityAI::AI_cityThreat(bool bDangerPercent)
 	
 	if (isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
 	{
-		// Tholal AI - Era fix
-		//int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
-		int iCurrentEra = GC.getGameINLINE().getCurrentPeriod();
+		int iCurrentEra = GET_PLAYER(getOwnerINLINE()).getCurrentEra();
 
 		iValue += std::max(0, ((10 * iCurrentEra) / 3) - 6); //there are better ways to do this
 	}
@@ -13194,9 +13183,7 @@ void CvCityAI::AI_updateWorkersNeededHere()
 		}
 	}
 	
-	// Tholal AI - era fix
-	//iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
-	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GC.getGameINLINE().getCurrentPeriod())) / 3;
+	iWorkersNeeded += (std::max(0, iUnimprovedWorkedPlotCount - 1) * (GET_PLAYER(getOwnerINLINE()).getCurrentEra())) / 3;
 	
 	if (GET_PLAYER(getOwnerINLINE()).AI_isFinancialTrouble())
 	{

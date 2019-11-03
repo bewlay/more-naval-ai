@@ -154,13 +154,22 @@
 		<Finnish>When checked, displays the technology each type of great person will research.</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_ADVISORS__WIDETECHSCREEN_TEXT</Tag>
-		<English>Widescreen</English>
-		<French>Ecran Large</French>
-		<German>Breitbild</German>
-		<Italian>Schermo ampio</Italian>
-		<Spanish>Pantalla Ancha</Spanish>
-		<Finnish>Widescreen</Finnish>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__FULLSCREENADVISORS_TEXT</Tag>
+		<English>Full Screen Advisors</English>
+		<French>Full Screen Advisors</French>
+		<German>Full Screen Advisors</German>
+		<Italian>Full Screen Advisors</Italian>
+		<Spanish>Full Screen Advisors</Spanish>
+		<Finnish>Full Screen Advisors</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ADVISORS__FULLSCREENADVISORS_HOVER</Tag>
+		<English>When checked, some (WIP) advisors will be full-screen (requires restart).</English>
+		<French>When checked, some (WIP) advisors will be full-screen (requires restart).</French>
+		<German>When checked, some (WIP) advisors will be full-screen (requires restart).</German>
+		<Italian>When checked, some (WIP) advisors will be full-screen (requires restart).</Italian>
+		<Spanish>When checked, some (WIP) advisors will be full-screen (requires restart).</Spanish>
+		<Finnish>When checked, some (WIP) advisors will be full-screen (requires restart).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__WIDETECHSCREEN_HOVER</Tag>
@@ -242,12 +251,12 @@
 
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGVICTORIESTAB_TEXT</Tag>
-		<English>Victories tab</English>
-		<French>Victories tab</French>
+		<English>BUG Victories tab</English>
+		<French>BUG Victories tab</French>
 		<German>BUG Siegbedingungen</German>
-		<Italian>Scheda Vittorie</Italian>
-		<Spanish>Pesta&#241;a de Victoria</Spanish>
-		<Finnish>Victories tab</Finnish>
+		<Italian>BUG Scheda Vittorie</Italian>
+		<Spanish>BUG Pesta&#241;a de Victoria</Spanish>
+		<Finnish>BUG Victories tab</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGVICTORIESTAB_HOVER</Tag>
@@ -260,12 +269,12 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGMEMBERSTAB_TEXT</Tag>
-		<English>Members tab</English>
-		<French>Members tab</French>
+		<English>BUG Members tab</English>
+		<French>BUG Members tab</French>
 		<German>BUG Mitglieder</German>
-		<Italian>Scheda Membri</Italian>
-		<Spanish>Pesta&#241;a Miembros</Spanish>
-		<Finnish>Members tab</Finnish>
+		<Italian>BUG Scheda Membri</Italian>
+		<Spanish>BUG Pesta&#241;a Miembros</Spanish>
+		<Finnish>BUG Members tab</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGMEMBERSTAB_HOVER</Tag>

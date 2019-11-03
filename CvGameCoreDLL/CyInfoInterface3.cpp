@@ -639,48 +639,90 @@ void CyInfoPythonInterface3()
 		.def("getDefault", &CvGraphicOptionInfo::getDefault, "bool ()")
 		;
 
-//FfH Spell System: Added by Kael 07/23/2007
+//FfH Spell System: Added by Kael 07/23/2007, more added by Denev 2009/10/03 and lfgr 08/2019
     python::class_<CvSpellInfo, python::bases<CvInfoBase> >("CvSpellInfo")
 		.def("getPromotionPrereq1", &CvSpellInfo::getPromotionPrereq1, "string ()")
 		.def("getPromotionPrereq2", &CvSpellInfo::getPromotionPrereq2, "string ()")
-		.def("getPyResult", &CvSpellInfo::getPyResult, "string ()")
-		.def("getPyRequirement", &CvSpellInfo::getPyRequirement, "string ()")
-		.def("isGlobal", &CvSpellInfo::isGlobal, "bool ()")
-		.def("getCivilizationPrereq", &CvSpellInfo::getCivilizationPrereq, "int ()")
-
-		.def("isAllowAutomateTerrain", &CvSpellInfo::isAllowAutomateTerrain, "bool ()")
-		.def("getPyAlternateReq", &CvSpellInfo::getPyAlternateReq, "string ()")	// MNAI
-
-//>>>>BUGFfH: Added by Denev 2009/10/03
-		.def("getDelay", &CvSpellInfo::getDelay, "int ()")
-		.def("isAbility", &CvSpellInfo::isAbility, "bool ()")
+		.def("getUnitPrereq", &CvSpellInfo::getUnitPrereq, "int ()")
 		.def("getUnitCombatPrereq", &CvSpellInfo::getUnitCombatPrereq, "int ()")
 		.def("getUnitClassPrereq", &CvSpellInfo::getUnitClassPrereq, "int ()")
-		.def("getUnitPrereq", &CvSpellInfo::getUnitPrereq, "int ()")
+		.def("getUnitInStackPrereq", &CvSpellInfo::getUnitInStackPrereq, "int ()")
 		.def("getBuildingPrereq", &CvSpellInfo::getBuildingPrereq, "int ()")
 		.def("getBuildingClassOwnedPrereq", &CvSpellInfo::getBuildingClassOwnedPrereq, "int ()")
+		.def("getCivilizationPrereq", &CvSpellInfo::getCivilizationPrereq, "int ()")
+		.def("getCorporationPrereq", &CvSpellInfo::getCorporationPrereq, "int ()")
 		.def("getFeatureOrPrereq1", &CvSpellInfo::getFeatureOrPrereq1, "int ()")
 		.def("getFeatureOrPrereq2", &CvSpellInfo::getFeatureOrPrereq2, "int ()")
 		.def("getImprovementPrereq", &CvSpellInfo::getImprovementPrereq, "int ()")
+		.def("getPromotionInStackPrereq", &CvSpellInfo::getPromotionInStackPrereq, "int ()")
 		.def("getReligionPrereq", &CvSpellInfo::getReligionPrereq, "int ()")
 		.def("getStateReligionPrereq", &CvSpellInfo::getStateReligionPrereq, "int ()")
 		.def("getTechPrereq", &CvSpellInfo::getTechPrereq, "int ()")
+		.def("getRange", &CvSpellInfo::getRange, "int ()")
+		.def("getEffect", &CvSpellInfo::getEffect, "int ()")
+		.def("getRange", &CvSpellInfo::getRange, "int ()")
+		.def("getAIWeight", &CvSpellInfo::getAIWeight, "int ()")
+		.def("getCasterMinLevel", &CvSpellInfo::getCasterMinLevel, "int ()")
+		.def("getAIWeight", &CvSpellInfo::getAIWeight, "int ()")
+		.def("getChangePopulation", &CvSpellInfo::getChangePopulation, "int ()")
 		.def("getCost", &CvSpellInfo::getCost, "int ()")
+		.def("getDamage", &CvSpellInfo::getDamage, "int ()")
+		.def("getDamageType", &CvSpellInfo::getDamageType, "int ()")
+		.def("getDelay", &CvSpellInfo::getDelay, "int ()")
+		.def("getCreateUnitNum", &CvSpellInfo::getCreateUnitNum, "int ()")
+		.def("getAddPromotionType1", &CvSpellInfo::getAddPromotionType1, "int ()")
+		.def("getAddPromotionType2", &CvSpellInfo::getAddPromotionType2, "int ()")
+		.def("getAddPromotionType3", &CvSpellInfo::getAddPromotionType3, "int ()")
+		.def("getDamageLimit", &CvSpellInfo::getDamageLimit, "int ()")
+		.def("getConvertUnitType", &CvSpellInfo::getConvertUnitType, "int ()")
 		.def("getCreateBuildingType", &CvSpellInfo::getCreateBuildingType, "int ()")
 		.def("getCreateFeatureType", &CvSpellInfo::getCreateFeatureType, "int ()")
 		.def("getCreateImprovementType", &CvSpellInfo::getCreateImprovementType, "int ()")
+		.def("getSpreadReligion", &CvSpellInfo::getSpreadReligion, "int ()")
+		.def("getImmobileTurns", &CvSpellInfo::getImmobileTurns, "int ()")
+		.def("getMiscastChance", &CvSpellInfo::getMiscastChance, "int ()")
+		.def("getRemovePromotionType1", &CvSpellInfo::getRemovePromotionType1, "int ()")
+		.def("getRemovePromotionType2", &CvSpellInfo::getRemovePromotionType2, "int ()")
+		.def("getRemovePromotionType3", &CvSpellInfo::getRemovePromotionType3, "int ()")
+		.def("getResistModify", &CvSpellInfo::getResistModify, "int ()")
+		.def("getCreateUnitPromotion", &CvSpellInfo::getCreateUnitPromotion, "int ()")
 		.def("getCreateUnitType", &CvSpellInfo::getCreateUnitType, "int ()")
-		.def("getConvertUnitType", &CvSpellInfo::getConvertUnitType, "int ()")
-//<<<<BUGFfH: End Add
-
-/********************************************************************************/
-/* SpellPyHelp                        11/2013                           lfgr    */
-/********************************************************************************/
-		.def("getPyHelp", &CvSpellInfo::getPyHelp, "string ()")
-/********************************************************************************/
-/* SpellPyHelp                                                          END     */
-/********************************************************************************/
-
+		.def("isAllowAI", &CvSpellInfo::isAllowAI, "bool ()")
+		.def("isAllowAuto", &CvSpellInfo::isAllowAuto, "bool ()")
+		.def("isAllowAutomateTerrain", &CvSpellInfo::isAllowAutomateTerrain, "bool ()")
+		.def("isAdjacentToWaterOnly", &CvSpellInfo::isAdjacentToWaterOnly, "bool ()")
+		.def("isCasterMustBeAlive", &CvSpellInfo::isCasterMustBeAlive, "bool ()")
+		.def("isCasterNoDuration", &CvSpellInfo::isCasterNoDuration, "bool ()")
+		.def("isCausesWar", &CvSpellInfo::isCausesWar, "bool ()")
+		.def("isCopyCastersPromotions", &CvSpellInfo::isCopyCastersPromotions, "bool ()")
+		.def("isGlobal", &CvSpellInfo::isGlobal, "bool ()")
+		.def("isInBordersOnly", &CvSpellInfo::isInBordersOnly, "bool ()")
+		.def("isInCityOnly", &CvSpellInfo::isInCityOnly, "bool ()")
+		.def("isPrereqSlaveTrade", &CvSpellInfo::isPrereqSlaveTrade, "bool ()")
+		.def("isBuffCasterOnly", &CvSpellInfo::isBuffCasterOnly, "bool ()")
+		.def("isAbility", &CvSpellInfo::isAbility, "bool ()")
+		.def("isDispel", &CvSpellInfo::isDispel, "bool ()")
+		.def("isDisplayWhenDisabled", &CvSpellInfo::isDisplayWhenDisabled, "bool ()")
+		.def("isHasCasted", &CvSpellInfo::isHasCasted, "bool ()")
+		.def("isIgnoreHasCasted", &CvSpellInfo::isIgnoreHasCasted, "bool ()")
+		.def("isImmuneTeam", &CvSpellInfo::isImmuneTeam, "bool ()")
+		.def("isImmuneNeutral", &CvSpellInfo::isImmuneNeutral, "bool ()")
+		.def("isImmuneEnemy", &CvSpellInfo::isImmuneEnemy, "bool ()")
+		.def("isImmuneFlying", &CvSpellInfo::isImmuneFlying, "bool ()")
+		.def("isImmuneNotAlive", &CvSpellInfo::isImmuneNotAlive, "bool ()")
+		.def("isPermanentUnitCreate", &CvSpellInfo::isPermanentUnitCreate, "bool ()")
+		.def("isPush", &CvSpellInfo::isPush, "bool ()")
+		.def("isRemoveHasCasted", &CvSpellInfo::isRemoveHasCasted, "bool ()")
+		.def("isResistable", &CvSpellInfo::isResistable, "bool ()")
+		.def("isSacrificeCaster", &CvSpellInfo::isSacrificeCaster, "bool ()")
+		.def("isNoInterruptUnitCycling", &CvSpellInfo::isNoInterruptUnitCycling, "bool ()")
+		.def("isRemoveInvalidFeature", &CvSpellInfo::isRemoveInvalidFeature, "bool ()")	// MNAI
+		.def("getSound", &CvSpellInfo::getSound, "string ()")
+		.def("getPyMiscast", &CvSpellInfo::getPyMiscast, "string ()")
+		.def("getPyResult", &CvSpellInfo::getPyResult, "string ()")
+		.def("getPyRequirement", &CvSpellInfo::getPyRequirement, "string ()")
+		.def("getPyAlternateReq", &CvSpellInfo::getPyAlternateReq, "string ()")	// MNAI
+		.def("getPyHelp", &CvSpellInfo::getPyHelp, "string ()") // SpellPyHelp 11/2013 lfgr
 		;
 //FfH: End Add
 

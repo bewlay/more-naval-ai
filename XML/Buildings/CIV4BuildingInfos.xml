@@ -3735,9 +3735,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -4677,9 +4677,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -8568,9 +8568,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_ORDER_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -10391,9 +10391,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_EMPYREAN_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -15164,9 +15164,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_BUILD_GREATLIBRARY</ConstructSound>
 			<BonusHealthChanges>
@@ -15421,9 +15421,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_BUILD_LIGHTHOUSE</ConstructSound>
 			<BonusHealthChanges>
@@ -15878,9 +15878,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -16123,9 +16123,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -16355,9 +16355,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -16591,9 +16591,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -20462,9 +20462,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -20919,9 +20919,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -21625,9 +21625,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_COUNCIL_OF_ESUS_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -28333,9 +28333,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -28570,9 +28570,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -29019,9 +29019,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -29484,9 +29484,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -30647,9 +30647,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_LEAVES_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -31552,9 +31552,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_ASHEN_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -32019,9 +32019,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_RUNES_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -33392,9 +33392,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>
@@ -34817,9 +34817,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-				<iCommerce>0</iCommerce>
-				<iCommerce>0</iCommerce>
-				<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound>AS2D_OVERLORDS_DINK</ConstructSound>
 			<BonusHealthChanges>
@@ -35837,10 +35837,10 @@
 			</TechTypes>
 			<Bonus>NONE</Bonus>
 			<PrereqBonuses>
-				<BonusType>BONUS_MANA_BODY</BonusType>
-				<BonusType>BONUS_MANA_LIFE</BonusType>
-				<BonusType>BONUS_MANA_ENCHANTMENT</BonusType>
-				<BonusType>BONUS_MANA_NATURE</BonusType>
+				<Bonus>BONUS_MANA_BODY</Bonus>
+				<Bonus>BONUS_MANA_LIFE</Bonus>
+				<Bonus>BONUS_MANA_ENCHANTMENT</Bonus>
+				<Bonus>BONUS_MANA_NATURE</Bonus>
 			</PrereqBonuses>
 			<ProductionTraits>
 			</ProductionTraits>
@@ -36287,10 +36287,10 @@
 			</TechTypes>
 			<Bonus>NONE</Bonus>
 			<PrereqBonuses>
-				<BonusType>BONUS_MANA_LAW</BonusType>
-				<BonusType>BONUS_MANA_SUN</BonusType>
-				<BonusType>BONUS_MANA_SPIRIT</BonusType>
-				<BonusType>BONUS_MANA_MIND</BonusType>
+				<Bonus>BONUS_MANA_LAW</Bonus>
+				<Bonus>BONUS_MANA_SUN</Bonus>
+				<Bonus>BONUS_MANA_SPIRIT</Bonus>
+				<Bonus>BONUS_MANA_MIND</Bonus>
 			</PrereqBonuses>
 			<ProductionTraits>
 			</ProductionTraits>
@@ -36968,10 +36968,10 @@
 			</TechTypes>
 			<Bonus>NONE</Bonus>
 			<PrereqBonuses>
-				<BonusType>BONUS_MANA_CHAOS</BonusType>
-				<BonusType>BONUS_MANA_DEATH</BonusType>
-				<BonusType>BONUS_MANA_ENTROPY</BonusType>
-				<BonusType>BONUS_MANA_SHADOW</BonusType>
+				<Bonus>BONUS_MANA_CHAOS</Bonus>
+				<Bonus>BONUS_MANA_DEATH</Bonus>
+				<Bonus>BONUS_MANA_ENTROPY</Bonus>
+				<Bonus>BONUS_MANA_SHADOW</Bonus>
 			</PrereqBonuses>
 			<ProductionTraits>
 			</ProductionTraits>
@@ -37193,10 +37193,10 @@
 			</TechTypes>
 			<Bonus>NONE</Bonus>
 			<PrereqBonuses>
-				<BonusType>BONUS_MANA_EARTH</BonusType>
-				<BonusType>BONUS_MANA_FIRE</BonusType>
-				<BonusType>BONUS_MANA_AIR</BonusType>
-				<BonusType>BONUS_MANA_WATER</BonusType>
+				<Bonus>BONUS_MANA_EARTH</Bonus>
+				<Bonus>BONUS_MANA_FIRE</Bonus>
+				<Bonus>BONUS_MANA_AIR</Bonus>
+				<Bonus>BONUS_MANA_WATER</Bonus>
 			</PrereqBonuses>
 			<ProductionTraits>
 			</ProductionTraits>
@@ -38884,9 +38884,9 @@
 			<CommerceFlexibles>
 			</CommerceFlexibles>
 			<CommerceChangeOriginalOwners>
-					<iCommerce>0</iCommerce>
-					<iCommerce>0</iCommerce>
-					<iCommerce>1</iCommerce>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>0</bCommerceChangeOriginalOwner>
+				<bCommerceChangeOriginalOwner>1</bCommerceChangeOriginalOwner>
 			</CommerceChangeOriginalOwners>
 			<ConstructSound></ConstructSound>
 			<BonusHealthChanges>

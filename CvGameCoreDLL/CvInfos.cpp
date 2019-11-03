@@ -43,6 +43,10 @@ CvInfoBase::~CvInfoBase()
 
 void CvInfoBase::read(FDataStreamBase* pStream)
 {
+	// lfgr 07/2019: safeguard
+	FAssertMsg( false, "Cached XML not supported" );
+	// lfgr end
+
 	reset();
 
 	pStream->Read(&m_bGraphicalOnly);
@@ -200,6 +204,10 @@ bool CvInfoBase::read(CvXMLLoadUtility* pXML)
 
 	// TYPE
 	pXML->GetChildXmlValByName(m_szType, "Type");
+	
+	// BETTER_ASSERTS 07/2019 lfgr: Store InfoType
+	GC.setCurrentXMLInfoType( m_szType );
+	// BETTER_ASSERTS end
 
 	// DESCRIPTION
 	pXML->GetChildXmlValByName(m_szTextKey, "Description");
@@ -1602,6 +1610,10 @@ bool CvTechInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "Era");
 	m_iEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( GC.getEraInfo( (EraTypes) m_iEra ).isRealEra(), "Technology can't have non-real era" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "FirstFreeUnitClass");
 	m_iFirstFreeUnitClass = pXML->FindInInfoClass(szTextVal);
@@ -1889,9 +1901,6 @@ m_iSpellDamageModify(0),
 m_iWorkRateModify(0),
 m_iCaptureUnitCombat(NO_UNITCOMBAT),
 m_iPromotionCombatApply(NO_PROMOTION),
-m_iPromotionImmune1(NO_PROMOTION),
-m_iPromotionImmune2(NO_PROMOTION),
-m_iPromotionImmune3(NO_PROMOTION),
 m_iPromotionRandomApply(NO_PROMOTION),
 m_iPromotionSummonPerk(NO_PROMOTION),
 m_iBonusPrereq(NO_BONUS),
@@ -1902,10 +1911,12 @@ m_iPromotionNextLevel(NO_PROMOTION),
 m_iUnitArtStyleType(NO_UNIT_ARTSTYLE),
 m_iPromotionCombatType(NO_PROMOTION),
 m_iPromotionCombatMod(0),
+m_iMiscastChance(0), // MiscastPromotions 10/2019 lfgr
 m_piBonusAffinity(NULL),
 m_piDamageTypeCombat(NULL),
 m_piDamageTypeResist(NULL),
 //FfH: End Add
+m_pbPromotionImmune(NULL), // XML_LISTS 07/2019 lfgr
 
 // MNAI - additional promotion tags
 m_bAllowsMoveImpassable(false),
@@ -1944,6 +1955,8 @@ CvPromotionInfo::~CvPromotionInfo()
 	SAFE_DELETE_ARRAY(m_pbTerrainDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbFeatureDoubleMove);
 	SAFE_DELETE_ARRAY(m_pbUnitCombat);
+	
+	SAFE_DELETE_ARRAY(m_pbPromotionImmune); // XML_LISTS 07/2019 lfgr
 }
 
 int CvPromotionInfo::getLayerAnimationPath() const
@@ -2487,21 +2500,6 @@ int CvPromotionInfo::getPromotionCombatApply() const
 	return m_iPromotionCombatApply;
 }
 
-int CvPromotionInfo::getPromotionImmune1() const
-{
-	return m_iPromotionImmune1;
-}
-
-int CvPromotionInfo::getPromotionImmune2() const
-{
-	return m_iPromotionImmune2;
-}
-
-int CvPromotionInfo::getPromotionImmune3() const
-{
-	return m_iPromotionImmune3;
-}
-
 int CvPromotionInfo::getPromotionRandomApply() const
 {
 	return m_iPromotionRandomApply;
@@ -2551,6 +2549,13 @@ int CvPromotionInfo::getPromotionCombatMod() const
 {
 	return m_iPromotionCombatMod;
 }
+
+// MiscastPromotions 10/2019 lfgr
+int CvPromotionInfo::getMiscastChance() const
+{
+	return m_iMiscastChance;
+}
+// MiscastPromotions end
 
 const TCHAR *CvPromotionInfo::getPyPerTurn() const
 {
@@ -2670,6 +2675,13 @@ bool CvPromotionInfo::getUnitCombat(int i) const
 	return m_pbUnitCombat ? m_pbUnitCombat[i] : false;
 }
 
+// XML_LISTS 07/2019 lfgr
+bool CvPromotionInfo::isPromotionImmune( int /*PromotionTypes*/ ePromotion ) {
+	FAssertMsg(ePromotion < GC.getNumPromotionInfos(), "Index out of bounds");
+	FAssertMsg(ePromotion > -1, "Index out of bounds");
+	return m_pbPromotionImmune ? m_pbPromotionImmune[ePromotion] : false;
+}
+
 void CvPromotionInfo::read(FDataStreamBase* stream)
 {
 	CvHotkeyInfo::read(stream);
@@ -2785,9 +2797,6 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iWorkRateModify);
 	stream->Read(&m_iCaptureUnitCombat);
 	stream->Read(&m_iPromotionCombatApply);
-	stream->Read(&m_iPromotionImmune1);
-	stream->Read(&m_iPromotionImmune2);
-	stream->Read(&m_iPromotionImmune3);
 	stream->Read(&m_iPromotionRandomApply);
 	stream->Read(&m_iPromotionSummonPerk);
 	stream->Read(&m_iBonusPrereq);
@@ -2859,6 +2868,8 @@ void CvPromotionInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_pbUnitCombat);
 	m_pbUnitCombat = new bool[GC.getNumUnitCombatInfos()];
 	stream->Read(GC.getNumUnitCombatInfos(), m_pbUnitCombat);
+
+	// XML_LISTS: reading/writing from cache not supported
 }
 
 void CvPromotionInfo::write(FDataStreamBase* stream)
@@ -2976,9 +2987,6 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iWorkRateModify);
 	stream->Write(m_iCaptureUnitCombat);
 	stream->Write(m_iPromotionCombatApply);
-	stream->Write(m_iPromotionImmune1);
-	stream->Write(m_iPromotionImmune2);
-	stream->Write(m_iPromotionImmune3);
 	stream->Write(m_iPromotionRandomApply);
 	stream->Write(m_iPromotionSummonPerk);
 	stream->Write(m_iBonusPrereq);
@@ -3015,6 +3023,8 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumTerrainInfos(), m_pbTerrainDoubleMove);
 	stream->Write(GC.getNumFeatureInfos(), m_pbFeatureDoubleMove);
 	stream->Write(GC.getNumUnitCombatInfos(), m_pbUnitCombat);
+
+	// XML_LISTS: reading/writing from cache not supported
 }
 
 bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
@@ -3157,6 +3167,7 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "UnitArtStyleType");
 	m_aszExtraXMLforPass3.push_back(szTextVal);
 	pXML->GetChildXmlValByName(&m_iPromotionCombatMod, "iPromotionCombatMod");
+	pXML->GetChildXmlValByName(&m_iMiscastChance, "iMiscastChance"); // MiscastPromotions 10/2019 lfgr
 	pXML->SetVariableListTagPair(&m_piBonusAffinity, "BonusAffinities", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piDamageTypeResist, "DamageTypeResists", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
@@ -3185,15 +3196,19 @@ bool CvPromotionInfo::readPass2(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(szTextVal, "PromotionPrereqOr2");
 	m_iPrereqOrPromotion2 = GC.getInfoTypeForString(szTextVal);
 
+	// XML_LISTS 07/2019 lfgr
+	pXML->SetVariableList( &m_pbPromotionImmune, "PromotionImmunes", GC.getNumPromotionInfos() );
+	// XML_LISTS end
+
 //FfH: Modified by Kael 02/24/2008
 	pXML->GetChildXmlValByName(szTextVal, "PromotionCombatApply");
 	m_iPromotionCombatApply = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune1");
-	m_iPromotionImmune1 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune2");
-	m_iPromotionImmune2 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune3");
-	m_iPromotionImmune3 = pXML->FindInInfoClass(szTextVal);
+	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionRandomApply");
 	m_iPromotionRandomApply = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PromotionSummonPerk");
@@ -6014,6 +6029,12 @@ const TCHAR *CvUnitInfo::getPyPostCombatWon() const
 	return m_szPyPostCombatWon;
 }
 
+// lfgr 10/2019: UnitPyInfoHelp
+const TCHAR *CvUnitInfo::getPyInfoHelp() const
+{
+	return m_szPyInfoHelp;
+}
+
 int CvUnitInfo::getTier() const
 {
 	return m_iTier;
@@ -6506,11 +6527,11 @@ void CvUnitInfo::updateArtDefineButton()
 
 const CvArtInfoUnit* CvUnitInfo::getArtInfo(int i, EraTypes eEra, UnitArtStyleTypes eStyle) const
 {
-	if ((eEra > GC.getNumEraInfos() / 2) && !CvString(getLateArtDefineTag(i, eStyle)).empty())
+	if ((eEra > GC.getNumRealEras() / 2) && !CvString(getLateArtDefineTag(i, eStyle)).empty())
 	{
 		return ARTFILEMGR.getUnitArtInfo(getLateArtDefineTag(i, eStyle));
 	}
-	else if ((eEra > GC.getNumEraInfos() / 4) && !CvString(getMiddleArtDefineTag(i, eStyle)).empty())
+	else if ((eEra > GC.getNumRealEras() / 4) && !CvString(getMiddleArtDefineTag(i, eStyle)).empty())
 	{
 		return ARTFILEMGR.getUnitArtInfo(getMiddleArtDefineTag(i, eStyle));
 	}
@@ -7345,14 +7366,14 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAIWeight, "iAIWeight");
 	pXML->GetChildXmlValByName(&m_iProductionCost, "iCost");
 	pXML->GetChildXmlValByName(&m_iHurryCostModifier, "iHurryCostModifier");
-	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost");
+	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost", 100); // lfgr 07/2019: Default 100
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCostIncrease, "iAdvancedStartCostIncrease");
-	pXML->GetChildXmlValByName(&m_iMinAreaSize, "iMinAreaSize");
+	pXML->GetChildXmlValByName(&m_iMinAreaSize, "iMinAreaSize", -1); // lfgr 06/2019: Default -1
 	pXML->GetChildXmlValByName(&m_iMoves, "iMoves");
 	pXML->GetChildXmlValByName(&m_iAirRange, "iAirRange");
 	pXML->GetChildXmlValByName(&m_iAirUnitCap, "iAirUnitCap");
 	pXML->GetChildXmlValByName(&m_iDropRange, "iDropRange");
-	pXML->GetChildXmlValByName(&m_iNukeRange, "iNukeRange");
+	pXML->GetChildXmlValByName(&m_iNukeRange, "iNukeRange", -1); // lfgr 06/2019: Default -1
 	pXML->GetChildXmlValByName(&m_iWorkRate, "iWorkRate");
 	pXML->GetChildXmlValByName(&m_iBaseDiscover, "iBaseDiscover");
 	pXML->GetChildXmlValByName(&m_iDiscoverMultiplier, "iDiscoverMultiplier");
@@ -7367,7 +7388,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_pbFeatureImpassable, "FeatureImpassables", sizeof(GC.getFeatureInfo((FeatureTypes)0)), GC.getNumFeatureInfos(), false);
 
 	pXML->GetChildXmlValByName(&m_iCombat, "iCombat");
-	pXML->GetChildXmlValByName(&m_iCombatLimit, "iCombatLimit");
+	pXML->GetChildXmlValByName(&m_iCombatLimit, "iCombatLimit", 100); // lfgr 06/2019: Default 100
 	pXML->GetChildXmlValByName(&m_iAirCombat, "iAirCombat");
 	pXML->GetChildXmlValByName(&m_iAirCombatLimit, "iAirCombatLimit");
 	pXML->GetChildXmlValByName(&m_iXPValueAttack, "iXPValueAttack");
@@ -7512,6 +7533,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iWithdrawlProbDefensive,"iWithdrawlProbDefensive");
 	pXML->GetChildXmlValByName(m_szPyPostCombatLost, "PythonPostCombatLost");
 	pXML->GetChildXmlValByName(m_szPyPostCombatWon, "PythonPostCombatWon");
+	pXML->GetChildXmlValByName(m_szPyInfoHelp, "PythonInfoHelp");// lfgr 10/2019: UnitPyInfoHelp
 	pXML->SetVariableListTagPair(&m_piDamageTypeCombat, "DamageTypeCombats", sizeof(GC.getDamageTypeInfo((DamageTypes)0)), GC.getNumDamageTypeInfos());
 	pXML->SetVariableListTagPair(&m_piBonusAffinity, "BonusAffinities", sizeof(GC.getBonusInfo((BonusTypes)0)), GC.getNumBonusInfos());
 //FfH: End Add
@@ -10714,7 +10736,7 @@ const CvArtInfoBuilding* CvBuildingInfo::getArtInfo() const
 const CvArtInfoMovie* CvBuildingInfo::getMovieInfo() const
 {
 	const TCHAR* pcTag = getMovieDefineTag();
-	if (NULL != pcTag && 0 != _tcscmp(pcTag, "NONE"))
+	if (NULL != pcTag && 0 != _tcscmp(pcTag, "") && 0 != _tcscmp(pcTag, "NONE"))
 	{
 		return ARTFILEMGR.getMovieArtInfo(pcTag);
 	}
@@ -11392,9 +11414,19 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 
 	pXML->GetChildXmlValByName(szTextVal, "FreeStartEra");
 	m_iFreeStartEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( m_iFreeStartEra == NO_ERA || GC.getEraInfo( (EraTypes) m_iFreeStartEra ).isRealEra(),
+			"Building can't have non-real FreeStartEra" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "MaxStartEra");
 	m_iMaxStartEra = pXML->FindInInfoClass(szTextVal);
+// ERA_FIX 09/2017 lfgr
+// Verify
+	FAssertMsg( m_iMaxStartEra == NO_ERA || GC.getEraInfo( (EraTypes) m_iMaxStartEra ).isRealEra(),
+			"Building can't have non-real MaxStartEra" );
+// ERA_FIX end
 
 	pXML->GetChildXmlValByName(szTextVal, "ObsoleteTech");
 	m_iObsoleteTech = pXML->FindInInfoClass(szTextVal);
@@ -20323,6 +20355,9 @@ m_iAlignmentWorst(NO_ALIGNMENT)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+// ERA_FIX 09/2017 lfgr
+, m_PseudoEra( NO_ERA )
+// ERA_FIX end
 {
 	reset();
 }
@@ -20575,6 +20610,13 @@ TechTypes CvReligionInfo::getReligionTech2() const
 /**	END	                                        												**/
 /*************************************************************************************************/
 
+// ERA_FIX 09/2017 lfgr
+EraTypes CvReligionInfo::getPseudoEra() const
+{
+	return m_PseudoEra;
+}
+// ERA_FIX end
+
 //
 // read from xml
 //
@@ -20673,6 +20715,11 @@ bool CvReligionInfo::read(CvXMLLoadUtility* pXML)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+	
+// ERA_FIX 09/2017 lfgr
+	pXML->GetChildXmlValByName(szTextVal, "PseudoEra");
+	m_PseudoEra = (EraTypes) pXML->FindInInfoClass(szTextVal);
+// ERA_FIX end
 
 	return true;
 }
@@ -23426,6 +23473,9 @@ m_bNoAnimals(false),
 m_bNoBarbUnits(false),
 m_bNoBarbCities(false),
 m_bFirstSoundtrackFirst(false),
+// ERA_FIX 09/2017 lfgr 
+m_bRealEra( false ),
+// ERA_FIX end
 m_paiCitySoundscapeSciptIds(NULL),
 m_paiSoundtracks(NULL)
 {
@@ -23537,6 +23587,13 @@ bool CvEraInfo::isFirstSoundtrackFirst() const
 	return m_bFirstSoundtrackFirst;
 }
 
+// ERA_FIX 09/2017 lfgr 
+bool CvEraInfo::isRealEra() const
+{
+	return m_bRealEra;
+}
+// ERA_FIX end
+
 int CvEraInfo::getNumSoundtracks() const
 {
 	return m_iNumSoundtracks;
@@ -23620,6 +23677,9 @@ bool CvEraInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iEventChancePerTurn, "iEventChancePerTurn");
 	pXML->GetChildXmlValByName(&m_iSoundtrackSpace, "iSoundtrackSpace");
 	pXML->GetChildXmlValByName(&m_bFirstSoundtrackFirst, "bFirstSoundtrackFirst");
+// ERA_FIX 09/2017 lfgr
+	pXML->GetChildXmlValByName( &m_bRealEra, "bRealEra" );
+// ERA_FIX end
 	pXML->GetChildXmlValByName(m_szAudioUnitVictoryScript, "AudioUnitVictoryScript");
 	pXML->GetChildXmlValByName(m_szAudioUnitDefeatScript, "AudioUnitDefeatScript");
 
@@ -26272,7 +26332,14 @@ bool CvEventTriggerInfo::read(CvXMLLoadUtility* pXML)
 						{
 							m_aszText.push_back(szTextVal);
 							pXML->GetNextXmlVal(szTextVal);
-							m_aiTextEra.push_back(pXML->FindInInfoClass(szTextVal));
+						// ERA_FIX 09/2017 lfgr
+						// Verify
+						//	m_aiTextEra.push_back(pXML->FindInInfoClass(szTextVal));
+							int iEra = pXML->FindInInfoClass(szTextVal);
+							FAssertMsg( iEra == NO_ERA || GC.getEraInfo( (EraTypes) iEra ).isRealEra(),
+									"Event can't reference non-real Era" )
+							m_aiTextEra.push_back( iEra );
+						// ERA_FIX end
 
 							gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
 

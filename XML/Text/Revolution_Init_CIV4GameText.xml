@@ -204,15 +204,6 @@
 		<Finnish>[NEWLINE][TAB]Start As Minors</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_MOD_INITIALIZING_DYNAMIC_CIV_NAMES</Tag>
-		<English>[NEWLINE][TAB]Dynamic Civ Names</English>
-		<French>[NEWLINE][TAB]Dynamic Civ Names</French>
-		<German>[NEWLINE][TAB]Dynamische Civ-Namen</German>
-		<Italian>[NEWLINE][TAB]"Dynamic Civ Names"</Italian>
-		<Spanish>[NEWLINE][TAB]Dynamic Civ Names</Spanish>
-		<Finnish>[NEWLINE][TAB]Dynamic Civ Names</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_MOD_INITIALIZING_NONE</Tag>
 		<English>[NEWLINE][TAB]None</English>
 		<French>[NEWLINE][TAB]None</French>

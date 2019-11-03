@@ -15,6 +15,8 @@
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvGlobals.h"
 
+#include "BetterBTSAI.h" // lfgr 10/2019
+
 CyUnit::CyUnit() : m_pUnit(NULL)
 {
 
@@ -33,8 +35,12 @@ void CyUnit::convert(CyUnit* pUnit)
 
 void CyUnit::kill(bool bDelay, int /*PlayerTypes*/ ePlayer, bool bConvert)
 {
-	if (m_pUnit)
+	if (m_pUnit) {
+		logBBAI("    Killing %S%s -- from python (Unit %d - plot: %d, %d)",
+				m_pUnit->getName().GetCString(), bDelay ? " (delayed)" : "" ,
+				m_pUnit->getID(), m_pUnit->getX(), m_pUnit->getY());
 		m_pUnit->kill(bDelay, (PlayerTypes)ePlayer, bConvert);
+	}
 }
 
 void CyUnit::NotifyEntity(int /*MissionTypes*/ eEvent)
@@ -1214,6 +1220,14 @@ int CyUnit::getLevel()
 
 void CyUnit::setLevel(int iNewLevel)
 {
+	// MORE_ASSERTS 07/2019 lfgr: Check that level is positive
+#ifdef FASSERT_ENABLE
+	if( iNewLevel <= 0 ) {
+		throw std::exception( "New level must be positive" ); // for python stacktrace message
+	}
+#endif
+	// MORE_ASSERTS end
+
 	if (m_pUnit)
 		m_pUnit->setLevel(iNewLevel);
 }
@@ -1479,6 +1493,11 @@ void CyUnit::setBlockading(bool bNewValue)
 {
 	if (m_pUnit)
 		m_pUnit->setBlockading(bNewValue);
+}
+
+// exposed 07/2019 lfgr
+bool CyUnit::isBlockading() const {
+	return m_pUnit && m_pUnit->isBlockading();
 }
 
 int CyUnit::getOwner()
@@ -2000,3 +2019,11 @@ void CyUnit::joinGroup(CySelectionGroup* pNewGroup)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
+
+
+// XML_LISTS 07/2019 lfgr: cache CvPromotionInfo::isPromotionImmune
+bool CyUnit::isPromotionImmune( int /*PromotionTypes*/ ePromotion ) const
+{
+	return m_pUnit ? m_pUnit->isPromotionImmune( (PromotionTypes) ePromotion ) : false;
+}
+// XML_LISTS end

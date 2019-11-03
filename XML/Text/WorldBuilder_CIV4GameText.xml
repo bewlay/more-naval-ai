@@ -154,14 +154,6 @@
 		<Spanish>Level</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_WB_OWNER</Tag>
-		<English>Owner</English>
-		<French>Owner</French>
-		<German>Owner</German>
-		<Italian>Owner</Italian>
-		<Spanish>Owner</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_WB_PLOT</Tag>
 		<English>Plot</English>
 		<French>Plot</French>
@@ -810,63 +802,6 @@
 		<Spanish>Matar</Spanish>
 	</TEXT>
 
-	<TEXT>
-		<Tag>TXT_KEY_PEDIA_HIDE_INACTIVE</Tag>
-		<English>Hide Inactive</English>
-		<French>Hide Inactive</French>
-		<German>Hide Inactive</German>
-		<Italian>Hide Inactive</Italian>
-		<Spanish>Hide Inactive</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PEDIA_CATEGORY_ROUTE</Tag>
-		<English>Routes</English>
-		<French>Routes</French>
-		<German>Routes</German>
-		<Italian>Routes</Italian>
-		<Spanish>Routes</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PEDIA_DOMAIN</Tag>
-		<English>Domain</English>
-		<French>Domain</French>
-		<German>Domain</German>
-		<Italian>Domain</Italian>
-		<Spanish>Domain</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_PEDIA_NATIONAL_STUFF</Tag>
-		<English>National %s1</English>
-		<French>National %s1</French>
-		<German>National %s1</German>
-		<Italian>National %s1</Italian>
-		<Spanish>National %s1</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_PEDIA_TEAM_STUFF</Tag>
-		<English>Team %s1</English>
-		<French>Team %s1</French>
-		<German>Team %s1</German>
-		<Italian>Team %s1</Italian>
-		<Spanish>Team %s1</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_PEDIA_WORLD_STUFF</Tag>
-		<English>World %s1</English>
-		<French>World %s1</French>
-		<German>World %s1</German>
-		<Italian>World %s1</Italian>
-		<Spanish>World %s1</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_PEDIA_NON_COMBAT</Tag>
-		<English>Non-Combat Units</English>
-		<French>Unit&#233;s sans type de combat</French>
-		<German>Zivile Einheiten</German>
-		<Italian>Unit?non da combattimento</Italian>
-		<Spanish>Unidades sin tipo de combate</Spanish>
-	</TEXT>
-
 <!-- FFH2 Specific-->
 	<TEXT>
 		<Tag>TXT_KEY_WB_STRENGTH_DEFENSE</Tag>
@@ -1150,14 +1085,6 @@
 		<Spanish>Is Permanent Summon</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_WB_NUKES_EXPLODED</Tag>
-		<English>Nukes Exploded</English>
-		<French>Nukes Exploded</French>
-		<German>Nukes Exploded</German>
-		<Italian>Nukes Exploded</Italian>
-		<Spanish>Nukes Exploded</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_NO_RELIGION</Tag>
 		<English>No Religion</English>
 		<French>No Religion</French>
@@ -1405,4 +1332,29 @@
 		<Italian>Planning War</Italian>
 		<Spanish>Planning War</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESOLUTIONS</Tag>
+		<English>Resolutions</English>
+		<French>Resolutions</French>
+		<German>Resolutions</German>
+		<Italian>Resolutions</Italian>
+		<Spanish>Resolutions</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_IGNORE_HIDE</Tag>
+		<English>Ignore Hide</English>
+		<French>Ignore Hide</French>
+		<German>Ignore Hide</German>
+		<Italian>Ignore Hide</Italian>
+		<Spanish>Ignore Hide</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WB_BLOCKADING</Tag>
+		<English>Blockading</English>
+		<French>Blockading</French>
+		<German>Blockading</German>
+		<Italian>Blockading</Italian>
+		<Spanish>Blockading</Spanish>
+	</TEXT>
+
 </Civ4GameText>

@@ -6,7 +6,7 @@
 #   sevotastic.blogspot.com
 #   sevotastic@yahoo.com
 #
-# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose
+# additional work by Gaurav, Progor, Ket, Vovan, Fitchn, LunarMongoose, lfgr
 # see ReadMe for details
 #
 
@@ -26,6 +26,8 @@ class SevoPediaSpecialist:
 		self.iSpecialist = -1
 		self.top = main
 
+
+	def initPositions( self ) :
 		self.X_MAIN_PANEL = self.top.X_PEDIA_PAGE
 		self.Y_MAIN_PANEL = self.top.Y_PEDIA_PAGE
 		self.W_MAIN_PANEL = 200
@@ -50,6 +52,8 @@ class SevoPediaSpecialist:
 
 
 	def interfaceScreen(self, iSpecialist):
+		self.initPositions()
+		
 		self.iSpecialist = iSpecialist
 		screen = self.top.getScreen()
 

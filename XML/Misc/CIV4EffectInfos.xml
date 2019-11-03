@@ -1056,14 +1056,6 @@
 			<bIsProjectile>0</bIsProjectile>
 		</EffectInfo>
 		<EffectInfo>
-			<Type>EFFECT_OMEN_HORSEMAN</Type>
-			<Description>Omen Horsemen attack</Description>
-			<fScale>1.0</fScale>
-			<fUpdateRate>1.0</fUpdateRate>
-			<Path>Art/Effects/Omen_Horseman/OMEN_HORSEMAN_EFFECT.nif</Path>
-			<bIsProjectile>0</bIsProjectile>
-		</EffectInfo>
-		<EffectInfo>
 			<Type>EFFECT_SIEGE_TOWER_DIE</Type>
 			<Description>Dust as the Siege tower dies</Description>
 			<fScale>2</fScale>

@@ -619,12 +619,12 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 						CvEventTriggerInfo& kTrigger = GC.getEventTriggerInfo(pEvent->m_eTrigger);
 						if( kTrigger.isGlobal() )
 						{
-							setTriggerFired( *pEvent, false, false );
+							setTriggerFired( *pEvent, false, false, false );
 							break;
 						}
 						else if( kTrigger.isTeam() && GET_PLAYER((PlayerTypes)iJ).getTeam() == getTeam() )
 						{
-							setTriggerFired( *pEvent, false, false );
+							setTriggerFired( *pEvent, false, false, false );
 							break;
 						}
 					}
@@ -1014,6 +1014,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_ePersonalityType = NO_LEADER;
 	}
 	m_eCurrentEra = ((EraTypes)0);  //??? Is this repeated data???
+// ERA_FIX 09/2017 lfgr
+	m_eCurrentRealEra = (EraTypes) 0;
+// ERA_FIX end
 	m_eLastStateReligion = NO_RELIGION;
 	m_eParent = NO_PLAYER;
 /************************************************************************************************/
@@ -1647,7 +1650,7 @@ void CvPlayer::changeCiv( CivilizationTypes eNewCiv )
 		GC.getInitCore().setArtStyle( getID(), (ArtStyleTypes)GC.getCivilizationInfo(eNewCiv).getArtStyleType() );
 
 		// Forces update of units flags
-		EraTypes eEra = getCurrentEra();
+		EraTypes eEra = getCurrentRealEra();
 		bool bAuto = m_bDisableHuman;
 		m_bDisableHuman = true;
 		//setCurrentEra((EraTypes)((eEra + 1)%GC.getNumEraInfos()));
@@ -2561,6 +2564,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		{
 			if (pLoopUnit->getDomainType() == DOMAIN_IMMOBILE)
 			{
+				logBBAI("    Killing %S -- immobile in acquired city (Unit %d - plot: %d, %d)",
+						pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 				pLoopUnit->kill(false, getID());
 			}
 		}
@@ -3525,7 +3530,9 @@ void CvPlayer::disbandUnit(bool bAnnounce)
 		gDLL->getInterfaceIFace()->addMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNITDISBANDED", MESSAGE_TYPE_MINOR_EVENT, pBestUnit->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pBestUnit->getX_INLINE(), pBestUnit->getY_INLINE(), true, true);
 
 		FAssert(!(pBestUnit->isGoldenAge()));
-
+		
+		logBBAI("    Killing %S -- disbanded, no money (Unit %d - plot: %d, %d)",
+				pBestUnit->getName().GetCString(), pBestUnit->getID(), pBestUnit->getX(), pBestUnit->getY());
 		pBestUnit->kill(false);
 	}
 }
@@ -3558,6 +3565,8 @@ void CvPlayer::killUnits()
         }
         if (pLoopUnit->canScrap())
         {
+			logBBAI("    Killing %S -- scrappable unit with eliminated owner (Unit %d - plot: %d, %d)",
+					pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
             pLoopUnit->kill(false);
         }
         else
@@ -3565,6 +3574,8 @@ void CvPlayer::killUnits()
 			// HARDCODE - kill treasure chests on civ elimination
 			if (pLoopUnit->getUnitClassType() == GC.getInfoTypeForString("EQUIPMENTCLASS_TREASURE"))
 			{
+				logBBAI("    Killing %S -- treasure chest with eliminated owner (Unit %d - plot: %d, %d)",
+						pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 				pLoopUnit->kill(false);
 			}
 			else
@@ -4363,7 +4374,7 @@ const TCHAR* CvPlayer::getUnitButton(UnitTypes eUnit) const
 //>>>>Unofficial Bug Fix: Modified by Denev 2009/09/28
 //*** Assimilated city produces a unit with original civilization artstyle.
 //	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), (UnitArtStyleTypes) GC.getCivilizationInfo(getCivilizationType()).getUnitArtStyleType())->getButton();
-	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), getUnitArtStyleType())->getButton();
+	return GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentRealEra(), getUnitArtStyleType())->getButton();
 //<<<<Unofficial Bug Fix: End Modify
 }
 
@@ -4628,6 +4639,8 @@ void CvPlayer::doTurnUnits()
             {
                 if (pLoopUnit->getSpecialUnitType() == iSpell)
                 {
+					logBBAI("    Killing %S -- SPECIALUNIT_SPELL killed each turn (Unit %d - plot: %d, %d)",
+							pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
                     pLoopUnit->kill(false);
                 }
             }
@@ -5427,7 +5440,8 @@ int CvPlayer::countOwnedBonuses(BonusTypes eBonus, bool bCheckBlockingFeatures) 
 	int iI;
 	//int iLoop;
 
-    bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentEra() < 3);
+	// lfgr_todo: (getCurrentRealEra() < 3) always true in FfH/MNAI. What is this even supposed to do (same in vanilla bts)?
+    bool bAdvancedStart = (getAdvancedStartPoints() >= 0) && (getCurrentRealEra() < 3);
 	bool bCanWork;
 
 	iCount = 0;
@@ -6597,7 +6611,13 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 /*************************************************************************************************/
 /** Advanced Diplomacy       START															     */
 /*************************************************************************************************/
-						if (GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)))
+					// lfgr 06/2019: Cannot trade war against somebody with whom we are already at war
+					//	if (GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)))
+						// LFGR_TODO: canDeclareWarWithoutSenate does nothing at the moment. Figure that out,
+						//   see tholal's note in that function
+						if( !atWar(getTeam(), ((TeamTypes)(item.m_iData))) &&
+							GET_TEAM(getTeam()).canDeclareWarWithoutSenate((TeamTypes)(item.m_iData)) )
+					// lfgr END
 						{
 /*************************************************************************************************/
 /** Advanced Diplomacy       END															     */
@@ -7074,13 +7094,17 @@ int CvPlayer::getNumAvailableBonuses(BonusTypes eBonus) const
 {
 
 //FfH: Added by Kael 11/14/2007
-    if (isFullMember((VoteSourceTypes)0))
-    {
-        if (GC.getGameINLINE().isNoBonus(eBonus))
-        {
-            return 0;
-        }
-    }
+// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
+	for( int eVoteSource = 0; eVoteSource < GC.getNumVoteSourceInfos(); eVoteSource++ )
+	{
+		if( isFullMember( (VoteSourceTypes) eVoteSource ) )
+		{
+			if( GC.getGameINLINE().isNoBonus( (VoteSourceTypes) eVoteSource, eBonus ) )
+			{
+				return 0;
+			}
+		}
+	}
 //FfH: End Add
 
 	CvPlotGroup* pPlotGroup;
@@ -8179,6 +8203,7 @@ void CvPlayer::found(int iX, int iY)
 }
 
 
+// bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
 bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
 {
 	PROFILE_FUNC();
@@ -8791,7 +8816,7 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -8856,7 +8881,7 @@ int CvPlayer::getProductionNeeded(BuildingTypes eBuilding) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -8903,7 +8928,7 @@ int CvPlayer::getProductionNeeded(ProjectTypes eProject) const
 			iProductionNeeded /= 100;
 		}
 
-		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iProductionNeeded *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iProductionNeeded /= 100;
 	}
 
@@ -9202,7 +9227,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 	{
 		if (!(GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBuildInfo(eBuild).getTechPrereq())))
 		{
-			if ((!bTestEra && !bTestVisible) || ((getCurrentEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild).getTechPrereq()).getEra()))
+			if ((!bTestEra && !bTestVisible) || ((getCurrentRealEra() + 1) < GC.getTechInfo((TechTypes) GC.getBuildInfo(eBuild).getTechPrereq()).getEra()))
 			{
 				return false;
 			}
@@ -9524,7 +9549,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 		iSupport *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitCostPercent();
 		iSupport /= 100;
 
-		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iSupport *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iSupport /= 100;
 	}
 
@@ -9595,7 +9620,7 @@ int CvPlayer::calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const
 		iSupply *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIUnitSupplyPercent();
 		iSupply /= 100;
 
-		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iSupply *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iSupply /= 100;
 	}
 
@@ -9648,7 +9673,7 @@ int CvPlayer::calculateInflationRate() const
 	if (!isHuman() && !isBarbarian())
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
-		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iAIModifier *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iAIModifier /= 100;
 
 		iModifier += iAIModifier - 100;
@@ -10241,20 +10266,19 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 /************************************************************************************************/	
 
 	CvCivicInfo &kCivic = GC.getCivicInfo(eCivic);
-	
-//FfH: Added by Kael 11/23/2007
-    if (isFullMember((VoteSourceTypes)0))
-    {
-//FfH: End Add
 
-        if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)(kCivic.getCivicOptionType())))
-        {
-            return GC.getGameINLINE().isForceCivic(eCivic);
-        }
-
-//FfH: Added by Kael 11/23/2007
-    }
-//FfH: End Add
+// lfgr 06/2019 / Kael 11/2007: ForceCivic applies only to the respective VoteSource
+	for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
+	{
+		VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
+		if( isFullMember( eVoteSource )
+				&& GC.getGameINLINE().isForceCivicOption(
+						eVoteSource, (CivicOptionTypes) kCivic.getCivicOptionType() ) )
+		{
+			return GC.getGameINLINE().isForceCivic( eVoteSource, eCivic );
+		}
+	}
+// lfgr end
 
 	if(GC.getUSE_CAN_DO_CIVIC_CALLBACK())
 	{
@@ -10359,26 +10383,30 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 	}
 	else
 	{
-		for (iI = 0; iI < GC.getNumCivicOptionInfos(); ++iI)
+	// lfgr 06/2019 / Kael 12/2007: ForceCivic applies only to the respective VoteSource LFGR_TODO: Optimize by putting isFullMember first?
+		// Check that we honor forced civics
+		for( int i = 0; i < GC.getNumVoteSourceInfos(); i++ )
 		{
-
-//FfH: Added by Kael 12/30/2007
-            if (isFullMember((VoteSourceTypes)0))
-            {
-//FfH: End Add
-
-			if (GC.getGameINLINE().isForceCivicOption((CivicOptionTypes)iI))
+			VoteSourceTypes eVoteSource = (VoteSourceTypes) i;
+			if( isFullMember( eVoteSource )  )
 			{
-				if (!GC.getGameINLINE().isForceCivic(paeNewCivics[iI]))
+				for( int iCivicOption = 0; iCivicOption < GC.getNumCivicOptionInfos(); ++iCivicOption )
 				{
-					return false;
+					if( GC.getGameINLINE().isForceCivicOption(
+								eVoteSource, (CivicOptionTypes) iCivicOption )
+						&& ! GC.getGameINLINE().isForceCivic( eVoteSource, paeNewCivics[iCivicOption] ) )
+					{
+						// CivicOption is forced to another civic than the one we want to switch to
+						return false;
+					}
 				}
 			}
+		}
+	// lfgr end
 
-//FfH: Added by Kael 12/30/2007
-            }
-//FfH: End Add
-
+		// Check that we actually want to change something
+		for (iI = 0; iI < GC.getNumCivicOptionInfos(); ++iI)
+		{
 			if (getCivics((CivicOptionTypes)iI) != paeNewCivics[iI])
 			{
 				return true;
@@ -11086,7 +11114,15 @@ void CvPlayer::killGoldenAgeUnits(CvUnit* pUnitAlive)
 		if (pBestUnit != NULL)
 		{
 			pabUnitUsed[pBestUnit->getUnitType()] = true;
-
+			
+			// lfgr 07/2019: transport units unload cargo when they start a golden age
+			if (pBestUnit->getCargo() > 0)
+			{
+				pBestUnit->unloadAll();
+			}
+			
+			logBBAI("    Killing %S (delayed) -- golden age (Unit %d - plot: %d, %d)",
+					pBestUnit->getName().GetCString(), pBestUnit->getID(), pBestUnit->getX(), pBestUnit->getY());
 			pBestUnit->kill(true);
 
 			//play animations
@@ -12613,7 +12649,7 @@ int CvPlayer::getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger)
 		iWarWearinessPercentAnger *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIWarWearinessPercent();
 		iWarWearinessPercentAnger /= 100;
 
-		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentPeriod()) + 100));
+		iWarWearinessPercentAnger *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * GC.getGameINLINE().getCurrentEra()) + 100));
 		iWarWearinessPercentAnger /= 100;
 	}
 
@@ -14233,6 +14269,14 @@ EraTypes CvPlayer::getCurrentEra() const
 }
 
 
+// ERA_FIX 09/2017 lfgr
+EraTypes CvPlayer::getCurrentRealEra() const
+{
+	return m_eCurrentRealEra;
+}
+// ERA_FIX end
+
+
 
 void CvPlayer::setCurrentEra(EraTypes eNewValue)
 {
@@ -14287,7 +14331,7 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
-		if (isHuman() && (getCurrentEra() != GC.getGameINLINE().getStartEra()) && !GC.getGameINLINE().isNetworkMultiPlayer())
+		if (isHuman() && (getCurrentRealEra() != GC.getGameINLINE().getStartEra()) && !GC.getGameINLINE().isNetworkMultiPlayer())
 		{
 			if (GC.getGameINLINE().isFinalInitialized() && !(gDLL->GetWorldBuilderMode()))
 			{
@@ -14302,6 +14346,36 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		}
 	}
 }
+
+// ERA_FIX 09/2017 lfgr
+void CvPlayer::setCurrentRealEra( EraTypes eNewValue )
+{
+	FAssertMsg( eNewValue == NO_ERA || GC.getEraInfo( eNewValue ).isRealEra(),
+		"Can't set current real era to a non-real era! These have to declared as \
+		PseudoEra of a religion to work properly." );
+
+	m_eCurrentRealEra = eNewValue;
+	updateCurrentEra();
+}
+
+void CvPlayer::updateCurrentEra()
+{
+	EraTypes eNewEra = NO_ERA;
+	
+	// Pseudo era takes precendence
+	if( getStateReligion() != NO_RELIGION )
+	{
+		// Note: eNewEra remains NO_ERA if religion has no pseudo era.
+		eNewEra = GC.getReligionInfo( getStateReligion() ).getPseudoEra();
+	}
+
+	// If no pseudo era was found, use the real era
+	if( eNewEra == NO_ERA )
+		eNewEra = getCurrentRealEra();
+
+	setCurrentEra( eNewEra );
+}
+// ERA_FIX end
 
 
 ReligionTypes CvPlayer::getLastStateReligion() const
@@ -14350,6 +14424,11 @@ void CvPlayer::setLastStateReligion(ReligionTypes eNewValue)
 		GC.getGameINLINE().AI_makeAssignWorkDirty();
 
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+
+	// ERA_FIX 09/2017 lfgr
+	// In case the previous or new religion triggers an era change
+		updateCurrentEra();
+	// ERA_FIX end
 
 		if (GC.getGameINLINE().isFinalInitialized())
 		{
@@ -15358,7 +15437,8 @@ bool CvPlayer::isUnitClassMaxedOut(UnitClassTypes eIndex, int iExtra) const
 		return false;
 	}
 
-	FAssertMsg(getUnitClassCount(eIndex) <= GC.getUnitClassInfo(eIndex).getMaxPlayerInstances(), "getUnitClassCount is expected to be less than maximum bound of MaxPlayerInstances (invalid index)");
+	// lfgr fix: In FfH, MaxPlayerInstances aren't that strict, but only apply when trying to build new units.
+	//FAssertMsg(getUnitClassCount(eIndex) <= GC.getUnitClassInfo(eIndex).getMaxPlayerInstances(), "getUnitClassCount is expected to be less than maximum bound of MaxPlayerInstances (invalid index)");
 
 	return ((getUnitClassCount(eIndex) + iExtra) >= GC.getUnitClassInfo(eIndex).getMaxPlayerInstances());
 }
@@ -15874,7 +15954,7 @@ int CvPlayer::getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy) const
 		iUpkeep *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAICivicUpkeepPercent();
 		iUpkeep /= 100;
 
-		iUpkeep *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iUpkeep *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iUpkeep /= 100;
 	}
 
@@ -18019,6 +18099,8 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 			{
 				FAssert(pUnit->plot() == pPlot);
 				szBuffer = gDLL->getText("TXT_KEY_ESPIONAGE_TARGET_SOMETHING_DESTROYED", pUnit->getNameKey()).GetCString();
+				logBBAI("    Killing %S -- destroyed unit by espionage (Unit %d - plot: %d, %d)",
+						pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 				pUnit->kill(false, getID());
 
 				bSomethingHappened = true;
@@ -18047,6 +18129,8 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 				UnitTypes eUnitType = pUnit->getUnitType();
 				int iX = pUnit->getX_INLINE();
 				int iY = pUnit->getY_INLINE();
+				logBBAI("    Killing %S -- Bought unit by espionage (Unit %d - plot: %d, %d)",
+						pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 				pUnit->kill(false, getID());
 				initUnit(eUnitType, iX, iY, NO_UNITAI);
 
@@ -18511,6 +18595,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 						if (pLoopUnit->getUnitType() == eUnit)
 						{
+							logBBAI("    Killing %S -- Removed advanced start unit (Unit %d - plot: %d, %d)",
+									pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
 							pLoopUnit->kill(false);
 							changeAdvancedStartPoints(iCost);
 							return;
@@ -18526,6 +18612,8 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 					iCost = getAdvancedStartUnitCost(pUnit->getUnitType(), false);
 					FAssertMsg(iCost != -1, "If this is -1 then that means it's going to try to delete a unit which shouldn't exist");
+					logBBAI("    Killing %S -- Removed advanced start unit (Unit %d - plot: %d, %d)",
+							pUnit->getName().GetCString(), pUnit->getID(), pUnit->getX(), pUnit->getY());
 					pUnit->kill(false);
 					changeAdvancedStartPoints(iCost);
 				}
@@ -20413,6 +20501,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	pStream->Read((int*)&m_eID);
 	pStream->Read((int*)&m_ePersonalityType);
 	pStream->Read((int*)&m_eCurrentEra);
+// ERA_FIX 09/2017 lfgr
+	pStream->Read((int*)&m_eCurrentRealEra);
+// ERA_FIX end
 	pStream->Read((int*)&m_eLastStateReligion);
 	pStream->Read((int*)&m_eParent);
 	updateTeamType(); //m_eTeamType not saved
@@ -21046,6 +21137,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(m_eID);
 	pStream->Write(m_ePersonalityType);
 	pStream->Write(m_eCurrentEra);
+// ERA_FIX 09/2017 lfgr
+	pStream->Write(m_eCurrentRealEra);
+// ERA_FIX end
 	pStream->Write(m_eLastStateReligion);
 	pStream->Write(m_eParent);
 	//m_eTeamType not saved
@@ -21592,7 +21686,7 @@ void CvPlayer::resetTriggerFired(EventTriggerTypes eTrigger)
 	}
 }
 
-void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers, bool bAnnounce)
+void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers, bool bAnnounce, bool bDoEffects)
 {
 	FAssert(kTriggeredData.m_eTrigger >= 0 && kTriggeredData.m_eTrigger < GC.getNumEventTriggerInfos());
 
@@ -21614,7 +21708,7 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 //						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
                         if (GET_PLAYER((PlayerTypes)i).isAlive())
                         {
-                            GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
+                            GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false, bDoEffects);
                         }
 
 					}
@@ -21626,7 +21720,7 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 				{
 					if (i != getID() && getTeam() == GET_PLAYER((PlayerTypes)i).getTeam())
 					{
-						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false);
+						GET_PLAYER((PlayerTypes)i).setTriggerFired(kTriggeredData, false, false, bDoEffects);
 					}
 				}
 			}
@@ -21634,28 +21728,23 @@ void CvPlayer::setTriggerFired(const EventTriggeredData& kTriggeredData, bool bO
 		//}
 
 	//FfH: Modified by Kael 09/25/2008
-	//	if (!isEmpty(kTrigger.getPythonCallback()))
-	//	{
-	//		long lResult;
-	//		CyArgsList argsList;
-	//		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-	//		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-	//	}
-		if (isAlive())
-		{
-			if (!CvString(kTrigger.getPythonCallback()).empty())
-			{
-				long lResult;
-
-				CyArgsList argsList;
-				argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
-				argsList.add(getID());	// Player ID
-				gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
-			}
-		}
+		// lfgr 06/2019: Moved callback
 		GC.getGameINLINE().setEventTriggered((EventTriggerTypes)kTriggeredData.m_eTrigger, true);
 	//FfH: End Modify
 	}
+	
+	// lfgr 06/2019: Apply python effects if and only if bDoEffects
+	if( bDoEffects && isAlive() && !CvString(kTrigger.getPythonCallback()).empty())
+	{
+		long lResult;
+
+		CyArgsList argsList;
+		argsList.add(gDLL->getPythonIFace()->makePythonObject(&kTriggeredData));
+		argsList.add(getID());	// Player ID
+		gDLL->getPythonIFace()->callFunction(PYRandomEventModule, kTrigger.getPythonCallback(), argsList.makeFunctionArgs(), &lResult);
+	}
+	// lfgr END
+
 	if (bAnnounce)
 	{
 		CvPlot* pPlot = GC.getMapINLINE().plot(kTriggeredData.m_iPlotX, kTriggeredData.m_iPlotY);
@@ -22171,7 +22260,7 @@ EventTriggeredData* CvPlayer::initTriggeredData(EventTriggerTypes eEventTrigger,
 	std::vector<CvWString> aszTexts;
 	for (int i = 0; i < kTrigger.getNumTexts(); ++i)
 	{
-		if (NO_ERA == kTrigger.getTextEra(i) || kTrigger.getTextEra(i) == getCurrentEra())
+		if (NO_ERA == kTrigger.getTextEra(i) || kTrigger.getTextEra(i) == getCurrentRealEra())
 		{
 			aszTexts.push_back(kTrigger.getText(i));
 		}
@@ -23566,7 +23655,7 @@ void CvPlayer::doEvents()
 
 //FfH: Modifed by Kael 09/26/2007
 //		if (GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("EVENT_PROBABILITY_ROLL_SIDES"), "Global event check") >= GC.getEraInfo(getCurrentEra()).getEventChancePerTurn())
-        int iChance = GC.getEraInfo(getCurrentEra()).getEventChancePerTurn();
+        int iChance = GC.getEraInfo(getCurrentRealEra()).getEventChancePerTurn();
         if (GC.getGameINLINE().isOption(GAMEOPTION_DOUBLE_EVENTS))
         {
             iChance *= 2;
@@ -26430,7 +26519,7 @@ int CvPlayer::getGrowthThreshold(int iPopulation) const
 		iThreshold *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIGrowthPercent();
 		iThreshold /= 100;
 
-		iThreshold *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentEra()) + 100));
+		iThreshold *= std::max(0, ((GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIPerEraModifier() * getCurrentRealEra()) + 100));
 		iThreshold /= 100;
 	}
 
@@ -27845,7 +27934,7 @@ const CvArtInfoUnit* CvPlayer::getUnitArtInfo(UnitTypes eUnit, int iMeshGroup) c
 		eCivilization = (CivilizationTypes) GC.getDefineINT("BARBARIAN_CIVILIZATION");
 	}
 	UnitArtStyleTypes eStyle = (UnitArtStyleTypes) GC.getCivilizationInfo(eCivilization).getUnitArtStyleType();
-	EraTypes eEra = getCurrentEra();
+	EraTypes eEra = getCurrentRealEra();
 	if (eEra == NO_ERA)
 	{
 		eEra = (EraTypes) 0;

@@ -623,24 +623,6 @@
 		<Finnish>Max Score Lines displayed on Scoreboard (-1 for Maximum)</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__REBELTYPES_TEXT</Tag>
-		<English>Rebel Types</English>
-		<French>Rebel Types</French>
-		<German>Rebel Types</German>
-		<Italian>Rebel Types</Italian>
-		<Spanish>Rebel Types</Spanish>
-		<Finnish>Rebel Types</Finnish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__REBELTYPES_HOVER</Tag>
-		<English>Use RebelTypes file when setting up rebelions</English>
-		<French>Use RebelTypes file when setting up rebelions</French>
-		<German>Use RebelTypes file when setting up rebelions</German>
-		<Italian>Use RebelTypes file when setting up rebelions</Italian>
-		<Spanish>Use RebelTypes file when setting up rebelions</Spanish>
-		<Finnish>Use RebelTypes file when setting up rebelions</Finnish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__ARTSTYLETYPES_TEXT</Tag>
 		<English>ArtStyle Types</English>
 		<French>ArtStyle Types</French>
@@ -1798,6 +1780,33 @@
 		<Finnish>Enables Debugging information and logging for Dynamic Civ Names</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__DNCLEVEL_TEXT</Tag>
+		<English>Dynamic Names Level</English>
+		<French>Dynamic Names Level</French>
+		<German>Dynamic Names Level</German>
+		<Italian>Dynamic Names Level</Italian>
+		<Spanish>Dynamic Names Level</Spanish>
+		<Finnish>Dynamic Names Level</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__DNCLEVEL_HOVER</Tag>
+		<English>Level of creativity the Dynamic Civ Names component employs to generate names</English>
+		<French>Level of creativity the Dynamic Civ Names component employs to generate names</French>
+		<German>Level of creativity the Dynamic Civ Names component employs to generate names</German>
+		<Italian>Level of creativity the Dynamic Civ Names component employs to generate names</Italian>
+		<Spanish>Level of creativity the Dynamic Civ Names component employs to generate names</Spanish>
+		<Finnish>Level of creativity the Dynamic Civ Names component employs to generate names</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__DNCLEVEL_LIST</Tag>
+		<English>Off|Minimal|Medium|High</English>
+		<French>Off|Minimal|Medium|High</French>
+		<German>Off|Minimal|Medium|High</German>
+		<Italian>Off|Minimal|Medium|High</Italian>
+		<Spanish>Off|Minimal|Medium|High</Spanish>
+		<Finnish>Off|Minimal|Medium|High</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__TEAMNAMING_TEXT</Tag>
 		<English>Team Naming</English>
 		<French>Team Naming</French>
@@ -1832,5 +1841,23 @@
 		<Italian>Dynamic Civ Names are not applied to human players</Italian>
 		<Spanish>Dynamic Civ Names are not applied to human players</Spanish>
 		<Finnish>Dynamic Civ Names are not applied to human players</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__EMPIREDEFAULTNAME_TEXT</Tag>
+		<English>"Empire" default names</English>
+		<French>"Empire" default names</French>
+		<German>"Empire" default names</German>
+		<Italian>"Empire" default names</Italian>
+		<Spanish>"Empire" default names</Spanish>
+		<Finnish>"Empire" default names</Finnish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__EMPIREDEFAULTNAME_HOVER</Tag>
+		<English>Default names of the form "Amurite Empire" are used instead of "Amurites"</English>
+		<French>Default names of the form "Amurite Empire" are used instead of "Amurites"</French>
+		<German>Default names of the form "Amurite Empire" are used instead of "Amurites"</German>
+		<Italian>Default names of the form "Amurite Empire" are used instead of "Amurites"</Italian>
+		<Spanish>Default names of the form "Amurite Empire" are used instead of "Amurites"</Spanish>
+		<Finnish>Default names of the form "Amurite Empire" are used instead of "Amurites"</Finnish>
 	</TEXT>
 </Civ4GameText>
