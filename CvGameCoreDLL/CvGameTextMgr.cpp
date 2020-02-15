@@ -9673,7 +9673,13 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
     if (kPromotionInfo.getExpireChance() != 0)
     {
         szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_EXPIRE_CHANCE", kPromotionInfo.getExpireChance()));
+        // lfgr 02/2020: Better text for 100% expire chance
+        if( kPromotionInfo.getExpireChance() == 100 ) {
+			szBuffer.append( gDLL->getText( "TXT_KEY_PROMOTION_EXPIRES_END_OF_TURN" ) );
+		}
+		else {
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_EXPIRE_CHANCE", kPromotionInfo.getExpireChance()));
+		}
     }
     if (kPromotionInfo.isRemovedByCasting())
     {
