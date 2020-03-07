@@ -9170,19 +9170,17 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 	else
 	{
 //BUGFfH: End Add
+		if (kPromotionInfo.getCityAttackPercent() != 0)
+		{
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CITY_ATTACK_TEXT", kPromotionInfo.getCityAttackPercent()));
+		}
 
-
-	if (kPromotionInfo.getCityAttackPercent() != 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CITY_ATTACK_TEXT", kPromotionInfo.getCityAttackPercent()));
-	}
-
-	if (kPromotionInfo.getCityDefensePercent() != 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CITY_DEFENSE_TEXT", kPromotionInfo.getCityDefensePercent()));
-	}
+		if (kPromotionInfo.getCityDefensePercent() != 0)
+		{
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_CITY_DEFENSE_TEXT", kPromotionInfo.getCityDefensePercent()));
+		}
 //BUGFfH: Added by Denev 2009/09/05
 	}
 //BUGFfH: End Add
@@ -9199,17 +9197,17 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 	else
 	{
 //BUGFfH: End Add
-	if (kPromotionInfo.getHillsAttackPercent() != 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_UNIT_HILLS_ATTACK", kPromotionInfo.getHillsAttackPercent()));
-	}
+		if (kPromotionInfo.getHillsAttackPercent() != 0)
+		{
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_UNIT_HILLS_ATTACK", kPromotionInfo.getHillsAttackPercent()));
+		}
 
-	if (kPromotionInfo.getHillsDefensePercent() != 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_HILLS_DEFENSE_TEXT", kPromotionInfo.getHillsDefensePercent()));
-	}
+		if (kPromotionInfo.getHillsDefensePercent() != 0)
+		{
+			szBuffer.append(pcNewline);
+			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_HILLS_DEFENSE_TEXT", kPromotionInfo.getHillsDefensePercent()));
+		}
 //BUGFfH: Added by Denev 2009/09/05
 	}
 //BUGFfH: End Add
@@ -9280,18 +9278,18 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 		else
 		{
 //BUGFfH: End Add
-		if (kPromotionInfo.getTerrainAttackPercent(iI) != 0)
-		{
-			szBuffer.append(pcNewline);
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_ATTACK_TEXT", kPromotionInfo.getTerrainAttackPercent(iI), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()));
-		}
+			if (kPromotionInfo.getTerrainAttackPercent(iI) != 0)
+			{
+				szBuffer.append(pcNewline);
+				szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_ATTACK_TEXT", kPromotionInfo.getTerrainAttackPercent(iI), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()));
+			}
 
 
-		if (kPromotionInfo.getTerrainDefensePercent(iI) != 0)
-		{
-			szBuffer.append(pcNewline);
-			szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_DEFENSE_TEXT", kPromotionInfo.getTerrainDefensePercent(iI), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()));
-		}
+			if (kPromotionInfo.getTerrainDefensePercent(iI) != 0)
+			{
+				szBuffer.append(pcNewline);
+				szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_DEFENSE_TEXT", kPromotionInfo.getTerrainDefensePercent(iI), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()));
+			}
 //BUGFfH: Added by Denev 2009/09/05
 		}
 //BUGFfH: End Add
