@@ -870,7 +870,7 @@
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ADEPT_LANUN</Type>
-            <Button>Art/Interface/Buttons/Units/Warrior Lanun.dds</Button>
+            <Button>Art/Interface/Buttons/Units/adept.dds</Button>
             <fScale>0.46</fScale>
             <fInterfaceScale>1</fInterfaceScale>
             <bActAsLand>0</bActAsLand>
