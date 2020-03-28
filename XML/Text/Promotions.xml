@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for general poromotion help and messages. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_EXPIRES_END_OF_TURN</Tag>
+		<English>[ICON_BULLET]Wears off at end of turn</English>
+		<French>[ICON_BULLET]Wears off at end of turn</French>
+		<German>[ICON_BULLET]Verschwindet am Ende des Zuges</German>
+		<Italian>[ICON_BULLET]Wears off at end of turn</Italian>
+		<Spanish>[ICON_BULLET]Wears off at end of turn</Spanish>
+	</TEXT>
+<!-- End Puppet States -->
+</Civ4GameText>
