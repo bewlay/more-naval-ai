@@ -11133,6 +11133,258 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 }
 
+// VOTE_HELP 11/2019 lfgr
+void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
+		VoteSourceTypes eVoteSource, PlayerTypes ePlayer, int iCity, PlayerTypes eOtherPlayer,
+		bool bRequirements ) {
+	PROFILE_FUNC();
+
+	if( eVote == NO_VOTE ) {
+		return;
+	}
+	
+	CvVoteInfo& kVote = GC.getVoteInfo( eVote );
+	
+	// Use first eligible vote source if none is specified
+	if( eVoteSource == NO_VOTESOURCE ) {
+		for( int eLoopVoteSource = 0; eLoopVoteSource < GC.getNumVoteSourceInfos(); eLoopVoteSource++ ) {
+			if( kVote.isVoteSourceType( eLoopVoteSource ) ) {
+				eVoteSource = (VoteSourceTypes) eLoopVoteSource;
+				break;
+			}
+		}
+	}
+
+	ReligionTypes eVoteSourceReligion = NO_RELIGION;
+	if( eVoteSource != NO_VOTESOURCE ) {
+		eVoteSourceReligion = GC.getGameINLINE().getVoteSourceReligion( eVoteSource );
+	}
+	
+	// Voting
+	
+	if( kVote.getPopulationThreshold() != 50 ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_POPULATION_THRESHOLD",
+				kVote.getPopulationThreshold() ) );
+	}
+	
+	if( kVote.getStateReligionVotePercent() != 0 ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_STATE_RELIGION_VOTE_PERCENT",
+				kVote.getStateReligionVotePercent() ) );
+	}
+	
+	// Minimum voters
+	if( bRequirements && kVote.getMinVoters() > 0 ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_MIN_VOTERS", kVote.getMinVoters() ) );
+	}
+
+	// "All players have to be voters"
+	if( bRequirements && kVote.isVictory() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_ALL_PLAYERS" ) );
+	}
+	
+	if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+
+	if( kVote.isCivVoting() ) {
+		if( eVoteSourceReligion == NO_RELIGION ) { // LFGR_TODO: What if vote source has religion, but we are in pedia?
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CIV_VOTING" ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CIV_VOTING_RELIGION",
+				GC.getReligionInfo( eVoteSourceReligion ).getChar() ) );
+		}
+	}
+	else if( kVote.isCityVoting() ) {
+		if( eVoteSourceReligion == NO_RELIGION ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CITY_VOTING" ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CITY_VOTING_RELIGION",
+				GC.getReligionInfo( eVoteSourceReligion ).getChar() ) );
+		}
+	}
+	else {
+		if( eVoteSourceReligion == NO_RELIGION ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_POP_VOTING" ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_POP_VOTING_RELIGION",
+				GC.getReligionInfo( eVoteSourceReligion ).getChar() ) );
+		}
+	}
+	
+	// Special resolutions
+	
+	if( kVote.isSecretaryGeneral() && eVoteSource != NO_VOTESOURCE ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		
+		CvWString szSecGenText = GC.getVoteSourceInfo( eVoteSource ).getSecretaryGeneralText();
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_SEC_GEN_ELECTION", szSecGenText.c_str() ) );
+	}
+
+	if( kVote.isVictory() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_VICTORY" ) );
+	}
+	
+	
+	// Effects
+	
+	if( kVote.getTradeRoutes() != 0 ) { // LFGR_TODO: Only for members
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_TRADE_ROUTES", kVote.getTradeRoutes() ) );
+	}
+	
+	if( kVote.isNoNukes() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_NO_NUKES" ) );
+	}
+	
+	if( kVote.isDefensivePact() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_DEFENSIVE_PACT" ) );
+	}
+
+	// LFGR_TODO: Limited borders, embassies, non-agression pact (?)
+	
+	if( kVote.isOpenBorders() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_OPEN_BORDERS" ) );
+	}
+	
+	if( kVote.isForcePeace() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+
+		if( ePlayer != NO_PLAYER ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_PEACE",
+					GET_PLAYER( ePlayer ).getNameKey() ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_PEACE_SOMEONE" ) );
+		}
+	}
+	
+	if( kVote.isForceNoTrade() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+
+		if( ePlayer != NO_PLAYER ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_NO_TRADE",
+					GET_PLAYER( ePlayer ).getNameKey() ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_NO_TRADE_SOMEONE" ) );
+		}
+	}
+	
+	if( kVote.isForceWar() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+
+		if( ePlayer != NO_PLAYER ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_WAR",
+					GET_PLAYER( ePlayer ).getNameKey() ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_WAR_SOMEONE" ) );
+		}
+	}
+
+	if( kVote.isFreeTrade() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FREE_TRADE" ) );
+	}
+	
+	if( kVote.isNoOutsideTechTrades() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_NO_OUTSIDE_TECH_TRADES" ) );
+	}
+
+	if( kVote.getFreeUnits() > 0 ) {
+		FAssertMsg( kVote.getFreeUnitClass() != NO_UNITCLASS, "Cannot have iFreeUnits > 0, but no FreeUnitClass in VoteInfo" );
+		
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		
+		CvWString szUnit;
+		if( kVote.getFreeUnits() == 1 ) {
+			szUnit = gDLL->getText( "%s1",
+				GC.getUnitClassInfo( (UnitClassTypes) kVote.getFreeUnitClass() ).getTextKeyWide() );
+		}
+		else {
+			szUnit = gDLL->getText( "%d1 %s1", kVote.getFreeUnits(),
+					GC.getUnitClassInfo( (UnitClassTypes) kVote.getFreeUnitClass() ).getTextKeyWide() );
+		}
+
+		if( kVote.getCost() > 0 ) {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_RECEIVE_UNIT_COST",
+				kVote.getCost(), GC.getCommerceInfo( COMMERCE_GOLD ).getChar(), szUnit.c_str() ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_RECEIVE_UNIT", szUnit.c_str() ) );
+		}
+	}
+
+	if( kVote.getCrime() != 0 ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CRIME", kVote.getCrime() ) );
+	}
+
+	if( kVote.getNoBonus() != NO_BONUS ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_NO_BONUS",
+				GC.getBonusInfo( (BonusTypes) kVote.getNoBonus() ).getChar() ) );
+	}
+
+	if( kVote.isTradeMap() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_TRADE_MAP" ) );
+	}
+
+	for( int eCivic = 0; eCivic < GC.getNumCivicInfos(); eCivic++ ) {
+		if( kVote.isForceCivic( eCivic ) ) {
+			if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_FORCE_CIVIC",
+				GC.getCivicInfo( (CivicTypes) eCivic ).getTextKeyWide() ) );
+		}
+	}
+
+	if( kVote.isAssignCity() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		if( ePlayer != NO_PLAYER ) {
+			FAssertMsg( iCity != -1 && eOtherPlayer != NO_PLAYER,
+					"Invalid arguments to parseVoteInfo: iAssignCity, ePlayer != NO_PLAYER, but "
+					"iCity == -1 or eOtherPlayer == NO_PLAYER" );
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_REASSIGN_CITY_FROM_TO",
+					GET_PLAYER( ePlayer ).getCity( iCity )->getName(),
+					GET_PLAYER( ePlayer ).getNameKey(),
+					GET_PLAYER( eOtherPlayer ).getNameKey() ) );
+		}
+		else {
+			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_REASSIGN_CITY" ) );
+		}
+	}
+	
+	/* LFGR_TODO
+    bool isGamblingRing() const;
+    bool isSlaveTrade() const;
+    bool isSmugglingRing() const;
+
+	bool isNoCityRazing() const;
+	bool isCultureNeedsEmptyRadius() const
+	bool isPacificRule() const;
+	*/
+
+	
+	// Custom Help text
+	if( !CvWString( kVote.getHelp()).empty() )
+	{
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( kVote.getHelp() );
+	}
+}
+
+// VOTE_HELP end
 
 // BUG - Trade Denial - start
 void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)

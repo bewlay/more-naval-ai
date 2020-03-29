@@ -91,6 +91,17 @@ public:
 //FfH: End Add
 
 	DllExport void parseCivicInfo(CvWStringBuffer &szBuffer, CivicTypes eCivic, bool bCivilopediaText = false, bool bPlayerContext = false, bool bSkipName = false);
+	
+	/**
+	 * VOTE_HELP 11/2019 lfgr
+	 *
+	 * If bRequirements, requirements to propose this vote are shown. If it is clear from the context that
+	 * the vote can be or was already proposed, bRequirements should be false.
+	 */
+	void parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote, VoteSourceTypes eVoteSource,
+			PlayerTypes ePlayer = NO_PLAYER, int iCity = -1,
+			PlayerTypes eOtherPlayer = NO_PLAYER, bool bRequirements = false );
+	
 	DllExport void parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePlayer);
 	DllExport void parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
 	DllExport void parseLeaderLineHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);

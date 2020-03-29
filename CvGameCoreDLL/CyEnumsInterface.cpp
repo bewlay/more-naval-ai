@@ -436,6 +436,8 @@ void CyEnumsPythonInterface()
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
+
+		.value("WIDGET_HELP_VOTE", WIDGET_HELP_VOTE) // VOTE_HELP 11/2019 lfgr
 		
 		.value("NUM_WIDGET_TYPES", NUM_WIDGET_TYPES)
 		;

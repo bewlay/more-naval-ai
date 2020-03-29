@@ -271,21 +271,31 @@ class CvVictoryScreen( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen advi
 				
 				addTableRow( screen, szTable, [szSecGenTitle, szSecGenName] )
 			
+			# Show time until next vote. "1" means "next turn"
+			if gc.getActivePlayer().isFullMember(eVoteSource) :
+				addTableRow( screen, szTable, [localText.getText( "TXT_KEY_TURNS_UNTIL_NEXT_VOTE", () ),
+						str( gc.getGame().getVoteTimer( eVoteSource ) + 1 )] )
+			
 			# Show resolutions
 			if not bSuppressUndercouncil :
-				for iLoop in range(gc.getNumVoteInfos()):
-					if gc.getGame().countPossibleVote(iLoop, eVoteSource) > 0:
-						info = gc.getVoteInfo(iLoop)
-						if gc.getGame().isChooseElection(iLoop):
+				for eVote in range(gc.getNumVoteInfos()):
+					if gc.getGame().countPossibleVote(eVote, eVoteSource) > 0:
+						info = gc.getVoteInfo(eVote)
+						if gc.getGame().isChooseElection(eVote):
 							szDesc = info.getDescription()
-							if gc.getGame().isVotePassed(iLoop):
+							if gc.getGame().isVotePassed(eVote):
 								szElectionText = localText.getText("TXT_KEY_POPUP_PASSED", ())
 							else:
 								szElectionText = localText.getText("TXT_KEY_POPUP_ELECTION_OPTION",
-										(u"", gc.getGame().getVoteRequired(iLoop, eVoteSource),
-												gc.getGame().countPossibleVote(iLoop, eVoteSource)))
+										(u"", gc.getGame().getVoteRequired(eVote, eVoteSource),
+												gc.getGame().countPossibleVote(eVote, eVoteSource)))
 							
-							addTableRow( screen, szTable, [szDesc, szElectionText] )
+							# Manually add row for correct widget type and data
+							iRow = screen.appendTableRow( szTable )
+							screen.setTableText( szTable, 0, iRow, szDesc, "", WidgetTypes.WIDGET_HELP_VOTE,
+									eVote, eVoteSource, CvUtil.FONT_LEFT_JUSTIFY )
+							screen.setTableText( szTable, 1, iRow, szElectionText, "", WidgetTypes.WIDGET_GENERAL,
+									-1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 		
 		if not bAnyVoteSourceHasMembers :
 			addTableRow( screen, szTable, localText.getText( "TXT_KEY_NO_ACTIVE_VOTE_SOURCES", () ) )

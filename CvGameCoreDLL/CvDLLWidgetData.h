@@ -221,6 +221,9 @@ public:
 	void parseUnitCombatHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseImprovementHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseCivicHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
+	void parseVoteHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer); // VOTE_HELP 11/2019 lfgr
+	void parseTriggeredVoteHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer); // VOTE_HELP 11/2019 lfgr
+	void parseVoteSelectionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer); // VOTE_HELP 11/2019 lfgr
 	void parseCivilizationHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseLeaderHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer);
 	void parseDescriptionHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer, bool bMinimal);

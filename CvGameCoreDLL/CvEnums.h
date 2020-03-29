@@ -541,6 +541,9 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_GLOBELAYER_OPTION,
 	WIDGET_GLOBELAYER_TOGGLE,
 
+	// lfgr note 11/2019: Apparantly, inserting items before here (and in particular, before WIDGET_CLOSE_SCREEN)
+	// can break some UI functionality.
+
 // BUG - Min/Max Commerce Rate - start
 	WIDGET_SET_PERCENT,
 // BUG - Min/Max Commerce Rate - end
@@ -590,6 +593,10 @@ enum WidgetTypes					// Exposed to Python
 /************************************************************************************************/
 /* Advanced Diplomacy                   END                                                     */
 /************************************************************************************************/
+
+	WIDGET_HELP_VOTE, // VOTE_HELP 11/2019 lfgr: General vote information widget
+	WIDGET_HELP_VOTE_YES, // VOTE_HELP 11/2019 lfgr: Vote "yes" widget
+	WIDGET_HELP_VOTE_SELECTION, // VOTE_HELP 11/2019 lfgr: Secretary general vote selection widget
 
 #ifdef _USRDLL
 	NUM_WIDGET_TYPES
