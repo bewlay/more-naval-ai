@@ -30,7 +30,6 @@ Tag(s)  | Description | History
 `<bAssignCity>1</bAssignCity>` | TODO | TODO
 `<ForceCivics>` | All members have to use the specified civics. (In BtS, all players have to use them.) | Changed in FfH2
 `<DiploVotes>` | TODO | TODO
-`<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2
 `<bNoOutsideTechTrades>1</bNoOutsideTechTrades>` | Members cannot trade with non-members. | Added in FfH2
 `<bSlaveTrade>1</bSlaveTrade>` | Allows member's units to cast spells with `<bPrereqSlaveTrade>1</bPrereqSlaveTrade>`. Neutral AI players will vote against this resolution. | Added in FfH2
 `<bSmugglingRing>1</bSmugglingRing>` | Allows members to construct a smuggler's port. <br/> AI players with less than 3 coastal cities will vote against this resolution. | Added in FfH2
@@ -42,6 +41,12 @@ Tag(s)  | Description | History
 `<bNoCityRazing>1</bNoCityRazing>` | Members don't auto-raze cities. **TODO: Members shouldn't be able to raze cities!** AI players might defy this resolution if they think they'll want to raze a lot in the future. | Added in MNAI via Advanced Diplomacy 2
 `<bCultureNeedsEmptyRadius>1</bCultureNeedsEmptyRadius>` | Cities of members don't spread culture to plots that are owned by other players that do the same (due to this or some other resolution). | Added in MNAI via Advanced Diplomacy 2
 `<bPacificRule>1</bPacificRule>` | **TODO: Doesn't seem to do anything** | Added in MNAI via Advanced Diplomacy 2
+
+**Removed tags**
+
+Tag(s)  | Description | History
+--- | --- | ---
+`<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U.
 
 
 Sources:
