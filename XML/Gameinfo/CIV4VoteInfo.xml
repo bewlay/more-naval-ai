@@ -34,7 +34,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -70,7 +69,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -106,7 +104,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -147,7 +144,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -183,7 +179,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -219,7 +214,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -255,7 +249,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -291,7 +284,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -327,7 +319,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -363,7 +354,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -399,7 +389,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -435,7 +424,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -471,7 +459,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -507,7 +494,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -543,7 +529,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>1</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>25</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>1</iFreeUnits>
@@ -579,7 +564,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>25</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>1</iFreeUnits>
@@ -615,7 +599,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>50</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -651,7 +634,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -687,7 +669,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>1</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -723,7 +704,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>1</bSmugglingRing>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -759,7 +739,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -796,7 +775,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -833,7 +811,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -870,7 +847,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -907,7 +883,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -944,7 +919,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>
@@ -981,7 +955,6 @@
 			</DiploVotes>
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<bSlaveTrade>0</bSlaveTrade>
-			<bSmugglingRing>0</bSmugglingRing>
 			<iCost>0</iCost>
 			<iCrime>0</iCrime>
 			<iFreeUnits>0</iFreeUnits>

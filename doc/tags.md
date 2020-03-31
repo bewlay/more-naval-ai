@@ -32,7 +32,6 @@ Tag(s)  | Description | History
 `<DiploVotes>` | TODO | TODO
 `<bNoOutsideTechTrades>1</bNoOutsideTechTrades>` | Members cannot trade with non-members. | Added in FfH2
 `<bSlaveTrade>1</bSlaveTrade>` | Allows member's units to cast spells with `<bPrereqSlaveTrade>1</bPrereqSlaveTrade>`. Neutral AI players will vote against this resolution. | Added in FfH2
-`<bSmugglingRing>1</bSmugglingRing>` | Allows members to construct a smuggler's port. <br/> AI players with less than 3 coastal cities will vote against this resolution. | Added in FfH2
 `<iCost>N</iCost>` <br/> `<iFreeUnits>M</iFreeUnits>` <br/> `<FreeUnitClass>UNIT_SOMETHING</FreeUnitClass>` | When this resolution is passed, each member who has a capital and at least N gold pays N gold and receives M units of type `UNIT_SOMETHING` in their capital. | Added in FfH2
 `<iCrime>Z</iCrime>` | Changes the global crime by Z (added to the crime of all cities). | Added in FfH2
 `<NoBonus>BONUS_SOMETHING</NoBonus>` | Disables access to `BONUS_SOMETHING` for all members. | Added in FfH2
@@ -46,7 +45,8 @@ Tag(s)  | Description | History
 
 Tag(s)  | Description | History
 --- | --- | ---
-`<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U.
+`<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
+`<bSmugglingRing>1</bSmugglingRing>` | Allows members to construct a smuggler's port. <br/> AI players with less than 3 coastal cities will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
 
 
 Sources:

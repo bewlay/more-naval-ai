@@ -11366,8 +11366,7 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	}
 	
 	/* LFGR_TODO
-    bool isSlaveTrade() const;
-    bool isSmugglingRing() const;
+    bool isSlaveTrade() const; // Need to replace bPrereqSpellTrade in SpellInfos
 
 	bool isNoCityRazing() const;
 	bool isCultureNeedsEmptyRadius() const

@@ -2831,11 +2831,6 @@ bool CyPlayer::isSlaveTrade() const
 	return m_pPlayer ? m_pPlayer->isSlaveTrade() : false;
 }
 
-bool CyPlayer::isSmugglingRing() const
-{
-	return m_pPlayer ? m_pPlayer->isSmugglingRing() : false;
-}
-
 bool CyPlayer::isAgnostic() const
 {
 	return m_pPlayer ? m_pPlayer->isAgnostic() : false;

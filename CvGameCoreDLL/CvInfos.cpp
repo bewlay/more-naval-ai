@@ -19707,7 +19707,6 @@ m_abVoteSourceTypes(NULL),
 //FfH: Added by Kael 11/14/2007
 m_bNoOutsideTechTrades(false),
 m_bSlaveTrade(false),
-m_bSmugglingRing(false),
 m_iCost(0),
 m_iCrime(0),
 m_iFreeUnits(0),
@@ -19820,11 +19819,6 @@ bool CvVoteInfo::isNoOutsideTechTrades() const
 bool CvVoteInfo::isSlaveTrade() const
 {
 	return m_bSlaveTrade;
-}
-
-bool CvVoteInfo::isSmugglingRing() const
-{
-	return m_bSmugglingRing;
 }
 
 int CvVoteInfo::getCost() const
@@ -19995,7 +19989,6 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 	CvString szTextVal;
 	pXML->GetChildXmlValByName(&m_bNoOutsideTechTrades, "bNoOutsideTechTrades");
 	pXML->GetChildXmlValByName(&m_bSlaveTrade, "bSlaveTrade");
-	pXML->GetChildXmlValByName(&m_bSmugglingRing, "bSmugglingRing");
 	pXML->GetChildXmlValByName(&m_iCost, "iCost");
 	pXML->GetChildXmlValByName(&m_iCrime, "iCrime");
 	pXML->GetChildXmlValByName(&m_iFreeUnits, "iFreeUnits");

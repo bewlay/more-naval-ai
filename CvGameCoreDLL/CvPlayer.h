@@ -1329,7 +1329,7 @@ public:
 	void setAssimilation(bool bNewValue);
 	bool isDeclaringWar() const;
 	void setDeclaringWar(bool bNewValue);
-	void setDisableHuman(bool bNewValue);
+	void setDisableHuman(bool bNewValue); // LFGR_TODO: remove? Seems unused and unimplemented
 	bool getDisableHuman() const;
 	bool isIgnoreFood() const;
 	void setIgnoreFood(bool bNewValue);
@@ -1349,7 +1349,6 @@ public:
 	void setSprawling(bool bNewValue);
 	bool isHasTech(int iTech) const;
 	bool isSlaveTrade() const;
-	bool isSmugglingRing() const;
 	int getSanctuaryTimer() const;
     void changeSanctuaryTimer(int iChange);
     int getTempPlayerTimer() const;

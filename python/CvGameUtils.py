@@ -343,7 +343,8 @@ class CvGameUtils:
 				return True
 
 		elif eBuilding == gc.getInfoTypeForString('BUILDING_SMUGGLERS_PORT'):
-			if not pPlayer.isSmugglingRing():
+			if not PyPlayer( pCity.getOwner() ).isVotePassed(
+					gc.getInfoTypeForString( "VOTE_SMUGGLING_RING" ) ) :
 				return True
 
 

@@ -55,7 +55,6 @@ CvGame::CvGame()
 	m_ppbNoBonusByVoteSource = NULL; // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	m_pabNoOutsideTechTrades = NULL;
 	m_pabSlaveTrade = NULL;
-	m_pabSmugglingRing = NULL;
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -604,7 +603,6 @@ void CvGame::uninit()
 	SAFE_DELETE_ARRAY(m_ppbNoBonusByVoteSource); // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	SAFE_DELETE_ARRAY(m_pabNoOutsideTechTrades);
 	SAFE_DELETE_ARRAY(m_pabSlaveTrade);
-	SAFE_DELETE_ARRAY(m_pabSmugglingRing);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -787,11 +785,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
 		{
 			m_pabSlaveTrade[iI] = false;
-		}
-		m_pabSmugglingRing = new bool[GC.getNumVoteSourceInfos()];
-		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-		{
-			m_pabSmugglingRing[iI] = false;
 		}
 //FfH: End Add
 
@@ -8668,10 +8661,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     {
         setSlaveTrade(kData.eVoteSource, bChange);
     }
-    if (kVote.isSmugglingRing())
-    {
-        setSmugglingRing(kData.eVoteSource, bChange);
-    }
     if (kVote.getFreeUnits() > 0 && bChange)
     {
 		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
@@ -9523,7 +9512,6 @@ void CvGame::read(FDataStreamBase* pStream)
 // lfgr end
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
-	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -9749,7 +9737,6 @@ void CvGame::write(FDataStreamBase* pStream)
 // lfgr end
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
-	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSmugglingRing);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -11516,16 +11503,6 @@ bool CvGame::isSlaveTrade(VoteSourceTypes eIndex) const
 void CvGame::setSlaveTrade(VoteSourceTypes eIndex, bool bNewValue)
 {
 	m_pabSlaveTrade[eIndex] = bNewValue;
-}
-
-bool CvGame::isSmugglingRing(VoteSourceTypes eIndex) const
-{
-	return m_pabSmugglingRing[eIndex];
-}
-
-void CvGame::setSmugglingRing(VoteSourceTypes eIndex, bool bNewValue)
-{
-	m_pabSmugglingRing[eIndex] = bNewValue;
 }
 
 int CvGame::getTrophyValue(const TCHAR* szName) const

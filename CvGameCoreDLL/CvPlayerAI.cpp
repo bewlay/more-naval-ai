@@ -10152,13 +10152,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				bValid = false;
 			}
 		}
-		if (GC.getVoteInfo(eVote).isSmugglingRing())
-		{
-			if (countNumCoastalCities() < 3)
-			{
-				bValid = false;
-			}
-		}
+		// LFGR_TODO: Players with less than 3 coastal cities oppose smuggling ring
 		if (GC.getVoteInfo(eVote).getNoBonus() != NO_BONUS)
 		{
 			if (getNumAvailableBonuses((BonusTypes)GC.getVoteInfo(eVote).getNoBonus()) > 0)

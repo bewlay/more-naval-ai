@@ -28118,21 +28118,6 @@ bool CvPlayer::isSlaveTrade() const
     return false;
 }
 
-bool CvPlayer::isSmugglingRing() const
-{
-   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
-	{
-	    if (isFullMember((VoteSourceTypes)iI))
-	    {
-	        if (GC.getGameINLINE().isSmugglingRing((VoteSourceTypes)iI))
-	        {
-	            return true;
-	        }
-	    }
-	}
-    return false;
-}
-
 int CvPlayer::getAlignment() const
 {
     return m_iAlignment;

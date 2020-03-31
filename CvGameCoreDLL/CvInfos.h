@@ -4980,7 +4980,6 @@ public:
 //FfH: Added by Kael 11/14/2007
     bool isNoOutsideTechTrades() const;
     bool isSlaveTrade() const;
-    bool isSmugglingRing() const;
     int getCost() const;
     int getCrime() const;
     int getFreeUnitClass() const;
@@ -5041,7 +5040,6 @@ protected:
 //FfH: Added by Kael 11/14/2007
 	bool m_bNoOutsideTechTrades;
 	bool m_bSlaveTrade;
-	bool m_bSmugglingRing;
 	int m_iCost;
 	int m_iCrime;
 	int m_iFreeUnits;

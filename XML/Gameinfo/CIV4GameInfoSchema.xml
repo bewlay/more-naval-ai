@@ -155,7 +155,6 @@
 	</ElementType>
 	<ElementType name="bNoOutsideTechTrades" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bSlaveTrade" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bSmugglingRing" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iCrime" content="textOnly" dt:type="int"/>
 	<ElementType name="NoBonus" content="textOnly"/>
 	<ElementType name="PyResult" content="textOnly"/>
@@ -188,7 +187,6 @@
 		<element type="DiploVotes" minOccurs="0"/>
 		<element type="bNoOutsideTechTrades" minOccurs="0"/>
 		<element type="bSlaveTrade" minOccurs="0"/>
-		<element type="bSmugglingRing" minOccurs="0"/>
 		<element type="iCost" minOccurs="0"/>
 		<element type="iCrime" minOccurs="0"/>
 		<element type="iFreeUnits" minOccurs="0"/>

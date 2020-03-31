@@ -685,8 +685,6 @@ public:
     void setNoOutsideTechTrades(VoteSourceTypes eIndex, bool bNewValue);
     bool isSlaveTrade(VoteSourceTypes eIndex) const;
     void setSlaveTrade(VoteSourceTypes eIndex, bool bNewValue);
-    bool isSmugglingRing(VoteSourceTypes eIndex) const;
-    void setSmugglingRing(VoteSourceTypes eIndex, bool bNewValue);
 	void decrementUnitCreatedCount(UnitTypes eIndex);
 	void decrementUnitClassCreatedCount(UnitClassTypes eIndex);
 	int getTrophyValue(const TCHAR* szName) const;
@@ -785,7 +783,6 @@ protected:
 	bool* m_pabEventTriggered;
 	bool* m_pabNoOutsideTechTrades;
 	bool* m_pabSlaveTrade;
-	bool* m_pabSmugglingRing;
 
 	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	// Stores a 2-dimensional array in a simple array. For access, see CvGame::isNoBonus().
