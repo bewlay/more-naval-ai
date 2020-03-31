@@ -11366,7 +11366,6 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	}
 	
 	/* LFGR_TODO
-    bool isGamblingRing() const;
     bool isSlaveTrade() const;
     bool isSmugglingRing() const;
 

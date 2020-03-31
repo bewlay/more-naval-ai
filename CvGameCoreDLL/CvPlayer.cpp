@@ -28098,21 +28098,6 @@ void CvPlayer::setSprawling(bool bNewValue)
 	m_bSprawling = bNewValue;
 }
 
-bool CvPlayer::isGamblingRing() const
-{
-   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
-	{
-	    if (isFullMember((VoteSourceTypes)iI))
-	    {
-	        if (GC.getGameINLINE().isGamblingRing((VoteSourceTypes)iI))
-	        {
-	            return true;
-	        }
-	    }
-	}
-    return false;
-}
-
 bool CvPlayer::isHasTech(int iTech) const
 {
     return GET_TEAM(getTeam()).isHasTech((TechTypes)iTech);

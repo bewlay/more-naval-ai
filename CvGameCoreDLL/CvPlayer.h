@@ -1347,7 +1347,6 @@ public:
 	void setSeeInvisible(bool bNewValue);
 	bool isSprawling() const;
 	void setSprawling(bool bNewValue);
-	bool isGamblingRing() const;
 	bool isHasTech(int iTech) const;
 	bool isSlaveTrade() const;
 	bool isSmugglingRing() const;

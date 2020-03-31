@@ -672,9 +672,6 @@ public:
     void foundBarbarianCity();
     bool isEventTriggered(EventTriggerTypes eTrigger) const;
     void setEventTriggered(EventTriggerTypes eTrigger, bool bNewValue);
-
-    bool isGamblingRing(VoteSourceTypes eIndex) const;
-    void setGamblingRing(VoteSourceTypes eIndex, bool bNewValue);
 	
 	// lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	/**
@@ -786,7 +783,6 @@ protected:
 	int m_iMaxGlobalCounter;
 	int m_iScenarioCounter;
 	bool* m_pabEventTriggered;
-	bool* m_pabGamblingRing;
 	bool* m_pabNoOutsideTechTrades;
 	bool* m_pabSlaveTrade;
 	bool* m_pabSmugglingRing;

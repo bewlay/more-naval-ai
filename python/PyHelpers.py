@@ -390,6 +390,22 @@ class PyPlayer:
 				iCounter += 1
 		return iCounter
 
+	# Improved PyHelpers 03/2020 lfgr
+	def isVotePassed( self, eVote ) :
+		"""
+		Returns true if and only if the given vote/resolution is passed in one of the vote sources
+		of which this player is a member.
+		"""
+		# Check that vote was passed (this is independent from the vote source)
+		if CyGame().getVoteOutcome( eVote ) == PlayerVoteTypes.PLAYER_VOTE_YES :
+			# Check that player is in the right vote source.
+			kVote = gc.getVoteInfo( eVote )
+			for eVoteSource in xrange( gc.getNumVoteSourceInfos() ) :
+				if kVote.isVoteSourceType( eVoteSource ) and self.player.isFullMember( eVoteSource ) :
+					return True
+		
+		return False
+
 
 class PyCity:
 	"requires player instance & cityID"

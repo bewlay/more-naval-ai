@@ -690,9 +690,11 @@ class CvGameUtils:
 		iCostMod = -1 # Any value > 0 will be used
 		pPlayer = gc.getPlayer(iPlayer)
 		pCity = pPlayer.getCity(iCityID)
+		
 		if iBuilding == gc.getInfoTypeForString('BUILDING_GAMBLING_HOUSE'):
-			if pPlayer.isGamblingRing():
+			if PyPlayer( iPlayer ).isVotePassed( gc.getInfoTypeForString( "VOTE_GAMBLING_RING" ) ) :
 				iCostMod = 25
+		
 		return iCostMod
 
 	def canUpgradeAnywhere(self, argsList):

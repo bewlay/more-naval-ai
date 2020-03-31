@@ -10144,13 +10144,7 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 
 //FfH: Added by Kael 05/08/2008
-		if (GC.getVoteInfo(eVote).isGamblingRing() || GC.getVoteInfo(eVote).isSlaveTrade())
-		{
-			if (getAlignment() == ALIGNMENT_NEUTRAL)
-			{
-				bValid = false;
-			}
-		}
+		// LFGR_TODO: Neutral players always oppose gambling ring and slave trade
 		if (GC.getVoteInfo(eVote).isNoOutsideTechTrades())
 		{
 			if (GC.getGameINLINE().getPlayerRank(getID()) < GC.getGameINLINE().getPlayerRank(GC.getGameINLINE().getRankPlayer(GC.getGameINLINE().countCivPlayersAlive() / 2)))

@@ -19705,7 +19705,6 @@ m_pbForceCivic(NULL),
 m_abVoteSourceTypes(NULL),
 
 //FfH: Added by Kael 11/14/2007
-m_bGamblingRing(false),
 m_bNoOutsideTechTrades(false),
 m_bSlaveTrade(false),
 m_bSmugglingRing(false),
@@ -19813,11 +19812,6 @@ bool CvVoteInfo::isAssignCity() const
 }
 
 //FfH: Added by Kael 11/14/2007
-bool CvVoteInfo::isGamblingRing() const
-{
-	return m_bGamblingRing;
-}
-
 bool CvVoteInfo::isNoOutsideTechTrades() const
 {
 	return m_bNoOutsideTechTrades;
@@ -19999,7 +19993,6 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 
 //FfH: Added by Kael 11/14/2007
 	CvString szTextVal;
-	pXML->GetChildXmlValByName(&m_bGamblingRing, "bGamblingRing");
 	pXML->GetChildXmlValByName(&m_bNoOutsideTechTrades, "bNoOutsideTechTrades");
 	pXML->GetChildXmlValByName(&m_bSlaveTrade, "bSlaveTrade");
 	pXML->GetChildXmlValByName(&m_bSmugglingRing, "bSmugglingRing");

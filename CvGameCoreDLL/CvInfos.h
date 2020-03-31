@@ -4978,7 +4978,6 @@ public:
 	bool isAssignCity() const;	// Exposed to Python
 
 //FfH: Added by Kael 11/14/2007
-    bool isGamblingRing() const;
     bool isNoOutsideTechTrades() const;
     bool isSlaveTrade() const;
     bool isSmugglingRing() const;
@@ -5040,7 +5039,6 @@ protected:
 	bool m_bAssignCity;
 
 //FfH: Added by Kael 11/14/2007
-	bool m_bGamblingRing;
 	bool m_bNoOutsideTechTrades;
 	bool m_bSlaveTrade;
 	bool m_bSmugglingRing;

@@ -153,7 +153,6 @@
 	<ElementType name="DiploVotes" content="eltOnly">
 		<element type="DiploVote" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
-	<ElementType name="bGamblingRing" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bNoOutsideTechTrades" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bSlaveTrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bSmugglingRing" content="textOnly" dt:type="boolean"/>
@@ -187,7 +186,6 @@
 		<!-- Advanced Diplomacy END -->
 		<element type="ForceCivics" minOccurs="0"/>
 		<element type="DiploVotes" minOccurs="0"/>
-		<element type="bGamblingRing" minOccurs="0"/>
 		<element type="bNoOutsideTechTrades" minOccurs="0"/>
 		<element type="bSlaveTrade" minOccurs="0"/>
 		<element type="bSmugglingRing" minOccurs="0"/>
