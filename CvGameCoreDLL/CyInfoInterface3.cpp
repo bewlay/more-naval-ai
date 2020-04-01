@@ -658,6 +658,7 @@ void CyInfoPythonInterface3()
 		.def("getReligionPrereq", &CvSpellInfo::getReligionPrereq, "int ()")
 		.def("getStateReligionPrereq", &CvSpellInfo::getStateReligionPrereq, "int ()")
 		.def("getTechPrereq", &CvSpellInfo::getTechPrereq, "int ()")
+		.def("getVotePrereq", &CvSpellInfo::getVotePrereq, "int()") // lfgr VOTE_CLEANUP 04/2020
 		.def("getRange", &CvSpellInfo::getRange, "int ()")
 		.def("getEffect", &CvSpellInfo::getEffect, "int ()")
 		.def("getRange", &CvSpellInfo::getRange, "int ()")

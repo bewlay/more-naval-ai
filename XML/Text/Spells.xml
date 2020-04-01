@@ -42,6 +42,14 @@
 		<Spanish>[ICON_BULLET]El lanzador no debe ser temporal</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_SPELL_VOTE_PREREQ</Tag>
+		<English>[ICON_BULLET]Requires the resolution %s1_vote</English>
+		<French>[ICON_BULLET]Requires the resolution %s1_vote</French>
+		<German>[ICON_BULLET]Benötigt die Resolution %s1_vote</German>
+		<Italian>[ICON_BULLET]Requires the resolution %s1_vote</Italian>
+		<Spanish>[ICON_BULLET]Requires the resolution %s1_vote</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_SPELL_PREREQ_POPULATION</Tag>
 		<English>[ICON_BULLET]Requires at least %d1 population points</English>
 		<French>[ICON_BULLET]Requires at least %d1 population points</French>

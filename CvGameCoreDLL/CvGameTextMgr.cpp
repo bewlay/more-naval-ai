@@ -9846,11 +9846,17 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_STATE_RELIGION_PREREQ", GC.getReligionInfo((ReligionTypes)kSpellInfo.getStateReligionPrereq()).getDescription()));
     }
-    if (kSpellInfo.getTechPrereq() != NO_TECH)
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_TECH_PREREQ", GC.getTechInfo((TechTypes)kSpellInfo.getTechPrereq()).getDescription()));
-    }
+	if (kSpellInfo.getTechPrereq() != NO_TECH)
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append(gDLL->getText("TXT_KEY_SPELL_TECH_PREREQ", GC.getTechInfo((TechTypes)kSpellInfo.getTechPrereq()).getDescription()));
+	}
+	if (kSpellInfo.getVotePrereq() != NO_VOTE) // lfgr VOTE_CLEANUP 04/2020
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append( gDLL->getText("TXT_KEY_SPELL_VOTE_PREREQ", // LFGR_TODO
+				GC.getVoteInfo( (VoteTypes) kSpellInfo.getVotePrereq() ).getDescription() ) );
+	}
     if (kSpellInfo.getUnitPrereq() != NO_UNIT)
     {
         szBuffer.append(pcNewline);

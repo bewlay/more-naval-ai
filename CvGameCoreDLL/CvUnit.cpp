@@ -16409,6 +16409,31 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
+
+	// VOTE_CLEANUP 04/2020 lfgr
+	if( kSpell.getVotePrereq() != NO_VOTE ) {
+		bool bValid = false;
+
+		// Vote must be passed
+		VoteTypes eVote = (VoteTypes) kSpell.getVotePrereq();
+		if( GC.getGameINLINE().getVoteOutcome( eVote ) == PLAYER_VOTE_YES ) {
+			CvVoteInfo& kVoteInfo = GC.getVoteInfo( eVote );
+
+			// Player must be on a council that provides the vote
+			for( int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); iVoteSource++ ) {
+				if( kVoteInfo.isVoteSourceType( iVoteSource )
+					&& GET_PLAYER( getOwnerINLINE() ).isFullMember( (VoteSourceTypes) iVoteSource ) ) {
+					bValid = true;
+				}
+			}
+		}
+
+		if( !bValid ) {
+			return false;
+		}
+	}
+	// VOTE_CLEANUP end
+
     if (kSpell.getConvertUnitType() != NO_UNIT)
     {
         if (getUnitType() == (UnitTypes)kSpell.getConvertUnitType())

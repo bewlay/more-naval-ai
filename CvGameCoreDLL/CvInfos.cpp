@@ -3276,6 +3276,7 @@ m_iPromotionInStackPrereq(NO_PROMOTION),
 m_iReligionPrereq(NO_RELIGION),
 m_iStateReligionPrereq(NO_RELIGION),
 m_iTechPrereq(NO_TECH),
+m_iVotePrereq(NO_VOTE), // VOTE_CLEANUP 04/2020 lfgr
 m_bAllowAI(false),
 /*************************************************************************************************/
 /**	ADDON (New Functions Definition) Sephi                                     					**/
@@ -3454,6 +3455,11 @@ int CvSpellInfo::getStateReligionPrereq() const
 int CvSpellInfo::getTechPrereq() const
 {
 	return m_iTechPrereq;
+}
+
+// VOTE_CLEANUP 04/2020 lfgr
+int CvSpellInfo::getVotePrereq() const {
+	return m_iVotePrereq;
 }
 
 int CvSpellInfo::getRange() const
@@ -4105,6 +4111,11 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	if (szTextVal != "") m_iStateReligionPrereq = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "TechPrereq");
 	if (szTextVal != "") m_iTechPrereq = pXML->FindInInfoClass(szTextVal);
+
+	// VOTE_CLEANUP 04/2020 lfgr
+	pXML->GetChildXmlValByName(szTextVal, "VotePrereq");
+	if (szTextVal != "") m_iVotePrereq = pXML->FindInInfoClass(szTextVal);
+
 	pXML->GetChildXmlValByName(&m_bAllowAI, "bAllowAI");
 
 /*************************************************************************************************/

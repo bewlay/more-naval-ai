@@ -25,6 +25,7 @@
 	<ElementType name="ReligionPrereq" content="textOnly"/>
 	<ElementType name="StateReligionPrereq" content="textOnly"/>
 	<ElementType name="TechPrereq" content="textOnly"/>
+	<ElementType name="VotePrereq" content="textOnly"/> <!-- VOTE_CLEANUP 04/2020 lfgr -->
 	<ElementType name="bAllowAI" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAllowAuto" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bAllowAutomateTerrain" content="textOnly" dt:type="boolean"/>
@@ -125,6 +126,7 @@
 		<element type="ReligionPrereq" minOccurs="0"/>
 		<element type="StateReligionPrereq" minOccurs="0"/>
 		<element type="TechPrereq" minOccurs="0"/>
+		<element type="VotePrereq" minOccurs="0"/> <!-- VOTE_CLEANUP 04/2020 lfgr -->
 		<element type="bAllowAI" minOccurs="0"/>
 		<element type="bAllowAuto" minOccurs="0"/>
 		<element type="bAllowAutomateTerrain" minOccurs="0"/>

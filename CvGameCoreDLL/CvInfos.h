@@ -851,6 +851,7 @@ public:
 	int getReligionPrereq() const;
 	int getStateReligionPrereq() const;
 	int getTechPrereq() const;
+	int getVotePrereq() const; // VOTE_CLEANUP 04/2020 lfgr
 	int getRange() const;
     int getEffect() const;
 	int getAIWeight() const;
@@ -969,6 +970,7 @@ protected:
 	int m_iReligionPrereq;
 	int m_iStateReligionPrereq;
 	int m_iTechPrereq;
+	int m_iVotePrereq; // VOTE_CLEANUP 04/2020 lfgr
 
     bool m_bAllowAI;
 /*************************************************************************************************/
