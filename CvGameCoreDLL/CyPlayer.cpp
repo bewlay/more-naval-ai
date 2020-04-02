@@ -2826,11 +2826,6 @@ bool CyPlayer::isHasTech(int iTech) const
 	return m_pPlayer ? m_pPlayer->isHasTech(iTech) : false;
 }
 
-bool CyPlayer::isSlaveTrade() const
-{
-	return m_pPlayer ? m_pPlayer->isSlaveTrade() : false;
-}
-
 bool CyPlayer::isAgnostic() const
 {
 	return m_pPlayer ? m_pPlayer->isAgnostic() : false;

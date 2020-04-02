@@ -3295,7 +3295,6 @@ m_bCausesWar(false),
 m_bGlobal(false),
 m_bInBordersOnly(false),
 m_bInCityOnly(false),
-m_bPrereqSlaveTrade(false),
 m_bResistable(false),
 m_iAIWeight(0),
 m_iCasterMinLevel(0),
@@ -3533,11 +3532,6 @@ bool CvSpellInfo::isInBordersOnly() const
 bool CvSpellInfo::isInCityOnly() const
 {
 	return m_bInCityOnly;
-}
-
-bool CvSpellInfo::isPrereqSlaveTrade() const
-{
-	return m_bPrereqSlaveTrade;
 }
 
 bool CvSpellInfo::isBuffCasterOnly() const
@@ -3875,7 +3869,6 @@ void CvSpellInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bGlobal);
 	stream->Read(&m_bInBordersOnly);
 	stream->Read(&m_bInCityOnly);
-	stream->Read(&m_bPrereqSlaveTrade);
 	stream->Read(&m_bResistable);
 	stream->Read(&m_iAIWeight);
 	stream->Read(&m_iCasterMinLevel);
@@ -3998,7 +3991,6 @@ void CvSpellInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bGlobal);
 	stream->Write(m_bInBordersOnly);
 	stream->Write(m_bInCityOnly);
-	stream->Write(m_bPrereqSlaveTrade);
 	stream->Write(m_bResistable);
 	stream->Write(m_iAIWeight);
 	stream->Write(m_iCasterMinLevel);
@@ -4136,7 +4128,6 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bGlobal, "bGlobal");
 	pXML->GetChildXmlValByName(&m_bInBordersOnly, "bInBordersOnly");
 	pXML->GetChildXmlValByName(&m_bInCityOnly, "bInCityOnly");
-	pXML->GetChildXmlValByName(&m_bPrereqSlaveTrade, "bPrereqSlaveTrade");
 	pXML->GetChildXmlValByName(&m_bResistable, "bResistable");
 	pXML->GetChildXmlValByName(&m_iAIWeight, "iAIWeight");
 	pXML->GetChildXmlValByName(&m_iCasterMinLevel, "iCasterMinLevel");
@@ -19717,7 +19708,6 @@ m_abVoteSourceTypes(NULL),
 
 //FfH: Added by Kael 11/14/2007
 m_bNoOutsideTechTrades(false),
-m_bSlaveTrade(false),
 m_iCost(0),
 m_iCrime(0),
 m_iFreeUnits(0),
@@ -19825,11 +19815,6 @@ bool CvVoteInfo::isAssignCity() const
 bool CvVoteInfo::isNoOutsideTechTrades() const
 {
 	return m_bNoOutsideTechTrades;
-}
-
-bool CvVoteInfo::isSlaveTrade() const
-{
-	return m_bSlaveTrade;
 }
 
 int CvVoteInfo::getCost() const
@@ -19999,7 +19984,6 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 //FfH: Added by Kael 11/14/2007
 	CvString szTextVal;
 	pXML->GetChildXmlValByName(&m_bNoOutsideTechTrades, "bNoOutsideTechTrades");
-	pXML->GetChildXmlValByName(&m_bSlaveTrade, "bSlaveTrade");
 	pXML->GetChildXmlValByName(&m_iCost, "iCost");
 	pXML->GetChildXmlValByName(&m_iCrime, "iCrime");
 	pXML->GetChildXmlValByName(&m_iFreeUnits, "iFreeUnits");

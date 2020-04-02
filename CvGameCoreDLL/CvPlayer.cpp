@@ -28103,21 +28103,6 @@ bool CvPlayer::isHasTech(int iTech) const
     return GET_TEAM(getTeam()).isHasTech((TechTypes)iTech);
 }
 
-bool CvPlayer::isSlaveTrade() const
-{
-   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
-	{
-	    if (isFullMember((VoteSourceTypes)iI))
-	    {
-	        if (GC.getGameINLINE().isSlaveTrade((VoteSourceTypes)iI))
-	        {
-	            return true;
-	        }
-	    }
-	}
-    return false;
-}
-
 int CvPlayer::getAlignment() const
 {
     return m_iAlignment;

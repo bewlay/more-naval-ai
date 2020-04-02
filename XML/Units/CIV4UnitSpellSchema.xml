@@ -36,7 +36,6 @@
 	<ElementType name="bGlobal" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bInBordersOnly" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bInCityOnly" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bPrereqSlaveTrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iAIWeight" content="textOnly" dt:type="int"/>
 	<ElementType name="iCasterMinLevel" content="textOnly" dt:type="int"/>
 	<ElementType name="bDisplayWhenDisabled" content="textOnly" dt:type="boolean"/>
@@ -137,7 +136,6 @@
 		<element type="bGlobal" minOccurs="0"/>
 		<element type="bInBordersOnly" minOccurs="0"/>
 		<element type="bInCityOnly" minOccurs="0"/>
-		<element type="bPrereqSlaveTrade" minOccurs="0"/>
 		<element type="iAIWeight" minOccurs="0"/>
 		<element type="iCasterMinLevel" minOccurs="0"/>
 		<element type="bDisplayWhenDisabled" minOccurs="0"/>

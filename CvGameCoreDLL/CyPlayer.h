@@ -702,7 +702,6 @@ public:
 	int getNumSettlements() const;
 	int getPlayersKilled() const;
 	bool isHasTech(int /*TechTypes*/ iTech) const;
-	bool isSlaveTrade() const;
 	bool isAgnostic() const;
 	bool isIgnoreFood() const;
 	void setAlive(bool bNewValue);

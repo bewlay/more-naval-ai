@@ -16441,13 +16441,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
             return false;
         }
     }
-    if (kSpell.isPrereqSlaveTrade())
-    {
-        if (!GET_PLAYER(getOwnerINLINE()).isSlaveTrade())
-        {
-            return false;
-        }
-    }
 	/*
     if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
     {

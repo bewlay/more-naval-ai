@@ -9767,12 +9767,6 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
     }
 
 	// +++ Requirements +++
-	
-    if (kSpellInfo.isPrereqSlaveTrade())
-    {
-        szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PREREQ_SLAVE_TRADE"));
-    }
     
     // lfgr 09/2019: Caster must be alive
     if (kSpellInfo.isCasterMustBeAlive())
@@ -11372,8 +11366,6 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	}
 	
 	/* LFGR_TODO
-    bool isSlaveTrade() const; // Need to replace bPrereqSpellTrade in SpellInfos
-
 	bool isNoCityRazing() const;
 	bool isCultureNeedsEmptyRadius() const
 	bool isPacificRule() const;

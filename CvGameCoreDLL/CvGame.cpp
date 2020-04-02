@@ -54,7 +54,6 @@ CvGame::CvGame()
 	m_pabEventTriggered = NULL;
 	m_ppbNoBonusByVoteSource = NULL; // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	m_pabNoOutsideTechTrades = NULL;
-	m_pabSlaveTrade = NULL;
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -602,7 +601,6 @@ void CvGame::uninit()
 	SAFE_DELETE_ARRAY(m_pabEventTriggered);
 	SAFE_DELETE_ARRAY(m_ppbNoBonusByVoteSource); // lfgr 06/2019: Fix NoBonus to apply to correct VoteSource
 	SAFE_DELETE_ARRAY(m_pabNoOutsideTechTrades);
-	SAFE_DELETE_ARRAY(m_pabSlaveTrade);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -780,11 +778,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
 		{
 			m_pabNoOutsideTechTrades[iI] = false;
-		}
-		m_pabSlaveTrade = new bool[GC.getNumVoteSourceInfos()];
-		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-		{
-			m_pabSlaveTrade[iI] = false;
 		}
 //FfH: End Add
 
@@ -8657,10 +8650,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
     {
         setNoOutsideTechTrades(kData.eVoteSource, bChange);
     }
-    if (kVote.isSlaveTrade())
-    {
-        setSlaveTrade(kData.eVoteSource, bChange);
-    }
     if (kVote.getFreeUnits() > 0 && bChange)
     {
 		for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
@@ -9511,7 +9500,6 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read( GC.getNumVoteSourceInfos() * GC.getNumBonusInfos(), m_ppbNoBonusByVoteSource );
 // lfgr end
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
-	pStream->Read(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -9736,7 +9724,6 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write( GC.getNumVoteSourceInfos() * GC.getNumBonusInfos(), m_ppbNoBonusByVoteSource );
 // lfgr end
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabNoOutsideTechTrades);
-	pStream->Write(GC.getNumVoteSourceInfos(), m_pabSlaveTrade);
 //FfH: End Add
 
 	// Advanced Diplomacy
@@ -11493,16 +11480,6 @@ bool CvGame::isNoOutsideTechTrades(VoteSourceTypes eIndex) const
 void CvGame::setNoOutsideTechTrades(VoteSourceTypes eIndex, bool bNewValue)
 {
 	m_pabNoOutsideTechTrades[eIndex] = bNewValue;
-}
-
-bool CvGame::isSlaveTrade(VoteSourceTypes eIndex) const
-{
-	return m_pabSlaveTrade[eIndex];
-}
-
-void CvGame::setSlaveTrade(VoteSourceTypes eIndex, bool bNewValue)
-{
-	m_pabSlaveTrade[eIndex] = bNewValue;
 }
 
 int CvGame::getTrophyValue(const TCHAR* szName) const

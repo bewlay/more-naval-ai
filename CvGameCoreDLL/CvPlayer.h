@@ -1348,7 +1348,6 @@ public:
 	bool isSprawling() const;
 	void setSprawling(bool bNewValue);
 	bool isHasTech(int iTech) const;
-	bool isSlaveTrade() const;
 	int getSanctuaryTimer() const;
     void changeSanctuaryTimer(int iChange);
     int getTempPlayerTimer() const;

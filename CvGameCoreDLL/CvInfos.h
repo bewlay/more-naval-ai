@@ -898,7 +898,6 @@ public:
 	bool isGlobal() const;
 	bool isInBordersOnly() const;
 	bool isInCityOnly() const;
-	bool isPrereqSlaveTrade() const;
 	bool isBuffCasterOnly() const;
 	bool isAbility() const;
 	bool isDispel() const;
@@ -990,7 +989,6 @@ protected:
     bool m_bGlobal;
     bool m_bInBordersOnly;
     bool m_bInCityOnly;
-    bool m_bPrereqSlaveTrade;
     bool m_bResistable;
     bool m_bDisplayWhenDisabled;
     bool m_bHasCasted;
@@ -4981,7 +4979,6 @@ public:
 
 //FfH: Added by Kael 11/14/2007
     bool isNoOutsideTechTrades() const;
-    bool isSlaveTrade() const;
     int getCost() const;
     int getCrime() const;
     int getFreeUnitClass() const;
@@ -5041,7 +5038,6 @@ protected:
 
 //FfH: Added by Kael 11/14/2007
 	bool m_bNoOutsideTechTrades;
-	bool m_bSlaveTrade;
 	int m_iCost;
 	int m_iCrime;
 	int m_iFreeUnits;
