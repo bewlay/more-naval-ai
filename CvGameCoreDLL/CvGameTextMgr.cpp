@@ -31,6 +31,8 @@
 #include "CyArgsList.h"
 #include "CvDLLPythonIFaceBase.h"
 
+#include "CvInfoUtils.h" // lfgr 04/2020
+
 // BUG - start
 #include "CvBugOptions.h"
 // BUG - end
@@ -10121,23 +10123,23 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_REMOVE_HAS_CASTED"));
     }
-    int iCost = kSpellInfo.getCost();
-    if (iCost != 0)
-    {
-		// scale costs by gamespeed
-		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
-		iCost /= 100;
 
-        if (kSpellInfo.getConvertUnitType() != NO_UNIT)
-        {
-            if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
-            {
-                iCost += (iCost * GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getUpgradeCostModifier()) / 100;
-            }
-        }
+    int iCost;
+	if( GC.getGameINLINE().getActivePlayer() != NO_PLAYER ) {
+		iCost = info_utils::getRealSpellCost( GC.getGameINLINE().getActivePlayer(), eSpell );
+	}
+	else {
+		iCost = kSpellInfo.getCost();
+	}
+	if( iCost > 0 ) {
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_COST", iCost));
     }
+	else if( iCost < 0 ) {
+		szBuffer.append(pcNewline);
+		szBuffer.append(gDLL->getText("TXT_KEY_SPELL_PROFIT", -iCost));
+	}
+
     if (kSpellInfo.getDelay() != 0)
     {
         szBuffer.append(pcNewline);

@@ -2,6 +2,22 @@
 <!-- Text for general spell help and messages. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_SPELL_COST</Tag>
+		<English>[ICON_BULLET]Costs %d1[ICON_GOLD]</English>
+		<French>[ICON_BULLET]Coûte %d1[ICON_GOLD]</French>
+		<German>[ICON_BULLET]Kostet %d1[ICON_GOLD]</German>
+		<Italian>[ICON_BULLET]Costs %d1[ICON_GOLD]</Italian>
+		<Spanish>[ICON_BULLET]Cuesta %d1[ICON_GOLD]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_PROFIT</Tag>
+		<English>[ICON_BULLET]Receive %d1[ICON_GOLD]</English>
+		<French>[ICON_BULLET]Receive %d1[ICON_GOLD]</French>
+		<German>[ICON_BULLET]Erhalte %d1[ICON_GOLD]</German>
+		<Italian>[ICON_BULLET]Receive %d1[ICON_GOLD]</Italian>
+		<Spanish>[ICON_BULLET]Receive %d1[ICON_GOLD]</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MESSAGE_SPELL_CAST</Tag>
 		<English>%s1_UnitName casts %s2</English>
 		<French>%s1_UnitName jets %s2</French>

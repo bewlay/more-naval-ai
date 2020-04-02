@@ -27,6 +27,8 @@
 #include "CvPopupInfo.h"
 #include "CvArtFileMgr.h"
 
+#include "CvInfoUtils.h" // lfgr 04/2020
+
 // BUG - start
 #include "CvBugOptions.h"
 // BUG - end
@@ -16601,21 +16603,10 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 			return false;
 		}
 	}
-	int iCost = kSpell.getCost();
-	if (iCost != 0)
+	if( !bTestVisible &&
+			GET_PLAYER(getOwnerINLINE()).getGold() < info_utils::getRealSpellCost( getOwnerINLINE(), eSpell ) )
 	{
-		// scale costs by gamespeed
-		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
-		iCost /= 100;
-
-		if (kSpell.getConvertUnitType() != NO_UNIT)
-		{
-			iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
-		}
-		if (GET_PLAYER(getOwnerINLINE()).getGold() < iCost)
-		{
-			return false;
-		}
+		return false; // Disable, but don't hide if not enough gold.
 	}
 	if (kSpell.isRemoveHasCasted())
 	{
@@ -16692,6 +16683,13 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         }
         return true;
     }
+
+	// From here on, we are only check if the spell does something at all.
+
+	if( kSpell.getCost() < 0 ) {
+		return true; // Gives gold
+	}
+
     if (kSpell.isRemoveHasCasted())
     {
         if (isHasCasted())
@@ -16787,6 +16785,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     {
         return true;
     }
+
     return false;
 }
 
@@ -17384,19 +17383,9 @@ void CvUnit::cast(int spell)
             setHasCasted(false);
         }
     }
-    int iCost = kSpellInfo.getCost();
-    if (iCost != 0)
-    {
-		// scale costs by gamespeed
-		iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
-		iCost /= 100;
 
-        if (kSpellInfo.getConvertUnitType() != NO_UNIT)
-        {
-            iCost += (iCost * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
-        }
-        GET_PLAYER(getOwnerINLINE()).changeGold(-1 * iCost);
-    }
+	GET_PLAYER(getOwnerINLINE()).changeGold( - info_utils::getRealSpellCost( getOwnerINLINE(), (SpellTypes) spell ) );
+
     if (kSpellInfo.getChangePopulation() != 0)
     {
         plot()->getPlotCity()->changePopulation(kSpellInfo.getChangePopulation());
@@ -19195,10 +19184,7 @@ int CvUnit::chooseSpell()
 
 				if (kSpellInfo.getCost() != 0)
 				{
-					//iValue -= 4 * kSpellInfo.getCost();
-					int iCost = kSpellInfo.getCost();
-					iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getTrainPercent();
-					iCost /= 100;
+					int iCost = info_utils::getRealSpellCost( getOwnerINLINE(), (SpellTypes) iSpell );
 					iValue += (GET_PLAYER(getOwner()).getGold() - GET_PLAYER(getOwner()).AI_getGoldTreasury(true, true, true, true)) - iCost;
 				}
 
