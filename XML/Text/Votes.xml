@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Text for specific votes. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_GAMBLING_RING_HELP</Tag>
+		<English>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</English>
+		<French>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</French>
+		<German>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</German>
+		<Italian>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</Italian>
+		<Spanish>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SMUGGLING_RING_HELP</Tag>
+		<English>[ICON_BULLET]Enables Smuggler's Port</English>
+		<French>[ICON_BULLET]Enables Smuggler's Port</French>
+		<German>[ICON_BULLET]Enables Smuggler's Port</German>
+		<Italian>[ICON_BULLET]Enables Smuggler's Port</Italian>
+		<Spanish>[ICON_BULLET]Enables Smuggler's Port</Spanish>
+	</TEXT>
+</Civ4GameText>

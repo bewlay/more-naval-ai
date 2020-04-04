@@ -592,6 +592,7 @@
 		<VoteInfo>
 			<Type>VOTE_GAMBLING_RING</Type>
 			<Description>TXT_KEY_VOTE_GAMBLING_RING</Description>
+			<Help>TXT_KEY_VOTE_GAMBLING_RING_HELP</Help>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -660,6 +661,7 @@
 		<VoteInfo>
 			<Type>VOTE_SMUGGLING_RING</Type>
 			<Description>TXT_KEY_VOTE_SMUGGLING_RING</Description>
+			<Help>TXT_KEY_VOTE_SMUGGLING_RING_HELP</Help>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>

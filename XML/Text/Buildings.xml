@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for specific Buildings -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_GAMBLING_HOUSE_HELP</Tag>
+		<English>[ICON_BULLET]Costs -75%[ICON_PRODUCTION] with Undercouncil and Gambling Ring resolution</English>
+		<French>[ICON_BULLET]Costs -75%[ICON_PRODUCTION] with Undercouncil and Gambling Ring resolution</French>
+		<German>[ICON_BULLET]Costs -75%[ICON_PRODUCTION] with Undercouncil and Gambling Ring resolution</German>
+		<Italian>[ICON_BULLET]Costs -75%[ICON_PRODUCTION] with Undercouncil and Gambling Ring resolution</Italian>
+		<Spanish>[ICON_BULLET]Costs -75%[ICON_PRODUCTION] with Undercouncil and Gambling Ring resolution</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_SMUGGLERS_PORT_HELP</Tag>
+		<English>[ICON_BULLET]Requires Undercouncil and Smuggling Ring resolution</English>
+		<French>[ICON_BULLET]Requires Undercouncil and Smuggling Ring resolutio</French>
+		<German>[ICON_BULLET]Requires Undercouncil and Smuggling Ring resolutio</German>
+		<Italian>[ICON_BULLET]Requires Undercouncil and Smuggling Ring resolutio</Italian>
+		<Spanish>[ICON_BULLET]Requires Undercouncil and Smuggling Ring resolutio</Spanish>
+	</TEXT>
+</Civ4GameText>

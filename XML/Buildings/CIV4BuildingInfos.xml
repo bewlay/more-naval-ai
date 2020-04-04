@@ -14063,7 +14063,7 @@
 			<Description>TXT_KEY_BUILDING_GAMBLING_HOUSE</Description>
 			<Civilopedia>TXT_KEY_BUILDING_GAMBLING_HOUSE_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_BUILDING_GAMBLING_HOUSE_STRATEGY</Strategy>
-			<Help></Help>
+			<Help>TXT_KEY_BUILDING_GAMBLING_HOUSE_HELP</Help>
 			<Advisor>ADVISOR_ECONOMY</Advisor>
 			<ArtDefineTag>ART_DEF_BUILDING_GAMBLING_HOUSE</ArtDefineTag>
 			<MovieDefineTag>NONE</MovieDefineTag>
@@ -30244,7 +30244,7 @@
 			<Description>TXT_KEY_BUILDING_SMUGGLERS_PORT</Description>
 			<Civilopedia>TXT_KEY_BUILDING_PLACEHOLDER_PEDIA</Civilopedia>
 			<Strategy></Strategy>
-			<Help></Help>
+			<Help>TXT_KEY_BUILDING_SMUGGLERS_PORT_HELP</Help>
 			<Advisor>ADVISOR_ECONOMY</Advisor>
 			<ArtDefineTag>ART_DEF_BUILDING_PORTUGAL_FEITORIA</ArtDefineTag>
 			<MovieDefineTag>NONE</MovieDefineTag>
