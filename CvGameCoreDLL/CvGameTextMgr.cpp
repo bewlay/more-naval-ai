@@ -11366,6 +11366,19 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 			szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_REASSIGN_CITY" ) );
 		}
 	}
+
+	for( int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++ ) {
+		CvSpellInfo& kSpell = GC.getSpellInfo( (SpellTypes) iSpell );
+		if( kSpell.getVotePrereq() == eVote ) {
+			if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+			if( kSpell.isAbility() ) {
+				szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_ENABLES_ABILITY", kSpell.getDescription() ) );
+			}
+			else {
+				szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_ENABLES_SPELL", kSpell.getDescription() ) );
+			}
+		}
+	}
 	
 	/* LFGR_TODO
 	bool isNoCityRazing() const;

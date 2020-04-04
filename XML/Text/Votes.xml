@@ -142,7 +142,7 @@
 		<Spanish>[ICON_BULLET]Makes a player win a diplomatic victory</Spanish>
 	</TEXT>
 	
-	<!-- Permanent effects -->
+	<!-- Permanent effects (until revoked) -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_TRADE_ROUTES</Tag>
 		<English>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</English>
@@ -182,6 +182,22 @@
 		<German>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</German>
 		<Italian>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</Italian>
 		<Spanish>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_HELP_ENABLES_ABILITY</Tag>
+		<English>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</English>
+		<French>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</French>
+		<German>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</German>
+		<Italian>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</Italian>
+		<Spanish>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_HELP_ENABLES_SPELL</Tag>
+		<English>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</English>
+		<French>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</French>
+		<German>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</German>
+		<Italian>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</Italian>
+		<Spanish>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</Spanish>
 	</TEXT>
 	
 	<!-- One-time effects: diplomacy -->
