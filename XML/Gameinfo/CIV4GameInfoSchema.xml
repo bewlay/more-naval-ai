@@ -160,6 +160,7 @@
 	<ElementType name="VoteInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
+		<element type="Help" minOccurs="0"/> <!-- VOTE_HELP lfgr 04/2020 -->
 		<element type="iPopulationThreshold"/>
 		<element type="bCityVoting"/>
 		<element type="bCivVoting"/>
