@@ -4952,6 +4952,9 @@ public:
 	CvVoteInfo();
 	virtual ~CvVoteInfo();
 
+	// VOTE_DESC 04/2020 lfgr: Description parametrized with player name, city name, other player name.
+	const wchar* getParamDescriptionKey() const;
+
 	int getPopulationThreshold() const;	// Exposed to Python
 	int getStateReligionVotePercent() const;	// Exposed to Python
 	int getTradeRoutes() const;					// Exposed to Python
@@ -5010,6 +5013,8 @@ public:
 	bool read(CvXMLLoadUtility* pXML);
 
 protected:
+
+	CvWString m_szParamDescriptionKey; // VOTE_DESC 04/2020 lfgr
 
 	int m_iPopulationThreshold;
 	int m_iStateReligionVotePercent;

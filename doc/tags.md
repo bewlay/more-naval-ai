@@ -24,10 +24,10 @@ Tag(s)  | Description | History
 `<bNoNukes>1</bNoNukes>` | Forbids creating nukes or buildings/projects that allow nukes. AI calculation is fairly complicated. | From BtS
 `<bDefensivePact>1</bDefensivePact>` | All members sign a defensive pact with each other. Only available if at least one defensive pact can be signed that way. | From BtS
 `<bOpenBorders>1</bOpenBorders>` | All members sign open borders agreement with each other. Only available if at least one open borders agreement can be signed that way. | From BtS
-`<bForcePeace>1</bForcePeace>` | A member is chosen for the resolution. All other members sign a peace treaty with that member. | From BtS
+`<bForcePeace>1</bForcePeace>` | A member is chosen for the resolution that is at war with some other member. All other members sign a peace treaty with that member. | From BtS
 `<bForceNoTrade>1</bForceNoTrade>` | A non-member player is chosen for the resolution. All members cancel all deals with that player. | From BtS
-`<bForceWar>1</bForceWar>` | A non-member player is chosen for the resolution. All members declare war on that player. | From BtS
-`<bAssignCity>1</bAssignCity>` | TODO | TODO
+`<bForceWar>1</bForceWar>` | A non-member player is chosen for the resolution. All members declare war on that player. Can only be passed if some member is at war with the chosen non-member, but not all members are. | From BtS
+`<bAssignCity>1</bAssignCity>` | TODO; Cannot be combined with another tag that chooses a player. | From BtS
 `<ForceCivics>` | All members have to use the specified civics. (In BtS, all players have to use them.) | Changed in FfH2
 `<DiploVotes>` | TODO | TODO
 `<bNoOutsideTechTrades>1</bNoOutsideTechTrades>` | Members cannot trade with non-members. | Added in FfH2

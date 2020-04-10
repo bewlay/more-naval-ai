@@ -2,12 +2,204 @@
 <!-- Text for specific votes. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_VOTE_ASSIGN_CITY</Tag>
+		<English>Assign City Ownership</English>
+		<French>Mandat pour la possession d'une ville</French>
+		<German>Mandat f&#252;r Stadt&#252;bernahme</German>
+		<Italian>Mandato di assegnazione della citt&#224;</Italian>
+		<Spanish>Mandato de cesi&#243;n de ciudad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_ASSIGN_CITY_PARAM</Tag>
+		<English>Transfer ownwership of %s2_city from %s1_player to %s3_player</English>
+		<French>Transfer ownwership of %s2_city from %s1_player to %s3_player</French>
+		<German>Transfer ownwership of %s2_city from %s1_player to %s3_player</German>
+		<Italian>Transfer ownwership of %s2_city from %s1_player to %s3_player</Italian>
+		<Spanish>Transfer ownwership of %s2_city from %s1_player to %s3_player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_DEVELOP_SECRET_CODES</Tag>
+		<English>Develop Secret Codes</English>
+		<French>Developpper des Codes Secrets</French>
+		<German>Geheimcode entwickeln</German>
+		<Italian>Develop Secret Codes</Italian>
+		<Spanish>Desarrollar códigos secretos</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_ENLIST_THE_NIGHTWATCH</Tag>
+		<English>Enlist the Nightwatch</English>
+		<French>Enrôler la Garde de Nuit</French>
+		<German>Nachtwache anwerbene</German>
+		<Italian>Enlist the Nightwatch</Italian>
+		<Spanish>Enrolar a los Vigilantes de la Noche</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_NO_TRADE</Tag>
+		<English>Trade Embargo</English>
+		<French>Embargo commercial</French>
+		<German>Handelsembargo</German>
+		<Italian>Embargo commerciale</Italian>
+		<Spanish>Embargo comercial</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_NO_TRADE_PARAM</Tag>
+		<English>Trade Embargo against %s1_player</English>
+		<French>Trade Embargo against %s1_player</French>
+		<German>Handelsembargo gegen %s1_player</German>
+		<Italian>Trade Embargo against %s1_player</Italian>
+		<Spanish>Embargo comercial en contra %s1_player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_PEACE</Tag>
+		<English>Force Peace</English>
+		<French>Maintien de la paix</French>
+		<German>Friedensresolution</German>
+		<Italian>Forze di pace</Italian>
+		<Spanish>Pacificaci&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_PEACE_PARAM</Tag>
+		<English>Force peace with %s1_player</English>
+		<French>Force peace with %s1_player</French>
+		<German>Frieden mit %s1_player</German>
+		<Italian>Force peace with %s1_player</Italian>
+		<Spanish>Force peace with %s1_player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_WAR</Tag>
+		<English>Call to Arms</English>
+		<French>R&#233;solution pour la guerre</French>
+		<German>Kriegsresolution</German>
+		<Italian>Risoluzione di guerra</Italian>
+		<Spanish>Resoluci&#243;n de guerra</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FORCE_WAR_PARAM</Tag>
+		<English>Call to Arms against %s1_player</English>
+		<French>Call to Arms against %s1_player</French>
+		<German>Kriegsresolution gegen %s1_player</German>
+		<Italian>Call to Arms against %s1_player</Italian>
+		<Spanish>Resoluci&#243;n de guerra en contra %s1_player</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FREE_TRADE</Tag>
+		<English>Open Markets</English>
+		<French>Marchés Ouverts</French>
+		<German>Offene Märkte</German>
+		<Italian>Open Markets</Italian>
+		<Spanish>Comercio Libre</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FUND_DISSIDENTS</Tag>
+		<English>Fund Dissidents</English>
+		<French>Formenter des Troubles</French>
+		<German>Dissidenten unterstützen</German>
+		<Italian>Fund Dissidents</Italian>
+		<Spanish>Colocar Disidentes</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_FUND_DISSIDENTS_HELP</Tag>
+		<English>[ICON_BULLET]Could cause unhappiness in the cities of Overcouncil members</English>
+		<French>[ICON_BULLET]Peut causer du mécontentement dans les villes des non-Membres du Conseil supérieur</French>
+		<German>[ICON_BULLET]Kann Unzufriedenheit in Städten von Mitgliedern des Hohen Rats verursachen</German>
+		<Italian>[ICON_BULLET]Could cause unhappiness in the cities of Overcouncil members</Italian>
+		<Spanish>[ICON_BULLET]Puede causar infelicidad en ciudades que pertenezcan al Gran Consejo</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_GAMBLING_RING</Tag>
+		<English>Setup a Gambling Ring: Reduces the production cost of Gambling Houses by 75%, increases global crime by 5%</English>
+		<French>Intaller un Cercle de Jeu - Réduit le coût de production des Maisons de Jeu de 75%, augmente le crime global de 5%</French>
+		<German>Glücksspielerring aufbauen - Reduziert die Produktionskosten von Glücksspielhäusern um 75%, erhöht die weltweite Verbrechenrate um 5%</German>
+		<Italian>Setup a Gambling Ring: Reduces the production cost of Gambling Houses by 75%, increases global crime by 5%</Italian>
+		<Spanish>Círculo de Apuestas: Reduce los costes de las Casas de Apuestas en un 75% y aumenta el índice de criminalidad global en un 5%</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_VOTE_GAMBLING_RING_HELP</Tag>
 		<English>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</English>
 		<French>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</French>
 		<German>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</German>
 		<Italian>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</Italian>
 		<Spanish>[ICON_BULLET]Gambling house costs -75%[ICON_PRODUCTION]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_LIBERTY</Tag>
+		<English>Global Civic - Liberty</English>
+		<French>Doctrine Mondiale - Liberté</French>
+		<German>Einheitliche Gesellschaftsform - Hochkultur</German>
+		<Italian>Global Civic - Liberty</Italian>
+		<Spanish>Principio Global - Libertad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_NO_DEATH_MANA</Tag>
+		<English>Outlaw Death Mana</English>
+		<French>Déclarer la Mana de Mort Hors-la-Loi</French>
+		<German>Todesmana ächten</German>
+		<Italian>Outlaw Death Mana</Italian>
+		<Spanish>Prohibir Maná de Muerte</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_NO_ENTROPY_MANA</Tag>
+		<English>Outlaw Entropy Mana</English>
+		<French>Déclarer la Mana d'Entropie Hors-la-Loi</French>
+		<German>Entropiemana ächten</German>
+		<Italian>Outlaw Entropy Mana</Italian>
+		<Spanish>Prohibir Maná de Entropía</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_NO_SHADOW_MANA</Tag>
+		<English>Outlaw Shadow Mana</English>
+		<French>Déclarer la Mana d'Ombre Hors-la-Loi</French>
+		<German>Schattenmana ächten</German>
+		<Italian>Outlaw Shadow Mana</Italian>
+		<Spanish>Prohibir Maná de Sombra</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_OPEN_BORDERS</Tag>
+		<English>Force Open Borders between all members</English>
+		<French>Forcer les Libre Passage entre tous les Membres</French>
+		<German>Offene Grenzen erzwingen zwischen allen Ratsmitgliedern</German>
+		<Italian>Force Open Borders between all members</Italian>
+		<Spanish>Todos los miembros tienen Apertura de Fronteras</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SECRETARY_GENERAL_OVERCOUNCIL</Tag>
+		<English>Head Councilor election</English>
+		<French>Head Councilor election</French>
+		<German>Wahl des Ratsvorsitzenden</German>
+		<Italian>Head Councilor election</Italian>
+		<Spanish>Elección del Consejero Mayor</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SECRETARY_GENERAL_UNDERCOUNCIL</Tag>
+		<English>Dark Magistrate election</English>
+		<French>Dark Magistrate election</French>
+		<German>Wahl des Dunklen Magistrats</German>
+		<Italian>Dark Magistrate election</Italian>
+		<Spanish>Elección del Magistrado Oscuro</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SINGLE_CURRENCY</Tag>
+		<English>Single Currency</English>
+		<French>Concurrence Unique</French>
+		<German>Einheitswährung</German>
+		<Italian>Single Currency</Italian>
+		<Spanish>Moneda Única</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SLAVE_TRADE</Tag>
+		<English>Setup Slave Trade</English>
+		<French>Installer le marché aux esclaves</French>
+		<German>Sklavenhandel aufbauen</German>
+		<Italian>Setup Slave Trade</Italian>
+		<Spanish>Mercado de Esclavos</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_SMUGGLING_RING</Tag>
+		<English>Setup Smuggling Ring</English>
+		<French>Installer un Cercle de Contrebande</French>
+		<German>Schmugglering aufbauen</German>
+		<Italian>Setup Smuggling Ring</Italian>
+		<Spanish>Círculo de Contrabandistas</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_SMUGGLING_RING_HELP</Tag>

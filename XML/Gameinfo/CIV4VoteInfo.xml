@@ -7,8 +7,8 @@
 <Civ4VoteInfo xmlns="x-schema:CIV4GameInfoSchema.xml">
 	<VoteInfos>
 		<VoteInfo>
-			<Type>VOTE_SECRETARY_GENERAL</Type>
-			<Description>TXT_KEY_VOTE_SECRETARY_GENERAL</Description>
+			<Type>VOTE_SECRETARY_GENERAL_OVERCOUNCIL</Type>
+			<Description>TXT_KEY_VOTE_SECRETARY_GENERAL_OVERCOUNCIL</Description>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -148,8 +148,9 @@
 			<PyResult/>
 		</VoteInfo>
 		<VoteInfo>
-			<Type>VOTE_UN_FORCE_PEACE</Type>
-			<Description>TXT_KEY_VOTE_UN_FORCE_PEACE</Description>
+			<Type>VOTE_FORCE_PEACE</Type>
+			<Description>TXT_KEY_VOTE_FORCE_PEACE</Description>
+			<ParamDescription>TXT_KEY_VOTE_FORCE_PEACE_PARAM</ParamDescription>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -182,8 +183,9 @@
 			<PyResult/>
 		</VoteInfo>
 		<VoteInfo>
-			<Type>VOTE_UN_FORCE_NO_TRADE</Type>
-			<Description>TXT_KEY_UN_VOTE_FORCE_NO_TRADE</Description>
+			<Type>VOTE_FORCE_NO_TRADE</Type>
+			<Description>TXT_KEY_VOTE_FORCE_NO_TRADE</Description>
+			<ParamDescription>TXT_KEY_VOTE_FORCE_NO_TRADE_PARAM</ParamDescription>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -217,7 +219,8 @@
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_FORCE_WAR</Type>
-			<Description>TXT_KEY_UN_VOTE_FORCE_WAR</Description>
+			<Description>TXT_KEY_VOTE_FORCE_WAR</Description>
+			<ParamDescription>TXT_KEY_VOTE_FORCE_WAR_PARAM</ParamDescription>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -251,7 +254,8 @@
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_ASSIGN_CITY</Type>
-			<Description>TXT_KEY_VOTE_UN_ASSIGN_CITY</Description>
+			<Description>TXT_KEY_VOTE_ASSIGN_CITY</Description>
+			<ParamDescription>TXT_KEY_VOTE_ASSIGN_CITY_PARAM</ParamDescription>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -421,7 +425,7 @@
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_SECRETARY_GENERAL_UNDERCOUNCIL</Type>
-			<Description>TXT_KEY_VOTE_SECRETARY_GENERAL</Description>
+			<Description>TXT_KEY_VOTE_SECRETARY_GENERAL_UNDERCOUNCIL</Description>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -455,7 +459,8 @@
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_FORCE_WAR_UNDERCOUNCIL</Type>
-			<Description>TXT_KEY_UN_VOTE_FORCE_WAR</Description>
+			<Description>TXT_KEY_VOTE_FORCE_WAR</Description>
+			<ParamDescription>TXT_KEY_VOTE_FORCE_WAR_PARAM</ParamDescription>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -558,6 +563,7 @@
 		<VoteInfo>
 			<Type>VOTE_FUND_DISSIDENTS</Type>
 			<Description>TXT_KEY_VOTE_FUND_DISSIDENTS</Description>
+			<Help>TXT_KEY_VOTE_FUND_DISSIDENTS_HELP</Help>
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -797,6 +803,9 @@
 			<NoBonus/>
 			<PyResult/>
 		</VoteInfo>
+		
+		<!-- LFGR_TODO: fix or remove the following votes -->
+		
 		<VoteInfo>
 			<Type>VOTE_UN_TRADE_MAP</Type>
 			<Description>TXT_KEY_VOTE_UN_TRADE_MAP</Description>

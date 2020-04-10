@@ -11160,6 +11160,7 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	CvVoteInfo& kVote = GC.getVoteInfo( eVote );
 	
 	// Use first eligible vote source if none is specified
+	// LFGR_TODO?
 	if( eVoteSource == NO_VOTESOURCE ) {
 		for( int eLoopVoteSource = 0; eLoopVoteSource < GC.getNumVoteSourceInfos(); eLoopVoteSource++ ) {
 			if( kVote.isVoteSourceType( eLoopVoteSource ) ) {
@@ -11175,8 +11176,15 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	}
 	
 	// Voting
-	
-	if( kVote.getPopulationThreshold() != 50 ) {
+
+	if( eVoteSource != NO_VOTESOURCE && GC.getGameINLINE().getActivePlayer() != NO_PLAYER ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_REQUIRED_VOTES",
+			GC.getGameINLINE().getVoteRequired( eVote, eVoteSource ),
+			GC.getGameINLINE().countPossibleVote( eVote, eVoteSource )) );
+	}
+	else if( kVote.getPopulationThreshold() != 50 ) {
+		// Show percentage if no game is running or no vote source is specified.
 		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
 		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_POPULATION_THRESHOLD",
 				kVote.getPopulationThreshold() ) );

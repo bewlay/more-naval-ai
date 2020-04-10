@@ -113,6 +113,7 @@
 		<element type="ProductionToCommerceModifiers"/>
 		<element type="Button"/>
 	</ElementType>
+	<ElementType name="ParamDescription" content="textOnly" /> <!-- VOTE_DESC lfgr 04/2020 -->
 	<ElementType name="iPopulationThreshold" content="textOnly" dt:type="int"/>
 	<ElementType name="bCityVoting" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCivVoting" content="textOnly" dt:type="boolean"/>
@@ -160,6 +161,7 @@
 	<ElementType name="VoteInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
+		<element type="ParamDescription" minOccurs="0"/> <!-- VOTE_DESC lfgr 04/2020 -->
 		<element type="Help" minOccurs="0"/> <!-- VOTE_HELP lfgr 04/2020 -->
 		<element type="iPopulationThreshold"/>
 		<element type="bCityVoting"/>

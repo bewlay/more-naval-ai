@@ -19731,6 +19731,12 @@ CvVoteInfo::~CvVoteInfo()
 	SAFE_DELETE_ARRAY(m_abVoteSourceTypes);
 }
 
+// VOTE_DESC 04/2020 lfgr
+const wchar* CvVoteInfo::getParamDescriptionKey() const
+{
+	return m_szParamDescriptionKey.c_str();
+}
+
 int CvVoteInfo::getPopulationThreshold() const
 {
 	return m_iPopulationThreshold;
@@ -19943,6 +19949,8 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 	{
 		return false;
 	}
+
+	pXML->GetChildXmlValByName(m_szParamDescriptionKey, "ParamDescription"); // VOTE_DESC 04/2020 lfgr
 
 	pXML->GetChildXmlValByName(&m_iPopulationThreshold, "iPopulationThreshold");
 	pXML->GetChildXmlValByName(&m_iStateReligionVotePercent, "iStateReligionVotePercent");

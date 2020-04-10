@@ -14,6 +14,11 @@
 namespace info_utils {
 	// The actual cost of the given spell, taking game speed into account
 	int getRealSpellCost( PlayerTypes ePlayer, SpellTypes eSpell );
+
+	CvWString getParametrizedVoteDescription( VoteTypes eVote,
+		PlayerTypes ePlayer, int iCity, PlayerTypes eOtherPlayer );
+
+	void setParametrizedVoteDescription( VoteSelectionSubData& kData );
 }
 
 #endif /* CVINFOUTILS_H_ */

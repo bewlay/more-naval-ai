@@ -30,6 +30,8 @@
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLPythonIFaceBase.h"
 
+#include "CvInfoUtils.h" // lfgr 04/2020
+
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                      10/02/09                                jdog5000      */
 /*                                                                                              */
@@ -3396,7 +3398,7 @@ void CvGame::clearSecretaryGeneral(VoteSourceTypes eVoteSource)
 				kData.eVoteSource = eVoteSource;
 				kData.kVoteOption.eVote = (VoteTypes)j;
 				kData.kVoteOption.iCityId = -1;
-				kData.kVoteOption.szText.empty();
+				kData.kVoteOption.szText.clear(); // lfgr fix 04/2020
 				kData.kVoteOption.ePlayer = NO_PLAYER;
 				setVoteOutcome(kData, NO_PLAYER_VOTE);
 				setSecretaryGeneralTimer(eVoteSource, 0);
@@ -4799,6 +4801,7 @@ bool CvGame::canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionSub
 
 bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const
 {
+	// LFGR_TODO: This does not work if a vote does multiple things
 	if (NO_PLAYER != kData.ePlayer)
 	{
 		CvPlayer& kPlayer = GET_PLAYER(kData.ePlayer);
@@ -4900,6 +4903,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 
 		bool bValid = false;
 
+		// Must be at war with some member
 		for (int iTeam2 = 0; iTeam2 < MAX_CIV_TEAMS; ++iTeam2)
 		{
 			if (atWar(kPlayer.getTeam(), (TeamTypes)iTeam2))
@@ -10443,121 +10447,61 @@ VoteSelectionData* CvGame::addVoteSelection(VoteSourceTypes eVoteSource)
 					kData.ePlayer = NO_PLAYER;
 					kData.eOtherPlayer = NO_PLAYER;
 
-					if (GC.getVoteInfo(kData.eVote).isOpenBorders())
-					{
-						if (isValidVoteSelection(eVoteSource, kData))
-						{
-							kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPEN_BORDERS", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-							pData->aVoteOptions.push_back(kData);
-						}
-					}
-					else if (GC.getVoteInfo(kData.eVote).isDefensivePact())
-					{
-						if (isValidVoteSelection(eVoteSource, kData))
-						{
-							kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_DEFENSIVE_PACT", getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-							pData->aVoteOptions.push_back(kData);
-						}
-					}
-					else if (GC.getVoteInfo(kData.eVote).isForcePeace())
-					{
-						for (int iTeam1 = 0; iTeam1 < MAX_CIV_TEAMS; ++iTeam1)
-						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
+					// VOTE_DESC 04/2020 lfgr: Simplified the following
 
-							if (kTeam1.isAlive())
-							{
-								kData.ePlayer = kTeam1.getLeaderID();
+					CvVoteInfo& kVote = GC.getVoteInfo( kData.eVote );
 
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_PEACE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
+					if( kVote.isForcePeace() || kVote.isForceNoTrade() || kVote.isForceWar() ) {
+						// Choose non-member team
+
+						FAssertMsg( ! kVote.isAssignCity(), CvString::format(
+								"Invalid Vote parameter combination: %s", kVote.getType() ).c_str() );
+
+						for( int iTeam = 0; iTeam < MAX_CIV_TEAMS; ++iTeam ) {
+							CvTeam& kTeam = GET_TEAM( (TeamTypes)iTeam );
+
+							if( kTeam.isAlive() ) {
+								kData.ePlayer = kTeam.getLeaderID();
+
+								if( isValidVoteSelection( eVoteSource, kData ) ) {
+									info_utils::setParametrizedVoteDescription( kData );
+									pData->aVoteOptions.push_back( kData );
 								}
 							}
 						}
 					}
-					else if (GC.getVoteInfo(kData.eVote).isForceNoTrade())
-					{
-						for (int iTeam1 = 0; iTeam1 < MAX_CIV_TEAMS; ++iTeam1)
-						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
-
-							if (kTeam1.isAlive())
-							{
-								kData.ePlayer = kTeam1.getLeaderID();
-
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_NO_TRADE", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
-								}
-							}
-						}
-					}
-					else if (GC.getVoteInfo(kData.eVote).isForceWar())
-					{
-						for (int iTeam1 = 0; iTeam1 < MAX_CIV_TEAMS; ++iTeam1)
-						{
-							CvTeam& kTeam1 = GET_TEAM((TeamTypes)iTeam1);
-
-							if (kTeam1.isAlive())
-							{
-								kData.ePlayer = kTeam1.getLeaderID();
-
-								if (isValidVoteSelection(eVoteSource, kData))
-								{
-									kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_FORCE_WAR", kTeam1.getName().GetCString(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-									pData->aVoteOptions.push_back(kData);
-								}
-							}
-						}
-					}
-					else if (GC.getVoteInfo(kData.eVote).isAssignCity())
-					{
-						for (int iPlayer1 = 0; iPlayer1 < MAX_CIV_PLAYERS; ++iPlayer1)
-						{
-							CvPlayer& kPlayer1 = GET_PLAYER((PlayerTypes)iPlayer1);
-/************************************************************************************************/
-/* Afforess	                  Start		 		                                                */
-/* Advanced Diplomacy                                                                           */
-/************************************************************************************************/
-							if (kPlayer1.isAlive())
-							{
+					else if( kVote.isAssignCity() ) {
+						// Choose city to transfer
+						// Modified by Afforess for Advanced Diplomacy
+						for( int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer ) {
+							CvPlayer& kPlayer = GET_PLAYER( (PlayerTypes)iPlayer );
+							if( kPlayer.isAlive() ) {
 								int iLoop;
-								for (CvCity* pLoopCity = kPlayer1.firstCity(&iLoop); NULL != pLoopCity; pLoopCity = kPlayer1.nextCity(&iLoop))
-								{
+								for( CvCity* pLoopCity = kPlayer.firstCity( &iLoop ); NULL != pLoopCity;
+										pLoopCity = kPlayer.nextCity( &iLoop ) ) {
 									PlayerTypes eNewOwner = pLoopCity->plot()->findHighestCulturePlayer();
-									if (NO_PLAYER != eNewOwner)
-									{
-										kData.ePlayer = (PlayerTypes)iPlayer1;
+									if( NO_PLAYER != eNewOwner ) {
+										kData.ePlayer = (PlayerTypes) iPlayer;
 										kData.iCityId =	pLoopCity->getID();
 										kData.eOtherPlayer = eNewOwner;
 
-										if (isValidVoteSelection(eVoteSource, kData))
-										{
-											kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_ASSIGN_CITY", kPlayer1.getCivilizationAdjectiveKey(), pLoopCity->getNameKey(), GET_PLAYER(eNewOwner).getNameKey(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-											pData->aVoteOptions.push_back(kData);
+										if( isValidVoteSelection( eVoteSource, kData ) ) {
+											info_utils::setParametrizedVoteDescription( kData );
+											pData->aVoteOptions.push_back( kData );
 										}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 									}
 								}
 							}
 						}
 					}
-					else
-					{
-						kData.szText = gDLL->getText("TXT_KEY_POPUP_ELECTION_OPTION", GC.getVoteInfo(kData.eVote).getTextKeyWide(), getVoteRequired(kData.eVote, eVoteSource), countPossibleVote(kData.eVote, eVoteSource));
-						if (isVotePassed(kData.eVote))
-						{
-							kData.szText += gDLL->getText("TXT_KEY_POPUP_PASSED");
-						}
-
-						if (canDoResolution(eVoteSource, kData))
-						{
-							pData->aVoteOptions.push_back(kData);
+					else {
+						// No parameters to select
+						if( isValidVoteSelection( eVoteSource, kData ) ) {
+							info_utils::setParametrizedVoteDescription( kData );
+							if( isVotePassed(kData.eVote) ) {
+								kData.szText += gDLL->getText("TXT_KEY_POPUP_PASSED");
+							}
+							pData->aVoteOptions.push_back( kData );
 						}
 					}
 				}
@@ -10651,6 +10595,9 @@ void CvGame::doVoteResults()
 		VoteTypes eVote = pVoteTriggered->kVoteOption.eVote;
 		VoteSourceTypes eVoteSource = pVoteTriggered->eVoteSource;
 		bool bPassed = false;
+
+		// VOTE_DESC 04/2020 lfgr: Take into account previous result
+		bool bPassedBefore = isVotePassed( pVoteTriggered->kVoteOption.eVote );
 		
 /********************************************************************************/
 /* Improved Councils    03/2013                                         lfgr    */
@@ -10874,7 +10821,11 @@ void CvGame::doVoteResults()
 					}
 				}
 
-				szBuffer += NEWLINE + gDLL->getText((bPassed ? "TXT_KEY_POPUP_DIPLOMATIC_VOTING_SUCCEEDS" : "TXT_KEY_POPUP_DIPLOMATIC_VOTING_FAILURE"), GC.getVoteInfo(eVote).getTextKeyWide(), countVote(*pVoteTriggered, PLAYER_VOTE_YES), getVoteRequired(eVote, eVoteSource), countPossibleVote(eVote, eVoteSource));
+				// VOTE_DESC 04/2020 lfgr: Improved
+				szBuffer += NEWLINE + gDLL->getText((bPassed ? "TXT_KEY_POPUP_DIPLOMATIC_VOTING_SUCCEEDS" : "TXT_KEY_POPUP_DIPLOMATIC_VOTING_FAILURE"),
+						pVoteTriggered->kVoteOption.szText.c_str(),
+						countVote(*pVoteTriggered, PLAYER_VOTE_YES), getVoteRequired(eVote, eVoteSource),
+						countPossibleVote(eVote, eVoteSource));
 				
 /********************************************************************************/
 /* Improved Councils    03/2013                                         lfgr    */
@@ -10887,6 +10838,7 @@ void CvGame::doVoteResults()
 /* Improved Councils                                                    END     */
 /********************************************************************************/
 
+				// Add individual player votes
 				for (int iI = PLAYER_VOTE_NEVER; iI <= PLAYER_VOTE_YES; ++iI)
 				{
 					for (int iJ = 0; iJ < MAX_CIV_PLAYERS; iJ++)
@@ -10928,6 +10880,7 @@ void CvGame::doVoteResults()
 				setVoteOutcome(*pVoteTriggered, bPassed ? PLAYER_VOTE_YES : PLAYER_VOTE_NO);
 			}
 
+			// Show popup to members and message to members and other affected players
 			for (int iI = 0; iI < MAX_CIV_PLAYERS; iI++)
 			{
 				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
@@ -10945,48 +10898,46 @@ void CvGame::doVoteResults()
 						}
 					}
 
-					if (!bShow)
-					{
-						if (iI == pVoteTriggered->kVoteOption.ePlayer && GET_PLAYER(pVoteTriggered->kVoteOption.ePlayer).isVotingMember(pVoteTriggered->eVoteSource))
-						{
-							bShow = true;
-						}
-					}
+					// lfgr fix 04/2020: The previous code here didn't do anything. Below is what was probably desired.
+					bShow = bShow || ( iI == pVoteTriggered->kVoteOption.ePlayer )
+					              || ( iI == pVoteTriggered->kVoteOption.eOtherPlayer );
 
-					if (!bShow)
-					{
-						if (iI == pVoteTriggered->kVoteOption.eOtherPlayer && GET_PLAYER(pVoteTriggered->kVoteOption.eOtherPlayer).isVotingMember(pVoteTriggered->eVoteSource))
-						{
-							bShow = true;
-						}
-					}
-
-					if (bShow && bPassed)
-					{
-/********************************************************************************/
-/* Improved Councils    03/2013                                         lfgr    */
-/* Better Messages                                                              */
-/********************************************************************************/
-/* old
-						CvWString szMessage = gDLL->getText("TXT_KEY_VOTE_RESULTS", GC.getVoteSourceInfo(eVoteSource).getTextKeyWide(), pVoteTriggered->kVoteOption.szText.GetCString());
-*/
+					// VOTE_DESC 04/2020 lfgr: Show appropriate message
+					if( bShow ) {
 						CvWString szMessage;
-						
 						CvVoteInfo& kVote = GC.getVoteInfo( eVote );
 						CvVoteSourceInfo& kVoteSource = GC.getVoteSourceInfo( eVoteSource );
 						int iChoice = getVoteOutcome( eVote );
-						if( kVote.isVictory() )
-							szMessage = gDLL->getText("TXT_KEY_VOTE_RESULTS_VICTORY", kVoteSource.getTextKeyWide(), GET_TEAM( (TeamTypes) iChoice ).getName().GetCString() );
-						else if( kVote.isSecretaryGeneral() )
-							szMessage = gDLL->getText("TXT_KEY_VOTE_RESULTS_SECRETARY", kVoteSource.getTextKeyWide(), GET_TEAM( (TeamTypes) iChoice ).getName().GetCString(), kVoteSource.getSecretaryGeneralText().GetCString() );
-						else
-							szMessage = gDLL->getText("TXT_KEY_VOTE_RESULTS", GC.getVoteSourceInfo(eVoteSource).getTextKeyWide(), pVoteTriggered->kVoteOption.szText.GetCString());
-/********************************************************************************/
-/* Improved Councils                                                    END     */
-/********************************************************************************/
-						gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szMessage, "AS2D_NEW_ERA", MESSAGE_TYPE_MINOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
-					}
 
+						if( bPassed && kVote.isVictory() ) {
+							szMessage = gDLL->getText( "TXT_KEY_VOTE_RESULTS_VICTORY", kVoteSource.getTextKeyWide(),
+									GET_TEAM( (TeamTypes) iChoice ).getName().GetCString() );
+						}
+						else if( bPassed && kVote.isSecretaryGeneral() ) {
+							szMessage = gDLL->getText( "TXT_KEY_VOTE_RESULTS_SECRETARY", kVoteSource.getTextKeyWide(),
+									GET_TEAM( (TeamTypes) iChoice ).getName().GetCString(),
+									kVoteSource.getSecretaryGeneralText().GetCString() );
+						}
+						else if( bPassed && bPassedBefore ) {
+							szMessage = gDLL->getText( "TXT_KEY_MSG_VOTE_PASSED_AGAIN", kVoteSource.getTextKeyWide(),
+									pVoteTriggered->kVoteOption.szText.GetCString() );
+						}
+						else if( bPassed && !bPassedBefore ) {
+							szMessage = gDLL->getText( "TXT_KEY_MSG_VOTE_PASSED", kVoteSource.getTextKeyWide(),
+									pVoteTriggered->kVoteOption.szText.GetCString() );
+						}
+						else if( !bPassed && bPassedBefore ) {
+							szMessage = gDLL->getText( "TXT_KEY_MSG_VOTE_REPEALED", kVoteSource.getTextKeyWide(),
+									pVoteTriggered->kVoteOption.szText.GetCString() );
+						}
+						else if( !bPassed && !bPassedBefore ) {
+							szMessage = gDLL->getText( "TXT_KEY_MSG_VOTE_REJECTED", kVoteSource.getTextKeyWide(),
+									pVoteTriggered->kVoteOption.szText.GetCString() );
+						}
+						gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(),
+								szMessage, "AS2D_NEW_ERA", MESSAGE_TYPE_MINOR_EVENT, NULL,
+								(ColorTypes)GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"));
+					}
 				}
 			}
 		}
