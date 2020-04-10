@@ -10,6 +10,14 @@
 		<Spanish>[ICON_BULLET]Cuesta %d1[ICON_GOLD]</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_SPELL_COST_CANNOT_PAY</Tag>
+		<English>[ICON_BULLET][COLOR_RED]Costs %d1[COLOR_REVERT][ICON_GOLD]</English>
+		<French>[ICON_BULLET][COLOR_RED]Coûte %d1[COLOR_REVERT][ICON_GOLD]</French>
+		<German>[ICON_BULLET][COLOR_RED]Kostet %d1[COLOR_REVERT][ICON_GOLD]</German>
+		<Italian>[ICON_BULLET][COLOR_RED]Costs %d1[COLOR_REVERT][ICON_GOLD]</Italian>
+		<Spanish>[ICON_BULLET][COLOR_RED]Cuesta %d1[COLOR_REVERT][ICON_GOLD]</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_SPELL_PROFIT</Tag>
 		<English>[ICON_BULLET]Receive %d1[ICON_GOLD]</English>
 		<French>[ICON_BULLET]Receive %d1[ICON_GOLD]</French>

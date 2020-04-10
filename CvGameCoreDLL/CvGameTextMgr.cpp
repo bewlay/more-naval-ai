@@ -10132,8 +10132,20 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 		iCost = kSpellInfo.getCost();
 	}
 	if( iCost > 0 ) {
+		bool bCanPay = true;
+
+		if( pvpUnits != NULL && pvpUnits->size() > 0 ) {
+			// All selected units have the same owner
+			bCanPay = GET_PLAYER( pvpUnits->at( 0 )->getOwnerINLINE() ).getGold() >= iCost;
+		}
+
         szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_SPELL_COST", iCost));
+        if( bCanPay ) {
+			szBuffer.append(gDLL->getText("TXT_KEY_SPELL_COST", iCost));
+		}
+		else {
+			szBuffer.append(gDLL->getText("TXT_KEY_SPELL_COST_CANNOT_PAY", iCost));
+		}
     }
 	else if( iCost < 0 ) {
 		szBuffer.append(pcNewline);
