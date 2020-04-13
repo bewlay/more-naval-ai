@@ -2,22 +2,6 @@
 <!-- Text for specific votes. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_ASSIGN_CITY</Tag>
-		<English>Assign City Ownership</English>
-		<French>Mandat pour la possession d'une ville</French>
-		<German>Mandat f&#252;r Stadt&#252;bernahme</German>
-		<Italian>Mandato di assegnazione della citt&#224;</Italian>
-		<Spanish>Mandato de cesi&#243;n de ciudad</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_ASSIGN_CITY_PARAM</Tag>
-		<English>Transfer ownwership of %s2_city from %s1_player to %s3_player</English>
-		<French>Transfer ownwership of %s2_city from %s1_player to %s3_player</French>
-		<German>Transfer ownwership of %s2_city from %s1_player to %s3_player</German>
-		<Italian>Transfer ownwership of %s2_city from %s1_player to %s3_player</Italian>
-		<Spanish>Transfer ownwership of %s2_city from %s1_player to %s3_player</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_VOTE_DEVELOP_SECRET_CODES</Tag>
 		<English>Develop Secret Codes</English>
 		<French>Developpper des Codes Secrets</French>

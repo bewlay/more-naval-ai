@@ -253,41 +253,6 @@
 			<PyResult/>
 		</VoteInfo>
 		<VoteInfo>
-			<Type>VOTE_ASSIGN_CITY</Type>
-			<Description>TXT_KEY_VOTE_ASSIGN_CITY</Description>
-			<ParamDescription>TXT_KEY_VOTE_ASSIGN_CITY_PARAM</ParamDescription>
-			<iPopulationThreshold>50</iPopulationThreshold>
-			<bCityVoting>0</bCityVoting>
-			<bCivVoting>1</bCivVoting>
-			<iMinVoters>2</iMinVoters>
-			<iStateReligionVotePercent>0</iStateReligionVotePercent>
-			<iTradeRoutes>0</iTradeRoutes>
-			<bSecretaryGeneral>0</bSecretaryGeneral>
-			<bVictory>0</bVictory>
-			<bFreeTrade>0</bFreeTrade>
-			<bNoNukes>0</bNoNukes>
-			<bDefensivePact>0</bDefensivePact>
-			<bOpenBorders>0</bOpenBorders>
-			<bForcePeace>0</bForcePeace>
-			<bForceNoTrade>0</bForceNoTrade>
-			<bForceWar>0</bForceWar>
-			<bAssignCity>1</bAssignCity>
-			<ForceCivics/>
-			<DiploVotes>
-				<DiploVote>
-					<DiploVoteType>DIPLOVOTE_OVERCOUNCIL</DiploVoteType>
-					<bValid>1</bValid>
-				</DiploVote>
-			</DiploVotes>
-			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
-			<iCost>0</iCost>
-			<iCrime>0</iCrime>
-			<iFreeUnits>0</iFreeUnits>
-			<FreeUnitClass>NONE</FreeUnitClass>
-			<NoBonus/>
-			<PyResult/>
-		</VoteInfo>
-		<VoteInfo>
 			<Type>VOTE_DEFENSIVE_PACT</Type>
 			<Description>TXT_KEY_VOTE_DEFENSIVE_PACT</Description>
 			<iPopulationThreshold>50</iPopulationThreshold>
