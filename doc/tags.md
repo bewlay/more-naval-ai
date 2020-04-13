@@ -27,7 +27,7 @@ Tag(s)  | Description | History
 `<bForcePeace>1</bForcePeace>` | A member is chosen for the resolution that is at war with some other member. All other members sign a peace treaty with that member. | From BtS
 `<bForceNoTrade>1</bForceNoTrade>` | A non-member player is chosen for the resolution. All members cancel all deals with that player. | From BtS
 `<bForceWar>1</bForceWar>` | A non-member player is chosen for the resolution. All members declare war on that player. Can only be passed if some member is at war with the chosen non-member, but not all members are. | From BtS
-`<bAssignCity>1</bAssignCity>` | TODO; Cannot be combined with another tag that chooses a player. | From BtS
+`<bAssignCity>1</bAssignCity>` | Transfers ownership of a city. The receiving player must have the most culture in the city and must be a full member. The giving player must be a voting member, but not a full member. The two players must not be at war. Cannot be combined with another tag that chooses a player. | From BtS
 `<ForceCivics>` | All members have to use the specified civics. (In BtS, all players have to use them.) | Changed in FfH2
 `<DiploVotes>` | TODO | TODO
 `<bNoOutsideTechTrades>1</bNoOutsideTechTrades>` | Members cannot trade with non-members. | Added in FfH2
@@ -36,9 +36,7 @@ Tag(s)  | Description | History
 `<NoBonus>BONUS_SOMETHING</NoBonus>` | Disables access to `BONUS_SOMETHING` for all members. | Added in FfH2
 `<PyResult>something()</PyResult>` | Python code to be executed (in `CvSpellInterface.py`) when this resolution is passed. | Added in FfH2
 `<bTradeMap>1</bTradeMap>` | When passed, all members share their maps immediately. This resolution can be passed repeatedly. AI players only vote for this resolution if they would be willing (in principle) to trade maps with all other members. | Added in MNAI via Advanced Diplomacy 2
-`<bNoCityRazing>1</bNoCityRazing>` | Members don't auto-raze cities. **TODO: Members shouldn't be able to raze cities!** AI players might defy this resolution if they think they'll want to raze a lot in the future. | Added in MNAI via Advanced Diplomacy 2
 `<bCultureNeedsEmptyRadius>1</bCultureNeedsEmptyRadius>` | Cities of members don't spread culture to plots that are owned by other players that do the same (due to this or some other resolution). | Added in MNAI via Advanced Diplomacy 2
-`<bPacificRule>1</bPacificRule>` | **TODO: Doesn't seem to do anything** | Added in MNAI via Advanced Diplomacy 2
 
 **Removed tags**
 
@@ -47,6 +45,16 @@ Tag(s)  | Description | History
 `<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
 `<bSmugglingRing>1</bSmugglingRing>` | Allows members to construct a smuggler's port. <br/> AI players with less than 3 coastal cities will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
 `<bSlaveTrade>1</bSlaveTrade>` | Allows member's units to cast spells with `<bPrereqSlaveTrade>1</bPrereqSlaveTrade>`. Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U (using SpellInfos `<VotePrereq>`).
+`<bNoCityRazing>1</bNoCityRazing>` | Members don't auto-raze cities. **TODO: Members shouldn't be able to raze cities!** AI players might defy this resolution if they think they'll want to raze a lot in the future. | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
+`<bPacificRule>1</bPacificRule>` | **TODO: Doesn't seem to do anything** | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
+
+
+### Units/CIV4SpellInfos.xml
+
+Tag(s)  | Description | History
+--- | --- | ---
+`<bAbility>1</bAbility>` | Can be cast even if spellcasting is disabled (e.g. through the Stasis worldspell). Created units do not gain promotions based on `<PromotionSummonPerk>`. Immunity to magic doesn't affect this spell.
+
 
 
 Sources:
@@ -54,4 +62,5 @@ Sources:
 * Kael's [Modder's guide to FfH2](https://forums.civfanatics.com/threads/modders-guide-to-ffh2.238077/)
 * Tholal's [Mod-modder's guide to MNAI](https://forums.civfanatics.com/threads/1st-draft-mod-modders-guide-to-mnai.519768/)
 * The civfanatics modiki [XML Reference](http://modiki.civfanatics.com/index.php?title=Civ4_XML_Reference)
+* civilization.fandom.com on the [Apostolic Palace](https://civilization.fandom.com/wiki/Apostolic_Palace_(Civ4))
 
