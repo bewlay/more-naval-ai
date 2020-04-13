@@ -29001,20 +29001,6 @@ DenialTypes CvPlayer::AI_tradeWarReparations(PlayerTypes ePlayer) const
 }
 
 // Advanced Diplomacy - added by MNAI
-bool CvPlayer::isNoCityRazing() const
-{
-   	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
-	{
-	    if (isFullMember((VoteSourceTypes)iI))
-	    {
-	        if (GC.getGameINLINE().isNoCityRazing((VoteSourceTypes)iI))
-	        {
-	            return true;
-	        }
-	    }
-	}
-    return false;
-}
 
 bool CvPlayer::isCultureNeedsEmptyRadius() const
 {

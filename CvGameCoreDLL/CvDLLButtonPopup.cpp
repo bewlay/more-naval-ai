@@ -1899,24 +1899,6 @@ bool CvDLLButtonPopup::launchDeclareWarMovePopup(CvPopup* pPopup, CvPopupInfo &i
 	else
 	{
 		szBuffer = gDLL->getText("TXT_KEY_POPUP_DOES_THIS_MEAN_WAR", GET_TEAM(eRivalTeam).getName().GetCString());
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		for (int iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-		{
-			if (GC.getGameINLINE().isPacificVoteSource((VoteSourceTypes)iI))
-			{
-				if (GET_TEAM(GC.getGameINLINE().getActiveTeam()).isVotingMember((VoteSourceTypes)iI))
-				{
-					szBuffer += NEWLINE;
-					szBuffer += gDLL->getText("TXT_KEY_POPUP_DOES_THIS_MEAN_WAR_PACIFIC", GC.getVoteSourceInfo((VoteSourceTypes)iI).getDescription());
-				}
-			}
-		}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	}
 	gDLL->getInterfaceIFace()->popupSetBodyString(pPopup, szBuffer);
 	gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, gDLL->getText("TXT_KEY_DECLARE_WAR_YES").c_str(), NULL, 0);

@@ -19697,9 +19697,7 @@ m_bAssignCity(false),
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
 m_bTradeMap(false),
-m_bNoCityRazing(false),
 m_bCultureNeedsEmptyRadius(false),
-m_bPacificRule(false),
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -19861,19 +19859,9 @@ bool CvVoteInfo::isTradeMap() const
 	return m_bTradeMap;
 }
 
-bool CvVoteInfo::isNoCityRazing() const
-{
-	return m_bNoCityRazing;
-}
-
 bool CvVoteInfo::isCultureNeedsEmptyRadius() const
 {
 	return m_bCultureNeedsEmptyRadius;
-}
-
-bool CvVoteInfo::isPacificRule() const
-{
-	return m_bPacificRule;
 }
 
 /*
@@ -19972,9 +19960,7 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
 	pXML->GetChildXmlValByName(&m_bTradeMap, "bTradeMap");
-	pXML->GetChildXmlValByName(&m_bNoCityRazing, "bNoCityRazing");
 	pXML->GetChildXmlValByName(&m_bCultureNeedsEmptyRadius, "bCultureNeedsEmptyRadius");
-	pXML->GetChildXmlValByName(&m_bPacificRule, "bPacificRule");
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/

@@ -699,30 +699,6 @@
 		<Spanish>¡Nunca retroceder! ¡Nunca rendirse!</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_NO_CAPITAL_PUNISHMENT</Tag>
-		<English>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</German>
-		<Italian>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</Italian>
-		<Spanish>TEST - Resolution (Abolition of Capital Punishment) (+1 ([ICON_HEALTHY]) in All Cities)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_MILITARY_MEDICINE</Tag>
-		<English>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</German>
-		<Italian>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</Italian>
-		<Spanish>TEST - Resolution (Humanitarian Assistance for Soldiers) (+30%([ICON_HEALTHY]) for Soldiers)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_PRISONER_RIGHTS</Tag>
-		<English>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</German>
-		<Italian>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</Italian>
-		<Spanish>TEST - Resolution (Return of Captured Civilians - Noncombatants Captured during War are Returned Upon Peace)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_TRADE_MAP</Tag>
 		<English>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
@@ -731,44 +707,12 @@
 		<Spanish>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_BARBARIAN_PEACE</Tag>
-		<English>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</German>
-		<Italian>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</Italian>
-		<Spanish>TEST - Resolution (Peace with Barbarians - Permenant Peace with Barbarians)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_NO_CITY_RAZING</Tag>
-		<English>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</German>
-		<Italian>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</Italian>
-		<Spanish>TEST - Resolution (Abolition of City Razing - No City Razing Upon Conquest)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Tag>
 		<English>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
 		<German>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </German>
 		<Italian>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Italian>
 		<Spanish>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_PACIFICSM</Tag>
-		<English>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</German>
-		<Italian>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</Italian>
-		<Spanish>TEST - Resolution (Voting Exclusion Penalty for Aggressive Wars - Temporary Exclusion of Voting Members who Launch Wars)</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_VICTIMS_RIGHTS</Tag>
-		<English>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</German>
-		<Italian>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</Italian>
-		<Spanish>TEST - Resolution (Victims' Rights Civilian Refugees Return Upon City Liberation)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DENIAL_SENATE_VETO</Tag>
@@ -825,14 +769,6 @@
 		<German>Active Senate</German>
 		<Italian>Active Senate</Italian>
 		<Spanish>Active Senate</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_GAME_OPTION_ACTIVE_SENATE_HELP</Tag>
-		<English>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</English>
-		<French>Sénat actif</French>
-		<German>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</German>
-		<Italian>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</Italian>
-		<Spanish>An Active Senate Overides Wars Unless Valid War Pretexts Exist.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_DOES_THIS_MEAN_WAR_PACIFIC</Tag>

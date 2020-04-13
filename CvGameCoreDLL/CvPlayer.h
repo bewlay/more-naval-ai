@@ -756,7 +756,6 @@ public:
 	void changeActiveSenateCount(int iChange);
 
 	//MNAI Additions
-	bool isNoCityRazing() const;
 	bool isCultureNeedsEmptyRadius() const;
 	// End MNAI
 /************************************************************************************************/

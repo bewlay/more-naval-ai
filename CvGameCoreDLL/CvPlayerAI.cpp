@@ -9530,28 +9530,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 /*************************************************************************************************/
 		int iTempValue;
 		int iCount;
-		
-		//No City Razing
-		if (bValid)
-		{
-			if (GC.getVoteInfo(eVote).isNoCityRazing())
-			{
-				iCount = std::max(20, GC.getGameINLINE().getSorenRandNum(100, "Random") * 10);
-				int iWarPlan = (GET_TEAM(getTeam()).getAnyWarPlanCount(true) * (10 + GC.getGameINLINE().getSorenRandNum(100, "random")));
-				iCount += GC.getGameINLINE().getSorenRandNum(iWarPlan, "Vote Count No City Razing");
-				iCount += GC.getLeaderHeadInfo(getPersonalityType()).getRazeCityProb();
-				iCount /= 2;
-				iTempValue = iCount - GC.getGameINLINE().getSorenRandNum(100, "No City Razing Probabilities");
-				if (iTempValue > 0)
-				{
-					bValid = false;
-					if (iTempValue >= (iCount - 5) && iCount >= 35)
-					{
-						bDefy = true;
-					}
-				}
-			}
-		}
 
 		//Culture Radius
 		if (bValid)
@@ -9584,23 +9562,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				}
 			}
 		}
-		
-		// Pacific Rule
-		if (bValid)
-		{
-			if (GC.getVoteInfo(eVote).isPacificRule())
-			{
-				//if (GET_TEAM(getTeam()).AI_getAtWarCounter(true))
-				{
-					bValid = false;
-
-					if (GET_TEAM(getTeam()).getAtWarCount(true) > 0)
-					{
-						bDefy = true;
-					}
-				}
-			}
-		}		
 /*************************************************************************************************/
 /** Advanced Diplomacy       END                                                 			 */
 /*************************************************************************************************/
@@ -9996,7 +9957,8 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 /*************************************************************************************************/
 /** Advanced Diplomacy       START                                                 				 */
 /*************************************************************************************************/			
-					if (bPropose && GET_TEAM(getTeam()).AI_isChosenWar(eWarTeam) && (GC.getGame().isPacificVoteSource(eVoteSource) || (std::max(0, (AI_getAttackOddsChange()-GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight())) == GC.getGame().getSorenRandNum(MAX_TEAMS, "force war playerai"))))
+					if( bPropose && GET_TEAM(getTeam()).AI_isChosenWar(eWarTeam)
+						&& std::max(0, (AI_getAttackOddsChange()-GC.getLeaderHeadInfo(getPersonalityType()).getBasePeaceWeight())) == GC.getGame().getSorenRandNum(MAX_TEAMS, "force war playerai") )
 					{
 						bValid = true;
 					}

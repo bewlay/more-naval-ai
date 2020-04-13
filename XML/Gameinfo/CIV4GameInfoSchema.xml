@@ -132,10 +132,7 @@
 	<ElementType name="bAssignCity" content="textOnly" dt:type="boolean"/>
 	<!-- Advanced Diplomacy START -->
 	<ElementType name="bTradeMap" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bVictimRights" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bNoCityRazing" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bCultureNeedsEmptyRadius" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bPacificRule" content="textOnly" dt:type="boolean"/>
 	<!-- Advanced Diplomacy END -->
 	<ElementType name="CivicType" content="textOnly"/>
 	<ElementType name="bForce" content="textOnly" dt:type="boolean"/>
@@ -181,9 +178,7 @@
 		<element type="bAssignCity"/>
 		<!-- Advanced Diplomacy START -->
 		<element type="bTradeMap" minOccurs="0"/>
-		<element type="bNoCityRazing" minOccurs="0"/>
 		<element type="bCultureNeedsEmptyRadius" minOccurs="0"/>
-		<element type="bPacificRule" minOccurs="0"/>
 		<!-- Advanced Diplomacy END -->
 		<element type="ForceCivics" minOccurs="0"/>
 		<element type="DiploVotes" minOccurs="0"/>

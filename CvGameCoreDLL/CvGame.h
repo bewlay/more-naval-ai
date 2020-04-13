@@ -456,15 +456,6 @@ public:
 	bool isReligionSlotTaken(ReligionTypes eReligion) const;											// Exposed to Python
 	void setReligionSlotTaken(ReligionTypes eReligion, bool bTaken);
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	bool isPacificVoteSource(VoteSourceTypes eVoteSource) const;											// Exposed to Python
-	void setPacificVoteSource(VoteSourceTypes eVoteSource, bool bNewValue);
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
-
 	CvCity* getHolyCity(ReligionTypes eIndex);																	// Exposed to Python
 	void setHolyCity(ReligionTypes eIndex, CvCity* pNewValue, bool bAnnounce);	// Exposed to Python
 
@@ -696,8 +687,6 @@ public:
 	// Advanced Diplomacy
     bool isCultureNeedsEmptyRadius(VoteSourceTypes eIndex) const;
     void setCultureNeedsEmptyRadius(VoteSourceTypes eIndex, bool bNewValue);
-    bool isNoCityRazing(VoteSourceTypes eIndex) const;
-    void setNoCityRazing(VoteSourceTypes eIndex, bool bNewValue);
 	// End Advanced Diplomacy
 
 	// Tholal AI
@@ -788,7 +777,6 @@ protected:
 
 	// Advanced Diplomacy
 	bool* m_pabCultureNeedsEmptyRadius;
-	bool* m_pabNoCityRazing;
 	// End Advanced Diplomacy
 
 	int* m_aiRankPlayer;        // Ordered by rank...
@@ -822,13 +810,6 @@ protected:
 
 	bool* m_pabSpecialUnitValid;
 	bool* m_pabSpecialBuildingValid;
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	std::vector<bool> m_abPacificVoteSource;/*bool* m_ab5; m_abPacificVoteSource*/
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                             */
-/************************************************************************************************/
 	bool* m_abReligionSlotTaken; 
 
 	IDInfo* m_paHolyCity;

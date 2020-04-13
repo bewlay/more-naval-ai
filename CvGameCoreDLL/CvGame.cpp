@@ -60,7 +60,6 @@ CvGame::CvGame()
 
 	// Advanced Diplomacy
 	m_pabCultureNeedsEmptyRadius = NULL;
-	m_pabNoCityRazing = NULL;
 	// End Advanced Diplomacy
 
 	m_paiUnitCreatedCount = NULL;
@@ -607,7 +606,6 @@ void CvGame::uninit()
 
 	// Advanced Diplomacy
 	SAFE_DELETE_ARRAY(m_pabCultureNeedsEmptyRadius);
-	SAFE_DELETE_ARRAY(m_pabNoCityRazing);
 	// End Advanced Diplomacy
 
 	SAFE_DELETE_ARRAY(m_aiShrineBuilding);
@@ -789,11 +787,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 		{
 			m_pabCultureNeedsEmptyRadius[iI] = false;
 		}
-		m_pabNoCityRazing = new bool[GC.getNumVoteSourceInfos()];
-		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-		{
-			m_pabNoCityRazing[iI] = false;
-		}
 		// End Advanced Diplomacy
 		FAssertMsg(m_paiUnitCreatedCount==NULL, "about to leak memory, CvGame::m_paiUnitCreatedCount");
 		m_paiUnitCreatedCount = new int[GC.getNumUnitInfos()];
@@ -842,18 +835,10 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 
 		FAssertMsg(0 < GC.getNumVoteSourceInfos(), "GC.getNumVoteSourceInfos() is not greater than zero in CvGame::reset");
 		FAssertMsg(m_aiDiploVote==NULL, "about to leak memory, CvGame::m_aiDiploVote");
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		m_abPacificVoteSource.clear();
 		m_aiDiploVote = new int[GC.getNumVoteSourceInfos()];
 		for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
 		{
 			m_aiDiploVote[iI] = 0;
-			m_abPacificVoteSource.push_back(false);
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 		}
 
 		/*
@@ -6085,33 +6070,6 @@ void CvGame::setReligionSlotTaken(ReligionTypes eReligion, bool bTaken)
 }
 
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-bool CvGame::isPacificVoteSource(VoteSourceTypes eVoteSource) const
-{
-	FAssertMsg(eVoteSource >= 0, "eIndex is expected to be non-negative (invalid Index)");
-	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-
-	return m_abPacificVoteSource[eVoteSource];
-}
-
-void CvGame::setPacificVoteSource(VoteSourceTypes eVoteSource, bool bNewValue)
-{
-	FAssertMsg(eVoteSource >= 0, "eIndex is expected to be non-negative (invalid Index)");
-	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-	m_abPacificVoteSource[eVoteSource] = bNewValue;
-
-	if (bNewValue)
-	{
-		updateSecretaryGeneral();
-	}
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
-
 int CvGame::getCorporationGameTurnFounded(CorporationTypes eIndex)
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
@@ -8623,14 +8581,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 	changeFreeTradeCount(kVote.isFreeTrade() ? iChange : 0);
 	changeNoNukesCount(kVote.isNoNukes() ? iChange : 0);
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	setPacificVoteSource(kData.eVoteSource, (GC.getVoteInfo(kData.kVoteOption.eVote).isPacificRule() ? (iChange > 0) : isPacificVoteSource(kData.eVoteSource)));
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 	{
 		// lfgr 06/2019: ForceCivic applies only to the respective VoteSource
@@ -8683,10 +8633,6 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 	if (kVote.isCultureNeedsEmptyRadius())
     {
         setCultureNeedsEmptyRadius(kData.eVoteSource, bChange);
-    }
-	if (kVote.isNoCityRazing())
-    {
-        setNoCityRazing(kData.eVoteSource, bChange);
     }
 	// End Advanced Diplomacy
 
@@ -9432,23 +9378,6 @@ void CvGame::read(FDataStreamBase* pStream)
 			m_mapVoteSourceReligions[eVoteSource] = eReligion;
 		}
 	}
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	{
-		m_abPacificVoteSource.clear();
-		uint iSize = GC.getNumVoteSourceInfos();
-//		pStream->Read(&iSize);
-		for (uint i = 0; i < iSize; i++)
-		{
-			bool bValue;
-			pStream->Read(&bValue);
-			m_abPacificVoteSource.push_back(bValue);
-		}
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	{
 		int iSize;
 		m_aeInactiveTriggers.clear();
@@ -9508,7 +9437,6 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	// Advanced Diplomacy
 	pStream->Read(GC.getNumVoteSourceInfos(), m_pabCultureNeedsEmptyRadius);
-	pStream->Read(GC.getNumVoteSourceInfos(), m_pabNoCityRazing);
 	// End Advanced Diplomacy
 }
 
@@ -9685,22 +9613,6 @@ void CvGame::write(FDataStreamBase* pStream)
 	}
 #endif
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	{
-/*		uint iSize = m_abPacificVoteSource.size();
-		pStream->Write(iSize);*/
-		std::vector<bool>::iterator it;
-		for (it = m_abPacificVoteSource.begin(); it != m_abPacificVoteSource.end(); ++it)
-		{
-			pStream->Write((*it));
-		}
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
 	pStream->Write(m_aeInactiveTriggers.size());
 	for (std::vector<EventTriggerTypes>::iterator it = m_aeInactiveTriggers.begin(); it != m_aeInactiveTriggers.end(); ++it)
 	{
@@ -9732,7 +9644,6 @@ void CvGame::write(FDataStreamBase* pStream)
 
 	// Advanced Diplomacy
 	pStream->Write(GC.getNumVoteSourceInfos(), m_pabCultureNeedsEmptyRadius);
-	pStream->Write(GC.getNumVoteSourceInfos(), m_pabNoCityRazing);
 	// End Advanced Diplomacy
 }
 
@@ -11644,16 +11555,6 @@ bool CvGame::isCultureNeedsEmptyRadius(VoteSourceTypes eIndex) const
 void CvGame::setCultureNeedsEmptyRadius(VoteSourceTypes eIndex, bool bNewValue)
 {
 	m_pabCultureNeedsEmptyRadius[eIndex] = bNewValue;
-}
-
-bool CvGame::isNoCityRazing(VoteSourceTypes eIndex) const
-{
-	return m_pabNoCityRazing[eIndex];
-}
-
-void CvGame::setNoCityRazing(VoteSourceTypes eIndex, bool bNewValue)
-{
-	m_pabNoCityRazing[eIndex] = bNewValue;
 }
 
 

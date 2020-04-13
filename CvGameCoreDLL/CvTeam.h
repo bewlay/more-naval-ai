@@ -486,19 +486,6 @@ public:
 
 	bool isNoTradeTech(TechTypes eIndex) const;																														// Exposed to Python
 	void setNoTradeTech(TechTypes eIndex, bool bNewValue);																					// Exposed to Python
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	DllExport bool isVoteSourceCondemned(VoteSourceTypes eIndex) const;										// Exposed to Python																				// Exposed to Python	DllExport bool isVoteSourceCondemned(VoteSourceTypes eIndex) const;										// Exposed to Python
-
-	int getVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam) const;										// Exposed to Python
-	bool isVoteSourceCondemnedWarValidArray() const;
-	DllExport bool isVoteSourceCondemnedWar(VoteSourceTypes eVoteSource) const;
-	void changeVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iChange);		// Exposed to Python
-	void setVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iNewValue);		// Exposed to Python
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;										// Exposed to Python
 	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);		// Exposed to Python
@@ -731,13 +718,6 @@ protected:
 	int** m_ppaaiImprovementYieldChange;
 
 	std::vector<BonusTypes> m_aeRevealedBonuses;
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	std::vector<VoteSourceCondemnedWar> m_aVoteSourceCondemnedWarCount;
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 	void doWarWeariness();
 

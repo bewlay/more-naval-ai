@@ -4994,9 +4994,7 @@ public:
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
 	bool isTradeMap() const;							// Exposed to Python
-	bool isNoCityRazing() const;						// Exposed to Python
 	bool isCultureNeedsEmptyRadius() const;						// Exposed to Python
-	bool isPacificRule() const;						// Exposed to Python
 //	int getCondemnCivic(int i) const;			// Exposed to Python
 //	bool isCondemnCivic(int i) const;			// Exposed to Python
 //	bool isValidCondemnCivicArray() const;			// Exposed to Python
@@ -5055,9 +5053,7 @@ protected:
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
 	bool m_bTradeMap;
-	bool m_bNoCityRazing;
 	bool m_bCultureNeedsEmptyRadius;
-	bool m_bPacificRule;
 	//std::vector<int> m_piCondemnCivic;
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */

@@ -317,7 +317,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
 	m_aiWarPretextAgainstCount.clear();
-	m_aVoteSourceCondemnedWarCount.clear();
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
@@ -519,13 +518,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		}
 
 		m_aeRevealedBonuses.clear();
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		m_aVoteSourceCondemnedWarCount.clear();
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 		AI_reset(false);
 	}
@@ -2408,19 +2400,6 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, 
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		if (!GET_TEAM(eTeam).isBarbarian() && !GET_TEAM(eTeam).isMinorCiv())
-		{
-			for (iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
-			{
-				changeVoteSourceCondemnedWarCount((VoteSourceTypes)iI, eTeam, 1);
-			}
-		}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 	}
 }
@@ -2731,24 +2710,6 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 				}
 			}
 		}
-
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		for (int iI = 0; iI < GC.getNumVoteSourceInfos(); ++iI)
-		{
-			if (getVoteSourceCondemnedWarCount((VoteSourceTypes)iI, eTeam) > 0)
-			{
-				setVoteSourceCondemnedWarCount((VoteSourceTypes)iI, eTeam, 0);
-			}
-			if (GET_TEAM(eTeam).getVoteSourceCondemnedWarCount((VoteSourceTypes)iI, getID()) > 0)
-			{
-				GET_TEAM(eTeam).setVoteSourceCondemnedWarCount((VoteSourceTypes)iI, getID(), 0);
-			}
-		}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	}
 }
 
@@ -7493,125 +7454,6 @@ int CvTeam::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eInde
 }
 
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-bool CvTeam::isVoteSourceCondemned(VoteSourceTypes eIndex) const
-{
-	return isVoteSourceCondemnedWar(eIndex);
-}
-
-
-int CvTeam::getVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam) const
-{
-	FAssertMsg(eVoteSource >= 0, "eVoteSource is expected to be non-negative (invalid Index)");
-	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eVoteSource is expected to be within maximum bounds (invalid Index)");
-	FAssertMsg(eTeam >= 0, "eTeam is expected to be non-negative (invalid Index)");
-	FAssertMsg(eTeam < MAX_CIV_TEAMS, "eTeam is expected to be within maximum bounds (invalid Index)");
-
-	for (std::vector<VoteSourceCondemnedWar>::const_iterator it = m_aVoteSourceCondemnedWarCount.begin(); it != m_aVoteSourceCondemnedWarCount.end(); ++it)
-	{
-		if ((*it).eVoteSource == eVoteSource && (*it).eWarTeam == eTeam)
-		{
-			return (*it).iCount;
-		}
-	}
-
-	return 0;
-}
-
-
-bool CvTeam::isVoteSourceCondemnedWarValidArray() const
-{
-	return (m_aVoteSourceCondemnedWarCount.size() > 0);
-}
-
-
-bool CvTeam::isVoteSourceCondemnedWar(VoteSourceTypes eVoteSource) const
-{
-	if (!GC.getGameINLINE().isPacificVoteSource(eVoteSource))
-	{
-		return false;
-	}
-
-	for (int iI = 0; iI < MAX_CIV_TEAMS; iI++)
-	{
-		if (getVoteSourceCondemnedWarCount(eVoteSource, (TeamTypes)iI) > 0)
-		{
-			if (isAtWar((TeamTypes)iI))
-			{
-				return true;
-			}
-//			else
-//			{
-//				setVoteSourceCondemnedWarCount(eVoteSource, (TeamTypes)iI, 0);
-//			}
-		}
-	}
-
-	return false;
-}
-
-
-void CvTeam::changeVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iChange)
-{
-	FAssertMsg(eVoteSource >= 0, "eVoteSource is expected to be non-negative (invalid Index)");
-	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eVoteSource is expected to be within maximum bounds (invalid Index)");
-	FAssertMsg(eTeam >= 0, "eTeam is expected to be non-negative (invalid Index)");
-	FAssertMsg(eTeam < MAX_CIV_TEAMS, "eTeam is expected to be within maximum bounds (invalid Index)");
-
-	setVoteSourceCondemnedWarCount(eVoteSource, eTeam, getVoteSourceCondemnedWarCount(eVoteSource, eTeam)+iChange);
-}
-
-
-void CvTeam::setVoteSourceCondemnedWarCount(VoteSourceTypes eVoteSource, TeamTypes eTeam, int iNewValue)
-{
-	FAssertMsg(eVoteSource >= 0, "eVoteSource is expected to be non-negative (invalid Index)");
-	FAssertMsg(eVoteSource < GC.getNumVoteSourceInfos(), "eVoteSource is expected to be within maximum bounds (invalid Index)");
-	FAssertMsg(eTeam >= 0, "eTeam is expected to be non-negative (invalid Index)");
-	FAssertMsg(eTeam < MAX_CIV_TEAMS, "eTeam is expected to be within maximum bounds (invalid Index)");
-
-	if (iNewValue != getVoteSourceCondemnedWarCount(eVoteSource, eTeam))
-	{
-		bool bCreate = true;
-		for (std::vector<VoteSourceCondemnedWar>::iterator it = m_aVoteSourceCondemnedWarCount.begin(); it != m_aVoteSourceCondemnedWarCount.end(); ++it)
-		{
-			if ((*it).eVoteSource == eVoteSource && (*it).eWarTeam == eTeam)
-			{
-				if ((*it).iCount != iNewValue)
-				{
-					if (iNewValue == 0)
-					{
-						m_aVoteSourceCondemnedWarCount.erase(it);
-					}
-					else
-					{
-						(*it).iCount = iNewValue;
-					}
-				}
-
-				bCreate =  false;
-				break;
-			}
-		}
-
-		if (bCreate && 0 != iNewValue)
-		{
-			VoteSourceCondemnedWar kChange;
-			kChange.eVoteSource = eVoteSource;
-			kChange.eWarTeam = eTeam;
-			kChange.iCount = 0;
-			m_aVoteSourceCondemnedWarCount.push_back(kChange);
-		}
-
-		GC.getGameINLINE().updateSecretaryGeneral();
-	}
-}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
-
-
 void CvTeam::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
 {
 	FAssertMsg(eIndex1 >= 0, "eIndex1 is expected to be non-negative (invalid Index)");
@@ -8574,20 +8416,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 			m_pavProjectArtTypes[i].push_back(temp);
 		}
 	}
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	pStream->Read(&iNumElts);
-	m_aVoteSourceCondemnedWarCount.clear();
-	for (int i = 0; i < iNumElts; ++i)
-	{
-		VoteSourceCondemnedWar kChange;
-		kChange.read(pStream);
-		m_aVoteSourceCondemnedWarCount.push_back(kChange);
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	pStream->Read(GC.getNumProjectInfos(), m_paiProjectMaking);
 	pStream->Read(GC.getNumUnitClassInfos(), m_paiUnitClassCount);
 	pStream->Read(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);
@@ -8750,18 +8578,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 		for(int j=0;j<m_paiProjectCount[i];j++)
 			pStream->Write(m_pavProjectArtTypes[i][j]);
 	}
-	
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                             */
-/************************************************************************************************/
-	pStream->Write(m_aVoteSourceCondemnedWarCount.size());
-	for (std::vector<VoteSourceCondemnedWar>::iterator it = m_aVoteSourceCondemnedWarCount.begin(); it != m_aVoteSourceCondemnedWarCount.end(); ++it)
-	{
-		(*it).write(pStream);
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	pStream->Write(GC.getNumProjectInfos(), m_paiProjectMaking);
 	pStream->Write(GC.getNumUnitClassInfos(), m_paiUnitClassCount);
 	pStream->Write(GC.getNumBuildingClassInfos(), m_paiBuildingClassCount);

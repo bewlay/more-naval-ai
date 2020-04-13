@@ -11401,9 +11401,7 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 	}
 	
 	/* LFGR_TODO
-	bool isNoCityRazing() const;
 	bool isCultureNeedsEmptyRadius() const
-	bool isPacificRule() const;
 	*/
 
 	

@@ -17307,25 +17307,6 @@ bool CvCity::isAutoRaze() const
 {
 	if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_RAZING))
 	{
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-		if (!GET_PLAYER(getOwner()).isNoCityRazing())
-		{
-			if (getHighestPopulation() == 1)
-			{
-				return true;
-			}
-
-			if (GC.getGameINLINE().getMaxCityElimination() > 0)
-			{
-				return true;
-			}
-		}
-		
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 		if (GC.getGameINLINE().isOption(GAMEOPTION_ONE_CITY_CHALLENGE) && isHuman())
 		{
 			return true;
