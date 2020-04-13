@@ -317,6 +317,14 @@
 		<Italian>[ICON_BULLET]Members cannot trade with non-members</Italian>
 		<Spanish>[ICON_BULLET]Members cannot trade with non-members</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_HELP_CULTURE_NEEDS_EMPTY_RADIUS</Tag>
+		<English>[ICON_BULLET]Cannot overtake territory of other members via culture</English>
+		<French>[ICON_BULLET]Cannot overtake territory of other members via culture</French>
+		<German>[ICON_BULLET]Cannot overtake territory of other members via culture</German>
+		<Italian>[ICON_BULLET]Cannot overtake territory of other members via culture</Italian>
+		<Spanish>[ICON_BULLET]Cannot overtake territory of other members via culture</Spanish>
+	</TEXT>
 	
 	<!-- One-time effects: various -->
 	<TEXT>

@@ -11387,6 +11387,11 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 		}
 	}
 
+	if( kVote.isCultureNeedsEmptyRadius() ) {
+		if( ! szHelpText.isEmpty() ) szHelpText.append( NEWLINE );
+		szHelpText.append( gDLL->getText( "TXT_KEY_VOTE_HELP_CULTURE_NEEDS_EMPTY_RADIUS" ) );
+	}
+
 	for( int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++ ) {
 		CvSpellInfo& kSpell = GC.getSpellInfo( (SpellTypes) iSpell );
 		if( kSpell.getVotePrereq() == eVote ) {
@@ -11399,11 +11404,6 @@ void CvGameTextMgr::parseVoteInfo( CvWStringBuffer &szHelpText, VoteTypes eVote,
 			}
 		}
 	}
-	
-	/* LFGR_TODO
-	bool isCultureNeedsEmptyRadius() const
-	*/
-
 	
 	// Custom Help text
 	if( !CvWString( kVote.getHelp()).empty() )

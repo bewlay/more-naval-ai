@@ -699,14 +699,6 @@
 		<Spanish>¡Nunca retroceder! ¡Nunca rendirse!</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Tag>
-		<English>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </German>
-		<Italian>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Italian>
-		<Spanish>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_DENIAL_SENATE_VETO</Tag>
 		<English>&quot;Our Senate opposes the action.&quot;</English>
 		<French>&quot;Notre sénat s'y oppose.&quot;</French>

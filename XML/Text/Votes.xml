@@ -34,6 +34,14 @@
 		<Spanish>Enrolar a los Vigilantes de la Noche</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_VOTE_CULTURE_RADIUS</Tag>
+		<English>Fixed Borders</English>
+		<French>Fixed Borders</French>
+		<German>Fixed Borders</German>
+		<Italian>Fixed Borders</Italian>
+		<Spanish>Fixed Borders</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_VOTE_FORCE_NO_TRADE</Tag>
 		<English>Trade Embargo</English>
 		<French>Embargo commercial</French>
