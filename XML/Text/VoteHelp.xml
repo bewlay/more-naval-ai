@@ -361,10 +361,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_TRADE_MAP</Tag>
-		<English>[ICON_BULLET]All members share their world maps</English>
-		<French>[ICON_BULLET]All members share their world maps</French>
-		<German>[ICON_BULLET]All members share their world maps</German>
-		<Italian>[ICON_BULLET]All members share their world maps</Italian>
-		<Spanish>[ICON_BULLET]All members share their world maps</Spanish>
+		<English>[ICON_BULLET]All members share their current world maps</English>
+		<French>[ICON_BULLET]All members share their current world maps</French>
+		<German>[ICON_BULLET]All members share their current world maps</German>
+		<Italian>[ICON_BULLET]All members share their current world maps</Italian>
+		<Spanish>[ICON_BULLET]All members share their current world maps</Spanish>
 	</TEXT>
 </Civ4GameText>

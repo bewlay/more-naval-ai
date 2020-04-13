@@ -803,12 +803,9 @@
 			<NoBonus/>
 			<PyResult/>
 		</VoteInfo>
-		
-		<!-- LFGR_TODO: fix or remove the following votes -->
-		
 		<VoteInfo>
-			<Type>VOTE_UN_TRADE_MAP</Type>
-			<Description>TXT_KEY_VOTE_UN_TRADE_MAP</Description>
+			<Type>TXT_KEY_VOTE_TRADE_MAP</Type>
+			<Description>TXT_KEY_VOTE_TRADE_MAP</Description>
 			<iPopulationThreshold>51</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
@@ -841,6 +838,7 @@
 			<NoBonus/>
 			<PyResult/>
 		</VoteInfo>
+		<!-- LFGR_TODO: fix or remove the following votes -->
 		<VoteInfo>
 			<Type>VOTE_UN_CULTURE_RADIUS</Type>
 			<Description>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Description>

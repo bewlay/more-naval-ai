@@ -699,14 +699,6 @@
 		<Spanish>¡Nunca retroceder! ¡Nunca rendirse!</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_VOTE_UN_TRADE_MAP</Tag>
-		<English>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</English>
-		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>
-		<German>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</German>
-		<Italian>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</Italian>
-		<Spanish>TEST - Resolution (Worldwide Exchange of Maps - Shared Geographic Knowledge)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_CULTURE_RADIUS</Tag>
 		<English>TEST - Resolution (Fixed Borders - Culture Expansion Requires Empty Radius) </English>
 		<French>Résolution de l'ONU: [BOLD]Abolition de la peine de Mort[\BOLD] (+1 [ICON_HEALTHY])</French>

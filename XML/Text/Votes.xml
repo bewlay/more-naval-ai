@@ -209,4 +209,12 @@
 		<Italian>[ICON_BULLET]Enables Smuggler's Port</Italian>
 		<Spanish>[ICON_BULLET]Enables Smuggler's Port</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VOTE_TRADE_MAP</Tag>
+		<English>Map exchange</English>
+		<French>Map exchange</French>
+		<German>Map exchange</German>
+		<Italian>Map exchange</Italian>
+		<Spanish>Map exchange</Spanish>
+	</TEXT>
 </Civ4GameText>
