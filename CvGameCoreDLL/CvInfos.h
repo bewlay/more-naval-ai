@@ -4987,6 +4987,8 @@ public:
     int getFreeUnitClass() const;
     int getFreeUnits() const;
     int getNoBonus() const;
+	const TCHAR* getPyRequirement() const; // lfgr 04/2020
+	const TCHAR* getPyAI() const; // lfgr 04/2020
 	const TCHAR* getPyResult() const;
 //FfH: End Add
 
@@ -5046,6 +5048,8 @@ protected:
 	int m_iFreeUnits;
 	int m_iFreeUnitClass;
     int m_iNoBonus;
+	CvString m_szPyRequirement; // lfgr 04/2020
+	CvString m_szPyAI; // lfgr 04/2020
 	CvString m_szPyResult;
 //FfH: End Add
 

@@ -558,7 +558,9 @@
 			<iFreeUnits>0</iFreeUnits>
 			<FreeUnitClass>NONE</FreeUnitClass>
 			<NoBonus/>
-			<PyResult>voteFundDissidents()</PyResult>
+			<PyRequirement>canDoFundDissidents()</PyRequirement>
+			<PyAI>aiFundDissidents()</PyAI>
+			<PyResult>doFundDissidents()</PyResult>
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_GAMBLING_RING</Type>
@@ -590,10 +592,7 @@
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
-			<iFreeUnits>0</iFreeUnits>
-			<FreeUnitClass>NONE</FreeUnitClass>
-			<NoBonus/>
-			<PyResult/>
+			<PyAI>aiGamblingRing(ePlayer)</PyAI>
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_SLAVE_TRADE</Type>
@@ -624,10 +623,7 @@
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
-			<iFreeUnits>0</iFreeUnits>
-			<FreeUnitClass>NONE</FreeUnitClass>
-			<NoBonus/>
-			<PyResult/>
+			<PyAI>aiSlaveTrade(ePlayer)</PyAI>
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_SMUGGLING_RING</Type>
@@ -659,10 +655,7 @@
 			<bNoOutsideTechTrades>0</bNoOutsideTechTrades>
 			<iCost>25</iCost>
 			<iCrime>5</iCrime>
-			<iFreeUnits>0</iFreeUnits>
-			<FreeUnitClass>NONE</FreeUnitClass>
-			<NoBonus/>
-			<PyResult/>
+			<PyAI>aiSmugglingRing(ePlayer)</PyAI>
 		</VoteInfo>
 		<VoteInfo>
 			<Type>VOTE_OPEN_BORDERS</Type>

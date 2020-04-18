@@ -9189,6 +9189,25 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 {
 	PROFILE_FUNC();
 
+	// lfgr 04/2020
+	// Python AI takes precedence over everything else. Note that votes happen so rarely that we don't need to
+	// care about performance much.
+	if( strlen( GC.getVoteInfo( kVoteData.eVote ).getPyAI() ) > 0 )
+	{
+		CyArgsList argsList;
+		argsList.add( getIDINLINE() );
+		argsList.add( kVoteData.eVote );
+		argsList.add( kVoteData.ePlayer );
+		argsList.add( kVoteData.iCityId );
+		argsList.add( kVoteData.eOtherPlayer );
+		long eResult = NO_PLAYER_VOTE;
+		gDLL->getPythonIFace()->callFunction( PYVoteModule, "voteAI", argsList.makeFunctionArgs(), &eResult );
+		if( eResult != NO_PLAYER_VOTE ) {
+			// Python AI has made a decision
+			return (PlayerVoteTypes) eResult;
+		}
+	}
+
 	CivicTypes eBestCivic;
 	int iOpenCount;
 	int iClosedCount;
@@ -10106,7 +10125,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 
 
 //FfH: Added by Kael 05/08/2008
-		// LFGR_TODO: Neutral players always oppose gambling ring and slave trade
 		if (GC.getVoteInfo(eVote).isNoOutsideTechTrades())
 		{
 			if (GC.getGameINLINE().getPlayerRank(getID()) < GC.getGameINLINE().getPlayerRank(GC.getGameINLINE().getRankPlayer(GC.getGameINLINE().countCivPlayersAlive() / 2)))
@@ -10114,7 +10132,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 				bValid = false;
 			}
 		}
-		// LFGR_TODO: Players with less than 3 coastal cities oppose smuggling ring
 		if (GC.getVoteInfo(eVote).getNoBonus() != NO_BONUS)
 		{
 			if (getNumAvailableBonuses((BonusTypes)GC.getVoteInfo(eVote).getNoBonus()) > 0)

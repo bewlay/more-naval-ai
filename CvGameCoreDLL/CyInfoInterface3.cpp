@@ -239,6 +239,8 @@ void CyInfoPythonInterface3()
 		.def("isForceWar", &CvVoteInfo::isForceWar, "bool ()")
 		.def("isAssignCity", &CvVoteInfo::isAssignCity, "bool ()")
 
+		.def("getPyRequirement", &CvVoteInfo::getPyRequirement, "string ()")
+		.def("getPyAI", &CvVoteInfo::getPyAI, "string ()")
 //FfH: Added by Kael 11/21/2007
 		.def("getPyResult", &CvVoteInfo::getPyResult, "string ()")
 //FfH: End Add

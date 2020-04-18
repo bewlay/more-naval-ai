@@ -181,6 +181,8 @@
 #define PYDataStorageModule					"CvDataStorageInterface"
 //FfH: End Add
 
+#define PYVoteModule "CvVoteInterface" // lfgr 04/2020
+
 /********************************************************************************/
 /* MinorPuppetLeaders	02/27/12										lfgr	*/
 /********************************************************************************/

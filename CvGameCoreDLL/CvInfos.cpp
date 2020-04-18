@@ -19846,6 +19846,18 @@ int CvVoteInfo::getNoBonus() const
 	return m_iNoBonus;
 }
 
+// lfgr 04/2020
+const TCHAR *CvVoteInfo::getPyRequirement() const
+{
+	return m_szPyRequirement;
+}
+
+// lfgr 04/2020
+const TCHAR *CvVoteInfo::getPyAI() const
+{
+	return m_szPyAI;
+}
+
 const TCHAR *CvVoteInfo::getPyResult() const
 {
 	return m_szPyResult;
@@ -19985,6 +19997,8 @@ bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
 	m_iFreeUnitClass = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "NoBonus");
 	m_iNoBonus = pXML->FindInInfoClass(szTextVal);
+	pXML->GetChildXmlValByName(m_szPyRequirement, "PyRequirement");
+	pXML->GetChildXmlValByName(m_szPyAI, "PyAI");
 	pXML->GetChildXmlValByName(m_szPyResult, "PyResult");
 //FfH: End Add
 

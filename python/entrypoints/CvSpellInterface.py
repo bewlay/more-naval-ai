@@ -51,11 +51,6 @@ def onMoveFeature(argsList):
 	feature = gc.getFeatureInfo(eFeature)
 	eval(feature.getPythonOnMove())
 
-def vote(argsList):
-	eVote, int = argsList
-	vote = gc.getVoteInfo(eVote)
-	eval(vote.getPyResult())
-
 def miscast(argsList):
 	pCaster, eSpell = argsList
 	spell = gc.getSpellInfo(eSpell)
@@ -4028,17 +4023,6 @@ def onMovePortal(pCaster, pPlot):
 def onMoveWarningPost(pCaster, pPlot):
 	if CyGame().getWBMapScript():
 		sf.onMoveWarningPost(pCaster, pPlot)
-
-def voteFundDissidents():
-	iOvercouncil = gc.getInfoTypeForString('DIPLOVOTE_OVERCOUNCIL')
-	for iPlayer in range(gc.getMAX_PLAYERS()):
-		pPlayer = gc.getPlayer(iPlayer)
-		if pPlayer.isAlive():
-			if pPlayer.isFullMember(iOvercouncil):
-				for pyCity in PyPlayer(iPlayer).getCityList() :
-					if CyGame().getSorenRandNum(100, "Fund Dissidents") < 50:
-						pCity = pyCity.GetCy()
-						pCity.changeHurryAngerTimer(1 + CyGame().getSorenRandNum(3, "Fund Dissidents"))
 
 def spellGreatGeneralSplit(caster):
 	pPlayer = gc.getPlayer(caster.getOwner())

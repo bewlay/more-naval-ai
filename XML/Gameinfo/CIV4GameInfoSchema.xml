@@ -154,6 +154,8 @@
 	<ElementType name="bNoOutsideTechTrades" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iCrime" content="textOnly" dt:type="int"/>
 	<ElementType name="NoBonus" content="textOnly"/>
+	<ElementType name="PyRequirement" content="textOnly"/> <!-- lfgr 04/2020 -->
+	<ElementType name="PyAI" content="textOnly"/> <!-- lfgr 04/2020 -->
 	<ElementType name="PyResult" content="textOnly"/>
 	<ElementType name="VoteInfo" content="eltOnly">
 		<element type="Type"/>
@@ -188,6 +190,8 @@
 		<element type="iFreeUnits" minOccurs="0"/>
 		<element type="FreeUnitClass" minOccurs="0"/>
 		<element type="NoBonus" minOccurs="0"/>
+		<element type="PyRequirement" minOccurs="0"/>
+		<element type="PyAI" minOccurs="0"/>
 		<element type="PyResult" minOccurs="0"/>
 	</ElementType>
 	<ElementType name="ProcessInfos" content="eltOnly">
