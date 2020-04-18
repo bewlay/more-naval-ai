@@ -49,7 +49,7 @@
 		<Spanish>The members of the %s1_council have passed the resolution %s2_resolution.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_MSG_VOTE_NOT_PASSED</Tag>
+		<Tag>TXT_KEY_MSG_VOTE_REJECTED</Tag>
 		<English>The members of the %s1_council have rejected the resolution %s2_resolution.</English>
 		<French>The members of the %s1_council have rejected the resolution %s2_resolution.</French>
 		<German>The members of the %s1_council have rejected the resolution %s2_resolution.</German>
