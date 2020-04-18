@@ -5047,6 +5047,18 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 		return false;
 	}
 
+	// lfgr 04/2020
+	if( ! CvString( GC.getVoteInfo( kData.eVote ).getPyRequirement() ).empty() )
+	{
+		CyArgsList argsList;
+		argsList.add( kData.eVote );
+		long lResult = -1;
+		gDLL->getPythonIFace()->callFunction( PYVoteModule, "votePrereq", argsList.makeFunctionArgs(), &lResult );
+		if( lResult == 0 ) { // python returned false
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -8638,12 +8650,12 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 
 	// setForcedOpenBorder(kData.eVoteSource, bChange); // TODO - make this
 
+	// lfgr 04/2020: tweaked
 	if (!CvString(kVote.getPyResult()).empty())
     {
         CyArgsList argsList;
-        argsList.add(kData.kVoteOption.eVote);
-        argsList.add(1);
-        gDLL->getPythonIFace()->callFunction(PYSpellModule, "vote", argsList.makeFunctionArgs());
+        argsList.add( kData.kVoteOption.eVote );
+        gDLL->getPythonIFace()->callFunction( PYVoteModule, "voteResult", argsList.makeFunctionArgs() );
     }
 //FfH: End Add
 

@@ -5,7 +5,20 @@ import CvUtil
 
 gc = CyGlobalContext()
 
-class PyPlayer:
+
+# Improved PyHelpers 04/2020 lfgr: Allow calling underlying CyPlayer, CyGame, ... directly
+class AbstractDelegator( object ) :
+	def __init__( self, delegate ) :
+		self._delegate = delegate
+	
+	def __getattr__( self, name ) :
+		if not name.startswith( "__" ) and name not in dir( self ) :
+			return getattr( self._delegate, name )
+		else :
+			return super( AbstractDelegator, self ).__getattr__( name )
+
+
+class PyPlayer( AbstractDelegator ) :
 	' CyPlayer Helper Functions - Requires Player ID to initialize instance '
 	
 	def __init__(self, iPlayer):
@@ -14,6 +27,7 @@ class PyPlayer:
 			self.player = gc.getPlayer(iPlayer)
 		else:
 			self.player = gc.getPlayer(0)
+		AbstractDelegator.__init__( self, self.player )
 	
 	def CyGet(self):
 		' used to get the CyUnit instance for quick calls '
@@ -327,6 +341,17 @@ class PyPlayer:
 			(loopCity, iter) = self.player.nextCity(iter, false)
 		return lCity
 	
+	# lfgr 04/2020
+	def iterCities( self ) :
+		lCity = []
+		loopCity, it = self.player.firstCity( False )
+		while loopCity :
+			cityOwner = loopCity.getOwner()
+			if not loopCity.isNone() and loopCity.getOwner() == self.getID() : #only valid cities
+				yield PyCity( self.getID(), loopCity.getID() )
+			loopCity, it = self.player.nextCity( it, False )
+		
+	
 	def getNumCities(self):
 		return self.player.getNumCities()
 	
@@ -407,11 +432,12 @@ class PyPlayer:
 		return False
 
 
-class PyCity:
+class PyCity( AbstractDelegator ) :
 	"requires player instance & cityID"
 	def __init__(self, iPlayerID, iCityID):
 		self.player = gc.getPlayer(iPlayerID)
 		self.city = self.player.getCity(iCityID)
+		AbstractDelegator.__init__( self, self.city )
 	
 	def isNone(self):
 		"bool - Is the city instance valid?"
@@ -758,10 +784,11 @@ class PyCity:
 	def isConnectedToCapital(self, iPlayer):
 		return self.city.isConnectedToCapital(iPlayer)
 	
-class PyGame:
+class PyGame( AbstractDelegator ) :
 	"requires Nothing"
 	def __init__(self):
 		self.game = CyGame()
+		AbstractDelegator.__init__( self, self.game )
 	
 	def isNone(self):
 		"bool - Is the game instance valid?"
@@ -780,6 +807,13 @@ class PyGame:
 				else:
 					playerList.append(loopPlayer)
 		return playerList
+	
+	# lfgr 04/2020
+	def iterAliveCivPlayers( self ) :
+		for ePlayer in range( gc.getMAX_CIV_PLAYERS() ) :
+			if gc.getPlayer( ePlayer ).isAlive() :
+				yield ePlayer, PyPlayer( ePlayer )
+			
 		
 	def getCivTeamList(self, iTeam):
 		team=gc.getTeam(iTeam)
@@ -893,11 +927,12 @@ class PyGame:
 				listUnits.append(loopUnit)
 		return listUnits
 
-class PyPlot:
+class PyPlot( AbstractDelegator ) :
 	def __init__(self, plotIdx):
 		self.map = CyMap()
 		self.plot = self.map.getPlotByID(plotIdx)
 		self.player = gc.getActivePlayer()
+		AbstractDelegator.__init__( self, self.plot )
 	
 	############## G E N E R A L ##############
 	def getX(self):
