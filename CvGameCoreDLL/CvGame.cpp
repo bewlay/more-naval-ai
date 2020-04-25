@@ -8636,10 +8636,9 @@ void CvGame::processVote(const VoteTriggeredData& kData, int iChange)
 		    }
 		}
     }
-    if (kVote.getCrime() != 0)
-    {
-        changeCrime(kVote.getCrime()); // LFGR_TODO: Reduce it based on iChange!
-    }
+
+	// lfgr fix 04/2020
+	changeCrime( iChange * kVote.getCrime() );
 
 	// Advanced Diplomacy
 	if (kVote.isCultureNeedsEmptyRadius())
