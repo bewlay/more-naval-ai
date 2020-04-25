@@ -914,14 +914,11 @@ class DynamicCivNames :
 				CvUtil.pyPrint("  DCN - Leaving name for human player")
 				return
 		
-		newCivDesc, newCivShort, newCivAdj = self.chooseName( iPlayer, bForceUpdate )
-		
-		newDesc  = CvUtil.convertToStr(newCivDesc)
-		newShort = CvUtil.convertToStr(newCivShort)
-		newAdj   = CvUtil.convertToStr(newCivAdj)
-
-		# Pass to pPlayer seems to require a conversion to 'ascii'
-		pPlayer.setCivName( newDesc, newShort, newAdj )
+		# LFGR_TODO
+		# When chooseName returns a unicode str that contains é (\xe9), then this works
+		# Previously, CvUtil.convertToStr was used on all three strings, which messed up the é, and
+		# caused pPlayer.setCivName to fail.
+		pPlayer.setCivName( *self.chooseName( iPlayer, bForceUpdate ) )
 	
 	def chooseName( self, iPlayer, bForceUpdate = False ) :
 		"""
