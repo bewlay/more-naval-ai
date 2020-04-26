@@ -2,13 +2,23 @@
 
 This document contains an overview of new and changed XML tags in MNAI-U. It includes new and changed tags in Fall from Heaven 2 and MNAI that are still present in MNAI-U, as well as some BtS tags. It is still work in progress. For other BtS tags, see e.g. civfantics' [modiki](http://modiki.civfanatics.com/index.php?title=Civ4_XML_Reference).
 
+
+### Gameinfo/CIV4EraInfos.xml
+
+**Tags**
+
+Tag(s)  | Description | History
+--- | --- | ---
+`<bRealEra>0</bRealEra>` | This is just a utility era to change art style and music, and can be ignored by gameplay mechanics. | New in MNAI
+
+
 ### Gameinfo/CIV4VoteInfo.xml
 
 Contains resolutions that can be passed by the Organizations (VoteSources) defined in Gameinfo/CIV4VoteSourceInfo.xml.
 
 "This resolution" always refers to the resolution containing the tag. "Member" refers to members of the VoteSource where the resolution was passed.
 
-**New tags**
+**Tags**
 
 Tag(s)  | Description | History
 --- | --- | ---
@@ -34,7 +44,9 @@ Tag(s)  | Description | History
 `<iCost>N</iCost>` <br/> `<iFreeUnits>M</iFreeUnits>` <br/> `<FreeUnitClass>UNIT_SOMETHING</FreeUnitClass>` | When this resolution is passed, each member who has a capital and at least N gold pays N gold and receives M units of type `UNIT_SOMETHING` in their capital. | Added in FfH2
 `<iCrime>Z</iCrime>` | Changes the global crime by Z (added to the crime of all cities). | Added in FfH2
 `<NoBonus>BONUS_SOMETHING</NoBonus>` | Disables access to `BONUS_SOMETHING` for all members. | Added in FfH2
-`<PyResult>something()</PyResult>` | Python code to be executed (in `CvSpellInterface.py`) when this resolution is passed. | Added in FfH2
+`<PyRequirement>something(eVote)</PyRequirement>` | Python code which determines whether the vote can be proposed (executed in `CvVoteInterface.py`), usually a function call. Can use the `eVote` variable, which is the ID of the vote (typically not useful). | Added in MNAI-U.
+`<PyAI>something(ePlayer, eVote, eVotePlayer, iVoteCityId, eVoteOtherPlayer)</PyAI>` | Python code which determines how an AI player votes on a proposed vote (executed in `CvVoteInterface.py`), usually a function call. Can use the following variables: `ePlayer`, the AI player; `eVote`, the ID of the vote (typically not useful); `eVotePlayer`, `iVoteCityId`, `eVoteOtherPlayer`, the parameters of the proposed resolution (if applicable). | Added in MNAI-U.
+`<PyResult>something(eVote)</PyResult>` | Python code to be executed (in `CvVoteInterface.py`) when this resolution is passed, usually a function call. Can use the `eVote` variable, which is the ID of the vote (typically not useful). | Added in FfH2, modified in MNAI-U.
 `<bTradeMap>1</bTradeMap>` | When passed, all members share their maps immediately. This resolution can be passed repeatedly. AI players only vote for this resolution if they would be willing (in principle) to trade maps with all other members. | Added in MNAI via Advanced Diplomacy 2
 `<bCultureNeedsEmptyRadius>1</bCultureNeedsEmptyRadius>` | Cities of members don't spread culture to plots that are owned by other players that do the same (due to this or some other resolution). | Added in MNAI via Advanced Diplomacy 2
 
@@ -51,10 +63,11 @@ Tag(s)  | Description | History
 
 ### Units/CIV4SpellInfos.xml
 
+**Tags**
+
 Tag(s)  | Description | History
 --- | --- | ---
 `<bAbility>1</bAbility>` | Can be cast even if spellcasting is disabled (e.g. through the Stasis worldspell). Created units do not gain promotions based on `<PromotionSummonPerk>`. Immunity to magic doesn't affect this spell.
-
 
 
 Sources:
