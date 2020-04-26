@@ -9547,8 +9547,6 @@ PlayerVoteTypes CvPlayerAI::AI_diploVote(const VoteSelectionSubData& kVoteData, 
 /*************************************************************************************************/
 /** Advanced Diplomacy       START                                                  			 */
 /*************************************************************************************************/
-		int iTempValue;
-		int iCount;
 
 		//Culture Radius
 		if (bValid)
@@ -14211,13 +14209,15 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	{
 		//traits
 		int iTraitMod = 0;
-		for (iI = 0; iI < GC.getNumTraitInfos(); iI++)
-		{
-			if (hasTrait((TraitTypes)iI))
+		if( kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT ) {
+			for (iI = 0; iI < GC.getNumTraitInfos(); iI++)
 			{
-				// InfoCache 10/2019 lfgr
-				iTraitMod += getInfoCache().AI_getUnitValueFromTrait(
+				if (hasTrait((TraitTypes)iI))
+				{
+					// InfoCache 10/2019 lfgr
+					iTraitMod += getInfoCache().AI_getUnitValueFromTrait(
 						(UnitCombatTypes) kUnitInfo.getUnitCombatType(), (TraitTypes) iI );
+				}
 			}
 		}
 

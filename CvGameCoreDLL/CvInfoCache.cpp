@@ -4,8 +4,10 @@
 
 #include "CvInfoCache.h"
 
-CvInfoCache::CvInfoCache()
-{}
+#include "BetterBTSAI.h"
+
+CvInfoCache::CvInfoCache() {
+}
 
 CvInfoCache::~CvInfoCache() {
 }
@@ -57,10 +59,6 @@ CvInfoCache& getInfoCache() {
 // AI calculations that are based solely on InfoTypes and do not depend on the game state
 namespace info_ai {
 	int AI_calcUnitValueFromTrait( UnitCombatTypes eUnitCombat, TraitTypes eTrait ) {
-		if( eUnitCombat == NO_UNITCOMBAT ) {
-			return 0;
-		}
-
 		int iTraitMod = 0;
 		for (int iK = 0; iK < GC.getNumPromotionInfos(); iK++)
 		{

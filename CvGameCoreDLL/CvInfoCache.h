@@ -23,6 +23,7 @@ inline int enumLength( UnitTypes x ) { return GC.getNumUnitInfos(); }
 
 // Data structure mapping each KeyEnumType to some ValType
 // Must call init() exactly once after construction, after that the data structure doesn't change
+// Warning: does not support keys NO_XXX, i.e. -1
 template<class KeyEnumType, class ValType>
 class FixedEnumMap {
 public :
@@ -47,6 +48,9 @@ public :
 	}
 
 	ValType at( const KeyEnumType e ) const {
+		FAssert( m_aMap != NULL );
+		FAssert( 0 <= e );
+		FAssert( e <= ENUM_LENGTH(KeyEnumType) );
 		return m_aMap[e];
 	}
 
@@ -56,6 +60,7 @@ private :
 
 // Data structure mapping each pair of KeyEnumType1, KeyEnumType2 to some ValType
 // Must call init() exactly once after construction, after that the data structure doesn't change
+// Warning: does not support keys NO_XXX, i.e. -1
 template<class KeyEnumType1, class KeyEnumType2, class ValType>
 class Fixed2DEnumMap {
 public :
@@ -82,6 +87,11 @@ public :
 	}
 
 	ValType at( const KeyEnumType1 i, const KeyEnumType2 j ) const {
+		FAssert( m_aMap != NULL );
+		FAssert( 0 <= i );
+		FAssert( i < ENUM_LENGTH(KeyEnumType1) );
+		FAssert( 0 <= j );
+		FAssert( j < ENUM_LENGTH(KeyEnumType2) );
 		return m_aMap[i * ENUM_LENGTH(KeyEnumType2) + j];
 	}
 
