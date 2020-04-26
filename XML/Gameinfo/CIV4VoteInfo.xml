@@ -559,7 +559,6 @@
 			<FreeUnitClass>NONE</FreeUnitClass>
 			<NoBonus/>
 			<PyRequirement>canDoFundDissidents()</PyRequirement>
-			<PyAI>aiFundDissidents()</PyAI>
 			<PyResult>doFundDissidents()</PyResult>
 		</VoteInfo>
 		<VoteInfo>
