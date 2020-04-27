@@ -71,7 +71,7 @@ def aiSmugglingRing( ePlayer ) :
 	if 4 * pPlayer.countNumCoastalCities() <= pPlayer.getNumCities() :
 		return PlayerVoteTypes.PLAYER_VOTE_NO
 	elif 3 * pPlayer.countNumCoastalCities() <= pPlayer.getNumCities() :
-		return PlayerVoteTypes.PLAYER_VOTE_ABSTAIN
+		return PlayerVoteTypes.PLAYER_VOTE_ABSTAIN # LFGR_TODO: does this actually do anything?
 	else :
 		return PlayerVoteTypes.PLAYER_VOTE_YES
 	

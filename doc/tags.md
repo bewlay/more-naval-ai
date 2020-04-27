@@ -57,8 +57,8 @@ Tag(s)  | Description | History
 `<bGamblingRing>1</bGamblingRing>` | Makes Gambling Houses 25% cheaper to build for members (this effect is defined in python). Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
 `<bSmugglingRing>1</bSmugglingRing>` | Allows members to construct a smuggler's port. <br/> AI players with less than 3 coastal cities will vote against this resolution. | Added in FfH2. Removed in MNAI-U (moved to python).
 `<bSlaveTrade>1</bSlaveTrade>` | Allows member's units to cast spells with `<bPrereqSlaveTrade>1</bPrereqSlaveTrade>`. Neutral AI players will vote against this resolution. | Added in FfH2. Removed in MNAI-U (using SpellInfos `<VotePrereq>`).
-`<bNoCityRazing>1</bNoCityRazing>` | Members don't auto-raze cities. **TODO: Members shouldn't be able to raze cities!** AI players might defy this resolution if they think they'll want to raze a lot in the future. | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
-`<bPacificRule>1</bPacificRule>` | **TODO: Doesn't seem to do anything** | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
+`<bNoCityRazing>1</bNoCityRazing>` | Members don't auto-raze cities. AI players might defy this resolution if they think they'll want to raze a lot in the future. | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
+`<bPacificRule>1</bPacificRule>` | Doesn't seem to do anything | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH.
 
 
 ### Units/CIV4SpellInfos.xml
