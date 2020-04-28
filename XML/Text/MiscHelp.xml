@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for various help texts and messages. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_TURNS_UNTIL_50_PERCENT_NATIONALITY</Tag>
+		<English>Turns until 50% %s1&#x003a; %d2</English>
+		<French>Turns until 50% %s1&#x003a; %d2</French>
+		<German>Turns until 50% %s1&#x003a; %d2</German>
+		<Italian>Turns until 50% %s1&#x003a; %d2</Italian>
+		<Spanish>Turns until 50% %s1&#x003a; %d2</Spanish>
+	</TEXT>
+</Civ4GameText>

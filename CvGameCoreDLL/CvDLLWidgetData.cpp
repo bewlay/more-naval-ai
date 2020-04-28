@@ -5458,6 +5458,27 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 /************************************************************************************************/
 		}
 
+		// NATIONALITY_HELP 04/2020 lfgr: Display turns until nationality is at 50%
+		CultureLevelTypes eCultureLevel = pHeadSelectedCity->getCultureLevel();
+		if( eCultureLevel >= 1 ) { // cultureRange is 1 for city plot
+			int iOwnerCulture = pHeadSelectedCity->plot()->getCulture( pHeadSelectedCity->getOwnerINLINE() );
+			int iDesiredCulture = pHeadSelectedCity->plot()->countTotalCulture() - iOwnerCulture;
+			if( iOwnerCulture < iDesiredCulture ) {
+				// LFGR_TODO: Should probably be function, see CvCity::doPlotCulture
+				int iFreeCultureRate = GC.getDefineINT("CITY_FREE_CULTURE_GROWTH_FACTOR");
+				int iCultureRate = pHeadSelectedCity->getCommerceRate( COMMERCE_CULTURE );
+				int iCulturePerTurn = ( eCultureLevel - 1 ) * iFreeCultureRate + iCultureRate + 1;
+				if( iCulturePerTurn > 0 ) {
+					// Round up
+					int iMissingTurns = ( iDesiredCulture - iOwnerCulture + iCulturePerTurn - 1 ) / iCulturePerTurn;
+					szBuffer.append( NEWLINE );
+					szBuffer.append( gDLL->getText( "TXT_KEY_TURNS_UNTIL_50_PERCENT_NATIONALITY",
+							GET_PLAYER( pHeadSelectedCity->getOwnerINLINE() ).getCivilizationAdjective(),
+							iMissingTurns ) );
+				}
+			}
+		}
+
 		eCulturalOwner = pHeadSelectedCity->plot()->calculateCulturalOwner();
 
 		if (eCulturalOwner != NO_PLAYER)
