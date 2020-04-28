@@ -766,7 +766,7 @@
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
-			<iMinVoters>3</iMinVoters>
+			<iMinVoters>2</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
 			<bSecretaryGeneral>0</bSecretaryGeneral>
@@ -801,7 +801,7 @@
 			<iPopulationThreshold>50</iPopulationThreshold>
 			<bCityVoting>0</bCityVoting>
 			<bCivVoting>1</bCivVoting>
-			<iMinVoters>3</iMinVoters>
+			<iMinVoters>2</iMinVoters>
 			<iStateReligionVotePercent>0</iStateReligionVotePercent>
 			<iTradeRoutes>0</iTradeRoutes>
 			<bSecretaryGeneral>0</bSecretaryGeneral>
