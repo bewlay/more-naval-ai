@@ -908,11 +908,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_JOIN</Tag>
-		<English>The revolutionionaries join forces with %s1_leader of the %s2_civ !</English>
-		<French>Les revolutionionaries joignent</French>
-		<German>Die Revolution&#228;re vereinigen sich mit</German>
-		<Italian>I ribelli si uniscono al/la </Italian>
-		<Spanish>Los revolucionarios se han unido al/a la</Spanish>
+		<English>The revolutionionaries join forces with %s1_leader of the %s2_civ.</English>
+		<French>The revolutionionaries join forces with %s1_leader of the %s2_civ.</French>
+		<German>Die Revolution&#228;re vereinigen sich mit %s1_leader vom %s2_civ.</German>
+		<Italian>The revolutionionaries join forces with %s1_leader of the %s2_civ.</Italian>
+		<Spanish>Los revolucionarios se han unido [NUM1:al:a la:a los:a las] %s1_leader [NUM1:del:de la:de los:de las] %s2_civ.</Spanish>
 		<Finnish>The revolutionionaries join the</Finnish>
 	</TEXT>
 	<TEXT>

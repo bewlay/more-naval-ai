@@ -6361,7 +6361,7 @@ class Revolution :
 						colorNum = 7
 						mess = "<color=255,0,0,255>"
 						if( bJoinRev ) :
-							mess += localText.getText("TXT_KEY_REV_MESS_JOIN",(pRevPlayer.getName(), pRevPlayer.getCivilizationDescription(0)))
+							mess += localText.getText("TXT_KEY_REV_MESS_JOIN",(pRevPlayer.getNameKey(), pRevPlayer.getCivilizationDescription(0)))
 						else :
 							mess += localText.getText("TXT_KEY_REV_MESS_YOU_RISEN",(pRevPlayer.getNameKey(), pRevPlayer.getCivilizationDescription(0)))
 					else :
