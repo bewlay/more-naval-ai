@@ -6737,21 +6737,10 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 			{
 
 //FfH: Modified by Kael 05/24/2008
-//				if ((pPlot->getUpgradeProgress() > 0) || pPlot->isBeingWorked())
-//				{
-//					iTurns = pPlot->getUpgradeTimeLeft(eImprovement, eRevealOwner);
-//
-//					szString.append(gDLL->getText("TXT_KEY_PLOT_IMP_UPGRADE", iTurns, GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
-//				}
-//				else
-//				{
-//					szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
-//				}
+				// lfgr fix 04/2020: Removed commented out code, added pPlot->getOwner() check
                 if (GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization() == NO_CIVILIZATION ||
-                 GC.getGameINLINE().getActivePlayer() == NO_PLAYER ||
-				 //GC.getGameINLINE().isDebugMode() ||
-                 //GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
-				 GET_PLAYER(pPlot->getOwner()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
+						pPlot->getOwner() == NO_PLAYER ||
+						GET_PLAYER(pPlot->getOwner()).getCivilizationType() == GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getPrereqCivilization())
                 {
                     // Super Forts begin *text* *upgrade*
 					if ((pPlot->getUpgradeProgress() > 0) || (pPlot->isBeingWorked() && !GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify()))
