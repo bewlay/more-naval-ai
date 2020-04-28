@@ -3275,50 +3275,21 @@ It is fine for a human player mouse-over (which is what it is used for).
                         if (pDefender->isAnimal())
                         {
                             //animal
-                            iExperience = range(iExperience,0,GC.getDefineINT("ANIMAL_MAX_XP_VALUE")-(pAttacker->getExperience()));
-                            if (iExperience < 0 )
-                            {
-                                iExperience = 0;
-                            }
-                            iWithdrawXP = range(iWithdrawXP,0,GC.getDefineINT("ANIMAL_MAX_XP_VALUE")-(pAttacker->getExperience()));
-                            if (iWithdrawXP < 0 )
-                            {
-                                iWithdrawXP = 0;
-                            }
-                            iBonusAttackerXP = range(iBonusAttackerXP,0,GC.getDefineINT("ANIMAL_MAX_XP_VALUE")-(pAttacker->getExperience() + iExperience));
-                            if (iBonusAttackerXP < 0 )
-                            {
-                                iBonusAttackerXP = 0;
-                            }
-                            iBonusWithdrawXP = range(iBonusWithdrawXP,0,GC.getDefineINT("ANIMAL_MAX_XP_VALUE")-(pAttacker->getExperience() + iWithdrawXP));
-                            if (iBonusWithdrawXP < 0 )
-                            {
-                                iBonusWithdrawXP = 0;
-                            }
+							int iMaxExtraAnimalXP = std::max( 0, GC.getDefineINT( "ANIMAL_MAX_XP_VALUE" ) - pAttacker->getExperience() );
+							iExperience = range(iExperience,0,iMaxExtraAnimalXP);
+							iWithdrawXP = range(iWithdrawXP,0,iMaxExtraAnimalXP);
+							iBonusAttackerXP = range(iBonusAttackerXP,0,iMaxExtraAnimalXP + iExperience);
+							iBonusWithdrawXP = range(iBonusWithdrawXP,0,iMaxExtraAnimalXP + iWithdrawXP);
+
                         }
                         else
                         {
                             //normal barbarian
-                            iExperience = range(iExperience,0,GC.getDefineINT("BARBARIAN_MAX_XP_VALUE")-pAttacker->getExperience());
-                            if (iExperience < 0 )
-                            {
-                                iExperience = 0;
-                            }
-                            iWithdrawXP = range(iWithdrawXP,0,GC.getDefineINT("BARBARIAN_MAX_XP_VALUE")-(pAttacker->getExperience()));
-                            if (iWithdrawXP < 0 )
-                            {
-                                iWithdrawXP = 0;
-                            }
-                            iBonusAttackerXP = range(iBonusAttackerXP,0,GC.getDefineINT("BARBARIAN_MAX_XP_VALUE")-(pAttacker->getExperience() + iExperience));
-                            if (iBonusAttackerXP < 0 )
-                            {
-                                iBonusAttackerXP = 0;
-                            }
-                            iBonusWithdrawXP = range(iBonusWithdrawXP,0,GC.getDefineINT("BARBARIAN_MAX_XP_VALUE")-(pAttacker->getExperience() + iWithdrawXP));
-                            if (iBonusWithdrawXP < 0 )
-                            {
-                                iBonusWithdrawXP = 0;
-                            }
+							int iMaxExtraBarbXP = std::max( 0, GC.getDefineINT( "BARBARIAN_MAX_XP_VALUE" ) - pAttacker->getExperience() );
+							iExperience = range(iExperience,0,iMaxExtraBarbXP);
+							iWithdrawXP = range(iWithdrawXP,0,iMaxExtraBarbXP);
+							iBonusAttackerXP = range(iBonusAttackerXP,0,iMaxExtraBarbXP + iExperience);
+							iBonusWithdrawXP = range(iBonusWithdrawXP,0,iMaxExtraBarbXP + iWithdrawXP);
                         }
                     }
 
@@ -9733,6 +9704,8 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 {
 	PROFILE_FUNC();
 
+	FAssert( pvpUnits == NULL || pvpUnits->size() > 0 );
+
 	CvWString szText, szText2;
 
 	if (NO_SPELL == eSpell)
@@ -14918,26 +14891,8 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 
 				if (iYear != MIN_INT)
 				{
-					/*
 					// year built
-					CvWString szYear;
-
-					if (iYear < 0)
-					{
-						szYear = gDLL->getText("TXT_KEY_TIME_BC", -iYear);
-					}
-					else if (iYear > 0)
-					{
-						szYear = gDLL->getText("TXT_KEY_TIME_AD", iYear);
-					}
-					else
-					{
-						szYear = gDLL->getText("TXT_KEY_TIME_AD", 1);
-					}
-					*/
-
 					szBuffer.append(NEWLINE);
-					//szBuffer.append(gDLL->getText("TXT_KEY_BUG_YEAR_BUILT", szYear.GetCString()));
 					szBuffer.append(gDLL->getText("TXT_KEY_BUG_YEAR_BUILT", iYear));
 
 					// double commerce

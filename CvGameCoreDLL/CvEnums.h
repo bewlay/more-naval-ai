@@ -541,7 +541,7 @@ enum WidgetTypes					// Exposed to Python
 	WIDGET_GLOBELAYER_OPTION,
 	WIDGET_GLOBELAYER_TOGGLE,
 
-	// lfgr note 11/2019: Apparantly, inserting items before here (and in particular, before WIDGET_CLOSE_SCREEN)
+	// lfgr note 11/2019: Apparently, inserting items before here (and in particular, before WIDGET_CLOSE_SCREEN)
 	// can break some UI functionality.
 
 // BUG - Min/Max Commerce Rate - start
