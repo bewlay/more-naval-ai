@@ -969,9 +969,9 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bConvert)
 			{
 				if (GET_PLAYER((PlayerTypes)iI).isAlive())
 				{
-					//szBuffer = gDLL->getText("TXT_KEY_MISC_GENERAL_KILLED", getNameKey());
+					// lfgr 04/2020: Removed irritating "unit defeated" sound effect
 					szBuffer = gDLL->getText("TXT_KEY_MISC_GENERAL_KILLED");
-					gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_MAJOR_EVENT);
+					gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, NULL, MESSAGE_TYPE_MAJOR_EVENT);
 				}
 			}
 		}
