@@ -1,0 +1,9 @@
+
+// *** Control Bitmap Theme file
+
+// Set the resource 
+resource_path	"Mods/More Naval AI/Resource";
+
+// Setup common properties
+include			"Mods/More Naval AI/Resource/Themes/Civ4/Civ4Theme.thm";
+
