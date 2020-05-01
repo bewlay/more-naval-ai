@@ -208,7 +208,7 @@ class CustomFunctions:
 				lPromoList.extend( ['PROMOTION_POISONED_BLADE'] )
 				lHenchmanList.extend( ['UNIT_LIZARDMAN', 'UNIT_GORILLA'] )
 				if not self.grace() :
-					lList.extend( [('TECH_ANIMAL_HANDLING', 'UNIT_MANTICORE')] )
+					lList.extend( [('UNIT_MANTICORE', 'TECH_ANIMAL_HANDLING')] )
 			if CyGame().getGlobalCounter() > 40:
 				lList.extend( ['UNIT_PIT_BEAST', ('UNIT_DEATH_KNIGHT', 'TECH_IRON_WORKING'), ('UNIT_BALOR',
 						'TECH_IRON_WORKING')] )
