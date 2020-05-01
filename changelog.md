@@ -1,5 +1,49 @@
 # Changelog
 
+## v2.9-beta1u
+
+Breaks savegames.
+
+### Gameplay
+* The "sell slave" spell (which was previously not available due to a bug) can only be cast in cities
+* Fund dissidents resolution can now only be chosen if it actually does something
+* Removed broken and/or unfitting resolutions, cleaned up the rest
+
+### UI
+* "100% chance of wearing off each turn" now reads "Wears off at the end of turn"
+* Adjusted size of unit model for currently selected unit so it doesn't overlap with the tooltip
+* Lanun adept now uses default adept button instead of lanun warrior button (report by swapoer@civfanatics.com)
+* Vote help text now avaiable as a tooltip in victory advisor and resolution choice and voting dialogs
+* Improved popup text and messages regarding voting
+* Spell costs you cannot pay are now indicated in red
+* Removed irritating "unit defeated" sound when great generals die (report by Bickendan@civfanatics.com)
+* If own nationality is <50% in a city, show turns until 50% is achieved
+* Adjusted player colors such that rebels (and Minister Koun) get new ones (report by Devils_Advocate@civfanatics.com)
+
+### Bugfixes
+* Spells whose only positive effect is gaining gold can now be casted (this was preventing "Sell Slave" to work)
+* Repealing a resolution now correctly undoes its effect on crime rate
+* Fixed an encoding problem with Dynamic Civ Names
+* Fixed an invalid memory access occuring in the AI cache
+* Fixed an invalid memory access when having the mouse over an unowned town improvement
+* Fixed a typo in the lair exploration code
+
+### Code
+* `<bGamblingRing>`, `<bSmugglingRing>`, and `<bSlaveTrade>` VoteInfo tag removed (superseded)
+* `<bCityRazing>` and `<bPacificRule>` VoteInfo tags removed (didn't work and not fitting for FfH)
+* `<bPrereqSlaveTrade>` SpellInfo tag removed
+* New SpellInfo tag: `<VotePrereq>`
+* New VoteInfo tags: `<PyRequirement>`, `<PyAI>`. See doc/tags.md for more information
+* Enabled VoteInfo `<Help>` tag in Schema
+* gambling ring, smuggling ring, and slave trade resolutions now use python and the new tags
+* More documentation for Vote system
+* Misc formatting, cleanup, and comments.
+* Removed an invalid assert complaining about the world building limit - this is expected to be too high if we e.g. pick up and drop crown of Akharien.
+
+### Misc
+* The mod folder is now "More Naval AI", it should no longer installed over vanilla FfH.
+
+
 ## v2.8.1u
 
 ### Gameplay
