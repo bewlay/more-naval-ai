@@ -71,7 +71,7 @@ class GenericAdvisorScreen( object ) :
 		
 		if BugOpt.isFullScreenAdvisors() and screen.getXResolution() > 1024 :
 			self.wScreen = max( 1024, screen.getXResolution() )
-			self.hScreen = max( 768, screen.getYResolution() )
+			self.hScreen = max( 720, screen.getYResolution() )
 			screen.setDimensions( 0, 0, self.wScreen, self.hScreen )
 			BugUtil.debug( "Initializing %s with fulls-screen resolution %dx%d" \
 					% ( self.__class__.__name__, self.wScreen, self.hScreen ) )
