@@ -7946,6 +7946,11 @@ bool CvPlayer::canFound(int iX, int iY, bool bTestVisible) const
 		}
 	}
 
+	// lfgr fix 05/2020
+	if( pPlot->isFoundDisabled() ) {
+		return false;
+	}
+
 	if (pPlot->isImpassable())
 	{
 		return false;
