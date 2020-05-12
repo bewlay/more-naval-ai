@@ -28,7 +28,7 @@ BeginGame
 	TargetScore=0
 	StartYear=0
 	Description=TXT_KEY_WB_THE_BLACK_TOWER_DESC
-	ModPath=Mods\Fall from Heaven 2
+	ModPath=Mods\More Naval AI
 EndGame
 BeginTeam
 	TeamID=0
