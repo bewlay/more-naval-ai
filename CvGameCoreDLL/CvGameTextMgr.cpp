@@ -3085,6 +3085,7 @@ It is fine for a human player mouse-over (which is what it is used for).
 					if ((!ACO_enabled) || (getBugOptionBOOL("ACO__ForceOriginalOdds", false, "ACO_FORCE_ORIGINAL_ODDS")))
 					{
 						szString.append(gDLL->getText("TXT_KEY_COMBAT_PLOT_ODDS", szTempBuffer.GetCString()));
+						szString.append( NEWLINE );
 					}
 /*************************************************************************************************/
 /** ADVANCED COMBAT ODDS                      3/11/09                           PieceOfMind      */
