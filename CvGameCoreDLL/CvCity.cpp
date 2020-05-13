@@ -961,6 +961,8 @@ int CvCity::getRevIndexHappinessVal()
 	return iVal;
 }
 
+// LFGR_TODO: What is this about? Looks unfinished
+
 int CvCity::getRevIndexDistanceVal()
 {
 	int iVal = 0;

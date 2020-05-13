@@ -8178,6 +8178,7 @@ void CvPlayer::found(int iX, int iY)
 
 	// lfgr: merged from MoM
 	// Sephi default value for avoid angry Citizens	
+	// LFGR_TODO: Make this a BUG option
 	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
 		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
 	// lfgr end

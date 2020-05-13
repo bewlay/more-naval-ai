@@ -1610,7 +1610,7 @@ void CvUnit::resolveAirCombat(CvUnit* pInterceptor, CvPlot* pPlot, CvAirMissionD
 	CvWString szBuffer;
 
 	int iTheirStrength = (DOMAIN_AIR == pInterceptor->getDomainType() ? pInterceptor->airCurrCombatStr(this) : pInterceptor->currCombatStr(NULL, NULL));
-	int iOurStrength = (DOMAIN_AIR == getDomainType() ? airCurrCombatStr(pInterceptor) : currCombatStr(NULL, NULL));
+	int iOurStrength = (DOMAIN_AIR == getDomainType() ? airCurrCombatStr(pInterceptor) : currCombatStr(NULL, NULL)); // LFGR_TODO: ( NULL, pDefender )?
 	int iTotalStrength = iOurStrength + iTheirStrength;
 	if (0 == iTotalStrength)
 	{
@@ -9928,6 +9928,9 @@ int CvUnit::baseCombatStrDefense() const
 //		pPlot valid, pAttacker == this (new case), when the defender is unknown, but we want to calc approx str
 //			note, in this last case, it is expected pCombatDetails == NULL, it does not have to be, but some
 //			values may be unexpectedly reversed in this case (iModifierTotal will be the negative sum)
+// lfgr note 05/2020: In FfH, we have this:
+//		pPlot == NULL, pAttacher != NULL - This is the attacker, pAttacker is the defender.
+//		pPlot == NULL, pAttacker == NULL should probably not be used anymore, as the defender can influence strength via damage resistance/immunity
 int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDetails* pCombatDetails) const
 {
 	int iCombat;
@@ -9963,6 +9966,8 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 	{
 		pAttackedPlot = plot();
 	}
+
+	// lfgr note 05/2020: from now on, pAttacker != this
 
 	if (pCombatDetails != NULL)
 	{
@@ -14027,7 +14032,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking)
 			if( gUnitLogLevel > 0 ) 
 			{
 				logBBAI("      *** KOMBAT! ***\n                    ATTACKER: %S (Unit %d), CombatStrength=%d\n                    DEFENDER: Player %d Unit %d (%S's %S), CombatStrength=%d\n",
-						getName().GetCString(), getID(), currCombatStr(NULL, NULL),
+						getName().GetCString(), getID(), currCombatStr(NULL, pCombatUnit), // lfgr fix 05/2020
 						pCombatUnit->getOwnerINLINE(), pCombatUnit->getID(), GET_PLAYER(pCombatUnit->getOwnerINLINE()).getNameKey(), pCombatUnit->getName().GetCString(), pCombatUnit->currCombatStr(pCombatUnit->plot(), this));
 			}
 

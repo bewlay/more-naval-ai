@@ -3186,7 +3186,7 @@ It is fine for a human player mouse-over (which is what it is used for).
 					}
                     /** phungus end **/ //thanks to phungus420
 
-
+					// LFGR_TODO: Immunity and resistance
 
 					/** Many thanks to DanF5771 for some of these calculations! **/
 					int iAttackerStrength  = pAttacker->currCombatStr(NULL, pDefender);
