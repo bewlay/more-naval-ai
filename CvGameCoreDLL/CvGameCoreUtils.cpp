@@ -934,8 +934,8 @@ float getCombatOddsSpecific(CvUnit* pAttacker, CvUnit* pDefender, int n_A, int n
     int iDefenderHitLimit;
 
 
-    iAttackerStrength = pAttacker->currCombatStr(NULL, NULL);
-    iAttackerFirepower = pAttacker->currFirepower(NULL, NULL);
+    iAttackerStrength = pAttacker->currCombatStr(NULL, pDefender); // lfgr fix 05/2020
+    iAttackerFirepower = pAttacker->currFirepower(NULL, pDefender); // lfgr fix 05/2020
     iDefenderStrength = pDefender->currCombatStr(pDefender->plot(), pAttacker);
     iDefenderFirepower = pDefender->currFirepower(pDefender->plot(), pAttacker);
 

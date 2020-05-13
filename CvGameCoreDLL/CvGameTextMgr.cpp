@@ -3189,8 +3189,8 @@ It is fine for a human player mouse-over (which is what it is used for).
 
 
 					/** Many thanks to DanF5771 for some of these calculations! **/
-					int iAttackerStrength  = pAttacker->currCombatStr(NULL, NULL);
-					int iAttackerFirepower = pAttacker->currFirepower(NULL, NULL);
+					int iAttackerStrength  = pAttacker->currCombatStr(NULL, pDefender);
+					int iAttackerFirepower = pAttacker->currFirepower(NULL, pDefender);
 					int iDefenderStrength  = pDefender->currCombatStr(pPlot, pAttacker);
 					int iDefenderFirepower = pDefender->currFirepower(pPlot, pAttacker);
 
@@ -3260,8 +3260,13 @@ It is fine for a human player mouse-over (which is what it is used for).
 					}
 
 					int iDefExperienceKill;
-					iDefExperienceKill = (pAttacker->defenseXPValue() * iAttackerStrength) / iDefenderStrength;
-					iDefExperienceKill = range(iDefExperienceKill, GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), GC.getDefineINT("MAX_EXPERIENCE_PER_COMBAT"));
+					if( iDefenderStrength != 0 ) {
+						iDefExperienceKill = (pAttacker->defenseXPValue() * iAttackerStrength) / iDefenderStrength;
+						iDefExperienceKill = range(iDefExperienceKill, GC.getDefineINT("MIN_EXPERIENCE_PER_COMBAT"), GC.getDefineINT("MAX_EXPERIENCE_PER_COMBAT"));
+					}
+					else {
+						iDefExperienceKill = 0;
+					}
 
 					int iBonusAttackerXP = (iExperience * iAttackerExperienceModifier) / 100;
 					int iBonusDefenderXP = (iDefExperienceKill * iDefenderExperienceModifier) / 100;
@@ -3466,7 +3471,7 @@ It is fine for a human player mouse-over (which is what it is used for).
                     float RetreatOdds = 0.0f;
                     float DefenderKillOdds = 0.0f;
 
-                    float CombatRatio = ((float)(pAttacker->currCombatStr(NULL, NULL))) / ((float)(pDefender->currCombatStr(pPlot, pAttacker)));
+                    float CombatRatio = ((float)(pAttacker->currCombatStr(NULL, pDefender))) / ((float)(pDefender->currCombatStr(pPlot, pAttacker)));
                     // THE ALL-IMPORTANT COMBATRATIO
 
                     float AttXP = (pDefender->attackXPValue())/CombatRatio;
@@ -4251,8 +4256,9 @@ It is fine for a human player mouse-over (which is what it is used for).
             {
                 szString.append(NEWLINE);
 
-                szTempBuffer.Format(L"%.2f",
-                                    ((pAttacker->getDomainType() == DOMAIN_AIR) ? pAttacker->airCurrCombatStrFloat(pDefender) : pAttacker->currCombatStrFloat(NULL, pDefender)));
+                szTempBuffer.Format(L"%.2f", ((pAttacker->getDomainType() == DOMAIN_AIR)
+						? pAttacker->airCurrCombatStrFloat(pDefender)
+						: pAttacker->currCombatStrFloat(NULL, pDefender)));
 
                 if (pAttacker->isHurt())
                 {
@@ -4279,7 +4285,7 @@ It is fine for a human player mouse-over (which is what it is used for).
 
                 szString.append(gDLL->getText("TXT_ACO_VS", szTempBuffer.GetCString(), szTempBuffer2.GetCString()));
 
-                if (((!(pDefender->immuneToFirstStrikes())) && (pAttacker->maxFirstStrikes() > 0)) || (pAttacker->maxCombatStr(NULL,NULL)!=pAttacker->baseCombatStr()*100))
+                if (((!(pDefender->immuneToFirstStrikes())) && (pAttacker->maxFirstStrikes() > 0)) || (pAttacker->maxCombatStr(NULL,pDefender)!=pAttacker->baseCombatStr()*100))
                 {
                     //if attacker uninjured strength is not the same as base strength (i.e. modifiers are in effect) or first strikes exist, then
                     if (getBugOptionBOOL("ACO__ShowModifierLabels", false, "ACO_SHOW_MODIFIER_LABELS"))
