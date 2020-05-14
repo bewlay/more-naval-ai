@@ -296,6 +296,14 @@ public:
 	bool isProductionMaxedUnitClass(UnitClassTypes eUnitClass) const;																						// Exposed to Python
 	bool isProductionMaxedBuildingClass(BuildingClassTypes eBuildingClass, bool bAcquireCity = false) const;		// Exposed to Python
 	bool isProductionMaxedProject(ProjectTypes eProject) const;																									// Exposed to Python
+	
+	/* lfgr fix 05/2020
+		More flexible version of getProductionNeeded(UnitTypes).
+		If bAdvStartRefund == false, behaves like getProductionNeeded(UnitTypes) behaved originally.
+		If bAdvStartRefund == true, calculates the refund from production cost that this unit gives in advanced start. This
+		is different if InstanceCostModifier is not 0.
+	*/
+	int getProductionNeeded( UnitTypes eUnit, bool bAdvStartRefund ) const;
 	DllExport int getProductionNeeded(UnitTypes eUnit) const;																										// Exposed to Python
 	DllExport int getProductionNeeded(BuildingTypes eBuilding) const;																						// Exposed to Python
 	DllExport int getProductionNeeded(ProjectTypes eProject) const;																							// Exposed to Python

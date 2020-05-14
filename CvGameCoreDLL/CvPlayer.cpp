@@ -8782,7 +8782,7 @@ bool CvPlayer::isProductionMaxedProject(ProjectTypes eProject) const
 }
 
 
-int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
+int CvPlayer::getProductionNeeded( UnitTypes eUnit, bool bAdvStartRefund ) const
 {
 	UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo(eUnit).getUnitClassType();
 	FAssert(NO_UNITCLASS != eUnitClass);
@@ -8797,7 +8797,16 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 	}
 //<<<<Unofficial Bug Fix: End Add
 
-	iProductionNeeded *= 100 + getUnitClassCount(eUnitClass) * GC.getUnitClassInfo(eUnitClass).getInstanceCostModifier();
+	// lfgr fix 05/2020: Don't refund more than we payed.
+	int iUnitClassCount = getUnitClassCount( eUnitClass );
+	if( bAdvStartRefund ) {
+		if( iUnitClassCount <= 0 ) {
+			// Cannot remove a unit we don't have (a player clicked remove on an empty plot)
+			return -1;
+		}
+		iUnitClassCount -= 1;
+	}
+	iProductionNeeded *= 100 + iUnitClassCount * GC.getUnitClassInfo(eUnitClass).getInstanceCostModifier();
 	iProductionNeeded /= 100;
 
 	iProductionNeeded *= GC.getDefineINT("UNIT_PRODUCTION_PERCENT");
@@ -8848,6 +8857,11 @@ int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 //	return std::max(1, iProductionNeeded);
 	return iProductionNeeded;
 //<<<<Unofficial Bug Fix: End Modify
+}
+
+int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
+{
+	return getProductionNeeded( eUnit, false );
 }
 
 
@@ -19059,7 +19073,8 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	int iCost = (getProductionNeeded(eUnit) * kUnitInfo.getAdvancedStartCost()) / 100;
+	// lfgr fix 05/2020: If we remove the unit tell this getProductionNeeded to make sure we don't refund too much
+	int iCost = (getProductionNeeded(eUnit, !bAdd ) * kUnitInfo.getAdvancedStartCost()) / 100;
 	if (iCost < 0)
 	{
 		return -1;
