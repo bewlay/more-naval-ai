@@ -413,6 +413,29 @@ class CvEventManager:
 
 	def onGameStart(self, argsList):
 		'Called at the start of the game'
+		
+		# lfgr 05/2020: Print some statistics
+		# Mostly borrowed from victory screen
+		print( "--------------------------" )
+		print( "STARTING NEW GAME" )
+		print( "Mapscript: %s" % gc.getMap().getMapScriptName() )
+		print( "Map size: %s" % gc.getWorldInfo(gc.getMap().getWorldSize()).getTextKey() )
+		print( "Game speed: %s" % gc.getGameSpeedInfo(gc.getGame().getGameSpeedType()).getTextKey() )
+		print( "Climate: %s" % gc.getClimateInfo(gc.getMap().getClimate()).getTextKey() )
+		print( "Sea level: %s" % gc.getSeaLevelInfo(gc.getMap().getSeaLevel()).getTextKey() )
+		print( "Starting era: %s" % gc.getEraInfo(gc.getGame().getStartEra()).getTextKey() )
+		
+		print( "Options:" )
+		for eOption in xrange( gc.getNumGameOptionInfos() ) :
+			if gc.getGame().isOption( eOption ) :
+				print( "  %s" % gc.getGameOptionInfo( eOption ).getType() )
+		
+		print( "Players:" )
+		for ePlayer, pyPlayer in PyHelpers.PyGame().iterAliveCivPlayers() :
+			pyPlayer.getLeaderHeadDescription()
+			print( "  #%d: %s/%s" % ( pyPlayer.getID(), pyPlayer.getName(), pyPlayer.getCivilizationName() ) )
+		print( "--------------------------" )
+		
 
 		if CyGame().getWBMapScript():
 			sf.gameStart()
@@ -2098,6 +2121,9 @@ class CvEventManager:
 
 		if not bNewValue and gc.getGame().getGameTurnYear() >= 5:
 			pPlayer = gc.getPlayer(iPlayerID)
+			# lfgr 05/2020
+			CvUtil.pyPrint( "Player %d eliminated on turn %d" % ( iPlayerID, CyGame().getGameTurn() ) )
+			
 			if pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_GOOD'):
 				CyGame().changeGlobalCounter(5)
 			elif pPlayer.getAlignment() == gc.getInfoTypeForString('ALIGNMENT_EVIL'):
