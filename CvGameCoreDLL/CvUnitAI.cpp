@@ -2384,7 +2384,8 @@ void CvUnitAI::AI_workerMove()
 	BuildTypes eBestBonusBuild = NO_BUILD;
 	int iBestBonusValue = 0;
 
-    if (AI_improveBonus(25, &pBestBonusPlot, &eBestBonusBuild, &iBestBonusValue))
+	// First try to connect resources. Only consider resources inside borders, even if super forts is enabled.
+    if (AI_improveBonus(25, &pBestBonusPlot, &eBestBonusBuild, &iBestBonusValue, true))
 	{
 		return;
 	}
@@ -2560,6 +2561,12 @@ void CvUnitAI::AI_workerMove()
 		{
 			return;
 		}
+	}
+
+	// Second try to connect resources, for super forts
+	if( GC.getGameINLINE().isOption( GAMEOPTION_ADVANCED_TACTICS ) && AI_improveBonus() )
+	{
+		return;
 	}
 
 	if (pCity != NULL)
@@ -21324,8 +21331,9 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 }
 
 // Returns true if a mission was pushed...
-bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* peBestBuild, int* piBestValue)
+bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* peBestBuild, int* piBestValue, bool bInsideBorders)
 {
+	// LFGR_TODO: Maybe do some caching, this is called multiple times in the same turn by the same worker.
 	PROFILE_FUNC();
 
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
@@ -21362,8 +21370,9 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 
 		// Super Forts begin *AI_worker*
 		if ((pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || 
-			(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && pLoopPlot->getOwnerINLINE() == NO_PLAYER && pLoopPlot->isRevealed(getTeam(), false))) 
-			&& AI_plotValid(pLoopPlot))
+				( !bInsideBorders && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) // Allow outside borders if super forts is enabled
+				&& pLoopPlot->getOwnerINLINE() == NO_PLAYER && pLoopPlot->isRevealed(getTeam(), false) )
+			) && AI_plotValid(pLoopPlot))
 		//if (pLoopPlot->getOwnerINLINE() == getOwnerINLINE() && AI_plotValid(pLoopPlot)) - Original Code
 		// Super Forts end
 		{
