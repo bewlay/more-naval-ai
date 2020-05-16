@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Misc stuff -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWLEADERDEFEATPOPUP_TEXT</Tag>
+		<English>Defeat popups</English>
+		<French>Defeat popups</French>
+		<German>Defeat popups</German>
+		<Italian>Defeat popups</Italian>
+		<Spanish>Defeat popups</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWLEADERDEFEATPOPUP_HOVER</Tag>
+		<English>Show leader-specific popup when a player is defeated</English>
+		<French>Show leader-specific popup when a player is defeated</French>
+		<German>Show leader-specific popup when a player is defeated</German>
+		<Italian>Show leader-specific popup when a player is defeated</Italian>
+		<Spanish>Show leader-specific popup when a player is defeated</Spanish>
+	</TEXT>
+</Civ4GameText>

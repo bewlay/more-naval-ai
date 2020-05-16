@@ -149,6 +149,8 @@
 	<load mod="StatusDump"/>
 	<load mod="MovieMod"/>
 
+	<load mod="FfHUI" /> <!-- FfHUI 05/2020 lfgr -->
+
 	
 <!--RevolutionDCM start - mod components -->
 	<load mod="RevDCM"/>
@@ -177,6 +179,7 @@
 	
 	<screen id="BUGFull">
 		<tab module="BugGeneralOptionsTab"/>
+		<tab module="FallFromHeavenOptionsTab" /> <!-- FfHUI 05/2020 lfgr -->
     <!--RevolutionDCM start - RevDCM option control tab (delete next line to remove the tab -->
 		<tab module="RevDCMOptionsTab"/>
     <!--RevolutionDCM end -->

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	FfHUI 05/2020 lfgr
+	Configurable UI functionality for Fall from Heaven.
+-->
+<mod id="FfHUI"
+	name="Fall from Heaven 2 UI"
+	module="FfHUI"
+	author="lfgr"
+	date="05/2020">
+
+	<event type="setPlayerAlive" function="onSetPlayerAlive"/>
+
+	<options id="Fall from Heaven 2" file="Fall from Heaven 2.ini">
+		<section id="Popups">
+			<option id="ShowLeaderDefeatPopup" type="boolean" default="True" />
+		</section>
+	</options>
+</mod>
