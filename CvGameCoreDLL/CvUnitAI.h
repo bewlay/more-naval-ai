@@ -283,8 +283,10 @@ protected:
 	bool AI_irrigateTerritory();
 	bool AI_fortTerritory(bool bCanal, bool bAirbase);
 
-	// FFH_AI 05/2020 lfgr: Added optional argument bInsideBorders: Don't build outside borders (super forts)
-	bool AI_improveBonus(int iMinValue = 0, CvPlot** ppBestPlot = NULL, BuildTypes* peBestBuild = NULL, int* piBestValue = NULL, bool bInsideBorders = false);
+	// FFH_AI 05/2020 lfgr: Added optional argument bInsideBordersOrCurrentPlot: Don't build outside borders,
+	//   except on the plot we're standing on (super forts)
+	bool AI_improveBonus(int iMinValue = 0, CvPlot** ppBestPlot = NULL, BuildTypes* peBestBuild = NULL,
+			int* piBestValue = NULL, bool bInsideBordersOrCurrentPlot = false);
 	bool AI_improvePlot(CvPlot* pPlot, BuildTypes eBuild);
 	BuildTypes AI_betterPlotBuild(CvPlot* pPlot, BuildTypes eBuild);
 	bool AI_connectBonus(bool bTestTrade = true);

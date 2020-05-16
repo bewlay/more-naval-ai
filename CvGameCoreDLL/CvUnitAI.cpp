@@ -2375,6 +2375,7 @@ void CvUnitAI::AI_workerMove()
         {
 			if (AI_retreatToCity())
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... retreating from danger");}
 				return;
 			}
 		}
@@ -2405,6 +2406,7 @@ void CvUnitAI::AI_workerMove()
 					{
 						if (AI_connectPlot(plot()))
 						{
+							if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting the plot on which we're standing");}
 							return;
 						}
 					}
@@ -2429,6 +2431,7 @@ void CvUnitAI::AI_workerMove()
 	{
 		if (AI_connectCity())
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting some city");}
 			return;
 		}
 	}
@@ -2493,6 +2496,7 @@ void CvUnitAI::AI_workerMove()
 		{
 			if (AI_improveCity(pCity))
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... improving city %S", pCity->getName().c_str());}
 				return;
 			}
 		}
@@ -2500,6 +2504,7 @@ void CvUnitAI::AI_workerMove()
 
 	if (AI_improveLocalPlot(2, pCity))
 	{
+		if( gUnitLogLevel >= 3 ){logBBAI("    ... improving local plot");}
 		return;
 	}
 	
@@ -2517,6 +2522,7 @@ void CvUnitAI::AI_workerMove()
 //		{
 		if (AI_fortTerritory(bCanal, bAirbase))
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... build fort");}
 			return;
 		}
 //		}
@@ -2528,6 +2534,8 @@ void CvUnitAI::AI_workerMove()
 	{
 		if (AI_connectCity())
 		{
+			// LFGR_TODO: Can this ever happen? Same checks above.
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting some city");}
 			return;
 		}
 	}
@@ -2538,6 +2546,7 @@ void CvUnitAI::AI_workerMove()
 		{
 			if (AI_improvePlot(pBestBonusPlot, eBestBonusBuild))
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting bonus with low priority that we found earlier");}
 				return;
 			}
 		}
@@ -2549,6 +2558,7 @@ void CvUnitAI::AI_workerMove()
 
 		if (AI_nextCityToImprove(pCity))
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... improve next city");}
 			return;
 		}
 
@@ -2559,14 +2569,41 @@ void CvUnitAI::AI_workerMove()
 	{
 		if (AI_improvePlot(pBestBonusPlot, eBestBonusBuild))
 		{
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting bonus with very low priority that we found earlier");}
 			return;
 		}
 	}
 
-	// Second try to connect resources, for super forts
-	if( GC.getGameINLINE().isOption( GAMEOPTION_ADVANCED_TACTICS ) && AI_improveBonus() )
+	// Second try to connect resources, outside borders with super forts
+	if( GC.getGameINLINE().isOption( GAMEOPTION_ADVANCED_TACTICS ) )
 	{
-		return;
+		// Only do this if we have defenders to spare for the fort.
+		bool bDefendersAvailable = true; // LFGR_TODO
+		/*bool bDefendersAvailable = false;
+		CvPlayerAI& kOwner = GET_PLAYER( getOwnerINLINE() );
+		int iLoop;
+		for( CvCity* pLoopCity = kOwner.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOwner.nextCity(&iLoop) )
+		{
+			if( pLoopCity->area()->getID() == area()->getID() )
+			{
+				int iDefenders = pLoopCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
+				iDefenders += pLoopCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_COUNTER, -1, getOwnerINLINE());
+				if( pLoopCity->AI_neededDefenders() < iDefenders ) {
+					bDefendersAvailable = true;
+					break;
+				}
+			}
+		}*/
+		
+		if( bDefendersAvailable ) {
+			if( AI_improveBonus() ) {
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting bonus outside borders");}
+				return;
+			}
+		}
+		else {
+			if( gUnitLogLevel >= 3 ){logBBAI("    ... don't try to connect bonus outside borders: no defenders available!");}
+		}
 	}
 
 	if (pCity != NULL)
@@ -2708,6 +2745,7 @@ void CvUnitAI::AI_workerMove()
 
 	if (AI_retreatToCity(false, true))
 	{
+		if( gUnitLogLevel >= 3 ){logBBAI("    ... connecting bonus outside of borders with a super fort");}
 		return;
 	}
 
@@ -3092,14 +3130,16 @@ void CvUnitAI::AI_barbAttackMove()
 
 void CvUnitAI::AI_attackMove()
 {
+	logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_attackMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
 	PROFILE_FUNC();
 
 	if (GET_PLAYER(getOwnerINLINE()).getNumCities() == 0)
 	{
 		if (AI_shadow(UNITAI_SETTLE, -1, -1, false, false, 5))
-			{
-				return;
-			}
+		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... defend settler" );}
+			return;
+		}
 	}
 
 /************************************************************************************************/
@@ -3132,6 +3172,7 @@ void CvUnitAI::AI_attackMove()
 					// Since ATTACK can try to joing ATTACK_CITY again, need these units to
 					// take a break to let ATTACK_CITY group move and avoid hang
 					getGroup()->pushMission(MISSION_SKIP);
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... take a break while ATTACK_CITY stack move along" );}
 					return;
 				}
 			}
@@ -3149,6 +3190,7 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_guardCity(true))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> guard city" );}
 				return;
 			}
 		}
@@ -3157,12 +3199,14 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_anyAttack(2, 55))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> attack!" );}
 				return;
 			}
 		}
 
 		if (AI_groupMergeRange(UNITAI_ATTACK, 1, true, true, false))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> merge" );}
 			return;
 		}
 
@@ -3170,6 +3214,7 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_anyAttack(2, 30))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> attack!" );}
 				return;
 			}
 		}
@@ -3181,6 +3226,7 @@ void CvUnitAI::AI_attackMove()
 		// Guard a city we're in if it needs it
 		if (AI_guardCity(true))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... guard city" );}
 			return;
 		}
 
@@ -3189,6 +3235,7 @@ void CvUnitAI::AI_attackMove()
 			// Group with settler after naval drop
 			if( AI_groupMergeRange(UNITAI_SETTLE, 2, true, false, false) )
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... group with settler (after naval drop?)" );}
 				return;
 			}
 		}
@@ -3200,6 +3247,7 @@ void CvUnitAI::AI_attackMove()
 				// Defend colonies in new world
 				if (AI_guardCity(true, true, 3))
 				{
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... defend colonies in new world" );}
 					return;
 				}
 			}
@@ -3207,6 +3255,7 @@ void CvUnitAI::AI_attackMove()
 
 		if (AI_heal(30, 1))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... heal" );}
 			return;
 		}
 		
@@ -3214,22 +3263,31 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_group(UNITAI_SETTLE, 1, -1, -1, false, false, false, 3, true))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> group with settler" );}
 				return;
 			}
 
 			if (AI_group(UNITAI_SETTLE, 2, -1, -1, false, false, false, 3, true))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> group with settler" );}
+				return;
+			}
+
+			if( AI_guardFortMinDefender( true ) ) {
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> defend fort" );}
 				return;
 			}
 		}
 
 		if (AI_guardCityAirlift())
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... AI_guardCityAirlift" );}
 			return;
 		}
 
 		if (AI_guardCity(false, true, 1))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... guard city" );}
 			return;
 		}
 
@@ -3238,6 +3296,7 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_groupMergeRange(UNITAI_ATTACK_CITY, 1, true, true))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... join city attack in progress" );}
 				return;
 			}
 		}
@@ -3251,6 +3310,7 @@ void CvUnitAI::AI_attackMove()
                 {
                     if (AI_offensiveAirlift())
                     {
+						if( gUnitLogLevel >= 3 ) {logBBAI( "      ... offensive airlift" );}
                         return;
                     }
                 }
@@ -3261,11 +3321,13 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_cityAttack(1, 55))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> attack city!" );}
 				return;
 			}
 
 			if (AI_anyAttack(1, 65))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> attack!" );}
 				return;
 			}
 
@@ -3273,6 +3335,7 @@ void CvUnitAI::AI_attackMove()
 			{
 				if (AI_anyAttack(1, 45, 3))
 				{
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... danger -> attack!" );}
 					return;
 				}
 			}
@@ -3282,6 +3345,7 @@ void CvUnitAI::AI_attackMove()
 		{
 			if (AI_guardCity(false, false))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... guard city" );}
 				return;
 			}
 		}
@@ -3295,12 +3359,14 @@ void CvUnitAI::AI_attackMove()
 				{
 					if (AI_load(UNITAI_ASSAULT_SEA, MISSIONAI_LOAD_ASSAULT, UNITAI_ATTACK_CITY, -1, -1, -1, -1, MOVE_SAFE_TERRITORY, 4))
 					{
+						if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> load" );}
 						return;
 					}		
 				}
 
 				if (AI_load(UNITAI_SETTLER_SEA, MISSIONAI_LOAD_SETTLER, UNITAI_SETTLE, -1, -1, -1, 1, MOVE_SAFE_TERRITORY, 3))
 				{
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> load" );}
 					return;
 				}
 
@@ -3310,18 +3376,21 @@ void CvUnitAI::AI_attackMove()
 					// Fill transports before starting new one, but not just full of our unit ai
 					if (AI_load(UNITAI_ASSAULT_SEA, MISSIONAI_LOAD_ASSAULT, NO_UNITAI, 1, -1, -1, 1, MOVE_SAFE_TERRITORY, 4))
 					{
+						if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> load" );}
 						return;
 					}
 
 					// Pick new transport which has space for other unit ai types to join
 					if (AI_load(UNITAI_ASSAULT_SEA, MISSIONAI_LOAD_ASSAULT, NO_UNITAI, -1, 2, -1, -1, MOVE_SAFE_TERRITORY, 4))
 					{
+						if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> load" );}
 						return;
 					}
 				}
 
-				if (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP) > 0)
+				if (GET_PLAYER(getOwnerINLINE()).AI_unitTargetMissionAIs(this, MISSIONAI_GROUP) > 0) // LFGR_TODO: I don't really understand this
 				{
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... no danger -> wait (?)" );}
 					getGroup()->pushMission(MISSION_SKIP);
 					return;
 				}
@@ -3335,6 +3404,7 @@ void CvUnitAI::AI_attackMove()
 			{
 				if (AI_groupMergeRange(UNITAI_ATTACK, 1, true, true, true))
 				{
+					if( gUnitLogLevel >= 3 ) {logBBAI( "      ... outside territory, merge" );}
 					return;
 				}
 			}
@@ -3342,11 +3412,13 @@ void CvUnitAI::AI_attackMove()
 
 		if (AI_goody(3))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... get goody" );}
 			return;
 		}
 
 		if (AI_anyAttack(1, 70))
 		{
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... attack!" );}
 			return;
 		}
 	}
@@ -3738,6 +3810,7 @@ void CvUnitAI::AI_paratrooperMove()
 void CvUnitAI::AI_attackCityMove()
 {
 	PROFILE_FUNC();
+	logBBAI("    Stack %d (led by %S (%d), size %d) starting AI_attackCityMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 
 	AreaAITypes eAreaAIType = area()->getAreaAIType(getTeam());
@@ -13374,6 +13447,7 @@ bool CvUnitAI::AI_guardFort(bool bSearch)
 bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 {
 	PROFILE_FUNC();
+	// LFGR_TODO: Make sure the fort is not about to be conquered
 	
 	if(!GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 	{
@@ -21331,7 +21405,7 @@ bool CvUnitAI::AI_fortTerritory(bool bCanal, bool bAirbase)
 }
 
 // Returns true if a mission was pushed...
-bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* peBestBuild, int* piBestValue, bool bInsideBorders)
+bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* peBestBuild, int* piBestValue, bool bInsideBordersOrCurrentPlot)
 {
 	// LFGR_TODO: Maybe do some caching, this is called multiple times in the same turn by the same worker.
 	PROFILE_FUNC();
@@ -21368,9 +21442,9 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-		// Super Forts begin *AI_worker*
-		if ((pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || 
-				( !bInsideBorders && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) // Allow outside borders if super forts is enabled
+		// Super Forts begin *AI_worker*: Allow building outside borders if super forts is enabled
+		if ((pLoopPlot->getOwnerINLINE() == getOwnerINLINE() ||
+				( ( !bInsideBordersOrCurrentPlot || pLoopPlot == plot() ) && GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS)
 				&& pLoopPlot->getOwnerINLINE() == NO_PLAYER && pLoopPlot->isRevealed(getTeam(), false) )
 			) && AI_plotValid(pLoopPlot))
 		//if (pLoopPlot->getOwnerINLINE() == getOwnerINLINE() && AI_plotValid(pLoopPlot)) - Original Code
@@ -27256,6 +27330,11 @@ void CvUnitAI::AI_PatrolMove()
 		}
 	}
 
+	if( AI_guardFortMinDefender() ) {
+		if( gUnitLogLevel >= 3 ) {logBBAI( "      ... guard fort on same plot" );}
+		return;
+	}
+
 	// Jobs for small patrols
 	if (getGroup()->getNumUnits() <= 3)// && !bAtWar)
 	{
@@ -27442,6 +27521,11 @@ void CvUnitAI::AI_PatrolMove()
 		{
 			return;
 		}
+	}
+
+	if( AI_guardFortMinDefender( true ) ) {
+		if( gUnitLogLevel >= 3 ) {logBBAI( "      ... guarding undefended fort" );}
+		return;
 	}
 
 	if (AI_guardCityAirlift())
