@@ -21352,6 +21352,8 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 	eBestBuild = NO_BUILD;
 	pBestPlot = NULL;
 
+	if( gUnitLogLevel >= 3 ){logBBAI("    Try to improve some bonus");}
+
 	bCanRoute = canBuildRoute();
 
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
@@ -21431,6 +21433,11 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
                     //if ((pLoopPlot->getWorkingCity() != NULL) || (bIsConnected || bCanRoute)) // Original Code
 					// Super Forts end
                     {
+						if( gUnitLogLevel >= 3 ){
+							logBBAI("      Found bonus %s on %d|%d (%s), check whether we want to improve that...",
+								GC.getBonusInfo( eNonObsoleteBonus ).getType(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(),
+								( pLoopPlot->getOwnerINLINE() == getOwnerINLINE() ? "owned" : "unowned" ) );
+						}
                         eImprovement = pLoopPlot->getImprovementType();
 
                         bool bDoImprove = false;
@@ -21463,6 +21470,9 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 
                         if (bDoImprove)
                         {
+							if( gUnitLogLevel >= 3 ){
+								logBBAI("        We want to improve this, checking for builds..." );
+							}
                             for (iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
                             {
                                 eBuild = ((BuildTypes)iJ);
@@ -21470,10 +21480,12 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
                                 if (GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT)
                                 {
 									// Super Forts *AI_worker* (added if statement)
-									if(pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || (GC.getImprovementInfo((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement()).isActsAsCity() && GC.getImprovementInfo((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement()).isOutsideBorders()))
+									ImprovementTypes eImprovement = (ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement();
+									CvImprovementInfo& kImprovement = GC.getImprovementInfo( eImprovement );
+									if(pLoopPlot->getOwnerINLINE() == getOwnerINLINE() || kImprovement.isActsAsCity() && kImprovement.isOutsideBorders())
 									{
 										//if (GC.getImprovementInfo((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement()).isImprovementBonusTrade(eNonObsoleteBonus) || (!pLoopPlot->isCityRadius() && GC.getImprovementInfo((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement()).isActsAsCity()))
-										if (kOwner.doesImprovementConnectBonus((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement(), eNonObsoleteBonus)) // K-Mod
+										if (kOwner.doesImprovementConnectBonus(eImprovement, eNonObsoleteBonus)) // K-Mod
 										{
 											if (canBuild(pLoopPlot, eBuild))
 											{
@@ -21511,6 +21523,11 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 									} // Super Forts (closing bracket of if statement added above)
                                 }
                             }
+
+							if( gUnitLogLevel >= 3 ) {
+								if( eBestTempBuild == NO_BUILD ) {logBBAI("          No build found!" );}
+								else {logBBAI("         Best build %s", GC.getBuildInfo( eBestTempBuild ).getType() );}
+							}
                         }
                         if (eBestTempBuild == NO_BUILD)
                         {
@@ -21528,6 +21545,7 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
                         	if (generatePath(pLoopPlot, 0, true, &iPathTurns))
 							{
 								iValue = kOwner.AI_bonusVal(eNonObsoleteBonus);
+								if( gUnitLogLevel >= 3 ){ logBBAI("        Reachable. Base value: %d", iValue ); }
 
 								if (bDoImprove)
 								{
@@ -21548,6 +21566,7 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 */
 									iValue += 5 * pLoopPlot->calculateNatureYield(YIELD_FOOD, getOwnerINLINE(), pLoopPlot->isFeatureRemove(eBestTempBuild));
 //<<<<Unofficial Bug Fix: End Modify
+									if( gUnitLogLevel >= 3 ){ logBBAI("        Value after considering improvement: %d", iValue ); }
 								}
 
 								iValue += std::max(0, 100 * GC.getBonusInfo(eNonObsoleteBonus).getAIObjective());
@@ -21556,6 +21575,8 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 								{
 									iValue *= 2;
 								}
+
+								if( gUnitLogLevel >= 3 ){ logBBAI("        Value after considering objective, trade: %d", iValue ); }
 
 								int iMaxWorkers = 1;
 								// Super Forts begin *AI_worker* 
@@ -21571,9 +21592,12 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 									}
 								}
 
+								if( gUnitLogLevel >= 3 ){ logBBAI("        Using at most %d workers", iMaxWorkers ); }
+
 								if ((kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_BUILD, getGroup()) < iMaxWorkers)
 									&& (!bDoImprove || (pLoopPlot->getBuildTurnsLeft(eBestTempBuild, 0, 0) > (iPathTurns * 2 - 1))))
 								{
+									if( gUnitLogLevel >= 3 ){ logBBAI("          Workers are still required!" ); }
 									if (bDoImprove)
 									{
 										iValue *= 1000;
@@ -21581,14 +21605,18 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 										if (atPlot(pLoopPlot))
 										{
 											iValue *= 3;
+											if( gUnitLogLevel >= 3 ){ logBBAI("        We're at the plot already: triple value" ); }
 										}
 
 										iValue /= (iPathTurns + 1);
+										if( gUnitLogLevel >= 3 ){ logBBAI("        Divide by path turns: %d", iPathTurns ); }
 
 										if (pLoopPlot->isCityRadius())
 										{
 											iValue *= 2;
+											if( gUnitLogLevel >= 3 ){ logBBAI("        In city radius: double value" ); }
 										}
+										if( gUnitLogLevel >= 3 ){ logBBAI("        Final improvement build value: %d", iValue ); }
 
 										if (iValue > iBestValue)
 										{
@@ -21608,6 +21636,7 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 										{
 											iValue *= 1000;
 											iValue /= (iPathTurns + 1);
+											if( gUnitLogLevel >= 3 ){ logBBAI("        Final road build value: %d", iValue ); }
 
 											if (iValue > iBestValue)
 											{
@@ -21627,6 +21656,10 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 		}
 	}
 
+	if( gUnitLogLevel >= 3 && eBestBuild != NO_BUILD ){
+		logBBAI("      Best plot: %d|%d, best build: %s with value %d",
+			pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), GC.getBuildInfo( eBestBuild ).getType(), iBestValue );
+	}
 	if ((iBestValue < iMinValue) && (NULL != ppBestPlot))
 	{
 		FAssert(NULL != peBestBuild);
@@ -21675,6 +21708,7 @@ bool CvUnitAI::AI_improveBonus(int iMinValue, CvPlot** ppBestPlot, BuildTypes* p
 		{
 			if (AI_connectPlot(pBestPlot))
 			{
+				if( gUnitLogLevel >= 3 ){logBBAI("    ... building road to %d, %d (value: %d)", pBestPlot->getX(), iBestValue);}
 				return true;
 			}
 			/*else
