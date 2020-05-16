@@ -5262,6 +5262,25 @@ void CvDLLWidgetData::parseFlagHelp(CvWidgetDataStruct &widgetDataStruct, CvWStr
 	szBuffer.append(NEWLINE);
 // End More Naval AI
 
+	// lfgr: Some more information
+	CvWString szBuildInfo;
+#ifdef _DEBUG
+	if( szBuildInfo.size() != 0 ) {
+		szBuildInfo.append( L", " );
+	}
+	szBuildInfo.append( gDLL->getText("TXT_KEY_DEBUG_BUILD") );
+#endif
+#ifdef FASSERT_ENABLE
+	if( szBuildInfo.size() != 0 ) {
+		szBuildInfo.append( L", " );
+	}
+	szBuildInfo.append( gDLL->getText("TXT_KEY_ASSERTS_ENABLED") );
+#endif
+	if( szBuildInfo.size() > 0 ) {
+		szBuffer.append( szBuildInfo );
+		szBuffer.append( NEWLINE );
+	}
+
 	szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getDescription());
 	szBuffer.append(szTempBuffer);
 	szBuffer.append(NEWLINE);

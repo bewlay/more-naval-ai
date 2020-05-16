@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Misc stuff -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_ASSERTS_ENABLED</Tag>
+		<English>Asserts enabled</English>
+		<French>Asserts enabled</French>
+		<German>Asserts enabled</German>
+		<Italian>Asserts enabled</Italian>
+		<Spanish>Asserts enabled</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEBUG_BUILD</Tag>
+		<English>Debug build</English>
+		<French>Debug build</French>
+		<German>Debug build</German>
+		<Italian>Debug build</Italian>
+		<Spanish>Debug build</Spanish>
+		<Finnish>Debug build</Finnish>
+	</TEXT>
+</Civ4GameText>
