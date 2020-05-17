@@ -16844,27 +16844,15 @@ bool CvUnit::canAddPromotion(int spell)
    	PromotionTypes ePromotion3 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType3();
     if (GC.getSpellInfo((SpellTypes)spell).isBuffCasterOnly())
     {
-        if (ePromotion1 != NO_PROMOTION)
-        {
-			if (!isHasPromotion(ePromotion1) && !isPromotionImmune(ePromotion1))
-            {
-                return true;
-            }
-        }
-        if (ePromotion2 != NO_PROMOTION)
-        {
-            if (!isHasPromotion(ePromotion2) && !isPromotionImmune(ePromotion2))
-            {
-                return true;
-            }
-        }
-        if (ePromotion3 != NO_PROMOTION)
-        {
-            if (!isHasPromotion(ePromotion3) && !isPromotionImmune(ePromotion3))
-            {
-                return true;
-            }
-        }
+		if( ePromotion1 != NO_PROMOTION && canBeGrantedPromotion( ePromotion1 ) ) {
+			return true;
+		}
+		if( ePromotion2 != NO_PROMOTION && canBeGrantedPromotion( ePromotion2 ) ) {
+			return true;
+		}
+		if( ePromotion3 != NO_PROMOTION && canBeGrantedPromotion( ePromotion3 ) ) {
+			return true;
+		}
         return false;
     }
 	CvUnit* pLoopUnit;
@@ -16884,48 +16872,15 @@ bool CvUnit::canAddPromotion(int spell)
                     pUnitNode = pLoopPlot->nextUnitNode(pUnitNode);
                     if (!pLoopUnit->isImmuneToSpell(this, spell))
                     {
-                        if (ePromotion1 != NO_PROMOTION)
-                        {
-                            if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                            {
-                                if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion1)
-											&& !pLoopUnit->isPromotionImmune(ePromotion1))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        if (ePromotion2 != NO_PROMOTION)
-                        {
-                            if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                            {
-                                if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion2)
-											&& !pLoopUnit->isPromotionImmune(ePromotion2))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                        if (ePromotion3 != NO_PROMOTION)
-                        {
-                            if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-                            {
-                                if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
-                                {
-                                    if (!pLoopUnit->isHasPromotion(ePromotion3)
-											&& !pLoopUnit->isPromotionImmune(ePromotion3))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
+						if( ePromotion1 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion1, true ) ) {
+							return true;
+						}
+						if( ePromotion2 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion2, true ) ) {
+							return true;
+						}
+						if( ePromotion3 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion3, true ) ) {
+							return true;
+						}
                     }
                 }
             }
@@ -17238,6 +17193,35 @@ bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const
 */
 // MNAI end
 
+bool CvUnit::canBeGrantedPromotion( PromotionTypes ePromotion, bool bCheckUnitCombat ) const {
+	FAssert( 0 <= ePromotion );
+	FAssert( ePromotion <= GC.getNumPromotionInfos() );
+
+	if( isHasPromotion( ePromotion ) ) {
+		return false;
+	}
+
+	if( isPromotionImmune( ePromotion ) ) {
+		return false;
+	}
+
+	if( getDamage() == 0 && GC.getPromotionInfo( ePromotion ).isRemovedWhenHealed() ) {
+		return false;
+	}
+
+	if( bCheckUnitCombat ) {
+		if( getUnitCombatType() == NO_UNITCOMBAT ) {
+			return false;
+		}
+
+		if( ! GC.getPromotionInfo( ePromotion ).getUnitCombat( getUnitCombatType() ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void CvUnit::cast(int spell)
 {
 	CvWString szBuffer;
@@ -17447,19 +17431,17 @@ void CvUnit::castAddPromotion(int spell)
    	PromotionTypes ePromotion2 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType2();
    	PromotionTypes ePromotion3 = (PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getAddPromotionType3();
 
-	bool bAlreadyAffected;
-
     if (GC.getSpellInfo((SpellTypes)spell).isBuffCasterOnly())
     {
-        if (ePromotion1 != NO_PROMOTION)
+        if( ePromotion1 != NO_PROMOTION && canBeGrantedPromotion( ePromotion1 ) )
         {
             setHasPromotion(ePromotion1, true);
         }
-        if (ePromotion2 != NO_PROMOTION)
+        if( ePromotion2 != NO_PROMOTION && canBeGrantedPromotion( ePromotion2 ) )
         {
             setHasPromotion(ePromotion2, true);
         }
-        if (ePromotion3 != NO_PROMOTION)
+        if( ePromotion3 != NO_PROMOTION && canBeGrantedPromotion( ePromotion3 ) )
         {
             setHasPromotion(ePromotion3, true);
         }
@@ -17486,12 +17468,13 @@ void CvUnit::castAddPromotion(int spell)
                         if (!pLoopUnit->isImmuneToSpell(this, spell))
                         {
 							// MNAI - don't try and put this spell effect on units already affected by it
-							bAlreadyAffected = true;
+							// (avoid them trying to resist it)
+							bool bValid = false;
 							if (ePromotion1 != NO_PROMOTION)
                             {
 								if (!pLoopUnit->isHasPromotion(ePromotion1))
 								{
-									bAlreadyAffected = false;
+									bValid = true;
 								}
 							}
 
@@ -17499,7 +17482,7 @@ void CvUnit::castAddPromotion(int spell)
                             {
 								if (!pLoopUnit->isHasPromotion(ePromotion2))
 								{
-									bAlreadyAffected = false;
+									bValid = true;
 								}
 							}
 
@@ -17507,81 +17490,24 @@ void CvUnit::castAddPromotion(int spell)
                             {
 								if (!pLoopUnit->isHasPromotion(ePromotion3))
 								{
-									bAlreadyAffected = false;
+									bValid = true;
 								}
 							}
 							// MNAI End
 
-							if (!bAlreadyAffected)
-							{
-								if (bResistable)
-								{
-									if (!pLoopUnit->isResisted(this, spell))
-									{
-										if (ePromotion1 != NO_PROMOTION)
-										{
-											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-											{
-												if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
-												{
-													pLoopUnit->setHasPromotion(ePromotion1, true);
-												}
-											}
-										}
-										if (ePromotion2 != NO_PROMOTION)
-										{
-											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-											{
-												if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
-												{
-													pLoopUnit->setHasPromotion(ePromotion2, true);
-												}
-											}
-										}
-										if (ePromotion3 != NO_PROMOTION)
-										{
-											if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-											{
-												if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
-												{
-													pLoopUnit->setHasPromotion(ePromotion3, true);
-												}
-											}
-										}
-									}
+							if( bValid && bResistable && pLoopUnit->isResisted(this, spell) ) {
+								bValid = false;
+							}
+
+							if( bValid ) {
+								if( ePromotion1 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion1, true ) ) {
+									pLoopUnit->setHasPromotion(ePromotion1, true);
 								}
-								else
-								{
-									if (ePromotion1 != NO_PROMOTION)
-									{
-										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-										{
-											if (GC.getPromotionInfo(ePromotion1).getUnitCombat(pLoopUnit->getUnitCombatType()))
-											{
-												pLoopUnit->setHasPromotion(ePromotion1, true);
-											}
-										}
-									}
-									if (ePromotion2 != NO_PROMOTION)
-									{
-										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-										{
-											if (GC.getPromotionInfo(ePromotion2).getUnitCombat(pLoopUnit->getUnitCombatType()))
-											{
-												pLoopUnit->setHasPromotion(ePromotion2, true);
-											}
-										}
-									}
-									if (ePromotion3 != NO_PROMOTION)
-									{
-										if (pLoopUnit->getUnitCombatType() != NO_UNITCOMBAT)
-										{
-											if (GC.getPromotionInfo(ePromotion3).getUnitCombat(pLoopUnit->getUnitCombatType()))
-											{
-												pLoopUnit->setHasPromotion(ePromotion3, true);
-											}
-										}
-									}
+								if( ePromotion2 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion2, true ) ) {
+									pLoopUnit->setHasPromotion(ePromotion2, true);
+								}
+								if( ePromotion3 != NO_PROMOTION && pLoopUnit->canBeGrantedPromotion( ePromotion3, true ) ) {
+									pLoopUnit->setHasPromotion(ePromotion3, true);
 								}
 							}
                         }

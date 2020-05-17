@@ -888,6 +888,9 @@ public:
 	bool canRemovePromotion(int spell);
 	//bool canTerraform(int spell, const CvPlot* pPlot) const;	// MNAI
 
+	// Whether a spell can apply the specified promotion to this unit
+	bool canBeGrantedPromotion( PromotionTypes ePromotion, bool bCheckUnitCombat = false ) const;
+
 	void cast(int spell);
 	void castAddPromotion(int spell);
 	void castCreateUnit(int spell);
