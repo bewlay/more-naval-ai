@@ -3203,12 +3203,27 @@ bool CvPromotionInfo::readPass2(CvXMLLoadUtility* pXML)
 //FfH: Modified by Kael 02/24/2008
 	pXML->GetChildXmlValByName(szTextVal, "PromotionCombatApply");
 	m_iPromotionCombatApply = pXML->FindInInfoClass(szTextVal);
+
+	// XML_LISTS 07/2019 lfgr: compatability
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune1");
-	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
+	int ePromotion = pXML->FindInInfoClass(szTextVal);
+	if( ePromotion != NO_PROMOTION ) {
+		FAssertMsg( 0 <= ePromotion && ePromotion < GC.getNumPromotionInfos(), "Invalid PromotionImmune1" );
+		m_pbPromotionImmune[ePromotion] = true;
+	}
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune2");
-	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
+	ePromotion = pXML->FindInInfoClass(szTextVal);
+	if( ePromotion != NO_PROMOTION ) {
+		FAssertMsg( 0 <= ePromotion && ePromotion < GC.getNumPromotionInfos(), "Invalid PromotionImmune2" );
+		m_pbPromotionImmune[ePromotion] = true;
+	}
 	pXML->GetChildXmlValByName(szTextVal, "PromotionImmune3");
-	m_pbPromotionImmune[pXML->FindInInfoClass(szTextVal)] = true; // XML_LISTS 07/2019 lfgr: compatability
+	ePromotion = pXML->FindInInfoClass(szTextVal);
+	if( ePromotion != NO_PROMOTION ) {
+		FAssertMsg( 0 <= ePromotion && ePromotion < GC.getNumPromotionInfos(), "Invalid PromotionImmune3" );
+		m_pbPromotionImmune[ePromotion] = true;
+	}
+
 	pXML->GetChildXmlValByName(szTextVal, "PromotionRandomApply");
 	m_iPromotionRandomApply = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(szTextVal, "PromotionSummonPerk");
