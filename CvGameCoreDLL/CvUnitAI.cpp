@@ -12664,9 +12664,9 @@ bool CvUnitAI::AI_guardCityMinDefender(bool bSearch)
 	if ((pPlotCity != NULL) && (pPlotCity->getOwnerINLINE() == getOwnerINLINE()))
 	{
 		int iCityDefenderCount = pPlotCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
-		if ((iCityDefenderCount - 1) < pPlotCity->AI_minDefenders())
+		if ((iCityDefenderCount - 1) < pPlotCity->AI_minDefenders()) // LFGR_TODO: Use -stacksize instead of -1?
 		{
-			if ((iCityDefenderCount <= 2) || (GC.getGame().getSorenRandNum(5, "AI shuffle defender") != 0))
+			if ((iCityDefenderCount <= 2) || (GC.getGame().getSorenRandNum(5, "AI shuffle defender") != 0)) // LFGR_TODO: make "AI shuffle defender" optional?
 			{
 				getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_CITY, NULL);
 				return true;
@@ -27269,6 +27269,14 @@ void CvUnitAI::AI_PatrolMove()
 		logBBAI("    Stack %d (led by %S (%d), size %d) starting PatrolMove", getGroup()->getID(), getName().GetCString(), getID(), getGroup()->getNumUnits());
 	}
 
+	// lfgr 05/2020: Slightly hacky, to ensure the first/only remaining city is defended no matter what.
+	if( GET_PLAYER( getOwnerINLINE() ).getNumCities() == 1 ) {
+		if( AI_guardCityMinDefender( true ) ) { // Search for the city
+			if( gUnitLogLevel >= 3 ) {logBBAI( "      ... defends the only, (otherwise) undefended city!" );}
+			return;
+		}
+	}
+
 	// Heroes and Casters should seek larger groups
 	if (bHero || bWizard)
 	{
@@ -27287,10 +27295,12 @@ void CvUnitAI::AI_PatrolMove()
 			*/
 			if (AI_group(UNITAI_ATTACK))
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... hero/caster group with attack stack" );}
 				return;
 			}
 			if (AI_moveToStagingCity())
 			{
+				if( gUnitLogLevel >= 3 ) {logBBAI( "      ... hero/caster moving to staging city" );}
 				return;
 			}
 		}
@@ -27302,7 +27312,7 @@ void CvUnitAI::AI_PatrolMove()
 		{
 			if (getGroup()->getNumUnits() > ((GET_PLAYER(getOwnerINLINE()).getNumCities() + 1) * 3))
 			{
-				if( gUnitLogLevel > 3 ) logBBAI("       ...switching to GROUPFLAG_CONQUEST");
+				if( gUnitLogLevel >= 3 ) {logBBAI("       ...switching to GROUPFLAG_CONQUEST");}
 				AI_setGroupflag(GROUPFLAG_CONQUEST);
 				return;
 			}
@@ -27338,26 +27348,26 @@ void CvUnitAI::AI_PatrolMove()
 	// Jobs for small patrols
 	if (getGroup()->getNumUnits() <= 3)// && !bAtWar)
 	{
-		if( gUnitLogLevel > 3 ) logBBAI("       ...checking small group options");
+		if( gUnitLogLevel >= 3 ) logBBAI("       ...checking small group options");
 		if (plot()->getOwnerINLINE() != getOwnerINLINE())
 		{
-			//if( gUnitLogLevel > 3 ) logBBAI("       ...looking for Settlers to group with");
+			//if( gUnitLogLevel >= 3 ) logBBAI("       ...looking for Settlers to group with");
 			if (AI_group(UNITAI_SETTLE, 5, -1, -1, false, false, false, 0, true))
 			{
-				if( gUnitLogLevel > 3 ) logBBAI("       ...grouping with Settler in foreign territory");
+				if( gUnitLogLevel >= 3 ) logBBAI("       ...grouping with Settler in foreign territory");
 				return;
 			}
 		}
 
 		if (AI_cityAttack(1, 75))
 		{
-			if( gUnitLogLevel > 3 ) logBBAI("       ...opportunistic city attack");
+			if( gUnitLogLevel >= 3 ) logBBAI("       ...opportunistic city attack");
 			return;
 		}
 
 		if (AI_pickupEquipment(3))
 		{
-			if( gUnitLogLevel > 3 ) logBBAI("       ...picking up equipment");
+			if( gUnitLogLevel >= 3 ) logBBAI("       ...picking up equipment");
 			return;
 		}
 
@@ -27399,14 +27409,14 @@ void CvUnitAI::AI_PatrolMove()
 
 	if (AI_groupMergeRange(UNITAI_HERO, 0, true, true))
 	{
-		if( gUnitLogLevel > 3 ) logBBAI("       ...merging with UNITAI_HERO");
+		if( gUnitLogLevel >= 3 ) logBBAI("       ...merging with UNITAI_HERO");
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
 
 	if (AI_groupMergeRange(UNITAI_ATTACK, 0, true, true))
 	{
-		if( gUnitLogLevel > 3 ) logBBAI("       ...merging with UNITAI_ATTACK");
+		if( gUnitLogLevel >= 3 ) logBBAI("       ...merging with UNITAI_ATTACK");
 		getGroup()->pushMission(MISSION_SKIP);
 		return;
 	}
