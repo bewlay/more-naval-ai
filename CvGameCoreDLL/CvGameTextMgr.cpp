@@ -9688,6 +9688,10 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_PREREQ_ALIVE"));
     }
+	if( kPromotionInfo.getMinLevel() > 0 ) { // lfgr 05/2020
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_PROMOTION_MIN_LEVEL", kPromotionInfo.getMinLevel() ) );
+	}
 //FfH: End Add
 
 	if (wcslen(kPromotionInfo.getHelp()) > 0)

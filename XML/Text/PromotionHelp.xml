@@ -9,4 +9,12 @@
 		<Italian>[ICON_BULLET]Wears off at end of turn</Italian>
 		<Spanish>[ICON_BULLET]Wears off at end of turn</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_MIN_LEVEL</Tag>
+		<English>[ICON_BULLET]Requires level %d1 or higher</English>
+		<French>[ICON_BULLET]Requires level %d1 or higher</French>
+		<German>[ICON_BULLET]Requires level %d1 or higher</German>
+		<Italian>[ICON_BULLET]Requires level %d1 or higher</Italian>
+		<Spanish>[ICON_BULLET]Requiere nivel %d1 o superior</Spanish>
+	</TEXT>
 </Civ4GameText>
