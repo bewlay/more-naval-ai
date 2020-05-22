@@ -24893,6 +24893,8 @@ PlayerTypes CvPlayer::initNewEmpire(LeaderHeadTypes eNewLeader, CivilizationType
 		kNewTeam.setEspionagePointsEver(GET_TEAM(getTeam()).getEspionagePointsEver());
 
 		AI_updateBonusValue();
+
+		kNewTeam.AI_updateAreaStragies(); // fix 05/2020 lfgr
 	}
 
 	return eNewPlayer;
