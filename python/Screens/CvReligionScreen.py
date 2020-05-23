@@ -7,16 +7,17 @@
 from CvPythonExtensions import *
 import PyHelpers
 import CvUtil
-import ScreenInput
 import CvScreenEnums
 
 # BUG - start
-import BugUtil
 import BugCore
 import PlayerUtil
 import ReligionUtil
 AdvisorOpt = BugCore.game.Advisors
 # BUG - end
+
+# lfgr 05/2020: Full-screen Advisors: refactored, added full-screen support
+from InterfaceUtils import GenericAdvisorScreen
 
 PyPlayer = PyHelpers.PyPlayer
 
@@ -30,7 +31,7 @@ import CustomFunctions
 cf = CustomFunctions.CustomFunctions()
 #FfH: End Add
 
-class CvReligionScreen:
+class CvReligionScreen( GenericAdvisorScreen ) :
 	"Religion Advisor Screen"
 
 	def __init__(self):
@@ -46,34 +47,17 @@ class CvReligionScreen:
 		self.TABLE_ID =  "ReligionTableWidget"
 		self.AREA1_ID =  "ReligionAreaWidget1"
 		self.AREA2_ID =  "ReligionAreaWidget2"
-		self.BACKGROUND_ID = "ReligionBackground"
 		self.RELIGION_PANEL_ID = "ReligionPanel"
 		self.RELIGION_ANARCHY_WIDGET = "ReligionAnarchyWidget"
-
-		self.BORDER_WIDTH = 2
-		self.BUTTON_SIZE = 48
-		self.HIGHLIGHT_EXTRA_SIZE = 4
-
-		self.X_SCREEN = 500
-		self.Y_SCREEN = 396
-		self.W_SCREEN = 1024
-		self.H_SCREEN = 768
+		
+		# Some size/positioning constants
+		
 		self.Z_SCREEN = -6.1
-
-		self.Y_TITLE = 8
 		self.Z_TEXT = self.Z_SCREEN - 0.2
 		self.DZ = -0.2
-		self.Z_CONTROLS = self.Z_TEXT
 
-		self.X_EXIT = 994
-		self.Y_EXIT = 726
-
-		self.X_CANCEL = 552
-		self.Y_CANCEL = 726
-
-		self.X_ANARCHY = 21
-		self.Y_ANARCHY = 726
-
+		self.BUTTON_SIZE = 48
+		
 		self.LEFT_EDGE_TEXT = 10
 		self.X_RELIGION_START = 180
 		self.DX_RELIGION = 98
@@ -82,25 +66,12 @@ class CvReligionScreen:
 		self.Y_HOLY_CITY = 115
 		self.Y_INFLUENCE = 140
 		self.Y_RELIGION_NAME = 58
-
+		
 		self.X_SCROLLABLE_RELIGION_AREA = 0
 		self.Y_SCROLLABLE_RELIGION_AREA = 0
-		self.X_RELIGION_AREA = 45
-		self.Y_RELIGION_AREA = 84
-		self.W_RELIGION_AREA = 934
-		self.H_RELIGION_AREA = 175
 		self.H_SCROLL_OFFSET = 20
-
-		self.X_CITY1_AREA = 45
-		self.X_CITY2_AREA = 522
-		self.Y_CITY_AREA = 282
-		self.W_CITY_AREA = 457
-		self.H_CITY_AREA = 395
 		
-		self.X_CITY = 10
-		self.DY_CITY = 38
-		
-# BUG - start
+		# BUG - start
 		self.NUM_RELIGIONS = -1
 		self.COL_ZOOM_CITY = 0
 		self.COL_CITY_NAME = 1
@@ -109,7 +80,7 @@ class CvReligionScreen:
 		self.COL_FIRST_BUILDING = 10
 		self.COL_EFFECTS = 14
 		self.TABLE_COLUMNS = 15
-# BUG - end
+		# BUG - end
 
 		self.iReligionExamined = -1
 		self.iReligionSelected = -1
@@ -155,24 +126,56 @@ class CvReligionScreen:
 		screen = self.getScreen()
 		if screen.isActive():
 			return
-		screen.setRenderInterfaceOnly(True);
+		screen.setRenderInterfaceOnly(True)
 		screen.showScreen( PopupStates.POPUPSTATE_IMMEDIATE, False)
-	
-		# Set the background and exit button, and show the screen
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
-
-		screen.addDDSGFC(self.BACKGROUND_ID, ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
-		screen.addPanel( "TechTopPanel", u"", u"", True, False, 0, 0, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_TOPBAR )
-		screen.addPanel( "TechBottomPanel", u"", u"", True, False, 0, 713, self.W_SCREEN, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
-		screen.setText(self.CANCEL_NAME, "Background", self.CANCEL_TEXT, CvUtil.FONT_CENTER_JUSTIFY, self.X_CANCEL, self.Y_CANCEL, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)
+		
+		# Setup dimensions
+		self.initDimensions()
+		xCancel = self.wScreen - 472
+		yCancel = self.yExitButton
+		self.xAnarchyText = 21
+		self.yAnarchyText = self.yExitButton
+		
+		self.xReligionArea = 45
+		self.yReligionArea = 84
+		self.wReligionArea = self.wScreen - 90
+		self.hReligionArea = 175
+		if AdvisorOpt.isReligious():
+			#self.yReligionArea -= 40
+			self.hReligionArea += 75
+			if AdvisorOpt.isShowAllReligions():
+				self.leReligions = ReligionUtil.getAllReligions()
+			elif AdvisorOpt.isShowFoundedReligions():
+				self.leReligions = ReligionUtil.getFoundedReligions()
+			else:
+				self.leReligions = ReligionUtil.getPlayerReligions( gc.getPlayer( self.iActivePlayer ) )
+		else:
+			self.leReligions = ReligionUtil.getAllReligions()
+		
+		# One city area with BUG
+		self.xCityArea = self.xReligionArea
+		self.yCityArea = self.yReligionArea + self.hReligionArea + self.H_SCROLL_OFFSET + 3
+		self.wCityArea = self.wReligionArea
+		self.hCityArea = self.hScreen - self.yCityArea - 130 - self.H_SCROLL_OFFSET + 20
+		
+		# Two city areas without BUG
+		self.wCityAreaSplitSeparator = 20
+		self.xCityArea1 = self.xCityArea
+		self.wCityAreaSplit = ( self.wScreen - 2*self.xCityArea - self.wCityAreaSplitSeparator ) // 2
+		self.xCityArea2 = self.xCityArea + self.wCityAreaSplit + self.wCityAreaSplitSeparator
+		
+		# Background, header, and footer
+		self.addBackgroundHeaderFooter( localText.getText( "TXT_KEY_RELIGION_SCREEN_TITLE", () ).upper() )
+		
+		# Cancel button
+		screen.setText( self.CANCEL_NAME, "Background", self.CANCEL_TEXT, CvUtil.FONT_CENTER_JUSTIFY,
+				xCancel, yCancel, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0 )
 
 		screen.showWindowBackground(False)
-
-		# Header...
-		screen.setLabel(self.HEADER_NAME, "Background", u"<font=4b>" + localText.getText("TXT_KEY_RELIGION_SCREEN_TITLE", ()).upper() + u"</font>", CvUtil.FONT_CENTER_JUSTIFY, self.X_SCREEN, self.Y_TITLE, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		
 		# Make the scrollable areas for the city list...
-
+		
+		# ComboBox for player selection in debug mode
 		if (CyGame().isDebugMode()):
 			self.szDropdownName = self.DEBUG_DROPDOWN_ID
 			screen.addDropDownBoxGFC(self.szDropdownName, 22, 12, 300, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -180,28 +183,10 @@ class CvReligionScreen:
 				if (gc.getPlayer(j).isAlive()):
 					screen.addPullDownString(self.szDropdownName, gc.getPlayer(j).getName(), j, j, False )
 
-		if AdvisorOpt.isReligious():
-			self.X_RELIGION_AREA = 45
-			self.Y_RELIGION_AREA = 84 - 40
-			self.W_RELIGION_AREA = 934
-			self.H_RELIGION_AREA = 175 + 75
-#			screen.addPanel(szArea, "", "", False, True, self.X_RELIGION_AREA, self.Y_RELIGION_AREA - 40, self.W_RELIGION_AREA, self.H_RELIGION_AREA + 80, PanelStyles.PANEL_STYLE_MAIN)
-			if AdvisorOpt.isShowAllReligions():
-				self.RELIGIONS = ReligionUtil.getAllReligions()
-			elif AdvisorOpt.isShowFoundedReligions():
-				self.RELIGIONS = ReligionUtil.getFoundedReligions()
-			else:
-				self.RELIGIONS = ReligionUtil.getPlayerReligions(gc.getPlayer(self.iActivePlayer))
-		else:
-			self.X_RELIGION_AREA = 45
-			self.Y_RELIGION_AREA = 84
-			self.W_RELIGION_AREA = 934
-			self.H_RELIGION_AREA = 175
-			self.RELIGIONS = ReligionUtil.getAllReligions() ##+ (ReligionUtil.getNumReligions(),)
-
 		# Make the scrollable area for the religions list...
-		screen.addPanel(self.RELIGION_PANEL_ID, "", "", False, True, self.X_RELIGION_AREA, self.Y_RELIGION_AREA, self.W_RELIGION_AREA, self.H_RELIGION_AREA+5, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addScrollPanel( "ReligionList", u"", self.X_RELIGION_AREA, self.Y_RELIGION_AREA, self.W_RELIGION_AREA, self.H_RELIGION_AREA, PanelStyles.PANEL_STYLE_EXTERNAL )
+		screen.addPanel( self.RELIGION_PANEL_ID, "", "", False, True, self.xReligionArea, self.yReligionArea,
+				self.wReligionArea, self.hReligionArea + 5, PanelStyles.PANEL_STYLE_MAIN )
+		screen.addScrollPanel( "ReligionList", u"", self.xReligionArea, self.yReligionArea, self.wReligionArea, self.hReligionArea, PanelStyles.PANEL_STYLE_EXTERNAL )
 		screen.setActivation( "ReligionList", ActivationTypes.ACTIVATE_NORMAL )
 
 		# Draw Religion info
@@ -221,7 +206,7 @@ class CvReligionScreen:
 
 		# Religion buttons at the top
 		xLoop = self.X_RELIGION_START
-		for iRel in self.RELIGIONS:
+		for iRel in self.leReligions:
 			szButtonName = self.getReligionButtonName(iRel)
 			if gc.getGame().getReligionGameTurnFounded(iRel) >= 0:
 				screen.addCheckBoxGFCAt(szArea, szButtonName, gc.getReligionInfo(iRel).getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
@@ -257,7 +242,7 @@ class CvReligionScreen:
 
 		# Date Founded:
 		xLoop = self.X_RELIGION_START
-		for iRel in self.RELIGIONS:
+		for iRel in self.leReligions:
 			if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 				szFounded = CyGameTextMgr().getTimeStr(gc.getGame().getReligionGameTurnFounded(iRel), false)
 				screen.setLabelAt("", szArea, szFounded, CvUtil.FONT_CENTER_JUSTIFY, xLoop, self.Y_FOUNDED, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -269,7 +254,7 @@ class CvReligionScreen:
 		screen.setLabelAt("", szArea, localText.getText("TXT_KEY_RELIGION_SCREEN_HOLY_CITY", ()), CvUtil.FONT_LEFT_JUSTIFY, self.LEFT_EDGE_TEXT, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		xLoop = self.X_RELIGION_START
-		for iRel in self.RELIGIONS:
+		for iRel in self.leReligions:
 			if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 				pHolyCity = gc.getGame().getHolyCity(iRel)
 				if pHolyCity.isNone():
@@ -291,7 +276,7 @@ class CvReligionScreen:
 		screen.setLabelAt("", szArea, localText.getText("TXT_KEY_RELIGION_SCREEN_INFLUENCE", ()), CvUtil.FONT_LEFT_JUSTIFY, self.LEFT_EDGE_TEXT, self.Y_INFLUENCE, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		xLoop = self.X_RELIGION_START
-		for iRel in self.RELIGIONS:
+		for iRel in self.leReligions:
 			if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 				szFounded = str(gc.getGame().calculateReligionPercent(iRel)) + "%"
 				screen.setLabelAt("", szArea, szFounded, CvUtil.FONT_CENTER_JUSTIFY, xLoop, self.Y_INFLUENCE, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -316,7 +301,7 @@ class CvReligionScreen:
 				lHolyCity = pLoopCity.getHolyCity()
 				lReligions = pLoopCity.getReligions()
 
-				for iRel in self.RELIGIONS:
+				for iRel in self.leReligions:
 					# count the number of cities
 					if iRel in lReligions:
 						iCities[iRel] += 1
@@ -338,7 +323,7 @@ class CvReligionScreen:
 
 			# count the number of active missionaries
 			for iUnit in PlayerUtil.playerUnits(self.iActivePlayer):  
-				for iRel in self.RELIGIONS:
+				for iRel in self.leReligions:
 					if iUnit.getUnitType() == ReligionUtil.getUnit(iRel, ReligionUtil.UNIT_MISSIONARY):
 						iMissionaries_Active[iRel] += 1
 
@@ -348,7 +333,7 @@ class CvReligionScreen:
 			screen.setLabelAt("", szArea, sCities, CvUtil.FONT_LEFT_JUSTIFY, self.LEFT_EDGE_TEXT, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			xLoop = self.X_RELIGION_START
-			for iRel in self.RELIGIONS:
+			for iRel in self.leReligions:
 				if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 					szFounded = "%i" % (iCities[iRel])
 					screen.setLabelAt("", szArea, szFounded, CvUtil.FONT_CENTER_JUSTIFY, xLoop, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -359,7 +344,7 @@ class CvReligionScreen:
 			screen.setLabelAt("", szArea, self.szTemples, CvUtil.FONT_LEFT_JUSTIFY, self.LEFT_EDGE_TEXT, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			xLoop = self.X_RELIGION_START
-			for iRel in self.RELIGIONS:
+			for iRel in self.leReligions:
 				if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 					szFounded = "%i" % (iTemple[iRel])
 					screen.setLabelAt("", szArea, szFounded, CvUtil.FONT_CENTER_JUSTIFY, xLoop, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -381,7 +366,7 @@ class CvReligionScreen:
 			screen.setLabelAt("", szArea, self.szMissionaries, CvUtil.FONT_LEFT_JUSTIFY, self.LEFT_EDGE_TEXT, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			xLoop = self.X_RELIGION_START
-			for iRel in self.RELIGIONS:
+			for iRel in self.leReligions:
 				if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 					szFounded = "%i [%i]" % (iMissionaries_Active[iRel], iMissionaries_Construct[iRel])
 					screen.setLabelAt("", szArea, szFounded, CvUtil.FONT_CENTER_JUSTIFY, xLoop, iY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -447,16 +432,13 @@ class CvReligionScreen:
 			iLinkReligion = iReligion
 
 		if AdvisorOpt.isReligious():
-# Zappara start - make space for horizontal slider
-			screen.addPanel(self.AREA1_ID, "", "", True, True, self.X_RELIGION_AREA, self.Y_RELIGION_AREA + self.H_RELIGION_AREA + self.H_SCROLL_OFFSET + 3, self.W_RELIGION_AREA, self.H_CITY_AREA - self.H_SCROLL_OFFSET + 20, PanelStyles.PANEL_STYLE_MAIN)
-			#screen.addPanel(self.AREA1_ID, "", "", True, True, self.X_RELIGION_AREA, self.Y_RELIGION_AREA + self.H_RELIGION_AREA + 3, self.W_RELIGION_AREA, self.H_CITY_AREA, PanelStyles.PANEL_STYLE_MAIN)
-# Zappara end
+			screen.addPanel( self.AREA1_ID, "", "", True, True, self.xCityArea, self.yCityArea, self.wCityArea, self.hCityArea, PanelStyles.PANEL_STYLE_MAIN )
 		else:
-			screen.addPanel(self.AREA1_ID, "", "", True, True, self.X_CITY1_AREA, self.Y_CITY_AREA, self.W_CITY_AREA, self.H_CITY_AREA, PanelStyles.PANEL_STYLE_MAIN)
-			screen.addPanel(self.AREA2_ID, "", "", True, True, self.X_CITY2_AREA, self.Y_CITY_AREA, self.W_CITY_AREA, self.H_CITY_AREA, PanelStyles.PANEL_STYLE_MAIN)
+			screen.addPanel( self.AREA1_ID, "", "", True, True, self.xCityArea1, self.yCityArea, self.wCityAreaSplit, self.hCityArea, PanelStyles.PANEL_STYLE_MAIN )
+			screen.addPanel( self.AREA2_ID, "", "", True, True, self.xCityArea2, self.yCityArea, self.wCityAreaSplit, self.hCityArea, PanelStyles.PANEL_STYLE_MAIN )
 
 		szArea = self.RELIGION_PANEL_ID
-		for iRel in self.RELIGIONS:
+		for iRel in self.leReligions:
 			if (self.iReligionSelected == iRel):
 				screen.setState(self.getReligionButtonName(iRel), True)
 			else:
@@ -473,28 +455,36 @@ class CvReligionScreen:
 # start of BUG indent for new code
 		if AdvisorOpt.isReligious():
 			# create religion table
-			screen.addTableControlGFC(self.TABLE_ID, self.TABLE_COLUMNS, self.X_RELIGION_AREA + 15, self.Y_RELIGION_AREA + self.H_RELIGION_AREA + self.H_SCROLL_OFFSET + 3 + 15, self.W_RELIGION_AREA - 2 * 15, self.H_CITY_AREA - self.H_SCROLL_OFFSET - 5,
-						  True, True, 24,24, TableStyles.TABLE_STYLE_STANDARD)
+			wTable = self.wCityArea - 2 * 15
+			screen.addTableControlGFC( self.TABLE_ID, self.TABLE_COLUMNS, self.xCityArea + 15, self.yCityArea + 15,
+					wTable, self.hCityArea - self.H_SCROLL_OFFSET - 5,  True, True, 24, 24,
+					TableStyles.TABLE_STYLE_STANDARD )
 			screen.enableSort(self.TABLE_ID)
+			
 			
 			screen.setTableColumnHeader(self.TABLE_ID, self.COL_ZOOM_CITY, "", 30)
 			screen.setTableColumnHeader(self.TABLE_ID, self.COL_CITY_NAME, self.sCity, 115)
+			
+			iTotalColWidth = 30 + 115
 
 			for iRel in range(self.NUM_RELIGIONS):   # columns for religious icons
 				if (gc.getGame().getReligionGameTurnFounded(iRel) >= 0):
 					szReligionIcon = u"<font=2>%c</font>" %(gc.getReligionInfo(iRel).getChar())
 					screen.setTableColumnHeader(self.TABLE_ID, self.COL_FIRST_RELIGION + iRel, szReligionIcon, 25)
+					iTotalColWidth += 25
 
 			# columns for units (missionaries)
 			for type in ReligionUtil.getUnitTypes():
 				screen.setTableColumnHeader(self.TABLE_ID, self.COL_FIRST_UNIT + type.index, u"<font=2>%s</font>" % type.icon, 30)
+				iTotalColWidth += 30
 
 			# columns for buildings (temples, monasteries, cathedral, shrine)
 			for type in ReligionUtil.getBuildingTypes():
 				screen.setTableColumnHeader(self.TABLE_ID, self.COL_FIRST_BUILDING + type.index, u"<font=2>%s</font>" % type.icon, 30)
+				iTotalColWidth += 30
 
 			# column for religious impact
-			screen.setTableColumnHeader(self.TABLE_ID, self.COL_EFFECTS, "", 400)
+			screen.setTableColumnHeader(self.TABLE_ID, self.COL_EFFECTS, "", max( 400, wTable - iTotalColWidth ) )
 			
 			# Loop through the cities
 			for iCity in range(len(cityList)):
@@ -604,8 +594,8 @@ class CvReligionScreen:
 				else:
 					szRightCities += u"<font=3>" + szCityName + u"</font>\n"
 
-			screen.addMultilineText("Child" + self.AREA1_ID, szLeftCities, self.X_CITY1_AREA+5, self.Y_CITY_AREA+5, self.W_CITY_AREA-10, self.H_CITY_AREA-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-			screen.addMultilineText("Child" + self.AREA2_ID, szRightCities, self.X_CITY2_AREA+5, self.Y_CITY_AREA+5, self.W_CITY_AREA-10, self.H_CITY_AREA-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+			screen.addMultilineText("Child" + self.AREA1_ID, szLeftCities, self.xCityArea1 + 5, self.yCityArea + 5, self.wCityAreaSplit - 10, self.hCityArea - 10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+			screen.addMultilineText("Child" + self.AREA2_ID, szRightCities, self.xCityArea2 + 5, self.yCityArea + 5, self.wCityAreaSplit - 10, self.hCityArea - 10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 # end of BUG indent of original code
 
 		# Convert Button....
@@ -614,16 +604,16 @@ class CvReligionScreen:
 			iLink = 1
 
 		if (not self.canConvert(iLinkReligion) or iLinkReligion == self.iReligionOriginal):			
-			screen.setText(self.CONVERT_NAME, "Background", self.EXIT_TEXT, CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0)
+			screen.setText( self.CONVERT_NAME, "Background", self.EXIT_TEXT, CvUtil.FONT_RIGHT_JUSTIFY, self.xExitButton, self.yExitButton, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 0 )
 			screen.hide(self.CANCEL_NAME)
 			szAnarchyTime = CyGameTextMgr().setConvertHelp(self.iActivePlayer, iLinkReligion)
 		else:
-			screen.setText(self.CONVERT_NAME, "Background", self.CONVERT_TEXT, CvUtil.FONT_RIGHT_JUSTIFY, self.X_EXIT, self.Y_EXIT, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CONVERT, iLinkReligion, 1)
+			screen.setText( self.CONVERT_NAME, "Background", self.CONVERT_TEXT, CvUtil.FONT_RIGHT_JUSTIFY, self.xExitButton, self.yExitButton, self.Z_TEXT, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CONVERT, iLinkReligion, 1 )
 			screen.show(self.CANCEL_NAME)
 			szAnarchyTime = localText.getText("TXT_KEY_ANARCHY_TURNS", (gc.getPlayer(self.iActivePlayer).getReligionAnarchyLength(), ))
 
 		# Turns of Anarchy Text...
-		screen.setLabel(self.RELIGION_ANARCHY_WIDGET, "Background", u"<font=3>" + szAnarchyTime + u"</font>", CvUtil.FONT_LEFT_JUSTIFY, self.X_ANARCHY, self.Y_ANARCHY, self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.setLabel( self.RELIGION_ANARCHY_WIDGET, "Background", u"<font=3>" + szAnarchyTime + u"</font>", CvUtil.FONT_LEFT_JUSTIFY, self.xAnarchyText, self.yAnarchyText, self.Z_TEXT, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 	def getReligionButtonName(self, iReligion):
 		szName = self.BUTTON_NAME + str(iReligion)
