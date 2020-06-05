@@ -93,21 +93,27 @@ class GenericAdvisorScreen( object ) :
 		wScreen, hScreen = self.wScreen, self.hScreen
 		screen = self.getScreen()
 		
+		self.hHeader = 55
+		self.hFooter = 55
+		self.yFooter = hScreen - self.hFooter
+		self.yMainArea = self.hHeader
+		self.hMainArea = self.hScreen - self.hHeader - self.hFooter
+		
 		# Background
 		screen.addDDSGFC("BackgroundPicture",
 				ArtFileMgr.getInterfaceArtInfo("SCREEN_BG_OPAQUE").getPath(),
 				0, 0, wScreen, hScreen, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 		# Header
-		screen.addPanel( "TopPanel", u"", u"", True, False, 0, 0, wScreen, 55,
+		screen.addPanel( "TopPanel", u"", u"", True, False, 0, 0, wScreen, self.hHeader,
 				PanelStyles.PANEL_STYLE_TOPBAR )
 		screen.setLabel( "TitleHeader", "Background", u"<font=4>" + szHeaderText + u"</font>",
 				CvUtil.FONT_CENTER_JUSTIFY, wScreen / 2, 8, 0, FontTypes.TITLE_FONT,
 				WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		
 		# Footer
-		screen.addPanel( "BottomPanel", u"", u"", True, False, 0, hScreen - 55,
-				wScreen, 55, PanelStyles.PANEL_STYLE_BOTTOMBAR )
+		screen.addPanel( "BottomPanel", u"", u"", True, False, 0, self.yFooter,
+				wScreen, self.hFooter, PanelStyles.PANEL_STYLE_BOTTOMBAR )
 	
 	def addExitButton( self ) :
 		screen = self.getScreen()
