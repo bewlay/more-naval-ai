@@ -4,6 +4,12 @@ from CvPythonExtensions import *
 import CvUtil
 
 gc = CyGlobalContext()
+localText = CyTranslator()
+
+
+# Improved PyHelpers 05/2020 lfgr: getText with varargs
+def getText( szTag, *args ) :
+	return localText.getText( szTag, tuple( args ) )
 
 
 # Improved PyHelpers 04/2020 lfgr: Allow calling underlying CyPlayer, CyGame, ... directly
@@ -343,10 +349,9 @@ class PyPlayer( AbstractDelegator ) :
 	
 	# lfgr 04/2020
 	def iterCities( self ) :
-		lCity = []
+		# type: ( PyPlayer ) -> Iterator[PyCity]
 		loopCity, it = self.player.firstCity( False )
 		while loopCity :
-			cityOwner = loopCity.getOwner()
 			if not loopCity.isNone() and loopCity.getOwner() == self.getID() : #only valid cities
 				yield PyCity( self.getID(), loopCity.getID() )
 			loopCity, it = self.player.nextCity( it, False )
