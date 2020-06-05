@@ -75,7 +75,7 @@ def getGameSpeedMod( ) :
 
 
 def doRefortify( iPlayer ) :
-	 #pyPlayer = PyPlayer( iPlayer )
+	#pyPlayer = PyPlayer( iPlayer )
 	pPlayer = gc.getPlayer(iPlayer)
 
 	CvUtil.pyPrint( "Refortifying units for player %d"%(iPlayer))
@@ -1078,8 +1078,8 @@ def getModNumUnhappy( pCity, wwMod = 2.0, silent = False ) :
 		CvUtil.pyPrint("  Revolt - %s has numUnhappy %d, mod %d, modNumUn %d"%(pCity.getName(),pCity.angryPopulation(0),modifier,modNumUnhappy))
 
 	if( modNumUnhappy <= 0 ) :
-		numHappy = max( [0, pCity.happyLevel() - pCity.unhappyLevel(0)] )
-		numHappy = min( [numHappy, pCity.getPopulation()] )
+		numHappy = max( 0, pCity.happyLevel() - pCity.unhappyLevel(0) )
+		numHappy = min( numHappy, pCity.getPopulation() )
 		return -numHappy
 	else :
 		return modNumUnhappy

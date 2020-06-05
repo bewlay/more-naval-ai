@@ -5,9 +5,9 @@
 
 import CvUtil
 from CvPythonExtensions import *
-import CvEventInterface
 import CustomFunctions
 import ScenarioFunctions
+import PythonWidgetHelp
 
 import PyHelpers
 PyPlayer = PyHelpers.PyPlayer
@@ -1073,7 +1073,8 @@ class CvGameUtils:
 				elif iData2 == 1:
 					return CyTranslator().getText("TXT_KEY_WB_HAS_CAST",())
 #Magister Stop
-
+			else :
+				return PythonWidgetHelp.getHelp( iData1, iData2 )
 ## Ultrapack ##
 		return u""
 
