@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.9-beta2u
+
+### UI
+* (Most) advisors are now able to adapt to a screen height of 720
+* Flag tooltip now shows whether the game is played with an assert/debug build
+* Player defeat popups can now be disabled via BUG options
+* Show promotion min level in help
+* Some small text fixes
+* Religion advisor can be made full-screen again
+
+### Bugfixes
+* Scenarios now work with the new mod name.
+* Cannot found on foundDisabled plots, even in advanced start. (report by MagisterCultuum@civfanatics)
+* Advanced combat odds now display correct combat odds for units with special combat types (report by MagisterCultuum@civfanatics)
+* Corrected refund when removing a unit with InstanceCostModifier in advanced start (report by MagisterCultuum@civfanatics)
+* Can only cast regeneration when a damaged unit is in stack
+* Fixed array underflow when closing the game (thanks to DuskTreader@civfanatics)
+* Make Minister Koun properly update his area strategies when he spawns
+* Upgrades cannot yield gold, even with total iUpgradeDiscount > 100% (report by MagisterCultuum@civfanatics)
+* Building <ReligionChange> applies religion in worldbuilder/advanced start, too (report by MagisterCultuum@civfanatics)
+
+### AI
+* AI is now less eager to build super forts in unowned territory
+* Some tweaks to make the AI better at guarding forts
+* Tweaks to make the AI less likely to build forts in the city radius
+* AI tries to not leave it's city undefended if it has only one city
+
+### Code
+* More logging, especially for AI, but release build log less
+* Added custom makefile
+* Small improvements to PyHelpers
+
+
 ## v2.9-beta1u
 
 Breaks savegames.
