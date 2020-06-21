@@ -3,10 +3,10 @@
 ## v2.9-beta2u
 
 ### UI
-* (Most) advisors are now able to adapt to a screen height of 720
+* (Most) advisors are now able to adapt to a screen height of 720 (report by Tielby@civfanatics)
 * Flag tooltip now shows whether the game is played with an assert/debug build
 * Player defeat popups can now be disabled via BUG options
-* Show promotion min level in help
+* Show promotion min level in help (report by MagisterCultuum@civfanatics)
 * Some small text fixes
 * Religion advisor can be made full-screen again
 
@@ -23,9 +23,9 @@
 
 ### AI
 * AI is now less eager to build super forts in unowned territory
-* Some tweaks to make the AI better at guarding forts
+* Some tweaks to make the AI better at guarding forts (report by Dominus the Mentat@civfanatics)
 * Tweaks to make the AI less likely to build forts in the city radius
-* AI tries to not leave it's city undefended if it has only one city
+* AI tries to not leave it's city undefended if it has only one city (report by Dominus the Mentat@civfanatics)
 
 ### Code
 * More logging, especially for AI, but release build log less
