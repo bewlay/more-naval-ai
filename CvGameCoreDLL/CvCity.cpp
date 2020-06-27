@@ -12947,6 +12947,15 @@ void CvCity::setNumRealBuildingTimed(BuildingTypes eIndex, int iNewValue, bool b
 					GET_PLAYER(getOwnerINLINE()).setCapitalCity(this);
 				}
 
+				// lfgr fix 06/2020: Apply religion even in worldbuilder or advanced start
+				for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
+				{
+					if (GC.getBuildingInfo(eIndex).getReligionChange(iI) > 0)
+					{
+						setHasReligion(((ReligionTypes)iI), true, true, true);
+					}
+				}
+
 				if (GC.getGameINLINE().isFinalInitialized() && !(gDLL->GetWorldBuilderMode()))
 				{
 					if (GC.getBuildingInfo(eIndex).isGoldenAge())
@@ -12972,14 +12981,6 @@ void CvCity::setNumRealBuildingTimed(BuildingTypes eIndex, int iNewValue, bool b
 									}
 								}
 							}
-						}
-					}
-
-					for (iI = 0; iI < GC.getNumReligionInfos(); iI++)
-					{
-						if (GC.getBuildingInfo(eIndex).getReligionChange(iI) > 0)
-						{
-							setHasReligion(((ReligionTypes)iI), true, true, true);
 						}
 					}
 

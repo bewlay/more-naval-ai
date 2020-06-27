@@ -12663,7 +12663,17 @@ bool CvUnitAI::AI_guardCityMinDefender(bool bSearch)
 	CvCity* pPlotCity = plot()->getPlotCity();
 	if ((pPlotCity != NULL) && (pPlotCity->getOwnerINLINE() == getOwnerINLINE()))
 	{
-		int iCityDefenderCount = pPlotCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
+		int iCityDefenderCount;
+
+		// lfgr AI 06/2020: Non-city-defender units now may also call this. If they do, they count every unit.
+		// City defenders still only count their own.
+		if( AI_getUnitAIType() == UNITAI_CITY_DEFENSE ) {
+			iCityDefenderCount = pPlotCity->plot()->plotCount(PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getOwnerINLINE());
+		}
+		else {
+			iCityDefenderCount = pPlotCity->plot()->plotCount(PUF_canDefend, -1, -1, getOwnerINLINE());
+		}
+
 		if ((iCityDefenderCount - 1) < pPlotCity->AI_minDefenders()) // LFGR_TODO: Use -stacksize instead of -1?
 		{
 			if ((iCityDefenderCount <= 2) || (GC.getGame().getSorenRandNum(5, "AI shuffle defender") != 0)) // LFGR_TODO: make "AI shuffle defender" optional?

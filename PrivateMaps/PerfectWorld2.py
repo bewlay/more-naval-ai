@@ -46,6 +46,8 @@
 ##
 ##############################################################################
 ## Version History
+## 2.07 (lfgr) - Fixed Assertion errors by removing gc.getInfoTypeForString("NO_IMPROVEMENT")
+##
 ## 2.06 - Fixed a few bugs from my minimum hill/maximum bad feature function.
 ##
 ## 2.05 - Made maps of standard size and below a bit smaller. Changed the way I
@@ -4829,7 +4831,7 @@ class StartingArea :
                 sPlot = gameMap.plot(self.plotList[m].x,self.plotList[m].y)
                 if sPlot.isWater() == True:
                     raise ValueError, "Start plot is water!"
-                sPlot.setImprovementType(gc.getInfoTypeForString("NO_IMPROVEMENT"))
+                sPlot.setImprovementType(ImprovementTypes.NO_IMPROVEMENT)
                 playerID = self.playerList[n]
                 player = gc.getPlayer(playerID)
                 sPlot.setStartingPlot(True)

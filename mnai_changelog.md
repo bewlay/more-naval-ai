@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.9-beta2u
+
+### UI
+* (Most) advisors are now able to adapt to a screen height of 720 (report by Tielby@civfanatics)
+* Flag tooltip now shows whether the game is played with an assert/debug build
+* Player defeat popups can now be disabled via BUG options
+* Show promotion min level in help (report by MagisterCultuum@civfanatics)
+* Some small text fixes
+* Religion advisor can be made full-screen again
+
+### Bugfixes
+* Scenarios now work with the new mod name.
+* Cannot found on foundDisabled plots, even in advanced start. (report by MagisterCultuum@civfanatics)
+* Advanced combat odds now display correct combat odds for units with special combat types (report by MagisterCultuum@civfanatics)
+* Corrected refund when removing a unit with InstanceCostModifier in advanced start (report by MagisterCultuum@civfanatics)
+* Can only cast regeneration when a damaged unit is in stack
+* Fixed array underflow when closing the game (thanks to DuskTreader@civfanatics)
+* Make Minister Koun properly update his area strategies when he spawns
+* Upgrades cannot yield gold, even with total iUpgradeDiscount greater than 100% (report by MagisterCultuum@civfanatics)
+* Building `<ReligionChange>` applies religion in worldbuilder/advanced start, too (report by MagisterCultuum@civfanatics)
+
+### AI
+* AI is now less eager to build super forts in unowned territory
+* Some tweaks to make the AI better at guarding forts (report by Dominus the Mentat@civfanatics)
+* Tweaks to make the AI less likely to build forts in the city radius
+* AI tries to not leave it's city undefended if it has only one city (report by Dominus the Mentat@civfanatics)
+
+### Code
+* More logging, especially for AI, but release build log less
+* Added custom makefile
+* Small improvements to PyHelpers
+
+
 ## v2.9-beta1u
 
 Breaks savegames.
@@ -17,7 +50,7 @@ Breaks savegames.
 * Improved popup text and messages regarding voting
 * Spell costs you cannot pay are now indicated in red
 * Removed irritating "unit defeated" sound when great generals die (report by Bickendan@civfanatics.com)
-* If own nationality is <50% in a city, show turns until 50% is achieved
+* If own nationality is lower than 50% in a city, show turns until 50% is achieved
 * Adjusted player colors such that rebels (and Minister Koun) get new ones (report by Devils_Advocate@civfanatics.com)
 
 ### Bugfixes
@@ -61,7 +94,7 @@ Breaks savegames.
 * Trade route yield modifiers from Civics and Traits are now displayed correctly (report by westamastaflash@civfanatics)
 * Overhauled dynamic civ names. There are now three flavors of DNC that can be chosen in the "Scoreboard" tab of the BUG options window, along with other options:
 	* Off - Always use default name
-	* Minimal - Always use default name, except when two civililzations of the same type exist (in that case, use "Realm of <leader>")
+	* Minimal - Always use default name, except when two civililzations of the same type exist (in that case, use "Realm of [leader]")
 	* Medium - Similar to Minimal, but with a limited number of additional names based on civ, civics etc.
 	* High - Tholal's original DNC variant
 

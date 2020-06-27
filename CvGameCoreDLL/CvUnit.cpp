@@ -8879,7 +8879,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
     iPrice += (iPrice * GET_PLAYER(getOwnerINLINE()).getUpgradeCostModifier()) / 100;
 //FfH: End Add
 
-	return iPrice;
+	return std::max( 0, iPrice ); // lfgr fix 06/2020: No gold earned from upgrades
 }
 
 

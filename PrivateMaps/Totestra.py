@@ -49,6 +49,9 @@
 ##
 ##############################################################################
 ## Version History
+##
+## 20200613 (lfgr) - Fixed Assertion errors by removing gc.getInfoTypeForString("NO_IMPROVEMENT")
+##
 ## Totestra - Sam Trenholme's update of PerfectWorld2.py
 ##
 ## 20120615:
@@ -5281,7 +5284,7 @@ class StartingArea :
                 sPlot = gameMap.plot(self.plotList[m].x,self.plotList[m].y)
                 if sPlot.isWater() == True:
                     raise ValueError, "Start plot is water!"
-                sPlot.setImprovementType(gc.getInfoTypeForString("NO_IMPROVEMENT"))
+                sPlot.setImprovementType(ImprovementTypes.NO_IMPROVEMENT)
                 playerID = self.playerList[n]
                 player = gc.getPlayer(playerID)
                 sPlot.setStartingPlot(True)
