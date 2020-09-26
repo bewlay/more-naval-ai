@@ -6661,7 +6661,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			else
 			{
 				iValue *= 10000;
-				iValue /= GET_TEAM(getTeam()).getResearchLeft(eTech);
+				iValue /= std::max( 1, GET_TEAM(getTeam()).getResearchLeft(eTech) );
 			}
 		}
 	}
