@@ -14711,12 +14711,20 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 //			bFirst = false;
 //		}
 //	}
+	// lfgr UI 10/2020: If some player is active, don't show units that require a different civilization
 	UnitTypes eLoopUnit;
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
 		if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
 		{
 			eLoopUnit = (UnitTypes)GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getCivilizationUnits(iI);
+			if( eLoopUnit != NO_UNIT ) {
+				CivilizationTypes ePrereqCiv = (CivilizationTypes) GC.getUnitInfo( eLoopUnit ).getPrereqCiv();
+				if( ePrereqCiv != NO_CIVILIZATION && ePrereqCiv != GC.getGameINLINE().getActiveCivilizationType() )
+				{
+					continue;
+				}
+			}
 		}
 		else
 		{
