@@ -21,3 +21,5 @@ class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
 		column = self.addOneColumnLayout( screen, panel )
 		
 		self.addCheckbox( screen, column, "FfHUI__ShowLeaderDefeatPopup" )
+		self.addCheckbox( screen, column, "FfHUI__AvoidAngryCitizensDefault" )
+		self.addCheckbox( screen, column, "FfHUI__AvoidUnhealthyCitizensDefault" )

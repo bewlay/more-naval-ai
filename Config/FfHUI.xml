@@ -15,5 +15,9 @@
 		<section id="Popups">
 			<option id="ShowLeaderDefeatPopup" type="boolean" default="True" />
 		</section>
+		<section id="Cities">
+			<option id="AvoidAngryCitizensDefault" type="boolean" default="True" />
+			<option id="AvoidUnhealthyCitizensDefault" type="boolean" default="False" />
+		</section>
 	</options>
 </mod>

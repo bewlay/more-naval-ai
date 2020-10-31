@@ -3054,9 +3054,16 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	SAFE_DELETE_ARRAY(paiBuildingOriginalOwner);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalTime);
 
-	// Sephi default value for avoid angry Citizens	
-	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
-			pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	// Sephi default value for avoid angry Citizens
+	// lfgr 10/2020: Made optional, added unhealthy citizens
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidAngryCitizensDefault", true, "BUG_AVOID_ANGRY_CITIZENS_DEFAULT" ) ) {
+		pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	}
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidUnhealthyCitizensDefault", false, "BUG_AVOID_UNHEALTHY_CITIZENS_DEFAULT" ) ) {
+		pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS"),true);
+	}
 
 	if (bConquest)
 	{
@@ -8177,10 +8184,16 @@ void CvPlayer::found(int iX, int iY)
 	}
 
 	// lfgr: merged from MoM
-	// Sephi default value for avoid angry Citizens	
-	// LFGR_TODO: Make this a BUG option
-	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
+	// Sephi default value for avoid angry Citizens
+	// lfgr 10/2020: Made optional, added unhealthy citizens
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidAngryCitizensDefault", true, "BUG_AVOID_ANGRY_CITIZENS_DEFAULT" ) ) {
 		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	}
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidUnhealthyCitizensDefault", false, "BUG_AVOID_UNHEALTHY_CITIZENS_DEFAULT" ) ) {
+		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS"),true);
+	}
 	// lfgr end
 
 	if (isHuman() && getAdvancedStartPoints() < 0)
