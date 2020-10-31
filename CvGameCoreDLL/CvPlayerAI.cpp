@@ -29612,8 +29612,8 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 
 	iBestTowerManaValue += iNumCompletedTowers;
 
-	if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
-		iBestTowerManaValue *= 10;
+	// lfgr 10/2020: Reduced from 10 to 2, as AI was overvaluing mana.
+	iBestTowerManaValue *= 2;
 
 	return iBestTowerManaValue;
 }
