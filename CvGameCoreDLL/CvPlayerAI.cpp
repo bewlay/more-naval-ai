@@ -11959,7 +11959,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 							// buffs and debuffs
 							if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 							{
-								iValue =+ 10;
+								iValue += 10;
 								if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getAddPromotionType1()).getMovesChange() > 0)
 								{
 									if (!bDemon)
