@@ -11991,6 +11991,13 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 // BUG - Starting Experience - end
 	}
 
+	// lfgr UI 11/2020: Show unit religion
+	if( kUnitInfo.getReligionType() != NO_RELIGION )
+	{
+		szBuffer.append( NEWLINE );
+		szBuffer.append( gDLL->getText( "TXT_KEY_UNIT_RELIGION", GC.getReligionInfo( (ReligionTypes) kUnitInfo.getReligionType() ).getDescription() ) );
+	}
+
 	if (kUnitInfo.isGoldenAge())
 	{
 		szBuffer.append(NEWLINE);
