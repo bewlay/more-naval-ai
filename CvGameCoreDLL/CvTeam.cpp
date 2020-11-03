@@ -8814,36 +8814,7 @@ void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
 			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
-		// set visibility on capital
-		CvCity* pCapital;
-		
-		for (int iI = 0; iI < MAX_PLAYERS; ++iI)
-		{
-			//if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == eIndex)
-			{
-				pCapital = GET_PLAYER((PlayerTypes)iI).getCapitalCity();
-				if (pCapital != NULL)
-				{
-					//pCapital->plot()->updateSight(false, true);
-				}
-			}
-		}
-		
 		m_abEmbassy[eIndex] = bNewValue;
-		for (int iI = 0; iI < MAX_PLAYERS; ++iI)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).getTeam() == eIndex)// || GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
-			{
-				pCapital = GET_PLAYER((PlayerTypes)iI).getCapitalCity();
-				if (pCapital != NULL)
-				{
-					//pCapital->plot()->updateSight(bNewValue, true);
-					pCapital->plot()->setRevealed(getID(), true, false, NO_TEAM, true);
-					pCapital->plot()->updateVisibility();
-				}
-			}
-		}
     }
 }
 

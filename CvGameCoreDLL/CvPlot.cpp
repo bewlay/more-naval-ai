@@ -2338,26 +2338,6 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 
 	if (pCity != NULL)
 	{
-		// Embassies
-		/*
-		if (getOwner() != NO_PLAYER)
-		{
-			if (isCity())
-			{
-				if (getPlotCity()->isCapital())
-				{
-					for (iI = 0; iI < MAX_CIV_TEAMS; ++iI)
-					{
-						if (GET_TEAM((TeamTypes)iI).isHasEmbassy(getTeam()))
-						{
-							changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
-						}
-					}
-				}
-			}
-		}
-		*/
-
 		// Religion - Disabled with new Espionage System
 /*		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
@@ -4584,20 +4564,6 @@ bool CvPlot::isVisible(TeamTypes eTeam, bool bDebug) const
 		if (eTeam == NO_TEAM)
 		{
 			return false;
-		}
-
-		if (getOwner() != NO_PLAYER)
-		{
-			if (isCity())
-			{
-				if (getPlotCity()->isCapital())
-				{
-					if (GET_TEAM(eTeam).isHasEmbassy(getTeam()))
-					{
-						return true;
-					}
-				}
-			}
 		}
 
 		return ((getVisibilityCount(eTeam) > 0) || (getStolenVisibilityCount(eTeam) > 0));

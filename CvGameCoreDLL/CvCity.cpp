@@ -1207,23 +1207,6 @@ void CvCity::kill(bool bUpdatePlotGroups)
 			pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
 		}
 	}
-/************************************************************************************************/
-/* Advanced Diplomacy         Start                                                             */
-/************************************************************************************************/
-	//ls612: Embassy visibility fix (by Damgo)
-	if (bCapital)
-	{
-		for (iI = 0; iI < MAX_TEAMS; iI++)
-		{
-			if (GET_TEAM(GET_PLAYER(eOwner).getTeam()).isHasEmbassy((TeamTypes)iI))
-			{
-				pPlot->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, false);
-			}
-		}
-	}
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 	GET_PLAYER(eOwner).updateMaintenance();
 
 	GC.getMapINLINE().updateWorkingCity();

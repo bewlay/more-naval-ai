@@ -13094,36 +13094,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		{
 			m_iCapitalCityID = FFreeList::INVALID_INDEX;
 		}
-		
-/************************************************************************************************/
-/* Advanced Diplomacy         Start                                                             */
-/************************************************************************************************/		
-		//ls612: Embassy Visibility Fix (by Damgo)
-		if (pOldCapitalCity != NULL)
-		{
-			for (int iI = 0; iI < MAX_TEAMS; iI++)
-			{
-				if (GET_TEAM(getTeam()).isHasEmbassy((TeamTypes)iI))
-				{
-					pOldCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, bUpdatePlotGroups);
-				}
-			}
-		}
-		
-		if (pNewCapitalCity != NULL)
-		{
-			for (int iI = 0; iI < MAX_TEAMS; iI++)
-			{
-				if (GET_TEAM(getTeam()).isHasEmbassy((TeamTypes)iI))
-				{
-					pNewCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), true, NULL, bUpdatePlotGroups);
-				}
-			}
-		}
-		//ls612: End Embassy Visibility Fix (by Damgo)
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 		if (bUpdatePlotGroups)
 		{
