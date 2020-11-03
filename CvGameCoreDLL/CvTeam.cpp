@@ -5480,6 +5480,7 @@ bool CvTeam::isFreeTrade(TeamTypes eIndex) const
 		return true;
 	}
 	
+	// LFGR_TODO: This currently does nothing, since free trade agreements require open borders
 	if (isFreeTradeAgreement(eIndex))
 	{
 		return true;

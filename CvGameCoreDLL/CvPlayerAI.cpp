@@ -12565,6 +12565,7 @@ DenialTypes CvPlayerAI::AI_cityTrade(CvCity* pCity, PlayerTypes ePlayer) const
 }
 
 
+// Value for us that ePlayer stops trading with eTradeTeam (?)
 int CvPlayerAI::AI_stopTradingTradeVal(TeamTypes eTradeTeam, PlayerTypes ePlayer) const
 {
 	CvDeal* pLoopDeal;
