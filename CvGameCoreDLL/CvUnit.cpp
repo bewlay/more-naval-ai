@@ -8948,11 +8948,11 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 	// no cross-religion upgrades for religious units
-	if (m_pUnitInfo->getReligionType() != NO_RELIGION)
+	if (getReligion() != NO_RELIGION)
 	{
 		if (kUnitInfo.getReligionType() != NO_RELIGION)
 		{
-			if (m_pUnitInfo->getReligionType() != kUnitInfo.getReligionType())
+			if (getReligion() != kUnitInfo.getReligionType())
 			{
 				return false;
 			}
