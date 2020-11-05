@@ -138,7 +138,10 @@ class UnitUpgradesGraph:
 						self.addUpgradePath(graph, unitA, unitB)
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, gc.getUnitInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
+		# lfgr UI 11/2020: Use correct art style
+		szUnitIcon = gc.getUnitInfo( unit ).getUnitButtonWithCivArtStyle( gc.getGame().getActiveCivilizationType() )
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, szUnitIcon, xPos, yPos,
+				self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
 			
 	def unitToString(self, unit):
 		return gc.getUnitInfo(unit).getDescription() + ":%d"%(unit, )
