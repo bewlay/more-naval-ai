@@ -10224,6 +10224,16 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 }
 //FfH: End Add
 
+// lfgr UI 11/2020: For "Allows civic" buttons in Tech tree.
+void CvGameTextMgr::parseSingleCivicRevealHelp( CvWStringBuffer &szBuffer, CivicTypes eCivic )
+{
+	szBuffer.appendfmt( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivicInfo( eCivic ).getDescription() );
+
+	CvWStringBuffer szCivicHelpText;
+	GAMETEXT.parseCivicInfo( szCivicHelpText, eCivic, true, true, true ); // bCiviliopedia=true to hide tech prereq
+	szBuffer.append( szCivicHelpText );
+}
+
 //	Function:			parseCivicInfo()
 //	Description:	Will parse the civic info help
 //	Parameters:		szHelpText -- the text to put it into

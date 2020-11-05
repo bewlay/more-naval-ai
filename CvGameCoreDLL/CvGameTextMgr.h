@@ -90,6 +90,9 @@ public:
 /********************************************************************************/
 //FfH: End Add
 
+	// lfgr UI 11/2020: For "Allows civic" buttons in Tech tree.
+	void parseSingleCivicRevealHelp( CvWStringBuffer &szBuffer, CivicTypes eCivic );
+
 	DllExport void parseCivicInfo(CvWStringBuffer &szBuffer, CivicTypes eCivic, bool bCivilopediaText = false, bool bPlayerContext = false, bool bSkipName = false);
 	
 	/**
