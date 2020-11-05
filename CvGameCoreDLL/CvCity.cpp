@@ -17508,7 +17508,7 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 		{
 			if (isHasReligion((ReligionTypes)iI))
 			{
-				if (pUnit->getReligion() == NO_RELIGION)
+				if (pUnit->getReligion() == NO_RELIGION) // LFGR_TODO: Check this first.
 				{
 //>>>>Unofficial Bug Fix: Modified by Denev 2009/12/23
 //*** Each religion has equal chance of adopting.

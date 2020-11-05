@@ -8966,7 +8966,6 @@ int CvPlayerAI::AI_getFreeTradeAgreementAttitude(PlayerTypes ePlayer) const
 	{
 		if (GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeDivisor() != 0)
 		{
-
 			iAttitudeChange = (GET_TEAM(getTeam()).AI_getFreeTradeAgreementCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeDivisor());
 			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeChangeLimit()));
 		}
