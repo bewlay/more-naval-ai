@@ -36,6 +36,11 @@
 // BUG - start
 #include "CvBugOptions.h"
 // BUG - end
+
+// lfgr UI 11/2020: Allow cycling through units in plot help
+#include "PlotHelpCycling.h"
+
+
 int shortenID(int iId)
 {
 	return iId;
@@ -2731,7 +2736,9 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		return;
 	}
 
-
+	// lfgr UI 11/2020: Allow cycling through units in plot help
+	PlotHelpCyclingManager::getInstance().updateCurrentPlot( GC.getMapINLINE().plotNumINLINE( pPlot->getX_INLINE(), pPlot->getY_INLINE() ) );
+	
 	CvUnit* pLoopUnit;
 	static const uint iMaxNumUnits = 15;
 	static std::vector<CvUnit*> apUnits;
@@ -2795,7 +2802,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		{
 			apUnits.push_back(pLoopUnit);
 
-			if (iNumVisibleUnits > iMaxNumUnits)
+			if (iNumVisibleUnits > iMaxNumUnits) // LFGR_TODO: Unnecessary
 			{
 				int iIndex = pLoopUnit->getUnitType() * MAX_PLAYERS + pLoopUnit->getOwner();
 				if (aiUnitNumbers[iIndex] == 0)

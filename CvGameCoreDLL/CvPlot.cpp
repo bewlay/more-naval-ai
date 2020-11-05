@@ -42,6 +42,9 @@
 // lfgr 06/2019: BUG options
 #include "CvBugOptions.h"
 
+// lfgr UI 11/2020: Allow cycling through units in plot help
+#include "PlotHelpCycling.h"
+
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
 /*************************************************************************************************/
@@ -1139,6 +1142,9 @@ void CvPlot::updateCenterUnit()
 
 	setCenterUnit(getSelectedUnit());
 
+	// lfgr UI 11/2020: No cycling when a unit on this plot is selected (since the selected unit is alawys shown; can use plot list buttons instead)
+	bool bUsedSelectedUnit = ( getCenterUnit() != NULL );
+
 	if (getCenterUnit() == NULL)
 	{
 		setCenterUnit(getBestDefender(GC.getGameINLINE().getActivePlayer(), NO_PLAYER, NULL, false, false, true));
@@ -1162,6 +1168,31 @@ void CvPlot::updateCenterUnit()
 	if (getCenterUnit() == NULL)
 	{
 		setCenterUnit(getBestDefender(NO_PLAYER, GC.getGameINLINE().getActivePlayer()));
+	}
+
+	// lfgr UI 11/2020: Consider cycling
+	if( getCenterUnit() != NULL && !bUsedSelectedUnit && PlotHelpCyclingManager::getInstance().getCycleIdx() != 0 )
+	{
+		std::vector<CvUnit *> plotUnits;
+		GC.getGameINLINE().getPlotUnits( this, plotUnits );
+		int iCenterUnitIdx = -1;
+		for( int i = 0; i < (int) plotUnits.size(); i++ )
+		{
+			if( plotUnits.at( i ) == getCenterUnit() )
+			{
+				iCenterUnitIdx = i;
+				break;
+			}
+		}
+		FAssertMsg( iCenterUnitIdx != -1, "Center unit not found in unit list." )
+
+		int iNewIdx = iCenterUnitIdx + PlotHelpCyclingManager::getInstance().getCycleIdx();
+		iNewIdx %= plotUnits.size();
+		if( iNewIdx < 0 )
+		{
+			iNewIdx += plotUnits.size();
+		}
+		setCenterUnit( plotUnits.at( iNewIdx ) );
 	}
 }
 

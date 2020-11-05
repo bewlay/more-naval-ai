@@ -93,4 +93,9 @@ def onSetPlayerAlive( argsList ) :
 			elif iLeader == gc.getInfoTypeForString('LEADER_VARN'):
 				cf.addPopup(CyTranslator().getText("TXT_KEY_POPUP_DEFEATED_MALAKIM",()),'art/interface/popups/Varn.dds')
 
-		
+
+def cyclePlotHelpForwards( argsList = None ) :
+	gc.changePlotHelpCycleIdx( 1 )
+
+def cyclePlotHelpBackwards( argsList = None ) :
+	gc.changePlotHelpCycleIdx( -1 )

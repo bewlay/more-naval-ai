@@ -20,4 +20,8 @@
 			<option id="AvoidUnhealthyCitizensDefault" type="boolean" default="False" />
 		</section>
 	</options>
+
+	<!-- Plot help unit cycling -->
+	<shortcut function="cyclePlotHelpForwards" keys="Ctrl Space | -"/>
+	<shortcut function="cyclePlotHelpBackwards" keys="Ctrl Shift Space"/>
 </mod>
