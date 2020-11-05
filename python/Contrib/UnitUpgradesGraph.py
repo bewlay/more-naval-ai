@@ -133,7 +133,9 @@ class UnitUpgradesGraph:
 			for numB in range(gc.getNumUnitClassInfos()):
 				unitB = self.getUnitNumber(numB)
 				if gc.getUnitInfo(unitA).getUpgradeUnitClass(numB):
-					self.addUpgradePath(graph, unitA, unitB)
+					# lfgr UI 11/2020: Only unitB allows being upgraded to
+					if unitB != -1 and not gc.getUnitInfo( unitB ).isDisableUpgradeTo() :
+						self.addUpgradePath(graph, unitA, unitB)
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
 		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, gc.getUnitInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
