@@ -28,8 +28,8 @@ class SevoPediaIndex:
 		self.W_INDEX = self.top.W_SCREEN - 2 * self.top.X_CATEGORIES
 		self.H_INDEX = self.top.H_CATEGORIES
 
-		self.X_LETTER = main.X_INDEX + 130  # position of first letter button
-		self.Y_LETTER = main.Y_INDEX
+		self.X_LETTER = self.top.X_INDEX + 130  # position of first letter button
+		self.Y_LETTER = self.top.Y_INDEX
 		self.W_LETTER = 20
 
 		self.index = None
