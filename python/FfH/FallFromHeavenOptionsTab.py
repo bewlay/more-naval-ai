@@ -23,3 +23,4 @@ class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
 		self.addCheckbox( screen, column, "FfHUI__ShowLeaderDefeatPopup" )
 		self.addCheckbox( screen, column, "FfHUI__AvoidAngryCitizensDefault" )
 		self.addCheckbox( screen, column, "FfHUI__AvoidUnhealthyCitizensDefault" )
+		self.addTextDropdown( screen, column, column, "FfHUI__PlotHelpNumUnits" )

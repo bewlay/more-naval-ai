@@ -2740,7 +2740,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 	PlotHelpCyclingManager::getInstance().updateCurrentPlot( GC.getMapINLINE().plotNumINLINE( pPlot->getX_INLINE(), pPlot->getY_INLINE() ) );
 	
 	CvUnit* pLoopUnit;
-	static const uint iMaxNumUnits = 15;
+	uint iMaxNumUnits = getBugOptionINT( "FfHUI__PlotHelpNumUnits", 15 );
 	static std::vector<CvUnit*> apUnits;
 	static std::vector<int> aiUnitNumbers;
 	static std::vector<int> aiUnitStrength;

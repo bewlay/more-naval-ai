@@ -19,6 +19,9 @@
 			<option id="AvoidAngryCitizensDefault" type="boolean" default="True" />
 			<option id="AvoidUnhealthyCitizensDefault" type="boolean" default="False" />
 		</section>
+		<section id="PlotHelp">
+			<list id="PlotHelpNumUnits" type="int" default="15" listType="int" values="5, 10, 15, 20" />
+		</section>
 	</options>
 
 	<!-- Plot help unit cycling -->
