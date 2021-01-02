@@ -28773,6 +28773,12 @@ int CvPlayerAI::AI_getPlotChokeValue(CvPlot* pPlot) const
 //100 * iHappy means a high value.
 int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 {
+	// lfgr fix 01/2021
+	if (0 == iHappy)
+	{
+		return 0;
+	}
+
 	int iWorstHappy = 0;
 	int iBestHappy = 0;
 	int iTotalUnhappy = 0;
@@ -28781,10 +28787,6 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	CvCity* pLoopCity;
 	int iCount = 0;
 
-	if (0 == iHappy)
-	{
-		iHappy = 1;
-	}
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
@@ -28833,7 +28835,9 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 
 int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 {
-	if (isNoUnhealthyPopulation())
+	// lfgr fix 01/2021:
+	// Added isIgnoreFood() and iHealth == 0
+	if (isNoUnhealthyPopulation() || isIgnoreFood() || iHealth == 0 )
 	{
 		return 0;
 	}
@@ -28846,10 +28850,6 @@ int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 	CvCity* pLoopCity;
 	int iCount = 0;
 
-	if (0 == iHealth)
-	{
-		iHealth = 1;
-	}
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
