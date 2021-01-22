@@ -1198,8 +1198,8 @@ def reqEarthquake(caster):
 		for iiX in range(iX-1, iX+2, 1):
 			for iiY in range(iY-1, iY+2, 1):
 				pPlot = CyMap().plot(iiX,iiY)
-				p2Player = gc.getPlayer(pPlot.getOwner())
 				if pPlot.isOwned():
+					p2Player = gc.getPlayer(pPlot.getOwner())
 					e2Team = gc.getTeam(p2Player.getTeam())
 					if e2Team.isAtWar(eTeam) == False:
 						return False
