@@ -17972,7 +17972,7 @@ void CvUnit::castCreateUnit(int spell)
 //*** summoned unit is pushed out if enemy unit exists in the same tile.
 	if (pUnit->plot()->isVisibleEnemyUnit(getOwnerINLINE()))
 	{
-		pUnit->withdrawlToNearestValidPlot();
+		pUnit->withdrawlToNearestValidPlot(); // Note: Can kill unit. Do not do anything else with this unit afterwards!
 	}
 //<<<<Unofficial Bug Fix: End Add
 }
@@ -18407,7 +18407,8 @@ void CvUnit::changeInvisibleFromPromotion(int iNewValue)
         {
             if (getDomainType() != DOMAIN_IMMOBILE)
             {
-                withdrawlToNearestValidPlot();
+				// lfgr fix 01/2021: Do not kill the unit, since this function might be called from anywhere.
+                withdrawlToNearestValidPlot( false );
             }
         }
     }
