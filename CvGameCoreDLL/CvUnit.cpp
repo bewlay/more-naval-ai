@@ -628,6 +628,7 @@ void CvUnit::setupGraphical()
 }
 
 
+// This adopts properties of pUnit. Kills pUnit.
 void CvUnit::convert(CvUnit* pUnit)
 {
 	CvPlot* pPlot = plot();
@@ -739,7 +740,7 @@ void CvUnit::convert(CvUnit* pUnit)
     }
     if (pUnit->isImmortal())
     {
-        pUnit->changeImmortal(-1);
+        pUnit->makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
     }
     if (pUnit->isHasCasted())
     {
@@ -1311,6 +1312,10 @@ void CvUnit::doTurn()
             }
             if (bValid == false)
             {
+				if( isImmortal() )
+				{
+					makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
+				}
                 gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwnerINLINE(), true, GC.getDefineINT("EVENT_MESSAGE_TIME"), gDLL->getText("TXT_KEY_MESSAGE_UNIT_ABANDON", getNameKey()), GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, m_pUnitInfo->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), plot()->getX_INLINE(), plot()->getY_INLINE());
 				logBBAI("    Killing %S (delayed) -- abandoned owner (Unit %d - plot: %d, %d)",
 						getName().GetCString(), getID(), getX(), getY());
@@ -1401,7 +1406,7 @@ void CvUnit::doTurn()
 	    {
 	        if (isImmortal())
 	        {
-	            changeImmortal(-1);
+	            makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
 	        }
 
 			// summoned transport units unload cargo when they expire
@@ -18335,6 +18340,12 @@ void CvUnit::changeImmortal(int iNewValue)
             m_iImmortal = 0;
         }
     }
+}
+
+// lfgr fix 01/2021: Reliably set the immortality counter to 0
+void CvUnit::makeMortal()
+{
+	m_iImmortal = 0;
 }
 
 bool CvUnit::isImmuneToCapture() const

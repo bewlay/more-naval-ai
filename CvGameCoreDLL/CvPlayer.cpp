@@ -3568,7 +3568,7 @@ void CvPlayer::killUnits()
         }
         if (pLoopUnit->isImmortal())
         {
-            pLoopUnit->changeImmortal(-1);
+            pLoopUnit->makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
         }
         if (pLoopUnit->canScrap())
         {
