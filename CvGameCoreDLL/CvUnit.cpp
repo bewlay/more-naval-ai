@@ -1432,7 +1432,8 @@ void CvUnit::doTurn()
             }
         }
     }
-    if (m_pUnitInfo->isImmortal())
+	// lfgr fix 01/2021: Don't revive units that are already dead.
+    if( m_pUnitInfo->isImmortal() && !isDelayedDeath() )
     {
         if (!isImmortal())
         {
