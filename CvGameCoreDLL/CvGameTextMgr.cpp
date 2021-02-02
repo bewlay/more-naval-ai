@@ -10208,9 +10208,11 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 		
 			CvWString szHelp;
 			gDLL->getPythonIFace()->callFunction(PYSpellModule, "getSpellHelp", argsList.makeFunctionArgs(), &szHelp);
-		
-			szBuffer.append( pcNewline );
-			szBuffer.append( szHelp );
+			
+			if( !szHelp.empty() ) {
+				szBuffer.append( pcNewline );
+				szBuffer.append( szHelp );
+			}
 		}
 	}
 /********************************************************************************/
