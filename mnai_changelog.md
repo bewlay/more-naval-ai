@@ -14,7 +14,7 @@ Breaks savegames.
 * Allow enabling/disabling avoid angry/unhealthy citizens in new cities via BUG Option
 * Allow cycling through foreign units on a single plot -- Allows access to unit details for all foreign units on plots with no unit belonging to the active player. Before, details where inaccessible if too many units were on the plot. Cycle while hovering over a plot with Ctrl-Space (forwards) and Ctrl-Shift-Space (backwards).
 * BUG option to control how many individual units are shown in plot help
-* Improve display of unit upgrades and building-enabled units in pedia, based on active player (report by Vintage Strategist@civfanatics.com)
+* Improve display of unit upgrades and building-enabled units in pedia, based on active player (report by Vintage Strategist@civfanatics)
 * Hide units from the upgrade chart that are unavailable to active player because of PrereqCiv
 * Added Advanced diplomacy concept page
 * Show UnitInfo religion (e.g., in build queue tooltip and in pedia)
