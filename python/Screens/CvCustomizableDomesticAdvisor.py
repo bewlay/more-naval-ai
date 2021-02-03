@@ -1149,7 +1149,6 @@ class CvCustomizableDomesticAdvisor:
 		if self.isFlavorful:
 
 			screen.hide(self.RENAME_PAGE_NAME)
-			screen.hide(self.RENAME_PAGE_NAME)
 			screen.hide(self.ADD_PAGE_NAME)
 			screen.hide(self.DEL_PAGE_NAME)
 			screen.hide(self.PAGE_UP_NAME)
@@ -2495,14 +2494,14 @@ class CvCustomizableDomesticAdvisor:
 				self.listSelectedCities.append(screen.getTableText(page, 1, i))
 	
 	def save(self, inputClass):
-		name = BugPath.findIniFile("CustomDomAdv.txt", "CustomDomAdv")
-		if (name):
-			file = open(name, 'w')
-	
-			if(file != 0):
-				pickle.dump({ "version" : self.PICKLED_VERSION, "pages" : self.PAGES }, file)
-				file.close()
+		BugPath.makeDir( "CustomDomAdv" )
+		name = BugPath.findDataFile("CustomDomAdv.txt", "CustomDomAdv")
+		if not name :
+			name = BugPath.createDataFile("CustomDomAdv.txt", "CustomDomAdv")
 
+		file = open(name, 'w')
+		pickle.dump({ "version" : self.PICKLED_VERSION, "pages" : self.PAGES }, file)
+		file.close()
 		return 1
 
 	def ModifyPage(self, inputClass):
@@ -2831,9 +2830,7 @@ class CvCustomizableDomesticAdvisor:
 	def loadPages(self):
 
 		self.PAGES = None
-		name = BugPath.findIniFile("CustomDomAdv.txt", "CustomDomAdv")
-		if (not name):
-			name = BugPath.findIniFile("CustomDomAdv.txt")
+		name = BugPath.findDataFile("CustomDomAdv.txt", "CustomDomAdv")
 		if (name):
 			BugConfigTracker.add("CDA_Config", name)
 			try:
