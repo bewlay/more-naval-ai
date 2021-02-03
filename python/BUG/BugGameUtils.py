@@ -228,6 +228,7 @@ class Dispatcher:
 		self._setDefault("canUpgradeAnywhere", False)
 		self._setDefault("getWidgetHelp", u"")
 		self._setDefault("getUpgradePriceOverride", -1)
+		self._setDefault("applyBuildEffects", False) # lfgr 02/2021 fix. TODO: This should not be a callback, but an event
 		
 	def _createCallback(self, name, func, default=None, log=None):
 		if log is None:
