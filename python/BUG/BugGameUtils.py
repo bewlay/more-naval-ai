@@ -362,12 +362,12 @@ class Callback:
 			if result is not None and result != self.default:
 				break
 		else:
-			if self.default is not None:
+			# lfgr 02/2021: First check base handler (very important for FfH), then default value.
+			if self.log: BugUtil.debug("BugGameUtils - %s - dispatching to base handler", self.name)
+			result = self.callHandler(self.baseHandler, argsList)
+			if result is None and self.default is not None:
 				if self.log: BugUtil.debug("BugGameUtils - %s - using default %s", self.name, self.default)
 				result = self.default
-			else:
-				if self.log: BugUtil.debug("BugGameUtils - %s - dispatching to base handler", self.name)
-				result = self.callHandler(self.baseHandler, argsList)
 		if result is not None:
 			for listener in self.listeners:
 				if self.log: BugUtil.debug("BugGameUtils - %s - calling %s listener", self.name, listener.__module__)
