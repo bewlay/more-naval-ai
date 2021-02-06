@@ -17,4 +17,52 @@
 		<Italian>Show leader-specific popup when a player is defeated</Italian>
 		<Spanish>Show leader-specific popup when a player is defeated</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__AVOIDANGRYCITIZENSDEFAULT_TEXT</Tag>
+		<English>Avoid angry citizens in new cities</English>
+		<French>Avoid angry citizens in new cities</French>
+		<German>Avoid angry citizens in new cities</German>
+		<Italian>Avoid angry citizens in new cities</Italian>
+		<Spanish>Avoid angry citizens in new cities</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__AVOIDANGRYCITIZENSDEFAULT_HOVER</Tag>
+		<English>Avoid angry citizens is enabled by default in new cities</English>
+		<French>Avoid angry citizens is enabled by default in new cities</French>
+		<German>Avoid angry citizens is enabled by default in new cities</German>
+		<Italian>Avoid angry citizens is enabled by default in new cities</Italian>
+		<Spanish>Avoid angry citizens is enabled by default in new cities</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__AVOIDUNHEALTHYCITIZENSDEFAULT_TEXT</Tag>
+		<English>Avoid unhealthy citizens in new cities</English>
+		<French>Avoid unhealthy citizens in new cities</French>
+		<German>Avoid unhealthy citizens in new cities</German>
+		<Italian>Avoid unhealthy citizens in new cities</Italian>
+		<Spanish>Avoid unhealthy citizens in new cities</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__AVOIDUNHEALTHYCITIZENSDEFAULT_HOVER</Tag>
+		<English>Avoid unhealthy citizens is enabled by default in new cities</English>
+		<French>Avoid unhealthy citizens is enabled by default in new cities</French>
+		<German>Avoid unhealthy citizens is enabled by default in new cities</German>
+		<Italian>Avoid unhealthy citizens is enabled by default in new cities</Italian>
+		<Spanish>Avoid unhealthy citizens is enabled by default in new cities</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__PLOTHELPNUMUNITS_TEXT</Tag>
+		<English>Individual units in plot tooltip</English>
+		<French>Individual units in plot tooltip</French>
+		<German>Individual units in plot tooltip</German>
+		<Italian>Individual units in plot tooltip</Italian>
+		<Spanish>Individual units in plot tooltip</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__PLOTHELPNUMUNITS_HOVER</Tag>
+		<English>Number of units in plot tooltip that are shown individually</English>
+		<French>Number of units in plot tooltip that are shown individually</French>
+		<German>Number of units in plot tooltip that are shown individually</German>
+		<Italian>Number of units in plot tooltip that are shown individually</Italian>
+		<Spanish>Number of units in plot tooltip that are shown individually</Spanish>
+	</TEXT>
 </Civ4GameText>

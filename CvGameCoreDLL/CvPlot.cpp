@@ -42,6 +42,9 @@
 // lfgr 06/2019: BUG options
 #include "CvBugOptions.h"
 
+// lfgr UI 11/2020: Allow cycling through units in plot help
+#include "PlotHelpCycling.h"
+
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
 /*************************************************************************************************/
@@ -1139,6 +1142,9 @@ void CvPlot::updateCenterUnit()
 
 	setCenterUnit(getSelectedUnit());
 
+	// lfgr UI 11/2020: No cycling when a unit on this plot is selected (since the selected unit is alawys shown; can use plot list buttons instead)
+	bool bUsedSelectedUnit = ( getCenterUnit() != NULL );
+
 	if (getCenterUnit() == NULL)
 	{
 		setCenterUnit(getBestDefender(GC.getGameINLINE().getActivePlayer(), NO_PLAYER, NULL, false, false, true));
@@ -1162,6 +1168,31 @@ void CvPlot::updateCenterUnit()
 	if (getCenterUnit() == NULL)
 	{
 		setCenterUnit(getBestDefender(NO_PLAYER, GC.getGameINLINE().getActivePlayer()));
+	}
+
+	// lfgr UI 11/2020: Consider cycling
+	if( getCenterUnit() != NULL && !bUsedSelectedUnit && PlotHelpCyclingManager::getInstance().getCycleIdx() != 0 )
+	{
+		std::vector<CvUnit *> plotUnits;
+		GC.getGameINLINE().getPlotUnits( this, plotUnits );
+		int iCenterUnitIdx = -1;
+		for( int i = 0; i < (int) plotUnits.size(); i++ )
+		{
+			if( plotUnits.at( i ) == getCenterUnit() )
+			{
+				iCenterUnitIdx = i;
+				break;
+			}
+		}
+		FAssertMsg( iCenterUnitIdx != -1, "Center unit not found in unit list." )
+
+		int iNewIdx = iCenterUnitIdx + PlotHelpCyclingManager::getInstance().getCycleIdx();
+		iNewIdx %= plotUnits.size();
+		if( iNewIdx < 0 )
+		{
+			iNewIdx += plotUnits.size();
+		}
+		setCenterUnit( plotUnits.at( iNewIdx ) );
 	}
 }
 
@@ -2338,26 +2369,6 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 
 	if (pCity != NULL)
 	{
-		// Embassies
-		/*
-		if (getOwner() != NO_PLAYER)
-		{
-			if (isCity())
-			{
-				if (getPlotCity()->isCapital())
-				{
-					for (iI = 0; iI < MAX_CIV_TEAMS; ++iI)
-					{
-						if (GET_TEAM((TeamTypes)iI).isHasEmbassy(getTeam()))
-						{
-							changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
-						}
-					}
-				}
-			}
-		}
-		*/
-
 		// Religion - Disabled with new Espionage System
 /*		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{
@@ -4584,20 +4595,6 @@ bool CvPlot::isVisible(TeamTypes eTeam, bool bDebug) const
 		if (eTeam == NO_TEAM)
 		{
 			return false;
-		}
-
-		if (getOwner() != NO_PLAYER)
-		{
-			if (isCity())
-			{
-				if (getPlotCity()->isCapital())
-				{
-					if (GET_TEAM(eTeam).isHasEmbassy(getTeam()))
-					{
-						return true;
-					}
-				}
-			}
 		}
 
 		return ((getVisibilityCount(eTeam) > 0) || (getStolenVisibilityCount(eTeam) > 0));

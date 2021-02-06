@@ -178,5 +178,8 @@ void CyGlobalContextPythonInterface4(python::class_<CyGlobalContext>& x)
 // ERA_FIX 09/2017 lfgr
 		.def("getNumRealEras", &CyGlobalContext::getNumRealEras, "int () - Number of real (non-pseudo) eras")
 // ERA_FIX end
+
+// lfgr UI 11/2020: Allow cycling through units in plot help
+		.def("changePlotHelpCycleIdx", &CyGlobalContext::changePlotHelpCycleIdx, "void (int) - Cycle through units in plot help" )
 		;
 }

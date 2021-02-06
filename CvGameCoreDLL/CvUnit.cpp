@@ -628,6 +628,7 @@ void CvUnit::setupGraphical()
 }
 
 
+// This adopts properties of pUnit. Kills pUnit.
 void CvUnit::convert(CvUnit* pUnit)
 {
 	CvPlot* pPlot = plot();
@@ -739,7 +740,7 @@ void CvUnit::convert(CvUnit* pUnit)
     }
     if (pUnit->isImmortal())
     {
-        pUnit->changeImmortal(-1);
+        pUnit->makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
     }
     if (pUnit->isHasCasted())
     {
@@ -1311,6 +1312,10 @@ void CvUnit::doTurn()
             }
             if (bValid == false)
             {
+				if( isImmortal() )
+				{
+					makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
+				}
                 gDLL->getInterfaceIFace()->addMessage((PlayerTypes)getOwnerINLINE(), true, GC.getDefineINT("EVENT_MESSAGE_TIME"), gDLL->getText("TXT_KEY_MESSAGE_UNIT_ABANDON", getNameKey()), GC.getEraInfo(GC.getGameINLINE().getCurrentEra()).getAudioUnitDefeatScript(), MESSAGE_TYPE_INFO, m_pUnitInfo->getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), plot()->getX_INLINE(), plot()->getY_INLINE());
 				logBBAI("    Killing %S (delayed) -- abandoned owner (Unit %d - plot: %d, %d)",
 						getName().GetCString(), getID(), getX(), getY());
@@ -1401,7 +1406,7 @@ void CvUnit::doTurn()
 	    {
 	        if (isImmortal())
 	        {
-	            changeImmortal(-1);
+	            makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
 	        }
 
 			// summoned transport units unload cargo when they expire
@@ -1432,7 +1437,8 @@ void CvUnit::doTurn()
             }
         }
     }
-    if (m_pUnitInfo->isImmortal())
+	// lfgr fix 01/2021: Don't revive units that are already dead.
+    if( m_pUnitInfo->isImmortal() && !isDelayedDeath() )
     {
         if (!isImmortal())
         {
@@ -2142,6 +2148,30 @@ void CvUnit::updateCombat(bool bQuick)
 
 	//FAssertMsg((pPlot == pDefender->plot()), "There is not expected to be a defender or the defender's plot is expected to be pPlot (the attack plot)");
 
+//FfH: Added by Kael 07/30/2007
+	if (pDefender->isFear())
+	{
+		if (!isImmuneToFear())
+		{
+			int iChance = baseCombatStr() + 20 + getLevel() - pDefender->baseCombatStr() - pDefender->getLevel();
+			if (iChance < 4)
+			{
+				iChance = 4;
+			}
+			if (GC.getGameINLINE().getSorenRandNum(40, "Im afeared!") > iChance)
+			{
+				setMadeAttack(true);
+				changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
+				szBuffer = gDLL->getText("TXT_KEY_MESSAGE_IM_AFEARED", getNameKey());
+				// lfgr 01/2021: Force message to appear immediately
+				gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)getOwner()), true, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_DISCOVERBONUS",
+						MESSAGE_TYPE_MAJOR_EVENT, "Art/Interface/Buttons/Promotions/Fear.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
+				bFinish = true;
+				checkRemoveSelectionAfterAttack(); // lfgr 01/2021: Remove unit from selection if it can't attack again
+			}
+		}
+	}
+//FfH: End Add
 
 	//if not finished and not fighting yet, set up combat damage and mission
 	if (!bFinish)
@@ -2172,30 +2202,11 @@ void CvUnit::updateCombat(bool bQuick)
 			setCombatUnit(pDefender, true);
 			pDefender->setCombatUnit(this, false);
 
-		//FfH: Added by Kael 07/30/2007
+		//FfH: Added by Kael 07/30/2007, moved here by Tholal
 		    if (!isImmuneToDefensiveStrike())
 		    {
 				logBBAI("    %S (%d)checking for defensive strike against %S (%d)!", pDefender->getName().GetCString(), pDefender->getID(), getName().GetCString(), getID());
 		        pDefender->doDefensiveStrike(this);
-		    }
-		    if (pDefender->isFear())
-		    {
-		        if (!isImmuneToFear())
-		        {
-		            int iChance = baseCombatStr() + 20 + getLevel() - pDefender->baseCombatStr() - pDefender->getLevel();
-		            if (iChance < 4)
-		            {
-		                iChance = 4;
-		            }
-		            if (GC.getGameINLINE().getSorenRandNum(40, "Im afeared!") > iChance)
-		            {
-		                setMadeAttack(true);
-		                changeMoves(std::max(GC.getMOVE_DENOMINATOR(), pPlot->movementCost(this, plot())));
-		                szBuffer = gDLL->getText("TXT_KEY_MESSAGE_IM_AFEARED", getNameKey());
-		                gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)getOwner()), false, GC.getDefineINT("EVENT_MESSAGE_TIME"), szBuffer, "AS2D_DISCOVERBONUS", MESSAGE_TYPE_MAJOR_EVENT, "Art/Interface/Buttons/Promotions/Fear.dds", (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
-		                bFinish = true;
-		            }
-		        }
 		    }
 		//FfH: End Add
 
@@ -8948,11 +8959,11 @@ bool CvUnit::canUpgrade(UnitTypes eUnit, bool bTestVisible) const
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 	// no cross-religion upgrades for religious units
-	if (m_pUnitInfo->getReligionType() != NO_RELIGION)
+	if (getReligion() != NO_RELIGION)
 	{
 		if (kUnitInfo.getReligionType() != NO_RELIGION)
 		{
-			if (m_pUnitInfo->getReligionType() != kUnitInfo.getReligionType())
+			if (getReligion() != kUnitInfo.getReligionType())
 			{
 				return false;
 			}
@@ -17971,7 +17982,7 @@ void CvUnit::castCreateUnit(int spell)
 //*** summoned unit is pushed out if enemy unit exists in the same tile.
 	if (pUnit->plot()->isVisibleEnemyUnit(getOwnerINLINE()))
 	{
-		pUnit->withdrawlToNearestValidPlot();
+		pUnit->withdrawlToNearestValidPlot(); // Note: Can kill unit. Do not do anything else with this unit afterwards!
 	}
 //<<<<Unofficial Bug Fix: End Add
 }
@@ -18336,6 +18347,12 @@ void CvUnit::changeImmortal(int iNewValue)
     }
 }
 
+// lfgr fix 01/2021: Reliably set the immortality counter to 0
+void CvUnit::makeMortal()
+{
+	m_iImmortal = 0;
+}
+
 bool CvUnit::isImmuneToCapture() const
 {
 	return m_iImmuneToCapture == 0 ? false : true;
@@ -18406,7 +18423,8 @@ void CvUnit::changeInvisibleFromPromotion(int iNewValue)
         {
             if (getDomainType() != DOMAIN_IMMOBILE)
             {
-                withdrawlToNearestValidPlot();
+				// lfgr fix 01/2021: Do not kill the unit, since this function might be called from anywhere.
+                withdrawlToNearestValidPlot( false );
             }
         }
     }

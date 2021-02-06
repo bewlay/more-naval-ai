@@ -171,11 +171,10 @@ def doArmageddonWrath(argsList):
 	py = PyPlayer(iPlayer)
 	for pUnit in py.getUnitList():
 		if pUnit.getDomainType() == iLand:
-			if pUnit.isAlive():
+			if pUnit.isAlive() and not isWorldUnitClass(pUnit.getUnitClassType()) and pUnit.baseCombatStr() > 0 :
 				if CyGame().getSorenRandNum(100, "Wrath") < iWrathConvertChance:
-					if isWorldUnitClass(pUnit.getUnitClassType()) == False:
-						pUnit.setHasPromotion(iEnraged, True)
-						CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_WRATH_ENRAGED", ()),'',1,'Art/Interface/Buttons/Promotions/Enraged.dds',ColorTypes(7),pUnit.getX(),pUnit.getY(),True,True)
+					pUnit.setHasPromotion(iEnraged, True)
+					CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_WRATH_ENRAGED", ()),'',1,'Art/Interface/Buttons/Promotions/Enraged.dds',ColorTypes(7),pUnit.getX(),pUnit.getY(),True,True)
 
 def doArmageddonYersinia(argsList):
 	kTriggeredData = argsList[0]

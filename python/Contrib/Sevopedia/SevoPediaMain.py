@@ -224,7 +224,7 @@ class SevoPediaMain(CvPediaScreen.CvPediaScreen, InterfaceUtils.GenericAdvisorSc
 ##--------	BUGFfH: End Delete
 		self.iActivePlayer = gc.getGame().getActivePlayer()
 ##--------	BUGFfH: Added by Denev 2009/09/12
-		self.iActiveCivilization = gc.getGame().getActiveCivilizationType()
+		self.iActiveCiv = gc.getGame().getActiveCivilizationType()
 ##--------	BUGFfH: End Add
 		self.iCategory = -1
 		if (not self.pediaHistory):

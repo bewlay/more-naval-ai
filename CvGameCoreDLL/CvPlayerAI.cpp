@@ -6661,7 +6661,7 @@ int CvPlayerAI::AI_techValue( TechTypes eTech, int iPathLength, bool bIgnoreCost
 			else
 			{
 				iValue *= 10000;
-				iValue /= GET_TEAM(getTeam()).getResearchLeft(eTech);
+				iValue /= std::max( 1, GET_TEAM(getTeam()).getResearchLeft(eTech) );
 			}
 		}
 	}
@@ -8966,7 +8966,6 @@ int CvPlayerAI::AI_getFreeTradeAgreementAttitude(PlayerTypes ePlayer) const
 	{
 		if (GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeDivisor() != 0)
 		{
-
 			iAttitudeChange = (GET_TEAM(getTeam()).AI_getFreeTradeAgreementCounter(GET_PLAYER(ePlayer).getTeam()) / GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeDivisor());
 			return range(iAttitudeChange, -(abs(GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeChangeLimit())), abs(GC.getLeaderHeadInfo(getPersonalityType()).getFreeTradeAgreementAttitudeChangeLimit()));
 		}
@@ -10156,11 +10155,19 @@ int CvPlayerAI::AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pLis
 
 	FAssertMsg(ePlayer != getID(), "shouldn't call this function on ourselves");
 
+	if( gPlayerLogLevel >= 3 ) {
+		logBBAI( "Starting AI deal evaluation..." );
+	}
+
 	iValue = 0;
 
 	if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
 	{
 		iValue += GET_TEAM(getTeam()).AI_endWarVal(GET_PLAYER(ePlayer).getTeam());
+
+		if( gPlayerLogLevel >= 3 ) {
+			logBBAI( "%d for being at war", iValue );
+		}
 	}
 
 	for (pNode = pList->head(); pNode; pNode = pList->next(pNode))
@@ -10428,6 +10435,10 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 	int iOurValue = GET_PLAYER(ePlayer).AI_dealVal(getID(), pOurList, false, iChange);
 	int iTheirValue = AI_dealVal(ePlayer, pTheirList, false, iChange);
 
+	if( gPlayerLogLevel >= 2 ) {
+		logBBAI( "Asked AI to consider offer with values %d/%d (Our/Their)", iOurValue, iTheirValue );
+	}
+
 /************************************************************************************************/
 /* Afforess	                  Start		 		                                                */
 /* Advanced Diplomacy                                                                           */
@@ -10599,6 +10610,9 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 
 	iHumanDealWeight = AI_dealVal(ePlayer, pTheirList);
 	iAIDealWeight = GET_PLAYER(ePlayer).AI_dealVal(getID(), pOurList);
+	if( gPlayerLogLevel >= 2 ) {
+		logBBAI( "Asked AI for counter proposal. Current values Human/AI: %d/%d", iHumanDealWeight, iAIDealWeight );
+	}
 
 	int iGoldValuePercent = AI_goldTradeValuePercent();
 
@@ -11436,7 +11450,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 	bool bDemon = (GC.getCivilizationInfo(getCivilizationType()).getDefaultRace() == GC.getInfoTypeForString("PROMOTION_DEMON"));
 
 	//recalculate if not defined
-	if(m_aiBonusValue[eBonus] == -1)
+	if(true || m_aiBonusValue[eBonus] == -1)
 	{
 		PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate");
 
@@ -11451,10 +11465,21 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		bool bMana = kBonusInfo.isMana();
 		int iNumCities = AI_getNumRealCities();
 
+		int iOldValue; // Only for logging
+		if( gPlayerLogLevel >= 3 ) {
+			logBBAI( "    %S recalculates value of %s", getName(), kBonusInfo.getType() );
+			iOldValue = iValue;
+		}
+
 		if (!GET_TEAM(getTeam()).isBonusObsolete(eBonus))
 		{
 			iValue += AI_getHappinessWeight(kBonusInfo.getHappiness(),1);
 			iValue += AI_getHealthWeight(kBonusInfo.getHealth(),1);
+
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From happiness and health: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
 
 			// Tholal ToDo - better valuation of yield changes
 			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
@@ -11468,9 +11493,19 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				}
 			}
 
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From yields: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
+
 			if (AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2) || AI_isDoVictoryStrategy(AI_VICTORY_ALTAR2))
 			{
 				iValue += (50 * kBonusInfo.getGreatPeopleRateModifier());
+			}
+
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From great people modifier (Culture or Altar strategy): %d", iValue - iOldValue );
+				iOldValue = iValue;
 			}
 
 			CvCity* pCapital = getCapitalCity();
@@ -11478,19 +11513,43 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			int iCoastalCityCount = countNumCoastalCities();
 
 			// new FFH tags
+
 			iValue += (kBonusInfo.getHealChange() * (bAtWar ? 10 : 5));
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From heal change: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
+
 			iValue += (kBonusInfo.getHealChangeEnemy() * (bAtWar ? -20 : -10));
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From enemy heal change: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
+
 			iValue -= (kBonusInfo.getMaintenanceModifier() * iCityCount);
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From maintenance: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
+
 			if (kBonusInfo.getFreePromotion() != NO_PROMOTION)
 			{
 				//ToDo - value the promotion rather than just adding a flat number
 				iValue += 100;
+
+				if( gPlayerLogLevel >= 3 ) {
+					logBBAI( "      From free promotion: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
 			}
+
 			iValue += (AI_commerceWeight(COMMERCE_RESEARCH) * kBonusInfo.getResearchModifier()/10);
+			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				logBBAI( "      From research modifier: %d", iValue - iOldValue );
+				iOldValue = iValue;
+			}
 
 			CvTeam& kTeam = GET_TEAM(getTeam());
-
-
 
 			// find the first coastal city
 			CvCity* pCoastalCity = NULL;
@@ -11595,6 +11654,10 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						}
 
 						iValue += iTempValue;
+
+						if( gPlayerLogLevel >= 3 ) {
+							logBBAI( "      From %s: %d", kLoopUnit.getType(), iTempValue );
+						}
 					}
 				}
 			}
@@ -11698,6 +11761,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						}
 
 						iValue += iTempValue;
+
+						if( gPlayerLogLevel >= 3 && iTempValue != 0 ) {
+							logBBAI( "      From %s: %d", kLoopBuilding.getType(), iTempValue );
+							iOldValue = iValue;
+						}
 					}
 				}
 			}
@@ -11740,6 +11808,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					}
 
 					iValue += iTempValue;
+
+					if( gPlayerLogLevel >= 3 && iTempValue != 0 ) {
+						logBBAI( "      From %s: %d", kLoopProject.getType(), iTempValue );
+						iOldValue = iValue;
+					}
 				}
 			}
 
@@ -11770,6 +11843,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					{
 						iValue += iTempValue / 2;
 					}
+
+					if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+						logBBAI( "      From %s: %d", GC.getRouteInfo(eRoute).getType(), iValue - iOldValue );
+						iOldValue = iValue;
+					}
 				}
 			}
 
@@ -11794,8 +11872,18 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				iTempValue = getNumAvailableBonuses(eBonus) * 300;
 				iTempValue /= std::max(1, iTotalBonusCount);
 				iValue += iTempValue;
+
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From resource scarcity: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
 				
 				iValue += GC.getBonusInfo(eBonus).getAIObjective() * 10;
+
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From AI objective: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
 			}
 			
 /************************************************************************************************/
@@ -11817,6 +11905,12 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			if (bMana)
 			{
 				iValue += 100;
+
+				if( gPlayerLogLevel >= 3 ) {
+					logBBAI( "      From being mana: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
+
 				int iNumBonuses = countOwnedBonuses(eBonus);
 				/*
 				if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
@@ -11864,7 +11958,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 							// buffs and debuffs
 							if (kSpellInfo.getAddPromotionType1() != NO_PROMOTION)
 							{
-								iValue =+ 10;
+								iValue += 10;
 								if (GC.getPromotionInfo((PromotionTypes)kSpellInfo.getAddPromotionType1()).getMovesChange() > 0)
 								{
 									if (!bDemon)
@@ -11886,6 +11980,11 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 							if (kSpellInfo.getCreateBuildingType() != NO_BUILDING)
 							{
 								iValue += 10; // ToDo - extract some info about the building and how useful it will be to us
+							}
+
+							if( gPlayerLogLevel >= 3 ) {
+								logBBAI( "      From %s: %d", kSpellInfo.getType(), iValue - iOldValue );
+								iOldValue = iValue;
 							}
 						}
 					}
@@ -11927,11 +12026,21 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				}
 
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From Civ/Leader: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
+
 				if ((BonusTypes)eBonus == GC.getInfoTypeForString("BONUS_MANA_METAMAGIC"))
 				{
 					if (iNumBonuses == 0)
 					{
 						iValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 1550 : 50);
+
+						if( gPlayerLogLevel >= 3 ) {
+							logBBAI( "      From Metamagic and (possibly) mastery strategy: %d", iValue - iOldValue );
+							iOldValue = iValue;
+						}
 					}
 				}
 
@@ -11945,9 +12054,24 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					}
 				}
 
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From Civ/Leader: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
+
 				iValue += (kBonusInfo.getDiscoverRandModifier() * (countNumOwnedHills()/5));
 
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From resource discover modifier: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
+
 				iValue += 100 * AI_getTowerManaValue(eBonus);
+
+				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					logBBAI( "      From tower mana value: %d", iValue - iOldValue );
+					iOldValue = iValue;
+				}
 
 				if (iNumBonuses > 0)
 				{
@@ -11959,14 +12083,27 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					{
 						iValue /= 2;
 					}
+
+					if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+						logBBAI( "      From already having the bonus: %d", iValue - iOldValue );
+						iOldValue = iValue;
+					}
 				}
 			}
 			// End Tholal AI
+
+			if( gPlayerLogLevel >= 3 ) {
+				logBBAI( "      -> Pre-final value for non-obsolete bonus: %d", iValue );
+			}
 
 			iValue /= 10;
 		}
 
 		//GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getImprovementWeightModifier((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement())));
+
+		if( gPlayerLogLevel >= 3 ) {
+			logBBAI( "      -> Final value: %d", iValue );
+		}
 
 		//clamp value non-negative
 		m_aiBonusValue[eBonus] = std::max(0, iValue);
@@ -12427,6 +12564,7 @@ DenialTypes CvPlayerAI::AI_cityTrade(CvCity* pCity, PlayerTypes ePlayer) const
 }
 
 
+// Value for us that ePlayer stops trading with eTradeTeam (?)
 int CvPlayerAI::AI_stopTradingTradeVal(TeamTypes eTradeTeam, PlayerTypes ePlayer) const
 {
 	CvDeal* pLoopDeal;
@@ -28635,6 +28773,12 @@ int CvPlayerAI::AI_getPlotChokeValue(CvPlot* pPlot) const
 //100 * iHappy means a high value.
 int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 {
+	// lfgr fix 01/2021
+	if (0 == iHappy)
+	{
+		return 0;
+	}
+
 	int iWorstHappy = 0;
 	int iBestHappy = 0;
 	int iTotalUnhappy = 0;
@@ -28643,10 +28787,6 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	CvCity* pLoopCity;
 	int iCount = 0;
 
-	if (0 == iHappy)
-	{
-		iHappy = 1;
-	}
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
@@ -28695,7 +28835,9 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 
 int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 {
-	if (isNoUnhealthyPopulation())
+	// lfgr fix 01/2021:
+	// Added isIgnoreFood() and iHealth == 0
+	if (isNoUnhealthyPopulation() || isIgnoreFood() || iHealth == 0 )
 	{
 		return 0;
 	}
@@ -28708,10 +28850,6 @@ int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 	CvCity* pLoopCity;
 	int iCount = 0;
 
-	if (0 == iHealth)
-	{
-		iHealth = 1;
-	}
 	int iValue = 0;
 	for (pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 	{
@@ -29474,8 +29612,8 @@ int CvPlayerAI::AI_getTowerManaValue(BonusTypes eBonus) const
 
 	iBestTowerManaValue += iNumCompletedTowers;
 
-	if (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1))
-		iBestTowerManaValue *= 10;
+	// lfgr 10/2020: Reduced from 10 to 2, as AI was overvaluing mana.
+	iBestTowerManaValue *= 2;
 
 	return iBestTowerManaValue;
 }

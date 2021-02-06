@@ -16147,6 +16147,7 @@
 			<iBombardRate>20</iBombardRate>
 			<SpecialCargo>SPECIALUNIT_BIRD</SpecialCargo>
 			<DomainCargo>DOMAIN_LAND</DomainCargo>
+			<iCargo>1</iCargo>
 			<iAsset>18</iAsset>
 			<iPower>25</iPower>
 			<UnitMeshGroups>

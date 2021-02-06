@@ -5972,7 +5972,8 @@ void CvDLLWidgetData::parseBonusRevealHelp(CvWidgetDataStruct &widgetDataStruct,
 
 void CvDLLWidgetData::parseCivicRevealHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)
 {
-	GAMETEXT.buildCivicRevealString(szBuffer, ((TechTypes)(widgetDataStruct.m_iData1)), widgetDataStruct.m_iData2, true);
+	// lfgr UI 11/2020: Show civic help in tech tree
+	GAMETEXT.parseSingleCivicRevealHelp( szBuffer, (CivicTypes) widgetDataStruct.m_iData2 );
 }
 
 void CvDLLWidgetData::parseProcessInfoHelp(CvWidgetDataStruct &widgetDataStruct, CvWStringBuffer &szBuffer)

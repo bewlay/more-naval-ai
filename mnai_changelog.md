@@ -1,5 +1,53 @@
 # Changelog
 
+## v2.9-beta3u
+
+Breaks savegames.
+
+### Gameplay
+* Embassies no longer allow players to see into other capitals
+* Consider actual unit religion instead of UnitInfo religion when checking whether upgrades to religious units are valid. This means that e.g. Assassins with a non-CoE religion cannot upgrade to Shadow (Assassins without religion still can).
+* Men o' War can now carry one bird, like Frigates (Report by King Bulrush@civfanatics)
+* Lumbermill can now be constructed on ancient forests
+
+### UI
+* Allow enabling/disabling avoid angry/unhealthy citizens in new cities via BUG Option
+* Allow cycling through foreign units on a single plot -- Allows access to unit details for all foreign units on plots with no unit belonging to the active player. Before, details where inaccessible if too many units were on the plot. Cycle while hovering over a plot with Ctrl-Space (forwards) and Ctrl-Shift-Space (backwards).
+* BUG option to control how many individual units are shown in plot help
+* Improve display of unit upgrades and building-enabled units in pedia, based on active player (report by Vintage Strategist@civfanatics)
+* Hide units from the upgrade chart that are unavailable to active player because of PrereqCiv
+* Added Advanced diplomacy concept page
+* Show UnitInfo religion (e.g., in build queue tooltip and in pedia)
+* Civic buttons in tech tree now have a more informative tooltip
+* Fix some invalid upgrades that were shown in unit upgrade graph
+* Unit upgrade graph uses buttons with corret artstyle
+* Small improvements to the defensive fear mechanic: After scared out of attacking, units that are unable to attack again are removed from selection, and the "unit afraid" message is shown immediately after trying to attack
+* Some text fixes for spanish
+
+### Bugfixes
+* Regenerating the map resets world wonder counts and allows re-founding of religions (report by MagisterCultuum@civfanatics)
+* Avatar of Wrath event no longer enrages workers (report by kvaak@civfanatics)
+* Fixed a frequent error when exploring a lair had one of the outcomes "Depths", "Dwarf vs. Lizardmen" or "Portal".
+* Real (non-temporary) terrain type now saved correctly by WB (code by MagisterCultuum@civfanatics)
+* Fixed a possible zero division error
+* Fixed GFC Error when "Fall from Heaven 2" folder is not present (thanks omegaflames@civfanatics)
+* Fixed invalid memory access when earthquake spell is checked on unowned plot
+* Immortal units now properly abandon you or expire from limited duration (report by MagisterCultuum@cf)
+* Crash when ejecting unit because it loses an invisibility promotion (report by Bickendan@cf)
+* Defensive fear mechanic now works again (thanks Azhral@cf)
+
+### AI
+* Fixed a bug causing the AI to miscalculate mana value
+* Scaled back AI valuation of mana when (momentarily) going for a tower victory (Report by Sezren@civfanatics)
+* Removed erroneous base valuation of resources, even of those with no benefit. In particular, Hyborem will not assign any value to health resources.
+
+### Code
+* Removed trivial assertion errors in PerfectWorld2.py and Totestra.py
+* Debug build now logs as intended
+* More AI deal logging
+* Some Advanced Diplomacy documentation
+* Added 40 dummy gameoption for mod use
+
 ## v2.9-beta2u
 
 ### UI

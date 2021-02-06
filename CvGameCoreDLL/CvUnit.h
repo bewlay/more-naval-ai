@@ -960,6 +960,7 @@ public:
 	void changeIgnoreBuildingDefense(int iNewValue);
 	bool isImmortal() const;
 	void changeImmortal(int iNewValue);
+	void makeMortal(); // lfgr fix 01/2021: Reliably set the immortality counter to 0
 	bool isImmuneToCapture() const;
 	void changeImmuneToCapture(int iNewValue);
 	bool isImmuneToFear() const;

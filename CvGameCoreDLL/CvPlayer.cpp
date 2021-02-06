@@ -3054,9 +3054,16 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	SAFE_DELETE_ARRAY(paiBuildingOriginalOwner);
 	SAFE_DELETE_ARRAY(paiBuildingOriginalTime);
 
-	// Sephi default value for avoid angry Citizens	
-	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
-			pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	// Sephi default value for avoid angry Citizens
+	// lfgr 10/2020: Made optional, added unhealthy citizens
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidAngryCitizensDefault", true, "BUG_AVOID_ANGRY_CITIZENS_DEFAULT" ) ) {
+		pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	}
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidUnhealthyCitizensDefault", false, "BUG_AVOID_UNHEALTHY_CITIZENS_DEFAULT" ) ) {
+		pNewCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS"),true);
+	}
 
 	if (bConquest)
 	{
@@ -3561,7 +3568,7 @@ void CvPlayer::killUnits()
         }
         if (pLoopUnit->isImmortal())
         {
-            pLoopUnit->changeImmortal(-1);
+            pLoopUnit->makeMortal(); // lfgr fix 01/2021: Reliably set counter to 0.
         }
         if (pLoopUnit->canScrap())
         {
@@ -8177,10 +8184,16 @@ void CvPlayer::found(int iX, int iY)
 	}
 
 	// lfgr: merged from MoM
-	// Sephi default value for avoid angry Citizens	
-	// LFGR_TODO: Make this a BUG option
-	if(GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE)
+	// Sephi default value for avoid angry Citizens
+	// lfgr 10/2020: Made optional, added unhealthy citizens
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidAngryCitizensDefault", true, "BUG_AVOID_ANGRY_CITIZENS_DEFAULT" ) ) {
 		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_ANGRY_CITIZENS"),true);
+	}
+	if( GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS")!=NO_EMPHASIZE
+			&& getBugOptionBOOL( "FfHUI__AvoidUnhealthyCitizensDefault", false, "BUG_AVOID_UNHEALTHY_CITIZENS_DEFAULT" ) ) {
+		pCity->AI_setEmphasize((EmphasizeTypes)GC.getInfoTypeForString("EMPHASIZE_AVOID_UNHEALTHY_CITIZENS"),true);
+	}
 	// lfgr end
 
 	if (isHuman() && getAdvancedStartPoints() < 0)
@@ -13081,36 +13094,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 		{
 			m_iCapitalCityID = FFreeList::INVALID_INDEX;
 		}
-		
-/************************************************************************************************/
-/* Advanced Diplomacy         Start                                                             */
-/************************************************************************************************/		
-		//ls612: Embassy Visibility Fix (by Damgo)
-		if (pOldCapitalCity != NULL)
-		{
-			for (int iI = 0; iI < MAX_TEAMS; iI++)
-			{
-				if (GET_TEAM(getTeam()).isHasEmbassy((TeamTypes)iI))
-				{
-					pOldCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, bUpdatePlotGroups);
-				}
-			}
-		}
-		
-		if (pNewCapitalCity != NULL)
-		{
-			for (int iI = 0; iI < MAX_TEAMS; iI++)
-			{
-				if (GET_TEAM(getTeam()).isHasEmbassy((TeamTypes)iI))
-				{
-					pNewCapitalCity->plot()->changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), true, NULL, bUpdatePlotGroups);
-				}
-			}
-		}
-		//ls612: End Embassy Visibility Fix (by Damgo)
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
 
 		if (bUpdatePlotGroups)
 		{

@@ -36,6 +36,11 @@
 // BUG - start
 #include "CvBugOptions.h"
 // BUG - end
+
+// lfgr UI 11/2020: Allow cycling through units in plot help
+#include "PlotHelpCycling.h"
+
+
 int shortenID(int iId)
 {
 	return iId;
@@ -2731,9 +2736,11 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		return;
 	}
 
-
+	// lfgr UI 11/2020: Allow cycling through units in plot help
+	PlotHelpCyclingManager::getInstance().updateCurrentPlot( GC.getMapINLINE().plotNumINLINE( pPlot->getX_INLINE(), pPlot->getY_INLINE() ) );
+	
 	CvUnit* pLoopUnit;
-	static const uint iMaxNumUnits = 15;
+	uint iMaxNumUnits = getBugOptionINT( "FfHUI__PlotHelpNumUnits", 15 );
 	static std::vector<CvUnit*> apUnits;
 	static std::vector<int> aiUnitNumbers;
 	static std::vector<int> aiUnitStrength;
@@ -2795,7 +2802,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		{
 			apUnits.push_back(pLoopUnit);
 
-			if (iNumVisibleUnits > iMaxNumUnits)
+			if (iNumVisibleUnits > iMaxNumUnits) // LFGR_TODO: Unnecessary
 			{
 				int iIndex = pLoopUnit->getUnitType() * MAX_PLAYERS + pLoopUnit->getOwner();
 				if (aiUnitNumbers[iIndex] == 0)
@@ -10201,9 +10208,11 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 		
 			CvWString szHelp;
 			gDLL->getPythonIFace()->callFunction(PYSpellModule, "getSpellHelp", argsList.makeFunctionArgs(), &szHelp);
-		
-			szBuffer.append( pcNewline );
-			szBuffer.append( szHelp );
+			
+			if( !szHelp.empty() ) {
+				szBuffer.append( pcNewline );
+				szBuffer.append( szHelp );
+			}
 		}
 	}
 /********************************************************************************/
@@ -10216,6 +10225,16 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
     }
 }
 //FfH: End Add
+
+// lfgr UI 11/2020: For "Allows civic" buttons in Tech tree.
+void CvGameTextMgr::parseSingleCivicRevealHelp( CvWStringBuffer &szBuffer, CivicTypes eCivic )
+{
+	szBuffer.appendfmt( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivicInfo( eCivic ).getDescription() );
+
+	CvWStringBuffer szCivicHelpText;
+	GAMETEXT.parseCivicInfo( szCivicHelpText, eCivic, true, true, true ); // bCiviliopedia=true to hide tech prereq
+	szBuffer.append( szCivicHelpText );
+}
 
 //	Function:			parseCivicInfo()
 //	Description:	Will parse the civic info help
@@ -11991,6 +12010,13 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 // BUG - Starting Experience - end
 	}
 
+	// lfgr UI 11/2020: Show unit religion
+	if( kUnitInfo.getReligionType() != NO_RELIGION )
+	{
+		szBuffer.append( NEWLINE );
+		szBuffer.append( gDLL->getText( "TXT_KEY_UNIT_RELIGION", GC.getReligionInfo( (ReligionTypes) kUnitInfo.getReligionType() ).getDescription() ) );
+	}
+
 	if (kUnitInfo.isGoldenAge())
 	{
 		szBuffer.append(NEWLINE);
@@ -12546,7 +12572,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 			if (kUnitInfo.getFeatureAttackModifier(iI) != 0)
 			{
 				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_UNIT_STRENGTH", kUnitInfo.getFeatureAttackModifier(iI), GC.getTerrainInfo((TerrainTypes) iI).getTextKeyWide()));
+				szBuffer.append(gDLL->getText("TXT_KEY_UNIT_STRENGTH", kUnitInfo.getFeatureAttackModifier(iI), GC.getFeatureInfo((FeatureTypes) iI).getTextKeyWide()));
 			}
 		}
 		else
@@ -14711,12 +14737,20 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 //			bFirst = false;
 //		}
 //	}
+	// lfgr UI 10/2020: If some player is active, don't show units that require a different civilization
 	UnitTypes eLoopUnit;
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
 		if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
 		{
 			eLoopUnit = (UnitTypes)GC.getCivilizationInfo(GC.getGameINLINE().getActiveCivilizationType()).getCivilizationUnits(iI);
+			if( eLoopUnit != NO_UNIT ) {
+				CivilizationTypes ePrereqCiv = (CivilizationTypes) GC.getUnitInfo( eLoopUnit ).getPrereqCiv();
+				if( ePrereqCiv != NO_CIVILIZATION && ePrereqCiv != GC.getGameINLINE().getActiveCivilizationType() )
+				{
+					continue;
+				}
+			}
 		}
 		else
 		{

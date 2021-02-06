@@ -11,6 +11,9 @@
 // 2 - Many decisions
 // 3 - All logging
 #if defined(LOG_AI_ALL)
+#ifndef LOG_AI
+#define LOG_AI
+#endif
 #define gPlayerLogLevel 3
 #define gTeamLogLevel   3
 #define gCityLogLevel   3

@@ -114,11 +114,15 @@ class UnitUpgradesGraph:
 		
 	def getUnitNumber(self, k):
 		"Gets the id for the kth unit for the current active player"
+		# lfgr: Consider PrereqCiv
 		if (self.getActivePlayer() == -1):
-			result = gc.getUnitClassInfo(k).getDefaultUnitIndex()
+			return gc.getUnitClassInfo(k).getDefaultUnitIndex()
 		else:
-			result = gc.getCivilizationInfo(gc.getGame().getActiveCivilizationType()).getCivilizationUnits(k)
-		return result
+			eUnit = gc.getCivilizationInfo(gc.getGame().getActiveCivilizationType()).getCivilizationUnits(k)
+			if eUnit != -1 and gc.getUnitInfo( eUnit ).getPrereqCiv() not in [-1, gc.getGame().getActiveCivilizationType()] :
+				return -1
+			else :
+				return eUnit
 	
 	def getUnitType(self, e):
 		"Returns the type of the units with the specified id"
@@ -129,10 +133,15 @@ class UnitUpgradesGraph:
 			for numB in range(gc.getNumUnitClassInfos()):
 				unitB = self.getUnitNumber(numB)
 				if gc.getUnitInfo(unitA).getUpgradeUnitClass(numB):
-					self.addUpgradePath(graph, unitA, unitB)
+					# lfgr UI 11/2020: Only unitB allows being upgraded to
+					if unitB != -1 and not gc.getUnitInfo( unitB ).isDisableUpgradeTo() :
+						self.addUpgradePath(graph, unitA, unitB)
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, gc.getUnitInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
+		# lfgr UI 11/2020: Use correct art style
+		szUnitIcon = gc.getUnitInfo( unit ).getUnitButtonWithCivArtStyle( gc.getGame().getActiveCivilizationType() )
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, szUnitIcon, xPos, yPos,
+				self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
 			
 	def unitToString(self, unit):
 		return gc.getUnitInfo(unit).getDescription() + ":%d"%(unit, )

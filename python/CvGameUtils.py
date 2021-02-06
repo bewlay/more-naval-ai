@@ -1093,6 +1093,7 @@ class CvGameUtils:
 		return iExperienceNeeded
 
 ##--------	Unofficial Bug Fix: Added by Denev 2009/12/31
+	# TODO: This should not be a callback, but an event
 	def applyBuildEffects(self, argsList):
 		pUnit, pCity = argsList
 		if pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_CHANCEL_OF_GUARDIANS')) > 0:
@@ -1133,6 +1134,7 @@ class CvGameUtils:
 			if pCity.getNumBuilding(gc.getInfoTypeForString('BUILDING_DEMONS_ALTAR')) > 0:
 				pUnit.changeExperience(2, -1, False, False, False)
 ##--------	Unofficial Bug Fix: End Add
+		return False
 
 
 # Return 1 if a Mission was pushed

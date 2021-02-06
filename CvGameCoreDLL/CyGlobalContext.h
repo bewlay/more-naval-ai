@@ -11,6 +11,9 @@
 #include "CvGlobals.h"
 #include "CvArtFileMgr.h"
 
+// lfgr UI 11/2020: Allow cycling through units in plot help
+#include "PlotHelpCycling.h"
+
 class CyGame;
 class CyMap;
 class CyPlayer;
@@ -358,6 +361,9 @@ public:
 	std::wstring pyGetBuffyVersion() { return getBuffyVersion(); }							// Exposed to Python
 #endif
 // BUFFY - DLL Info - end
+
+// lfgr UI 11/2020: Allow cycling through units in plot help
+	void changePlotHelpCycleIdx( int iChange ) { PlotHelpCyclingManager::getInstance().changeCycleIdx( iChange ); } // Exposed to Python
 };
 
 #endif	// CyGlobalContext_h

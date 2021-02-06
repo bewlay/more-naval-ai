@@ -312,7 +312,26 @@ class SevoPediaUnit:
 				for iReincarnation in liReincarnation:
 					screen.attachImageButton( panelName, "", gc.getSpellInfo(iReincarnation).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iReincarnation, -1, False )
 ##--------	BUGFfH: End Add
-
+	
+	
+	# lfgr UI 10/2020: Select units+icons, used by unit upgrades
+	def iterUnitsAndIcons( self, leUnitClasses, leCivilizations ) :
+		# type: (List[int], List[int]) -> Iterator[Tuple[int, str]]
+		for eUnitClass in leUnitClasses :
+			dUnitsWithButtons = { }
+			for eCiv in leCivilizations :
+				eUnit = gc.getCivilizationInfo( eCiv ).getCivilizationUnits( eUnitClass )
+				if eUnit != -1 :
+					sButton = gc.getUnitInfo( eUnit ).getUnitButtonWithCivArtStyle( eCiv )
+					if eUnit not in dUnitsWithButtons :
+						dUnitsWithButtons[eUnit] = set()
+					dUnitsWithButtons[eUnit].add( sButton )
+			
+			for eUnit, hButtons in dUnitsWithButtons.iteritems() :
+				if len( hButtons ) == 1 :  # If the button is unique, go with that
+					yield eUnit, list( hButtons )[0]
+				else :  # Otherwise, we have multiple buttons, so use the default
+					yield eUnit, gc.getUnitInfo( eUnit ).getButton()
 
 
 	def placeUpgradesTo(self):
@@ -342,36 +361,12 @@ class SevoPediaUnit:
 			if self.top.iActiveCiv in liAvailableCiv:
 				liAvailableCiv = [self.top.iActiveCiv]
 
-			ltUpgradeUnit = []
-			for iUpgradeUnitClass in range(gc.getNumUnitClassInfos()):
-				ltUpgradeUnitTemp = []
-
-				#get UnitType (and icon) on each avilable civilization
-				for iAvailableCiv in liAvailableCiv:
-					iUpgradeUnit = gc.getCivilizationInfo(iAvailableCiv).getCivilizationUnits(iUpgradeUnitClass)
-
-					#does loop UnitClass match to the unit as upgrade target?
-					if iUpgradeUnit != UnitTypes.NO_UNIT\
-					and gc.getUnitInfo(self.iUnit).getUpgradeUnitClass(iUpgradeUnitClass)\
-					and not gc.getUnitInfo(iUpgradeUnit).isDisableUpgradeTo():
-						szUnitIcon = gc.getUnitInfo(iUpgradeUnit).getUnitButtonWithCivArtStyle(iAvailableCiv)
-						ltUpgradeUnitTemp.append( (iUpgradeUnit, szUnitIcon) )
-
-				#remove repeated items
-				ltUpgradeUnitTemp = sorted(set(ltUpgradeUnitTemp))
-
-				#if UnitType and icon can be selected uniquely, adopt it.
-				if len(ltUpgradeUnitTemp) == 1:
-					ltUpgradeUnit.append(ltUpgradeUnitTemp[0])
-				#if more than one kind of unit icon exists, adopt default.
-				elif len(ltUpgradeUnitTemp) > 1:
-					iUpgradeUnit = gc.getUnitClassInfo(iUpgradeUnitClass).getDefaultUnitIndex()
-					szUnitIcon = gc.getUnitInfo(iUpgradeUnit).getButton()
-					ltUpgradeUnit.append( (iUpgradeUnit, szUnitIcon) )
-
-			#place unit icons.
-			for iUpgradeUnit, szUpgradeUnitName in ltUpgradeUnit:
-				screen.attachImageButton(panelName, "", szUpgradeUnitName, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUpgradeUnit, 1, False)
+			# lfgr UI 10/2020: Rewrote selection method. Shows less when a civilization is active, and more when coming from main menu.
+			pUnitInfo = gc.getUnitInfo( self.iUnit )
+			leUpgradeUnitClasses = [eUnitClass for eUnitClass in range( gc.getNumUnitClassInfos() ) if pUnitInfo.getUpgradeUnitClass( eUnitClass )]
+			for eUnit, szButton in self.iterUnitsAndIcons( leUpgradeUnitClasses, liAvailableCiv ) :
+				if not gc.getUnitInfo( eUnit ).isDisableUpgradeTo() :
+					screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, eUnit, 1, False)
 ##--------	BUGFfH: End Modify
 
 

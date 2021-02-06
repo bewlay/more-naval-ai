@@ -525,6 +525,11 @@ void CvGame::regenerateMap()
     }
 //FfH: End Add
 
+	// lfgr fix 09/2020: Also reset world wonder counts.
+	for( int i = 0; i < GC.getNumBuildingClassInfos(); i++ ) {
+		m_paiBuildingClassCreatedCount[i] = 0;
+	}
+
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		GET_PLAYER((PlayerTypes)iI).killCities();
@@ -549,6 +554,12 @@ void CvGame::regenerateMap()
 	gDLL->getEngineIFace()->clearSigns();
 
 	GC.getMapINLINE().erasePlots();
+
+	// lfgr fix 09/2020: Allow to re-found religions after regeneration.
+	for( int i = 0; i < GC.getNumReligionInfos(); i++ ) {
+		setReligionSlotTaken( (ReligionTypes) i, false );
+		m_paiReligionGameTurnFounded[i] = -1;
+	}
 
 	CvMapGenerator::GetInstance().generateRandomMap();
 	CvMapGenerator::GetInstance().addGameElements();

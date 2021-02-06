@@ -173,6 +173,8 @@ class CustomFunctions:
 		iPlayer = caster.getOwner()
 		pPlot = caster.plot()
 		
+		CvUtil.pyPrint( "exploreLairBigBad" )
+		
 		# lList and lHenchmanList format: "UnitType" or ("UnitType", "PrereqTechs")
 		
 		lList = [('UNIT_AZER', 'TECH_KNOWLEDGE_OF_THE_ETHER')]
@@ -354,16 +356,12 @@ class CustomFunctions:
 			CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_CAGE",()),'',1,'Art/Interface/Buttons/Improvements/Cage.dds',ColorTypes(7),caster.getX(),caster.getY(),True,True)
 			return 0
 		if sGoody == 'DEPTHS':
-			iUnitID = self.getUnitPlayerID(caster)
-			if iUnitID != -1:
-				iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_DEPTHS')
-				triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, iUnitID, -1)
+			iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_DEPTHS')
+			pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, caster.getID(), -1)
 			return 100
 		if sGoody == 'DWARF_VS_LIZARDMEN':
-			iUnitID = self.getUnitPlayerID(caster)
-			if iUnitID != -1:
-				iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_DWARF_VS_LIZARDMEN')
-				triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, iUnitID, -1)
+			iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_DWARF_VS_LIZARDMEN')
+			pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, caster.getID(), -1)
 			return 100
 		if sGoody == 'MUTATED':
 			caster.setHasPromotion(gc.getInfoTypeForString('PROMOTION_MUTATED'), True)
@@ -373,10 +371,8 @@ class CustomFunctions:
 			CyInterface().addMessage(iPlayer,True,25,CyTranslator().getText("TXT_KEY_MESSAGE_EXPLORE_LAIR_NOTHING",()),'',1,'Art/Interface/Buttons/Spells/Explore Lair.dds',ColorTypes(8),pPlot.getX(),pPlot.getY(),True,True)
 			return 100
 		if sGoody == 'PORTAL':
-			iUnitID = self.getUnitPlayerID(caster)
-			if iUnitID != -1:
-				iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_PORTAL')
-				triggerData = pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, iUnitID, -1)
+			iEvent = CvUtil.findInfoTypeNum(gc.getEventTriggerInfo, gc.getNumEventTriggerInfos(), 'EVENTTRIGGER_EXPLORE_LAIR_PORTAL')
+			pPlayer.initTriggeredData(iEvent, True, -1, caster.getX(), caster.getY(), caster.getOwner(), -1, -1, -1, caster.getID(), -1)
 			return 0
 		if sGoody == 'SPAWN_DROWN':
 			pPlayer.receiveGoody(pPlot, gc.getInfoTypeForString('GOODY_EXPLORE_LAIR_SPAWN_DROWN'), caster)
@@ -1205,16 +1201,6 @@ class CustomFunctions:
 			if gc.getUnitInfo(pUnit.getUnitType()).getTier() == 4:
 				iUnit = gc.getInfoTypeForString('UNIT_BEASTMASTER')
 		return iUnit
-
-	def getUnitPlayerID(self, pUnit):
-		pPlayer = gc.getPlayer(pUnit.getOwner())
-		iID = pUnit.getID()
-		iUnitID = -1
-		for iUnit in range(pPlayer.getNumUnits()):
-			pLoopUnit = pPlayer.getUnit(iUnit)
-			if pLoopUnit.getID() == iID:
-				iUnitID = iUnit
-		return iUnitID
 
 	def giftUnit(self, iUnit, iCivilization, iXP, pFromPlot, iFromPlayer):
 		iAngel = gc.getInfoTypeForString('UNIT_ANGEL')
