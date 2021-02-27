@@ -10646,7 +10646,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		}
 		
 		//  Revolution Religious Freedom Modifier
-		/*
 		if (0 != kCivic.getRevReligiousFreedom())
 		{
 			if ( kCivic.getRevReligiousFreedom() < 0 )
@@ -10660,31 +10659,24 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_FREEDOM", kCivic.getRevReligiousFreedom()));
 			}
 		}
-		*/
-		/*
 		//  Revolution Labor Modifier
 		if (0 != kCivic.getRevLaborFreedom())
 		{
 				szHelpText.append(NEWLINE);
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_LABOR", kCivic.getRevLaborFreedom()));
 		}
-		*/
-		/*
 		//  Revolution Environment Modifier
 		if (0 != kCivic.getRevEnvironmentalProtection())
 		{
 				szHelpText.append(NEWLINE);
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_ENVIRONMENT", kCivic.getRevEnvironmentalProtection()));
 		}
-		*/
-		/*
 		//  Revolution Democracy Modifier
 		if (0 != kCivic.getRevDemocracyLevel())
 		{
 				szHelpText.append(NEWLINE);
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_DEMOCRACY", kCivic.getRevDemocracyLevel()));
 		}
-		*/
 	}
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */

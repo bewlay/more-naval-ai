@@ -1196,22 +1196,16 @@ class Revolution :
 			revIdxHist['Location'] = [iLocationRevIdx] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
 			# phungus -end
 
-			# Colony
-			iColonyIdx = pCityHelper.computeColonyRevIdx()
-			if bIsRevWatch and iColonyIdx > 0 :
-				negList.append( (iColonyIdx, localText.getText("TXT_KEY_REV_WATCH_COLONY",())) )
-
 			# Connected to capital
 			iConnectionIdx = pCityHelper.computeConnectionRevIdx()
 			if bIsRevWatch and iConnectionIdx > 0 :
 				negList.append( (iConnectionIdx, localText.getText("TXT_KEY_REV_WATCH_NOT_CONNECTED",())) )
-			iColonyIdx += iConnectionIdx # LFGR_TODO: Why?
 
-			iLocalRevIdx += iColonyIdx
-			revIdxHist['Colony'] = [iColonyIdx] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
+			# TODO: Remove
+			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
 			if self.LOG_DEBUG and iGameTurn%25 == 0 :
-				CvUtil.pyPrint("  Revolt - %s location effects: [%d,%d], maintenance: [%.2f,%.2f], modifier: %d, gcent: %d"%(pCity.getName(),iLocationRevIdx,iColonyIdx,pCity.getMaintenanceTimes100()/100.0,pCity.calculateColonyMaintenanceTimes100()/100.0,pCity.getMaintenanceModifier(),pCity.isGovernmentCenter()))
+				CvUtil.pyPrint("  Revolt - %s location effects: [%d], maintenance: [%.2f,%.2f], modifier: %d, gcent: %d"%(pCity.getName(),iLocationRevIdx,pCity.getMaintenanceTimes100()/100.0,pCity.calculateColonyMaintenanceTimes100()/100.0,pCity.getMaintenanceModifier(),pCity.isGovernmentCenter()))
 
 
 			# Religion
@@ -1253,40 +1247,34 @@ class Revolution :
 			revIdxHist['Nationality'] = [iNationalityIdx] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
 
 			# Health
-			iHealthIdx = pCityHelper.getHealthRevIdx()
+			iHealthIdx = pCityHelper.computeHealthRevIdx()
 			if bIsRevWatch and iHealthIdx != 0 :
 				negList.append( (iHealthIdx, localText.getText("TXT_KEY_REV_WATCH_UNHEALTHY",())) )
 			iLocalRevIdx += iHealthIdx
 			revIdxHist['Health'] = [iHealthIdx] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1]
 
 			# Garrison
-			iGarIdx = pCityHelper.getGarrisonRevIdx()
+			iGarIdx = pCityHelper.computeGarrisonRevIdx()
 			if bIsRevWatch and iGarIdx != 0 :
 				posList.append( (iGarIdx, localText.getText("TXT_KEY_REV_WATCH_GARRISON",())) )
 			iLocalRevIdx += iGarIdx
 			revIdxHist['Garrison'] = [iGarIdx] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
 
-			# Spirit
-			iSpiritIdx = pCityHelper.getSpiritRevIdx()
-			if bIsRevWatch and iSpiritIdx != 0 :
-				negList.append( (iSpiritIdx, localText.getText("TXT_KEY_REV_WATCH_SPIRIT",())) )
-			iLocalRevIdx += iSpiritIdx
-
 			# Size
-			iSizeIdx = pCityHelper.getSizeRevIdx()
+			iSizeIdx = pCityHelper.computeSizeRevIdx()
 			if bIsRevWatch and iSizeIdx != 0 :
 				posList.append( (iSizeIdx, localText.getText( "TXT_KEY_REV_WATCH_SMALL_CITY", () )) )
 			iLocalRevIdx += iSizeIdx
 
 			# Starving
-			iStarvingIdx = pCityHelper.getStarvingRevIdx()
+			iStarvingIdx = pCityHelper.computeStarvingRevIdx()
 			if bIsRevWatch and iStarvingIdx != 0 :
 				negList.append( (iStarvingIdx, localText.getText( "TXT_KEY_REV_WATCH_STARVATION", () )) )
 			iLocalRevIdx += iStarvingIdx
 			revIdxHist['Health'][0] += iStarvingIdx
 
 			# Disorder
-			iDisorderIdx = pCityHelper.getDisorderRevIdx()
+			iDisorderIdx = pCityHelper.computeDisorderRevIdx()
 			if bIsRevWatch and iDisorderIdx != 0 :
 				negList.append( (iDisorderIdx, localText.getText("TXT_KEY_REV_WATCH_DISORDER",())) )
 			revIdxHist['Disorder'] = [iDisorderIdx] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
@@ -1308,7 +1296,7 @@ class Revolution :
 			negList.extend( buildingNegList )
 
 			# Crime
-			iCrimeIdx = pCityHelper.getCrimeRevIdx()
+			iCrimeIdx = pCityHelper.computeCrimeRevIdx()
 			if bIsRevWatch :
 				if iCrimeIdx > 0 :
 					negList.append( ( iCrimeIdx, "Crime" ) )
@@ -1457,6 +1445,7 @@ class Revolution :
 		"""
 		Update the revolution effects for the entire empire.
 		If bIsRevWatch, returns a string showing the factors for civ stability.
+		If not bIsRevWatch, update the player's stability, and also add the civ stability to all cities.
 		"""
 
 		posList = list()
