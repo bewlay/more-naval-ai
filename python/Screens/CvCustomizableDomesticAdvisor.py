@@ -45,6 +45,8 @@
 #
 #     Fixaxis, of course, for making CivIV and stealing months of my life. ;)
 
+# CDA_REFACTOR 03/2021 lfgr: Added new column system and some tweaks. See also CDAColumns.py
+
 ## Legal Stuff
 #
 #  THIS MATERIAL IS NOT MADE, GUARANTEED OR SUPPORTED BY THE PUBLISHER OF THE SOFTWARE OR ITS AFFILIATES.
@@ -120,7 +122,7 @@ def forcePositionCalc (*args):
 	g_bMustCreatePositions = True
 
 # used to access the customizing flag
-g_advisor = None
+g_advisor = None # type: Optional[CvCustomizableDomesticAdvisor]
 def isCustomizing():
 	return g_advisor.customizing
 
@@ -130,6 +132,13 @@ def getEditHelpText(eWidgetType, iData1, iData2, bOption):
 		return BugUtil.getPlainText("TXT_KEY_CDA_STOP_EDITING")
 	else:
 		return BugUtil.getPlainText("TXT_KEY_CDA_START_EDITING")
+
+# CDA_REFACTORING 03/2021 lfgr
+# Entryppoint for cell help text
+def getCellHelpText( eWidgetType, iData1, iData2, bOption ) :
+	if g_advisor is None :
+		return u""
+	return g_advisor.getCellHelpText( iData1, iData2 )
 
 
 # Class CvDomesticAdvisor
@@ -196,6 +205,7 @@ class CvCustomizableDomesticAdvisor:
 		self.COLUMNDN_NAME = "DomColDn"
 		
 		self.TOGGLE_SPECS_NAME = "ToggleSpecsCB"
+		self.TOGGLE_TOOLTIPS_NAME = "ToggleTooltipsCB" # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 
 		self.customizing = False
 		self.currentPageNum = 0
@@ -233,7 +243,8 @@ class CvCustomizableDomesticAdvisor:
 				("DEFENSE",					60,		"int",	None,					None,					0,									self.calculateDefense,					None,						"self.defenseIcon"),
 				("ESPIONAGE",			    38,		"int",	None,					CyCity.getCommerceRate, CommerceTypes.COMMERCE_ESPIONAGE,	None,									None,						"self.espionageIcon"),
 				("ESPIONAGE_DEF",			60,		"int",	CyCity.getEspionageDefenseModifier,	None,		0,									self.calculateEspionageDefense,			None,						"self.espionageIcon + u\"%\""),
-				("FEATURES",				106,	"text",	None,					None,					0,									self.calculateFeatures,					None,						"localText.getText(\"TXT_KEY_MISC_FEATURES\", ())"),
+				#("FEATURES",				106,	"text",	None,					None,					0,									self.calculateFeatures,					None,						"localText.getText(\"TXT_KEY_MISC_FEATURES\", ())"),
+				CDAColumns.FeaturesCDAColumn(), # CDA_REFACTOR 03/2021 lfgr
 				("FOOD",					35,		"int",	None,					None,					0,									self.calculateFood,						None,						"self.foodIcon"),
 				("FOUNDED",					80,		"date",	None,					None,					0,									self.calculateFounded,					None,						"localText.getText(\"TXT_KEY_DOMESTIC_ADVISOR_FOUNDED\", ()).upper()"),
 				("FREE_EXPERIENCE_LAND",	30,		"int",	None,					None,					0,									self.calculateFreeExperience,			"L",						"self.landIcon"),
@@ -392,11 +403,28 @@ class CvCustomizableDomesticAdvisor:
 			self.PAGE_DOWN_NAME			: self.downPage,
 			
 			self.TOGGLE_SPECS_NAME		: self.toggleShowSpecialistControls,
+			self.TOGGLE_TOOLTIPS_NAME	: self.toggleShowTooltips, # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 
 			self.RELOAD_PAGES_NAME		: self.reloadPages,
 			self.RENAME_PAGE_NAME		: self.renamePage,
 
 			}
+
+	### CDA_REFACTOR 03/2021 lfgr: Helper functions
+
+	def all_column_names( self ) :
+		# type: () -> Iterator[str]
+		""" Iterator over all available colunn names. """
+		for col in self.COLUMNS_LIST :
+			if isinstance( col, CDAColumns.CDAColumn ) :
+				yield col.name
+			else :
+				yield col[0]
+
+	def col_header_button_name( self, szColName ) :
+		# type: (str) -> str
+		""" Name identifying a column header button of the specified column. """
+		return "CDA_HEADER_BTN_%s" % szColName
 
 	def createDictionaries(self):
 		"""
@@ -851,6 +879,14 @@ class CvCustomizableDomesticAdvisor:
 		""" Get the number of emphasis types (that WE deal with)."""
 		return len (self.AUTOMATION_ICON_DICT)
 
+	def getCellHelpText( self, iColumn, iCityID ) :
+		# type: (int, int) -> unicode
+		if self.isShowingTooltips() :
+			colDef = self.COLUMNS_LIST[iColumn]
+			if isinstance( colDef, CDAColumns.CDAColumn ) :
+				return colDef.compute_tooltip( gc.getActivePlayer().getCity( iCityID ) )
+		return u""
+
 	def interfaceScreen(self):
 		"""
 		Screen construction function.
@@ -923,6 +959,11 @@ class CvCustomizableDomesticAdvisor:
 		x += self.nControlSize + 2
 		info = gc.getSpecialistInfo(gc.getInfoTypeForString("SPECIALIST_CITIZEN"))
 		screen.addCheckBoxGFC(self.TOGGLE_SPECS_NAME, info.getTexture(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_TOGGLE_SPECIALISTS, -1, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
+		x += self.nControlSize + 2 # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
+		screen.addCheckBoxGFC( self.TOGGLE_TOOLTIPS_NAME, ArtFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DEMOGRAPHICS" ).getPath(),
+				ArtFileMgr.getInterfaceArtInfo( "BUTTON_HILITE_SQUARE" ).getPath(), x, self.Y_SPECIAL,
+				self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_TOGGLE_SPECIALISTS, -1, -1,
+				ButtonStyles.BUTTON_STYLE_IMAGE )
 		x += self.nControlSize + 2
 		screen.setImageButton( self.ADD_PAGE_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_PLUS").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_ADD_PAGE, -1, -1 )
 		x += self.nControlSize + 2
@@ -1131,14 +1172,22 @@ class CvCustomizableDomesticAdvisor:
 			screen.show(self.RENAME_PAGE_NAME)
 			screen.show(self.ADD_PAGE_NAME)
 			screen.show(self.DEL_PAGE_NAME)
-			screen.show(self.PAGE_UP_NAME)
-			screen.show(self.PAGE_DOWN_NAME)
+			if self.currentPageNum > 0 :
+				screen.show(self.PAGE_UP_NAME)
+			else :
+				screen.hide(self.PAGE_UP_NAME)
+			if self.currentPageNum < len( self.PAGES ) -1 :
+				screen.show(self.PAGE_DOWN_NAME)
+			else :
+				screen.hide(self.PAGE_DOWN_NAME)
 			screen.show(self.SAVE_NAME)
 			screen.show(self.RELOAD_PAGES_NAME)
 			screen.show(self.TOGGLE_SPECS_NAME)
+			screen.show(self.TOGGLE_TOOLTIPS_NAME) # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 			
 			page = self.PAGES[self.currentPageNum]
 			screen.setState(self.TOGGLE_SPECS_NAME, page["showSpecControls"])
+			screen.setState( self.TOGGLE_TOOLTIPS_NAME, self.isShowingTooltips() ) # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 
 	def hideCustomizationControls(self):
 
@@ -1165,6 +1214,7 @@ class CvCustomizableDomesticAdvisor:
 			screen.hide(self.SAVE_NAME)
 			screen.hide(self.RELOAD_PAGES_NAME)
 			screen.hide(self.TOGGLE_SPECS_NAME)
+			screen.hide(self.TOGGLE_TOOLTIPS_NAME) # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 
 	def hide (self, screen, page):
 		""" Hide function which hides a specific screen."""
@@ -2127,7 +2177,11 @@ class CvCustomizableDomesticAdvisor:
 		screen = self.getScreen()
 		iPlayer = PyPlayer(CyGame().getActivePlayer())
 		cityList = iPlayer.getCityList()
-		
+
+		# CDA_REFACTOR 03/2021 lfgr: Hide column icons
+		for szColName in self.all_column_names() :
+			screen.hide( self.col_header_button_name( szColName ) )
+
 		# Hide building icons
 		for i in range(gc.getNumBuildingInfos()):
 			szButtonName = "BLDG_BTN_%d" % i
@@ -2137,6 +2191,16 @@ class CvCustomizableDomesticAdvisor:
 		screen.addDropDownBoxGFC(self.PAGES_DD_NAME, self.X_SPECIAL, self.Y_SPECIAL, self.PAGES_DD_W, WidgetTypes.WIDGET_CDA_SELECT_PAGE, -1, -1, FontTypes.GAME_FONT)
 		for i, p in enumerate(self.PAGES):
 			screen.addPullDownString(self.PAGES_DD_NAME, p["name"], i, i, i == self.currentPageNum )
+
+		# CDA REFACTOR 03/2021 lfgr: Hide prev/next page button appropriately
+		if self.currentPageNum > 0 :
+			screen.show( self.PREV_PAGE_NAME )
+		else :
+			screen.hide( self.PREV_PAGE_NAME )
+		if self.currentPageNum < len( self.PAGES ) - 1 :
+			screen.show( self.NEXT_PAGE_NAME )
+		else :
+			screen.hide( self.NEXT_PAGE_NAME )
 
 		if(self.customizing):
 			# Build the page definition table
@@ -2299,7 +2363,7 @@ class CvCustomizableDomesticAdvisor:
 						# Make header
 						if columnDef.button is not None :
 							screen.setTableColumnHeader (page, value + 1, "", self.columnWidth[key])
-							szButtonName = "CDA_HEADER_BTN_" + columnDef.name
+							szButtonName = self.col_header_button_name( columnDef.name )
 							x = iColHeaderX + ( self.columnWidth[key] - self.BUILDING_BUTTON_X_SIZE ) / 2
 							eWidgetType, szButton, iData1, iData2 = columnDef.button
 							
@@ -2311,11 +2375,14 @@ class CvCustomizableDomesticAdvisor:
 									self.columnWidth[key] )
 						# Make cells
 						for i in cityRange :
-							cellValue = columnDef.compute_value( cityList[i].city )
+							pCity = cityList[i].city
+							cellValue = columnDef.compute_value( pCity )
+							iData1 = self.COLUMNS_INDEX[key]
+							iData2 = pCity.getID()
 							if isinstance( value, (str, unicode) ) :
-								screen.setTableText( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+								screen.setTableText( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_LEFT_JUSTIFY )
 							elif isinstance( value, int ) :
-								screen.setTableInt( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_RIGHT_JUSTIFY )
+								screen.setTableInt( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_RIGHT_JUSTIFY )
 						
 						iColHeaderX += self.columnWidth[key]
 						
@@ -2762,6 +2829,16 @@ class CvCustomizableDomesticAdvisor:
 		page["showGPLegend"] = not page["showGPLegend"]
 #		screen.setState(self.TOGGLE_SPECS_NAME, page["showSpecControls"])
 		
+		return 1
+
+	# CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
+	def isShowingTooltips( self ) :
+		return self.PAGES[self.currentPageNum].get( "showTooltips", True )
+
+	def toggleShowTooltips( self, inputClass ):
+		""" Toggle whether to show tooltips or not. """
+		self.PAGES[self.currentPageNum]["showTooltips"] = not self.isShowingTooltips()
+
 		return 1
 	
 	def toggleShowCultureLegend(self, inputClass):

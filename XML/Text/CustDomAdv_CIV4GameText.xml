@@ -142,6 +142,15 @@
 		<Finnish>[COLOR_HIGHLIGHT_TEXT]Toggle Specialist[COLOR_REVERT][NEWLINE]Toggle whether or not the selected city's specialists are displayed along with buttons to add/remove them</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_CDA_TOGGLE_TOOLTIPS</Tag> <!-- CDA_REFACTOR 03/2021 lfgr -->
+		<English>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</English>
+		<French>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</French>
+		<German>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</German>
+		<Italian>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</Italian>
+		<Spanish>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</Spanish>
+		<Finnish>[COLOR_HIGHLIGHT_TEXT]Toggle Tooltips[COLOR_REVERT][NEWLINE]Toggle whether or not tooltips for certain cells are shown in the upper left corner</Finnish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_CDA_ADD_COLUMN</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Add Column[COLOR_REVERT][NEWLINE]Insert the selected column(s) from the right list into the left list</English>
 		<French>[COLOR_HIGHLIGHT_TEXT]Add Column[COLOR_REVERT][NEWLINE]Insert the selected column(s) from the right list into the left list</French>
