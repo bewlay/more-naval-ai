@@ -79,6 +79,7 @@ import GameUtil
 import TradeUtil
 
 import CDAColumns
+import CDAColumnsRevolution
 
 # BUG - Mac Support - start
 BugUtil.fixSets(globals())
@@ -303,6 +304,9 @@ class CvCustomizableDomesticAdvisor:
 				("TRADE_ROUTES_DOMESTIC",	30,		"int",	None,					None,					0,									self.countTradeRoutes,					"D",						"u\"D#\" + self.tradeIcon"),
 				("TRADE_ROUTES_FOREIGN",	30,		"int",	None,					None,					0,									self.countTradeRoutes,					"F",						"u\"F#\" + self.tradeIcon"),
 			]
+
+		# Revolutions columns
+		self.COLUMNS_LIST.extend( CDAColumnsRevolution.makeColumns() )
 
 		# Values to check to see if we need to color the number as a problem
 		self.PROBLEM_VALUES_DICT = {
