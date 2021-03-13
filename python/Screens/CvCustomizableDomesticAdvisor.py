@@ -2382,7 +2382,11 @@ class CvCustomizableDomesticAdvisor:
 							if isinstance( value, (str, unicode) ) :
 								screen.setTableText( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_LEFT_JUSTIFY )
 							elif isinstance( value, int ) :
-								screen.setTableInt( page, value + 1, i, cellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_RIGHT_JUSTIFY )
+								szCellValue = unicode( cellValue )
+								eColor = columnDef.compute_int_color( pCity, cellValue )
+								if eColor != -1 :
+									szCellValue = localText.changeTextColor( szCellValue, eColor )
+								screen.setTableInt( page, value + 1, i, szCellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_RIGHT_JUSTIFY )
 						
 						iColHeaderX += self.columnWidth[key]
 						

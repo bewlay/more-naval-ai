@@ -147,6 +147,15 @@ class CDAColumn( object ) :
 		"""
 		return (u"", None)
 
+	def compute_int_color( self, pCity, iValue ) :
+		# type: (CyCity, int) -> int
+		"""
+		Returns the color of the cell value as a ColorTypes.
+		Only is called if compute_value() returns an integer; string coloring can be done manually.
+		The return value of compute_value() is provided as the second argument for convenience.
+		"""
+		return ColorTypes.NO_COLOR
+
 	@property
 	def is_date_cell( self ) :
 		# type: () -> bool
