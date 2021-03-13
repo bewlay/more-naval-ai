@@ -65,4 +65,7 @@
 	<widget name="WIDGET_CDA_SHRINK_COLUMN" xml="TXT_KEY_CDA_SHRINK_COLUMN"/>
 	<widget name="WIDGET_CDA_EXPAND_COLUMN" xml="TXT_KEY_CDA_EXPAND_COLUMN"/>
 
+	<!-- CDA_REFACTOR 03/2021 lfgr -->
+	<widget name="WIDGET_CDA_CELL" function="getCellHelpText"/>
+	<widget name="WIDGET_CDA_TOGGLE_TOOLTIPS" xml="TXT_KEY_CDA_TOGGLE_TOOLTIPS"/>
 </mod>
