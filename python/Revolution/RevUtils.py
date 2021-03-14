@@ -62,7 +62,8 @@ def init( ) :
 
 ########################## Generic helper functions ###############################
 
-def getGameSpeedMod( ) :
+def getGameSpeedMod( ) : # LFGR_TODO: Could this lead to problems when playing multiple games in a single session?
+	# LFGR_TODO: Make this a GameSpeed property.
 		# Ratio of game turns to those of Epic, limited adjustment for extremely short/long differences
 		global gameSpeedMod
 		if( gameSpeedMod == None ) :

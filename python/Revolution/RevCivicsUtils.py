@@ -46,60 +46,6 @@ def initCivicsList( ) :
 ########################## Civics effect helper functions #####################
 
 
-def getCivicsRevIdxLocal( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return [0,list(),list()]
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return [0,list(),list()]
-
-	if( len(civicsList) < gc.getNumCivicOptionInfos() ) :
-		initCivicsList()
-
-	localRevIdx = 0
-	posList = list()
-	negList = list()
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			civicEffect = kCivic.getRevIdxLocal()
-
-			# Effect doubles for some when a much better alternative exists
-			if( civicEffect > 0 and kCivic.getRevLaborFreedom() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevLaborFreedom() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %s doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 and kCivic.getRevDemocracyLevel() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevDemocracyLevel() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %s doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 ) :
-				negList.append( (civicEffect, kCivic.getDescription()) )
-			elif( civicEffect < 0 ) :
-				posList.append( (civicEffect, kCivic.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kCivic.getDescription(),civicEffect))
-
-			localRevIdx += civicEffect
-
-	return [localRevIdx,posList,negList]
-
-
 def getCivicsCivStabilityIndex( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)

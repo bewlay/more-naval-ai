@@ -8,40 +8,11 @@ from CvPythonExtensions import *
 import FontUtil
 
 from CDAColumns import CDAColumn
-from RevIdxUtils import CityRevIdxHelper
+from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr
 
+artFileMgr = CyArtFileMgr()
 gc = CyGlobalContext()
 localText = CyTranslator()
-
-
-def coloredRevIdxFactorStr( iRevIdx ) :
-	""" Color a single factor with green to red """
-	if iRevIdx < -10 :
-		sColor = "<color=20,230,20,255>"
-	elif iRevIdx < -5 :
-		sColor = "<color=50,230,50,255>"
-	elif iRevIdx < -2 :
-		sColor = "<color=100,230,100,255>"
-	elif iRevIdx < 0 :
-		sColor = "<color=150,230,150,255>"
-	elif iRevIdx == 0 :
-		sColor = ""
-	elif iRevIdx <= 2 :
-		sColor = "<color=225,150,150,255>"
-	elif iRevIdx <= 5 :
-		sColor = "<color=225,100,100,255>"
-	elif iRevIdx <= 10 :
-		sColor = "<color=225,75,75,255>"
-	elif iRevIdx <= 20 :
-		sColor = "<color=225,50,50,255>"
-	else :
-		sColor = "<color=255,10,10,255>"
-
-	if iRevIdx != 0 :
-		sRevIdx = ("%+d" % iRevIdx)  # Show + or minus sign
-	else :
-		sRevIdx = str( iRevIdx )
-	return sColor + sRevIdx
 
 
 class RevolutionCDAColumn( CDAColumn ) :
@@ -55,7 +26,7 @@ class RevIdxCityHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type: i
 		self._cityHelperRevIdxAndHelpFunc = cityHelperRevIdxAndHelpFunc
 
 	def compute_value_and_tooltip( self, pCity ) :
-		helper = CityRevIdxHelper( pCity )
+		helper = CityRevIdxHelper( pCity ) # TODO: Cache in CDA
 		value, tooltip = self._cityHelperRevIdxAndHelpFunc( helper )
 		return coloredRevIdxFactorStr( value ), tooltip
 
@@ -67,19 +38,10 @@ class RevIdxCityHelperCDAColumn( RevolutionCDAColumn ) :
 		self._cityHelperRevIdxHelpFunc = cityHelperRevIdxHelpFunc
 
 	def compute_value_and_tooltip( self, pCity ) :
-		helper = CityRevIdxHelper( pCity )
+		helper = CityRevIdxHelper( pCity ) # TODO: Cache in CDA
 		value = self._cityHelperRevIdxFunc( helper )
 		tooltip = self._cityHelperRevIdxHelpFunc( helper )
 		return coloredRevIdxFactorStr( value ), tooltip
-
-
-class RevIdxPerTurnCDAColumn( RevolutionCDAColumn ) :
-	def __init__( self ) :
-		super( RevIdxPerTurnCDAColumn, self ).__init__( "REV_PER_TURN", 55,
-				localText.getText( "Rev/T", () ) ) # TODO: Translate
-
-	def compute_value( self, pCity ) :
-		return "?" # LFGR_TODO
 
 
 class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
@@ -94,7 +56,6 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 def makeColumns() :
 	# type: () -> Sequence[CDAColumn]
 	return (
-		RevIdxPerTurnCDAColumn(),
 		RevIdxTotalCDAColumn(),
 		RevIdxCityHelperCombinedCDAColumn( "REV_HAPPINESS", 46,
 				u"<font=2>%s/%s</font>" % ( FontUtil.getChar( "happy" ), FontUtil.getChar( "unhappy" ) ),
@@ -136,7 +97,14 @@ def makeColumns() :
 				CityRevIdxHelper.computeDisorderRevIdxAndHelp ),
 
 		RevIdxCityHelperCombinedCDAColumn( "REV_CRIME", 50, u"<font=2>%s</font>" % FontUtil.getChar( "badgold" ),
-				CityRevIdxHelper.computeCrimeRevIdxAndHelp )
+				CityRevIdxHelper.computeCrimeRevIdxAndHelp ),
+
+		RevIdxCityHelperCombinedCDAColumn( "REV_CIVICS", 50,
+				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_CIVICS" ).getPath(),
+				CityRevIdxHelper.computeCivicsRevIdxAndHelp ),
+
+		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Rev/T",
+				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp )
 	)
 
 

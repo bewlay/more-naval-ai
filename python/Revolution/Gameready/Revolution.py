@@ -1097,6 +1097,7 @@ class Revolution :
 		"""
 		Updates the revolution effects local to each city
 		If bIsRevWatch, returns a string showing the factors for city stability.
+		If not bIsRevWatch, apply rev idx per current turn, and update history.
 		If subCityList is not None, only consider the cities in subCityList
 		"""
 
@@ -1165,16 +1166,12 @@ class Revolution :
 			if revIdxHist is None :
 				revIdxHist = RevDefs.initRevIdxHistory()
 
-			prevRevIdx = pCity.getRevolutionIndex()
-
 			# Record lists of (#, string type) effects, seperate for positive and negative
 			posList = list()
 			negList = list()
 
-			# Sum up local factors for the city
-			iLocalRevIdx = 0
-
 			### MAIN COMPUTATION
+			# Fill history (changes only applied if not bRevWatch) or build help string (TODO: Help string deprecated)
 
 			# Happiness
 			iHappyIdx = pCityHelper.computeHappinessRevIdx()
@@ -1183,8 +1180,6 @@ class Revolution :
 					negList.append( (iHappyIdx, localText.getText( "TXT_KEY_REV_WATCH_HAPPINESS", () )) )
 				elif iHappyIdx < 0 :
 					posList.append( (iHappyIdx, localText.getText( "TXT_KEY_REV_WATCH_HAPPINESS", () )) )
-
-			iLocalRevIdx += iHappyIdx
 			revIdxHist['Happiness'] = [iHappyIdx] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
 
 			# Location ("distance", though it is much more)
@@ -1192,7 +1187,6 @@ class Revolution :
 			iLocationRevIdx = pCityHelper.computeLocationRevIdx()
 			if bIsRevWatch and iLocationRevIdx > 0 :
 				negList.append( (iLocationRevIdx, localText.getText( "TXT_KEY_REV_WATCH_DISTANT", () )) )
-			iLocalRevIdx += iLocationRevIdx
 			revIdxHist['Location'] = [iLocationRevIdx] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
 			# phungus -end
 
@@ -1204,16 +1198,13 @@ class Revolution :
 			# TODO: Remove
 			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
-			if self.LOG_DEBUG and iGameTurn%25 == 0 :
-				CvUtil.pyPrint("  Revolt - %s location effects: [%d], maintenance: [%.2f,%.2f], modifier: %d, gcent: %d"%(pCity.getName(),iLocationRevIdx,pCity.getMaintenanceTimes100()/100.0,pCity.calculateColonyMaintenanceTimes100()/100.0,pCity.getMaintenanceModifier(),pCity.isGovernmentCenter()))
-
-
 			# Religion
 			iHolyCityOwnershipRevIdx = pCityHelper.computeHolyCityOwnershipRevIdx()
-			if iHolyCityOwnershipRevIdx < 0 :
-				posList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HOLY_CITY", () )) )
-			elif iHolyCityOwnershipRevIdx > 0 :
-				negList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HEATHENS", () )) )
+			if bIsRevWatch :
+				if iHolyCityOwnershipRevIdx < 0 :
+					posList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HOLY_CITY", () )) )
+				elif iHolyCityOwnershipRevIdx > 0 :
+					negList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HEATHENS", () )) )
 
 			iGoodRelIdx, iBadRelIdx = pCityHelper.computeReligionRevIndices()
 
@@ -1224,15 +1215,12 @@ class Revolution :
 					negList.append( (iBadRelIdx, localText.getText( "TXT_KEY_REV_WATCH_NON_STATE_RELIGION", () )) )
 
 			iRelIdx = iGoodRelIdx + iBadRelIdx + iHolyCityOwnershipRevIdx
-			iLocalRevIdx += iRelIdx
 			revIdxHist['Religion'] = [iRelIdx] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
-			#if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s religious index: %d, total: %d"%(pCity.getName(),relIdx,localRevIdx))
 
 			# Culture
 			iCultureIdx = pCityHelper.computeCultureRevIdx()
 			if bIsRevWatch and iCultureIdx != 0 :
 				posList.append( (iCultureIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
-			iLocalRevIdx += iCultureIdx
 
 			# Nationality
 			iNationalityIdx = pCityHelper.computeNationalityRevIdx()
@@ -1243,34 +1231,29 @@ class Revolution :
 				elif iNationalityIdx < 0 :
 					posList.append( (iNationalityIdx, localText.getText("TXT_KEY_REV_WATCH_NATIONALITY",())) )
 
-			iLocalRevIdx += iNationalityIdx
 			revIdxHist['Nationality'] = [iNationalityIdx] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
 
 			# Health
 			iHealthIdx = pCityHelper.computeHealthRevIdx()
 			if bIsRevWatch and iHealthIdx != 0 :
 				negList.append( (iHealthIdx, localText.getText("TXT_KEY_REV_WATCH_UNHEALTHY",())) )
-			iLocalRevIdx += iHealthIdx
 			revIdxHist['Health'] = [iHealthIdx] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1]
 
 			# Garrison
 			iGarIdx = pCityHelper.computeGarrisonRevIdx()
 			if bIsRevWatch and iGarIdx != 0 :
 				posList.append( (iGarIdx, localText.getText("TXT_KEY_REV_WATCH_GARRISON",())) )
-			iLocalRevIdx += iGarIdx
 			revIdxHist['Garrison'] = [iGarIdx] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
 
 			# Size
 			iSizeIdx = pCityHelper.computeSizeRevIdx()
 			if bIsRevWatch and iSizeIdx != 0 :
 				posList.append( (iSizeIdx, localText.getText( "TXT_KEY_REV_WATCH_SMALL_CITY", () )) )
-			iLocalRevIdx += iSizeIdx
 
 			# Starving
 			iStarvingIdx = pCityHelper.computeStarvingRevIdx()
 			if bIsRevWatch and iStarvingIdx != 0 :
 				negList.append( (iStarvingIdx, localText.getText( "TXT_KEY_REV_WATCH_STARVATION", () )) )
-			iLocalRevIdx += iStarvingIdx
 			revIdxHist['Health'][0] += iStarvingIdx
 
 			# Disorder
@@ -1279,22 +1262,6 @@ class Revolution :
 				negList.append( (iDisorderIdx, localText.getText("TXT_KEY_REV_WATCH_DISORDER",())) )
 			revIdxHist['Disorder'] = [iDisorderIdx] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
 
-			# Civics
-			# LFGR_TODO
-			[civicIdx,civicPosList,civicNegList] = RevUtils.getCivicsRevIdxLocal( iPlayer )
-			iLocalRevIdx += civicIdx
-
-			posList.extend( civicPosList )
-			negList.extend( civicNegList )
-
-			# Buildings
-			# LFGR_TODO
-			[buildingIdx,buildingPosList,buildingNegList] = RevUtils.getBuildingsRevIdxLocal( pCity )
-			iLocalRevIdx += buildingIdx
-
-			posList.extend( buildingPosList )
-			negList.extend( buildingNegList )
-
 			# Crime
 			iCrimeIdx = pCityHelper.computeCrimeRevIdx()
 			if bIsRevWatch :
@@ -1302,33 +1269,20 @@ class Revolution :
 					negList.append( ( iCrimeIdx, "Crime" ) )
 				elif iCrimeIdx < 0 :
 					posList.append( ( iCrimeIdx, "Low Crime" ) )
-			iLocalRevIdx += iCrimeIdx
 
-			# Remember RevIdx before adjustment
-			iOrigLocalRevIdx = iLocalRevIdx
+			# Civics
+			civicIdx, civicPosList, civicNegList = pCityHelper.getRevWatchCivicsIdxData()
+			posList.extend( civicPosList )
+			negList.extend( civicNegList )
+
+			# Buildings
+			buildingIdx,buildingPosList,buildingNegList = pCityHelper.getRevWatchBuildingsIdxData()
+			posList.extend( buildingPosList )
+			negList.extend( buildingNegList )
 
 			# Adjust index accumulation for varying game speeds
-			gameSpeedMod = RevUtils.getGameSpeedMod()
-			iLocalRevIdx = int(math.floor( gameSpeedMod*self.revIdxModifier*iLocalRevIdx + self.revIdxOffset + .5 ))
-
-			# Adjust index for human
-			# LFGR_TODO: Better adjust for AI, so the human display is more natural?
-			if pPlayer.isHuman():
-				iLocalRevIdx = int(math.floor( self.humanIdxModifier*iLocalRevIdx + self.humanIdxOffset + .5 ))
-
-			iPrevRevIdx = pCity.getRevolutionIndex()
-
-			# Feedback on Rev Index
-			# LFGR_TODO: ?
-			# LFGR_TODO: This seems to always give a bonus of at least -6, even if iLocalRevIdx >= 0...
-			if iLocalRevIdx < 0 and iPrevRevIdx > self.alwaysViolentThreshold :
-				# Very angry locals forgive very quickly if things begin improving
-				iFeedback = -min( iPrevRevIdx // 170, 10 )
-			elif iLocalRevIdx < 0 and iPrevRevIdx > self.revInstigatorThreshold :
-				# Angry locals forgive quickly if things are improving
-				iFeedback = -min( iPrevRevIdx // 230, 8 )
-			else :
-				iFeedback = -min( iPrevRevIdx // 300, 6 )
+			# lfgr note: This includes feedback. Before, feedback was left out of LocalRevIdx
+			iLocalRevIdx = pCityHelper.computeLocalRevIdx()
 
 			# Update local RevIndex whenever called
 			# LFGR_TODO: This seems fishy, and probably is a recipe for OOS errors
@@ -1336,7 +1290,7 @@ class Revolution :
 
 			if( not bIsRevWatch ) :
 				# Change revolution indices based on local effects
-				pCity.changeRevolutionIndex( iLocalRevIdx + iFeedback )
+				pCity.changeRevolutionIndex( iLocalRevIdx )
 				pCity.updateRevIndexAverage()
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
 
@@ -1347,11 +1301,6 @@ class Revolution :
 
 			iPrevRevIdx = pCity.getRevolutionIndex()
 			revIdxAvg = pCity.getRevIndexAverage()
-
-			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) :
-				CvUtil.pyPrint("  Revolt - %s:   Hap %d,   Loc %d,   Rel %d,   Nat %d,   Cult %d,   Gar %d"%(pCity.getName(),iHappyIdx,iLocationRevIdx,iRelIdx,iNationalityIdx,iCultureIdx,iGarIdx))
-			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) :
-				CvUtil.pyPrint("  Revolt -		 Local effects for %s (%s):  %d   (%d) fdbk with total  %d"%(pCity.getName(),pPlayer.getCivilizationDescription(0),iLocalRevIdx,iFeedback,iPrevRevIdx))
 
 			# RevolutionDCM - city advisor text conditioning
 			cityString = pCity.getName()# + " \t"
@@ -1380,11 +1329,6 @@ class Revolution :
 				cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 			if( game.isDebugMode() ) :
 				cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
-			
-			# lfgr 07/2019: Show current effects summary
-			if RevOpt.isShowRevIndexInPopup :
-				cityString += "\n" + localText.getText("TXT_KEY_REV_WATCH_THIS_TURN_AND_AFTER_ADJUSTMENTS", (iOrigLocalRevIdx, iLocalRevIdx) )
-			# lfgr end
 
 			# Enable only for debugging rev index histories
 			if False :

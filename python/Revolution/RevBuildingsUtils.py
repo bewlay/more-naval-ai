@@ -24,30 +24,6 @@ localText = CyTranslator()
 
 ########################## Traits effect helper functions #####################
 
-def getBuildingsRevIdxLocal( pCity ) :
-
-	localRevIdx = 0
-	posList = list()
-	negList = list()
-
-	for iBuilding in range(gc.getNumBuildingInfos()):
-		if ( pCity.getNumRealBuilding(iBuilding) > 0):
-			kBuilding = gc.getBuildingInfo(iBuilding)
-			
-			if (kBuilding.getPrereqCiv() == -1) or (kBuilding.getPrereqCiv() == gc.getGame().getActiveCivilizationType()):
-				if (kBuilding.getPrereqTrait() == -1) or (kBuilding.getPrereqTrait() == gc.getGame().getActiveCivilizationType()):
-					buildingEffect = kBuilding.getRevIdxLocal()
-					if( buildingEffect > 0 ) :
-						negList.append( (buildingEffect, kBuilding.getDescription()) )
-					elif( buildingEffect < 0 ) :
-						posList.append( (buildingEffect, kBuilding.getDescription()) )
-		
-					#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(traitInfo.getDescription(),traitEffect))
-		
-					localRevIdx += buildingEffect
-
-	return [localRevIdx,posList,negList]
-
 
 def getBuildingsCivStabilityIndex( iPlayer ) :
 
@@ -88,8 +64,6 @@ def getBuildingsCivStabilityIndex( iPlayer ) :
 def getBuildingsDistanceMod( pCity ) :
 
 	distModifier = 0
-	posList = list()
-	negList = list()
 
 	for iBuilding in range(gc.getNumBuildingInfos()):
 		kBuilding = gc.getBuildingInfo(iBuilding)

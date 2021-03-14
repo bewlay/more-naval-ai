@@ -11,6 +11,8 @@ Changes:
 * Current era not subtracted from culture rate
 * Removed malus from negative food per turn
 * Simplified and streamlined unhealthiness, nationality, health and garrison indices
+* No increased civic malus if "better" civics are available
+* Building effects not disabled from wrong PrereqCiv or PrereqTrait
 """
 
 
@@ -56,12 +58,74 @@ def isqrt( n ) :
 	return x
 
 
+def coloredRevIdxFactorStr( iRevIdx ) :
+	""" Color a single factor with green to red. For, e.g., help text """
+	if iRevIdx < -10 :
+		sColor = "<color=20,230,20,255>"
+	elif iRevIdx < -5 :
+		sColor = "<color=50,230,50,255>"
+	elif iRevIdx < -2 :
+		sColor = "<color=100,230,100,255>"
+	elif iRevIdx < 0 :
+		sColor = "<color=150,230,150,255>"
+	elif iRevIdx == 0 :
+		sColor = None
+	elif iRevIdx <= 2 :
+		sColor = "<color=225,150,150,255>"
+	elif iRevIdx <= 5 :
+		sColor = "<color=225,100,100,255>"
+	elif iRevIdx <= 10 :
+		sColor = "<color=225,75,75,255>"
+	elif iRevIdx <= 20 :
+		sColor = "<color=225,50,50,255>"
+	else :
+		sColor = "<color=255,10,10,255>"
+
+	if iRevIdx != 0 :
+		sRevIdx = ("%+d" % iRevIdx)  # Show + or minus sign
+	else :
+		sRevIdx = str( iRevIdx )
+	if sColor is not None :
+		return sColor + sRevIdx + "</color>"
+	else :
+		return sRevIdx
+
+def effectsToIdxAndHelp( effects ) :
+	# type: ( Iterator[Tuple[CvInfoBase, int]] ) -> Tuple[int, unicode]
+	""" Aggregate a set of (info, iEffect) tuples into a total effect and help text. """
+	iTotalIdx = 0
+	szHelp = u""
+	for info, iRevIdx in effects :
+		iTotalIdx += iRevIdx
+		if szHelp != u"" : szHelp += u"\n"
+		szHelp += getText( "[ICON_BULLET]%s1: %s2", info.getTextKey(), coloredRevIdxFactorStr( iRevIdx ) )
+	return iTotalIdx, szHelp
+
+def effectsToRevWatchData( effects ) : # TODO: Deprecated
+	# type: ( Iterator[Tuple[CvInfoBase, int]] ) -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+	""" Aggregate a set of (info, iEffect) tuples into a total effect, a positive list, and negative list. """
+	iTotal = 0
+	posList = []
+	negList = []
+	for info, iRevIdx in effects :
+		iTotal += iRevIdx
+		if iRevIdx > 0 :
+			negList.append( (iRevIdx, info.getDescription()) )
+		else :
+			posList.append( (iRevIdx, info.getDescription()) )
+	return iTotal, posList, negList
+
+def modAsPercent( fMod ) :
+	""" Converts a modifier such as 0.7 to a percentage such as -30 """
+	return int( ( fMod - 1 ) * 100 )
+
 def canRevolt( pCity ) :
 	# type: ( CyCity ) -> bool
 	if pCity.isSettlement() and pCity.getOwner() == pCity.getOriginalOwner() :
 		return False
 
 	return True
+
 
 class CityRevIdxHelper :
 	"""
@@ -422,11 +486,9 @@ class CityRevIdxHelper :
 				if not pStateHolyCity.isNone() :
 					eHolyCityOwner = pStateHolyCity.getOwner()
 					if eHolyCityOwner == self._eOwner :
-						#posList.append( (-iHolyCityGood, localText.getText( "TXT_KEY_REV_WATCH_HOLY_CITY", () )) )
 						return -iHolyCityGood # We own the holy city
 					elif gc.getPlayer( eHolyCityOwner ).getStateReligion() != eStateReligion :
 						return iHolyCityBad # Heathens own the holy city!
-						#negList.append( (iHolyCityBad, localText.getText( "TXT_KEY_REV_WATCH_HEATHENS", () )) )
 
 		return 0
 
@@ -698,7 +760,7 @@ class CityRevIdxHelper :
 		if iDefenseMod != 0 :
 			sDefendersEffect = "%.2f" % fDefendersEffect
 			szHelp += u"\n" + getText( "Base garrison stability: %s1", sDefendersEffect )
-			szHelp += u"\n" + getText( "[ICON_BULLET]City defense bonus", iDefenseMod )
+			szHelp += u"\n" + getText( "[ICON_BULLET]City defense bonus: %D1%", iDefenseMod )
 
 		iGarIdx = -int( fDefendersEffect * ( 100 + iDefenseMod ) ) / 100
 		iGarIdx = max( iGarIdx, -8 )
@@ -809,4 +871,119 @@ class CityRevIdxHelper :
 	def computeCrimeRevIdxHelp( self ) :
 		# type: () -> unicode
 		return self.computeCrimeRevIdxAndHelp()[1]
-	
+
+	def civicsWithLocalEffect( self ) :
+		# type: () -> Iterator[Tuple[CvCivicInfo, int]]
+		""" Iterates over tuples (eCivic, iRevIdx) """
+		for eCivicOption in range( 0,gc.getNumCivicOptionInfos() ) :
+			eCivic = self._pOwner.getCivics( eCivicOption )
+			if eCivic >= 0  :
+				info = gc.getCivicInfo( eCivic )
+				iRevIdx = info.getRevIdxLocal()
+				# Note: Don't increase effect with other civics with higher LaborFreedon/DemocracyLevel are available.
+				if iRevIdx != 0 :
+					yield info, iRevIdx
+
+	def computeCivicsRevIdxAndHelp( self ) :
+		# type: () -> Tuple[int, unicode]
+		return effectsToIdxAndHelp( self.civicsWithLocalEffect() )
+
+	def getRevWatchCivicsIdxData( self ) : # TODO: Deprecated
+		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+		""" Special function for RevWatchAdvisor """
+		return effectsToRevWatchData( self.civicsWithLocalEffect() )
+
+	def buildingsWithEffects( self ) :
+		for eBuilding in range( gc.getNumBuildingInfos() ) :
+			if self._pCity.getNumRealBuilding( eBuilding ) > 0 :
+				info = gc.getBuildingInfo( eBuilding )
+				iRevIdx = info.getRevIdxLocal()
+				if iRevIdx != 0 :
+					yield info, iRevIdx
+
+	def computeBuildingsRevIdxAndHelp( self ) :
+		# type: () -> Tuple[int, unicode]
+		return effectsToIdxAndHelp( self.buildingsWithEffects() )
+
+	def getRevWatchBuildingsIdxData( self ) : # TODO: Deprecated
+		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+		""" Special function for RevWatchAdvisor """
+		return effectsToRevWatchData( self.buildingsWithEffects() )
+
+	def computeLocalRevIdxAndFinalModifierHelp( self ) :
+		# type () -> Tuple[int, unicode]
+		""" The total RevIdx (per turn) of this city. The help string only contains final adjustments. """
+		iIdxSum = sum( [ # TODO: Caching
+			self.computeHappinessRevIdx(),
+			self.computeLocationRevIdx(),
+			self.computeConnectionRevIdx(),
+			self.computeHolyCityOwnershipRevIdx(),
+			self.computeReligionRevIdx(),
+			self.computeCultureRevIdx(),
+			self.computeNationalityRevIdx(),
+			self.computeHealthRevIdx(),
+			self.computeGarrisonRevIdx(),
+			self.computeSizeRevIdx(),
+			self.computeStarvingRevIdx(),
+			self.computeDisorderRevIdx(),
+			self.computeCrimeRevIdx(),
+			self.computeCivicsRevIdxAndHelp()[0],
+			self.computeBuildingsRevIdxAndHelp()[0]
+		] )
+		szHelp = getText( "Sum of all effects: %D1", iIdxSum )
+
+		# Adjust index accumulation for varying game speeds
+		fGameSpeedMod = RevUtils.getGameSpeedMod()
+		if fGameSpeedMod != 1 :
+			szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", modAsPercent( fGameSpeedMod ) )
+
+		fMod = RevOpt.getIndexModifier() # TODO: Make constant
+		if fMod != 1 :
+			szHelp += u"\n" + getText( "[ICON_BULLET]General modifier: %D1%", modAsPercent( fMod ) )
+
+		iOffset = int( RevOpt.getIndexOffset() ) # TODO: Make int constant
+		if iOffset != 0 :
+			szHelp += u"\n" + getText( "[ICON_BULLET]General offset: %D1", iOffset )
+
+		iAdjustedIdx = int( fGameSpeedMod * fMod * iIdxSum + iOffset + .5 )
+		if fGameSpeedMod != 1 or fMod != 1 or iOffset != 0 :
+			szHelp += SEPARATOR + u"\n" + getText( "Adjusted: %D1", iAdjustedIdx )
+
+		# Adjust for human
+		if self._pOwner.isHuman() :
+			fMod = RevOpt.getHumanIndexModifier() # TODO: Make constant
+			if fMod != 1 :
+				szHelp += u"\n" + getText( "[ICON_BULLET]Human modifier: %D1%", modAsPercent( fMod ) )
+			iOffset = int( RevOpt.getHumanIndexOffset() ) # TODO: Make int constant
+			if iOffset != 0 :
+				szHelp += u"\n" + getText( "[ICON_BULLET]Human offset: %D1", iOffset )
+			iAdjustedIdx = int( fGameSpeedMod * fMod * iIdxSum + iOffset + .5 )
+			if fMod != 1 or iOffset != 0 :
+				szHelp += SEPARATOR + u"\n" + getText( "Adjusted for human: %D1", iAdjustedIdx )
+
+		# Feedback
+		iPrevRevIdx = max( 0, self._pCity.getRevolutionIndex() ) # Just in case
+		if iAdjustedIdx < 0 :
+			if iPrevRevIdx > RevDefs.alwaysViolentThreshold :
+				# Very angry locals forgive very quickly if things begin improving
+				iFeedback = -min( iPrevRevIdx // 170, 10 )
+			elif iPrevRevIdx > RevDefs.revInstigatorThreshold :
+				# Angry locals forgive quickly if things are improving
+				iFeedback = -min( iPrevRevIdx // 230, 8 )
+			else :
+				iFeedback = -min( iPrevRevIdx // 300, 6 )
+			if iFeedback != 0 :
+				szHelp += u"\n" + getText( "[ICON_BULLET]Recent improvements: %D1", iFeedback )
+			iAdjustedIdx += iFeedback
+
+		return iAdjustedIdx, szHelp
+
+	def computeLocalRevIdx( self ) :
+		# type: () -> int
+		return self.computeLocalRevIdxAndFinalModifierHelp()[0]
+
+	def computeFinalModifierHelp( self ) :
+		# type: () -> unicode
+		return self.computeLocalRevIdxAndFinalModifierHelp()[1]
+
+

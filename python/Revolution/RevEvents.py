@@ -605,6 +605,7 @@ def checkRebelBonuses( argsList ) :
 				pCity.setOccupationTimer(iTurns)
 
 def updateRevolutionIndices( argsList ) :
+		""" Called when a new city is acquired. """
 		owner,playerType,pCity,bConquest,bTrade = argsList
 
 		newOwnerID = pCity.getOwner()
