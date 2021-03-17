@@ -1183,6 +1183,7 @@ class Revolution :
 			revIdxHist['Happiness'] = [iHappyIdx] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
 
 			# Location ("distance", though it is much more)
+			# lfgr 03/2021: Added connection to capital here.
 			# phungus -start
 			iLocationRevIdx = pCityHelper.computeLocationRevIdx()
 			if bIsRevWatch and iLocationRevIdx > 0 :
@@ -1190,22 +1191,10 @@ class Revolution :
 			revIdxHist['Location'] = [iLocationRevIdx] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
 			# phungus -end
 
-			# Connected to capital
-			iConnectionIdx = pCityHelper.computeConnectionRevIdx()
-			if bIsRevWatch and iConnectionIdx > 0 :
-				negList.append( (iConnectionIdx, localText.getText("TXT_KEY_REV_WATCH_NOT_CONNECTED",())) )
-
 			# TODO: Remove
 			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
 			# Religion
-			iHolyCityOwnershipRevIdx = pCityHelper.computeHolyCityOwnershipRevIdx()
-			if bIsRevWatch :
-				if iHolyCityOwnershipRevIdx < 0 :
-					posList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HOLY_CITY", () )) )
-				elif iHolyCityOwnershipRevIdx > 0 :
-					negList.append( (iHolyCityOwnershipRevIdx, localText.getText( "TXT_KEY_REV_WATCH_HEATHENS", () )) )
-
 			iGoodRelIdx, iBadRelIdx = pCityHelper.computeReligionRevIndices()
 
 			if bIsRevWatch :
@@ -1214,7 +1203,7 @@ class Revolution :
 				if iBadRelIdx != 0 :
 					negList.append( (iBadRelIdx, localText.getText( "TXT_KEY_REV_WATCH_NON_STATE_RELIGION", () )) )
 
-			iRelIdx = iGoodRelIdx + iBadRelIdx + iHolyCityOwnershipRevIdx
+			iRelIdx = iGoodRelIdx + iBadRelIdx
 			revIdxHist['Religion'] = [iRelIdx] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
 
 			# Culture
@@ -1390,6 +1379,8 @@ class Revolution :
 		Update the revolution effects for the entire empire.
 		If bIsRevWatch, returns a string showing the factors for civ stability.
 		If not bIsRevWatch, update the player's stability, and also add the civ stability to all cities.
+
+		REVOLUTION_REFACTORING 03/2021 lfgr: Moved most stuff to RevIdxUtils
 		"""
 
 		posList = list()
@@ -1403,109 +1394,23 @@ class Revolution :
 		if( pPlayer.getNumCities() == 0 ) :
 			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
 
-		pTeam = gc.getTeam( pPlayer.getTeam() )
-		iEra = pPlayer.getCurrentRealEra()
+		pPlayerHelper = RevIdxUtils.PlayerRevIdxHelper( iPlayer )
 
-		civRevIdx = 0
-		revIdxHistEvents = 0
-		civStabilityIdx = 0
-
-		civSizeIdx = 0
-		civSizeIdx2 = 0
 		# Size of Empire
-		# Note:  Empire size also effects modifier multiply location effects in local rev indices, so not all effects are here
-		civSizeValue = self.civSizeModifier*RevUtils.computeCivSize( iPlayer )[0]
-		if( civSizeValue > 2.0 ) :
-			if( bIsRevWatch ) : negList.append( (-4, localText.getText("TXT_KEY_REV_WATCH_HUGE_EMP",())) )
-			civSizeIdx += 4
-			civSizeIdx2 -= 4
-		elif( civSizeValue > 1.6 ) :
-			if( bIsRevWatch ) : negList.append( (-3, localText.getText("TXT_KEY_REV_WATCH_LARGE_EMP",())) )
-			civSizeIdx += 3
-			civSizeIdx2 -= 3
-		elif( civSizeValue > 1.4 ) :
-			if( bIsRevWatch ) : negList.append( (-2, localText.getText("TXT_KEY_REV_WATCH_LARGE_EMP",())) )
-			civSizeIdx += 2
-			civSizeIdx2 -= 2
-		elif( civSizeValue > 1.2 ) :
-			civSizeIdx += 1
-			civSizeIdx2 -= 1
-		elif( civSizeValue > 1.0 ) :
-			civSizeIdx += 0
-			civSizeIdx2 += 0
-		elif( civSizeValue > .7 ) :
-			if( bIsRevWatch ) : posList.append( (1, localText.getText("TXT_KEY_REV_WATCH_MED_EMP",())) )
-			civSizeIdx2 += 1
-		else :
-			if( bIsRevWatch ) : posList.append( (1, localText.getText("TXT_KEY_REV_WATCH_SMALL_EMP",())) )
-			# No national flat benefit
-			civSizeIdx2 += 1
-
-		civRevIdx += civSizeIdx
-		civStabilityIdx += civSizeIdx2
-
-
+		iSizeIdx = pPlayerHelper.computeSizeRevIdxAndHelp()[0]
+		if bIsRevWatch :
+			if iSizeIdx > 0 :
+				negList.append( (iSizeIdx, "Empire size" ) ) # TODO: translate
+			elif iSizeIdx < 0 :
+				posList.append( (iSizeIdx, "Empire size" ) ) # TODO: translate
 
 		# Cultural spending
-		cultPerc = pPlayer.getCommercePercent( CommerceTypes.COMMERCE_CULTURE )
-
-		cultIdx = 0
-		if( cultPerc > 0 ) :
-			cultIdx += int(pow(cultPerc, 0.5))
-			if( pPlayer.hasTrait(gc.getInfoTypeForString("TRAIT_CREATIVE")) ):
-				cultIdx += cultIdx/3
-			if( bIsRevWatch ) : posList.append( (cultIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_SPENDING",())) )
-
-
-		# Finances
-		iGoldRate = pPlayer.calculateGoldRate()
-		iGold = pPlayer.getGold()
-
-		goldPerc = pPlayer.getCommercePercent( CommerceTypes.COMMERCE_GOLD )
-		sciPerc = pPlayer.getCommercePercent( CommerceTypes.COMMERCE_RESEARCH )
-
-		# This is calculation AI does to figure out if it's in financial trouble
-		iNetCommerce = 1 + pPlayer.getCommerceRate(CommerceTypes.COMMERCE_GOLD) + pPlayer.getCommerceRate(CommerceTypes.COMMERCE_RESEARCH) + max([0, pPlayer.getGoldPerTurn()])
-		iNetExpenses = pPlayer.calculateInflatedCosts() + max([0, -pPlayer.getGoldPerTurn()])
-		iFundedPercent = (100 * (iNetCommerce - iNetExpenses)) / max([1, iNetCommerce])
-
-		iThresholdPercent = 75
-
-		iNumWars = pTeam.getAtWarCount(True)
-		if( iNumWars > 0 ) :
-			iThresholdPercent -= 10 + 2*min([iNumWars, 5])
-
-		if( pPlayer.isCurrentResearchRepeat() ) :
-			# Have all techs, research no longer important
-			iThresholdPercent *= 2
-			iThresholdPercent /= 3
-		if( cultPerc > 70 ) :
-			# Going for cultural victory, research no longer important
-			iThresholdPercent *= 2
-			iThresholdPercent /= 3
-
-		if( pPlayer.hasTrait(gc.getInfoTypeForString("TRAIT_ORGANIZED")) ):
-			iThresholdPercent *= 10
-			iThresholdPercent /= 11
-
-		if( self.LOG_DEBUG and (bVerbose or iGameTurn%25 == 0) ) : CvUtil.pyPrint("  Revolt - The %s financial status: commerce %d, expenses %d, funded %d, thresh = %d, num wars %d,   gold %d, rate %d, gold perc %.2f"%(pPlayer.getCivilizationDescription(0), iNetCommerce, iNetExpenses, iFundedPercent, iThresholdPercent, iNumWars, iGold, iGoldRate,goldPerc))
-
-		taxesIdx = 0
-		finIdx = 0
-		if pPlayer.AI_isFinancialTrouble():
-			finIdx = -5
-		if( bIsRevWatch ) :
-			if(finIdx < 0):
-				negList.append( (finIdx, localText.getText("TXT_KEY_REV_WATCH_FINANCIAL_NEG",())) )
-		revIdxHistEvents += finIdx
-
-		civRevIdx -= finIdx
-		civStabilityIdx += finIdx
+		iCultSpendingIdx = pPlayerHelper.computeCultureSpendingRevIdxAndHelp()[0]
+		if bIsRevWatch and iCultSpendingIdx != 0 :
+			posList.append( (iCultSpendingIdx, localText.getText( "TXT_KEY_REV_WATCH_CULTURE_SPENDING", () ) ) )
 
 		# Civics
-		[civicIdx,civicPosList,civicNegList] = RevUtils.getCivicsCivStabilityIndex( iPlayer )
-		civStabilityIdx += -civicIdx
-
+		iCivicIdx, civicPosList, civicNegList = pPlayerHelper.getRevWatchCivicsIdxData()
 		posList.extend( civicPosList )
 		negList.extend( civicNegList )
 
@@ -1517,48 +1422,16 @@ class Revolution :
 #		negList.extend( traitNegList )
 
 		# Buildings
-		[buildingIdx,buildingPosList,buildingNegList] = RevUtils.getBuildingsCivStabilityIndex( iPlayer )
-		civStabilityIdx += -buildingIdx
+		iBuildingsIdx, buildingsPosList, buildingsNegList = pPlayerHelper.getRevWatchBuildingsIdxData()
+		posList.extend( buildingsPosList )
+		negList.extend( buildingsNegList )
 
-		posList.extend( buildingPosList )
-		negList.extend( buildingNegList )
+		# Golden age
+		iGoldenAgeIdx = pPlayerHelper.computeGoldenAgeRevIdxAndHelp()[0]
+		if bIsRevWatch and iGoldenAgeIdx != 0 :
+			posList.append( (iGoldenAgeIdx, localText.getText( "TXT_KEY_REV_WATCH_GOLDEN_AGE", () )) )
 
-		# Helps catch tiny civs in late game
-		if( pPlayer.getNumMilitaryUnits() > pPlayer.getTotalPopulation() and pPlayer.getTotalPopulation()/pPlayer.getNumCities() < 4 ) :
-			if( (game.getCurrentEra() - game.getStartEra()) > 2 ) :
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt -	The %s have way more troops than citizens"%(pPlayer.getCivilizationDescription(0)))
-				milIdx = int( (4*pPlayer.getNumMilitaryUnits())/pPlayer.getTotalPopulation() )
-				if( bIsRevWatch ) : negList.append( (-milIdx, localText.getText("TXT_KEY_REV_WATCH_MILITARY",())) )
-				civRevIdx += milIdx
-				civStabilityIdx -= milIdx
-
-		# Any civic or religion changes cause anarchy for non-spiritual civs
-		# TODO: single turn anarchy doesn't show up at beginning or end of players turn
-		if( pPlayer.isAnarchy() ) :
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - The %s is in anarchy!"%(pPlayer.getCivilizationDescription(0)))
-			if( bIsRevWatch ) : negList.append( (-100, localText.getText("TXT_KEY_REV_WATCH_ANARCHY",())) )
-			if( pPlayer.isRebel() ) :
-				civRevIdx += 40
-				civStabilityIdx -= 25
-			else :
-				civRevIdx += 100
-				civStabilityIdx -= 70
-			revIdxHistEvents += 100
-
-		if( pPlayer.isGoldenAge() ) :
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - The %s are in their golden age!"%(pPlayer.getCivilizationDescription(0)))
-			if( bIsRevWatch ) : posList.append( (10, localText.getText("TXT_KEY_REV_WATCH_GOLDEN_AGE",())) )
-			civRevIdx -= 20
-			civStabilityIdx += 10
-			revIdxHistEvents -= 30
-
-		civRevIdx = int(math.floor( gameSpeedMod*self.revIdxModifier*civRevIdx + .5 ))
-		civStabilityIdx = int(math.floor( gameSpeedMod*self.revIdxModifier*civStabilityIdx + .5 ))
-		if( pPlayer.isHuman() ) :
-			civRevIdx = int(math.floor( self.humanIdxModifier*civRevIdx + .5 ))
-			civStabilityIdx = int(math.floor( self.humanIdxModifier*civStabilityIdx + .5 ))
-
-		if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s stability effects: %d, size: %d, civics: %d, cult: %d, taxes: %d, finances: %d\n"%(pPlayer.getCivilizationDescription(0),civStabilityIdx,civSizeIdx2,civicIdx,cultIdx,taxesIdx,finIdx))
+		iCivRevIdx = pPlayerHelper.computeNationalRevIdxAndFinalModifierHelp()[0]
 
 		if( not bIsRevWatch ) :
 			for city in PyPlayer(iPlayer).getCityList() :
@@ -1566,50 +1439,51 @@ class Revolution :
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
-				pCity.changeRevolutionIndex( int(civRevIdx) )
+				pCity.changeRevolutionIndex( int(iCivRevIdx) )
 #-------------------------------------------------------------------------------------------------
 # END Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
-				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
-				revIdxHist['Events'][0] += revIdxHistEvents
-				RevData.updateCityVal(pCity,'RevIdxHistory',revIdxHist)
+				#revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+				#revIdxHist['Events'][0] += revIdxHistEvents
+				#RevData.updateCityVal(pCity,'RevIdxHistory',revIdxHist)
 
-		centerVal = 500
-		feedback = (centerVal - pPlayer.getStabilityIndex())/20
+		# LFGR_TODO?
+		#centerVal = 500
+		#feedback = (centerVal - pPlayer.getStabilityIndex())/20
 
-		civStabilityIdx += feedback
+		iCivStabilityIdx = -iCivRevIdx
 		if( not bIsRevWatch ) :
-			pPlayer.changeStabilityIndex(civStabilityIdx)
+			pPlayer.changeStabilityIndex( iCivStabilityIdx )
 			pPlayer.updateStabilityIndexAverage()
 
 
-		iStablity = pPlayer.getStabilityIndex()
+		iStability = pPlayer.getStabilityIndex()
 		civString = localText.getText("TXT_KEY_REV_WATCH_CIV_STABILITY",()) + ' '
-		if( iStablity > 750 ) :
+		if( iStability > 750 ) :
 			civString += localText.getText("TXT_KEY_REV_WATCH_VERY_STABLE",())
-		elif( iStablity > 570 ) :
+		elif( iStability > 570 ) :
 			civString += localText.getText("TXT_KEY_REV_WATCH_STABLE",())
-		elif( iStablity > 430 ) :
+		elif( iStability > 430 ) :
 			civString += localText.getText("TXT_KEY_REV_WATCH_NEUTRAL",())
-		elif( iStablity > 250 ) :
+		elif( iStability > 250 ) :
 			civString += localText.getText("TXT_KEY_REV_WATCH_UNSTABLE",())
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE",())
 
 		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-			civString += " (%d)  Net: %d"%(iStablity,civStabilityIdx)
+			civString += " (%d)  Net: %d"%(iStability,iCivStabilityIdx)
 		#RevolutionDCM - text conditioning
 		civString += "  "
 		#civString += "  " + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + " "
-		if( (iStablity - pPlayer.getStabilityIndexAverage()) > self.showStabilityTrend ) :
+		if( (iStability - pPlayer.getStabilityIndexAverage()) > self.showStabilityTrend ) :
 			civString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
-		elif( (iStablity - pPlayer.getStabilityIndexAverage()) <= -self.showStabilityTrend ) :
+		elif( (iStability - pPlayer.getStabilityIndexAverage()) <= -self.showStabilityTrend ) :
 			civString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
 		else :
 			civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
 
 		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-			civString += " (%d)"%(iStablity - pPlayer.getStabilityIndexAverage())
+			civString += " (%d)"%(iStability - pPlayer.getStabilityIndexAverage())
 
 		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
 		posList.sort()

@@ -1,6 +1,11 @@
 """
 Refactor of RevIdx part of Revolution modcomp, for Fall from Heaven 2/MNAI
-Changes:
+
+All calculations for local and national RevIdx will ultimately be moved here.
+
+Below are changes made, most here, some still in Revolution.py.
+
+Local rev idx changes:
 * Removed effects of hardcoded "Nationalism", "Liberalism" and "Scientific Method" techs.
 * Instability from nationality no longer reduces the garrison RevIdx cap
 * Removed small capital malus in later eras ("To help remove late game tiny civs" -- we don't want that)
@@ -13,6 +18,21 @@ Changes:
 * Simplified and streamlined unhealthiness, nationality, health and garrison indices
 * No increased civic malus if "better" civics are available
 * Building effects not disabled from wrong PrereqCiv or PrereqTrait
+* Slightly changed combination of final general and human modifiers (does nothing by default)
+* Slightly changed the religion bonus when at war
+
+National rev idx changes:
+* Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former.
+	Stability seemed to have no effect other than for display purposes. Now Stability = -RevIdx.
+* Streamlined small empire bonus and apply it to RevIdx (not just stability)
+* Culture spending is now actually added to the national RevIdx
+* Removed wonky "financial trouble" factor.
+* No increased civic malus if "better" civics are available
+* Civics now added to national RevIdx (instead of only "stability")
+* Building effects not disabled from wrong PrereqCiv or PrereqTrait
+* Removed late-game penalty for players with large military
+* Removed (only partly working) anarchy penalty of 100 (40 for rebels) (LFGR_TODO: Should be added as an RevIdx-changing event)
+* Slightly changed combination of final general and human modifiers (does nothing by default)
 """
 
 
@@ -24,7 +44,7 @@ except ImportError : pass
 
 import math
 
-from PyHelpers import getText
+from PyHelpers import getText, PyPlayer
 
 import BugCore
 import CvUtil
@@ -91,7 +111,7 @@ def coloredRevIdxFactorStr( iRevIdx ) :
 		return sRevIdx
 
 def effectsToIdxAndHelp( effects ) :
-	# type: ( Iterator[Tuple[CvInfoBase, int]] ) -> Tuple[int, unicode]
+	# type: ( Iterable[Tuple[CvInfoBase, int]] ) -> Tuple[int, unicode]
 	""" Aggregate a set of (info, iEffect) tuples into a total effect and help text. """
 	iTotalIdx = 0
 	szHelp = u""
@@ -102,7 +122,7 @@ def effectsToIdxAndHelp( effects ) :
 	return iTotalIdx, szHelp
 
 def effectsToRevWatchData( effects ) : # TODO: Deprecated
-	# type: ( Iterator[Tuple[CvInfoBase, int]] ) -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+	# type: ( Iterable[Tuple[CvInfoBase, int]] ) -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
 	""" Aggregate a set of (info, iEffect) tuples into a total effect, a positive list, and negative list. """
 	iTotal = 0
 	posList = []
@@ -114,6 +134,43 @@ def effectsToRevWatchData( effects ) : # TODO: Deprecated
 		else :
 			posList.append( (iRevIdx, info.getDescription()) )
 	return iTotal, posList, negList
+
+def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False ) :
+	# type (int, CyPlayer) -> (int, unicode)
+	"""
+	Adjust given raw RevIdx for Game speed and other modifiers. Used for both local and national RevIdx.
+	Help string documents changes and stars with "\n" if is not empty.
+
+	bColorFinalIdx indicates whether the final adjusted index should be colored
+	"""
+	szHelp = u""
+
+	# Adjust index accumulation for varying game speeds
+	fGameSpeedMod = RevUtils.getGameSpeedMod()
+	if fGameSpeedMod != 1 :
+		szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", modAsPercent( fGameSpeedMod ) )
+
+	fMod = RevOpt.getIndexModifier()  # TODO: Make constant
+	if pPlayer.isHuman() :
+		fMod *= RevOpt.getHumanIndexModifier()  # TODO: Make constant
+	if fMod != 1 :
+		szHelp += u"\n" + getText( "[ICON_BULLET]Modifier: %D1%", modAsPercent( fMod ) )
+
+	iOffset = int( RevOpt.getIndexOffset() )  # TODO: Make int constant
+	if pPlayer.isHuman() :
+		iOffset += int( RevOpt.getHumanIndexOffset() )  # TODO: Make int constant
+	if iOffset != 0 :
+		szHelp += u"\n" + getText( "[ICON_BULLET]Offset: %D1", iOffset )
+
+	iAdjustedIdx = int( fGameSpeedMod * fMod * iRawIdx + iOffset + .5 )
+
+	if szHelp != u"" :
+		if bColorFinalIdx :
+			szHelp += SEPARATOR + u"\n" + getText( "Adjusted: %s1", coloredRevIdxFactorStr( iAdjustedIdx ) )
+		else :
+			szHelp += SEPARATOR + u"\n" + getText( "Adjusted: %D1", iAdjustedIdx )
+
+	return iAdjustedIdx, szHelp
 
 def modAsPercent( fMod ) :
 	""" Converts a modifier such as 0.7 to a percentage such as -30 """
@@ -422,145 +479,160 @@ class CityRevIdxHelper :
 			fDistModAlt *= 0.5
 		return fDistModAlt
 
-	def computeLocationRevIdx( self ) :
-		# type: () -> int
+	def computeLocationRevIdxAndHelp( self ) :
+		# type: () -> Tuple[int, unicode]
 		# By phungus
 		# Distance to capital City Distance modified by communication techs and structures
 
 		fCityDist = self._computeAdjustedCityDistance() * self._computeDistModifier()
 
-		locationRevIdx = 0
+		iLocationRevIdx = 0
 
 		if self._fCivSizeRawVal > 2.0 :
-			locationRevIdx += int( math.floor( 2.0 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( 2.0 * fCityDist + .5 ) )
 		elif self._fCivSizeRawVal > 1.6 :
-			locationRevIdx += int( math.floor( 1.65 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( 1.65 * fCityDist + .5 ) )
 		elif self._fCivSizeRawVal > 1.4 :
-			locationRevIdx += int( math.floor( 1.45 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( 1.45 * fCityDist + .5 ) )
 		elif self._fCivSizeRawVal > 1.2 :
-			locationRevIdx += int( math.floor( 1.25 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( 1.25 * fCityDist + .5 ) )
 		elif self._fCivSizeRawVal > 1.0 :
-			locationRevIdx += int( math.floor( fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( fCityDist + .5 ) )
 		elif self._fCivSizeRawVal > .7 :
-			locationRevIdx += int( math.floor( .75 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( .75 * fCityDist + .5 ) )
 		else :
-			locationRevIdx += int( math.floor( .5 * fCityDist + .5 ) )
+			iLocationRevIdx += int( math.floor( .5 * fCityDist + .5 ) )
 
-		return int( math.floor( locationRevIdx + .5 ) )
-
-	def computeLocationRevIdxHelp( self ) :
-		# type: () -> unicode
-		# TODO
-		return u"Location effect: %d" % self.computeLocationRevIdx()
-
-	def computeConnectionRevIdx( self ) :
-		# type: () -> int
 
 		pCapital = self._pOwner.getCapitalCity()
-
 		if pCapital is not None and not self._pCity.isConnectedTo( pCapital ) :
 			if self._bRecentlyAcquired or self._pOwner.isRebel() :
-				return 3
+				iDisconnectedIdx = 3
 			else :
-				return min( 5 + self._pOwner.getCurrentRealEra() + self._pCity.getPopulation() / 3, 10 )
-
-		return 0
-
-	def computeConnectionRevIdxHelp( self ) :
-		# type: () -> unicode
-
-		connRevIdx = self.computeConnectionRevIdx()
-		if connRevIdx == 0 :
-			return u"<color=20,230,20,255>Connected to capital.</color>"
+				iDisconnectedIdx = min( 5 + self._pOwner.getCurrentRealEra() + self._pCity.getPopulation() / 3, 10 )
+			szHelp = getText( "Location: %D1", iLocationRevIdx )
+			iLocationRevIdx += iDisconnectedIdx
+			szHelp += u"\n" + getText( "Not connected to capital: %D1", iDisconnectedIdx)
+			szHelp += SEPARATOR + u"\n" + getText( "Full effect: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 		else :
-			return u"<color=255,10,10,255>Not connected to capital.</color>"
+			szHelp = getText( "Location: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 
-	def computeHolyCityOwnershipRevIdx( self ) :
+		return iLocationRevIdx, szHelp
+
+	def computeLocationRevIdx( self ) :
 		# type: () -> int
-		# LFGR_TODO: Should this be National idx?
-		eStateReligion = self._pOwner.getStateReligion()
-		if self._pOwner.isStateReligion() and eStateReligion != -1 : # LFGR_TODO: Necessary?
-			iHolyCityGood, iHolyCityBad = RevUtils.getCivicsHolyCityEffects( self._eOwner )
-			if self._pCity.isHasReligion( eStateReligion ) :
-				pStateHolyCity = game.getHolyCity( eStateReligion )
-				if not pStateHolyCity.isNone() :
-					eHolyCityOwner = pStateHolyCity.getOwner()
-					if eHolyCityOwner == self._eOwner :
-						return -iHolyCityGood # We own the holy city
-					elif gc.getPlayer( eHolyCityOwner ).getStateReligion() != eStateReligion :
-						return iHolyCityBad # Heathens own the holy city!
-
-		return 0
-
-	def computeHolyCityOwnershipRevIdxHelp( self ) :
-		# type: () -> unicode
-		# TODO
-		return u"Stability from owning the holy city of your state religion: %d" % self.computeHolyCityOwnershipRevIdx()
+		return self.computeLocationRevIdxAndHelp()[0]
 
 	def computeReligionRevIndicesAndHelp( self ) :
 		# type: () -> Tuple[int, int, unicode]
 		# Returns (goodIdx, badIdx), where goodIdx is idx based on state religion in city, and
 		#   badIdx is based on non-state religion in city
 		eStateReligion = self._pOwner.getStateReligion()
-		szHelp = ""
 		if self._pOwner.isStateReligion() and eStateReligion != -1 : # LFGR_TODO: Necessary?
 			# LFGR_TODO: Take religion type into account
+
+			# Preparation
+			# TODO: Compute civics effects and show them (?)
+			iCivicsHolyCityGood, iCivicsHolyCityBad = RevUtils.getCivicsHolyCityEffects( self._eOwner )
+			fCivicsGoodMod, fCivicsBadMod = RevUtils.getCivicsReligionMods( self._eOwner )
+
+			# GOOD STUFF
 			iRelGoodIdx = 0
+			szGoodHelp = ""
+
+			# State religion in city
+			if self._pCity.isHasReligion( eStateReligion ) :
+				# Basic bonus
+				iRelGoodIdx -= 4
+				if len( szGoodHelp ) > 0 : szGoodHelp += u"\n"
+				szGoodHelp += getText( "State religion in city: %d1", -4 )
+
+				# Our holy city
+				if self._pCity.isHolyCityByType( eStateReligion ) :
+					iRelGoodIdx += -5 - iCivicsHolyCityGood
+					szGoodHelp += u"\n" + getText( "Holy city: %d1", -5 - iCivicsHolyCityGood ) # LFGR_TODO: Add symbol
+				else :
+					# Do we own the holy city?
+					pStateHolyCity = game.getHolyCity( eStateReligion )
+					if not pStateHolyCity.isNone() :
+						eHolyCityOwner = pStateHolyCity.getOwner()
+						if eHolyCityOwner == self._eOwner :
+							iRelGoodIdx -= iCivicsHolyCityGood # We own the holy city
+							szGoodHelp += u"\n" + getText( "We own the holy city: %d1", -iCivicsHolyCityGood )
+
+			if iRelGoodIdx != 0 :
+				# General modifier
+				fMod = RevOpt.getReligionModifier()
+				if fMod != 1 :
+					szGoodHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
+
+				# War bonus
+				if self._pOwnerTeam.getAtWarCount( True ) > 1 :
+					# God is on your side =P
+					fWarExtraMod = 0.5
+					fMod += fWarExtraMod
+					szGoodHelp += u"\n" + getText( "[ICON_BULLET]War bonus: %D1%", int( fWarExtraMod * 100 ) )
+
+				# Civics
+				if fCivicsGoodMod != 0 :
+					fMod += fCivicsGoodMod
+					szGoodHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsGoodMod * 100 ) )
+
+				iRelGoodIdx = int( math.floor( fMod * iRelGoodIdx + .5 ) )
+				szGoodHelp += u"\n" + getText( "Good effect: %D1", iRelGoodIdx )
+
+			# BAD STUFF
 			fRelBadIdx = 0
+			szBadHelp = u""
+
+			# Non-state religions
 			for eReligion in range( 0, gc.getNumReligionInfos() ) :
 				if self._pCity.isHasReligion( eReligion ) :
-					if eReligion == eStateReligion :
-						iRelGoodIdx += 4
-						if len(szHelp) > 0 : szHelp += u"\n"
-						szHelp += getText( "State religion in city: %d1", -4 )
-					else :
+					if eReligion != eStateReligion :
 						if fRelBadIdx > 4 :
 							fRelBadIdx += 1
 						else :
 							fRelBadIdx += 2.5
-
 			if fRelBadIdx > 0 :
-				if len(szHelp) > 0 : szHelp += u"\n"
-				sRelBadIdx = u"%.2f" % fRelBadIdx
-				if len(szHelp) > 0 : szHelp += u"\n"
-				szHelp += getText( "Non-state religions: %s1", sRelBadIdx )
+				szBadHelp += getText( "Non-state religions: %s1", u"%.2f" % fRelBadIdx )
 
-			# Holy city
+			# Holy city ownership
+			pStateHolyCity = game.getHolyCity( eStateReligion )
+			if not pStateHolyCity.isNone() :
+				if gc.getPlayer( pStateHolyCity.getOwner() ).getStateReligion() != eStateReligion :
+					fRelBadIdx += iCivicsHolyCityBad # Heathens own the holy city!
+					if szBadHelp != u"" : szBadHelp += u"\n"
+					szBadHelp += getText( "Heathens own the holy city: %d1", iCivicsHolyCityBad )
+
+			# Infidel's holy city
 			if self._pCity.isHolyCity() :
-				if self._pCity.isHolyCityByType( eStateReligion ) :
-					iRelGoodIdx += 5
-					szHelp += u"\n"
-					szHelp += getText( "Holy city: %d1", -5 )
-				else :
+				if not self._pCity.isHolyCityByType( eStateReligion ) :
 					fRelBadIdx += 4
-					szHelp += u"\n"
-					szHelp += getText( "Infidel's holy city: %d1", 4 )
+					if szBadHelp != u"" : szBadHelp += u"\n"
+					szBadHelp += getText( "Infidel's holy city: %d1", 4 )
 
-			if iRelGoodIdx == 0 and fRelBadIdx == 0 :
-				return 0, 0, u""
+			if fRelBadIdx != 0 :
+				# General modifier
+				fMod = RevOpt.getReligionModifier()
+				if fMod != 1 :
+					szBadHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
 
-			# LFGR_TODO: This is not used at all!
-			relGoodMod, relBadMod = RevUtils.getCivicsReligionMods( self._eOwner )
-			if self._pOwnerTeam.getAtWarCount( True ) > 1 :
-				# God is on your side =P
-				iWarBonus = int( math.floor( iRelGoodIdx * 0.5 + .5 ) )
-				iRelGoodIdx += iWarBonus
-				szHelp += u"\n"
-				szHelp += getText( "War bonus: %d1", -iWarBonus )
+				# Civics
+				if fCivicsBadMod != 0 :
+					fMod += fCivicsBadMod
+					szBadHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsBadMod * 100 ) )
+				iRelBadIdx = int( math.floor( fMod * fRelBadIdx + .5 ) )
+				szBadHelp += u"\n" + getText( "Bad effect: %D1", iRelBadIdx )
+			else :
+				iRelBadIdx = 0
 
-			fMod = RevOpt.getReligionModifier()
-
-			if fMod != 1 :
-				szHelp += u"\n"
-				szHelp += getText( "General religion modifier: %d1%", int( fMod * 100 ) - 100 )
-
-			iRelGoodIdx = - int( math.floor( fMod * iRelGoodIdx + .5 ) )
-			iRelBadIdx = int( math.floor( fMod * fRelBadIdx + .5 ) )
-
-			szHelp += SEPARATOR
-			szHelp += u"\n"
-			szHelp += getText( "Final religion effect: %d1", iRelBadIdx + iRelGoodIdx )
-
+			# Put everything together
+			if szGoodHelp != u"" and szBadHelp != u"" :
+				szHelp = szGoodHelp + SEPARATOR + u"\n" + szBadHelp
+			elif szGoodHelp != u"" :
+				szHelp = szGoodHelp
+			else :
+				szHelp = szBadHelp
 			return iRelGoodIdx, iRelBadIdx, szHelp
 
 		return 0, 0, getText( "(No state religion)" )
@@ -618,7 +690,7 @@ class CityRevIdxHelper :
 			iCultureIdx = int( math.floor( fCultureIdx + .5 ) )
 			szHelp += SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "Final culture rate effect: %d1%", int( fMod * 100 ) - 100 )
+			szHelp += getText( "Final culture rate effect: %d1%", iCultureIdx )
 		return iCultureIdx, szHelp
 
 	def computeCultureRevIdx( self ) :
@@ -916,8 +988,6 @@ class CityRevIdxHelper :
 		iIdxSum = sum( [ # TODO: Caching
 			self.computeHappinessRevIdx(),
 			self.computeLocationRevIdx(),
-			self.computeConnectionRevIdx(),
-			self.computeHolyCityOwnershipRevIdx(),
 			self.computeReligionRevIdx(),
 			self.computeCultureRevIdx(),
 			self.computeNationalityRevIdx(),
@@ -932,34 +1002,8 @@ class CityRevIdxHelper :
 		] )
 		szHelp = getText( "Sum of all effects: %D1", iIdxSum )
 
-		# Adjust index accumulation for varying game speeds
-		fGameSpeedMod = RevUtils.getGameSpeedMod()
-		if fGameSpeedMod != 1 :
-			szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", modAsPercent( fGameSpeedMod ) )
-
-		fMod = RevOpt.getIndexModifier() # TODO: Make constant
-		if fMod != 1 :
-			szHelp += u"\n" + getText( "[ICON_BULLET]General modifier: %D1%", modAsPercent( fMod ) )
-
-		iOffset = int( RevOpt.getIndexOffset() ) # TODO: Make int constant
-		if iOffset != 0 :
-			szHelp += u"\n" + getText( "[ICON_BULLET]General offset: %D1", iOffset )
-
-		iAdjustedIdx = int( fGameSpeedMod * fMod * iIdxSum + iOffset + .5 )
-		if fGameSpeedMod != 1 or fMod != 1 or iOffset != 0 :
-			szHelp += SEPARATOR + u"\n" + getText( "Adjusted: %D1", iAdjustedIdx )
-
-		# Adjust for human
-		if self._pOwner.isHuman() :
-			fMod = RevOpt.getHumanIndexModifier() # TODO: Make constant
-			if fMod != 1 :
-				szHelp += u"\n" + getText( "[ICON_BULLET]Human modifier: %D1%", modAsPercent( fMod ) )
-			iOffset = int( RevOpt.getHumanIndexOffset() ) # TODO: Make int constant
-			if iOffset != 0 :
-				szHelp += u"\n" + getText( "[ICON_BULLET]Human offset: %D1", iOffset )
-			iAdjustedIdx = int( fGameSpeedMod * fMod * iIdxSum + iOffset + .5 )
-			if fMod != 1 or iOffset != 0 :
-				szHelp += SEPARATOR + u"\n" + getText( "Adjusted for human: %D1", iAdjustedIdx )
+		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iIdxSum, self._pOwner, bColorFinalIdx = False )
+		szHelp += szAdjustHelp
 
 		# Feedback
 		iPrevRevIdx = max( 0, self._pCity.getRevolutionIndex() ) # Just in case
@@ -987,3 +1031,147 @@ class CityRevIdxHelper :
 		return self.computeLocalRevIdxAndFinalModifierHelp()[1]
 
 
+class PlayerRevIdxHelper :
+	"""
+	Helper for national RevIdx.
+	WARNING: Uses caching, so do not re-use after revolution-relevant events!
+	"""
+	def __init__( self, ePlayer ) :
+		self._ePlayer = ePlayer
+		self._pPlayer = gc.getPlayer( ePlayer )
+		self._buildingsCache = None
+
+	def computeSizeRevIdxAndHelp( self, bForceText = False ) :
+		# type: ( bool ) -> Tuple[int, unicode]
+		""" If bForceText, also outputs text if there is no effect. """ # LFGR_TODO: needed?
+		fCivSizeValue = RevOpt.getCivSizeModifier() * RevUtils.computeCivSize( self._ePlayer )[0]
+		if (fCivSizeValue > 2.0) :
+			iSizeIdx = 4
+		elif (fCivSizeValue > 1.6) :
+			iSizeIdx = 3
+		elif (fCivSizeValue > 1.4) :
+			iSizeIdx = 2
+		elif (fCivSizeValue > 1.2) :
+			iSizeIdx = 1
+		elif (fCivSizeValue > 1.0) :
+			iSizeIdx = 0
+		elif (fCivSizeValue > .7) :
+			iSizeIdx = -1
+		else :
+			iSizeIdx = -2
+
+		if iSizeIdx < 0 :
+			szHelp = getText( "Small empire: %s1", coloredRevIdxFactorStr( iSizeIdx ) )
+		elif iSizeIdx > 0 :
+			szHelp = getText( "Large empire: %s1", coloredRevIdxFactorStr( iSizeIdx ) )
+		else :
+			if bForceText :
+				szHelp = getText( "Medium empire: 0" )
+			else :
+				szHelp = u""
+
+		return iSizeIdx, szHelp
+
+
+	def computeCultureSpendingRevIdxAndHelp( self ) : # LFGR_TODO: bForceText?
+		# type: () -> Tuple[int, unicode]
+		szHelp = u""
+
+		iCultPerc = self._pPlayer.getCommercePercent( CommerceTypes.COMMERCE_CULTURE )
+		iCultIdx = isqrt( iCultPerc )
+
+		iExtraPercent = 0
+		szExtraText = u""
+		if self._pPlayer.hasTrait( gc.getInfoTypeForString( "TRAIT_CREATIVE" ) ) : # LFGR_TODO: Make TraitInfo property
+			iExtraPercent += 70
+			szExtraText += getText( "[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Creative[COLOR_REVERT]: %d1%", 70 ) + u"\n"
+
+		if szExtraText != u"" :
+			szHelp += getText( "Raw culture spending effect: %d1", iCultIdx )
+			szHelp += szExtraText # Has a newline at end!
+			iCultIdx += iCultPerc * iExtraPercent // 100
+
+		szHelp += getText( "Culture spending effect: %s1", coloredRevIdxFactorStr( iCultIdx ) )
+
+		return iCultIdx, szHelp
+
+	def computeGoldenAgeRevIdxAndHelp( self ) :
+		if self._pPlayer.isGoldenAge() :
+			iIdx = -20
+			return iIdx, getText( "Golden age: %s1", coloredRevIdxFactorStr( iIdx ) )
+		return 0, u""
+
+	def civicsWithNationalEffect( self ) :
+		# type: () -> Iterator[Tuple[CvCivicInfo, int]]
+		""" Iterates over tuples (pCivic, iRevIdx) """
+		for eCivicOption in range( 0,gc.getNumCivicOptionInfos() ) :
+			eCivic = self._pPlayer.getCivics( eCivicOption )
+			if eCivic >= 0  :
+				info = gc.getCivicInfo( eCivic )
+				iRevIdx = info.getRevIdxNational()
+				# Note: Don't increase effect with other civics with higher LaborFreedon/DemocracyLevel are available.
+				if iRevIdx != 0 :
+					yield info, iRevIdx
+
+	def computeCivicsRevIdxAndHelp( self ) :
+		# type: () -> Tuple[int, unicode]
+		return effectsToIdxAndHelp( self.civicsWithNationalEffect() )
+
+	def getRevWatchCivicsIdxData( self ) : # TODO: Deprecated
+		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+		""" Special function for RevWatchAdvisor """
+		return effectsToRevWatchData( self.civicsWithNationalEffect() )
+
+	def _buildingsWithNationalEffects( self ) :
+		""" Un-cached function"""
+		for eBuilding in range( gc.getNumBuildingInfos() ) :
+			iCount = 0
+			for pCity in PyPlayer( self._ePlayer ).iterCities() :
+				if pCity.isHasBuilding( eBuilding ) :
+					iCount += 1
+
+			if iCount > 0 :
+				kBuilding = gc.getBuildingInfo( eBuilding )
+				iRevIdx = kBuilding.getRevIdxNational()
+				if iRevIdx != 0 :
+					yield kBuilding, iRevIdx * iCount
+
+	def buildingsWithNationalEffects( self ) :
+		# type: () -> Sequence[Tuple[CvBuildingInfo, int]]
+		"""
+		Returns a collection of buildings and associated RevIndices that have a nationwide effect.
+		"""
+		if self._buildingsCache is None :
+			self._buildingsCache = tuple( self._buildingsWithNationalEffects() )
+		return self._buildingsCache
+
+	def computeBuildingsRevIdxAndHelp( self ) :
+		# type: () -> Tuple[int, unicode]
+		return effectsToIdxAndHelp( self.buildingsWithNationalEffects() )
+
+	def getRevWatchBuildingsIdxData( self ) : # TODO: Deprecated
+		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
+		""" Special function for RevWatchAdvisor """
+		return effectsToRevWatchData( self.buildingsWithNationalEffects() )
+
+	def computeNationalRevIdxAndFinalModifierHelp( self ) :
+		# type () -> Tuple[int, unicode]
+		""" The total RevIdx (per turn) of this city. The help string only contains final adjustments. """
+		iIdxSum = sum( [ # TODO: Caching
+			self.computeSizeRevIdxAndHelp()[0],
+			self.computeCultureSpendingRevIdxAndHelp()[0],
+			self.computeGoldenAgeRevIdxAndHelp()[0],
+			self.computeCivicsRevIdxAndHelp()[0],
+			self.computeBuildingsRevIdxAndHelp()[0]
+		] )
+
+		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iIdxSum, self._pPlayer, bColorFinalIdx = True )
+
+		if szAdjustHelp == u"" :
+			szHelp = getText( "Sum of all effects: %s1", coloredRevIdxFactorStr( iIdxSum ) )
+		else :
+			szHelp = getText( "Sum of all effects: %D1", iIdxSum ) + szAdjustHelp
+
+		# LFGR_TODO: Feedback?
+
+		return iAdjustedIdx, szHelp

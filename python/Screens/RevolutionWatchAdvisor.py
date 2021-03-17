@@ -40,7 +40,7 @@
 #  CONSEQUENTIAL DAMAGES RESULTING FROM POSSESSION, USE OR MALFUNCTION OF THE SOFTWARE, INCLUDING
 #  DAMAGES TO PROPERTY, LOSS OF GOODWILL, COMPUTER FAILURE OR MALFUNCTION AND, TO THE EXTENT PERMITTED
 #  BY LAW, DAMAGES FOR PERSONAL INJURIES, EVEN IF THE AUTHOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
-#  DAMAGES. THE AUTHOR’S LIABILITY SHALL NOT EXCEED THE ACTUAL PRICE PAID FOR USE OF THE MATERIAL. SOME
+#  DAMAGES. THE AUTHORï¿½S LIABILITY SHALL NOT EXCEED THE ACTUAL PRICE PAID FOR USE OF THE MATERIAL. SOME
 #  STATES/COUNTRIES DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS AND/OR THE EXCLUSION
 #  OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATIONS AND/OR EXCLUSION OR
 #  LIMITATION OF LIABILITY MAY NOT APPLY TO YOU. THIS WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS, AND
@@ -2879,221 +2879,31 @@ class RevolutionWatchAdvisor:
 
 		# RevolutionDCM - legend control 9
 		if(self.PAGES is None):
-			if(self.isFlavorful):
-				self.PAGES =	[
-					{
-						"name" : "Executive Summary",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("AUTOMATION", 80, "text"),
-							("FEATURES", 92, "text"),
-							("POPULATION", 35, "int"),
-							("GARRISON", 30, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("MAINTENANCE", 30, "int"),
-							("BASE_COMMERCE", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Specialization",
-						"showSpecControls" : True,
-						"showRevolutionLegend" : True,
-						"showGPLegend" : True,
-						"columns" : [
-							("NAME", 95, "text"),
-							("FOUNDED", 80, "date"),
-							("RELIGIONS", 90, "text"),
-							("SPECIALISTS", 159, "text"),
-							("HAPPY", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Top Cities - National",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("FEATURES", 92, "text"),
-							("RELIGIONS", 90, "text"),
-							("GOLD", 38, "int"),
-							("NRANK_GOLD",	38, "int"),
-							("RESEARCH", 38, "int"),
-							("NRANK_RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("NRANK_CULTURE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Top Cities - Global",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("FEATURES", 92, "text"),
-							("RELIGIONS", 90, "text"),
-							("GOLD", 38, "int"),
-							("GRANK_GOLD",	38, "int"),
-							("RESEARCH", 38, "int"),
-							("GRANK_RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("GRANK_CULTURE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Military Overview",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("GARRISON", 30, "int"),
-							("DEFENSE", 60, "int"),
-							("THREATS", 60, "text"),
-							("CONSCRIPT_UNIT", 90, "text"),
-							(self.getBuildingKey(3), 70, "text"),
-							(self.getBuildingKey(4), 70, "text"),
-							(self.getBuildingKey(5), 70, "text"),
-							(self.getBuildingKey(6), 70, "text"),
-							(self.getBuildingKey(7), 70, "text"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					}
+			self.PAGES =	[
+				{
+					"name" : "Revolutions",
+					"showSpecControls" : True,
+					"showRevolutionLegend" : True,
+					"showGPLegend" : True,
+					"columns" : [
+						("NAME", 95, "text"),
+						("FOUNDED", 80, "date"),
+						("RELIGIONS", 90, "text"),
+						("SPECIALISTS", 159, "text"),
+						("HAPPY", 30, "int"),
+						("GROWTH", 35, "int"),
+						("FOOD", 35, "int"),
+						("PRODUCTION", 38, "int"),
+						("GOLD", 38, "int"),
+						("RESEARCH", 38, "int"),
+						("CULTURE_RATE", 38, "int"),
+						("CULTURE", 53, "int"),
+						("GREATPEOPLE_RATE", 38, "int"),
+						("GREATPEOPLE", 45, "int"),
+						("PRODUCING", 90, "text"),
+						("PRODUCING_TURNS", 33, "int"),
 					]
-			else:
-				self.PAGES =	[
-					{
-						"name" : "Default View",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("AUTOMATION", 80, "text"),
-							("FEATURES", 92, "text"),
-							("POPULATION", 35, "int"),
-							("GARRISON", 30, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("MAINTENANCE", 30, "int"),
-							("BASE_COMMERCE", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Specialists",
-						"showSpecControls" : True,
-						"showRevolutionLegend" : True,
-						"showGPLegend" : True,
-						"columns" : [
-							("NAME", 95, "text"),
-							("FOUNDED", 80, "date"),
-							("RELIGIONS", 90, "text"),
-							("SPECIALISTS", 159, "text"),
-							("HAPPY", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Growth",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							(self.getBuildingKey(8), 70, "text"),
-							(self.getBuildingKey(12), 70, "text"),
-							(self.getBuildingKey(9), 70, "text"),
-							(self.getBuildingKey(31), 70, "text"),
-							(self.getBuildingKey(10), 70, "text"),
-							(self.getBuildingKey(11), 70, "text"),
-							(self.getBuildingKey(13), 70, "text"),
-							(self.getBuildingKey(33), 70, "text"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Military",
-						"showSpecControls" : False,
-						"showRevolutionLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("GARRISON", 30, "int"),
-							("DEFENSE", 60, "int"),
-							("THREATS", 60, "text"),
-							("CONSCRIPT_UNIT", 90, "text"),
-							(self.getBuildingKey(3), 70, "text"),
-							(self.getBuildingKey(4), 70, "text"),
-							(self.getBuildingKey(5), 70, "text"),
-							(self.getBuildingKey(6), 70, "text"),
-							(self.getBuildingKey(7), 70, "text"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					}
+				}
 				]
 
 		# Fix and retain configuration from previous versions, when possible.

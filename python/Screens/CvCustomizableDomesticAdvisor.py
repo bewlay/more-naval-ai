@@ -80,6 +80,7 @@ import TradeUtil
 
 import CDAColumns
 import CDAColumnsRevolution
+import RevIdxUtils
 
 # BUG - Mac Support - start
 BugUtil.fixSets(globals())
@@ -2349,6 +2350,10 @@ class CvCustomizableDomesticAdvisor:
 			iColHeaderX = self.nTableX + 30
 			iColHeaderY = self.nTableY
 			civInfo = gc.getCivilizationInfo(gc.getActivePlayer().getCivilizationType())
+
+			# REVOLUTION_REFACTORING 03/2021 lfgr: Caching helpers for
+			pPlayerHelper = RevIdxUtils.PlayerRevIdxHelper( gc.getActivePlayer().getID() )
+			lCitiesWithHelpers = [(cityList[i].city, RevIdxUtils.CityRevIdxHelper( cityList[i].city ) ) for i in cityRange]
 			
 			# Loop through the columns first. This is unintuitive, but faster.
 			for value, key in columns:
@@ -2374,10 +2379,11 @@ class CvCustomizableDomesticAdvisor:
 							screen.setTableColumnHeader( page, value + 1, "<font=2>%s</font>" % columnDef.title,
 									self.columnWidth[key] )
 						# Make cells
-						for i in cityRange :
+						for i, t in enumerate( lCitiesWithHelpers ) :
+							pCity, pCityHelper = t
 							try :
 								pCity = cityList[i].city
-								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity )
+								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper, pPlayerHelper = pPlayerHelper )
 								print( "%s, %s, %s" % ( columnDef.name, szCellValue, cellTooltip ) )
 								self._tooltipCache[self.COLUMNS_INDEX[key], pCity.getID()] = cellTooltip
 

@@ -46,57 +46,6 @@ def initCivicsList( ) :
 ########################## Civics effect helper functions #####################
 
 
-def getCivicsCivStabilityIndex( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	civStabilityIdx = 0
-	posList = list()
-	negList = list()
-
-	if( pPlayer.isNone() ) :
-		return [civStabilityIdx,posList,negList]
-
-	if( len(civicsList) < gc.getNumCivicOptionInfos() ) :
-		initCivicsList()
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			civicEffect = -kCivic.getRevIdxNational()
-
-			# Effect doubles for some when a much better alternative exists
-			if( civicEffect < 0 and kCivic.getRevLaborFreedom() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevLaborFreedom() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %d doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect < 0 and kCivic.getRevDemocracyLevel() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevDemocracyLevel() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %d doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 ) :
-				posList.append( (civicEffect, kCivic.getDescription()) )
-			elif( civicEffect < 0 ) :
-				negList.append( (civicEffect, kCivic.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kCivic.getDescription(),civicEffect))
-
-			civStabilityIdx += civicEffect
-
-	return [civStabilityIdx,posList,negList]
-
-
 def getCivicsHolyCityEffects( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)

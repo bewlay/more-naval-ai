@@ -5,10 +5,11 @@ CDA_REFACTOR 03/2021 lfgr
 """
 
 from CvPythonExtensions import *
+from PyHelpers import getText
 import FontUtil
 
 from CDAColumns import CDAColumn
-from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr
+from RevIdxUtils import CityRevIdxHelper, PlayerRevIdxHelper, coloredRevIdxFactorStr
 
 artFileMgr = CyArtFileMgr()
 gc = CyGlobalContext()
@@ -22,35 +23,64 @@ class RevolutionCDAColumn( CDAColumn ) :
 
 class RevIdxCityHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type: int
 	def __init__( self, szName, iDefaultWidth, szTitle, cityHelperRevIdxAndHelpFunc ) :
+		# type: (str, int, unicode, Callable[[CityRevIdxHelper], Tuple[int, unicode]]) -> None
 		super( RevIdxCityHelperCombinedCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
 		self._cityHelperRevIdxAndHelpFunc = cityHelperRevIdxAndHelpFunc
 
-	def compute_value_and_tooltip( self, pCity ) :
-		helper = CityRevIdxHelper( pCity ) # TODO: Cache in CDA
-		value, tooltip = self._cityHelperRevIdxAndHelpFunc( helper )
+	def compute_value_and_tooltip( self, pCity, pCityHelper = None, **kwargs ) :
+		assert pCityHelper is not None
+		value, tooltip = self._cityHelperRevIdxAndHelpFunc( pCityHelper )
 		return coloredRevIdxFactorStr( value ), tooltip
+
+	@property
+	def type( self ) :
+		return "int"
 
 
 class RevIdxCityHelperCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self, szName, iDefaultWidth, szTitle, cityHelperRevIdxFunc, cityHelperRevIdxHelpFunc ) :
+		# type: (str, int, unicode, Callable[[CityRevIdxHelper], int], Callable[[CityRevIdxHelper], unicode]) -> None
 		super( RevIdxCityHelperCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
 		self._cityHelperRevIdxFunc = cityHelperRevIdxFunc
 		self._cityHelperRevIdxHelpFunc = cityHelperRevIdxHelpFunc
 
-	def compute_value_and_tooltip( self, pCity ) :
-		helper = CityRevIdxHelper( pCity ) # TODO: Cache in CDA
-		value = self._cityHelperRevIdxFunc( helper )
-		tooltip = self._cityHelperRevIdxHelpFunc( helper )
+	def compute_value_and_tooltip( self, pCity, pCityHelper = None, **kwargs ) :
+		assert pCityHelper is not None
+		value = self._cityHelperRevIdxFunc( pCityHelper )
+		tooltip = self._cityHelperRevIdxHelpFunc( pCityHelper )
 		return coloredRevIdxFactorStr( value ), tooltip
+
+	@property
+	def type( self ) :
+		return "int"
+
+
+class RevIdxPlayerHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type: int
+	def __init__( self, szName, iDefaultWidth, szTitle, cityHelperRevIdxAndHelpFunc ) :
+		# type: (str, int, unicode, Callable[[PlayerRevIdxHelper], Tuple[int, unicode]]) -> None
+		super( RevIdxPlayerHelperCombinedCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
+		self._cityHelperRevIdxAndHelpFunc = cityHelperRevIdxAndHelpFunc
+
+	def compute_value_and_tooltip( self, pCity, pPlayerHelper = None, **kwargs ) :
+		assert pPlayerHelper is not None
+		value, tooltip = self._cityHelperRevIdxAndHelpFunc( pPlayerHelper )
+		return coloredRevIdxFactorStr( value ), tooltip
+
+	@property
+	def type( self ) :
+		return "int"
 
 
 class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self ) :
-		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55,
-				localText.getText( "Rev", () ) ) # TODO: Translate
+		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, "RevIdx" ) # TODO: Translate
 
-	def compute_value( self, pCity ) :
-		return unicode( pCity.getRevolutionIndex() )
+	def compute_value_and_tooltip( self, pCity, **kwargs ) :
+		return unicode( pCity.getRevolutionIndex() ), u""
+
+	@property
+	def type( self ) :
+		return "int"
 
 
 def makeColumns() :
@@ -61,15 +91,8 @@ def makeColumns() :
 				u"<font=2>%s/%s</font>" % ( FontUtil.getChar( "happy" ), FontUtil.getChar( "unhappy" ) ),
 				CityRevIdxHelper.computeHappinessRevIdxAndHelp ),
 
-		RevIdxCityHelperCDAColumn( "REV_LOCATION", 40, u"<font=2>%s</font>" % FontUtil.getChar( "map" ),
-				CityRevIdxHelper.computeLocationRevIdx, CityRevIdxHelper.computeLocationRevIdxHelp ),
-
-		RevIdxCityHelperCDAColumn( "REV_CONNECTION", 40, u"<font=2>%s</font>" % FontUtil.getChar( "trade" ),
-			CityRevIdxHelper.computeConnectionRevIdx, CityRevIdxHelper.computeConnectionRevIdxHelp ),
-
-		RevIdxCityHelperCDAColumn( "REV_HC_OWNERSHIP", 42,
-				u"<font=2>%s%s</font>" % (FontUtil.getChar( "religion" ), FontUtil.getChar( "star" ) ),
-				CityRevIdxHelper.computeHolyCityOwnershipRevIdx, CityRevIdxHelper.computeHolyCityOwnershipRevIdxHelp ),
+		RevIdxCityHelperCombinedCDAColumn( "REV_LOCATION", 40, u"<font=2>%s</font>" % FontUtil.getChar( "map" ),
+				CityRevIdxHelper.computeLocationRevIdxAndHelp ),
 
 		RevIdxCityHelperCDAColumn( "REV_RELIGION", 40, u"<font=2>%s</font>" % FontUtil.getChar( "religion" ),
 				CityRevIdxHelper.computeReligionRevIdx, CityRevIdxHelper.computeReligionRevIdxHelp ),
@@ -103,8 +126,35 @@ def makeColumns() :
 				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_CIVICS" ).getPath(),
 				CityRevIdxHelper.computeCivicsRevIdxAndHelp ),
 
-		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Rev/T",
-				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp )
+		RevIdxCityHelperCombinedCDAColumn( "REV_BUILDINGS", 50,
+				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
+				CityRevIdxHelper.computeBuildingsRevIdxAndHelp ),
+
+		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Loc",
+				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_SIZE", 40,
+				u"Size", # TODO
+				PlayerRevIdxHelper.computeSizeRevIdxAndHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_CULT_SPENDING", 40,
+				u"<font=2>%s</font>S" % FontUtil.getChar( "commerce culture" ),
+				PlayerRevIdxHelper.computeCultureSpendingRevIdxAndHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_GOLDEN_AGE", 40,
+				u"<font=2>%s</font>" % FontUtil.getChar( "goldenage" ),
+				PlayerRevIdxHelper.computeGoldenAgeRevIdxAndHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_CIVICS", 40,
+				u"N<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_CIVICS" ).getPath(),
+				PlayerRevIdxHelper.computeCivicsRevIdxAndHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_BUILDINGS", 40,
+				u"N<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
+				PlayerRevIdxHelper.computeBuildingsRevIdxAndHelp ),
+
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat",
+				PlayerRevIdxHelper.computeNationalRevIdxAndFinalModifierHelp )
 	)
 
 

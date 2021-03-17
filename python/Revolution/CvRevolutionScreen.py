@@ -59,17 +59,8 @@ REV_IDX_COLUMNS_CONFIG = (
 	RevIdxCombinedColConfig( RevIdxUtils.CityRevIdxHelper.computeHappinessRevIdxAndHelp,
 			u"<font=2>%s/%s</font>" % (FontUtil.getChar( "happy" ), FontUtil.getChar( "unhappy" )) ),
 	
-	RevIdxColConfig( RevIdxUtils.CityRevIdxHelper.computeLocationRevIdx,
-			RevIdxUtils.CityRevIdxHelper.computeLocationRevIdxHelp,
+	RevIdxCombinedColConfig( RevIdxUtils.CityRevIdxHelper.computeLocationRevIdxAndHelp,
 			u"<font=2>%s</font>" % FontUtil.getChar( "map" ) ),
-	
-	RevIdxColConfig( RevIdxUtils.CityRevIdxHelper.computeConnectionRevIdx,
-			RevIdxUtils.CityRevIdxHelper.computeConnectionRevIdxHelp,
-			u"<font=2>%s</font>" % FontUtil.getChar( "trade" ) ),
-	
-	RevIdxColConfig( RevIdxUtils.CityRevIdxHelper.computeHolyCityOwnershipRevIdx,
-			RevIdxUtils.CityRevIdxHelper.computeHolyCityOwnershipRevIdxHelp,
-			u"<font=2>%s%s</font>" % ( FontUtil.getChar( "religion" ), FontUtil.getChar( "star" ) ) ),
 	
 	RevIdxColConfig( RevIdxUtils.CityRevIdxHelper.computeReligionRevIdx,
 			RevIdxUtils.CityRevIdxHelper.computeReligionRevIdxHelp,
