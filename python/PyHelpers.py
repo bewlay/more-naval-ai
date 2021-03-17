@@ -9,6 +9,7 @@ localText = CyTranslator()
 
 # Improved PyHelpers 05/2020 lfgr: getText with varargs
 def getText( szTag, *args ) :
+	# type: (str, Any) -> unicode
 	return localText.getText( szTag, tuple( args ) )
 
 
