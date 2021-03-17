@@ -5,6 +5,7 @@ CDA_REFACTOR 03/2021 lfgr
 """
 
 from CvPythonExtensions import *
+from PyHelpers import getText
 import FontUtil
 
 gc = CyGlobalContext()
@@ -127,40 +128,17 @@ class CDAColumn( object ) :
 		where the last three parameters are for creating the button widget.
 		"""
 		return None
-	
-	def compute_value( self, pCity ) :
-		# type : (CyCity) -> Union[unicode, int]
-		"""
-		Compute the cell content of this column for the given city.
-		This or compute_value_and_tooltip should be overridden by subclasses.
-		"""
-		return self.compute_value_and_tooltip( pCity )[0]
 
-	def compute_tooltip( self, pCity ) :
-		# type: (CyCity) -> Optional[unicode]
-		""" Compute the cell tooltip of this column for the given city. None means no tooltip """
-		return self.compute_value_and_tooltip( pCity )[1]
-
-	def compute_value_and_tooltip( self, pCity ) :
+	def compute_value_and_tooltip( self, pCity, **kwargs ) :
+		# type: (CyCity, Any) -> Tuple[unicode, Optional[unicode]]
 		"""
-		Returns a tuple (cellContent, tooltip). May be overridden instead of compute_value() and compute_tooltip().
+		Compute the cell content and tooltip of this column for the given city.
+		Compute the cell content and tooltip of this column for the given city.
+		CDA might pass additional keyword arguments for caching.
+		Returns a tuple (cellContent, tooltip).
+		Returns a tuple (cellContent, tooltip).
 		"""
 		return (u"", None)
-
-	def compute_int_color( self, pCity, iValue ) :
-		# type: (CyCity, int) -> int
-		"""
-		Returns the color of the cell value as a ColorTypes.
-		Only is called if compute_value() returns an integer; string coloring can be done manually.
-		The return value of compute_value() is provided as the second argument for convenience.
-		"""
-		return ColorTypes.NO_COLOR
-
-	@property
-	def is_date_cell( self ) :
-		# type: () -> bool
-		""" Whether the cell content string should be written with CyGInterface.setTableDate """
-		return False
 	
 	def is_valid( self, pPlayer ) :
 		# type: (CyPlayer) -> bool
@@ -168,11 +146,30 @@ class CDAColumn( object ) :
 		return True
 	
 	@property
-	def type( self ) : # LFGR_TODO: Remove
-		# type: () -> str
-		""" For compatibility. """
+	def type( self ) :
+		# type: () -> Literal["text", "int", "date"]
+		"""
+		"text", "int", or "date". Only affects the function used to display cells in CDA.
+		Note that compute_value_and_tooltip(...)[0] is expected to be unicode regardless.
+		"""
 		return "text"
 
+class CityFuncCDAColumn( CDAColumn ) :
+	def __init__( self, szName, iDefaultWidth, szTitle, cityFunc, szTooltipTag, szType = "text" ) :
+		# type: (str, int, unicode, Callable[[CyCity], unicode], str, Literal["text", "int", "date"] ) -> None
+		super( CityFuncCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
+		self._cityFunc = cityFunc
+		self._szTooltipTag = szTooltipTag
+		self._szType = szType
+
+	def compute_value_and_tooltip( self, pCity, **kwargs ) :
+		value = self._cityFunc( pCity )
+		tooltip = getText( self._szTooltipTag, value )
+		return value, tooltip
+
+	@property
+	def type( self ) :
+		return self._szType
 
 class BuildingIconCDAColumn( CDAColumn ) :
 	def __init__( self, eBuilding ) :
@@ -185,38 +182,23 @@ class BuildingIconCDAColumn( CDAColumn ) :
 	def button( self ) :
 		return ( WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, self._info.getButton(), self._eBuilding, -1 )
 	
-	def compute_value( self, pCity ) : # From CvCustomizableDomesticAdvisor
+	def compute_value_and_tooltip( self, pCity, **kwargs ) : # From CvCustomizableDomesticAdvisor
+		szName = self._info.getDescription()
 		if self._eBuilding == BuildingTypes.NO_BUILDING :
-			return self._help.objectNotPossible
+			return self._help.objectNotPossible, getText( "Cannot build %s1", szName ) # LFGR_TODO: Translate
 		if pCity.getNumBuilding( self._eBuilding ) > 0:
 			if pCity.getNumActiveBuilding( self._eBuilding ) > 0:
-				return self._help.objectHave
+				return self._help.objectHave, getText( "%s1 present", szName ) # LFGR_TODO: Translate
 			else:
-				return self._help.objectHaveObsolete
+				return self._help.objectHaveObsolete, getText( "%s1 present, but obsolete", szName ) # LFGR_TODO: Translate
 		elif pCity.getFirstBuildingOrder( self._eBuilding ) != -1:
-			return self._help.objectUnderConstruction
+			return self._help.objectUnderConstruction, getText( "%s1 under construction", szName ) # LFGR_TODO: Translate
 		elif pCity.canConstruct( self._eBuilding, False, False, False ):
-			return self._help.objectPossible
+			return self._help.objectPossible, getText( "%s1 can be constructed", szName ) # LFGR_TODO: Translate
 		elif pCity.canConstruct( self._eBuilding, True, False, False ):
-			return self._help.objectPossibleConcurrent
+			return self._help.objectPossibleConcurrent, getText( "%s1 can be continued", szName ) # LFGR_TODO: Translate, is this correct?
 		else:
-			return self._help.objectNotPossible
-
-	def compute_tooltip( self, pCity ) :
-		szName = self._info.getDescription()
-		value = self.compute_value( pCity )
-		if value == self._help.objectNotPossible :
-			return localText.getText( "Cannot build %s1", (szName,) ) # LFGR_TODO: Translate
-		elif value == self._help.objectHave :
-			return localText.getText( "%s1 present", (szName,) ) # LFGR_TODO: Translate
-		elif value == self._help.objectHaveObsolete :
-			return localText.getText( "%s1 present, but obsolete", (szName,) ) # LFGR_TODO: Translate
-		elif value == self._help.objectUnderConstruction :
-			return localText.getText( "%s1 under construction", (szName,) ) # LFGR_TODO: Translate
-		elif value == self._help.objectPossible :
-			return localText.getText( "%s1 can be constructed", (szName,) ) # LFGR_TODO: Translate
-		elif value == self._help.objectPossibleConcurrent :
-			return localText.getText( "%s1 can be continued", (szName,) ) # LFGR_TODO: Translate, is this correct?
+			return self._help.objectNotPossible, getText( "Cannot build %s1", szName ) # LFGR_TODO: Translate
 
 	def is_valid( self, pPlayer ) :
 		eClass = self._info.getBuildingClassType()
@@ -226,22 +208,22 @@ class BuildingIconCDAColumn( CDAColumn ) :
 
 class FeaturesCDAColumn( CDAColumn ) :
 	def __init__( self ) :
-		super( FeaturesCDAColumn, self ).__init__( "FEATURES", 106, localText.getText( "TXT_KEY_MISC_FEATURES", () ) )
+		super( FeaturesCDAColumn, self ).__init__( "FEATURES", 106, getText( "TXT_KEY_MISC_FEATURES" ) )
 
-	def compute_value_and_tooltip( self, pCity ) :
+	def compute_value_and_tooltip( self, pCity, **kwargs ) :
 		# Mostly from original CDA
 		szValue = ""
-		szTooltip = ""
+		szTooltip = u""
 
 		# First look for Government Centers
 		if pCity.isGovernmentCenter():
 			# And distinguish between the Capital and the others (e.g. Forbidden Palace)
 			if pCity.isCapital():
 				szValue += self._help.starIcon
-				szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]Capital", () ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Capital" ) ) # TODO: Translate
 			else:
 				szValue += self._help.silverStarIcon
-				szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]Government center", () ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Government center" ) ) # TODO: Translate
 
 		# add National Wonders
 		for i in range(gc.getNumBuildingInfos()):
@@ -250,22 +232,21 @@ class FeaturesCDAColumn( CDAColumn ) :
 			if classInfo.getMaxGlobalInstances() == -1 and classInfo.getMaxPlayerInstances() == 1 and pCity.getNumBuilding(i) > 0 and not info.isCapital():
 				# Use bullets as markers for National Wonders
 				szValue += self._help.bulletIcon
-				szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]National wonder: %s1_building",
-						( info.getTextKey(), ) ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]National wonder: %s1_building",
+						info.getTextKey() ) ) # TODO: Translate
 
 		if pCity.isDisorder():
 			if pCity.isOccupation():
 				szOccu = u"%c" % CyGame().getSymbolID(FontSymbols.OCCUPATION_CHAR)
 				szValue += szOccu +":"+unicode(pCity.getOccupationTimer())
-				szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]",
-						() ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]" ) ) # TODO: Translate
 			else:
-				pCity += self._help.angryIcon
-				szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]Disorder", () ) ) # TODO: Translate
+				szValue += self._help.angryIcon
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Disorder" ) ) # TODO: Translate
 
 		pTradeCity = pCity.getTradeCity(0)
 		if (pTradeCity and pTradeCity.getOwner() >= 0):
 			szValue += self._help.tradeIcon
-			szTooltip = _appendLine( szTooltip, localText.getText( "[ICON_BULLET]Trade with other cities", () ) ) # TODO: Translate
+			szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Trade with other cities" ) ) # TODO: Translate
 
 		return szValue, szTooltip
