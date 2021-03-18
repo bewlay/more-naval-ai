@@ -6,6 +6,7 @@ import BugUtil
 import CvUtil
 
 
+gc = CyGlobalContext()
 BugOpt = BugCore.game.Advisors
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
@@ -33,6 +34,17 @@ def makeTableColWidths( wTotal, lfWeights ) :
 		yield wCol
 	
 	yield wTotal - wUsed # Last column
+
+
+def addMessage( ePlayer, szMessage, bForce = True, iLength = None, szSound = "",
+		eType = InterfaceMessageTypes.MESSAGE_TYPE_INFO, szIcon = None, eFlashColor = ColorTypes.NO_COLOR,
+		iFlashX = -1, iFlashY = -1, bShowOffScreenArrows = False, bShowOnScreenArrows = False ) :
+	""" Like CyInterface().addMessage, but with default arguments, and the szMessage argument moved. """
+	if iLength is None :
+		iLength = gc.getEVENT_MESSAGE_TIME()
+	CyInterface().addMessage( ePlayer, bForce, iLength, szMessage, szSound, eType, szIcon, eFlashColor, iFlashX,
+			iFlashY, bShowOffScreenArrows, bShowOnScreenArrows )
+
 
 def setTableColHeaders( screen, szTable, wTable, lfWeights, lszHeaders = None ) :
 	if lszHeaders is None :

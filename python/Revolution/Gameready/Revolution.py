@@ -20,6 +20,7 @@ import CvScreensInterface
 # lfgr
 import RevCivUtils
 import RevIdxUtils
+import InterfaceUtils
 # lfgr end
 
 # lfgr: removed RebelTypes stuff
@@ -985,7 +986,6 @@ class Revolution :
 
 		else :
 			sumRevIdx = 0
-			bChanged = False
 			for [i,curCivic] in enumerate(curCivics) :
 				if( not curCivic == prevCivics[i] ) :
 					curInfo  = gc.getCivicInfo(curCivic)
@@ -1017,9 +1017,8 @@ class Revolution :
 							pCity = city.GetCy()
 							revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 
-							iThisRevIdxChange = iRevIdxChange
 							mod = 1.0
-							for [listIdx,key] in enumerate(keyList) :
+							for key in keyList :
 								if( revIdxHist[key][0] > 9 ) :
 									mod *= 1.8
 								elif( revIdxHist[key][0] > 3 ) :
@@ -1044,6 +1043,14 @@ class Revolution :
 
 			if( not sumRevIdx == 0 ) :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Avg net effect for %s: %d"%(pPlayer.getCivilizationDescription(0),sumRevIdx))
+
+			# REVOLUTION_ALERTS 03/2021 lfgr
+			if sumRevIdx > 0 :
+				InterfaceUtils.addMessage( iPlayer, PyHelpers.getText(
+						"[COLOR_NEGATIVE_TEXT]The change of civics has increased revolutionary sentiment throughout your empire[COLOR_REVERT]"  ) ) # LFGR_TODO: Translate
+			elif sumRevIdx < 0 :
+				InterfaceUtils.addMessage( iPlayer, PyHelpers.getText(
+						"[COLOR_POSITIVE_TEXT]The change of civics has reduced revolutionary sentiment throughout your empire[COLOR_REVERT]"  ) ) # LFGR_TODO: Translate
 
 
 	def updatePlayerRevolution( self, argsList ):
