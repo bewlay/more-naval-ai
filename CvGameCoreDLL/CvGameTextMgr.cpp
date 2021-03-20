@@ -10593,7 +10593,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		}
 		
 		//  Revolution Switch to Modifier
-		/*
 		if (0 != kCivic.getRevIdxSwitchTo())
 		{
 			if (kCivic.getRevIdxSwitchTo() < 0)
@@ -10607,24 +10606,13 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", kCivic.getRevIdxSwitchTo()));
 			}
 		}
-		*/
 		//  Revolution Nationality Modifier
+		// REVOLUTION_REFACTORING 03/2021 lfgr: More precise messages
 		if (0 != kCivic.getRevIdxNationalityMod())
 		{
-			if ( kCivic.getRevIdxNationalityMod() < 0)
-			{
-				szHelpText.append(NEWLINE);
-				CvWString szTempBuffer;
-				szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxNationalityMod());
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_REDUCTION_MOD", szTempBuffer.GetCString()));
-			}
-			if ( kCivic.getRevIdxNationalityMod() > 0)
-			{
-				szHelpText.append(NEWLINE);
-				CvWString szTempBuffer;
-				szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxNationalityMod());
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_INCREASE_MOD", szTempBuffer.GetCString()));
-			}
+			szHelpText.append(NEWLINE);
+			CvWString szTempBuffer;
+			szHelpText.append( gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_MOD", (int) (100 * kCivic.getRevIdxNationalityMod()) ) );
 		}
 		
 		//  Revolution Bad Religion Modifier
@@ -10643,39 +10631,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			CvWString szTempBuffer;
 			szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxGoodReligionMod());
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_RELIGION_MOD", szTempBuffer.GetCString()));
-		}
-		
-		//  Revolution Religious Freedom Modifier
-		if (0 != kCivic.getRevReligiousFreedom())
-		{
-			if ( kCivic.getRevReligiousFreedom() < 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_OPRESSION", kCivic.getRevReligiousFreedom()));
-			}
-			if ( kCivic.getRevReligiousFreedom() > 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_RELIGION_FREEDOM", kCivic.getRevReligiousFreedom()));
-			}
-		}
-		//  Revolution Labor Modifier
-		if (0 != kCivic.getRevLaborFreedom())
-		{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_LABOR", kCivic.getRevLaborFreedom()));
-		}
-		//  Revolution Environment Modifier
-		if (0 != kCivic.getRevEnvironmentalProtection())
-		{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_ENVIRONMENT", kCivic.getRevEnvironmentalProtection()));
-		}
-		//  Revolution Democracy Modifier
-		if (0 != kCivic.getRevDemocracyLevel())
-		{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_DEMOCRACY", kCivic.getRevDemocracyLevel()));
 		}
 	}
 /************************************************************************************************/

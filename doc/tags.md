@@ -3,6 +3,18 @@
 This document contains an overview of new and changed XML tags in MNAI-U. It includes new and changed tags in Fall from Heaven 2 and MNAI that are still present in MNAI-U, as well as some BtS tags. It is still work in progress. For other BtS tags, see e.g. civfantics' [modiki](http://modiki.civfanatics.com/index.php?title=Civ4_XML_Reference).
 
 
+### Gameinfo/CIV4CivicInfos.xml
+
+**Tags**
+
+Tag(s)  | Description | History
+--- | --- | ---
+`<iRevReligiousFreedom>Z</iRevReligiousFreedom>` | `Z` should be between -10 and 10. Peaceful religious revolutionaries might ask for a civic with higher religious freedom. When switching between two civics with differently signed religious freedom (positive to negative or vice versa), the effect from `<iRevIdxSwitchTo>` is increased in cities with religious instability. | Added in MNAI via RevDCM, adapted in MNAI-U.
+`<iRevLaborFreedom>Z</iRevLaborFreedom>` | `Z` should be between -10 and 10. Certain peaceful revolutionaries might ask for a civic with higher labor freedom. A labor freedom below -5 can trigger a slave revolt if considerably better civics are available. When switching between two civics with differently signed labor freedom, the effect from `<iRevIdxSwitchTo>` is increased in cities with nationality instability. | Added in MNAI via RevDCM, adapted in MNAI-U.
+`<iRevEnvironmentalProtection>Z</iRevEnvironmentalProtection>` | `Z` should be between -10 and 10. Certain peaceful revolutionaries might ask for a civic with higher environmental protection. | Added in MNAI via RevDCM, adapted in MNAI-U.
+`<iRevDemocracyLevel>Z</iRevDemocracyLevel>` | `Z` should be between -10 and 10. Colonists and other peaceful revolutionaries might ask for a civic with higher democracy level. When switching between two civics with differently signed democracy level, the effect from `<iRevIdxSwitchTo>` is increased in cities with location and nationality instability. | Added in MNAI via RevDCM, adapted in MNAI-U.
+`<fRevIdxNationalityMod>X</fRevIdxNationalityMod>` | Increases or decreases instability from nationality. | Added in MNAI via RevDCM
+
 ### Gameinfo/CIV4EraInfos.xml
 
 **Tags**
@@ -70,7 +82,7 @@ Tag(s)  | Description | History
 `<bAbility>1</bAbility>` | Can be cast even if spellcasting is disabled (e.g. through the Stasis worldspell). Created units do not gain promotions based on `<PromotionSummonPerk>`. Immunity to magic doesn't affect this spell.
 
 
-Sources:
+Sources (other than the code itself):
 
 * Kael's [Modder's guide to FfH2](https://forums.civfanatics.com/threads/modders-guide-to-ffh2.238077/)
 * Tholal's [Mod-modder's guide to MNAI](https://forums.civfanatics.com/threads/1st-draft-mod-modders-guide-to-mnai.519768/)
