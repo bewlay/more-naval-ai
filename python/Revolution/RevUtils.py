@@ -1038,7 +1038,6 @@ def computeBribeCosts( pCity, bSilent = True ) :
 def bribeCity( pCity, bribeSize ) :
 
 	iRevIdx = pCity.getRevolutionIndex()
-	localRevIdx = pCity.getLocalRevIndex()
 
 	if( bribeSize == 'Small' ) :
 		# Small reduction in rev index, mostly just for buyoffturns

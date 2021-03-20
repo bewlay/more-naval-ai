@@ -109,26 +109,6 @@ def getCivicsDistanceMod( iPlayer ) :
 
 	return distModifier
 
-def getCivicsNationalityMod( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return 0
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return 0
-
-	natMod = 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			natMod += kCivic.getRevIdxNationalityMod()
-
-	return natMod
-
 def getCivicsViolentRevMod( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)
@@ -219,7 +199,7 @@ def isCanDoElections( iPlayer ) :
 
 	return False
 
-def getReligiousFreedom( iPlayer ) :
+def getReligiousFreedom( iPlayer ) : # LFGR_TODO: This potentially only looks at a single category
 	# Returns [freedom level, option type]
 
 	pPlayer = gc.getPlayer(iPlayer)
@@ -251,7 +231,7 @@ def getBestReligiousFreedom( iPlayer, relOptionType ) :
 	for i in civicsList[relOptionType] :
 		kCivic = gc.getCivicInfo(i)
 		civicFreedom = kCivic.getRevReligiousFreedom()
-		if( pPlayer.canDoCivics(i) and not civicFreedom == 0 ) :
+		if( pPlayer.canDoCivics(i) and not civicFreedom == 0 ) : # LFGR_TODO: This may prefer negative over 0...
 			if( kCivic.getRevReligiousFreedom() > bestFreedom ) :
 				bestFreedom = civicFreedom
 				bestCivic = i

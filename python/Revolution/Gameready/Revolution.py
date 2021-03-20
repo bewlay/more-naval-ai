@@ -424,9 +424,6 @@ class Revolution :
 	def showBribeCityPopup( self, pCity ) :
 		popup = PyPopup.PyPopup(RevDefs.bribeCityPopup,contextType = EventContextTypes.EVENTCONTEXT_ALL)
 
-		iRevIdx = pCity.getRevolutionIndex()
-		localRevIdx = pCity.getLocalRevIndex()
-
 		popupData = dict()
 
 		popupData['City'] = pCity.getID()
@@ -1641,9 +1638,6 @@ class Revolution :
 				cityThreshold = max([int( self.revInstigatorThreshold*50/(1.0*localRevIdx)), int(self.revInstigatorThreshold/2.0)])
 			else :
 				cityThreshold = self.revInstigatorThreshold
-
-			if( pCity.isCapital() ) :
-				capRevIdx = revIdx
 
 			if( revIdx >= int( self.warnFrac*cityThreshold ) and pCity.getRevolutionCounter() == 0 ) :
 				if(  RevData.getCityVal(pCity, 'WarningCounter') == 0 ) :
