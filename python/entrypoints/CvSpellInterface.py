@@ -18,6 +18,15 @@ gc = CyGlobalContext()
 cf = CustomFunctions.CustomFunctions()
 sf = ScenarioFunctions.ScenarioFunctions()
 
+
+# lfgr 03/2021: Helper function
+def all( bs ) :
+	# type: ( Iterable[bool] ) -> bool
+	for b in bs :
+		if not b :
+			return False
+	return True
+
 Blizzards = Blizzards.Blizzards()		#Added in Blizzards: TC01
 
 def cast(argsList):
@@ -127,6 +136,67 @@ def findClearPlot(pUnit, plot):
 					BestPlot = pPlot
 					iBestPlot = iCurrentPlot
 	return BestPlot
+
+
+# lfgr 03/2021: Refactoring terraforming spells
+class TerraformHelper( object ) :
+	def __init__( self, dTransform, goodTerrains, badTerrains ) :
+		# type: ( Dict[str, str], Iterable[str], Iterable[str] ) -> None
+		"""
+		dTransform: Which terrains are translated into which terrains.
+		goodTerrains: Which terrains are improved by the spell, for AI.
+		badTerrains: Which terrains are worsened by the spell, for AI.
+		"""
+		self._dTransform = {} # type: Dict[int, int]
+		for key, value in dTransform.iteritems() :
+			self._dTransform[gc.getInfoTypeForString( key )] = gc.getInfoTypeForString( value )
+		self._heGoodTerrains = set( gc.getInfoTypeForString( szTerrain ) for szTerrain in goodTerrains )
+		self._heBadTerrains = set( gc.getInfoTypeForString( szTerrain ) for szTerrain in badTerrains )
+
+		assert all( eTerrain in self._dTransform for eTerrain in self._heGoodTerrains )
+		assert all( eTerrain in self._dTransform for eTerrain in self._heBadTerrains )
+
+	def doTerraform( self, pCaster ) :
+		# type: (CyUnit) -> None
+		pPlot = pCaster.plot()
+		eTargetTerrain = self._dTransform.get( pPlot.getTerrainType() ) # Might be temp terrain
+		if eTargetTerrain is not None :
+			iTempTimer = pPlot.getTempTerrainTimer()
+			if iTempTimer == 0 or eTargetTerrain == pPlot.getRealTerrainType() :
+				pPlot.setTerrainType( eTargetTerrain, True, True )
+			else :
+				pPlot.setTempTerrainType( eTargetTerrain, iTempTimer )
+
+	def canCast( self, pCaster ) :
+		# type: (CyUnit) -> bool
+		pPlot = pCaster.plot()
+		pPlayer = gc.getPlayer( pCaster.getOwner() )
+		eTerrain = pPlot.getTerrainType()
+		ePlotOwner = pPlot.getOwner()
+		if eTerrain not in self._dTransform : # Does this spell do anything here?
+			return False
+
+		if not pPlayer.isHuman() :
+			if eTerrain in self._heBadTerrains : # Does it do something bad?
+				# Only use it in enemy territory
+				return ePlotOwner != -1 and gc.getTeam( pPlayer.getTeam() ).isAtWar( gc.getPlayer( ePlotOwner ).getTeam() )
+			elif eTerrain in self._heGoodTerrains : # Does it do something good?
+				return ePlotOwner == pCaster.getOwner()
+			return False
+
+		return True
+
+	def getHelp( self, pCaster ) :
+		# type: (CyUnit) -> unicode
+		pPlot = pCaster.plot()
+		eTargetTerrain = self._dTransform.get( pPlot.getTerrainType() )
+		if eTargetTerrain is not None :
+			return PyHelpers.getText( "TXT_KEY_TERRAFORM_TRANSFORMS",
+				gc.getTerrainInfo( pPlot.getTerrainType() ).getTextKey(),
+				gc.getTerrainInfo( eTargetTerrain ).getTextKey()
+			)
+		return u""
+
 
 def postCombatConsumePaladin(pCaster, pOpponent):
 	if (pOpponent.getUnitClassType() == gc.getInfoTypeForString('UNITCLASS_PALADIN')):
@@ -2938,46 +3008,39 @@ def reqSandLion(caster):
 		return False
 	return True
 
-def reqScorch(caster):
-	pPlot = caster.plot()
-	pPlayer = gc.getPlayer(caster.getOwner())
+# lfgr 03/2021: Refactoring terraforming spells
+SCORCH_TERRAFORM_HELPER = TerraformHelper(
+	{
+		"TERRAIN_PLAINS" : "TERRAIN_DESERT",
+		"TERRAIN_FIELDS_OF_PERDITION" : "TERRAIN_BURNING_SANDS",
+		"TERRAIN_SNOW" : "TERRAIN_TUNDRA",
+		"TERRAIN_MARSH" : "TERRAIN_PLAINS"
+	},
+	goodTerrains = ["TERRAIN_SNOW", "TERRAIN_MARSH"],
+	badTerrains = ["TERRAIN_PLAINS", "TERRAIN_FIELDS_OF_PERDITION"]
+)
 
-	if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS') or pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION')):
-		if pPlayer.isHuman() == False:
-			ePlotOwner = pPlot.getOwner()
-			if (ePlotOwner == caster.getOwner()) or (ePlotOwner == -1):
-				return False
-			return gc.getTeam(pPlayer.getTeam()).isAtWar(gc.getPlayer(ePlotOwner).getTeam())
-		return True
-		
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
-		if pPlayer.isHuman() == False:
-			if caster.getOwner() != pPlot.getOwner():
-				return False
-			if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_ILLIANS'):
-				return False
-		return True	
+def reqScorch( pCaster ):
+	return SCORCH_TERRAFORM_HELPER.canCast( pCaster )
 
-# Tholal AI - allow marshes to be scorched
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
-		if pPlayer.isHuman() == False:
-			if caster.getOwner() != pPlot.getOwner():
-				return False
-		return True
-	return False
-
-def spellScorch(caster):
-	pPlot = caster.plot()
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_PLAINS'):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_DESERT'),True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'),True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_SNOW'):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_TUNDRA'),True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
+def spellScorch( pCaster ):
+	SCORCH_TERRAFORM_HELPER.doTerraform( pCaster )
+	pPlot = pCaster.plot()
 	if pPlot.isOwned():
-		cf.startWar(caster.getOwner(), pPlot.getOwner(), WarPlanTypes.WARPLAN_TOTAL)
+		cf.startWar( pCaster.getOwner(), pPlot.getOwner(), WarPlanTypes.WARPLAN_TOTAL )
+
+def helpScorch( lpUnits ) :
+	if len( lpUnits ) > 0 :
+		szHelp = SCORCH_TERRAFORM_HELPER.getHelp( lpUnits[0] )
+		if szHelp != u"" : # If the spell does something
+			ePlotOwner = lpUnits[0].plot().getOwner()
+			if ePlotOwner != -1 :
+				if cf.canStartWar( lpUnits[0].getOwner(), ePlotOwner ) :
+					szHelp += u"\n"
+					szHelp += PyHelpers.getText( "TXT_KEY_SPELL_STARTS_WAR_WITH", gc.getPlayer( ePlotOwner ).getName() )
+		return szHelp
+	else :
+		return u""
 
 def spellSing(caster):
 	pPlot = caster.plot()
@@ -3073,54 +3136,66 @@ def reqSpreadTheCouncilOfEsus(caster):
 			return False
 	return True
 
+
+
+# lfgr 03/2021: Refactoring terraforming spells
+SPRING_TERRAFORM_HELPER = TerraformHelper(
+	{
+		"TERRAIN_DESERT" : "TERRAIN_PLAINS"
+	},
+	goodTerrains = ["TERRAIN_DESERT"],
+	badTerrains = []
+)
+
+def iterNeighborSmokeOrFlamePlots( pPlot ) :
+	# type: (CyPlot) -> Iterator[CyPlot]
+	for pPlot2 in PyHelpers.PyPlot( pPlot ).iterThisAndNeighborPlots() :
+		if ( pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES')
+				or pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE') ) :
+			yield pPlot2
+
 def reqSpring(caster):
 	pPlot = caster.plot()
 	pPlayer = gc.getPlayer(caster.getOwner())
-	bFlames = False
-	iX = pPlot.getX()
-	iY = pPlot.getY()
-	for iiX in range(iX-1, iX+2, 1):
-		for iiY in range(iY-1, iY+2, 1):
-			pPlot2 = CyMap().plot(iiX,iiY)
-			if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES') or pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
-				bFlames = True
-	if bFlames == False:
-		if pPlot.getTerrainType() != gc.getInfoTypeForString('TERRAIN_DESERT'):
-			return False
-		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS'):
-			return False
-		if pPlayer.isHuman() == False:
-			if caster.getOwner() != pPlot.getOwner():
-				return False
-	if pPlayer.isHuman() == False:
+	bFlamesOrSmoke = len( list( iterNeighborSmokeOrFlamePlots( pPlot ) ) ) != 0
+
+	if not bFlamesOrSmoke and not SPRING_TERRAFORM_HELPER.canCast( caster ) :
+		return False # Spell does nothing
+	if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS'):
+		return False # Too OP if it doesn't remove Flood plains, noob trap otherwise
+
+	# AI
+	if not pPlayer.isHuman() :
+		if not bFlamesOrSmoke and caster.getOwner() != pPlot.getOwner() :
+			return False # Don't improve plots we don't own
 		if pPlayer.getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
-			return False
-		iX = pPlot.getX()
-		iY = pPlot.getY()
-		for iiX in range(iX-1, iX+2, 1):
-			for iiY in range(iY-1, iY+2, 1):
-				pPlot2 = CyMap().plot(iiX,iiY)
-				if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES'):
-					return True
-				if pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
-					return True
+			return False # Don't put out flames on burning sand
+
 	return True
 
 def spellSpring(caster):
 	pPlot = caster.plot()
-	if (pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_DESERT') and pPlot.getFeatureType() != gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
-		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'):
-			pPlot.setFeatureType(-1, -1)
-	iX = pPlot.getX()
-	iY = pPlot.getY()
-	for iiX in range(iX-1, iX+2, 1):
-		for iiY in range(iY-1, iY+2, 1):
-			pPlot2 = CyMap().plot(iiX,iiY)
-			if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES'):
-				pPlot2.setFeatureType(-1, -1)
-			if pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE'):
-				pPlot2.setImprovementType(-1)
+	SPRING_TERRAFORM_HELPER.doTerraform( caster )
+	if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'): # Remove scrubs from deserts
+		pPlot.setFeatureType( -1, -1 )
+
+	for pPlot2 in iterNeighborSmokeOrFlamePlots( pPlot ) :
+		if pPlot2.getFeatureType() == gc.getInfoTypeForString('FEATURE_FLAMES') :
+			pPlot2.setFeatureType( -1, -1 )
+		if pPlot2.getImprovementType() == gc.getInfoTypeForString('IMPROVEMENT_SMOKE') :
+			pPlot2.setImprovementType( -1 )
+
+def helpSpring( lpUnits ) :
+	if len( lpUnits ) > 0 :
+		pPlot = lpUnits[0].plot()
+		szHelp = SPRING_TERRAFORM_HELPER.getHelp( lpUnits[0] )
+		iNumSmokeOrFlamePlots = len( list( iterNeighborSmokeOrFlamePlots( pPlot ) ) )
+		if iNumSmokeOrFlamePlots > 0 :
+			if len( szHelp ) > 0 : szHelp += u"\n"
+			szHelp += PyHelpers.getText( "SPELL_SPRING_PUT_OUT_FLAMES", iNumSmokeOrFlamePlots )
+		return szHelp
+	else :
+		return u""
 
 def reqSprint(caster):
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_FATIGUED')):
@@ -3561,36 +3636,35 @@ def spellVeilOfNight(caster):
 		if pUnit.baseCombatStr() > 0:
 			pUnit.setHasPromotion(iHiddenNationality, True)
 
+# lfgr 03/2021: Refactoring terraforming spells
+VITALIZE_TERRAFORM_HELPER = TerraformHelper(
+	{
+		"TERRAIN_SNOW" : "TERRAIN_TUNDRA",
+		"TERRAIN_TUNDRA" : "TERRAIN_PLAINS",
+		"TERRAIN_DESERT" : "TERRAIN_PLAINS",
+		"TERRAIN_PLAINS" : "TERRAIN_GRASS",
+		"TERRAIN_MARSH" : "TERRAIN_GRASS"
+	},
+	goodTerrains = ["TERRAIN_SNOW", "TERRAIN_TUNDRA", "TERRAIN_DESERT", "TERRAIN_MARSH"],
+	badTerrains = []
+)
+
 def reqVitalize(caster):
 	pPlot = caster.plot()
-	if pPlot.getOwner() != caster.getOwner():
-		return False
-	if pPlot.isWater():
-		return False
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_GRASS'):
-		return False
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'):
-		return False
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS'):
-		return False
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'):
-		return False
-	return True
+	return pPlot.getOwner() == caster.getOwner() and VITALIZE_TERRAFORM_HELPER.canCast( caster )
 
 def spellVitalize(caster):
 	pPlot = caster.plot()
-	if(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_SNOW')):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_TUNDRA'),True,True)
-	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_TUNDRA')):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
-	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_DESERT')):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_PLAINS'),True,True)
-		if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'):
-			pPlot.setFeatureType(-1, -1)
-	elif(pPlot.getTerrainType()==gc.getInfoTypeForString('TERRAIN_PLAINS')):
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_GRASS'),True,True)
-	if pPlot.getTerrainType() == gc.getInfoTypeForString('TERRAIN_MARSH'):	
-		pPlot.setTerrainType(gc.getInfoTypeForString('TERRAIN_GRASS'),True,True)	
+	if pPlot.getFeatureType() == gc.getInfoTypeForString('FEATURE_SCRUB'):
+		pPlot.setFeatureType(-1, -1)
+	VITALIZE_TERRAFORM_HELPER.doTerraform( caster )
+
+def helpVitalize( lpUnits ) :
+	if len( lpUnits ) > 0 :
+		return VITALIZE_TERRAFORM_HELPER.getHelp( lpUnits[0] )
+	else :
+		return u""
+
 
 def reqWane(caster):
 	if caster.getUnitCombatType() == gc.getInfoTypeForString('UNITCOMBAT_ANIMAL'):

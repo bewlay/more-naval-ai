@@ -2759,6 +2759,7 @@
             <bHasCasted>1</bHasCasted>
             <PyResult>spellScorch(pCaster)</PyResult>
             <PyRequirement>reqScorch(pCaster)</PyRequirement>
+            <PyHelp>helpScorch(lpUnits)</PyHelp>
             <Effect>EFFECT_SCORCH</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
             <Button>Art/Interface/Buttons/Spells/Scorch.dds</Button>
@@ -2993,6 +2994,7 @@
             <bHasCasted>1</bHasCasted>
             <PyResult>spellSpring(pCaster)</PyResult>
             <PyRequirement>reqSpring(pCaster)</PyRequirement>
+            <PyHelp>helpSpring(lpUnits)</PyHelp>
             <Effect>EFFECT_SPRING</Effect>
             <Sound>AS3D_SPELL_SPRING</Sound>
             <Button>Art/Interface/Buttons/Spells/Spring.dds</Button>
@@ -4611,6 +4613,7 @@
             <bHasCasted>1</bHasCasted>
             <PyResult>spellVitalize(pCaster)</PyResult>
             <PyRequirement>reqVitalize(pCaster)</PyRequirement>
+            <PyHelp>helpVitalize(lpUnits)</PyHelp>
             <Effect>EFFECT_VITALIZE</Effect>
             <Sound>AS3D_SPELL_SANCTIFY</Sound>
             <Button>Art/Interface/Buttons/Spells/Vitalize.dds</Button>

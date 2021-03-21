@@ -1278,18 +1278,24 @@ class CustomFunctions:
 				if gc.getImprovementInfo(pPlot.getImprovementType()).isUnique():
 					pPlot.setRevealed(iTeam, True, False, TeamTypes.NO_TEAM)
 
-	def startWar(self, iPlayer, i2Player, iWarPlan):
+	# lfgr 03/2021: For spell help texts
+	def canStartWar( self, iPlayer, iPlayer2 ) :
+		# type: (int, int) -> bool
 		iTeam = gc.getPlayer(iPlayer).getTeam()
-		i2Team = gc.getPlayer(i2Player).getTeam()
-		eTeam = gc.getTeam(iTeam)
-		e2Team = gc.getTeam(i2Team)
-		if eTeam.isAlive():
-			if e2Team.isAlive():
-				if not eTeam.isAtWar(i2Team):
-					if iTeam != i2Team:
-						if eTeam.isHasMet(i2Team):
-							if not eTeam.isPermanentWarPeace(i2Team):
-								eTeam.declareWar(i2Team, false, iWarPlan)
+		iTeam2 = gc.getPlayer(iPlayer2).getTeam()
+		pTeam = gc.getTeam(iTeam)
+		pTeam2 = gc.getTeam(iTeam2)
+		return ( pTeam.isAlive() and pTeam2.isAlive()
+				and iTeam != iTeam2 and not pTeam.isAtWar(iTeam2)
+				and pTeam.isHasMet(iTeam2) and not pTeam.isPermanentWarPeace(iTeam2) )
+
+
+	# lfgr 03/2021: refactored
+	def startWar(self, iPlayer, iPlayer2, iWarPlan):
+		if self.canStartWar( iPlayer, iPlayer2 ) :
+			pTeam = gc.getTeam( gc.getPlayer(iPlayer).getTeam() )
+			iTeam2 = gc.getPlayer(iPlayer2).getTeam()
+			pTeam.declareWar(iTeam2, False, iWarPlan)
 
 	def warScript(self, iPlayer):
 		pPlayer = gc.getPlayer(iPlayer)

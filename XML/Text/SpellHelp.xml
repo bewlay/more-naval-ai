@@ -121,5 +121,20 @@
 		<Italian>[ICON_BULLET]%D1% to the miscasting rate</Italian>
 		<Spanish>[ICON_BULLET]%D1% to the miscasting rate</Spanish>
 	</TEXT>
-<!-- End Puppet States -->
+	<TEXT>
+		<Tag>TXT_KEY_TERRAFORM_TRANSFORMS</Tag>
+		<English>[ICON_BULLET]Turns [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] into [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT]</English>
+		<French>[ICON_BULLET]Turns [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] into [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT]</French>
+		<German>[ICON_BULLET]Turns [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] into [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT]</German>
+		<Italian>[ICON_BULLET]Turns [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] into [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT]</Italian>
+		<Spanish>[ICON_BULLET]Turns [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] into [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_STARTS_WAR_WITH</Tag>
+		<English>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</English>
+		<French>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</French>
+		<German>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</German>
+		<Italian>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</Italian>
+		<Spanish>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</Spanish>
+	</TEXT>
 </Civ4GameText>
