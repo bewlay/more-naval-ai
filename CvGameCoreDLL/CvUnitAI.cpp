@@ -30074,21 +30074,22 @@ void CvUnitAI::AI_terraformerMove()
 			}
 			else
 			{
-				if( gUnitLogLevel >= 3)
+				if( ! GET_PLAYER(getOwnerINLINE()).isHuman() )
 				{
-					logBBAI("     ...choosing a spell...\n");
-				}				
-				int iSpell = chooseSpell();
-				if (iSpell != NO_SPELL)
-				{
-					cast(iSpell);
-					return;
+					if( gUnitLogLevel >= 3)
+					{
+						logBBAI("     ...choosing a spell...\n");
+					}
+					int iSpell = chooseSpell();
+					if (iSpell != NO_SPELL)
+					{
+						cast(iSpell);
+						return;
+					}
 				}
-				else // we have someplace to go but no useful spell to cast at the moment
-				{
-					getGroup()->pushMission(MISSION_SKIP);
-					return;
-				}
+				// We have someplace to go but no useful spell to cast at the moment
+				getGroup()->pushMission(MISSION_SKIP);
+				return;
 			}
 		}
 
