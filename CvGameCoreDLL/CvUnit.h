@@ -875,6 +875,11 @@ public:
 /************************************************************************************************/
 
 //FfH Spell System: Added by Kael 07/23/2007
+	/* Whether this unit can cast the given spell in principle. This function returns the same result
+	 * unless the unit gains or loses a promotion, its unit type changes, or its owner's civilization
+	 * type changes (note that the latter two cannot occur normally).
+	 */
+	bool canCastWithCurrentPromotions( SpellTypes eSpell ) const; // lfgr fix 03/2021
 	bool canCast(int spell, bool bTestVisible);
 	bool canCreateUnit(int spell) const;
 	bool canAddPromotion(int spell);
