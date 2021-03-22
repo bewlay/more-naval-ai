@@ -1312,54 +1312,54 @@ class CvGameUtils:
 			if not pUnit.canMove():
 				return 2
 
-			for isearch in range(1,searchdistance,1):
-				for iiX in range(iX-isearch, iX+isearch+1, 1):
-					for iiY in range(iY-isearch, iY+isearch+1, 1):
-						pPlot2 = CyMap().plot(iiX,iiY)
-						if pPlot2.isNone():continue
-						if pPlot2.getOwner() != iPlayer:continue
-						if pPlot2.isImpassable():continue
-						if not pUnit.generatePath(pPlot2,0,False,None):continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
-						iImprovement = pPlot2.getImprovementType()
-						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
-							iTerrain = pPlot2.getTerrainType()
-							iFeature = pPlot2.getFeatureType()
-							if smokeb:
-								if iImprovement == iSmoke:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if desertb:
-								if iTerrain == iDesert and iFeature != iFlood:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if snowb:
-								if iTerrain == iSnow:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if tundrab:
-								if iTerrain == iTundra:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if marshb:
-								if iTerrain == iMarsh:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if plainsb:
-								if iTerrain == iPlains:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if hellterrb:
-								if iTerrain in lHellTerrains:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-						if treesb:
-							if not pPlot2.isCity():
-								if iFeature == -1:
-									if treesimpb or iImprovement == -1:
-										if iTerrain in lBloomableTerrains:
-											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 2
+			# lfgr 03/2021: Removed duplicate plot search
+			for iiX in range(iX-searchdistance, iX+searchdistance+1, 1):
+				for iiY in range(iY-searchdistance, iY+searchdistance+1, 1):
+					pPlot2 = CyMap().plot(iiX,iiY)
+					if pPlot2.isNone():continue
+					if pPlot2.getOwner() != iPlayer:continue
+					if pPlot2.isImpassable():continue
+					if not pUnit.generatePath(pPlot2,0,False,None):continue
+					if pPlot2.isVisibleEnemyUnit(iPlayer):continue
+					iImprovement = pPlot2.getImprovementType()
+					if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
+						iTerrain = pPlot2.getTerrainType()
+						iFeature = pPlot2.getFeatureType()
+						if smokeb:
+							if iImprovement == iSmoke:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if desertb:
+							if iTerrain == iDesert and iFeature != iFlood:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if snowb:
+							if iTerrain == iSnow:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if tundrab:
+							if iTerrain == iTundra:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if marshb:
+							if iTerrain == iMarsh:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if plainsb:
+							if iTerrain == iPlains:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+						if hellterrb:
+							if iTerrain in lHellTerrains:
+								pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+								return 2
+					if treesb:
+						if not pPlot2.isCity():
+							if iFeature == -1:
+								if treesimpb or iImprovement == -1:
+									if iTerrain in lBloomableTerrains:
+										pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+										return 2
 
 #Nothing to do, lets move on to another City!
 			iBestCount=0
