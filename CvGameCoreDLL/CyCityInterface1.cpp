@@ -547,7 +547,9 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("isHasBuildingClass", &CyCity::isHasBuildingClass, "bool (int /*BuildingClassTypes*/ iIndex) - has building class")
 		.def("isSettlement", &CyCity::isSettlement, "bool () - is settlement")
 		.def("setCivilizationType", &CyCity::setCivilizationType, "void (int iNewValue) - sets the Civilization Type of this city")
+		.def("getPlotRadius", &CyCity::getPlotRadius, "int ()") // lfgr 03/2021
 		.def("setPlotRadius", &CyCity::setPlotRadius, "void (int iNewValue) - sets the Plot Radius of this city")
+		.def("getNumCityPlots", &CyCity::getNumCityPlots, "int ()") // lfgr 03/2021
 		.def("setSettlement", &CyCity::setSettlement, "void (bool bNewValue) - sets city as a Settlement or not")
 //FfH: End Add
 

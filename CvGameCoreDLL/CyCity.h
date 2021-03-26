@@ -616,7 +616,9 @@ public:
 	bool isHasBuildingClass(int /*BuildingClassTypes*/ iIndex) const;
 	bool isSettlement() const;
     void setCivilizationType(int iNewValue);
+    int getPlotRadius() const; // lfgr 03/2021
     void setPlotRadius(int iNewValue);
+	int CyCity::getNumCityPlots() const; // lfgr 03/2021
     void setSettlement(bool bNewValue);
 //FfH: End Add
 

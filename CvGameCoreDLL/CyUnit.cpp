@@ -1733,6 +1733,12 @@ int CyUnit::baseCombatStrDefense() const
 	return m_pUnit ? m_pUnit->baseCombatStrDefense() : -1;
 }
 
+// lfgr TERRAFORMING 03/2021
+bool CyUnit::canCastWithCurrentPromotions( int eSpell ) const
+{
+	return m_pUnit ? m_pUnit->canCastWithCurrentPromotions( (SpellTypes) eSpell ) : false;
+}
+
 bool CyUnit::canCast(int spell, bool bTestVisible) const
 {
 	return m_pUnit ? m_pUnit->canCast(spell, bTestVisible) : false;

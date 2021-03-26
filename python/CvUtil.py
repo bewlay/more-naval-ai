@@ -224,6 +224,12 @@ def shuffle(num, rand):
 	shuffleList(num, rand, piShuffle)	# implemented in C for speed
 	return piShuffle
 
+# lfgr 03/2021
+def shuffleList( l ) :
+	for i in range( len( l ) ) :
+		j = i + CyGame().getSorenRandNum( len( l ) - i, "Shuffle list" )
+		l[i], l[j] = l[j], l[i]
+
 def spawnUnit(iUnit, pPlot, pPlayer):
 	pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 	return 1

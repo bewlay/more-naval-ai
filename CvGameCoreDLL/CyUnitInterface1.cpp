@@ -411,6 +411,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("attack", &CyUnit::attack, "void (CyPlot* pPlot, bool bQuick)")
 		.def("setBaseCombatStrDefense", &CyUnit::setBaseCombatStrDefense, "void (int)")
 		.def("baseCombatStrDefense", &CyUnit::baseCombatStrDefense, "int ()")
+		.def("canCastWithCurrentPromotions", &CyUnit::canCastWithCurrentPromotions, "bool (int eSpell, bool bTestVisible)") // lfgr TERRAFORMING 03/2021
 		.def("canCast", &CyUnit::canCast, "bool (int spell, bool bTestVisible)")
 		.def("canDispel", &CyUnit::canDispel, "bool (int spell)")
 		.def("cast", &CyUnit::cast, "void (int spell)")

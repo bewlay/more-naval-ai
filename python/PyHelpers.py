@@ -969,6 +969,16 @@ class PyPlot( AbstractDelegator ) :
 			for iiY in range(iY-1, iY+2, 1):
 				yield CyMap().plot(iiX,iiY)
 
+	def iterPlotsAtDistance( self, iDist ) : # lfgr 03/2021
+		# type: (int) -> Iterator[CyPlot]
+		iX = self.getX()
+		iY = self.getY()
+		for iDX in range( -iDist, iDist+1 ) :
+			for iDY in range( -iDist, iDist+1 ) :
+				if max( abs( iDX ), abs( iDY ) ) == iDist :
+					pPlot = self.map.plot( iX + iDX, iY + iDY )
+					if not pPlot.isNone() :
+						yield pPlot
 	
 	############## B O N U S ##############
 	def getBonusType(self):

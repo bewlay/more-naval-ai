@@ -2881,10 +2881,22 @@ void CyCity::setCivilizationType(int iNewValue)
 		m_pCity->setCivilizationType(iNewValue);
 }
 
+// lfgr 03/2021
+int CyCity::getPlotRadius() const
+{
+	return m_pCity ? m_pCity->getPlotRadius() : 0;
+}
+
 void CyCity::setPlotRadius(int iNewValue)
 {
 	if (m_pCity)
 		m_pCity->setPlotRadius(iNewValue);
+}
+
+// lfgr 03/2021
+int CyCity::getNumCityPlots() const
+{
+	return m_pCity ? ::calculateNumCityPlots( getPlotRadius() ) : 0;
 }
 
 void CyCity::setSettlement(bool bNewValue)

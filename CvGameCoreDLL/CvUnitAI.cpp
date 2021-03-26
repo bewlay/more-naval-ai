@@ -105,7 +105,7 @@ bool CvUnitAI::AI_update()
 
 	CvUnit* pTransportUnit;
 
-	FAssertMsg(canMove(), "canMove is expected to be true");
+	//FAssertMsg(canMove(), "canMove is expected to be true"); // lfgr 03/2021: Also allow calling this when unit can only cast
 	FAssertMsg(isGroupHead(), "isGroupHead is expected to be true"); // XXX is this a good idea???
 
 	// allow python to handle it for certain barbarians
@@ -412,7 +412,11 @@ bool CvUnitAI::AI_update()
 
 		// Start Sephi Code - Automatic Terraforming
         case AUTOMATE_TERRAFORMING:
-            AI_setUnitAIType(UNITAI_TERRAFORMER);
+			if( AI_getUnitAIType() != UNITAI_TERRAFORMER )
+			{
+				AI_setUnitAIType(UNITAI_TERRAFORMER); // lfgr comment: This kicks us out of our group and resets our AutomateType!
+				getGroup()->setAutomateType( AUTOMATE_TERRAFORMING ); // lfgr fix 03/2021
+			}
             AI_terraformerMove();
             break;
 		// End Sephi Code
@@ -30008,9 +30012,8 @@ bool CvUnitAI::AI_mageMove()
 	return false;
 }
 
-void CvUnitAI::AI_terraformerMove()
+void CvUnitAI::AI_terraformerMove() // lfgr 03/2021: Tweaked
 {
-
 	if( gUnitLogLevel >= 3)
 	{
 			logBBAI("     %S (Unit %d) starting terraformer move\n", getName().GetCString(), getID());
@@ -30061,38 +30064,8 @@ void CvUnitAI::AI_terraformerMove()
 		}
 	}
 	
-    if (lResult != 1)
-    {
-		// lResult of 2 means that the unit has been told to move somewhere or 
-		// that the unit cannot move (either it already has or something is preventing it from moving)
-		if (lResult == 2)
-		{
-			if (isHasCasted())
-			{
-				getGroup()->pushMission(MISSION_SKIP);
-				return;
-			}
-			else
-			{
-				if( ! GET_PLAYER(getOwnerINLINE()).isHuman() )
-				{
-					if( gUnitLogLevel >= 3)
-					{
-						logBBAI("     ...choosing a spell...\n");
-					}
-					int iSpell = chooseSpell();
-					if (iSpell != NO_SPELL)
-					{
-						cast(iSpell);
-						return;
-					}
-				}
-				// We have someplace to go but no useful spell to cast at the moment
-				getGroup()->pushMission(MISSION_SKIP);
-				return;
-			}
-		}
-
+	if (lResult == 0) // Python found nothing to do
+	{
 		if (GET_TEAM(getTeam()).getAtWarCount(false) > 0) //nothing to do and we're at war
 		{
 			if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
@@ -30117,14 +30090,35 @@ void CvUnitAI::AI_terraformerMove()
 			return;
 		}
 
-        getGroup()->pushMission(MISSION_SKIP);
+		getGroup()->pushMission(MISSION_SKIP);
 		return;
-    }
+	}
+	else
+	{
+		if( !isHasCasted() && !GET_PLAYER(getOwnerINLINE()).isHuman() )
+		{
+			// Let's try to cast a random spell!
+			int iSpell = chooseSpell();
+			if (iSpell != NO_SPELL)
+			{
+				cast(iSpell);
+				return;
+			}
+		}
+
+		if( isHasCasted() )
+		{
+			// We're done. If we wanted to move somehwere, we'd have done this in python.
+			getGroup()->pushMission(MISSION_SKIP); // LFGR_TODO: This does nothing if unit is busy!
+			return;
+		}
+	}
+
 	// Tholal note: terraformers can get stuck in loop, if they've casted, are at a terraformable plot and have movement left
 	
 	if (isHasCasted())
 	{
-		getGroup()->pushMission(MISSION_SENTRY);
+		getGroup()->pushMission(MISSION_SENTRY); // LFGR_TODO: This does nothing if unit is busy!
 		//finishMoves();
 	}
 	
