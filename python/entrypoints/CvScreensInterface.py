@@ -312,11 +312,8 @@ def createRevolutionWatchAdvisor():
 	"""Creates the Revolution Watch Advisor."""
 	global revolutionWatchAdvisor
 	if revolutionWatchAdvisor is None:
-		# lfgr: Replace RevolutionWatchAdvisor with CvRevolutionScreen
 		import RevolutionWatchAdvisor
 		revolutionWatchAdvisor = RevolutionWatchAdvisor.RevolutionWatchAdvisor()
-		#import CvRevolutionScreen
-		#revolutionWatchAdvisor = CvRevolutionScreen.CvRevolutionScreen()
 		HandleInputMap[REVOLUTION_WATCH_ADVISOR] = revolutionWatchAdvisor
 
 def showRevolutionWatchAdvisor(argsList):
