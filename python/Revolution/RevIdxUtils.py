@@ -243,9 +243,6 @@ class CityRevIdxHelper :
 	def computeHappinessRevIdx( self ) :
 		return self.computeHappinessRevIdxAndHelp()[0]
 
-	def computeHappinessRevIdxHelp( self ) :
-		return self.computeHappinessRevIdxAndHelp()[1]
-
 	def computeHappinessRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -256,7 +253,6 @@ class CityRevIdxHelper :
 
 		if iNumUnhappy > 0 :
 			szHelp += getText( "[ICON_UNHAPPY] City is unhappy" )
-
 
 			if self._pCity.getOccupationTimer() > 0 :
 				szHelp += u"\n"
@@ -312,7 +308,7 @@ class CityRevIdxHelper :
 			
 			szHelp += SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "Final instability from unhappiness: %d1", iHappyIdx )
+			szHelp += getText( "Final instability from unhappiness: %s1", coloredRevIdxFactorStr( iHappyIdx ) )
 
 			return iHappyIdx, szHelp
 		elif iNumUnhappy < 0 :
@@ -352,11 +348,12 @@ class CityRevIdxHelper :
 			
 			szHelp += SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "Final happiness effect: %d1", -iNegHappyIdx )
+			szHelp += getText( "Final happiness effect: %s1", coloredRevIdxFactorStr( -iNegHappyIdx ) )
 
 			return -iNegHappyIdx, szHelp
+		else :
+			return 0, getText( "City is neither happy nor unhappy" )
 
-		return 0, u""
 
 	def _computeAdjustedCityDistance( self ) :
 		# type: () -> float
@@ -523,6 +520,7 @@ class CityRevIdxHelper :
 		# type: () -> int
 		return self.computeLocationRevIdxAndHelp()[0]
 
+
 	def computeReligionRevIndicesAndHelp( self ) :
 		# type: () -> Tuple[int, int, unicode]
 		# Returns (goodIdx, badIdx), where goodIdx is idx based on state religion in city, and
@@ -538,7 +536,7 @@ class CityRevIdxHelper :
 
 			# GOOD STUFF
 			iRelGoodIdx = 0
-			szGoodHelp = ""
+			szGoodHelp = u""
 
 			# State religion in city
 			if self._pCity.isHasReligion( eStateReligion ) :
@@ -560,26 +558,33 @@ class CityRevIdxHelper :
 							iRelGoodIdx -= iCivicsHolyCityGood # We own the holy city
 							szGoodHelp += u"\n" + getText( "We own the holy city: %d1", -iCivicsHolyCityGood )
 
-			if iRelGoodIdx != 0 :
+			if iRelGoodIdx != 0 : # Compute modifiers
+				szModHelp = u""
+
 				# General modifier
 				fMod = RevOpt.getReligionModifier()
 				if fMod != 1 :
-					szGoodHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
+					szModHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
 
 				# War bonus
 				if self._pOwnerTeam.getAtWarCount( True ) > 1 :
 					# God is on your side =P
 					fWarExtraMod = 0.5
 					fMod += fWarExtraMod
-					szGoodHelp += u"\n" + getText( "[ICON_BULLET]War bonus: %D1%", int( fWarExtraMod * 100 ) )
+					szModHelp += u"\n" + getText( "[ICON_BULLET]War bonus: %D1%", int( fWarExtraMod * 100 ) )
 
 				# Civics
 				if fCivicsGoodMod != 0 :
 					fMod += fCivicsGoodMod
-					szGoodHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsGoodMod * 100 ) )
+					szModHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsGoodMod * 100 ) )
+
+				if szModHelp != u"" :
+					if "\n" in szGoodHelp : # More than one line
+						szGoodHelp += u"\n" + getText( "Base good effect: %d1", iRelGoodIdx )
+					szGoodHelp += szModHelp
 
 				iRelGoodIdx = int( math.floor( fMod * iRelGoodIdx + .5 ) )
-				szGoodHelp += u"\n" + getText( "Good effect: %D1", iRelGoodIdx )
+				szGoodHelp += u"\n" + getText( "Good effect: %s1", coloredRevIdxFactorStr( iRelGoodIdx ) )
 
 			# BAD STUFF
 			fRelBadIdx = 0
@@ -611,18 +616,26 @@ class CityRevIdxHelper :
 					if szBadHelp != u"" : szBadHelp += u"\n"
 					szBadHelp += getText( "Infidel's holy city: %d1", 4 )
 
-			if fRelBadIdx != 0 :
+			if fRelBadIdx != 0 : # Compute modifiers
+				szModHelp = u""
+
 				# General modifier
 				fMod = RevOpt.getReligionModifier()
 				if fMod != 1 :
-					szBadHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
+					szModHelp += u"\n" + getText( "[ICON_BULLET]General religion modifier: %D1%", int( fMod * 100 ) - 100 )
 
 				# Civics
 				if fCivicsBadMod != 0 :
 					fMod += fCivicsBadMod
-					szBadHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsBadMod * 100 ) )
+					szModHelp += u"\n" + getText( "[ICON_BULLET]Civics: %D1%", int( fCivicsBadMod * 100 ) )
+
+				if szModHelp != u"" :
+					if "\n" in szBadHelp : # More than one line
+						szBadHelp += u"\n" + getText( "Base bad effect: %s1", u"%.2f" % fRelBadIdx )
+					szBadHelp += szModHelp
+
 				iRelBadIdx = int( math.floor( fMod * fRelBadIdx + .5 ) )
-				szBadHelp += u"\n" + getText( "Bad effect: %D1", iRelBadIdx )
+				szBadHelp += u"\n" + getText( "Bad effect: %s1", coloredRevIdxFactorStr( iRelBadIdx  ) )
 			else :
 				iRelBadIdx = 0
 
@@ -631,8 +644,10 @@ class CityRevIdxHelper :
 				szHelp = szGoodHelp + SEPARATOR + u"\n" + szBadHelp
 			elif szGoodHelp != u"" :
 				szHelp = szGoodHelp
-			else :
+			elif szBadHelp != u"" :
 				szHelp = szBadHelp
+			else :
+				szHelp = getText( "(No religions in city)" )
 			return iRelGoodIdx, iRelBadIdx, szHelp
 
 		return 0, 0, getText( "(No state religion)" )
@@ -649,13 +664,14 @@ class CityRevIdxHelper :
 		# type: () -> unicode
 		return self.computeReligionRevIndicesAndHelp()[2]
 
+
 	def computeCultureRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		iCultRate = self._pCity.getCommerceRate( CommerceTypes.COMMERCE_CULTURE )
 		szHelp = getText( "Culture rate: %d1 [ICON_CULTURE]", iCultRate )
 
 		if iCultRate == 0 :
-			return iCultRate, u""
+			return iCultRate, szHelp
 
 		fEraMod = 1 / (1.5 + self._pOwner.getCurrentRealEra() / 2.0) # Era divisor adjusted to FfH
 		szHelp += u"\n"
@@ -668,38 +684,39 @@ class CityRevIdxHelper :
 		szHelp += getText( "Adjusted culture rate: %s1", sAdjCultRate )
 
 		iCultureIdx = - min( int( pow( fAdjCultRate, .7 ) + 0.5 ), 10 )
-		szHelp += u"\n"
-		szHelp += getText( "Culture rate effect: %d1", iCultureIdx )
 
+		# Compute further modifications
 		fCultureIdx = float( iCultureIdx )
-		bModified = False # Any further modifications?
+		szModHelp = u""
 		if self._bWarWithMaxCult and not self._pOwner.isRebel() : # TODO: Move to nationality stuff?
-			bModified = True
 			fCultureIdx *= 0.5
-			szHelp += u"\n"
-			szHelp += getText( "War with majority culture: %d1%", int( 0.5 * 100 ) - 100 )
+			szModHelp += u"\n"
+			szModHelp += getText( "War with majority culture: %d1%", int( 0.5 * 100 ) - 100 )
 
 		fMod = RevOpt.getCultureRateModifier()
 		if fMod != 1 :
-			bModified = True
 			fCultureIdx *= fMod
-			szHelp += u"\n"
-			szHelp += getText( "General culture rate modifier: %d1%", int( fMod * 100 ) - 100 )
+			szModHelp += u"\n"
+			szModHelp += getText( "General culture rate modifier: %d1%", int( fMod * 100 ) - 100 )
 
-		if bModified :
+		# Final effect
+		if szModHelp == u"" :
+			szHelp += u"\n"
+			szHelp += getText( "Culture rate effect: %s1", coloredRevIdxFactorStr( iCultureIdx ) )
+		else :
+			szHelp += u"\n"
+			szHelp += getText( "Base effect: %d1", iCultureIdx )
+			szHelp += szModHelp
+
 			iCultureIdx = int( math.floor( fCultureIdx + .5 ) )
 			szHelp += SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "Final culture rate effect: %d1%", iCultureIdx )
+			szHelp += getText( "Culture rate effect: %s1", coloredRevIdxFactorStr( iCultureIdx ) )
 		return iCultureIdx, szHelp
 
 	def computeCultureRevIdx( self ) :
 		# type: () -> int
 		return self.computeCultureRevIdxAndHelp()[0]
-
-	def computeCultureRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeCultureRevIdxAndHelp()[1]
 
 
 	def computeNationalityRevIdxAndHelp( self ) :
@@ -710,7 +727,7 @@ class CityRevIdxHelper :
 			iBadPercent = ( 60 - self._iCulturePercent )
 			iPreNatIdx = min( 13, ( iBadPercent ** 2 ) // 200 )
 			szHelp += u"\n"
-			szHelp += getText( "[ICON_BULLET]Raw instability (capped at 13): %d1", iPreNatIdx )
+			szHelp += getText( "Raw effect (capped at 13): %d1", iPreNatIdx )
 
 			iLowerCap = iBadPercent // 10
 			szHelp += u"\n"
@@ -726,10 +743,7 @@ class CityRevIdxHelper :
 		else :
 			iBaseNatIdx = -( self._iCulturePercent - 60 ) // 8
 
-		if iBaseNatIdx != 0 :
-			szHelp += u"\n"
-			szHelp += getText( "Base effect: %d1", iBaseNatIdx )
-
+		szModHelp = u""
 		if iBaseNatIdx > 0 :
 			iCap = 1000 # float("inf") does not seem to work in python 2.4
 			iModTimes100 = 100
@@ -739,21 +753,21 @@ class CityRevIdxHelper :
 				iRecAqCap = 6
 				iModTimes100 += iRecAqModPercent
 				iCap = min( iCap, iRecAqCap )
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET]Recently acquired: %D1%, capped at %d2", iRecAqModPercent, iRecAqCap )
+				szModHelp += u"\n"
+				szModHelp += getText( "[ICON_BULLET]Recently acquired: %D1%, capped at %d2", iRecAqModPercent, iRecAqCap )
 
 			if self._bWarWithMaxCult and not self._pOwner.isRebel() :
 				iWarModTimes100 = 50
 				iModTimes100 += iWarModTimes100
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET]War with majority culture: %D1%", iWarModTimes100 )
+				szModHelp += u"\n"
+				szModHelp += getText( "[ICON_BULLET]War with majority culture: %D1%", iWarModTimes100 )
 			elif self._bMaxCultIsVassal :
 				iVassalModTimes100 = -30
 				iVassalCap = 5
 				iModTimes100 += iVassalModTimes100
 				iCap = min( iCap, iVassalCap )
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET]Majority culture is vassal: %D1%, capped at %d2", iVassalModTimes100, iVassalCap )
+				szModHelp += u"\n"
+				szModHelp += getText( "[ICON_BULLET]Majority culture is vassal: %D1%, capped at %d2", iVassalModTimes100, iVassalCap )
 
 			for i in range( 0, gc.getNumCivicOptionInfos() ) :
 				iCivic = self._pOwner.getCivics( i )
@@ -763,16 +777,22 @@ class CityRevIdxHelper :
 					if fCivicMod != 0 :
 						iCivicModTimes100 = int( fCivicMod * 100 )
 						iModTimes100 += iCivicModTimes100
-						szHelp += u"\n"
-						szHelp += getText( "[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT]: %D2%", kCivic.getDescription(), iCivicModTimes100 )
+						szModHelp += u"\n"
+						szModHelp += getText( "[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT]: %D2%", kCivic.getDescription(), iCivicModTimes100 )
 
 			iNatIdx = min( iCap, iBaseNatIdx * max( 0, iModTimes100 ) // 100 )
-
-			if iNatIdx != iBaseNatIdx :
-				szHelp += u"\n"
-				szHelp += getText( "Final effect: %d1", iNatIdx )
 		else :
 			iNatIdx = iBaseNatIdx
+
+
+		if szModHelp == u"" :
+			if iNatIdx != 0 :
+				szHelp += u"\n"
+				szHelp += getText( "Nationality effect: %s1", coloredRevIdxFactorStr( iNatIdx ) )
+		else :
+			szHelp += u"\n" + getText( "Base Effect: %d1", iBaseNatIdx )
+			szHelp += szModHelp
+			szHelp += u"\n" + getText( "Nationality effect: %s1", coloredRevIdxFactorStr( iNatIdx ) )
 
 		# TODO: Ignores RevOpt.getNationalityModifier()
 
@@ -782,9 +802,6 @@ class CityRevIdxHelper :
 		# type: () -> int
 		return self.computeNationalityRevIdxAndHelp()[0]
 
-	def computeNationalityRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeNationalityRevIdxAndHelp()[1]
 
 	def computeHealthRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -805,18 +822,15 @@ class CityRevIdxHelper :
 				iHealthIdx //= 3
 
 			szHelp += SEPARATOR
-			szHelp += u"\n" + getText( "[ICON_UNHEALTHY] effect: %D1", iHealthIdx )
+			szHelp += u"\n" + getText( "[ICON_UNHEALTHY] effect: %s1", coloredRevIdxFactorStr( iHealthIdx ) )
 			return iHealthIdx, szHelp
 		else :
-			return 0, u""
+			return 0, getText( "(No excess [ICON_UNHEALTHY])" )
 
 	def computeHealthRevIdx( self ) :
 		# type: () -> int
 		return self.computeHealthRevIdxAndHelp()[0]
 
-	def computeHealthRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeHealthRevIdxAndHelp()[1]
 
 	def computeGarrisonRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -831,21 +845,18 @@ class CityRevIdxHelper :
 		iDefenseMod = min( 100, self._pCity.getBuildingDefense() )
 		if iDefenseMod != 0 :
 			sDefendersEffect = "%.2f" % fDefendersEffect
-			szHelp += u"\n" + getText( "Base garrison stability: %s1", sDefendersEffect )
+			szHelp += u"\n" + getText( "Base effect: %s1", sDefendersEffect )
 			szHelp += u"\n" + getText( "[ICON_BULLET]City defense bonus: %D1%", iDefenseMod )
 
 		iGarIdx = -int( fDefendersEffect * ( 100 + iDefenseMod ) ) / 100
 		iGarIdx = max( iGarIdx, -8 )
-		szHelp += u"\n" + getText( "Garrison effect (capped at -8): %d1", iGarIdx )
+		szHelp += u"\n" + getText( "Garrison effect (capped at -8): %s1", coloredRevIdxFactorStr( iGarIdx ) )
 		return iGarIdx, szHelp
 
 	def computeGarrisonRevIdx( self ) :
 		# type: () -> int
 		return self.computeGarrisonRevIdxAndHelp()[0]
 
-	def computeGarrisonRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeGarrisonRevIdxAndHelp()[1]
 
 	def computeSizeRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -853,20 +864,20 @@ class CityRevIdxHelper :
 		iPop = self._pCity.getPopulation()
 		iEraBonus = -3 - min( 3, self._pOwner.getCurrentRealEra() )
 		szHelp = getText( "City size: %d1", iPop )
-		szHelp += u"\n" + getText( "Era bonus: %d1", iEraBonus )
+		szHelp += u"\n" + getText( "Era bonus: %D1", iEraBonus )
 		iSizeRevIdx = min( 0, iPop + iEraBonus )
 
 		szHelp += SEPARATOR
-		szHelp += u"\n" + getText( "Small city bonus: %d1", iSizeRevIdx )
+		if iSizeRevIdx != 0 :
+			szHelp += u"\n" + getText( "Small city bonus: %s1", coloredRevIdxFactorStr( iSizeRevIdx ) )
+		else :
+			szHelp += u"\n" + getText( "No small city bonus" )
 		return iSizeRevIdx, szHelp
 
 	def computeSizeRevIdx( self ) :
 		# type: () -> int
 		return self.computeSizeRevIdxAndHelp()[0]
 
-	def computeSizeRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeSizeRevIdxAndHelp()[1]
 
 	def computeStarvingRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -874,15 +885,13 @@ class CityRevIdxHelper :
 		if self._pCity.foodDifference( True ) < 0 and abs( self._pCity.foodDifference( True ) ) > self._pCity.getFood() :
 			iStarvingIdx = 100
 			return iStarvingIdx, getText( "City is starving: %D1", iStarvingIdx )
-		return 0, u""
+		else :
+			return 0, getText( "(City is not starving)" )
 
 	def computeStarvingRevIdx( self ) :
 		# type: () -> int
 		return self.computeStarvingRevIdxAndHelp()[0]
 
-	def computeStarvingRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeStarvingRevIdxAndHelp()[1]
 
 	def computeDisorderRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -906,19 +915,16 @@ class CityRevIdxHelper :
 				iDisorderIdx = iDisorderIdx * iModTimes100 // 100
 
 			if len( szHelp ) > 0 : szHelp += u"\n"
-			szHelp += getText( "Disorder effect: %D1", iDisorderIdx )
+			szHelp += getText( "Disorder effect: %s1", coloredRevIdxFactorStr( iDisorderIdx ) )
 
 			return iDisorderIdx, szHelp
 
-		return 0, u""
+		return 0, getText( "(No disorder)" )
 
 	def computeDisorderRevIdx( self ) :
 		# type: () -> int
 		return self.computeDisorderRevIdxAndHelp()[0]
 
-	def computeDisorderRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeDisorderRevIdxAndHelp()[1]
 
 	def computeCrimeRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
@@ -932,7 +938,7 @@ class CityRevIdxHelper :
 		szHelp = getText( "Effective city crime (capped at 100): %d1", iCityCrime )
 
 		iCrimeIdx = (iCityCrime - iUsualCityCrime) * iCrimeFactorPercent // 100
-		szHelp += u"\n" + getText( "Crime effect: %D1", iCrimeIdx )
+		szHelp += u"\n" + getText( "Crime effect: %s1", coloredRevIdxFactorStr( iCrimeIdx ) )
 
 		return iCrimeIdx, szHelp
 
@@ -940,9 +946,6 @@ class CityRevIdxHelper :
 		# type: () -> int
 		return self.computeCrimeRevIdxAndHelp()[0]
 
-	def computeCrimeRevIdxHelp( self ) :
-		# type: () -> unicode
-		return self.computeCrimeRevIdxAndHelp()[1]
 
 	def civicsWithLocalEffect( self ) :
 		# type: () -> Iterator[Tuple[CvCivicInfo, int]]
@@ -965,6 +968,7 @@ class CityRevIdxHelper :
 		""" Special function for RevWatchAdvisor """
 		return effectsToRevWatchData( self.civicsWithLocalEffect() )
 
+
 	def buildingsWithEffects( self ) :
 		for eBuilding in range( gc.getNumBuildingInfos() ) :
 			if self._pCity.getNumRealBuilding( eBuilding ) > 0 :
@@ -981,6 +985,7 @@ class CityRevIdxHelper :
 		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
 		""" Special function for RevWatchAdvisor """
 		return effectsToRevWatchData( self.buildingsWithEffects() )
+
 
 	def computeLocalRevIdxAndFinalModifierHelp( self ) :
 		# type () -> Tuple[int, unicode]
@@ -1002,7 +1007,7 @@ class CityRevIdxHelper :
 		] )
 		szHelp = getText( "Sum of all effects: %D1", iIdxSum )
 
-		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iIdxSum, self._pOwner, bColorFinalIdx = False )
+		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iIdxSum, self._pOwner, bColorFinalIdx = True )
 		szHelp += szAdjustHelp
 
 		# Feedback
@@ -1025,10 +1030,6 @@ class CityRevIdxHelper :
 	def computeLocalRevIdx( self ) :
 		# type: () -> int
 		return self.computeLocalRevIdxAndFinalModifierHelp()[0]
-
-	def computeFinalModifierHelp( self ) :
-		# type: () -> unicode
-		return self.computeLocalRevIdxAndFinalModifierHelp()[1]
 
 
 class PlayerRevIdxHelper :
@@ -1099,7 +1100,7 @@ class PlayerRevIdxHelper :
 		if self._pPlayer.isGoldenAge() :
 			iIdx = -20
 			return iIdx, getText( "Golden age: %s1", coloredRevIdxFactorStr( iIdx ) )
-		return 0, u""
+		return 0, getText( "(No golden age)" )
 
 	def civicsWithNationalEffect( self ) :
 		# type: () -> Iterator[Tuple[CvCivicInfo, int]]

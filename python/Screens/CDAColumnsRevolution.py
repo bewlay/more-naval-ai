@@ -104,7 +104,7 @@ def makeColumns() :
 				u"<font=2>%s%s</font>" % ( FontUtil.getChar( "commerce culture" ), FontUtil.getChar( "power" ) ),
 			   CityRevIdxHelper.computeNationalityRevIdxAndHelp ),
 
-		RevIdxCityHelperCombinedCDAColumn( "REV_HEALTH", 40, u"<font=2>%s</font>" % FontUtil.getChar( "healthy" ),
+		RevIdxCityHelperCombinedCDAColumn( "REV_HEALTH", 40, u"<font=2>%s</font>" % FontUtil.getChar( "unhealthy" ),
 				CityRevIdxHelper.computeHealthRevIdxAndHelp ),
 
 		RevIdxCityHelperCombinedCDAColumn( "REV_GARRISON", 40, u"<font=2>%s</font>" % FontUtil.getChar( "power" ),
@@ -130,7 +130,7 @@ def makeColumns() :
 				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				CityRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Loc",
+		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Local",
 				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp ),
 
 		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_SIZE", 40,
@@ -153,7 +153,7 @@ def makeColumns() :
 				u"N<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				PlayerRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat",
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat.",
 				PlayerRevIdxHelper.computeNationalRevIdxAndFinalModifierHelp )
 	)
 
