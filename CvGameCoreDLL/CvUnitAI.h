@@ -394,4 +394,7 @@ protected:
 
 };
 
+// lfgr 03/2021: Helper function, to ensure consistency
+bool isCityAIType( UnitAITypes eUnitAI );
+
 #endif

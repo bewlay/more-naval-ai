@@ -332,6 +332,10 @@ bool PUF_isDomainType( const CvUnit* pUnit, int iData1, int iData2 = -1);
 bool PUF_isUnitAIType( const CvUnit* pUnit, int iData1, int iData2 = -1);
 bool PUF_isCityAIType( const CvUnit* pUnit, int iData1, int iData2 = -1);
 bool PUF_isNotCityAIType( const CvUnit* pUnit, int iData1, int iData2 = -1);
+/* lfgr 03/2021: If the given UnitAI is a CityAIType, then accept only units with CityAIType.
+ * Otherwise, accept all units that can defend.
+*/
+bool PUF_isPreferredDefenderAIType( const CvUnit* pUnit, int eUnitAI, int iData2 = -1 );
 bool PUF_isSelected( const CvUnit* pUnit, int iData1 = -1, int iData2 = -1);
 bool PUF_makeInfoBarDirty(CvUnit* pUnit, int iData1 = -1, int iData2 = -1);
 bool PUF_isNoMission(const CvUnit* pUnit, int iData1 = -1, int iData2 = -1);

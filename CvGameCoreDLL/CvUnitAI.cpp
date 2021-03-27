@@ -1464,10 +1464,7 @@ bool CvUnitAI::AI_bestCityBuild(CvCity* pCity, CvPlot** ppBestPlot, BuildTypes* 
 
 bool CvUnitAI::AI_isCityAIType() const
 {
-	return ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) ||
-		      (AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
-					(AI_getUnitAIType() == UNITAI_CITY_SPECIAL) ||
-						(AI_getUnitAIType() == UNITAI_RESERVE));
+	return isCityAIType( AI_getUnitAIType() );
 }
 
 
@@ -13480,7 +13477,8 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= 1)
+				// lfgr fix 03/2021: Stop non-CityAIType units getting stranded, prefer CityAIType units
+				if (plot()->plotCount(PUF_isPreferredDefenderAIType, AI_getUnitAIType(), -1, getOwnerINLINE()) <= 1)
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
@@ -13513,7 +13511,8 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 					{
 						if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 						{
-							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
+							// lfgr fix 03/2021: Stop non-CityAIType units getting stranded, prefer CityAIType units
+							if (pLoopPlot->plotCount(PUF_isPreferredDefenderAIType, AI_getUnitAIType(), -1, getOwnerINLINE()) == 0)
 							{
 								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) == 0)
 								{
@@ -31296,4 +31295,13 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 	}
 
 	return false;
+}
+
+// lfgr 03/2021: Helper function, to ensure consistency
+bool isCityAIType( UnitAITypes eUnitAI )
+{
+	return (eUnitAI == UNITAI_CITY_DEFENSE) ||
+		(eUnitAI == UNITAI_CITY_COUNTER) ||
+		(eUnitAI == UNITAI_CITY_SPECIAL) ||
+		(eUnitAI == UNITAI_RESERVE);
 }
