@@ -5,8 +5,12 @@
 ## Copyright (c) 2007-2008 The BUG Mod.
 ##
 ## Author: EmperorFool
+##
+## lfgr 03/2021: Changed to be unit-based instead of flavor based, to fix errors when a unit has multiple flavors
+## Also, made it respect canEverResearch()
 
 from CvPythonExtensions import *
+import GCUtils
 
 # BUG - Mac Support - start
 import BugUtil
@@ -14,23 +18,33 @@ BugUtil.fixSets(globals())
 # BUG - Mac Support - end
 
 gc = CyGlobalContext()
+gcu = GCUtils.GCUtils()
 
-# see gc.getNumFlavorTypes() and gc.getFlavorTypes()
-# not available via gc.getInfoTypeForString(), thus the hard-coding here :(
-NUM_FLAVORS = 8
-FLAVORS = [ "Military", "Religion", "Production",
-			"Gold", "Science", "Culture",
-			"Growth", "Espionage" ]
-(
-	FLAVOR_MILITARY,
-	FLAVOR_RELIGION,
-	FLAVOR_PRODUCTION,
-	FLAVOR_GOLD,
-	FLAVOR_SCIENCE,
-	FLAVOR_CULTURE,
-	FLAVOR_GROWTH,
-	FLAVOR_ESPIONAGE,
-) = range(NUM_FLAVORS)
+
+# Helper functions
+def getDiscoveryValue( pUnitInfo, eTech ) :
+	# type: (CvUnitInfo, int) -> int
+	# Note: This must reflect changes in CvGameCoreUtils/getDiscoveryTech().
+	# LFGR_TODO: Make a this a C++ helper function
+	pTechInfo = gc.getTechInfo( eTech )
+	iValue = 0
+	for eFlavor in range( gc.getNumFlavorTypes() ) :
+		iValue += pUnitInfo.getFlavorValue( eFlavor ) * pTechInfo.getFlavorValue( eFlavor )
+	return iValue
+
+def makeDiscoveryTechList( eUnit ) :
+	# type: (int) -> List[int]
+	""" A list of techs that a unit of the given type can research, by order of importance. """
+	pUnitInfo = gc.getUnitInfo( eUnit )
+	lTechsWithValue = [(-getDiscoveryValue( pUnitInfo, eTech ), eTech) for eTech in range( gc.getNumTechInfos() )]
+	lTechsWithValue.sort()
+	return [eTech for _, eTech in lTechsWithValue]
+
+def iterDiscoverUnitInfos() :
+	for pUnitInfo in gcu.iterUnitInfos() :
+		if pUnitInfo.getBaseDiscover() > 0 :
+			yield pUnitInfo
+
 
 class TechPrefs:
 
@@ -39,21 +53,23 @@ class TechPrefs:
 		self.NUM_AND_PREREQS = gc.getDefineINT("NUM_AND_TECH_PREREQS")
 		self.NUM_OR_PREREQS = gc.getDefineINT("NUM_OR_TECH_PREREQS")
 		
-		self.mTechs = {}
-		self.lTechsByFlavor = []
-		for iFlavor in range(NUM_FLAVORS):
-			self.lTechsByFlavor.append([])
+		# The tech tree
+		self.mTechs = {} # type: Dict[int, Tech]
 		
-		# build a list of all techs and a list of techs for each flavor
+		# Unit(Type)s that can discover. Best discoverers first
+		self.leDiscoverUnits = [eUnit for eUnit in range( gc.getNumUnitInfos() )
+				if gc.getUnitInfo( eUnit ).getBaseDiscover() > 0]
+		self.leDiscoverUnits.sort( key = lambda eUnit : gc.getUnitInfo( eUnit ).getBaseDiscover(), reverse = True )
+		
+		# Tech pref lists by unit
+		self.mTechsByUnit = {}
+		for eUnit in self.leDiscoverUnits :
+			self.mTechsByUnit[eUnit] = [self.getTech( eTech ) for eTech in makeDiscoveryTechList( eUnit )]
+		
+		# Initialize tech tree
 		for iTech in range(self.NUM_TECHS):
 			pTechInfo = gc.getTechInfo(iTech)
 			pTech = self.getTech(iTech)
-			for iFlavor in range(NUM_FLAVORS):
-				iFlavorValue = pTechInfo.getFlavorValue(iFlavor)
-				if (iFlavorValue > 0):
-					pTech.setFlavorValue(iFlavor, iFlavorValue)
-					self.lTechsByFlavor[iFlavor].append((-iFlavorValue, iTech, pTech))
-					bHasFlavor = True
 			
 			# hook up prereq techs
 			for i in range(self.NUM_AND_PREREQS):
@@ -64,53 +80,9 @@ class TechPrefs:
 				pPrereqTech = pTechInfo.getPrereqOrTechs(i)
 				if (pPrereqTech != -1):
 					pTech.addOrPrereq(self.getTech(pPrereqTech))
-		
-		# sort each flavor's list of techs by decreasing preference: reverse flavor value, tech number
-		# and create a copy that doesn't get trimmed as techs are researched
-		self.lAllTechsByFlavor = {}
-		for iFlavor in range(NUM_FLAVORS):
-			lTechs = self.lTechsByFlavor[iFlavor]
-##			print "%s has %d techs" % (FLAVORS[iFlavor], len(lTechs))
-			lTechs.sort()
-			self.lTechsByFlavor[iFlavor] = [ pTech for _, _, pTech in lTechs ]
-			self.lAllTechsByFlavor[iFlavor] = tuple(self.lTechsByFlavor[iFlavor])
-		
-##		print "---- Techs with Flavor ----"
-##		for pTech in self.mTechs.values():
-##			print "%2d: %s" % (pTech.iTech, pTech.getName())
-##		for iFlavor in range(NUM_FLAVORS):
-##			print "---- %d Techs with Flavor %s ----" % (len(self.lTechsByFlavor[iFlavor]), FLAVORS[iFlavor])
-##			for pTech in self.lTechsByFlavor[iFlavor]:
-##				print "%2d-%2d: %s" % (pTech.getFlavorValue(iFlavor), pTech.iTech, pTech.getName())
-		
-##		pOptics = self.getTech(gc.getInfoTypeForString("TECH_OPTICS"))
-##		print pOptics
-##		pAstronomy = self.getTech(gc.getInfoTypeForString("TECH_ASTRONOMY"))
-##		print pAstronomy
-##		pPhysics = self.getTech(gc.getInfoTypeForString("TECH_PHYSICS"))
-##		print pPhysics
-##		pAstronomy.removeFromTree()
-##		print pOptics
-##		print pAstronomy
-##		print pPhysics
-##		
-##		self.removeKnownTechs()
-##		print self.getNextResearchableFlavorTech(FLAVOR_RELIGION)
-##		print self.getNextResearchableFlavorTech(FLAVOR_SCIENCE)
-##		print self.getNextResearchableFlavorTech(FLAVOR_GOLD)
-##		techs = set()
-##		techs.add(self.getTechStr("TECH_THE_WHEEL"))
-##		techs.add(self.getTechStr("TECH_MYSTICISM"))
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_RELIGION, techs)
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_SCIENCE, techs)
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_GOLD, techs)
-##		techs.add(self.getTechStr("TECH_IRON_WORKING"))
-##		techs.add(self.getTechStr("TECH_IRON_POTTERY"))
-##		techs.add(self.getTechStr("TECH_MEDITATION"))
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_RELIGION, techs)
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_SCIENCE, techs)
-##		print self.getNextResearchableWithFlavorTech(FLAVOR_GOLD, techs)#
-
+	
+	def getDiscoverUnits( self ) :
+		return list( self.leDiscoverUnits )
 
 	def getTech(self, iTech):
 		if iTech not in self.mTechs:
@@ -128,9 +100,9 @@ class TechPrefs:
 		if (iTech in self.mTechs):
 			pTech = self.mTechs[iTech]
 			del self.mTechs[iTech]
-			for iFlavor in range(NUM_FLAVORS):
-				if pTech in self.lTechsByFlavor[iFlavor]:
-					self.lTechsByFlavor[iFlavor].remove(pTech)
+			for lTechs in self.mTechsByUnit.values() :
+				if pTech in lTechs :
+					lTechs.remove(pTech)
 			pTech.removeFromTree()
 
 	def removeKnownTechs(self):
@@ -140,109 +112,37 @@ class TechPrefs:
 			if (pTeam.isHasTech(iTech)):
 				self.removeTech(iTech)
 
-
-	def getResearchableTechs(self):
-		"""Returns a set of all techs that can be researched now."""
-		sCan = set()
-		for pTech in self.mTechs.values():
-			if (pTech.canResearch()):
-				sCan.add(pTech)
-		return sCan
-
-	def getResearchableWithTechs(self, sTechs):
-		"""Returns a set of all techs that can be researched once the given techs have been researched."""
-		sCan = set()
-		for pTech in self.mTechs.values():
-			if (pTech not in sTechs and pTech.canResearchWith(sTechs)):
-				sCan.add(pTech)
-		return sCan
-
-
-	def getNextFlavorTech(self, iFlavor):
-		"""Returns the next tech in the flavor's list or None."""
-		if (len(self.lTechsByFlavor[iFlavor]) > 0):
-			return self.lTechsByFlavor[iFlavor][0]
-		else:
-			return None
-
-	def getNextResearchableFlavorTech(self, iFlavor):
-		"""Returns the next tech in the flavor's list that is researchable now or None."""
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech.canResearch()):
+	def getNextResearchableUnitTech(self, eUnit):
+		"""Returns the next tech in the unit's list that is researchable now or None."""
+		for pTech in self.mTechsByUnit[eUnit]:
+			if pTech.canResearch() :
 				return pTech
 		return None
 
-	def getNextResearchableWithFlavorTech(self, iFlavor, sTechs):
+	def getNextResearchableWithUnitTech(self, eUnit, sTechs):
 		"""Returns the next tech in the flavor's list that is researchable once the given techs are researched or None."""
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech not in sTechs and pTech.canResearchWith(sTechs)):
+		for pTech in self.mTechsByUnit[eUnit]:
+			if pTech not in sTechs and pTech.canResearchWith(sTechs) :
 				return pTech
 		return None
 
-	def getAllFlavorTechs(self, iFlavor):
-		"""Returns a list of all techs in the flavor's list."""
-		lTechs = []
-		for pTech in self.lAllTechsByFlavor[iFlavor]:
-			lTechs.append(pTech)
-		return lTechs
+	def getAllUnitTechs(self, eUnit):
+		"""Returns a list of all techs in the unit's list."""
+		return list( self.mTechsByUnit[eUnit] )
 
-	def getCurrentFlavorTechs(self, iFlavor):
-		"""Returns a list of techs in the flavor's list that are researchable now."""
-		lTechs = []
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech.canResearch()):
-				lTechs.append(pTech)
-		return lTechs
+	def getCurrentUnitTechs(self, eUnit):
+		"""Returns a list of techs in the unit's list that are researchable now."""
+		return [tech for tech in self.mTechsByUnit[eUnit] if tech.canResearch()]
 
-	def getCurrentWithFlavorTechs(self, iFlavor, sTechs):
-		"""Returns a list of techs in the flavor's list that are researchable once sTechs have been researched."""
-		lTechs = []
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech not in sTechs and pTech.canResearchWith(sTechs)):
-				lTechs.append(pTech)
-		return lTechs
-
-	def getRemainingFlavorTechs(self, iFlavor):
-		"""Returns a list of techs in the flavor's list that haven't been researched yet."""
-		lTechs = []
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech.getID() in self.mTechs):
-				lTechs.append(pTech)
-		return lTechs
-
-	def getFutureFlavorTechs(self, iFlavor, sTechs):
-		"""Returns a list of techs in the flavor's list that haven't been researched yet and aren't in <sTechs>."""
-		lTechs = []
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if (pTech.getID() in self.mTechs and pTech not in sTechs):
-				lTechs.append(pTech)
-		return lTechs
-
-
-	def printFlavorTechs(self, iFlavor):
-		"""Prints the techs in the flavor's list."""
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			print pTech
-
-	def printResearchableFlavorTechs(self, iFlavor):
-		"""Prints the techs in the flavor's list."""
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if pTech.canResearch():
-				print pTech
-
-	def printResearchableWithFlavorTechs(self, iFlavor, sTechs):
-		"""Prints the techs in the flavor's list."""
-		for pTech in self.lTechsByFlavor[iFlavor]:
-			if pTech.canResearchWith(sTechs):
-				print pTech
+	def getCurrentWithUnitTechs(self, eUnit, sTechs):
+		"""Returns a list of techs in the unit's list that are researchable once sTechs have been researched."""
+		return [tech for tech in self.mTechsByUnit[eUnit] if tech.canResearchWith(sTechs)]
 
 
 class Tech:
 	
 	def __init__(self, iTech):
 		self.iTech = iTech
-		self.lFlavorValues = [0] * NUM_FLAVORS
-		self.lFlavorPref = [0] * NUM_FLAVORS
 		self.sAndPrereqs = set()
 		self.sOrPrereqs = set()
 		self.iNumAndPrereqs = 0
@@ -266,19 +166,6 @@ class Tech:
 	
 	def __cmp__(self, other):
 		return self.iTech - other.iTech
-
-
-	def setFlavorValue(self, iFlavor, iValue):
-		self.lFlavorValues[iFlavor] = iValue
-
-	def getFlavorValue(self, iFlavor):
-		return self.lFlavorValues[iFlavor]
-
-	def setFlavorPref(self, iFlavor, iPref):
-		self.lFlavorPref[iFlavor] = iPref
-
-	def getFlavorPref(self, iFlavor):
-		return self.lFlavorPref[iFlavor]
 
 
 	def addAndPrereq(self, pTech):
@@ -323,15 +210,22 @@ class Tech:
 		else:
 			orSet = self.sOrPrereqs.copy()
 		return andSet, orSet
+	
+	def canEverResearch( self ) :
+		return gc.getActivePlayer().canEverResearch( self.iTech )
 
 	def canResearch(self):
 		"""Returns True if this tech has met all And prereqs and at least one Or prereq."""
-		return self.getNumTechsNeeded() == 0
+		return self.getNumTechsNeeded() == 0 and self.canEverResearch()
 
 	def canResearchWith(self, sTechs):
 		"""Returns True if this tech can be researched once the given tech(s) have been researched."""
 		if (len(sTechs) == 0):
 			return self.canResearch()
+		if not self.canEverResearch() :
+			return False
+		if self in sTechs :
+			return False
 		sAnds = self.sAndPrereqs.difference(sTechs)
 		sOrs = self.sOrPrereqs.difference(sTechs)
 		return (len(sOrs) == 0 or len(sOrs) < self.iNumOrPrereqs) and len(sAnds) == 0
