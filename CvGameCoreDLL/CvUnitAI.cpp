@@ -209,7 +209,7 @@ bool CvUnitAI::AI_update()
                 BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI);
                 if (NO_BUILDING != eBuilding)
                 {
-                    if ((m_pUnitInfo->getForceBuildings(eBuilding)) || (m_pUnitInfo->getBuildings(eBuilding)))
+                    if ((m_pUnitInfo->getForceBuildings(eBuilding)) || (m_pUnitInfo->getBuildings(eBuilding)))// LFGR_TODO: This can be cached
                     {
                        /*
 						if (canConstruct(plot(),eBuilding))
@@ -278,7 +278,7 @@ bool CvUnitAI::AI_update()
 		// End Tholal Merge
 
         //remove AI control from Defensive only Units
-        else if(isOnlyDefensive())
+        if(isOnlyDefensive()) // lfgr fix 03/2021: else if -> if, due to Snarko's fix above
         {
             changeAIControl(-1);
             getGroup()->pushMission(MISSION_SKIP);
@@ -421,8 +421,8 @@ bool CvUnitAI::AI_update()
             break;
 		// End Sephi Code
 
-		default:
-			FAssert(false);
+		default: // lfgr comment: isAIControl() makes isAutomated() true without actually having to have an automate type.
+			FAssertMsg( isAIControl(), CvString::format( "Unknown automate type: %d", getGroup()->getAutomateType() ).c_str() );
 			break;
 		}
 

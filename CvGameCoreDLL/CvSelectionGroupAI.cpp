@@ -279,7 +279,7 @@ bool CvSelectionGroupAI::AI_update()
 			{
 				if (iTempHack == 99)
 				{
-					FAssertMsg(false, "unit about to be stuck in loop");
+					FAssertMsg(false, "unit about to be stuck in loop"); // LFGR_TODO: This should be in else block
 				}
 				// AI_update returns true when we should abort the loop and wait until next slice
 				break;
