@@ -534,8 +534,6 @@ class CvCustomizableDomesticAdvisor:
 							if (not self.bonusCorpCommerces[eBonus][eCommerce].has_key(eCorp)):
 								self.bonusCorpCommerces[eBonus][eCommerce][eCorp] = iCommerceValue
 
-		self.loadPages()
-
 		self.BUILDING_ICONS_DICT = { }
 		self.BUILDING_DICT = { }
 		self.BUILDING_INFO_LIST = []
@@ -750,6 +748,7 @@ class CvCustomizableDomesticAdvisor:
 				}
 # BUG - Production Grouping - end
 
+		self.loadPages() # lfgr 03/2021: Moved here, so we can use COLUMNS_INDEX
 		self.switchPage(self.PAGES[0]["name"])
 
 		self.runtimeInitDone = True
@@ -3154,13 +3153,42 @@ class CvCustomizableDomesticAdvisor:
 							("DEFENSE", 60, "int"),
 							("THREATS", 60, "text"),
 							("CONSCRIPT_UNIT", 90, "text"),
-							(self.getBuildingKey(3), 70, "text"),
-							(self.getBuildingKey(4), 70, "text"),
-							(self.getBuildingKey(5), 70, "text"),
-							(self.getBuildingKey(6), 70, "text"),
-							(self.getBuildingKey(7), 70, "text"),
+							"I_BUILDING_HUNTING_LODGE", # LFGR_TODO: buildingclass?
+							"I_BUILDING_TRAINING_YARD", # LFGR_TODO: buildingclass?
+							"I_BUILDING_STABLE", # LFGR_TODO: buildingclass?
+							"I_BUILDING_MAGE_GUILD",
 							("PRODUCING", 90, "text"),
 							("PRODUCING_TURNS", 33, "int"),
+						]
+					},
+					{
+						"name" : "Revolutions",
+						"showSpecControls" : False,
+						"showCultureLegend" : False,
+						"showGPLegend" : False,
+						"columns" : [
+							"NAME",
+							"REV_HAPPINESS",
+							"REV_LOCATION",
+							"REV_RELIGION",
+							"REV_CULTURE",
+							"REV_NATIONALITY",
+							"REV_HEALTH",
+							"REV_GARRISON",
+							"REV_SIZE",
+							"REV_STARVATION",
+							"REV_DISORDER",
+							"REV_CRIME",
+							"REV_CIVICS",
+							"REV_BUILDINGS",
+							"REV_PER_TURN",
+							"REV_NAT_SIZE",
+							"REV_NAT_CULT_SPENDING",
+							"REV_NAT_GOLDEN_AGE",
+							"REV_NAT_CIVICS",
+							"REV_NAT_BUILDINGS",
+							"REV_NAT_PER_TURN",
+							"REV_TOTAL"
 						]
 					}
 					]
@@ -3281,6 +3309,19 @@ class CvCustomizableDomesticAdvisor:
 
 			if not p.has_key("columns"):
 				p["columns"] = [("NAME", 95, "text")]
+			
+			# lfgr 03/2021: Allow columns to be given as name-only in initial specification
+			for idx, col in enumerate( list( p["columns"] ) ) :
+				if isinstance( col, str ) :
+					colDef = self.COLUMNS_LIST[self.COLUMNS_INDEX[col]]
+					if isinstance( colDef, CDAColumns.CDAColumn ) :
+						iWidth = colDef.default_width
+						tp = colDef.type
+					else :
+						iWidth = colDef[1]
+						tp = colDef[2]
+					p["columns"][idx] = (col, iWidth, tp)
+						
 
 
 	def renamePage(self, inputClass):
