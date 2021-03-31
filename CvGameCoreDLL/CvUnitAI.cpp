@@ -6614,8 +6614,8 @@ void CvUnitAI::AI_spyMove()
 			iEspionageChance = 0;
 			break;
 
-		default:
-			FAssert(false);
+		default: // lfgr comment: isAIControl() makes isAutomated() true without actually having to have an automate type.
+			FAssertMsg( isAIControl(), CvString::format( "Unknown automate type: %d", getGroup()->getAutomateType() ).c_str() );
 			break;
 		}
 

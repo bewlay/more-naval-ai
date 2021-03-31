@@ -21830,7 +21830,7 @@ EventTriggeredData* CvPlayer::initTriggeredData(EventTriggerTypes eEventTrigger,
 	{
 		if (NULL == pCity)
 		{
-			pCity = pickTriggerCity(eEventTrigger);
+			pCity = pickTriggerCity(eEventTrigger); // LFGR_TODO: Pick plot at the same time, otherwise we might miss a valid combination.
 		}
 
 		if (NULL != pCity)
