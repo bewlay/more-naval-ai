@@ -21209,6 +21209,9 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	}
 
 	FAssertMsg(iModYield == city.getCommerceRateTimes100(eCommerceType), "Commerce yield does not match actual value");
+	
+	// lfgr fix 03/2021: This is possible e.g. with market and 0% research
+	iModYield = std::max( 0, iModYield );
 
 	CvWString szYield = CvWString::format(L"%d.%02d", iModYield/100, iModYield%100);
 	szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_COMMERCE_FINAL_YIELD_FLOAT", info.getTextKeyWide(), szYield.GetCString(), info.getChar()));

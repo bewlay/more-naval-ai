@@ -3912,7 +3912,11 @@ class CvMainInterface:
 					eCommerce = (i + 1) % CommerceTypes.NUM_COMMERCE_TYPES
 
 					if ((gc.getPlayer(pHeadSelectedCity.getOwner()).isCommerceFlexible(eCommerce)) or (eCommerce == CommerceTypes.COMMERCE_GOLD)):
-						szBuffer = u"%d.%02d %c" %(pHeadSelectedCity.getCommerceRate(eCommerce), pHeadSelectedCity.getCommerceRateTimes100(eCommerce)%100, gc.getCommerceInfo(eCommerce).getChar())
+						# lfgr fix 03/2021: Allow negative research
+						if pHeadSelectedCity.getCommerceRateTimes100(eCommerce) > 0 :
+							szBuffer = u"%d.%02d %c" %(pHeadSelectedCity.getCommerceRate(eCommerce), pHeadSelectedCity.getCommerceRateTimes100(eCommerce)%100, gc.getCommerceInfo(eCommerce).getChar())
+						else :
+							szBuffer = u"0.00 %c" % gc.getCommerceInfo(eCommerce).getChar()
 
 						iHappiness = pHeadSelectedCity.getCommerceHappinessByType(eCommerce)
 
