@@ -6378,7 +6378,8 @@ bool CvUnit::pillage()
 				if (pPlot->isOwned())
 				{
 					// Tholal AI - pillaging affects War Success
-					if ((iPillageGold > 10) || (pPlot->getBonusType() != NO_BONUS))
+					// lfgr fix 03/2021: Only for non-HN units
+					if( !isHiddenNationality() && ( iPillageGold > 10 || pPlot->getBonusType() != NO_BONUS ) )
 					{
 						GET_TEAM(getTeam()).AI_changeWarSuccess(pPlot->getTeam(), 1);
 					}
