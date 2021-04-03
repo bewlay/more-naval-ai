@@ -15780,6 +15780,15 @@ bool CvUnit::isPotentialEnemy(TeamTypes eTeam, const CvPlot* pPlot) const
 		pPlot = plot();
 	}
 
+	// lfgr fix 03/2021: See isEnemy()
+	if (isAlwaysHostile(pPlot))
+	{
+		if (getTeam() != eTeam)
+		{
+			return true;
+		}
+	}
+
 	return (::isPotentialEnemy(GET_PLAYER(getCombatOwner(eTeam, pPlot)).getTeam(), eTeam));
 }
 
