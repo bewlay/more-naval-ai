@@ -24842,7 +24842,9 @@ int CvPlayerAI::AI_getStrategyRand() const
 {
 	if( m_iStrategyRand <= 0 )
 	{
-		m_iStrategyRand = 1 + GC.getGameINLINE().getSorenRandNum(100000, "AI Strategy Rand");
+		// lfgr fix 03/2021: getSorenRandNum only supports the unsigned short range.
+		m_iStrategyRand = 1 + GC.getGameINLINE().getSorenRandNum(100, "AI Strategy Rand 1") * 1000
+				+ GC.getGameINLINE().getSorenRandNum(1000, "AI Strategy Rand 2");
 	}
 
 	return m_iStrategyRand;
