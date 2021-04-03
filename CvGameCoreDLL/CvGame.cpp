@@ -8922,6 +8922,7 @@ CvRandom& CvGame::getSorenRand()
 
 int CvGame::getSorenRandNum(int iNum, const char* pszLog)
 {
+	FAssertMsg( 0 <= iNum && iNum < 65536, "getSorenRandNum parameter out of range" )
 	return m_sorenRand.get(iNum, pszLog);
 }
 
