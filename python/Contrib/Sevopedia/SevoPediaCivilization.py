@@ -12,13 +12,10 @@
 
 from CvPythonExtensions import *
 import CvUtil
-import ScreenInput
-import SevoScreenEnums
-##--------	BUGFfH: Added by Denev 2009/08/14
-import SevoPediaMain
-##--------	BUGFfH: End Add
+import GCUtils # lfgr 04/2021
 
 gc = CyGlobalContext()
+gcu = GCUtils.GCUtils()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -72,7 +69,7 @@ class SevoPediaCivilization:
 
 		self.X_BUILDINGS = self.X_MAIN_PANE
 		self.Y_BUILDINGS = self.Y_HEROES + self.H_HEROES + Y_MERGIN
-		self.W_BUILDINGS = 215
+		self.W_BUILDINGS = 215 # lfgr 04/2021: Increased to show full caption
 		self.H_BUILDINGS = self.H_HEROES
 
 		self.X_UNITS = self.X_BUILDINGS + self.W_BUILDINGS + X_MERGIN
@@ -152,10 +149,10 @@ class SevoPediaCivilization:
 
 
 
-	def placeBuilding(self):
+	def placeBuilding(self): # lfgr 04 2021: Also show civ-specific rituals
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel(panelName, localText.getText("TXT_KEY_UNIQUE_BUILDINGS", ()), "", False, True, self.X_BUILDINGS, self.Y_BUILDINGS, self.W_BUILDINGS, self.H_BUILDINGS, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel(panelName, localText.getText("TXT_KEY_UNIQUE_BUILDINGS_AND_PROJECTS", ()), "", False, True, self.X_BUILDINGS, self.Y_BUILDINGS, self.W_BUILDINGS, self.H_BUILDINGS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
 		for iBuilding in range(gc.getNumBuildingClassInfos()):
 			iUniqueBuilding = gc.getCivilizationInfo(self.iCivilization).getCivilizationBuildings(iBuilding)
@@ -168,6 +165,12 @@ class SevoPediaCivilization:
 				if iUniqueBuilding != BuildingTypes.NO_BUILDING:
 					szButton = gc.getBuildingInfo(iUniqueBuilding).getButton()
 					screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iUniqueBuilding, 1, False)
+		for eProject, project in enumerate( gcu.iterProjectInfos() ) :
+			if project.getPrereqCivilization() == self.iCivilization :
+				szButton = project.getButton()
+				screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+						WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, eProject, 1, False)
+
 
 
 	def placeUnit(self):
