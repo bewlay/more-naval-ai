@@ -12,7 +12,6 @@
 
 from CvPythonExtensions import *
 import CvUtil
-import ScreenInput
 import SevoScreenEnums
 
 gc = CyGlobalContext()
@@ -28,9 +27,6 @@ class SevoPediaProject:
 	
 	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/04
-		X_MERGIN = self.top.X_MERGIN
-		Y_MERGIN = self.top.Y_MERGIN
-
 		self.W_REQUIRES = 240
 		self.X_REQUIRES = self.top.R_PEDIA_PAGE - self.W_REQUIRES
 		self.Y_REQUIRES = self.top.Y_PEDIA_PAGE
@@ -134,7 +130,11 @@ class SevoPediaProject:
 		if (iPrereq >= 0):
 			screen.attachImageButton(panelName, "", gc.getTechInfo(iPrereq).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iPrereq, 1, False)
 
-
+		# lfgr 04/2021: Show required ritual
+		ePrereqRitual = gc.getProjectInfo(self.iProject).getAnyoneProjectPrereq()
+		if ePrereqRitual != -1 :
+			screen.attachImageButton( panelName, "", gc.getTechInfo( iPrereq ).getButton(),
+				GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, ePrereqRitual, 1, False )
 
 	def placeSpecial(self):
 		screen = self.top.getScreen()
