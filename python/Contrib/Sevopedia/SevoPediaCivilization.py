@@ -40,20 +40,20 @@ class SevoPediaCivilization:
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
 
-		self.W_CIV_TRAIT = 150
-		self.H_CIV_TRAIT = 116
-		self.X_CIV_TRAIT = self.top.R_PEDIA_PAGE - self.W_CIV_TRAIT
-		self.Y_CIV_TRAIT = self.top.Y_PEDIA_PAGE
+		self.W_FEATURES = 215
+		self.H_FEATURES = 116
+		self.X_FEATURES = self.top.R_PEDIA_PAGE - self.W_FEATURES
+		self.Y_FEATURES = self.top.Y_PEDIA_PAGE
 
 		self.W_TECHS = 180
-		self.H_TECHS = self.H_CIV_TRAIT
-		self.X_TECHS = self.X_CIV_TRAIT - self.W_TECHS - X_MERGIN
-		self.Y_TECHS = self.Y_CIV_TRAIT
+		self.H_TECHS = self.H_FEATURES
+		self.X_TECHS = self.X_FEATURES - self.W_TECHS - X_MERGIN
+		self.Y_TECHS = self.Y_FEATURES
 
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
-		self.Y_MAIN_PANE = self.Y_CIV_TRAIT
+		self.Y_MAIN_PANE = self.Y_FEATURES
 		self.W_MAIN_PANE = self.X_TECHS - self.X_MAIN_PANE - X_MERGIN
-		self.H_MAIN_PANE = self.H_CIV_TRAIT
+		self.H_MAIN_PANE = self.H_FEATURES
 
 		self.W_ICON = 100
 		self.H_ICON = 100
@@ -124,7 +124,7 @@ class SevoPediaCivilization:
 		screen.addDDSGFC(self.top.getNextWidgetName(), ArtFileMgr.getCivilizationArtInfo(gc.getCivilizationInfo(self.iCivilization).getArtDefineTag()).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		self.placeTech()
-		self.placeRaceAndTrait() # lfgr 04/2021
+		self.placeOtherFeatures() # lfgr 04/2021
 		self.placeBuilding()
 		self.placeUnit()
 		self.placeLeader()
@@ -158,16 +158,19 @@ class SevoPediaCivilization:
 				screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 1, False)
 	
 	
-	def placeRaceAndTrait( self ) :
+	# lfgr 04/2021
+	def placeOtherFeatures( self ) :
 		screen = self.top.getScreen()
 
 		eRace = self.civInfo.getDefaultRace()
 		eTrait = self.civInfo.getCivTrait()
+		leCivics = [eCivic for eCivic in range( gc.getNumCivicInfos() )
+				if gc.getCivicInfo( eCivic ).getPrereqCivilization() == self.iCivilization]
 		
-		if eRace != -1 or eTrait != -1 :
+		if eRace != -1 or eTrait != -1 or len( leCivics ) > 0 :
 			panelName = self.top.getNextWidgetName()
-			screen.addPanel( panelName, localText.getText("TXT_KEY_CIV_RACE_TRAIT", ()), "", False, True,
-					self.X_CIV_TRAIT, self.Y_CIV_TRAIT, self.W_CIV_TRAIT, self.H_CIV_TRAIT, PanelStyles.PANEL_STYLE_BLUE50 )
+			screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_OTHER_FEATURES", ()), "", False, True,
+							 self.X_FEATURES, self.Y_FEATURES, self.W_FEATURES, self.H_FEATURES, PanelStyles.PANEL_STYLE_BLUE50 )
 			screen.attachLabel( panelName, "", "  " )
 			
 			if eRace != -1 :
@@ -177,6 +180,10 @@ class SevoPediaCivilization:
 			if eTrait != -1 :
 				screen.attachImageButton( panelName, "", gc.getTraitInfo( eTrait ).getButton(),
 						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, eTrait, 1, False )
+			
+			for eCivic in leCivics :
+				screen.attachImageButton( panelName, "", gc.getCivicInfo( eCivic ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, eCivic, 1, False )
 		
 
 

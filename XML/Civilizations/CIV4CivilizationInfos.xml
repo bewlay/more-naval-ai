@@ -443,7 +443,6 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<CivTrait>TRAIT_GUARDSMAN</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
-			<Help>TXT_KEY_CIV_BANNOR_HELP</Help>
 			<Hero>UNIT_DONAL</Hero>
 			<MaintainFeatures>
 			</MaintainFeatures>

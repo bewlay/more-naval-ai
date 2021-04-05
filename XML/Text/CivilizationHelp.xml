@@ -11,12 +11,12 @@
 		<Finnish>Unique Buildings/Rituals</Finnish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIV_RACE_TRAIT</Tag>
-		<English>Race/Traits</English>
-		<French>Race/Traits</French>
-		<German>Race/Traits</German>
-		<Italian>Race/Traits</Italian>
-		<Spanish>Race/Traits</Spanish>
-		<Finnish>Race/Traits</Finnish>
+		<Tag>TXT_KEY_PEDIA_OTHER_FEATURES</Tag>
+		<English>Race, Traits, and Civics</English>
+		<French>Race, Traits, and Civics</French>
+		<German>Race, Traits, and Civics</German>
+		<Italian>Race, Traits, and Civics</Italian>
+		<Spanish>Race, Traits, and Civics</Spanish>
+		<Finnish>Race, Traits, and Civics</Finnish>
 	</TEXT>
 </Civ4GameText>
