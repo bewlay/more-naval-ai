@@ -431,6 +431,7 @@
 	<ElementType name="FreePromotionUnitCombats" content="eltOnly">
 		<element type="FreePromotionUnitCombat" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="Button" content="textOnly"/> <!-- lfgr 04/2021: Trait buttons -->
 	<ElementType name="TraitInfo" content="eltOnly">
 		<element type="Type"/>
 		<element type="Description"/>
@@ -466,7 +467,8 @@
 		<element type="CommerceChanges"/>
 		<element type="CommerceModifiers"/>
 		<element type="FreePromotions"/>
-		<element type="FreePromotionUnitCombats"/>
+		<element type="FreePromotionUnitCombats"/> <!-- lfgr 04/2021: Trait buttons -->
+		<element type="Button"/>
 	</ElementType>
 	<ElementType name="TraitInfos" content="eltOnly">
 		<element type="TraitInfo" maxOccurs="*"/>
