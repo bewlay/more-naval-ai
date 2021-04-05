@@ -25,6 +25,15 @@ class SevoPediaCivilization:
 		self.iCivilization = -1
 		self.top = main
 	
+	# lfgr 04/2021: Helper function
+	@property
+	def civInfo( self ) :
+		# type: () -> Optional[CvCivilizationInfo]
+		if self.iCivilization != -1 :
+			return gc.getCivilizationInfo( self.iCivilization )
+		else :
+			return None
+	
 	
 	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/08
@@ -69,7 +78,7 @@ class SevoPediaCivilization:
 
 		self.X_BUILDINGS = self.X_MAIN_PANE
 		self.Y_BUILDINGS = self.Y_HEROES + self.H_HEROES + Y_MERGIN
-		self.W_BUILDINGS = 215 # lfgr 04/2021: Increased to show full caption
+		self.W_BUILDINGS = 215
 		self.H_BUILDINGS = self.H_HEROES
 
 		self.X_UNITS = self.X_BUILDINGS + self.W_BUILDINGS + X_MERGIN
@@ -115,6 +124,7 @@ class SevoPediaCivilization:
 		screen.addDDSGFC(self.top.getNextWidgetName(), ArtFileMgr.getCivilizationArtInfo(gc.getCivilizationInfo(self.iCivilization).getArtDefineTag()).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		self.placeTech()
+		self.placeRaceAndTrait() # lfgr 04/2021
 		self.placeBuilding()
 		self.placeUnit()
 		self.placeLeader()
@@ -146,7 +156,28 @@ class SevoPediaCivilization:
 		for iTech in range(gc.getNumTechInfos()):
 			if (gc.getCivilizationInfo(self.iCivilization).isCivilizationFreeTechs(iTech)):
 				screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 1, False)
+	
+	
+	def placeRaceAndTrait( self ) :
+		screen = self.top.getScreen()
 
+		eRace = self.civInfo.getDefaultRace()
+		eTrait = self.civInfo.getCivTrait()
+		
+		if eRace != -1 or eTrait != -1 :
+			panelName = self.top.getNextWidgetName()
+			screen.addPanel( panelName, localText.getText("TXT_KEY_CIV_RACE_TRAIT", ()), "", False, True,
+					self.X_CIV_TRAIT, self.Y_CIV_TRAIT, self.W_CIV_TRAIT, self.H_CIV_TRAIT, PanelStyles.PANEL_STYLE_BLUE50 )
+			screen.attachLabel( panelName, "", "  " )
+			
+			if eRace != -1 :
+				screen.attachImageButton( panelName, "", gc.getPromotionInfo( eRace ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, eRace, 1, False )
+			
+			if eTrait != -1 :
+				screen.attachImageButton( panelName, "", gc.getTraitInfo( eTrait ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, eTrait, 1, False )
+		
 
 
 	def placeBuilding(self): # lfgr 04 2021: Also show civ-specific rituals
