@@ -14,6 +14,8 @@ from CvPythonExtensions import *
 import CvUtil
 import GCUtils # lfgr 04/2021
 
+import itertools
+
 gc = CyGlobalContext()
 gcu = GCUtils.GCUtils()
 ArtFileMgr = CyArtFileMgr()
@@ -68,7 +70,8 @@ class SevoPediaCivilization:
 
 		self.X_SPELLS = self.X_HEROES + self.W_HEROES + X_MERGIN
 		self.Y_SPELLS = self.Y_HEROES
-		self.W_SPELLS = 155
+		# lfgr 04/2021: Spells get more room from leaders
+		self.W_SPELLS = max( 155, ( self.top.R_PEDIA_PAGE - self.X_SPELLS - X_MERGIN ) / 2 )
 		self.H_SPELLS = self.H_HEROES
 
 		self.X_LEADERS = self.X_SPELLS + self.W_SPELLS + X_MERGIN
@@ -134,7 +137,7 @@ class SevoPediaCivilization:
 
 		self.placeTrait()
 		self.placeHero()
-		self.placeWorldSpell()
+		self.placeSpells()
 
 		szPanelName1 = self.placeBlockedBuilding()
 		szPanelName2 = self.placeBlockedUnit()
@@ -360,19 +363,27 @@ class SevoPediaCivilization:
 			screen.attachImageButton(panelName, "", heroInfo.getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iHero, 1, False)
 
 
-
-	def placeWorldSpell(self):
+	# lfgr 04/2021: Show all spells
+	def placeSpells( self ):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel(panelName, localText.getText("TXT_KEY_CONCEPT_WORLD_SPELLS", ()), "", False, True, self.X_SPELLS, self.Y_SPELLS, self.W_SPELLS, self.H_SPELLS, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel(panelName, localText.getText("TXT_KEY_CONCEPT_SPELLS", ()), "", False, True, self.X_SPELLS, self.Y_SPELLS, self.W_SPELLS, self.H_SPELLS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
+		
+		leWorldSpells = [] # These come first
+		leOtherSpells = []
 
-		for iSpell in range(gc.getNumSpellInfos()):
-			spellInfo = gc.getSpellInfo(iSpell)
-			if spellInfo.isGlobal():
-				if spellInfo.getCivilizationPrereq() == self.iCivilization:
-					screen.attachImageButton(panelName, "", spellInfo.getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, 1, False)
-					break
+		for eSpell in range(gc.getNumSpellInfos()):
+			spellInfo = gc.getSpellInfo( eSpell )
+			if spellInfo.getCivilizationPrereq() == self.iCivilization:
+				if spellInfo.isGlobal():
+					leWorldSpells.append( eSpell )
+				else :
+					leOtherSpells.append( eSpell)
+		
+		for eSpell in itertools.chain( leWorldSpells, leOtherSpells ) :
+			screen.attachImageButton( panelName, "", gc.getSpellInfo( eSpell ).getButton(),
+					GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, eSpell, 1, False )
 ##--------	BUGFfH: End Add
 
 
