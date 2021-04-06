@@ -24100,6 +24100,11 @@ bool CvGameText::read(CvXMLLoadUtility* pXML, int iCurrentLanguage)
 	static const char* const LANGUAGES[] = {"English", "French", "German", "Italian", "Spanish"};
 	static const int NUM_DEFINED_LANGUAGES = 5;
 	FAssert( 0 <= iCurrentLanguage && iCurrentLanguage < NUM_DEFINED_LANGUAGES )
+	
+	if( NUM_LANGUAGES == 0 )
+	{
+		NUM_LANGUAGES = NUM_DEFINED_LANGUAGES;
+	}
 
 	// Read tag
 	pXML->GetChildXmlValByName( m_szType, "Tag" );
