@@ -28,18 +28,11 @@
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALIST_HEALTHY</Tag>
 		<English>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</English>
-		<French>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</French>
-		<German>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</German>
-		<Italian>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</Italian>
-		<Spanish>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</Spanish>
 	</TEXT>
 
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALIST_UNHEALTHY</Tag>
 		<English>[ICON_BULLET]%D1_Change[ICON_UNHEALTHY]</English>
-		<French>[ICON_BULLET]%D1_Change[ICON_UNHEALTHY]</French>
-		<German>[ICON_BULLET]%D1_Change[ICON_UNHEALTHY]</German>
-		<Italian>[ICON_BULLET]%D1_Change[ICON_UNHEALTHY]</Italian>
 		<Spanish>[ICON_BULLET]%D1_Change[ICON_HEALTHY]</Spanish>
 	</TEXT>
 
@@ -64,19 +57,11 @@
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALIST_HAPPY</Tag>
 		<English>[ICON_BULLET]%D1_Change[ICON_HAPPY]</English>
-		<French>[ICON_BULLET]%D1_Change[ICON_HAPPY]</French>
-		<German>[ICON_BULLET]%D1_Change[ICON_HAPPY]</German>
-		<Italian>[ICON_BULLET]%D1_Change[ICON_HAPPY]</Italian>
-		<Spanish>[ICON_BULLET]%D1_Change[ICON_HAPPY]</Spanish>
 	</TEXT>
 
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALIST_UNHAPPY</Tag>
 		<English>[ICON_BULLET]%D1_Change[ICON_UNHAPPY]</English>
-		<French>[ICON_BULLET]%D1_Change[ICON_UNHAPPY]</French>
-		<German>[ICON_BULLET]%D1_Change[ICON_UNHAPPY]</German>
-		<Italian>[ICON_BULLET]%D1_Change[ICON_UNHAPPY]</Italian>
-		<Spanish>[ICON_BULLET]%D1_Change[ICON_UNHAPPY]</Spanish>
 	</TEXT>
 
 </Civ4GameText>

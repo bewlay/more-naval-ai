@@ -13,7 +13,6 @@
 		<German>Erinnerungen aktivieren</German>
 		<Italian>Abilita i Promemoria [ALT + M]</Italian>
 		<Spanish>Activar Recordatorios [ALT + M]</Spanish>
-		<Finnish>Enable Reminders [ALT + M]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__ENABLED_HOVER</Tag>
@@ -22,7 +21,6 @@
 		<German>Erm&#246;glicht das Schreiben von Erinnerungsmeldungen (Tastenkombination [ALT + M]), die nach einer bestimmten Anzahl Runden wieder erscheinen (verwendet eotinbs "Reminders"-Mod)</German>
 		<Italian>Quando &#232; selezionato, usando [ALT + M] durante il gioco potrai creare messaggi che appariranno dopo un numero definito di turni (utilizzando il Reminders Mod di Eotinb).</Italian>
 		<Spanish>Cuando se activa, te permite crear mensajes con [ALT + M] que apareceran en un determinado n&#250;mero de turnos, con el Mod de Recordatorios de eotinb.</Spanish>
-		<Finnish>When checked, you can create messages using [ALT + M] that pop up in a specified number of turns using eotinb's Reminders mod.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__DISPLAYMETHOD_TEXT</Tag>
@@ -31,7 +29,6 @@
 		<German>Anzeigemethode</German>
 		<Italian>Modalit&#224; di visualizzazione</Italian>
 		<Spanish>Modo de Visualizaci&#243;n</Spanish>
-		<Finnish>Display Method</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__DISPLAYMETHOD_HOVER</Tag>
@@ -40,7 +37,6 @@
 		<German>Bestimmt die Anzeigemethode f&#252;r Erinnerungen:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Meldung[COLOR_REVERT] - einfache Meldung mit einem Eintrag im Log[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Popup[COLOR_REVERT] - Dialogfenster mit der M&#246;glichkeit, die Meldung in der n&#228;chsten Runde erneut anzeigen zu lassen[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Beides[COLOR_REVERT] - Sowohl die Meldung als auch das Dialogfenster werden angezeigt</German>
 		<Italian>Determina come i Promemoria verranno visualizzati:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Messaggio[COLOR_REVERT] - un messaggio sullo schermo e una nota nel registro;[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Popup[COLOR_REVERT] - un messaggio interattivo con l'opzione di ripetere il promemoria al turno successivo;[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]entrambi[COLOR_REVERT] - Both the on-screen message and the popup are displayed</Italian>
 		<Spanish>Determina como se muestran los recordatorios:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Mensaje[COLOR_REVERT] - Mensajes en pantalla con entrada en el log[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Popup[COLOR_REVERT] - Un mensaje en un popup modal con la opci&#243;n de relanzar el evento el pr&#243;ximo turno[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Ambos[COLOR_REVERT] - Tanto el mensaje por pantalla como el popup se muestran</Spanish>
-		<Finnish>Determines how reminders are displayed to you:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Message[COLOR_REVERT] - On-screen message with entry in the log[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Popup[COLOR_REVERT] - A modal popup message with the option to retrigger the event next turn[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Both[COLOR_REVERT] - Both the on-screen message and the popup are displayed</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__DISPLAYMETHOD_LIST</Tag>
@@ -49,7 +45,6 @@
 		<German>Meldung|Popup|Beides</German>
 		<Italian>Messaggio|Popup|Entrambe</Italian>
 		<Spanish>Mensaje|Popup|Ambos</Spanish>
-		<Finnish>Message|Popup|Both</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__AUTOLOG_TEXT</Tag>
@@ -58,7 +53,6 @@
 		<German>Mit Autolog protokollieren</German>
 		<Italian>Registra con Autolog</Italian>
 		<Spanish>Trazar con Autolog</Spanish>
-		<Finnish>Log w. Autolog</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REMINDER__AUTOLOG_HOVER</Tag>
@@ -67,6 +61,5 @@
 		<German>Protokolliert die Erstellung und Ausl&#246;sung von Erinnerungen (verwendet eotinbs "Autolog"-Mod)</German>
 		<Italian>Quando &#232; selezionato, i Promemoria verranno registrati dal Registro Automatico quando vengono creati e quando vengono mostrati.</Italian>
 		<Spanish>Cuando se activa, los recordatorios se tracearan con Autolog cuando se creen y se activen.</Spanish>
-		<Finnish>When checked, reminders will be logged using Autolog when created and triggered.</Finnish>
 	</TEXT>
 </Civ4GameText>

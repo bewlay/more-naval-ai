@@ -7,110 +7,72 @@
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__REVDCMRESET_TEXT</Tag>
 		<English>Reset Options To Defaults</English>
-		<French>Reset Options To Defaults</French>
 		<German>Auf Standardoptionen zur&#252;cksetzen</German>
-		<Italian>Reset Options To Defaults</Italian>
 		<Spanish>Resetear Opciones a Predefinidas</Spanish>
-		<Finnish>Reset Options To Defaults</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__REVDCMRESET_HOVER</Tag>
 		<English>Reset all options back to mod defaults (game effect is immediate but reload BUG options screen to visually confirm)</English>
-		<French>Reset all options back to mod defaults (game effect is immediate but reload BUG options screen to visually confirm)</French>
 		<German>Alle Optionen auf Standard dieses Mods zur&#252;ckstellen (&#196;nderungen sind im Spiel unmittelbar wirksam, BUG-Optionen neu starten, um sie hier zu sehen</German>
-		<Italian>Reset all options back to mod defaults (game effect is immediate but reload BUG options screen to visually confirm)</Italian>
 		<Spanish>Resetea todas las opciones a las predefinidas del mod (los cambios de los efectos en el juego son inmediatos, pero recarga la pantalla de Opciones Bug para confirmarlo)</Spanish>
-		<Finnish>Reset all options back to mod defaults (game effect is immediate but reload BUG options screen to visually confirm)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__REVDCMHIDDENATTITUDE_TEXT</Tag>
 		<English>Display detailed AI attitude info</English>
-		<French>Display detailed AI attitude info</French>
 		<German>Zeigt detailierte Infos zur Einstellung der KIs</German>
-		<Italian>Display detailed AI attitude info</Italian>
 		<Spanish>Muestra informaci&#243;n detallada de la actitud de la IA</Spanish>
-		<Finnish>Display detailed AI attitude info</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__REVDCMHIDDENATTITUDE_HOVER</Tag>
 		<English>When checked, enables the Hidden Attitude Mod by DaveMcW</English>
-		<French>When checked, enables the Hidden Attitude Mod by DaveMcW</French>
 		<German>Schaltet den verborgenen Einstellungsmodus (Hidden Attitude Mod) von DaveMcW ein</German>
-		<Italian>When checked, enables the Hidden Attitude Mod by DaveMcW</Italian>
 		<Spanish>Cuando se activa, habilita el Mod Actitud Oculta de DaveMcW</Spanish>
-		<Finnish>When checked, enables the Hidden Attitude Mod by DaveMcW</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__OC_RESPAWN_HOLY_CITIES_TEXT</Tag>
 		<English>Holy City Relocation</English>
-		<French>Holy City Relocation</French>
 		<German>Heilige Stadt versetzen</German>
-		<Italian>Holy City Relocation</Italian>
 		<Spanish>Reubicaci&#243;n Ciudad Santa</Spanish>
-		<Finnish>Holy City Relocation</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__OC_RESPAWN_HOLY_CITIES_HOVER</Tag>
 		<English>Allows inquisitions to purge Holy Cities; if there exists a civilization that has two cities with the religion of the purged holy city, the holy city will relocate</English>
-		<French>Allows inquisitions to purge Holy Cities; if there exists a civilization that has two cities with the religion of the purged holy city, the holy city will relocate</French>
 		<German>Erlaubt es Inquisitionen Heilige St&#228;dte auszul&#246;schen; wenn eine Zivilisation mit 2 St&#228;dten dieser Religion existiert, so wird die Heilige Stadt dorthin versetzt</German>
-		<Italian>Allows inquisitions to purge Holy Cities; if there exists a civilization that has two cities with the religion of the purged holy city, the holy city will relocate</Italian>
 		<Spanish>Permite a los Inquisidores purgar Ciudades Santas; si existe una civilizaci&#243;n qu&#233; tiene dos ciudades con la religi&#243;n de la ciudad santa purgada, la ciudad santa se reubicara</Spanish>
-		<Finnish>Allows inquisitions to purge Holy Cities; if there exists a civilization that has two cities with the religion of the purged holy city, the holy city will relocate</Finnish>
 	</TEXT>
 
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__LIMITED_RELIGIONS_EXCEPTIONS_TEXT</Tag>
 		<English>Limited Religions Exceptions</English>
-		<French>Limited Religions Exceptions</French>
 		<German>Begrenzte Religionen mit Ausnahmen</German>
-		<Italian>Limited Religions Exceptions</Italian>
-		<Spanish>Limited Religions Exceptions</Spanish>
-		<Finnish>Limited Religions Exceptions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__LIMITED_RELIGIONS_EXCEPTIONS_HOVER</Tag>
 		<English>When selected, Limited Religions will still allow multiple religion founding for single city civs and rebels</English>
-		<French>When selected, Limited Religions will still allow multiple religion founding for single city civs and rebels</French>
 		<German>Auch bei Auswahl von Begrenzten Religionen k&#246;nnen von Zivilisationen mit nur einer Stadt und Rebellen mehrere Religionen gegr&#252;ndet werden.</German>
-		<Italian>When selected, Limited Religions will still allow multiple religion founding for single city civs and rebels</Italian>
-		<Spanish>When selected, Limited Religions will still allow multiple religion founding for single city civs and rebels</Spanish>
-		<Finnish>When selected, Limited Religions will still allow multiple religion founding for single city civs and rebels</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__OC_LIMITED_RELIGIONS_TEXT</Tag>
 		<English>Limited Religions</English>
-		<French>Limited Religions</French>
 		<German>Begrenzte Religionen</German>
-		<Italian>Limited Religions</Italian>
 		<Spanish>Religiones Limitadas</Spanish>
-		<Finnish>Limited Religions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__OC_LIMITED_RELIGIONS_HOVER</Tag>
 		<English>A civ can only found one religion and thus possess only one holy city (unless more are obtained through conquest); Causes a more equal spread of religions in a game creating more diplomatic religious tensions</English>
-		<French>A civ can only found one religion and thus possess only one holy city (unless more are obtained through conquest); Causes a more equal spread of religions in a game creating more diplomatic religious tensions</French>
 		<German>Eine Zivilisation kann nur eine Religion gr&#252;nden und somit nur eine Heilige Stadt besitzen (au&#223;er durch Eroberung); Erzeugt eine gleichm&#228;&#223;igere Verteilung der Religionen im Spiel und bewirkt verst&#228;rkte religi&#246;s-diplomatische Spannungen</German>
-		<Italian>A civ can only found one religion and thus possess only one holy city (unless more are obtained through conquest); Causes a more equal spread of religions in a game creating more diplomatic religious tensions</Italian>
 		<Spanish>Una civilizaci&#243;n solo puede fundar una religi&#243;n y poseer una sola ciudad santa (A no ser que se obtenga por conquista); Provoca una mayor difusi&#243;n de las religiones en el juego, creando mayores tensiones diplom&#225;ticas por las religiones.</Spanish>
-		<Finnish>A civ can only found one religion and thus possess only one holy city (unless more are obtained through conquest); Causes a more equal spread of religions in a game creating more diplomatic religious tensions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__CHOOSE_RELIGION_TEXT</Tag>
 		<English>Choose Religions</English>
-		<French>Choose Religions</French>
 		<German>Religion ausw&#228;hlen</German>
-		<Italian>Choose Religions</Italian>
 		<Spanish>Escoger Religiones</Spanish>
-		<Finnish>Choose Religions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__CHOOSE_RELIGION_HOVER</Tag>
 		<English>Works the same as the game option version, except that you not only choose your own founding faith, but also the AI's</English>
-		<French>Works the same as the game option version, except that you not only choose your own founding faith, but also the AI's</French>
 		<German>Funktioniert wie die normale Spieloption, au&#223;er dass man nicht nur den selbst erforschten Glauben, sondern auch den der KIs ausw&#228;hlen kann</German>
-		<Italian>Works the same as the game option version, except that you not only choose your own founding faith, but also the AI's</Italian>
 		<Spanish>Funciona igual que la opci&#243;n incluida en el juego, excepto que no solo escoges la religi&#243;n, sino tambi&#233;n la  de la IA.</Spanish>
-		<Finnish>Works the same as the game option version, except that you not only choose your own founding faith, but also the AI's</Finnish>
 	</TEXT>
 </Civ4GameText>

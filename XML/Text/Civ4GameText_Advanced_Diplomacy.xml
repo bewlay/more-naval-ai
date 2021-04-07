@@ -5,7 +5,6 @@
 		<English>Your inhumanity will not be soon forgotten...</English>
 		<French>Votre inhumanité ne sera pas oubliée de si tôt...</French>
 		<German>Eure Unmenschlichkeit wird nicht leicht vergessen werden...</German>
-		<Italian>Your inhumanity will not be soon forgotten...</Italian>
 		<Spanish>Tu falta de compasión no será olvidada...</Spanish>
 	</TEXT>
 	<TEXT>
@@ -13,7 +12,6 @@
 		<English>Loyalty with Honor, Courage with Valor, Warmongering with Wrath,  and Folly with Doom!</English>
 		<French>Fidélité avec honneur, Courage avec Valeur, Bellicisme avec Colère, et Folie avec Destruction!</French>
 		<German>Loyalität mit Ehre, Mut mit Tapferkeit, Kriegstreiberei mit Zorn,  und Torheit mit Untergang!</German>
-		<Italian>Loyalty with Honor, Courage with Valor, Warmongering with Wrath,  and Folly with Doom!</Italian>
 		<Spanish>¡Lealtad con honor, coraje con valor, belicismo con ira, y disparates con perdición!</Spanish>
 	</TEXT>
 	<TEXT>
@@ -21,7 +19,6 @@
 		<English>This will be the undoing of us all!</English>
 		<French>Ce sera la défaite de nous tous!</French>
 		<German>Das bedeutet das Ende für uns alle!</German>
-		<Italian>This will be the undoing of us all!</Italian>
 		<Spanish>¡Ésto nos destruirá a todos!</Spanish>
 	</TEXT>
 	<TEXT>
@@ -29,7 +26,6 @@
 		<English>We can no longer stand by and watch the carnage!  You must end your war with the %s1!</English>
 		<French>Nous ne pouvons plus rester là et regarde le carnage! Vous devez arrêter votre Guerre contre %s1!</French>
 		<German>Wir können dem Gemetzel nicht länger zusehen und tatenlos bleiben! Ihr müßt den Krieg mit den %s1 beenden!</German>
-		<Italian>We can no longer stand by and watch the carnage!  You must end your war with the %s1!</Italian>
 		<Spanish>¡No podemos seguir contemplando esta carnicería!. ¡Debes de terminar tu guerra con los %s1!</Spanish>
 	</TEXT>
 	<TEXT>
@@ -37,7 +33,6 @@
 		<English>The war has gone on long enough!  Make peace with %s1.</English>
 		<French>La Guerre a durée assez longtemps!  Faire la paix avec %s1.</French>
 		<German>Der Krieg hat lange genug gedauert!  Macht Frieden mit %s1.</German>
-		<Italian>The war has gone on long enough!  Make peace with %s1.</Italian>
 		<Spanish>¡La guerra ha durado suficiente!. Hacer la paz con los %s1.</Spanish>
 	</TEXT>
 	<TEXT>
@@ -45,193 +40,121 @@
 		<English>[SPACE](%s2_player is exporting %d1_num_bonus)[SPACE]</English>
 		<French>[SPACE](%s2_player exporte %d1_num_bonus)[SPACE]</French>
 		<German>[SPACE](%s2_player exportiert %d1_num_bonus)[SPACE]</German>
-		<Italian>[SPACE](%s2_player is exporting %d1_num_bonus)[SPACE]</Italian>
-		<Spanish>[SPACE](%s2_player is exporting %d1_num_bonus)[SPACE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_IMPORTS_PLAYER</Tag>
 		<English>[SPACE](%s2_player is importing %d1_num_bonus)[SPACE]</English>
 		<French>[SPACE](%s2_player importe %d1_num_bonus)[SPACE]</French>
 		<German>[SPACE](%s2_player importiert %d1_num_bonus)[SPACE]</German>
-		<Italian>[SPACE](%s2_player is importing %d1_num_bonus)[SPACE]</Italian>
-		<Spanish>[SPACE](%s2_player is importing %d1_num_bonus)[SPACE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_ATTITUDE_CHANGE</Tag>
 		<English>[SPACE]Diplomacy with all players with[SPACE]</English>
 		<French>[SPACE]Diplomatie avec tous les joueurs avec[SPACE]</French>
 		<German>[SPACE]Diplomatiewert von allen Spielern mit[SPACE]</German>
-		<Italian>[SPACE]Diplomacy with all players with[SPACE]</Italian>
-		<Spanish>[SPACE]Diplomacy with all players with[SPACE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_EMBASSY_MOD</Tag>
 		<English>%d1%: For Having an Embassy in their Nation.</English>
 		<French>%d1%: pour avoir une Ambassade dans leur Nation.</French>
 		<German>%d1%: F&#252;r eine Botschaft in ihrer Nation.</German>
-		<Italian>%d1%: For Having an Embassy in their Nation.</Italian>
-		<Spanish>%d1%: For Having an Embassy in their Nation.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_FREE_TRADE_AGREEMENT_MOD</Tag>
 		<English>%d1%: From Free Trade Agreement</English>
 		<French>%d1%: des Accords de libre échange</French>
-		<German>%d1%: From Free Trade Agreement</German>
-		<Italian>%d1%: From Free Trade Agreement</Italian>
-		<Spanish>%d1%: From Free Trade Agreement</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAMEOPTION_ADVANCED_DIPLOMACY</Tag>
 		<English>Advanced Diplomacy</English>
 		<French>Diplomatie avancée</French>
 		<German>Fortgeschrittene Diplomatie</German>
-		<Italian>Advanced Diplomacy</Italian>
-		<Spanish>Advanced Diplomacy</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAMEOPTION_ADVANCED_DIPLOMACY_HELP</Tag>
 		<English>Advanced Diplomacy adds new diplomatic trading options, from embassies to trading military and worker units. </English>
 		<French>Ajoute de nouvelles options diplomatiques, de l'ambassade aux échange d'unités militaires et civiles. </French>
 		<German>Fortgeschrittene Diplomatie führt zu zusätzlichen Diplomatie-Optionen, von Botschaften zum Handel mit Militäreinheiten und Bautrupps. </German>
-		<Italian>Advanced Diplomacy adds new diplomatic trading options, from embassies to trading military and worker units. </Italian>
-		<Spanish>Advanced Diplomacy adds new diplomatic trading options, from embassies to trading military and worker units. </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ADVANCED_DIPLOMACY</Tag>
 		<English>Advanced Diplomacy</English>
 		<French>Diplomatie Avancée</French>
 		<German>Verbesserte Diplomatie</German>
-		<Italian>Advanced Diplomacy</Italian>
-		<Spanish>Advanced Diplomacy</Spanish>
-		<Finnish>Advanced Diplomacy</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ADVANCED_DIPLOMACY_PEDIA</Tag>
 		<English>[H1]Advanced Diplomacy[\H1][PARAGRAPH:2]Advanced Diplomacy (enabled via the Advanced tactics option) vastly changes the way diplomacy works from standard Civilization. Many new trading options are added, each with their own benefits, and potiential disadvantages. What follows is a list of the new options. (Warning: incomplete)[PARAGRAPH:2][BOLD]Embassies.[\BOLD] Nations can now establish embassies in other nations. Embassies improve diplomatic relations between countries over time, but be warned; revoking a foreign embassies rights will have disastrous diplomatic repercussions with the other nation. Embassies are now required to unlock higher diplomatic functions with other nations, namely, [COLOR_HIGHLIGHT_TEXT]Open Borders Agreements[COLOR_REVERT], [COLOR_HIGHLIGHT_TEXT]Defensive Pacts[COLOR_REVERT], and some new options (see below). Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2] [BOLD]Right of Passage.[\BOLD] Similar to open borders, in that it allows foreign trade, but the agreement only allows for defensive units and scouts to pass through the nations. Other units will not be able to enter the territory. Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2][BOLD]Free Trade Agreement.[\BOLD] This agreement increases gold from trading missions and improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Open borders[COLOR_REVERT].[PARAGRAPH:2] [BOLD]Non-Aggression Pact.[\BOLD] The AI is somewhat less likely to attack a player with whom it has a non-agression pact. Also improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].[PARAGRAPH:2][BOLD]Trading Military Units and Workers.[\BOLD] Workers and certain Military units, like siege machines, can be traded. Each tradable unit will be marked in it's respective civilopedia entry with &quot;This unit is tradable.&quot; Requires [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].</English>
-		<French>[H1]Advanced Diplomacy[\H1][PARAGRAPH:2]Advanced Diplomacy (enabled via the Advanced tactics option) vastly changes the way diplomacy works from standard Civilization. Many new trading options are added, each with their own benefits, and potiential disadvantages. What follows is a list of the new options. (Warning: incomplete)[PARAGRAPH:2][BOLD]Embassies.[\BOLD] Nations can now establish embassies in other nations. Embassies improve diplomatic relations between countries over time, but be warned; revoking a foreign embassies rights will have disastrous diplomatic repercussions with the other nation. Embassies are now required to unlock higher diplomatic functions with other nations, namely, [COLOR_HIGHLIGHT_TEXT]Open Borders Agreements[COLOR_REVERT], [COLOR_HIGHLIGHT_TEXT]Defensive Pacts[COLOR_REVERT], and some new options (see below). Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2] [BOLD]Right of Passage.[\BOLD] Similar to open borders, in that it allows foreign trade, but the agreement only allows for defensive units and scouts to pass through the nations. Other units will not be able to enter the territory. Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2][BOLD]Free Trade Agreement.[\BOLD] This agreement increases gold from trading missions and improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Open borders[COLOR_REVERT].[PARAGRAPH:2] [BOLD]Non-Aggression Pact.[\BOLD] The AI is somewhat less likely to attack a player with whom it has a non-agression pact. Also improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].[PARAGRAPH:2][BOLD]Trading Military Units and Workers.[\BOLD] Workers and certain Military units, like siege machines, can be traded. Each tradable unit will be marked in it's respective civilopedia entry with &quot;This unit is tradable.&quot; Requires [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].</French>
-		<German>[H1]Advanced Diplomacy[\H1][PARAGRAPH:2]Advanced Diplomacy (enabled via the Advanced tactics option) vastly changes the way diplomacy works from standard Civilization. Many new trading options are added, each with their own benefits, and potiential disadvantages. What follows is a list of the new options. (Warning: incomplete)[PARAGRAPH:2][BOLD]Embassies.[\BOLD] Nations can now establish embassies in other nations. Embassies improve diplomatic relations between countries over time, but be warned; revoking a foreign embassies rights will have disastrous diplomatic repercussions with the other nation. Embassies are now required to unlock higher diplomatic functions with other nations, namely, [COLOR_HIGHLIGHT_TEXT]Open Borders Agreements[COLOR_REVERT], [COLOR_HIGHLIGHT_TEXT]Defensive Pacts[COLOR_REVERT], and some new options (see below). Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2] [BOLD]Right of Passage.[\BOLD] Similar to open borders, in that it allows foreign trade, but the agreement only allows for defensive units and scouts to pass through the nations. Other units will not be able to enter the territory. Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2][BOLD]Free Trade Agreement.[\BOLD] This agreement increases gold from trading missions and improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Open borders[COLOR_REVERT].[PARAGRAPH:2] [BOLD]Non-Aggression Pact.[\BOLD] The AI is somewhat less likely to attack a player with whom it has a non-agression pact. Also improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].[PARAGRAPH:2][BOLD]Trading Military Units and Workers.[\BOLD] Workers and certain Military units, like siege machines, can be traded. Each tradable unit will be marked in it's respective civilopedia entry with &quot;This unit is tradable.&quot; Requires [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].</German>
-		<Italian>[H1]Advanced Diplomacy[\H1][PARAGRAPH:2]Advanced Diplomacy (enabled via the Advanced tactics option) vastly changes the way diplomacy works from standard Civilization. Many new trading options are added, each with their own benefits, and potiential disadvantages. What follows is a list of the new options. (Warning: incomplete)[PARAGRAPH:2][BOLD]Embassies.[\BOLD] Nations can now establish embassies in other nations. Embassies improve diplomatic relations between countries over time, but be warned; revoking a foreign embassies rights will have disastrous diplomatic repercussions with the other nation. Embassies are now required to unlock higher diplomatic functions with other nations, namely, [COLOR_HIGHLIGHT_TEXT]Open Borders Agreements[COLOR_REVERT], [COLOR_HIGHLIGHT_TEXT]Defensive Pacts[COLOR_REVERT], and some new options (see below). Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2] [BOLD]Right of Passage.[\BOLD] Similar to open borders, in that it allows foreign trade, but the agreement only allows for defensive units and scouts to pass through the nations. Other units will not be able to enter the territory. Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2][BOLD]Free Trade Agreement.[\BOLD] This agreement increases gold from trading missions and improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Open borders[COLOR_REVERT].[PARAGRAPH:2] [BOLD]Non-Aggression Pact.[\BOLD] The AI is somewhat less likely to attack a player with whom it has a non-agression pact. Also improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].[PARAGRAPH:2][BOLD]Trading Military Units and Workers.[\BOLD] Workers and certain Military units, like siege machines, can be traded. Each tradable unit will be marked in it's respective civilopedia entry with &quot;This unit is tradable.&quot; Requires [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].</Italian>
-		<Spanish>[H1]Advanced Diplomacy[\H1][PARAGRAPH:2]Advanced Diplomacy (enabled via the Advanced tactics option) vastly changes the way diplomacy works from standard Civilization. Many new trading options are added, each with their own benefits, and potiential disadvantages. What follows is a list of the new options. (Warning: incomplete)[PARAGRAPH:2][BOLD]Embassies.[\BOLD] Nations can now establish embassies in other nations. Embassies improve diplomatic relations between countries over time, but be warned; revoking a foreign embassies rights will have disastrous diplomatic repercussions with the other nation. Embassies are now required to unlock higher diplomatic functions with other nations, namely, [COLOR_HIGHLIGHT_TEXT]Open Borders Agreements[COLOR_REVERT], [COLOR_HIGHLIGHT_TEXT]Defensive Pacts[COLOR_REVERT], and some new options (see below). Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2] [BOLD]Right of Passage.[\BOLD] Similar to open borders, in that it allows foreign trade, but the agreement only allows for defensive units and scouts to pass through the nations. Other units will not be able to enter the territory. Requires [LINK=TECH_WRITING]Writing[\LINK].[PARAGRAPH:2][BOLD]Free Trade Agreement.[\BOLD] This agreement increases gold from trading missions and improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Open borders[COLOR_REVERT].[PARAGRAPH:2] [BOLD]Non-Aggression Pact.[\BOLD] The AI is somewhat less likely to attack a player with whom it has a non-agression pact. Also improves diplomatic relations over time. Requires [LINK=TECH_WRITING]Writing[\LINK] and [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].[PARAGRAPH:2][BOLD]Trading Military Units and Workers.[\BOLD] Workers and certain Military units, like siege machines, can be traded. Each tradable unit will be marked in it's respective civilopedia entry with &quot;This unit is tradable.&quot; Requires [COLOR_HIGHLIGHT_TEXT]Embassy[COLOR_REVERT].</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_BACKSTAB</Tag>
 		<English>&quot;You betrayed us!&quot;</English>
 		<French>&quot;Vous nous avez trahi!&quot;</French>
-		<German>&quot;You betrayed us!&quot;</German>
-		<Italian>&quot;You betrayed us!&quot;</Italian>
-		<Spanish>&quot;You betrayed us!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_BACKSTAB_FRIEND</Tag>
 		<English>&quot;You are treacherous!&quot;</English>
 		<French>&quot;Vous etes un traitre !&quot;</French>
-		<German>&quot;You are treacherous!&quot;</German>
-		<Italian>&quot;You are treacherous!&quot;</Italian>
-		<Spanish>&quot;You are treacherous!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_BROKEN_AGREEMENT</Tag>
 		<English>&quot;You cannot be trusted.&quot;</English>
-		<French>&quot;You cannot be trusted.&quot;</French>
-		<German>&quot;You cannot be trusted.&quot;</German>
-		<Italian>&quot;You cannot be trusted.&quot;</Italian>
-		<Spanish>&quot;You cannot be trusted.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_MADE_PEACE</Tag>
 		<English>&quot;You have proven to be committed to peace.&quot;</English>
 		<French>Vous avez prouvé être attaché à la Paix</French>
 		<German>&quot;Du hast bewiesen, friedliebend zu sein.&quot;</German>
-		<Italian>&quot;You have proven to be committed to peace.&quot;</Italian>
-		<Spanish>&quot;You have proven to be committed to peace.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_RECALLED_AMBASSADOR</Tag>
 		<English>&quot;You recalled your ambassador!&quot;</English>
 		<French>Vous avez rappelé votre ambassadeur!</French>
 		<German>&quot;Du hast Deinen Botschafter abberufen!&quot;</German>
-		<Italian>&quot;You recalled your ambassador!&quot;</Italian>
 		<Spanish>&quot;¡Llamaste a consultas a tu embajador!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_TRADED_POW</Tag>
 		<English>&quot;You returned our missing soldiers!&quot;</English>
-		<French>&quot;You returned our missing soldiers!&quot;</French>
-		<German>&quot;You returned our missing soldiers!&quot;</German>
-		<Italian>&quot;You returned our missing soldiers!&quot;</Italian>
-		<Spanish>&quot;You returned our missing soldiers!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_KEPT_POW</Tag>
 		<English>&quot;You unlawfully kept our captured soldiers!&quot;</English>
-		<French>&quot;You unlawfully kept our captured soldiers!&quot;</French>
-		<German>&quot;You unlawfully kept our captured soldiers!&quot;</German>
-		<Italian>&quot;You unlawfully kept our captured soldiers!&quot;</Italian>
-		<Spanish>&quot;You unlawfully kept our captured soldiers!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_CANCELLED_NON_AGGRESSION</Tag>
 		<English>&quot;You disolved our Non-Aggression Pact!&quot;</English>
-		<French>&quot;You disolved our Non-Aggression Pact!&quot;</French>
-		<German>&quot;You disolved our Non-Aggression Pact!&quot;</German>
-		<Italian>&quot;You disolved our Non-Aggression Pact!&quot;</Italian>
-		<Spanish>&quot;You disolved our Non-Aggression Pact!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_CANCELLED_FREE_TRADE_AGREEMENT</Tag>
 		<English>&quot;You raised our Trading Tariffs!&quot;</English>
-		<French>&quot;You raised our Trading Tariffs!&quot;</French>
-		<German>&quot;You raised our Trading Tariffs!&quot;</German>
-		<Italian>&quot;You raised our Trading Tariffs!&quot;</Italian>
-		<Spanish>&quot;You raised our Trading Tariffs!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_YOU_POLLUTE</Tag>
 		<English>&quot;We pay a lot for your environmental degradations!&quot;</English>
 		<French>&quot;Nous payons cher vos degradations de l'environnement !</French>
-		<German>&quot;We pay a lot for your environmental degradations!&quot;</German>
-		<Italian>&quot;We pay a lot for your environmental degradations!&quot;</Italian>
-		<Spanish>&quot;We pay a lot for your environmental degradations!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_WORKED_PLOT</Tag>
 		<English>&quot;You improved our lands!&quot;</English>
-		<French>&quot;You improved our lands!&quot;</French>
-		<German>&quot;You improved our lands!&quot;</German>
-		<Italian>&quot;You improved our lands!&quot;</Italian>
-		<Spanish>&quot;You improved our lands!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_KEPT_OUT_CITY</Tag>
 		<English>&quot;You kept our city!&quot;</English>
-		<French>&quot;You kept our city!&quot;</French>
-		<German>&quot;You kept our city!&quot;</German>
-		<Italian>&quot;You kept our city!&quot;</Italian>
-		<Spanish>&quot;You kept our city!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_WARMONGER</Tag>
 		<English>&quot;You are a Warmongerer!&quot;</English>
 		<French>Vous êtes un Seigneur de Guerre!</French>
 		<German>&quot;Du bist ein Kriegstreiber!&quot;</German>
-		<Italian>&quot;You are a Warmongerer!&quot;</Italian>
-		<Spanish>&quot;You are a Warmongerer!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_NON_AGGRESSION</Tag>
 		<English>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</English>
-		<French>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</French>
-		<German>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</German>
-		<Italian>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</Italian>
-		<Spanish>%D1: &quot;Our Non-Aggression Pact secures the peace.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_FREE_TRADE_AGREEMENT</Tag>
 		<English>%D1: &quot;Our Free Trade Agreement propels our economies.&quot;</English>
-		<French>%D1: &quot;Our Free Trade Agreement propels our economies.&quot;</French>
-		<German>%D1: &quot;Our Free Trade Agreement propels our economies.&quot;</German>
-		<Italian>%D1: &quot;Our Free Trade Agreement propels our economies.&quot;</Italian>
-		<Spanish>%D1: &quot;Our Free Trade Agreement propels our economies.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_EMBASSY</Tag>
@@ -244,217 +167,138 @@
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_RIGHT_PASSAGE</Tag>
 		<English>%D1: &quot;You let our people pass through your lands.&quot;</English>
-		<French>%D1: &quot;You let our people pass through your lands.&quot;</French>
-		<German>%D1: &quot;You let our people pass through your lands.&quot;</German>
-		<Italian>%D1: &quot;You let our people pass through your lands.&quot;</Italian>
-		<Spanish>%D1: &quot;You let our people pass through your lands.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CORPORATION_TRADE</Tag>
 		<English>%s2_Civ1 has sold %s1_Corp to %s3_Civ2</English>
 		<French>%s2_Civ1 a vendu %s1_Corp à %s3_Civ2</French>
 		<German>%s2_Civ1 hat %s1_Corp an %s3_Civ2 verkauft</German>
-		<Italian>%s2_Civ1 has sold %s1_Corp to %s3_Civ2</Italian>
-		<Spanish>%s2_Civ1 has sold %s1_Corp to %s3_Civ2</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_EMBASSY</Tag>
 		<English>Embassy</English>
 		<French>Embassade</French>
 		<German>Botschaft</German>
-		<Italian>Embassy</Italian>
 		<Spanish>Embajada</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_PREPARE_WAR</Tag>
 		<English>Prepare For War On</English>
-		<French>Prepare For War On</French>
-		<German>Prepare For War On</German>
-		<Italian>Prepare For War On</Italian>
-		<Spanish>Prepare For War On</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_EMBASSIES</Tag>
 		<English>[ICON_BULLET]Enables Embassy Trading</English>
 		<French>[ICON_BULLET]Permet l'établissement d'Ambassades</French>
 		<German>[ICON_BULLET]Erm&#246;glicht Botschaften-Handel</German>
-		<Italian>[ICON_BULLET]Enables Embassy Trading</Italian>
 		<Spanish>[ICON_BULLET]Permite establecimiento de embajadas</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_LIMITED_BORDERS</Tag>
 		<English>[ICON_BULLET]Enables Right of Passage</English>
-		<French>[ICON_BULLET]Enables Right of Passage</French>
-		<German>[ICON_BULLET]Enables Right of Passage</German>
-		<Italian>[ICON_BULLET]Enables Right of Passage</Italian>
 		<Spanish>[ICON_BULLET]Permite derecho de paso</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_FREE_TRADE_ZONE</Tag>
 		<English>Free Trade Agreement</English>
 		<French>Accord de libre échange</French>
-		<German>Free Trade Agreement</German>
-		<Italian>Free Trade Agreement</Italian>
-		<Spanish>Free Trade Agreement</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_FREE_TRADE_AGREEMENT</Tag>
 		<English>[ICON_BULLET]Enables Free Trade Agreement</English>
-		<French>[ICON_BULLET]Enables Free Trade Agreement</French>
-		<German>[ICON_BULLET]Enables Free Trade Agreement</German>
-		<Italian>[ICON_BULLET]Enables Free Trade Agreement</Italian>
-		<Spanish>[ICON_BULLET]Enables Free Trade Agreement</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_NON_AGGRESSION</Tag>
 		<English>[ICON_BULLET]Enables Non Aggression Pact</English>
-		<French>[ICON_BULLET]Enables Non Aggression Pact</French>
-		<German>[ICON_BULLET]Enables Non Aggression Pact</German>
-		<Italian>[ICON_BULLET]Enables Non Aggression Pact</Italian>
-		<Spanish>[ICON_BULLET]Enables Non Aggression Pact</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_POW_EXCHANGE</Tag>
 		<English>[ICON_BULLET]Enables POW Exchange</English>
-		<French>[ICON_BULLET]Enables POW Exchange</French>
-		<German>[ICON_BULLET]Enables POW Exchange</German>
-		<Italian>[ICON_BULLET]Enables POW Exchange</Italian>
-		<Spanish>[ICON_BULLET]Enables POW Exchange</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HIRED_WAR_ALLY</Tag>
 		<English>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</English>
 		<French>Les sournois %s1_CivAdj ont convaincu les traîtres %s2_CivAdj de nous déclarer la Guerre!</French>
 		<German>Die b&#246;sartigen %s1_CivAdj haben die hinterh&#228;ltigen %s2_CivAdj davon &#252;berzeugt, uns den Krieg zu erkl&#228;ren!</German>
-		<Italian>The dastardly %s1_CivAdj have convinced the treacherous %s2_CivAdj to declare war on us!</Italian>
 		<Spanish>¡Los malvados %s1_CivAdj han convencido a los traicioneros %s2_CivAdj para que nos declaren la guerra!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CANCELLED_NON_AGGRESSION</Tag>
 		<English>The %s1 Civilization has broken its Non-Aggression Pact with the %s2 Civilization!</English>
-		<French>The %s1 Civilization has broken its Non-Aggression Pact with the %s2 Civilization!</French>
-		<German>The %s1 Civilization has broken its Non-Aggression Pact with the %s2 Civilization!</German>
-		<Italian>The %s1 Civilization has broken its Non-Aggression Pact with the %s2 Civilization!</Italian>
-		<Spanish>The %s1 Civilization has broken its Non-Aggression Pact with the %s2 Civilization!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POW_KEPT</Tag>
 		<English>The %s1 Civilization has broken its POW Agreement with the %s2 Civilization!</English>
-		<French>The %s1 Civilization has broken its POW Agreement with the %s2 Civilization!</French>
-		<German>The %s1 Civilization has broken its POW Agreement with the %s2 Civilization!</German>
-		<Italian>The %s1 Civilization has broken its POW Agreement with the %s2 Civilization!</Italian>
-		<Spanish>The %s1 Civilization has broken its POW Agreement with the %s2 Civilization!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_LIMITED_BORDERS</Tag>
 		<English>Right of Passage</English>
 		<French>Droit de Passage</French>
 		<German>Passiererlaubnis</German>
-		<Italian>Right of Passage</Italian>
 		<Spanish>Derecho de Paso</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_NON_AGGRESSION</Tag>
 		<English>Non-Aggression Pact</English>
-		<French>Non-Aggression Pact</French>
-		<German>Non-Aggression Pact</German>
-		<Italian>Non-Aggression Pact</Italian>
-		<Spanish>Non-Aggression Pact</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POW</Tag>
 		<English>POW Exchange</English>
-		<French>POW Exchange</French>
-		<German>POW Exchange</German>
-		<Italian>POW Exchange</Italian>
-		<Spanish>POW Exchange</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_NON_AGGRESSION_AGREEMENT</Tag>
 		<English>%s1 and %s2 signed a Non-Aggression Pact to guarantee peace between their civilizations.</English>
-		<French>%s1 and %s2 signed a Non-Aggression Pact to guarantee peace between their civilizations.</French>
-		<German>%s1 and %s2 signed a Non-Aggression Pact to guarantee peace between their civilizations.</German>
-		<Italian>%s1 and %s2 signed a Non-Aggression Pact to guarantee peace between their civilizations.</Italian>
-		<Spanish>%s1 and %s2 signed a Non-Aggression Pact to guarantee peace between their civilizations.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POW_AGREEMENT</Tag>
 		<English>%s1 and %s2 have agreed to exchange POW's from their conflict.</English>
-		<French>%s1 and %s2 have agreed to exchange POW's from their conflict.</French>
-		<German>%s1 and %s2 have agreed to exchange POW's from their conflict.</German>
-		<Italian>%s1 and %s2 have agreed to exchange POW's from their conflict.</Italian>
-		<Spanish>%s1 and %s2 have agreed to exchange POW's from their conflict.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POW_RETURN</Tag>
 		<English>The POW Exchange between the %s1 and %s2 has completed.</English>
-		<French>The POW Exchange between the %s1 and %s2 has completed.</French>
-		<German>The POW Exchange between the %s1 and %s2 has completed.</German>
-		<Italian>The POW Exchange between the %s1 and %s2 has completed.</Italian>
-		<Spanish>The POW Exchange between the %s1 and %s2 has completed.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_NON_AGGRESSION_RETURN</Tag>
 		<English>The Non-Aggression Pact between the %s1 and %s2 civilizations has come to an end.</English>
-		<French>The Non-Aggression Pact between the %s1 and %s2 civilizations has come to an end.</French>
-		<German>The Non-Aggression Pact between the %s1 and %s2 civilizations has come to an end.</German>
-		<Italian>The Non-Aggression Pact between the %s1 and %s2 civilizations has come to an end.</Italian>
-		<Spanish>The Non-Aggression Pact between the %s1 and %s2 civilizations has come to an end.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_PLAYERS_BREAK_DEFENSIVE_PACT</Tag>
 		<English>The alliance between %s1 and %s2 has been dissolved.</English>
-		<French>The alliance between %s1 and %s2 has been dissolved.</French>
-		<German>The alliance between %s1 and %s2 has been dissolved.</German>
-		<Italian>The alliance between %s1 and %s2 has been dissolved.</Italian>
-		<Spanish>The alliance between %s1 and %s2 has been dissolved.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_CONTACT_ANNOYED</Tag>
 		<English>Out of spite, the %s1 have introduced the ambassadors of the %s2 to us.</English>
 		<French>Par dépit, les %s1 nous ont introduits auprès des Ambassadeurs des %s2.</French>
 		<German>Aus reiner Gehässigkeit haben uns die %s1 Abgesandte der %s2 vorgestellt.</German>
-		<Italian>Out of spite, the %s1 have introduced the ambassadors of the %s2 to us.</Italian>
-		<Spanish>Out of spite, the %s1 have introduced the ambassadors of the %s2 to us.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_CONTACT_CAUTIOUS</Tag>
 		<English>For reasons of their own, the %s1 have introduced the ambassadors of the %s2 to us.</English>
 		<French>Pour leurs propres raisons, les %s1 nous ont introduits auprès des Ambassadeurs des %s2.</French>
 		<German>Aus Gründen, die nur sie selbst kennen, haben uns die %s1 Abgesandte der %s2 vorgestellt.</German>
-		<Italian>For reasons of their own, the %s1 have introduced the ambassadors of the %s2 to us.</Italian>
-		<Spanish>For reasons of their own, the %s1 have introduced the ambassadors of the %s2 to us.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_CONTACT_FRIENDLY</Tag>
 		<English>Our good friends, the %s1, have taken it upon themself to introduce the charming ambassadors from the %s2 to us.</English>
 		<French>Nos Amis, les %s1, ont pris l'initiative de nous introduire auprès des charmants des %s2.</French>
 		<German>Unsere guten Freunde, die %s1, haben sich die Mühe gemacht, uns die charmanten Abgesandten der %s2 vorzustellen.</German>
-		<Italian>Our good friends, the %s1, have taken it upon themself to introduce the charming ambassadors from the %s2 to us.</Italian>
-		<Spanish>Our good friends, the %s1, have taken it upon themself to introduce the charming ambassadors from the %s2 to us.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_CONTACT_FURIOUS</Tag>
 		<English>In some sinister plot, the %s1 have introduced some shady ambassadors who claim to hail from the %s2 to us.</English>
 		<French>Dans un sinistre complot, les %s1 nous ont introduit auprès Ambassadeurs de l'ombre qui réclament la grêle de la part des %s2.</French>
 		<German>In einer undurchsichtigen Verschwörung haben die %s1 einige dubiose Abgesandte vorgestellt, die behaupten, Grüße der %s2 zu überbringen.</German>
-		<Italian>In some sinister plot, the %s1 have introduced some shady ambassadors who claim to hail from the %s2 to us.</Italian>
-		<Spanish>In some sinister plot, the %s1 have introduced some shady ambassadors who claim to hail from the %s2 to us.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_CONTACT_PLEASED</Tag>
 		<English>Our friends, the %s1, have introduced the charming ambassadors from the %s2 to us.</English>
 		<French>Nos Amis, les %s1, nous ont introduits auprès des charmants Ambassadeurs des %s2.</French>
 		<German>Unsere Freunde, die %s1, haben uns die charmanten Abgesandten der %s2 vorgestellt.</German>
-		<Italian>Our friends, the %s1, have introduced the charming ambassadors from the %s2 to us.</Italian>
-		<Spanish>Our friends, the %s1, have introduced the charming ambassadors from the %s2 to us.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_TRADED_UNIT_TO_YOU</Tag>
 		<English>%s1 has traded a %s2 to you.</English>
 		<French>%s1 vous a vendu [NUM2:un:une:des:des] %s2.</French>
 		<German>%s1 hat einen %s2 an Dich verkauft.</German>
-		<Italian>%s1 has traded a %s2 to you.</Italian>
 		<Spanish>%s1 ha intercambiado [NUM1:un:una:unos:unas] %s2 contigo.</Spanish>
 	</TEXT>
 	<TEXT>
@@ -470,7 +314,6 @@
 		<English>Sell</English>
 		<French>Vendre</French>
 		<German>Verkaufen</German>
-		<Italian>Sell</Italian>
 		<Spanish>Vender</Spanish>
 	</TEXT>
 	<TEXT>
@@ -478,24 +321,18 @@
 		<English>Trade Corporation</English>
 		<French>Commerce de Corporation</French>
 		<German>mit Korporationen handeln</German>
-		<Italian>Trade Corporation</Italian>
-		<Spanish>Trade Corporation</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_CONTACT</Tag>
 		<English>%s1_CivName establishes contact with %s2_CivName</English>
 		<French>%s1_CivName a établi le contact avec %s2_CivName</French>
 		<German>%s1_CivName etabliert Kontakt mit %s2_CivName</German>
-		<Italian>%s1_CivName establishes contact with %s2_CivName</Italian>
-		<Spanish>%s1_CivName establishes contact with %s2_CivName</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_CONTACT_WITH</Tag>
 		<English>Contact with </English>
 		<French>Contact avec </French>
 		<German>Kontakt mit </German>
-		<Italian>Contact with </Italian>
-		<Spanish>Contact with </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_EMBASSY</Tag>
@@ -510,7 +347,6 @@
 		<English>Establish Embassy</English>
 		<French>Etablir une Embassade</French>
 		<German>Botschaft er&#246;ffnen</German>
-		<Italian>Establish Embassy</Italian>
 		<Spanish>Establecer Embajada</Spanish>
 	</TEXT>
 	<TEXT>
@@ -526,7 +362,6 @@
 		<English>A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.</English>
 		<French>Un Droit de Passage permet uniquement aux unités civiles de passer aux travers des frontières des civilisations, incluant le commerce. Pratique lorsque les joueurs veulent continuer les échanges commerciaux tout en stoppant les mouvement de troupes ennemis.</French>
 		<German>Eine Passiererlaubnis erm&#246;glicht nichtmilit&#228;rischen Einheiten durch Deine Zivilisation zu ziehen und auch den Handel. Das ist sinnvoll f&#252;r Spieler, die den Handel weiterf&#252;hren aber den Durchzug der feindlichen Truppen unterbinden m&#246;chten.</German>
-		<Italian>A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.</Italian>
 		<Spanish>Un acuerdo de Derecho de Paso permite pasar solamente a las unidades no agresivas de la otra civilización, incluyendo el comercio. Es útil cuando se desea mantener el comercio pero evitar el paso de tropas enemigas.</Spanish>
 	</TEXT>
 	<TEXT>
@@ -534,7 +369,6 @@
 		<English>Right of Passage</English>
 		<French>Droit de Passage</French>
 		<German>Passiererlaubnis</German>
-		<Italian>Right of Passage</Italian>
 		<Spanish>Derecho de Paso</Spanish>
 	</TEXT>
 	<TEXT>
@@ -542,119 +376,77 @@
 		<English>Contact With </English>
 		<French>Contact avec </French>
 		<German>Kontakt mit </German>
-		<Italian>Contact With </Italian>
-		<Spanish>Contact With </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_MAKE_PREPARE_WAR</Tag>
 		<English>Will Cause %s1_CivName to Prepare For War on %s2_CivName.</English>
-		<French>Will Cause %s1_CivName to Prepare For War on %s2_CivName.</French>
-		<German>Will Cause %s1_CivName to Prepare For War on %s2_CivName.</German>
-		<Italian>Will Cause %s1_CivName to Prepare For War on %s2_CivName.</Italian>
-		<Spanish>Will Cause %s1_CivName to Prepare For War on %s2_CivName.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_MILITARY_UNIT</Tag>
 		<English>Military Units</English>
 		<French>Unités Militaires</French>
 		<German>Milit&#228;reinheiten</German>
-		<Italian>Military Units</Italian>
 		<Spanish>Unidades Militares</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_NON_AGGRESSION</Tag>
 		<English>Each Leader Promises to not Attack the Other. </English>
-		<French>Each Leader Promises to not Attack the Other. </French>
-		<German>Each Leader Promises to not Attack the Other. </German>
-		<Italian>Each Leader Promises to not Attack the Other. </Italian>
-		<Spanish>Each Leader Promises to not Attack the Other. </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_NON_AGGRESSION_STRING</Tag>
 		<English>Non-Aggression Pact</English>
-		<French>Non-Aggression Pact</French>
-		<German>Non-Aggression Pact</German>
-		<Italian>Non-Aggression Pact</Italian>
-		<Spanish>Non-Aggression Pact</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_POW</Tag>
 		<English>Exchange your Captured Soldiers for Their Captured Soldiers.</English>
-		<French>Exchange your Captured Soldiers for Their Captured Soldiers.</French>
-		<German>Exchange your Captured Soldiers for Their Captured Soldiers.</German>
-		<Italian>Exchange your Captured Soldiers for Their Captured Soldiers.</Italian>
-		<Spanish>Exchange your Captured Soldiers for Their Captured Soldiers.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_POW_STRING</Tag>
 		<English>POW Exchange</English>
-		<French>POW Exchange</French>
-		<German>POW Exchange</German>
-		<Italian>POW Exchange</Italian>
-		<Spanish>POW Exchange</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_PREPARE_WAR_ON</Tag>
 		<English>Prepare For War On</English>
-		<French>Prepare For War On</French>
-		<German>Prepare For War On</German>
-		<Italian>Prepare For War On</Italian>
-		<Spanish>Prepare For War On</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_PREPARE_WAR_WITH</Tag>
 		<English>Prepare For War On </English>
-		<French>Prepare For War On </French>
-		<German>Prepare For War On </German>
-		<Italian>Prepare For War On </Italian>
-		<Spanish>Prepare For War On </Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_SECRETARY_GENERAL</Tag>
 		<English>%s1_CivName pledges to vote for %s2_CivName as Secretary General of %s3_VoteSource</English>
 		<French>%s1_CivName s'engage à voter pour %s2_CivName en tant que Secrétaire Général de %s3_VoteSource</French>
 		<German>%s1_CivName verspricht, für %s2_CivName als Generalsekretär der %s3_VoteSource abzustimmen</German>
-		<Italian>%s1_CivName pledges to vote for %s2_CivName as Secretary General of %s3_VoteSource</Italian>
-		<Spanish>%s1_CivName pledges to vote for %s2_CivName as Secretary General of %s3_VoteSource</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_SECRETARY_GENERAL_VOTE</Tag>
 		<English>Secretary General</English>
 		<French>Secrétaire Général</French>
 		<German>Generalsekretär</German>
-		<Italian>Secretary General</Italian>
-		<Spanish>Secretary General</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_SEC_GEN_VOTE</Tag>
 		<English>Vote for %s1 (%s2)</English>
 		<French>Vote pour %s1 (%s2)</French>
 		<German>Wähle für %s1 (%s2)</German>
-		<Italian>Vote for %s1 (%s2)</Italian>
-		<Spanish>Vote for %s1 (%s2)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_WORKER</Tag>
 		<English>Workers</English>
 		<French>Ouvriers</French>
 		<German>Bautrupps</German>
-		<Italian>Workers</Italian>
-		<Spanish>Workers</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_WORKERS</Tag>
 		<English>Workers</English>
 		<French>Ouvriers</French>
 		<German>Bautrupps</German>
-		<Italian>Workers</Italian>
-		<Spanish>Workers</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_DIPLO_MAKE_PEACE_WITH_1</Tag>
 		<English>Yes!  Let's make peace.</English>
 		<French>Oui!  Faisons la Paix.</French>
 		<German>Ja!  Laßt uns Frieden machen.</German>
-		<Italian>Yes!  Let's make peace.</Italian>
 		<Spanish>¡Si!. Tengamos la paz.</Spanish>
 	</TEXT>
 	<TEXT>
@@ -662,7 +454,6 @@
 		<English>Peace it is...</English>
 		<French>Paix il y a...</French>
 		<German>So soll es Frieden sein...</German>
-		<Italian>Peace it is...</Italian>
 		<Spanish>Tendremos la paz...</Spanish>
 	</TEXT>
 	<TEXT>
@@ -670,7 +461,6 @@
 		<English>No!  They must be taught a lesson!</English>
 		<French>Non!  Il faut leur donner une leçon!</French>
 		<German>Nein!  Sie müssen ihre Lektion lernen!</German>
-		<Italian>No!  They must be taught a lesson!</Italian>
 		<Spanish>¡No!. ¡Hay que darles una lección!</Spanish>
 	</TEXT>
 	<TEXT>
@@ -678,7 +468,6 @@
 		<English>Some wars are worth fighting...</English>
 		<French>certaines Guerres doivent être menées...</French>
 		<German>Manche Kriege sind es wert zu kämpfen...</German>
-		<Italian>Some wars are worth fighting...</Italian>
 		<Spanish>Algunas guerras merecen ser luchadas...</Spanish>
 	</TEXT>
 	<TEXT>
@@ -686,7 +475,6 @@
 		<English>Not until their blood fills the streets of their capital city!</English>
 		<French>Pas avant que leur sang remplisse les rues de leur Capitale!</French>
 		<German>Nicht bis das Blut die Straßen ihrer Hauptstadt füllt!</German>
-		<Italian>Not until their blood fills the streets of their capital city!</Italian>
 		<Spanish>¡No hasta que su sangre llene las calles de su capital!</Spanish>
 	</TEXT>
 	<TEXT>
@@ -694,365 +482,196 @@
 		<English>Never Give Up!  Never Surrender!</English>
 		<French>N'abandonnerai Jamais! Jamais je ne me rendrai!</French>
 		<German>Gib niemals auf!  Kapituliere niemals!</German>
-		<Italian>Never Give Up!  Never Surrender!</Italian>
 		<Spanish>¡Nunca retroceder! ¡Nunca rendirse!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_DENIAL_SENATE_VETO</Tag>
 		<English>&quot;Our Senate opposes the action.&quot;</English>
 		<French>&quot;Notre sénat s'y oppose.&quot;</French>
-		<German>&quot;Our Senate opposes the action.&quot;</German>
-		<Italian>&quot;Our Senate opposes the action.&quot;</Italian>
-		<Spanish>&quot;Our Senate opposes the action.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ACTIVE_SENATE</Tag>
 		<English>Active Senate</English>
 		<French><Text>Sénat</Text><Gender>Male</Gender><Plural>0</Plural></French>
-		<German>Active Senate</German>
-		<Italian>Active Senate</Italian>
-		<Spanish>Active Senate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_ACTIVE_SENATE_PEDIA</Tag>
 		<English>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</English>
 		<French>[H1]Sénat[\H1][PARAGRAPH:2]Sous certains régimes ([LINK=CIVIC_REPRESENTATION]Réprésentation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Suffrage Universel[\LINK]), le Sénat peut s'ingérer dans votre politique militaire. Ainsi, il peut annuler vos déclarations de guerre et/ou vous forcer à signer un traité de paix avec vos ennemis.[PARAGRAPH:2]Les décisions du Sénat dépendent notamment de l'ampleur du conflit, qu'il soit éventuel ou effectif, et de son réel intéret. Ainsi, mener une politique militaire sous régime démocratique devient plus ardu.[PARAGRAPH:2]Cependant, lorsqu'un adversaire agit d'une façon déplaisante à l'égard de votre nation, par un boycott, un vote défavorable, une mission d'espionnage, etc..., vous disposez d'un prétexte suffisant pour mener ou subir une guerre sans que le Sénat intervienne. Tout prétexte est valable un tour, puis tout au long du conflit en cas de déclaration de guerre. Bien entendu, les actes malveillants des ennemis qui sont déjà en guerre contre vous ne sauraient être des prétextes pour contourner le sénat.[NEWLINE][NEWLINE]</French>
-		<German>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</German>
-		<Italian>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</Italian>
-		<Spanish>[H1]Active Senate[\H1][PARAGRAPH:2]Under some types of government ([LINK=CIVIC_REPRESENTATION]Representation[\LINK], [LINK=CIVIC_UNIVERSAL_SUFFRAGE]Universal Suffrage[\LINK]), the Senate can interfere with your military policy. Thus, it may invalidate your declarations of war and/or force you to sign a peace treaty with your enemies.[PARAGRAPH:2]The decisions of the Senate depend in particular on the scale of the conflict, either potential or actual, and its real interest. Thus, pursue a policy military under democratic regime becomes more difficult.[PARAGRAPH:2] However, when an opponent make unpleasant acts to your nation, by a embargo, a negative vote, an espionage mission, etc. ..., you have a sufficient pretext to go to war without Senate intervention. Any war pretext is valid for one turn and throughout the conflict in case of a declaration of war. Of course, malicious acts of enemies who are already at war against you are a pretext to circumvent the Senate.[NEWLINE][NEWLINE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_ACTIVE_SENATE</Tag>
 		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</English>
 		<French>[ICON_BULLET]Le [COLOR_HIGHLIGHT_TEXT]Sénat[COLOR_REVERT] peut entraver vos projets militaires</French>
-		<German>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</German>
-		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</Italian>
-		<Spanish>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Active Senate[COLOR_REVERT] can Override Military Actions</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SENATE_CANCEL_WAR</Tag>
 		<English>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</English>
 		<French>Le [COLOR_HIGHLIGHT_TEXT]Sénat[COLOR_REVERT] annule votre déclaration de guerre contre %s1_TeamName (%s2_TeamCiv)</French>
-		<German>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</German>
-		<Italian>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</Italian>
-		<Spanish>The [COLOR_HIGHLIGHT_TEXT]Senate[COLOR_REVERT] has vetoed your declaration of war on %s1_TeamCiv</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_HELP_CURRENT_PRETEXT</Tag>
 		<English>Valid pretext for War</English>
 		<French>Prétexte valable en cours</French>
-		<German>Valid pretext for War</German>
-		<Italian>Valid pretext for War</Italian>
-		<Spanish>Valid pretext for War</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_ACTIVE_SENATE</Tag>
 		<English>Active Senate</English>
 		<French>Sénat actif</French>
-		<German>Active Senate</German>
-		<Italian>Active Senate</Italian>
-		<Spanish>Active Senate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_DOES_THIS_MEAN_WAR_PACIFIC</Tag>
 		<English>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</English>
-		<French>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</French>
-		<German>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</German>
-		<Italian>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Italian>
-		<Spanish>Your government reminds you that you signed the &quot;Voting Exclusion Penalty for Aggressive Wars&quot; of the %s1_VoteSourcename.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_CONDEMN_UN_SLAVERY</Tag>
 		<English>Condemn Slavery Civic</English>
 		<French>Condamner Etat Policier</French>
-		<German>Condemn Slavery Civic</German>
-		<Italian>Condemn Slavery Civic</Italian>
-		<Spanish>Condemn Slavery Civic</Spanish>
 	</TEXT>
 		<TEXT>
 		<Tag>TXT_KEY_MISC_CONDEMN_CIVIC</Tag>
 		<English>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</English>
 		<French>Les Nations Unies condamnent [NUM1:le:la:les:les] %s1_Civic ! Les Civilisations qui ont choisi cette doctrine perdent l'estime des autres.</French>
-		<German>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</German>
-		<Italian>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</Italian>
-		<Spanish>United Nations condemned %s1_Civic! The Civilizations which chose this civic lose the respect of the others.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CONDEMN_CIVIC_END</Tag>
 		<English>United Nations no longer condemns %s1_Civic!</English>
-		<French>United Nations no longer condemns %s1_Civic!</French>
-		<German>United Nations no longer condemns %s1_Civic!</German>
-		<Italian>United Nations no longer condemns %s1_Civic!</Italian>
-		<Spanish>United Nations no longer condemns %s1_Civic!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_CONDEMNED_CIVIC</Tag>
 		<English>%D1: &quot;You are using Condemned Civics!&quot;</English>
-		<French>%D1: &quot;You are using Condemned Civics!&quot;</French>
-		<German>%D1: &quot;You are using Condemned Civics!&quot;</German>
-		<Italian>%D1: &quot;You are using Condemned Civics!&quot;</Italian>
-		<Spanish>%D1: &quot;You are using Condemned Civics!&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_CONDAMN_CIVIC_PEDIA</Tag>
 		<English>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</English>
 		<French>[H1]Doctrine condamnée[\H1][PARAGRAPH:2]Les autorités apostoliques et les Nations-Unies peuvent faire voter des résolution de condamnation d'une doctrine. Si et seulement si cette doctrine est adoptée par un des joueurs votants. Ne sont condamnables par l'ONU, que certaines doctrines parmi les plus extrêmistes. Et ne sont condamnables par le palais apostolique, que les doctrines religieuses impliquant le choix d'une religion d'Etat.[PARAGRAPH:2]Opter pour une cotrine condamnée génère un malus diplomatique de la part des membres votants, et exclue la civilisation du clan des membres aptes à voter, ce qui, en soi, n'est pas toujours une mauvaise chose (à vous de jauger les risques et les avantages d'une telle situation).[PARAGRAPH:2]Il se peut qu'un joueur IA propose ce genre de résolution et qu'elle passe, auquel cas cela peut influer sur le cours de la partie. Mais d'un point de vue humain, l'intéret est plus subtil. Il permet notamment de retourner certaines civilisations contre une autre. Notamment dans le cadre du palais apostolique. En effet, si vous souhaitez attaquer un adversaire qui a une religion d'Etat partagée par vous et par vos alliés, mais qu'il a choisi une doctrine religieuse différente, vous pouvez tenter de la condamner afin d'en faire un pariat et de l'attaquer sans froisser vos frères de foi, voire même avec leur concours.[PARAGRAPH:2]D'un point de vue historique, l'intéret est, à la base, de pouvoir condamner la réforme, ou les croisades, notamment.[NEWLINE][NEWLINE]</French>
-		<German>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</German>
-		<Italian>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</Italian>
-		<Spanish>[H1]Condamned Civic[\H1][PARAGRAPH:2]The United Nations can vote on resolution of condemnation of a civic. If and only if this civic is adopted by one of the voting players. Are condemnable by the United Nations, some of the most extremist civics. [PARAGRAPH:2]Choosing a condemned civic generate a diplomatic penalty from the voting members and exclude the civilization to the clan of members which can vote, which in itself is not always a bad thing (as you assess the risks and benefits of such a situation.)[PARAGRAPH:2]It is possible that a AI player proposes such a resolution and pass it, in which case it can influence the course of the game. But from a human point of view, the interest is more subtile. It allows to turn some civilizations against another. Indeed, if you want to attack an opponent who has a state religion shared by you and your allies, but he chose a different religious doctrine, you can try to condemn it to make it a pariat and attack without offending your brothers in faith, even with their assistance.[PARAGRAPH:2]From a historical point of view, the interest is basically to be able to condemn the reform among others.[NEWLINE][NEWLINE]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_CONDAMN_CIVIC</Tag>
 		<English>Condemned civic</English>
 		<French><Text>Doctrine condamnée</Text><Gender>Male</Gender><Plural>1</Plural></French>
-		<German>Condemned civic</German>
-		<Italian>Condemned civic</Italian>
-		<Spanish>Condemned civic</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_ELECTION_NUM_VOTERS_WITH_COND_CIVIC0</Tag>
 		<English>%d1 voting [NUM1:player:players] chose this civic.</English>
 		<French>%d1 [NUM1:votant:votants] [NUM1:a:ont] choisi cette doctrine.</French>
-		<German>%d1 voting [NUM1:player:players] chose this civic.</German>
-		<Italian>%d1 voting [NUM1:player:players] chose this civic.</Italian>
-		<Spanish>%d1 voting [NUM1:player:players] chose this civic.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_ELECTION_NUM_VOTERS_WITH_COND_CIVIC</Tag>
 		<English> --- %d1 voting [NUM1:player:players] chose this civic.</English>
 		<French> --- %d1 [NUM1:votant:votants] [NUM1:a:ont] choisi cette doctrine.</French>
-		<German> --- %d1 voting [NUM1:player:players] chose this civic.</German>
-		<Italian> --- %d1 voting [NUM1:player:players] chose this civic.</Italian>
-		<Spanish> --- %d1 voting [NUM1:player:players] chose this civic.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_CIVIC_IS_COND_BY_ONU</Tag>
 		<English>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</English>
 		<French>[COLOR_NEGATIVE_TEXT]Doctrine condamnée par les Nations Unies[COLOR_REVERT]</French>
-		<German>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</German>
-		<Italian>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_NEGATIVE_TEXT]Civic condemned by the United Nations[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_UN_OBSOLETE_BONUS</Tag>
 		<English>No prohibition resolution in the Overcouncil</English>
-		<French>No prohibition resolution in the Overcouncil</French>
-		<German>No prohibition resolution in the Overcouncil</German>
-		<Italian>No prohibition resolution in the Overcouncil</Italian>
-		<Spanish>No prohibition resolution in the Overcouncil</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_UN_OBSOLETE_BONUS_HELP</Tag>
 		<English>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</English>
-		<French>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</French>
-		<German>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</German>
-		<Italian>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</Italian>
-		<Spanish>UN won't be able to propose a resolution to make a resource disappeared/reappeared.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL</Tag>
 		<English>Prohibition of Coal</English>
-		<French>Prohibition of Coal</French>
-		<German>Prohibition of Coal</German>
-		<Italian>Prohibition of Coal</Italian>
-		<Spanish>Prohibition of Coal</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL_HELP</Tag>
 		<English>Overcouncil Resolution: [BOLD]Prohibition of Coal[\BOLD]</English>
-		<French>Overcouncil Resolution: [BOLD]Prohibition of Coal[\BOLD]</French>
-		<German>Overcouncil Resolution: [BOLD]Prohibition of Coal[\BOLD]</German>
-		<Italian>Overcouncil Resolution: [BOLD]Prohibition of Coal[\BOLD]</Italian>
-		<Spanish>Overcouncil Resolution: [BOLD]Prohibition of Coal[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_COAL_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</English>
-		<French>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</French>
-		<German>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</German>
-		<Italian>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</Italian>
-		<Spanish>[BOLD]Prohibition of Coal[\BOLD][NEWLINE]Makes the Coal resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR</Tag>
 		<English>Prohibition of Fur</English>
-		<French>Prohibition of Fur</French>
-		<German>Prohibition of Fur</German>
-		<Italian>Prohibition of Fur</Italian>
-		<Spanish>Prohibition of Fur</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR_HELP</Tag>
 		<English>Overcouncil Resolution: [BOLD]Prohibition of Fur[\BOLD]</English>
-		<French>Overcouncil Resolution: [BOLD]Prohibition of Fur[\BOLD]</French>
-		<German>Overcouncil Resolution: [BOLD]Prohibition of Fur[\BOLD]</German>
-		<Italian>Overcouncil Resolution: [BOLD]Prohibition of Fur[\BOLD]</Italian>
-		<Spanish>Overcouncil Resolution: [BOLD]Prohibition of Fur[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_FUR_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</English>
-		<French>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</French>
-		<German>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</German>
-		<Italian>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</Italian>
-		<Spanish>[BOLD]Prohibition of Fur[\BOLD][NEWLINE]Makes the Fur resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY</Tag>
 		<English>Prohibition of Ivory</English>
-		<French>Prohibition of Ivory</French>
-		<German>Prohibition of Ivory</German>
-		<Italian>Prohibition of Ivory</Italian>
-		<Spanish>Prohibition of Ivory</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY_HELP</Tag>
 		<English>Overcouncil Resolution: [BOLD]Prohibition of Ivory[\BOLD]</English>
-		<French>Overcouncil Resolution: [BOLD]Prohibition of Ivory[\BOLD]</French>
-		<German>Overcouncil Resolution: [BOLD]Prohibition of Ivory[\BOLD]</German>
-		<Italian>Overcouncil Resolution: [BOLD]Prohibition of Ivory[\BOLD]</Italian>
-		<Spanish>Overcouncil Resolution: [BOLD]Prohibition of Ivory[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_IVORY_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</English>
-		<French>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</French>
-		<German>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</German>
-		<Italian>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</Italian>
-		<Spanish>[BOLD]Prohibition of Ivory[\BOLD][NEWLINE]Makes the Ivory resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE</Tag>
 		<English>Prohibition of Whale Fishing</English>
-		<French>Prohibition of Whale Fishing</French>
-		<German>Prohibition of Whale Fishing</German>
-		<Italian>Prohibition of Whale Fishing</Italian>
-		<Spanish>Prohibition of Whale Fishing</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE_HELP</Tag>
 		<English>Overcouncil Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</English>
-		<French>Overcouncil Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</French>
-		<German>Overcouncil Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</German>
-		<Italian>Overcouncil Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</Italian>
-		<Spanish>Overcouncil Resolution: [BOLD]Prohibition of Whale Fishing[\BOLD]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_UN_OBSOLETE_WHALE_STRATEGY</Tag>
 		<English>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</English>
-		<French>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</French>
-		<German>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</German>
-		<Italian>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Italian>
-		<Spanish>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_BONUS_BAD_VOTE</Tag>
 		<English>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</English>
-		<French>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</French>
-		<German>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</German>
-		<Italian>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Italian>
-		<Spanish>[BOLD]Prohibition of Whale Fishing[\BOLD][NEWLINE]Makes the Whale resource disappeared</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_BONUS_BECOME_OBSOLETE</Tag>
 		<English>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</English>
-		<French>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</French>
-		<German>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</German>
-		<Italian>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</Italian>
-		<Spanish>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was abandoned near %s2_CityName.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_BONUS_BECOME_OBSOLETE2</Tag>
 		<English>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</English>
-		<French>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</French>
-		<German>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</German>
-		<Italian>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</Italian>
-		<Spanish>A source of [COLOR_HIGHLIGHT_TEXT]%s1_BonusName[COLOR_REVERT] was reactivated near %s2_CityName.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_IS_OBSO</Tag>
 		<English>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</English>
-		<French>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</French>
-		<German>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</German>
-		<Italian>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_WARNING_TEXT]Exploitation prohibited by United Nations[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CLOSEST_ALLY_OF</Tag>
 		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</English>
-		<French>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</French>
-		<German>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</German>
-		<Italian>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</Italian>
-		<Spanish>[ICON_BULLET][COLOR_POSITIVE_TEXT]Closest Ally of %s1_player[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_SHARED_ENEMY</Tag>
 		<English>%D1: &quot;We share common rivals.&quot;</English>
-		<French>%D1: &quot;We share common rivals.&quot;</French>
-		<German>%D1: &quot;We share common rivals.&quot;</German>
-		<Italian>%D1: &quot;We share common rivals.&quot;</Italian>
-		<Spanish>%D1: &quot;We share common rivals.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ATTITUDE_SHARED_FRIEND</Tag>
 		<English>%D1: &quot;We have friends in common.&quot;</English>
-		<French>%D1: &quot;We have friends in common.&quot;</French>
-		<German>%D1: &quot;We have friends in common.&quot;</German>
-		<Italian>%D1: &quot;We have friends in common.&quot;</Italian>
-		<Spanish>%D1: &quot;We have friends in common.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_WAR_REPARATIONS_STRING</Tag>
 		<English>Pay War Reparations</English>
-		<French>Pay War Reparations</French>
-		<German>Pay War Reparations</German>
-		<Italian>Pay War Reparations</Italian>
-		<Spanish>Pay War Reparations</Spanish>
-		<Polish>Pay War Reparations</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_WAR_REPARATIONS</Tag>
 		<English>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</English>
-		<French>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</French>
-		<German>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</German>
-		<Italian>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</Italian>
-		<Spanish>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</Spanish>
-		<Polish>Paying war reparations reimburses for losses caused by wars. War reparations are an expensive means to repair relations between former enemies.</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_WAR_REPARATIONS</Tag>
 		<English>War Reparations</English>
-		<French>War Reparations</French>
-		<German>War Reparations</German>
-		<Italian>War Reparations</Italian>
-		<Spanish>War Reparations</Spanish>
-		<Polish>War Reparations</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_CEASE_RELATIONS</Tag>
 		<English>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</English>
-		<French>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</French>
-		<German>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</German>
-		<Italian>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</Italian>
-		<Spanish>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</Spanish>
-		<Polish>Will cause %s1_You to cease all diplomatic relations with %s2_Them for %d3 turns.</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_CEASE_RELATIONS_WITH</Tag>
 		<English>Cease Relations With</English>
-		<French>Cease Relations With</French>
-		<German>Cease Relations With</German>
-		<Italian>Cease Relations With</Italian>
-		<Spanish>Cease Relations With</Spanish>
-		<Polish>Cease Relations With</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_CEASE_RELATIONS_GLOBAL_MSG</Tag>
 		<English>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</English>
-		<French>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</French>
-		<German>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</German>
-		<Italian>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</Spanish>
-		<Polish>[COLOR_YELLOW]At the request of %s1 the %s2 have ceased all diplomatic relations with %s3.[COLOR_REVERT]</Polish>
 	</TEXT>
 </Civ4GameText>

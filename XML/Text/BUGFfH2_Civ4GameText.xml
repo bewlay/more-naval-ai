@@ -14,60 +14,39 @@
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CATEGORY_EQUIPMENTS</Tag>
         <English>Equipments</English>
-        <French>Equipments</French>
-        <German>Equipments</German>
-        <Italian>Equipments</Italian>
         <Spanish>Equipo</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CATEGORY_SPELLS</Tag>
         <English>Spells</English>
-        <French>Spells</French>
-        <German>Spells</German>
-        <Italian>Spells</Italian>
         <Spanish>Hechizos</Spanish>
     </TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_ABILITY</Tag>
 		<English>Special Abilities</English>
-		<French>Special Abilities</French>
-		<German>Special Abilities</German>
-		<Italian>Special Abilities</Italian>
 		<Spanish>Habilidades Especiales</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Resources) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_PRODUCING_BUILDINGS</Tag>
         <English>Producing Buildings</English>
-        <French>Producing Buildings</French>
-        <German>Producing Buildings</German>
-        <Italian>Producing Buildings</Italian>
         <Spanish>Edificios Productores</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Buildings) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_REQ_STATE_RELIGION</Tag>
         <English>State[ICON_RELIGION] is</English>
-        <French>State[ICON_RELIGION] is</French>
-        <German>State[ICON_RELIGION] is</German>
-        <Italian>State[ICON_RELIGION] is</Italian>
         <Spanish>[ICON_RELIGION]Estatal es</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_REQ_CITY_HAS</Tag>
         <English>City Has</English>
-        <French>City Has</French>
-        <German>City Has</German>
-        <Italian>City Has</Italian>
         <Spanish>La Ciudad Tiene</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Improvements) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_BASE_YIELDS</Tag>
 		<English>Base Yields</English>
-		<French>Base Yields</French>
-		<German>Base Yields</German>
-		<Italian>Base Yields</Italian>
 		<Spanish>Beneficios Base</Spanish>
 	</TEXT>
 	<TEXT>
@@ -114,185 +93,113 @@
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_DOUBLE_SPEED</Tag>
 		<English>Double Speed Production with</English>
-		<French>Double Speed Production with</French>
-		<German>Double Speed Production with</German>
-		<Italian>Double Speed Production with</Italian>
 		<Spanish>Velocidad de Producción Duplicada con</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Promotions) -->
     <TEXT>
         <Tag>TXT_KEY_PEDIA_PLAYER_PREREQ</Tag>
         <English>Requires of Player</English>
-        <French>Requires of Player</French>
-        <German>Requires of Player</German>
-        <Italian>Requires of Player</Italian>
         <Spanish>Requiere del Jugador</Spanish>
     </TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_REQ_UNIT_RELIGION</Tag>
         <English>Unit[ICON_RELIGION] is</English>
-        <French>Unit[ICON_RELIGION] is</French>
-        <German>Unit[ICON_RELIGION] is</German>
-        <Italian>Unit[ICON_RELIGION] is</Italian>
-        <Spanish>Unit[ICON_RELIGION] is</Spanish>
 	</TEXT>
 	<!-- Civilopedia (Religions) -->
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_FOUNDED_BY_FIRST</Tag>
 		<English>Founded by First to Discover</English>
 		<French>Fond&#233;e par le premier &#224; d&#233;couvrir</French>
-		<German>Founded by First to Discover</German>
 		<Italian>Fondato dalla prima civilit&#224; che scopre</Italian>
 		<Spanish>Fundado por el primero en descubrir</Spanish>
 	</TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_HEROES_OR_WONDERS_ENABLED</Tag>
         <English>Heroes or Wonders Enabled</English>
-        <French>Heroes or Wonders Enabled</French>
-        <German>Heroes or Wonders Enabled</German>
-        <Italian>Heroes or Wonders Enabled</Italian>
         <Spanish>Héroes o Maravillas Habilitadas</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_ENABLED_WITHOUT_STATE</Tag>
         <English>Enabled without State Religion</English>
-        <French>Enabled without State Religion</French>
-        <German>Enabled without State Religion</German>
-        <Italian>Enabled without State Religion</Italian>
         <Spanish>Habilitado sin Religión Estatal</Spanish>
     </TEXT>
 	<!-- Civilopedia (Spells) -->
     <TEXT>
         <Tag>TXT_KEY_PEDIA_GAIN</Tag>
         <English>Gain: %d1_Num</English>
-        <French>Gain: %d1_Num</French>
-        <German>Gain: %d1_Num</German>
-        <Italian>Gain: %d1_Num</Italian>
         <Spanish>Gana: %d1_Num</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_DELAY</Tag>
         <English>Delay: %d1_turns [NUM1:Turn:Turns]</English>
-        <French>Delay: %d1_turns [NUM1:Turn:Turns]</French>
-        <German>Delay: %d1_turns [NUM1:Turn:Turns]</German>
-        <Italian>Delay: %d1_turns [NUM1:Turn:Turns]</Italian>
         <Spanish>Retraso: %d1_turns [NUM1:Turno:Turnos]</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_CASTER_PREREQ</Tag>
         <English>Requires of Caster</English>
-        <French>Requires of Caster</French>
-        <German>Requires of Caster</German>
-        <Italian>Requires of Caster</Italian>
         <Spanish>Requiere de Lanzador</Spanish>
     </TEXT>
 	<!-- Civilopedia (Techs) -->
     <TEXT>
         <Tag>TXT_KEY_PEDIA_OTHERS_ENABLED</Tag>
         <English>Others Enabled</English>
-        <French>Others Enabled</French>
-        <German>Others Enabled</German>
-        <Italian>Others Enabled</Italian>
         <Spanish>Otros</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_UNRESEARCHABLE</Tag>
         <English>Can not be Researched</English>
-        <French>Can not be Researched</French>
-        <German>Can not be Researched</German>
-        <Italian>Can not be Researched</Italian>
         <Spanish>No puede ser Investigada</Spanish>
     </TEXT>
 	<!-- Civilopedia (Terrain) -->
     <TEXT>
         <Tag>TXT_KEY_PEDIA_TERRAIN_EARTHLY</Tag>
         <English>Earthly Terrain</English>
-        <French>Earthly Terrain</French>
-        <German>Earthly Terrain</German>
-        <Italian>Earthly Terrain</Italian>
         <Spanish>Terreno Normal</Spanish>
     </TEXT>
     <TEXT>
         <Tag>TXT_KEY_PEDIA_TERRAIN_HELL</Tag>
         <English>Hell Terrain</English>
-        <French>Hell Terrain</French>
-        <German>Hell Terrain</German>
-        <Italian>Hell Terrain</Italian>
         <Spanish>Terreno Infernal</Spanish>
     </TEXT>
 	<!-- Resource Help -->
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_TILE_MODIFIER</Tag>
         <English>Tile Modifier:</English>
-        <French>Tile Modifier:</French>
-        <German>Tile Modifier:</German>
-        <Italian>Tile Modifier:</Italian>
         <Spanish>Modificador de Casilla:</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_FREE_PROMOTION_CHANCE</Tag>
         <English>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</English>
-        <French>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</French>
-        <German>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</German>
-        <Italian>[ICON_BULLET]%D1_chance% chance free %s2_promotion for new units belonging to available category in the city</Italian>
         <Spanish>[ICON_BULLET]%D1_chance% de probabilidades de obtener %s2_promotion gratis para las nuevas unidades pertenecientes a la categoría disponible en la ciudad</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_FORBIDDEN_MANA_PENALTY</Tag>
         <English>[ICON_BULLET]%D1_penalty Attitude Modifier (Each Leader evaluates this coefficient value)</English>
-        <French>[ICON_BULLET]%D1_penalty Attitude Modifier (Each Leader evaluates this coefficient value)</French>
-        <German>[ICON_BULLET]%D1_penalty Attitude Modifier (Each Leader evaluates this coefficient value)</German>
-        <Italian>[ICON_BULLET]%D1_penalty Attitude Modifier (Each Leader evaluates this coefficient value)</Italian>
-        <Spanish>[ICON_BULLET]%D1_penalty Attitude Modifier (Each Leader evaluates this coefficient value)</Spanish>
 	</TEXT>
 	<!-- Building Help -->
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_FREE_PROMOTION_STAYED</Tag>
 		<English>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</English>
-		<French>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</French>
-		<German>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</German>
-		<Italian>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</Italian>
-		<Spanish>[ICON_BULLET]Free %s1_Name Promotion for Units Stayed in this City</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_IGNORE_REQUIREMENT</Tag>
 		<English>[SPACE](Ignoring Requirements)</English>
-		<French>[SPACE](Ignoring Requirements)</French>
-		<German>[SPACE](Ignoring Requirements)</German>
-		<Italian>[SPACE](Ignoring Requirements)</Italian>
-		<Spanish>[SPACE](Ignoring Requirements)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_REQ_STATE_RELIGION</Tag>
         <English>[COLOR_WARNING_TEXT]Requires %F1_RelIcon as State[ICON_RELIGION][COLOR_REVERT]</English>
-        <French>[COLOR_WARNING_TEXT]Requires %F1_RelIcon as State[ICON_RELIGION][COLOR_REVERT]</French>
-        <German>[COLOR_WARNING_TEXT]Requires %F1_RelIcon as State[ICON_RELIGION][COLOR_REVERT]</German>
-        <Italian>[COLOR_WARNING_TEXT]Requires %F1_RelIcon as State[ICON_RELIGION][COLOR_REVERT]</Italian>
-        <Spanish>[COLOR_WARNING_TEXT]Requires %F1_RelIcon as State[ICON_RELIGION][COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_REQ_CITY_HAS_RELIGION</Tag>
         <English>[COLOR_WARNING_TEXT]Requires %F1_RelIcon in the City[COLOR_REVERT]</English>
-        <French>[COLOR_WARNING_TEXT]Requires %F1_RelIcon in the City[COLOR_REVERT]</French>
-        <German>[COLOR_WARNING_TEXT]Requires %F1_RelIcon in the City[COLOR_REVERT]</German>
-        <Italian>[COLOR_WARNING_TEXT]Requires %F1_RelIcon in the City[COLOR_REVERT]</Italian>
-        <Spanish>[COLOR_WARNING_TEXT]Requires %F1_RelIcon in the City[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_REQ_CITY_HAS</Tag>
         <English>[COLOR_WARNING_TEXT]Requires %s1_requirement in the City[COLOR_REVERT]</English>
-        <French>[COLOR_WARNING_TEXT]Requires %s1_requirement in the City[COLOR_REVERT]</French>
-        <German>[COLOR_WARNING_TEXT]Requires %s1_requirement in the City[COLOR_REVERT]</German>
-        <Italian>[COLOR_WARNING_TEXT]Requires %s1_requirement in the City[COLOR_REVERT]</Italian>
-        <Spanish>[COLOR_WARNING_TEXT]Requires %s1_requirement in the City[COLOR_REVERT]</Spanish>
 	</TEXT>
     <TEXT>
         <Tag>TXT_KEY_BUILDING_DWARVEN_VAULT_HELP</Tag>
         <English>[ICON_BULLET]Be upgraded automatically depending on the amount of Empire Treasury per City.[NEWLINE][SPACE][SPACE][ICON_BULLET]000-049 [ICON_GOLD] per City: +2 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]050-099 [ICON_GOLD] per City: +1 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]100-149 [ICON_GOLD] per City: None[NEWLINE][SPACE][SPACE][ICON_BULLET]150-199 [ICON_GOLD] per City: +1 [ICON_HAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]200-299 [ICON_GOLD] per City: +2 [ICON_HAPPY], +10% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]300-499 [ICON_GOLD] per City: +2 [ICON_HAPPY], +25% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]500over [ICON_GOLD] per City: +3 [ICON_HAPPY], +40% [ICON_PRODUCTION], +25% [ICON_GREATPEOPLE]</English>
-        <French>[ICON_BULLET]Be upgraded automatically depending on the amount of Empire Treasury per City.[NEWLINE][SPACE][SPACE][ICON_BULLET]000-049 [ICON_GOLD] per City: +2 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]050-099 [ICON_GOLD] per City: +1 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]100-149 [ICON_GOLD] per City: None[NEWLINE][SPACE][SPACE][ICON_BULLET]150-199 [ICON_GOLD] per City: +1 [ICON_HAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]200-299 [ICON_GOLD] per City: +2 [ICON_HAPPY], +10% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]300-499 [ICON_GOLD] per City: +2 [ICON_HAPPY], +25% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]500over [ICON_GOLD] per City: +3 [ICON_HAPPY], +40% [ICON_PRODUCTION], +25% [ICON_GREATPEOPLE]</French>
-        <German>[ICON_BULLET]Be upgraded automatically depending on the amount of Empire Treasury per City.[NEWLINE][SPACE][SPACE][ICON_BULLET]000-049 [ICON_GOLD] per City: +2 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]050-099 [ICON_GOLD] per City: +1 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]100-149 [ICON_GOLD] per City: None[NEWLINE][SPACE][SPACE][ICON_BULLET]150-199 [ICON_GOLD] per City: +1 [ICON_HAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]200-299 [ICON_GOLD] per City: +2 [ICON_HAPPY], +10% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]300-499 [ICON_GOLD] per City: +2 [ICON_HAPPY], +25% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]500over [ICON_GOLD] per City: +3 [ICON_HAPPY], +40% [ICON_PRODUCTION], +25% [ICON_GREATPEOPLE]</German>
-        <Italian>[ICON_BULLET]Be upgraded automatically depending on the amount of Empire Treasury per City.[NEWLINE][SPACE][SPACE][ICON_BULLET]000-049 [ICON_GOLD] per City: +2 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]050-099 [ICON_GOLD] per City: +1 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]100-149 [ICON_GOLD] per City: None[NEWLINE][SPACE][SPACE][ICON_BULLET]150-199 [ICON_GOLD] per City: +1 [ICON_HAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]200-299 [ICON_GOLD] per City: +2 [ICON_HAPPY], +10% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]300-499 [ICON_GOLD] per City: +2 [ICON_HAPPY], +25% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]500over [ICON_GOLD] per City: +3 [ICON_HAPPY], +40% [ICON_PRODUCTION], +25% [ICON_GREATPEOPLE]</Italian>
-        <Spanish>[ICON_BULLET]Be upgraded automatically depending on the amount of Empire Treasury per City.[NEWLINE][SPACE][SPACE][ICON_BULLET]000-049 [ICON_GOLD] per City: +2 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]050-099 [ICON_GOLD] per City: +1 [ICON_UNHAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]100-149 [ICON_GOLD] per City: None[NEWLINE][SPACE][SPACE][ICON_BULLET]150-199 [ICON_GOLD] per City: +1 [ICON_HAPPY][NEWLINE][SPACE][SPACE][ICON_BULLET]200-299 [ICON_GOLD] per City: +2 [ICON_HAPPY], +10% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]300-499 [ICON_GOLD] per City: +2 [ICON_HAPPY], +25% [ICON_PRODUCTION][NEWLINE][SPACE][SPACE][ICON_BULLET]500over [ICON_GOLD] per City: +3 [ICON_HAPPY], +40% [ICON_PRODUCTION], +25% [ICON_GREATPEOPLE]</Spanish>
     </TEXT>
 	<!-- Civic Help -->
 	<TEXT>
@@ -307,25 +214,15 @@
 	<TEXT>
 		<Tag>TXT_KEY_FEATURE_GROWING_TO_NEAR_TILE</Tag>
 		<English>[ICON_BULLET]1 in %d1_denominator% chance of growing per each %d2_num_directions adjacent tiles[NEWLINE][ICON_BULLET]1 in %d3_denominator% chance of growing per each tiles with any route</English>
-		<French>[ICON_BULLET]1 in %d1_denominator% chance of growing per each %d2_num_directions adjacent tiles[NEWLINE][ICON_BULLET]1 in %d3_denominator% chance of growing per each tiles with any route</French>
-		<German>[ICON_BULLET]1 in %d1_denominator% chance of growing per each %d2_num_directions adjacent tiles[NEWLINE][ICON_BULLET]1 in %d3_denominator% chance of growing per each tiles with any route</German>
-		<Italian>[ICON_BULLET]1 in %d1_denominator% chance of growing per each %d2_num_directions adjacent tiles[NEWLINE][ICON_BULLET]1 in %d3_denominator% chance of growing per each tiles with any route</Italian>
-		<Spanish>[ICON_BULLET]1 in %d1_denominator% chance of growing per each %d2_num_directions adjacent tiles[NEWLINE][ICON_BULLET]1 in %d3_denominator% chance of growing per each tiles with any route</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_FEATURE_FLAMMABLE</Tag>
 		<English>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</English>
-		<French>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</French>
-		<German>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</German>
-		<Italian>[NEWLINE][ICON_BULLET]Can catch [LINK=IMPROVEMENT_SMOKE]Fire[\LINK]</Italian>
 		<Spanish>[NEWLINE][ICON_BULLET]Puede prenderse [LINK=IMPROVEMENT_SMOKE]Fuego[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_MANANODES</Tag>
 		<English>Mana</English>
-		<French>Mana</French>
-		<German>Mana</German>
-		<Italian>Mana</Italian>
 		<Spanish>Maná</Spanish>
 	</TEXT>	
 </Civ4GameText>

@@ -38,52 +38,39 @@
 		</German>
 		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]E' possibile aggiornare le unit&#224; al di fuori dei confini nazionali.</Italian>
 		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]Puede actualizar unidades fuera de las fronteras nacionales.</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]Can upgrade units outside of national borders.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_REVIDX_LOCAL</Tag>
 		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to local RevIdx Penalty</English>
-		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to local RevIdx Penalty</French>
 		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 zum lokalen RevIdx-Malus</German>
 		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]Penalit&#224; al RevIdx locale: %D1</Italian>
 		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 de penalizaci&#243;n al RevIdx local</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to local RevIdx Penalty</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_REVIDX_NATIONAL</Tag>
 		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to National Revolution Stability Bonus</English>
-		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to National Revolution Stability Bonus</French>
 		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 zum nationalen Revolutions-Stabilit&#228;ts-Bonus</German>
 		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]Bonus Stabilit&#224; Nazionale: %D1</Italian>
 		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 de bonificaci&#243;n a la Estabilidad Revolucionaria Nacional</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to National Revolution Stability Bonus</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_DISTANCE_MOD</Tag>
 		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% change to RevIdx City Distance penalty</English>
-		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% change to RevIdx City Distance penalty</French>
 		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% Ver&#228;nderung des RevIdx-Malus durch Abstand der St&#228;dte</German>
-		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% change to RevIdx City Distance penalty</Italian>
-		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% change to RevIdx City Distance penalty</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1% change to RevIdx City Distance penalty</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_REV_GOOD_HOLY_CITY</Tag>
 		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to RevIdx bonus from State [ICON_RELIGION] Holy City</English>
-		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to RevIdx bonus from State [ICON_RELIGION] Holy City</French>
 		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 zum RevIdx-Bonus von der Heiligen Stadt der Staats-[ICON_RELIGION]</German>
 		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]Bonus al RevIdx: %D1 da Citt&#224; Santa per [ICON_RELIGION] di Stato</Italian>
 		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 de bonificaci&#243;n al RevIdx por Ciudad Sanate de la [ICON_RELIGION] de estado</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 to RevIdx bonus from State [ICON_RELIGION] Holy City</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_REV_BAD_HOLY_CITY</Tag>
 		<English>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 reduction to RevIdx penalty from Non State [ICON_RELIGION] Holy City</English>
-		<French>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 reduction to RevIdx penalty from Non State [ICON_RELIGION] Holy City</French>
 		<German>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 Reduktion des RevIdx-Malus durch die Heilge Stadt der nicht-Staats-[ICON_RELIGION]</German>
 		<Italian>[NEWLINE][SPACE][SPACE][ICON_BULLET]Penalit&#224; al RevIdx: %D1 da Citt&#224; Santa per [ICON_RELIGION] non di Stato</Italian>
 		<Spanish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 de reducci&#243;n a la penalizaci&#243;n del RevIdx por Ciudad Santa [ICON_RELIGION] no de estado</Spanish>
-		<Finnish>[NEWLINE][SPACE][SPACE][ICON_BULLET]%D1 reduction to RevIdx penalty from Non State [ICON_RELIGION] Holy City</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRAIT_REV_NATIONALITY_MOD</Tag>
@@ -115,10 +102,8 @@
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_MAX_START_ERA</Tag>
 		<English>[NEWLINE][ICON_BULLET]Can only be Built on %s1_Name and Earlier Starts</English>
-		<French>[NEWLINE][ICON_BULLET]Can only be Built on %s1_Name and Earlier Starts</French>
 		<German>[NEWLINE][ICON_BULLET]Kann nur in %s1_Name und fr&#252;heren Startzeitaltern gebaut werden</German>
 		<Italian>[NEWLINE][ICON_BULLET]Pu&#242; essere construito/a solo nella %s1_Name o precedenti</Italian>
 		<Spanish>[NEWLINE][ICON_BULLET]Solo puede ser construido en %s1_Name y &#201;pocas anteriores</Spanish>
-		<Finnish>[NEWLINE][ICON_BULLET]Can only be Built on %s1_Name and Earlier Starts</Finnish>
 	</TEXT>
 </Civ4GameText>

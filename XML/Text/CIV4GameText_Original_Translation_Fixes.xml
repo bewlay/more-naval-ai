@@ -140,9 +140,7 @@
 		<Tag>TXT_KEY_TRAIT_EXPANSIVE_SHORT</Tag>
 		<English>Exp</English>
 		<French>Acc</French>
-		<German>Exp</German>
 		<Italian>Esp</Italian>
-		<Spanish>Exp</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_TRAITS</Tag>
@@ -203,7 +201,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_WB_PROMOTIONS</Tag>
 		<English>Promotions</English>
-		<French>Promotions</French>
 		<German>Bef&#246;rderungen</German>
 		<Italian>Promozioni</Italian>
 		<Spanish>Promociones</Spanish>

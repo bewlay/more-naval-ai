@@ -2395,7 +2395,6 @@
 		<English>Cha-CHING!</English>
 		<French>Cha-CHING !</French>
 		<German>Ka-CHING!</German>
-		<Italian>Cha-CHING!</Italian>
 		<Spanish>&#161;Cha-CHING!</Spanish>
 		<Finnish>Ta-daa!</Finnish>
 	</TEXT>
@@ -6119,9 +6118,7 @@
 	<TEXT>
 		<Tag>USER_DIPLO_RESEARCH_TECH_1</Tag>
 		<English>%s1...</English>
-		<French>%s1...</French>
 		<German>%s1 ...</German>
-		<Italian>%s1...</Italian>
 		<Spanish>...%s1?</Spanish>
 		<Finnish>%s1:2...</Finnish>
 	</TEXT>
@@ -6137,9 +6134,7 @@
 	<TEXT>
 		<Tag>USER_DIPLO_ATTITUDE_PLAYER_1</Tag>
 		<English>%s1...</English>
-		<French>%s1...</French>
 		<German>%s1 ...</German>
-		<Italian>%s1...</Italian>
 		<Spanish>...%s1?</Spanish>
 		<Finnish>johtajasta %s1...</Finnish>
 	</TEXT>
@@ -6155,9 +6150,7 @@
 	<TEXT>
 		<Tag>USER_DIPLO_TARGET_CITY_1</Tag>
 		<English>%s1...</English>
-		<French>%s1...</French>
 		<German>%s1 ...</German>
-		<Italian>%s1...</Italian>
 		<Spanish>...%s1?</Spanish>
 		<Finnish>kaupunkiin %s1...</Finnish>
 	</TEXT>
@@ -6849,72 +6842,55 @@
 	<TEXT>
 		<Tag>USER_STOP_BOTHERING</Tag>
 		<English>Cease bothering us!</English>
-		<French>Cease bothering us!</French>
 		<German>H&#246;rt auf uns zu nerven!</German>
-		<Italian>Cease bothering us!</Italian>
-		<Spanish>Cease bothering us!</Spanish>
 		<Finnish>J&#228;t&#228; meid&#228;t rauhaan!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>ASSUME_SNUFFED</Tag>
 		<English>So be it. But if we need you at the table, your absense may not be to your advantage.</English>
-		<French>So be it. But if we need you at the table, your absense may not be to your advantage.</French>
 		<German>So sei es. Aber wenn wir Euch brauchen w&#228;re Eure Abwesenheit nicht zu Eurem Vorteil.</German>
-		<Italian>So be it. But if we need you at the table, your absense may not be to your advantage.</Italian>
 		<Spanish>Sea. Pero si os necesitamos a la mesa, vuestra ausencia puede que no sea vuestra ventaja.</Spanish>
 		<Finnish>Olkoon niin. Jos kuitenkin joskus haluaisimme n&#228;hd&#228; teid&#228;t neuvottelup&#246;yd&#228;n &#228;&#228;ress&#228;, ei poissaolonne ole v&#228;ltt&#228;m&#228;tt&#228; hy&#246;dyksenne.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>ASSUME_REALLY_SNUFFED</Tag>
 		<English>So be it. But the next time we meet, it may be on the battlefield!</English>
-		<French>So be it. But the next time we meet, it may be on the battlefield!</French>
 		<German>So sei es! Doch unser n&#228;chstes Treffen k&#246;nnte auf dem Schlachtfeld sein!</German>
-		<Italian>So be it. But the next time we meet, it may be on the battlefield!</Italian>
 		<Spanish>Sea. Pero la pr&#243;xima vez que no veamos,  &#161;ser&#225; en el campo de batalla!</Spanish>
 		<Finnish>Olkoon niin. Voi olla ett&#228; seuraavan kerran tapaamme taistelutantereella!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>ASSUME_NOT_SNUFFED</Tag>
 		<English>What a shame. My diplomats enjoyed your openness and all it revealed about you.</English>
-		<French>What a shame. My diplomats enjoyed your openness and all it revealed about you.</French>
 		<German>Was f&#252;r ein Jammer! Meine Diplomaten genossen Eure Offenheit und was sie &#252;ber Euch verriet.</German>
-		<Italian>What a shame. My diplomats enjoyed your openness and all it revealed about you.</Italian>
 		<Spanish>Que Lastima. Mis diplom&#225;ticos disfrutan vuestra franqueza y todo lo que revelaba sobre ti.</Spanish>
 		<Finnish>Harmi. Diplomaattini nauttivat avoimuudestanne ja sen tarjoamista... paljastuksista.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>USER_LETS_TALK</Tag>
 		<English>We wish to resume talks...</English>
-		<French>We wish to resume talks...</French>
 		<German>Wir w&#252;nschen, die Gespr&#228;che wieder aufzunehmen...</German>
-		<Italian>We wish to resume talks...</Italian>
 		<Spanish>Desear&#237;amos retomar el di&#225;logo...</Spanish>
 		<Finnish>Haluamme palata puhev&#228;leihin...</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>RESUME_TALKS</Tag>
 		<English>If you wish. I will contact you when it suits me.</English>
-		<French>If you wish. I will contact you when it suits me.</French>
 		<German>Wenn Ihr w&#252;nscht. Ich werde mich melden, wenn mir danach ist.</German>
-		<Italian>If you wish. I will contact you when it suits me.</Italian>
 		<Spanish>Como desees. Ya te llamare cuando me apetezca.</Spanish>
 		<Finnish>Kuten haluat. Otamme yhteytt&#228; kun se meille sopii.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>RESUME_TALKS_RELUCTANT</Tag>
 		<English>If you insist. But I have enjoyed your absense.</English>
-		<French>If you insist. But I have enjoyed your absense.</French>
 		<German>Wenn Ihr darauf besteht. Aber ich habe Eure Abwesenheit genossen.</German>
-		<Italian>If you insist. But I have enjoyed your absense.</Italian>
 		<Spanish>Si insist&#237;s. Pero debo decir que he disfrutado vuestra ausencia.</Spanish>
 		<Finnish>Jos niin vaadit... olen kuitenkin nauttinut poissaolostasi.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>RESUME_TALKS_GLADLY</Tag>
 		<English>Excellent! There are many things you have to offer us.</English>
-		<French>Excellent! There are many things you have to offer us.</French>
 		<German>Exzellent! Es gibt so vieles, was Ihr uns bieten k&#246;nnt.</German>
-		<Italian>Excellent! There are many things you have to offer us.</Italian>
 		<Spanish>&#161;Excelente! Hay un mont&#243;n de cosas que pod&#233;is ofrecernos.</Spanish>
 		<Finnish>Mainiota! On niin paljon mit&#228; voitte tarjota meille!</Finnish>
 	</TEXT>

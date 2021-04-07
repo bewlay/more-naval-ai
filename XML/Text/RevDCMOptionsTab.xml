@@ -137,28 +137,13 @@
 	<TEXT>
 		<Tag>TXT_KEY_REVDCMTAB_BBAI_OPTIONS</Tag>
 		<English>BBAI options:</English>
-		<French>BBAI options:</French>
-		<German>BBAI options:</German>
-		<Italian>BBAI options:</Italian>
-		<Spanish>BBAI options:</Spanish>
-		<Finnish>BBAI options:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__BBAI_DEFENSEPACT_TEXT</Tag>
 		<English>Defense pact type:</English>
-		<French>Defense pact type:</French>
-		<German>Defense pact type:</German>
-		<Italian>Defense pact type:</Italian>
-		<Spanish>Defense pact type:</Spanish>
-		<Finnish>Defense pact type:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVDCM__BBAI_DEFENSEPACT_HOVER</Tag>
 		<English>0=default bi-pact; 1=multi-pact; 2=offensive pact;</English>
-		<French>0=default bi-pact; 1=multi-pact; 2=offensive pact;</French>
-		<German>0=default bi-pact; 1=multi-pact; 2=offensive pact;</German>
-		<Italian>0=default bi-pact; 1=multi-pact; 2=offensive pact;</Italian>
-		<Spanish>0=default bi-pact; 1=multi-pact; 2=offensive pact;</Spanish>
-		<Finnish>0=default bi-pact; 1=multi-pact; 2=offensive pact;</Finnish>
 	</TEXT>
 </Civ4GameText>

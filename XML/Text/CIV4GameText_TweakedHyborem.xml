@@ -3,9 +3,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_HYBOREMS_WHISPER_SELECT</Tag>
 		<English>[ICON_BULLET]Select City of %s1</English>
-		<French>[ICON_BULLET]Select City of %s1</French>
-		<German>[ICON_BULLET]Select City of %s1</German>
-		<Italian>[ICON_BULLET]Select City of %s1</Italian>
 		<Spanish>[ICON_BULLET]Seleccionar ciudad de %s1</Spanish>
 	</TEXT>
 </Civ4GameText>

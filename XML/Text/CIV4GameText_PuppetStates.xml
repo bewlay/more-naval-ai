@@ -4,17 +4,11 @@
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_PUPPET_STATES</Tag>
 		<English>Puppet States</English>
-		<French>Puppet States</French>
-		<German>Puppet States</German>
-		<Italian>Puppet States</Italian>
 		<Spanish>Estados Marioneta</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_PUPPET_STATES_HELP</Tag>
 		<English>Allows the creation of Puppet States</English>
-		<French>Allows the creation of Puppet States</French>
-		<German>Allows the creation of Puppet States</German>
-		<Italian>Allows the creation of Puppet States</Italian>
 		<Spanish>Permite la creación de Estados Marioneta</Spanish>
 	</TEXT>
 	<TEXT>
@@ -28,42 +22,22 @@
 	<TEXT>
 		<Tag>TXT_KEY_CONCEPT_PUPPET_STATES_PEDIA</Tag>
 		<English>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</English>
-		<French>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</French>
-		<German>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</German>
-		<Italian>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</Italian>
-		<Spanish>[H1]Puppet States[\H1][PARAGRAPH:2]Puppet States can be formed when a civilization with knowledge of how to form Vassal States conquers a city. Puppet States are created as a Vassal of the conquering player, and are the same civilization type as the previous city owner. Puppet States are a special type of vassal in that they don't get a Palace and are permanently a Vassal unless they achieve Legitimacy. A Puppet State achieves Legitimacy when it is the last remaining civ of it's civilization type. At that point it becomes a regular Vassal rather than a Puppet State.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_ENABLES_PUPPET_STATES</Tag>
 		<English>[ICON_BULLET]Enables Puppet States</English>
-		<French>[ICON_BULLET]Enables Puppet States</French>
-		<German>[ICON_BULLET]Enables Puppet States</German>
-		<Italian>[ICON_BULLET]Enables Puppet States</Italian>
-		<Spanish>[ICON_BULLET]Enables Puppet States</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_CREATE_PUPPET_STATE</Tag>
 		<English>Form a pro-%s1 State in %s2_City</English>
-		<French>Form a pro-%s1 State in %s2_City</French>
-		<German>Form a pro-%s1 State in %s2_City</German>
-		<Italian>Form a pro-%s1 State in %s2_City</Italian>
-		<Spanish>Form a pro-%s1 State in %s2_City</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MEMORY_MADE_PUPPET</Tag>
 		<English>&quot;We owe our power to you.&quot;</English>
-		<French>&quot;We owe our power to you.&quot;</French>
-		<German>&quot;We owe our power to you.&quot;</German>
-		<Italian>&quot;We owe our power to you.&quot;</Italian>
-		<Spanish>&quot;We owe our power to you.&quot;</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_MAKE_PUPPET</Tag>
 		<English>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</English>
-		<French>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</French>
-		<German>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</German>
-		<Italian>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</Italian>
-		<Spanish>%s1_CivAdj forces in %s2_City have named %s3_Leader as leader of the new %s4_Civ government!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_POPUP_RETURN_PUPPET_CITY</Tag>

@@ -12,16 +12,11 @@
 		<German>Keine Inquisitionen</German>
 		<Italian>Nessuno Inquisizioni</Italian>
 		<Spanish>No Inquisitiones</Spanish>
-		<Finnish>No Inquisitions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_NO_INQUISITIONS_HELP</Tag>
 		<English>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</English>
-		<French>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</French>
 		<German>Beendet Inquisitionen. Es k&#246;nnen keine Inquisitoren ausgebildet werden und keine nicht-staatlichen Religionen zum Zweck der Reduzierung der Rebellionsgefahr ausgel&#246;scht werden.</German>
-		<Italian>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Italian>
-		<Spanish>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Spanish>
-		<Finnish>Disables Inquisitions.  Inquisitors may not be trained and non-state religions may not be purged in order to reduce the threat of rebellion.</Finnish>
 	</TEXT>	
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_UNIT_UPGRADE_COST_MOD</Tag>
@@ -44,10 +39,5 @@
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_DISALLOW_INQUISITONS</Tag>
 		<English>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</English>
-		<French>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</French>
-		<German>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</German>
-		<Italian>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Italian>
-		<Spanish>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Spanish>
-		<Finnish>[ICON_BULLET]Disables use of the [LINK=literal]Inquisition[\LINK] ability</Finnish>
 	</TEXT>
 </Civ4GameText>

@@ -119,7 +119,6 @@
 		<German>F&#252;hrer: %s1_Leader[NEWLINE]ZIVILIZATION: %s2_CivilizationAdj[NEWLINE][NEWLINE]Anfangsrunde: %d3_StartTurn[NEWLINE]Endrunde: %d4_EndTurn[NEWLINE]Automatische Runden: %d5_AutoTurn[NEWLINE][NEWLINE]Das Spiel wurde eine Runde automatisch gesteuert.</German>
 		<Italian>LEADER: %s1_Leader[NEWLINE]CIVILTA': %s2_CivilizationAdj[NEWLINE][NEWLINE]TURNO INIZIALE: %d3_StartTurn[NEWLINE]TURNO FINALE: %d4_EndTurn[NEWLINE]TURNI AUTO: %d5_AutoTurn[NEWLINE][NEWLINE]Controllo Automatico dell'IA per un solo turno.</Italian>
 		<Spanish>LEADER: %s1_Leader[NEWLINE]CIVILIZATION: %s2_CivilizationAdj[NEWLINE][NEWLINE]START TURN: %d3_StartTurn[NEWLINE]END TURN: %d4_EndTurn[NEWLINE]AUTO TURNS: %d5_AutoTurn[NEWLINE][NEWLINE]Juego controlado autom&#225;ticamente por la IA  un solo turno.</Spanish>
-		<Finnish>LEADER: %s1_Leader[NEWLINE]CIVILIZATION: %s2_CivilizationAdj[NEWLINE][NEWLINE]START TURN: %d3_StartTurn[NEWLINE]END TURN: %d4_EndTurn[NEWLINE]AUTO TURNS: %d5_AutoTurn[NEWLINE][NEWLINE]Game AI Auto Controled for a single Turn.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_AIAUTOPLAY_MP_ANNOUNCE_ABDICATE</Tag>
