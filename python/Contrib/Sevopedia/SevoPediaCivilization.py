@@ -12,13 +12,12 @@
 
 from CvPythonExtensions import *
 import CvUtil
-import ScreenInput
-import SevoScreenEnums
-##--------	BUGFfH: Added by Denev 2009/08/14
-import SevoPediaMain
-##--------	BUGFfH: End Add
+import GCUtils # lfgr 04/2021
+
+import itertools
 
 gc = CyGlobalContext()
+gcu = GCUtils.GCUtils()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -28,26 +27,35 @@ class SevoPediaCivilization:
 		self.iCivilization = -1
 		self.top = main
 	
+	# lfgr 04/2021: Helper function
+	@property
+	def civInfo( self ) :
+		# type: () -> Optional[CvCivilizationInfo]
+		if self.iCivilization != -1 :
+			return gc.getCivilizationInfo( self.iCivilization )
+		else :
+			return None
+	
 	
 	def initPositions( self ) :
 ##--------	BUGFfH: Modified by Denev 2009/10/08
 		X_MERGIN = self.top.X_MERGIN
 		Y_MERGIN = self.top.Y_MERGIN
 
-		self.W_CIV_TRAIT = 150
-		self.H_CIV_TRAIT = 116
-		self.X_CIV_TRAIT = self.top.R_PEDIA_PAGE - self.W_CIV_TRAIT
-		self.Y_CIV_TRAIT = self.top.Y_PEDIA_PAGE
+		self.W_FEATURES = 215
+		self.H_FEATURES = 116
+		self.X_FEATURES = self.top.R_PEDIA_PAGE - self.W_FEATURES
+		self.Y_FEATURES = self.top.Y_PEDIA_PAGE
 
 		self.W_TECHS = 180
-		self.H_TECHS = self.H_CIV_TRAIT
-		self.X_TECHS = self.X_CIV_TRAIT - self.W_TECHS - X_MERGIN
-		self.Y_TECHS = self.Y_CIV_TRAIT
+		self.H_TECHS = self.H_FEATURES
+		self.X_TECHS = self.X_FEATURES - self.W_TECHS - X_MERGIN
+		self.Y_TECHS = self.Y_FEATURES
 
 		self.X_MAIN_PANE = self.top.X_PEDIA_PAGE
-		self.Y_MAIN_PANE = self.Y_CIV_TRAIT
+		self.Y_MAIN_PANE = self.Y_FEATURES
 		self.W_MAIN_PANE = self.X_TECHS - self.X_MAIN_PANE - X_MERGIN
-		self.H_MAIN_PANE = self.H_CIV_TRAIT
+		self.H_MAIN_PANE = self.H_FEATURES
 
 		self.W_ICON = 100
 		self.H_ICON = 100
@@ -62,7 +70,8 @@ class SevoPediaCivilization:
 
 		self.X_SPELLS = self.X_HEROES + self.W_HEROES + X_MERGIN
 		self.Y_SPELLS = self.Y_HEROES
-		self.W_SPELLS = 155
+		# lfgr 04/2021: Spells get more room from leaders
+		self.W_SPELLS = max( 155, ( self.top.R_PEDIA_PAGE - self.X_SPELLS - X_MERGIN ) / 2 )
 		self.H_SPELLS = self.H_HEROES
 
 		self.X_LEADERS = self.X_SPELLS + self.W_SPELLS + X_MERGIN
@@ -118,6 +127,7 @@ class SevoPediaCivilization:
 		screen.addDDSGFC(self.top.getNextWidgetName(), ArtFileMgr.getCivilizationArtInfo(gc.getCivilizationInfo(self.iCivilization).getArtDefineTag()).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		self.placeTech()
+		self.placeOtherFeatures() # lfgr 04/2021
 		self.placeBuilding()
 		self.placeUnit()
 		self.placeLeader()
@@ -127,7 +137,7 @@ class SevoPediaCivilization:
 
 		self.placeTrait()
 		self.placeHero()
-		self.placeWorldSpell()
+		self.placeSpells()
 
 		szPanelName1 = self.placeBlockedBuilding()
 		szPanelName2 = self.placeBlockedUnit()
@@ -149,13 +159,41 @@ class SevoPediaCivilization:
 		for iTech in range(gc.getNumTechInfos()):
 			if (gc.getCivilizationInfo(self.iCivilization).isCivilizationFreeTechs(iTech)):
 				screen.attachImageButton(panelName, "", gc.getTechInfo(iTech).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 1, False)
+	
+	
+	# lfgr 04/2021
+	def placeOtherFeatures( self ) :
+		screen = self.top.getScreen()
+
+		eRace = self.civInfo.getDefaultRace()
+		eTrait = self.civInfo.getCivTrait()
+		leCivics = [eCivic for eCivic in range( gc.getNumCivicInfos() )
+				if gc.getCivicInfo( eCivic ).getPrereqCivilization() == self.iCivilization]
+		
+		if eRace != -1 or eTrait != -1 or len( leCivics ) > 0 :
+			panelName = self.top.getNextWidgetName()
+			screen.addPanel( panelName, localText.getText("TXT_KEY_PEDIA_OTHER_FEATURES", ()), "", False, True,
+							 self.X_FEATURES, self.Y_FEATURES, self.W_FEATURES, self.H_FEATURES, PanelStyles.PANEL_STYLE_BLUE50 )
+			screen.attachLabel( panelName, "", "  " )
+			
+			if eRace != -1 :
+				screen.attachImageButton( panelName, "", gc.getPromotionInfo( eRace ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, eRace, 1, False )
+			
+			if eTrait != -1 :
+				screen.attachImageButton( panelName, "", gc.getTraitInfo( eTrait ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, eTrait, 1, False )
+			
+			for eCivic in leCivics :
+				screen.attachImageButton( panelName, "", gc.getCivicInfo( eCivic ).getButton(),
+						GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, eCivic, 1, False )
+		
 
 
-
-	def placeBuilding(self):
+	def placeBuilding(self): # lfgr 04 2021: Also show civ-specific rituals
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel(panelName, localText.getText("TXT_KEY_UNIQUE_BUILDINGS", ()), "", False, True, self.X_BUILDINGS, self.Y_BUILDINGS, self.W_BUILDINGS, self.H_BUILDINGS, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel(panelName, localText.getText("TXT_KEY_UNIQUE_BUILDINGS_AND_PROJECTS", ()), "", False, True, self.X_BUILDINGS, self.Y_BUILDINGS, self.W_BUILDINGS, self.H_BUILDINGS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
 		for iBuilding in range(gc.getNumBuildingClassInfos()):
 			iUniqueBuilding = gc.getCivilizationInfo(self.iCivilization).getCivilizationBuildings(iBuilding)
@@ -168,6 +206,12 @@ class SevoPediaCivilization:
 				if iUniqueBuilding != BuildingTypes.NO_BUILDING:
 					szButton = gc.getBuildingInfo(iUniqueBuilding).getButton()
 					screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iUniqueBuilding, 1, False)
+		for eProject, project in enumerate( gcu.iterProjectInfos() ) :
+			if project.getPrereqCivilization() == self.iCivilization :
+				szButton = project.getButton()
+				screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+						WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, eProject, 1, False)
+
 
 
 	def placeUnit(self):
@@ -319,19 +363,27 @@ class SevoPediaCivilization:
 			screen.attachImageButton(panelName, "", heroInfo.getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iHero, 1, False)
 
 
-
-	def placeWorldSpell(self):
+	# lfgr 04/2021: Show all spells
+	def placeSpells( self ):
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
-		screen.addPanel(panelName, localText.getText("TXT_KEY_CONCEPT_WORLD_SPELLS", ()), "", False, True, self.X_SPELLS, self.Y_SPELLS, self.W_SPELLS, self.H_SPELLS, PanelStyles.PANEL_STYLE_BLUE50)
+		screen.addPanel(panelName, localText.getText("TXT_KEY_CONCEPT_SPELLS", ()), "", False, True, self.X_SPELLS, self.Y_SPELLS, self.W_SPELLS, self.H_SPELLS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
+		
+		leWorldSpells = [] # These come first
+		leOtherSpells = []
 
-		for iSpell in range(gc.getNumSpellInfos()):
-			spellInfo = gc.getSpellInfo(iSpell)
-			if spellInfo.isGlobal():
-				if spellInfo.getCivilizationPrereq() == self.iCivilization:
-					screen.attachImageButton(panelName, "", spellInfo.getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, iSpell, 1, False)
-					break
+		for eSpell in range(gc.getNumSpellInfos()):
+			spellInfo = gc.getSpellInfo( eSpell )
+			if spellInfo.getCivilizationPrereq() == self.iCivilization:
+				if spellInfo.isGlobal():
+					leWorldSpells.append( eSpell )
+				else :
+					leOtherSpells.append( eSpell)
+		
+		for eSpell in itertools.chain( leWorldSpells, leOtherSpells ) :
+			screen.attachImageButton( panelName, "", gc.getSpellInfo( eSpell ).getButton(),
+					GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPELL, eSpell, 1, False )
 ##--------	BUGFfH: End Add
 
 

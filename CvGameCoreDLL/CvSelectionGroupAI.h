@@ -33,6 +33,9 @@ public:
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+	// lfgr AI 03/2021: Whether AI_update should try to do more stuff with this group.
+	// Returning false means we're done for this turn.
+	bool AI_readyToUpdate();
 
 	bool AI_update();
 

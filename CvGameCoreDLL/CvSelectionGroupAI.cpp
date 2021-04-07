@@ -153,6 +153,28 @@ bool CvSelectionGroupAI::AI_separateEmptyTransports()
 // bbai / K-Mod
 
 
+// lfgr AI 03/2021
+bool CvSelectionGroupAI::AI_readyToUpdate()
+{
+	if( readyToMove() )
+	{
+		return true;
+	}
+
+	// Terraformers might want to cast after moving
+	if( getHeadUnitAI() == UNITAI_TERRAFORMER )
+	{
+		// LFGR_TODO: Why does readyToCast() not check headMissionQueueNode() == NULL ?
+		if( headMissionQueueNode() == NULL && readyToCast() )
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
 // Returns true if the group has become busy...
 bool CvSelectionGroupAI::AI_update()
 {
@@ -209,7 +231,7 @@ bool CvSelectionGroupAI::AI_update()
 	bDead = false;
 	
 	bool bFailedAlreadyFighting = false;
-	while ((m_bGroupAttack && !bFailedAlreadyFighting) || readyToMove())
+	while ((m_bGroupAttack && !bFailedAlreadyFighting) || AI_readyToUpdate() ) // lfgr AI 03/2021
 	{
 		iTempHack++;
 		if (iTempHack > 100)
@@ -257,7 +279,7 @@ bool CvSelectionGroupAI::AI_update()
 			{
 				if (iTempHack == 99)
 				{
-					FAssertMsg(false, "unit about to be stuck in loop");
+					FAssertMsg(false, "unit about to be stuck in loop"); // LFGR_TODO: This should be in else block
 				}
 				// AI_update returns true when we should abort the loop and wait until next slice
 				break;

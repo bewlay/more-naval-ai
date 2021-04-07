@@ -24086,6 +24086,7 @@ bool CvGameText::read(CvXMLLoadUtility* pXML)
 	return read(pXML, GAMETEXT.getCurrentLanguage());
 }
 
+// lfgr 04/2021: Changed to allow omitting language tags
 bool CvGameText::read(CvXMLLoadUtility* pXML, int iCurrentLanguage)
 {
 	//*lol*CvString szTextVal;
@@ -24095,55 +24096,53 @@ bool CvGameText::read(CvXMLLoadUtility* pXML, int iCurrentLanguage)
 		return false;
 	}
 
-	gDLL->getXMLIFace()->SetToChild(pXML->GetXML()); // Move down to Child level
-	pXML->GetXmlVal(m_szType);		// TAG
-
-	static const int iMaxNumLanguages = GC.getDefineINT("MAX_NUM_LANGUAGES");
-	int iNumLanguages = NUM_LANGUAGES ? NUM_LANGUAGES : iMaxNumLanguages + 1;
-
-	int j=0;
-	for (j = 0; j < iNumLanguages; j++)
+	// lfgr 04/2021: Specify languages here. Default language comes first
+	static const char* const LANGUAGES[] = {"English", "French", "German", "Italian", "Spanish"};
+	static const int NUM_DEFINED_LANGUAGES = 5;
+	FAssert( 0 <= iCurrentLanguage && iCurrentLanguage < NUM_DEFINED_LANGUAGES )
+	
+	if( NUM_LANGUAGES == 0 )
 	{
-		pXML->SkipToNextVal();	// skip comments
-
-		if (!gDLL->getXMLIFace()->NextSibling(pXML->GetXML()) || j == iMaxNumLanguages)
-		{
-			NUM_LANGUAGES = j;
-			break;
-		}
-		if (j == iCurrentLanguage)//lol GAMETEXT.getCurrentLanguage()) // Only add appropriate language Text
-		{
-			// TEXT
-			if (! pXML->GetChildXmlValByName(m_szText, "Text"))
-			{
-				pXML->GetXmlVal(m_szText);
-				if (NUM_LANGUAGES > 0) //*lol* i know total languages, so complete reading
-				{
-					break;
-				}
-			}
-
-			// GENDER
-			if (pXML->GetChildXmlValByName(wszTextVal, "Gender"))
-			{
-				setGender(wszTextVal);
-			}
-
-			// PLURAL
-			if (pXML->GetChildXmlValByName(wszTextVal, "Plural"))
-			{
-				setPlural(wszTextVal);
-			}
-			if (NUM_LANGUAGES > 0)
-			{
-				break;
-			}
-		}
+		NUM_LANGUAGES = NUM_DEFINED_LANGUAGES;
 	}
 
-	gDLL->getXMLIFace()->SetToParent(pXML->GetXML()); // Move back up to Parent
+	// Read tag
+	pXML->GetChildXmlValByName( m_szType, "Tag" );
 
-	return true;
+	// Try current language
+	bool bSuccess = gDLL->getXMLIFace()->SetToChildByTagName( pXML->GetXML(), LANGUAGES[iCurrentLanguage] );
+	if( !bSuccess )
+	{
+		// Fall back to default language
+		bSuccess = gDLL->getXMLIFace()->SetToChildByTagName( pXML->GetXML(), LANGUAGES[0] );
+		FAssertMsg( bSuccess, CvString::format( "Text tag '%s' requires English translation", m_szType.c_str() ) );
+	}
+	
+	// Now we're in the correct tag and can do the actual reading
+	if( bSuccess )
+	{
+		// TEXT
+		if (! pXML->GetChildXmlValByName(m_szText, "Text"))
+		{
+			pXML->GetXmlVal(m_szText);
+		}
+
+		// GENDER
+		if (pXML->GetChildXmlValByName(wszTextVal, "Gender"))
+		{
+			setGender(wszTextVal);
+		}
+
+		// PLURAL
+		if (pXML->GetChildXmlValByName(wszTextVal, "Plural"))
+		{
+			setPlural(wszTextVal);
+		}
+
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML()); // Move back up to Parent
+	}
+
+	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////////

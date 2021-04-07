@@ -331,7 +331,6 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<CivTrait>NONE</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
-			<Help>TXT_KEY_CIV_BALSERAPHS_HELP</Help>
 			<Hero>UNIT_LOKI</Hero>
 			<MaintainFeatures>
 			</MaintainFeatures>
@@ -443,7 +442,6 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<CivTrait>TRAIT_GUARDSMAN</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
-			<Help>TXT_KEY_CIV_BANNOR_HELP</Help>
 			<Hero>UNIT_DONAL</Hero>
 			<MaintainFeatures>
 			</MaintainFeatures>
@@ -1074,7 +1072,6 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<CivTrait>TRAIT_TOLERANT</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
-			<Help>TXT_KEY_CIV_ELOHIM_HELP</Help>
 			<Hero>UNIT_CORLINDALE</Hero>
 			<MaintainFeatures>
 			</MaintainFeatures>
@@ -2926,7 +2923,6 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<CivTrait>NONE</CivTrait>
 			<DefaultRace>NONE</DefaultRace>
-			<Help>TXT_KEY_CIV_SIDAR_HELP</Help>
 			<Hero>UNIT_RATHUS</Hero>
 			<MaintainFeatures>
 			</MaintainFeatures>

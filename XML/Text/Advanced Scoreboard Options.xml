@@ -9,20 +9,16 @@
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__SHOWMINOR_TEXT</Tag>
 		<English>Show Minor Civilizations</English>
-		<French>Show Minor Civilizations</French>
 		<German>Unbedeutende Zivilisationen</German>
 		<Italian>Mostra Civilt&#224; Minori</Italian>
 		<Spanish>Mostrar Civilizaciones Menores</Spanish>
-		<Finnish>Show Minor Civilizations</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__SHOWMINOR_HOVER</Tag>
 		<English>When checked, minor civilizations are shown (some scenarios consider certain civs to be minor).</English>
-		<French>When checked, minor civilizations are shown (some scenarios consider certain civs to be minor).</French>
 		<German>Zeigt unbedeutende Zivilisationen in der Punkteanzeige an (diese werden in einigen Szenarios verwendet)</German>
 		<Italian>Quando &#232; selezionato, vengono visualizzate anche le Civilt&#224; Minori (certi Scenari considerano alcune Civilt&#224; come minori).</Italian>
 		<Spanish>Cuando se activa, las civilizaciones menores se muestran (algunos escenarios consideran que algunas civs son menores).</Spanish>
-		<Finnish>When checked, minor civilizations are shown (some scenarios consider certain civs to be minor).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__SHOWDEAD_TEXT</Tag>
@@ -31,7 +27,6 @@
 		<German>Anzeigen</German>
 		<Italian>Mostra</Italian>
 		<Spanish>Mostrar</Spanish>
-		<Finnish>Show</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__SHOWDEAD_HOVER</Tag>
@@ -40,7 +35,6 @@
 		<German>L&#228;sst ausgel&#246;schte Zivilisationen weiter in der Punkteanzeige erscheinen</German>
 		<Italian>Quando &#232; selezionato, le Civilt&#224; scomparse rimarranno nel Pannello del Punteggio.</Italian>
 		<Spanish>Cuando se activa, las civilizaciones eliminadas permanecer&#225;n en el panel de clasificaci&#243;n.</Spanish>
-		<Finnish>When checked, dead civilizations will remain on the scoreboard.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__TAGDEAD_TEXT</Tag>
@@ -49,7 +43,6 @@
 		<German>Mit "TOT" markieren</German>
 		<Italian>Marca come scomparse "X"</Italian>
 		<Spanish>Marcar como "CAPUT"</Spanish>
-		<Finnish>Tag as "DEAD"</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__TAGDEAD_HOVER</Tag>
@@ -58,7 +51,6 @@
 		<German>Markiert ausgel&#246;schte Zivilisationen mit dem Attribut "TOT" in der Punkteanzeige, wenn diese angezeigt werden sollen</German>
 		<Italian>Quando &#232; selezionato, ogni Civilt&#224; scomparsa verr&#224; marcata come scomparsa ("X") nel Pannello del Punteggio.</Italian>
 		<Spanish>Cuando se activa, las civilizaciones eliminadas se etiquetar&#225;n como "CAPUT" cuando se muestren.</Spanish>
-		<Finnish>When checked, dead civilizations will be tagged as "DEAD" when shown.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__GREYDEAD_TEXT</Tag>
@@ -67,7 +59,6 @@
 		<German>Ausgrauen</German>
 		<Italian>Colora in grigio</Italian>
 		<Spanish>Usar Gris</Spanish>
-		<Finnish>Use Grey Color</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__GREYDEAD_HOVER</Tag>
@@ -76,43 +67,34 @@
 		<German>Graut ausgel&#246;schte Zivilisationen aus, wenn diese nicht angezeigt werden sollen</German>
 		<Italian>Quando &#232; selezionato, le Civilt&#224; scomparse verranno colorate in grigio nel Pannello del Punteggio.</Italian>
 		<Spanish>Cuando se activa, las civilizaciones eliminadas ser&#225;n puestas de color gris en el panel de clasificaci&#243;n.</Spanish>
-		<Finnish>When checked, dead civilizations will be greyed out when not shown.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DELTA_TEXT</Tag>
 		<English>Score Delta</English>
-		<French>Score Delta</French>
 		<German>Wertungstrend</German>
 		<Italian>Variazione punteggio</Italian>
 		<Spanish>Variaci&#243;n Puntuaci&#243;n</Spanish>
-		<Finnish>Score Delta</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DELTA_HOVER</Tag>
 		<English>When checked, shows the change in score since the previous turn</English>
-		<French>When checked, shows the change in score since the previous turn</French>
 		<German>Zeigt die Ver&#228;nderung der Wertung einer Zivilisation seit der letzten Runde an</German>
 		<Italian>Quando &#232; selezionato, mostra la variazione del punteggio della Civilt&#224; rispetto al turno precedente.</Italian>
 		<Spanish>Cuando se activa, muestra el cambio en la puntuaci&#243;n desde el &#250;ltimo turno.</Spanish>
-		<Finnish>When checked, shows the change in score since the previous turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DELTAINCLUDECURRENT_TEXT</Tag>
 		<English>Include Current Turn</English>
-		<French>Include Current Turn</French>
 		<German>Aktuelle Runde einbeziehen</German>
 		<Italian>Includere turno corrente</Italian>
 		<Spanish>Incluir Turno Actual</Spanish>
-		<Finnish>Include Current Turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DELTAINCLUDECURRENT_HOVER</Tag>
 		<English>When checked, includes the current turn's change in the score change.</English>
-		<French>When checked, includes the current turn's change in the score change.</French>
 		<German>Bezieht in die Ver&#228;nderung der Wertung einer Zivilisation sowohl die letzte als auch die aktuelle Runde ein</German>
 		<Italian>Quando &#232; selezionato, include anche la variazione di punteggio relativa al turno corrente.</Italian>
 		<Spanish>Cuando se activa, incluye los cambios en el turno actual en el c&#243;mputo del cambio de puntuaci&#243;n.</Spanish>
-		<Finnish>When checked, includes the current turn's change in the score change.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DISPLAYNAME_TEXT</Tag>
@@ -121,7 +103,6 @@
 		<German>Anzeigename</German>
 		<Italian>Identifica con nome</Italian>
 		<Spanish>Mostrar Nombre</Spanish>
-		<Finnish>Display Name</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DISPLAYNAME_HOVER</Tag>
@@ -130,34 +111,27 @@
 		<German>Bestimmt den Namen, mit dem Zivilisationen in der Punkteanzeige angezeigt werden:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Oberhaupt[COLOR_REVERT] - Name des Oberhaupts oder Spielers (Victoria oder EmperorFool)[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Zivilisation (Ziv)[COLOR_REVERT] - Name der Zivilisation (England)[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Ziv-Beschreibung[COLOR_REVERT] - Beschreibender Name der Zivilisation (Reich der Engl&#228;nder)</German>
 		<Italian>Determina come le Civilt&#224; vengono identificate nel Pannello del Punteggio.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Leader[COLOR_REVERT] - Nome del leader o giocatore (Victoria o EmperorFool).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]CCivilt&#224;[COLOR_REVERT] - Nome della civilt&#224; (Inghilterra).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Descrizione[COLOR_REVERT] - Nome descrittivo della civilt&#224; (Impero Inglese).</Italian>
 		<Spanish>Determina como son etiquetadas las civilizaciones en el panel de clasificaci&#243;n.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Lider[COLOR_REVERT] - Nombre del l&#237;der o jugador (Victoria o EmperorFool).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Civilizacion[COLOR_REVERT] - Nombre de la civilizaci&#243;n (Inglaterra).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Descripcion[COLOR_REVERT] - Nombre descriptivo de la civilizaci&#243;n (Imperio Ingl&#233;s).</Spanish>
-		<Finnish>Determines how civilizations are labeled on the scoreboard.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Leader[COLOR_REVERT] - Name of the leader or player (Victoria or EmperorFool).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Civilization[COLOR_REVERT] - Name of the civilization (England).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Description[COLOR_REVERT] - Descriptive name of the civilization (English Empire).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DISPLAYNAME_LIST</Tag>
 		<English>Leader|Civilization|Civ Description|Leader / Civ|Leader / Civ Desc</English>
-		<French>Leader|Civilization|Civ Description|Leader / Civ|Leader / Civ Desc</French>
 		<German>Oberhaupt|Zivilisation|Ziv-Beschreibung|Oberhaupt / Zivilisation|Oberhaupt / Ziv-Beschreibung</German>
 		<Italian>Leader|Civilt&#224;|Short Civ|Leader + Civ|Leader + Short Civ</Italian>
 		<Spanish>L&#237;der|Civilizaci&#243;n|Civ Descripci&#243;n|L&#237;der / Civ|L&#237;der / Civ Desc</Spanish>
-		<Finnish>Leader|Civilization|Civ Description|Leader / Civ|Leader / Civ Desc</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__USEPLAYERNAME_TEXT</Tag>
 		<English>Use Player Name</English>
-		<French>Use Player Name</French>
 		<German>Spielername verwenden</German>
 		<Italian>Usa il nome del giocatore</Italian>
 		<Spanish>Usa Nombre Jugador</Spanish>
-		<Finnish>Use Player Name</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__USEPLAYERNAME_HOVER</Tag>
 		<English>When checked, the human players' names are used in place of those of the leaders they are playing as.</English>
-		<French>When checked, the human players' names are used in place of those of the leaders they are playing as.</French>
 		<German>Zeigt die Namen der menschlichen Spieler anstatt des jeweils ausgew&#228;hlten Oberhauptes an</German>
 		<Italian>Quando &#232; selezionato, nel Pannello del Punteggio viene utilizzato il nome del giocatore invece di quello del Leader della Civilt&#224; da lui utilizzata.</Italian>
 		<Spanish>Cuando se activa, los nombres de los jugadores humanos se muestran en lugar de los l&#237;deres que est&#225;n jugando.</Spanish>
-		<Finnish>When checked, the human players' names are used in place of those of the leaders they are playing as.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__ATTITUDE_TEXT</Tag>
@@ -166,7 +140,6 @@
 		<German>Einstellung</German>
 		<Italian>Icone di Atteggiamento</Italian>
 		<Spanish>Iconos de Actitud</Spanish>
-		<Finnish>Attitude Icons</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__ATTITUDE_HOVER</Tag>
@@ -175,7 +148,6 @@
 		<German>Zeigt die Einstellung jeder Zivilisation gegen&#252;ber der eigenen mit Smilies an</German>
 		<Italian>Quando &#232; selezionato, nel Pannello del Punteggio vengono mostrate delle emoticons che rappresentano l'atteggiamento delle altre Civilt&#224; verso di te.</Italian>
 		<Spanish>Cuando se activa, muestra smileys indicando la actitud de cada IA respecto a ti.</Spanish>
-		<Finnish>When checked, shows faces depicting each AI's attitude toward you.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__WORSTENEMY_TEXT</Tag>
@@ -184,7 +156,6 @@
 		<German>Erzfeind</German>
 		<Italian>Icone del Peggior Nemico</Italian>
 		<Spanish>Iconos de Peor Enemigo</Spanish>
-		<Finnish>Worst Enemy Icons</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__WORSTENEMY_HOVER</Tag>
@@ -193,43 +164,34 @@
 		<German>Zeigt das Symbol eines w&#252;tenden B&#252;rgers an, wenn eine Zivilisation der Erzfeind der eigenen Zivilisation ist</German>
 		<Italian>Quando &#232; selezionato, mostra un'apposita icona quando sei il Peggior Nemico di quella Civilt&#224;.</Italian>
 		<Spanish>Cuando se activa, muestra un icono de ciudadano enfadado cuando eres el peor enemigo de alguna IA.</Spanish>
-		<Finnish>When checked, shows an angry person icon when you are an AI's worst enemy.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__WHEOOH_TEXT</Tag>
 		<English>War Mobilization Icons</English>
-		<French>War Mobilization Icons</French>
 		<German>Kriegsvorbereitungen</German>
 		<Italian>Icone di Mobilitazione</Italian>
 		<Spanish>Icono de Movilizaci&#243;n Guerra</Spanish>
-		<Finnish>War Mobilization Icons</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__WHEOOH_HOVER</Tag>
 		<English>When checked, shows an orange fist icon when the AI is mobilizing for war (We Have Enough on Our Hands).</English>
-		<French>When checked, shows an orange fist icon when the AI is mobilizing for war (We Have Enough on Our Hands).</French>
 		<German>Zeigt ein orangenes Faust-Symbol an, wenn sich eine Zivilisation auf einen Krieg vorbereitet (engl. "We Have Enough on Our Hands")</German>
 		<Italian>Quando &#232; selezionato, mostra un'apposita icona quando la Civilt&#224; si sta mobilitando per la guerra ('We Have Enough on Our Hands', WHEOH).</Italian>
 		<Spanish>Cuando se activa, muestra un icono de pu&#241;o naranja cuando la IA se esta movilizando para la guerra (We Have Enough on Our Hands).</Spanish>
-		<Finnish>When checked, shows an orange fist icon when the AI is mobilizing for war (We Have Enough on Our Hands).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__CITIES_TEXT</Tag>
 		<English>Number of Cities</English>
-		<French>Number of Cities</French>
 		<German>Anzahl der St&#228;dte</German>
 		<Italian>Numero di Citt&#224;</Italian>
 		<Spanish>N&#250;mero de Ciudades</Spanish>
-		<Finnish>Number of Cities</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__CITIES_HOVER</Tag>
 		<English>When checked, shows a count of the number of cities for each leader.</English>
-		<French>When checked, shows a count of the number of cities for each leader.</French>
 		<German>Zeigt f&#252;r jede Zivilisation die Anzahl ihrer St&#228;dte an</German>
 		<Italian>Quando &#232; selezionato, mostra il numero di Citt&#224; per ogni Civilt&#224;.</Italian>
 		<Spanish>Cuando se activa, muestra el total de ciudades de cada l&#237;der.</Spanish>
-		<Finnish>When checked, shows a count of the number of cities for each leader.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__ALIGNICONS_TEXT</Tag>
@@ -238,7 +200,6 @@
 		<German>Aktivieren</German>
 		<Italian>Attivato</Italian>
 		<Spanish>Activado</Spanish>
-		<Finnish>Enabled</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__ALIGNICONS_HOVER</Tag>
@@ -247,61 +208,48 @@
 		<German>Stellt die Punkteanzeige als Raster dar, um die folgenden Optionen nutzen zu k&#246;nnen</German>
 		<Italian>Quando &#232; selezionato, il Pannello del Punteggio viene strutturato come griglia (vedi l'opzione seguente).</Italian>
 		<Spanish>Cuando se activa, el panel de clasificaci&#243;n se estructura como una tabla, y las otras opciones en esta columna afectan a la tabla.</Spanish>
-		<Finnish>When checked, the scoreboard is drawn as a grid, and the other options in this column affect it.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__MAXPLAYERS_TEXT</Tag>
 		<English>Maximum Civilizations</English>
-		<French>Maximum Civilizations</French>
 		<German>Anzahl Zivilisationen</German>
 		<Italian>Massimo di Civilt&#224;</Italian>
 		<Spanish>M&#225;ximo de Civilizaciones</Spanish>
-		<Finnish>Maximum Civilizations</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__MAXPLAYERS_HOVER</Tag>
 		<English>Select the maximum number of civilizations to display (0 for unlimited).</English>
-		<French>Select the maximum number of civilizations to display (0 for unlimited).</French>
 		<German>Bestimmt die maximale Anzahl der angezeigten Zivilisationen (0 f&#252;r unendlich)</German>
 		<Italian>Seleziona il massimo numero di Civilt&#224; che verranno mostrate (0 significa illimitate).</Italian>
 		<Spanish>Selecciona el m&#225;ximo de Civilizaciones a mostrar (0 para ilimitadas).</Spanish>
-		<Finnish>Select the maximum number of civilizations to display (0 for unlimited).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__LINEHEIGHT_TEXT</Tag>
 		<English>Line Height</English>
-		<French>Line Height</French>
 		<German>Zeilenh&#246;he</German>
 		<Italian>Altezza riga</Italian>
 		<Spanish>Alto de L&#237;nea</Spanish>
-		<Finnish>Line Height</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__LINEHEIGHT_HOVER</Tag>
 		<English>Select the height of each civilization's line (default value is 22).</English>
-		<French>Select the height of each civilization's line (default value is 22).</French>
 		<German>Bestimmt die H&#246;he der Textzeile f&#252;r jede Zivilisation (der Standardwert ist 22)</German>
 		<Italian>Imposta l'altezza della riga di ogni Civilt&#224; (il valore predefinito &#232; 22).</Italian>
 		<Spanish>Selecciona el alto de l&#237;nea de cada civilizaci&#243;n (valor por defecto es 22).</Spanish>
-		<Finnish>Select the height of each civilization's line (default value is 22).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DEFAULTSPACING_TEXT</Tag>
 		<English>Default Spacing</English>
-		<French>Default Spacing</French>
 		<German>Standardabstand</German>
 		<Italian>Spaziatura</Italian>
 		<Spanish>Espaciado por Defecto</Spanish>
-		<Finnish>Default Spacing</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DEFAULTSPACING_HOVER</Tag>
 		<English>The spacing between columns (in pixels) to use when none is specified for a column.</English>
-		<French>The spacing between columns (in pixels) to use when none is specified for a column.</French>
 		<German>Bestimmt den Standardabstand (in Pixeln) zwischen den einzelnen Spalten, wenn f&#252;r eine Spalte kein bestimmter Abstand angegeben wird</German>
 		<Italian>Definisce la spaziatura (in pixel) tra le colonne che viene utilizzata quando non ne viene specificata una differente per una o pi&#249; colonne specifiche mediante l'utilizzo di un codice numerico.</Italian>
 		<Spanish>El espacio entre columnas (en p&#237;xeles) cuando no se especifica uno para una columna.</Spanish>
-		<Finnish>The spacing between columns (in pixels) to use when none is specified for a column.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DISPLAYORDER_TEXT</Tag>
@@ -310,7 +258,6 @@
 		<German>Spaltenreihenfolge:</German>
 		<Italian>Ordine delle colonne:</Italian>
 		<Spanish>Orden de las Columnas:</Spanish>
-		<Finnish>Column Order:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__DISPLAYORDER_HOVER</Tag>
@@ -324,20 +271,16 @@
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__GROUPVASSALS_TEXT</Tag>
 		<English>Group Vassals</English>
-		<French>Group Vassals</French>
 		<German>Vasallen gruppieren</German>
 		<Italian>Raggruppa Vassalli</Italian>
 		<Spanish>Agrupar Vasallos</Spanish>
-		<Finnish>Group Vassals</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__GROUPVASSALS_HOVER</Tag>
 		<English>When checked, vassals are group together under their master(s).</English>
-		<French>When checked, vassals are group together under their master(s).</French>
 		<German>Gruppiert Vasallenstaaten zusammen mit ihren jeweiligen Hegemoniestaaten</German>
 		<Italian>Quando &#232; selezionato, le Civilt&#224; Vassalle sono elencate (rientranti) sotto alla Civilt&#224; di cui sono Vassalli.</Italian>
 		<Spanish>Cuando se activa, los vasallos se agrupan debajo del Se&#241;or.</Spanish>
-		<Finnish>When checked, vassals are group together under their master(s).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__LEFTALIGNNAME_TEXT</Tag>
@@ -346,7 +289,6 @@
 		<German>Linksb&#252;ndige Namen</German>
 		<Italian>Nome a sinistra</Italian>
 		<Spanish>Alinear Nombre a la Izquierda</Spanish>
-		<Finnish>Left-Align Name</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__LEFTALIGNNAME_HOVER</Tag>
@@ -355,7 +297,6 @@
 		<German>Zeigt den Namen von Zivilisationen/Oberh&#228;uptern linksb&#252;ndig statt rechtsb&#252;ndig an</German>
 		<Italian>Quando &#232; selezionato, il nome della Civilt&#224;/del Leader nel Pannello del Punteggio viene allineato a sinistra invece che a destra.</Italian>
 		<Spanish>Cuando se activa, el nombre de la Civ. o el l&#237;der se alinean a la izquierda en vez de a la derecha.</Spanish>
-		<Finnish>When checked, the civ/leader name is left-aligned instead of right-aligned.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__RESEARCHICONS_TEXT</Tag>
@@ -364,7 +305,6 @@
 		<German>Technologiesymbole</German>
 		<Italian>Icone di Ricerca</Italian>
 		<Spanish>Iconos de Investigaci&#243;n</Spanish>
-		<Finnish>Research Icons</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__RESEARCHICONS_HOVER</Tag>
@@ -373,25 +313,20 @@
 		<German>Zeigt die Symbole statt der Namen der Technologien an, die andere Zivilisationen momentan erforschen, falls diese bekannt sind</German>
 		<Italian>Quando &#232; selezionato, nel Pannello del Punteggio vengono visualizzate le icone invece dei nomi delle Tecnologie ricercate dalle Civilt&#224; (per cui ti &#232; lecito conoscerle).</Italian>
 		<Spanish>Cuando se activa, muestra iconos en vez de nombres para las investigaciones de las Civ. que tu puedes ver.</Spanish>
-		<Finnish>When checked, shows icons instead of names for civs whose research you can see.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__RESEARCHICONSIZE_TEXT</Tag>
 		<English>Size</English>
-		<French>Size</French>
 		<German>Gr&#246;&#223;e</German>
 		<Italian>Dimensione</Italian>
 		<Spanish>Tama&#241;o</Spanish>
-		<Finnish>Size</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__RESEARCHICONSIZE_HOVER</Tag>
 		<English>Select the size of the research icons when displayed (default value is 24).</English>
-		<French>Select the size of the research icons when displayed (default value is 24).</French>
 		<German>Bestimmt die Gr&#246;&#223;e der Technologiesymbole, falls diese angezeigt werden (der Standardwert ist 24).</German>
 		<Italian>Imposta la dimensione delle Icone di Ricerca (quando queste sono visualizzate; il valore predefinito &#232; 24).</Italian>
 		<Spanish>Especifica el tama&#241;o de los iconos de investigaci&#243;n cuando se muestran (valor por defecto es 24).</Spanish>
-		<Finnish>Select the size of the research icons when displayed (default value is 24).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWER_TEXT</Tag>
@@ -400,7 +335,6 @@
 		<German>Machtverh&#228;ltnis</German>
 		<Italian>Rap. Forza</Italian>
 		<Spanish>Relaci&#243;n de Poder</Spanish>
-		<Finnish>Power Ratio</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWER_HOVER</Tag>
@@ -409,52 +343,41 @@
 		<German>Wenn Sie, Erscheinen das Verhältnis Ihrer Anschlusswerte zu denen der Zivilisationen überprüft werden, mit denen Sie eine Botschaft haben (nur vorhanden mit der vorgerückten Taktikwahl).</German>
 		<Italian>Una volta controllato, esposizioni il rapporto della vostra valutazione di potere a quelle delle civilizzazioni con quale avete un'ambasciata (soltanto disponibile con l'opzione Avanzata di Tattiche).</Italian>
 		<Spanish>Cuando está comprobado, demostraciones el cociente de su grado de energía a los de las civilizaciones con las cuales usted tiene una embajada (solamente disponible con la opción Avanzada de las Táctica).</Spanish>
-		<Finnish>When checked, shows the ratio of your power rating to those of civilizations with whom you have an embassy (only available with the Advanced Tactics option).</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERFORMULA_TEXT</Tag>
 		<English>Power Formula</English>
-		<French>Power Formula</French>
 		<German>Berechnungsformel</German>
 		<Italian>Rapporto di Forza</Italian>
 		<Spanish>Formula Relaci&#243;n de Poder</Spanish>
-		<Finnish>Power Formula</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERFORMULA_HOVER</Tag>
 		<English>Select the formula to use for calculating the power ratio:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Rival vs. You[COLOR_REVERT] - Lower numbers are better.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]You vs. Rival[COLOR_REVERT] - Higher numbers are better.</English>
-		<French>Select the formula to use for calculating the power ratio:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Rival vs. You[COLOR_REVERT] - Lower numbers are better.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]You vs. Rival[COLOR_REVERT] - Higher numbers are better.</French>
 		<German>Bestimmt, wie das Machtverh&#228;ltnis berechnet wird:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Standard[COLOR_REVERT] - Macht der eigenen Zivilisation geteilt durch die der gegnerischen (h&#246;here Werte sind besser)[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Kehrwert[COLOR_REVERT] - Macht der gegnerischen Zivilisation geteilt durch die der eigenen (niedrigere Werte sind besser)</German>
 		<Italian>Seleziona la formula da utilizzare per calcolare il Rapporto di Forza nel Pannello del Punteggio:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Avversari/Giocatore[COLOR_REVERT] - minore &#232; il rapporto, maggiore &#232; la forza del giocatore rispetto a quella degli avversari;[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Giocatore/Avversari[COLOR_REVERT] - maggiore &#232; il rapporto, maggiore &#232; la forza del giocatore rispetto a quella degli avversari.</Italian>
 		<Spanish>Selecciona la formula a utilizar para calcular la relaci&#243;n de poder:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Rival vs. T&#250;[COLOR_REVERT] - Poder del enemigo dividido por el de tu Civ. (valores m&#225;s bajos son mejores).[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]T&#250; vs. Rival[COLOR_REVERT] - Poder de su civilizaci&#243;n dividida por el enemigo (los valores m&#225;s altos son mejores).</Spanish>
-		<Finnish>Select the formula to use for calculating the power ratio:[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Rival vs. You[COLOR_REVERT] - Lower numbers are better.[NEWLINE][ICON_BULLET][COLOR_HIGHLIGHT_TEXT]You vs. Rival[COLOR_REVERT] - Higher numbers are better.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERFORMULA_LIST</Tag>
 		<English>Rival vs. You|You vs. Rival</English>
-		<French>Rival vs. You|You vs. Rival</French>
 		<German>Kehrwert|Standard</German>
 		<Italian>Altri/Giocatore|Giocatore/Altri</Italian>
 		<Spanish>Rival vs. T&#250;|T&#250; vs. Rival</Spanish>
-		<Finnish>Rival vs. You|You vs. Rival</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERDECIMALS_TEXT</Tag>
 		<English>Ratio Decimal Places</English>
-		<French>Ratio Decimal Places</French>
 		<German>Nachkommastellen</German>
 		<Italian>Cifre decimali</Italian>
 		<Spanish>Parte Decimal</Spanish>
-		<Finnish>Ratio Decimal Places</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERDECIMALS_HOVER</Tag>
 		<English>Number of decimal places to show for power ratio display.</English>
-		<French>Number of decimal places to show for power ratio display.</French>
 		<German>Bestimmt die Anzahl der Nachkommastellen des Machtverh&#228;ltnisses</German>
 		<Italian>Indica il numero di cifre decimali con cui il Rapporto di Forza viene visualizzato nel Pannello del Punteggio.</Italian>
 		<Spanish>N&#250;mero of cifras decimales a mostrar para la relaci&#243;n de poder.</Spanish>
-		<Finnish>Number of decimal places to show for power ratio display.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERCOLOR_TEXT</Tag>
@@ -463,7 +386,6 @@
 		<German>Standardfarbe</German>
 		<Italian>Colore standard</Italian>
 		<Spanish>Color por Defecto</Spanish>
-		<Finnish>Default Color</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERCOLOR_HOVER</Tag>
@@ -472,78 +394,61 @@
 		<German>Bestimmt die Standardfarbe, in der das Machtverh&#228;ltnis erscheint</German>
 		<Italian>Colore predefinito per i Rapporti di Forza.</Italian>
 		<Spanish>Color usado por defecto para mostrar la relaci&#243;n de poder.</Spanish>
-		<Finnish>Color used by default for power ratios.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHRATIO_TEXT</Tag>
 		<English>High Ratio Cutoff</English>
-		<French>High Ratio Cutoff</French>
 		<German>Hohes Verh&#228;ltnis</German>
 		<Italian>Livello rapporto alto</Italian>
 		<Spanish>Franja Puntuaci&#243;n Superior</Spanish>
-		<Finnish>High Ratio Cutoff</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHRATIO_HOVER</Tag>
 		<English>Power ratings greater than or equal to this value are shown in the High Color.</English>
-		<French>Power ratings greater than or equal to this value are shown in the High Color.</French>
 		<German>Hohe Machtverh&#228;ltnisse gr&#246;&#223;er oder gleich diesem Wert erscheinen in der definierten Farbe</German>
 		<Italian>Consente di selezionare il valore limite perch&#233; un Rapporto di Forza venga considerato "alto" (e quindi visualizzato col relativo colore).</Italian>
 		<Spanish>Puntuaciones en relaci&#243;n de poder mayores o iguales a este valor se mostraran en el color de Puntuaci&#243;n Superior.</Spanish>
-		<Finnish>Power ratings greater than or equal to this value are shown in the High Color.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHCOLOR_TEXT</Tag>
 		<English>High Color</English>
-		<French>High Color</French>
 		<German>Farbe (hoch)</German>
 		<Italian>Colore rapporto alto</Italian>
-		<Spanish>High Color</Spanish>
 		<Finnish>Color Puntuaci&#243;n Superior</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERHIGHCOLOR_HOVER</Tag>
 		<English>Color used for high power ratios.</English>
-		<French>Color used for high power ratios.</French>
 		<German>Bestimmt die Farbe, in der hohe Machtverh&#228;ltnisse erscheinen</German>
 		<Italian>Consente di selezionare il colore con cui visualizzare il Rapporto di Forza nel Pannello del Punteggio quando &#232; "alto".</Italian>
 		<Spanish>Color utilizado en la Puntuaci&#243;n Superior.</Spanish>
-		<Finnish>Color used for high power ratios.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWRATIO_TEXT</Tag>
 		<English>Low Ratio Cutoff</English>
-		<French>Low Ratio Cutoff</French>
 		<German>Niedriges Verh&#228;ltnis</German>
 		<Italian>Livello rapporto basso</Italian>
 		<Spanish>Franja Puntuaci&#243;n Inferior</Spanish>
-		<Finnish>Low Ratio Cutoff</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWRATIO_HOVER</Tag>
 		<English>Power ratings less than or equal to this value are shown in in the Low Color.</English>
-		<French>Power ratings less than or equal to this value are shown in in the Low Color.</French>
 		<German>Niedrige Machtverh&#228;ltnisse kleiner oder gleich diesem Wert erscheinen in der definierten Farbe</German>
 		<Italian>Consente di selezionare il valore limite perch&#233; un Rapporto di Forza venga considerato "basso" (e quindi visualizzato col relativo colore).</Italian>
 		<Spanish>Puntuaciones en relaci&#243;n de poder menores o iguales a este valor se mostraran en el color de Puntuaci&#243;n Inferior.</Spanish>
-		<Finnish>Power ratings less than or equal to this value are shown in in the Low Color.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWCOLOR_TEXT</Tag>
 		<English>Low Color</English>
-		<French>Low Color</French>
 		<German>Farbe (niedrig)</German>
 		<Italian>Colore rapporto basso</Italian>
 		<Spanish>Color Puntuaci&#243;n Inferior</Spanish>
-		<Finnish>Low Color</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWCOLOR_HOVER</Tag>
 		<English>Color used for low power ratios.</English>
-		<French>Color used for low power ratios.</French>
 		<German>Bestimmt die Farbe, in der niedrige Machtverh&#228;ltnisse erscheinen</German>
 		<Italian>Consente di selezionare il colore con cui visualizzare il Rapporto di Forza nel Pannello del Punteggio quando &#232; "basso".</Italian>
 		<Spanish>Color utilizado en la Puntuaci&#243;n Inferior.</Spanish>
-		<Finnish>Color used for low power ratios.</Finnish>
 	</TEXT>
 </Civ4GameText>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Text for specific spells. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>SPELL_SPRING_PUT_OUT_FLAMES</Tag>
+		<English>[ICON_BULLET]Puts out smoke or flames on %d1 tiles</English>
+	</TEXT>
+</Civ4GameText>

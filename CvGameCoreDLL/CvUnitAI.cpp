@@ -105,7 +105,7 @@ bool CvUnitAI::AI_update()
 
 	CvUnit* pTransportUnit;
 
-	FAssertMsg(canMove(), "canMove is expected to be true");
+	//FAssertMsg(canMove(), "canMove is expected to be true"); // lfgr 03/2021: Also allow calling this when unit can only cast
 	FAssertMsg(isGroupHead(), "isGroupHead is expected to be true"); // XXX is this a good idea???
 
 	// allow python to handle it for certain barbarians
@@ -209,7 +209,7 @@ bool CvUnitAI::AI_update()
                 BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(iI);
                 if (NO_BUILDING != eBuilding)
                 {
-                    if ((m_pUnitInfo->getForceBuildings(eBuilding)) || (m_pUnitInfo->getBuildings(eBuilding)))
+                    if ((m_pUnitInfo->getForceBuildings(eBuilding)) || (m_pUnitInfo->getBuildings(eBuilding)))// LFGR_TODO: This can be cached
                     {
                        /*
 						if (canConstruct(plot(),eBuilding))
@@ -278,7 +278,7 @@ bool CvUnitAI::AI_update()
 		// End Tholal Merge
 
         //remove AI control from Defensive only Units
-        else if(isOnlyDefensive())
+        if(isOnlyDefensive()) // lfgr fix 03/2021: else if -> if, due to Snarko's fix above
         {
             changeAIControl(-1);
             getGroup()->pushMission(MISSION_SKIP);
@@ -412,13 +412,17 @@ bool CvUnitAI::AI_update()
 
 		// Start Sephi Code - Automatic Terraforming
         case AUTOMATE_TERRAFORMING:
-            AI_setUnitAIType(UNITAI_TERRAFORMER);
+			if( AI_getUnitAIType() != UNITAI_TERRAFORMER )
+			{
+				AI_setUnitAIType(UNITAI_TERRAFORMER); // lfgr comment: This kicks us out of our group and resets our AutomateType!
+				getGroup()->setAutomateType( AUTOMATE_TERRAFORMING ); // lfgr fix 03/2021
+			}
             AI_terraformerMove();
             break;
 		// End Sephi Code
 
-		default:
-			FAssert(false);
+		default: // lfgr comment: isAIControl() makes isAutomated() true without actually having to have an automate type.
+			FAssertMsg( isAIControl(), CvString::format( "Unknown automate type: %d", getGroup()->getAutomateType() ).c_str() );
 			break;
 		}
 
@@ -1460,10 +1464,7 @@ bool CvUnitAI::AI_bestCityBuild(CvCity* pCity, CvPlot** ppBestPlot, BuildTypes* 
 
 bool CvUnitAI::AI_isCityAIType() const
 {
-	return ((AI_getUnitAIType() == UNITAI_CITY_DEFENSE) ||
-		      (AI_getUnitAIType() == UNITAI_CITY_COUNTER) ||
-					(AI_getUnitAIType() == UNITAI_CITY_SPECIAL) ||
-						(AI_getUnitAIType() == UNITAI_RESERVE));
+	return isCityAIType( AI_getUnitAIType() );
 }
 
 
@@ -6613,8 +6614,8 @@ void CvUnitAI::AI_spyMove()
 			iEspionageChance = 0;
 			break;
 
-		default:
-			FAssert(false);
+		default: // lfgr comment: isAIControl() makes isAutomated() true without actually having to have an automate type.
+			FAssertMsg( isAIControl(), CvString::format( "Unknown automate type: %d", getGroup()->getAutomateType() ).c_str() );
 			break;
 		}
 
@@ -13476,7 +13477,8 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 		{
 			if (GC.getImprovementInfo(eImprovement).isActsAsCity() || GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
 			{
-				if (plot()->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) <= 1)
+				// lfgr fix 03/2021: Stop non-CityAIType units getting stranded, prefer CityAIType units
+				if (plot()->plotCount(PUF_isPreferredDefenderAIType, AI_getUnitAIType(), -1, getOwnerINLINE()) <= 1)
 				{
 					getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_GUARD_BONUS, plot());
 					return true;
@@ -13509,7 +13511,8 @@ bool CvUnitAI::AI_guardFortMinDefender(bool bSearch)
 					{
 						if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 						{
-							if (pLoopPlot->plotCount(PUF_isCityAIType, -1, -1, getOwnerINLINE()) == 0)
+							// lfgr fix 03/2021: Stop non-CityAIType units getting stranded, prefer CityAIType units
+							if (pLoopPlot->plotCount(PUF_isPreferredDefenderAIType, AI_getUnitAIType(), -1, getOwnerINLINE()) == 0)
 							{
 								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_BONUS, getGroup()) == 0)
 								{
@@ -30008,9 +30011,8 @@ bool CvUnitAI::AI_mageMove()
 	return false;
 }
 
-void CvUnitAI::AI_terraformerMove()
+void CvUnitAI::AI_terraformerMove() // lfgr 03/2021: Tweaked
 {
-
 	if( gUnitLogLevel >= 3)
 	{
 			logBBAI("     %S (Unit %d) starting terraformer move\n", getName().GetCString(), getID());
@@ -30061,37 +30063,8 @@ void CvUnitAI::AI_terraformerMove()
 		}
 	}
 	
-    if (lResult != 1)
-    {
-		// lResult of 2 means that the unit has been told to move somewhere or 
-		// that the unit cannot move (either it already has or something is preventing it from moving)
-		if (lResult == 2)
-		{
-			if (isHasCasted())
-			{
-				getGroup()->pushMission(MISSION_SKIP);
-				return;
-			}
-			else
-			{
-				if( gUnitLogLevel >= 3)
-				{
-					logBBAI("     ...choosing a spell...\n");
-				}				
-				int iSpell = chooseSpell();
-				if (iSpell != NO_SPELL)
-				{
-					cast(iSpell);
-					return;
-				}
-				else // we have someplace to go but no useful spell to cast at the moment
-				{
-					getGroup()->pushMission(MISSION_SKIP);
-					return;
-				}
-			}
-		}
-
+	if (lResult == 0) // Python found nothing to do
+	{
 		if (GET_TEAM(getTeam()).getAtWarCount(false) > 0) //nothing to do and we're at war
 		{
 			if (getUnitCombatType() == GC.getInfoTypeForString("UNITCOMBAT_ADEPT"))
@@ -30116,14 +30089,35 @@ void CvUnitAI::AI_terraformerMove()
 			return;
 		}
 
-        getGroup()->pushMission(MISSION_SKIP);
+		getGroup()->pushMission(MISSION_SKIP);
 		return;
-    }
+	}
+	else
+	{
+		if( !isHasCasted() && !GET_PLAYER(getOwnerINLINE()).isHuman() )
+		{
+			// Let's try to cast a random spell!
+			int iSpell = chooseSpell();
+			if (iSpell != NO_SPELL)
+			{
+				cast(iSpell);
+				return;
+			}
+		}
+
+		if( isHasCasted() )
+		{
+			// We're done. If we wanted to move somehwere, we'd have done this in python.
+			getGroup()->pushMission(MISSION_SKIP); // LFGR_TODO: This does nothing if unit is busy!
+			return;
+		}
+	}
+
 	// Tholal note: terraformers can get stuck in loop, if they've casted, are at a terraformable plot and have movement left
 	
 	if (isHasCasted())
 	{
-		getGroup()->pushMission(MISSION_SENTRY);
+		getGroup()->pushMission(MISSION_SENTRY); // LFGR_TODO: This does nothing if unit is busy!
 		//finishMoves();
 	}
 	
@@ -31301,4 +31295,13 @@ bool CvUnitAI::AI_seekDefensiveGround(int iRange, bool bIncludeHealing)
 	}
 
 	return false;
+}
+
+// lfgr 03/2021: Helper function, to ensure consistency
+bool isCityAIType( UnitAITypes eUnitAI )
+{
+	return (eUnitAI == UNITAI_CITY_DEFENSE) ||
+		(eUnitAI == UNITAI_CITY_COUNTER) ||
+		(eUnitAI == UNITAI_CITY_SPECIAL) ||
+		(eUnitAI == UNITAI_RESERVE);
 }

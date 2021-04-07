@@ -411,6 +411,7 @@ public:
     void attack(CyPlot* pPlot, bool bQuick);
 	void setBaseCombatStrDefense(int iCombat);
 	int baseCombatStrDefense() const;
+	bool canCastWithCurrentPromotions( int eSpell ) const; // lfgr TERRAFORMING 03/2021; see CvUnit.h
     bool canCast(int spell, bool bTestVisible) const;
     bool canDispel(int spell) const;
     void cast(int spell);

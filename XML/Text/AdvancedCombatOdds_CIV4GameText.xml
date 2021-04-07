@@ -8,11 +8,7 @@
 	<TEXT>
 		<Tag>TXT_ACO_VS</Tag>
 		<English>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</English>
-		<French>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</French>
 		<German>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] gegen [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</German>
-		<Italian>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_BarbFreeWinsLeft</Tag>
@@ -21,7 +17,6 @@
 		<German>[COLOR_HIGHLIGHT_TEXT]&#220;brige sichere Siege gegen Barbaren:[SPACE][COLOR_REVERT]</German>
 		<Italian>[COLOR_HIGHLIGHT_TEXT]Vittorie barbariche garantite rimaste:[SPACE][COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_HIGHLIGHT_TEXT]N&#250;mero de victorias garantizadas contra los b&#225;rbaros:[SPACE][COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_HIGHLIGHT_TEXT]Barbarian free wins left:[SPACE][COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_PressSHIFT</Tag>
@@ -30,7 +25,6 @@
 		<German>[COLOR_HIGHLIGHT_TEXT]&lt;Umschalt&gt; dr&#252;cken f&#252;r mehr Einzelheiten[COLOR_REVERT]</German>
 		<Italian>[COLOR_HIGHLIGHT_TEXT]Tieni premuto SHIFT per maggiori dettagli[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_HIGHLIGHT_TEXT]Pulse SHIFT para m&#225;s detalles[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_HIGHLIGHT_TEXT]Press SHIFT for more detail[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_SurvivalOdds</Tag>
@@ -39,7 +33,6 @@
 		<German>&#220;berlebenschance:[SPACE]</German>
 		<Italian>Probabilit&#224; di sopravvivenza:[SPACE]</Italian>
 		<Spanish>Probabilidad de supervivencia:[SPACE]</Spanish>
-		<Finnish>Survival odds:[SPACE]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_SurvivalGuaranteed</Tag>
@@ -48,7 +41,6 @@
 		<German>[COLOR_HIGHLIGHT_TEXT]Sicheres &#220;berleben![COLOR_REVERT]</German>
 		<Italian>[COLOR_HIGHLIGHT_TEXT]Sopravvivenza certa![COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_HIGHLIGHT_TEXT]&#161;Supervivencia garantizada![COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_HIGHLIGHT_TEXT]Survival Guaranteed![COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_Victory</Tag>
@@ -57,7 +49,6 @@
 		<German>[COLOR_POSITIVE_TEXT]Sieg[COLOR_REVERT]</German>
 		<Italian>[COLOR_POSITIVE_TEXT]Vittoria[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_POSITIVE_TEXT]Victoria[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_POSITIVE_TEXT]Victory[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_Defeat</Tag>
@@ -66,7 +57,6 @@
 		<German>[COLOR_NEGATIVE_TEXT]Niederlage[COLOR_REVERT]</German>
 		<Italian>[COLOR_NEGATIVE_TEXT]Sconfitta[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_NEGATIVE_TEXT]Derrota[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_NEGATIVE_TEXT]Defeat[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_Withdraw</Tag>
@@ -75,7 +65,6 @@
 		<German>[COLOR_POSITIVE_TEXT]Flucht[COLOR_REVERT]</German>
 		<Italian>[COLOR_POSITIVE_TEXT]Fuga[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_POSITIVE_TEXT]Repliegue[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_POSITIVE_TEXT]Withdraw[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_Retreat</Tag>
@@ -84,7 +73,6 @@
 		<German>[COLOR_UNIT_TEXT]R&#252;ckzug[COLOR_REVERT]</German>
 		<Italian>[COLOR_UNIT_TEXT]Ritirata[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_UNIT_TEXT]Retirada[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_UNIT_TEXT]Retreat[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_AverageHP</Tag>
@@ -93,7 +81,6 @@
 		<German>[NEWLINE]Mittlere TP:[SPACE]</German>
 		<Italian>[NEWLINE]PV medi:[SPACE]</Italian>
 		<Spanish>[NEWLINE]PG promedio:[SPACE]</Spanish>
-		<Finnish>[NEWLINE]Average HP:[SPACE]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_Unharmed</Tag>
@@ -102,7 +89,6 @@
 		<German>[NEWLINE]Unversehrt:[SPACE]</German>
 		<Italian>[NEWLINE]Disarmato:[SPACE]</Italian>
 		<Spanish>[NEWLINE]Ileso:[SPACE]</Spanish>
-		<Finnish>[NEWLINE]Unharmed:[SPACE]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_UnroundedXP</Tag>
@@ -111,7 +97,6 @@
 		<German>[NEWLINE]Ungerundete EP:[SPACE]</German>
 		<Italian>[NEWLINE]XP non arrotondati:[SPACE]</Italian>
 		<Spanish>[NEWLINE]XP no redondeados:[SPACE]</Spanish>
-		<Finnish>[NEWLINE]Unrounded XP:[SPACE]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_TotalDefenseModifier</Tag>
@@ -120,7 +105,6 @@
 		<German>[NEWLINE]Verteidigungsmodifikator absolut:[SPACE]</German>
 		<Italian>[NEWLINE]Modificatore difensivo totale:[SPACE]</Italian>
 		<Spanish>[NEWLINE]Modificador defensivo total:[SPACE]</Spanish>
-		<Finnish>[NEWLINE]Total defense modifier:[SPACE]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_AttackModifiers</Tag>
@@ -129,7 +113,6 @@
 		<German>[NEWLINE][COLOR_POSITIVE_TEXT]Angriffsmodifikatoren:[COLOR_REVERT]</German>
 		<Italian>[NEWLINE][COLOR_POSITIVE_TEXT]Modificatori offensivi:[COLOR_REVERT]</Italian>
 		<Spanish>[NEWLINE][COLOR_POSITIVE_TEXT]Modificadores de ataque:[COLOR_REVERT]</Spanish>
-		<Finnish>[NEWLINE][COLOR_POSITIVE_TEXT]Attack modifiers:[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_DefenseModifiers</Tag>
@@ -138,7 +121,6 @@
 		<German>[NEWLINE][COLOR_NEGATIVE_TEXT]Verteidigungsmodifikatoren:[COLOR_REVERT]</German>
 		<Italian>[NEWLINE][COLOR_NEGATIVE_TEXT]Modificatori difensivi:[COLOR_REVERT]</Italian>
 		<Spanish>[NEWLINE][COLOR_NEGATIVE_TEXT]Modificadores defensivos:[COLOR_REVERT]</Spanish>
-		<Finnish>[NEWLINE][COLOR_NEGATIVE_TEXT]Defense modifiers:[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_GuaranteedNoDefenderHit</Tag>
@@ -147,7 +129,6 @@
 		<German>[NEWLINE][COLOR_HIGHLIGHT_TEXT]Sicher! Der Verteidiger kann keinen Treffer landen.[COLOR_REVERT]</German>
 		<Italian>[NEWLINE][COLOR_HIGHLIGHT_TEXT]Certa! I difensori non possono colpire neppure una volta.[COLOR_REVERT]</Italian>
 		<Spanish>[NEWLINE][COLOR_HIGHLIGHT_TEXT]&#161;Garantizado! El defensor no puede dar en el blanco.[COLOR_REVERT]</Spanish>
-		<Finnish>[NEWLINE][COLOR_HIGHLIGHT_TEXT]Guaranteed! Defender cannot score a hit.[COLOR_REVERT]</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_HitsAt</Tag>
@@ -156,7 +137,6 @@
 		<German>trifft</German>
 		<Italian>colpisce a</Italian>
 		<Spanish>golpea a</Spanish>
-		<Finnish>hits at</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_HP</Tag>
@@ -165,7 +145,6 @@
 		<German>TP</German>
 		<Italian>PV</Italian>
 		<Spanish>PG</Spanish>
-		<Finnish>HP</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_INJURED_HP</Tag>
@@ -174,7 +153,6 @@
 		<German>%d1/%d2TP</German>
 		<Italian>%d1/%d2PV</Italian>
 		<Spanish>%d1/%d2PG</Spanish>
-		<Finnish>%d1/%d2HP</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_HP_NEUTRAL</Tag>
@@ -183,33 +161,19 @@
 		<German>[COLOR_UNIT_TEXT]TP[COLOR_REVERT]</German>
 		<Italian>[COLOR_UNIT_TEXT]PV[COLOR_REVERT]</Italian>
 		<Spanish>[COLOR_UNIT_TEXT]PG[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_UNIT_TEXT]HP[COLOR_REVERT]</Finnish>
 	</TEXT>	
 	<TEXT>
 		<Tag>TXT_ACO_XP</Tag>
 		<English>XP</English>
 		<French>EXP</French>
 		<German>EP</German>
-		<Italian>XP</Italian>
-		<Spanish>XP</Spanish>
-		<Finnish>XP</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ACO_MULTIPLY</Tag>
 		<English>&#x0D7;</English>
-		<French>&#x0D7;</French>
-		<German>&#x0D7;</German>
-		<Italian>&#x0D7;</Italian>
-		<Spanish>&#x0D7;</Spanish>
-		<Finnish>&#x0D7;</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_ACO__HEADER</Tag>
 		<English>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</English>
-		<French>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</French>
-		<German>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</German>
-		<Italian>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Italian>
-		<Spanish>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Spanish>
-		<Finnish>[COLOR_POSITIVE_TEXT]%s1_attacker[COLOR_REVERT] vs. [COLOR_NEGATIVE_TEXT]%s2_defender[COLOR_REVERT]</Finnish>
 	</TEXT>
 </Civ4GameText>

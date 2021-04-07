@@ -8,34 +8,25 @@
 	<TEXT>
 		<Tag>TXT_KEY_NO_ACTIVE_VOTE_SOURCES</Tag>
 		<English>No active councils</English>
-		<French>No active councils</French>
 		<German>Keine aktiven Räte</German>
-		<Italian>No active councils</Italian>
 		<Spanish>No hay concilios activos</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SECRETARY_GENERAL_UNKNOWN</Tag>
 		<English>Unknown</English>
-		<French>Unknown</French>
 		<German>Unbekannt</German>
-		<Italian>Unknown</Italian>
 		<Spanish>Desconocido</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SECRETARY_GENERAL_VACANT</Tag>
 		<English>Vacant</English>
-		<French>Vacant</French>
 		<German>Unbesetzt</German>
-		<Italian>Vacant</Italian>
 		<Spanish>Vacante</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TURNS_UNTIL_NEXT_VOTE</Tag>
 		<English>Turns until next vote</English>
-		<French>Turns until next vote</French>
 		<German>Runden bis zur nächsten Abstimmung</German>
-		<Italian>Turns until next vote</Italian>
-		<Spanish>Turns until next vote</Spanish>
 	</TEXT>
 	
 	<!-- Message after voting -->
@@ -43,34 +34,18 @@
 	<TEXT>
 		<Tag>TXT_KEY_MSG_VOTE_PASSED</Tag>
 		<English>The members of the %s1_council have passed the resolution %s2_resolution.</English>
-		<French>The members of the %s1_council have passed the resolution %s2_resolution.</French>
-		<German>The members of the %s1_council have passed the resolution %s2_resolution.</German>
-		<Italian>The members of the %s1_council have passed the resolution %s2_resolution.</Italian>
-		<Spanish>The members of the %s1_council have passed the resolution %s2_resolution.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MSG_VOTE_REJECTED</Tag>
 		<English>The members of the %s1_council have rejected the resolution %s2_resolution.</English>
-		<French>The members of the %s1_council have rejected the resolution %s2_resolution.</French>
-		<German>The members of the %s1_council have rejected the resolution %s2_resolution.</German>
-		<Italian>The members of the %s1_council have rejected the resolution %s2_resolution.</Italian>
-		<Spanish>The members of the %s1_council have rejected the resolution %s2_resolution.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MSG_VOTE_PASSED_AGAIN</Tag>
 		<English>The members of the %s1_council have confirmed the resolution %s2_resolution.</English>
-		<French>The members of the %s1_council have confirmed the resolution %s2_resolution.</French>
-		<German>The members of the %s1_council have confirmed the resolution %s2_resolution.</German>
-		<Italian>The members of the %s1_council have confirmed the resolution %s2_resolution.</Italian>
-		<Spanish>The members of the %s1_council have confirmed the resolution %s2_resolution.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MSG_VOTE_REPEALED</Tag>
 		<English>The members of the %s1_council have repealed the resolution %s2_resolution.</English>
-		<French>The members of the %s1_council have repealed the resolution %s2_resolution.</French>
-		<German>The members of the %s1_council have repealed the resolution %s2_resolution.</German>
-		<Italian>The members of the %s1_council have repealed the resolution %s2_resolution.</Italian>
-		<Spanish>The members of the %s1_council have repealed the resolution %s2_resolution.</Spanish>
 	</TEXT>
 	
 	<!-- Text for vote help, used in various tooltips -->
@@ -87,160 +62,84 @@
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_POPULATION_THRESHOLD</Tag>
 		<English>[ICON_BULLET]Requires %d1%% of all votes</English>
-		<French>[ICON_BULLET]Requires %d1%% of all votes</French>
-		<German>[ICON_BULLET]Requires %d1%% of all votes</German>
-		<Italian>[ICON_BULLET]Requires %d1%% of all votes</Italian>
-		<Spanish>[ICON_BULLET]Requires %d1%% of all votes</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_MIN_VOTERS</Tag>
 		<English>[ICON_BULLET]Requires at least %d1 voting members</English>
-		<French>[ICON_BULLET]Requires at least %d1 voting members</French>
-		<German>[ICON_BULLET]Requires at least %d1 voting members</German>
-		<Italian>[ICON_BULLET]Requires at least %d1 voting members</Italian>
-		<Spanish>[ICON_BULLET]Requires at least %d1 voting members</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_ALL_PLAYERS</Tag>
 		<English>[ICON_BULLET]All players must be voting members</English>
-		<French>[ICON_BULLET]All players must be voting members</French>
-		<German>[ICON_BULLET]All players must be voting members</German>
-		<Italian>[ICON_BULLET]All players must be voting members</Italian>
-		<Spanish>[ICON_BULLET]All players must be voting members</Spanish>
 	</TEXT>
 	
 	<!-- Voting rules -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CIV_VOTING</Tag>
 		<English>[ICON_BULLET]Each member has one vote</English>
-		<French>[ICON_BULLET]Each member has one vote</French>
-		<German>[ICON_BULLET]Each member has one vote</German>
-		<Italian>[ICON_BULLET]Each member has one vote</Italian>
-		<Spanish>[ICON_BULLET]Each member has one vote</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CIV_VOTING_RELIGION</Tag>
 		<English>[ICON_BULLET]Each member with a %F2_Religion city has one vote</English>
-		<French>[ICON_BULLET]Each member with a %F2_Religion city has one vote</French>
-		<German>[ICON_BULLET]Each member with a %F2_Religion city has one vote</German>
-		<Italian>[ICON_BULLET]Each member with a %F2_Religion city has one vote</Italian>
-		<Spanish>[ICON_BULLET]Each member with a %F2_Religion city has one vote</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CITY_VOTING</Tag>
 		<English>[ICON_BULLET]Each member has one vote per city</English>
-		<French>[ICON_BULLET]Each member has one vote per city</French>
-		<German>[ICON_BULLET]Each member has one vote per city</German>
-		<Italian>[ICON_BULLET]Each member has one vote per city</Italian>
-		<Spanish>[ICON_BULLET]Each member has one vote per city</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CITY_VOTING_RELIGION</Tag>
 		<English>[ICON_BULLET]Each member has one vote per %F2_Religion city</English>
-		<French>[ICON_BULLET]Each member has one vote per %F2_Religion city</French>
-		<German>[ICON_BULLET]Each member has one vote per %F2_Religion city</German>
-		<Italian>[ICON_BULLET]Each member has one vote per %F2_Religion city</Italian>
-		<Spanish>[ICON_BULLET]Each member has one vote per %F2_Religion city</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_POP_VOTING</Tag>
 		<English>[ICON_BULLET]Each member has one vote per population point</English>
-		<French>[ICON_BULLET]Each member has one vote per population point</French>
-		<German>[ICON_BULLET]Each member has one vote per population point</German>
-		<Italian>[ICON_BULLET]Each member has one vote per population point</Italian>
-		<Spanish>[ICON_BULLET]Each member has one vote per population point</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_POP_VOTING_RELIGION</Tag>
 		<English>[ICON_BULLET]Each member has one vote per %F2_Religion population point</English>
-		<French>[ICON_BULLET]Each member has one vote per %F2_Religion population point</French>
-		<German>[ICON_BULLET]Each member has one vote per %F2_Religion population point</German>
-		<Italian>[ICON_BULLET]Each member has one vote per %F2_Religion population point</Italian>
-		<Spanish>[ICON_BULLET]Each member has one vote per %F2_Religion population point</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_STATE_RELIGION_VOTE_PERCENT</Tag>
 		<English>[ICON_BULLET]Players with correct state religion have %D1%% more votes</English>
-		<French>[ICON_BULLET]Players with correct state religion have %D1%% more votes</French>
-		<German>[ICON_BULLET]Players with correct state religion have %D1%% more votes</German>
-		<Italian>[ICON_BULLET]Players with correct state religion have %D1%% more votes</Italian>
-		<Spanish>[ICON_BULLET]Players with correct state religion have %D1%% more votes</Spanish>
 	</TEXT>
 	
 	<!-- Special effects -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_SEC_GEN_ELECTION</Tag>
 		<English>[ICON_BULLET]Election of the %s1 (can propose resolutions)</English>
-		<French>[ICON_BULLET]Election of the %s1 (can propose resolutions)</French>
-		<German>[ICON_BULLET]Election of the %s1 (can propose resolutions)</German>
-		<Italian>[ICON_BULLET]Election of the %s1 (can propose resolutions)</Italian>
-		<Spanish>[ICON_BULLET]Election of the %s1 (can propose resolutions)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_VICTORY</Tag>
 		<English>[ICON_BULLET]Makes a player win a diplomatic victory</English>
-		<French>[ICON_BULLET]Makes a player win a diplomatic victory</French>
-		<German>[ICON_BULLET]Makes a player win a diplomatic victory</German>
-		<Italian>[ICON_BULLET]Makes a player win a diplomatic victory</Italian>
-		<Spanish>[ICON_BULLET]Makes a player win a diplomatic victory</Spanish>
 	</TEXT>
 	
 	<!-- Permanent effects (until revoked) -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_TRADE_ROUTES</Tag>
 		<English>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</English>
-		<French>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</French>
-		<German>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</German>
-		<Italian>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</Italian>
-		<Spanish>[ICON_BULLET]%D1 trade routes ([ICON_TRADE]) for all players</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_NO_NUKES</Tag>
 		<English>[ICON_BULLET]Forbids nukes</English>
-		<French>[ICON_BULLET]Forbids nukes</French>
-		<German>[ICON_BULLET]Forbids nukes</German>
-		<Italian>[ICON_BULLET]Forbids nukes</Italian>
-		<Spanish>[ICON_BULLET]Forbids nukes</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FREE_TRADE</Tag>
 		<English>[ICON_BULLET]Trade routes ([ICON_TRADE]) between all players</English>
-		<French>[ICON_BULLET]Trade routes ([ICON_TRADE]) between all players</French>
-		<German>[ICON_BULLET]Trade routes ([ICON_TRADE]) between all players</German>
-		<Italian>[ICON_BULLET]Trade routes ([ICON_TRADE]) between all players</Italian>
-		<Spanish>[ICON_BULLET]Trade routes ([ICON_TRADE]) between all players</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_NO_BONUS</Tag>
 		<English>[ICON_BULLET]Disables access to %F1 for all members</English>
-		<French>[ICON_BULLET]Disables access to %F1 for all members</French>
-		<German>[ICON_BULLET]Disables access to %F1 for all members</German>
-		<Italian>[ICON_BULLET]Disables access to %F1 for all members</Italian>
-		<Spanish>[ICON_BULLET]Disables access to %F1 for all members</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_CIVIC</Tag>
 		<English>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</English>
-		<French>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</French>
-		<German>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</German>
-		<Italian>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</Italian>
-		<Spanish>[ICON_BULLET]All members have to adopt [LINK=literal]%s1[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_ENABLES_ABILITY</Tag>
 		<English>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</English>
-		<French>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</French>
-		<German>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</German>
-		<Italian>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</Italian>
-		<Spanish>[ICON_BULLET]Enables the ability [LINK=literal]%s1[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_ENABLES_SPELL</Tag>
 		<English>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</English>
-		<French>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</French>
-		<German>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</German>
-		<Italian>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</Italian>
-		<Spanish>[ICON_BULLET]Enables the spell [LINK=literal]%s1[\LINK]</Spanish>
 	</TEXT>
 	
 	<!-- One-time effects: diplomacy -->
@@ -248,131 +147,69 @@
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_DEFENSIVE_PACT</Tag>
 		<English>[ICON_BULLET]All members sign defensive pacts with each other</English>
-		<French>[ICON_BULLET]All members sign defensive pacts with each other</French>
-		<German>[ICON_BULLET]All members sign defensive pacts with each other</German>
-		<Italian>[ICON_BULLET]All members sign defensive pacts with each other</Italian>
-		<Spanish>[ICON_BULLET]All members sign defensive pacts with each other</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_OPEN_BORDERS</Tag>
 		<English>[ICON_BULLET]All members sign an open borders agreement with each other</English>
-		<French>[ICON_BULLET]All members sign an open borders agreement with each other</French>
-		<German>[ICON_BULLET]All members sign an open borders agreement with each other</German>
-		<Italian>[ICON_BULLET]All members sign an open borders agreement with each other</Italian>
-		<Spanish>[ICON_BULLET]All members sign an open borders agreement with each other</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_PEACE</Tag>
 		<English>[ICON_BULLET]All other members sign a peace treaty with %s1</English>
-		<French>[ICON_BULLET]All other members sign a peace treaty with %s1</French>
-		<German>[ICON_BULLET]All other members sign a peace treaty with %s1</German>
-		<Italian>[ICON_BULLET]All other members sign a peace treaty with %s1</Italian>
-		<Spanish>[ICON_BULLET]All other members sign a peace treaty with %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_PEACE_SOMEONE</Tag>
 		<English>[ICON_BULLET]All other members sign a peace treaty with a chosen member</English>
-		<French>[ICON_BULLET]All other members sign a peace treaty with a chosen member</French>
-		<German>[ICON_BULLET]All other members sign a peace treaty with a chosen member</German>
-		<Italian>[ICON_BULLET]All other members sign a peace treaty with a chosen member</Italian>
-		<Spanish>[ICON_BULLET]All other members sign a peace treaty with a chosen member</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_NO_TRADE</Tag>
 		<English>[ICON_BULLET]All members cancel all deals with %s1</English>
-		<French>[ICON_BULLET]All members cancel all deals with %s1</French>
-		<German>[ICON_BULLET]All members cancel all deals with %s1</German>
-		<Italian>[ICON_BULLET]All members cancel all deals with %s1</Italian>
-		<Spanish>[ICON_BULLET]All members cancel all deals with %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_NO_TRADE_SOMEONE</Tag>
 		<English>[ICON_BULLET]All members cancel all deals with a chosen non-member</English>
-		<French>[ICON_BULLET]All members cancel all deals with a chosen non-member</French>
-		<German>[ICON_BULLET]All members cancel all deals with a chosen non-member</German>
-		<Italian>[ICON_BULLET]All members cancel all deals with a chosen non-member</Italian>
-		<Spanish>[ICON_BULLET]All members cancel all deals with a chosen non-member</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_WAR</Tag>
 		<English>[ICON_BULLET]All members declare war on %s1</English>
-		<French>[ICON_BULLET]All members declare war on %s1</French>
-		<German>[ICON_BULLET]All members declare war on %s1</German>
-		<Italian>[ICON_BULLET]All members declare war on %s1</Italian>
-		<Spanish>[ICON_BULLET]All members declare war on %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_FORCE_WAR_SOMEONE</Tag>
 		<English>[ICON_BULLET]All members declare war on a chosen non-member</English>
-		<French>[ICON_BULLET]All members declare war on a chosen non-member</French>
-		<German>[ICON_BULLET]All members declare war on a chosen non-member</German>
-		<Italian>[ICON_BULLET]All members declare war on a chosen non-member</Italian>
-		<Spanish>[ICON_BULLET]All members declare war on a chosen non-member</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_NO_OUTSIDE_TECH_TRADES</Tag>
 		<English>[ICON_BULLET]Members cannot trade with non-members</English>
-		<French>[ICON_BULLET]Members cannot trade with non-members</French>
-		<German>[ICON_BULLET]Members cannot trade with non-members</German>
-		<Italian>[ICON_BULLET]Members cannot trade with non-members</Italian>
-		<Spanish>[ICON_BULLET]Members cannot trade with non-members</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CULTURE_NEEDS_EMPTY_RADIUS</Tag>
 		<English>[ICON_BULLET]Cannot overtake territory of other members via culture</English>
-		<French>[ICON_BULLET]Cannot overtake territory of other members via culture</French>
-		<German>[ICON_BULLET]Cannot overtake territory of other members via culture</German>
-		<Italian>[ICON_BULLET]Cannot overtake territory of other members via culture</Italian>
-		<Spanish>[ICON_BULLET]Cannot overtake territory of other members via culture</Spanish>
 	</TEXT>
 	
 	<!-- One-time effects: various -->
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_RECEIVE_UNIT_COST</Tag>
 		<English>[ICON_BULLET]Each member who can pay %d1 %F2 receives [LINK=literal]%s3[\LINK]</English>
-		<French>[ICON_BULLET]Each member who can pay %d1 %F2 receives [LINK=literal]%s3[\LINK]</French>
-		<German>[ICON_BULLET]Each member who can pay %d1 %F2 receives [LINK=literal]%s3[\LINK]</German>
-		<Italian>[ICON_BULLET]Each member who can pay %d1 %F2 receives [LINK=literal]%s3[\LINK]</Italian>
-		<Spanish>[ICON_BULLET]Each member who can pay %d1 %F2 receives [LINK=literal]%s3[\LINK]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_RECEIVE_UNIT</Tag>
 		<English>[ICON_BULLET]Each member receives %s1</English>
-		<French>[ICON_BULLET]Each member receives %s1</French>
-		<German>[ICON_BULLET]Each member receives %s1</German>
-		<Italian>[ICON_BULLET]Each member receives %s1</Italian>
-		<Spanish>[ICON_BULLET]Each member receives %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CRIME</Tag>
 		<English>[ICON_BULLET]%D1 to the global crime rate</English>
-		<French>[ICON_BULLET]%D1 to the global crime rate</French>
-		<German>[ICON_BULLET]%D1 to the global crime rate</German>
 		<Italian>ICON_BULLET]%D1 to the global crime rate</Italian>
 		<Spanish>ICON_BULLET]%D1 to the global crime rate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_REASSIGN_CITY</Tag>
 		<English>[ICON_BULLET]Reassigns ownership of a city</English>
-		<French>[ICON_BULLET]Reassigns ownership of a city</French>
-		<German>[ICON_BULLET]Reassigns ownership of a city</German>
-		<Italian>[ICON_BULLET]Reassigns ownership of a city</Italian>
-		<Spanish>[ICON_BULLET]Reassigns ownership of a city</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_REASSIGN_CITY_FROM_TO</Tag>
 		<English>[ICON_BULLET]Reassigns ownership of %s1 from %s2 to %s3</English>
-		<French>[ICON_BULLET]Reassigns ownership of %s1 from %s2 to %s3</French>
-		<German>[ICON_BULLET]Reassigns ownership of %s1 from %s2 to %s3</German>
-		<Italian>[ICON_BULLET]Reassigns ownership of %s1 from %s2 to %s3</Italian>
-		<Spanish>[ICON_BULLET]Reassigns ownership of %s1 from %s2 to %s3</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_TRADE_MAP</Tag>
 		<English>[ICON_BULLET]All members share their current world maps</English>
-		<French>[ICON_BULLET]All members share their current world maps</French>
-		<German>[ICON_BULLET]All members share their current world maps</German>
-		<Italian>[ICON_BULLET]All members share their current world maps</Italian>
-		<Spanish>[ICON_BULLET]All members share their current world maps</Spanish>
 	</TEXT>
 </Civ4GameText>

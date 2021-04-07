@@ -934,41 +934,20 @@ class PyGame( AbstractDelegator ) :
 		return listUnits
 
 class PyPlot( AbstractDelegator ) :
-	def __init__(self, plotIdx):
+	def __init__( self, plotOrID ): # lfgr 03/2021: Allow either CyPlot or plot ID
+		# type: (Union[int, CyPlot]) -> None
 		self.map = CyMap()
-		self.plot = self.map.getPlotByID(plotIdx)
+		if isinstance( plotOrID, CyPlot ) :
+			self.plot = plotOrID
+		else :
+			assert isinstance( plotOrID, int )
+			self.plot = self.map.plotByIndex( plotOrID )
+
 		self.player = gc.getActivePlayer()
 		AbstractDelegator.__init__( self, self.plot )
 	
 	############## G E N E R A L ##############
-	def getX(self):
-		"int - X coordinate"
-		return self.plot.getX()
-	
-	def getY(self):
-		"int - Y coordinate"
-		return self.plot.getY()
-	
-	def getOwner(self):
-		"int - playerIdx"
-		return self.plot.getOwner()
-	
-	def isUnit(self):
-		"int - unit present?"
-		return self.plot.isUnit()
-	
-	def getNumUnits(self):
-		"int - number of units"
-		return self.plot.getNumUnits()
-	
-	def isCity(self):
-		"bool - city present?"
-		return self.plot.isCity()
-		
-	def getPlotCity(self):
-		"obj - city instance"
-		if (self.isCity()):
-			return self.plot.getPlotCity()
+	# lfgr 03/2021: Removed delegate methods.
 	
 	def getFoodYield(self):
 		"int - food yield"
@@ -981,16 +960,25 @@ class PyPlot( AbstractDelegator ) :
 	def getCommerceYield(self):
 		"int - commerce yield"
 		return self.plot.getYield(YieldTypes.YIELD_COMMERCE)
-	
-	############## T E R R A I N ##############	
-	def getTerrainType(self):
-		"int - terrain type XML ID"
-		return self.plot.getTerrainType()
 
-	def isCoastalLand(self):
-		"bool - is this a coastal land plot"
-		return self.plot.isCoastalLand()
+	def iterThisAndNeighborPlots( self ) : # lfgr 03/2021
+		# type: () -> Iterator[CyPlot]
+		iX = self.getX()
+		iY = self.getY()
+		for iiX in range(iX-1, iX+2, 1):
+			for iiY in range(iY-1, iY+2, 1):
+				yield CyMap().plot(iiX,iiY)
 
+	def iterPlotsAtDistance( self, iDist ) : # lfgr 03/2021
+		# type: (int) -> Iterator[CyPlot]
+		iX = self.getX()
+		iY = self.getY()
+		for iDX in range( -iDist, iDist+1 ) :
+			for iDY in range( -iDist, iDist+1 ) :
+				if max( abs( iDX ), abs( iDY ) ) == iDist :
+					pPlot = self.map.plot( iX + iDX, iY + iDY )
+					if not pPlot.isNone() :
+						yield pPlot
 	
 	############## B O N U S ##############
 	def getBonusType(self):
@@ -1004,21 +992,13 @@ class PyPlot( AbstractDelegator ) :
 		return False
 
 	############## F E A T U R E S ##############
-	def getFeatureType(self):
-		"int - Feature Type XML ID"
-		return self.plot.getFeatureType()
-	
 	def isFeature(self):
 		"bool - any feature at all?"
 		if (self.getFeatureType()):
 			return True
 		return False
 	
-	############## I M P R O V E M E N T ##############	
-	def getImprovementType(self):
-		"int - Improvement Type XML ID"
-		return self.plot.getImprovementType()
-	
+	############## I M P R O V E M E N T ##############
 	def isImprovement(self):
 		"bool - Any improvements at all?"
 		if (self.getImprovementType()):

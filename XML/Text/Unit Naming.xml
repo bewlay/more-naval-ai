@@ -12,19 +12,15 @@
 		<Tag>TXT_KEY_BUG_UNIT_NAMING_DOMAIN_LAND</Tag>
 		<English>Land</English>
 		<French>Terrestre</French>
-		<German>Land</German>
 		<Italian>Terrestre</Italian>
 		<Spanish>Tierra</Spanish>
-		<Finnish>Land</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_UNIT_NAMING_DOMAIN_SEA</Tag>
 		<English>Naval</English>
-		<French>Naval</French>
 		<German>Marine</German>
 		<Italian>Navale</Italian>
 		<Spanish>Mar</Spanish>
-		<Finnish>Naval</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_UNIT_NAMING_DOMAIN_AIR</Tag>
@@ -33,7 +29,6 @@
 		<German>Luft</German>
 		<Italian>Aerea</Italian>
 		<Spanish>Aire</Spanish>
-		<Finnish>Air</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_UNIT_NAMING_DOMAIN_IMMOBILE</Tag>
@@ -42,7 +37,6 @@
 		<German>Station&#228;r</German>
 		<Italian>Stazionario</Italian>
 		<Spanish>Estacionaria</Spanish>
-		<Finnish>Stationary</Finnish>
 	</TEXT>
 
 </Civ4GameText>

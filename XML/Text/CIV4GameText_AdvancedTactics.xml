@@ -3,9 +3,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_ADVANCED_TACTICS</Tag>
 		<English>Advanced Tactics</English>
-		<French>Advanced Tactics</French>
-		<German>Advanced Tactics</German>
-		<Italian>Advanced Tactics</Italian>
 		<Spanish>Tácticas Avanzadas</Spanish>
 	</TEXT>
 	<TEXT>
@@ -20,33 +17,21 @@
 	<TEXT>
 		<Tag>TXT_KEY_WEHAVECAPTUREDSOMETHING</Tag>
 		<English>We have captured the %s1!</English>
-		<French>We have captured the %s1!</French>
-		<German>We have captured the %s1!</German>
-		<Italian>We have captured the %s1!</Italian>
 		<Spanish>¡Hemos capturado [NUM1:un:una:unos:unas] %s1!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_WEHAVELOSTSOMETHING</Tag>
 		<English>Our %s1 has been captured!</English>
-		<French>Our %s1 has been captured!</French>
-		<German>Our %s1 has been captured!</German>
-		<Italian>Our %s1 has been captured!</Italian>
 		<Spanish>¡[NUM1:Nuestro:Nuestra:Nuestros:Nuestras] %s1 [NUM1:ha:ha:han:han] sido [NUM1:capturado:capturada:capturados:capturadas]!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_WARPRIZES_SUCCESS</Tag>
 		<English>We have captured the %s1!</English>
-		<French>We have captured the %s1!</French>
-		<German>We have captured the %s1!</German>
-		<Italian>We have captured the %s1!</Italian>
 		<Spanish>¡Hemos capturado [NUM2:un:una:unos:unas] %s1!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_WARPRIZES_FAILURE</Tag>
 		<English>Our %s1 has been captured!</English>
-		<French>Our %s1 has been captured!</French>
-		<German>Our %s1 has been captured!</German>
-		<Italian>Our %s1 has been captured!</Italian>
 		<Spanish>¡[NUM1:Nuestro:Nuestra:Nuestros:Nuestras] %s1 [NUM1:ha:ha:han:han] sido [NUM1:capturado:capturada:capturados:capturadas]!</Spanish>
 	</TEXT>
 <!-- End War Prizes -->
@@ -54,17 +39,11 @@
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_GREAT_GENERAL_SPLIT</Tag>
 		<English>Detach Great General</English>
-		<French>Detach Great General</French>
-		<German>Detach Great General</German>
-		<Italian>Detach Great General</Italian>
 		<Spanish>Separar Gran General</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_GENERAL_KILLED</Tag>
 		<English>A Great General has been killed!</English>
-		<French>A Great General has been killed!</French>
-		<German>A Great General has been killed!</German>
-		<Italian>A Great General has been killed!</Italian>
 		<Spanish>¡Un Gran General ha muerto!</Spanish>
 	</TEXT>
 <!-- End Great Generals -->

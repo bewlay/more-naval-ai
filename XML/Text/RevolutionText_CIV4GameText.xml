@@ -11,7 +11,6 @@
 		<German>Revolutions-&#220;berwachung &lt;Ctrl+Shift+G&gt;</German>
 		<Italian>Consigliere Rivoluzionario &lt;Ctrl+Shift+G&gt;</Italian>
 		<Spanish>Visor de Revoluci&#243;n &lt;Ctrl+Shift+G&gt;</Spanish>
-		<Finnish>Revolution Watch &lt;Ctrl+Shift+G&gt;</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_STATUS</Tag>
@@ -20,7 +19,6 @@
 		<German>Aufruhr-Status</German>
 		<Italian>Stato della Rivolta</Italian>
 		<Spanish>Estado de la rebeli&#243;n</Spanish>
-		<Finnish>Revolt Status</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_STATUS_HEADER</Tag>
@@ -29,7 +27,6 @@
 		<German>- Klicken, um der Stadt Bestechungsgeld anzubieten.[NEWLINE]==========================</German>
 		<Italian>- clicca per offrire una 'donazione' alla citt&#224;[NEWLINE]==========================</Italian>
 		<Spanish>- Click para ofrecer soborno a la ciudad[NEWLINE]==========================</Spanish>
-		<Finnish>- click to offer bribe to city[NEWLINE]==========================</Finnish>
 	</TEXT>
 	
 	
@@ -41,7 +38,6 @@
 		<German>Die Stadt</German>
 		<Italian>La citt&#224; di</Italian>
 		<Spanish>La ciudad de</Spanish>
-		<Finnish>The city of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CITY</Tag>
@@ -50,7 +46,6 @@
 		<German>Stadt</German>
 		<Italian>Citt&#224;</Italian>
 		<Spanish>Ciudad</Spanish>
-		<Finnish>City</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CITIES_OF</Tag>
@@ -59,7 +54,6 @@
 		<German>Die St&#228;dte von</German>
 		<Italian>Le citt&#224; di</Italian>
 		<Spanish>Las ciudades de</Spanish>
-		<Finnish>The cities of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CITIES</Tag>
@@ -68,7 +62,6 @@
 		<German>St&#228;dte</German>
 		<Italian>Citt&#224;</Italian>
 		<Spanish>Ciudades</Spanish>
-		<Finnish>Cities</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CITIZENS_OF</Tag>
@@ -77,7 +70,6 @@
 		<German>Die B&#252;rger von</German>
 		<Italian>I cittadini di</Italian>
 		<Spanish>Los ciudadanos de</Spanish>
-		<Finnish>The citizens of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ALONG_WITH</Tag>
@@ -86,7 +78,6 @@
 		<German>, zusammen mit</German>
 		<Italian>, con</Italian>
 		<Spanish>, junto a</Spanish>
-		<Finnish>, along with</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_THE</Tag>
@@ -95,7 +86,6 @@
 		<German>die</German>
 		<Italian>il</Italian>
 		<Spanish>el</Spanish>
-		<Finnish>the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BIG_THE</Tag>
@@ -104,7 +94,6 @@
 		<German>Die</German>
 		<Italian>Il</Italian>
 		<Spanish>El</Spanish>
-		<Finnish>The</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CURRENTLY</Tag>
@@ -113,7 +102,6 @@
 		<German>Z.Zt.,</German>
 		<Italian>Attualmente,</Italian>
 		<Spanish>Actualmente,</Spanish>
-		<Finnish>Currently,</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_AND</Tag>
@@ -122,7 +110,6 @@
 		<German>und</German>
 		<Italian>e</Italian>
 		<Spanish>y</Spanish>
-		<Finnish>and</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ARE</Tag>
@@ -131,7 +118,6 @@
 		<German>sind</German>
 		<Italian>stanno</Italian>
 		<Spanish>est&#225;n</Spanish>
-		<Finnish>are</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IS</Tag>
@@ -140,7 +126,6 @@
 		<German>ist</German>
 		<Italian>sta</Italian>
 		<Spanish>est&#225;</Spanish>
-		<Finnish>is</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_YOU</Tag>
@@ -149,7 +134,6 @@
 		<German>Sie</German>
 		<Italian>tu</Italian>
 		<Spanish>tu</Spanish>
-		<Finnish>you</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_YOUR_CIV</Tag>
@@ -158,7 +142,6 @@
 		<German>Sie</German>
 		<Italian>voi</Italian>
 		<Spanish>usted</Spanish>
-		<Finnish>you</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_TURNS</Tag>
@@ -167,7 +150,6 @@
 		<German>Runden</German>
 		<Italian>turni</Italian>
 		<Spanish>turnos</Spanish>
-		<Finnish>turns</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_LEADER</Tag>
@@ -176,7 +158,6 @@
 		<German>, Anf&#252;hrer der</German>
 		<Italian>, capo del</Italian>
 		<Spanish>, l&#237;der de la</Spanish>
-		<Finnish>, leader of the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_PREPARING_WAR</Tag>
@@ -185,7 +166,6 @@
 		<German>KRIEGSVORBEREITUNGEN!!!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sehr bald zuschlagen werden...</German>
 		<Italian>preparandosi alla GUERRA!!!  Affretta i tuoi preparativi, poich&#232; i ribelli colpiranno molto presto ...</Italian>
 		<Spanish>preparandose para la GUERRA.  Deber&#237;as hacer las &#250;ltimas preparaciones, dado que los rebeldes atacar&#225;n muy pronto ...</Spanish>
-		<Finnish>preparing for WAR!!!  You should make your final preparations, as the rebels will strike very soon ...</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_JOINING_WAR</Tag>
@@ -194,7 +174,6 @@
 		<German>KRIEGSVORBEREITUNGEN!!!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sich sehr bald mit %s vereinen werden ...</German>
 		<Italian>preparandosi alla GUERRA!!!  Affretta i tuoi preparativi, poich&#232; i ribelli si uniranno al/la %s molto presto ...</Italian>
 		<Spanish>preparandose para la GUERRA.  Deber&#237;as hacer las &#250;ltimas preparaciones, dado que los rebeldes se uniran a la %s muy pronto ...</Spanish>
-		<Finnish>preparing for WAR!!!  You should make your final preparations, as the rebels will join the %s very soon ...</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_NONE</Tag>
@@ -203,7 +182,6 @@
 		<German>Kein</German>
 		<Italian>Nessuno</Italian>
 		<Spanish>Ninguna</Spanish>
-		<Finnish>None</Finnish>
 	</TEXT>
 	
 	<!-- Revolution warning text -->
@@ -214,7 +192,6 @@
 		<German>Revolution liegt in der Luft!</German>
 		<Italian>C'&#232; aria di rivolta!</Italian>
 		<Spanish>&#161;La Revoluci&#243;n est&#225; en el aire!</Spanish>
-		<Finnish>Revolution is in the air!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_NEWS</Tag>
@@ -223,7 +200,6 @@
 		<German>Ernste Nachrichten!  Die B&#252;rger von</German>
 		<Italian>Gravi notizie!  I cittadini di</Italian>
 		<Spanish>&#161;Graves noticias!  Los ciudadanos de</Spanish>
-		<Finnish>Grave news!  The citizens of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_CONTEMPLATING</Tag>
@@ -232,7 +208,6 @@
 		<German>erw&#228;gen eine Revolution.  Es ist m&#246;glicherweise nicht zu sp&#228;t die Ordnung aufrecht zu erhalten, wenn Sie Schritte ergreifen, die die Situation in diesen St&#228;dten verbessert.</German>
 		<Italian>potrebbero rivoltarsi.  Non &#232; ancora troppo tardi per riportare l'ordine, se agirai per migliorare la situazione in queste citt&#224;.</Italian>
 		<Spanish>est&#225;n ansiosos por rebelarse.  A&#250;n no deber&#237;a ser muy tarde para mantener el orden, si tomas medidas para mejorar la situaci&#243;n local.</Spanish>
-		<Finnish>are contemplating revolution.  It may not yet be too late to maintain order, if you take steps to improve the local situation in these cities.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_CIV_WIDE</Tag>
@@ -241,7 +216,6 @@
 		<German>Es gibt auch Civ-weite Dinge, die Sie beachten sollten:</German>
 		<Italian>Ci sono altre cose pi&#249; generali da considerare:</Italian>
 		<Spanish>Deber&#237;as considerar que tambi&#233;n hay asuntos que inciden sobre el gobierno de tu civilizaci&#243;n en general:</Spanish>
-		<Finnish>There are also civ-wide things you might consider:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_WARS</Tag>
@@ -250,7 +224,6 @@
 		<German>W&#228;hrend ein Sieg in unseren gegenw&#228;rtigen Kriegen die Freiheitsrufe beruhigen kann, k&#246;nnte die Schande des Verlustes einer weiteren Stadt an unsere Feinde unsere Anh&#228;ngerschaft verringern.  &#220;berlegen Sie gr&#252;ndlich, wie Sie einen schnellen Sieg erringen k&#246;nnen.</German>
 		<Italian>Mentre una vittoria nella guerra in corso potr&#224; diminuire la tensione nelle citt&#224;, l'umiliazione di farsi strappare un'altra citt&#224; dai nemici potrebbe fare crollare il tuo consenso.  Valuta con attenzione le probabilit&#224; di una vittoria rapida.</Italian>
 		<Spanish>Mientras la victoria en nuestras guerras actuales pueda calmar los llantos de las ciudades, la verg&#252;enza de perder otra ciudad ante nuestros enemigos podr&#237;a disminuir nuestra popularidad.  Considerad cuidadosamente vuestras opciones para una r&#225;pida victoria.</Spanish>
-		<Finnish>While victory in our current wars may calm the cities cries, the shame of losing another city to our enemies could erode our support.  Carefully consider your chances for a quick victory.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_GLORY</Tag>
@@ -259,7 +232,6 @@
 		<German>Der Ruhm der Eroberung anderer L&#228;nder k&#246;nnte die St&#228;dte &#252;berzeugen, bei Ihnen zu bleiben. Wenn Sie bereits fremde L&#228;nder im Auge haben, k&#246;nnte es jetzt an der Zeit sein zuzuschlagen.</German>
 		<Italian>La gloria delle tue conquiste potrebbe convincere le citt&#224; in rivolta a desistere: se hai sotto mira territori stranieri potrebbe essere il momento di attaccare.</Italian>
 		<Spanish>La gloria de conquistar otras tierras puede que convenza a las ciudades para quedarse, si tienes los ojos puestos en tierras extranjeras puede que sea momento de atacar.</Spanish>
-		<Finnish>The glory of conquering other lands might convince the cities to stay, if you have your eyes on foreign lands it might be time to strike.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_LOST</Tag>
@@ -268,7 +240,6 @@
 		<German>Besonders wenn Sie einige der St&#228;dte wiedergewinnen k&#246;nnten, die  Sie fr&#252;her verloren haben, w&#228;re der Ruhm gewaltig.</German>
 		<Italian>In pi&#249;, se riuscirai a riconquistare citt&#224; perse recentemente, per te sar&#224; il trionfo.</Italian>
 		<Spanish>Por otro lado, si pudi&#233;rais recuperar algunas de las ciudades perdidas anteriormente, la gloria ser&#237;a enorme.</Spanish>
-		<Finnish>Particularly, if you could regain some of the cities you might have lost earlier, the glory would be great.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_TEMPORARY</Tag>
@@ -277,7 +248,6 @@
 		<German>Aber seien Sie gewarnt, dies ist nur eine tempor&#228;re L&#246;sung!</German>
 		<Italian>Attento, questa &#232; solo una soluzione momentanea!</Italian>
 		<Spanish>&#161;Pero ten cuidado, esto es solo una soluci&#243;n temporal!</Spanish>
-		<Finnish>But be warned, this is only a temporary solution!</Finnish>
 	</TEXT>
 
 	<!-- Revolution watch text -->
@@ -288,7 +258,6 @@
 		<German>St&#228;dte, die eine Revolution beginnen k&#246;nnten</German>
 		<Italian>Citt&#224; che potrebbero scatenare una rivolta</Italian>
 		<Spanish>Ciudades que podr&#237;an alzarse en revoluci&#243;n</Spanish>
-		<Finnish>Cities that might start a revolution</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_WARNING_CITIES</Tag>
@@ -297,7 +266,6 @@
 		<German>St&#228;dte, die sich einer Revolution anschlie&#223;en k&#246;nnten</German>
 		<Italian>Citt&#224; che potrebbero unirsi ad una rivolta</Italian>
 		<Spanish>Ciudades que podr&#237;an unirse a una revoluci&#243;n</Spanish>
-		<Finnish>Cities that might join a revolution</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SAFE_CITIES</Tag>
@@ -306,7 +274,6 @@
 		<German>St&#228;dte, die nicht revoltieren werden</German>
 		<Italian>Citt&#224; che non si rivolteranno</Italian>
 		<Spanish>Ciudades que no se rebelar&#225;n</Spanish>
-		<Finnish>Cities that will not revolt</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_TITLE</Tag>
@@ -315,7 +282,6 @@
 		<German>Revolutions-&#220;berwachung</German>
 		<Italian>Schermata "Rivoluzioni"</Italian>
 		<Spanish>Visor de Revoluci&#243;n</Spanish>
-		<Finnish>Revolution Watch</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DETAIL</Tag>
@@ -324,7 +290,6 @@
 		<German>Detailansicht</German>
 		<Italian>Particolare</Italian>
 		<Spanish>Ver los detalles</Spanish>
-		<Finnish>Detail View</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_BRIBE</Tag>
@@ -333,7 +298,6 @@
 		<German>Bestechen Sie eine Stadt</German>
 		<Italian>Corrompi una citt&#224;</Italian>
 		<Spanish>Sobornar una ciudad</Spanish>
-		<Finnish>Bribe a city</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_NO_CITIES</Tag>
@@ -342,7 +306,6 @@
 		<German>Keine St&#228;dte</German>
 		<Italian>Nessuna citt&#224;</Italian>
 		<Spanish>Sin ciudades</Spanish>
-		<Finnish>No cities</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_CITY_BY_CITY</Tag>
@@ -351,7 +314,6 @@
 		<German>Stadt f&#252;r Stadt:</German>
 		<Italian>Citt&#224; per citt&#224;:</Italian>
 		<Spanish>Ciudad por ciudad:</Spanish>
-		<Finnish>City by city:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DEBUG_NOTE</Tag>
@@ -360,7 +322,6 @@
 		<German>(Anmerkung:  Einzelne Zahlen lassen sich in vielen F&#228;llen nicht zum Ganzen addieren)</German>
 		<Italian>(Nota:  In molti casi, i numeri specifici non si sommano al totale)</Italian>
 		<Spanish>(Nota:  N&#250;meros espec&#237;ficos no se sumar&#225;n al total en diversas circunstancias)</Spanish>
-		<Finnish>(Note:  Specific numbers will not add up to total in many circumstances)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_HAPPINESS</Tag>
@@ -369,7 +330,6 @@
 		<German>Zufriedenheit</German>
 		<Italian>Felicit&#224;</Italian>
 		<Spanish>Infelicidad</Spanish>
-		<Finnish>Happiness</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_NOT_CONNECTED</Tag>
@@ -378,7 +338,6 @@
 		<German>Nicht an Hauptstadt angeschlossen</German>
 		<Italian>Non collegata a capitale</Italian>
 		<Spanish>No conectada a la capital</Spanish>
-		<Finnish>Not connected to capital</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_HUGE_EMP</Tag>
@@ -387,7 +346,6 @@
 		<German>Sehr gro&#223;es Imperium</German>
 		<Italian>Impero enorme</Italian>
 		<Spanish>Vasto Imperio</Spanish>
-		<Finnish>Huge Empire</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_LARGE_EMP</Tag>
@@ -396,16 +354,13 @@
 		<German>Gro&#223;es Imperium</German>
 		<Italian>Grande impero</Italian>
 		<Spanish>Gran Imperio</Spanish>
-		<Finnish>Large Empire</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_MED_EMP</Tag>
 		<English>Med. Empire</English>
-		<French>Med. Empire</French>
 		<German>Mittleres Imperium</German>
 		<Italian>Med. Impero</Italian>
 		<Spanish>Mediano Imperio</Spanish>
-		<Finnish>Med. Empire</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SMALL_EMP</Tag>
@@ -414,7 +369,6 @@
 		<German>Kleines Imperium</German>
 		<Italian>Piccolo impero</Italian>
 		<Spanish>Peque&#241;o Imperio</Spanish>
-		<Finnish>Small Empire</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DISTANT</Tag>
@@ -423,7 +377,6 @@
 		<German>Entfernte Lage</German>
 		<Italian>Posizione distante</Italian>
 		<Spanish>Ubicaci&#243;n distante</Spanish>
-		<Finnish>Distant Location</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_COLONY</Tag>
@@ -432,7 +385,6 @@
 		<German>Kolonie</German>
 		<Italian>Colonia</Italian>
 		<Spanish>Colonia</Spanish>
-		<Finnish>Colony</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_HOLY_CITY</Tag>
@@ -441,7 +393,6 @@
 		<German>Heilige Stadt</German>
 		<Italian>Citt&#224; Santa</Italian>
 		<Spanish>Ciudad santa</Spanish>
-		<Finnish>Holy city</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_HEATHENS</Tag>
@@ -450,16 +401,12 @@
 		<German>Heilige Stadt im Besitz von Heiden</German>
 		<Italian>Citt&#224; Santa posseduta da infedeli</Italian>
 		<Spanish>Ciudad santa poseida por paganos</Spanish>
-		<Finnish>Holy city owned by heathens</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_RELIGION</Tag>
 		<English>Religion</English>
-		<French>Religion</French>
-		<German>Religion</German>
 		<Italian>Religione</Italian>
 		<Spanish>Religi&#243;n</Spanish>
-		<Finnish>Religion</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_STATE_RELIGION</Tag>
@@ -468,7 +415,6 @@
 		<German>Staatsreligion</German>
 		<Italian>Religione di Stato</Italian>
 		<Spanish>Religi&#243;n de estado</Spanish>
-		<Finnish>State Religion</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_NON_STATE_RELIGION</Tag>
@@ -477,7 +423,6 @@
 		<German>Nicht-staatliche Religion</German>
 		<Italian>Religione 'non di Stato'</Italian>
 		<Spanish>Sin religi&#243;n de estado</Spanish>
-		<Finnish>Non-state Religion</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_CULTURE_RATE</Tag>
@@ -486,7 +431,6 @@
 		<German>Kulturrate</German>
 		<Italian>Tasso culturale</Italian>
 		<Spanish>Nivel cultural</Spanish>
-		<Finnish>Cult. rate</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_NATIONALITY</Tag>
@@ -495,7 +439,6 @@
 		<German>Nationalit&#228;t</German>
 		<Italian>Nazionalit&#224;</Italian>
 		<Spanish>Nacionalidad</Spanish>
-		<Finnish>Nationality</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SMALL_CITY</Tag>
@@ -504,7 +447,6 @@
 		<German>Kleine Stadt</German>
 		<Italian>Piccola citt&#224;</Italian>
 		<Spanish>Ciudad peque&#241;a</Spanish>
-		<Finnish>Small City</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_UNHEALTHY</Tag>
@@ -513,7 +455,6 @@
 		<German>Ungesund</German>
 		<Italian>Insalubre</Italian>
 		<Spanish>Insalubridad</Spanish>
-		<Finnish>Unhealthy</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_GARRISON</Tag>
@@ -522,7 +463,6 @@
 		<German>Garnison</German>
 		<Italian>Guarnigione</Italian>
 		<Spanish>Guarnici&#243;n</Spanish>
-		<Finnish>Garrison</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SPIRIT</Tag>
@@ -531,7 +471,6 @@
 		<German>Rebellischer Geist</German>
 		<Italian>Spirito ribelle</Italian>
 		<Spanish>Esp&#237;ritu de rebeli&#243;n</Spanish>
-		<Finnish>Rebellious Spirit</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_STARVATION</Tag>
@@ -540,7 +479,6 @@
 		<German>Hunger</German>
 		<Italian>Carestia</Italian>
 		<Spanish>Hambruna</Spanish>
-		<Finnish>Starvation</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DISORDER</Tag>
@@ -549,16 +487,13 @@
 		<German>Unruhe</German>
 		<Italian>Disordine</Italian>
 		<Spanish>Desorden</Spanish>
-		<Finnish>Disorder</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DANGER</Tag>
 		<English>Danger</English>
-		<French>Danger</French>
 		<German>Gefahr</German>
 		<Italian>Pericolo</Italian>
 		<Spanish>En peligro</Spanish>
-		<Finnish>Danger</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_WARNING</Tag>
@@ -567,7 +502,6 @@
 		<German>Warnung</German>
 		<Italian>Attenzione</Italian>
 		<Spanish>En alerta</Spanish>
-		<Finnish>Warning</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SAFE</Tag>
@@ -576,7 +510,6 @@
 		<German>Sicher</German>
 		<Italian>Sicuro</Italian>
 		<Spanish>Seguro</Spanish>
-		<Finnish>Safe</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_TREND</Tag>
@@ -585,7 +518,6 @@
 		<German>Tendenz:</German>
 		<Italian>Tendenza:</Italian>
 		<Spanish>Tendencia:</Spanish>
-		<Finnish>Trend:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_FLAT</Tag>
@@ -594,7 +526,6 @@
 		<German>(gleichbleibend)</German>
 		<Italian>(costante)</Italian>
 		<Spanish>(Sin cambios)</Spanish>
-		<Finnish>(Flat)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_IMPROVING</Tag>
@@ -603,7 +534,6 @@
 		<German>(verbessernd)</German>
 		<Italian>(Migliora)</Italian>
 		<Spanish>(Mejorando)</Spanish>
-		<Finnish>(Improving)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_RAPIDLY_IMPROVING</Tag>
@@ -612,7 +542,6 @@
 		<German>(schnell verbessernd)</German>
 		<Italian>(Migliora velocemente)</Italian>
 		<Spanish>(Mejorando r&#225;pidamente)</Spanish>
-		<Finnish>(Rapidly Improving)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_WORSENING</Tag>
@@ -621,7 +550,6 @@
 		<German>(verschlechternd)</German>
 		<Italian>(Peggiora)</Italian>
 		<Spanish>(Empeorando)</Spanish>
-		<Finnish>(Worsening)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_RAPIDLY_WORSENING</Tag>
@@ -630,16 +558,11 @@
 		<German>(Schnell verschlechternd)</German>
 		<Italian>(Peggiora velocemente)</Italian>
 		<Spanish>(Empeorando r&#225;pidamente)</Spanish>
-		<Finnish>(Rapidly Worsening)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_THIS_TURN_AND_AFTER_ADJUSTMENTS</Tag>
 		<English>This turn: %D1 (%D2 after game speed adjustments)</English>
-		<French>This turn: %D1 (%D2 after game speed adjustments)</French>
 		<German>Dieser Zug: %D1 (%D2 nach Anpassungen wegen Spielgeschwindigkeit)</German>
-		<Italian>This turn: %D1 (%D2 after game speed adjustments)</Italian>
-		<Spanish>This turn: %D1 (%D2 after game speed adjustments)</Spanish>
-		<Finnish>This turn: %D1 (%D2 after game speed adjustments)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_POSITIVE</Tag>
@@ -666,7 +589,6 @@
 		<German>Gef&#228;hrlich instabil:</German>
 		<Italian>Pericolosamente instabile </Italian>
 		<Spanish>Peligrosamente inestable</Spanish>
-		<Finnish>Dangerously Unstable:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_UNSTABLE</Tag>
@@ -675,25 +597,19 @@
 		<German>Instabil</German>
 		<Italian>Instabile</Italian>
 		<Spanish>Inestable</Spanish>
-		<Finnish>Unstable</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_NEUTRAL</Tag>
 		<English>Neutral</English>
 		<French>Neutre</French>
-		<German>Neutral</German>
 		<Italian>Neutro</Italian>
-		<Spanish>Neutral</Spanish>
-		<Finnish>Neutral</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_STABLE</Tag>
 		<English>Stable</English>
-		<French>Stable</French>
 		<German>Stabil</German>
 		<Italian>Stabile</Italian>
 		<Spanish>Estable</Spanish>
-		<Finnish>Stable</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_VERY_STABLE</Tag>
@@ -702,7 +618,6 @@
 		<German>Sehr stabil</German>
 		<Italian>Molto stabile</Italian>
 		<Spanish>Muy estable</Spanish>
-		<Finnish>Very Stable</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_SERIOUS_FINANCIAL</Tag>
@@ -711,7 +626,6 @@
 		<German>Ernste Finanzprobleme</German>
 		<Italian>Seria difficolt&#224; finanziaria </Italian>
 		<Spanish>Serios problemas financieros</Spanish>
-		<Finnish>Serious financial trouble</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_FINANCIAL_NEG</Tag>
@@ -720,7 +634,6 @@
 		<German>Finanzprobleme</German>
 		<Italian>Difficolt&#224; finanziaria </Italian>
 		<Spanish>Problemas financieros</Spanish>
-		<Finnish>Financial trouble</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_FINANCIAL_POS</Tag>
@@ -738,7 +651,6 @@
 		<German>Hohe Steuern</German>
 		<Italian>Tasse elevate </Italian>
 		<Spanish>Impuestos altos</Spanish>
-		<Finnish>High taxes</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_LOW_TAXES</Tag>
@@ -747,7 +659,6 @@
 		<German>Niedrige Steuern</German>
 		<Italian>Tasse basse </Italian>
 		<Spanish>Impuestos bajos</Spanish>
-		<Finnish>Low taxes</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_CULTURE_SPENDING</Tag>
@@ -756,7 +667,6 @@
 		<German>Kulturausgaben</German>
 		<Italian>Spesa per Cultura </Italian>
 		<Spanish>Gastos culturales</Spanish>
-		<Finnish>Cult. spending</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_MILITARY</Tag>
@@ -765,7 +675,6 @@
 		<German>&#220;bergro&#223;es Milit&#228;r</German>
 		<Italian>Esercito sovradimensionato </Italian>
 		<Spanish>Excedentes militares</Spanish>
-		<Finnish>Oversize military</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_ANARCHY</Tag>
@@ -774,7 +683,6 @@
 		<German>Anarchie</German>
 		<Italian>Anarchia</Italian>
 		<Spanish>Anarqu&#237;a</Spanish>
-		<Finnish>Anarchy</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_GOLDEN_AGE</Tag>
@@ -783,7 +691,6 @@
 		<German>Goldenes Zeitalter</German>
 		<Italian>Et&#224; dell'oro</Italian>
 		<Spanish>Edad de Oro</Spanish>
-		<Finnish>Golden Age</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_CIV_STABILITY</Tag>
@@ -792,7 +699,6 @@
 		<German>Imperiumweite Stabilit&#228;t:</German>
 		<Italian>Stabilit&#224; Nazionale: </Italian>
 		<Spanish>Estabilidad de la civilizaci&#243;n:</Spanish>
-		<Finnish>Empire stability:</Finnish>
 	</TEXT>
 
 	<!-- Bribe city text -->
@@ -803,7 +709,6 @@
 		<German>Welche Stadt m&#246;chten Sie bestechen?</German>
 		<Italian>Quale citt&#224; vorresti corrompere?</Italian>
 		<Spanish>&#191;Que ciudad te gustar&#237;a sobornar?</Spanish>
-		<Finnish>Which city would you like to bribe?</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_VIOLENT</Tag>
@@ -812,7 +717,6 @@
 		<German>Die B&#252;rger von %s nehmen kein Geld von Ihnen an, sie m&#246;chten Sie vielmehr v&#246;llig los werden!</German>
 		<Italian>I cittadini di %s non accetteranno il tuo denaro, piuttosto preferiscono sbarazzarsi completamente di te!</Italian>
 		<Spanish>&#161;Los ciudadanos de %s no te aceptar&#225;n ning&#250;n soborno, preferir&#237;an deshacerse totalmente de t&#237;!</Spanish>
-		<Finnish>The citizen's of %s will not accept any money from you, they would rather be rid of you entirely!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_POOR</Tag>
@@ -821,7 +725,6 @@
 		<German>Leider haben Sie nicht gen&#252;gend Gold in der Schatzkammer, um diese Stadt bestechen zu k&#246;nnen.</German>
 		<Italian>Purtroppo, non hai abbastanza oro per poter corrompere questa citt&#224;.</Italian>
 		<Spanish>Desafortunadamente, no tienes suficiente oro en el tesoro para poder sobornar esta ciudad.</Spanish>
-		<Finnish>Unfortunately, you do not have enough gold in the treasury to be able to bribe this city.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_NO_NEED</Tag>
@@ -830,7 +733,6 @@
 		<German>Es ist nicht notwendig %s zu bestechen, die &#246;rtlichen Verh&#228;ltnisse sind derzeit g&#252;nstig.</German>
 		<Italian>Non serve corrompere %s, la situazione locale &#232; favorevole, per ora.</Italian>
 		<Spanish>No hace ninguna falta sobornar %s, la situaci&#243;n local es favorable por ahora.</Spanish>
-		<Finnish>There is no need to bribe %s, the local situation is favorable for now.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_RECENT</Tag>
@@ -839,7 +741,6 @@
 		<German>Sie bestachen diese Stadt vor %d Runden, deshalb sind die Kosten, um den gew&#252;nschten Effekt zu erzielen h&#246;her als &#252;blich.  Die Kosten verringern sich jede Runde, die Sie warten, falls Sie &#252;berhaupt warten k&#246;nnen.</German>
 		<Italian>Hai corrotto questa citt&#224; %d turni fa, il costo per ottenere l'effetto desiderato sar&#224; superiore al normale.  Questo costo diminuir&#224; ogni turno che passa, se sei in grado di aspettare.</Italian>
 		<Spanish>Sobornaste esta ciudad hace %d turno(s), as&#237; que el coste para producir el efecto deseado ser&#225; mayor de lo normal.  Los costes decrecer&#225;n cada turno que esperes, si por supuesto te lo puedes permitir.</Spanish>
-		<Finnish>You bribed this city %d turns ago, so the cost to produce the desired effect will be higher than normal.  Costs will decrease every turn you wait, if you can wait at all.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_SMALL</Tag>
@@ -848,7 +749,6 @@
 		<German>Ein kleines Geschenk von %d Gold, um sich etwas Zeit kaufen zu k&#246;nnen bis sie eine Rebellion in Erw&#228;gung ziehen.</German>
 		<Italian>Un piccolo regalo (%d [ICON_GOLD]) per guadagnare un po' di tempo prima che scoppi una rivolta.</Italian>
 		<Spanish>Un peque&#241;o presente de %d de oro para comprar algo de tiempo antes de que dese&#233;n rebelarse.</Spanish>
-		<Finnish>A small gift of %d gold to buy some time before they contemplate rebelling.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_MED</Tag>
@@ -857,7 +757,6 @@
 		<German>Ein mittelgro&#223;es Geschenk in H&#246;he von %d Gold um den Gedanken an Rebellion etwas l&#228;nger aus ihren Gedanken zu streichen.</German>
 		<Italian>Un discreto regalo (%d [ICON_GOLD]), per allontanare la rivolta dai loro pensieri...</Italian>
 		<Spanish>Un buen presente por el coste de %d de oro para alejar el esp&#237;ritu de la rebeli&#243;n de sus pensamientos.</Spanish>
-		<Finnish>A middle-sized gift at a cost of %d gold to push rebelling further from their thoughts.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_LARGE</Tag>
@@ -866,7 +765,6 @@
 		<German>Ein verschwenderisches Geschenk in H&#246;he von %d Gold, um sie an Ihre Wohlt&#228;tigkeit zu erinnern und sie f&#252;r l&#228;ngere Zeit vom Rebellieren abzuhalten.</German>
 		<Italian>Un regalo sontuoso (%d [ICON_GOLD]), per ricordare loro la tua benevolenza e impedirgli di ribellarsi per molto tempo.</Italian>
 		<Spanish>Un profuso presente, por %d de oro, para recordarles tu benevolencia y esfumar las ansias de rebeli&#243;n por mucho tiempo.</Spanish>
-		<Finnish>A lavish gift, at %d gold, to remind them of your benevolence and keep them from rebelling for longer.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_OPTIONS</Tag>
@@ -875,7 +773,6 @@
 		<German>Sie k&#246;nnen der Stadt eine der folgenden &#039;Spenden&#039; geben:</German>
 		<Italian>Puoi scegliere di fare una delle seguenti &#039;donazioni&#039; alla citt&#224;: </Italian>
 		<Spanish>Puedes elegir dar una de las siguientes 'donaciones' para la ciudad:</Spanish>
-		<Finnish>You can choose to give one of the following 'donations' to the city:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_BUTTON</Tag>
@@ -884,7 +781,6 @@
 		<German>%d Bestechung mit Gold</German>
 		<Italian>Dona %d oro</Italian>
 		<Spanish>%d Oro de soborno</Spanish>
-		<Finnish>%d Gold Bribe</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE_CITY_NO_BRIBE</Tag>
@@ -893,7 +789,6 @@
 		<German>Kein Bestechungsgeld</German>
 		<Italian>Nessun dono</Italian>
 		<Spanish>Sin soborno</Spanish>
-		<Finnish>No bribe</Finnish>
 	</TEXT>
 
 	<!-- Revolution messages -->
@@ -904,14 +799,11 @@
 		<German>Unorganisierte Aufr&#252;hrer haben sich gegen Sie erhoben!</German>
 		<Italian>Bande disorganizzate di ribelli si sono sollevate contro di te!</Italian>
 		<Spanish>&#161;Unos rebeldes desorganizados se han levantado contra t&#237;!</Spanish>
-		<Finnish>Disorganized rebels have risen up against you!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_JOIN</Tag>
 		<English>The revolutionionaries join forces with %s1_leader of the %s2_civ.</English>
-		<French>The revolutionionaries join forces with %s1_leader of the %s2_civ.</French>
 		<German>Die Revolution&#228;re vereinigen sich mit %s1_leader vom %s2_civ.</German>
-		<Italian>The revolutionionaries join forces with %s1_leader of the %s2_civ.</Italian>
 		<Spanish>Los revolucionarios se han unido [NUM1:al:a la:a los:a las] %s1_leader [NUM1:del:de la:de los:de las] %s2_civ.</Spanish>
 		<Finnish>The revolutionionaries join the</Finnish>
 	</TEXT>
@@ -931,7 +823,6 @@
 		<German>Eine gewaltt&#228;tige Revolution findet statt im</German>
 		<Italian>Una violenta rivolta &#232; scoppiata nel/la </Italian>
 		<Spanish>&#161;&#161;&#161;Una violenta revoluci&#243;n ha tenido lugar en el/la</Spanish>
-		<Finnish>A violent revolution has occured in the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_BARB</Tag>
@@ -940,7 +831,6 @@
 		<German>Unorganisierte Aufr&#252;hrer haben sich erhoben, die Region versinkt im B&#252;rgerkrieg!</German>
 		<Italian>Bande disorganizzate di ribelli sono in rivolta e la regione sprofonda nella guerra civile!</Italian>
 		<Spanish>&#161;Unos rebeldes desorganizados se han levantado seg&#250;n la regi&#243;n ca&#237;a en guerra civil!</Spanish>
-		<Finnish>Disorganized rebels have risen up as the region descends into civil war!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_RISEN</Tag>
@@ -958,7 +848,6 @@
 		<German>hat die Kontrolle &#252;bernommen von</German>
 		<Italian>ha assunto il comando del/la</Italian>
 		<Spanish>ha tomado el control sobre el/la</Spanish>
-		<Finnish>has taken over control of the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REINFORCEMENTS</Tag>
@@ -985,7 +874,6 @@
 		<German>Ein kleiner Aufstand hat in %s stattgefunden!</German>
 		<Italian>Una piccola rivolta &#232; scoppiata a %s!</Italian>
 		<Spanish>&#161;Una peque&#241;a rebeli&#243;n ha tomado lugar en %s!</Spanish>
-		<Finnish>A small revolt has taken place in %s!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_FREED</Tag>
@@ -994,7 +882,6 @@
 		<German>%s haben die St&#228;dte von %s befreit und sie das %s bilden lassen!</German>
 		<Italian>%s hanno liberato le citt&#224; di %s,  e cos&#236; hanno formato il/la %s!</Italian>
 		<Spanish>%s han liberado las ciudades de %s, permitiendoles formar el %s!</Spanish>
-		<Finnish>%s have liberated the cities of %s, allowing them to form the %s!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_CEDE</Tag>
@@ -1003,7 +890,6 @@
 		<German>Unter dem Druck von Rebellengruppen haben %s die Kontrolle von %s an %s &#252;bergeben!</German>
 		<Italian>Sotto pressione di gruppi ribelli, %s ha ceduto il controllo di %s a: %s!</Italian>
 		<Spanish>&#161;Bajo la presi&#243;n de grupos rebeldes, %s ha cedido el control de %s a: %s!</Spanish>
-		<Finnish>Under pressure from rebel groups, %s have ceded control of %s to %s!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_YOUR_CAPTURE</Tag>
@@ -1012,7 +898,6 @@
 		<German>Durch Ihre Eroberung von %s w&#228;chst die Unterst&#252;tzung f&#252;r den Aufstand in der Stadt...</German>
 		<Italian>Dopo la cattura di %s, cresce la forza della rivolta nella citt&#224;...</Italian>
 		<Spanish>Con vuestra captura de %s, el espiritu de la rebeli&#243;n en la ciudad crece ...</Spanish>
-		<Finnish>With your capture of %s, support for the rebellion in the city swells ...</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_YOUR_CAPTURE_GOLD</Tag>
@@ -1021,7 +906,6 @@
 		<German>Die dankbare Stadt %s gibt Ihnen %d Gold, um den Aufstand zu unterst&#252;tzen!</German>
 		<Italian>La citt&#224; di %s, per riconoscenza, ti dona %d oro per sostenere la rivolta!</Italian>
 		<Spanish>&#161;La grandiosa ciudad de %s te otorga %d de oro para mantener la rebeli&#243;n!</Spanish>
-		<Finnish>The grateful city of %s gives you %d gold to support the rebellion!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_GOLDEN_AGE</Tag>
@@ -1030,7 +914,6 @@
 		<German>Der anhaltende Erfolg Ihres Aufstands startet ein goldenes Zeitalter!</German>
 		<Italian>Il continuo successo della tua rivolta fa partire un'Et&#224; dell'oro!</Italian>
 		<Spanish>&#161;El continuo &#233;xito de vuestra rebeli&#243;n ha originado una Edad de Oro!</Spanish>
-		<Finnish>The continued success of your rebellion launches a Golden Age!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REBEL_CONTROL</Tag>
@@ -1039,7 +922,6 @@
 		<German>Die Aufr&#252;hrer vom %s kontrollieren %s!  Unterst&#252;tzung f&#252;r den Aufstand w&#228;chst...</German>
 		<Italian>I ribelli del %s hanno preso il controllo di %s!  Cresce la forza della rivolta!</Italian>
 		<Spanish>&#161;Los rebeldes de %s han tomado el control de %s!  El espiritu de la rebeli&#243;n en la ciudad crece ...</Spanish>
-		<Finnish>The rebels from the %s have taken control of %s!  Support for the rebellion swells ...</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_BREWING</Tag>
@@ -1048,7 +930,6 @@
 		<German>Eine Revolution braut sich in %s zusammen!</German>
 		<Italian>Cova la rivolta a %s!</Italian>
 		<Spanish>&#161;Una revoluci&#243;n amenaza en %s!</Spanish>
-		<Finnish>A revolution is brewing in %s!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REPORT</Tag>
@@ -1057,7 +938,6 @@
 		<German>Unsere Agenten berichten, dass die Spannung im %s von %s in %s</German>
 		<Italian>Nostri agenti segnalano che la tensione nella %s di %s, in %s </Italian>
 		<Spanish>Nuestros agentes informan que la tensi&#243;n en la(s) %s de %s, en %s, ha</Spanish>
-		<Finnish>Our agents report that tension in the %s of %s in %s has</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REPORT_EASED</Tag>
@@ -1066,7 +946,6 @@
 		<German>nachgelassen hat, nachdem die Regierung die Forderungen der Rebellen akzeptierte.</German>
 		<Italian>si &#232; attenuata dopo che il governo ha accettato le condizioni dei ribelli.</Italian>
 		<Spanish>disminuido despu&#233;s de que el gobierno aceptara los t&#233;rminos rebeldes.</Spanish>
-		<Finnish>eased after the government accepted the rebel terms.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REPORT_INCREASED</Tag>
@@ -1075,7 +954,6 @@
 		<German>sich erh&#246;ht hat, nachdem die Regierung die Forderungen der Rebellen ablehnte.</German>
 		<Italian>&#232; aumentata dopo che il governo ha respinto le condizioni dei ribelli.</Italian>
 		<Spanish>aumentado despu&#233;s de que el gobierno rechazara las imposiciones rebeldes.</Spanish>
-		<Finnish>increased after the government rejected the rebel terms.</Finnish>
 	</TEXT>
 
 	<!-- General revolution popup text -->
@@ -1086,7 +964,6 @@
 		<German>Sie haben zwar noch nicht mit Kriegsvorbereitungen begonnen, doch wenn Sie ihre Forderungen ablehnen, werden sie Ihre gegenw&#228;rtige Politik m&#246;glicherweise nicht l&#228;nger dulden.  Ihre Forderung zu erf&#252;llen ist der bei weitem schnellste und einfachste Weg sie in absehbaren Zukunft in Ihrem Imperium zu halten.</German>
 		<Italian>Per ora non hanno cominciato i preparativi per la guerra, ma se non accetti la loro richiesta, non potranno sopportare per molto la tua politica.  Accettare la loro richiesta &#232;la scelta pi&#249; rapida e pi&#249; semplice per mantenerli nel tuo impero, per il prossimo futuro.</Italian>
 		<Spanish>Aunque a&#250;n no han empezado sus preparaciones para la guerra, si deniegas sus peticiones puede que no aguanten mucho m&#225;s tus pol&#237;ticas actuales.  Aceptar sus demandas es, con mucho, el m&#225;s r&#225;pido y f&#225;cil camino para mantener a estos ciudadanos en un futuro seguro para tu imperio.</Spanish>
-		<Finnish>While they have not yet begun preparations for war, if you deny their request they may not put up with your current policies much longer.  Honoring their request is by far the quickest and easiest path to keeping them in your empire for the forseeable future.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_PEACEFUL_CONCLUSION</Tag>
@@ -1095,7 +972,6 @@
 		<German>Die Demonstranten sind noch nicht gewaltt&#228;tig geworden, es ist immer noch Zeit die Situation friedlich beizulegen.  Ihre Forderung zu erf&#252;llen ist der bei weitem schnellste und einfachste Weg sie in absehbarer Zukunft in Ihrem Imperium zu halten.</German>
 		<Italian>I dimostranti ancora non sono arrivati alla violenza e ti rimane tempo per giungere ad una conclusione pacifica.  Accettare la loro richiesta &#232; la scelta pi&#249; rapida e pi&#249; semplice per mantenerli nel tuo impero, per il prossimo futuro.</Italian>
 		<Spanish>Los manifestantes todav&#237;a no han dado muestras de violencia, y a&#250;n es tiempo de poder concluir la situaci&#243;n pac&#237;ficamente.  Aceptar sus demandas es, con mucho, el m&#225;s r&#225;pido y f&#225;cil camino para mantener a estas ciudades en un futuro seguro para tu imperio .</Spanish>
-		<Finnish>The demonstrators have not yet turned to violence, and there is still time to bring the situation to a peaceful conclusion.  Honoring their request is by far the quickest and easiest path to keeping these cities in your empire for the forseeable future.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BRIBE</Tag>
@@ -1104,7 +980,6 @@
 		<German>Sie k&#246;nnen auch beschlie&#223;en, die Aufwiegler zu bestechen und sie werden ihre Sache aufgeben und sich beruhigen.</German>
 		<Italian>Puoi anche scegliere di corrompere gli agitatori, cominceranno ad abbandonare la loro causa e la situazione comincer&#224; a calmarsi.</Italian>
 		<Spanish>Tambi&#233;n puedes elegir sobornar a los agitadores y ellos dejar&#225;n a un lado su causa y se calmar&#225;n.</Spanish>
-		<Finnish>You may also choose to bribe the agitators and they will drop their cause and quiet down.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ADVISOR_ACCEPT</Tag>
@@ -1113,7 +988,6 @@
 		<German>(Ihre Berater empfehlen, die Bedingungen zu akzeptieren)</German>
 		<Italian>(I tuoi consiglieri ti suggeriscono di accettare le condizioni)</Italian>
 		<Spanish>(Tus consejeros recomiendan aceptar los t&#233;rminos)</Spanish>
-		<Finnish>(Your advisors recommend accepting the terms)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ADVISOR_REJECT</Tag>
@@ -1122,7 +996,6 @@
 		<German>(Ihre Berater empfehlen, die Bedingungen zur&#252;ckzuweisen)</German>
 		<Italian>(I tuoi consiglieri ti suggeriscono di rifiutare le condizioni)</Italian>
 		<Spanish>(Tus consejeros recomiendan rechazar los t&#233;rminos)</Spanish>
-		<Finnish>(Your advisors recommend rejecting the terms)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ADVISOR_NEUTRAL</Tag>
@@ -1131,7 +1004,6 @@
 		<German>(Ihre Berater stehen diesen Bedingungen neutral gegen&#252;ber)</German>
 		<Italian>(I tuoi consiglieri non hanno preferenze verso queste condizioni)</Italian>
 		<Spanish>(Tus consejeros son neutrales en estos t&#233;rminos)</Spanish>
-		<Finnish>(Your advisors are neutral on these terms)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ADVISOR_APPROVAL</Tag>
@@ -1140,7 +1012,6 @@
 		<German>Ihr neuer Beliebtheitsgrad ist</German>
 		<Italian>Il tuo grado di approvazione (stimato) &#232;</Italian>
 		<Spanish>Tu grado de aprobaci&#243;n entre el pueblo es</Spanish>
-		<Finnish>Your adjusted approval rating is</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ADVISOR_ELEC_LOSE</Tag>
@@ -1149,7 +1020,6 @@
 		<German>Sie werden zweifellos jede gerechte Wahl verlieren.</German>
 		<Italian>In caso di elezioni regolari, certamente perderai.</Italian>
 		<Spanish>Seguramente perder&#225;s cualquier elecci&#243;n justa.</Spanish>
-		<Finnish>You will certainly lose any fair election.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_ACCEPT</Tag>
@@ -1158,7 +1028,6 @@
 		<German>Bedingungen akzeptieren</German>
 		<Italian>Accetta</Italian>
 		<Spanish>Aceptar los t&#233;rminos</Spanish>
-		<Finnish>Accept Terms</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_REJECT</Tag>
@@ -1167,7 +1036,6 @@
 		<German>Bedingungen ablehnen</German>
 		<Italian>Rifiuta</Italian>
 		<Spanish>Rechazar las imposiciones</Spanish>
-		<Finnish>Reject Terms</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_BUYOFF</Tag>
@@ -1176,7 +1044,6 @@
 		<German>Zahlen Sie ihnen</German>
 		<Italian>Paga</Italian>
 		<Spanish>Pagadles</Spanish>
-		<Finnish>Pay them</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_BUY_ELECTION</Tag>
@@ -1185,7 +1052,6 @@
 		<German>Kaufen Sie die Wahl f&#252;r</German>
 		<Italian>Compra le elezioni con</Italian>
 		<Spanish>Comprar las elecciones para</Spanish>
-		<Finnish>Buy election for</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_CONTROL</Tag>
@@ -1194,7 +1060,6 @@
 		<German>Nehmen Sie an und kontrollieren Sie die neue Civ</German>
 		<Italian>Accetta e prendi il controllo di una nuova civilt&#224;</Italian>
 		<Spanish>Aceptar y tomar el control de la nueva civilizaci&#243;n</Spanish>
-		<Finnish>Accept and take control of new civ</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_DEFECT</Tag>
@@ -1212,7 +1077,6 @@
 		<German>Gew&#228;hren Sie die Unabh&#228;ngigkeit</German>
 		<Italian>Concedi l'indipendenza</Italian>
 		<Spanish>Otorgar la Independecia</Spanish>
-		<Finnish>Grant Independence</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_RECOGNIZE</Tag>
@@ -1221,7 +1085,6 @@
 		<German>Erkennen Sie die Unabh&#228;ngigkeit an</German>
 		<Italian>Riconosci l'indipendenza</Italian>
 		<Spanish>Reconocer la Independencia</Spanish>
-		<Finnish>Recognize Independence</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_VASSAL</Tag>
@@ -1230,7 +1093,6 @@
 		<German>Akzeptieren Sie den Vasall</German>
 		<Italian>Accetta il vassallo</Italian>
 		<Spanish>Aceptar Vasallo</Spanish>
-		<Finnish>Accept Vassal</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_WAR</Tag>
@@ -1239,7 +1101,6 @@
 		<German>Erkl&#228;ren Sie Krieg gegen</German>
 		<Italian>Dichiara guerra a: </Italian>
 		<Spanish>Declarar la guerra a:</Spanish>
-		<Finnish>Declare War on</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_WELCOME</Tag>
@@ -1248,7 +1109,6 @@
 		<German>Willkommen zur&#252;ck</German>
 		<Italian>Bentornato</Italian>
 		<Spanish>Bienvenido de nuevo</Spanish>
-		<Finnish>Welcome back</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_NOT_WANTED</Tag>
@@ -1257,7 +1117,6 @@
 		<German>Sie sind hier nicht Willkommen</German>
 		<Italian>Non sei il benvenuto</Italian>
 		<Spanish>No eres bienvenido aqu&#237;</Spanish>
-		<Finnish>You're not welcome here</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_MAYBE_LATER</Tag>
@@ -1266,7 +1125,6 @@
 		<German>Vielleicht sp&#228;ter</German>
 		<Italian>Forse dopo..</Italian>
 		<Spanish>A lo mejor m&#225;s tarde</Spanish>
-		<Finnish>Maybe later</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_BUTTON_NEVER</Tag>
@@ -1275,7 +1133,6 @@
 		<German>Niemals!</German>
 		<Italian>Mai!</Italian>
 		<Spanish>&#161;Jam&#225;s!</Spanish>
-		<Finnish>Never!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_TITLE_PEACEFUL</Tag>
@@ -1284,7 +1141,6 @@
 		<German>Ihre B&#252;rger werden unruhig</German>
 		<Italian>I tuoi cittadini sono sempre pi&#249; inquieti</Italian>
 		<Spanish>Est&#225; creciendo la agitaci&#243;n de tus ciudadanos</Spanish>
-		<Finnish>Your citizens are growing restless</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_TITLE_VIOLENT</Tag>
@@ -1293,7 +1149,6 @@
 		<German>Eine Revolution braut sich zusammen!</German>
 		<Italian>Una rivolta sta per scoppiare!</Italian>
 		<Spanish>&#161;Est&#225; amenazando una revoluci&#243;n!</Spanish>
-		<Finnish>A revolution is brewing!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_TITLE_GOOD_NEWS</Tag>
@@ -1302,7 +1157,6 @@
 		<German>Gute Nachrichten!</German>
 		<Italian>Buone notizie!</Italian>
 		<Spanish>&#161;Buenas noticias!</Spanish>
-		<Finnish>Good news!</Finnish>
 	</TEXT>
 
 	
@@ -1314,7 +1168,6 @@
 		<German>wurde die Freiheit gew&#228;hrt, Ihrem Imperium wieder beizutreten</German>
 		<Italian>hanno avuto il permesso di riunirsi al tuo impero, da</Italian>
 		<Spanish>les ha sido concedida la libertad para volver a unirse a tu imperio por parte de</Spanish>
-		<Finnish>have been granted the freedom to rejoin your empire by</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_REGAIN</Tag>
@@ -1323,7 +1176,6 @@
 		<German>Sie k&#246;nnen Ihr verlorenes Territorium wiedergewinnen, ohne einen einzigen Schuss abzufeuern! [NEWLINE] [NEWLINE] Wenn Sie sie nicht zur&#252;ckbekommen mw&#246;chten, so bilden die Revolution&#228;re stattdessen</German>
 		<Italian>Puoi riguadagnare il territorio perso senza sparare un colpo! [NEWLINE] [NEWLINE] se non li riaccogli, insorgeranno ribelli, per formare il/la</Italian>
 		<Spanish>&#161;Puedes recuperar tu territorio perdido sin disparar un tiro![NEWLINE][NEWLINE]Si no los quieres de vuelta, los revolucionarios en su lugar formar&#225;n el/la</Spanish>
-		<Finnish>You can regain your lost territory without firing a shot![NEWLINE][NEWLINE]If you do not want them back, the revolutionaries will instead form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_JOIN_CHOICE</Tag>
@@ -1332,7 +1184,6 @@
 		<German>Was sollen wir den Revolution&#228;ren sagen?</German>
 		<Italian>Che cosa dobbiamo dire ai rivoltosi?</Italian>
 		<Spanish>&#191;Que debemos decirle a los revolucionarios?</Spanish>
-		<Finnish>What shall we tell the revolutionaries?</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_ELEC_VICTORY</Tag>
@@ -1341,7 +1192,6 @@
 		<German>Sieg!  Sie haben die Wahl gewonnen![NEWLINE][NEWLINE]Die revoltierenden St&#228;dte akzeptieren die Entscheidung und beruhigen sich vorl&#228;ufig.  Dennoch wird es weiterhin sinnvoll sein ihre Zufriedenheit zu erh&#246;hen, um so etwas nicht bald wieder zu erleben.</German>
 		<Italian>Vittoria! Hai vinto le elezioni![NEWLINE][NEWLINE]Le citt&#224; in rivolta accettano la decisione nazionale e cessano le ostilit&#224; per il momento.  Tuttavia, sarebbe prudente aumentare la loro felicit&#224; per non trovarsi presto di fronte a questo pericolo.</Italian>
 		<Spanish>&#161;Victoria!  &#161;Has ganado las elecciones![NEWLINE][NEWLINE]Las ciudades rebeldes han aceptado la decisi&#243;n nacional y han asentado la cabeza por el momento.  No obstante, ser&#237;a prudente incrementar su felicidad para no tener que volver a encarar esto pronto.</Spanish>
-		<Finnish>Victory!  You have won the election![NEWLINE][NEWLINE]The revolting cities accept the national decision and settle down for the time being.  However, it will still be prudent to increase their happiness so you don't face this again soon.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_ELEC_LOSS</Tag>
@@ -1350,7 +1200,6 @@
 		<German>Schreckliche Nachrichten!  Sie haben die Wahl und die Kontrolle &#252;ber Ihre Civ verloren!</German>
 		<Italian>Notizie terribili!  Hai perso le elezioni ed il controllo sulla tua civilt&#224;!</Italian>
 		<Spanish>&#161;Terribles noticias!  &#161;Has perdido las elecciones y el control de tu civilizaci&#243;n!</Spanish>
-		<Finnish>Terrible news!  You have lost the election and control over your civ!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_ELEC_BUYOFF</Tag>
@@ -1359,7 +1208,6 @@
 		<German>Erfolg!  Sie haben sich erfolgreich einen Wahlsieg gekauft.[NEWLINE][NEWLINE]Ihre hinterh&#228;ltigen Taktiken und Bestechungsgelder wurden nicht aufgedeckt und die rebellischen St&#228;dte nehmen ihre Niederlage in den Abstimmungen an und und beruhigen sich vorl&#228;ufig.  Dennoch wird es weiterhin sinnvoll sein ihre Zufriedenheit zu erh&#246;hen, um so etwas nicht bald wieder zu erleben.</German>
 		<Italian>Successo!  Hai comprato la vittoria delle elezioni.[NEWLINE][NEWLINE]Le tue losche tattiche e le tangenti non sono state scoperte: le citt&#224; ribelli accettano la sconfitta elettorale e cessano le ostilit&#224; per il momento.  Tuttavia, sarebbe prudente aumentare la loro felicit&#224; per non affrontare presto lo stesso pericolo...</Italian>
 		<Spanish>&#161;Logrado!  Has comprado con &#233;xito una victoria en las elecciones.[NEWLINE][NEWLINE]Tus sobornos y t&#225;cticas clandestinas no fueron detectadas y las ciudades rebeldes aceptan su derrota en la votaci&#243;n y se han calmado por el momento.  No obstante, ser&#237;a prudente incrementar su felicidad para no tener que volver a encarar esto pronto..</Spanish>
-		<Finnish>Success!  You have successfully bought a victory in the election.[NEWLINE][NEWLINE]Your underhanded tactics and bribes were not detected and the rebellious cities accept their defeat in the polls and settle down for the time being.  However, it will still be prudent to increase their happiness so you don't face this again soon.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_CEDE</Tag>
@@ -1368,7 +1216,6 @@
 		<German>Ihre Herrschaft ist beendet und ein neuer Anf&#252;hrer besetzt den Thron!</German>
 		<Italian>Il tuo potere &#232; caduto, e un nuovo leader sale sul trono!</Italian>
 		<Spanish>&#161;Tu mandato ha caido y un nuevo l&#237;der asume el trono!</Spanish>
-		<Finnish>Your rule is over and a new leader assumes the throne!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HUMAN_CONTROL_RETURNED</Tag>
@@ -1377,7 +1224,6 @@
 		<German>Jedoch wird Ihnen die Kontrolle zur&#252;ckgegeben in</German>
 		<Italian>Tuttavia, il controllo ti sar&#224; restituito in </Italian>
 		<Spanish>No obstante, el control te ser&#225; devuelto en</Spanish>
-		<Finnish>However, control will be returned to you in</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ASSIM_POPUP</Tag>
@@ -1386,7 +1232,6 @@
 		<German>Das %s m&#246;chte die Unabh&#228;ngigkeit aufgeben und sich Ihrem Imperium anschlie&#223;en!  Sie glauben, dass sie einfach zu klein sind, um auf sich selbst gestellt zu &#252;berleben und hoffen, dass Sie ihren Antrag annehmen.[NEWLINE][NEWLINE]Wenn Sie diesen Antrag annehmen, erhalten Sie alle St&#228;dte von %s. Sie bilden anschlie&#223;end eine Minderheit in Ihrem Imperium.</German>
 		<Italian>Il/la %s vorrebbe abbandonare la propria indipendenza ed unirsi al tuo impero!  Semplicemente non sono abbastanza estesi per sopravvivere da soli e sperano che accetterai la loro richiesta.[NEWLINE][NEWLINE]Se accetti, otterrai tutte le citt&#224; del/la %s, ed essi diverranno una minoranza all'interno del tuo impero.</Italian>
 		<Spanish>&#161;Las %s querr&#237;an renunciar a su independencia y unirse a tu imperio!  Sienten que son simplemente demasiado peque&#241;as para sobrevivir por si mismas, y esperan que aceptes sus peticiones.[NEWLINE][NEWLINE]Si aceptas sus t&#233;rminos, recibir&#225;s todas las ciudades %ss y se convertir&#225;n en un grupo minoritario en tu imperio.</Spanish>
-		<Finnish>The %s would like to give up their independence and join your empire!  They feel they are simply too small to survive on their own, and hope that you will accept their request.[NEWLINE][NEWLINE]If you accept this request, you will receive all of the %s's cities and they will become a minority group in your empire.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_ASSIM_POPUP_REBEL</Tag>
@@ -1395,7 +1240,6 @@
 		<German>Beachten Sie, dass die Einverleibung dieser Rebellen zu einer ernsthaften Belastung unserer Beziehung zu %s f&#252;hrt, die Ihnen wom&#246;glich sogar den Krieg erkl&#228;ren werden.  Bedenken Sie Ihre Entscheidung sorgf&#228;ltig.</German>
 		<Italian>Nota che che assimilare questi ribelli provocher&#224; una grande tensione nei rapporti con %s, fino a portarlo sul punto di dichiararti guerra.  Rifletti bene sulla tua decisione.</Italian>
 		<Spanish>Hay que tener en cuenta que asimilar a estos rebeldes causar&#225; serias tensiones en tus relaciones con %s, que podr&#237;a incluso considerar el declararte la guerra.  Estima cuidadosamente tu decisi&#243;n.</Spanish>
-		<Finnish>Note that assimilating these rebels will cause a serious strain on your relations with %s, who may go so far as to declare war on you.  Consider your decision carefully.</Finnish>
 	</TEXT>
 
 	<!-- Join existing revolution popup text -->
@@ -1406,7 +1250,6 @@
 		<German>wenden sich an Sie mit einem Angebot.  Wenn Sie die Kontrolle &#252;bergeben vom</German>
 		<Italian>ti contatta con un'offerta.  Se cedi il controllo di</Italian>
 		<Spanish>intenta aproximarse a t&#237; con una oferta.  Si entregas el control de</Spanish>
-		<Finnish>approaches you with an offer.  If you surrender control of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_JOINREV_PEACE</Tag>
@@ -1415,7 +1258,6 @@
 		<German>, die Aufr&#252;hrer sind damit einverstanden, die Gewalt zu beenden und Frieden zu erkl&#228;ren.[NEWLINE][NEWLINE]Wenn Sie das Angebot annehmen, wird der Krieg beendet, aber Sie verlieren die Kontrolle &#252;ber die St&#228;dte.  Wenn Sie das Angebot ablehnen, wird sich die Stadt %s erheben und  die Reihen der Rebellen verst%#228;rken, w&#228;hrend Aufr&#252;hrer in anderen St&#228;dten ebenfalls ermutigt werden k&#246;nnten.  W&#228;hlen Sie sorgf&#228;ltig.</German>
 		<Italian>, i ribelli termineranno le azioni violente e acconsentiranno alla pace.[NEWLINE][NEWLINE]Se accetti l'offerta, la guerra si concluder&#224;, ma perderai il controllo delle citt&#224;.  Se rifiuti, la citt&#224; di %s sollever&#224; e rinforzer&#224; l'armata ribelle, mentre in altre citt&#224; i ribelli potranno essere incoraggiati.  Scegli con attenzione.</Italian>
 		<Spanish>, los rebeldes est&#225;n de acuerdo en acabar la violencia  y declarar la paz.[NEWLINE][NEWLINE]Si aceptas la oferta, la guerra terminar&#225;, pero perder&#225;s el control de la(s) ciudad(es).  Si declinas la oferta, la ciudad de %s se levantar&#225; encabezando las fuerzas rebeldes, y cabe la posibilidad de que rebeldes en otras ciudades se envalentonen.  Escoge cuidadosamente.</Spanish>
-		<Finnish>, the rebels will agree to end the violence and declare peace.[NEWLINE][NEWLINE]If you accept the offer, the war will end, but you will lose control of the cities.  If you decline the offer, the city of %s will rise up and bolster the rebel ranks, while rebels in other cities may also be emboldened.  Choose carefully.</Finnish>
 	</TEXT>
 
 	<!-- Cultural revolution popup text -->
@@ -1426,7 +1268,6 @@
 		<German>Lautstarke Forderung sich anzuschlie&#223;en an</German>
 		<Italian>chiedono a gran voce di unirsi al/la</Italian>
 		<Spanish>clamando unirse al</Spanish>
-		<Finnish>clamoring to join the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_PEACE_REFORM</Tag>
@@ -1435,7 +1276,6 @@
 		<German>sehnen sich danach neu zu formen</German>
 		<Italian>desiderano riformare</Italian>
 		<Spanish>anhelando reformarse</Spanish>
-		<Finnish>longing to re-form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_PEACE</Tag>
@@ -1444,7 +1284,6 @@
 		<German>Demonstrationen und Aufst&#228;nde sind in den Stra&#223;en ausgebrochen![NEWLINE][NEWLINE]Ihre Forderungen zu verweigern wird die Leute ver&#228;rgern und vielleicht ihren revolution&#228;ren Geist befl&#252;geln.  Wenn Sie ihre Forderungen ablehnen, so werden sie noch nicht zu den Waffen greifen. Sie sollten jedoch Ma&#223;nahmen ergreifen, um ihre Zufriedenheit zu erh&#246;hen oder die Bindung an Ihre Kultur und Religion zu verbessern.  Beim n&#228;chsten mal k&#246;nnte es einen Aufstand geben!</German>
 		<Italian>Sono scoppiati dimostrazioni e tumulti![NEWLINE][NEWLINE]Rifiutare la loro richiesta far&#224; aumentare la rabbia e rinforzare lo spirito rivoluzionario.  Anche se ora non prenderanno le armi, se non accetti le loro richieste dovresti comunque intervenire per aumentare la loro felicit&#224; e i legami con la tua cultura e la tua religione.  Se ci sar&#224; una prossima volta, potresti affrontare una vera rivolta!</Italian>
 		<Spanish>&#161;Los manifestantes y los motines dominan las calles![NEWLINE][NEWLINE]Denegar sus peticiones enfadar&#225; a los ciudadanos y quiz&#225; encienda el esp&#237;ritu revolucionario.  Aunque a&#250;n no se alzaran en armas por ahora, si deniegas sus peticiones deber&#237;as tomar medidas para incrementar su felicidad o acercarlos a tu cultura y religi&#243;n.  &#161;Si esto vuelve a ocurrir, deber&#225;s enfrentarte a una sublevaci&#243;n!</Spanish>
-		<Finnish>Demonstrations and riots have broken out in the streets![NEWLINE][NEWLINE]Denying their request will anger the people and perhaps fuel their revolutionary spirit.  While they won't take up arms now, if you deny their request you should take action to increase their happiness or bond with your culture and religion.  If there is a next time, you may face an uprising!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN</Tag>
@@ -1453,7 +1292,6 @@
 		<German>fordern den Anschluss an</German>
 		<Italian>vogliono unirsi al/la</Italian>
 		<Spanish>demandan unirse al</Spanish>
-		<Finnish>demanding to join the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN_DENY_WAR</Tag>
@@ -1462,7 +1300,6 @@
 		<German>Wenn Sie sie nicht lassen, werden sie sich gegen Sie erheben und sich vereinen mit</German>
 		<Italian>Se non li lasci andare, si solleveranno contro di te, unendosi al/la</Italian>
 		<Spanish>Si no les dejas, se levantar&#225;n contra t&#237;, uniendose al</Spanish>
-		<Finnish>If you do not let them, they will rise up against you, joining the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN_DENY_BARB</Tag>
@@ -1471,7 +1308,6 @@
 		<German>Wenn Sie sie nicht lassen, werden ihre lose organisierten Rebellenbanden sich gegen Sie erheben.</German>
 		<Italian>Se non li lasci andare, le bande ribelli si solleveranno contro di te.</Italian>
 		<Spanish>Si no les dejas, sus desorganizadas bandas rebeldes se levantar&#225;n contra t&#237;.</Spanish>
-		<Finnish>If you do not let them, their loosely organized rebel bands will rise up against you.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN_DENY</Tag>
@@ -1480,7 +1316,6 @@
 		<German>Wenn Sie sie nicht lassen werden sie sich gegen Sie erheben als</German>
 		<Italian>Se non li lasci andare, si solleveranno contro di te, come </Italian>
 		<Spanish>Si no les dejas, se alzar&#225;n contra t&#237; como</Spanish>
-		<Finnish>If you do not let them, they will rise up against you as</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN_DENY_ALIVE</Tag>
@@ -1489,7 +1324,6 @@
 		<German>Wenn Sie sie nicht lassen, werden sie sich mit den %s vereinigen und Sie angreifen!</German>
 		<Italian>Se non li lasci andare, si uniranno al/la %s e ti attaccheranno!</Italian>
 		<Spanish>&#161;Si no se lo permites, se unir&#225;n al %s y te atacar&#225;n!</Spanish>
-		<Finnish>If you do not let them, they will join the %s and attack you!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_JOIN_DECLARE_WAR</Tag>
@@ -1498,7 +1332,6 @@
 		<German>Sie k&#246;nnen sich auch entscheiden, den Krieg zu erkl&#228;ren und beseitigen damit den &#228;rgerlichen Einfluss von</German>
 		<Italian>Puoi pure decidere di dichiarare guerra ed eliminare la fastidiosa influenza del/la</Italian>
 		<Spanish>Tambi&#233;n puedes determinar declarar la guerra y eliminar la problem&#225;tica influencia de</Spanish>
-		<Finnish>You may also decide to declare war and eliminate the troublesome influence of the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_REFORM_BARB</Tag>
@@ -1507,7 +1340,6 @@
 		<German>Unabh&#228;ngigkeit zu erkl&#228;ren, obwohl sie keine Flagge haben, um die sie sich versammeln k&#246;nnen.</German>
 		<Italian>dichiarando la propria indipendenza, anche se non hanno una bandiera sotto cui unirsi.</Italian>
 		<Spanish>declarando la independecia, aunque no tienen una bandera bajo la que unirse.</Spanish>
-		<Finnish>declaring independence even though they have no flag to rally around.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_REFORM</Tag>
@@ -1516,7 +1348,6 @@
 		<German>ihre Unabh&#228;ngigkeit zu erkl&#228;ren und w&#252;nschen wieder zu bilden das</German>
 		<Italian>dichiarando la propria indipendenza e desiderano riformare</Italian>
 		<Spanish>declarando su independecia y deseando reformarse</Spanish>
-		<Finnish>declaring their independence and desire to re-form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_1</Tag>
@@ -1525,7 +1356,6 @@
 		<German>Die B&#252;rger haben Waffen angeh&#228;uft und auf dem Land Man&#246;ver ausgef&#252;hrt![NEWLINE][NEWLINE]Wenn Sie ihren Wunsch sich abzuspalten ablehnen, m&#252;ssen Sie sich den Revolution&#228;ren auf dem Schlachtfeld gegen&#252;berstellen.</German>
 		<Italian>I cittadini stanno raccogliendo le armi e iniziando le esercitazioni![NEWLINE][NEWLINE]Se non accetterai la loro richiesta di indipendenza, dovrai affrontare i rivoluzionari sul campo di battaglia.</Italian>
 		<Spanish>&#161;Los ciudadanos han estado fabricando armas y adiestr&#225;ndose en el campo![NEWLINE][NEWLINE]Si deniegas sus peticiones para abandonar, tendr&#225;s que verte las caras con los revolucionarios en el campo de batalla.</Spanish>
-		<Finnish>The citizens have been massing weapons and drilling in the countryside![NEWLINE][NEWLINE]If you deny their request to leave, you will have to face the revolutionaries on the battlefield.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_2</Tag>
@@ -1534,7 +1364,6 @@
 		<German>kann Ihre Aktivit&#228;ten als Kriegshandlung deuten und dementsprechend reagieren!  Auch wenn sie sich nicht revanchieren werden, so leiden doch Ihre Beziehungen zu ihnen, und die St&#228;dte werden sich erheben</German>
 		<Italian>pu&#242; interpretare le tue azioni come atto di guerra e rispondere di conseguenza!   Se non ti risponderanno, i rapporti resteranno comunque difficili e le citt&#224; si solleveranno</Italian>
 		<Spanish>puede interpret&#225;r tus acciones como un acto de guerra y responder en consecuencia.  Si no toman represalias, tus relaciones con ellos no obstante sufrir&#225;n, y las ciudades se sublevar&#225;n.</Spanish>
-		<Finnish>may interpret your actions as an act of war and respond accordingly!  If they don't retaliate, your relations with them will still suffer, and the cities will rise up</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_BARB</Tag>
@@ -1543,7 +1372,6 @@
 		<German>in lose organisierten Rebellenbanden.</German>
 		<Italian>in bande ribelli poco organizzate.</Italian>
 		<Spanish>en desorganizadas bandas de rebeldes.</Spanish>
-		<Finnish>in loosely organized rebel bands.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_FIGHT</Tag>
@@ -1552,7 +1380,6 @@
 		<German>und bek&#228;mpfen Sie als</German>
 		<Italian>e combatterti come</Italian>
 		<Spanish>y luchar&#225;n contra t&#237; como</Spanish>
-		<Finnish>and fight you as</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_ENEMY</Tag>
@@ -1561,7 +1388,6 @@
 		<German>Die St&#228;dte werden sich erheben und schlie&#223;en sich Ihrem Feind an, den</German>
 		<Italian>Le citt&#224; si solleveranno e si uniranno al tuo nemico, il/la</Italian>
 		<Spanish>Las ciudades se alzar&#225;n y se unir&#225;n a tu enemigo, el </Spanish>
-		<Finnish>The cities will rise up and join your enemy, the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CULT_VIOLENT_FINAL</Tag>
@@ -1570,7 +1396,6 @@
 		<German>Ihre Truppen werden von einer feindseligen Bev&#246;lkerung umgeben sein und k&#246;nnen starke Verluste erleiden oder sogar &#252;berlaufen.  Die Verteidigung einiger dieser St&#228;dte kann unmittelbar zerfallen, andere k&#246;nnen vielleicht einen Rest an Kontrolle bewahren.  Krieg mit Ihren eigenen St&#228;dten ist h&#228;&#223;lich, aber vielleicht ist er dennoch besser, als Ihre St&#228;dte ohne Kampf ziehen zu lassen!  W&#228;gen Sie Ihre Optionen sorgf&#228;ltig ab.</German>
 		<Italian>Le tue truppe saranno circondate da una popolazione ostile e potranno subire gravi perdite o anche disertare.  Le difese di alcune di queste citt&#224; possono cadere subito, in altre potrai mantenere un certo grado di controllo.  Anche se la guerra contro le tue stesse citt&#224; sar&#224; terribile, potrebbe essere meglio che permettere loro di separarsi senza lottare!  Valuta con attenzione le tue scelte.</Italian>
 		<Spanish>Tus tropas estar&#225;n cercadas por una poblaci&#243;n hostil y pueden tener graves p&#233;rdidas o hasta desaparecer.  Las defensas de algunas de estas ciudades se desmoronar&#225;n inmediatamente, otras es posible que puedan mantener algo semejante a control.  &#161;Mientras, la guerra contra tus propias ciudades se ir&#225; volviendo m&#225;s y m&#225;s violenta, no obstante ser&#225; mejor eso a que permitas abandonar las ciudades en tu poder sin luchar!  Considera cuidadosamente tus opciones.</Spanish>
-		<Finnish>Your troops will be surrounded by a hostile population and may take heavy losses or even defect.  The defenses of some of these cities may crumble immediately, others may be able to retain some semblence of control.  While war with your own cities will be ugly, it may be better than allowing cities you control to leave without a fight!  Carefully weigh your options.</Finnish>
 	</TEXT>
 
 	<!-- Religious revolution popup text -->
@@ -1581,7 +1406,6 @@
 		<German>erbitten ein Ende Ihrer</German>
 		<Italian>chiedono la fine del tuo</Italian>
 		<Spanish>solicitando y terminar con tu</Spanish>
-		<Finnish>requesting an end to your</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_THEOCRACY2</Tag>
@@ -1590,7 +1414,6 @@
 		<German>Sie sind zu lang unterdr&#252;ckt worden und sie w&#252;nschen, dass Sie Ihre religi&#246;se Staatsform wechseln zu</German>
 		<Italian>Sono stati oppressi per troppo tempo e vogliono che tu cambi la forma di governo religiosa in</Italian>
 		<Spanish>Han sido oprimidos demasiado tiempo, y desean que cambies tu pol&#237;tica de principios religiosos a</Spanish>
-		<Finnish>They have been oppressed for too long, and desire you to switch your religious civic policy to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_FREE_REL1</Tag>
@@ -1599,7 +1422,6 @@
 		<German>fordern, dass Sie annehmen</German>
 		<Italian>chiedendo che tu adotti</Italian>
 		<Spanish>solicitan que adoptes</Spanish>
-		<Finnish>requesting that you adopt</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_FREE_REL2</Tag>
@@ -1608,7 +1430,6 @@
 		<German>Sie glauben, Ihre staatliche Unterst&#252;tzung von</German>
 		<Italian>Ritengono che il tuo sostegno di stato al </Italian>
 		<Spanish>Sienten que tu patrocinio de estado de</Spanish>
-		<Finnish>They feel your state sponsorship of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PRACTICE</Tag>
@@ -1617,7 +1438,6 @@
 		<German>behindert ihre F&#228;higkeit, den einen wahren Glauben zu &#252;ben und zu verbreiten,</German>
 		<Italian>impedisce loro la possibilit&#224; di praticare e diffondere l'unica vera fede, </Italian>
 		<Spanish>impide su posibilidad de practicar y propagar la &#250;nica y verdadera f&#233;,</Spanish>
-		<Finnish>impedes their ability to practice and spread the one true faith,</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_CHANGE</Tag>
@@ -1626,7 +1446,6 @@
 		<German>fordern, dass Sie Ihre Staatsreligion &#228;ndern zu</German>
 		<Italian>chiedendo che la Religione di Stato divenga </Italian>
 		<Spanish>solicitando que cambies tu religi&#243;n de estado por</Spanish>
-		<Finnish>requesting that you change your state religion to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_NEW_REL</Tag>
@@ -1635,7 +1454,6 @@
 		<German>von Ihren St&#228;dten haben die neue Religion, w&#228;hrend</German>
 		<Italian>delle tue citt&#224; che hanno la nuova religione, mentre</Italian>
 		<Spanish>de tus ciudades que tienen la nueva religi&#243;n, mientras</Spanish>
-		<Finnish>of your cities have the new religion, while</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_STATE_REL</Tag>
@@ -1644,7 +1462,6 @@
 		<German>haben die aktuelle Staatsreligion.</German>
 		<Italian>ha la tua attuale religione di stato.</Italian>
 		<Spanish>tienen tu religi&#243;n de estado actual.</Spanish>
-		<Finnish>have your current state religion.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_HONORING</Tag>
@@ -1653,7 +1470,6 @@
 		<German>Obwohl sie noch keine Kriegsvorbereitungen begonnen haben, werden sie, wenn ihr Wunsch verweigert wird, noch eifriger in ihrem Wunsch nach Ver&#228;nderung werden.  Ihren Antrag zu beachten ist der bei weitem schnellste und einfachste Weg sie in absehbarer Zukunft in Ihrem Imperium zu halten, aber kann andererseits zu etwas Unzufriedenheit in anderen St&#228;dten f&#252;hren. [NEWLINE] [NEWLINE] Als Alternative kann eine gro&#223;z&#252;gige Spende an die religi&#246;sen F&#252;hrer sie beruhigen.</German>
 		<Italian>Per ora non hanno cominciato i preparativi per la guerra, ma se non accetti la loro richiesta, diventeranno presto pi&#249; desiderosi di cambiamento.  Accettare la loro richiesta &#232;la scelta pi&#249; rapida e pi&#249; semplice per mantenerli nel tuo impero, per il prossimo futuro, ma pu&#242; indurre un certo malcontento in altre citt&#224;. [NEWLINE] [NEWLINE] In alternativa, una notevole donazione ai capi religiosi li indurrebbe alla calma.</Italian>
 		<Spanish>A&#250;n no han echo preparaciones para la guerra, si deniegas su petici&#243;n puede que pronto se alcen m&#225;s fervientes en su deseo de cambiar.  Aceptar sus solicitudes es, de lejos, la m&#225;s r&#225;pida y f&#225;cil opci&#243;n para mantenerlos en tu imperio por un futuro seguro, pero puede llevar a cierto descontento en otras ciudades.[NEWLINE][NEWLINE]Alternativamente, una gran donaci&#243;n a los l&#237;deres religiosos puede motivarles a sentar la cabeza.</Spanish>
-		<Finnish>While they have not yet begun preparations for war, if you deny their request they may soon become more fervent in their desire for change.  Honoring their request is by far the quickest and easiest path to keeping them in your empire for the forseeable future, but may lead to some discontent in other cities.[NEWLINE][NEWLINE]Alternatively, a large donation to the religious leaders would cause them to settle down.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_VASSAL_1</Tag>
@@ -1662,7 +1478,6 @@
 		<German>suchen nach teilweiser Autonomie, damit sie ihren Glauben frei aus&#252;ben k&#246;nnen,</German>
 		<Italian>cercano una parziale autonomia in modo da professare liberamente la propria fede, </Italian>
 		<Spanish>procurandoles una cierta autonom&#237;a de modo que puedan adorar su f&#233; m&#225;s libremente,</Spanish>
-		<Finnish>seeking partial autonomy so that they may freely worship their faith,</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_VASSAL_2</Tag>
@@ -1671,7 +1486,6 @@
 		<German>Sie m&#246;chten bilden</German>
 		<Italian>Desiderano formare</Italian>
 		<Spanish>Desean fomar</Spanish>
-		<Finnish>They wish to form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_VASSAL_3</Tag>
@@ -1680,7 +1494,6 @@
 		<German>und ein freier Vasall Ihres Imperiums werden.  Sie k&#246;nnen ihnen auch volle Unabh&#228;ngigkeit bewilligen.</German>
 		<Italian>e diventare un vassallo del tuo impero.  Puoi anche decidere di riconoscere loro la completa indipendenza.</Italian>
 		<Spanish>y convertirse en un Vasallo libre de tu imperio.  Solo puedes elegir garantizarles una completa independecia.</Spanish>
-		<Finnish>and become a free Vassal of your empire.  You may also choose to grant them full independence.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_IND_1</Tag>
@@ -1689,7 +1502,6 @@
 		<German>suchen nach Unabh&#228;ngigkeit, damit sie ihren Glauben frei aus&#252;ben k&#246;nnen</German>
 		<Italian>cercando l'indipendenza in modo da professare liberamente </Italian>
 		<Spanish>otorg&#225;ndoles indepedencia de modo que puedan adorar m&#225;s libremente</Spanish>
-		<Finnish>seeking independence so that they may freely worship</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_IND_2</Tag>
@@ -1698,7 +1510,6 @@
 		<German>Sie haben gelebt in Ihrer</German>
 		<Italian>Hanno vissuto nella tua societ&#224; dominata dal</Italian>
 		<Spanish>Han vivido en tu</Spanish>
-		<Finnish>They have lived in your</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE_IND_3</Tag>
@@ -1707,7 +1518,6 @@
 		<German>dominanten Gesellschaft f&#252;r zu lange und m&#246;chten bilden</German>
 		<Italian>per troppo tempo e vogliono formare</Italian>
 		<Spanish>sociedad dominante por demasiado tiempo, y quieren formar</Spanish>
-		<Finnish>dominated society for too long, and want to form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_PEACE</Tag>
@@ -1716,7 +1526,6 @@
 		<German>Obwohl sie noch keine Kriegsvorbereitungen begonnen haben, werden sie, wenn ihr Wunsch verweigert wird, noch eifriger in ihrem Wunsch nach Unabh&#228;gigkeit werden.  Wenn Sie beschlie&#223;en, sie nicht gehen zu lassen, so sollten Sie Ihre Religion in Ihren St&#228;dten verbreiten und weitere Ma&#223;nahmen ergreifen, um ihre Situation zu verbessern. Tun Sie das oder Sie k&#246;nnen in Zukunft mit Aufst&#228;nden rechnen! [NEWLINE] [NEWLINE] Alternativ k&#246;nnten Sie den religi&#246;sen F&#252;hrern eine gro&#223;z&#252;gige Spende &#252;bergeben. Mit dieser Geste des Vertrauens werden sie ihre Sache fallen lassen und sich beruhigen.</German>
 		<Italian>Per ora non hanno cominciato i preparativi per la guerra, ma se non accetti la loro richiesta, diventeranno presto pi&#249; desiderosi di indipendenza.  Se sceglierai di non lasciarli andare, dovresti diffondere la religione di stato nelle citt&#224; ed agire per migliorare la loro condizione.  Fai qualcosa, altrimenti dovrai fronteggiare presto una rivolta! [NEWLINE] [NEWLINE] In alternativa, fai una generosa donazione ai capi religiosi: dopo questo gesto di buona fede, cominceranno ad abbandonare la loro causa e la situazione comincer&#224; a calmarsi.</Italian>
 		<Spanish>A&#250;n no han echo preparaciones para la guerra, si deniegas su petici&#243;n puede que pronto se alcen m&#225;s fervientes en su deseo de independecia.  Si escoges no permitirles irse, deber&#237;as extender tu religi&#243;n a las otra ciudades y tomar otras medidas para mejorar su situaci&#243;n.  &#161;Uno u otro, o puede que tengas que encarar muy bien una insurreci&#243;n en el futuro![NEWLINE][NEWLINE]Alternativamente, puedes hacer una generosa donaci&#243;n a los l&#237;deres religiosos.  Con este buen gesto de f&#233;, dejar&#225;n a un lado su causa y se calmar&#225;n.</Spanish>
-		<Finnish>While they have not yet begun preparations for war, if you deny their request they may soon become more fervent in their desire for independence.  If you choose not to let them walk away, you should spread your religion to the cities and take other action to improve their situation.  Either that, or you may very well be faced with an uprising in the future![NEWLINE][NEWLINE]Alternatively, you could make a generous donation to the religions leaders.  With this good faith gesture, they will drop their cause and quiet down.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_VIOLENT_IND_1</Tag>
@@ -1725,7 +1534,6 @@
 		<German>erkl&#228;ren ihre Unabh&#228;ngigkeit, damit sie ihren Glauben frei aus&#252;ben k&#246;nnen,</German>
 		<Italian>dichiarando la propria indipendenza in modo da professare liberamente la propria fede, </Italian>
 		<Spanish>declarando su indepedencia de modo que puedan adorar m&#225;s libremente su f&#233;,</Spanish>
-		<Finnish>declaring their independence so that they may freely worship their faith,</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_VIOLENT_IND_2</Tag>
@@ -1734,7 +1542,6 @@
 		<German>Sie haben gelebt in Ihrer</German>
 		<Italian>Hanno vissuto nella tua societ&#224; dominata dal </Italian>
 		<Spanish>Han vivido en tu</Spanish>
-		<Finnish>They have lived in your</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_VIOLENT_IND_3</Tag>
@@ -1743,7 +1550,6 @@
 		<German>dominanten Gesellschaft f&#252;r zu lange!</German>
 		<Italian>per troppo tempo!</Italian>
 		<Spanish>sociedad dominante por demasiado tiempo!</Spanish>
-		<Finnish>dominated society for too long!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_REL_VIOLENT_IND</Tag>
@@ -1752,7 +1558,6 @@
 		<German>Wenn Sie ihre Bitte zu gehen verweigern, so m&#252;ssen Sie sich gl&#228;ubigen Revolution&#228;ren auf dem Schlachtfeld stellen.  Ihre Truppen in diesen St&#228;dten werden von einer feindseligen Bev&#246;lkerung umgeben sein und k&#246;nnen starke Verluste erleiden oder sogar &#252;berlaufen.  Die Verteidigung einiger dieser St&#228;dte kann unmittelbar zerfallen, andere k&#246;nnen vielleicht einen Rest an Kontrolle bewahren.  Krieg mit Ihren eigenen St&#228;dten ist h&#228;&#223;lich, aber vielleicht ist er dennoch besser, als Ihre St&#228;dte ohne Kampf ziehen zu lassen!  W&#228;gen Sie Ihre Optionen sorgf&#228;ltig ab.</German>
 		<Italian>Se non accetterai la loro richiesta di separarsi, dovrai affrontare i rivoluzionari sul campo di battaglia. Le tue truppe in queste citt&#224; saranno circondate da una popolazione ostile e potranno subire gravi perdite o anche disertare.   Le difese di alcune di queste citt&#224; possono crollare subito, su altre potresti mantenere un certo livello di controllo.  Anche se la guerra contro le tue stesse citt&#224; sar&#224; terribile, potrebbe essere meglio che permettere loro di separarsi senza lottare!  Valuta con attenzione le tue scelte.</Italian>
 		<Spanish>Si rechazas sus peticiones para marcharse, deber&#225;s encarar a los devotos revolucionarios en el campo de batalla.  Tus tropas en estas ciudades estar&#225;n cercadas por una poblaci&#243;n hostil y pueden tener graves p&#233;rdidas o hasta sufrir defectos.  Las defensas de algunas de estas ciudades se desmoronar&#225;n inmediatamente, otras es posible que puedan mantener algo semejante a control.  &#161;Cuando la guerra con tus propias ciudades se encarnice, ser&#225; mejor que permitas abandonar las ciudades bajo tu control sin luchar!  Considera cuidadosamente tus opciones..</Spanish>
-		<Finnish>If you deny their request to leave, you will have to face the devout revolutionaries on the battlefield.  Your troops in these cities will be surrounded by a hostile population and may take heavy losses or even defect.  The defenses of some of these cities may crumble immeadiately, others may be able to retain some semblence of control.  While war with your own cities will be ugly, it may be better than allowing cities you control to leave without a fight!  Carefully weigh your options.</Finnish>
 	</TEXT>
 	
 	<!-- Homeland revolution popup text -->
@@ -1763,7 +1568,6 @@
 		<German>vereinigen sich mit Ihren religi&#246;sen Anf&#252;hrern zum Anruf f&#252;r einen heiligen Krieg gegen</German>
 		<Italian>unendosi con i tuoi capi religiosi alla richiesta per una Guerra Santa contro</Italian>
 		<Spanish>uniendose a tus l&#237;deres religiosos para declarar una guerra santa contra</Spanish>
-		<Finnish>joining with your religious leaders to call for a holy war against the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_RECLAIM</Tag>
@@ -1772,7 +1576,6 @@
 		<German>Sie m&#252;ssen Ihre Hingabe zeigen, indem Sie Ihre heilige Stadt zur&#252;ckfordern,</German>
 		<Italian>Devi mostrare la tua devozione riconquistando la Citt&#224; Santa,</Italian>
 		<Spanish>Debes mostrar tu devoci&#243;n para reclamar tu ciudad santa,</Spanish>
-		<Finnish>You must show your devotion by reclaiming your holy city,</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_HEATHENS</Tag>
@@ -1781,7 +1584,6 @@
 		<German>von den Heiden!</German>
 		<Italian>dagli infedeli!</Italian>
 		<Spanish>de los paganos!</Spanish>
-		<Finnish>from the heathens!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_REQUEST</Tag>
@@ -1790,7 +1592,6 @@
 		<German>Ihre Forderung zu beachten und Ihre Anh&#228;nger zu einem heiligen Sieg zu f&#252;hren ist der sicherste Weg, diese St&#228;dte auch in der Zukunft in Ihrem Imperium zu halten. Wenn Sie ihre Rufe nach einem heiligen Krieg ignorieren, k&#246;nnten sie bald zur Erkenntnis gelangen, dass Sie kein wahrer Gl&#228;ubiger sind und sich gegen Sie wenden.</German>
 		<Italian>Accettare la loro richiesta e condurre i tuoi seguaci ad una santa vittoria &#232; il metodo pi&#249; sicuro per mantenere queste citt&#224; nel tuo impero per il prossimo futuro.  Se ignori i loro richiami alla Guerra Santa, potranno decidere che non sei un vero credente e rivoltarsi contro di te.</Italian>
 		<Spanish>Aceptando sus peticiones, y dirigiendo a tus seguidores a una victoria santa es la manera m&#225;s segura de mantener estas ciudades en tu imperio por un futuro seguro.  Si ignoras sus llantos por la guerra santa, puede que pronto decidan que no eres un verdadero creyente y se te opongan.</Spanish>
-		<Finnish>Honoring their request, and leading your followers to a holy victory is the surest way to keep these cities in your empire for the forseeable future.  If you ignore their cries for holy war, they may soon decide you are not a true believer and turn against you.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_WHILE</Tag>
@@ -1799,7 +1600,6 @@
 		<German>W&#228;hrend es zutrifft, dass</German>
 		<Italian>Mentre &#232; vero che</Italian>
 		<Spanish>Mientras es verdad el</Spanish>
-		<Finnish>While it is true the</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_CLAIMS</Tag>
@@ -1808,7 +1608,6 @@
 		<German>fordert zu folgen</German>
 		<Italian>proclama di seguire</Italian>
 		<Spanish>claman seguir</Spanish>
-		<Finnish>claims to follow</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_WORTHY</Tag>
@@ -1817,7 +1616,6 @@
 		<German>sie sind nicht mehr w&#252;rdig, die heilige Stadt zu besitzen</German>
 		<Italian>non sono pi&#249; degni di possedere la Citt&#224; Santa di</Italian>
 		<Spanish>no son dignos de poseer por m&#225;s tiempo la ciudad sagrada de</Spanish>
-		<Finnish>they are no longer worthy of holding the holy city of</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_DEVOTION</Tag>
@@ -1826,7 +1624,6 @@
 		<German>Sie m&#252;ssen Ihre Hingabe zeigen, indem Sie zur&#252;ckfordern</German>
 		<Italian>Devi mostrare la tua devozione riconquistando</Italian>
 		<Spanish>Debes mostrar tu devoci&#243;n reclamando</Spanish>
-		<Finnish>You must show your devotion by reclaiming</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_HOLY_UNWORTHY</Tag>
@@ -1835,7 +1632,6 @@
 		<German>von den Unw&#252;rdigen!</German>
 		<Italian>dagli indegni!</Italian>
 		<Spanish>de los indignos!</Spanish>
-		<Finnish>from the unworthy!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_EMAN_REJECT</Tag>
@@ -1844,7 +1640,6 @@
 		<German>fordern, dass Sie offiziell die Praxis der Sklaverei zur&#252;ckweisen und annehmen</German>
 		<Italian>chiedendo che venga ufficialmente abolita la pratica della schiavit&#249; e che tu adotti</Italian>
 		<Spanish>solitando que rehuses oficialmente de practicar la esclavitud y adoptes</Spanish>
-		<Finnish>requesting that you officially reject the practice of slavery and adopt</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_EMAN_CIVIC</Tag>
@@ -1853,7 +1648,6 @@
 		<German>in Ihren Staatsformen.  Massendemonstrationen sind ausgebrochen und die Produktion in Ihren St&#228;dten wurde zum Stillstand gebracht!</German>
 		<Italian>come forma di governo.  Sono scoppiate manifestazioni di piazza, bloccando la produzione nelle tue citt&#224;!</Italian>
 		<Spanish>en tus principios pol&#237;ticos.  &#161;Manifestaciones masivas han salido a la calle, llevando la producci&#243;n en tus ciudades a interrumpirse!</Spanish>
-		<Finnish>in your civic policy.  Mass demonstrations have broken out, bringing production in your cities to a halt!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_EMAN_SLAVE</Tag>
@@ -1862,7 +1656,6 @@
 		<German>Sollten Sie sich entscheiden, Ihre gegenw&#228;rtige Praxis beizubehalten, so k&#246;nnten Sie noch gen&#252;gend Zeit haben, andere Aspekte dieser St&#228;dte zu verbessern, bis sie Ihre Duldung des Sklavenhandels vergessen haben.</German>
 		<Italian>Tuttavia, anche se decidi di proseguire l'attuale politica, sei ancora in tempo per migliorare altri aspetti di queste citt&#224; in modo da far loro dimenticare la tua tolleranza al commercio di schiavi.</Italian>
 		<Spanish>No obstante, si decides mantener tus pr&#225;cticas actuales, aun tienes tiempo para mejorar otros aspectos de estas ciudades de modo que olviden tu comercio de esclavos.</Spanish>
-		<Finnish>However, if you decide to keep your current practices, you may yet have time to improve other aspects of these cities so they will forget your condoning the slave trade.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_SLAVE_REBELLION</Tag>
@@ -1871,7 +1664,6 @@
 		<German>Ein Sklavenaufstand ist ausgebrochen in</German>
 		<Italian>Una rivolta di schiavi &#232; scoppiata a</Italian>
 		<Spanish>Una rebeli&#243;n de esclavos ha irrumpido en</Spanish>
-		<Finnish>A slave rebellion has broken out in</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_SLAVE_DEMAND</Tag>
@@ -1880,7 +1672,6 @@
 		<German>Die Sklaven verlangen, dass Sie wechseln zu</German>
 		<Italian>Gli schiavi stanno chiedendo di cambiare verso</Italian>
 		<Spanish>Los esclavos est&#225;n demandando que cambies a</Spanish>
-		<Finnish>The slaves are demanding you switch to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_SLAVE_DENY</Tag>
@@ -1889,7 +1680,6 @@
 		<German>oder sie werden k&#228;mpfen! [NEWLINE] [NEWLINE] Wenn Sie ihre Forderung ablehnen, so werden unorganisierte Sklavenbanden vor den Toren Ihrer St&#228;dte auftauchen!  Aber wenn Sie die Sklaverei beenden, so werden viele Peitschenhersteller arbeitslos.</German>
 		<Italian>o combatteranno! [NEWLINE] [NEWLINE] Se non accetti la loro richiesta, bande disorganizzate di schiavi si solleveranno nelle tue citt&#224;!  Ma se porrai fine alla schiavit&#249;, lascerai i fabbricanti di fruste senza lavoro.</Italian>
 		<Spanish>o luchar&#225;n![NEWLINE][NEWLINE]&#161;Si deniegas sus peticiones, bandas de esclavos desorganizadas se levantar&#225;n en las afueras de tus ciudades!  Pero si acabas con su condici&#243;n de siervos, dejar&#225;s a muchos esclavistas sin trabajo.</Spanish>
-		<Finnish>or they will fight![NEWLINE][NEWLINE]If you deny their request, disorganized slave bands will rise up outside your cities!  But if you end their servitude, you will put many whip makers out of business.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_ENV_REQUEST</Tag>
@@ -1898,7 +1688,6 @@
 		<German>fordern, dass Sie die Umweltverschmutzung einstellen und annehmen</German>
 		<Italian>chiedendo di porre fine ai comportamenti inquninanti, e di adottare </Italian>
 		<Spanish>solicitando que termines tus contaminantes costumbres y adoptes</Spanish>
-		<Finnish>requesting that you end your polluting ways and adopt</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_ENV_GREEN</Tag>
@@ -1907,7 +1696,6 @@
 		<German>Massendemonstrationen sind ausgebrochen und gr&#252;ne Kr&#228;fte f&#252;llen die Stra&#223;en!</German>
 		<Italian>Sono scoppiate manifestazioni di massa e le strade sono riempite dal 'potere verde'!</Italian>
 		<Spanish>&#161;Han tenido lugar manifestaciones masivas, y el "poder verde" a tomado las calles!</Spanish>
-		<Finnish>Mass demonstrations have broken out, and green power has filled the streets!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_HL_ENV_SMOG</Tag>
@@ -1916,7 +1704,6 @@
 		<German>Wenn Sie Ihr gegenw&#228;rtiges Verhalten beibehalten, so k&#246;nnten Sie immer noch gen&#252;gend Zeit haben, andere Aspekte dieser St&#228;dte so zu verbessern, dass sie wieder durch den Smog sehen werden k&#246;nnen.</German>
 		<Italian>Tuttavia, anche se decidi di proseguire l'attuale politica, sei ancora in tempo per migliorare altri aspetti di queste citt&#224; in modo renderli meno sensibili allo smog.</Italian>
 		<Spanish>No obstante, si decides mantener tus costumbres actuales, aun tienes tiempo de mejorar otros aspectos de estas ciudades de modo que dejen a un lado el tema de la poluci&#243;n.</Spanish>
-		<Finnish>However, if you decide to keep your current practices, you may yet have time to improve other aspects of these cities so they will see past the smog.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_COL_GOVT_REQUEST</Tag>
@@ -1925,7 +1712,6 @@
 		<German>fordern Mitsprache in Ihrer Regierung.  Als Kolonien f&#252;hlen sie sich von Ihrer Regierung nicht gerecht behandelt.</German>
 		<Italian>richiedendo di intervenire sul tuo governo.  Come colonie, pensano di non essere trattate equamente dal tuo governo.</Italian>
 		<Spanish>solicitando la palabra en tu gobierno.  Como colonias, sienten que tu gobierno no les est&#225; tratando equitativamente.</Spanish>
-		<Finnish>requesting a say in your government.  As a colonies, they feel your government is not treating them fairly.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_COL_GOVT_PROTESTING</Tag>
@@ -1934,7 +1720,6 @@
 		<German>Die Kolonisten protestieren in den Stra&#223;en und verlangen</German>
 		<Italian>I coloni stanno protestando nelle strade chiedendo</Italian>
 		<Spanish>Los colonos est&#225;n protestando en las calles demandando</Spanish>
-		<Finnish>The colonists are protesting in the streets demanding</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_COL_GOVT_CRIES</Tag>
@@ -1943,7 +1728,6 @@
 		<German>Rufe von &#039;Keine Steuern ohne</German>
 		<Italian>Grida di &#039;Nessuna tassa senza </Italian>
 		<Spanish>Llantos de 'No hay tributaci&#243;n sin</Spanish>
-		<Finnish>Cries of 'No taxation without</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_COL_GOVT_MARCH</Tag>
@@ -1952,7 +1736,6 @@
 		<German>erf&#252;llen die Luft w&#228;hrend die Kolonisten marschieren!</German>
 		<Italian>riempiono l'aria quando i coloni sono in marcia!</Italian>
 		<Spanish>llena el aire como los colonos marchan!</Spanish>
-		<Finnish>fill the air as colonists march!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_COL_GOVT_PRACTICES</Tag>
@@ -1961,7 +1744,6 @@
 		<German>Wenn Sie Ihr gegenw&#228;rtiges Verhalten beibehalten, so k&#246;nnten Sie immer noch gen&#252;gend Zeit haben, andere Aspekte dieser St&#228;dte so zu verbessern, dass sie ihre Machtlosigkeit &#252;bersehen werden.</German>
 		<Italian>Tuttavia, anche se decidi di proseguire l'attuale politica, sei ancora in tempo per migliorare altri aspetti di queste citt&#224; in modo da fargli sentire meno l'esclusione dal potere.</Italian>
 		<Spanish>No obstante, si decides mantener tu pol&#237;tica actual, aun tienes tiempo de mejorar la situaci&#243;n local de estas ciudades de modo que pasen por alto su exclusi&#243;n del poder.</Spanish>
-		<Finnish>However, if you decide to keep your current practices, you may yet have time to improve other aspects of these cities so they will overlook their exclusion from power.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_COM_REQUEST</Tag>
@@ -1970,7 +1752,6 @@
 		<German>verlangen den Wechsel zu</German>
 		<Italian>richiedendo un cambiamento verso</Italian>
 		<Spanish>demandando un cambio a</Spanish>
-		<Finnish>requesting a switch to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_COM_BROTHER</Tag>
@@ -1979,7 +1760,6 @@
 		<German>Sie tr&#228;umen von einer Welt ohne Besitzt&#252;mer in der alle Menschen Br&#252;der sind! [NEWLINE] [NEWLINE] W&#228;hrend</German>
 		<Italian>Stanno sognando la fine della propriet&#224; privata e la fratellanza tra gli uomini! [NEWLINE] [NEWLINE] mentre </Italian>
 		<Spanish>&#161;Est&#225;n imaginando un mundo sin posesiones, una hermandad de hombres![NEWLINE][NEWLINE]Mientras </Spanish>
-		<Finnish>They are imagining no possesions and a brotherhood of man![NEWLINE][NEWLINE]While </Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_COM_ECON</Tag>
@@ -1988,7 +1768,6 @@
 		<German>seine Vorteile haben mag, so ist es wom&#246;glich doch nicht sinnvoll, das derzeitige &#246;konomische Modell aufzugeben.  Die kommunistischen Aufwiegler sind noch nicht gewaltt&#228;tig, also haben Sie Zeit, ihnen die Vorteile des Wettbewerbs beizubringen.  Sich zu einem Genossen zu erkl&#228;ren ist jedoch der schnellste und einfachste Weg diese St&#228;dte in der absehbaren Zukunft in Ihrem Imperium zu behalten.  Da sie in Geld keinen Wert sehen, k&#246;nnen Sie sie auch nicht bestechen.</German>
 		<Italian>pu&#242; avere i suoi benefici, pu&#242; non valere la pena di abbandonare il tuo attuale modello economico.  Gli agitatori comunisti non sono ancora passati alla violenza, quindi sei ancora in tempo per aiutarli a vedere i benefici del libero mercato.  Tuttavia, la scelta pi&#249; rapida e pi&#249; semplice per mantenere queste citt&#224; nel tuo impero, per il prossimo futuro, &#232; quella di dichiararsi un 'compagno'.  Poich&#233; non danno peso al tuo oro, non potrai corromperli.</Italian>
 		<Spanish>poder gozar de los beneficios, puede no valer la pena renunciar a tu modelo econ&#243;mico actual.  Los agitadores comunistas aun no han echo uso de la violencia, puede que aun tengas tiempo de ayudar a verles los beneficios de la competencia.  No obstante, la m&#225;s r&#225;pida y f&#225;cil opcion para mantener estas ciudades en tu imperio por un futuro seguro es declararte un Camarada.  Mientras no valoren tu dinero, no podr&#225;s pagarles para calmarlos.</Spanish>
-		<Finnish>may have its benefits, it may not be worth giving up your current economic model.  The communist agitators have not yet turned to violence, so you may have time to help them see the benefits of competition.  However, the quickest and easiest path to keeping these cities in your empire for the forseeable future is to declare yourself a Comrade.  Since they don't value your cash, you cannot pay them off.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_REQUEST</Tag>
@@ -1997,7 +1776,6 @@
 		<German>fordern Mitsprache in Ihrer Regierung.</German>
 		<Italian>richiedendo di intervenire sul tuo governo.</Italian>
 		<Spanish>solicitando la palabra en tu gobierno.</Spanish>
-		<Finnish>requesting a say in your government.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_US</Tag>
@@ -2006,7 +1784,6 @@
 		<German>M&#228;nner und Frauen protestieren auf den Stra&#223;en und verlangen</German>
 		<Italian>Sia gli uomini che le donne stanno protestando nelle strade, richiedendo </Italian>
 		<Spanish>&#161;Hombres y mujeres est&#225;n a la par protestando en las calles demandando</Spanish>
-		<Finnish>Both men and women are protesting in the streets demanding</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_CRIES</Tag>
@@ -2015,7 +1792,6 @@
 		<German>Rufe von &#039;Keine Steuern ohne</German>
 		<Italian>Grida di &#039;Nessuna tassa senza</Italian>
 		<Spanish>Gritos de 'No hay tributaci&#243;n sin</Spanish>
-		<Finnish>Cries of 'No taxation without</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_MARCH</Tag>
@@ -2024,7 +1800,6 @@
 		<German>erf&#252;llen die Luft w&#228;hrend die Demonstranten marschieren!</German>
 		<Italian>riempiono l'aria quando i dimostranti sono in marcia!</Italian>
 		<Spanish>llena el aire como los protestantes marchan!</Spanish>
-		<Finnish>fill the air as protesters march!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_POWER</Tag>
@@ -2033,7 +1808,6 @@
 		<German>Wenn Sie Ihr gegenw&#228;rtiges Verhalten beibehalten, so k&#246;nnten Sie immer noch gen&#252;gend Zeit haben, andere Aspekte dieser St&#228;dte so zu verbessern, dass sie ihre Machtlosigkeit &#252;bersehen werden.</German>
 		<Italian>Tuttavia, anche se decidi di proseguire l'attuale politica, sei ancora in tempo per migliorare altri aspetti di queste citt&#224; in modo da fargli sentire meno l'esclusione dal potere.</Italian>
 		<Spanish>No obstante, si decides mantener tus pr&#225;cticas actuales, aun tienes tiempo de mejorar la situaci&#243;n local de estas ciudades de modo que pasen por alto su exclusi&#243;n del poder.</Spanish>
-		<Finnish>However, if you decide to keep your current practices, you may yet have time to improve other aspects of these cities so they will overlook their exclusion from power.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_VOTE_STATUES</Tag>
@@ -2042,7 +1816,6 @@
 		<German>Einige neue, teure Statuen k&#246;nnten sie daran erinnern, wie bedeutend Sie sind.</German>
 		<Italian>Alcune nuovi, costosi monumenti potranno ricordare loro la tua grandezza.</Italian>
 		<Spanish>Algunas nuevas y caras estatuas podr&#237;an hacerles recordar lo grandioso que eres.</Spanish>
-		<Finnish>Some new, expensive statues may remind them how great you are.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_SPEECH_REQUEST</Tag>
@@ -2051,7 +1824,6 @@
 		<German>fordern die Meinungsfreiheit:</German>
 		<Italian>stanno chiedendo la libert&#224; di esprimere il proprio pensiero: </Italian>
 		<Spanish>est&#225;n demandando la libertad para expresar sus opiniones:</Spanish>
-		<Finnish>are requesting the freedom to speak their mind:</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_SPEECH_DENY</Tag>
@@ -2060,7 +1832,6 @@
 		<German>Junge Menschen &#228;u&#223;ern sich frei, alle Macht dem Volk! [NEWLINE][NEWLINE]Die Halbstarken und die Journalisten sind noch nicht gewaltt&#228;tig, also haben Sie Zeit, das Problem friedlich zu l&#246;sen.  Ihre Forderungen zu erf&#252;llen ist jedoch der schnellste und einfachste Weg diese St&#228;dte in der absehbaren Zukunft in Ihrem Imperium zu behalten.  Sollten Sie sich entscheiden, Ihr gegenw&#228;rtiges Verhalten beibehalten, so k&#246;nnten Sie immer noch gen&#252;gend Zeit haben, andere Aspekte dieser St&#228;dte so zu verbessern, dass sie sich &#252;ber nichts beschweren k&#246;nnen, selbst wenn sie dazu in der Lage w&#228;ren. Sie k&#246;nnen die Aufr&#252;rer auch bestechen und sie werden ihre Sache fallen lassen und sagen, was immer Sie von ihnen wollen.</German>
 		<Italian>Giovani che esprimono il proprio pensiero, potere alla gente! [NEWLINE][NEWLINE]I contestatori non sono ancora passati alla violenza e sei ancora in tempo per giungere ad una conclusione pacifica.  Accettare la loro richiesta &#232; la scelta pi&#249; rapida e pi&#249; semplice per mantenere queste citt&#224; nel tuo impero, per il prossimo futuro.  Tuttavia, anche se decidi di proseguire l'attuale politica, sei ancora in tempo per migliorare altri aspetti di queste citt&#224; in modo che non protestino ancora, anche se ne avrebbero motivo.  Puoi anche scegliere di corrompere gli agitatori, essi cominceranno ad abbandonare la loro causa e diranno qualunque cosa tu vorrai.</Italian>
 		<Spanish>&#161;Los jovenes expresan sus ideales, el poder para el pueblo![NEWLINE][NEWLINE]Los agitadores y periodistas aun no han echo muestras de violencia, a&#250;n es tiempo de poder llevar la situaci&#243;n a una conclusi&#243;n pac&#237;fica. Aceptar sus demandas es de lejos el m&#225;s r&#225;pido y f&#225;cil camino  para mantener estas ciudades en tu imperio por un futuro seguro.  No obstante, si decides mantener tus pol&#237;ticas actuales, puede que aun tengas tiempo de mejorar otros aspectos de estas ciudades de modo que no tengas motivos para quejarse sobre si se pueden quejar.  Solo puedes elegir sobornar a los agitadores y ellos dejar&#225;n a un lado su causa y dir&#225;n lo que tu quieras que digan.</Spanish>
-		<Finnish>Young people speaking their minds, power to the people![NEWLINE][NEWLINE]The beatniks and journalists have not yet turned to violence, and there is still time to bring the situation to a peaceful conclusion.  Honoring their request is by far the quickest and easiest path to keeping these cities in your empire for the forseeable future.  However, if you decide to keep your current practices, you may yet have time to improve other aspects of these cities so they would have nothing to complain about even if they could complain.  You may also choose to bribe the agitators and they will drop their cause and say whatever you want them to.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_REQUEST</Tag>
@@ -2069,7 +1840,6 @@
 		<German>fordern einen F&#252;hrungswechsel!</German>
 		<Italian>richiedendo un cambiamento della politica del governo!</Italian>
 		<Spanish>pidiendo un cambio en la direcci&#243;n del estado.</Spanish>
-		<Finnish>calling for a change in leadership!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_CEDE</Tag>
@@ -2078,7 +1848,6 @@
 		<German>Demonstrationen sind ausgebrochen, sie fordern, dass Sie die Macht &#252;bergeben an</German>
 		<Italian>Sono scoppiate manifestazioni, chiedendo che tu ceda il potere a </Italian>
 		<Spanish>Manifestantes han irrumpido, exigiendo que cedas el poder a</Spanish>
-		<Finnish>Demonstrations have broken out, asking that you cede power to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_CONCLUSION</Tag>
@@ -2087,7 +1856,6 @@
 		<German>Die Demonstranten sind noch nicht gewaltt&#228;tig, also haben Sie Zeit, das Problem friedlich zu l&#246;sen.  Wie alle guten Despoten sind Sie selbstverst&#228;ndlich die gr&#246;&#223;te Hoffnung f&#252;r Ihr Volk.  Sie m&#252;ssen sie lediglich an den Ruhm Ihrer Herrschaft erinnern, indem Sie entweder ihre Situation verbessern, Ihre Feinde vernichten oder Massen von Soldaten in ihre St&#228;dte schicken.  Das Aufrichten von gl&#228;nzenden Statuen Ihrer selbst wird die Abweichler ebenfalls ruhigstellen. [NEWLINE][NEWLINE]Wenn Sie jetzt allerdings zu sehr an der Macht h&#228;ngen, k&#246;nnten Sie sich in der Zukunft einem B&#252;rgerkrieg gegen&#252;bersehen!  Ihre Forderung zu erf&#252;llen w&#252;rde Ihre Herrschaft nur kurzzeitig beenden, es gibt berechtigten Grund zu glauben, dass Ihre Erben in der Zukunft die Macht zur&#252;ckgewinnen werden.</German>
 		<Italian>I dimostranti non sono ancora passati alla violenza e sei ancora in tempo per giungere ad una conclusione pacifica.  Come tutti i despoti illuminati, sei certamente la miglior speranza per la tua gente.  Ti occorre solo ricordar loro la gloria del tuo governo, sia con il miglioramento della loro condizione, sgominando i nemici, sia con il rafforzamento delle guarnigioni nelle loro citt&#224;. Anche la costruzione di splendenti statue con la tua immagine calmer&#224; i dissidenti. [NEWLINE][NEWLINE]Tuttavia, se ora ti aggrapperai al potere, potrai essere costretto ad affrontare una guerra civile in avvenire!  Accettare la loro richiesta porterebbe soltanto ad una provvisoria interruzione del tuo governo, poich&#232; c'&#232; ragione di credere che i tuoi eredi riprenderanno il potere in futuro.</Italian>
 		<Spanish>Los protestantes no han echo uso violencia por ahora, y a&#250;n puede ser tiempo de llevar la situaci&#243;n a una conclusi&#243;n pac&#237;fica.  Como todos los buenos d&#233;spotas, eres desde luego la mejor esperanza para tu gente.  Solo necesitas recordarles la gloria de tu mandato, bien mejorando su situaci&#243;n, conquistando a tus enemigos, o trasladando grupos de soldados a sus ciudades.  Erigir majestuosas estatuas de tu persona puede calmar a los disidentes.[NEWLINE][NEWLINE]&#161;No obstante, si te pegas al poder ahora, puede que debas encarar una guerra civil en el futuro!  Aceptar sus demandas solo conllevar&#225; un final temporal de tu mandato, dado que hay muchas razones para creer que tus herederos podr&#225;n retornar al poder en el futuro.</Spanish>
-		<Finnish>The protesters have not yet turned to violence, and there is still time to bring the situation to a peaceful conclusion.  Like all good despots, you are of course the best hope for your people.  You just need to remind them of the glory of your rule, either by improving their situation, vanquishing your enemies, or moving lots of soldiers into their towns.  Erecting shiny statues of yourself will also quiet the dissenters.[NEWLINE][NEWLINE]However, if you cling to power now, you may face a civil war in the future!  Honoring their request would bring only a temporary end to your rule, as there is every reason to believe your heirs will regain power in the future.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_RULER</Tag>
@@ -2096,7 +1864,6 @@
 		<German>w&#228;re kein halb so guter Anf&#252;hrer wie Sie.  (Wenn Sie diese Option w&#228;hlen, so wird Ihre Civ einige Runden lang automatisiert und dann Ihnen wieder friedlich &#252;bergeben)</German>
 		<Italian>potrebbe possibilmente non valere la met&#224; di te come leader.  (Se scegli questa opzione, la tua civilt&#224; sar&#224; automatizzata per un certo numero di turni, quindi pacificamente sar&#224; restituita al tuo controllo)</Italian>
 		<Spanish>muy posiblemente no sea la mitad de dirigente que eres tu.  (Si eliges esta opci&#243;n, tu civilizaci&#243;n ser&#225; automatizada algunos turnos, despu&#233;s volver&#225; a tu control pac&#237;ficamente)</Spanish>
-		<Finnish>could not possibly be half the ruler you are.  (If you take this option, your civ will be automated for some number of turns, then peacefully returned to your control)</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_ELECTION</Tag>
@@ -2105,7 +1872,6 @@
 		<German>Demonstrationen sind ausgebrochen, es wird gefordert, dass Sie sich einer Wahl stellen gegen</German>
 		<Italian>Sono scoppiate manifestazioni: richiedono una consultazione elettorale, dove affonterai </Italian>
 		<Spanish>Manifestantes han salido a la calle, exigiendo que les encares en una elecciones</Spanish>
-		<Finnish>Demonstrations have broken out, asking that you face an election against</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_LEAD_BUYOFF</Tag>
@@ -2114,7 +1880,6 @@
 		<German>Wenn Sie eine ehrliche und offene Wahl gewinnen, so werden die Proteste verschwinden und Ihre Macht wird nicht in Frage gestellt.  Es k&#246;nnte auch m&#246;glich sein, Ihnen den &#039;Wahlsieg&#039; zu garantieren, wenn Sie meine Anspielung verstehen, aber es w&#228;re sehr teuer und die Sache k&#246;nnte auffliegen, mit sehr negativen Konsequenzen.  Ihre Ablehnung der Wahlen w&#252;rde Ihr Bekenntnis zur freien Regierung in Zweifel ziehen, damit w&#252;rde sich die Gefahr dass Ihre Gegner in den Kampf ziehen erh&#246;hen!</German>
 		<Italian>Se vincerai libere ed oneste elezioni, le proteste cesseranno ed il tuo potere non sar&#224; contestato.  E' possibile anche "garantirsi la vittoria" - non so se mi spiego -  ma ti coster&#224; e l'imbroglio potrebbe essere scoperto, con conseguenze molto negative.  Rifiutare la loro richiesta di un'elezione metter&#224; in dubbio il tuo impegno per un governo democratico ed inciter&#224; i vostri avversari a combattere in futuro!</Italian>
 		<Spanish>Si ganas unas elecciones justas y abiertas, los protestantes desaparecer&#225;n y tu poder no ser&#225; cuestionado.  Puede ser posible garantizar tu 'victoria', si sabes a lo que me refiero, pero ello ser&#225; costoso y el ama&#241;o puede ser descubierto con nefastas consecuencias. &#161;Denegar sus peticiones para unas nuevas elecciones les har&#225; cuestionarse tus compromisos de ceder el poder el gobierno y har&#225; que tus oponentes est&#233;n m&#225;s deseosos de luchar en el futuro!</Spanish>
-		<Finnish>If you win a fair and open election, the protests will disappear and your power will not be questioned.  It may also be possible to guarantee you 'victory', if you catch my drift, but it will be costly and the slight could be detected with very negative consequences.  Denying their request for an election will call into question your committment to open government and make your opponents more likely to fight in the future!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_DEMAND</Tag>
@@ -2123,7 +1888,6 @@
 		<German>verlangen einen F&#252;hrungswechsels!</German>
 		<Italian>richiedendo un cambiamento della politica del governo!</Italian>
 		<Spanish>demandando un cambio en la direcci&#243;n del estado.</Spanish>
-		<Finnish>demanding a change in leadership!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_CEDE</Tag>
@@ -2132,7 +1896,6 @@
 		<German>Armeen versammeln sich auf dem Lande und bereiten sich auf einen Kampf vor, wenn Sie die Macht nicht &#252;bergeben an</German>
 		<Italian>Gli eserciti si stanno riunendo nelle campagne, preparandosi a combattere se non cedi il potere a </Italian>
 		<Spanish>Sus ej&#233;rcitos est&#225;n agrupandose en los campos, preparandose para la pelea si no le cedes el poder a</Spanish>
-		<Finnish>Armies are gathering in the countryside, readying for a fight if you do not cede power to</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_TERRIBLE</Tag>
@@ -2141,7 +1904,6 @@
 		<German>Dies ist wirklich eine schreckliche Situation.  Wie alle guten Despote sind Sie selbstverst&#228;ndlich die gr&#246;&#223;te Hoffnung f&#252;r Ihr Volk, aber irgendwie erkennen sie einfach das Licht nicht.  Jetzt m&#252;ssen Sie sich entscheiden, welches Verm&#228;chtnis Sie hinterlassen. [NEWLINE][NEWLINE]Sie k&#246;nnen der Herausforderung mit Gewalt begegnen, und Ihre St&#228;dte w&#252;rden sich erheben als</German>
 		<Italian>Questa; &#232; veramente una situazione terribile.  Come tutti i despoti illuminati, sei certamente la miglior speranza per la tua gente, ma per qualche motivo essi non vedono la luce.  Ora devi decidere che eredit&#224; lascerai. [NEWLINE][NEWLINE]Puoi accettare la sfida con forza e le tue citt&#224; si solleveranno come </Italian>
 		<Spanish>Esta es una situaci&#243;n sinceramente terrible.  Como todos los buenos d&#233;spotas, eres por descontado la mejor esperanza para tu gente, pero algunos por su simpleza no son capaces de ver la luz.  Ahora debes decidir que legado dejar&#225;s.[NEWLINE][NEWLINE]Puedes plantar cara al desafio por la fuerza, y tus ciudades se alzar&#225;n como</Spanish>
-		<Finnish>This is truly a terrible situation.  Like all good despots, you are of course the best hope for your people, but some how they simply cannot see the light.  Now you must decide what legacy you will leave.[NEWLINE][NEWLINE]You could meet the challenge with force, and your cities would rise up as</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_FIGHT</Tag>
@@ -2150,7 +1912,6 @@
 		<German>zu k&#228;mpfen. Ihre Truppen in diesen St&#228;dten werden von einer feindseligen Bev&#246;lkerung umgeben sein und k&#246;nnen starke Verluste erleiden oder sogar &#252;berlaufen. Die Verteidigung einiger dieser St&#228;dte kann unmittelbar zerfallen, andere k&#246;nnen vielleicht einen Rest an Kontrolle bewahren.  Wenn es Ihnen dann gelingen w&#252;rde, das Land wieder zu vereinen, so w&#228;re der Ruhm gewaltig.   Aber wenn Sie versagen, so w&#252;rden Sie lange daf&#252;r geschm&#228;ht, dass Ihre Sturk&#246;pfigkeit den B&#252;rgerkrieg in Ihr Vaterland gebracht hat! [NEWLINE][NEWLINE]Es liegt keine Ehre darin, sich dem Willen des Volkes zu beugen, aber es k&#246;nnte all das erhalten, was Sie aufgebaut haben.  Ihre Forderung zu erf&#252;llen w&#252;rde Ihre Herrschaft nur kurzzeitig beenden, da es berechtigten Grund gibt zu glauben, dass Ihre Erben in der Zukunft die Macht zur&#252;ckgewinnen werden.</German>
 		<Italian>per combattere. Le tue truppe in queste citt&#224; saranno circondate da una popolazione ostile e potranno subire gravi perdite o anche disertare.  Le difese di alcune di queste citt&#224; possono crollare subito, su altre potresti mantenere un certo livello di controllo.  Se allora riuscirai a riunire il paese, il trionfo sar&#224; completo.  Ma se fallirai, sarai disprezzato a lungo poich&#232; la tua ostinazione avr&#224; portato la guerra civile nella tua patria! [NEWLINE][NEWLINE]non c'&#232; gloria nell'arrendersi alla volont&#224; del popolo, ma manterresti ci&#242; che hai costruito.  Accettare la loro richiesta porterebbe soltanto ad una provvisoria interruzione del tuo governo, poich&#232; c'&#232; ragione di credere che i tuoi eredi riprenderanno il potere in futuro.</Italian>
 		<Spanish>para luchar.  Tus tropas en estas ciudades estar&#225;n cercadas por una poblaci&#243;n hostil y pueden tener graves p&#233;rdidas o hasta sufrir defectos.  Las defensas de algunas de estas ciudades se desmoronar&#225;n inmediatamente, otras es posible que puedan mantener algo semejante a control.  Si los manejas para reunir tu pa&#237;s, la gloria ser&#237;a enorme.  &#161;Pero si fallas, ser&#225;s muy vilipendiado dado que tu obstinaci&#243;n habr&#225; traido la guerra civil a tu tierra![NEWLINE][NEWLINE]No hay ninguna gloria en abandonar por el futuro de la gente, pero ello preservar&#225; todo lo que has construido.  Aceptar sus peticiones tan solo traer&#225; un fin temporal de tu mandato, pues todos los indicios apuntan a que tus herederos podr&#225;n retornar al poder en el futuro.</Spanish>
-		<Finnish>to fight. Your troops in these cities will be surrounded by a hostile population and may take heavy losses or even defect.  The defenses of some of these cities may crumble immeadiately, others may be able to retain some semblence of control.  If you then managed to reunite your country, the glory would be tremendous.  But if you fail, you will long be vilified as your obstinance will have brought civil war into your homeland![NEWLINE][NEWLINE]There is no glory in surrendering to the will of the people, but it would preserve all that you have built.  Honoring their request would bring only a temporary end to your rule, as there is every reason to believe your heirs will regain power in the future.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_ELECTION</Tag>
@@ -2159,7 +1920,6 @@
 		<German>Demonstranten randalieren in den Stra&#223;en und verlangen, dass Sie sich einer Wahl stellen gegen</German>
 		<Italian>I dimostranti sono in rivolta nelle strade: richiedono una nuova consultazione elettorale, dove affonterai </Italian>
 		<Spanish>Manifestantes y motines campan por las calles, exigiendo que les encares en una elecciones</Spanish>
-		<Finnish>Demonstrators are rioting in the streets, demanding that you face an election against</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_RISE</Tag>
@@ -2168,7 +1928,6 @@
 		<German>Wenn Sie ihre Forderung ablehnen, so erheben sich diese St&#228;dte als</German>
 		<Italian>Se non accetti la loro richiesta, queste citt&#224; si solleveranno come </Italian>
 		<Spanish>Si deniegas sus peticiones, estas ciudades se alzar&#225;n como</Spanish>
-		<Finnish>If you deny their request, these cities will rise up as</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_CAP_RULE_BUYOFF</Tag>
@@ -2177,7 +1936,6 @@
 		<German>und k&#228;mpfen. Ihre Truppen in diesen St&#228;dten werden von einer feindseligen Bev&#246;lkerung umgeben sein und k&#246;nnen starke Verluste erleiden oder sogar &#252;berlaufen. Die Verteidigung einiger dieser St&#228;dte kann unmittelbar zerfallen, andere k&#246;nnen vielleicht einen Rest an Kontrolle bewahren. [NEWLINE][NEWLINE]Wenn Sie eine ehrliche und offene Wahl gewinnen, so werden die Proteste verschwinden und Ihre Macht wird nicht in Frage gestellt.  Es k&#246;nnte auch m&#246;glich sein, Ihnen den &#039;Wahlsieg&#039; zu garantieren, wenn Sie meine Anspielung verstehen, aber es w&#228;re sehr teuer und die Sache k&#246;nnte auffliegen, mit sehr negativen Konsequenzen.</German>
 		<Italian>e combatteranno. Le tue truppe in queste citt&#224; saranno circondate da una popolazione ostile e subiranno gravi perdite o potranno anche disertare.  Le difese di alcune di queste citt&#224; possono crollare subito, su altre potresti mantenere un certo livello di controllo. [NEWLINE][NEWLINE]tuttavia, se vincerai libere ed oneste elezioni, i tumulti cesseranno ed il tuo potere non sar&#224; contestato. E' possibile anche "garantirsi la vittoria" - non so se mi spiego -  ma ti coster&#224; e l'imbroglio potrebbe essere scoperto, con conseguenze molto negative.</Italian>
 		<Spanish>y luchar.  Tus tropas en estas ciudades estar&#225;n cercadas por una poblaci&#243;n hostil y pueden tener graves p&#233;rdidas o hasta sufrir defectos.  Las defensas de algunas de estas ciudades se desmoronar&#225;n inmediatamente, otras es posible que puedan mantener algo semejante a control.[NEWLINE][NEWLINE]Sin embargo, si ganas unas elecciones justas y abiertas, los motines desaparecer&#225;n y tu poder no ser&#225; cuestionado. Puede ser posible garantizar tu 'victoria', si escoges mi corriente, pero ello ser&#225; costoso y el ama&#241;o puede ser descubierto con nefastas consecuencias.</Spanish>
-		<Finnish>and fight. Your troops in these cities will be surrounded by a hostile population and will take heavy losses or even defect.  The defenses of some of these cities may crumble immeadiately, others may be able to retain some semblence of control.[NEWLINE][NEWLINE]However, if you win a fair and open election, the riots will disappear and your power will not be questioned. It may also be possible to guarantee you 'victory', if you catch my drift, but it will be costly and the slight could be detected with very negative consequences.</Finnish>
 	</TEXT>
 	
 	<!-- Independence revolution popup text -->
@@ -2188,7 +1946,6 @@
 		<German>kapituliert</German>
 		<Italian>capitolato</Italian>
 		<Spanish>capitulaci&#243;n</Spanish>
-		<Finnish>capitulated</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_VASSAL_FREE</Tag>
@@ -2197,7 +1954,6 @@
 		<German>frei</German>
 		<Italian>libero</Italian>
 		<Spanish>libre</Spanish>
-		<Finnish>free</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_REQUEST</Tag>
@@ -2206,7 +1962,6 @@
 		<German>bitten um Unabh&#228;ngigkeit.  Diese B&#252;rger finden, dass Ihr Imperium nicht ihren  Bed&#252;rfnissen entspricht. Sie m&#246;chten auf eigenen F&#252;&#223;en stehen und bilden</German>
 		<Italian>chiedendo l'indipendenza.  Questi cittadini ritengono che il tuo impero non venga incontro alle loro esigenze, preferiscono andare da soli e costituire </Italian>
 		<Spanish>pidiendo la indepedencia.  Estos ciudadanos sienten que tu imperio no est&#225; cubriendo sus necesidades y desean separarse y mantenerse por si mismos</Spanish>
-		<Finnish>asking for independence.  These citizens feel your empire is not meeting their needs and wish to strike out on their own and form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_REQUEST_ALIVE</Tag>
@@ -2215,7 +1970,6 @@
 		<German>bitten darum, sich den %s anzuschlie&#223;en.  Diese B&#252;rger finden, dass Ihr Imperium nicht ihren  Bed&#252;rfnissen entspricht und m&#246;chten sich Ihrem Rivalen anschlie&#223;en.</German>
 		<Italian>chiedendo di unirsi al/la %s.  Questi cittadini ritengono che il tuo impero non venga incontro alle loro esigenze e preferiscono unirsi al tuo nemico.</Italian>
 		<Spanish>pidiendo unirse a %s.  Estos ciudadanos sienten que tu imperio no est&#225; cubriendo sus necesidades y desean unirse a tu rival.</Spanish>
-		<Finnish>asking to join the %s.  These citizens feel your empire is not meeting their needs and wish to join your rival.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_VASSAL</Tag>
@@ -2224,7 +1978,6 @@
 		<German>bitten um begrenzte Autonomie.  Diese B&#252;rger m&#246;chten sich nicht vollst&#228;ndig von Ihrem Imperium lossagen, aber w&#252;nschen die Kontrolle &#252;ber ihre lokalen Angelegenheiten.  Sie m&#246;chten ausbilden</German>
 		<Italian>chiedendo una parziale autonomia.  Questi cittadini non desiderano rompere completamente i legami con l'impero, ma vogliono il controllo dei loro affari locali. Preferiscono costituire </Italian>
 		<Spanish>demandando una autonom&#237;a parcial.  Estos ciudadanos no desean romper sus lazos completamente con tu imperio, pero quieren controlar sus asuntos locales.  Desean formar</Spanish>
-		<Finnish>asking for partial autonomy.  These citizens do not wish to completely break ties with your empire, but want control of their local affairs.  They wish to form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_BECOME</Tag>
@@ -2233,7 +1986,6 @@
 		<German>und wird Ihr</German>
 		<Italian>e diventare un tuo</Italian>
 		<Spanish>y convertirse en tu</Spanish>
-		<Finnish>and become your</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_GRANT</Tag>
@@ -2242,7 +1994,6 @@
 		<German>Vasall. Sie k&#246;nnen ihnen auch volle Unabh&#228;ngigkeit gew&#228;hren.</German>
 		<Italian>Vassallo. Puoi anche concedere loro una completa indipendenza.</Italian>
 		<Spanish>Vasallo.  Solo debes garantizar su completa indepedencia.</Spanish>
-		<Finnish>Vassal. You may also grant them full independence.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_ACTION</Tag>
@@ -2251,7 +2002,6 @@
 		<German>Auch wenn sie noch keinen Krieg erw&#228;gen, sollten Sie, falls Sie ihre Forderung ablehnen sollten, sofort Ma&#223;nahmen ergreifen, um ihre Situation zu verbessern.  Wachsende Kultur oder die Verst&#228;rkung der Garnisonen k&#246;nnten ihre Entschlossenheit reduzieren.</German>
 		<Italian>Anche se ancora non stanno pensando alla guerra, se non accetterai la loro richiesta dovresti agire rapidamente per migliorare la loro situazione.  Aumentare l'influsso culturale o rinforzare le guarnigioni pu&#242; far cambiare loro idea.</Italian>
 		<Spanish>No ponen sus ojos en una guerra abierta, pero si rechazas sus peticiones deber&#225;s tomar medidas inmediatamente para mejorar su situaci&#243;n.  Incrementando tu cultura o aumentando las guarniciones es posible que cesen en sus prop&#243;sitos.</Spanish>
-		<Finnish>While they are not yet contemplating war, if you deny their request you should take immediate action to improve their situation.  Increasing culture or strengthening the garrisons may lessen their resolve.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_PEACE_ACTION2</Tag>
@@ -2260,7 +2010,6 @@
 		<German>Sie k&#246;nnen auch w&#228;hlen, die Revolution&#228;re auszuzahlen.  Im Austausch f&#252;r etwas Gold werden die Revolution&#228;re ihre Sorgen f&#252;r eine Weile vergessen.  Seien Sie jedoch gewarnt, dass andere St&#228;dte eher zu einer Rebellion neigen, wenn sie sehen, dass Sie Geld verteilen.</German>
 		<Italian>Puoi anche pensare di comprare i ribelli.  In cambio di oro, i ribelli abbasseranno le loro pretese, per il momento.  Attento, per&#242;, altre citt&#224; possono diventare pi&#249; desiderose di ribellarsi, dopo che hanno capito che sei disposto a concedere il tuo oro...</Italian>
 		<Spanish>Solo puedes elegir comprar a los revolucionarios. A cambio de algo de oro, los revolucionarios dejar&#225;n de lado sus agravios por el momento.  &#161;Ten cuidado, no obstante, otras ciudades pueden ser m&#225;s proclives a rebelarse despu&#233;s de ver que pretendes comprarles.</Spanish>
-		<Finnish>You can also choose to payoff the revolutionaries.  In exchange some gold, the revolutionaries will drop their grievances for the time being.  Be warned, however, other cities may be more inclined to rebel after seeing you hand out money.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_VIOLENT_DEMAND</Tag>
@@ -2269,7 +2018,6 @@
 		<German>erkl&#228;ren ihre Unabh&#228;ngigkeit.  Sie haben genug von Ihnen und von Ihrem Imperium und werden k&#228;mpfen</German>
 		<Italian>dichiarando la propria indipendenza.  Ne hanno abbastanza di te e del tuo impero, e combatteranno </Italian>
 		<Spanish>declarando su indepedencia.  Han tenido suficiente de ti y de tu imperio, y luchar&#225;n</Spanish>
-		<Finnish>declaring their independence.  They have had enough of you and your empire, and will fight</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_VIOLENT_BARB</Tag>
@@ -2278,7 +2026,6 @@
 		<German>obwohl sie keine Flagge haben, um die sie sich versammeln k&#246;nnen.</German>
 		<Italian>anche se non hanno una bandiera sotto cui unirsi.</Italian>
 		<Spanish>de todas formas no tienen ninguna bandera bajo la que unirse.</Spanish>
-		<Finnish>even though they have no flag to rally around.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_VIOLENT_FORM</Tag>
@@ -2287,7 +2034,6 @@
 		<German>wenn es notwendig ist zu formen</German>
 		<Italian>se necessario per formare </Italian>
 		<Spanish>si es necesario formar</Spanish>
-		<Finnish>if necessary to form</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_IND_VIOLENT_FIGHT</Tag>
@@ -2296,16 +2042,12 @@
 		<German>Dies ist eine schwierige Situation, Sie k&#246;nnen entweder einen Teil Ihres Territoriums aufgeben oder Sie m&#252;ssen sich dem B&#252;rgerkrieg stellen!  Keine der Optionen ist sehr attraktiv, Sie m&#252;ssen die Bereitschaft Ihres Milit&#228;rs gegen den Wert dieser St&#228;dte im Verh&#228;ltnis zu Ihrem gesamten Imperium abw&#228;gen.  Wenn Sie Krieg w&#228;hlen, werden Ihre Truppen in diesen St&#228;dten von einer feindseligen Bev&#246;lkerung umgeben sein und werden schwere Verluste erleiden.  Die Verteidigung von einigen dieser St&#228;dte kann sofort zusammenbrechen, andere k&#246;nnen in der Lage sein, so etwas &#228;hnliches wie Kontrolle aufrecht zu erhalten.</German>
 		<Italian>E' una situazione difficile, poich&#233; devi scegliere se abbandonare parte del tuo territorio, o affrontare la guerra civile!  Nessuna delle due opzioni &#232; piacevole, devi confrontare la tua preparazione militare con il valore per l'impero di queste citt&#224;.  Se scegli la guerra, le tue truppe in queste citt&#224; saranno circondate da una popolazione ostile e subiranno gravi perdite. Le difese di alcune di queste citt&#224; possono crollare subito, su altre potresti mantenere un certo livello di controllo.</Italian>
 		<Spanish>&#161;Esta es una situaci&#243;n dificil, tus &#250;nicas opciones son abandonar parte de tu territorio, o encarar una guerra civil!  Ninguna opci&#243;n es muy alentadora, debes comparar tus efectivos militares con el valor de estas ciudades para tu imperio.  Si eliges la guerra, tus tropas en estas ciudades estar&#225;n cercadas por una poblaci&#243;n hostil y pueden tener graves p&#233;rdidas.  Las defensas de algunas de estas ciudades se desmoronar&#225;n inmediatamente, otras es posible que puedan mantener algo semejante a control.</Spanish>
-		<Finnish>This is a difficult situation, as your options are to give up some of your territory, or face civil war!  Neither option is very appealing, you must weigh your military preparedness against the value of these cities to your empire.  If you choose war, your troops in these cities will be surrounded by a hostile population and will take heavy losses.  The defenses of some of these cities may crumble immediately, others may be able to retain some semblence of control.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>LOCAL_REV_INDEX_ADVISOR_SIMPLE</Tag>
 		<English>Local</English>
-		<French>Local</French>
 		<German>Lokal</German>
 		<Italian>Locale</Italian>
-		<Spanish>Local</Spanish>
-		<Finnish>Local</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>DELTA_TREND_ADVISOR_SIMPLE</Tag>
@@ -2314,16 +2056,10 @@
 		<German>Tendenz</German>
 		<Italian>Tendenza</Italian>
 		<Spanish>Tendencia</Spanish>
-		<Finnish>Trend</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>REVOLUTION_INDEX_ADVISOR_SIMPLE</Tag>
 		<English>Instability</English>
-		<French>Instability</French>
-		<German>Instability</German>
-		<Italian>Instability</Italian>
-		<Spanish>Instability</Spanish>
-		<Finnish>Instability</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_FLAT</Tag>
@@ -2332,7 +2068,6 @@
 		<German>Gleichbleibend</German>
 		<Italian>Costante</Italian>
 		<Spanish>Plano</Spanish>
-		<Finnish>Flat</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_IMPROVING</Tag>
@@ -2341,7 +2076,6 @@
 		<German>verbessernd</German>
 		<Italian>Migliora</Italian>
 		<Spanish>Mejora</Spanish>
-		<Finnish>Improving</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_WORSENING</Tag>
@@ -2350,7 +2084,6 @@
 		<German>verschlechternd</German>
 		<Italian>Peggiora</Italian>
 		<Spanish>Empeoramiento</Spanish>
-		<Finnish>Worsening</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_RAPIDLY_WORSENING</Tag>
@@ -2359,16 +2092,13 @@
 		<German>schnell verschlechternd</German>
 		<Italian>Peggiora velocemente</Italian>
 		<Spanish>R&#225;pidamente empeorando</Spanish>
-		<Finnish>Rapidly Worsening</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REVOLUTION_WATCH_ADVISOR_TITLE</Tag>
 		<English>Revolution Watch Screen</English>
-		<French>Revolution Watch Screen</French>
 		<German>Revolutions-&#220;berwachungsanzeige</German>
 		<Italian>Schermata 'Rivolutioni'</Italian>
 		<Spanish>Visor de la Revoluci&#243;n</Spanish>
-		<Finnish>Revolution Watch Screen</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_CRITICAL</Tag>
@@ -2377,7 +2107,6 @@
 		<German>Kritisch</German>
 		<Italian>Critico</Italian>
 		<Spanish>Peligro</Spanish>
-		<Finnish>Critical</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_POSITIVE</Tag>
@@ -2386,16 +2115,13 @@
 		<German>Gut</German>
 		<Italian>Buono</Italian>
 		<Spanish>Bueno</Spanish>
-		<Finnish>Good</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_HEALTH</Tag>
 		<English>Health</English>
-		<French>Health</French>
 		<German>Gesundheit</German>
 		<Italian>Salute</Italian>
 		<Spanish>Salud</Spanish>
-		<Finnish>Health</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_ADVISOR_BRIBE</Tag>
@@ -2404,25 +2130,17 @@
 		<German>Klicken, um zu bestechen</German>
 		<Italian>Corrompi</Italian>
 		<Spanish>Click para sobornar</Spanish>
-		<Finnish>Click to bribe </Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>REVOLUTION_GRAPH_TITLE_SMALL</Tag>
 		<English>Stability</English>
-		<French>Stability</French>
-		<German>Stability</German>
-		<Italian>Stability</Italian>
-		<Spanish>Stability</Spanish>
-		<Finnish>Stability</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_REV_INDEX_LOCAL_PENALTY</Tag>
 		<English>[ICON_BULLET]%D1 local instability penalty per turn</English>
-		<French>[ICON_BULLET]%D1 local instability penalty per turn</French>
 		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Malus</German>
 		<Italian>[ICON_BULLET]Penalit&#224; Instabilit&#224; Locale: %D1/turno</Italian>
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n a la inestabilidad local por turno</Spanish>
-		<Finnish>[ICON_BULLET]%D1 local instability penalty per turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_REV_INDEX_LOCAL_BONUS</Tag>
@@ -2431,97 +2149,74 @@
 		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Bonus</German>
 		<Italian>[ICON_BULLET]Bonus Stabilit&#224; Locale: %D1/turno</Italian>
 		<Spanish>[ICON_BULLET]%D1 bonus a la estabilidad local por turno</Spanish>
-		<Finnish>[ICON_BULLET]%D1 local stability bonus per turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY</Tag>
 		<English>[ICON_BULLET]%D1 local instability penalty per turn in each city</English>
-		<French>[ICON_BULLET]%D1 local instability penalty per turn in each city</French>
 		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Malus pro Durchgang und Stadt</German>
 		<Italian>[ICON_BULLET]Penalit&#224; Instabilit&#224; Locale: %D1/turno ogni citt&#224;</Italian>
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n a la inestabilidad local por turno en cada ciudad</Spanish>
-		<Finnish>[ICON_BULLET]%D1 local instability penalty per turn in each city</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_INDEX_LOCAL_BONUS</Tag>
 		<English>[ICON_BULLET]%D1 local stability bonus per turn in each city</English>
-		<French>[ICON_BULLET]%D1 local stability bonus per turn in each city</French>
 		<German>[ICON_BULLET]%D1 &#246;rtlicher Stabilit&#228;ts-Bonus pro Durchgang und Stadt</German>
 		<Italian>[ICON_BULLET]Bonus Stabilit&#224; Locale: %D1/turno ogni citt&#224;</Italian>
 		<Spanish>[ICON_BULLET]%D1 bonus a la estabilidad local por turno en cada ciudad</Spanish>
-		<Finnish>[ICON_BULLET]%D1 local stability bonus per turn in each city</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY</Tag>
 		<English>[ICON_BULLET]%D1 national instability penalty per turn</English>
-		<French>[ICON_BULLET]%D1 national instability penalty per turn</French>
 		<German>[ICON_BULLET]%D1 nationaler Stabilit&#228;ts-Malus pro Durchgang</German>
 		<Italian>[ICON_BULLET]Penalit&#224; Instabilit&#224; Nazionale: %D1/turno</Italian>
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n a la inestabilidad nacional por turno en cada ciudad</Spanish>
-		<Finnish>[ICON_BULLET]%D1 national instability penalty per turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS</Tag>
 		<English>[ICON_BULLET]%D1 national stability bonus per turn</English>
-		<French>[ICON_BULLET]%D1 national stability bonus per turn</French>
 		<German>[ICON_BULLET]%D1 nationaler Stabilit&#228;ts-Bonus pro Durchgang</German>
 		<Italian>[ICON_BULLET]Bonus Stabilit&#224; Nazionale: %D1/turno</Italian>
 		<Spanish>[ICON_BULLET]%D1 bonus a la estabilidad nacional por turno en cada ciudad</Spanish>
-		<Finnish>[ICON_BULLET]%D1 national stability bonus per turn</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD</Tag>
 		<English>[ICON_BULLET]%D1% to city distance instability penalty</English>
-		<French>[ICON_BULLET]%D1% to city distance instability penalty</French>
 		<German>[ICON_BULLET]%D1% Stabilit&#228;ts-Malus wegen Entfernung der St&#228;dte</German>
 		<Italian>[ICON_BULLET]Variazione della penalit&#224; instabilit&#224; per distanza: %D1%</Italian>
-		<Spanish>[ICON_BULLET]%D1% to city distance instability penalty</Spanish>
-		<Finnish>[ICON_BULLET]%D1% to city distance instability penalty</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD</Tag>
 		<English>[ICON_BULLET]%D1% to city distance instability penalty</English>
-		<French>[ICON_BULLET]%D1% to city distance instability penalty</French>
 		<German>[ICON_BULLET]%D1% Stabilit&#228;ts-Malus wegen Entfernung der St&#228;dte</German>
 		<Italian>[ICON_BULLET]Variazione della penalit&#224; instabilit&#224; per distanza: %D1%</Italian>
-		<Spanish>[ICON_BULLET]%D1% to city distance instability penalty</Spanish>
-		<Finnish>[ICON_BULLET]%D1% to city distance instability penalty</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY</Tag>
 		<English>[ICON_BULLET]%D1 stability bonus per turn for owning state religion holy city</English>
-		<French>[ICON_BULLET]%D1 stability bonus per turn for owning state religion holy city</French>
 		<German>[ICON_BULLET]%D1 Stabilit&#228;ts-Bonus pro Durchgang wegen Besitz der Heiligen Stadt der Staatsreligion</German>
 		<Italian>[ICON_BULLET]Bonus stabilit&#224; %D1/turno per il controllo della Citt&#224; Santa della [ICON_RELIGION] di Stato</Italian>
 		<Spanish>[ICON_BULLET]%D1 bonus a la estabilidad por turno por poseer la Ciudad Santa de la religi&#243;n de estado</Spanish>
-		<Finnish>[ICON_BULLET]%D1 stability bonus per turn for owning state religion holy city</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_BAD_HOLY_CITY</Tag>
 		<English>[ICON_BULLET]%D1 instability penalty per turn if state religion holy city is owned by heathens</English>
-		<French>[ICON_BULLET]%D1 instability penalty per turn if state religion holy city is owned by heathens</French>
 		<German>[ICON_BULLET]%D1 Stabilit&#228;ts-Malus pro Durchgang wenn die Heilige Stadt der Staatsreligion von Heiden beherrscht wird</German>
 		<Italian>[ICON_BULLET]Penalit&#224; instabilit&#224;: %D1/turno se la Citt&#224; Santa della [ICON_RELIGION] di Stato &#232; controllata da infedeli</Italian>
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n a la inestabilidad por turno si la Ciudad Santa de la religi&#243;n de estado est&#225; controlada por infieles</Spanish>
-		<Finnish>[ICON_BULLET]%D1 instability penalty per turn if state religion holy city is owned by heathens</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS</Tag>
 		<English>[ICON_BULLET]%D1 one-time stability bonus for adopting civic</English>
-		<French>[ICON_BULLET]%D1 one-time stability bonus for adopting civic</French>
 		<German>[ICON_BULLET]%D1 einmaliger Stabilit&#228;ts-Bonus durch die &#220;bernahme der Staatsform</German>
 		<Italian>[ICON_BULLET]Bonus stabilit&#224; per variazione forma di governo (%D1 una tantum)</Italian>
 		<Spanish>[ICON_BULLET]%D1 bonus &#250;nico a la estabilidad por adoptar principio</Spanish>
-		<Finnish>[ICON_BULLET]%D1 one-time stability bonus for adopting civic</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY</Tag>
 		<English>[ICON_BULLET]%D1 one-time instability penalty for adopting civic</English>
-		<French>[ICON_BULLET]%D1 one-time instability penalty for adopting civic</French>
 		<German>[ICON_BULLET]%D1 einmaliger Stabilit&#228;ts-Malus durch die &#220;bernahme der Staatsform</German>
 		<Italian>[ICON_BULLET]%Penalit&#224; instabilit&#224; per variazione forma di governo (%D1 una tantum)</Italian>
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n &#250;nica a la estabilidad por adoptar principio</Spanish>
-		<Finnish>[ICON_BULLET]%D1 one-time instability penalty for adopting civic</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_NATIONALITY_MOD</Tag>
@@ -2535,19 +2230,15 @@
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_BAD_RELIGION_MOD</Tag>
 		<English>[ICON_BULLET]+%s1% increase in instability penalties from non-state religions</English>
-		<French>[ICON_BULLET]+%s1% increase in instability penalties from non-state religions</French>
 		<German>[ICON_BULLET]+%s1% Zuwachs an Stabilit&#228;ts-Malus durch nicht-staatliche Religion</German>
 		<Italian>[ICON_BULLET]Penalit&#224; instabilit&#224;: +%s1% per [ICON_RELIGION] NON di Stato</Italian>
 		<Spanish>[ICON_BULLET]+%s1% aumento en penalizaciones a la inestabilidad para religiones distintas a la religi&#243;n de estado</Spanish>
-		<Finnish>[ICON_BULLET]+%s1% increase in instability penalties from non-state religions</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_GOOD_RELIGION_MOD</Tag>
 		<English>[ICON_BULLET]+%s1% increase in stability bonuses from state religion</English>
-		<French>[ICON_BULLET]+%s1% increase in stability bonuses from state religion</French>
 		<German>[ICON_BULLET]+%s1% Zuwachs an Stabilit&#228;ts-Bonus durch die Staatsreligion</German>
 		<Italian>[ICON_BULLET]Bonus stabilit&#224;: +%s1% per [ICON_RELIGION] di Stato</Italian>
 		<Spanish>[ICON_BULLET]+%s1% aumento en bonificaciones a la estabilidad para la religi&#243;n de estado</Spanish>
-		<Finnish>[ICON_BULLET]+%s1% increase in stability bonuses from state religion</Finnish>
 	</TEXT>
 </Civ4GameText>

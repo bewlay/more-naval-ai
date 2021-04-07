@@ -1492,6 +1492,19 @@ bool PUF_isNotCityAIType(const CvUnit* pUnit, int iData1, int iData2)
 	return !(PUF_isCityAIType(pUnit, iData1, iData2));
 }
 
+// lfgr 03/2021: See header
+bool PUF_isPreferredDefenderAIType( const CvUnit* pUnit, int eUnitAI, int iData2 )
+{
+	if( isCityAIType( (UnitAITypes) eUnitAI ) )
+	{
+		return pUnit->AI_isCityAIType();
+	}
+	else
+	{
+		return pUnit->canDefend();
+	}
+}
+
 bool PUF_isSelected(const CvUnit* pUnit, int iData1, int iData2)
 {
 	return pUnit->IsSelected();

@@ -1134,284 +1134,144 @@ class CvGameUtils:
 		return False
 
 
-# Return 1 if a Mission was pushed
 	def AI_MageTurn(self, argsList):
-		pUnit = argsList[0]
-		pPlot = pUnit.plot()
+		"""
+			Returns 0 if we couldn't find anything to do.
+			Returns 1 if we did something, or pushed some missinon, or are out of moves
+		"""
+		pUnit = argsList[0] # type: CyUnit
+		pUnitPlot = pUnit.plot()
 		iPlayer = pUnit.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
 		iCiv = pPlayer.getCivilizationType()
-		iX = pUnit.getX()
-		iY = pUnit.getY()
 
 		if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
+			# LFGR_TODO: Automated units may attack (probably while moving)
 
-#-----------------------------------
-#TERRAFORMING
-#
-#SETTING FLAGS
-#
-#-----------------------------------
+			# TERRAFORMING 03/2021 lfgr: Refactored and tweaked
 
-			searchdistance=3
+			# Useful constants
+			eSpellSpring = gc.getInfoTypeForString('SPELL_SPRING')
+			eSpellVitalize = gc.getInfoTypeForString('SPELL_VITALIZE')
+			eSpellScorch = gc.getInfoTypeForString('SPELL_SCORCH')
+			eSpellSanctify = gc.getInfoTypeForString('SPELL_SANCTIFY')
+			eSpellBloom = gc.getInfoTypeForString('SPELL_BLOOM')
 
-#-----------------------------------
-#SETTING FLAGS
-#
-#INIT
-#CIV SPECIFIC
-#UNIT SPECIFIC
-#-----------------------------------
+			eDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
+			eMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
+			eGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
+			ePlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
+			eSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
+			eTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
+			eFlood = gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')
+			eSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
+			eBloomForest = gc.getSpellInfo( eSpellBloom ).getCreateFeatureType()
+			assert eBloomForest != -1
 
-#INIT
-			iIllians = gc.getInfoTypeForString('CIVILIZATION_ILLIANS')
-			iInfernal = gc.getInfoTypeForString('CIVILIZATION_INFERNAL')
-			iLjosalfar = gc.getInfoTypeForString('CIVILIZATION_LJOSALFAR')
-			iSvartalfar = gc.getInfoTypeForString('CIVILIZATION_SVARTALFAR')
+			bIllians = iCiv == gc.getInfoTypeForString( "CIVILIZATION_ILLIANS" )
+			bInfernal = iCiv == gc.getInfoTypeForString( "CIVILIZATION_INFERNAL" )
+			bFoL = pPlayer.getStateReligion() == gc.getInfoTypeForString( "RELIGION_FELLOWSHIP_OF_LEAVES" )
+			bMaintainBloomForest = gc.getCivilizationInfo( iCiv ).isMaintainFeatures( eBloomForest )
 
-			iFoL = gc.getInfoTypeForString('RELIGION_FELLOWSHIP_OF_LEAVES')
+			# Catch leftover priests of leaves
+			if not pPlayer.isHuman() :
+				if pUnit.isHasPromotion( gc.getInfoTypeForString( "PROMOTION_MEDIC2" ) ) :
+					pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
+					return 0
 
-			iLife1 = gc.getInfoTypeForString('PROMOTION_LIFE1')
-			iNature3 = gc.getInfoTypeForString('PROMOTION_NATURE3')
-			iSun1 = gc.getInfoTypeForString('PROMOTION_SUN1')
-			iWater1 = gc.getInfoTypeForString('PROMOTION_WATER1')
+			# Can cast cache
+			# LFGR_TODO: This really should be cached in the DLL anyway
+			debCanCastWCP = {} # type: Dict[int, bool]
+			for eSpell in ( eSpellSpring, eSpellVitalize, eSpellScorch, eSpellSanctify, eSpellBloom ) :
+				debCanCastWCP[eSpell] = pUnit.canCastWithCurrentPromotions( eSpell )
 
-			iSmoke = gc.getInfoTypeForString('IMPROVEMENT_SMOKE')
-			iFlood = gc.getInfoTypeForString('FEATURE_FLOOD_PLAINS')
-			iDesert = gc.getInfoTypeForString('TERRAIN_DESERT')
-			iMarsh = gc.getInfoTypeForString('TERRAIN_MARSH')
-			iGrass = gc.getInfoTypeForString('TERRAIN_GRASS')
-			iPlains = gc.getInfoTypeForString('TERRAIN_PLAINS')
-			iSnow = gc.getInfoTypeForString('TERRAIN_SNOW')
-			iTundra = gc.getInfoTypeForString('TERRAIN_TUNDRA')
+			def iterSpellsForPlot( pPlot ) :
+				# type: (CyPlot) -> Iterator[int]
+				if pPlot.getOwner() == iPlayer:
+					eTerrain = pPlot.getTerrainType()
+					eFeature = pPlot.getFeatureType()
+					eImprovement = pPlot.getImprovementType()
+					eBonus = pPlot.getBonusType(-1)
+					if eImprovement == eSmoke or ( eTerrain == eDesert and eFeature != eFlood ) :
+						yield eSpellSpring
+					if eTerrain in (eDesert, eMarsh, ePlains, eTundra) or ( eTerrain == eSnow and not bIllians ) :
+						yield eSpellVitalize
+					if eTerrain == eMarsh or ( eTerrain == eSnow and not bIllians ) :
+						yield eSpellScorch
+					if pPlot.getPlotCounter() >= 10 and not bInfernal :
+						yield eSpellSanctify
+					if eFeature == -1 and pPlot.canHaveFeature( eBloomForest ) :
+						if bMaintainBloomForest :
+							yield eSpellBloom # Elves want to bloom everywhere
+						if eImprovement == -1 and eBonus == -1 and eTerrain != eGrass :
+							yield eSpellBloom # Can't bloom over improvements and don't want to bloom over boni or grass
 
-			lHellTerrains = [	gc.getInfoTypeForString('TERRAIN_BROKEN_LANDS'),
-						gc.getInfoTypeForString('TERRAIN_BURNING_SANDS'),
-						gc.getInfoTypeForString('TERRAIN_FIELDS_OF_PERDITION'),
-						gc.getInfoTypeForString('TERRAIN_SHALLOWS')
-						]
+			def hasSpellForPlot( pPlot ) :
+				for eSpell in iterSpellsForPlot( pPlot ) :
+					if debCanCastWCP[eSpell] :
+						return True
+				return False
+			
+			# Try casting a spell!
+			for eSpell in iterSpellsForPlot( pUnitPlot ) :
+				if pUnit.canCast( eSpell, False ) :
+					pUnit.cast( eSpell )
 
-			lBloomableTerrains = [	iGrass, gc.getInfoTypeForString('TERRAIN_PLAINS'),
-						gc.getInfoTypeForString('TERRAIN_TUNDRA'),
-						gc.getInfoTypeForString('TERRAIN_MARSH')
-						]
+			if not pUnit.canMove() :
+				pUnit.getGroup().pushMission( MissionTypes.MISSION_SKIP, -1, -1, 0, False,
+					False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
+				return 1
 
-			iSpellSpring = gc.getInfoTypeForString('SPELL_SPRING')
-			iSpellVitalize = gc.getInfoTypeForString('SPELL_VITALIZE')
-			iSpellScorch = gc.getInfoTypeForString('SPELL_SCORCH')
-			iSpellSanctify = gc.getInfoTypeForString('SPELL_SANCTIFY')
-			iSpellBloom = gc.getInfoTypeForString('SPELL_BLOOM')
+			TERRAFORM_SEARCH_DISTANCE = 3
 
-			smokeb = False #terraformer tries to put out smoke
-			desertb = False #terraformer tries to spring deserts
-			plainsb = False #terraformer tries to improve plains
-			snowb = False #terraformer tries to scorch snow to tundra
-			tundrab = False #terraformer tries to scorch tundra to plains
-			marshb = False #terraformer tries to scorch marsh to grassland
-			hellterrb = False #terraformer tries to remove hell terrain
-			treesb = False #terraformer tries to Create Trees
+			for iDist in range( 1, TERRAFORM_SEARCH_DISTANCE ) :
+				lPlots = list( PyHelpers.PyPlot( pUnitPlot ).iterPlotsAtDistance( iDist ) )
+				CvUtil.shuffleList( lPlots )
+				for pPlot in lPlots :
+					if pPlot.getOwner() != iPlayer : continue
+					if pPlot.isImpassable() : continue
+					if not pUnit.generatePath( pPlot, 0, False, None ) : continue
+					if pPlot.isVisibleEnemyUnit( iPlayer ) : continue
 
+					if hasSpellForPlot( pPlot ) :
+						pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, pPlot.getX(), pPlot.getY(), 0, False,
+							False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
+						return 1
 
-#CIV SPECIFICS
-##			if iCiv == iInfernal:
-##				smokeb = False
-##				hellterrb = False
-##			elif iCiv == iIllians:
-##				snowb = False
-##				tundrab = False
-##			elif iCiv == iDoviello:
-##				tundrab = False
+			# Nothing to do, lets move on to another City!
+			iBestCount = 0
+			pBestCity = None
+			for pyCity in PyPlayer( iPlayer ).iterCities() :
+				if pUnit.generatePath( pyCity.plot(), 0, True, None ) :
+					iCount = 0 # Count number of terraformable plots
+					# LFGR_TODO: Should create and expose CyCity.getNumCityPlots() (using ::calculateNumCityPlots())
+					for iI in range( 1, pyCity.getNumCityPlots() ) :
+						pPlot = pyCity.getCityIndexPlot( iI )
+						if pPlot.isNone() : continue
+						if pPlot.getOwner() != iPlayer : continue
+						if pPlot.isImpassable() : continue
+						if not pUnit.generatePath( pPlot, 0, False, None ) : continue
+						if pPlot.isVisibleEnemyUnit( iPlayer ) : continue
 
+						if hasSpellForPlot( pPlot ) :
+							iCount += 1
 
-#UNIT SPECIFIC
-			if pUnit.isHasPromotion(iLife1) or pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_DEVOUT'):
-				if not iCiv == iInfernal:
-					hellterrb = True #terraformer tries to remove hell terrain
+					if pyCity.isSettlement() :
+						iCount += 1000 # Always prefer non-settlements
+					if iCount > iBestCount :
+						pBestCity = pyCity
+						iBestCount = iCount
 
-			if pUnit.getUnitType() == gc.getInfoTypeForString('UNIT_PRIEST_OF_LEAVES'):
-				treesb = True #terraformer tries to Create Trees
-				treesimpb = False
-				if iCiv in [iLjosalfar, iSvartalfar]:
-					treesimpb = True
-				if not (treesimpb or pPlayer.getStateReligion() == iFoL):
-					if not pPlayer.isHuman():
-						pUnit.setUnitAIType(gc.getInfoTypeForString('UNITAI_MEDIC'))
-						return 0
-
-			if pUnit.isHasPromotion(iWater1):
-				smokeb = True
-				desertb = True
-
-			if pUnit.isHasPromotion(iSun1):
-#				tundrab = True
-				marshb = True
-				if not iCiv == iIllians:
-					snowb = True
-
-			if pUnit.isHasPromotion(iNature3):
-				desertb = True
-				plainsb = True
-				tundrab = True
-				marshb = True
-				if not iCiv == iIllians:
-					snowb = True
-
-#TERRAFORMING CURRENT PLOT
-			iImprovement = pPlot.getImprovementType()
-			iTerrain = pPlot.getTerrainType()
-			iFeature = pPlot.getFeatureType()
-
-			if pPlot.getOwner() == iPlayer:
-				if desertb or pPlot.isRiver():
-					if iTerrain == iDesert:
-						if pUnit.canCast(iSpellSpring,False):
-							pUnit.cast(iSpellSpring)
-						elif pUnit.canCast(iSpellVitalize,False):
-							pUnit.cast(iSpellVitalize)
-				if smokeb:
-					if iImprovement == iSmoke:
-						if pUnit.canCast(iSpellSpring,False):
-							pUnit.cast(iSpellSpring)
-
-				if snowb and iTerrain == iSnow:
-					if pUnit.canCast(iSpellScorch,False):
-						pUnit.cast(iSpellScorch)
-					elif pUnit.canCast(iSpellVitalize,False):
-						pUnit.cast(iSpellVitalize)
-
-				if tundrab and iTerrain == iTundra:
-					if pUnit.canCast(iSpellScorch,False):
-						pUnit.cast(iSpellScorch)
-					elif pUnit.canCast(iSpellVitalize,False):
-						pUnit.cast(iSpellVitalize)
-
-				if plainsb and iTerrain == iPlains:
-					if pUnit.canCast(iSpellVitalize,False):
-						pUnit.cast(iSpellVitalize)
-
-				if marshb and iTerrain == iMarsh:
-					if pUnit.canCast(iSpellScorch,False):
-						pUnit.cast(iSpellScorch)
-					elif pUnit.canCast(iSpellVitalize,False):
-						pUnit.cast(iSpellVitalize)
-
-				if hellterrb:
-					if pUnit.canCast(iSpellSanctify,False):
-						pUnit.cast(iSpellSanctify)
-
-				if treesb:
-					if pPlot.getFeatureType() == -1:
-						if pUnit.canCast(iSpellBloom,False):
-							if treesimpb or pPlot.getBonusType(-1) == -1:
-								pUnit.cast(iSpellBloom)
-								return 1
-
-## LOOK FOR WORK
-			if not pUnit.canMove():
-				return 2
-
-			for isearch in range(1,searchdistance,1):
-				for iiX in range(iX-isearch, iX+isearch+1, 1):
-					for iiY in range(iY-isearch, iY+isearch+1, 1):
-						pPlot2 = CyMap().plot(iiX,iiY)
-						if pPlot2.isNone():continue
-						if pPlot2.getOwner() != iPlayer:continue
-						if pPlot2.isImpassable():continue
-						if not pUnit.generatePath(pPlot2,0,False,None):continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
-						iImprovement = pPlot2.getImprovementType()
-						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
-							iTerrain = pPlot2.getTerrainType()
-							iFeature = pPlot2.getFeatureType()
-							if smokeb:
-								if iImprovement == iSmoke:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if desertb:
-								if iTerrain == iDesert and iFeature != iFlood:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if snowb:
-								if iTerrain == iSnow:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if tundrab:
-								if iTerrain == iTundra:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if marshb:
-								if iTerrain == iMarsh:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if plainsb:
-								if iTerrain == iPlains:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-							if hellterrb:
-								if iTerrain in lHellTerrains:
-									pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-									return 2
-						if treesb:
-							if not pPlot2.isCity():
-								if iFeature == -1:
-									if treesimpb or iImprovement == -1:
-										if iTerrain in lBloomableTerrains:
-											pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, iiX, iiY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
-											return 2
-
-#Nothing to do, lets move on to another City!
-			iBestCount=0
-			pBestCity=0
-			for icity in range(pPlayer.getNumCities()):
-				pCity = pPlayer.getCity(icity)
-				if not pCity.isNone():
-					iCount=0
-					for iI in range(1, 21):
-						pPlot2 = pCity.getCityIndexPlot(iI)
-						if pPlot2.isNone():continue
-						if pPlot2.getOwner() != iPlayer:continue
-						if pPlot2.isImpassable():continue
-						if not pUnit.generatePath(pPlot2,0,False,None):continue
-						if pPlot2.isVisibleEnemyUnit(iPlayer):continue
-						iImprovement = pPlot2.getImprovementType()
-						if not (iImprovement != -1 and gc.getImprovementInfo(iImprovement).isUnique()):
-							iTerrain = pPlot2.getTerrainType()
-							iFeature = pPlot2.getFeatureType()
-							if smokeb:
-								if iImprovement == iSmoke:
-									iCount += 1
-							if desertb:
-								if iTerrain == iDesert and iFeature != iFlood:
-									iCount += 1
-							if snowb:
-								if iTerrain == iSnow:
-									iCount += 1
-							if tundrab:
-								if iTerrain == iTundra:
-									iCount += 1
-							if marshb:
-								if iTerrain == iMarsh:
-									iCount += 1
-							if hellterrb:
-								if iTerrain in lHellTerrains:
-									iCount += 1
-							if treesb:
-								if not pPlot2.isCity():
-									if iFeature == -1:
-										if treesimpb or iImprovement == -1:
-											if iTerrain in lBloomableTerrains:
-												iCount += 1
-
-					if iCount > iBestCount:
-						pBestCity=pCity
-						iBestCount=iCount
-			if pBestCity!=0:
+			if pBestCity is not None :
 				pCPlot = pBestCity.plot()
 				CX = pCPlot.getX()
 				CY = pCPlot.getY()
-				pUnit.getGroup().pushMission(MissionTypes.MISSION_MOVE_TO, CX, CY, 0, False, False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit)
+				pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, CX, CY, 0, False, False,
+					MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
 				return 1
-			return 0
+
+		return 0
+
 
 	def AI_Mage_UPGRADE_MANA(self, argsList):
 		pUnit = argsList[0]

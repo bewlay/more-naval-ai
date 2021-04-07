@@ -35,11 +35,6 @@ import BugUtil
 PREF_ICON_SIZE = 24
 PREF_ICON_TOP = 168
 PREF_ICON_LEFT = 10
-
-FLAVORS = [ TechPrefs.FLAVOR_PRODUCTION, TechPrefs.FLAVOR_GOLD, TechPrefs.FLAVOR_SCIENCE,
-			TechPrefs.FLAVOR_CULTURE, TechPrefs.FLAVOR_RELIGION ]
-UNIT_CLASSES = [ "UNITCLASS_ENGINEER", "UNITCLASS_MERCHANT", "UNITCLASS_SCIENTIST",
-				 "UNITCLASS_ARTIST", "UNITCLASS_PROPHET" ]
 # BUG - GP Tech Prefs - end
 
 # BUG - 3.19 No Espionage - start
@@ -60,10 +55,10 @@ def resetTechPrefs(args=[]):
 	CvScreensInterface.techChooser.resetTechPrefs()
 
 def getAllTechPrefsHover(widgetType, iData1, iData2, bOption):
-	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_ALL", CvScreensInterface.techChooser.pPrefs.getAllFlavorTechs(iData1))
+	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_ALL", CvScreensInterface.techChooser.pPrefs.getAllUnitTechs(iData1))
 
 def getCurrentTechPrefsHover(widgetType, iData1, iData2, bOption):
-	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_CURRENT", CvScreensInterface.techChooser.pPrefs.getCurrentFlavorTechs(iData1))
+	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_CURRENT", CvScreensInterface.techChooser.pPrefs.getCurrentUnitTechs(iData1))
 
 def getFutureTechPrefsHover(widgetType, iData1, iData2, bOption):
 	pPlayer = gc.getPlayer(CvScreensInterface.techChooser.iCivSelected)
@@ -71,7 +66,7 @@ def getFutureTechPrefsHover(widgetType, iData1, iData2, bOption):
 	for i in range(gc.getNumTechInfos()):
 		if (pPlayer.isResearchingTech(i)):
 			sTechs.add(CvScreensInterface.techChooser.pPrefs.getTech(i))
-	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_FUTURE", CvScreensInterface.techChooser.pPrefs.getCurrentWithFlavorTechs(iData1, sTechs))
+	return buildTechPrefsHover("TXT_KEY_BUG_TECH_PREFS_FUTURE", CvScreensInterface.techChooser.pPrefs.getCurrentWithUnitTechs(iData1, sTechs))
 
 def buildTechPrefsHover(key, lTechs):
 	szText = BugUtil.getPlainText(key) + "\n"
@@ -1085,10 +1080,10 @@ class CvTechChooser( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Adviso
 			if (self.bPrefsShowing):
 				# ... and if so, remove icons if they are currently showing
 				screen.hide( "GreatPersonHeading")
-				for i, f in enumerate(FLAVORS):
-					screen.hide( "GreatPerson" + str(f) )
-					screen.hide( "GreatPersonTech" + str(f) )
-					screen.hide( "GreatPersonTechNext" + str(f) )
+				for eUnit in self.pPrefs.getDiscoverUnits() :
+					screen.hide( "GreatPerson" + str(eUnit) )
+					screen.hide( "GreatPersonTech" + str(eUnit) )
+					screen.hide( "GreatPersonTechNext" + str(eUnit) )
 				self.bPrefsShowing = False
 			return
 		# Always redraw the GP icons because otherwise they are prone to disappearing
@@ -1098,14 +1093,13 @@ class CvTechChooser( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Adviso
 		iY = PREF_ICON_TOP - iIconSize - 40
 		screen.addDDSGFC( "GreatPersonHeading", ArtFileMgr.getInterfaceArtInfo("DISCOVER_TECHNOLOGY_BUTTON").getPath(), iX, iY, iIconSize, iIconSize, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
-		for i, f in enumerate(FLAVORS):
+
+		for i, eUnit in enumerate( self.pPrefs.getDiscoverUnits() ) :
 			# GP icon
-			iUnitClass = gc.getInfoTypeForString(UNIT_CLASSES[i])
-			iUnitType = gc.getUnitClassInfo(iUnitClass).getDefaultUnitIndex()
-			pUnitInfo = gc.getUnitInfo(iUnitType)
+			pUnitInfo = gc.getUnitInfo( eUnit )
 			iX = PREF_ICON_LEFT
 			iY = PREF_ICON_TOP + 4 * i * PREF_ICON_SIZE
-			screen.addDDSGFC( "GreatPerson" + str(f), pUnitInfo.getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_ALL, f, -1 )
+			screen.addDDSGFC( "GreatPerson" + str(eUnit), pUnitInfo.getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_ALL, eUnit, -1 )
 		self.bPrefsShowing = True
 
 		# Remove any techs researched since last call, creating tree if necessary
@@ -1120,30 +1114,30 @@ class CvTechChooser( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen Adviso
 				sTechs.add(self.pPrefs.getTech(i))
 
 		# Update the buttons to reflect the new tech prefs
-		for i, f in enumerate(FLAVORS):
+		for i, eUnit in enumerate( self.pPrefs.getDiscoverUnits() ) :
 			# GP button
-			screen.show( "GreatPerson" + str(f) )
+			screen.show( "GreatPerson" + str(eUnit) )
 
 			# Current tech GP will pop
-			szButtonName = "GreatPersonTech" + str(f)
-			pTech = self.pPrefs.getNextResearchableFlavorTech(f)
+			szButtonName = "GreatPersonTech" + str(eUnit)
+			pTech = self.pPrefs.getNextResearchableUnitTech( eUnit )
 			iX = PREF_ICON_LEFT + 3 * PREF_ICON_SIZE / 2
 			iY = PREF_ICON_TOP + 4 * i * PREF_ICON_SIZE
 			if (pTech):
-				screen.addDDSGFC( szButtonName, pTech.getInfo().getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_CURRENT, f, -1 )
+				screen.addDDSGFC( szButtonName, pTech.getInfo().getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_CURRENT, eUnit, -1 )
 			else:
-				screen.addDDSGFC( szButtonName, self.NO_TECH_ART, iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_CURRENT, f, -1 )
+				screen.addDDSGFC( szButtonName, self.NO_TECH_ART, iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_CURRENT, eUnit, -1 )
 			screen.show( szButtonName )
 
 			# Tech GP will pop once selected techs are researched
-			szButtonName = "GreatPersonTechNext" + str(f)
-			pTech = self.pPrefs.getNextResearchableWithFlavorTech(f, sTechs)
+			szButtonName = "GreatPersonTechNext" + str(eUnit)
+			pTech = self.pPrefs.getNextResearchableWithUnitTech(eUnit, sTechs)
 			iX = PREF_ICON_LEFT + 3 * PREF_ICON_SIZE / 2
 			iY = PREF_ICON_TOP + 4 * i * PREF_ICON_SIZE + 3 * PREF_ICON_SIZE / 2
 			if (pTech):
-				screen.addDDSGFC( szButtonName, pTech.getInfo().getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_FUTURE, f, -1 )
+				screen.addDDSGFC( szButtonName, pTech.getInfo().getButton(), iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_FUTURE, eUnit, -1 )
 			else:
-				screen.addDDSGFC( szButtonName, self.NO_TECH_ART, iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_FUTURE, f, -1 )
+				screen.addDDSGFC( szButtonName, self.NO_TECH_ART, iX, iY, PREF_ICON_SIZE, PREF_ICON_SIZE, WidgetTypes.WIDGET_TECH_PREFS_FUTURE, eUnit, -1 )
 			screen.show( szButtonName )
 # BUG - GP Tech Prefs - end
 

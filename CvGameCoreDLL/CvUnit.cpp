@@ -6378,7 +6378,8 @@ bool CvUnit::pillage()
 				if (pPlot->isOwned())
 				{
 					// Tholal AI - pillaging affects War Success
-					if ((iPillageGold > 10) || (pPlot->getBonusType() != NO_BONUS))
+					// lfgr fix 03/2021: Only for non-HN units
+					if( !isHiddenNationality() && ( iPillageGold > 10 || pPlot->getBonusType() != NO_BONUS ) )
 					{
 						GET_TEAM(getTeam()).AI_changeWarSuccess(pPlot->getTeam(), 1);
 					}
@@ -15779,6 +15780,15 @@ bool CvUnit::isPotentialEnemy(TeamTypes eTeam, const CvPlot* pPlot) const
 		pPlot = plot();
 	}
 
+	// lfgr fix 03/2021: See isEnemy()
+	if (isAlwaysHostile(pPlot))
+	{
+		if (getTeam() != eTeam)
+		{
+			return true;
+		}
+	}
+
 	return (::isPotentialEnemy(GET_PLAYER(getCombatOwner(eTeam, pPlot)).getTeam(), eTeam));
 }
 
@@ -16243,6 +16253,95 @@ int CvUnit::getSelectionSoundScript() const
 }
 
 //FfH Spell System: Added by Kael 07/23/2007
+bool CvUnit::canCastWithCurrentPromotions( SpellTypes eSpell ) const // lfgr fix 03/2021
+{
+	// LFGR_TODO: Cache this?
+	CvSpellInfo& kSpell = GC.getSpellInfo(eSpell);
+
+	if (isCastingBlocked())
+	{
+		return false;
+	}
+
+	// objects cant cast spells
+	if (getUnitInfo().isObject())
+	{
+		// unless the spell is designed for that object (ie. Golden Hammer)
+		if (kSpell.getUnitPrereq() != NO_UNIT)
+		{
+			if (kSpell.getUnitPrereq() != getUnitType())
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
+	{
+		if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq1()))
+		{
+			return false;
+		}
+	}
+	if (kSpell.getPromotionPrereq2() != NO_PROMOTION)
+	{
+		if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq2()))
+		{
+			return false;
+		}
+	}
+	if (kSpell.getUnitClassPrereq() != NO_UNITCLASS)
+	{
+		if (getUnitClassType() != (UnitClassTypes)kSpell.getUnitClassPrereq())
+		{
+			return false;
+		}
+	}
+	if (kSpell.getUnitPrereq() != NO_UNIT)
+	{
+		if (getUnitType() != (UnitTypes)kSpell.getUnitPrereq())
+		{
+			return false;
+		}
+	}
+	if (kSpell.getUnitCombatPrereq() != NO_UNITCOMBAT)
+	{
+		if (getUnitCombatType() != (UnitCombatTypes)kSpell.getUnitCombatPrereq())
+		{
+			return false;
+		}
+	}
+	if (kSpell.getCivilizationPrereq() != NO_CIVILIZATION)
+	{
+		if (getCivilizationType() != (CivilizationTypes)kSpell.getCivilizationPrereq())
+		{
+			return false;
+		}
+	}
+
+	if (kSpell.getConvertUnitType() != NO_UNIT)
+	{
+		if (getUnitType() == (UnitTypes)kSpell.getConvertUnitType())
+		{
+			return false;
+		}
+	}
+
+	if (kSpell.isCasterMustBeAlive())
+	{
+		if (!isAlive())
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 bool CvUnit::canCast(int spell, bool bTestVisible)
 {
     SpellTypes eSpell = (SpellTypes)spell;
@@ -16252,12 +16351,13 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     CLLNode<IDInfo>* pUnitNode;
     bool bValid = false;
 
-	if (getImmobileTimer() > 0 && !isHeld())
-	{
+	// lfgr 03/2021: Moved some stuff to canCastWithCurrentPromotions
+
+	if( !canCastWithCurrentPromotions( eSpell ) ) {
 		return false;
 	}
 
-	if (isCastingBlocked())
+	if (getImmobileTimer() > 0 && !isHeld())
 	{
 		return false;
 	}
@@ -16296,23 +16396,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         }
     }
 
-	// objects cant cast spells
-	if (getUnitInfo().isObject())
-	{
-		// unless the spell is designed for that object (ie. Golden Hammer)
-		if (kSpell.getUnitPrereq() != NO_UNIT)
-		{
-			if (kSpell.getUnitPrereq() != getUnitType())
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 	// Illusions cannot pickup or take equipment; they also cannot Add to Flesh Golem or Wolf Pack
 	if (isIllusionary())
 	{ // LFGR_TODO: This should not be "hardcoded"
@@ -16327,41 +16410,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 
-    if (kSpell.getPromotionPrereq1() != NO_PROMOTION)
-    {
-        if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq1()))
-        {
-            return false;
-        }
-    }
-    if (kSpell.getPromotionPrereq2() != NO_PROMOTION)
-    {
-        if (!isHasPromotion((PromotionTypes)kSpell.getPromotionPrereq2()))
-        {
-            return false;
-        }
-    }
-    if (kSpell.getUnitClassPrereq() != NO_UNITCLASS)
-    {
-        if (getUnitClassType() != (UnitClassTypes)kSpell.getUnitClassPrereq())
-        {
-            return false;
-        }
-    }
-    if (kSpell.getUnitPrereq() != NO_UNIT)
-    {
-        if (getUnitType() != (UnitTypes)kSpell.getUnitPrereq())
-        {
-            return false;
-        }
-    }
-    if (kSpell.getUnitCombatPrereq() != NO_UNITCOMBAT)
-    {
-        if (getUnitCombatType() != (UnitCombatTypes)kSpell.getUnitCombatPrereq())
-        {
-            return false;
-        }
-    }
     if (kSpell.getBuildingPrereq() != NO_BUILDING)
     {
         if (!pPlot->isCity())
@@ -16377,13 +16425,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     {
         //if (GET_PLAYER(getOwnerINLINE()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq())  == 0)
 		if (GET_TEAM(getTeam()).getBuildingClassCount((BuildingClassTypes)kSpell.getBuildingClassOwnedPrereq()) == 0)
-        {
-            return false;
-        }
-    }
-    if (kSpell.getCivilizationPrereq() != NO_CIVILIZATION)
-    {
-        if (getCivilizationType() != (CivilizationTypes)kSpell.getCivilizationPrereq())
         {
             return false;
         }
@@ -16451,14 +16492,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
 		}
 	}
 	// VOTE_CLEANUP end
-
-    if (kSpell.getConvertUnitType() != NO_UNIT)
-    {
-        if (getUnitType() == (UnitTypes)kSpell.getConvertUnitType())
-        {
-            return false;
-        }
-    }
 	/*
     if (GC.getUnitInfo((UnitTypes)getUnitType()).getEquipmentPromotion() != NO_PROMOTION)
     {
@@ -16474,13 +16507,6 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     if (kSpell.getCasterMinLevel() != 0)
     {
         if (getLevel() < kSpell.getCasterMinLevel())
-        {
-            return false;
-        }
-    }
-    if (kSpell.isCasterMustBeAlive())
-    {
-        if (!isAlive())
         {
             return false;
         }
@@ -16700,7 +16726,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
         return true;
     }
 
-	// From here on, we are only check if the spell does something at all.
+	// From here on, we only check if the spell does something at all.
 
 	if( kSpell.getCost() < 0 ) {
 		return true; // Gives gold
@@ -19980,7 +20006,7 @@ void CvUnit::updateTerraformer()
     {
         if (GC.getSpellInfo((SpellTypes)iSpell).isAllowAutomateTerrain())
         {
-            if (canCast(iSpell, false))
+            if (canCastWithCurrentPromotions( (SpellTypes) iSpell )) // lfgr fix 03/2021
             {
                 m_bTerraformer = true;
                 return;
