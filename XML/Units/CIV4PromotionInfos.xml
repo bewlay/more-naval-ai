@@ -1687,7 +1687,6 @@
                     <bFeatureDoubleMove>1</bFeatureDoubleMove>
                 </FeatureDoubleMove>
             </FeatureDoubleMoves>
-            <bGraphicalOnly>1</bGraphicalOnly>
             <Button>Art/Interface/Buttons/Promotions/Elf.dds</Button>
             <bRace>1</bRace>
             <iWorkRateModify>-20</iWorkRateModify>
