@@ -17193,6 +17193,20 @@ bool CvUnit::canSpreadReligion(int spell) const
 	return true;
 }
 
+// lfgr 04/2021
+// lfgr TODO: Cache?
+bool CvUnit::canCastAnything()
+{
+	for( int eSpell = 0; eSpell < GC.getNumSpellInfos(); eSpell++ )
+	{
+		if( canCast( eSpell, false ) )
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 // MNAI begin
 /*
 bool CvUnit::canTerraform(int spell, const CvPlot* pPlot) const

@@ -495,7 +495,8 @@ bool CvUnitAI::AI_update()
 			}
 
 			// Tholal AI - catch for units who have casted already this turn and now can't move
-			if (!canMove())
+			// lfgr 04/2021: Allow certain AI functions to be called when we can still cast, but not move anymore
+			if (!AI_readyToMoveOrCast())
 			{
 				return false;
 			}
@@ -545,7 +546,9 @@ bool CvUnitAI::AI_update()
 /**	END	                                        												**/
 /*************************************************************************************************/
 
-		if (canMove()) // Tholal AI - make sure we dont try to move if we can't (ie, due to spell/ability usage earlier in this function)
+// Tholal AI - make sure we dont try to move if we can't (ie, due to spell/ability usage earlier in this function)
+// lfgr 04/2021: Allow certain AI functions to be called when we can still cast, but not move anymore
+		if (AI_readyToMoveOrCast())
 		{
 			switch (AI_getUnitAIType())
 			{
@@ -31304,4 +31307,20 @@ bool isCityAIType( UnitAITypes eUnitAI )
 		(eUnitAI == UNITAI_CITY_COUNTER) ||
 		(eUnitAI == UNITAI_CITY_SPECIAL) ||
 		(eUnitAI == UNITAI_RESERVE);
+}
+
+
+// lfgr 04/2021: See CvUnitAI.h
+bool CvUnitAI::AI_readyToMoveOrCast()
+{
+	if( canMove() )
+	{
+		return true;
+	}
+
+	// For now, only the terrraformer AI might want to move and then cast.
+	if( AI_getUnitAIType() == UNITAI_TERRAFORMER && canCastAnything() )
+	{
+		return true;
+	}
 }
