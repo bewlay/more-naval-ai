@@ -6853,9 +6853,10 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 	case TRADE_NON_AGGRESSION:
 		if (GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS))
 		{
-			for (int iI = 0; iI < MAX_PLAYERS; iI++)
+			// lfgr 04/2021: Removed unncessary loop, don't allow for vassals
+			if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
 			{
-				if (getTeam() != GET_PLAYER(eWhoTo).getTeam())
+				if ( !GET_TEAM(getTeam()).isAVassal() && !GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isAVassal() )
 				{
 					if (GET_TEAM(getTeam()).isHasEmbassy(GET_PLAYER(eWhoTo).getTeam()))
 					{

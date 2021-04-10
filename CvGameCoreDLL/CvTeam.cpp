@@ -5810,7 +5810,8 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 						for (pNode = pLoopDeal->getFirstTrades()->head(); pNode; pNode = pLoopDeal->getFirstTrades()->next(pNode))
 						{
 							if ((pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT) ||
-								(pNode->m_data.m_eItemType == TRADE_PEACE_TREATY))
+								(pNode->m_data.m_eItemType == TRADE_PEACE_TREATY) ||
+								(pNode->m_data.m_eItemType == TRADE_NON_AGGRESSION)) // lfgr 04/2021: Cancel non-agression pacts when becoming a vasal
 							{
 								bValid = false;
 								break;
@@ -5823,7 +5824,8 @@ void CvTeam::setVassal(TeamTypes eIndex, bool bNewValue, bool bCapitulated)
 						for (pNode = pLoopDeal->getSecondTrades()->head(); pNode; pNode = pLoopDeal->getSecondTrades()->next(pNode))
 						{
 							if ((pNode->m_data.m_eItemType == TRADE_DEFENSIVE_PACT) ||
-								(pNode->m_data.m_eItemType == TRADE_PEACE_TREATY))
+								(pNode->m_data.m_eItemType == TRADE_PEACE_TREATY) ||
+								(pNode->m_data.m_eItemType == TRADE_NON_AGGRESSION)) // lfgr 04/2021: Cancel non-agression pacts when becoming a vasal
 							{
 								bValid = false;
 								break;
