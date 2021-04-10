@@ -2,15 +2,17 @@
 FfHUI 05/2020 lfgr
 Configurable UI functionality for Fall from Heaven.
 """
-
+import FfHDefines
 from CvPythonExtensions import *
 import BugCore
 import CustomFunctions
+from PyHelpers import getText
 
 
 cf = CustomFunctions.CustomFunctions()
 gc = CyGlobalContext()
 ffhUIOpt = BugCore.game.FfHUI
+ffhDefines = FfHDefines.getInstance()
 
 
 def onSetPlayerAlive( argsList ) :
@@ -99,3 +101,25 @@ def cyclePlotHelpForwards( argsList = None ) :
 
 def cyclePlotHelpBackwards( argsList = None ) :
 	gc.changePlotHelpCycleIdx( -1 )
+
+
+def getPlayerGoldTooltip( eWidgetType, iData1, iData2, bOption ) :
+	pPlayer = gc.getPlayer( CyGame().getActivePlayer() )
+	if pPlayer.getCivilizationType() != gc.getInfoTypeForString( "CIVILIZATION_KHAZAD" ) :
+		return u""
+	
+	szHelp = u""
+	iGoldPerCity = pPlayer.getGold() // pPlayer.getNumCities()
+	szHelp += getText( "TXT_KEY_GOLD_PER_CITY", iGoldPerCity )
+
+	nextVaultAndGold = ffhDefines.getNextKhazadVaultWithMinGold( pPlayer )
+	if nextVaultAndGold is not None :
+		eNextVault, iMinGold = nextVaultAndGold
+		szHelp += u"\n" + getText( "TXT_KEY_NEXT_GOLD", iMinGold, gc.getBuildingInfo( eNextVault ).getTextKey() )
+	
+	eVault = ffhDefines.getKhazadVault( pPlayer )
+	szHelp += u"\n" + CyGameTextMgr().getBuildingHelp( eVault, False, False, False, None )
+	
+	return szHelp
+	
+	

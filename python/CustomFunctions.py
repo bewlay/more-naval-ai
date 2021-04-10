@@ -5,9 +5,11 @@ from CvPythonExtensions import *
 import CvUtil
 import Popup as PyPopup
 import PyHelpers
+import FfHDefines # lfgr 04/2021
 
 # globals
 gc = CyGlobalContext()
+ffhDefines = FfHDefines.getInstance() # lfgr 04/2021
 PyPlayer = PyHelpers.PyPlayer
 
 class CustomFunctions:
@@ -826,37 +828,12 @@ class CustomFunctions:
 	def doTurnKhazad(self, iPlayer):
 		pPlayer = gc.getPlayer(iPlayer)
 		if pPlayer.getNumCities() > 0:
-			iVault1 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_EMPTY')
-			iVault2 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_LOW')
-			iVault3 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT')
-			iVault4 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_STOCKED')
-			iVault5 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_ABUNDANT')
-			iVault6 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_FULL')
-			iVault7 = gc.getInfoTypeForString('BUILDING_DWARVEN_VAULT_OVERFLOWING')
-			iGold = pPlayer.getGold() / pPlayer.getNumCities()
-			if iGold <= 49:
-				iNewVault = iVault1
-			if (iGold >= 50 and iGold <= 99):
-				iNewVault = iVault2
-			if (iGold >= 100 and iGold <= 149):
-				iNewVault = iVault3
-			if (iGold >= 150 and iGold <= 199):
-				iNewVault = iVault4
-			if (iGold >= 200 and iGold <= 299):
-				iNewVault = iVault5
-			if (iGold >= 300 and iGold <= 499):
-				iNewVault = iVault6
-			if iGold >= 500:
-				iNewVault = iVault7
+			# lfgr 04/2021: Simplified
+			iNewVault = ffhDefines.getKhazadVault( pPlayer )
 			for pyCity in PyPlayer(iPlayer).getCityList():
 				pCity = pyCity.GetCy()
-				pCity.setNumRealBuilding(iVault1, 0)
-				pCity.setNumRealBuilding(iVault2, 0)
-				pCity.setNumRealBuilding(iVault3, 0)
-				pCity.setNumRealBuilding(iVault4, 0)
-				pCity.setNumRealBuilding(iVault5, 0)
-				pCity.setNumRealBuilding(iVault6, 0)
-				pCity.setNumRealBuilding(iVault7, 0)
+				for eVault, _ in ffhDefines.getKhazadVaultsWithMinGold() :
+					pCity.setNumRealBuilding( eVault, 0)
 				pCity.setNumRealBuilding(iNewVault, 1)
 
 	def doTurnLuchuirp(self, iPlayer):

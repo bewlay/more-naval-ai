@@ -22,7 +22,13 @@
 		<section id="PlotHelp">
 			<list id="PlotHelpNumUnits" type="int" default="15" listType="int" values="5, 10, 15, 20" />
 		</section>
+		<section id="Interface">
+			<option id="ShowKhazadVaultText" type="boolean" default="False" />
+		</section>
 	</options>
+
+	<!-- Khazad vault text -->
+	<widget name="WIDGET_PLAYER_GOLD" function="getPlayerGoldTooltip"/>
 
 	<!-- Plot help unit cycling -->
 	<shortcut function="cyclePlotHelpForwards" keys="Ctrl Space | -"/>

@@ -46,6 +46,8 @@ g_bScoreShowCivName = RevOpt.isScoreShowCivName()
 PleOpt = BugCore.game.PLE
 # BUG - PLE - end
 
+ffhUIOpt = BugCore.game.FfHUI # lfgr 04/2021
+
 # BUG - Align Icons - start
 import Scoreboard
 import PlayerUtil
@@ -3235,7 +3237,9 @@ class CvMainInterface:
 # BUG - Gold Rate Warning - end
 
 #FfH: Added by Kael 12/08/2007
-				if (gc.getPlayer(ePlayer).getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD') and gc.getPlayer(ePlayer).getNumCities() > 0):
+				if gc.getPlayer(ePlayer).getCivilizationType() == gc.getInfoTypeForString('CIVILIZATION_KHAZAD') \
+						and gc.getPlayer(ePlayer).getNumCities() > 0 \
+						and ffhUIOpt.isShowKhazadVaultText() : # lfgr 04/2021
 					iGold = gc.getPlayer(ePlayer).getGold() / gc.getPlayer(ePlayer).getNumCities()
 					if iGold <= 49:
 						szText = szText + " " + localText.getText("TXT_KEY_MISC_DWARVEN_VAULT_EMPTY", ())
@@ -3250,8 +3254,9 @@ class CvMainInterface:
 					if iGold >= 500:
 						szText = szText + " " + localText.getText("TXT_KEY_MISC_DWARVEN_VAULT_OVERFLOWING", ())
 #FfH: End Add
-				#MOVED AMOUNT OF GOLD TEXT							   2/03/08					 JOHNY SMITH	  
-				screen.setLabel( "GoldText", "Background", szText, CvUtil.FONT_LEFT_JUSTIFY, 80, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+				#MOVED AMOUNT OF GOLD TEXT							   2/03/08					 JOHNY SMITH
+				# lfgr 04/2021: Changed widget type to show Khazad vault tooltip
+				screen.setLabel( "GoldText", "Background", szText, CvUtil.FONT_LEFT_JUSTIFY, 80, 6, -0.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_PLAYER_GOLD, -1, -1 )
 				#END													 2/03/08					 JOHNY SMITH
 				screen.show( "GoldText" )
 				

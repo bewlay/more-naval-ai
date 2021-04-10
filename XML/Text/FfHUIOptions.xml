@@ -33,4 +33,12 @@
 		<Tag>TXT_KEY_BUG_OPT_FFHUI__PLOTHELPNUMUNITS_HOVER</Tag>
 		<English>Number of units in plot tooltip that are shown individually</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWKHAZADVAULTTEXT_TEXT</Tag>
+		<English>Show Khazad vault status</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWKHAZADVAULTTEXT_HOVER</Tag>
+		<English>Show Khazad vault status next to your current gold and income in the top left corner. Note that this information is always provided (to Khazad players) by hovering the mouse over your current gold.</English>
+	</TEXT>
 </Civ4GameText>

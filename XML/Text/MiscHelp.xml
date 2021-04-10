@@ -5,4 +5,14 @@
 		<Tag>TXT_KEY_TURNS_UNTIL_50_PERCENT_NATIONALITY</Tag>
 		<English>Turns until 50% %s1&#x003a; %d2</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOLD_PER_CITY</Tag>
+		<English>%d1[ICON_GOLD]/city</English>
+		<Spanish>%d1[ICON_GOLD]/ciudad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEXT_GOLD</Tag>
+		<English>Needs %d1[ICON_GOLD]/city for %s2</English>
+		<Spanish>Necesita %d1[ICON_GOLD]/ciudad para %s2</Spanish>
+	</TEXT>
 </Civ4GameText>
