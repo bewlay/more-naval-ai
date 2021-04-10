@@ -31323,4 +31323,6 @@ bool CvUnitAI::AI_readyToMoveOrCast()
 	{
 		return true;
 	}
+
+	return false;
 }
