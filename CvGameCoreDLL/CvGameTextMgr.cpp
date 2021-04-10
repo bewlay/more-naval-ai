@@ -13031,6 +13031,13 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
     }
 //FfH: End Add
 
+	// Autoraze help 04/2021 lfgr
+	if( kUnitInfo.isAutoRaze() )
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_UNIT_AUTORAZE"));
+	}
+
 	if (!CvWString(kUnitInfo.getHelp()).empty())
 	{
 		szBuffer.append(NEWLINE);
