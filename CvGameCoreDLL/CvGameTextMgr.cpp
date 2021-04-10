@@ -13396,24 +13396,38 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 				}
 			}
 
-			bFirst = true;
+			// lfgr fix 04/2021: Don't show any OR-prereq bonus if one of them is available
+			std::vector<BonusTypes> vePrereqOrBoni;
+			bool bHasSomeBonus = false;
 
-			for (iI = 0; iI < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++iI)
+			for( int i = 0; i < GC.getNUM_UNIT_PREREQ_OR_BONUSES(); ++i )
 			{
-				if (kUnitInfo.getPrereqOrBonuses(iI) != NO_BONUS)
+				BonusTypes eBonus = (BonusTypes) kUnitInfo.getPrereqOrBonuses( i );
+				if( eBonus != NO_BONUS )
 				{
-					if ((pCity == NULL) || !(pCity->hasBonus((BonusTypes)kUnitInfo.getPrereqOrBonuses(iI))))
+					if( pCity != NULL && pCity->hasBonus( eBonus ) )
 					{
-						szTempBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_REQUIRES").c_str());
-						setListHelp(szBuffer, szTempBuffer, GC.getBonusInfo((BonusTypes) kUnitInfo.getPrereqOrBonuses(iI)).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
-						bFirst = false;
+						bHasSomeBonus = true;
+						break; // No need to check the other boni
 					}
+					vePrereqOrBoni.push_back( eBonus );
 				}
 			}
 
-			if (!bFirst)
+			if( !bHasSomeBonus && vePrereqOrBoni.size() > 0 )
 			{
-				szBuffer.append(ENDCOLR);
+				bFirst = true;
+				szTempBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_REQUIRES").c_str()); // Prepare "requires" string
+				for( int i = 0; i < vePrereqOrBoni.size(); i++ )
+				{
+					setListHelp(szBuffer, szTempBuffer, GC.getBonusInfo(vePrereqOrBoni[i]).getDescription(), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);
+					bFirst = false;
+				}
+
+				if (!bFirst)
+				{
+					szBuffer.append(ENDCOLR);
+				}
 			}
 		}
 	}
