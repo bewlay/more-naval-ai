@@ -885,6 +885,8 @@ void CvUnitAI::AI_upgrade()
 	int iBestValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true) * 100;
 	UnitTypes eBestUnit = NO_UNIT;
 
+	// LFGR_TODO: A new function CvUnit::canEverUpgrade(UnitTypes) could help here. Caching a list of possible upgrades for each UnitType could also make sense.
+
 	// Note: the original code did two passes, presumably for speed reasons.
 	// In the first pass, they checked only units which were flagged with the right unitAI.
 	// Then, only if no such units were found, they checked all other units.
