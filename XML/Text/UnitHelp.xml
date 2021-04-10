@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for general unit help and messages. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_AUTORAZE</Tag>
+		<English>[ICON_BULLET]Destroys improvements (in enemy territory) and terrain features when it enters a tile</English>
+	</TEXT>
+</Civ4GameText>

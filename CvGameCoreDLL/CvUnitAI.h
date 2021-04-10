@@ -389,6 +389,10 @@ protected:
     bool AI_buildPirateCove();
 // End Sephi AI
 
+	// lfgr 04/2021
+	// Whether this unit is for ready for further orders from an AI method
+	bool AI_readyToMoveOrCast();
+
 	// added so under cheat mode we can call protected functions for testing
 	friend class CvGameTextMgr;
 
