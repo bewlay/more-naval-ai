@@ -1225,6 +1225,7 @@ void CvSelectionGroup::startMission()
 			pUnitNode = headUnitNode();
 			int iMaxMovesLeft = 0;
 
+			// lfgr comment: Calculate iMaxMovesLeft
 			while (pUnitNode != NULL)
 			{
 				
@@ -1245,6 +1246,7 @@ void CvSelectionGroup::startMission()
 				}
 			}
 
+			// lfgr comment: do the pillaging
 			bool bDidPillage = false;
 			while( iMaxMovesLeft > 0 && !bDidPillage )
 			{
@@ -1255,13 +1257,16 @@ void CvSelectionGroup::startMission()
 				{
 					pLoopUnit = ::getUnit(pUnitNode->m_data);
 					pUnitNode = nextUnitNode(pUnitNode);
-					if (pLoopUnit->plot()->getImprovementType() == NO_IMPROVEMENT && pLoopUnit->isEnemyRoute() && !isHuman())
+					// lfgr 04/2021: This might do nothing if there is a unit with EnemyRoute (command promomotion) in the stack.
+					// This makes units be stuck in a loop. If we don't want to pillage routes, we have to decide that earlier.
+					/*if (pLoopUnit->plot()->getImprovementType() == NO_IMPROVEMENT && pLoopUnit->isEnemyRoute() && !isHuman())
 					{
 						bDidPillage = true;
 						break;
-					}
+					}*/
 					if( pLoopUnit->canMove() && pLoopUnit->canPillage(pLoopUnit->plot()) )
 					{
+						// lfgr comment: Same computation as above.
 						int iMovesLeft = pLoopUnit->movesLeft();
 						if( pLoopUnit->bombardRate() > 0 )
 						{
