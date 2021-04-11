@@ -461,10 +461,8 @@ def onCityBuilt( argsList ):
 			city.setRevIndexAverage(city.getRevolutionIndex())
 			return
 
-		if( not city.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
-			city.setRevolutionIndex( int(.35*RevOpt.getInstigateRevolutionThreshold()) )
-		else :
-			city.setRevolutionIndex( int(.25*RevOpt.getInstigateRevolutionThreshold()) )
+		# lfgr 04/2021: Reduced, removed distinction between normal cities and colonies
+		city.setRevolutionIndex(int(.15 * RevOpt.getInstigateRevolutionThreshold()))
 		city.setRevIndexAverage(city.getRevolutionIndex())
 		
 		revTurn = RevData.revObjectGetVal( pPlayer, 'RevolutionTurn' )
@@ -665,7 +663,7 @@ def updateRevolutionIndices( argsList ) :
 		if( newOwner.isBarbarian() ) :
 			return
 
-		newRevIdx = 400
+		newRevIdx = 200 # lfgr 04/2021: Reduced
 		changeRevIdx = -40 # Change for all other cities
 
 		if( bConquest ) :
