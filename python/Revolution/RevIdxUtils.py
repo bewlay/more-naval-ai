@@ -261,10 +261,10 @@ class CityRevIdxHelper :
 				return 0, szHelp
 
 			# Base unhappiness, recalculated
-			iNumUnhappy = self._pCity.unhappyLevelForRevIdx( 0 ) - self._pCity.happyLevel()
+			iNumUnhappy = max( 0, self._pCity.unhappyLevelForRevIdx( 0 ) - self._pCity.happyLevel() )
 
 			szHelp += u"\n"
-			szHelp += getText( "Base unhappiness (ignoring some factors): %d1 [ICON_UNHAPPY]", iNumUnhappy )
+			szHelp += getText( "Ignoring some factors: %d1 [ICON_ANGRYPOP]", iNumUnhappy )
 
 			if iNumUnhappy <= 0 :
 				iHappyIdx = 0
