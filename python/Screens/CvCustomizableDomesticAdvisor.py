@@ -3181,12 +3181,12 @@ class CvCustomizableDomesticAdvisor:
 							"REV_CRIME",
 							"REV_CIVICS",
 							"REV_BUILDINGS",
-							"REV_PER_TURN",
 							"REV_NAT_SIZE",
 							"REV_NAT_CULT_SPENDING",
 							"REV_NAT_GOLDEN_AGE",
 							"REV_NAT_CIVICS",
 							"REV_NAT_BUILDINGS",
+							"REV_PER_TURN",
 							"REV_NAT_PER_TURN",
 							"REV_TOTAL"
 						]

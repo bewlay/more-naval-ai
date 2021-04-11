@@ -130,7 +130,7 @@ def makeColumns() :
 				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				CityRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Local",
+		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Local/T",
 				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp ),
 
 		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_SIZE", 40,
@@ -153,7 +153,7 @@ def makeColumns() :
 				u"N<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				PlayerRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat.",
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat./T",
 				PlayerRevIdxHelper.computeNationalRevIdxAndFinalModifierHelp )
 	)
 
