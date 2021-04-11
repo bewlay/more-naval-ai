@@ -1068,6 +1068,7 @@ def bribeCity( pCity, bribeSize ) :
 
 ########################## RevIndex helper functions #####################
 
+# LFGR_TODO: Maybe use pCity.getUnhappyLevelForRevIdx() here?
 def getModNumUnhappy( pCity, wwMod = 2.0, silent = False ) :
 
 	modifier = int( wwMod*pCity.getPopulation()*pCity.getWarWearinessPercentAnger()/1000 )

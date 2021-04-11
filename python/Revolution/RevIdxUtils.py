@@ -249,62 +249,60 @@ class CityRevIdxHelper :
 		szHelp = u""
 
 		# TODO: Remove all the floating point arithmetic, maybe simplify
-		iNumUnhappy = RevUtils.getModNumUnhappy( self._pCity, RevOpt.getWarWearinessMod() )
+		iNumUnhappy = self._pCity.unhappyLevel(0) - self._pCity.happyLevel()
+		#iNumUnhappy = RevUtils.getModNumUnhappy( self._pCity, RevOpt.getWarWearinessMod() )
 
 		if iNumUnhappy > 0 :
 			szHelp += getText( "[ICON_UNHAPPY] City is unhappy" )
 
 			if self._pCity.getOccupationTimer() > 0 :
 				szHelp += u"\n"
-				szHelp += getText( "No effect while in disorder" )
+				szHelp += getText( "(No effect while in disorder)" )
 				return 0, szHelp
 
-			# Base unhappiness
-			# TODO: Calculate this more elegantly (?)
-			iNumUnhappy = max( iNumUnhappy
-					- (self._pCity.getRevIndexPercentAnger() * self._pCity.getPopulation()) / 1000, 0 )
-			if self._pCity.getEspionageHappinessCounter() > 0 :
-				# Reduce effect if unhappiness is from spy mission
-				iNumUnhappy -= self._pCity.getEspionageHappinessCounter()
-			iNumUnhappy = max( 0, iNumUnhappy )
+			# Base unhappiness, recalculated
+			iNumUnhappy = self._pCity.unhappyLevelForRevIdx( 0 ) - self._pCity.happyLevel()
 
 			szHelp += u"\n"
-			szHelp += getText( "Base unhappiness (ignoring some factors): %d1", iNumUnhappy )
+			szHelp += getText( "Base unhappiness (ignoring some factors): %d1 [ICON_UNHAPPY]", iNumUnhappy )
 
-			# TODO: Remove float arithmetic
-			iHappyIdxTimes100 = int( 15 * RevOpt.getHappinessModifier() * pow( iNumUnhappy, .8 ) * 100 )
+			if iNumUnhappy <= 0 :
+				iHappyIdx = 0
+			else :
+				# TODO: Remove float arithmetic
+				iHappyIdxTimes100 = int( 15 * RevOpt.getHappinessModifier() * pow( iNumUnhappy, .8 ) * 100 )
 
-			szHelp += u"\n"
-			szHelp += getText( "Base instability from unhappiness: %s1",
-					"%.2f" % ( iHappyIdxTimes100 / 100. ) )
+				szHelp += u"\n"
+				szHelp += getText( "Base instability from unhappiness: %s1",
+						"%.2f" % ( iHappyIdxTimes100 / 100. ) )
 
-			# Compute modifiers
-			iHappyIdxModTimes100 = 100
+				# Compute modifiers
+				iHappyIdxModTimes100 = 100
 
-			# Bonus if population is larger than unhappiness
-			# TODO: Somehow work this in earlier. Maybe generally use unhappiness/pop
-			iAdjPopulation = min( 12, self._pCity.getPopulation() ) # TODO: Do this?
-			if iNumUnhappy < iAdjPopulation :
-				iPopMod = 100 * iNumUnhappy // iAdjPopulation - 100
-				if iPopMod != 0 :
+				# Bonus if population is larger than unhappiness
+				# TODO: Somehow work this in earlier. Maybe generally use unhappiness/pop
+				iAdjPopulation = min( 12, self._pCity.getPopulation() ) # TODO: Do this?
+				if iNumUnhappy < iAdjPopulation :
+					iPopMod = 100 * iNumUnhappy // iAdjPopulation - 100
+					if iPopMod != 0 :
+						szHelp += u"\n"
+						szHelp += getText( "[ICON_BULLET] %D1% from large population compared to unhappiness level", iPopMod )
+						iHappyIdxModTimes100 += iPopMod
+
+				if self._bRecentlyAcquired :
+					iRecentlyAcquiredHappyIdxMod = -30 # TODO
 					szHelp += u"\n"
-					szHelp += getText( "[ICON_BULLET] %D1% from large population compared to unhappiness level", iPopMod )
-					iHappyIdxModTimes100 += iPopMod
+					szHelp += getText( "[ICON_BULLET] %D1% from recent acquisition", iRecentlyAcquiredHappyIdxMod )
+					iHappyIdxModTimes100 += iRecentlyAcquiredHappyIdxMod
 
-			if self._bRecentlyAcquired :
-				iRecentlyAcquiredHappyIdxMod = -30 # TODO
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET] %D1% from recent acquisition", iRecentlyAcquiredHappyIdxMod )
-				iHappyIdxModTimes100 += iRecentlyAcquiredHappyIdxMod
+				if self._pCity.isUnhappyProduction() :
+					iUnhappyProduction = -30 # TODO
+					szHelp += u"\n"
+					szHelp += getText( "[ICON_BULLET] %D1% from unhappiness production", iUnhappyProduction ) # TODO: say Building
+					iHappyIdxModTimes100 += iUnhappyProduction
 
-			if self._pCity.isUnhappyProduction() :
-				iUnhappyProduction = -30 # TODO
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET] %D1% from unhappiness production", iUnhappyProduction ) # TODO: say Building
-				iHappyIdxModTimes100 += iUnhappyProduction
-
-			iHappyIdxModTimes100 = max( 0, iHappyIdxModTimes100 )
-			iHappyIdx = iHappyIdxTimes100 * iHappyIdxModTimes100 // 10000
+				iHappyIdxModTimes100 = max( 0, iHappyIdxModTimes100 )
+				iHappyIdx = iHappyIdxTimes100 * iHappyIdxModTimes100 // 10000
 			
 			szHelp += SEPARATOR
 			szHelp += u"\n"

@@ -180,6 +180,7 @@ public:
 /************************************************************************************************/
 	int getLargestCityHappiness();
 	int unhappyLevel(int iExtra);
+	int unhappyLevelForRevIdx(int iExtra); // REVOLUTION_REFACTORING 04/2021 lfgr: Ignores some modifiers
 	int happyLevel();
 	int angryPopulation(int iExtra);
 	int totalFreeSpecialists();
