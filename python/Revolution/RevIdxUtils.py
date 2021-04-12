@@ -20,6 +20,10 @@ Local rev idx changes:
 * Building effects not disabled from wrong PrereqCiv or PrereqTrait
 * Slightly changed combination of final general and human modifiers (does nothing by default)
 * Slightly changed the religion bonus when at war
+* Slightly changed the unhappiness malus, now uses the new DLL method CyCity.unhappyLevelForRevIdx()
+* Route bonus in location RevIdx now considers all technology changes to the city's actual route
+* Location rev idx incorporates civ size more smoothly
+* Civic/Building boni now do what they seem
 
 National rev idx changes:
 * Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former.
@@ -224,7 +228,8 @@ class CityRevIdxHelper :
 		self._bMaxCultIsVassal = gc.getTeam( eMaxCultTeam ).isVassal( self._eOwnerTeam )
 
 		# Caching
-		self._fCacheCityDistModifier = None # type: Optional[float]
+		self._fCacheAdjCityDistance = None # type: Optional[float]
+		self._szCacheAdjCityDistanceHelp = None # type: Optional[unicode]
 	
 	def getCity( self ) :
 		# type: () -> CyCity
@@ -352,152 +357,170 @@ class CityRevIdxHelper :
 		else :
 			return 0, getText( "City is neither happy nor unhappy" )
 
-
-	def _computeAdjustedCityDistance( self ) :
-		# type: () -> float
-
-		# LFGR_TODO: This seems overly complicated
-
-		if self._fCacheCityDistModifier is None :
-			# Some useful vars/abbreviations
-			pCapital = self._pOwner.getCapitalCity()
-
-			# Compute simple distances
-			# LFGR_TODO: Use actual map distances instead of euclidean? Should not affect performance to much.
-			map = CyMap()
-			deltaX = abs( self._pCity.getX() - pCapital.getX() )
-			if map.isWrapX() :
-				deltaX = min( deltaX, map.getGridWidth() - deltaX )
-			deltaY = abs( self._pCity.getY() - pCapital.getY() )
-			if map.isWrapY() :
-				deltaY = min( deltaY, map.getGridWidth() - deltaY )
-			fCityDistRaw = (deltaX ** 2 + deltaY ** 2) ** 0.5 # Euclidean distance from capital
-			fCityDistMapModifier = (map.getGridWidth() ** 2 + map.getGridHeight() ** 2) ** 0.5 # Map diagonal
-
-			### Compute "Communication bonus"
-			cityDistCommBonus = 0
-			pTeam = gc.getTeam( self._pOwner.getTeam() )
-			bCanTradeOverCoast = False
-			bCanTradeOverOcean = False
-			iTerrainCoast = gc.getInfoTypeForString( RevDefs.sXMLCoast )
-			iTerrainOcean = gc.getInfoTypeForString( RevDefs.sXMLOcean )
-			for i in range( gc.getNumTechInfos() ) :
-				tech = gc.getTechInfo( i )
-				if tech.isTerrainTrade( iTerrainCoast ) :
-					if pTeam.isHasTech( i ) :
-						bCanTradeOverCoast = True
-				if tech.isTerrainTrade( iTerrainOcean ) :
-					if pTeam.isHasTech( i ) :
-						bCanTradeOverOcean = True
-
-			# +50 if we can trade over ocean
-			if bCanTradeOverOcean :
-				cityDistCommBonus += 50
-
-			# +17 for each trade route but the first
-			iCityTradeRoutes = self._pCity.getTradeRoutes()
-			if iCityTradeRoutes > 1 :
-				cityDistCommBonus += (iCityTradeRoutes - 1) * 17
-
-			# Some extra boni if we are connected...
-			bCityIsConnected = self._pCity.isConnectedTo( pCapital )
-			if bCityIsConnected :
-				bTechRouteModifier = False
-				for i in range( gc.getNumTechInfos() ) :
-					for j in range( gc.getNumRouteInfos() ) :
-						if gc.getRouteInfo( j ).getTechMovementChange( i ) != 0 and pTeam.isHasTech( i ) :
-							bTechRouteModifier = True
-							break
-					if bTechRouteModifier :
-						break
-				if bTechRouteModifier :
-					# (FfH) ... if we have engineering, +100-(30-10)*1.67 = +66.6
-					cityDistCommBonus += 100 - ( gc.getRouteInfo( self._pCity.plot().getRouteType() ).getFlatMovementCost()
-							+ gc.getRouteInfo( self._pCity.plot().getRouteType() ).getTechMovementChange( i ) ) * 1.67
-				else :
-					# (FfH) ... if we have engineering, +100-30*1.67 = +49.9
-					cityDistCommBonus += 100 - (gc.getRouteInfo( self._pCity.plot().getRouteType() ).getFlatMovementCost()) * 1.67
-				if self._pCity.isCoastal( -1 ) :
-					# Coastal cities: +25, or +50 if we can trade over ocean
-					if bCanTradeOverOcean :
-						cityDistCommBonus += 50
-					elif bCanTradeOverCoast :
-						cityDistCommBonus += 25
-				# +TradeRouteMod, +CultureMod, +GoldMod/2
-				iTradeRouteModifier = self._pCity.getTradeRouteModifier()
-				iCityCultureModifier = self._pCity.getCommerceRateModifier( CommerceTypes.COMMERCE_CULTURE )
-				iCityGoldModifier = self._pCity.getCommerceRateModifier( CommerceTypes.COMMERCE_GOLD )
-				cityDistCommBonus += iTradeRouteModifier
-				cityDistCommBonus += iCityCultureModifier
-				cityDistCommBonus += iCityGoldModifier / 2
-
-			# -MaintainanceMod
-			iCityMaintenanceModifier = self._pCity.getMaintenanceModifier()
-			cityDistCommBonus -= iCityMaintenanceModifier
-
-			# +150 if we have power
-			bCityisPower = self._pCity.isPower()
-			if bCityisPower :
-				cityDistCommBonus += 150
-
-			# +100 per airlift capacity
-			iCityAirlift = self._pCity.getMaxAirlift()
-			cityDistCommBonus += 100 * iCityAirlift
-
-			# Finally: First, distance as fraction of maxdist, times 307 (?)
-			# Divide by (100+CommBonus)/100
-			# Subtract 666 / maxdist (?)
-			# In other words: ( 307*dist / ((100+CommBonus)/100) - 666 ) / maxdist
-			# LFGR_TODO: Could this even be negative?
-			self._fCacheCityDistModifier = (307.0 * fCityDistRaw / fCityDistMapModifier) / (1.0 + (cityDistCommBonus / 100.0))
-			self._fCacheCityDistModifier -= int( 666 / fCityDistMapModifier )
-		return self._fCacheCityDistModifier
-
-	def _computeDistModifier( self ) :
-		# type: () -> float
-		# LFGR_TODO: Caching?
-		# Modifiers from civics, traits (LFGR_TODO), buildings
-		# Does not work the way it would seem if smaller than 0.
-		CivicsDistModifier = RevUtils.getCivicsDistanceMod( self._eOwner )
-		#			TraitsDistModifier = RevUtils.getTraitsDistanceMod( iPlayer )
-		TraitsDistModifier = 0
-		BuildingsDistModifier = RevUtils.getBuildingsDistanceMod( self._pCity )
-		DistModifier = (CivicsDistModifier + TraitsDistModifier + BuildingsDistModifier) / 100.0
-		fDistModAlt = 1.0
-		if DistModifier < 0 :
-			fDistModAlt /= (1.0 - DistModifier)
-		elif DistModifier > 0 :
-			fDistModAlt += DistModifier
-
-		fDistModAlt *= RevOpt.getDistanceToCapitalModifier()
-		if self._pCity.isGovernmentCenter() :
-			fDistModAlt *= 0.5
-		return fDistModAlt
-
 	def computeLocationRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		# By phungus
 		# Distance to capital City Distance modified by communication techs and structures
 
-		fCityDist = self._computeAdjustedCityDistance() * self._computeDistModifier()
+		# LFGR_TODO: This seems overly complicated
+		if self._fCacheAdjCityDistance is None :
+			self._szCacheAdjCityDistanceHelp = u""
 
-		iLocationRevIdx = 0
+			# Some useful vars/abbreviations
+			pCapital = self._pOwner.getCapitalCity()
 
-		if self._fCivSizeRawVal > 2.0 :
-			iLocationRevIdx += int( math.floor( 2.0 * fCityDist + .5 ) )
-		elif self._fCivSizeRawVal > 1.6 :
-			iLocationRevIdx += int( math.floor( 1.65 * fCityDist + .5 ) )
-		elif self._fCivSizeRawVal > 1.4 :
-			iLocationRevIdx += int( math.floor( 1.45 * fCityDist + .5 ) )
-		elif self._fCivSizeRawVal > 1.2 :
-			iLocationRevIdx += int( math.floor( 1.25 * fCityDist + .5 ) )
-		elif self._fCivSizeRawVal > 1.0 :
-			iLocationRevIdx += int( math.floor( fCityDist + .5 ) )
-		elif self._fCivSizeRawVal > .7 :
-			iLocationRevIdx += int( math.floor( .75 * fCityDist + .5 ) )
-		else :
-			iLocationRevIdx += int( math.floor( .5 * fCityDist + .5 ) )
+			### Compute "Communication bonus"
+			iCommBonus = 0
+			lszCommBonusHelps = []
 
+			pTeam = gc.getTeam(self._pOwner.getTeam())
+			bCanTradeOverCoast = False
+			bCanTradeOverOcean = False
+			iTerrainCoast = gc.getInfoTypeForString(RevDefs.sXMLCoast)
+			iTerrainOcean = gc.getInfoTypeForString(RevDefs.sXMLOcean)
+			for i in range(gc.getNumTechInfos()) :
+				tech = gc.getTechInfo(i)
+				if tech.isTerrainTrade(iTerrainCoast) :
+					if pTeam.isHasTech(i) :
+						bCanTradeOverCoast = True
+				if tech.isTerrainTrade(iTerrainOcean) :
+					if pTeam.isHasTech(i) :
+						bCanTradeOverOcean = True
+
+			# +17 for each trade route but the first
+			iCityTradeRoutes = self._pCity.getTradeRoutes()
+			if iCityTradeRoutes > 1 :
+				iCommBonus += (iCityTradeRoutes - 1) * 17
+				lszCommBonusHelps.append( getText("[ICON_BULLET]Trade routes: %D1", (iCityTradeRoutes - 1) * 17) )
+
+			# Some extra boni if we are connected...
+			bCityIsConnected = self._pCity.isConnectedTo(pCapital)
+			if bCityIsConnected :
+				eCityRoute = self._pCity.plot().getRouteType()
+				routeInfo = gc.getRouteInfo(eCityRoute)
+				iMovementCost = routeInfo.getFlatMovementCost()
+
+				for i in range(gc.getNumTechInfos()) :
+					if pTeam.isHasTech(i) :
+						iMovementCost += routeInfo.getTechMovementChange(i)
+
+				iRouteBonus = 100 - iMovementCost * 5 // 3
+				iCommBonus += iRouteBonus
+				lszCommBonusHelps.append( getText( "[ICON_BULLET]Connection via %s1: %D2", routeInfo.getTextKey(), iRouteBonus ) )
+				# +TradeRouteMod, +CultureMod, +GoldMod/2
+				iTradeRouteModifier = self._pCity.getTradeRouteModifier()
+				iCityCultureModifier = self._pCity.getCommerceRateModifier(CommerceTypes.COMMERCE_CULTURE)
+				iCityGoldModifier = self._pCity.getCommerceRateModifier(CommerceTypes.COMMERCE_GOLD)
+				iCommBonus += iTradeRouteModifier
+				iCommBonus += iCityCultureModifier
+				iCommBonus += iCityGoldModifier / 2
+
+			# Coastal cities: +25, or +50 if we can trade over ocean
+			if self._pCity.isCoastal(-1) and bCityIsConnected :
+				if bCanTradeOverOcean :
+					iCommBonus += 100
+					lszCommBonusHelps.append(getText("[ICON_BULLET][ICON_TRADE] on Ocean: %D1", 100))
+				elif bCanTradeOverCoast :
+					iCommBonus += 25
+					lszCommBonusHelps.append(getText("[ICON_BULLET][ICON_TRADE] on Coast: %D1", 25))
+			elif bCanTradeOverOcean :  # Always +50 if we can trade over ocean
+				iCommBonus += 50
+				lszCommBonusHelps.append(getText("[ICON_BULLET][ICON_TRADE] on Ocean: %D1", 50))
+
+			# -MaintainanceMod
+			iCityMaintenanceModifier = self._pCity.getMaintenanceModifier()
+			iCommBonus -= iCityMaintenanceModifier
+			lszCommBonusHelps.append(getText("[ICON_BULLET]Maintenance modifier: %D1", -iCityMaintenanceModifier))
+
+			# +150 if we have power
+			bCityisPower = self._pCity.isPower()
+			if bCityisPower :
+				iCommBonus += 150
+				lszCommBonusHelps.append(getText("[ICON_BULLET][ICON_POWER]: %D1", 150))
+
+			# +100 per airlift capacity
+			iAirliftCommBonus = 100 * self._pCity.getMaxAirlift()
+			iCommBonus += iAirliftCommBonus
+			if iAirliftCommBonus > 0 :
+				lszCommBonusHelps.append(getText("[ICON_BULLET]Teleportation: %D1", iAirliftCommBonus))
+
+			self._szCacheAdjCityDistanceHelp = u""
+			if len(lszCommBonusHelps) > 0 :
+				self._szCacheAdjCityDistanceHelp += getText("[COLOR_HIGHLIGHT_TEXT]Communication[COLOR_REVERT]" )
+				self._szCacheAdjCityDistanceHelp += u"\n" + u"\n".join(lszCommBonusHelps)
+				self._szCacheAdjCityDistanceHelp += u"\n" + getText( "Communication score: %d1", iCommBonus )
+				self._szCacheAdjCityDistanceHelp += SEPARATOR
+
+			# Compute simple distances
+			# LFGR_TODO: Use grid distance, like maintenance
+			map = CyMap()
+			deltaX = abs(self._pCity.getX() - pCapital.getX())
+			if map.isWrapX() :
+				deltaX = min(deltaX, map.getGridWidth() - deltaX)
+			deltaY = abs(self._pCity.getY() - pCapital.getY())
+			if map.isWrapY() :
+				deltaY = min(deltaY, map.getGridWidth() - deltaY)
+			fCityDistRaw = (deltaX ** 2 + deltaY ** 2) ** 0.5  # Euclidean distance from capital
+			fCityDistMapModifier = (map.getGridWidth() ** 2 + map.getGridHeight() ** 2) ** 0.5  # Map diagonal
+
+			self._fCacheAdjCityDistance = 307 * fCityDistRaw / fCityDistMapModifier
+			self._szCacheAdjCityDistanceHelp += u"\n" + getText("Map-adj. distance: %d1", int(self._fCacheAdjCityDistance))
+			if iCommBonus > 0 :  # Can only be bonus
+				factor = 1 / (1.0 + (iCommBonus / 100.0))
+				self._fCacheAdjCityDistance *= factor
+				self._szCacheAdjCityDistanceHelp += u"\n" + getText("[ICON_BULLET]Communication Bonus: %D1%", int(100 * (factor-1)))
+			iBonus = -int(666 / fCityDistMapModifier)
+			self._szCacheAdjCityDistanceHelp += u"\n" + getText("[ICON_BULLET]Default bonus: %D1", iBonus)  # LFGR_TODO
+			self._fCacheAdjCityDistance += iBonus
+			self._szCacheAdjCityDistanceHelp += u"\n" + getText(r"Adjusted distance: %d1", int(self._fCacheAdjCityDistance))
+
+		fCityDist = self._fCacheAdjCityDistance
+		szHelp = self._szCacheAdjCityDistanceHelp
+
+		if fCityDist > 0 :
+			iDistModTimes100 = 100
+
+			# Modifiers from civics, traits (LFGR_TODO), buildings
+			# Does not work the way it would seem if smaller than 0.
+			for i in range( gc.getNumCivicOptionInfos() ) :
+				iCivic = self._pOwner.getCivics(i)
+				if iCivic >= 0 :
+					info = gc.getCivicInfo( iCivic )
+					iMod = info.getRevIdxDistanceModifier()
+					if iMod != 0 :
+						szHelp += u"\n" + getText( "[ICON_BULLET]%s1: %D2%", info.getTextKey(), iMod )
+						iDistModTimes100 += iMod
+
+			for iBuilding in range( gc.getNumBuildingInfos() ) :
+				if  self._pCity.getNumRealBuilding(iBuilding) > 0 :
+					info = gc.getBuildingInfo( iBuilding )
+					iMod = info.getRevIdxDistanceModifier()
+					if iMod != 0 :
+						szHelp += u"\n" + getText( "[ICON_BULLET]%s1: %D2%", info.getTextKey(), iMod )
+						iDistModTimes100 += iMod
+
+			if iDistModTimes100 != 100 :
+				fCityDist = max( 0.0, fCityDist * iDistModTimes100 / 100 )
+				szHelp += u"\n" + getText( "Modified distance: %d1", int( fCityDist ) )
+
+			### Civilization size
+
+			fCivSizeAdjusted = min( 2.0, max( 0.5, self._fCivSizeRawVal ) )
+			szHelp += u"\n" + getText( "Civ size: %d1", int( fCivSizeAdjusted * 100 ) )
+
+			fCityDist *= fCivSizeAdjusted
+
+		### Final adjustments
+
+		fCityDist *= RevOpt.getDistanceToCapitalModifier()
+		if self._pCity.isGovernmentCenter() : # TODO: Rather use this for distance computation
+			fCityDist *= 0.5
+		iLocationRevIdx = int( fCityDist + .5 )
+
+		szHelp += SEPARATOR
+
+		### Connection to capital
+		# TODO: Already used above in comm bonus
 
 		pCapital = self._pOwner.getCapitalCity()
 		if pCapital is not None and not self._pCity.isConnectedTo( pCapital ) :
@@ -505,12 +528,12 @@ class CityRevIdxHelper :
 				iDisconnectedIdx = 3
 			else :
 				iDisconnectedIdx = min( 5 + self._pOwner.getCurrentRealEra() + self._pCity.getPopulation() / 3, 10 )
-			szHelp = getText( "Location: %D1", iLocationRevIdx )
+			szHelp += u"\n" + getText( "Location: %D1", iLocationRevIdx )
 			iLocationRevIdx += iDisconnectedIdx
-			szHelp += u"\n" + getText( "Not connected to capital: %D1", iDisconnectedIdx)
+			szHelp += u"\n" + getText( "[ICON_BULLET]Not connected to capital: %D1", iDisconnectedIdx)
 			szHelp += SEPARATOR + u"\n" + getText( "Full effect: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 		else :
-			szHelp = getText( "Location: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
+			szHelp += u"\n" + getText( "Location: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 
 		return iLocationRevIdx, szHelp
 

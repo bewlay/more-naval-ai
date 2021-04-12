@@ -90,25 +90,6 @@ def getCivicsReligionMods( iPlayer ) :
 
 	return [goodMod,badMod]
 
-def getCivicsDistanceMod( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-	distModifier = 0
-
-	if( pPlayer.isNone() ) :
-		return 0
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			distModifier += kCivic.getRevIdxDistanceModifier()
-
-	return distModifier
-
 def getCivicsViolentRevMod( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)
