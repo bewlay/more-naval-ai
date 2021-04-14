@@ -1416,6 +1416,22 @@ def reqFeast(caster):
 		return False
 	return True
 
+# lfgr 04/2021
+def helpFeast( lpUnits ) :
+	# type: (List[CyUnit]) -> unicode
+	if len( lpUnits ) > 0 :
+		pCity = lpUnits[0].plot().getPlotCity()
+		if pCity is not None and not pCity.isNone() :
+			iMaxFeastXP = pCity.getPopulation() - 2
+			if iMaxFeastXP > 0 :
+				if len( lpUnits ) == 1 :
+					return PyHelpers.getText( "TXT_KEY_FEAST_XP", iMaxFeastXP )
+				else :
+					iNumUnitsGain = min( iMaxFeastXP-1, len( lpUnits ) )
+					iMinFeastXP = max( 1, iMaxFeastXP - len( lpUnits ) + 1 )
+					return PyHelpers.getText( "TXT_KEY_FEAST_XP_MULTI", iNumUnitsGain, iMinFeastXP, iMaxFeastXP )
+	return PyHelpers.getText( "TXT_KEY_SPELL_FEAST_HELP" )
+
 def spellFeast(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
