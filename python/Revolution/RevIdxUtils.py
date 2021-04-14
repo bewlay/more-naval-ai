@@ -23,7 +23,9 @@ Local rev idx changes:
 * Slightly changed the unhappiness malus, now uses the new DLL method CyCity.unhappyLevelForRevIdx()
 * Route bonus in location RevIdx now considers all technology changes to the city's actual route
 * Location rev idx incorporates civ size more smoothly
-* Civic/Building boni now do what they seem
+* Civic/Building location rev idx boni now do what they seem
+* Location rev idx calculates distance from nearest gov. center, not only capital
+* Location rev idx can't be negative (a good comm bonus otherwise makes the bonus worse)
 
 National rev idx changes:
 * Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former.
@@ -200,6 +202,7 @@ class CityRevIdxHelper :
 		# Player stuff
 		self._eOwner = self._pCity.getOwner()
 		self._pOwner = gc.getPlayer( self._eOwner )
+		self._pyOwner = PyPlayer( self._eOwner )
 		self._eOwnerTeam = self._pOwner.getTeam()
 		self._pOwnerTeam = gc.getTeam( self._eOwnerTeam )
 		self._bRecentlyAcquired = \
@@ -357,6 +360,19 @@ class CityRevIdxHelper :
 		else :
 			return 0, getText( "City is neither happy nor unhappy" )
 
+
+	def _cityDistance(self, pOtherCity ) :
+		# type: (CyCity) -> float
+		# LFGR_TODO: Use grid distance, like maintenance
+		map = CyMap()
+		deltaX = abs(self._pCity.getX() - pOtherCity.getX())
+		if map.isWrapX() :
+			deltaX = min(deltaX, map.getGridWidth() - deltaX)
+		deltaY = abs(self._pCity.getY() - pOtherCity.getY())
+		if map.isWrapY() :
+			deltaY = min(deltaY, map.getGridWidth() - deltaY)
+		return (deltaX ** 2 + deltaY ** 2) ** 0.5  # Euclidean distance from other city
+
 	def computeLocationRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		# By phungus
@@ -452,16 +468,14 @@ class CityRevIdxHelper :
 				self._szCacheAdjCityDistanceHelp += SEPARATOR
 
 			# Compute simple distances
-			# LFGR_TODO: Use grid distance, like maintenance
-			map = CyMap()
-			deltaX = abs(self._pCity.getX() - pCapital.getX())
-			if map.isWrapX() :
-				deltaX = min(deltaX, map.getGridWidth() - deltaX)
-			deltaY = abs(self._pCity.getY() - pCapital.getY())
-			if map.isWrapY() :
-				deltaY = min(deltaY, map.getGridWidth() - deltaY)
-			fCityDistRaw = (deltaX ** 2 + deltaY ** 2) ** 0.5  # Euclidean distance from capital
-			fCityDistMapModifier = (map.getGridWidth() ** 2 + map.getGridHeight() ** 2) ** 0.5  # Map diagonal
+			fCityDistRaw = None
+			for pyCity in self._pyOwner.iterCities() :
+				if pyCity.isGovernmentCenter() :
+					fDist = self._cityDistance( pyCity.GetCy() )
+					if fCityDistRaw is None or fCityDistRaw > fDist :
+						fCityDistRaw = fDist
+
+			fCityDistMapModifier = (CyMap().getGridWidth() ** 2 + CyMap().getGridHeight() ** 2) ** 0.5  # Map diagonal
 
 			self._fCacheAdjCityDistance = 307 * fCityDistRaw / fCityDistMapModifier
 			self._szCacheAdjCityDistanceHelp += u"\n" + getText("Map-adj. distance: %d1", int(self._fCacheAdjCityDistance))
@@ -513,8 +527,6 @@ class CityRevIdxHelper :
 		### Final adjustments
 
 		fCityDist *= RevOpt.getDistanceToCapitalModifier()
-		if self._pCity.isGovernmentCenter() : # TODO: Rather use this for distance computation
-			fCityDist *= 0.5
 		iLocationRevIdx = int( fCityDist + .5 )
 
 		szHelp += SEPARATOR
@@ -528,12 +540,15 @@ class CityRevIdxHelper :
 				iDisconnectedIdx = 3
 			else :
 				iDisconnectedIdx = min( 5 + self._pOwner.getCurrentRealEra() + self._pCity.getPopulation() / 3, 10 )
-			szHelp += u"\n" + getText( "Location: %D1", iLocationRevIdx )
+			szHelp += u"\n" + getText( "Location effect: %D1", iLocationRevIdx )
 			iLocationRevIdx += iDisconnectedIdx
 			szHelp += u"\n" + getText( "[ICON_BULLET]Not connected to capital: %D1", iDisconnectedIdx)
+
+			iLocationRevIdx = max( 0, iLocationRevIdx ) # No Bonus
 			szHelp += SEPARATOR + u"\n" + getText( "Full effect: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 		else :
-			szHelp += u"\n" + getText( "Location: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
+			iLocationRevIdx = max( 0, iLocationRevIdx ) # No Bonus
+			szHelp += u"\n" + getText( "Location effect: %s1", coloredRevIdxFactorStr( iLocationRevIdx ) )
 
 		return iLocationRevIdx, szHelp
 
