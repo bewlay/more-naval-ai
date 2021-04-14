@@ -10035,11 +10035,6 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_DISPEL"));
     }
-	if (wcslen(kSpellInfo.getHelp()) > 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(kSpellInfo.getHelp());
-	}
     if (kSpellInfo.isResistable())
     {
         if (kSpellInfo.getResistModify() != 0)
@@ -10185,6 +10180,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 /********************************************************************************/
 /* SpellPyHelp                        11/2013                           lfgr    */
 /********************************************************************************/
+	bool bPyHelpUsed = false;
 	if( pvpUnits != NULL && !CvString( GC.getSpellInfo( eSpell ).getPyHelp() ).empty() )
 	{
 		// Get owner of the units
@@ -10213,7 +10209,15 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 				szBuffer.append( pcNewline );
 				szBuffer.append( szHelp );
 			}
+			bPyHelpUsed = true;
 		}
+	}
+
+	// lfgr 04/2021: SpellPyHelp overrides static help
+	if (!bPyHelpUsed && wcslen(kSpellInfo.getHelp()) > 0)
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append(kSpellInfo.getHelp());
 	}
 /********************************************************************************/
 /* SpellPyHelp                                                          END     */
