@@ -5,4 +5,12 @@
 		<Tag>SPELL_SPRING_PUT_OUT_FLAMES</Tag>
 		<English>[ICON_BULLET]Puts out smoke or flames on %d1 tiles</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEAST_XP</Tag>
+		<English>[ICON_BULLET]Unit gains %d1 XP.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FEAST_XP_MULTI</Tag>
+		<English>[ICON_BULLET]%d1 units gain %d2-%d3 XP.</English>
+	</TEXT>
 </Civ4GameText>

@@ -78,16 +78,10 @@ public:
 	DllExport void parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, const wchar* pcNewline = NEWLINE);
 
 //FfH: Added by Kael 08/08/2007
-/********************************************************************************/
-/* SpellPyHelp                        11/2013                           lfgr    */
-/********************************************************************************/
-/* old
-	DllExport void parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline = NEWLINE);
-*/
-	DllExport void parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline = NEWLINE, std::vector<CvUnit*>* pvpUnits = NULL );
-/********************************************************************************/
-/* SpellPyHelp                                                          END     */
-/********************************************************************************/
+
+	// SpellPyHelp 11/2013 lfgr: Added pvpUnits parameter
+	// Improved spell help 04/2021 lfgr: Added bCivilopediaText parameter. If false, help for added promotions/buildings are shown.
+	void parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline = NEWLINE, std::vector<CvUnit*>* pvpUnits = NULL, bool bCivilopediaText = false );
 //FfH: End Add
 
 	// lfgr UI 11/2020: For "Allows civic" buttons in Tech tree.

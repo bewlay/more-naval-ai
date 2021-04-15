@@ -100,4 +100,16 @@
 		<Tag>TXT_KEY_SPELL_STARTS_WAR_WITH</Tag>
 		<English>[ICON_BULLET][COLOR_NEGATIVE_TEXT]Starts a war with %s1_player[COLOR_REVERT]</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_ADD_PROMOTION_HEADER</Tag>
+		<English>[COLOR_ALT_HIGHLIGHT_TEXT]Promotion: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_CREATE_BUILDING_PRE_HEADER</Tag>
+		<English>[COLOR_BUILDING_TEXT]Building: [COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_CREATE_UNIT_PRE_HEADER</Tag>
+		<English>[COLOR_UNIT_TEXT]Unit: [COLOR_REVERT]</English>
+	</TEXT>
 </Civ4GameText>

@@ -9626,12 +9626,15 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_MISCAST_CHANCE_MODIFY", kPromotionInfo.getMiscastChance()));
     }
 	// MiscastPromotions end
+	// Improved spell help 04/2021: Gather allowed spells
+	std::vector<SpellTypes> veAllowedSpells;
 	for (iI = 0; iI < GC.getNumSpellInfos(); iI++)
 	{
 	    if (GC.getSpellInfo((SpellTypes)iI).getPromotionPrereq1() == ePromotion)
 		{
             if (!GC.getSpellInfo((SpellTypes)iI).isGraphicalOnly())
             {
+				veAllowedSpells.push_back( (SpellTypes) iI );
                 szBuffer.append(pcNewline);
                 if (GC.getSpellInfo((SpellTypes)iI).getPromotionPrereq2() == NO_PROMOTION)
                 {
@@ -9708,17 +9711,8 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 	}
 }
 
-//FfH: Added by Kael 07/23/2007
-/********************************************************************************/
-/* SpellPyHelp                        11/2013                           lfgr    */
-/********************************************************************************/
-/* old
-void CvGameTextMgr::parseSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline)
-*/
-void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline, std::vector<CvUnit*>* pvpUnits )
-/********************************************************************************/
-/* SpellPyHelp                                                          END     */
-/********************************************************************************/
+//FfH: Added by Kael 07/23/2007; SpellPyHelp 11/2013 lfgr; Improved spell help 04/2021 lfgr
+void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell, const wchar* pcNewline, std::vector<CvUnit*>* pvpUnits, bool bCivilopediaText )
 {
 	PROFILE_FUNC();
 
@@ -10035,11 +10029,6 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_DISPEL"));
     }
-	if (wcslen(kSpellInfo.getHelp()) > 0)
-	{
-		szBuffer.append(pcNewline);
-		szBuffer.append(kSpellInfo.getHelp());
-	}
     if (kSpellInfo.isResistable())
     {
         if (kSpellInfo.getResistModify() != 0)
@@ -10185,6 +10174,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 /********************************************************************************/
 /* SpellPyHelp                        11/2013                           lfgr    */
 /********************************************************************************/
+	bool bPyHelpUsed = false;
 	if( pvpUnits != NULL && !CvString( GC.getSpellInfo( eSpell ).getPyHelp() ).empty() )
 	{
 		// Get owner of the units
@@ -10213,7 +10203,15 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 				szBuffer.append( pcNewline );
 				szBuffer.append( szHelp );
 			}
+			bPyHelpUsed = true;
 		}
+	}
+
+	// lfgr 04/2021: SpellPyHelp overrides static help
+	if (!bPyHelpUsed && wcslen(kSpellInfo.getHelp()) > 0)
+	{
+		szBuffer.append(pcNewline);
+		szBuffer.append(kSpellInfo.getHelp());
 	}
 /********************************************************************************/
 /* SpellPyHelp                                                          END     */
@@ -10223,6 +10221,39 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(pcNewline);
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_SACRIFICE_CASTER"));
     }
+
+
+
+	// Improved spell help 04/2021: Show help for added promotion, constructed building
+	// LFGR_TODO: AddPromotionType2...
+	if( !bCivilopediaText )
+	{
+		CvSpellInfo& kSpellInfo = GC.getSpellInfo( eSpell );
+		PromotionTypes eAddedPromotion = (PromotionTypes) kSpellInfo.getAddPromotionType1();
+		if( eAddedPromotion != NO_PROMOTION && getBugOptionBOOL( "FfHUI__ShowSpellAddedPromotionHelp", true ) ) {
+
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_ADD_PROMOTION_HEADER", GC.getPromotionInfo( eAddedPromotion ).getTextKeyWide() ) );
+
+			parsePromotionHelp( szBuffer, eAddedPromotion );
+		}
+
+		UnitTypes eUnit = (UnitTypes) kSpellInfo.getCreateUnitType();
+		if( eUnit != NO_BUILDING && getBugOptionBOOL( "FfHUI__ShowSpellCreatedUnitHelp", true ) )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_CREATE_UNIT_PRE_HEADER" ) );
+			setUnitHelp( szBuffer, eUnit );
+		}
+
+		BuildingTypes eBuilding = (BuildingTypes) kSpellInfo.getCreateBuildingType();
+		if( eBuilding != NO_BUILDING && getBugOptionBOOL( "FfHUI__ShowSpellCreatedBuildingHelp", true ) )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_CREATE_BUILDING_PRE_HEADER" ) );
+			setBuildingHelp( szBuffer, eBuilding );
+		}
+	}
 }
 //FfH: End Add
 
@@ -18557,7 +18588,7 @@ void CvGameTextMgr::setSpellHelp(CvWStringBuffer &szBuffer, SpellTypes eSpell, b
 		szBuffer.append(szTempBuffer);
 	}
 
-	parseSpellHelp(szBuffer, eSpell);
+	parseSpellHelp(szBuffer, eSpell, NEWLINE, NULL, bCivilopediaText); // Improved spell help 04/2021 lfgr
 }
 //FfH: End Add
 

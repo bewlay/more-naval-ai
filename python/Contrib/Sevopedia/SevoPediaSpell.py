@@ -200,7 +200,7 @@ class SevoPediaSpell:
 		iPrereqUnitClass = gc.getSpellInfo(self.iSpell).getUnitClassPrereq()
 
 		iActiveUnit = UnitTypes.NO_UNIT
-		if self.top.iActiveCiv != CivilizationTypes.NO_CIVILIZATION:
+		if self.top.iActiveCiv != CivilizationTypes.NO_CIVILIZATION and iPrereqUnitClass != UnitClassTypes.NO_UNITCLASS:
 			iActiveUnit = gc.getCivilizationInfo(self.top.iActiveCiv).getCivilizationUnits(iPrereqUnitClass)
 
 		iQualifiedCiv = CivilizationTypes.NO_CIVILIZATION
