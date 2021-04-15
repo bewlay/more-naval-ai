@@ -1412,7 +1412,7 @@ def spellExploreLairEpic(caster):
 def reqFeast(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
-	if pCity.getPopulation() < 3:
+	if pCity.getPopulation() < 4: # lfgr fix 04/2021
 		return False
 	return True
 
@@ -1422,7 +1422,7 @@ def helpFeast( lpUnits ) :
 	if len( lpUnits ) > 0 :
 		pCity = lpUnits[0].plot().getPlotCity()
 		if pCity is not None and not pCity.isNone() :
-			iMaxFeastXP = pCity.getPopulation() - 2
+			iMaxFeastXP = pCity.getPopulation() - 3
 			if iMaxFeastXP > 0 :
 				if len( lpUnits ) == 1 :
 					return PyHelpers.getText( "TXT_KEY_FEAST_XP", iMaxFeastXP )
@@ -1435,6 +1435,7 @@ def helpFeast( lpUnits ) :
 def spellFeast(caster):
 	pPlot = caster.plot()
 	pCity = pPlot.getPlotCity()
+	# lfgr note: since we removed a population point before, this is 3 less than the previous population in the city.
 	caster.changeExperience(pCity.getPopulation()-2, -1, False, False, False)
 	pCity.changeHurryAngerTimer(3)
 
