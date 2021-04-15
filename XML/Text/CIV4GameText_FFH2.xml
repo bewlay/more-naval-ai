@@ -21001,12 +21001,6 @@
 		<Spanish>Esperanza</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_SPELL_HOPE_HELP</Tag>
-		<English>[ICON_BULLET]Inspires the people of the city it is cast in (+4 Culture, +1 Happiness and free Courage promotion)</English>
-		<German>[ICON_BULLET]Inspiriert die Bev&#246;lkerung in der in der sich der Zaubernde aufh&#228;lt (+ 4 Kultur + 1 Zufriedenheit und freie Bef&#246;rderung "Tapferkeit")</German>
-		<Spanish>[ICON_BULLET]Inspira a las gentes de la ciudad donde es lanzada (+4 de Cultura, +1 de Felicidad y la promoci&#243;n de Coraje de forma gratuita)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_SPELL_HOPE_PEDIA</Tag>
 		<English>[TAB]We gazed at the ruins of our city, and around it the slaughtered herds and salted fields. The crows circled overhead eagerly, and their stench of the scavengers feast reached insidiously into our noses.[PARAGRAPH:1]"Well," the commander said at last, "things won't be getting any worse, boys."</English>
 		<German>[TAB]Wir starrten fassungslos auf die Ruinen unserer Stadt und auf die geschlachteten Herden, die brachen Felder drumherum. Die Kr&#228;hen drehten weit &#252;ber unseren k&#246;pfen ihre Kreise, und der Gestank dieses - f&#252;r Aasfresser - Festmahls drang uns bald in die Nasen.[PARAGRAPH:1]" Nun gut, Jungs," sagte der Kommandant schlie&#223;lich, "schlimmer kann es nicht mehr kommen."</German>
@@ -21156,12 +21150,6 @@
 		<English>Inspiration</English>
 		<French>Inspiration.</French>
 		<Spanish>Inspiraci&#243;n</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_SPELL_INSPIRATION_HELP</Tag>
-		<English>[ICON_BULLET]Inspires the people of the city it is cast in (+2 Research, +1 Sage GPP)</English>
-		<German>[ICON_BULLET]Inspiriert die B&#252;rger der Stadt in der der Zauber gesprochen wird. (+2 Forschung, +1 Geburtenrate Gro&#223;er Wissenschaftler)</German>
-		<Spanish>[ICON_BULLET]Inspira a las gentes de la ciudad donde se lanza el hechizo (+2 Investigaci&#243;n, +1 punto de Gran Sabio)</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_INSPIRATION_PEDIA</Tag>
@@ -22502,13 +22490,6 @@
 		<French>Ordre Inflexible</French>
 		<German>Dogma</German>
 		<Spanish>Orden Implacable</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_SPELL_UNYIELDING_ORDER_HELP</Tag>
-		<English>[ICON_BULLET]Ends city anger and removes unhappiness from the city as long as the caster remains in it</English>
-		<French>Stoppe la col&#232;re de la cit&#233; et supprime tout m&#233;contentement de la cit&#233; aussi longtemps que le lanceur y reste.</French>
-		<German>[ICON_BULLET]Beendet einen Aufstand und sorgt f&#252;r vollste Zufriedenheit in der Stadt f&#252;r die Dauer des Aufenthalts des Zaubernden.</German>
-		<Spanish>[ICON_BULLET]Acaba con los disturbios y elimina la infelicidad de la ciudad siempre y cuando el lanzador permanezca en ella.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_UNYIELDING_ORDER_PEDIA</Tag>

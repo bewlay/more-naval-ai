@@ -41,4 +41,28 @@
 		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWKHAZADVAULTTEXT_HOVER</Tag>
 		<English>Show Khazad vault status next to your current gold and income in the top left corner. Note that this information is always provided (to Khazad players) by hovering the mouse over your current gold.</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLADDEDPROMOTIONHELP_TEXT</Tag>
+		<English>Added promotion details in spell help</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLADDEDPROMOTIONHELP_HOVER</Tag>
+		<English>Spells that add promotions (to your or enemy units) show the properties of those promotions in their description</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEDUNITHELP_TEXT</Tag>
+		<English>Summoned unit details in spell help</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEDUNITHELP_HOVER</Tag>
+		<English>Spells that summon units show the properties of those units in their description</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEDBUILDINGHELP_TEXT</Tag>
+		<English>Created building details in spell help</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEBUILDINGHELP_HOVER</Tag>
+		<English>Spells that create buildings show the properties of those buildings in their description</English>
+	</TEXT>
 </Civ4GameText>
