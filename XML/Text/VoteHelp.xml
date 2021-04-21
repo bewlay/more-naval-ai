@@ -197,8 +197,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_CRIME</Tag>
 		<English>[ICON_BULLET]%D1 to the global crime rate</English>
-		<Italian>ICON_BULLET]%D1 to the global crime rate</Italian>
-		<Spanish>ICON_BULLET]%D1 to the global crime rate</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_VOTE_HELP_REASSIGN_CITY</Tag>
