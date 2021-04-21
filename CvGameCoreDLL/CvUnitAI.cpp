@@ -11163,6 +11163,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 //	}
 //FfH: End Modify
 
+
+	// lfgr AI 04/2021: Summoners no longer prefer CombatPercent.
+	// Combat I-V's granted empower promotions are counted below anyway.
 	iTemp = kPromotion.getCombatPercent();
 	if ((eUnitAI == UNITAI_ATTACK) ||
 		(eUnitAI == UNITAI_COUNTER) ||
@@ -11175,7 +11178,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		(eUnitAI == UNITAI_CARRIER_SEA) ||
 		(eUnitAI == UNITAI_ATTACK_AIR) ||
 		(eUnitAI == UNITAI_CARRIER_AIR) ||
-		isSummoner() ||
+		//isSummoner() ||
 		(eUnitAI == UNITAI_HERO))
 	{
 		iValue += (iTemp * 2);
