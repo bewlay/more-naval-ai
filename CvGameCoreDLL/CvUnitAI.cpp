@@ -30146,28 +30146,14 @@ bool CvUnitAI::isSummoner()
 		return false;
 	}
 	
+	// LFGR_TODO: Use canCastWithCurrentPromotions
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
 		if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
 		{
-		    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-						else
-						{
-							return false;
-						}
-					}
-
-					return true;
-				}
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
 			}
 		}
 	}
@@ -30258,22 +30244,18 @@ void CvUnitAI::AI_SummonCast()
 }
 
 //returns true if the Unit can Damage stuff
+// lfgr AI 04/2021: Ignores isHasCasted and uses canCastWithCurrentPromotions instead of canCast.
 bool CvUnitAI::isDirectDamageCaster()
 {
 	if (!isChanneler())
 	{
 		return false;
 	}
-
-    if (isHasCasted())
-    {
-        return false;
-    }
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
         if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() > 0)
         {
-            if (canCast(iSpell, false))
+            if (canCastWithCurrentPromotions((SpellTypes)iSpell))
             {
                 return true;
             }
@@ -30402,19 +30384,11 @@ bool CvUnitAI::isDeBuffer()
 
 		if (bDebuffPromo)
 		{
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-					 }
-				 }
-			}	
+			// lfgr AI 04/2021: Use canCastWithCurrentPromotions
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
+			}
 		}
 	}
 	
@@ -30525,18 +30499,10 @@ bool CvUnitAI::isBuffer()
 
 		if (bBuffPromo)
 		{
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-					 }
-				 }
+			// lfgr AI 04/2021: Use canCastWithCurrentPromotions
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
 			}
 		}
 	}
@@ -30551,7 +30517,7 @@ void CvUnitAI::AI_BuffCast()
     {
         return;
     }
-    if (!isBuffer())
+    if (!isBuffer()) // LFGR_TODO: Seems redundant
     {
         return;
     }
