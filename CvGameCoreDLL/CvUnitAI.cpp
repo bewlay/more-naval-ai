@@ -944,6 +944,11 @@ void CvUnitAI::AI_promote()
 		return; // can't get any normal promotions. (see CvUnit::canPromote)
 	// K-Mod end
 
+	if( gPromoteLogLevel >= 1 )
+	{
+		logBBAI("    %S (unit %d - %S) looking for best promotion...", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription() );
+	}
+
 	int iBestValue = 0;
 	PromotionTypes eBestPromotion = NO_PROMOTION;
 
@@ -952,6 +957,11 @@ void CvUnitAI::AI_promote()
 		if (canPromote((PromotionTypes)iI, -1))
 		{
 			int iValue = AI_promotionValue((PromotionTypes)iI);
+
+			if( gPromoteLogLevel >= 1 && iValue > 0 )
+			{
+				logBBAI("      %S has value %d", GC.getPromotionInfo( (PromotionTypes)iI ).getDescription(), iValue );
+			}
 
 			if (iValue > iBestValue)
 			{
