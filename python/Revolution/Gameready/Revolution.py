@@ -534,6 +534,9 @@ class Revolution :
 		else:
 			CvScreensInterface.cityScreenRedraw()
 
+		# lfgr 04/2021: Update CDA (might be displaying revolution values)
+		CyInterface().setDirty(InterfaceDirtyBits.Domestic_Advisor_DIRTY_BIT, True)
+
 
 ##--- Standard Event handling functions -------------------------------------------
 

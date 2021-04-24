@@ -81,6 +81,8 @@ import TradeUtil
 import CDAColumns
 import CDAColumnsRevolution
 import RevIdxUtils
+import RevInstances
+import RevUtils
 
 # BUG - Mac Support - start
 BugUtil.fixSets(globals())
@@ -208,6 +210,8 @@ class CvCustomizableDomesticAdvisor:
 		
 		self.TOGGLE_SPECS_NAME = "ToggleSpecsCB"
 		self.TOGGLE_TOOLTIPS_NAME = "ToggleTooltipsCB" # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
+
+		self.BRIBE_NAME = "DomesticBribe" # lfgr 04/2021: Revolution bribe button
 
 		self.customizing = False
 		self.currentPageNum = 0
@@ -413,6 +417,7 @@ class CvCustomizableDomesticAdvisor:
 			self.RELOAD_PAGES_NAME		: self.reloadPages,
 			self.RENAME_PAGE_NAME		: self.renamePage,
 
+			self.BRIBE_NAME             : self.bribe # lfgr 04/2021: Bribe button
 			}
 
 		# Cache tooltips so that they are only recomputed when the page is redrawn.
@@ -814,6 +819,10 @@ class CvCustomizableDomesticAdvisor:
 
 # BUG - Colony Split - end
 
+		# lfgr 04/2021: Revolution bribe button
+		self.X_BRIBE = self.X_SPLIT - 35
+		self.Y_BRIBE = self.Y_SPLIT
+
 		# Building Button Headers
 		self.BUILDING_BUTTON_X_SIZE = 24
 		self.BUILDING_BUTTON_Y_SIZE = 24
@@ -936,6 +945,11 @@ class CvCustomizableDomesticAdvisor:
 		if (self.bCanLiberate):
 			screen.setImageButton( self.SPLIT_NAME, "", self.X_SPLIT, self.Y_SPLIT, 28, 28, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_FREE_COLONY).getActionInfoIndex(), -1 )
 			screen.setStyle( self.SPLIT_NAME, "Button_HUDAdvisorVictory_Style" )
+
+		# lfgr 04/2021: Bribe button
+		screen.setImageButton( self.BRIBE_NAME, "Art/Interface/Buttons/revbtn.dds", self.X_BRIBE, self.Y_BRIBE, 28, 28,
+			WidgetTypes.WIDGET_CDA_REV_BRIBE, -1, -1 )
+		self.updateBribeButton()
 
 # BUG - Colony Split - end
 
@@ -2546,8 +2560,9 @@ class CvCustomizableDomesticAdvisor:
 					popupInfo.addPopup(inputClass.getData1())
 				else:
 					city = self.getCurrentCity()
-					if (city):
-						CyInterface().lookAtCityOffset(city.getID())
+					if city :
+						CyInterface().lookAtCityOffset( city.getID() )
+					self.updateBribeButton()
 					
 					if self.PAGES[self.currentPageNum]["showSpecControls"]:
 						self.showSpecialists()
@@ -2600,7 +2615,7 @@ class CvCustomizableDomesticAdvisor:
 	def updateScreen(self):
 		""" Updates the screen."""
 
-		self.drawContents()
+		self.drawContents( self.currentPage )
 
 		return
 
@@ -3223,7 +3238,7 @@ class CvCustomizableDomesticAdvisor:
 						]
 					},
 					{
-						"name" : "Specialists", 
+						"name" : "Specialists",
 						"showSpecControls" : True,
 						"showCultureLegend" : True,
 						"showGPLegend" : True,
@@ -3376,6 +3391,22 @@ class CvCustomizableDomesticAdvisor:
 		self.customizingRestoreSelection()
 
 		return 0
+
+	# lfgr 04/2021: Bribe button
+	def bribe( self, inputClass ) :
+		if CyGame().isOption( GameOptionTypes.GAMEOPTION_REVOLUTIONS ) :
+			city = self.getCurrentCity()
+			if city :
+				RevInstances.RevolutionInst.showBribeCityPopup( city )
+
+	# lfgr 04/2021: Bribe button
+	def updateBribeButton( self ) :
+		pCity = self.getCurrentCity()
+		bCanBribe = pCity and CyGame().isOption( GameOptionTypes.GAMEOPTION_REVOLUTIONS ) and RevUtils.isCanBribeCity( pCity )[0]
+		if bCanBribe :
+			self.getScreen().show( self.BRIBE_NAME )
+		else :
+			self.getScreen().hide( self.BRIBE_NAME )
 	
 	def stripStr(self, s, out):
 		while s.find(out) != -1:
