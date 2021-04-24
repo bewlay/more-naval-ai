@@ -1068,6 +1068,29 @@ class CityRevIdxHelper :
 		return self.computeLocalRevIdxAndFinalModifierHelp()[0]
 
 
+class NationalEffectBuildingsCache :
+	""" Caches all building(type)s that have an effect on all cities"""
+
+	_instance = None
+
+	def __init__( self ) :
+		self._leBuildings = []
+		for eBuilding in range( gc.getNumBuildingInfos() ) :
+			kBuilding = gc.getBuildingInfo( eBuilding )
+			if kBuilding.getRevIdxNational() != 0 :
+				self._leBuildings.append( eBuilding )
+
+	def __iter__( self ) :
+		return iter( self._leBuildings )
+
+	@staticmethod
+	def getInstance() :
+		# type: () -> NationalEffectBuildingsCache
+		if NationalEffectBuildingsCache._instance is None :
+			NationalEffectBuildingsCache._instance = NationalEffectBuildingsCache()
+		return NationalEffectBuildingsCache._instance
+
+
 class PlayerRevIdxHelper :
 	"""
 	Helper for national RevIdx.
@@ -1161,7 +1184,7 @@ class PlayerRevIdxHelper :
 
 	def _buildingsWithNationalEffects( self ) :
 		""" Un-cached function"""
-		for eBuilding in range( gc.getNumBuildingInfos() ) :
+		for eBuilding in NationalEffectBuildingsCache.getInstance() :
 			iCount = 0
 			for pCity in PyPlayer( self._ePlayer ).iterCities() :
 				if pCity.isHasBuilding( eBuilding ) :

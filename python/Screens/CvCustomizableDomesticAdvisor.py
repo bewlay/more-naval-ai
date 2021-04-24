@@ -2378,6 +2378,9 @@ class CvCustomizableDomesticAdvisor:
 					if isinstance( columnDef, CDAColumns.CDAColumn ) :
 						if not columnDef.is_valid( gc.getActivePlayer() ) :
 							continue
+
+						start = time.clock()
+
 						# Make header
 						if columnDef.button is not None :
 							screen.setTableColumnHeader (page, value + 1, "", self.columnWidth[key])
@@ -2397,7 +2400,6 @@ class CvCustomizableDomesticAdvisor:
 							try :
 								pCity = cityList[i].city
 								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper, pPlayerHelper = pPlayerHelper )
-								print( "%s, %s, %s" % ( columnDef.name, szCellValue, cellTooltip ) )
 								self._tooltipCache[self.COLUMNS_INDEX[key], pCity.getID()] = cellTooltip
 
 								iData1 = self.COLUMNS_INDEX[key]
@@ -2414,6 +2416,9 @@ class CvCustomizableDomesticAdvisor:
 								traceback.print_exc()
 						
 						iColHeaderX += self.columnWidth[key]
+
+						end = time.clock()
+						BugUtil.debug("Computing column %s: %f.3s" % ( columnDef.name, end - start ) )
 						
 						continue # TODO: elif block
 					
