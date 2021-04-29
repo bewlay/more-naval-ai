@@ -696,7 +696,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				overflowResearch = (gc.getPlayer(iPlayer).getOverflowResearch() * gc.getPlayer(iPlayer).calculateResearchModifier(gc.getPlayer(iPlayer).getCurrentResearch()))/100
 				researchCost = gc.getTeam(gc.getPlayer(iPlayer).getTeam()).getResearchCost(gc.getPlayer(iPlayer).getCurrentResearch())
 				researchRate = gc.getPlayer(iPlayer).calculateResearchRate(-1)
-				zTurns = (researchCost - researchProgress - overflowResearch) / researchRate + 1
+				if researchRate > 0 :
+					zTurns = (researchCost - researchProgress - overflowResearch) / researchRate + 1
+				else :
+					zTurns = 99999
 				message = BugUtil.getText("TXT_KEY_AUTOLOG_RESEARCH_BEGUN", (PyInfo.TechnologyInfo(iTechType).getDescription(), zTurns))
 				Logger.writeLog(message, vColor="Green")
 

@@ -944,6 +944,11 @@ void CvUnitAI::AI_promote()
 		return; // can't get any normal promotions. (see CvUnit::canPromote)
 	// K-Mod end
 
+	if( gPromoteLogLevel >= 1 )
+	{
+		logBBAI("    %S (unit %d - %S) looking for best promotion...", getName().GetCString(), getID(), GC.getUnitAIInfo(AI_getUnitAIType()).getDescription() );
+	}
+
 	int iBestValue = 0;
 	PromotionTypes eBestPromotion = NO_PROMOTION;
 
@@ -952,6 +957,11 @@ void CvUnitAI::AI_promote()
 		if (canPromote((PromotionTypes)iI, -1))
 		{
 			int iValue = AI_promotionValue((PromotionTypes)iI);
+
+			if( gPromoteLogLevel >= 1 && iValue > 0 )
+			{
+				logBBAI("      %S has value %d", GC.getPromotionInfo( (PromotionTypes)iI ).getDescription(), iValue );
+			}
 
 			if (iValue > iBestValue)
 			{
@@ -11153,6 +11163,9 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 //	}
 //FfH: End Modify
 
+
+	// lfgr AI 04/2021: Summoners no longer prefer CombatPercent.
+	// Combat I-V's granted empower promotions are counted below anyway.
 	iTemp = kPromotion.getCombatPercent();
 	if ((eUnitAI == UNITAI_ATTACK) ||
 		(eUnitAI == UNITAI_COUNTER) ||
@@ -11165,7 +11178,7 @@ int CvUnitAI::AI_promotionValue(PromotionTypes ePromotion)
 		(eUnitAI == UNITAI_CARRIER_SEA) ||
 		(eUnitAI == UNITAI_ATTACK_AIR) ||
 		(eUnitAI == UNITAI_CARRIER_AIR) ||
-		isSummoner() ||
+		//isSummoner() ||
 		(eUnitAI == UNITAI_HERO))
 	{
 		iValue += (iTemp * 2);
@@ -30136,28 +30149,14 @@ bool CvUnitAI::isSummoner()
 		return false;
 	}
 	
+	// LFGR_TODO: Use canCastWithCurrentPromotions
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
 		if (GC.getSpellInfo((SpellTypes)iSpell).getCreateUnitType() != NO_UNIT)
 		{
-		    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-						else
-						{
-							return false;
-						}
-					}
-
-					return true;
-				}
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
 			}
 		}
 	}
@@ -30248,22 +30247,18 @@ void CvUnitAI::AI_SummonCast()
 }
 
 //returns true if the Unit can Damage stuff
+// lfgr AI 04/2021: Ignores isHasCasted and uses canCastWithCurrentPromotions instead of canCast.
 bool CvUnitAI::isDirectDamageCaster()
 {
 	if (!isChanneler())
 	{
 		return false;
 	}
-
-    if (isHasCasted())
-    {
-        return false;
-    }
     for (int iSpell = 0; iSpell < GC.getNumSpellInfos(); iSpell++)
     {
         if (GC.getSpellInfo((SpellTypes)iSpell).getDamage() > 0)
         {
-            if (canCast(iSpell, false))
+            if (canCastWithCurrentPromotions((SpellTypes)iSpell))
             {
                 return true;
             }
@@ -30392,19 +30387,11 @@ bool CvUnitAI::isDeBuffer()
 
 		if (bDebuffPromo)
 		{
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-					 }
-				 }
-			}	
+			// lfgr AI 04/2021: Use canCastWithCurrentPromotions
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
+			}
 		}
 	}
 	
@@ -30515,18 +30502,10 @@ bool CvUnitAI::isBuffer()
 
 		if (bBuffPromo)
 		{
-			if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1() != NO_PROMOTION)
-		    {
-				if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq1()))
-		        {
-				    if (GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2() != NO_PROMOTION)
-				    {
-						if (isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)iSpell).getPromotionPrereq2()))
-				        {
-							return true;
-				        }
-					 }
-				 }
+			// lfgr AI 04/2021: Use canCastWithCurrentPromotions
+			if( canCastWithCurrentPromotions( (SpellTypes) iSpell ) )
+			{
+				return true;
 			}
 		}
 	}
@@ -30541,7 +30520,7 @@ void CvUnitAI::AI_BuffCast()
     {
         return;
     }
-    if (!isBuffer())
+    if (!isBuffer()) // LFGR_TODO: Seems redundant
     {
         return;
     }

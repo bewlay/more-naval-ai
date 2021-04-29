@@ -3298,7 +3298,14 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 		{
 			if (GC.getActionInfo(widgetDataStruct.m_iData1).getCommandType() == COMMAND_PROMOTION)
 			{
-				GAMETEXT.parsePromotionHelp(szBuffer, ((PromotionTypes)(GC.getActionInfo(widgetDataStruct.m_iData1).getCommandData())));
+				// lfgr 04/2021: Show promotion value when shift is pressed
+				PromotionTypes ePromotion = (PromotionTypes) GC.getActionInfo(widgetDataStruct.m_iData1).getCommandData();
+				GAMETEXT.parsePromotionHelp(szBuffer, ePromotion);
+
+				if( pHeadSelectedUnit != NULL && gDLL->getChtLvl() > 0 && gDLL->shiftKey() )
+				{
+					szBuffer.append( gDLL->getText( "[NEWLINE][COLOR_WARNING_TEXT]AI value: %d1[COLOR_REVERT]", pHeadSelectedUnit->AI_promotionValue( ePromotion ) ) );
+				}
 			}
 
 //FfH: Added by Kael 07/23/2007

@@ -11466,7 +11466,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 		int iNumCities = AI_getNumRealCities();
 
 		int iOldValue; // Only for logging
-		if( gPlayerLogLevel >= 3 ) {
+		if( gBonusValueLogLevel >= 1 ) {
 			logBBAI( "    %S recalculates value of %s", getName(), kBonusInfo.getType() );
 			iOldValue = iValue;
 		}
@@ -11476,7 +11476,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			iValue += AI_getHappinessWeight(kBonusInfo.getHappiness(),1);
 			iValue += AI_getHealthWeight(kBonusInfo.getHealth(),1);
 
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From happiness and health: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
@@ -11493,7 +11493,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				}
 			}
 
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From yields: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
@@ -11503,7 +11503,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				iValue += (50 * kBonusInfo.getGreatPeopleRateModifier());
 			}
 
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From great people modifier (Culture or Altar strategy): %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
@@ -11515,19 +11515,19 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			// new FFH tags
 
 			iValue += (kBonusInfo.getHealChange() * (bAtWar ? 10 : 5));
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From heal change: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
 
 			iValue += (kBonusInfo.getHealChangeEnemy() * (bAtWar ? -20 : -10));
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From enemy heal change: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
 
 			iValue -= (kBonusInfo.getMaintenanceModifier() * iCityCount);
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From maintenance: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
@@ -11537,14 +11537,14 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				//ToDo - value the promotion rather than just adding a flat number
 				iValue += 100;
 
-				if( gPlayerLogLevel >= 3 ) {
+				if( gBonusValueLogLevel >= 1 ) {
 					logBBAI( "      From free promotion: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
 			}
 
 			iValue += (AI_commerceWeight(COMMERCE_RESEARCH) * kBonusInfo.getResearchModifier()/10);
-			if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+			if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 				logBBAI( "      From research modifier: %d", iValue - iOldValue );
 				iOldValue = iValue;
 			}
@@ -11655,7 +11655,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						iValue += iTempValue;
 
-						if( gPlayerLogLevel >= 3 ) {
+						if( gBonusValueLogLevel >= 1 ) {
 							logBBAI( "      From %s: %d", kLoopUnit.getType(), iTempValue );
 						}
 					}
@@ -11762,7 +11762,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 						iValue += iTempValue;
 
-						if( gPlayerLogLevel >= 3 && iTempValue != 0 ) {
+						if( gBonusValueLogLevel >= 1 && iTempValue != 0 ) {
 							logBBAI( "      From %s: %d", kLoopBuilding.getType(), iTempValue );
 							iOldValue = iValue;
 						}
@@ -11809,7 +11809,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 					iValue += iTempValue;
 
-					if( gPlayerLogLevel >= 3 && iTempValue != 0 ) {
+					if( gBonusValueLogLevel >= 1 && iTempValue != 0 ) {
 						logBBAI( "      From %s: %d", kLoopProject.getType(), iTempValue );
 						iOldValue = iValue;
 					}
@@ -11844,7 +11844,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						iValue += iTempValue / 2;
 					}
 
-					if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 						logBBAI( "      From %s: %d", GC.getRouteInfo(eRoute).getType(), iValue - iOldValue );
 						iOldValue = iValue;
 					}
@@ -11873,14 +11873,14 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 				iTempValue /= std::max(1, iTotalBonusCount);
 				iValue += iTempValue;
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From resource scarcity: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
 				
 				iValue += GC.getBonusInfo(eBonus).getAIObjective() * 10;
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From AI objective: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
@@ -11906,7 +11906,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			{
 				iValue += 100;
 
-				if( gPlayerLogLevel >= 3 ) {
+				if( gBonusValueLogLevel >= 1 ) {
 					logBBAI( "      From being mana: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
@@ -11982,7 +11982,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 								iValue += 10; // ToDo - extract some info about the building and how useful it will be to us
 							}
 
-							if( gPlayerLogLevel >= 3 ) {
+							if( gBonusValueLogLevel >= 1 ) {
 								logBBAI( "      From %s: %d", kSpellInfo.getType(), iValue - iOldValue );
 								iOldValue = iValue;
 							}
@@ -12026,7 +12026,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 				}
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From Civ/Leader: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
@@ -12037,7 +12037,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					{
 						iValue += (AI_isDoVictoryStrategy(AI_VICTORY_TOWERMASTERY1) ? 1550 : 50);
 
-						if( gPlayerLogLevel >= 3 ) {
+						if( gBonusValueLogLevel >= 1 ) {
 							logBBAI( "      From Metamagic and (possibly) mastery strategy: %d", iValue - iOldValue );
 							iOldValue = iValue;
 						}
@@ -12054,21 +12054,21 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 					}
 				}
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From Civ/Leader: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
 
 				iValue += (kBonusInfo.getDiscoverRandModifier() * (countNumOwnedHills()/5));
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From resource discover modifier: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
 
 				iValue += 100 * AI_getTowerManaValue(eBonus);
 
-				if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+				if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 					logBBAI( "      From tower mana value: %d", iValue - iOldValue );
 					iOldValue = iValue;
 				}
@@ -12084,7 +12084,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 						iValue /= 2;
 					}
 
-					if( gPlayerLogLevel >= 3 && iValue != iOldValue ) {
+					if( gBonusValueLogLevel >= 1 && iValue != iOldValue ) {
 						logBBAI( "      From already having the bonus: %d", iValue - iOldValue );
 						iOldValue = iValue;
 					}
@@ -12092,7 +12092,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 			}
 			// End Tholal AI
 
-			if( gPlayerLogLevel >= 3 ) {
+			if( gBonusValueLogLevel >= 1 ) {
 				logBBAI( "      -> Pre-final value for non-obsolete bonus: %d", iValue );
 			}
 
@@ -12101,7 +12101,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus) const
 
 		//GC.getLeaderHeadInfo(GET_PLAYER(getOwnerINLINE()).getPersonalityType()).getImprovementWeightModifier((ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement())));
 
-		if( gPlayerLogLevel >= 3 ) {
+		if( gBonusValueLogLevel >= 1 ) {
 			logBBAI( "      -> Final value: %d", iValue );
 		}
 

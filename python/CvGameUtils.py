@@ -1256,19 +1256,21 @@ class CvGameUtils:
 						if hasSpellForPlot( pPlot ) :
 							iCount += 1
 
-					if pyCity.isSettlement() :
-						iCount += 1000 # Always prefer non-settlements
-					if iCount > iBestCount :
-						pBestCity = pyCity
-						iBestCount = iCount
+					if iCount > 0 :
+						if not pyCity.isSettlement() :
+							iCount += 1000 # Always prefer non-settlements
+						if iCount > iBestCount :
+							pBestCity = pyCity
+							iBestCount = iCount
 
 			if pBestCity is not None :
 				pCPlot = pBestCity.plot()
-				CX = pCPlot.getX()
-				CY = pCPlot.getY()
-				pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, CX, CY, 0, False, False,
-					MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
-				return 1
+				iCX = pCPlot.getX()
+				iCY = pCPlot.getY()
+				if iCX != pUnit.getX() or iCY != pUnit.getY() :
+					pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, iCX, iCY, 0, False, False,
+						MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
+					return 1
 
 		return 0
 

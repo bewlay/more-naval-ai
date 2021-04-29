@@ -13051,7 +13051,8 @@ void CvUnit::getCargoUnits(std::vector<CvUnit*>& aUnits) const
 		}
 	}
 
-	FAssertMsg(getCargo() == aUnits.size(), "(May occur erroneously when moving a ship containing some unit that can see some invisible type)");
+	// lfgr 04/2021: Commented out
+	//FAssertMsg(getCargo() == aUnits.size(), "(May occur erroneously when moving a ship containing some unit that can see some invisible type)");
 }
 
 CvPlot* CvUnit::getAttackPlot() const

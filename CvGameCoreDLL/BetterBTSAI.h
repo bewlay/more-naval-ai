@@ -30,6 +30,17 @@
 #define gUnitLogLevel   0
 #endif
 
+// Special logging
+#ifdef LOG_AI
+// Enable these manually
+#define gBonusValueLogLevel 0 // >=1 logs bonus value calculation
+#define gPromoteLogLevel 0 // >=1 logs promotion values when AI promotes a units
+#else
+#define gBonusValueLogLevel 0
+#define gPromoteLogLevel 0
+#endif
+
+
 void logBBAI(char* format, ... );
 
 #endif  //BETTERBTSAI_H
