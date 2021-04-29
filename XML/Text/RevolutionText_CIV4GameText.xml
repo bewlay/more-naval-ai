@@ -835,11 +835,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_RISEN</Tag>
 		<English>The %s1_civ under the command of %s2_leader have taken up arms as war engulfs the region!</English>
-		<French>se sont lev&#233;s vers le haut pendant que la r&#233;gion descend dans la guerre civile !</French>
-		<German>haben sich erhoben, die Region versinkt im B&#252;rgerkrieg!</German>
-		<Italian>si &#232; sollevata, e la regione sprofonda nella guerra civile!</Italian>
-		<Spanish>se ha levantado y la regi&#243;n ha caido en guerra civil.</Spanish>
-		<Finnish>have risen up as the region descends into civil war!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_NEW_LEADER</Tag>

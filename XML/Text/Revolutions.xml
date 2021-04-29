@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COLUMN_REV_IDX</Tag>
+		<English>RevIdx</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COLUMN_REV_LOCAL_PER_TURN</Tag>
+		<English>Local/T</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COLUMN_REV_NATIONAL_PER_TURN</Tag>
+		<English>Nat./T</English>
+	</TEXT>
+</Civ4GameText>

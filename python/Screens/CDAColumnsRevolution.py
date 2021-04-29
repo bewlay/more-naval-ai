@@ -21,7 +21,7 @@ class RevolutionCDAColumn( CDAColumn ) :
 		return CyGame().isOption( GameOptionTypes.GAMEOPTION_REVOLUTIONS )
 
 
-class RevIdxCityHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type: int
+class RevIdxCityHelperCombinedCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self, szName, iDefaultWidth, szTitle, cityHelperRevIdxAndHelpFunc ) :
 		# type: (str, int, unicode, Callable[[CityRevIdxHelper], Tuple[int, unicode]]) -> None
 		super( RevIdxCityHelperCombinedCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
@@ -55,7 +55,7 @@ class RevIdxCityHelperCDAColumn( RevolutionCDAColumn ) :
 		return "int"
 
 
-class RevIdxPlayerHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type: int
+class RevIdxPlayerHelperCombinedCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self, szName, iDefaultWidth, szTitle, cityHelperRevIdxAndHelpFunc ) :
 		# type: (str, int, unicode, Callable[[PlayerRevIdxHelper], Tuple[int, unicode]]) -> None
 		super( RevIdxPlayerHelperCombinedCDAColumn, self ).__init__( szName, iDefaultWidth, szTitle )
@@ -73,7 +73,7 @@ class RevIdxPlayerHelperCombinedCDAColumn( RevolutionCDAColumn ) : # TODO: type:
 
 class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self ) :
-		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, "RevIdx" ) # TODO: Translate
+		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, getText( "TXT_KEY_CDA_COLUMN_REV_IDX" ) )
 
 	def compute_value_and_tooltip( self, pCity, **kwargs ) :
 		return unicode( pCity.getRevolutionIndex() ), u""
@@ -130,7 +130,7 @@ def makeColumns() :
 				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				CityRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, "Local/T",
+		RevIdxCityHelperCombinedCDAColumn( "REV_PER_TURN", 55, getText( "TXT_KEY_CDA_COLUMN_REV_LOCAL_PER_TURN" ),
 				CityRevIdxHelper.computeLocalRevIdxAndFinalModifierHelp ),
 
 		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_SIZE", 40,
@@ -153,7 +153,7 @@ def makeColumns() :
 				u"N<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_DOMESTIC" ).getPath(),
 				PlayerRevIdxHelper.computeBuildingsRevIdxAndHelp ),
 
-		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, "Nat./T",
+		RevIdxPlayerHelperCombinedCDAColumn( "REV_NAT_PER_TURN", 55, getText( "TXT_KEY_CDA_COLUMN_REV_NATIONAL_PER_TURN" ),
 				PlayerRevIdxHelper.computeNationalRevIdxAndFinalModifierHelp )
 	)
 
