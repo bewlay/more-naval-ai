@@ -1849,7 +1849,6 @@ def spellInquisition(caster):
 		return
 
 	pCity = pPlot.getPlotCity()
-	pPlayer = gc.getPlayer(caster.getOwner())
 	StateBelief = gc.getPlayer(pCity.getOwner()).getStateReligion()
 	iRnd = CyGame().getSorenRandNum(4, "Bob")
 	if StateBelief == gc.getInfoTypeForString('RELIGION_THE_ORDER'):
@@ -1860,7 +1859,9 @@ def spellInquisition(caster):
 			iRnd = iRnd + 1
 			for i in range(gc.getNumBuildingInfos()):
 				if gc.getBuildingInfo(i).getPrereqReligion() == iTarget:
-					pCity.setNumRealBuilding(i, 0)
+					# lfgr 05/2021: Don't remove wonders
+					if gc.getBuildingClassInfo( gc.getBuildingInfo( i ).getBuildingClassType() ).getMaxGlobalInstances() != 1 :
+						pCity.setNumRealBuilding(i, 0)
 	if iRnd >= 1:
 		pCity.changeHurryAngerTimer(iRnd)
 
