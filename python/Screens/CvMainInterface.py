@@ -217,6 +217,9 @@ RAW_YIELD_HELP = ( "TXT_KEY_RAW_YIELD_VIEW_TRADE",
 				   "TXT_KEY_RAW_YIELD_TILES_ALL" )
 # BUG - Raw Yields - end
 
+# 04/2021: lfgr fixes
+RESEARCH_BAR_WIDTH = 487
+
 # BUG - field of view slider - start
 DEFAULT_FIELD_OF_VIEW = 42
 # BUG - field of view slider - end
@@ -427,7 +430,7 @@ class CvMainInterface:
 
 # BUG - Progress Bar - Tick Marks - start
 		xCoord = 268 + (self.xResolution - 1024) / 2
-		self.pBarResearchBar_n = ProgressBarUtil.ProgressBar("ResearchBar-Canvas", xCoord, 2, 487, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
+		self.pBarResearchBar_n = ProgressBarUtil.ProgressBar("ResearchBar-Canvas", xCoord, 2, RESEARCH_BAR_WIDTH, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
 		self.pBarResearchBar_n.addBarItem("ResearchBar")
 		self.pBarResearchBar_n.addBarItem("ResearchText")
 # BUG - Progress Bar - Tick Marks - end
@@ -435,7 +438,7 @@ class CvMainInterface:
 # BUG - Progress Bar - Tick Marks - start
 		xCoord = 268 + (self.xResolution - 1440) / 2
 		xCoord += 6 + 84
-		self.pBarResearchBar_w = ProgressBarUtil.ProgressBar("ResearchBar-w-Canvas", xCoord, 2, 487, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
+		self.pBarResearchBar_w = ProgressBarUtil.ProgressBar("ResearchBar-w-Canvas", xCoord, 2, RESEARCH_BAR_WIDTH, iStackBarHeight, gc.getInfoTypeForString("COLOR_RESEARCH_RATE"), ProgressBarUtil.TICK_MARKS, True)
 		self.pBarResearchBar_w.addBarItem("ResearchBar-w")
 		self.pBarResearchBar_w.addBarItem("ResearchText")
 # BUG - Progress Bar - Tick Marks - end
@@ -886,7 +889,8 @@ class CvMainInterface:
 		szGameDataList = []
 
 		xCoord = 268 + (xResolution - 1024) / 2
-		screen.addStackedBarGFC( "ResearchBar", xCoord, 2, 487, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
+		self.xResearchBar = xCoord
+		screen.addStackedBarGFC( "ResearchBar", self.xResearchBar, 2, RESEARCH_BAR_WIDTH, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_RESEARCH_STORED") )
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_RESEARCH_RATE") )
 		screen.setStackedBarColors( "ResearchBar", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
@@ -922,14 +926,15 @@ class CvMainInterface:
 		screen.hide( "GreatGeneralBar-w" )
 
 		xCoord += 6 + 84
-		screen.addStackedBarGFC( "ResearchBar-w", xCoord, 2, 487, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
+		self.xResearchBarWide = xCoord
+		screen.addStackedBarGFC( "ResearchBar-w", self.xResearchBarWide, 2, RESEARCH_BAR_WIDTH, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_RESEARCH, -1, -1 )
 		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_RESEARCH_STORED") )
 		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_RESEARCH_RATE") )
 		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY") )
 		screen.setStackedBarColors( "ResearchBar-w", InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY") )
 		screen.hide( "ResearchBar-w" )
 
-		xCoord += 6 + 487
+		xCoord += 6 + RESEARCH_BAR_WIDTH
 		screen.addStackedBarGFC( "GreatPersonBar-w", xCoord, 2, 320, iStackBarHeight, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GP_PROGRESS_BAR, -1, -1 )
 		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED") )
 		screen.setStackedBarColors( "GreatPersonBar-w", InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE") )
@@ -1171,6 +1176,12 @@ class CvMainInterface:
 		screen.registerHideList( szHideList, len(szHideList), 0 )
 
 		return 0
+
+	# lfgr 04/2021: Helper function
+	def isResearchBarWide( self ) :
+		# type: () -> bool
+		screen = CyGInterfaceScreen( "MainInterface", CvScreenEnums.MAIN_INTERFACE )
+		return screen.getXResolution() >= 1440 and ( MainOpt.isShowGGProgressBar() or MainOpt.isShowGPProgressBar() )
 
 	# Will update the screen (every 250 MS)
 	def updateScreen(self):
@@ -3298,10 +3309,9 @@ class CvMainInterface:
 					szText = CyGameTextMgr().getResearchStr(ePlayer)
 
 # BUG - Bars on single line for higher resolution screens - start
-					if (xResolution >= 1440
-					and (MainOpt.isShowGGProgressBar() or MainOpt.isShowGPProgressBar())):
+					if self.isResearchBarWide() :
 						szResearchBar = "ResearchBar-w"
-						xCoord = 268 + (xResolution - 1440) / 2 + 84 + 6 + 487 / 2
+						xCoord = self.xResearchBarWide + RESEARCH_BAR_WIDTH / 2
 					else:
 						szResearchBar = "ResearchBar"
 						xCoord = screen.centerX(512)
@@ -5591,15 +5601,16 @@ class CvMainInterface:
 		xResolution = screen.getXResolution()
 
 # BUG - Bars on single line for higher resolution screens - start
-		if (xResolution >= 1440
-		and (MainOpt.isShowGGProgressBar() or MainOpt.isShowGPProgressBar())):
-			xCoord = 268 + (xResolution - 1440) / 2
-			xCoord += 6 + 84
-			screen.moveItem( szButtonID, 264 + ( ( xResolution - 1024 ) / 2 ) + ( 34 * ( iCount % 15 ) ), 0 + ( 34 * ( iCount / 15 ) ), -0.3 )
+		# lfgr fix 04/2021
+		if self.isResearchBarWide() :
+			xCoord = self.xResearchBarWide
 		else:
-			xCoord = 264 + ( ( xResolution - 1024 ) / 2 )
+			xCoord = self.xResearchBar
 
-		screen.moveItem( szButtonID, xCoord + ( 34 * ( iCount % 15 ) ), 0 + ( 34 * ( iCount / 15 ) ), -0.3 )
+		iButtonWidth = 34
+		iButtonsPerRow = RESEARCH_BAR_WIDTH // iButtonWidth
+		screen.moveItem( szButtonID, xCoord + ( iButtonWidth * ( iCount % iButtonsPerRow ) ),
+			( iButtonWidth * ( iCount / iButtonsPerRow ) ), -0.3 )
 # BUG - Bars on single line for higher resolution screens - end
 
 	# Will set the selection button position
