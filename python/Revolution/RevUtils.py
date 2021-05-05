@@ -62,7 +62,8 @@ def init( ) :
 
 ########################## Generic helper functions ###############################
 
-def getGameSpeedMod( ) :
+def getGameSpeedMod( ) : # LFGR_TODO: Could this lead to problems when playing multiple games in a single session?
+	# LFGR_TODO: Make this a GameSpeed property.
 		# Ratio of game turns to those of Epic, limited adjustment for extremely short/long differences
 		global gameSpeedMod
 		if( gameSpeedMod == None ) :
@@ -75,7 +76,7 @@ def getGameSpeedMod( ) :
 
 
 def doRefortify( iPlayer ) :
-	 #pyPlayer = PyPlayer( iPlayer )
+	#pyPlayer = PyPlayer( iPlayer )
 	pPlayer = gc.getPlayer(iPlayer)
 
 	CvUtil.pyPrint( "Refortifying units for player %d"%(iPlayer))
@@ -1037,7 +1038,6 @@ def computeBribeCosts( pCity, bSilent = True ) :
 def bribeCity( pCity, bribeSize ) :
 
 	iRevIdx = pCity.getRevolutionIndex()
-	localRevIdx = pCity.getLocalRevIndex()
 
 	if( bribeSize == 'Small' ) :
 		# Small reduction in rev index, mostly just for buyoffturns
@@ -1068,6 +1068,7 @@ def bribeCity( pCity, bribeSize ) :
 
 ########################## RevIndex helper functions #####################
 
+# LFGR_TODO: Maybe use pCity.getUnhappyLevelForRevIdx() here?
 def getModNumUnhappy( pCity, wwMod = 2.0, silent = False ) :
 
 	modifier = int( wwMod*pCity.getPopulation()*pCity.getWarWearinessPercentAnger()/1000 )
@@ -1078,8 +1079,8 @@ def getModNumUnhappy( pCity, wwMod = 2.0, silent = False ) :
 		CvUtil.pyPrint("  Revolt - %s has numUnhappy %d, mod %d, modNumUn %d"%(pCity.getName(),pCity.angryPopulation(0),modifier,modNumUnhappy))
 
 	if( modNumUnhappy <= 0 ) :
-		numHappy = max( [0, pCity.happyLevel() - pCity.unhappyLevel(0)] )
-		numHappy = min( [numHappy, pCity.getPopulation()] )
+		numHappy = max( 0, pCity.happyLevel() - pCity.unhappyLevel(0) )
+		numHappy = min( numHappy, pCity.getPopulation() )
 		return -numHappy
 	else :
 		return modNumUnhappy

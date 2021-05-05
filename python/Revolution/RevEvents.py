@@ -7,15 +7,14 @@ from CvPythonExtensions import *
 import CvUtil
 import PyHelpers
 import Popup as PyPopup
-import pickle
 import math
 # --------- Revolution mod -------------
 import RevDefs
 import RevData
-import SdToolKitCustom
-import RevInstances
 import RevUtils
 import BugCore
+
+import InterfaceUtils
 
 
 # globals
@@ -197,9 +196,9 @@ def onSetPlayerAlive( argsList ) :
 	
 	pPlayer = gc.getPlayer( iPlayerID )
 	
-	if( bNewValue == False ) :
+	if( bNewValue == False ) : # Player was killed
 		
-		print 'Rev - %s are dead, %d cities lost, %d founded a city'%(pPlayer.getCivilizationDescription(0),pPlayer.getCitiesLost(),pPlayer.isFoundedFirstCity())
+		CvUtil.pyPrint( 'Rev - %s are dead, %d cities lost, %d founded a city'%(pPlayer.getCivilizationDescription(0),pPlayer.getCitiesLost(),pPlayer.isFoundedFirstCity()) )
 		
 		# Check if this was a put down revolution
 		for i in range(0,gc.getMAX_CIV_PLAYERS()) :
@@ -207,6 +206,10 @@ def onSetPlayerAlive( argsList ) :
 			if( playerI.isAlive() and playerI.getNumCities() > 0 ) :
 				playerIPy = PyPlayer( i )
 				cityList = playerIPy.getCityList()
+
+				# REVOLUTION_ALERTS 03/2021 lfgr: Gather cities where killing this player improved conditions
+				lPutDownRebelCities = []
+
 				for city in cityList :
 					pCity = city.GetCy()
 					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
@@ -236,6 +239,7 @@ def onSetPlayerAlive( argsList ) :
 								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 								pCity.setReinforcementCounter( 0 )
 								pCity.setOccupationTimer(0)
+								lPutDownRebelCities.append( pCity ) # REVOLUTION_ALERTS 03/2021 lfgr
 								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
 							elif( game.getGameTurn() - revTurn < 30 ) :
 								# Put down after a while
@@ -256,8 +260,18 @@ def onSetPlayerAlive( argsList ) :
 								revIdxHist['Events'][0] += changeRevIdx
 								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 								pCity.setOccupationTimer(0)
+								lPutDownRebelCities.append( pCity ) # REVOLUTION_ALERTS 03/2021 lfgr
 								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
 
+				# REVOLUTION_ALERTS 03/2021 lfgr
+				if len( lPutDownRebelCities ) == 1 :
+					InterfaceUtils.addMessage( i, PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]The destruction of %s1 has reduced revolutionary sentiment in %s2[COLOR_REVERT]",
+							pPlayer.getName(), lPutDownRebelCities[0].getName() ) ) # LFGR_TODO: Translate
+				elif len( lPutDownRebelCities ) > 1 :
+					InterfaceUtils.addMessage( i, PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]The destruction of %s1 has reduced revolutionary sentiment in the following cities: %s2[COLOR_REVERT]",
+							pPlayer.getName(), u", ".join( city.getName() for city in lPutDownRebelCities ) ) ) # LFGR_TODO: Translate
 
 		if( not pPlayer.isFoundedFirstCity() ) :
 			# Add +1 for this turn?
@@ -328,9 +342,16 @@ def onChangeWar( argsList ):
 					onRivalTeamList.append(pPlayer)
 					onRivalTeamCivs.append(pPlayer.getCivilizationType())
 
+			# REVOLUTION_ALERTS 03/2021 lfgr
+			szTeamStr = u"/".join( pPlayer.getName() for pPlayer in onTeamList )
+			szRivalTeamStr = u"/".join( pPlayer.getName() for pPlayer in onRivalTeamList )
+
 			for pPlayer in onTeamList :
 
 				playerPy = PyPlayer(pPlayer.getID())
+
+				# REVOLUTION_ALERTS 03/2021 lfgr
+				lAffectedCities = []
 
 				cityList = playerPy.getCityList()
 				for city in cityList :
@@ -360,11 +381,26 @@ def onChangeWar( argsList ):
 								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 								pCity.setOccupationTimer(0)
 								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+								# REVOLUTION_ALERTS 03/2021 lfgr
+								lAffectedCities.append( pCity )
+
+				# REVOLUTION_ALERTS 03/2021 lfgr
+				if len( lAffectedCities ) == 1 :
+					InterfaceUtils.addMessage( pPlayer.getID(), PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]Peace with %s1 has reduced revolutionary sentiment in %s2[COLOR_REVERT]",
+							szRivalTeamStr, lAffectedCities[0].getName() ) ) # LFGR_TODO: Translate
+				elif len( lAffectedCities ) > 1 :
+					InterfaceUtils.addMessage( pPlayer.getID(), PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]Peace with %s1 has reduced revolutionary sentiment in the following cities: %s2[COLOR_REVERT]",
+							szTeamStr, u", ".join( city.getName() for city in lAffectedCities ) ) ) # LFGR_TODO: Translate
 
 				gc.getTeam(pPlayer.getTeam()).setRebelAgainst( iRivalTeam, False )
 				
 			for pPlayer in onRivalTeamList :
 				playerPy = PyPlayer(pPlayer.getID())
+
+				# REVOLUTION_ALERTS 03/2021 lfgr
+				lAffectedCities = []
 
 				cityList = playerPy.getCityList()
 				for city in cityList :
@@ -394,6 +430,18 @@ def onChangeWar( argsList ):
 								RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 								pCity.setOccupationTimer(0)
 								if( LOG_DEBUG ) : CvUtil.pyPrint("Rev index in %s decreased to %d (from %d)"%(pCity.getName(),pCity.getRevolutionIndex(),revIdx))
+								# REVOLUTION_ALERTS 03/2021 lfgr
+								lAffectedCities.append( pCity )
+
+				# REVOLUTION_ALERTS 03/2021 lfgr
+				if len( lAffectedCities ) == 1 :
+					InterfaceUtils.addMessage( pPlayer.getID(), PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]Peace with %s1 has reduced revolutionary sentiment in %s2[COLOR_REVERT]",
+							szTeamStr, lAffectedCities[0].getName() ) ) # LFGR_TODO: Translate
+				elif len( lAffectedCities ) > 1 :
+					InterfaceUtils.addMessage( pPlayer.getID(), PyHelpers.getText(
+							"[COLOR_POSITIVE_TEXT]Peace with %s1 has reduced revolutionary sentiment in the following cities: %s2[COLOR_REVERT]",
+							szTeamStr, u", ".join( city.getName() for city in lAffectedCities ) ) ) # LFGR_TODO: Translate
 
 				gc.getTeam(pPlayer.getTeam()).setRebelAgainst( iTeam, False )
 
@@ -413,10 +461,8 @@ def onCityBuilt( argsList ):
 			city.setRevIndexAverage(city.getRevolutionIndex())
 			return
 
-		if( not city.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
-			city.setRevolutionIndex( int(.35*RevOpt.getInstigateRevolutionThreshold()) )
-		else :
-			city.setRevolutionIndex( int(.25*RevOpt.getInstigateRevolutionThreshold()) )
+		# lfgr 04/2021: Reduced, removed distinction between normal cities and colonies
+		city.setRevolutionIndex(int(.15 * RevOpt.getInstigateRevolutionThreshold()))
 		city.setRevIndexAverage(city.getRevolutionIndex())
 		
 		revTurn = RevData.revObjectGetVal( pPlayer, 'RevolutionTurn' )
@@ -605,6 +651,7 @@ def checkRebelBonuses( argsList ) :
 				pCity.setOccupationTimer(iTurns)
 
 def updateRevolutionIndices( argsList ) :
+		""" Called when a new city is acquired. """
 		owner,playerType,pCity,bConquest,bTrade = argsList
 
 		newOwnerID = pCity.getOwner()
@@ -616,8 +663,8 @@ def updateRevolutionIndices( argsList ) :
 		if( newOwner.isBarbarian() ) :
 			return
 
-		newRevIdx = 400
-		changeRevIdx = -40
+		newRevIdx = 200 # lfgr 04/2021: Reduced
+		changeRevIdx = -40 # Change for all other cities
 
 		if( bConquest ) :
 			# Occupied cities also rack up rev points each turn
@@ -669,6 +716,16 @@ def updateRevolutionIndices( argsList ) :
 				revIdxHist = RevData.getCityVal(pListCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal( pListCity, 'RevIdxHistory', revIdxHist )
+
+		# REVOLUTION_ALERTS 03/2021 lfgr
+		if changeRevIdx > 0 :
+			InterfaceUtils.addMessage( newOwnerID, PyHelpers.getText(
+					"[COLOR_NEGATIVE_TEXT]The acquisition of %s1 has increased revolutionary sentiment throughout your empire[COLOR_REVERT]",
+					pCity.getName() ) ) # LFGR_TODO: Translate
+		elif changeRevIdx < 0 :
+			InterfaceUtils.addMessage( newOwnerID, PyHelpers.getText(
+					"[COLOR_POSITIVE_TEXT]The acquisition of %s1 has reduced revolutionary sentiment throughout your empire[COLOR_REVERT]",
+					pCity.getName() ) ) # LFGR_TODO: Translate
 
 		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - New rev idx for %s is %d"%(pCity.getName(),newRevIdx))
 		
@@ -773,12 +830,20 @@ def playerCityLost( player, pCity, bConquest = True ) :
 			revIdxHist['Events'][0] += iRevIdxChange
 			RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 
+		# REVOLUTION_ALERTS 03/2021 lfgr
+		if iRevIdxChange != 0 :
+			InterfaceUtils.addMessage( iPlayer, PyHelpers.getText(
+					"[COLOR_NEGATIVE_TEXT]The loss of %s1 has increased revolutionary sentiment throughout your empire[COLOR_REVERT]",
+					pCity.getName() ) ) # LFGR_TODO: Translate
+
 def onBuildingBuilt( argsList):
 		'Building Completed'
 		pCity, iBuildingType = argsList
 
 		buildingInfo = gc.getBuildingInfo(iBuildingType)
 		buildingClassInfo = gc.getBuildingClassInfo(buildingInfo.getBuildingClassType())
+
+		# LFGR_TODO: This is a little stupid. Should make this a building tag.
 
 		if( buildingClassInfo.getMaxGlobalInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10 ) :
 			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - World wonder %s build in %s"%(buildingInfo.getDescription(),pCity.getName()))
@@ -793,6 +858,11 @@ def onBuildingBuilt( argsList):
 				revIdxHist['Events'][0] += iRevIdxChange
 				RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
 
+			# REVOLUTION_ALERTS 03/2021 lfgr
+			InterfaceUtils.addMessage( pCity.getOwner(), PyHelpers.getText(
+					"[COLOR_POSITIVE_TEXT]The creation of %s1 has reduced revolutionary sentiment throughout your empire.[COLOR_REVERT]",
+					buildingInfo.getTextKey() ) ) # LFGR_TODO: Translate
+
 		elif( buildingClassInfo.getMaxPlayerInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10 ) :
 			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - National wonder %s build in %s"%(buildingInfo.getDescription(),pCity.getName()))
 			curRevIdx = pCity.getRevolutionIndex()
@@ -805,6 +875,11 @@ def onBuildingBuilt( argsList):
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += iRevIdxChange
 				RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+
+			# REVOLUTION_ALERTS 03/2021 lfgr
+			InterfaceUtils.addMessage( pCity.getOwner(), PyHelpers.getText(
+					"[COLOR_POSITIVE_TEXT]The creation of %s1 has reduced revolutionary sentiment throughout your empire.[COLOR_REVERT]",
+					buildingInfo.getTextKey() ) ) # LFGR_TODO: Translate
 
 
 ########################## Religious events ###############################

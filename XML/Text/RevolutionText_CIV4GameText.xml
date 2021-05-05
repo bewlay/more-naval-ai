@@ -835,11 +835,6 @@
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_RISEN</Tag>
 		<English>The %s1_civ under the command of %s2_leader have taken up arms as war engulfs the region!</English>
-		<French>se sont lev&#233;s vers le haut pendant que la r&#233;gion descend dans la guerre civile !</French>
-		<German>haben sich erhoben, die Region versinkt im B&#252;rgerkrieg!</German>
-		<Italian>si &#232; sollevata, e la regione sprofonda nella guerra civile!</Italian>
-		<Spanish>se ha levantado y la regi&#243;n ha caido en guerra civil.</Spanish>
-		<Finnish>have risen up as the region descends into civil war!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_NEW_LEADER</Tag>
@@ -2219,18 +2214,13 @@
 		<Spanish>[ICON_BULLET]%D1 penalizaci&#243;n &#250;nica a la estabilidad por adoptar principio</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_NATIONALITY_REDUCTION_MOD</Tag>
-		<English>[ICON_BULLET]%s1% Revolutionary sentiment (Patriotism).</English>
-		<German>[ICON_BULLET]%s1% Revolution&#228;re Stimmung (Patriotismus).</German>
-		<Italian>[ICON_BULLET]Spirito rivoluzionario: %s1% (Patriottismo).</Italian>
-		<Spanish>[ICON_BULLET]%s1% Sentimiento Revolucionario (Patriotismo).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_NATIONALITY_INCREASE_MOD</Tag>
-		<English>[ICON_BULLET]+%s1% Revolutionary sentiment (alienation)</English>
-		<German>[ICON_BULLET]+%s1% Revolution&#228;re Stimmung (Entfremdung)</German>
-		<Italian>[ICON_BULLET]Spirito rivoluzionario: +%s1% (Alienazione)</Italian>
-		<Spanish>[ICON_BULLET]+%s1% Sentimiento Revolucionario (enajenaci&#243;n)</Spanish>
+		<Tag>TXT_KEY_CIVIC_REV_NATIONALITY_MOD</Tag>
+		<English>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</English>
+		<French>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</French>
+		<German>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</German>
+		<Italian>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</Italian>
+		<Spanish>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</Spanish>
+		<Finnish>[ICON_BULLET]%D1% Stability penalty from foreign nationality.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVIC_REV_BAD_RELIGION_MOD</Tag>
@@ -2245,40 +2235,5 @@
 		<German>[ICON_BULLET]+%s1% Zuwachs an Stabilit&#228;ts-Bonus durch die Staatsreligion</German>
 		<Italian>[ICON_BULLET]Bonus stabilit&#224;: +%s1% per [ICON_RELIGION] di Stato</Italian>
 		<Spanish>[ICON_BULLET]+%s1% aumento en bonificaciones a la estabilidad para la religi&#243;n de estado</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_RELIGION_FREEDOM</Tag>
-		<English>[ICON_BULLET]%D1% National Stability (religious freedom).</English>
-		<German>[ICON_BULLET]%D1% Nationale Stabilit&#228;t (Religionsfreiheit).</German>
-		<Italian>[ICON_BULLET]Stabilit&#224; Nazionale: %D1% (libert&#224; religiosa).</Italian>
-		<Spanish>[ICON_BULLET]%D1% Estabilidad Nacional (libertad religiosa).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_RELIGION_OPRESSION</Tag>
-		<English>[ICON_BULLET]%D1% National Stability (religious opression).</English>
-		<German>[ICON_BULLET]%D1% National Stabilit&#228;t (religi&#246;se Unterdr&#252;ckung).</German>
-		<Italian>[ICON_BULLET]Stabilit&#224; Nazionale: %D1% (oppressione religiosa).</Italian>
-		<Spanish>[ICON_BULLET]%D1% Estabilidad Nacional (opresi&#243;n religiosa).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_LABOR</Tag>
-		<English>[ICON_BULLET]%D1% National Stability (labor).</English>
-		<German>[ICON_BULLET]%D1% National Stabilit&#228;t (Arbeit).</German>
-		<Italian>[ICON_BULLET]Stabilit&#224; Nazionale: %D1% (lavoro).</Italian>
-		<Spanish>[ICON_BULLET]%D1% Estabilidad Nacional (trabajo).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_ENVIRONMENT</Tag>
-		<English>[ICON_BULLET]%D1% National Stability (Health and Safety).</English>
-		<German>[ICON_BULLET]%D1% National Stabilit&#228;t (Gesundheit und Sicherheit).</German>
-		<Italian>[ICON_BULLET]Stabilit&#224; Nazionale: %D1% (salute e sicurezza).</Italian>
-		<Spanish>[ICON_BULLET]%D1% Estabilidad Nacional (Salud y Seguridad).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_CIVIC_REV_DEMOCRACY</Tag>
-		<English>[ICON_BULLET]%D1% National Stability (Suffrage).</English>
-		<German>[ICON_BULLET]%D1% National Stabilit&#228;t (Wahlrecht).</German>
-		<Italian>[ICON_BULLET]Stabilit&#224; Nazionale: %D1% (democrazia).</Italian>
-		<Spanish>[ICON_BULLET]%D1% Estabilidad Nacional (Sufragio).</Spanish>
 	</TEXT>
 </Civ4GameText>

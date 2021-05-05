@@ -159,4 +159,8 @@
 		<Italian>[COLOR_HIGHLIGHT_TEXT]Allarga Col.[COLOR_REVERT][NEWLINE]Rendi la colonna/e selezionata/e pi&#249; larga/e</Italian>
 		<Spanish>[COLOR_HIGHLIGHT_TEXT]Expandir Columna[COLOR_REVERT][NEWLINE]Hace la columna seleccionada mas ancha.</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_REV_BRIBE</Tag> <!-- lfgr 04/2021 -->
+		<English>[COLOR_HIGHLIGHT_TEXT]Bribe city[COLOR_REVERT]</English>
+	</TEXT>
 </Civ4GameText>

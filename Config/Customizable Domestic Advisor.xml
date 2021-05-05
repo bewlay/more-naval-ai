@@ -68,4 +68,5 @@
 	<!-- CDA_REFACTOR 03/2021 lfgr -->
 	<widget name="WIDGET_CDA_CELL" function="getCellHelpText"/>
 	<widget name="WIDGET_CDA_TOGGLE_TOOLTIPS" xml="TXT_KEY_CDA_TOGGLE_TOOLTIPS"/>
+	<widget name="WIDGET_CDA_REV_BRIBE" xml="TXT_KEY_CDA_REV_BRIBE"/>
 </mod>

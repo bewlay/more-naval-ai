@@ -5326,7 +5326,8 @@ int CvCity::getVassalUnhappiness() const
 }
 
 
-int CvCity::unhappyLevel(int iExtra) const
+// REVOLUTION_REFACTORING 04/2021 lfgr: Added bForRevIdx parameter, which ignores some modifiers
+int CvCity::unhappyLevel(int iExtra, bool bForRevIdx) const
 {
 	int iAngerPercent;
 	int iUnhappiness;
@@ -5345,17 +5346,12 @@ int CvCity::unhappyLevel(int iExtra) const
 		iAngerPercent += getHurryPercentAnger(iExtra);
 		iAngerPercent += getConscriptPercentAnger(iExtra);
 		iAngerPercent += getDefyResolutionPercentAnger(iExtra);
-		iAngerPercent += getWarWearinessPercentAnger();
-/************************************************************************************************/
-/* REVOLUTION_MOD                         04/26/08                                jdog5000      */
-/*                                                                                              */
-/*                                                                                              */
-/************************************************************************************************/
-		iAngerPercent += getRevRequestPercentAnger(iExtra);	
-		iAngerPercent += getRevIndexPercentAnger(iExtra);
-/************************************************************************************************/
-/* REVOLUTION_MOD                          END                                                  */
-/************************************************************************************************/
+		if( !bForRevIdx ) // REVOLUTION_REFACTORING 04/2021 lfgr
+		{
+			iAngerPercent += getWarWearinessPercentAnger();
+			iAngerPercent += getRevIndexPercentAnger(iExtra); // REVOLUTION_MOD 04/26/08 jdog5000
+		}
+		iAngerPercent += getRevRequestPercentAnger(iExtra); // REVOLUTION_MOD 04/26/08 jdog5000
 
 		for (iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
@@ -5387,7 +5383,10 @@ int CvCity::unhappyLevel(int iExtra) const
 		iUnhappiness -= std::min(0, (getExtraHappiness() + GET_PLAYER(getOwnerINLINE()).getExtraHappiness()));
 		iUnhappiness -= std::min(0, GC.getHandicapInfo(getHandicapType()).getHappyBonus());
 		iUnhappiness += std::max(0, getVassalUnhappiness());
-		iUnhappiness += std::max(0, getEspionageHappinessCounter());
+		if( !bForRevIdx ) // REVOLUTION_REFACTORING 04/2021 lfgr
+		{
+			iUnhappiness += std::max(0, getEspionageHappinessCounter());
+		}
 	}
 
 	return std::max(0, iUnhappiness);

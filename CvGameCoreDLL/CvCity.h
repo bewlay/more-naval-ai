@@ -250,7 +250,8 @@ public:
 	int getLargestCityHappiness() const;																		// Exposed to Python
 	int getVassalHappiness() const;																		// Exposed to Python
 	int getVassalUnhappiness() const;																		// Exposed to Python
-	int unhappyLevel(int iExtra = 0) const;																	// Exposed to Python
+	// REVOLUTION_REFACTORING 04/2021 lfgr: Added bForRevIdx parameter, which ignores some modifiers
+	int unhappyLevel(int iExtra = 0, bool bForRevIdx = false) const;																	// Exposed to Python
 	int happyLevel() const;																				// Exposed to Python
 	int angryPopulation(int iExtra = 0) const;										// Exposed to Python
 

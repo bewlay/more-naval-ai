@@ -124,6 +124,7 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("getWarWearinessPercentAnger", &CyCity::getWarWearinessPercentAnger, "int ()")
 		.def("getLargestCityHappiness", &CyCity::getLargestCityHappiness, "int ()")
 		.def("unhappyLevel", &CyCity::unhappyLevel, "int (int iExtra)")
+		.def("unhappyLevelForRevIdx", &CyCity::unhappyLevelForRevIdx, "int (int iExtra) - Ignores some modifiers") // REVOLUTION_REFACTORING 04/2021 lfgr
 		.def("happyLevel", &CyCity::happyLevel, "int ()")
 		.def("angryPopulation", &CyCity::angryPopulation, "int (iExtra) - # of unhappy citizens")
 		.def("totalFreeSpecialists", &CyCity::totalFreeSpecialists)

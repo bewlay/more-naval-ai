@@ -79,6 +79,10 @@ import GameUtil
 import TradeUtil
 
 import CDAColumns
+import CDAColumnsRevolution
+import RevIdxUtils
+import RevInstances
+import RevUtils
 
 # BUG - Mac Support - start
 BugUtil.fixSets(globals())
@@ -207,6 +211,8 @@ class CvCustomizableDomesticAdvisor:
 		self.TOGGLE_SPECS_NAME = "ToggleSpecsCB"
 		self.TOGGLE_TOOLTIPS_NAME = "ToggleTooltipsCB" # CDA_REFACTOR 03/2021 lfgr: Allow toggling tooltips
 
+		self.BRIBE_NAME = "DomesticBribe" # lfgr 04/2021: Revolution bribe button
+
 		self.customizing = False
 		self.currentPageNum = 0
 		
@@ -303,6 +309,9 @@ class CvCustomizableDomesticAdvisor:
 				("TRADE_ROUTES_DOMESTIC",	30,		"int",	None,					None,					0,									self.countTradeRoutes,					"D",						"u\"D#\" + self.tradeIcon"),
 				("TRADE_ROUTES_FOREIGN",	30,		"int",	None,					None,					0,									self.countTradeRoutes,					"F",						"u\"F#\" + self.tradeIcon"),
 			]
+
+		# Revolutions columns
+		self.COLUMNS_LIST.extend( CDAColumnsRevolution.makeColumns() )
 
 		# Values to check to see if we need to color the number as a problem
 		self.PROBLEM_VALUES_DICT = {
@@ -408,6 +417,7 @@ class CvCustomizableDomesticAdvisor:
 			self.RELOAD_PAGES_NAME		: self.reloadPages,
 			self.RENAME_PAGE_NAME		: self.renamePage,
 
+			self.BRIBE_NAME             : self.bribe # lfgr 04/2021: Bribe button
 			}
 
 		# Cache tooltips so that they are only recomputed when the page is redrawn.
@@ -528,8 +538,6 @@ class CvCustomizableDomesticAdvisor:
 								self.bonusCorpCommerces[eBonus][eCommerce] = {}
 							if (not self.bonusCorpCommerces[eBonus][eCommerce].has_key(eCorp)):
 								self.bonusCorpCommerces[eBonus][eCommerce][eCorp] = iCommerceValue
-
-		self.loadPages()
 
 		self.BUILDING_ICONS_DICT = { }
 		self.BUILDING_DICT = { }
@@ -745,6 +753,7 @@ class CvCustomizableDomesticAdvisor:
 				}
 # BUG - Production Grouping - end
 
+		self.loadPages() # lfgr 03/2021: Moved here, so we can use COLUMNS_INDEX
 		self.switchPage(self.PAGES[0]["name"])
 
 		self.runtimeInitDone = True
@@ -809,6 +818,10 @@ class CvCustomizableDomesticAdvisor:
 		self.Y_SPLIT = self.Y_TEXT - 8
 
 # BUG - Colony Split - end
+
+		# lfgr 04/2021: Revolution bribe button
+		self.X_BRIBE = self.X_SPLIT - 35
+		self.Y_BRIBE = self.Y_SPLIT
 
 		# Building Button Headers
 		self.BUILDING_BUTTON_X_SIZE = 24
@@ -932,6 +945,11 @@ class CvCustomizableDomesticAdvisor:
 		if (self.bCanLiberate):
 			screen.setImageButton( self.SPLIT_NAME, "", self.X_SPLIT, self.Y_SPLIT, 28, 28, WidgetTypes.WIDGET_ACTION, gc.getControlInfo(ControlTypes.CONTROL_FREE_COLONY).getActionInfoIndex(), -1 )
 			screen.setStyle( self.SPLIT_NAME, "Button_HUDAdvisorVictory_Style" )
+
+		# lfgr 04/2021: Bribe button
+		screen.setImageButton( self.BRIBE_NAME, "Art/Interface/Buttons/revbtn.dds", self.X_BRIBE, self.Y_BRIBE, 28, 28,
+			WidgetTypes.WIDGET_CDA_REV_BRIBE, -1, -1 )
+		self.updateBribeButton()
 
 # BUG - Colony Split - end
 
@@ -2345,6 +2363,10 @@ class CvCustomizableDomesticAdvisor:
 			iColHeaderX = self.nTableX + 30
 			iColHeaderY = self.nTableY
 			civInfo = gc.getCivilizationInfo(gc.getActivePlayer().getCivilizationType())
+
+			# REVOLUTION_REFACTORING 03/2021 lfgr: Caching helpers for
+			pPlayerHelper = RevIdxUtils.PlayerRevIdxHelper( gc.getActivePlayer().getID() )
+			lCitiesWithHelpers = [(cityList[i].city, RevIdxUtils.CityRevIdxHelper( cityList[i].city ) ) for i in cityRange]
 			
 			# Loop through the columns first. This is unintuitive, but faster.
 			for value, key in columns:
@@ -2356,6 +2378,9 @@ class CvCustomizableDomesticAdvisor:
 					if isinstance( columnDef, CDAColumns.CDAColumn ) :
 						if not columnDef.is_valid( gc.getActivePlayer() ) :
 							continue
+
+						start = time.clock()
+
 						# Make header
 						if columnDef.button is not None :
 							screen.setTableColumnHeader (page, value + 1, "", self.columnWidth[key])
@@ -2370,11 +2395,11 @@ class CvCustomizableDomesticAdvisor:
 							screen.setTableColumnHeader( page, value + 1, "<font=2>%s</font>" % columnDef.title,
 									self.columnWidth[key] )
 						# Make cells
-						for i in cityRange :
+						for i, t in enumerate( lCitiesWithHelpers ) :
+							pCity, pCityHelper = t
 							try :
 								pCity = cityList[i].city
-								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity )
-								print( "%s, %s, %s" % ( columnDef.name, szCellValue, cellTooltip ) )
+								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper, pPlayerHelper = pPlayerHelper )
 								self._tooltipCache[self.COLUMNS_INDEX[key], pCity.getID()] = cellTooltip
 
 								iData1 = self.COLUMNS_INDEX[key]
@@ -2391,6 +2416,9 @@ class CvCustomizableDomesticAdvisor:
 								traceback.print_exc()
 						
 						iColHeaderX += self.columnWidth[key]
+
+						end = time.clock()
+						BugUtil.debug("Computing column %s: %f.3s" % ( columnDef.name, end - start ) )
 						
 						continue # TODO: elif block
 					
@@ -2537,8 +2565,9 @@ class CvCustomizableDomesticAdvisor:
 					popupInfo.addPopup(inputClass.getData1())
 				else:
 					city = self.getCurrentCity()
-					if (city):
-						CyInterface().lookAtCityOffset(city.getID())
+					if city :
+						CyInterface().lookAtCityOffset( city.getID() )
+					self.updateBribeButton()
 					
 					if self.PAGES[self.currentPageNum]["showSpecControls"]:
 						self.showSpecialists()
@@ -2591,7 +2620,7 @@ class CvCustomizableDomesticAdvisor:
 	def updateScreen(self):
 		""" Updates the screen."""
 
-		self.drawContents()
+		self.drawContents( self.currentPage )
 
 		return
 
@@ -3144,13 +3173,42 @@ class CvCustomizableDomesticAdvisor:
 							("DEFENSE", 60, "int"),
 							("THREATS", 60, "text"),
 							("CONSCRIPT_UNIT", 90, "text"),
-							(self.getBuildingKey(3), 70, "text"),
-							(self.getBuildingKey(4), 70, "text"),
-							(self.getBuildingKey(5), 70, "text"),
-							(self.getBuildingKey(6), 70, "text"),
-							(self.getBuildingKey(7), 70, "text"),
+							"I_BUILDING_HUNTING_LODGE", # LFGR_TODO: buildingclass?
+							"I_BUILDING_TRAINING_YARD", # LFGR_TODO: buildingclass?
+							"I_BUILDING_STABLE", # LFGR_TODO: buildingclass?
+							"I_BUILDING_MAGE_GUILD",
 							("PRODUCING", 90, "text"),
 							("PRODUCING_TURNS", 33, "int"),
+						]
+					},
+					{
+						"name" : "Revolutions",
+						"showSpecControls" : False,
+						"showCultureLegend" : False,
+						"showGPLegend" : False,
+						"columns" : [
+							"NAME",
+							"REV_HAPPINESS",
+							"REV_LOCATION",
+							"REV_RELIGION",
+							"REV_CULTURE",
+							"REV_NATIONALITY",
+							"REV_HEALTH",
+							"REV_GARRISON",
+							"REV_SIZE",
+							"REV_STARVATION",
+							"REV_DISORDER",
+							"REV_CRIME",
+							"REV_CIVICS",
+							"REV_BUILDINGS",
+							"REV_NAT_SIZE",
+							"REV_NAT_CULT_SPENDING",
+							"REV_NAT_GOLDEN_AGE",
+							"REV_NAT_CIVICS",
+							"REV_NAT_BUILDINGS",
+							"REV_PER_TURN",
+							"REV_NAT_PER_TURN",
+							"REV_TOTAL"
 						]
 					}
 					]
@@ -3185,7 +3243,7 @@ class CvCustomizableDomesticAdvisor:
 						]
 					},
 					{
-						"name" : "Specialists", 
+						"name" : "Specialists",
 						"showSpecControls" : True,
 						"showCultureLegend" : True,
 						"showGPLegend" : True,
@@ -3271,6 +3329,19 @@ class CvCustomizableDomesticAdvisor:
 
 			if not p.has_key("columns"):
 				p["columns"] = [("NAME", 95, "text")]
+			
+			# lfgr 03/2021: Allow columns to be given as name-only in initial specification
+			for idx, col in enumerate( list( p["columns"] ) ) :
+				if isinstance( col, str ) :
+					colDef = self.COLUMNS_LIST[self.COLUMNS_INDEX[col]]
+					if isinstance( colDef, CDAColumns.CDAColumn ) :
+						iWidth = colDef.default_width
+						tp = colDef.type
+					else :
+						iWidth = colDef[1]
+						tp = colDef[2]
+					p["columns"][idx] = (col, iWidth, tp)
+						
 
 
 	def renamePage(self, inputClass):
@@ -3325,6 +3396,22 @@ class CvCustomizableDomesticAdvisor:
 		self.customizingRestoreSelection()
 
 		return 0
+
+	# lfgr 04/2021: Bribe button
+	def bribe( self, inputClass ) :
+		if CyGame().isOption( GameOptionTypes.GAMEOPTION_REVOLUTIONS ) :
+			city = self.getCurrentCity()
+			if city :
+				RevInstances.RevolutionInst.showBribeCityPopup( city )
+
+	# lfgr 04/2021: Bribe button
+	def updateBribeButton( self ) :
+		pCity = self.getCurrentCity()
+		bCanBribe = pCity and CyGame().isOption( GameOptionTypes.GAMEOPTION_REVOLUTIONS ) and RevUtils.isCanBribeCity( pCity )[0]
+		if bCanBribe :
+			self.getScreen().show( self.BRIBE_NAME )
+		else :
+			self.getScreen().hide( self.BRIBE_NAME )
 	
 	def stripStr(self, s, out):
 		while s.find(out) != -1:

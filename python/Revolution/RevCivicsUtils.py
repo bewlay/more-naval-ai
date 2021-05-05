@@ -46,111 +46,6 @@ def initCivicsList( ) :
 ########################## Civics effect helper functions #####################
 
 
-def getCivicsRevIdxLocal( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return [0,list(),list()]
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return [0,list(),list()]
-
-	if( len(civicsList) < gc.getNumCivicOptionInfos() ) :
-		initCivicsList()
-
-	localRevIdx = 0
-	posList = list()
-	negList = list()
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			civicEffect = kCivic.getRevIdxLocal()
-
-			# Effect doubles for some when a much better alternative exists
-			if( civicEffect > 0 and kCivic.getRevLaborFreedom() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevLaborFreedom() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %s doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 and kCivic.getRevDemocracyLevel() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevDemocracyLevel() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %s doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 ) :
-				negList.append( (civicEffect, kCivic.getDescription()) )
-			elif( civicEffect < 0 ) :
-				posList.append( (civicEffect, kCivic.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kCivic.getDescription(),civicEffect))
-
-			localRevIdx += civicEffect
-
-	return [localRevIdx,posList,negList]
-
-
-def getCivicsCivStabilityIndex( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	civStabilityIdx = 0
-	posList = list()
-	negList = list()
-
-	if( pPlayer.isNone() ) :
-		return [civStabilityIdx,posList,negList]
-
-	if( len(civicsList) < gc.getNumCivicOptionInfos() ) :
-		initCivicsList()
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			civicEffect = -kCivic.getRevIdxNational()
-
-			# Effect doubles for some when a much better alternative exists
-			if( civicEffect < 0 and kCivic.getRevLaborFreedom() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevLaborFreedom() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %d doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect < 0 and kCivic.getRevDemocracyLevel() < -1 ) :
-				for j in civicsList[kCivic.getCivicOptionType()] :
-					if( pPlayer.canDoCivics(j) ) :
-						kCivicOption = gc.getCivicInfo(j)
-						if( kCivicOption.getRevDemocracyLevel() > 1 ) :
-							civicEffect = 2*civicEffect
-							#CvUtil.pyPrint("  Revolt - Effect of %d doubled to %d because can do %s"%(kCivic.getDescription(),civicEffect,kCivicOption.getDescription()))
-							break
-
-			if( civicEffect > 0 ) :
-				posList.append( (civicEffect, kCivic.getDescription()) )
-			elif( civicEffect < 0 ) :
-				negList.append( (civicEffect, kCivic.getDescription()) )
-
-			#CvUtil.pyPrint("  Revolt - %s local effect: %d"%(kCivic.getDescription(),civicEffect))
-
-			civStabilityIdx += civicEffect
-
-	return [civStabilityIdx,posList,negList]
-
-
 def getCivicsHolyCityEffects( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)
@@ -194,45 +89,6 @@ def getCivicsReligionMods( iPlayer ) :
 			badMod += kCivic.getRevIdxBadReligionMod()
 
 	return [goodMod,badMod]
-
-def getCivicsDistanceMod( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-	distModifier = 0
-
-	if( pPlayer.isNone() ) :
-		return 0
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			distModifier += kCivic.getRevIdxDistanceModifier()
-
-	return distModifier
-
-def getCivicsNationalityMod( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return 0
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return 0
-
-	natMod = 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			natMod += kCivic.getRevIdxNationalityMod()
-
-	return natMod
 
 def getCivicsViolentRevMod( iPlayer ) :
 
@@ -324,7 +180,7 @@ def isCanDoElections( iPlayer ) :
 
 	return False
 
-def getReligiousFreedom( iPlayer ) :
+def getReligiousFreedom( iPlayer ) : # LFGR_TODO: This potentially only looks at a single category
 	# Returns [freedom level, option type]
 
 	pPlayer = gc.getPlayer(iPlayer)
@@ -356,7 +212,7 @@ def getBestReligiousFreedom( iPlayer, relOptionType ) :
 	for i in civicsList[relOptionType] :
 		kCivic = gc.getCivicInfo(i)
 		civicFreedom = kCivic.getRevReligiousFreedom()
-		if( pPlayer.canDoCivics(i) and not civicFreedom == 0 ) :
+		if( pPlayer.canDoCivics(i) and not civicFreedom == 0 ) : # LFGR_TODO: This may prefer negative over 0...
 			if( kCivic.getRevReligiousFreedom() > bestFreedom ) :
 				bestFreedom = civicFreedom
 				bestCivic = i
