@@ -239,7 +239,7 @@ class FeaturesCDAColumn( CDAColumn ) :
 			if pCity.isOccupation():
 				szOccu = u"%c" % CyGame().getSymbolID(FontSymbols.OCCUPATION_CHAR)
 				szValue += szOccu +":"+unicode(pCity.getOccupationTimer())
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]" ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]", pCity.getOccupationTimer() ) ) # TODO: Translate
 			else:
 				szValue += self._help.angryIcon
 				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Disorder" ) ) # TODO: Translate
