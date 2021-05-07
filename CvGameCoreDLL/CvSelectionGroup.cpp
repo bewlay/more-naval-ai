@@ -1056,6 +1056,28 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 	return false;
 }
 
+// lfgr 05/2021: Helper function. Computation adjusted to return at least 1 if unit can pillage the plot
+// Basically, this is this unit's priority for pillaging. Higher is better.
+inline int getMovesLeftForPillaging( CvUnit* pUnit, CvPlot* pPlotToPillage )
+{
+	if( pUnit->canMove() && pUnit->canPillage( pPlotToPillage ) )
+	{
+		int iMovesLeft = pUnit->movesLeft();
+		if( pUnit->bombardRate() > 0 )
+		{
+			iMovesLeft /= 2;
+		}
+		iMovesLeft *= pUnit->currHitPoints();
+		iMovesLeft /= std::max(1, pUnit->maxHitPoints());
+
+		return std::max( 1, iMovesLeft );
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 
 void CvSelectionGroup::startMission()
 {
@@ -1103,6 +1125,7 @@ void CvSelectionGroup::startMission()
 
 	if (!canStartMission(headMissionQueueNode()->m_data.eMissionType, headMissionQueueNode()->m_data.iData1, headMissionQueueNode()->m_data.iData2, plot()))
 	{
+		logBBAI( "Cannot start mission of type %d", headMissionQueueNode()->m_data.eMissionType );
 		bDelete = true;
 	}
 	else
@@ -1220,30 +1243,19 @@ void CvSelectionGroup::startMission()
 /************************************************************************************************/
 		if( headMissionQueueNode()->m_data.eMissionType == MISSION_PILLAGE )
 		{
-			
+
 			// Fast units pillage first
 			pUnitNode = headUnitNode();
 			int iMaxMovesLeft = 0;
 
 			// lfgr comment: Calculate iMaxMovesLeft
+			// lfgr 05/2021: Outsourced some code, adjusted "moves left" are always > 0
 			while (pUnitNode != NULL)
 			{
-				
 				pLoopUnit = ::getUnit(pUnitNode->m_data);
 				pUnitNode = nextUnitNode(pUnitNode);
 
-				if( pLoopUnit->canMove() && pLoopUnit->canPillage(plot()) )
-				{
-					int iMovesLeft = pLoopUnit->movesLeft();
-					if( pLoopUnit->bombardRate() > 0 )
-					{
-						iMovesLeft /= 2;
-					}
-					iMovesLeft *= pLoopUnit->currHitPoints();
-					iMovesLeft /= std::max(1, pLoopUnit->maxHitPoints());
-
-					iMaxMovesLeft = std::max( iMaxMovesLeft, iMovesLeft );
-				}
+				iMaxMovesLeft = std::max( iMaxMovesLeft, getMovesLeftForPillaging( pLoopUnit, plot() ) );
 			}
 
 			// lfgr comment: do the pillaging
@@ -1264,18 +1276,11 @@ void CvSelectionGroup::startMission()
 						bDidPillage = true;
 						break;
 					}*/
+
+					// lfgr 05/2021: Outsourced some code, adjusted "moves left" are always > 0 for units that can pillage
 					if( pLoopUnit->canMove() && pLoopUnit->canPillage(pLoopUnit->plot()) )
 					{
-						// lfgr comment: Same computation as above.
-						int iMovesLeft = pLoopUnit->movesLeft();
-						if( pLoopUnit->bombardRate() > 0 )
-						{
-							iMovesLeft /= 2;
-						}
-						iMovesLeft *= pLoopUnit->currHitPoints();
-						iMovesLeft /= std::max(1, pLoopUnit->maxHitPoints());
-
-						if( iMovesLeft >= iMaxMovesLeft )
+						if( getMovesLeftForPillaging( pLoopUnit, pLoopUnit->plot() ) >= iMaxMovesLeft )
 						{
 							if (pLoopUnit->pillage())
 							{
@@ -1288,7 +1293,8 @@ void CvSelectionGroup::startMission()
 							}
 						}
 
-						iNextMaxMovesLeft = std::max( iNextMaxMovesLeft, iMovesLeft );
+						// lfgr 05/2021 fix: Uses the updated moves left now.
+						iNextMaxMovesLeft = std::max( iNextMaxMovesLeft, getMovesLeftForPillaging( pLoopUnit, pLoopUnit->plot() ) );
 					}
 				}
 
