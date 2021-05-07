@@ -62,7 +62,7 @@
 		<English>Created building details in spell help</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEBUILDINGHELP_HOVER</Tag>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEDBUILDINGHELP_HOVER</Tag>
 		<English>Spells that create buildings show the properties of those buildings in their description</English>
 	</TEXT>
 </Civ4GameText>
