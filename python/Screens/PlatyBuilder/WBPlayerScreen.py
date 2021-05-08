@@ -72,6 +72,12 @@ class WBPlayerScreen:
 		for i in xrange(gc.getNumEraInfos()):
 			screen.addPullDownString("CurrentEra", gc.getEraInfo(i).getDescription(), i, i, i == pPlayer.getCurrentEra())
 
+		# lfgr 05/2021: Handicap selection
+		iY += 30
+		screen.addDropDownBoxGFC("Handicap", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for i in xrange(gc.getNumHandicapInfos()):
+			screen.addPullDownString("Handicap", gc.getHandicapInfo(i).getDescription(), i, i, i == pPlayer.getHandicapType())
+
 		global lReligions
 #Magister Start
 		global lTraits
@@ -164,7 +170,7 @@ class WBPlayerScreen:
 			screen.setLabel("PlayerName", "Background", "<font=4b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setLabel("CivilizationName", "Background", "<font=4b>" + pPlayer.getCivilizationDescription(0) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		iY = 150
+		iY = 180 # lfgr 05/2021: Moved down for handicap selection
 		iXPlus = 20
 		iXMinus = 45
 		iXText = 75
@@ -493,8 +499,12 @@ class WBPlayerScreen:
 			iIndex = screen.getPullDownData("CurrentPlayer", screen.getSelectedPullDownID("CurrentPlayer"))
 			self.interfaceScreen(iIndex)
 
-		elif inputClass.getFunctionName() == "CurrentEra":
+		elif inputClass.getFunctionName() == "CurrentEra" :
 			pPlayer.setCurrentEra(screen.getPullDownData("CurrentEra", screen.getSelectedPullDownID("CurrentEra")))
+
+		# lfgr 05/2021: Handicap selection
+		elif inputClass.getFunctionName() == "Handicap" :
+			pPlayer.setHandicapType( screen.getPullDownData( "Handicap", screen.getSelectedPullDownID( "Handicap" ) ) )
 
 		elif inputClass.getFunctionName().find("PlayerGold") > -1:
 			if inputClass.getData1() == 1030:
