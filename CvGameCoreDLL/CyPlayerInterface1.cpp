@@ -405,6 +405,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 
 		.def("getID", &CyPlayer::getID, "int ()")
 		.def("getHandicapType", &CyPlayer::getHandicapType, "int ()")
+		.def("setHandicapType", &CyPlayer::setHandicapType, "void ( int /*HandicapTypes*/ eHandicap )")
 		.def("getCivilizationType", &CyPlayer::getCivilizationType, "int ()")
 		.def("getLeaderType", &CyPlayer::getLeaderType, "int ()")
 		.def("getPersonalityType", &CyPlayer::getPersonalityType, "int ()")
@@ -424,6 +425,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getPlayerTextColorG", &CyPlayer::getPlayerTextColorG, "int ()")
 		.def("getPlayerTextColorB", &CyPlayer::getPlayerTextColorB, "int ()")
 		.def("getPlayerTextColorA", &CyPlayer::getPlayerTextColorA, "int ()")
+		.def("setPlayerColor", &CyPlayer::setPlayerColor, "void (int /*PlayerColorTypes*/ eColor )")
 
 		.def("getSeaPlotYield", &CyPlayer::getSeaPlotYield, "int (YieldTypes eIndex)")
 		.def("getYieldRateModifier", &CyPlayer::getYieldRateModifier, "int (YieldTypes eIndex)")
@@ -521,11 +523,6 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getNumSelectionGroups", &CyPlayer::getNumSelectionGroups, "int ()")
 		.def("getSelectionGroup", &CyPlayer::getSelectionGroup, python::return_value_policy<python::manage_new_object>(), "CvSelectionGroup* (int iID)")
 
-		.def("trigger", &CyPlayer::trigger, "void (/*EventTriggerTypes*/int eEventTrigger)")
-		.def("getEventOccured", &CyPlayer::getEventOccured, python::return_value_policy<python::reference_existing_object>(), "EventTriggeredData* (int /*EventTypes*/ eEvent)")
-		.def("resetEventOccured", &CyPlayer::resetEventOccured, "void (int /*EventTypes*/ eEvent)")
-		.def("getEventTriggered", &CyPlayer::getEventTriggered, python::return_value_policy<python::reference_existing_object>(), "EventTriggeredData* (int iID)")
-		.def("initTriggeredData", &CyPlayer::initTriggeredData, python::return_value_policy<python::reference_existing_object>(), "EventTriggeredData* (int eEventTrigger, bool bFire, int iCityId, int iPlotX, int iPlotY, PlayerTypes eOtherPlayer, int iOtherPlayerCityId, ReligionTypes eReligion, CorporationTypes eCorporation, int iUnitId, BuildingTypes eBuilding)")
-		.def("getEventTriggerWeight", &CyPlayer::getEventTriggerWeight, "int getEventTriggerWeight(int eEventTrigger)")
+		// lfgr 05/2021: Moved some stuff to CyPlayerInterface2.cpp
 		;
 }

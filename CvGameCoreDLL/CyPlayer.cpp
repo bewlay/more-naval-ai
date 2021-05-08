@@ -16,6 +16,7 @@
 #include "CySelectionGroup.h"
 #include "CvDLLPythonIFaceBase.h"
 #include "CvGlobals.h"
+#include "CvInitCore.h" // lfgr 05/2021
 
 CyPlayer::CyPlayer() : m_pPlayer(NULL)
 {
@@ -1792,6 +1793,15 @@ int /* HandicapTypes */ CyPlayer::getHandicapType()
 	return m_pPlayer ? (int) m_pPlayer->getHandicapType() : -1;
 }
 
+// lfgr 05/2021: for worldbuilder
+void CyPlayer::setHandicapType( /*HandicapTypes*/ int eHandicap )
+{
+	if( m_pPlayer )
+	{
+		GC.getInitCore().setHandicap( m_pPlayer->getIDINLINE(), (HandicapTypes) eHandicap );
+	}
+}
+
 int /* CivilizationTypes */  CyPlayer::getCivilizationType()
 {
 	return m_pPlayer ? (int) m_pPlayer->getCivilizationType() : NO_CIVILIZATION;
@@ -1850,6 +1860,15 @@ int CyPlayer::getTeam()
 int /*PlayerColorTypes*/ CyPlayer::getPlayerColor()
 {
 	return m_pPlayer ? (int) m_pPlayer->getPlayerColor() : NO_COLOR;
+}
+
+// lfgr 05/2021: for worldbuilder
+void CyPlayer::setPlayerColor( int /*PlayerColorTypes*/ eColor )
+{
+	if( m_pPlayer )
+	{
+		GC.getInitCore().setColor( m_pPlayer->getIDINLINE(), (PlayerColorTypes) eColor );
+	}
 }
 
 int CyPlayer::getPlayerTextColorR()

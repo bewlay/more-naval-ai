@@ -26,7 +26,7 @@ class WBPlayerScreen:
 		global iTeam
 		global pTeam
 		iPlayer = iPlayerX
-		pPlayer = gc.getPlayer(iPlayer)
+		pPlayer = gc.getPlayer(iPlayer) # type: CyPlayer
 		iTeam = pPlayer.getTeam()
 		pTeam = gc.getTeam(iTeam)
 
@@ -77,6 +77,29 @@ class WBPlayerScreen:
 		screen.addDropDownBoxGFC("Handicap", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(gc.getNumHandicapInfos()):
 			screen.addPullDownString("Handicap", gc.getHandicapInfo(i).getDescription(), i, i, i == pPlayer.getHandicapType())
+
+		# lfgr 05/2021: Color selection
+		iY += 30
+		screen.addDropDownBoxGFC("PlayerColor", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
+		for eColor in xrange( gc.getNumPlayerColorInfos() ):
+			def type_str(szType) :
+				if szType.startswith("PLAYERCOLOR_") :
+					szType = szType[len("PLAYERCOLOR_") :]
+				elif szType.startswith("COLOR_PLAYER_") :
+					szType = szType[len("COLOR_PLAYER_") :]
+				elif szType.startswith("COLOR_") :
+					szType = szType[len("COLOR_") :]
+				return szType.lower().replace("_", " ")
+			colorInfo = gc.getPlayerColorInfo( eColor )
+			szColorName = "%s (%s/%s, %s)" % (
+					type_str( colorInfo.getType() ),
+					type_str( gc.getColorInfo( colorInfo.getColorTypePrimary() ).getType() ),
+					type_str( gc.getColorInfo( colorInfo.getColorTypeSecondary() ).getType() ),
+					type_str( gc.getColorInfo( colorInfo.getTextColorType() ).getType() )
+			)
+			screen.addPullDownString( "PlayerColor", szColorName, eColor, eColor, eColor == pPlayer.getPlayerColor() )
+
+		pPlayer.getPlayerColor()
 
 		global lReligions
 #Magister Start
@@ -170,7 +193,7 @@ class WBPlayerScreen:
 			screen.setLabel("PlayerName", "Background", "<font=4b>" + sText + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			screen.setLabel("CivilizationName", "Background", "<font=4b>" + pPlayer.getCivilizationDescription(0) + "</font>", CvUtil.FONT_CENTER_JUSTIFY, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		iY = 180 # lfgr 05/2021: Moved down for handicap selection
+		iY = 210 # lfgr 05/2021: Moved down for handicap and playercolor selection
 		iXPlus = 20
 		iXMinus = 45
 		iXText = 75
@@ -505,6 +528,10 @@ class WBPlayerScreen:
 		# lfgr 05/2021: Handicap selection
 		elif inputClass.getFunctionName() == "Handicap" :
 			pPlayer.setHandicapType( screen.getPullDownData( "Handicap", screen.getSelectedPullDownID( "Handicap" ) ) )
+
+		# lfgr 05/2021: PlayerColor selection
+		elif inputClass.getFunctionName() == "PlayerColor" :
+			pPlayer.setPlayerColor( screen.getPullDownData( "PlayerColor", screen.getSelectedPullDownID( "PlayerColor" ) ) )
 
 		elif inputClass.getFunctionName().find("PlayerGold") > -1:
 			if inputClass.getData1() == 1030:

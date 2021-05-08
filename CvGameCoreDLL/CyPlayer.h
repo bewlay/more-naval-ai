@@ -469,6 +469,7 @@ public:
 
 	int getID();
 	int /* HandicapTypes */ getHandicapType();
+	void setHandicapType( /*HandicapTypes*/ int eHandicap ); // lfgr 05/2021: for worldbuilder
 	int /* CivilizationTypes */ getCivilizationType();
 	int /*LeaderHeadTypes*/ getLeaderType();
 	int /*LeaderHeadTypes*/ getPersonalityType();
@@ -489,6 +490,7 @@ public:
 	int getPlayerTextColorG();
 	int getPlayerTextColorB();
 	int getPlayerTextColorA();
+	void setPlayerColor( int /*PlayerColorTypes*/ eColor ); // lfgr 05/2021: for worldbuilder
 
 	int getSeaPlotYield(YieldTypes eIndex);
 	int getYieldRateModifier(YieldTypes eIndex);

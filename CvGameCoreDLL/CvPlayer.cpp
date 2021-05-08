@@ -1650,7 +1650,7 @@ void CvPlayer::changeCiv( CivilizationTypes eNewCiv )
 		GC.getInitCore().setArtStyle( getID(), (ArtStyleTypes)GC.getCivilizationInfo(eNewCiv).getArtStyleType() );
 
 		// Forces update of units flags
-		EraTypes eEra = getCurrentRealEra();
+		EraTypes eEra = getCurrentRealEra(); // LFGR_TODO: Non-real era?
 		bool bAuto = m_bDisableHuman;
 		m_bDisableHuman = true;
 		//setCurrentEra((EraTypes)((eEra + 1)%GC.getNumEraInfos()));
