@@ -141,11 +141,11 @@ def changeCivHandler( playerID, netUserData, popupReturn ) :
 	newLeaderType = popupReturn.getSelectedPullDownValue( 3 )
 	teamIdx = popupReturn.getSelectedPullDownValue( 4 )
 
-	if( (iTeam >= 0) and (iTeam <= gc.getMAX_CIV_TEAMS()) ) :
+	if( (teamIdx >= 0) and (teamIdx <= gc.getMAX_CIV_TEAMS()) ) :
 		playerI = gc.getPlayer(playerIdx)
 		if(playerI.isAlive) :
 			if( LOG_DEBUG ) : CvUtil.pyPrint( "   CP : You have selected player %d, the %s, on team %d"%(playerIdx, playerI.getCivilizationDescription(0), playerI.getTeam()) )
-	if( (iTeam >= 0) and (iTeam <= gc.getMAX_CIV_TEAMS()) ) :
+	if( (teamIdx >= 0) and (teamIdx <= gc.getMAX_CIV_TEAMS()) ) :
 		teamI =  gc.getTeam(teamIdx)
 		if( LOG_DEBUG ) : CvUtil.pyPrint( "   CP : New team idx is %d"%(teamIdx) )
 

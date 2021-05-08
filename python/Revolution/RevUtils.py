@@ -1139,7 +1139,7 @@ def changeCiv( playerIdx, newCivType = -1, newLeaderType = -1, teamIdx = -1 ) :
 		player.changeCiv( newCivType )
 		if( not RevInstances.DynamicCivNamesInst == None ) :
 			RevInstances.DynamicCivNamesInst.resetName( playerIdx )
-			RevInstances.DynamicCivNamesInst.setNewNameByCivics( playerIdx )
+			RevInstances.DynamicCivNamesInst.recalcNameWithMessage( playerIdx )
 	if( newLeaderType >= 0 and not newLeaderType == oldLeaderType ) :
 		player.setName("")
 		player.changeLeader( newLeaderType )
