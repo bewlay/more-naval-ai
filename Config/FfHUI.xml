@@ -20,7 +20,8 @@
 			<option id="AvoidUnhealthyCitizensDefault" type="boolean" default="False" />
 		</section>
 		<section id="PlotHelp">
-			<list id="PlotHelpNumUnits" type="int" default="15" listType="int" values="5, 10, 15, 20" />
+			<list id="PlotHelpNumUnits" key="Plot Help Num Units" type="int" default="15" listType="int"
+				values="5, 10, 15, 20" />
 		</section>
 		<section id="Interface">
 			<option id="ShowKhazadVaultText" type="boolean" default="False" />

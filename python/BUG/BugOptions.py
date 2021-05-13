@@ -1034,7 +1034,7 @@ class UnsavedMixin(object):
 	
 	def _setValue(self, value, *args):
 		value = TYPE_MAP[self.type](value)
-		BugUtil.debug("BugOptions - setting %s to %r", self.getID(), value)
+		BugUtil.debug("BugOptions - setting %s to %r (UNSAVED)", self.getID(), value)
 		self.value = value
 		return True
 
@@ -1364,6 +1364,8 @@ class BaseOptionHandler(BugConfig.Handler):
 					BugUtil.warn("BugConfig - <list> %s inside <options> element must be inside a <section> element; making it unsaved", id)
 				else:
 					option = IniListOption(mod, id, ini, section, key, type, default, andId, dll, listType, values, format, title, tooltip, dirtyBit)
+		else :
+			BugUtil.warn( "BugConfig - <list> %s in <options> element has no key attribute; making it unsaved", id )
 		if option is None:
 			option = UnsavedListOption(mod, id, type, default, andId, dll, listType, values, format, title, tooltip, dirtyBit)
 		self.addOption(mod, option, getter, setter)
