@@ -220,10 +220,10 @@ class FeaturesCDAColumn( CDAColumn ) :
 			# And distinguish between the Capital and the others (e.g. Forbidden Palace)
 			if pCity.isCapital():
 				szValue += self._help.starIcon
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Capital" ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_CAPITAL" ) )
 			else:
 				szValue += self._help.silverStarIcon
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Government center" ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_GOV_CENTER" ) )
 
 		# add National Wonders
 		for i in range(gc.getNumBuildingInfos()):
@@ -232,21 +232,20 @@ class FeaturesCDAColumn( CDAColumn ) :
 			if classInfo.getMaxGlobalInstances() == -1 and classInfo.getMaxPlayerInstances() == 1 and pCity.getNumBuilding(i) > 0 and not info.isCapital():
 				# Use bullets as markers for National Wonders
 				szValue += self._help.bulletIcon
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]National wonder: %s1_building",
-						info.getTextKey() ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_NAT_WONDER", info.getTextKey() ) )
 
 		if pCity.isDisorder():
 			if pCity.isOccupation():
 				szOccu = u"%c" % CyGame().getSymbolID(FontSymbols.OCCUPATION_CHAR)
 				szValue += szOccu +":"+unicode(pCity.getOccupationTimer())
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]", pCity.getOccupationTimer() ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_OCCUPIED", pCity.getOccupationTimer() ) )
 			else:
 				szValue += self._help.angryIcon
-				szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Disorder" ) ) # TODO: Translate
+				szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_DISORDER" ) )
 
 		pTradeCity = pCity.getTradeCity(0)
 		if (pTradeCity and pTradeCity.getOwner() >= 0):
 			szValue += self._help.tradeIcon
-			szTooltip = _appendLine( szTooltip, getText( "[ICON_BULLET]Trade with other cities" ) ) # TODO: Translate
+			szTooltip = _appendLine( szTooltip, getText( "TXT_KEY_CDA_COL_FEATURES_TRADE" ) )
 
 		return szValue, szTooltip

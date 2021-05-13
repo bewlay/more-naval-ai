@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for the Customizable Domestic Advisor -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_CAPITAL</Tag>
+		<English>[ICON_BULLET]Capital</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_GOV_CENTER</Tag>
+		<English>[ICON_BULLET]Government center</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_NAT_WONDER</Tag>
+		<English>[ICON_BULLET]National wonder: %s1_building</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_OCCUPIED</Tag>
+		<English>[ICON_BULLET]Occupied for %d1 more [NUM1:turn:turns]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_DISORDER</Tag>
+		<English>[ICON_BULLET]Disorder</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CDA_COL_FEATURES_TRADE</Tag>
+		<English>[ICON_BULLET]Trades with other cities</English>
+	</TEXT>
+</Civ4GameText>
