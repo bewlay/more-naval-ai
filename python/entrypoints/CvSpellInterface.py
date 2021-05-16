@@ -3204,7 +3204,7 @@ def spellSpring(caster):
 			pPlot2.setImprovementType( -1 )
 
 def helpSpring( lpUnits ) :
-	if len( lpUnits ) > 0 :
+	if len( lpUnits ) > 0 and reqSpring( lpUnits[0] ) :
 		pPlot = lpUnits[0].plot()
 		szHelp = SPRING_TERRAFORM_HELPER.getHelp( lpUnits[0] )
 		iNumSmokeOrFlamePlots = len( list( iterNeighborSmokeOrFlamePlots( pPlot ) ) )
@@ -3212,8 +3212,7 @@ def helpSpring( lpUnits ) :
 			if len( szHelp ) > 0 : szHelp += u"\n"
 			szHelp += PyHelpers.getText( "SPELL_SPRING_PUT_OUT_FLAMES", iNumSmokeOrFlamePlots )
 		return szHelp
-	else :
-		return u""
+	return u""
 
 def reqSprint(caster):
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_FATIGUED')):
