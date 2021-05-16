@@ -10202,8 +10202,8 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 			if( !szHelp.empty() ) {
 				szBuffer.append( pcNewline );
 				szBuffer.append( szHelp );
+				bPyHelpUsed = true;
 			}
-			bPyHelpUsed = true;
 		}
 	}
 
