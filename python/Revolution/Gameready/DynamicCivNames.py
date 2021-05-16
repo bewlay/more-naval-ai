@@ -257,7 +257,7 @@ class DescGenerator :
 		pPlayer = gc.getPlayer( ePlayer )
 		
 		eCiv = pPlayer.getCivilizationType()
-		pCiv = gc.getCivilizationInfo( eCiv )
+		bVassal = gc.getTeam( pPlayer.getTeam() ).isAVassal()
 		
 		# Is there another non-rebel (and, if iCreativityLevel == 2, non-vassal) player with the same civ?
 		# TODO: We need to update names if leaders cease to be rebels
@@ -265,10 +265,11 @@ class DescGenerator :
 		for eLoopPlayer in range( gc.getMAX_CIV_PLAYERS() ) :
 			pLoopPlayer = gc.getPlayer( eLoopPlayer )
 			if eLoopPlayer != ePlayer and pLoopPlayer.getCivilizationType() == eCiv \
-					and pLoopPlayer.isAlive() and not pLoopPlayer.isRebel() \
-					and ( iCreativityLevel == 1 or not gc.getTeam( pLoopPlayer.getTeam() ).isAVassal() ) :
-				bDuplicateCiv = True
-				break
+					and pLoopPlayer.isAlive() and not pLoopPlayer.isRebel() : # Only consider alive non-rebels
+				if iCreativityLevel == 1 or ( bVassal or not gc.getTeam( pLoopPlayer.getTeam() ).isAVassal() ) :
+					# Creativity levels doesn't consider other vassals as duplicates if we are not a vassal.
+					bDuplicateCiv = True
+					break
 		
 		if bDuplicateCiv and self.LOG_DEBUG : CvUtil.pyPrint( "  DCN - Duplicate civ" )
 		
