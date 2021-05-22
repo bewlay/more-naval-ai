@@ -107,7 +107,7 @@
 			<Plural>0</Plural>
 		</Italian>
 		<Spanish>
-			<Text>Bárbaros</Text>
+			<Text>B&#225;rbaros</Text>
 			<Gender>Male</Gender>
 			<Plural>1</Plural>
 		</Spanish>
@@ -204,5 +204,13 @@
 		<German>Bef&#246;rderungen</German>
 		<Italian>Promozioni</Italian>
 		<Spanish>Promociones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CITY_CAPTURED_BY</Tag>
+		<English>%s1_CityName has been captured by the %s2_CivName!!!</English>
+		<French>La ville de %s1_CityName est tomb&#233;e aux mains des %s2_CivName !</French>
+		<German>Das %s2:2_CivName hat die Stadt %s1_CityName eingenommen!!!</German>
+		<Italian>%s1_CityName &#232; stata conquistata dall'%s2_CivName!!!</Italian>
+		<Spanish>%s1_CityName ha sido capturada por [NUM2:el:la:los:las] %s2_CivName.</Spanish>
 	</TEXT>
 </Civ4GameText>
