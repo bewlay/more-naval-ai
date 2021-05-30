@@ -16,7 +16,6 @@ import RevInstances
 from RevCivicsUtils import *
 #phungus Rev Trait Effects
 #from RevTraitsUtils import *
-from RevBuildingsUtils import *
 #Rev Trait End
 import BugCore
 
