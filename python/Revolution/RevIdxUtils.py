@@ -26,6 +26,7 @@ Local rev idx changes:
 * Civic/Building location rev idx boni now do what they seem
 * Location rev idx calculates distance from nearest gov. center, not only capital
 * Location rev idx can't be negative (a good comm bonus otherwise makes the bonus worse)
+* Settlements do not get RevIdx from starvation (since they always starve down to 1 pop after conquest)
 
 National rev idx changes:
 * Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former.
@@ -919,8 +920,11 @@ class CityRevIdxHelper :
 		# type: () -> Tuple[int, unicode]
 
 		if self._pCity.foodDifference( True ) < 0 and abs( self._pCity.foodDifference( True ) ) > self._pCity.getFood() :
-			iStarvingIdx = 100
-			return iStarvingIdx, getText( "City is starving: %D1", iStarvingIdx )
+			if self._pCity.isSettlement() :
+				return 0, getText( "(No starvation penalty for settlements)" )
+			else :
+				iStarvingIdx = 100
+				return iStarvingIdx, getText( "City is starving: %D1", iStarvingIdx )
 		else :
 			return 0, getText( "(City is not starving)" )
 
