@@ -1,5 +1,109 @@
 # Changelog
 
+## 2.9u
+
+### Gameplay
+* Allow Illians to build workshops on snow
+* Automating terraformers now works and automated terraformers no longer cast random spells
+* Reduced frequency of Clairone (Harpy) event by 75% (report by Set@civfanatics)
+* Inquisition no longer removes wonders (report by kvaak@civfanatics)
+
+### UI
+* Customizable Domestic Advisor can now load and save settings, tooltips now work
+* Improved terraforming spell tooltips
+* Better Feast help text
+* Spell help now shows details of added promotions, summoned units and created buildings (Can be disabled via BUG option)
+* Document bAutoraze (war machine + four horsemen) in unit info help
+* Don't show any of the OR-required boni of a unit if we already have one of them
+* Show required projects in project pedia
+* Show civ-specific projects, civics, spells, and terrain yield modifiers in pedia (report by Alekseyev_@civfanatics)
+* Add trait buttons for pedia (Terkhen@civfanatics)
+* Show default race and traits in civ pedia
+* Dark Elf promotion now shows up in the pedia
+* Unified format of english civ pedia texts
+* Re-add shortcuts concept section (From AdvCiv; the actual shortcuts are not tested)
+* Added Decius pedia entry (by Nikis-Knight@civfanatics)
+* Added pedia entries for Duke Sallos, Meresin, and Ouzza (by Kael@reddit)
+* Fixed BUG display of GP-discoverable technologies in tech chooser
+* Negative research is now correctly displayed as 0 research in city screen
+* Khazad vault status now is a tooltip of the gold/income text; default behavior can be restored by a BUG option
+* Technology buttons no longer overlap GP bar
+* Allow changing Handicap via worldbuilder (report by Qgqqqqq@realmsbeyond)
+* Allow changing player color via worldbuilder (requires some time to update; report by Qgqqqqq@realmsbeyond)
+* Don't try to show dead teams as worst enemies on the scoreboard
+* Never show "-1 hammers" in unit help
+* Outdated loading screen hint (Deaf Metal@civfanatics)
+* Show number of cities and power ratio in scoreboard (report by Deaf Metal@civfanatics)
+* Some text fixes and translations
+
+### Bugfixes
+* BarbarianAllies now get combat odds when attacking animals
+* Don't show an empty line if PySpellHelp returns an empty string
+* Some text encoding fixes
+* Fixed an invalid usage of getSorenRandNum in BBAI code
+* Vassals can no longer have non-agression pacts
+* Fixed two instanecs of AI confusion related to pillaging (Thanks to DuskTreader@civfanatics)
+* Feast spell can no longer be cast if it would give 0 XP
+* Division by zero in Autolog mod
+* Python bug when trying to switch civ and leader with ChangePlayer
+* PlotHelpNumUnits BUG option is now properly saved
+* Fixed a problem with DCN vassal naming
+
+### AI
+* Improved terraforming AI
+* Stop patrol units piling up on forts (report by kvaak@civfanatics)
+* Pillaging with hidden nationality units no longer changes the AI's subjective war success (report by Akbarthegreat@civfanatics)
+* More robust summoner/buffer/debuffer recognition (AI used to think that all mages are summoners, since it didn't realize that Summon Sand Lion is a Malakim-only spell)
+* Summoners no longer prefer promotions with CombatPercent, e.g. Combat I-V (Combat I-V granting Empower I-V is still considered)
+
+### Code
+* PySpellHelp now replaces static spell <Help> if the former is non-empty
+* Enable BugGameUtils and make it fall back to CvGameUtils
+* Refactored CvCustomizableDomesticAdvisor, allow specificing row tooltips
+* Fixed profile build
+* Throw assert if number out of unsigned short range is passed to getSorenRandNum (Sezren@civfanatics)
+* Allow omitting language tags in text XML files (falls back to English)
+* Remove all translated texts that are identical to the English text
+* Better logging and logging control
+* Fixed or disabled some asserts
+* Revolution refactoring
+
+### Revolutions
+* Added Revolution page to Customizable Domestic Advisor
+* Local RevIdx changes:
+	* Removed effects of hardcoded "Nationalism", "Liberalism" and "Scientific Method" techs.
+	* Instability from nationality no longer reduces the garrison RevIdx cap
+	* Removed small capital malus in later eras ("To help remove late game tiny civs" -- we don't want that)
+	* Removed malus for small cities that used to be large
+	* Streamlined small city bonus
+	* No unhappiness malus in city with disorder.
+	* Removed colony malus, "revolutionary spirit"
+	* Current era no longer subtracted from culture rate
+	* Removed malus from negative food per turn
+	* Simplified and streamlined unhealthiness, nationality, health and garrison indices
+	* No increased civic malus if "better" civics are available
+	* Building effects not disabled from wrong PrereqCiv or PrereqTrait
+	* Slightly changed combination of final general and human modifiers (does nothing by default)
+	* Slightly changed the religion bonus when at war
+	* Slightly changed the unhappiness malus, now uses the new DLL method CyCity.unhappyLevelForRevIdx()
+	* Route bonus in location RevIdx now considers all technology changes to the city's actual route
+	* Location rev idx incorporates civ size more smoothly
+	* Civic/Building location rev idx boni now do what they seem
+	* Location rev idx calculates distance from nearest gov. center, not only capital
+	* Location rev idx can't be negative (a good comm bonus otherwise makes the bonus worse)
+* National RevIdx changes:
+	* Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former. Stability seemed to have no effect other than for display purposes. Now Stability = -RevIdx.
+	* Streamlined small empire bonus and apply it to RevIdx (not just stability)
+	* Culture spending is now actually added to the national RevIdx
+	* Removed wonky "financial trouble" factor.
+	* No increased civic malus if "better" civics are available
+	* Civics now added to national RevIdx (instead of only "stability")
+	* Building effects not disabled from wrong PrereqCiv or PrereqTrait
+	* Removed late-game penalty for players with large military
+	* Removed (only partly working) anarchy penalty of 100 (40 for rebels)
+	* Slightly changed combination of final general and human modifiers (does nothing by default)
+
+
 ## v2.9-beta3u
 
 Breaks savegames.
