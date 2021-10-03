@@ -225,7 +225,7 @@ def shuffle(num, rand):
 	return piShuffle
 
 # lfgr 03/2021
-def shuffleList( l ) :
+def shuffleSequence( l ) :
 	for i in range( len( l ) ) :
 		j = i + CyGame().getSorenRandNum( len( l ) - i, "Shuffle list" )
 		l[i], l[j] = l[j], l[i]
