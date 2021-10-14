@@ -547,14 +547,15 @@ class CvForeignAdvisor:
 			screen.setText(self.HEATHEN_RELIGION_ID , "HR", self.HEATHEN_RELIGION_ON_TEXT, CvUtil.FONT_LEFT_JUSTIFY, self.CONTROL_AREA_X, self.CONTROL_AREA_Y + self.CONTROL_AREA_SPACING, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 		#RevolutionDCM end
 
-		# angle increment in radians (180 degree range)
-		if (iCount < 2):
-			deltaTheta = 0
-		else:
-			#RevolutionDCM start
-			#Leader heads will follow a full circle
-			deltaTheta = 2*3.1415927 / (iCount)
-			#RevolutionDCM end
+		# lfgr 10/2021: Ensure that our polygon has an odd number of corners to avoid lines crossing at the active
+		# player in the middle. Skip the corner at top if the number of other players is even.
+
+		iExtraCorners = 1 - iCount % 2 # 1 if iCount is even
+		iCorners = iCount + iExtraCorners
+
+		leaderThetas = {} # No dict comprehensions in python 2.4 :(
+		for p in leaderMap :
+			leaderThetas[p] = ( leaderMap[p] + iExtraCorners ) * 2*3.1415927 / iCorners - 3.1415927 / 2
 		
 		# draw other leaderheads
 		for iPlayer in leaderMap.keys():
@@ -570,11 +571,11 @@ class CvForeignAdvisor:
 
 			#RevolutionDCM start
 			#Make circle an oval
-			fRadiusOval = fRadius + self.RADIUS_OVAL * abs(math.cos(deltaTheta * leaderMap[iPlayer]))
-			fX = int(self.X_LEADER_CIRCLE_TOP - fRadiusOval * math.cos(deltaTheta * leaderMap[iPlayer]) - iLeaderWidth/2)
+			fRadiusOval = fRadius + self.RADIUS_OVAL * abs(math.cos(leaderThetas[iPlayer]))
+			fX = int(self.X_LEADER_CIRCLE_TOP - fRadiusOval * math.cos(leaderThetas[iPlayer]) - iLeaderWidth/2)
 			#RevolutionDCM end
 
-			fY = int(fLeaderArcTop + fRadius * math.sin(deltaTheta * leaderMap[iPlayer]) - iLeaderHeight/2)
+			fY = int(fLeaderArcTop + fRadius * math.sin(leaderThetas[iPlayer]) - iLeaderHeight/2)
 
 			szLeaderHead = self.getNextWidgetName()
 			screen.addCheckBoxGFC(szLeaderHead, gc.getLeaderHeadInfo(player.getLeaderType()).getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), int(fX), int(fY), iLeaderWidth, iLeaderHeight, WidgetTypes.WIDGET_LEADERHEAD, iPlayer, iBaseLeader, ButtonStyles.BUTTON_STYLE_LABEL)
@@ -607,7 +608,7 @@ class CvForeignAdvisor:
 			if iSelectedLeader in self.listSelectedLeaders or (bNoLeadersSelected and bDisplayed):
 				# get selected player and location
 				if (iSelectedLeader in leaderMap):
-					thetaSelected = deltaTheta * leaderMap[iSelectedLeader]
+					thetaSelected = leaderThetas[iSelectedLeader]
 
 					#RevolutionDCM start
 					#make oval
@@ -629,8 +630,8 @@ class CvForeignAdvisor:
 
 						#RevolutionDCM start
 						#make oval
-						fRadiusOval = fRadius + self.RADIUS_OVAL * abs(math.cos(deltaTheta * leaderMap[iPlayer]))
-						fX = self.X_LEADER_CIRCLE_TOP - fRadiusOval * math.cos(deltaTheta * leaderMap[iPlayer])
+						fRadiusOval = fRadius + self.RADIUS_OVAL * abs(math.cos(leaderThetas[iPlayer]))
+						fX = self.X_LEADER_CIRCLE_TOP - fRadiusOval * math.cos(leaderThetas[iPlayer])
 
 						playerSelected = gc.getPlayer(iSelectedLeader)
 						player = gc.getPlayer(iPlayer)
@@ -670,7 +671,7 @@ class CvForeignAdvisor:
 							drawLine = True
 						#RevolutionDCM end	
 
-						fY = fLeaderArcTop + fRadius * math.sin(deltaTheta * leaderMap[iPlayer])
+						fY = fLeaderArcTop + fRadius * math.sin(leaderThetas[iPlayer])
 					
 						# draw lines
 						if (player.getTeam() == gc.getPlayer(iSelectedLeader).getTeam()):
