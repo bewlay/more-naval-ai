@@ -9577,7 +9577,7 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
     if (kPromotionInfo.isInvisible())
     {
         szBuffer.append(pcNewline);
-        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_INVISIBLE_PEDIA"));
+        szBuffer.append(gDLL->getText("TXT_KEY_PROMOTION_HELP_INVISIBLE"));
     }
     if (kPromotionInfo.isSeeInvisible())
     {

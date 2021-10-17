@@ -18330,13 +18330,6 @@
 		<German>Unsichtbar</German>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INVISIBLE_PEDIA</Tag>
-		<English>[ICON_BULLET]Makes the unit invisible</English>
-		<French>[ICON_BULLET]Rend l'unit&#233; invisible</French>
-		<German>[ICON_BULLET]Einheit wird unsichtbar</German>
-		<Spanish>[ICON_BULLET]La unidad no puede ser vista</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_PROMOTION_IRON_WEAPONS</Tag>
 		<English>Iron Weapons</English>
 		<French>Armes d'Acier</French>
@@ -21165,10 +21158,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_INTO_THE_MIST_HELP</Tag>
-		<English>[ICON_BULLET]All of your units become invisible</English>
-		<French>[ICON_BULLET]Toutes vos unit&#233;s deviennent invisibles</French>
-		<German>[ICON_BULLET]All eure Einheiten werden unsichtbar</German>
-		<Spanish>[ICON_BULLET]Todas tus unidades se vuelven invisibles</Spanish>
+		<English>[ICON_BULLET]Adds the [LINK=PROMOTION_HIDDEN]Hidden[\LINK] promotion to all of your units</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_IRA_UNLEASHED</Tag>
