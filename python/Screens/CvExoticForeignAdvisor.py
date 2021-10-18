@@ -1511,7 +1511,7 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 				else :
 					self.getScreen().setText(self.CLOSE_BORDERS_ID , "CB", self.CLOSE_BORDERS_ON_TEXT, CvUtil.FONT_LEFT_JUSTIFY, self.CONTROL_AREA_X, self.CONTROL_AREA_Y + 0, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 					self.close_borders = True
-				self.drawContents(False)
+				self.drawContents(True)
 			elif (inputClass.getFunctionName() == self.HEATHEN_RELIGION_ID) :
 				self.hrToggle = self.hrToggle + 1
 				if (self.hrToggle % 2 == 0) :
@@ -1520,8 +1520,14 @@ class CvExoticForeignAdvisor (CvForeignAdvisor.CvForeignAdvisor):
 				else :
 					self.getScreen().setText(self.HEATHEN_RELIGION_ID , "HR", self.HEATHEN_RELIGION_ON_TEXT, CvUtil.FONT_LEFT_JUSTIFY, self.CONTROL_AREA_X, self.CONTROL_AREA_Y + self.CONTROL_AREA_SPACING, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 					self.heathen_religion = True
-				self.drawContents(False)
+				self.drawContents(True)
 			#RevolutionDCM end
+			elif (inputClass.getFunctionName() == self.COALITIONS_ID) :
+				if self.coalitions :
+					self.coalitions = False
+				else :
+					self.coalitions = True
+				self.drawContents(True)
 			
 			elif (inputClass.getButtonType() == WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS):
 #				ExoticForPrint ("FOOOOOO!!!!")

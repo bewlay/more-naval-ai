@@ -80,16 +80,21 @@ class CvForeignAdvisor:
 		self.HEATHEN_RELIGION_OFF_TEXT = u"<font=2>" + "Religious tension off" + u"</font>"
 		self.HEATHEN_RELIGION_ON_TEXT = u"<font=2>" + "Religious tension on" + u"</font>"
 		self.HEATHEN_RELIGION_KEY = "heathen religion"
+		# lfgr 10/2021: Coalition arrangement
+		self.COALITIONS_ID = "COALITIONS"
+		self.coalitions = False
+		self.COALITIONS_OFF_TEXT = u"<font=2>" + "Coalitions off" + u"</font>" # TODO
+		self.COALITIONS_ON_TEXT = u"<font=2>" + "Coalitions on" + u"</font>"
 		self.cbToggle = 0
 		self.hrToggle = 0
 		self.X_CONTROL = 20
 		self.Y_CONTROL = 60
 		self.W_CONTROL = self.W_LEGEND
-		self.H_CONTROL = 70
 		self.CONTROL_AREA_SPACING = 20
+		self.H_CONTROL = 30 + int( 3.5 * self.CONTROL_AREA_SPACING )
 		self.CONTROL_AREA_X = self.X_CONTROL + self.CONTROL_AREA_SPACING
 		self.CONTROL_AREA_Y = self.Y_CONTROL + self.CONTROL_AREA_SPACING
-		self.CONTROL_AREA_TEXT = "Constraints:"
+		self.CONTROL_AREA_CONSTRAINTS_TEXT = "Constraints:"
 		#RevolutionDCM end
 
 		self.LINE_WIDTH = 6
@@ -441,7 +446,54 @@ class CvForeignAdvisor:
 					screen.setState(szName, True)
 				else:
 					screen.setState(szName, False)
-					
+
+	def arrangePlayersByCoalitions( self, lePlayers ) :
+		# type: (List[int]) -> Mapping[int, float]
+		""" Arrange players on a line (or circle arc) or on a cycle. Returns a dict mapping players to theta positions """
+
+		lePlayers = sorted( lePlayers )
+
+		# First, cluster by enemy players
+		def getEnemies( ePlayer ) :
+			pTeam = gc.getTeam( gc.getPlayer( ePlayer ).getTeam() ) # type: CyTeam
+			return tuple( eEnemy for eEnemy in lePlayers + [self.iActiveLeader]
+					if pTeam.isAtWar( gc.getPlayer( eEnemy ).getTeam() ) )
+
+		playersByCoalition = {}
+		for ePlayer in lePlayers :
+			tEnemies = getEnemies( ePlayer )
+			if tEnemies in playersByCoalition :
+				playersByCoalition[tEnemies].append( ePlayer )
+			else :
+				playersByCoalition[tEnemies] = [ePlayer] # No defaultdict in Python 2.4 :(
+
+		# Arrange players by coalitions (sorted by contained players)
+		coalitions = sorted( playersByCoalition, key = lambda c : playersByCoalition[c] )
+
+		playerOrder = []
+		if len( coalitions ) == 1 :
+			playerOrder = sorted( lePlayers )
+		else :
+			for coalition in coalitions :
+				playerOrder.append( None ) # Space between coalitions
+				playerOrder.extend( playersByCoalition[coalition] )
+
+		if len( playerOrder ) % 2 == 0 :
+			playerOrder.insert( 0, None )
+
+		if len( playerOrder ) >= 2 and playerOrder[0] is None and playerOrder[1] is None :
+			# Special case if we need a wider gap
+			fShift = -0.5
+		else :
+			fShift = 0
+
+		thetasByPlayer = {}
+		for idx, iPlayer in enumerate( playerOrder ) :
+			if iPlayer is not None :
+				thetasByPlayer[iPlayer] = ( idx + fShift ) * 2*3.1415927 / len( playerOrder ) - 3.1415927 / 2
+		return thetasByPlayer
+
+
 	def drawRelations(self, bInitial):
 	
 		if self.iShiftKeyDown == 1:
@@ -534,7 +586,7 @@ class CvForeignAdvisor:
 		#RevolutionDCM start
 		#Set up control panel
 		screen.addPanel(self.getNextWidgetName(), u"", u"", True, False, self.X_CONTROL, self.Y_CONTROL, self.W_CONTROL, self.H_CONTROL, PanelStyles.PANEL_STYLE_IN)
-		screen.setLabel(self.getNextWidgetName(), "", u"<font=2>" + self.CONTROL_AREA_TEXT + u"</font>", CvUtil.FONT_LEFT_JUSTIFY, self.X_CONTROL + 5, self.Y_CONTROL + 5, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+		screen.setLabel(self.getNextWidgetName(), "", u"<font=2>" + self.CONTROL_AREA_CONSTRAINTS_TEXT + u"</font>", CvUtil.FONT_LEFT_JUSTIFY, self.X_CONTROL + 5, self.Y_CONTROL + 5, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		#Establish initial relations screen control conditions
 		if (self.cbToggle % 2 == 0) :
@@ -547,15 +599,29 @@ class CvForeignAdvisor:
 			screen.setText(self.HEATHEN_RELIGION_ID , "HR", self.HEATHEN_RELIGION_ON_TEXT, CvUtil.FONT_LEFT_JUSTIFY, self.CONTROL_AREA_X, self.CONTROL_AREA_Y + self.CONTROL_AREA_SPACING, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
 		#RevolutionDCM end
 
+		iCoalitionsTextX = self.X_CONTROL + 5
+		iCoalitionsTextY = self.CONTROL_AREA_Y + int( 2.5 * self.CONTROL_AREA_SPACING )
+
+		if self.coalitions :
+			screen.setText(self.COALITIONS_ID , "CO", self.COALITIONS_ON_TEXT, CvUtil.FONT_LEFT_JUSTIFY, iCoalitionsTextX, iCoalitionsTextY, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
+		else :
+			screen.setText(self.COALITIONS_ID , "CO", self.COALITIONS_OFF_TEXT, CvUtil.FONT_LEFT_JUSTIFY, iCoalitionsTextX, iCoalitionsTextY, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 0, 0)
+
 		# lfgr 10/2021: Ensure that our polygon has an odd number of corners to avoid lines crossing at the active
 		# player in the middle. Skip the corner at top if the number of other players is even.
 
-		iExtraCorners = 1 - iCount % 2 # 1 if iCount is even
-		iCorners = iCount + iExtraCorners
+		# Check whether to use coalition clustering
+		if self.coalitions :
+			leaderThetas = self.arrangePlayersByCoalitions( list( leaderMap ) )
+		else :
+			iCorners = iCount
 
-		leaderThetas = {} # No dict comprehensions in python 2.4 :(
-		for p in leaderMap :
-			leaderThetas[p] = ( leaderMap[p] + iExtraCorners ) * 2*3.1415927 / iCorners - 3.1415927 / 2
+			iExtraCorners = 1 - iCorners % 2 # 1 if iCount is even
+			iCorners = iCorners + iExtraCorners
+
+			leaderThetas = {} # No dict comprehensions in python 2.4 :(
+			for p in leaderMap :
+				leaderThetas[p] = ( leaderMap[p] + iExtraCorners ) * 2*3.1415927 / iCorners - 3.1415927 / 2
 		
 		# draw other leaderheads
 		for iPlayer in leaderMap.keys():
