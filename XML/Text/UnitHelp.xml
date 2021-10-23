@@ -5,4 +5,11 @@
 		<Tag>TXT_KEY_UNIT_AUTORAZE</Tag>
 		<English>[ICON_BULLET]Destroys improvements (in enemy territory) and terrain features when it enters a tile</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_DURATION</Tag>
+		<English>Duration: Will die in %d1 [NUM1:turn:turns].</English>
+		<French>Dur&#233;e: mourra dans %d1 [NUM1:tour:tours].</French>
+		<German>Dauer: Wird sterben in %d1 [NUM1:Runde:Runden].</German>
+		<Spanish>Duraci&#243;n: Morir&#225; en %d1 [NUM1:turno:turnos].</Spanish>
+	</TEXT>
 </Civ4GameText>

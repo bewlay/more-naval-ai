@@ -26594,13 +26594,6 @@
 		<German>Wiedererweckt von den Toten ist Duin mit Lykanthropie verflucht: jede lebende von ihm besiegte Einheit verwandelt sich in einen Lechzenden Werwolf und unterwirft sich seinem Willen.</German>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_DURATION</Tag>
-		<English>Duration: Will die in %D1 turn(s).</English>
-		<French>Dur&#233;e: mourra dans %D1 tour(s).</French>
-		<German>Dauer: Wird sterben in %D1 Runde(n).</German>
-		<Spanish>Duraci&#243;n: Morir&#225; en %D1 turno(s).</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_UNIT_DWARVEN_CANNON</Tag>
 		<English>Dwarven Cannon</English>
 		<French>Bombarde Naine</French>
