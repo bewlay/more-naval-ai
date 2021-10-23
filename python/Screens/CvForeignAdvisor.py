@@ -6,12 +6,15 @@ import ScreenInput
 import CvScreenEnums
 import math
 
+# lfgr 10/2021
+import TSPHeuristic
+
 # globals
 gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 #RevolutionDCM start
-aiAttitudes = CyGameTextMgr();
+aiAttitudes = CyGameTextMgr()
 #RevolutionDCM end
 
 # this class is shared by both the resource and technology foreign advisors
@@ -447,18 +450,66 @@ class CvForeignAdvisor:
 				else:
 					screen.setState(szName, False)
 
+	def _playerDislike( self, ePlayer1, ePlayer2, deeMasterCache ) :
+		""" How much two players dislike each other on a military level. """
+		pPlayer1 = gc.getPlayer( ePlayer1 )
+		pPlayer2 = gc.getPlayer( ePlayer2 )
+		pTeam1 = gc.getTeam( pPlayer1.getTeam() ) # type: CyTeam
+		pTeam2 = gc.getTeam( pPlayer2.getTeam() )
+		eMaster1 = deeMasterCache.get( ePlayer1 )
+		eMaster2 = deeMasterCache.get( ePlayer2 )
+		if pTeam1.isAtWar( pPlayer2.getTeam() ) :
+			return 1.0
+		elif pTeam1.isDefensivePact( pPlayer2.getTeam() ) :
+			return 0.4
+		elif eMaster1 is not None and eMaster1 == eMaster2 :
+			return 0.1
+		elif pTeam1.isVassal( pPlayer2.getTeam() ) or pTeam2.isVassal( pPlayer1.getTeam() ) :
+			return 0.0
+		else :
+			return 0.5
+
+	def _coalitionDislike( self, lePlayers1, leEnemies1, lePlayers2, leEnemies2, deeMasterCache ) :
+		""" How much two coalitions (define by enemy players) are different. """
+		assert len( lePlayers1 ) > 0 and len( lePlayers2 ) > 0
+
+		s1 = frozenset( leEnemies1 )
+		s2 = frozenset( leEnemies2 )
+		iMismatches = 0
+		iMatches = 0
+		for ePlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
+			if ePlayer in s1 and ePlayer in s2 :
+				iMatches += 1
+			elif ePlayer not in s1 or ePlayer not in s2 :
+				iMismatches += 1
+		fEnemiesDislike =  iMismatches * 1. / (iMismatches + iMatches)
+
+		fPlayersDislike = sum( self._playerDislike( e1, e2, deeMasterCache ) for e1 in lePlayers1 for e2 in lePlayers2 )
+		fPlayersDislike /= len( lePlayers1 ) * len( lePlayers2 )
+
+		return 3 * fEnemiesDislike + fPlayersDislike
+
 	def arrangePlayersByCoalitions( self, lePlayers ) :
 		# type: (List[int]) -> Mapping[int, float]
 		""" Arrange players on a line (or circle arc) or on a cycle. Returns a dict mapping players to theta positions """
 
 		lePlayers = sorted( lePlayers )
 
-		# First, cluster by enemy players
+		# Cache master of each player
+		deeMastersCache = {}
+		for ePlayer in lePlayers :
+			pTeam = gc.getTeam( gc.getPlayer( ePlayer ).getTeam() )
+			for eMasterTeam in range( gc.getMAX_CIV_TEAMS() ) :
+				if pTeam.isVassal( eMasterTeam ) :
+					deeMastersCache[ePlayer] = eMasterTeam
+
+		# First, cluster by enemy players into "coalitions"
 		def getEnemies( ePlayer ) :
-			pTeam = gc.getTeam( gc.getPlayer( ePlayer ).getTeam() ) # type: CyTeam
+			pTeam = gc.getTeam( gc.getPlayer( ePlayer ).getTeam() )
 			return tuple( eEnemy for eEnemy in lePlayers + [self.iActiveLeader]
 					if pTeam.isAtWar( gc.getPlayer( eEnemy ).getTeam() ) )
 
+		# List of players by coalition
 		playersByCoalition = {}
 		for ePlayer in lePlayers :
 			tEnemies = getEnemies( ePlayer )
@@ -467,12 +518,37 @@ class CvForeignAdvisor:
 			else :
 				playersByCoalition[tEnemies] = [ePlayer] # No defaultdict in Python 2.4 :(
 
-		# Arrange players by coalitions (sorted by contained players)
-		coalitions = sorted( playersByCoalition, key = lambda c : playersByCoalition[c] )
+		# The list of coalitions
+		coalitions = list( playersByCoalition )
+
+		# Find good player order within each coalition
+		cyclic = len( coalitions ) == 1 # If there's only one coalition, order it on the full cycle.
+		for c, players in playersByCoalition.items() :
+			playerDislikes = {}
+			for i in range( len( players ) ) :
+				for j in range( i ) :
+					e1, e2 = players[i], players[j]
+					playerDislikes[e1, e2] = playerDislikes[e2, e1] = self._playerDislike( e1, e2, deeMastersCache )
+			seed = sum( players ) # It's probably not worth it to come up with something more complicated
+			solver = TSPHeuristic.TSPSolver( players, playerDislikes, cyclic = cyclic, seed = seed )
+			playersByCoalition[c] = solver.min_tsp_hybrid_heuristic( 1500 )
+
+		# Find good coalition order
+		if len( coalitions ) > 3 :
+			seed = len( coalitions ) # It's probably not worth it to come up with something more complicated
+			coalitionDislikes = {}
+			for i in range( len( coalitions ) ) :
+				for j in range( i ) :
+					c1, c2 = coalitions[i], coalitions[j]
+					coalitionDislikes[c1, c2] = coalitionDislikes[c2, c1] = self._coalitionDislike(
+						playersByCoalition[c1], c1, playersByCoalition[c2], c2, deeMastersCache
+					)
+			solver = TSPHeuristic.TSPSolver( coalitions, coalitionDislikes, cyclic = True, seed = seed )
+			coalitions = solver.min_tsp_hybrid_heuristic( 1500 )
 
 		playerOrder = []
 		if len( coalitions ) == 1 :
-			playerOrder = sorted( lePlayers )
+			playerOrder = playersByCoalition.values()[0]
 		else :
 			for coalition in coalitions :
 				playerOrder.append( None ) # Space between coalitions
