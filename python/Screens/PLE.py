@@ -2168,13 +2168,16 @@ class PLE:
 		# Units lead by a GG will get a star instead of a dot.
 		if (self.bShowGreatGeneralIndicator):
 			# is unit lead by a GG?
-			iLeaderPromo = gc.getInfoTypeForString('PROMOTION_GREAT_COMMANDER')
-			if (iLeaderPromo != -1 and pLoopUnit.isHasPromotion(iLeaderPromo)):
-				szDotState += "_GG"
-				xSize = 16
-				ySize = 16
-				xOffset = -3
-				yOffset = -3
+			# lfgr 10/2021 fix: Consider both general types
+			for s in ("PROMOTION_GREAT_GENERAL", "PROMOTION_GREAT_COMMANDER") :
+				iLeaderPromo = gc.getInfoTypeForString( s )
+				if iLeaderPromo != -1 and pLoopUnit.isHasPromotion( iLeaderPromo ) :
+					szDotState += "_GG"
+					xSize = 16
+					ySize = 16
+					xOffset = -3
+					yOffset = -3
+					break
 
 		szFileNameState = ArtFileMgr.getInterfaceArtInfo(szDotState).getPath()
 

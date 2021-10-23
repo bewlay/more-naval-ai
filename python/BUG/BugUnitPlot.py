@@ -506,8 +506,13 @@ class BupUnit:
 		self.isHurt = pUnit.isHurt()
 		self.isPromotionReady = pUnit.isPromotionReady()
 
-		iLeaderPromo = gc.getInfoTypeForString('PROMOTION_GREAT_COMMANDER')
-		self.isLeadByGreatGeneral = iLeaderPromo != -1 and pUnit.isHasPromotion(iLeaderPromo)
+		# lfgr fix 10/2021: Consider both general types
+		self.isLeadByGreatGeneral = False
+		for s in ("PROMOTION_GREAT_GENERAL", "PROMOTION_GREAT_COMMANDER") :
+			iLeaderPromo = gc.getInfoTypeForString( s )
+			if iLeaderPromo != -1 and pUnit.isHasPromotion( iLeaderPromo ) :
+				self.isLeadByGreatGeneral = True
+				break
 
 		self.DotStatus = self._getDotStatus()
 		self.Mission = self._getMission(pUnit)
