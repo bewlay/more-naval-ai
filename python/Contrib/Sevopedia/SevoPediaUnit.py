@@ -114,11 +114,13 @@ class SevoPediaUnit:
 		screen.addUnitGraphicGFC(self.top.getNextWidgetName(), self.iUnit, self.X_UNIT_ANIMATION, self.Y_UNIT_ANIMATION, self.W_UNIT_ANIMATION, self.H_UNIT_ANIMATION, WidgetTypes.WIDGET_GENERAL, -1, -1, self.X_ROTATION_UNIT_ANIMATION, self.Z_ROTATION_UNIT_ANIMATION, self.SCALE_ANIMATION, True)
 
 ##--------	BUGFfH: Added by Denev 2009/08/12
-		if self.getUnitType(iUnit):
+		if self.getUnitType(iUnit): # lfgr 10/2021: Fix incorrect sizing with some resolutions
 			szImage = str(gc.getUnitInfo(iUnit).getImage())
-			iHeight = self.W_UPGRADES_TO_PANE / 3
+			iHeight = self.H_UPGRADES_TO_PANE
+			iWidth = self.H_UPGRADES_TO_PANE * 3
+			iPositionX = self.X_UPGRADES_TO_PANE + self.W_UPGRADES_TO_PANE - iWidth
 			iPositionY = self.Y_UPGRADES_TO_PANE + self.H_UPGRADES_TO_PANE - iHeight
-			screen.addDDSGFC(self.top.getNextWidgetName(), szImage, self.X_UPGRADES_TO_PANE, iPositionY, self.W_UPGRADES_TO_PANE, iHeight, WidgetTypes.WIDGET_GENERAL, -1, -1 )
+			screen.addDDSGFC(self.top.getNextWidgetName(), szImage, iPositionX, iPositionY, iWidth, iHeight, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 ##--------	BUGFfH: End Add
 
 		self.placeStats()
