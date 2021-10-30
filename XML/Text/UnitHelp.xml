@@ -2,6 +2,11 @@
 <!-- Text for general unit help and messages. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_MISSION_CREATE_GREAT_WORK_HELP</Tag>
+		<English>This order will have the unit create a Great Work and end revolts in the city they are currently in. It consumes the unit.</English>
+		<Spanish>Esta orden hace que la unidad cree una gran obra y termina alzamiento en la ciudad en la que se encuentre, consumi&#233;ndose en el proceso.</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_UNIT_AUTORAZE</Tag>
 		<English>[ICON_BULLET]Destroys improvements (in enemy territory) and terrain features when it enters a tile</English>
 	</TEXT>
