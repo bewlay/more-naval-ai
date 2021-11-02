@@ -13438,7 +13438,7 @@
             <bPickOtherPlayerCity>0</bPickOtherPlayerCity>
             <bShowPlot>1</bShowPlot>
             <iCityFoodWeight>0</iCityFoodWeight>
-            <PythonCanDo></PythonCanDo>
+            <PythonCanDo>canTriggerMushrooms</PythonCanDo>
             <PythonCanDoCity></PythonCanDoCity>
             <PythonCanDoUnit></PythonCanDoUnit>
             <PythonCallback>doMushrooms</PythonCallback>
