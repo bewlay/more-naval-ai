@@ -4567,6 +4567,11 @@ void CvPlayer::doTurn()
     {
         changeDisableProduction(-1);
         updateMaintenance();
+
+		if( getDisableProduction() == 0 )
+		{
+			updateCommerce();
+		}
     }
     if (getDisableResearch() > 0)
     {
