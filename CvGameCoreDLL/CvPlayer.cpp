@@ -18916,7 +18916,11 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			// Add Improvement to the plot
 			if (bAdd)
 			{
-				if (getAdvancedStartPoints() >= iCost)
+				// lfgr 11/2021: Refund overwritten improvement
+				int iOldCost = getAdvancedStartImprovementCost(pPlot->getImprovementType(), false, pPlot);
+				iOldCost = std::max( 0, iOldCost ); // Could be -1 if 
+
+				if (getAdvancedStartPoints() + iOldCost >= iCost) // lfgr 11/2021: Refund overwritten improvement
 				{
 					if (pPlot->getFeatureType() != NO_FEATURE)
 					{
@@ -18949,7 +18953,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 					pPlot->setImprovementType(eImprovement);
 
-					changeAdvancedStartPoints(-iCost);
+					changeAdvancedStartPoints(iOldCost-iCost); // lfgr 11/2021: Refund overwritten improvement
 				}
 			}
 
