@@ -19042,6 +19042,9 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 				pPlot->setRevealed(getTeam(), false, true, NO_TEAM, true);
 				changeAdvancedStartPoints(iCost);
 			}
+
+			// lfgr fix 11/2021
+			GC.getGameINLINE().updateColoredPlots();
 		}
 		break;
 	default:
