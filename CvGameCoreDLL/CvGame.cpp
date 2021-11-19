@@ -11264,6 +11264,18 @@ void CvGame::foundBarbarianCity()
 	CvPlot* pPlotI = NULL;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pLoopPlot = NULL;
+
+	// lfgr 11/2021: Allow configuring minimum distance
+	int iMinStartingPlotDistance;
+	if( GC.getGameINLINE().isOption( GAMEOPTION_ADVANCED_START ) )
+	{
+		iMinStartingPlotDistance = GC.getDefineINT( "BARBARIAN_WORLD_MIN_DISTANCE_ADVANCED_START" );
+	}
+	else
+	{
+		iMinStartingPlotDistance = GC.getDefineINT( "BARBARIAN_WORLD_MIN_DISTANCE" );
+	}
+
 	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); iPlot++)
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
@@ -11306,8 +11318,11 @@ void CvGame::foundBarbarianCity()
                     pPlotI = GET_PLAYER((PlayerTypes)iI).getStartingPlot();
                     if (pPlotI != NULL)
                     {
-                        iDist = GC.getMapINLINE().calculatePathDistance(pPlotI, pLoopPlot);
-						if (iDist < 4 && iDist > -1)
+						// Don't use path distance here, that doesn't make much sense
+                        //iDist = GC.getMapINLINE().calculatePathDistance(pPlotI, pLoopPlot);
+						//if (iDist < iMinStartingPlotDistance && iDist > -1)
+						iDist = stepDistance(pPlotI->getX_INLINE(), pPlotI->getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+						if (iDist < iMinStartingPlotDistance)
                         {
                             bValid = false;
                         }

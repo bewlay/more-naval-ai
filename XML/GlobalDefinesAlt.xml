@@ -10,6 +10,14 @@
         <iDefineIntVal>0</iDefineIntVal>
     </Define>
     <Define>
+        <DefineName>BARBARIAN_WORLD_MIN_DISTANCE_ADVANCED_START</DefineName>
+        <iDefineIntVal>4</iDefineIntVal>
+    </Define>
+    <Define>
+        <DefineName>BARBARIAN_WORLD_MIN_DISTANCE</DefineName>
+        <iDefineIntVal>3</iDefineIntVal>
+    </Define>
+    <Define>
         <DefineName>START_YEAR</DefineName>
         <iDefineIntVal>0</iDefineIntVal>
     </Define>
