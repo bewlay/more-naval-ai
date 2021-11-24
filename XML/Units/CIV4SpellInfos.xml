@@ -596,6 +596,7 @@
             <CreateUnitType>UNIT_BATTERING_RAM</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <bAbility>1</bAbility>
             <bNoInterruptUnitCycling>1</bNoInterruptUnitCycling>
             <iDelay>3</iDelay>
@@ -1602,6 +1603,7 @@
             <CreateUnitType>UNIT_FLESH_GOLEM</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <Effect>EFFECT_SPELL1</Effect>
             <Sound>AS3D_SPELL_GRAFT_FLESH</Sound>
             <Button>Art/Interface/Buttons/Units/Flesh Golem.dds</Button>
@@ -2328,6 +2330,7 @@
             <CreateUnitType>UNIT_SKELETON</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <PyResult>spellRaiseSkeleton(pCaster)</PyResult>
             <Effect>EFFECT_SPELL2</Effect>
             <Sound>AS3D_SPELL_RAISE_SKELETON</Sound>
@@ -3193,6 +3196,7 @@
             <CreateUnitType>UNIT_KRAKEN</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <Effect>EFFECT_SPELL2</Effect>
             <Sound>AS3D_SPELL_KRAKEN</Sound>
             <Button>Art/Interface/Buttons/Units/Kraken.dds</Button>
@@ -3269,6 +3273,7 @@
             <CreateUnitType>UNIT_TIGER</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <Effect>EFFECT_NATURE_SUMMON</Effect>
             <Sound>AS3D_SPELL_BLOOM</Sound>
             <Button>Art/Interface/Buttons/Units/Tiger.dds</Button>
@@ -3288,6 +3293,7 @@
             <CreateUnitType>UNIT_TREANT</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
             <bPermanentUnitCreate>1</bPermanentUnitCreate>
+            <bImmobileUnitCreate>1</bImmobileUnitCreate>
             <Effect>EFFECT_NATURE_SUMMON</Effect>
             <Sound>AS3D_SPELL_BLOOM</Sound>
             <Button>Art/Interface/Buttons/Units/Treant.dds</Button>

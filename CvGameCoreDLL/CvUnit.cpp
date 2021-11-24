@@ -17947,11 +17947,12 @@ void CvUnit::castCreateUnit(int spell)
 /*************************************************************************************************/
 /**	END	                                        												**/
 /*************************************************************************************************/
-	if (GC.getSpellInfo((SpellTypes)spell).isPermanentUnitCreate())
+	// lfgr 11/2021: Decouple permanent and immobile summons
+	if (GC.getSpellInfo((SpellTypes)spell).isImmobileUnitCreate())
 	{
 		pUnit->changeImmobileTimer(2);
 	}
-	else
+	if( ! GC.getSpellInfo((SpellTypes)spell).isPermanentUnitCreate() )
 	{
 		pUnit->changeDuration(2);
 		if (pUnit->getSpecialUnitType() != GC.getDefineINT("SPECIALUNIT_SPELL"))

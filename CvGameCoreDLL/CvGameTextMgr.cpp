@@ -9894,6 +9894,11 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         {
             szBuffer.append(gDLL->getText("TXT_KEY_SPELL_SUMMON_UNIT_PERMANENT"));
         }
+		// lfgr 11/2021: Decouple permanent and immobile summons
+		if (kSpellInfo.isPermanentUnitCreate())
+		{
+			szBuffer.append(gDLL->getText("TXT_KEY_SPELL_SUMMON_UNIT_IMMOBILE"));
+		}
         if (kSpellInfo.isCopyCastersPromotions())
         {
             szBuffer.append(pcNewline);

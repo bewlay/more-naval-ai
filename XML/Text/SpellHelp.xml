@@ -115,4 +115,8 @@
 		<English>[COLOR_UNIT_TEXT]Unit: [COLOR_REVERT]</English>
 		<Spanish>[COLOR_UNIT_TEXT]Unidad: [COLOR_REVERT]</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_SUMMON_UNIT_IMMOBILE</Tag>
+		<English>[NEWLINE][ICON_BULLET]Unit starts immobile</English>
+	</TEXT>
 </Civ4GameText>

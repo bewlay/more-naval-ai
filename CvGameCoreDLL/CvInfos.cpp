@@ -3337,6 +3337,7 @@ m_iCreateUnitType(NO_UNIT),
 m_iCreateUnitNum(0),
 m_bCopyCastersPromotions(false),
 m_bPermanentUnitCreate(false),
+m_bImmobileUnitCreate(false), // lfgr 11/2021: Decouple permanent and immobile summons
 m_iCreateUnitPromotion(NO_PROMOTION),
 m_bImmuneTeam(false),
 m_bImmuneNeutral(false),
@@ -3612,6 +3613,12 @@ bool CvSpellInfo::isImmuneNotAlive() const
 bool CvSpellInfo::isPermanentUnitCreate() const
 {
 	return m_bPermanentUnitCreate;
+}
+
+// lfgr 11/2021: Decouple permanent and immobile summons
+bool CvSpellInfo::isImmobileUnitCreate() const
+{
+	return m_bImmobileUnitCreate;
 }
 
 bool CvSpellInfo::isPush() const
@@ -4187,6 +4194,7 @@ bool CvSpellInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iCreateUnitNum, "iCreateUnitNum");
 	pXML->GetChildXmlValByName(&m_bCopyCastersPromotions, "bCopyCastersPromotions");
 	pXML->GetChildXmlValByName(&m_bPermanentUnitCreate, "bPermanentUnitCreate");
+	pXML->GetChildXmlValByName(&m_bImmobileUnitCreate, "bImmobileUnitCreate"); // lfgr 11/2021: Decouple permanent and immobile summons
 	pXML->GetChildXmlValByName(szTextVal, "CreateUnitPromotion");
 	if (szTextVal != "") m_iCreateUnitPromotion = pXML->FindInInfoClass(szTextVal);
 	pXML->GetChildXmlValByName(&m_bImmuneTeam, "bImmuneTeam");

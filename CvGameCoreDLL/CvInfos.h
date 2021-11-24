@@ -910,6 +910,7 @@ public:
 	bool isImmuneFlying() const;
 	bool isImmuneNotAlive() const;
 	bool isPermanentUnitCreate() const;
+	bool isImmobileUnitCreate() const; // lfgr 11/2021: Decouple permanent and immobile summons
 	bool isPush() const;
 	bool isRemoveHasCasted() const;
 	bool isResistable() const;
@@ -1015,7 +1016,8 @@ protected:
 	int m_iCreateUnitPromotion;
 	int m_iCreateUnitType;
     bool m_bCopyCastersPromotions;
-    bool m_bPermanentUnitCreate;
+	bool m_bPermanentUnitCreate;
+	bool m_bImmobileUnitCreate; // lfgr 11/2021: Decouple permanent and immobile summons
     bool m_bImmuneTeam;
     bool m_bImmuneNeutral;
     bool m_bImmuneEnemy;

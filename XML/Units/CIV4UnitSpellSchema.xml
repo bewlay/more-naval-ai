@@ -63,6 +63,7 @@
 	<ElementType name="iCreateUnitNum" content="textOnly" dt:type="int"/>
 	<ElementType name="bCopyCastersPromotions" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bPermanentUnitCreate" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bImmobileUnitCreate" content="textOnly" dt:type="boolean"/> <!-- lfgr 11/2021: Decouple permanent and immobile summons -->
 	<ElementType name="CreateUnitPromotion" content="textOnly"/>
 	<ElementType name="bImmuneTeam" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bImmuneNeutral" content="textOnly" dt:type="boolean"/>
@@ -163,6 +164,7 @@
 		<element type="iCreateUnitNum" minOccurs="0"/>
 		<element type="bCopyCastersPromotions" minOccurs="0"/>
 		<element type="bPermanentUnitCreate" minOccurs="0"/>
+		<element type="bImmobileUnitCreate" minOccurs="0" /> <!-- lfgr 11/2021: Decouple permanent and immobile summons -->
 		<element type="CreateUnitPromotion" minOccurs="0"/>
 		<element type="bImmuneTeam" minOccurs="0"/>
 		<element type="bImmuneNeutral" minOccurs="0"/>

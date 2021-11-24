@@ -713,6 +713,7 @@ void CyInfoPythonInterface3()
 		.def("isImmuneFlying", &CvSpellInfo::isImmuneFlying, "bool ()")
 		.def("isImmuneNotAlive", &CvSpellInfo::isImmuneNotAlive, "bool ()")
 		.def("isPermanentUnitCreate", &CvSpellInfo::isPermanentUnitCreate, "bool ()")
+		.def("isImmobileUnitCreate", &CvSpellInfo::isImmobileUnitCreate, "bool ()") // lfgr 11/2021: Decouple permanent and immobile summons
 		.def("isPush", &CvSpellInfo::isPush, "bool ()")
 		.def("isRemoveHasCasted", &CvSpellInfo::isRemoveHasCasted, "bool ()")
 		.def("isResistable", &CvSpellInfo::isResistable, "bool ()")
