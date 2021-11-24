@@ -413,7 +413,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					message = BugUtil.getText("TXT_KEY_AUTOLOG_WHIP_APPLIED", (iCity.getName(), ))
 					Logger.writeLog(message, vColor="Red")
 
-				if iCurrentConstrictCounter > self.CityConscriptCounter[i]:
+				# lfgr fix 11/2021: Check that there is a conscript unit available
+				if iCurrentConstrictCounter > self.CityConscriptCounter[i] and iCity.getConscriptUnit() != -1:
 					message = BugUtil.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (gc.getUnitInfo(iCity.getConscriptUnit()).getDescription(), iCity.getName()))
 					Logger.writeLog(message, vColor="Red")
 
