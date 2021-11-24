@@ -1848,6 +1848,10 @@ def spellInquisition(caster):
 	if not pPlot.isCity():
 		return
 
+	# lfgr 11/2021: The city may have changed owner/state religion while the spell is being cast
+	if not reqInquisition( caster ) :
+		return
+
 	pCity = pPlot.getPlotCity()
 	StateBelief = gc.getPlayer(pCity.getOwner()).getStateReligion()
 	iRnd = CyGame().getSorenRandNum(4, "Bob")
