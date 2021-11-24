@@ -15,4 +15,8 @@
 		<English>Needs %d1[ICON_GOLD]/city for %s2</English>
 		<Spanish>Necesita %d1[ICON_GOLD]/ciudad para %s2</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_FEATURE_REQUIRE_RESIST</Tag>
+		<English>[NEWLINE][ICON_BULLET]Units must have %d1%% resistance against %s2 damage to enter.</English>
+	</TEXT>
 </Civ4GameText>

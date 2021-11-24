@@ -19627,6 +19627,14 @@ void CvGameTextMgr::setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeat
 		szBuffer.append(gDLL->getText("TXT_KEY_TERRAIN_NO_CITIES"));
 	}
 
+	// lfgr 11/2021
+	if( feature.getRequireResist() != NO_DAMAGE )
+	{
+		szBuffer.append( gDLL->getText( "TXT_KEY_HELP_FEATURE_REQUIRE_RESIST",
+				GC.getDefineINT( "FEATURE_REQUIRE_RESIST_AMOUNT" ),
+				GC.getDamageTypeInfo( (DamageTypes) feature.getRequireResist() ).getTextKeyWide() ) );
+	}
+
 	if (feature.isNoImprovement())
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_FEATURE_NO_IMPROVEMENT"));
