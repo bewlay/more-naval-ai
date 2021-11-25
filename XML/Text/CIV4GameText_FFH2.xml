@@ -22168,25 +22168,6 @@
 		<Spanish>Invocar Treant</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_SPELL_SUMMON_UNIT</Tag>
-		<English>[ICON_BULLET]Summons a [LINK=literal]%s1_unit[\LINK].</English>
-		<French>[ICON_BULLET]Evoque un %s1_unit.</French>
-		<German>[ICON_BULLET]Beschw&#246;rt eine %s1_unit.</German>
-		<Spanish>[ICON_BULLET]Invoca una unidad de [LINK=literal]%s1_unit[\LINK].</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_SPELL_SUMMON_UNIT_MULTIPLE</Tag>
-		<English>[ICON_BULLET]Summons %D1 [LINK=literal]%s2_unitname[\LINK](s).</English>
-		<French>[ICON_BULLET]Evoque %D1 %s2_unitname(s).</French>
-		<German>[ICON_BULLET]Beschw&#246;rt %D1 %s2_unitname(s).</German>
-		<Spanish>[ICON_BULLET]Invoca %D1 [LINK=literal]%s2_unitname[\LINK](s).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_SPELL_SUMMON_UNIT_PERMANENT</Tag>
-		<English>(permanent)</English>
-		<Spanish>(permanente)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_SPELL_SUMMON_WATER_ELEMENTAL</Tag>
 		<English>Summon Water Elemental</English>
 		<French>Evoquer El&#233;mental d'Eau</French>
