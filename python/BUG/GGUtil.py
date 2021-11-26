@@ -21,7 +21,7 @@ g_cGreatGeneral = ""
 
 def init():
 	global g_ePromo
-	g_ePromo = gc.getInfoTypeForString("PROMOTION_GREAT_COMMANDER")
+	g_ePromo = gc.getInfoTypeForString("PROMOTION_GREAT_COMMANDER") # TODO
 	global g_promoButton
 	g_promoButton = gc.getPromotionInfo(g_ePromo).getButton()
 	global g_cGreatGeneral

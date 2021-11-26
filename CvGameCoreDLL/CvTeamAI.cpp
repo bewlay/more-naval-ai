@@ -3543,6 +3543,7 @@ DenialTypes CvTeamAI::AI_makePeaceTrade(TeamTypes ePeaceTeam, TeamTypes eTeam) c
 }
 
 
+// How valuable is it for me if eTeam declares war on eWarTeam?
 int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 {
 	PROFILE_FUNC();
@@ -3709,6 +3710,7 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 }
 
 
+// Do we trade to eTeam a war declaration on eWarTeam?
 DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bool bConsiderPower) const
 {
 	PROFILE_FUNC();
