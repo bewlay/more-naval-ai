@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!--
+	FfHNames 11/2021 lfgr
+	Name manager for Fall from Heaven 2
+-->
+<mod id="FfHNames"
+	name="Fall from Heaven 2 names"
+	module="FfHNames"
+	author="lfgr"
+	date="11/2021">
+
+	<event type="setPlayerAlive" function="onSetPlayerAlive"/>
+</mod>

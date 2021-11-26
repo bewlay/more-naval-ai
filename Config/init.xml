@@ -150,6 +150,7 @@
 	<load mod="MovieMod"/>
 
 	<load mod="FfHUI" /> <!-- FfHUI 05/2020 lfgr -->
+	<load mod="FfHNames" /> <!-- FfHNames 11/2021 lfgr -->
 
 	
 <!--RevolutionDCM start - mod components -->
