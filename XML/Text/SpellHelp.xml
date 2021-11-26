@@ -36,8 +36,8 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_IGNORE_HAS_CASTED</Tag>
-		<English>[ICON_BULLET]Can be casted even after another spell has been casted this turn by the same caster</English>
-		<German>[ICON_BULLET]Kann sogar gewirkt werden, wenn der Zaubernde diesen Zug schon einen anderen Zauber gewirkt hat</German>
+		<English>[ICON_BULLET]Can be cast even after casting another spell this turn</English>
+		<German>[ICON_BULLET]Kann auch nach einem anderen Zauber im selben Zug gewirkt werden</German>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_PREREQ_CASTER_ALIVE</Tag>
