@@ -5532,56 +5532,56 @@
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_1</Tag>
-		<English>The %s1 are a threat to us all. Please join us in wiping them out.</English>
+		<English>%s2 is a threat to us all. Please join us in wiping [NUM2:him:her:them:them] out.</English>
 		<French>Les %s1 repr&#233;sentent une menace pour nous tous. Joignez-vous &#224; nous pour les &#233;liminer.</French>
 		<German>Das %s1:3 Volk ist eine Bedrohung f&#252;r uns alle. Bitte helft uns bei seiner Vernichtung!</German>
 		<Italian>I %s1 sono un pericolo per tutti. Unisciti a noi e li toglieremo di mezzo.</Italian>
-		<Spanish>[NUM1:El:La:Los:Las] %s1:3 son una amenaza para todos nosotros. Un&#237;os a nosotros para borrarlos del mapa.</Spanish>
+		<Spanish>%s2 [NUM2:es:son] una amenaza para todos nosotros. Un&#237;os a nosotros para borrar[NUM2:lo:la:los:las] del mapa.</Spanish>
 		<Finnish>Kaikille on vaaraksi %s1 uhka. Liity meihin niin tuhoamme sen.</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_2</Tag>
-		<English>Care to assist us in destroying the evil %s1?</English>
+		<English>Care to assist us in destroying the evil %s2?</English>
 		<French>Acceptez-vous de nous aider &#224; &#233;craser les ignobles %s1 ?</French>
 		<German>Habt Ihr Interesse, uns bei der Vernichtung des %s1:2 Volkes behilflich zu sein?</German>
 		<Italian>Vuoi darci una mano a distruggere i malvagi %s1?</Italian>
-		<Spanish>&#191;Os importar&#237;a ayudarnos a destruir [NUM1:al malvado:a la malvada:a los malvados:a las malvadas] %s1:3?</Spanish>
+		<Spanish>&#191;Os importar&#237;a ayudarnos a destruir [NUM2:al malvado:a la malvada:a los malvados:a las malvadas] %s2?</Spanish>
 		<Finnish>%s1 on pahan k&#228;tyri. Uskallatko auttaa meit&#228; tuhoamaan h&#228;net?</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_3</Tag>
-		<English>Greetings, [CT_NAME]. The annoying %s1 must be destroyed, don't you agree?</English>
+		<English>Greetings, [CT_NAME]. The annoying %s2 must be destroyed, don't you agree?</English>
 		<French>Salutations, [CT_NAME]. Ne pensez-vous pas que ces maudits %s1 doivent &#234;tre extermin&#233;s ?</French>
 		<German>Seid gegr&#252;&#223;t, [CT_NAME]. Das l&#228;stige %s1:3 Volk muss vernichtet werden, findet Ihr nicht auch?</German>
 		<Italian>Salve, [CT_NAME]. I fastidiosi %s1 devono essere distrutti, non sei d'accordo?</Italian>
-		<Spanish>Saludos, [CT_NAME]. [NUM1:El molesto:La molesta:Los molestos:Las molestas] %s1:3 [NUM1:debe ser destruido:debe ser destruida: deben ser destruidos:deben ser destruidas], &#191;no os parece?</Spanish>
+		<Spanish>Saludos, [CT_NAME]. [NUM2:El molesto:La molesta:Los molestos:Las molestas] %s2 [NUM2:debe ser destruido:debe ser destruida: deben ser destruidos:deben ser destruidas], &#191;no os parece?</Spanish>
 		<Finnish>Tervehdys, [CT_NAME]. &#196;rsytt&#228;v&#228; %s1 pit&#228;&#228; tuhota, eik&#246; vain?</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_4</Tag>
-		<English>[CT_NAME]: we urgently request mighty [CT_CIV_SHORT]'s assistance in our crusade against the %s1!</English>
+		<English>[CT_NAME]: we urgently request mighty [CT_CIV_SHORT]'s assistance in our crusade against %s2!</English>
 		<French>[CT_NAME], nous demandons d'urgence le soutien des [CT_CIV_SHORT] dans notre croisade contre les %s1 !</French>
 		<German>[CT_NAME]: Wir bitten das m&#228;chtige Volk von [CT_CIV_SHORT] dringend um Hilfe bei unserem Kreuzzug gegen das %s1:3 Volk!</German>
 		<Italian>[CT_NAME], chiediamo urgentemente l'aiuto del[CT_CIV_SHORT:2] per la nostra crociata contro i %s1!</Italian>
-		<Spanish>[CT_NAME], solicitamos urgentemente la ayuda de la poderosa naci&#243;n de [CT_CIV_SHORT] en nuestra cruzada contra [NUM1:el:la:los:las] %s1:3.</Spanish>
+		<Spanish>[CT_NAME], solicitamos urgentemente la ayuda de la poderosa naci&#243;n de [CT_CIV_SHORT] en nuestra cruzada contra %s2.</Spanish>
 		<Finnish>[CT_NAME]: pyyd&#228;mme mahtavan valtionne apua ristiretkess&#228;mme. %s1 pit&#228;&#228; polkea jalkoihimme!</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_5</Tag>
-		<English>The treacherous %s1 must be punished for their offences against civilization, [CT_NAME]! I assume we can count on your assistance?</English>
+		<English>The treacherous %s2 must be punished for [NUM2:his:her:their:their] offences against civilization, [CT_NAME]! I assume we can count on your assistance?</English>
 		<French>Les perfides %s1 doivent &#234;tre punis pour leurs offenses envers la civilisation, [CT_NAME] ! J'imagine que nous pouvons compter sur votre aide ?</French>
 		<German>Das hinterh&#228;ltige %s1:3 Volk verdient es, f&#252;r seine Feindseligkeiten gegen andere Zivilisationen bestraft zu werden, [CT_NAME]! K&#246;nnen wir mit Eurer Unterst&#252;tzung rechnen?</German>
 		<Italian>I traditori %s1 devono essere puniti per le loro offese nei confronti delle altre civilt&#224;, [CT_NAME]! Possiamo contare sul tuo aiuto?</Italian>
-		<Spanish>&#161;Hemos de castigar [NUM1:al traicionero:a la traicionera:a los traicioneros:a las traicioneras] %s1:3 por sus ofensas contra la civilizaci&#243;n, [CT_NAME]! Suponemos que podemos contar con vuestra ayuda, &#191;no?</Spanish>
+		<Spanish>&#161;Hemos de castigar [NUM2:al traicionero:a la traicionera:a los traicioneros:a las traicioneras] %s2 por sus ofensas contra la civilizaci&#243;n, [CT_NAME]! Suponemos que podemos contar con vuestra ayuda, &#191;no?</Spanish>
 		<Finnish>Kunniaton %s1 kerj&#228;&#228; rangaistusta rikoksistaan ihmiskuntaa vastaan, [CT_NAME]! Voinko lukea teid&#228;t mukaan liittoomme?</Finnish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_JOIN_WAR_6</Tag>
-		<English>The nasty %s1 are plotting against us all, [CT_NAME]! Let us destroy them together!</English>
+		<English>The nasty %s2 are plotting against us all, [CT_NAME]! Let us destroy [NUM2:him:her:them:them] together!</English>
 		<French>Les inf&#226;mes %s1 complotent contre nous tous, [CT_NAME] ! D&#233;truisons-les ensemble !</French>
 		<German>Das unversch&#228;mte %s1:3 Volk hat sich gegen uns alle verschworen, [CT_NAME]! Lasst es uns gemeinsam vernichten!</German>
 		<Italian>I malvagi %s1 stanno complottando contro noi tutti, [CT_NAME]! Distruggiamoli assieme!</Italian>
-		<Spanish>&#161;[NUM1:El repugnante:La repugnante:Los repugnantes:Las repugnantes] %s1:3 est&#225;n conspirando contra todos nosotros, [CT_NAME]! &#161;Destruy&#225;moslos juntos!</Spanish>
+		<Spanish>&#161;[NUM2:El repugnante:La repugnante:Los repugnantes:Las repugnantes] %s2 [NUM2:est&#225;:est&#225;n] conspirando contra todos nosotros, [CT_NAME]! &#161;Destruy&#225;mos[NUM2:lo:la:los:las] juntos!</Spanish>
 		<Finnish>Ilke&#228; %s1 juonittelee meit&#228; vastaan, [CT_NAME]! Tuhotkaamme heid&#228;t yhdess&#228;!</Finnish>
 	</TEXT>
 	<TEXT>
@@ -5640,11 +5640,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_STOP_TRADING_1</Tag>
-		<English>It can no longer be tolerated - we demand that you cancel your deals with the vile %s1!</English>
+		<English>It can no longer be tolerated - we demand that you cancel your deals with the vile %s2!</English>
 		<French>C'est intol&#233;rable. Nous vous demandons d'annuler imm&#233;diatement tous vos accords avec les m&#233;prisables %s1 !</French>
 		<German>Das kann nicht l&#228;nger toleriert werden! Wir verlangen, dass Ihr Eure Handelsbeziehungen mit dem widerw&#228;rtigen %s1:2 Volk einstellt!</German>
 		<Italian>Questo atteggiamento non pu&#242; pi&#249; essere tollerato; ti chiediamo di annullare i tuoi accordi con [NUM1:il vile:la vile:i vili:le vili] %s1:3!</Italian>
-		<Spanish>Ya no podemos permitirnos ser tolerantes. &#161;Os exigimos que cancel&#233;is vuestro trato con [NUM1:el vil:la vil:los viles:las viles] %s1:3!</Spanish>
+		<Spanish>Ya no podemos permitirnos ser tolerantes. &#161;Os exigimos que cancel&#233;is vuestro trato con [NUM2:el vil:la vil:los viles:las viles] %s2!</Spanish>
 		<Finnish>En voi siet&#228;&#228; t&#228;t&#228; en&#228;&#228; - vaadimme, ett&#228; peruutat kaikki sopimuksesi, joita sin&#228; ja se %s1 idiootti olette tehneet!</Finnish>
 	</TEXT>
 	<TEXT>

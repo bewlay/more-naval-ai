@@ -23,17 +23,17 @@
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_WITH_1</Tag>
-		<English>We can no longer stand by and watch the carnage!  You must end your war with the %s1!</English>
+		<English>We can no longer stand by and watch the carnage!  You must end your war with %s2!</English>
 		<French>Nous ne pouvons plus rester là et regarde le carnage! Vous devez arrêter votre Guerre contre %s1!</French>
 		<German>Wir können dem Gemetzel nicht länger zusehen und tatenlos bleiben! Ihr müßt den Krieg mit den %s1 beenden!</German>
-		<Spanish>¡No podemos seguir contemplando esta carnicería!. ¡Debes de terminar tu guerra con los %s1!</Spanish>
+		<Spanish>¡No podemos seguir contemplando esta carnicería!. ¡Debes de terminar tu guerra con %s2!</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>AI_DIPLO_MAKE_PEACE_WITH_2</Tag>
-		<English>The war has gone on long enough!  Make peace with %s1.</English>
+		<English>The war has gone on long enough!  Make peace with %s2.</English>
 		<French>La Guerre a durée assez longtemps!  Faire la paix avec %s1.</French>
 		<German>Der Krieg hat lange genug gedauert!  Macht Frieden mit %s1.</German>
-		<Spanish>¡La guerra ha durado suficiente!. Hacer la paz con los %s1.</Spanish>
+		<Spanish>¡La guerra ha durado suficiente!. Hacer la paz con %s2.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BONUS_EXPORTS_PLAYER</Tag>
