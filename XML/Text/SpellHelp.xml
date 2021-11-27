@@ -138,4 +138,16 @@
 		<Tag>TXT_KEY_SPELL_SUMMON_UNIT_IMMOBILE</Tag>
 		<English>[NEWLINE][ICON_BULLET]Unit starts immobile</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_HELP_HAS_ACTIVE_SUMMON</Tag>
+		<English>[COLOR_NEGATIVE_TEXT]Can only maintain one summon of this type[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_HELP_SUMMONS_VS_SUMMONERS</Tag>
+		<English>(%d1/%d2 summoned units active)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPELL_HELP_SUMMONS_VS_SUMMONERS_UNAVAILABLE</Tag>
+		<English>[COLOR_NEGATIVE_TEXT](%d1/%d2 summoned units active)[COLOR_REVERT]</English>
+	</TEXT>
 </Civ4GameText>
