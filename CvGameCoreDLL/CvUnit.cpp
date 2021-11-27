@@ -16857,12 +16857,8 @@ bool CvUnit::canCreateUnit(int spell) const
 		CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
 		for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
 		{
-			if ((GC.getSpellInfo((SpellTypes)spell).getPromotionPrereq1() == NO_PROMOTION ||
-			  pLoopUnit->isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getPromotionPrereq1())) &&
-			  (GC.getSpellInfo((SpellTypes)spell).getPromotionPrereq2() == NO_PROMOTION ||
-			  pLoopUnit->isHasPromotion((PromotionTypes)GC.getSpellInfo((SpellTypes)spell).getPromotionPrereq2())) &&
-			  (GC.getSpellInfo((SpellTypes)spell).getReligionPrereq() == NO_RELIGION ||
-			  pLoopUnit->getReligion() == GC.getSpellInfo((SpellTypes)spell).getReligionPrereq()))
+			// lfgr 11/2021: More accurate counting of eligible units.
+			if( pLoopUnit->canCastWithCurrentPromotions( (SpellTypes) spell ) )
 			{
 				iCount += 1;
 			}
