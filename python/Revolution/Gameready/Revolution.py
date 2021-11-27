@@ -3565,7 +3565,7 @@ class Revolution :
 
 
 	def chooseRevolutionLeader( self, cityList ) :
-
+		""" Choose Leader for a "change in leadership" revolution. """
 		newLeaderType = None
 		newLeaderName = None
 
@@ -3595,6 +3595,7 @@ class Revolution :
 			newLeaderName = gc.getLeaderHeadInfo( newLeaderType ).getDescription()
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Switching from leader type %d to %d (%s)"%(ownerLeaderType,newLeaderType,newLeaderName))
 
+		# LFGR_TODO: Use FfHNames.setNewLeaderName?
 		if( newLeaderType == None ) :
 			# Use same leader type, but with new name
 			newLeaderType = ownerLeaderType

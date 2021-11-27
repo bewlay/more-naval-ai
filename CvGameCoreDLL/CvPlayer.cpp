@@ -3963,7 +3963,7 @@ const wchar* CvPlayer::getName(uint uiForm) const
 // This sets the name of the player, ie Peter or Montezuma
 void CvPlayer::setName(std::wstring szNewValue)
 {
-	if ( isCityNameValid(CvWString(szNewValue), false))
+	if ( isCityNameValid(CvWString(szNewValue), false)) // LFGR_TODO: Why city?
 	{
 		m_szName = szNewValue;
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
