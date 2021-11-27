@@ -16832,6 +16832,22 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     return false;
 }
 
+bool CvUnit::hasActiveSummon( UnitClassTypes eUnitClass ) const
+{
+	int iLoop;
+	CvUnit* pLoopUnit;
+	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
+	for( pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop) )
+	{
+		if( pLoopUnit->getUnitClassType() == eUnitClass && pLoopUnit->getSummoner() == getID() )
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool CvUnit::canCreateUnit(int spell) const
 {
 	if (getDuration() > 0) // to prevent summons summoning spinlocks
@@ -16851,21 +16867,23 @@ bool CvUnit::canCreateUnit(int spell) const
 //<<<<Unofficial Bug Fix: End Delete
 	if (GC.getSpellInfo((SpellTypes)spell).isPermanentUnitCreate())
 	{
-		int iCount = 0;
-		int iLoop = 0;
-		CvUnit* pLoopUnit;
-		CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
-		for (pLoopUnit = kPlayer.firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = kPlayer.nextUnit(&iLoop))
+		UnitClassTypes eCreatedUnitClass = (UnitClassTypes)GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)spell).getCreateUnitType()).getUnitClassType();
+		if( GC.getDefineINT( "COUNT_SUMMONS_PER_CASTER" ) )
 		{
-			// lfgr 11/2021: More accurate counting of eligible units.
-			if( pLoopUnit->canCastWithCurrentPromotions( (SpellTypes) spell ) )
+			// lfgr 11/2021: Only allow one summon (of each unitclass) per caster
+			if( hasActiveSummon( eCreatedUnitClass ) )
 			{
-				iCount += 1;
+				return false;
 			}
 		}
-		if (iCount <= kPlayer.getUnitClassCount((UnitClassTypes)GC.getUnitInfo((UnitTypes)GC.getSpellInfo((SpellTypes)spell).getCreateUnitType()).getUnitClassType()))
+		else
 		{
-			return false;
+			// lfgr 11/2021: Count number of summons (of correct unitclass) against number of eligible summoners (original behavior)
+			CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
+			if( kPlayer.getCasterCount( (SpellTypes) spell ) <= kPlayer.getUnitClassCount( eCreatedUnitClass ) )
+			{
+				return false;
+			}
 		}
 	}
 	return true;

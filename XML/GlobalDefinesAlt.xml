@@ -1023,4 +1023,10 @@
 		<DefineName>FORCE_ENABLE_CUSTOM_PROFILER</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
+    <!-- If 0, permanent summons can only be summoned if the player has less units of the summoned type than summoners.
+        If 1, permanent summons can only be summoned if the caster has no living summon of that type.  -->
+	<Define>
+		<DefineName>COUNT_SUMMONS_PER_CASTER</DefineName>
+		<iDefineIntVal>0</iDefineIntVal>
+	</Define>
 </Civ4Defines>

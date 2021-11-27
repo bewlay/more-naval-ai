@@ -883,6 +883,7 @@ public:
 	bool canCast(int spell, bool bTestVisible);
 	// Whether this unit can currently cast any spell
 	bool canCastAnything(); // lfgr 04/2021
+	bool hasActiveSummon( UnitClassTypes eUnitClass ) const; // lfgr 11/2021
 	bool canCreateUnit(int spell) const;
 	bool canAddPromotion(int spell);
 	bool canCreateBuilding(int spell) const;

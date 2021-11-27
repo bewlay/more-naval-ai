@@ -15499,6 +15499,23 @@ int CvPlayer::getUnitClassCountPlusMaking(UnitClassTypes eIndex) const
 	return (getUnitClassCount(eIndex) + getUnitClassMaking(eIndex));
 }
 
+// lfgr 11/2021
+int CvPlayer::getCasterCount( SpellTypes eSpell ) const
+{
+	int iCount = 0;
+	int iLoop = 0;
+	CvUnit* pLoopUnit;
+	for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+	{
+		// lfgr 11/2021: More accurate counting of eligible units.
+		if( pLoopUnit->canCastWithCurrentPromotions( eSpell ) )
+		{
+			iCount += 1;
+		}
+	}
+	return iCount;
+}
+
 
 int CvPlayer::getBuildingClassCount(BuildingClassTypes eIndex) const
 {

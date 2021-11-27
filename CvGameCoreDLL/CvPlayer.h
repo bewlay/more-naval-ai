@@ -998,6 +998,9 @@ public:
 	void changeUnitClassMaking(UnitClassTypes eIndex, int iChange);
 	int getUnitClassCountPlusMaking(UnitClassTypes eIndex) const;																			// Exposed to Python
 
+	// Number of units that can cast the spell in principle (see also CvUnit::canCastWithCurrentPromotions)
+	int getCasterCount( SpellTypes eSpell ) const; // lfgr 11/2021
+
 	int getBuildingClassCount(BuildingClassTypes eIndex) const;																				// Exposed to Python
 	bool isBuildingClassMaxedOut(BuildingClassTypes eIndex, int iExtra = 0) const;										// Exposed to Python
 	void changeBuildingClassCount(BuildingClassTypes eIndex, int iChange);
