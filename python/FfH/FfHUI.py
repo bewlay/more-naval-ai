@@ -107,6 +107,9 @@ def getPlayerGoldTooltip( eWidgetType, iData1, iData2, bOption ) :
 	pPlayer = gc.getPlayer( CyGame().getActivePlayer() )
 	if pPlayer.getCivilizationType() != gc.getInfoTypeForString( "CIVILIZATION_KHAZAD" ) :
 		return u""
+
+	if pPlayer.getNumCities() == 0 :
+		return u""
 	
 	szHelp = u""
 	iGoldPerCity = pPlayer.getGold() // pPlayer.getNumCities()
