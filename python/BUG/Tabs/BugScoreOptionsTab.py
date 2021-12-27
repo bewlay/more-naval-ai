@@ -6,6 +6,8 @@
 ##
 ## Author: EmperorFool
 
+from CvPythonExtensions import CyGame, CyTranslator # lfgr 12/2021
+
 import BugOptionsTab
 
 class BugScoreOptionsTab(BugOptionsTab.BugOptionsTab):
@@ -55,11 +57,14 @@ class BugScoreOptionsTab(BugOptionsTab.BugOptionsTab):
 		
 		# lfgr 10/2019
 		col1, col2, col3, col4 = self.addMultiColumnLayout(screen, column, 4, "Dynamic_Civ_Names")
-		#self.addLabel(screen, col1, "Scores_DNC", "Dynamic Civ Names:")
-		self.addTextDropdown(screen, col1, col1, "Revolution__DNCLevel")
-		self.addCheckbox(screen, col2, "Revolution__TeamNaming")
-		self.addCheckbox(screen, col3, "Revolution__LeaveHumanPlayerName")
-		self.addCheckbox(screen, col4, "Revolution__EmpireDefaultName")
+		if CyGame().isGameMultiPlayer() : # lfgr 12/2021: Disabled in multiplayer
+			self.addLabel(screen, col1, "Revolution_DNC_Disabled",
+					CyTranslator().getText( "TXT_KEY_BUG_DNC_DISABLED_MULTIPLAYER", () ) )
+		else :
+			self.addTextDropdown(screen, col1, col1, "Revolution__DNCLevel")
+			self.addCheckbox(screen, col2, "Revolution__TeamNaming")
+			self.addCheckbox(screen, col3, "Revolution__LeaveHumanPlayerName")
+			self.addCheckbox(screen, col4, "Revolution__EmpireDefaultName")
 		
 		screen.attachHSeparator(column, column + "Sep2")
 		# lfgr end

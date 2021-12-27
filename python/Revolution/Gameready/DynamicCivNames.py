@@ -72,7 +72,8 @@ def setOption(option, value):
 	Function called when an option is changed that requires recomputing names
 	"""
 	if RevInstances.DynamicCivNamesInst is not None :
-		RevInstances.DynamicCivNamesInst.recalcAll()
+		if not game.isGameMultiPlayer() : # GUI-triggered updates would cause OOS
+			RevInstances.DynamicCivNamesInst.recalcAll()
 
 
 class DescGenerator :
@@ -920,6 +921,12 @@ class DynamicCivNames :
 		# Previously, CvUtil.convertToStr was used on all three strings, which messed up the é, and
 		# caused pPlayer.setCivName to fail.
 		pPlayer.setCivName( *self.chooseName( iPlayer, bForceUpdate ) )
+
+	def getCreativityLevel( self ) :
+		if game.isGameMultiPlayer() :
+			return 0
+		else :
+			return RevOpt.getDNCLevel()
 	
 	def chooseName( self, iPlayer, bForceUpdate = False ) :
 		"""
@@ -938,7 +945,7 @@ class DynamicCivNames :
 		
 		tsOldTuple = (sCurDesc, sCurShort, sCurAdj)
 		
-		iCreativityLevel = RevOpt.getDNCLevel()
+		iCreativityLevel = self.getCreativityLevel()
 		
 		if iCreativityLevel == 0 :
 			CvUtil.pyPrint( "  DCN - No creativity allowed here, reverting to default name" )

@@ -897,4 +897,8 @@
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__EMPIREDEFAULTNAME_HOVER</Tag>
 		<English>Default names of the form "Amurite Empire" are used instead of "Amurites"</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_DNC_DISABLED_MULTIPLAYER</Tag>
+		<English>Dynamic Civ Names is disabled in multiplayer</English>
+	</TEXT>
 </Civ4GameText>
