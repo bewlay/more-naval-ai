@@ -1634,7 +1634,8 @@ class CvEventManager:
 					py = PyPlayer(iPlayer)
 					lUnits = []
 					for pLoopUnit in py.getUnitList():
-						if pLoopUnit.isAlive():
+						# lfgr fix 12/2021: Units without unitcombat can't get promotions
+						if pLoopUnit.isAlive() and pLoopUnit.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
 							if not pLoopUnit.isOnlyDefensive():
 								if not pLoopUnit.isDelayedDeath():
 									lUnits.append(pLoopUnit)
