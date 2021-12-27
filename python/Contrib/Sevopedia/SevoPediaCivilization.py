@@ -225,17 +225,22 @@ class SevoPediaCivilization:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, localText.getText("TXT_KEY_UNIQUE_BUILDINGS_AND_PROJECTS", ()), "", False, True, self.X_BUILDINGS, self.Y_BUILDINGS, self.W_BUILDINGS, self.H_BUILDINGS, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.attachLabel(panelName, "", "  ")
-		for iBuilding in range(gc.getNumBuildingClassInfos()):
-			iUniqueBuilding = gc.getCivilizationInfo(self.iCivilization).getCivilizationBuildings(iBuilding)
-			iDefaultBuilding = gc.getBuildingClassInfo(iBuilding).getDefaultBuildingIndex()
-			if iUniqueBuilding != BuildingTypes.NO_BUILDING:			
-				iUniqueCiv = gc.getBuildingInfo(iUniqueBuilding).getPrereqCiv()			
-			if (iDefaultBuilding > -1 and iUniqueBuilding > -1 and iDefaultBuilding != iUniqueBuilding):
-				screen.attachImageButton(panelName, "", gc.getBuildingInfo(iUniqueBuilding).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iUniqueBuilding, 1, False)
-			elif iUniqueCiv != -1 and iUniqueCiv == self.iCivilization:
-				if iUniqueBuilding != BuildingTypes.NO_BUILDING:
-					szButton = gc.getBuildingInfo(iUniqueBuilding).getButton()
-					screen.attachImageButton(panelName, "", szButton, GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iUniqueBuilding, 1, False)
+		# lfgr 11/2021: All palaces are unique in FfH, some refactoring and a small fix
+		ePalaceClass = gc.getInfoTypeForString( "BUILDINGCLASS_PALACE" )
+		for eBuildingClass in range(gc.getNumBuildingClassInfos()):
+			iUniqueBuilding = gc.getCivilizationInfo(self.iCivilization).getCivilizationBuildings(eBuildingClass)
+			if iUniqueBuilding == BuildingTypes.NO_BUILDING:
+				continue
+
+			iPrereqCiv = gc.getBuildingInfo(iUniqueBuilding).getPrereqCiv()
+			iDefaultBuilding = gc.getBuildingClassInfo(eBuildingClass).getDefaultBuildingIndex()
+
+			if ( eBuildingClass == ePalaceClass
+					or iPrereqCiv == self.iCivilization
+					or iDefaultBuilding != iUniqueBuilding ) :
+				screen.attachImageButton( panelName, "", gc.getBuildingInfo( iUniqueBuilding ).getButton(),
+					GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iUniqueBuilding,
+					1, False )
 		for eProject, project in enumerate( gcu.iterProjectInfos() ) :
 			if project.getPrereqCivilization() == self.iCivilization :
 				szButton = project.getButton()
