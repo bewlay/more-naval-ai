@@ -10181,14 +10181,15 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 /********************************************************************************/
 	// Get owner of the units
 	PlayerTypes eOwner = NO_PLAYER;
-	int* aiUnitIDs = new int[pvpUnits->size()];
-	for( uint i = 0; i < pvpUnits->size(); i++ )
+	if( pvpUnits != NULL )
 	{
-		if( eOwner == -1 )
-			eOwner = pvpUnits->at( i )->getOwnerINLINE();
-		else
-			FAssertMsg( pvpUnits->at( i )->getOwnerINLINE() == eOwner, "Units with different onwers selected!" );
-		aiUnitIDs[i] = pvpUnits->at( i )->getID();
+		for( uint i = 0; i < pvpUnits->size(); i++ )
+		{
+			if( eOwner == -1 )
+				eOwner = pvpUnits->at( i )->getOwnerINLINE();
+			else
+				FAssertMsg( pvpUnits->at( i )->getOwnerINLINE() == eOwner, "Units with different onwers selected!" );
+		}
 	}
 
 	bool bPyHelpUsed = false;
@@ -10196,6 +10197,12 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 	{
 		if( eOwner != -1 )
 		{
+			int* aiUnitIDs = new int[pvpUnits->size()];
+			for( uint i = 0; i < pvpUnits->size(); i++ )
+			{
+				aiUnitIDs[i] = pvpUnits->at( i )->getID();
+			}
+
 			CyArgsList argsList;
 			argsList.add( (int) eSpell );
 			argsList.add( (int) eOwner );
