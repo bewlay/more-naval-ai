@@ -1401,6 +1401,7 @@ public:
 	bool isHiddenNationality() const;			// Exposed to Python
 	bool isAlwaysHostile() const;			// Exposed to Python
 	bool isNoRevealMap() const;			// Exposed to Python
+	bool isNoUpkeep() const; // lfgr 01/2022
 
 	float getUnitMaxSpeed() const;					// Exposed to Python
 	float getUnitPadTime() const;					// Exposed to Python
@@ -1669,6 +1670,7 @@ protected:
 	bool m_bHiddenNationality;
 	bool m_bAlwaysHostile;
 	bool m_bNoRevealMap;
+	bool m_bNoUpkeep; // lfgr 01/2022
 	int m_iLeaderPromotion;
 
 	float m_fUnitMaxSpeed;

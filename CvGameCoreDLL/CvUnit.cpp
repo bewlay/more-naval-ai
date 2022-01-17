@@ -20230,7 +20230,7 @@ int CvUnit::getMiscastChance() const {
 // lfgr 01/2022: Refactoring
 bool CvUnit::isNoUpkeep() const
 {
-	return getDuration() > 0 || getUnitInfo().isObject();
+	return getDuration() > 0 || getUnitInfo().isNoUpkeep();
 }
 
 void CvUnit::read(FDataStreamBase* pStream)

@@ -5153,6 +5153,7 @@ m_bLineOfSight(false),
 m_bHiddenNationality(false),
 m_bAlwaysHostile(false),
 m_bNoRevealMap(false),
+m_bNoUpkeep(false), // lfgr 01/2022
 m_fUnitMaxSpeed(0.0f),
 m_fUnitPadTime(0.0f),
 m_pbUpgradeUnitClass(NULL),
@@ -5874,6 +5875,12 @@ bool CvUnitInfo::isAlwaysHostile() const
 bool CvUnitInfo::isNoRevealMap() const
 {
 	return m_bNoRevealMap;
+}
+
+// lfgr 01/2022
+bool CvUnitInfo::isNoUpkeep() const
+{
+	return m_bNoUpkeep;
 }
 
 float CvUnitInfo::getUnitMaxSpeed() const
@@ -7263,6 +7270,7 @@ bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bHiddenNationality,"bHiddenNationality",false);
 	pXML->GetChildXmlValByName(&m_bAlwaysHostile,"bAlwaysHostile",false);
 	pXML->GetChildXmlValByName(&m_bNoRevealMap,"bNoRevealMap",false);
+	pXML->GetChildXmlValByName(&m_bNoUpkeep,"bNoUpkeep",false); // lfgr 01/2022
 
 	pXML->SetVariableListTagPair(&m_pbUpgradeUnitClass, "UnitClassUpgrades", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
 	pXML->SetVariableListTagPair(&m_pbTargetUnitClass, "UnitClassTargets", sizeof(GC.getUnitClassInfo((UnitClassTypes)0)), GC.getNumUnitClassInfos());
