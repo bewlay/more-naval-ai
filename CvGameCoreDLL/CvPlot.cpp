@@ -535,7 +535,11 @@ void CvPlot::doTurn()
         int iUnit = GC.getImprovementInfo(eImprovement).getSpawnUnitType();
         if (iUnit != NO_UNIT)
         {
-            if (!GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS))
+			UnitClassTypes eUnitClass = (UnitClassTypes) GC.getUnitInfo( (UnitTypes) iUnit ).getUnitClassType();
+			bool bMaxedOut = GET_PLAYER( (PlayerTypes) GC.getBARBARIAN_PLAYER() ).isUnitClassMaxedOut( eUnitClass )
+					|| GET_TEAM( (TeamTypes) GC.getBARBARIAN_TEAM() ).isUnitClassMaxedOut( eUnitClass )
+					|| GC.getGameINLINE().isUnitClassMaxedOut( eUnitClass );
+            if (!bMaxedOut && !GC.getGameINLINE().isOption(GAMEOPTION_NO_BARBARIANS)) // lfgr 02/2022: Don't spawn too many limited units
             {
                 CvArea* pArea = GC.getMapINLINE().getArea(getArea());
                 if (pArea->getNumUnownedTiles() > 0)
