@@ -12306,6 +12306,13 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 
+	// lfgr UI 01/2022
+	if( kUnitInfo.isNoUpkeep() )
+	{
+		szBuffer.append( NEWLINE );
+		szBuffer.append( gDLL->getText( "TXT_KEY_UNIT_HELP_NO_UPKEEP" ) );
+	}
+
 	if (kUnitInfo.isOnlyDefensive())
 	{
 		szBuffer.append(NEWLINE);

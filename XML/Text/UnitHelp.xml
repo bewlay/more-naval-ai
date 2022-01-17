@@ -17,4 +17,8 @@
 		<German>Dauer: Wird sterben in %d1 [NUM1:Runde:Runden].</German>
 		<Spanish>Duraci&#243;n: Morir&#225; en %d1 [NUM1:turno:turnos].</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HELP_NO_UPKEEP</Tag>
+		<English>[ICON_BULLET]Costs no upkeep</English>
+	</TEXT>
 </Civ4GameText>
