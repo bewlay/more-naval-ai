@@ -9523,13 +9523,14 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 
 //FfH: Added by Kael 04/19/2009
 	// dont count summons or objects for unit maintenance
+	int iNoUpkeepUnits = 0; // lfgr 01/2022: Don't count units with no upkeep as free units for display purposes
 	CvUnit* pLoopUnit;
 	int iLoop;
 	for(pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
-	    if (pLoopUnit->getDuration() > 0 || pLoopUnit->getUnitInfo().isObject())
+	    if (pLoopUnit->isNoUpkeep()) // lfgr 01/2022: Refactoring
 	    {
-	        iFreeUnits += 1;
+			iNoUpkeepUnits += 1;
 	    }
 	}
 //FfH: End Add
@@ -9569,7 +9570,7 @@ int CvPlayer::calculateUnitCost(int& iFreeUnits, int& iFreeMilitaryUnits, int& i
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	iPaidUnits = std::max(0, getNumUnits() - iFreeUnits);
+	iPaidUnits = std::max(0, getNumUnits() - iFreeUnits - iNoUpkeepUnits); // lfgr 01/2022
 	iPaidMilitaryUnits = std::max(0, getNumMilitaryUnits() - iFreeMilitaryUnits);
 
 	iSupport = 0;

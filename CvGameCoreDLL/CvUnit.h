@@ -1061,6 +1061,9 @@ public:
 	virtual int AI_promotionValue(PromotionTypes ePromotion) = 0;
 //FfH: End Add
 
+	// lfgr 01/2022: Refactoring
+	bool isNoUpkeep() const; // Is this unit free?
+
 protected:
 
 /************************************************************************************************/

@@ -20227,6 +20227,12 @@ int CvUnit::getMiscastChance() const {
 	return std::max( 0, iMiscastChance );
 }
 
+// lfgr 01/2022: Refactoring
+bool CvUnit::isNoUpkeep() const
+{
+	return getDuration() > 0 || getUnitInfo().isObject();
+}
+
 void CvUnit::read(FDataStreamBase* pStream)
 {
 	// Init data before load
