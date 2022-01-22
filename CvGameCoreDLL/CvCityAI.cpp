@@ -2814,18 +2814,11 @@ void CvCityAI::AI_chooseProduction()
 			iWonderTime ++;
 			iWonderTime *= 4;
 
-/************************************************************************************************/
-/* Afforess	                  Start		 06/01/10                                               */
-/* Ruthless AI                                                                                  */
-/************************************************************************************************/
-			//Avoid building wonders that take a long time
-			if (bAggressiveAI)
+			// Ruthless AI: Avoid building wonders that take a long time
+			if( GC.getGameINLINE().isOption( GAMEOPTION_RUTHLESS_AI ) )
 			{
 				iWonderTime /= 2;
 			}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 			if (AI_chooseBuilding(BUILDINGFOCUS_WORLDWONDER, iWonderTime))
 			{
@@ -11301,18 +11294,12 @@ int CvCityAI::AI_buildUnitProb()
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Build more units                                                                */
-/************************************************************************************************/
-	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	// Ruthless AI: Build more units
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		iProb *= 4;
 		iProb /= 3;
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 /************************************************************************************************/
 /* REVOLUTION_MOD                         11/08/08                                jdog5000      */

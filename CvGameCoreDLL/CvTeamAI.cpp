@@ -2062,30 +2062,20 @@ DenialTypes CvTeamAI::AI_techTrade(TechTypes eTech, TeamTypes eTeam) const
 			{
 				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getTechRefuseAttitudeThreshold())
 				{
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Attitude is irrelevant                                                          */
-/************************************************************************************************/
-					if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+					// Ruthless AI: Attitude is irrelevant
+					if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 					{
 						if (eAttitude > ATTITUDE_FURIOUS)
 							continue;
 					}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 					return DENIAL_ATTITUDE;
 				}
 			}
 		}
 	}
 	
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/* Ruthless AI: Don't Sell Our Military Secrets                                                 */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-	if (1 < 2)
+	// Ruthless AI: Don't Sell Our Military Secrets
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		//if (GC.getTechInfo(eTech).getFlavorValue(GC.getInfoTypeForString("FLAVOR_MILITARY")) > 3)
 		if (GC.getTechInfo(eTech).getFlavorValue(0) > 3)
@@ -2098,9 +2088,6 @@ DenialTypes CvTeamAI::AI_techTrade(TechTypes eTech, TeamTypes eTeam) const
 			}
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 	if (eAttitude < ATTITUDE_FRIENDLY)
 	{
@@ -2239,12 +2226,9 @@ int CvTeamAI::AI_mapTradeVal(TeamTypes eTeam) const
 	}
 
 	iValue /= 10;
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/* Ruthless AI                                                                                  */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-	if (1 < 2)
+
+	// Ruthless AI
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		//Planning war against the team, we need their map!
 		if (AI_getWarPlan(eTeam) != NO_WARPLAN)
@@ -2275,9 +2259,7 @@ int CvTeamAI::AI_mapTradeVal(TeamTypes eTeam) const
 			}
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 	if (GET_TEAM(eTeam).isVassal(getID()))
 	{
 		iValue /= 2;
@@ -2324,12 +2306,9 @@ DenialTypes CvTeamAI::AI_mapTrade(TeamTypes eTeam) const
 	{
 		return DENIAL_WORST_ENEMY;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 03/30/10                                               */
-/* Ruthless AI: Selling Maps right before we go to war is stupid                                */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-	if (1 < 2)
+
+	// Ruthless AI: Selling Maps right before we go to war is stupid
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		if (AI_getWarPlan(eTeam) != NO_WARPLAN)
 		{
@@ -2358,9 +2337,7 @@ DenialTypes CvTeamAI::AI_mapTrade(TeamTypes eTeam) const
 			}
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 	eAttitude = AI_getAttitude(eTeam);
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -3742,17 +3719,13 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 	{
 		return DENIAL_JOKING;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 04/06/10                                               */
-/*  Ruthless AI: Refusing war when we are planning it anyway is silly                           */ 
-/************************************************************************************************/
-	if (AI_isChosenWar(eWarTeam))// && GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+
+	// Ruthless AI: Refusing war when we are planning it anyway is silly
+	if (AI_isChosenWar(eWarTeam) && GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		return NO_DENIAL;
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 	if (isHuman())
 	{
 		return NO_DENIAL;
@@ -3808,17 +3781,13 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 			}
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 04/06/10                                               */
-/* Ruthless AI: Backstab enemies                                                                */
-/************************************************************************************************/
-	if ((AI_getMemoryCount(eWarTeam, MEMORY_DECLARED_WAR) > 0))// && GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+
+	// Ruthless AI: Backstab enemies
+	if ((AI_getMemoryCount(eWarTeam, MEMORY_DECLARED_WAR) > 0) && GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		return NO_DENIAL;
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 	eAttitude = AI_getAttitude(eTeam);
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -3827,17 +3796,12 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 		{
 			if (GET_PLAYER((PlayerTypes)iI).getTeam() == getID())
 			{
-/************************************************************************************************/
-/* Afforess	                  Start		 03/7/10                                                */
-/* Ruthless AI: Attitude Doesn't Matter                                                         */
-/************************************************************************************************/
-				if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI) && eAttitude > ATTITUDE_FURIOUS)
+				// Ruthless AI: Attitude Doesn't Matter
+				if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI) && eAttitude > ATTITUDE_FURIOUS)
 				{
 					continue;
 				}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 				if (eAttitude <= GC.getLeaderHeadInfo(GET_PLAYER((PlayerTypes)iI).getPersonalityType()).getDeclareWarRefuseAttitudeThreshold())
 				{
 					return DENIAL_ATTITUDE;
@@ -3912,15 +3876,12 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 
 int CvTeamAI::AI_openBordersTradeVal(TeamTypes eTeam) const
 {
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/* Ruthless AI                                                                                  */
-/************************************************************************************************/
 //Normal Firaxis calculation
 	int iValue;
 	iValue = (getNumCities() + GET_TEAM(eTeam).getNumCities());
 	
-	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	// Ruthless AI
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		//if we are planning war, but not against them
 		if (AI_getWarPlan(eTeam) == NO_WARPLAN && getAnyWarPlanCount(true) > 0)
@@ -3929,6 +3890,7 @@ int CvTeamAI::AI_openBordersTradeVal(TeamTypes eTeam) const
 		}
 	}
 
+	// Tholal/lfgr AI
 	if (AI_isAnyMemberDoVictoryStrategy(AI_VICTORY_RELIGION4))
 	{
 		iValue *= 2;
@@ -3937,9 +3899,6 @@ int CvTeamAI::AI_openBordersTradeVal(TeamTypes eTeam) const
 	// TODO: What if all our cities are already converted?
 
 	return iValue;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 }
 
 
@@ -3967,12 +3926,8 @@ DenialTypes CvTeamAI::AI_openBordersTrade(TeamTypes eTeam) const
 		return NO_DENIAL;
 	}
 
-/************************************************************************************************/
-/* Afforess	                  Start		 03/30/10                                               */
-/* Ruthless AI: Get Open Borders with Nearby Allies, reject them with enemies                   */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-	if (1 < 2)
+	// Ruthless AI: Get Open Borders with Nearby Allies, reject them with enemies
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		bool bWarplans = getAnyWarPlanCount(true) > 0;
 		if (AI_getWarPlan(eTeam) == NO_WARPLAN && bWarplans)
@@ -4002,9 +3957,6 @@ DenialTypes CvTeamAI::AI_openBordersTrade(TeamTypes eTeam) const
 			return DENIAL_MYSTERY;
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/	
 
 	if (AI_getMemoryCount(eTeam, MEMORY_CANCELLED_OPEN_BORDERS) > 0)
 	{
@@ -5036,15 +4988,9 @@ int CvTeamAI::AI_noTechTradeThreshold() const
 		iRand /= iCount;
 	}
 	
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Trade More Techs                                                                */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	// Ruthless AI: Trade More Techs
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 		iRand *= 3;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 	return iRand;
 }
@@ -5073,15 +5019,10 @@ int CvTeamAI::AI_techTradeKnownPercent() const
 	{
 		iRand /= iCount;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Trade More Techs, even techs that others haven't discovered                     */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+
+	// Ruthless AI: Trade More Techs, even techs that others haven't discovered
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 		iRand /= 3;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 	return iRand;
 }
@@ -5138,19 +5079,12 @@ int CvTeamAI::AI_maxWarNearbyPowerRatio() const
 	{
 		iRand /= iCount;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Attack Weaker, Closer targets                                                   */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
-	if (1 < 2)
+
+	// Ruthless AI: Attack Weaker, Closer targets
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		iRand /= 2;
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/	
-	
 
 	return iRand;
 }
@@ -5179,15 +5113,10 @@ int CvTeamAI::AI_maxWarDistantPowerRatio() const
 	{
 		iRand /= iCount;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Avoid Far Away targets                                                          */
-/************************************************************************************************/
-	//if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+
+	// Ruthless AI: Avoid Far Away targets
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 		iRand /= 3;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 	return iRand;
 }
@@ -5391,15 +5320,10 @@ int CvTeamAI::AI_noWarAttitudeProb(AttitudeTypes eAttitude) const
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-/************************************************************************************************/
-/* Afforess	                  Start		 02/19/10                                               */
-/* Ruthless AI: Friends are just enemies we haven't made yet.                                   */
-/************************************************************************************************/
-	if (GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI))
+	// Ruthless AI: Friends are just enemies we haven't made yet
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 		iProb /= 5;
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
+
 	return iProb;
 }
 

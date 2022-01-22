@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Text for specific game options. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_RUTHLESS_AI</Tag>
+		<English>Ruthless AI</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_RUTHLESS_AI_HELP</Tag>
+		<English>AI plays to win, largely ignoring attitude.</English>
+	</TEXT>
+</Civ4GameText>

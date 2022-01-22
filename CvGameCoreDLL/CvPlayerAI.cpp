@@ -8518,10 +8518,13 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced) const
 		}
 	}
 	*/
-	//Ruthless AI: The Enemy of Our Enemy is our Friend!   
-	iAttitude += AI_getSharedEnemyAttitude(ePlayer);
-	//Ruthless AI: The Friend of Our Friend is our Friend! 	
-	iAttitude += AI_getSharedFriendAttitude(ePlayer);		
+	if( GC.getGameINLINE().isOption( GAMEOPTION_RUTHLESS_AI ) )
+	{
+		//Ruthless AI: The Enemy of Our Enemy is our Friend!
+		iAttitude += AI_getSharedEnemyAttitude(ePlayer);
+		//Ruthless AI: The Friend of Our Friend is our Friend!
+		iAttitude += AI_getSharedFriendAttitude(ePlayer);
+	}
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                             */
 /************************************************************************************************/
@@ -12918,22 +12921,14 @@ DenialTypes CvPlayerAI::AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) co
 		return DENIAL_ATTITUDE;
 	}
 
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/*                                                                                              */
-/* Ruthless AI: Don't change civics when planning war                                           */
-/************************************************************************************************/
-//	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
-	if (1 < 2)
+	// Ruthless AI: Don't change civics when planning war
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
 		{
 			return DENIAL_JOKING;
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 
 	return NO_DENIAL;
 }
@@ -13008,22 +13003,15 @@ DenialTypes CvPlayerAI::AI_religionTrade(ReligionTypes eReligion, PlayerTypes eP
 	{
 		return DENIAL_ATTITUDE;
 	}
-/************************************************************************************************/
-/* Afforess	                  Start		 03/19/10                                               */
-/*                                                                                              */
-/* Ruthless AI: Don't Change Religions When we are planning war (Anarchy is bad)                */
-/************************************************************************************************/
-//	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
-	if (1 < 2)
+
+	// Ruthless AI: Don't Change Religions When we are planning war (Anarchy is bad)
+	if (GC.getGameINLINE().isOption(GAMEOPTION_RUTHLESS_AI))
 	{
 		if (GET_TEAM(getTeam()).getAnyWarPlanCount(true) > 0)
 		{
 			return DENIAL_NO_GAIN;
 		}
 	}
-/************************************************************************************************/
-/* Afforess	                     END                                                            */
-/************************************************************************************************/
 	return NO_DENIAL;
 }
 
