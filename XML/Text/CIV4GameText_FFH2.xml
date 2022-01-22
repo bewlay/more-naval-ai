@@ -8513,9 +8513,9 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_ENEMY_CITY_CRIME</Tag>
-		<English>A bandit company outside of the %s1_civ city of %s2_city survives by raiding occasional caravans. If we were able to provide some financing they could harass our neighbors' guards.</English>
-		<German>Ein Ganovenbande au&#223;erhalb der %[s1_civ]en Stadt %s2_city schl&#228;gt sich gelengentlichen Karawanen&#252;berf&#228;llen durch. Wenn wir ihnen etwas Gold g&#228;ben, w&#252;rden sie ihre Angriffe auf unsere Nachbarn konzentrieren.</German>
-		<Spanish>Una compa&#241;&#237;a de bandidos a las afueras de la ciudad %s1_civ de %s2_city sobrevive mediante incursiones a las caravanas. Si pudi&#233;ramos financiarlos atacar&#237;an a nuestros vecinos en lugar de a nosotros.</Spanish>
+		<English>A bandit company outside of the %s1_civ city of %s6_city survives by raiding occasional caravans. If we were able to provide some financing they could harass our neighbors' guards.</English>
+		<German>Ein Ganovenbande au&#223;erhalb der %[s1_civ]en Stadt %s6_city schl&#228;gt sich gelengentlichen Karawanen&#252;berf&#228;llen durch. Wenn wir ihnen etwas Gold g&#228;ben, w&#252;rden sie ihre Angriffe auf unsere Nachbarn konzentrieren.</German>
+		<Spanish>Una compa&#241;&#237;a de bandidos a las afueras de la ciudad %s1_civ de %s6_city sobrevive mediante incursiones a las caravanas. Si pudi&#233;ramos financiarlos atacar&#237;an a nuestros vecinos en lugar de a nosotros.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_ENEMY_CITY_CRIME_1</Tag>
