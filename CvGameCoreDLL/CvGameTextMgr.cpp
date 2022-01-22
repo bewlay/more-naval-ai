@@ -10234,7 +10234,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
         szBuffer.append(gDLL->getText("TXT_KEY_SPELL_SACRIFICE_CASTER"));
     }
 
-	// Improved spell help 04/2021: Show help for added promotion, constructed building
+	// Improved spell help 04/2021: Show help for added promotion, created unit, constructed building
 	// LFGR_TODO: AddPromotionType2...
 	if( !bCivilopediaText )
 	{
@@ -10283,7 +10283,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 
 		CvSpellInfo& kSpellInfo = GC.getSpellInfo( eSpell );
 		PromotionTypes eAddedPromotion = (PromotionTypes) kSpellInfo.getAddPromotionType1();
-		if( eAddedPromotion != NO_PROMOTION && getBugOptionBOOL( "FfHUI__ShowSpellAddedPromotionHelp", true ) ) {
+		if( eAddedPromotion != NO_PROMOTION && GC.getDefineINT( "ALLOW_SHOW_ADDED_PROMOTION_HELP", 1 ) && getBugOptionBOOL( "FfHUI__ShowSpellAddedPromotionHelp", true ) ) {
 
 			szBuffer.append( NEWLINE );
 			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_ADD_PROMOTION_HEADER", GC.getPromotionInfo( eAddedPromotion ).getTextKeyWide() ) );
@@ -10292,7 +10292,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 		}
 
 		UnitTypes eUnit = (UnitTypes) kSpellInfo.getCreateUnitType();
-		if( eUnit != NO_BUILDING && getBugOptionBOOL( "FfHUI__ShowSpellCreatedUnitHelp", true ) )
+		if( eUnit != NO_BUILDING && GC.getDefineINT( "ALLOW_SHOW_CREATED_UNIT_HELP", 1 ) && getBugOptionBOOL( "FfHUI__ShowSpellCreatedUnitHelp", true ) )
 		{
 			szBuffer.append( NEWLINE );
 			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_CREATE_UNIT_PRE_HEADER" ) );
@@ -10300,7 +10300,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 		}
 
 		BuildingTypes eBuilding = (BuildingTypes) kSpellInfo.getCreateBuildingType();
-		if( eBuilding != NO_BUILDING && getBugOptionBOOL( "FfHUI__ShowSpellCreatedBuildingHelp", true ) )
+		if( eBuilding != NO_BUILDING && GC.getDefineINT( "ALLOW_SHOW_CREATED_BUILDING_HELP", 1 ) && getBugOptionBOOL( "FfHUI__ShowSpellCreatedBuildingHelp", true ) )
 		{
 			szBuffer.append( NEWLINE );
 			szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_CREATE_BUILDING_PRE_HEADER" ) );

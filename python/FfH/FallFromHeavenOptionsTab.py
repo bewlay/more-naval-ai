@@ -6,7 +6,12 @@
 ##
 ## Author: lfgr
 
+from CvPythonExtensions import CyGlobalContext
+
 import BugOptionsTab
+
+
+gc = CyGlobalContext()
 
 
 class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
@@ -24,7 +29,10 @@ class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
 		self.addCheckbox( screen, column, "FfHUI__AvoidAngryCitizensDefault" )
 		self.addCheckbox( screen, column, "FfHUI__AvoidUnhealthyCitizensDefault" )
 		self.addCheckbox( screen, column, "FfHUI__ShowKhazadVaultText" )
-		self.addCheckbox( screen, column, "FfHUI__ShowSpellAddedPromotionHelp" )
-		self.addCheckbox( screen, column, "FfHUI__ShowSpellCreatedUnitHelp" )
-		self.addCheckbox( screen, column, "FfHUI__ShowSpellCreatedBuildingHelp" )
+		if gc.getDefineINT( "ALLOW_SHOW_ADDED_PROMOTION_HELP" ) :
+			self.addCheckbox( screen, column, "FfHUI__ShowSpellAddedPromotionHelp" )
+		if gc.getDefineINT( "ALLOW_SHOW_CREATED_UNIT_HELP" ) :
+			self.addCheckbox( screen, column, "FfHUI__ShowSpellCreatedUnitHelp" )
+		if gc.getDefineINT( "ALLOW_SHOW_CREATED_BUILDING_HELP" ) :
+			self.addCheckbox( screen, column, "FfHUI__ShowSpellCreatedBuildingHelp" )
 		self.addTextDropdown( screen, column, column, "FfHUI__PlotHelpNumUnits" )
