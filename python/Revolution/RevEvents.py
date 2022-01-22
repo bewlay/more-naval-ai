@@ -824,11 +824,11 @@ def playerCityLost( player, pCity, bConquest = True ) :
 		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Loss of %s by %s (%d bConq): %d rev idx change"%(pCity.getName(),player.getCivilizationDescription(0),bConquest,iRevIdxChange))
 
 		for city in PyPlayer(iPlayer).getCityList() :
-			pCity = city.GetCy()
-			pCity.changeRevolutionIndex( iRevIdxChange )
-			revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+			pLoopCity = city.GetCy()
+			pLoopCity.changeRevolutionIndex( iRevIdxChange )
+			revIdxHist = RevData.getCityVal(pLoopCity,'RevIdxHistory')
 			revIdxHist['Events'][0] += iRevIdxChange
-			RevData.updateCityVal( pCity, 'RevIdxHistory', revIdxHist )
+			RevData.updateCityVal( pLoopCity, 'RevIdxHistory', revIdxHist )
 
 		# REVOLUTION_ALERTS 03/2021 lfgr
 		if iRevIdxChange != 0 :
