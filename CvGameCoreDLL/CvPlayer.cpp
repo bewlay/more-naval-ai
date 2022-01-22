@@ -20094,6 +20094,12 @@ void CvPlayer::doWarnings()
 									// don't show warning for land-based barbarians when player has Great Wall
 									continue;
 								}
+
+								// lfgr 01/2022: Don't show warning for lairguardians
+								if( pUnit->AI_getUnitAIType() == UNITAI_LAIRGUARDIAN )
+								{
+									continue;
+								}
 							}
 // BUG - Ignore Harmless Barbarians - end
 
