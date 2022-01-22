@@ -18605,7 +18605,15 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			{
 				if (getAdvancedStartPoints() >= iCost)
 				{
-					CvUnit* pUnit = initUnit(eUnit, iX, iY);
+					// lfgr 01/2022: Try to add at least one defender per city
+					UnitAITypes eUnitAI = NO_UNITAI;
+					if( GC.getUnitInfo( eUnit ).getUnitAIType( UNITAI_CITY_DEFENSE )
+							&& pPlot->plotCount( PUF_isUnitAIType, UNITAI_CITY_DEFENSE, -1, getIDINLINE() ) == 0 )
+					{
+						eUnitAI = UNITAI_CITY_DEFENSE;
+					}
+
+					CvUnit* pUnit = initUnit(eUnit, iX, iY, eUnitAI);
 					if (NULL != pUnit)
 					{
 						pUnit->finishMoves();
