@@ -355,6 +355,8 @@ void CyGamePythonInterface()
 		.def("changeCutLosersCounter", &CyGame::changeCutLosersCounter, "void (int iChange)")
 		.def("getCutLosersCounter", &CyGame::getCutLosersCounter)
 		.def("getHighToLowCounter", &CyGame::getHighToLowCounter)
+		.def("getFlexibleDifficultyRemainingTurns", &CyGame::getFlexibleDifficultyRemainingTurns) // lfgr 01/2022
+		.def("getIncreasingDifficultyRemainingTurns", &CyGame::getIncreasingDifficultyRemainingTurns) // lfgr 01/2022
 		.def("changeGlobalCounter", &CyGame::changeGlobalCounter, "void (int iChange)")
 		.def("getGlobalCounter", &CyGame::getGlobalCounter)
 		.def("changeGlobalCounterLimit", &CyGame::changeGlobalCounterLimit, "void (int iChange)")

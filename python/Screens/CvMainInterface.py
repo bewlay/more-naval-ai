@@ -5406,12 +5406,27 @@ class CvMainInterface:
 #FfH Global Counter: Added by Kael 08/12/2007
 				pPlayer = gc.getPlayer(gc.getGame().getActivePlayer())
 				iCountSpecial = 0
-				if (gc.getGame().isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_INCREASING_DIFFICULTY) or gc.getGame().isOption(GameOptionTypes.GAMEOPTION_FLEXIBLE_DIFFICULTY)):
+
+				# UI improvement 01/2022 lfgr
+				bIncreasing = gc.getGame().isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_INCREASING_DIFFICULTY)
+				bFlexible = gc.getGame().isOption(GameOptionTypes.GAMEOPTION_FLEXIBLE_DIFFICULTY)
+
+				if bIncreasing or bFlexible :
 					iCountSpecial += 1
 					szName = "DifficultyTag"
 					szBuffer = u"<font=2>"
-					szBuffer = szBuffer + localText.getColorText("TXT_KEY_MESSAGE_DIFFICULTY", (gc.getHandicapInfo(pPlayer.getHandicapType()).getDescription(), ()), gc.getInfoTypeForString("COLOR_RED"))
-					szBuffer = szBuffer + "</font>"
+					szBuffer += localText.getColorText("TXT_KEY_MESSAGE_DIFFICULTY", (gc.getHandicapInfo(pPlayer.getHandicapType()).getDescription(), ()), gc.getInfoTypeForString("COLOR_RED"))
+
+					iFlexibleTurns = game.getFlexibleDifficultyRemainingTurns()
+					iIncreasingTurns = game.getIncreasingDifficultyRemainingTurns()
+					if bIncreasing and bFlexible :
+						szBuffer += u" " + localText.getColorText( "TXT_KEY_MESSAGE_DIFFICULTY_CHANGE_FLEX_INCR", (iFlexibleTurns, iIncreasingTurns), gc.getInfoTypeForString("COLOR_RED"))
+					elif bIncreasing :
+						szBuffer += u" " + localText.getColorText( "TXT_KEY_MESSAGE_DIFFICULTY_CHANGE", (iIncreasingTurns,), gc.getInfoTypeForString("COLOR_RED"))
+					elif bFlexible :
+						szBuffer += u" " + localText.getColorText( "TXT_KEY_MESSAGE_DIFFICULTY_CHANGE", (iFlexibleTurns,), gc.getInfoTypeForString("COLOR_RED"))
+
+					szBuffer += "</font>"
 #					screen.setText( szName, "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 12, yCoord - ((iCount + iCountSpecial) * iBtnHeight), -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 #					screen.show( szName )
 					screen.setText( szName, "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 12, 100+ ((iCount + iCountSpecial) * iBtnHeight), -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )

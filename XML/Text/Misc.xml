@@ -9,4 +9,18 @@
 		<Tag>TXT_KEY_DEBUG_BUILD</Tag>
 		<English>Debug build</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MESSAGE_DIFFICULTY</Tag>
+		<English>Difficulty: %s1</English>
+		<German>Schwierigkeitsgrad: %s1</German>
+		<Spanish>Dificultad: %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MESSAGE_DIFFICULTY_CHANGE</Tag>
+		<English>(%d1 turns)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MESSAGE_DIFFICULTY_CHANGE_FLEX_INCR</Tag>
+		<English>(flex. %d1 turns, incr. %d2 turns)</English>
+	</TEXT>
 </Civ4GameText>

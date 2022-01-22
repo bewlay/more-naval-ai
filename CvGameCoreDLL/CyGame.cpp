@@ -1380,6 +1380,18 @@ int CyGame::getHighToLowCounter() const
 	return (NULL != m_pGame ? m_pGame->getHighToLowCounter() : -1);
 }
 
+// lfgr 01/2022
+int CyGame::getFlexibleDifficultyRemainingTurns() const
+{
+	return NULL != m_pGame ? m_pGame->getFlexibleDifficultyRemainingTurns() : 0;
+}
+
+// lfgr 01/2022
+int CyGame::getIncreasingDifficultyRemainingTurns() const
+{
+	return NULL != m_pGame ? m_pGame->getIncreasingDifficultyRemainingTurns() : 0;
+}
+
 void CyGame::changeGlobalCounter(int iChange)
 {
 	if (m_pGame)

@@ -362,6 +362,8 @@ public:
     void changeCutLosersCounter(int iChange);
     int getCutLosersCounter() const;
     int getHighToLowCounter() const;
+	int getFlexibleDifficultyRemainingTurns() const; // lfgr 01/2022
+	int getIncreasingDifficultyRemainingTurns() const; // lfgr 01/2022
     void changeGlobalCounter(int iChange);
     int getGlobalCounter() const;
     void changeGlobalCounterLimit(int iChange);

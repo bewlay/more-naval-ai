@@ -647,10 +647,12 @@ public:
     void changeCutLosersCounter(int iChange);
     int getFlexibleDifficultyCounter() const;
     void changeFlexibleDifficultyCounter(int iChange);
+	int getFlexibleDifficultyRemainingTurns() const; // lfgr 01/2022
     int getHighToLowCounter() const;
     void changeHighToLowCounter(int iChange);
     int getIncreasingDifficultyCounter() const;
     void changeIncreasingDifficultyCounter(int iChange);
+	int getIncreasingDifficultyRemainingTurns() const; // lfgr 01/2022
     int getGlobalCounter() const;
     int getTrueGlobalCounter() const;
     int getMaxGlobalCounter() const;

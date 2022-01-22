@@ -15276,12 +15276,6 @@
 		<Spanish>Ataque Defensivo: Tu %s1_UnitName ha recibido un da&#241;o de %d2% debido al %s3_UnitName enemigo</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_MESSAGE_DIFFICULTY</Tag>
-		<English>Difficulty: %s1</English>
-		<German>Schwierigkeitsgrad: %s1</German>
-		<Spanish>Dificultad: %s1</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_MESSAGE_DISABLE_PRODUCTION</Tag>
 		<English>Production disabled for %d1 turns</English>
 		<German>Produktion ausgeschaltet f&#252;r %d1 Runden</German>

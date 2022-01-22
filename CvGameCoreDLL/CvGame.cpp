@@ -6785,7 +6785,7 @@ void CvGame::doTurn()
 /**								---- Start Original Code ----									**
         if (getIncreasingDifficultyCounter() >= 50)
 /**								----  End Original Code  ----									**/
-        if (getIncreasingDifficultyCounter() >= 75 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
+        if (getIncreasingDifficultyRemainingTurns() <= 0) // lfgr 01/2022
 /*************************************************************************************************/
 /**	Tweak									END													**/
 /*************************************************************************************************/
@@ -6820,7 +6820,7 @@ void CvGame::doTurn()
 /**								---- Start Original Code ----									**
             if (getFlexibleDifficultyCounter() >= 20)
 /**								----  End Original Code  ----									**/
-            if (getFlexibleDifficultyCounter() >= 50 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100)
+            if (getFlexibleDifficultyRemainingTurns() <= 0) // lfgr 01/2022
 /*************************************************************************************************/
 /**	Tweak									END													**/
 /*************************************************************************************************/
@@ -11144,6 +11144,7 @@ int CvGame::getCutLosersCounter() const
 	return m_iCutLosersCounter;
 }
 
+// Counts remaining turns (cutting losers at 0)
 void CvGame::changeCutLosersCounter(int iChange)
 {
 	m_iCutLosersCounter += iChange;
@@ -11157,6 +11158,12 @@ int CvGame::getFlexibleDifficultyCounter() const
 void CvGame::changeFlexibleDifficultyCounter(int iChange)
 {
 	m_iFlexibleDifficultyCounter += iChange;
+}
+
+// lfgr 01/2022
+int CvGame::getFlexibleDifficultyRemainingTurns() const
+{
+	return 50 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100 - getFlexibleDifficultyCounter();
 }
 
 int CvGame::getHighToLowCounter() const
@@ -11177,6 +11184,12 @@ int CvGame::getIncreasingDifficultyCounter() const
 void CvGame::changeIncreasingDifficultyCounter(int iChange)
 {
 	m_iIncreasingDifficultyCounter += iChange;
+}
+
+// lfgr 01/2022
+int CvGame::getIncreasingDifficultyRemainingTurns() const
+{
+	return 75 * GC.getGameSpeedInfo(getGameSpeedType()).getGrowthPercent() / 100 - getIncreasingDifficultyCounter();
 }
 
 int CvGame::getGlobalCounter() const
