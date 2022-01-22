@@ -46,10 +46,12 @@ class Blizzards:
 
 	def isDeepening(self):
 		iDeepening = gc.getInfoTypeForString('PROJECT_THE_DEEPENING')
-		for i in range(CyGame().countCivTeamsAlive()-1):
+		# MagisterCultuum, lfgr 01/2022: Fix cycling
+		for i in range( gc.getMAX_CIV_TEAMS() ):
 			pTeam = gc.getTeam(i)
-			if pTeam.getProjectCount(iDeepening) > 0:
-				return true
+			if pTeam.isAlive() :
+				if pTeam.getProjectCount(iDeepening) > 0:
+					return true
 
 		return false
 
