@@ -5408,7 +5408,8 @@ class CvMainInterface:
 				iCountSpecial = 0
 
 				# UI improvement 01/2022 lfgr
-				bIncreasing = gc.getGame().isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_INCREASING_DIFFICULTY)
+				bIncreasing = gc.getGame().isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_INCREASING_DIFFICULTY) \
+						and pPlayer.getHandicapType() < gc.getNumHandicapInfos() - 1 # Not at hardest difficulty already
 				bFlexible = gc.getGame().isOption(GameOptionTypes.GAMEOPTION_FLEXIBLE_DIFFICULTY)
 
 				if bIncreasing or bFlexible :
