@@ -10940,7 +10940,7 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialistImpl(CommerceTypes eIndex, 
 	FAssertMsg(eSpecialist < GC.getNumSpecialistInfos(), "eSpecialist expected to be < GC.getNumSpecialistInfos()");
 
 	CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eSpecialist);
-	return iChange * (kSpecialist.getCommerceChange(eIndex) + GET_PLAYER(getOwnerINLINE()).getSpecialistExtraCommerce(eIndex));
+	return iChange *  GET_PLAYER(getOwnerINLINE()).specialistCommerce( eSpecialist, eIndex ); // lfgr fix 01/2022: Take into account FfH modifiers
 }
 // BUG - Specialist Additional Commerce - end
 
