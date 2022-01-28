@@ -13999,7 +13999,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		//iCombatValue = kUnitInfo.getCombatDefense();
 		iCombatValue += (kUnitInfo.getCombatDefense() * 2);
 		iValue += ((iCombatValue * 2) / 3);
-		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 25);
+		iValue += ((iCombatValue * kUnitInfo.getCityDefenseModifier()) / 75);
 		iValue += kUnitInfo.getFirstStrikes() * 5;
 		if (!kUnitInfo.isMilitaryHappiness())
 		{
