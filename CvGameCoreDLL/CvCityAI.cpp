@@ -1806,7 +1806,7 @@ void CvCityAI::AI_chooseProduction()
 	//minimal defense.
 	if (!bLandWar && !bCrushStrategy && !bFinancialTrouble)
 	{
-		if (iPlotCityDefenderCount <= (iPlotSettlerCount * 5))
+		if (iPlotCityDefenderCount < (iPlotSettlerCount * 5)) // lfgr 02/2022: only build anything if there actually are settlers
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S needs escort for existing settler", getName().GetCString());
 			if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
@@ -2074,7 +2074,7 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (kPlayer.AI_getFundedPercent() > 50)
 			{
-    			if (AI_chooseUnit(UNITAI_ATTACK))
+    			if (AI_chooseUnit(UNITAI_ATTACK)) // TODO: Before we do this, we should probably build prereq buildings
     			{
 					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack (%d needed)", getName().GetCString(), iAttackNeeded);
     				return;
