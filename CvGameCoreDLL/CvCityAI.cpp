@@ -5213,7 +5213,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 									iUnitTempValue += kUnitInfo.getTier() * 3;
 									iUnitTempValue += kUnitInfo.getWeaponTier();
 
-									if (GET_PLAYER(getOwner()).getHighestUnitTier(false,true) > kUnitInfo.getTier())
+									if (GET_PLAYER(getOwner()).getHighestUnitTier(false,true) < kUnitInfo.getTier())
 									{
 										iUnitTempValue += kUnitInfo.getTier() * 10;
 									}
