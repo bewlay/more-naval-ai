@@ -17,7 +17,9 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MESSAGE_DIFFICULTY_CHANGE</Tag>
-		<English>(%d1 turns)</English>
+		<English>(%d1 [NUM1:turn:turns])</English>
+		<German>(%d1 [NUM1:Runde:Runden])</German>
+		<Spanish>(%d1 [NUM1:turno:turnos])</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MESSAGE_DIFFICULTY_CHANGE_FLEX_INCR</Tag>
