@@ -29,6 +29,7 @@ class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
 		self.addCheckbox( screen, column, "FfHUI__AvoidAngryCitizensDefault" )
 		self.addCheckbox( screen, column, "FfHUI__AvoidUnhealthyCitizensDefault" )
 		self.addCheckbox( screen, column, "FfHUI__ShowKhazadVaultText" )
+		self.addCheckbox( screen, column, "FfHUI__ShowTurnsUntilDifficultyChange" )
 		if gc.getDefineINT( "ALLOW_SHOW_ADDED_PROMOTION_HELP" ) :
 			self.addCheckbox( screen, column, "FfHUI__ShowSpellAddedPromotionHelp" )
 		if gc.getDefineINT( "ALLOW_SHOW_CREATED_UNIT_HELP" ) :

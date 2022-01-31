@@ -65,4 +65,12 @@
 		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWSPELLCREATEDBUILDINGHELP_HOVER</Tag>
 		<English>Spells that create buildings show the properties of those buildings in their description</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWTURNSUNTILDIFFICULTYCHANGE_TEXT</Tag>
+		<English>Show turns until difficulty change</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI_SHOWTURNSUNTILDIFFICULTYCHANGE_HOVER</Tag>
+		<English>If Flexible Difficulty or Increasing Difficulty is enabled, show the number of turns until the next change along with the current difficulty</English>
+	</TEXT>
 </Civ4GameText>
