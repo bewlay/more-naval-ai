@@ -17499,15 +17499,16 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 	}
 	if (pUnit->isAlive() && !pUnit->isAnimal()) // Tholal AI - Animals shouldnt be assigned a religion
 	{
-//>>>>Unofficial Bug Fix: Added by Denev 2009/12/23
-//*** Each religion has equal chance of adopting.
-		std::vector<ReligionTypes> aeAdoptableReligions;
-//<<<<Unofficial Bug Fix: End Add
-		for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+		// lfgr 02/2022: Reordered checks for performance
+		if (pUnit->getReligion() == NO_RELIGION)
 		{
-			if (isHasReligion((ReligionTypes)iI))
+//>>>>Unofficial Bug Fix: Added by Denev 2009/12/23
+			//*** Each religion has equal chance of adopting.
+			std::vector<ReligionTypes> aeAdoptableReligions;
+//<<<<Unofficial Bug Fix: End Add
+			for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 			{
-				if (pUnit->getReligion() == NO_RELIGION) // LFGR_TODO: Check this first.
+				if (isHasReligion((ReligionTypes)iI))
 				{
 //>>>>Unofficial Bug Fix: Modified by Denev 2009/12/23
 //*** Each religion has equal chance of adopting.
@@ -17523,15 +17524,15 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 					}
 				}
 			}
-		}
 //>>>>Unofficial Bug Fix: Added by Denev 2009/12/23
 //*** Each religion has equal chance of adopting.
-		if (aeAdoptableReligions.size() > 0)
-		{
-			const int iRnd = GC.getGameINLINE().getSorenRandNum(aeAdoptableReligions.size(), "Adoption Religion Type");
-			pUnit->setReligion(aeAdoptableReligions[iRnd]);
-		}
+			if (aeAdoptableReligions.size() > 0)
+			{
+				const int iRnd = GC.getGameINLINE().getSorenRandNum(aeAdoptableReligions.size(), "Adoption Religion Type");
+				pUnit->setReligion(aeAdoptableReligions[iRnd]);
+			}
 //<<<<Unofficial Bug Fix: End Add
+		}
 		if (GC.getGameINLINE().getSorenRandNum(100, "Mutate Chance") < (getMutateChance()))
 		{
 			pUnit->setHasPromotion((PromotionTypes)GC.getDefineINT("MUTATED_PROMOTION"), true);
