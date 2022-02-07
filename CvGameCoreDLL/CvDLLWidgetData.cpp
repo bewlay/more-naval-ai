@@ -1543,18 +1543,19 @@ void CvDLLWidgetData::doContactCiv(CvWidgetDataStruct &widgetDataStruct)
 /************************************************************************************************/
 /* Advanced Diplomacy         START                                                               */
 /************************************************************************************************/
-		if (GET_TEAM(GC.getGameINLINE().getActiveTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam()))
-		{
-			if (!GET_TEAM(GC.getGameINLINE().getActiveTeam()).isSenateVeto(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam(), true))
-			{
-				CvMessageControl::getInstance().sendChangeWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam(), true);
-			}
-			else
-			{
-				CvWString szBuffer = gDLL->getText("TXT_KEY_SENATE_CANCEL_WAR", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getNameKey(), GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationShortDescriptionKey());
-				gDLL->getInterfaceIFace()->addMessage(GC.getGameINLINE().getActivePlayer(), false, 5, szBuffer, "AS2D_THEIRALLIANCE");
-			}
-		}
+		// lfgr 02/2022: Commented out, we don't want to immediately declare war (see code below)
+//		if (GET_TEAM(GC.getGameINLINE().getActiveTeam()).canDeclareWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam()))
+//		{
+//			if (!GET_TEAM(GC.getGameINLINE().getActiveTeam()).isSenateVeto(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam(), true))
+//			{
+//				CvMessageControl::getInstance().sendChangeWar(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam(), true);
+//			}
+//			else
+//			{
+//				CvWString szBuffer = gDLL->getText("TXT_KEY_SENATE_CANCEL_WAR", GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getNameKey(), GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getCivilizationShortDescriptionKey());
+//				gDLL->getInterfaceIFace()->addMessage(GC.getGameINLINE().getActivePlayer(), false, 5, szBuffer, "AS2D_THEIRALLIANCE");
+//			}
+//		}
 /************************************************************************************************/
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
