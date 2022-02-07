@@ -1393,6 +1393,12 @@ bool PUF_canDeclareWar( const CvUnit* pUnit, int iData1, int iData2)
 		return false;
 	}
 
+	// lfgr 02/2022: Don't ask to declare war when attacking a hidden nationality unit
+	if( pUnit->isHiddenNationality() )
+	{
+		return false;
+	}
+
 	return (iData2 ? false : GET_TEAM(eOtherTeam).canDeclareWar(eOurTeam));
 }
 
