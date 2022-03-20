@@ -15349,6 +15349,13 @@ int CvPlayerAI::AI_cityTargetUnitsByPath(CvCity* pCity, CvSelectionGroup* pSkipS
 
 	int iCount = 0;
 
+	// lfgr bugfix 03/2022: Use separate pathfinder to avoid messing up the cache
+	// If this function is called during AI calculations, there might be later pathfinding that assumes
+	// GC.getPathFinder() (via CvSelectionGroup::generatePath) hasn't been used for different selection groups (as in this function).
+	FAStar* pf = gDLL->getFAStarIFace()->create();
+	gDLL->getFAStarIFace()->Initialize( pf, GC.getMapINLINE().getGridWidthINLINE(), GC.getMapINLINE().getGridHeightINLINE(),
+			GC.getMapINLINE().isWrapXINLINE(), GC.getMapINLINE().isWrapYINLINE(), pathDestValid, pathHeuristic, pathCost, pathValid, pathAdd, NULL, NULL );
+
 	int iLoop;
 	int iPathTurns;
 	for(CvSelectionGroup* pLoopSelectionGroup = firstSelectionGroup(&iLoop); pLoopSelectionGroup; pLoopSelectionGroup = nextSelectionGroup(&iLoop))
@@ -15357,13 +15364,19 @@ int CvPlayerAI::AI_cityTargetUnitsByPath(CvCity* pCity, CvSelectionGroup* pSkipS
 		{
 			CvPlot* pMissionPlot = pLoopSelectionGroup->AI_getMissionAIPlot();
 
+			// lfgr bugfix 03/2022
+			gDLL->getFAStarIFace()->SetData( pf, pLoopSelectionGroup );
+
 			if (pMissionPlot != NULL )
 			{
 				int iDistance = stepDistance(pCity->getX_INLINE(), pCity->getY_INLINE(), pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE());
 
 				if (iDistance <= 1)
 				{
-					if( pLoopSelectionGroup->generatePath(pLoopSelectionGroup->plot(), pMissionPlot, 0, true, &iPathTurns) )
+					// lfgr bugfix 03/2022
+					//if (pLoopSelectionGroup->generatePath(pLoopSelectionGroup->plot(), pMissionPlot, 0, true, &iPathTurns))
+					if( gDLL->getFAStarIFace()->GeneratePath( pf, pLoopSelectionGroup->plot()->getX_INLINE(), pLoopSelectionGroup->plot()->getY_INLINE(),
+							pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), false, 0, false ) )
 					{
 						if( !(pLoopSelectionGroup->canAllMove()) )
 						{
@@ -15379,6 +15392,8 @@ int CvPlayerAI::AI_cityTargetUnitsByPath(CvCity* pCity, CvSelectionGroup* pSkipS
 			}
 		}
 	}
+
+	gDLL->getFAStarIFace()->destroy( pf );
 
 	return iCount;
 }
