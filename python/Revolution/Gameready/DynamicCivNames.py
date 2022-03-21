@@ -517,7 +517,7 @@ class DescGenerator :
 			if bMilitaryState :
 				sEmp = "Hegemony"
 				sAltEmp = "Hegemony"
-			if iNumCities == 1 :
+			elif iNumCities == 1 :
 				sEmp = "City"
 				sAltEmp = "City State"
 			else :
@@ -553,7 +553,7 @@ class DescGenerator :
 			if bCalabim :
 				sEmp = "Principalities"
 				sAltEmp = "Kingdom"
-			if bGuilds :
+			elif bGuilds :
 				sEmp = "Imperium"
 			elif bSlavery :
 				sEmp = "Dynasty"
@@ -679,15 +679,16 @@ class DescGenerator :
 		else :
 			sTheSrt = "the " + pPlayer.getCivilizationShortDescription( 0 )
 		
-		if sPost != "" :
-			yield "%s %s of %s %s" % (sPre, sEmp, sAdj, sPost)
-			return
-		
-		# Add space to prefix, if it exsits
+		# Add space to prefix, if it exists
 		if sPre != "" :
 			sPre += " "
 		if sAltPre != "" :
 			sAltPre += " "
+
+		# Special names
+		if sPost != "" :
+			yield "%s%s of %s %s" % (sPre, sEmp, sAdj, sPost)
+			return
 		
 		# Some final parameters
 		bCityAllowed = iNumCities <= iCityStateThreshold
