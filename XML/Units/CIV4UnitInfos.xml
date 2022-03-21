@@ -4075,7 +4075,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_SWORDSMAN</Description>
-			<Civilopedia>TXT_KEY_UNIT_AXEMAN_PEDIA</Civilopedia>
+			<Civilopedia>TXT_KEY_UNIT_SWORDSMAN_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_AXEMAN_STRATEGY</Strategy>
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<bMilitaryHappiness>1</bMilitaryHappiness>
@@ -4468,6 +4468,7 @@
 			<DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_BASIUM</Description>
 			<Civilopedia>TXT_KEY_LEADER_BASIUM_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_BASIUM_STRATEGY</Strategy>
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<bMilitaryHappiness>1</bMilitaryHappiness>
 			<bMilitaryProduction>1</bMilitaryProduction>
@@ -14182,6 +14183,7 @@
 			<DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_BISON_RIDER</Description>
 			<Civilopedia>TXT_KEY_UNIT_KNIGHT_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_BISON_RIDER_STRATEGY</Strategy>
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<bMilitaryHappiness>1</bMilitaryHappiness>
 			<bMilitarySupport>1</bMilitarySupport>
@@ -18994,6 +18996,7 @@
 			<DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_PRIEST_OF_WINTER</Description>
 			<Civilopedia>TXT_KEY_UNIT_PRIEST_OF_WINTER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_PRIEST_OF_WINTER_STRATEGY</Strategy>
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<bMilitaryHappiness>1</bMilitaryHappiness>
 			<bMilitarySupport>1</bMilitarySupport>
@@ -19747,7 +19750,7 @@
 			<DefaultUnitAI>UNITAI_ATTACK</DefaultUnitAI>
 			<SeeInvisible>INVISIBLE_ANIMAL</SeeInvisible>
 			<Description>TXT_KEY_UNIT_RANGER</Description>
-			<Civilopedia>TXT_KEY_UNIT_RANGER_PEDIA</Civilopedia>
+			<Civilopedia>TXT_KEY_UNIT_LIZARDMAN_RANGER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_RANGER_STRATEGY</Strategy>
 			<Advisor>ADVISOR_GROWTH</Advisor>
 			<bNoBadGoodies>1</bNoBadGoodies>
@@ -23093,6 +23096,7 @@
 			<DefaultUnitAI>UNITAI_HERO</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_WAR_MACHINE</Description>
 			<Civilopedia>TXT_KEY_UNIT_WAR_MACHINE_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_WAR_MACHINE_STRATEGY</Strategy>
 			<Advisor>ADVISOR_MILITARY</Advisor>
 			<bMilitaryHappiness>1</bMilitaryHappiness>
 			<bMilitaryProduction>1</bMilitaryProduction>

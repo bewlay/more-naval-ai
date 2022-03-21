@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text unused in the current version -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CATAPULT_BALSERAPHS_PEDIA</Tag>
+		<English>It required retrofitting the entire spring mechanism for the awkward shape, replacing the wheels to compensate for the change in center of gravity, and lengthening the lever arm so the beasts would stay put. But Perpentach wanted to see cows fly, and his engineers weren't going to deny him.</English>
+		<German>Es war n&#246;tig gewesen, den gesamten Wurfmechanismus f&#252;r diese unpraktische Form neu zu entwerfen, die R&#228;der zu ersetzen, um die Schwerpunktverlagerung auszugleichen und den Wurfarm zu verl&#228;ngern, damit erm&#246;glicht wird, dass Tiere an Ort und Stelle stehen bleiben w&#252;rden. Aber Perpentach wollte K&#252;he fliegen sehen und seine Ingenieure waren nicht im stande ihm dies zu verwehren.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CATAPULT_BALSERAPHS_STRATEGY</Tag>
+		<English>Feche la vache!</English>
+		<French>F&#232;che la vache!</French>
+		<German>F&#232;che la vache!</German>
+		<Spanish>F&#232;che la vache!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_EXECUTIONER</Tag>
+		<English>Executioner</English>
+		<French>Ex&#233;cuteur</French>
+		<German>Scharfrichter</German>
+		<Spanish>
+			<Text>Ejecutor:Ejecutores</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_EXPLORER</Tag>
+		<English>Explorer</English>
+		<French>Explorateur</French>
+		<German>Entdecker</German>
+		<Spanish>
+			<Text>Explorador:Exploradores</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GOBLIN_CHARIOT</Tag>
+		<English>Goblin Chariot</English>
+		<French>Char Gobelin</French>
+		<German>Goblin-Streitwagen</German>
+		<Spanish>
+			<Text>Carro Goblin:Carros Goblin</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GOBLIN_WORKER</Tag>
+		<English>Goblin Worker</English>
+		<French>Ouvrier Gobelin</French>
+		<German>Arbeitstrupp der Goblins</German>
+		<Spanish>
+			<Text>Trabajador Goblin:Trabajadores Goblin</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GOLEM_STRATEGY</Tag>
+		<English>Unfeeling and unthinking golems are powerful but expensive units. They are nearly as strong as the elite melee units in the but their inability to learn keeps then from leveling.</English>
+		<French>Incapables de ressentir ou de penser quoi que ce soit, les Golems sont des unit&#233;s puissantes mais ch&#232;res. Ils sont presque aussi forts que les meilleures unit&#233;s de Corps &#224; Corps mais leur incapacit&#233; d'apprendre les emp&#234;che de monter en niveau.</French>
+		<German>Die gef&#252;hllosen und gedankenlosen Golems sind starke jedoch auch teure Einheiten. Ihre St&#228;rke entspricht fast den besten Nahkampfeinheiten, da sie aber unf&#228;hig sind zu lernen, k&#246;nnen sie keine Bef&#246;rderungen erhalten.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GRAVEBORN</Tag>
+		<English>Graveborn</English>
+		<French>N&#233;-de-la-Tombe</French>
+		<German>Totgeborener</German>
+		<Spanish>
+			<Text>Tumulario:Tumularios</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HUNTING_DEMON</Tag>
+		<English>Hunting Demon</English>
+		<French>D&#233;mon Chasseur</French>
+		<German>D&#228;monenj&#228;ger</German>
+		<Spanish>
+			<Text>Cazador de Demonios:Cazadores de Demonios</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HUNTING_DEMON_PEDIA</Tag>
+		<English>Here is the savage hunger of the Hellhound brought to bear under the guidance of a cunning Infernal Hunting Demon. All the mortal realm is wilderness to the Infernal. They seek to dominate the world of men, but merely existing in it is disquieting to them even after all this time. Perhaps it is the sense that something is not quite wrong, or the fact that the fabric of existence was written with more laws than survival of the most brutal. Either way, most Infernal direct their efforts to capturing souls before returning to Hell, and the Hunting Demons are employed to great effect towards that end. They specialize in sniffing out children lost in the woods, pilgrims taking a wrong turn, or prophets meditating in the wilderness.</English>
+		<German>Der wilde Hunger des H&#246;llenhundes, in die Welt gebracht unter der Kontrolle eines listigen Jagtd&#228;monen der Infernals. Die ganze Welt der Sterblichen ist eine Wildnis f&#252;r die Infernals. Sie wollen die Welt der Menschen beherrschen, aber allein ihre Anwesenheit hier beunruhigt sie selbst nach so langer Zeit noch. Vielleicht ist es die Ahnung, dass etwas nicht ganz falsch ist oder dass die Struktur der Existenz auf der Grundlage von mehr Gesetzen konstruiert wurde als dem des &#220;berlebens der St&#228;rksten. Wie dem auch sei, die meisten Infernals versuchen, so viele Seelen wie m&#246;glich zu fangen, bevor sie zur H&#246;lle zur&#252;ckkehren, und die H&#246;llenhunde werden hierzu sehr erfolgreich eingesetzt. Sie sind speziell abgerichtet, um Kinder aufzusp&#252;ren, die sich im Wald verirrt haben, Pilger, die vom richtigen Weg abkommen oder Propheten, die in der Wildnis meditieren</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_INFERNAL_LORD</Tag>
+		<English>Infernal Lord</English>
+		<French>Seigneur des Enfers</French>
+		<German>H&#246;llenf&#252;rst</German>
+		<Spanish>
+			<Text>Se&#241;or Infernal:Se&#241;ores Infernales</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LAW_BRINGER</Tag>
+		<English>Law Bringer</English>
+		<French>L&#233;gislateur</French>
+		<German>Rechtsprecher</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LAW_BRINGER_PEDIA</Tag>
+		<English>A law bringer is summoned from the Vault; they are strong allies but refuse to attack units that are not a part of an evil army.</English>
+		<French>Une L&#233;gislateur est &#233;voqu&#233; depuis l'Au-Del&#224;, ils sont des alli&#233;s puissants mais refusent d'attaquer toute unit&#233;s n'appartenant pas &#224; des forces mal&#233;fiques.</French>
+		<German>Der Rechtsprecher wird aus der Gruft heraus beschworen. Er ist ein m&#228;chtiger Verb&#252;ndeter, doch wird er sich weigern, eine Einheit, die nicht zu den Heerscharen des B&#246;sen zu z&#228;hlen ist, anzugreifen.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LIZARDMAN_ASSASSIN</Tag>
+		<English>Lizardman Assassin</English>
+		<French>Assassin L&#233;zard</French>
+		<German>Echsen-Meuchelm&#246;rder</German>
+		<Spanish>
+			<Text>Asesino Lagarto:Asesinos Lagarto</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_LIZARDMAN_RANGER</Tag>
+		<English>Lizardman Ranger</English>
+		<French>R&#244;deur L&#233;zard</French>
+		<German>Echsen-Waldl&#228;ufer</German>
+		<Spanish>
+			<Text>Montaraz Lagarto:Montaraces Lagarto</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MERRYMAN</Tag>
+		<English>Merryman</English>
+		<French>Joyeux Drille</French>
+		<German>Narrenkrieger</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PARROT</Tag>
+		<English>Parrot</English>
+		<French>Perroquet</French>
+		<German>Papagei</German>
+		<Spanish>
+			<Text>Loro:Loros</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PITCH_WAGON</Tag>
+		<English>Pitch Wagon</English>
+		<French>Char &#224; Goudron</French>
+		<German>Pechkutsche</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RAVEN</Tag>
+		<English>Raven</English>
+		<French>Corbeau</French>
+		<German>Rabe</German>
+		<Spanish>
+			<Text>Cuervo:Cuervos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RUHIN_ARCHER</Tag>
+		<English>Ruhin Archer</English>
+		<French>Archer Ruhin</French>
+		<German>Bogensch&#252;tze der Ruhin</German>
+		<Spanish>
+			<Text>Arquero Ruhin:Arqueros Ruhin</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SETTLER_HIPPUS</Tag>
+		<English>Hippus Settler</English>
+		<French>Colon Hippus</French>
+		<German>Siedler der Hippus</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SKULL_CATAPULT</Tag>
+		<English>Skull Catapult</English>
+		<French>Catapulte &#224; Cr&#226;ne</French>
+		<German>Sch&#228;delwerfer</German>
+		<Spanish>
+			<Text>Catapulta de Calaveras:Catapultas de Calaveras</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SKULL_CATAPULT_PEDIA</Tag>
+		<English>When the Doviello are winning the battle, there's no shortage of ammo for their carcass flinging contraption. When they are losing... there's still no shortage of ammo.</English>
+		<German>Falls die Doviello einen Kampf gewinnen, so besteht kein Mangel an Munition f&#252;r ihre Katapulte. Und wenn sie verlieren... besteht ebenfalls kein Mangel an Munition.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SLAVE_DWARF</Tag>
+		<English>Dwarven Slave</English>
+		<French>Esclave Nain</French>
+		<German>Zwergen-Sklave</German>
+		<Spanish>
+			<Text>Esclavo Enano:Esclavos Enanos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SLAVE_ELF</Tag>
+		<English>Elven Slave</English>
+		<French>Esclave Elfe</French>
+		<German>Elfen-Sklave</German>
+		<Spanish>
+			<Text>Esclavo Elfo:Esclavos Elfos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SLAVE_ORC</Tag>
+		<English>Orcish Slave</English>
+		<French>Esclave Orque</French>
+		<German>Ork-Sklave</German>
+		<Spanish>
+			<Text>Esclavo Orco:Esclavos Orcos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SPY</Tag>
+		<English>Spy</English>
+		<French>Espion</French>
+		<German>Spion</German>
+		<Spanish>
+			<Text>Esp&#237;a:Esp&#237;as</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+</Civ4GameText>

@@ -2,13 +2,70 @@
 <!-- Text for general unit help and messages. -->
 <Civ4GameText xmlns="http://www.firaxis.com">
 	<TEXT>
+		<Tag>TXT_KEY_UNIT_ABANDON</Tag>
+		<English>[ICON_BULLET]Unit will abandon civilizations that don't maintain its Civic or Religion requirements</English>
+		<French>[ICON_BULLET]Cette unit&#233; abandonnera les civilisations qui ne maintiennent pas ses conditions de Religion ou de Doctrine.</French>
+		<German>[ICON_BULLET]Die Einheit verl&#228;sst die Zivilisation wenn sie nicht die ben&#246;tigten Gesellschaftsformen oder Religionen beibeh&#228;lt</German>
+		<Spanish>[ICON_BULLET]Esta unidad abandonar&#225; a las civilizaciones que no mantengan sus requisitos de Principios o Religi&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_AUTORAZE</Tag>
+		<English>[ICON_BULLET]Destroys improvements (in enemy territory) and terrain features when it enters a tile</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MISSION_CREATE_GREAT_WORK_HELP</Tag>
 		<English>This order will have the unit create a Great Work and end revolts in the city they are currently in. It consumes the unit.</English>
 		<Spanish>Esta orden hace que la unidad cree una gran obra y termina alzamiento en la ciudad en la que se encuentre, consumi&#233;ndose en el proceso.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_AUTORAZE</Tag>
-		<English>[ICON_BULLET]Destroys improvements (in enemy territory) and terrain features when it enters a tile</English>
+		<Tag>TXT_KEY_UNIT_CANNOT_CAPTURE</Tag>
+		<English>[ICON_BULLET]Unit cannot capture</English>
+		<Spanish>[ICON_BULLET]La unidad no puede hacer capturas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CANNOT_PILLAGE</Tag>
+		<English>[ICON_BULLET]Unit cannot pillage</English>
+		<Spanish>[ICON_BULLET]La unidad no puede hacer pillaje</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CANNOT_PROTECT_CITY</Tag>
+		<English>[ICON_BULLET]Unit doesn't provide military happiness</English>
+		<Spanish>[ICON_BULLET]La unidad no produce felicidad militar</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CANT_BUILD</Tag>
+		<English>[ICON_BULLET]Unit cannot be built</English>
+		<French>[ICON_BULLET]L'unit&#233; ne peut pas &#234;tre construire.</French>
+		<German>[ICON_BULLET]Einheit kann nicht aufgestellt werden.</German>
+		<Spanish>[ICON_BULLET]Esta unidad no puede ser constru&#237;da</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CONVERT_FROM_COMBAT</Tag>
+		<English>[ICON_BULLET]%D1% chance of becoming a %s2_unit if successful in combat</English>
+		<French>[ICON_BULLET]%D1% probabilite de devenir un %s2_unit si victorieux au combat</French>
+		<German>[ICON_BULLET]%D1% Chance dass Eure Einheit ein %s2_unit wird, wenn sie im Kampf erfolgreich ist.</German>
+		<Spanish>[ICON_BULLET]%D1% de probabilidades de convertirse en una unidad de %s2_unit si tiene &#233;xito en combate</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_CREATE_FROM_COMBAT</Tag>
+		<English>[ICON_BULLET]%D1% chance of creating a %s2_unit if successful in combat</English>
+		<French>[ICON_BULLET]%D1% probabilite de devenir un %s2_unit si victorieux au combat</French>
+		<German>[ICON_BULLET]%D1% Chance eine %s2_unit zu erschaffen, wenn sie im Kampf erfolgreich ist.</German>
+		<Spanish>[ICON_BULLET]%D1% de probabilidades de crear una unidad de %s2_unit si tiene &#233;xito en combate</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_DIPLO_VOTE_TYPE</Tag>
+		<English>[ICON_BULLET]+1 vote in the %s1</English>
+		<French>[ICON_BULLET]+1 vote dans le %s1</French>
+		<German>[ICON_BULLET]+1 Stimme im %s1</German>
+		<Spanish>[ICON_BULLET]+1 votos en el %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_DISABLE_UPGRADE_TO</Tag>
+		<English>[ICON_BULLET]Cannot Upgrade to this Unit Type</English>
+		<French>[ICON_BULLET]Ne peut pas &#234;tre am&#233;lior&#233; en ce type d'unit&#233;</French>
+		<German>[ICON_BULLET]Kann nicht zu diesem Einheitentyp modernisiert Werden</German>
+		<Spanish>[ICON_BULLET]No es posible actualizar a este tipo de unidad</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_DURATION</Tag>
@@ -18,7 +75,161 @@
 		<Spanish>Duraci&#243;n: Morir&#225; en %d1 [NUM1:turno:turnos].</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_UNIT_ENSLAVEMENT_CHANCE</Tag>
+		<English>[ICON_BULLET]%D1% chance to create a slave from combat</English>
+		<French>[ICON_BULLET]%D1% probabilit&#233; de cr&#233;er un esclave &#224; l'issue d'un combat</French>
+		<German>[ICON_BULLET]%D1% Chance nach dem Kampf einen Sklaven zu bekommen</German>
+		<Spanish>[ICON_BULLET]%D1% de posibilidades de crear un esclavo tras el combate</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_FREE_PROMOTION_PICK</Tag>
+		<English>[ICON_BULLET]Unit starts with %D1 free [NUM1:promotion:promotions]</English>
+		<French>[ICON_BULLET]L'unit&#233; commence avec %D1 [NUM1:promotion:promotions] [NUM1:gratuite:gratuites]</French>
+		<German>[ICON_BULLET]Einheit startet mit %D1 [NUM1:freien:freien] [NUM1:Bef&#246;rderung:Bef&#246;rderungen]</German>
+		<Spanish>[ICON_BULLET]Esta unidad empieza con %D1 [NUM1:promoci&#243;n:promociones] [NUM1:gratuita:gratuitas]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GOLD_FROM_COMBAT</Tag>
+		<English>[ICON_BULLET]Combat victories produce %D1 gold</English>
+		<French>ICON_BULLET]la victoire au combat produit %D1 d'or</French>
+		<German>[ICON_BULLET]Siegreiche K&#228;mpfe liefern %D1 Gold</German>
+		<Spanish>[ICON_BULLET]Las victorias en combate producen %D1 piezas de oro</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HAS_CASTED</Tag>
+		<English>Has already cast this turn</English>
+		<French>a d&#233;ja lanc&#233; un sort ce tour</French>
+		<German>Hat diese Runde schon gezaubert</German>
+		<Spanish>Ya ha lanzado hechizos este turno</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HELP_DELAYED_CASTING</Tag>
+		<English>Casting %s1_Spell (%d2_TurnsRemaining [NUM2:Turn:Turns] Remaining)</English>
+		<Spanish>Lanzando el hechizo %s1_Spell (faltan %d2_TurnsRemaining [NUM2:turno:turnos])</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HELP_HELD</Tag>
+		<English>Cannot move (Held)</English>
+		<German>Kein Bewegen m&#246;glich (gehalten)</German>
+		<Spanish>No puede moverse (atrapada)</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_UNIT_HELP_NO_UPKEEP</Tag>
 		<English>[ICON_BULLET]Costs no upkeep</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_INFORMATION</Tag>
+		<English>Unit Information</English>
+		<French>Information sur l'Unit&#233;</French>
+		<German>Einheiteninformation</German>
+		<Spanish>Informaci&#243;n de Unidad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_INVESTIGATE_CITY</Tag>
+		<English>[ICON_BULLET]Can Investigate Rival City</English>
+		<Spanish>[ICON_BULLET]Puede investigar ciudades enemigas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MIN_LEVEL</Tag>
+		<English>[ICON_BULLET]Must be upgraded from a unit of level %d1 or higher</English>
+		<French>[ICON_BULLET]Doit &#234;tre am&#233;lior&#233; depuis une unit&#233; de niveau %d1 ou plus</French>
+		<German>[ICON_BULLET]Muss von einer Einheit der Stufe %d1 oder h&#246;her modernisiert werden</German>
+		<Spanish>[ICON_BULLET]Debe de ser actualizado desde una unidad de nivel %d1 o superior</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_MUTATE_CHANCE</Tag>
+		<English>[ICON_BULLET]%D1% chance the unit starts mutated</English>
+		<French>[ICON_BULLET]%D1% probabilit&#233; que l'unit&#233; commence mut&#233;e</French>
+		<German>[ICON_BULLET]%D1% Chance dass die Einheit mutiert startet</German>
+		<Spanish>[ICON_BULLET]%D1% de probabilidades de que la unidad comience mutada</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_NEVER</Tag>
+		<English>Sir Not Appearing in this Mod</English>
+		<French>Seigneur N'appara&#238;t Pas Dans Ce Mod</French>
+		<German>Sir Hat keinen Auftritt in diesem Mod.</German>
+		<Spanish>
+			<Text>Sir No Aparezco en este Mod</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_NEVER_PEDIA</Tag>
+		<English>It isn't possible to get this unit in the game. It is in because units don't obsolete if there is an upgrade available that the civ doesn't have access to, so all units that have this unit as an upgrade will never obsolete.</English>
+		<German>Es ist nicht m&#246;glich diese Einheit im Spiel zu bekommen. Sie existiert, weil Einheiten nicht &#252;berholt sind, wenn eine h&#246;here Entwicklungsstufe [Upgrade] dieser Einheit zur Verf&#252;gung steht, zu der diese Zivilisation keinen Zugang hat. So wird keine Einheit, die diese Einheit als Upgrade hat jemals veraltet.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_NO_WAR_WEARINESS</Tag>
+		<English>[ICON_BULLET]Death won't cause War Weariness</English>
+		<French>[ICON_BULLET]la mort ne causera pas de lassitude due &#224; la guerre</French>
+		<German>[ICON_BULLET]Der Tod wird keine Kriegsm&#252;digkeit ausl&#246;sen</German>
+		<Spanish>[ICON_BULLET]La muerte de esta unidad no aumenta la infelicidad por guerra</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_NOT_ALIVE</Tag>
+		<English>Not Alive</English>
+		<French>Non-Vivant</French>
+		<German>nicht lebendig</German>
+		<Spanish>No Viva</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PREREQ_ALIGNMENT</Tag>
+		<English>[COLOR_WARNING_TEXT]Requires %s1 alignment[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Requiert alignement %s1 [COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT][ICON_BULLET]erforderlich: Gesinnung %s1[COLOR_REVERT]</German>
+		<Spanish>[COLOR_WARNING_TEXT]Requiere alineamiento %s1[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PREREQ_CIVIC</Tag>
+		<English>Requires the %s1_civic civic</English>
+		<French>Requiert la Doctrine %s1_civic</French>
+		<German>Ben&#246;tigt die Gesellschaftsform %s1_civic</German>
+		<Spanish>Requiere el principio %s1_civic</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PREREQ_GLOBAL_COUNTER</Tag>
+		<English>[COLOR_WARNING_TEXT]Requires an Armageddon Count of %D1 or higher[COLOR_REVERT]</English>
+		<French>[ICON_BULLET]Doit &#234;tre am&#233;lior&#233; depuis une unit&#233; de niveau %D1 ou plus</French>
+		<German>[COLOR_WARNING_TEXT]Ben&#246;tigt einen Armageddon-Z&#228;hlerstand von %D1 oder h&#246;her[COLOR_REVERT]</German>
+		<Spanish>[COLOR_WARNING_TEXT]Requiere un Contador de Armaged&#243;n de %D1 o mayor[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_PROMOTION_FROM_COMBAT</Tag>
+		<English>[ICON_BULLET]Gains the %s1_promotion promotion after defeating a living unit in combat</English>
+		<French>[ICON_BULLET]Obtient la promotion %s1_promotion apr&#232;s avoir vaincu une unit&#233; vivante en combat</French>
+		<German>[ICON_BULLET]Erh&#228;lt die %s1_promotion Bef&#246;rderung nachdem er eine lebende Einheit im Kampf besiegt hat</German>
+		<Spanish>[ICON_BULLET]Gana la promoci&#243;n %s1_promotion despues de derrotar a una unidad viva en combate</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_RELIGION</Tag>
+		<English>Religion: %s1_religion</English>
+		<Spanish>Religi&#243;n: %s1_religion</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_SPELL_ABILITY</Tag>
+		<English>[ICON_BULLET]Unit can use the [LINK=literal]%s1_spell[\LINK] ability</English>
+		<Spanish>[ICON_BULLET]Esta unidad puede usar la habilidad [LINK=literal]%s1_spell[\LINK]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_WEAPON_TIER_1</Tag>
+		<English>[ICON_BULLET]Unit can use Bronze weapons.</English>
+		<French>[ICON_BULLET]L'unit&#233; peut utiliser des armes de Bronze.</French>
+		<German>[ICON_BULLET]Kann Bronzewaffen benutzen</German>
+		<Spanish>[ICON_BULLET]La unidad puede usar armas de Bronce.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_WEAPON_TIER_2</Tag>
+		<English>[ICON_BULLET]Unit can use Bronze and Iron weapons.</English>
+		<French>[ICON_BULLET]L'unit&#233; peut utiliser des armes de Bronze et de Fer.</French>
+		<German>[ICON_BULLET]Kann Bronze- und Eisenwaffen benutzen</German>
+		<Spanish>[ICON_BULLET]La unidad puede usar armas de Bronce y Hierro.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_WEAPON_TIER_3</Tag>
+		<English>[ICON_BULLET]Unit can use Bronze, Iron and Mithril weapons.</English>
+		<French>[ICON_BULLET]L'unit&#233; peut utiliser des armes de Bronze, de Fer et de Mithril.</French>
+		<German>[ICON_BULLET]kann Bronze-, Eisen- und Mithrilwaffen benutzen</German>
+		<Spanish>[ICON_BULLET]La unidad puede usar armas de Bronce, Hierro y Mithril.</Spanish>
 	</TEXT>
 </Civ4GameText>
