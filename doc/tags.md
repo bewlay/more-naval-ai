@@ -1,6 +1,14 @@
-# New XML tags
+# XML tags
 
 This document contains an overview of new and changed XML tags in MNAI-U. It includes new and changed tags in Fall from Heaven 2 and MNAI that are still present in MNAI-U, as well as some BtS tags. It is still work in progress. For other BtS tags, see e.g. civfantics' [modiki](http://modiki.civfanatics.com/index.php?title=Civ4_XML_Reference).
+
+### Events/CIV4EventInfos.xml
+
+**Tags**
+
+Tag(s)  | Description | History
+--- | --- | ---
+`<iAIValue>N</iAIValue>` | `N` must not be negative. When an AI is deciding which event (option) from a trigger to pick, a random value between `0` and `N` is added. | From BtS. Was incorrectly used in FfH2.
 
 
 ### Gameinfo/CIV4CivicInfos.xml

@@ -27420,6 +27420,7 @@ bool CvEventInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iInflationModifier, "iInflationMod");
 	pXML->GetChildXmlValByName(&m_iSpaceProductionModifier, "iSpaceProductionMod");
 	pXML->GetChildXmlValByName(&m_iAIValue, "iAIValue");
+	FAssertMsg( m_iAIValue >= 0, CvString::format( "Event %s: iAIValue cannot be negative:", getType() ).c_str() );
 
 //FfH: Added by Kael 01/21/2008
 	pXML->GetChildXmlValByName(&m_iCrime, "iCrime");
