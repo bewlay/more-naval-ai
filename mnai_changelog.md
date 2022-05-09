@@ -1,5 +1,74 @@
 # Changelog
 
+
+## 2.9.1u
+
+### Gameplay
+* Disallow Mushrooms event on city plots
+* Great people and supplies no longer cost upkeep
+
+### UI
+* Relation lines in foreign advisor no longer cross the player icon
+* Improved help for Sidar world spell and Hidden promotion
+* Added option to group leaders in the Foreign Advisor by "coalitions"
+* PLE recognizes both Great General/Commander promotions for the overlay icon
+* Fixed incorrectly sized world unit portraits in Sevopedia (Report by Alekseyev_@civfanatics)
+* Show RequireResist of features in help and pedia ("Units must have ...% resistance against ... damage to enter")
+* AI now uses leader name instead of civ adjective in war/peace demands and embargoes (Only English and Spanish, proposed by MagisterCultuum@civfanatics)
+* Fixed English leader pronouns in various messages
+* Ensure unique name for newly added players (Using roman numerals; to be extended with a civ-specific name list later)
+* Show reasons if a permanent summon spell cannot be cast
+* Show Bannor palace as unique building in the pedia (report by Deaf Metal@civfanatics)
+* Fixed misleading free units display
+* Display turns until difficulty change (if increasing and/or flexible difficulty is on; BUG option to disable it)
+* Don't show enemy unit warning for lair guardians
+* Don't ask to declare war against the real owner when attacking a hidden nationality unit
+* Added some pregiously unused pedia text
+
+* Misc. minor text improvements (Thanks to Dominus the Mentat@civfanatics)
+
+### Bugfixes
+* Somnium works again (report by LightAcolyte@civfanatics)
+* Fixed opening the completed rituals log causing an exception (Report by Deaf Metal@civfanatics)
+* Properly update culture after Stasis spell ends (Report by Deaf Metal@civfanatics)
+* Correctly refund if improvement is replaced in advanced start (Report by MagisterCultuum@civfanatics)
+* Correctly update overlay when buying visibility in advanced start
+* Fixed an Autolog exception
+* Check inquisition requirements again after the 3-turn delay (report by Dominus the Mentat@civfanatics)
+* Fixed UI error when Khazad have no cities (report by Deaf Metal@civfanatics)
+* Disable DynamicCivNames in multiplayer to avoid OOS (report by Alekseyev_@civfanatics)
+* Prevent Spirit Guide passing XP to unit without unitcombat (report by kvaak@civfanatics)
+* Fixed a crash when computing spell help in pedia
+* Show in pedia if a unit costs no upkeep
+* Lair spawning now respects national/team/world unit limits
+* Blizzards code was looping over teams incorrectly (MagisterCultuum@civfanatics)
+* Wrong city in city loss revolution message (MagisterCultuum@civfanatics)
+* Fix city name display in "City Crime" event (reported by Deaf Metal@civfanatics)
+* Fixed incorrect "actual" commerce from specialists
+* Fixed OOS when avoid angry/unhealthy citizens BUG options differ
+* Stop skipping the declare war confirmation dialog
+* Use separate pathfinding for CvPlayerAI::AI_cityTargetUnitsByPath, to avoid messing up the cache
+* Small fixes to Tholal's DCN (report by Deaf Metal@civfanatics)
+* Fixed two instances of the AI bypassing war declaration restrictions
+
+### AI
+* Put most Ruthless AI stuff behind a new gameoption
+* Try to place a city defender into each city in Advanced start (report by LightAcolyte@civfanatics)
+* Value city defense bonus less, to stop AI from overvaluing warriors
+* Fix priorization of buildings required by units (Previous code priorizes buildings that allow building units of a *lower* tier than already available)
+* Don't try to protect settlers that aren't there
+
+### Code
+* Some naming/coding conventions now found in doc/conventions.md
+* Make barbarian city distance with Barbarian World option configurable
+* Decouple permanent and immobile summons (proposed by MagisterCultuum@civfanatics)
+* More accurate counting of the allowed number of permanent summons. Should not affect MNAI spells
+* Added define "COUNT_SUMMONS_PER_CASTER" to enable alternative summon rules: (only one summon per unitclass for every individual summoner)
+* New <bNoUpkeep> unit tag. Objects no longer automatically cost no upkeep, but all present objects get bNoUpkeep=1.
+* Allow entirely disabling created promotion/unit/building spell help via XML define
+* Added event <iAIValue> documentation and check on startup
+
+
 ## 2.9u
 
 ### Gameplay
