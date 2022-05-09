@@ -3731,13 +3731,8 @@ DenialTypes CvTeamAI::AI_declareWarTrade(TeamTypes eWarTeam, TeamTypes eTeam, bo
 		return NO_DENIAL;
 	}
 
-/************************************************************************************************/
-/* Advanced Diplomacy         START                                                               */
-/************************************************************************************************/
-	if (!canDeclareWarWithoutSenate(eWarTeam))
-/************************************************************************************************/
-/* Advanced Diplomacy         END                                                               */
-/************************************************************************************************/
+	// lfgr 04/2022: Reverted Advanced Diplomacy here
+	if (!canDeclareWar(eWarTeam))
 	{
 		return DENIAL_VASSAL;
 	}
