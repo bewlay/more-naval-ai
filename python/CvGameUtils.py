@@ -394,7 +394,7 @@ class CvGameUtils:
 
 		if eProject == gc.getInfoTypeForString('PROJECT_GLORY_EVERLASTING'):
 			if not pPlayer.isHuman():
-				if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNALS'):
+				if pPlayer.getCivilizationType() != gc.getInfoTypeForString('CIVILIZATION_INFERNAL'):
 					return True
 
 		if eProject == gc.getInfoTypeForString('PROJECT_ASCENSION'):
