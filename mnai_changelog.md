@@ -23,8 +23,7 @@
 * Display turns until difficulty change (if increasing and/or flexible difficulty is on; BUG option to disable it)
 * Don't show enemy unit warning for lair guardians
 * Don't ask to declare war against the real owner when attacking a hidden nationality unit
-* Added some pregiously unused pedia text
-
+* Added some previously unused pedia text
 * Misc. minor text improvements (Thanks to Dominus the Mentat@civfanatics)
 
 ### Bugfixes
@@ -66,7 +65,7 @@
 * Added define "COUNT_SUMMONS_PER_CASTER" to enable alternative summon rules: (only one summon per unitclass for every individual summoner)
 * New <bNoUpkeep> unit tag. Objects no longer automatically cost no upkeep, but all present objects get bNoUpkeep=1.
 * Allow entirely disabling created promotion/unit/building spell help via XML define
-* Added event <iAIValue> documentation and check on startup
+* Added event `<iAIValue>` documentation and check on startup
 
 
 ## 2.9u
