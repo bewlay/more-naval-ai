@@ -25,6 +25,7 @@
 * Don't ask to declare war against the real owner when attacking a hidden nationality unit
 * Added some previously unused pedia text
 * Misc. minor text improvements (Thanks to Dominus the Mentat@civfanatics)
+* Show in pedia if a unit costs no upkeep
 
 ### Bugfixes
 * Somnium works again (report by LightAcolyte@civfanatics)
@@ -38,7 +39,6 @@
 * Disable DynamicCivNames in multiplayer to avoid OOS (report by Alekseyev_@civfanatics)
 * Prevent Spirit Guide passing XP to unit without unitcombat (report by kvaak@civfanatics)
 * Fixed a crash when computing spell help in pedia
-* Show in pedia if a unit costs no upkeep
 * Lair spawning now respects national/team/world unit limits
 * Blizzards code was looping over teams incorrectly (MagisterCultuum@civfanatics)
 * Wrong city in city loss revolution message (MagisterCultuum@civfanatics)
@@ -63,7 +63,7 @@
 * Decouple permanent and immobile summons (proposed by MagisterCultuum@civfanatics)
 * More accurate counting of the allowed number of permanent summons. Should not affect MNAI spells
 * Added define "COUNT_SUMMONS_PER_CASTER" to enable alternative summon rules: (only one summon per unitclass for every individual summoner)
-* New <bNoUpkeep> unit tag. Objects no longer automatically cost no upkeep, but all present objects get bNoUpkeep=1.
+* New `<bNoUpkeep>` unit tag. Objects no longer automatically cost no upkeep, but all present objects get bNoUpkeep=1.
 * Allow entirely disabling created promotion/unit/building spell help via XML define
 * Added event `<iAIValue>` documentation and check on startup
 
