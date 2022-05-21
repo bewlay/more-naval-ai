@@ -10244,20 +10244,23 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 			UnitClassTypes eCreatedUnitClass = (UnitClassTypes) GC.getUnitInfo( (UnitTypes) kSpellInfo.getCreateUnitType() ).getUnitClassType();
 			if( GC.getDefineINT( "COUNT_SUMMONS_PER_CASTER" ) )
 			{
-				bool canAnySummon = false;
-				for( uint i = 0; i < pvpUnits->size(); i++ )
+				if (pvpUnits != NULL)
 				{
-					if( ! pvpUnits->at( i )->hasActiveSummon( eCreatedUnitClass ) )
+					bool canAnySummon = false;
+					for( uint i = 0; i < pvpUnits->size(); i++ )
 					{
-						canAnySummon = true;
-						break;
+						if( ! pvpUnits->at( i )->hasActiveSummon( eCreatedUnitClass ) )
+						{
+							canAnySummon = true;
+							break;
+						}
 					}
-				}
-				
-				if( !canAnySummon )
-				{
-					szBuffer.append( pcNewline );
-					szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_HELP_HAS_ACTIVE_SUMMON" ) );
+
+					if( !canAnySummon )
+					{
+						szBuffer.append( pcNewline );
+						szBuffer.append( gDLL->getText( "TXT_KEY_SPELL_HELP_HAS_ACTIVE_SUMMON" ) );
+					}
 				}
 			}
 			else
