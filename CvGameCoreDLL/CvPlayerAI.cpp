@@ -15357,7 +15357,6 @@ int CvPlayerAI::AI_cityTargetUnitsByPath(CvCity* pCity, CvSelectionGroup* pSkipS
 			GC.getMapINLINE().isWrapXINLINE(), GC.getMapINLINE().isWrapYINLINE(), pathDestValid, pathHeuristic, pathCost, pathValid, pathAdd, NULL, NULL );
 
 	int iLoop;
-	int iPathTurns;
 	for(CvSelectionGroup* pLoopSelectionGroup = firstSelectionGroup(&iLoop); pLoopSelectionGroup; pLoopSelectionGroup = nextSelectionGroup(&iLoop))
 	{
 		if (pLoopSelectionGroup != pSkipSelectionGroup && pLoopSelectionGroup->plot() != NULL && pLoopSelectionGroup->getNumUnits() > 0)
@@ -15378,14 +15377,21 @@ int CvPlayerAI::AI_cityTargetUnitsByPath(CvCity* pCity, CvSelectionGroup* pSkipS
 					if( gDLL->getFAStarIFace()->GeneratePath( pf, pLoopSelectionGroup->plot()->getX_INLINE(), pLoopSelectionGroup->plot()->getY_INLINE(),
 							pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), false, 0, false ) )
 					{
-						if( !(pLoopSelectionGroup->canAllMove()) )
-						{
-							iPathTurns++;
-						}
+						FAStarNode* pNode = gDLL->getFAStarIFace()->GetLastNode( pf );
 
-						if( iPathTurns <= iMaxPathTurns )
+						if (pNode != NULL) // lfgr: unsure if this check is necessary
 						{
-							iCount += pLoopSelectionGroup->getNumUnits();
+							int iPathTurns = pNode->m_iData2;
+
+							if( !(pLoopSelectionGroup->canAllMove()) )
+							{
+								iPathTurns++;
+							}
+
+							if( iPathTurns <= iMaxPathTurns )
+							{
+								iCount += pLoopSelectionGroup->getNumUnits();
+							}
 						}
 					}
 				}
