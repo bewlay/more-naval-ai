@@ -133,7 +133,7 @@ class SevoPediaProject:
 		# lfgr 04/2021: Show required ritual
 		ePrereqRitual = gc.getProjectInfo(self.iProject).getAnyoneProjectPrereq()
 		if ePrereqRitual != -1 :
-			screen.attachImageButton( panelName, "", gc.getTechInfo( iPrereq ).getButton(),
+			screen.attachImageButton( panelName, "", gc.getProjectInfo( ePrereqRitual ).getButton(),
 				GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, ePrereqRitual, 1, False )
 
 	def placeSpecial(self):
