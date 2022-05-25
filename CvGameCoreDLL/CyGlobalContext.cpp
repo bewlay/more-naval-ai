@@ -408,6 +408,14 @@ int CyGlobalContext::getInfoTypeForString(const char* szInfoType) const
 }
 
 
+// Special method provided for MapScripts to prevent them from triggering assertions.
+int CyGlobalContext::getInfoTypeForStringNoAsserts(const char* szInfoType) const
+{
+	return GC.getInfoTypeForString(szInfoType, true);
+}
+// End
+
+
 int CyGlobalContext::getTypesEnum(const char* szType) const
 {
 	return GC.getTypesEnum(szType);

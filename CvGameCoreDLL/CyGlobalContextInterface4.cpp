@@ -85,6 +85,9 @@ void CyGlobalContextPythonInterface4(python::class_<CyGlobalContext>& x)
 		.def("getColorInfo", &CyGlobalContext::getColorInfo, python::return_value_policy<python::reference_existing_object>(), "ColorInfo (int id)")
 
 		.def("getInfoTypeForString", &CyGlobalContext::getInfoTypeForString, "int (string) - returns the info index with the matching type string")
+// Special method provided for MapScripts to prevent them from triggering assertions.
+		.def("getInfoTypeForStringNoAsserts", &CyGlobalContext::getInfoTypeForStringNoAsserts, "int (string) - returns the info index with the matching type string. Will not trigger asserts")
+// End
 		.def("getTypesEnum", &CyGlobalContext::getTypesEnum, "int (string) - returns the type enum from a type string")
 
 		.def("getNumPlayerColorInfos", &CyGlobalContext::getNumPlayerColorInfos, "int () - Returns number of PlayerColorInfos")

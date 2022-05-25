@@ -101,6 +101,9 @@ public:
     CvUnitArtStyleTypeInfo* getUnitArtStyleTypeInfo(int i) const;
 
 	int getInfoTypeForString(const char* szInfoType) const;
+// Special method provided for MapScripts to prevent them from triggering assertions.
+	int getInfoTypeForStringNoAsserts(const char* szInfoType) const;
+// End
 	int getTypesEnum(const char* szType) const;
 
 	int getNumPlayerColorInfos() const { return GC.getNumPlayerColorInfos(); }
