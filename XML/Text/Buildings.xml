@@ -2361,10 +2361,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_WARRENS_HELP</Tag>
-		<English>[ICON_BULLET]Doubles the amount of units trained in the city.[NEWLINE][ICON_BULLET]Doesn't affect heroes, national, siege or naval units.</English>
-		<French>[ICON_BULLET]Double le nombre d'unit&#233;s produites dans la ville.[NEWLINE][ICON_BULLET]n'affecte pas les h&#233;ros, les unit&#233;s nationales, navales et de si&#232;ge.</French>
-		<German>Verdoppelt die Menge der aufgestellten Einheiten in der Stadt.[NEWLINE]Gilt nicht f&#252;r Helden, National- Belagerungs- und See-Einheiten.</German>
-		<Spanish>[ICON_BULLET]Dobla la cantidad de unidades entrenadas en la ciudad.[NEWLINE][ICON_BULLET]No afecta a unidades h&#233;roes, nacionales, de asedio o navales.</Spanish>
+		<English>[ICON_BULLET]Doubles the amount of living units trained in the city.[NEWLINE][ICON_BULLET]Doesn't affect heroes or national units.</English>
+		<French>[ICON_BULLET]Double le nombre d'unit&#233;s produites dans la ville.[NEWLINE][ICON_BULLET]n'affecte pas les h&#233;ros, les unit&#233;s nationales, navales et de si&#232;ge.</French><!-- TODO: Text deprecated -->
+		<German>Verdoppelt die Menge der aufgestellten lebenden Einheiten in der Stadt.[NEWLINE]Gilt nicht f&#252;r Helden und National-Einheiten.</German>
+		<Spanish>[ICON_BULLET]Dobla la cantidad de unidades vivas entrenadas en la ciudad.[NEWLINE][ICON_BULLET]No afecta a unidades h&#233;roes o nacionales.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_WARRENS_PEDIA</Tag>
