@@ -478,6 +478,10 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getSpecialBuildingNotRequiredCount", &CyPlayer::getSpecialBuildingNotRequiredCount, "int (int (SpecialBuildingTypes) eIndex)")
 		.def("isSpecialBuildingNotRequired", &CyPlayer::isSpecialBuildingNotRequired, "int (int (SpecialBuildingTypes) eIndex)")
 
+		// lfgr 05/2022: Expose inflation
+		.def("getInflationModifier", &CyPlayer::getInflationModifier, "int ()")
+		.def("changeInflationModifier", &CyPlayer::changeInflationModifier, "void (int)")
+
 		.def("isHasCivicOption", &CyPlayer::isHasCivicOption, "bool (int (CivicOptionTypes) eIndex)")
 		.def("isNoCivicUpkeep", &CyPlayer::isNoCivicUpkeep, "bool (int /*CivicOptionTypes*/ iIndex)")
 		.def("getHasReligionCount", &CyPlayer::getHasReligionCount)

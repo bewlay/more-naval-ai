@@ -9709,7 +9709,7 @@ int CvPlayer::calculateInflationRate() const
 	iInflationPerTurnTimes10000 *= GC.getHandicapInfo(getHandicapType()).getInflationPercent();
 	iInflationPerTurnTimes10000 /= 100;
 
-	int iModifier = m_iInflationModifier;
+	int iModifier = getInflationModifier(); // lfgr 05/2022
 	if (!isHuman() && !isBarbarian())
 	{
 		int iAIModifier = GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIInflationPercent();
@@ -15621,6 +15621,18 @@ void CvPlayer::changeHurryCount(HurryTypes eIndex, int iChange)
 			FAssert(m_iPopRushHurryCount >= 0);
 		}
 	}
+}
+
+// lfgr 05/2022: Expose inflation
+int CvPlayer::getInflationModifier() const
+{
+	return m_iInflationModifier;
+}
+
+// lfgr 05/2022: Expose inflation
+void CvPlayer::changeInflationModifier( int iChange )
+{
+	m_iInflationModifier += iChange;
 }
 
 int CvPlayer::getSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex) const
@@ -22851,7 +22863,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 
 	if (0 != kEvent.getInflationModifier())
 	{
-		m_iInflationModifier += kEvent.getInflationModifier();
+		changeInflationModifier( kEvent.getInflationModifier() ); // lfgr 05/2022
 	}
 
 	if (0 != kEvent.getSpaceProductionModifier())

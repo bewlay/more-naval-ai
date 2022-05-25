@@ -2117,6 +2117,19 @@ bool CyPlayer::canHurry(int /*HurryTypes*/ eIndex)
 	return m_pPlayer ? m_pPlayer->canHurry((HurryTypes)eIndex) : (int) NO_HURRY;
 }
 
+
+// lfgr 05/2022: Expose inflation
+int CyPlayer::getInflationModifier() const
+{
+	return m_pPlayer ? m_pPlayer->getInflationModifier() : 100;
+}
+
+void CyPlayer::changeInflationModifier( int iChange )
+{
+	if( m_pPlayer )
+		m_pPlayer->changeInflationModifier( iChange );
+}
+
 int CyPlayer::getSpecialBuildingNotRequiredCount(int /*SpecialBuildingTypes*/ eIndex)
 {
 	return m_pPlayer ? m_pPlayer->getSpecialBuildingNotRequiredCount((SpecialBuildingTypes)eIndex) : -1;

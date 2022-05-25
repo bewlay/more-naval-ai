@@ -1013,6 +1013,10 @@ public:
 	bool canPopRush();
 	void changeHurryCount(HurryTypes eIndex, int iChange);
 
+	// lfgr 05/2022: Expose inflation
+	int getInflationModifier() const;
+	void changeInflationModifier( int iChange );
+
 	int getSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex) const;												// Exposed to Python
 	bool isSpecialBuildingNotRequired(SpecialBuildingTypes eIndex) const;															// Exposed to Python
 	void changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex, int iChange);
