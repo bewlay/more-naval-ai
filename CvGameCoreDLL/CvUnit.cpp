@@ -3453,6 +3453,12 @@ bool CvUnit::canMoveInto(const CvPlot* pPlot, bool bAttack, bool bDeclareWar, bo
 		return false;
 	}
 
+	// lfgr 11/2022: Barbarian Animal AI units can never enter foreign (non-barbarian) cities
+	if (isBarbarian() && AI_getUnitAIType() == UNITAI_ANIMAL && pPlot->isCity() && pPlot->getOwnerINLINE() != getOwnerINLINE())
+	{
+		return false;
+	}
+
 	if (GC.getUSE_SPIES_NO_ENTER_BORDERS())
 	{
 		if (isSpy() && NO_PLAYER != pPlot->getOwnerINLINE())
