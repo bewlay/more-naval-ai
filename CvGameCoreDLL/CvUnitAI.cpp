@@ -286,7 +286,7 @@ bool CvUnitAI::AI_update()
         }
         else if(isAIControl())
         {
-			if (canMove())
+			if (canMove() && canAttack()) // lfgr 11/2022: Fix for defensive-only units
 			{
 				if (AI_anyAttack(getMoves(), 0))
 				{
