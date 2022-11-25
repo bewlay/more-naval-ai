@@ -1,0 +1,195 @@
+MapScriptTools Changelog
+====================================================================================================
+
+This file details the changes between all versions of MapScriptTools. Each MapScript also has its
+own changelog which details their versions and the changes in each one.
+
+1.06	12.Sep.2016 (Terkhen)
+====================================================================================================
+
+Added, in mods based on Fall from Heaven 2, city ruins (or ancient city ruins if available) will be placed on map creation along with some roads. The number of ruins scales with map size.
+
+Added, Archipelago Mapscript. RandomMap is now compatible with Archipelago.
+
+Added, Pangaea Mapscript. RandomMap is now compatible with Pangaea.
+
+Added, RandomMap no longer requires all compatible mapscripts to work. If some are missing, it will only list the existing ones.
+
+Added, Mapscripts now support all grid sizes.
+
+Added, Mapscripts will not use stored map script options if they are from older versions.
+
+Changed, use grid definitions from the active mod instead of using hardcoded ones.
+
+Fixed, some problems in Tectonics when playing with PlanetFall.
+
+Fixed, restored compatibility with PlanetFall.
+
+Fixed, corrected a trace in Erebus.
+
+
+1.05	17.Aug.2016 (Terkhen)
+====================================================================================================
+
+Added, Ashes of Erebus compatibility.
+
+Fixed, MapScriptTools will now always use the globally defined terrain, feature and improvement definitions instead of trying to obtain them directly.
+
+
+1.04	07.Aug.2016 (Terkhen)
+====================================================================================================
+
+Added, More Naval AI (for Fall from Heaven 2) compatibility.
+
+Fixed, Python exception on FracturedWorld when not using RandomMap.
+
+Fixed, Certain mods like More Naval AI or ExtraModMod use a Player instead of a Team as a parameter for canHaveImprovement and calculateBestNatureYield.
+
+Changed, Simplified mod determination code.
+
+
+1.03	08.Dic.2014 (Terkhen)
+====================================================================================================
+
+Added, RandomMap.
+
+Added, support for storing map options, and restoring them the next time the map is selected.
+
+Added, translatable names for Big Dents, Big Bogs and Lost Islands.
+
+Added, additional Big Bog names.
+
+Added, most map scripts now allow to select if the bonus balancer should be used or not.
+
+Added, allow more wrapping options when possible.
+
+Added, When possible, MapScriptTools will try to not trigger asserts.
+
+Added, when using all from Heaven 2 it is now possible to get Water Mana as a bonus in the Lost Island.
+
+Added, ExtraModMod (for Fall from Heaven 2) compatibility.
+
+Fixed, MapScriptTools will no longer place scrubs on top of mountains or hills.
+
+Fixed, the Fall from Heaven 2 bonus 'BONUS_REAGENTS' was misspelled as 'BONUS_REAGENS'.
+
+Fixed, Corrected a few typos.
+
+Changed, Simplify Big Bog name selection.
+
+Changed, Standardize order of map options.
+
+Changed, Unique terrain feature chance of appearance reduced slightly.
+
+Changed, Splitted documentation from the MapScriptTools main file to separate text files.
+
+Changed, Translatable text strings included for all MapScripts except SmartMap.
+
+
+1.02	29.Jul.2011 (Temudjin)
+====================================================================================================
+Fixed, path identification for MAC in getCivPaths()
+
+Fixed ??, MAC compatibility with key parameter in sort() method
+
+Fixed, Bonus-list now gives the correct mana-type for FFH type mods
+
+Changed, new optional parameter for printList() & sprintList()
+
+Changed, new optional parameter for featurePlacer.placeReefs() ! changes parameter order
+
+Changed, now two ways to recognize mana types automatically,
+  - as defined by the prerequisites for the Towers of Alteration/Divination/Necromancy/Elements; all other mana types are considered mana for meta-magics
+  - as defined by the mana type tech, that is the prerequisite of building the appropiate node on the mana boni
+
+Changed, in buildTerrainMap(), buildFeatureMap(),buildBonusMap() the showPlots parameter now defaults to False
+
+Improved, recognize 'Master of Mana', 'History Rewritten' mods
+
+Improved, put addGoodies() into the template
+
+Improved, whenever a reef is build in the ocean, there is now a chance that it expands into a somewhat longish chain of reefs
+
+Added, world shape to map description log
+
+Added, Planetfall_101_mst
+
+
+1.01   15.Mar.2011
+====================================================================================================
+
+Fixed, MAC compatibility with sets and in CivFolders.getCivPaths()
+
+Fixed, incompatibility with 'History in the Making', 'Quod Capita', and possibly some other mods using newer BUG versions
+
+Fixed, proper initialization of 'Lost Isle' region upon regeneration of map
+
+Fixed, potential problem with region signs falling off the unwrapped map
+
+Fixed, now correct coast terrain with special regions
+
+Fixed, now Volcanos stand on Land/Hills plots - looks better than floating above peaks
+
+Fixed [Planetfall], 'Lost Isle' now produce proper marine boni
+
+Fixed [Mars Now!], 'Lost Isle' region now also on Mars
+
+Fixed [Mars Now!], no more rivers from 'BigBog' or 'BigDent'
+
+Fixed [Mars Now!], printed terrain/feature/bonus maps now show proper resource names
+
+Fixed [Mars Now!], no volcanos on martian deserts anymore, if MST_FeatureGenerator is used
+
+Changed, new 'class MST_Terraingenerator_Mars' for use with 'Mars Now!', was split from 'class MST_Terraingenerator' which should be used otherwise
+
+Changed, minor changes producing special regions: 'BigDent' and 'BigBog'
+
+Changed [Planetfall], normal Trenches and Shelves on biggest ocean and a few more elsewhere
+
+Changed [Planetfall], BonusBalancer ignores options for balancing and finding boni
+
+Changed [Planetfall], Tundra conversion in planetFallMap.mapPfallTerrain() now: Tundra -> 33% FlatPolar, 16% RockyPolar, 33% FlatMoist, 16% RockyMoist
+
+Changed [Planetfall], Highland generation in planetFallMap.buildPfallHighlands() now gives more hills/peaks, which are more clustered together - like Planetfall
+
+Changed [Mars Now!], converting ocean to desert: some few hills are created and at higher latitudes tundra or even some ice may be created
+
+Changed, some default parameters within various methods - still balancing things
+
+Improved, streamlined num...Neighbors() mapping functions
+  - check number of plot-neighbors for lists of plots, terrain, features, boni or improvements
+  - killed obsolete bWrap parameter.
+
+Improved, less chance for 'BigBog' and 'BigDent' to start on small island and better chance to start inside bigger continent
+
+Improved, print version to log
+
+Added, new class variable 'riverMaker.maxRiverLength' to cap length of river
+
+Added, feature generator for Mars Now! (included in class MST_FeatureGenerator)
+
+Added to 'featurePlacer', methods to place Reefs and Scrub on the map, if allowed by mod
+
+Added to 'mapPrettifier', method lumpifyFeature()
+
+Added, parameter to getModInfo(), to allow suppression of region-names
+
+Added, parameter to mapRegions.buildBigBog() and mapRegions.buildBigDent() to control chances for each special region to exist; slightly lowered default chance (now 66%).
+
+Added, parameter to printDict() and printList(), to format floating-point output
+
+Added, parameter to mapStats.statPlotCount() to enable use before plots are generated
+
+Added [Planetfall], parameter and result to planetFallMap.buildPfallHighlands() to enable use before plots are generated
+
+Added [Planetfall], name signs for already known Planetfall regions: 'Mount Planet', 'Garland Crater', 'Manifold Nexus' 'The Great Dunes', 'Pholus Ridge', 'The Ruins', 'Borehole Cluster'
+
+Added [Mars Now!], new global variable: bSandsOfMars, denoting a map on Mars, where all surface water is converted to desert.
+
+Added Info, included 'How To Guide' and updated the 'MapScriptTools Interface Template'
+
+
+1.00   15.Jul.10
+====================================================================================================
+
+Initial release
