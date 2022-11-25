@@ -119,30 +119,195 @@ gc = CyGlobalContext()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
-# Reposition if resolution (or language) changes
-g_bMustCreatePositions = True
-def forcePositionCalc (*args):
-	global g_bMustCreatePositions
-	g_bMustCreatePositions = True
+# Maximum number of columns; a limit is required for encoding stuff in widget data
+MAX_NUM_COLUMNS = 10000
 
-# used to access the customizing flag
-g_advisor = None # type: Optional[CvCustomizableDomesticAdvisor]
-def isCustomizing():
-	return g_advisor.customizing
+# lfgr 11/2022: Support for multiple instances
+# Global access to all instances
+g_advisors = [] # type: List[CvCustomizableDomesticAdvisor]
+def _addAdvisor( advisor ) :
+	# type: (CvCustomizableDomesticAdvisor) -> int
+	g_advisors.append( advisor )
+	return len( g_advisors ) - 1
+def _getAdvisor( eID ) :
+	# type: (int) -> Optional[CvCustomizableDomesticAdvisor]
+	if eID < len( g_advisors ) :
+		return g_advisors[eID]
+	else :
+		return None
+
+# Reposition if resolution (or language) changes
+# lfgr 11/2022: Support for multiple instances
+def forcePositionCalc (*args):
+	for advisor in g_advisors :
+		advisor.bMustCreatePositions = True
 
 # widget help text
 def getEditHelpText(eWidgetType, iData1, iData2, bOption):
-	if isCustomizing():
+	if _getAdvisor( iData1 ) and _getAdvisor( iData1 ).customizing : # lfgr 11/2022: Support for multiple instances
 		return BugUtil.getPlainText("TXT_KEY_CDA_STOP_EDITING")
 	else:
 		return BugUtil.getPlainText("TXT_KEY_CDA_START_EDITING")
 
 # CDA_REFACTORING 03/2021 lfgr
-# Entryppoint for cell help text
+# Entrypoint for cell help text
 def getCellHelpText( eWidgetType, iData1, iData2, bOption ) :
-	if g_advisor is None :
+	eAdvisorID = iData1 // MAX_NUM_COLUMNS
+	iColumn = iData1 % MAX_NUM_COLUMNS
+	if _getAdvisor( eAdvisorID ) is None :
 		return u""
-	return g_advisor.getCellHelpText( iData1, iData2 )
+	return _getAdvisor( eAdvisorID ).getCellHelpText( iColumn, iData2 )
+
+
+# lfgr 11/2022: refactoring
+DEFAULT_PAGES = [
+	{
+		"name" : "Executive Summary",
+		"showSpecControls" : False,
+		"showCultureLegend" : False,
+		"showGPLegend" : False,
+		"columns" :	[
+			("NAME", 95, "text"),
+			("AUTOMATION", 80, "text"),
+			("FEATURES", 92, "text"),
+			("POPULATION", 35, "int"),
+			("GARRISON", 30, "int"),
+			("HAPPY", 30, "int"),
+			("HEALTH", 30, "int"),
+			("GROWTH", 35, "int"),
+			("FOOD", 35, "int"),
+			("PRODUCTION", 38, "int"),
+			("MAINTENANCE", 30, "int"),
+			("BASE_COMMERCE", 38, "int"),
+			("GOLD", 38, "int"),
+			("RESEARCH", 38, "int"),
+			("CULTURE_RATE", 38, "int"),
+			("CULTURE", 53, "int"),
+			("GREATPEOPLE_RATE", 38, "int"),
+			("GREATPEOPLE", 45, "int"),
+			("PRODUCING", 90, "text"),
+			("PRODUCING_TURNS", 33, "int"),
+		]
+	},
+	{
+		"name" : "Specialization",
+		"showSpecControls" : True,
+		"showCultureLegend" : True,
+		"showGPLegend" : True,
+		"columns" : [
+			("NAME", 95, "text"),
+			("FOUNDED", 80, "date"),
+			("RELIGIONS", 90, "text"),
+			("SPECIALISTS", 159, "text"),
+			("HAPPY", 30, "int"),
+			("GROWTH", 35, "int"),
+			("FOOD", 35, "int"),
+			("PRODUCTION", 38, "int"),
+			("GOLD", 38, "int"),
+			("RESEARCH", 38, "int"),
+			("CULTURE_RATE", 38, "int"),
+			("CULTURE", 53, "int"),
+			("GREATPEOPLE_RATE", 38, "int"),
+			("GREATPEOPLE", 45, "int"),
+			("PRODUCING", 90, "text"),
+			("PRODUCING_TURNS", 33, "int"),
+		]
+	},
+	{
+		"name" : "Top Cities - National",
+		"showSpecControls" : False,
+		"showCultureLegend" : False,
+		"showGPLegend" : False,
+		"columns" :	[
+			("NAME", 95, "text"),
+			("POPULATION", 35, "int"),
+			("FEATURES", 92, "text"),
+			("RELIGIONS", 90, "text"),
+			("GOLD", 38, "int"),
+			("NRANK_GOLD",	38, "int"),
+			("RESEARCH", 38, "int"),
+			("NRANK_RESEARCH", 38, "int"),
+			("CULTURE_RATE", 38, "int"),
+			("NRANK_CULTURE", 38, "int"),
+			("CULTURE", 53, "int"),
+			("PRODUCING", 90, "text"),
+			("PRODUCING_TURNS", 33, "int"),
+		]
+	},
+	{
+		"name" : "Top Cities - Global",
+		"showSpecControls" : False,
+		"showCultureLegend" : False,
+		"showGPLegend" : False,
+		"columns" :	[
+			("NAME", 95, "text"),
+			("POPULATION", 35, "int"),
+			("FEATURES", 92, "text"),
+			("RELIGIONS", 90, "text"),
+			("GOLD", 38, "int"),
+			("GRANK_GOLD",	38, "int"),
+			("RESEARCH", 38, "int"),
+			("GRANK_RESEARCH", 38, "int"),
+			("CULTURE_RATE", 38, "int"),
+			("GRANK_CULTURE", 38, "int"),
+			("CULTURE", 53, "int"),
+			("PRODUCING", 90, "text"),
+			("PRODUCING_TURNS", 33, "int"),
+		]
+	},
+	{
+		"name" : "Military Overview",
+		"showSpecControls" : False,
+		"showCultureLegend" : False,
+		"showGPLegend" : False,
+		"columns" : [
+			("NAME", 95, "text"),
+			("GARRISON", 30, "int"),
+			("DEFENSE", 60, "int"),
+			("THREATS", 60, "text"),
+			("CONSCRIPT_UNIT", 90, "text"),
+			"I_BUILDING_HUNTING_LODGE", # LFGR_TODO: buildingclass?
+			"I_BUILDING_TRAINING_YARD", # LFGR_TODO: buildingclass?
+			"I_BUILDING_STABLE", # LFGR_TODO: buildingclass?
+			"I_BUILDING_MAGE_GUILD",
+			("PRODUCING", 90, "text"),
+			("PRODUCING_TURNS", 33, "int"),
+		]
+	}
+]
+
+REV_PAGES = [
+	{
+		"name" : "Revolutions",
+		"showSpecControls" : False,
+		"showCultureLegend" : False,
+		"showGPLegend" : False,
+		"columns" : [
+			"NAME",
+			"REV_HAPPINESS",
+			"REV_LOCATION",
+			"REV_RELIGION",
+			"REV_CULTURE",
+			"REV_NATIONALITY",
+			"REV_HEALTH",
+			"REV_GARRISON",
+			"REV_SIZE",
+			"REV_STARVATION",
+			"REV_DISORDER",
+			"REV_CRIME",
+			"REV_CIVICS",
+			"REV_BUILDINGS",
+			"REV_NAT_SIZE",
+			"REV_NAT_CULT_SPENDING",
+			"REV_NAT_GOLDEN_AGE",
+			"REV_NAT_CIVICS",
+			"REV_NAT_BUILDINGS",
+			"REV_PER_TURN",
+			"REV_NAT_PER_TURN",
+			"REV_TOTAL"
+		]
+	}
+]
 
 
 # Class CvDomesticAdvisor
@@ -150,11 +315,19 @@ def getCellHelpText( eWidgetType, iData1, iData2, bOption ) :
 class CvCustomizableDomesticAdvisor:
 	"""Special Domestic Advisor Screen"""
 
-	def __init__(self):
+	def __init__( self, sName, eScreenEnum ):
 		"""
 		Basic init function.
 		Called when cIV is first booted up and everytime you switch into cIV
+		@param sName: The name of this advisor. Used for separate settings saving. If "Rev", a different default layout is used.
 		"""
+
+		# lfgr 11/2022: Support for multiple instances
+		self.sInstanceName = sName
+		self.eInstanceID = _addAdvisor( self )
+		self.bMustCreatePositions = True
+		self.eScreenEnum = eScreenEnum
+		CvUtil.pyPrint( "Initializing CustomDomAdvisor #%d with name %s" % ( self.eInstanceID, self.sInstanceName ) )
 
 		self.isFlavorful = True
 
@@ -690,6 +863,8 @@ class CvCustomizableDomesticAdvisor:
 
 			self.COLUMNS_LIST.append((key, 50, "text", None, None, 0, self.calculateBonus, i, "u\"" + desc + "\""))
 
+		assert len( self.COLUMNS_LIST ) < MAX_NUM_COLUMNS
+
 		self.COLUMNS_INDEX = { }
 		self.HEADER_DICT = { }
 
@@ -865,12 +1040,12 @@ class CvCustomizableDomesticAdvisor:
 		self.nSpecTextOffsetY = 50
 
 		# Flag so that we only do this again if really necessary
-		global g_bMustCreatePositions
-		g_bMustCreatePositions = False
+		# lfgr 11/2022: Support for multiple instances
+		self.bMustCreatePositions = False
 
 	def getScreen(self):
 		""" Return the screen we draw with. """
-		return CyGInterfaceScreen(self.SCREEN_NAME, CvScreenEnums.DOMESTIC_ADVISOR)
+		return CyGInterfaceScreen(self.SCREEN_NAME, self.eScreenEnum)
 
 	def getCurrentCity (self):
 		""" Get the current selected city."""
@@ -916,7 +1091,8 @@ class CvCustomizableDomesticAdvisor:
 
 		# createPositions determines our size/positions and should only
 		# be called if something has changed.
-		if g_bMustCreatePositions:
+		# lfgr 11/2022: Support for multiple instances
+		if self.bMustCreatePositions:
 			self.createPositions (screen)
 
 		screen.setDimensions (self.nScreenX, self.nScreenY, self.nScreenWidth, self.nScreenLength)
@@ -973,7 +1149,8 @@ class CvCustomizableDomesticAdvisor:
 		x += self.nControlSize + 2
 		screen.setImageButton( self.NEXT_PAGE_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_RIGHT").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_NEXT_PAGE, -1, -1 )
 		x += self.nControlSize + 12
-		screen.addCheckBoxGFC(self.START_CUSTOMIZING_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BTN_FOREIGN").getPath(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_EDIT_PAGE, -1, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
+		# lfgr 11/2022: Support for multiple instances
+		screen.addCheckBoxGFC(self.START_CUSTOMIZING_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BTN_FOREIGN").getPath(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_EDIT_PAGE, self.eInstanceID, -1, ButtonStyles.BUTTON_STYLE_IMAGE )
 		x += self.nControlSize + 2
 		screen.setImageButton( self.RENAME_PAGE_NAME, ArtFileMgr.getInterfaceArtInfo("INTERFACE_BTN_EVENT_LOG").getPath(), x, self.Y_SPECIAL, self.nControlSize, self.nControlSize, WidgetTypes.WIDGET_CDA_RENAME_PAGE, -1, -1 )
 		x += self.nControlSize + 2
@@ -2402,7 +2579,8 @@ class CvCustomizableDomesticAdvisor:
 								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper, pPlayerHelper = pPlayerHelper )
 								self._tooltipCache[self.COLUMNS_INDEX[key], pCity.getID()] = cellTooltip
 
-								iData1 = self.COLUMNS_INDEX[key]
+								# lfgr 11/2022: Support for multiple instances
+								iData1 = self.eInstanceID * MAX_NUM_COLUMNS + self.COLUMNS_INDEX[key]
 								iData2 = pCity.getID()
 								if columnDef.type == "int" :
 									screen.setTableInt( page, value + 1, i, szCellValue, "", WidgetTypes.WIDGET_CDA_CELL, iData1, iData2, CvUtil.FONT_RIGHT_JUSTIFY )
@@ -2592,7 +2770,7 @@ class CvCustomizableDomesticAdvisor:
 		# Is the input from a Zoom City button?
 		elif ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED ):
 			if ( inputClass.getFunctionName() == "ZoomCity" ):
-				screen = CyGInterfaceScreen( "DomesticAdvisor", CvScreenEnums.DOMESTIC_ADVISOR )
+				screen = CyGInterfaceScreen( "DomesticAdvisor", self.eScreenEnum )
 				screen.hideScreen()
 				
 				CyInterface().selectCity(gc.getPlayer(inputClass.getData1()).getCity(inputClass.getData2()), true);
@@ -2605,7 +2783,7 @@ class CvCustomizableDomesticAdvisor:
 # BUG - Colony Split - start
 
 			elif (inputClass.getFunctionName() == self.SPLIT_NAME):
-				screen = CyGInterfaceScreen( "DomesticAdvisor", CvScreenEnums.DOMESTIC_ADVISOR )
+				screen = CyGInterfaceScreen( "DomesticAdvisor", self.eScreenEnum )
 				screen.hideScreen()
 
 # BUG - Colony Split - end
@@ -2663,12 +2841,21 @@ class CvCustomizableDomesticAdvisor:
 		for i in range(nCities):
 			if screen.isRowSelected(page, i):
 				self.listSelectedCities.append(screen.getTableText(page, 1, i))
+
+	# lfgr 11/2022: Support for multiple instances
+	def getFileName( self ) :
+		if self.sInstanceName is None :
+			return "CustomDomAdv.txt"
+		else :
+			return "CustomDomAdv_" + self.sInstanceName + ".txt"
 	
 	def save(self, inputClass):
+		# lfgr 11/2022: Support for multiple instances
+		CvUtil.pyPrint( "Saving CustomDomAdv #%d to %s" % ( self.eInstanceID, self.getFileName() ) )
 		BugPath.makeDir( "CustomDomAdv" )
-		name = BugPath.findDataFile("CustomDomAdv.txt", "CustomDomAdv")
+		name = BugPath.findDataFile(self.getFileName(), "CustomDomAdv")
 		if not name :
-			name = BugPath.createDataFile("CustomDomAdv.txt", "CustomDomAdv")
+			name = BugPath.createDataFile(self.getFileName(), "CustomDomAdv")
 
 		file = open(name, 'w')
 		pickle.dump({ "version" : self.PICKLED_VERSION, "pages" : self.PAGES }, file)
@@ -3015,7 +3202,8 @@ class CvCustomizableDomesticAdvisor:
 	def loadPages(self):
 
 		self.PAGES = None
-		name = BugPath.findDataFile("CustomDomAdv.txt", "CustomDomAdv")
+		# lfgr 11/2022: Support for multiple instances
+		name = BugPath.findDataFile(self.getFileName(), "CustomDomAdv")
 		if (name):
 			BugConfigTracker.add("CDA_Config", name)
 			try:
@@ -3066,251 +3254,11 @@ class CvCustomizableDomesticAdvisor:
 				self.PAGES = None
 
 		if(self.PAGES is None):
-			if(self.isFlavorful):
-				self.PAGES =	[
-					{
-						"name" : "Executive Summary", 
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("AUTOMATION", 80, "text"),
-							("FEATURES", 92, "text"),
-							("POPULATION", 35, "int"),
-							("GARRISON", 30, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("MAINTENANCE", 30, "int"),
-							("BASE_COMMERCE", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Specialization", 
-						"showSpecControls" : True,
-						"showCultureLegend" : True,
-						"showGPLegend" : True,
-						"columns" : [
-							("NAME", 95, "text"),
-							("FOUNDED", 80, "date"),
-							("RELIGIONS", 90, "text"),
-							("SPECIALISTS", 159, "text"),
-							("HAPPY", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Top Cities - National", 
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("FEATURES", 92, "text"),
-							("RELIGIONS", 90, "text"),
-							("GOLD", 38, "int"),
-							("NRANK_GOLD",	38, "int"),
-							("RESEARCH", 38, "int"),
-							("NRANK_RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("NRANK_CULTURE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Top Cities - Global", 
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("FEATURES", 92, "text"),
-							("RELIGIONS", 90, "text"),
-							("GOLD", 38, "int"),
-							("GRANK_GOLD",	38, "int"),
-							("RESEARCH", 38, "int"),
-							("GRANK_RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("GRANK_CULTURE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Military Overview",
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("GARRISON", 30, "int"),
-							("DEFENSE", 60, "int"),
-							("THREATS", 60, "text"),
-							("CONSCRIPT_UNIT", 90, "text"),
-							"I_BUILDING_HUNTING_LODGE", # LFGR_TODO: buildingclass?
-							"I_BUILDING_TRAINING_YARD", # LFGR_TODO: buildingclass?
-							"I_BUILDING_STABLE", # LFGR_TODO: buildingclass?
-							"I_BUILDING_MAGE_GUILD",
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Revolutions",
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							"NAME",
-							"REV_HAPPINESS",
-							"REV_LOCATION",
-							"REV_RELIGION",
-							"REV_CULTURE",
-							"REV_NATIONALITY",
-							"REV_HEALTH",
-							"REV_GARRISON",
-							"REV_SIZE",
-							"REV_STARVATION",
-							"REV_DISORDER",
-							"REV_CRIME",
-							"REV_CIVICS",
-							"REV_BUILDINGS",
-							"REV_NAT_SIZE",
-							"REV_NAT_CULT_SPENDING",
-							"REV_NAT_GOLDEN_AGE",
-							"REV_NAT_CIVICS",
-							"REV_NAT_BUILDINGS",
-							"REV_PER_TURN",
-							"REV_NAT_PER_TURN",
-							"REV_TOTAL"
-						]
-					}
-					]
-			else:
-				self.PAGES =	[
-					{
-						"name" : "Default View", 
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" :	[
-							("NAME", 95, "text"),
-							("AUTOMATION", 80, "text"),
-							("FEATURES", 92, "text"),
-							("POPULATION", 35, "int"),
-							("GARRISON", 30, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("MAINTENANCE", 30, "int"),
-							("BASE_COMMERCE", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Specialists",
-						"showSpecControls" : True,
-						"showCultureLegend" : True,
-						"showGPLegend" : True,
-						"columns" : [
-							("NAME", 95, "text"),
-							("FOUNDED", 80, "date"),
-							("RELIGIONS", 90, "text"),
-							("SPECIALISTS", 159, "text"),
-							("HAPPY", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							("PRODUCTION", 38, "int"),
-							("GOLD", 38, "int"),
-							("RESEARCH", 38, "int"),
-							("CULTURE_RATE", 38, "int"),
-							("CULTURE", 53, "int"),
-							("GREATPEOPLE_RATE", 38, "int"),
-							("GREATPEOPLE", 45, "int"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Growth", 
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("POPULATION", 35, "int"),
-							("HAPPY", 30, "int"),
-							("HEALTH", 30, "int"),
-							("GROWTH", 35, "int"),
-							("FOOD", 35, "int"),
-							(self.getBuildingKey(8), 70, "text"),
-							(self.getBuildingKey(12), 70, "text"),
-							(self.getBuildingKey(9), 70, "text"),
-							(self.getBuildingKey(31), 70, "text"),
-							(self.getBuildingKey(10), 70, "text"),
-							(self.getBuildingKey(11), 70, "text"),
-							(self.getBuildingKey(13), 70, "text"),
-							(self.getBuildingKey(33), 70, "text"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					},
-					{
-						"name" : "Military",
-						"showSpecControls" : False,
-						"showCultureLegend" : False,
-						"showGPLegend" : False,
-						"columns" : [
-							("NAME", 95, "text"),
-							("GARRISON", 30, "int"),
-							("DEFENSE", 60, "int"),
-							("THREATS", 60, "text"),
-							("CONSCRIPT_UNIT", 90, "text"),
-							(self.getBuildingKey(3), 70, "text"),
-							(self.getBuildingKey(4), 70, "text"),
-							(self.getBuildingKey(5), 70, "text"),
-							(self.getBuildingKey(6), 70, "text"),
-							(self.getBuildingKey(7), 70, "text"),
-							("PRODUCING", 90, "text"),
-							("PRODUCING_TURNS", 33, "int"),
-						]
-					}
-				]
+			# lfgr 11/2022: Support for Rev instance, refactoring, remove unused non-flavorful pages
+			if self.sInstanceName == "Rev" :
+				self.PAGES = REV_PAGES
+			else :
+				self.PAGES = DEFAULT_PAGES
 
 		# Fix and retain configuration from previous versions, when possible.
 		for p in self.PAGES:
@@ -3412,6 +3360,10 @@ class CvCustomizableDomesticAdvisor:
 			self.getScreen().show( self.BRIBE_NAME )
 		else :
 			self.getScreen().hide( self.BRIBE_NAME )
+
+	# lfgr 11/2022 // RevolutionDCM - used by bribe popup to determine whether this advisor is in the forefront
+	def isVisible(self):
+		return self.currentPage is not None or self.visiblePage is not None
 	
 	def stripStr(self, s, out):
 		while s.find(out) != -1:

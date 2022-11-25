@@ -2,6 +2,7 @@
 ## Copyright Firaxis Games 2005
 import CvMainInterface
 import CvDomesticAdvisor
+import CvScreenEnums
 import CvTechChooser
 import CvForeignAdvisor
 import CvExoticForeignAdvisor
@@ -179,7 +180,8 @@ def createDomesticAdvisor():
 	if domesticAdvisor is None:
 		if (CustDomAdvOpt.isEnabled()):
 			import CvCustomizableDomesticAdvisor
-			domesticAdvisor = CvCustomizableDomesticAdvisor.CvCustomizableDomesticAdvisor()
+			domesticAdvisor = CvCustomizableDomesticAdvisor.CvCustomizableDomesticAdvisor( sName = None,
+					eScreenEnum = CvScreenEnums.DOMESTIC_ADVISOR )
 		else:
 			import CvDomesticAdvisor
 			domesticAdvisor = CvDomesticAdvisor.CvDomesticAdvisor()
@@ -313,7 +315,10 @@ def createRevolutionWatchAdvisor():
 	global revolutionWatchAdvisor
 	if revolutionWatchAdvisor is None:
 		import RevolutionWatchAdvisor
-		revolutionWatchAdvisor = RevolutionWatchAdvisor.RevolutionWatchAdvisor()
+		# LFGR_TODO: Handle popup on bribe stuff
+		import CvCustomizableDomesticAdvisor
+		revolutionWatchAdvisor = CvCustomizableDomesticAdvisor.CvCustomizableDomesticAdvisor( sName = "Rev",
+				eScreenEnum = CvScreenEnums.REVOLUTION_WATCH_ADVISOR )
 		HandleInputMap[REVOLUTION_WATCH_ADVISOR] = revolutionWatchAdvisor
 
 def showRevolutionWatchAdvisor(argsList):
