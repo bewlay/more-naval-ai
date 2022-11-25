@@ -1312,19 +1312,20 @@ class Revolution :
 				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
 			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				cityString += " (%d)"%(iPrevRevIdx)
-				
-			#RevolutionDCM - city advisor text conditioning
-			cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
-			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-				cityString += " %d "%((iPrevRevIdx - revIdxAvg))
-			if( (iPrevRevIdx - revIdxAvg) <= -self.showTrend ) :
-				cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
-			elif( (iPrevRevIdx - revIdxAvg) > self.showTrend ) :
-				cityString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
-			else :
-				cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-			if( game.isDebugMode() ) :
-				cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
+
+			# lfgr 11/2022: Disabled
+			# #RevolutionDCM - city advisor text conditioning
+			# cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
+			# if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
+			# 	cityString += " %d "%((iPrevRevIdx - revIdxAvg))
+			# if( (iPrevRevIdx - revIdxAvg) <= -self.showTrend ) :
+			# 	cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
+			# elif( (iPrevRevIdx - revIdxAvg) > self.showTrend ) :
+			# 	cityString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
+			# else :
+			# 	cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
+			# if( game.isDebugMode() ) :
+			# 	cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
 
 			# Enable only for debugging rev index histories
 			if False :
@@ -1377,6 +1378,11 @@ class Revolution :
 						cityString += " %d"%(neg[0])
 
 			cityString += "<color=255,255,255,255>"
+
+			# lfgr 11/2022: Show total rev idx
+			totalIdx = sum( idx for idx, _ in posList ) + sum( idx for idx, _ in negList )
+			cityString += "\n " + localText.getText( "TXT_KEY_REV_WATCH_TOTAL", (totalIdx,) )
+
 			totalString += cityString
 
 		return totalString
@@ -1480,17 +1486,18 @@ class Revolution :
 		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 			civString += " (%d)  Net: %d"%(iStability,iCivStabilityIdx)
 		#RevolutionDCM - text conditioning
-		civString += "  "
-		#civString += "  " + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + " "
-		if( (iStability - pPlayer.getStabilityIndexAverage()) > self.showStabilityTrend ) :
-			civString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
-		elif( (iStability - pPlayer.getStabilityIndexAverage()) <= -self.showStabilityTrend ) :
-			civString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
-		else :
-			civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-
-		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-			civString += " (%d)"%(iStability - pPlayer.getStabilityIndexAverage())
+		# lfgr 11/2022: Disabled
+		# civString += "  "
+		# #civString += "  " + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + " "
+		# if( (iStability - pPlayer.getStabilityIndexAverage()) > self.showStabilityTrend ) :
+		# 	civString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
+		# elif( (iStability - pPlayer.getStabilityIndexAverage()) <= -self.showStabilityTrend ) :
+		# 	civString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
+		# else :
+		# 	civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
+		#
+		# if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
+		# 	civString += " (%d)"%(iStability - pPlayer.getStabilityIndexAverage())
 
 		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
 		posList.sort()
@@ -1536,6 +1543,10 @@ class Revolution :
 				civString += " %d"%(neg[0])
 
 		civString += "<color=255,255,255,255>"
+
+		# lfgr 11/2022: Show total rev idx
+		totalIdx = sum( idx for idx, _ in posList ) + sum( idx for idx, _ in negList )
+		civString += "\n " + localText.getText( "TXT_KEY_REV_WATCH_TOTAL", (totalIdx,) )
 
 		return civString
 

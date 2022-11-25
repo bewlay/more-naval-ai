@@ -583,6 +583,12 @@
 		<Finnish>Bad:</Finnish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_REV_WATCH_TOTAL</Tag>
+		<English>Total: %D1</English>
+		<German>Gesamt: %D1</German>
+		<Spanish>Total: %D1</Spanish>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE</Tag>
 		<English>Dangerously Unstable:</English>
 		<French>Dangereusement instable:</French>
