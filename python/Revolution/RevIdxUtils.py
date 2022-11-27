@@ -976,7 +976,11 @@ class CityRevIdxHelper :
 
 		# Simple things
 		for szDesc, iLoopIdx in self._computeSimpleFactorsWithEffect() :
-			ltEffects.append( ( getText( szDesc ), iLoopIdx ) )
+			if isinstance( szDesc, str ) :
+				szDesc = getText( szDesc )
+			else :
+				assert type( szDesc ) == unicode
+			ltEffects.append( ( szDesc, iLoopIdx ) )
 
 		# Civics, buildings
 		ltEffects.extend( self._buildingsWithEffect() )
