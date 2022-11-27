@@ -90,9 +90,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -201,9 +201,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0.5</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>50</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -315,9 +315,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
@@ -431,9 +431,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -543,9 +543,9 @@
 						<iRevIdxHolyCityGood>4</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>4</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0.5</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0.5</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>50</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>50</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -654,9 +654,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-30</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>-.2</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>-20</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -789,9 +789,9 @@
 						<iRevIdxHolyCityGood>2</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>1</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-5</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -898,9 +898,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-0.5</fRevViolentMod>
 						<iRevReligiousFreedom>5</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1010,9 +1010,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1121,9 +1121,9 @@
 						<iRevIdxHolyCityGood>5</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>200</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
@@ -1237,9 +1237,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1360,9 +1360,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1482,9 +1482,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1597,9 +1597,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0.2</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>20</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>10</iRevLaborFreedom>
@@ -1705,9 +1705,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0.2</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
@@ -1813,9 +1813,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-5</iRevLaborFreedom>
@@ -1921,9 +1921,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2041,9 +2041,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-20</iRevLaborFreedom>
@@ -2161,9 +2161,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2276,9 +2276,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>-0.2</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>-20</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-0.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2391,9 +2391,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>20</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-3</iRevLaborFreedom>
@@ -2519,9 +2519,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2627,9 +2627,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>40</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0.2</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>20</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2743,9 +2743,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2851,9 +2851,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2966,9 +2966,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>10</iRevLaborFreedom>
@@ -3077,9 +3077,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -3201,9 +3201,9 @@
 						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
 						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
 						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<fRevIdxNationalityMod>0</fRevIdxNationalityMod>
-						<fRevIdxBadReligionMod>0</fRevIdxBadReligionMod>
-						<fRevIdxGoodReligionMod>0</fRevIdxGoodReligionMod>
+						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
+						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>

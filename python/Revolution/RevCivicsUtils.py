@@ -68,28 +68,6 @@ def getCivicsHolyCityEffects( iPlayer ) :
 
 	return [goodEffect,badEffect]
 
-def getCivicsReligionMods( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return [0,0]
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return [0,0]
-
-	goodMod = 0
-	badMod = 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			goodMod += kCivic.getRevIdxGoodReligionMod()
-			badMod += kCivic.getRevIdxBadReligionMod()
-
-	return [goodMod,badMod]
-
 def getCivicsViolentRevMod( iPlayer ) :
 
 	pPlayer = gc.getPlayer(iPlayer)

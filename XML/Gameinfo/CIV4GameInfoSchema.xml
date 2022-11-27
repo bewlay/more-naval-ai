@@ -823,9 +823,9 @@
 	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxSwitchTo" content="textOnly" dt:type="int"/>
-	<ElementType name="fRevIdxNationalityMod" content="textOnly"/>
-	<ElementType name="fRevIdxBadReligionMod" content="textOnly"/>
-	<ElementType name="fRevIdxGoodReligionMod" content="textOnly"/>
+	<ElementType name="iRevIdxNationalityMod" content="textOnly"/>
+	<ElementType name="iRevIdxBadReligionMod" content="textOnly"/>
+	<ElementType name="iRevIdxGoodReligionMod" content="textOnly"/>
 	<ElementType name="fRevViolentMod" content="textOnly"/>
 	<ElementType name="iRevReligiousFreedom" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevLaborFreedom" content="textOnly" dt:type="int"/>
@@ -920,9 +920,9 @@
 		<element type="iRevIdxHolyCityGood" minOccurs="0"/>
 		<element type="iRevIdxHolyCityBad" minOccurs="0"/>
 		<element type="iRevIdxSwitchTo" minOccurs="0"/>
-		<element type="fRevIdxNationalityMod" minOccurs="0"/>
-		<element type="fRevIdxBadReligionMod" minOccurs="0"/>
-		<element type="fRevIdxGoodReligionMod" minOccurs="0"/>
+		<element type="iRevIdxNationalityMod" minOccurs="0"/>
+		<element type="iRevIdxBadReligionMod" minOccurs="0"/>
+		<element type="iRevIdxGoodReligionMod" minOccurs="0"/>
 		<element type="fRevViolentMod" minOccurs="0"/>
 		<element type="iRevReligiousFreedom" minOccurs="0"/>
 		<element type="iRevLaborFreedom" minOccurs="0"/>

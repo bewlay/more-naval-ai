@@ -1312,45 +1312,6 @@ bool CyPlayer::isNonStateReligionCommerce() const
     return m_pPlayer ? m_pPlayer->isNonStateReligionCommerce() : false;
 }
 
-int CyPlayer::getRevIdxLocal()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxLocal() : 0;
-}
-
-int CyPlayer::getRevIdxNational()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxNational() : 0;
-}
-
-int CyPlayer::getRevIdxDistanceModifier()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxDistanceModifier() : 0;
-}
-
-int CyPlayer::getRevIdxHolyCityGood()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxHolyCityGood() : 0;
-}
-
-int CyPlayer::getRevIdxHolyCityBad()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxHolyCityBad() : 0;
-}
-
-float CyPlayer::getRevIdxNationalityMod()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxNationalityMod() : 0;
-}
-
-float CyPlayer::getRevIdxBadReligionMod()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxBadReligionMod() : 0;
-}
-
-float CyPlayer::getRevIdxGoodReligionMod()
-{
-	return m_pPlayer ? m_pPlayer->getRevIdxGoodReligionMod() : 0;
-}
 
 bool CyPlayer::canInquisition() 
 {

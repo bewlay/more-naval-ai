@@ -602,8 +602,8 @@ class CityRevIdxHelper :
 			iGoodMod = 100
 			iBadMod = 100
 			for pCivic in self._pyOwner.iterCivicInfos() :
-				iCivicGoodMod = int( pCivic.getRevIdxGoodReligionMod() * 100 + 0.5 ) # TODO: Use percent in XML
-				iCivicBadMod = int( pCivic.getRevIdxBadReligionMod() * 100 + 0.5 ) # TODO: Use percent in XML
+				iCivicGoodMod = pCivic.getRevIdxGoodReligionMod()
+				iCivicBadMod = pCivic.getRevIdxBadReligionMod()
 				if iCivicGoodMod != 0 :
 					iGoodMod += iCivicGoodMod
 					lszGoodHelpLines.append( getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2_civic[COLOR_REVERT]",
@@ -673,7 +673,7 @@ class CityRevIdxHelper :
 			iMod = 100
 			szModHelp = u""
 			for pCivic in self._pyOwner.iterCivicInfos() :
-				iCivicMod = int( pCivic.getRevIdxNationalityMod() * 100 ) # TODO: make int in XML
+				iCivicMod = pCivic.getRevIdxNationalityMod()
 				if iCivicMod != 0 :
 					iMod += iCivicMod
 					szModHelp += u"\n"

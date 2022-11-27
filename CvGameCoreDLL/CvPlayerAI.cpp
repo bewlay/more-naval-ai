@@ -16718,6 +16718,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic) const
 /************************************************************************************************/
 int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 {
+	// LFGR_TODO: This is outdated; should probably call python
 	if (isBarbarian())
 		return 0;
 	if(!isAlive())
@@ -16731,8 +16732,8 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 	{
 		int iRelScore = 0;
 
-		float fRelGoodMod = GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod();
-		float fRelBadMod = GC.getCivicInfo(eCivic).getRevIdxBadReligionMod();
+		int iRelGoodMod = GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod();
+		int iRelBadMod = GC.getCivicInfo(eCivic).getRevIdxBadReligionMod();
 		int iHolyCityGood = GC.getCivicInfo(eCivic).getRevIdxHolyCityGood();
 		int iHolyCityBad = GC.getCivicInfo(eCivic).getRevIdxHolyCityBad();
 
@@ -16815,8 +16816,8 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 				}
 			}
 
-			int iRelBadEffect = (int)floor((fCityNonStateReligion * (1+fRelBadMod)) + .5);
-			int iRelGoodEffect = (int)floor((fCityStateReligion * (1+fRelGoodMod)) + .5);
+			int iRelBadEffect = (int)floor((fCityNonStateReligion * (100+iRelBadMod) / 100) + .5);
+			int iRelGoodEffect = (int)floor((fCityStateReligion * (100+iRelGoodMod) / 100) + .5);
 
 			if (GET_TEAM(getTeam()).getAtWarCount(true) > 0 )
 			{

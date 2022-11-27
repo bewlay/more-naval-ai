@@ -1964,9 +1964,9 @@ public:
 	int getRevIdxHolyCityGood() const;
 	int getRevIdxHolyCityBad() const;
 	int getRevIdxSwitchTo() const;
-	float getRevIdxNationalityMod() const;
-	float getRevIdxBadReligionMod() const;
-	float getRevIdxGoodReligionMod() const;
+	int getRevIdxNationalityMod() const;
+	int getRevIdxBadReligionMod() const;
+	int getRevIdxGoodReligionMod() const;
 	float getRevViolentMod() const;
 	int getRevReligiousFreedom() const;
 	int getRevLaborFreedom() const;
@@ -2095,10 +2095,10 @@ protected:
 	int m_iRevIdxHolyCityGood;
 	int m_iRevIdxHolyCityBad;
 	int m_iRevIdxSwitchTo;
-	float m_fRevIdxNationalityMod;
-	float m_fRevIdxGoodReligionMod;
-	float m_fRevIdxBadReligionMod;
-	float m_fRevViolentMod;
+	int m_iRevIdxNationalityMod;
+	int m_iRevIdxGoodReligionMod;
+	int m_iRevIdxBadReligionMod;
+	int m_fRevViolentMod;
 	int m_iRevReligiousFreedom;
 	int m_iRevLaborFreedom;
 	int m_iRevEnvironmentalProtection;
