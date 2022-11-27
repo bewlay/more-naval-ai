@@ -86,6 +86,9 @@ public:
 	CyArea* getArea(int iID);
 	void recalculateAreas();
 	void resetPathDistance();
+	
+	// lfgr 11/2022: Expose
+	int maxPlotDistance();
 
 	int calculatePathDistance(CyPlot* pSource, CyPlot* pDest);
 	void rebuild(int iGridW, int iGridH, int iTopLatitude, int iBottomLatitude, bool bWrapX, bool bWrapY, WorldSizeTypes eWorldSize, ClimateTypes eClimate, SeaLevelTypes eSeaLevel, int iNumCustomMapOptions, CustomMapOptionTypes * aeCustomMapOptions);

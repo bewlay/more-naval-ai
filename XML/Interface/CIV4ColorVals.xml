@@ -251,6 +251,13 @@
 			<fBlue>0.85</fBlue>
 			<fAlpha>1.00</fAlpha>
 		</ColorVal>
+		<ColorVal><!-- lfgr 11/2022 -->
+			<Type>COLOR_CIVIC_TEXT</Type>
+			<fRed>0.70</fRed>
+			<fGreen>1.00</fGreen>
+			<fBlue>0.80</fBlue>
+			<fAlpha>1.00</fAlpha>
+		</ColorVal>
 		<ColorVal>
 			<Type>COLOR_PROJECT_TEXT</Type>
 			<fRed>0.80</fRed>

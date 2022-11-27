@@ -44,6 +44,9 @@ void CvDllTranslator::initializeTags(CvWString& szTagStartIcon, CvWString& szTag
 	aIconMap[L"[ICON_FOOD]"] = std::wstring(1, (wchar)GC.getYieldInfo(YIELD_FOOD).getChar());
 	aIconMap[L"[ICON_PRODUCTION]"] = std::wstring(1, (wchar)GC.getYieldInfo(YIELD_PRODUCTION).getChar());
 	aIconMap[L"[ICON_COMMERCE]"] = std::wstring(1, (wchar)GC.getYieldInfo(YIELD_COMMERCE).getChar());
+	
+	// LFGR_TODO: Placeholder. Need to add Che icon to the game font, or make up better icon.
+	aIconMap[L"[ICON_INSTABILITY]"] = std::wstring(1, (wchar)gDLL->getSymbolID(OCCUPATION_CHAR));
 
 	//create color map
 	aColorMap[L"[COLOR_REVERT]"] = CvWString(L"</color>");

@@ -1144,6 +1144,8 @@ class Revolution :
 				totalString += '  ' + localText.getText("TXT_KEY_REV_WATCH_DEBUG_NOTE",())
 		else :
 			cityList = subCityList
+		
+		pPlayerCache = RevIdxUtils.PlayerRevIdxCache( iPlayer )
 
 		for city in cityList :
 			try:
@@ -1153,7 +1155,7 @@ class Revolution :
 				pCity = city
 
 			# 05/2020 lfgr: REV_REFACTORING
-			pCityHelper = RevIdxUtils.CityRevIdxHelper( pCity )
+			pCityHelper = RevIdxUtils.CityRevIdxHelper( pCity, pPlayerCache )
 
 			# Settlements do not get rev points unless there are a conquered city
 			s = pCityHelper.cannotRevoltStr()
@@ -1202,21 +1204,15 @@ class Revolution :
 			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
 			# Religion
-			iGoodRelIdx, iBadRelIdx = pCityHelper.computeReligionRevIndices()
+			iRelIdx = pCityHelper.computeReligionRevIdx()
 
 			if bIsRevWatch :
-				if iGoodRelIdx != 0 :
-					posList.append( (iGoodRelIdx, localText.getText( "TXT_KEY_REV_WATCH_STATE_RELIGION", () )) )
-				if iBadRelIdx != 0 :
-					negList.append( (iBadRelIdx, localText.getText( "TXT_KEY_REV_WATCH_NON_STATE_RELIGION", () )) )
+				if iRelIdx < 0 :
+					posList.append( (iRelIdx, localText.getText( "Religion", () )) ) # TODO: Text tags
+				elif iRelIdx > 0 :
+					negList.append( (iRelIdx, localText.getText( "Religion", () )) ) # TODO: Text tags
 
-			iRelIdx = iGoodRelIdx + iBadRelIdx
 			revIdxHist['Religion'] = [iRelIdx] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
-
-			# Culture
-			iCultureIdx = pCityHelper.computeCultureRevIdx()
-			if bIsRevWatch and iCultureIdx != 0 :
-				posList.append( (iCultureIdx, localText.getText("TXT_KEY_REV_WATCH_CULTURE_RATE",())) )
 
 			# Nationality
 			iNationalityIdx = pCityHelper.computeNationalityRevIdx()
@@ -1230,27 +1226,14 @@ class Revolution :
 			revIdxHist['Nationality'] = [iNationalityIdx] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
 
 			# Health
-			iHealthIdx = pCityHelper.computeHealthRevIdx()
-			if bIsRevWatch and iHealthIdx != 0 :
-				negList.append( (iHealthIdx, localText.getText("TXT_KEY_REV_WATCH_UNHEALTHY",())) )
-			revIdxHist['Health'] = [iHealthIdx] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1]
+			revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO: remove
 
 			# Garrison
 			iGarIdx = pCityHelper.computeGarrisonRevIdx()
 			if bIsRevWatch and iGarIdx != 0 :
 				posList.append( (iGarIdx, localText.getText("TXT_KEY_REV_WATCH_GARRISON",())) )
 			revIdxHist['Garrison'] = [iGarIdx] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
-
-			# Size
-			iSizeIdx = pCityHelper.computeSizeRevIdx()
-			if bIsRevWatch and iSizeIdx != 0 :
-				posList.append( (iSizeIdx, localText.getText( "TXT_KEY_REV_WATCH_SMALL_CITY", () )) )
-
-			# Starving
-			iStarvingIdx = pCityHelper.computeStarvingRevIdx()
-			if bIsRevWatch and iStarvingIdx != 0 :
-				negList.append( (iStarvingIdx, localText.getText( "TXT_KEY_REV_WATCH_STARVATION", () )) )
-			revIdxHist['Health'][0] += iStarvingIdx
+			revIdxHist['Health'][0] += 0 # TODO
 
 			# Disorder
 			iDisorderIdx = pCityHelper.computeDisorderRevIdx()
@@ -1266,19 +1249,14 @@ class Revolution :
 				elif iCrimeIdx < 0 :
 					posList.append( ( iCrimeIdx, "Low Crime" ) )
 
-			# Civics
-			civicIdx, civicPosList, civicNegList = pCityHelper.getRevWatchCivicsIdxData()
+			# Various
+			civicIdx, civicPosList, civicNegList = pCityHelper.computeVariousTooltipData()
 			posList.extend( civicPosList )
 			negList.extend( civicNegList )
 
-			# Buildings
-			buildingIdx,buildingPosList,buildingNegList = pCityHelper.getRevWatchBuildingsIdxData()
-			posList.extend( buildingPosList )
-			negList.extend( buildingNegList )
-
 			# Adjust index accumulation for varying game speeds
 			# lfgr note: This includes feedback. Before, feedback was left out of LocalRevIdx
-			iLocalRevIdx = pCityHelper.computeLocalRevIdx()
+			iLocalRevIdx = pCityHelper.computeRevIdx()
 
 			# Update local RevIndex whenever called
 			# LFGR_TODO: This seems fishy, and probably is a recipe for OOS errors
@@ -1407,44 +1385,7 @@ class Revolution :
 		if( pPlayer.getNumCities() == 0 ) :
 			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
 
-		pPlayerHelper = RevIdxUtils.PlayerRevIdxHelper( iPlayer )
-
-		# Size of Empire
-		iSizeIdx = pPlayerHelper.computeSizeRevIdxAndHelp()[0]
-		if bIsRevWatch :
-			if iSizeIdx > 0 :
-				negList.append( (iSizeIdx, "Empire size" ) ) # TODO: translate
-			elif iSizeIdx < 0 :
-				posList.append( (iSizeIdx, "Empire size" ) ) # TODO: translate
-
-		# Cultural spending
-		iCultSpendingIdx = pPlayerHelper.computeCultureSpendingRevIdxAndHelp()[0]
-		if bIsRevWatch and iCultSpendingIdx != 0 :
-			posList.append( (iCultSpendingIdx, localText.getText( "TXT_KEY_REV_WATCH_CULTURE_SPENDING", () ) ) )
-
-		# Civics
-		iCivicIdx, civicPosList, civicNegList = pPlayerHelper.getRevWatchCivicsIdxData()
-		posList.extend( civicPosList )
-		negList.extend( civicNegList )
-
-		# Traits
-#		[traitIdx,traitPosList,traitNegList] = RevUtils.getTraitsCivStabilityIndex( iPlayer )
-#		civStabilityIdx += -traitIdx
-
-#		posList.extend( traitPosList )
-#		negList.extend( traitNegList )
-
-		# Buildings
-		iBuildingsIdx, buildingsPosList, buildingsNegList = pPlayerHelper.getRevWatchBuildingsIdxData()
-		posList.extend( buildingsPosList )
-		negList.extend( buildingsNegList )
-
-		# Golden age
-		iGoldenAgeIdx = pPlayerHelper.computeGoldenAgeRevIdxAndHelp()[0]
-		if bIsRevWatch and iGoldenAgeIdx != 0 :
-			posList.append( (iGoldenAgeIdx, localText.getText( "TXT_KEY_REV_WATCH_GOLDEN_AGE", () )) )
-
-		iCivRevIdx = pPlayerHelper.computeNationalRevIdxAndFinalModifierHelp()[0]
+		iCivRevIdx = 0 # TODO
 
 		if( not bIsRevWatch ) :
 			for city in PyPlayer(iPlayer).getCityList() :

@@ -284,26 +284,16 @@ REV_PAGES = [
 		"showGPLegend" : False,
 		"columns" : [
 			"NAME",
+			("POPULATION", 35, "int"),
 			"REV_HAPPINESS",
 			"REV_LOCATION",
 			"REV_RELIGION",
-			"REV_CULTURE",
 			"REV_NATIONALITY",
-			"REV_HEALTH",
 			"REV_GARRISON",
-			"REV_SIZE",
-			"REV_STARVATION",
 			"REV_DISORDER",
 			"REV_CRIME",
-			"REV_CIVICS",
-			"REV_BUILDINGS",
-			"REV_NAT_SIZE",
-			"REV_NAT_CULT_SPENDING",
-			"REV_NAT_GOLDEN_AGE",
-			"REV_NAT_CIVICS",
-			"REV_NAT_BUILDINGS",
+			"REV_VARIOUS",
 			"REV_PER_TURN",
-			"REV_NAT_PER_TURN",
 			"REV_TOTAL"
 		]
 	}
@@ -2542,8 +2532,9 @@ class CvCustomizableDomesticAdvisor:
 			civInfo = gc.getCivilizationInfo(gc.getActivePlayer().getCivilizationType())
 
 			# REVOLUTION_REFACTORING 03/2021 lfgr: Caching helpers for
-			pPlayerHelper = RevIdxUtils.PlayerRevIdxHelper( gc.getActivePlayer().getID() )
-			lCitiesWithHelpers = [(cityList[i].city, RevIdxUtils.CityRevIdxHelper( cityList[i].city ) ) for i in cityRange]
+			pPlayerCache = RevIdxUtils.PlayerRevIdxCache( gc.getActivePlayer().getID() )
+			lCitiesWithHelpers = [(cityList[i].city, RevIdxUtils.CityRevIdxHelper( cityList[i].city, pPlayerCache ) )
+					for i in cityRange]
 			
 			# Loop through the columns first. This is unintuitive, but faster.
 			for value, key in columns:
@@ -2576,7 +2567,7 @@ class CvCustomizableDomesticAdvisor:
 							pCity, pCityHelper = t
 							try :
 								pCity = cityList[i].city
-								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper, pPlayerHelper = pPlayerHelper )
+								szCellValue, cellTooltip = columnDef.compute_value_and_tooltip( pCity, pCityHelper = pCityHelper )
 								self._tooltipCache[self.COLUMNS_INDEX[key], pCity.getID()] = cellTooltip
 
 								# lfgr 11/2022: Support for multiple instances

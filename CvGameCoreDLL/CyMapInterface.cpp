@@ -83,6 +83,9 @@ void CyMapPythonInterface()
 		.def("getArea", &CyMap::getArea, python::return_value_policy<python::manage_new_object>(), "CyArea (iID) - get CyArea at iID")
 		.def("recalculateAreas", &CyMap::recalculateAreas, "void () - Recalculates the areaID for each plot. Should be preceded by CyMap.setPlotTypes(...)")
 		.def("resetPathDistance", &CyMap::resetPathDistance, "void ()")
+		
+		// lfgr 11/2022: Expose
+		.def("maxPlotDistance", &CyMap::maxPlotDistance, "int ()")
 
 		.def("calculatePathDistance", &CyMap::calculatePathDistance, "finds the shortest passable path between two CyPlots and returns its length, or returns -1 if no such path exists. Note: the path must be all-land or all-water")
 		.def("rebuild", &CyMap::rebuild, "used to initialize the map during WorldBuilder load")

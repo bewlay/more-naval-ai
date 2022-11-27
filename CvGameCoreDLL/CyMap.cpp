@@ -278,6 +278,12 @@ void CyMap::resetPathDistance()
 		m_pMap->resetPathDistance();
 }
 
+// lfgr 11/2022: Expose
+int CyMap::maxPlotDistance()
+{
+	return m_pMap ? m_pMap->maxPlotDistance() : 0;
+}
+
 int CyMap::calculatePathDistance(CyPlot* pSource, CyPlot* pDest)
 {
 	if (m_pMap)
