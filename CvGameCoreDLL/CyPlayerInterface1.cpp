@@ -382,7 +382,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("getStateReligionBuildingProductionModifier", &CyPlayer::getStateReligionBuildingProductionModifier, "int ()")
 		.def("changeStateReligionBuildingProductionModifier", &CyPlayer::changeStateReligionBuildingProductionModifier, "void (int iChange)")
 		.def("getStateReligionFreeExperience", &CyPlayer::getStateReligionFreeExperience, "int ()")
-		.def("getCapitalCity", &CyPlayer::getCapitalCity, python::return_value_policy<python::manage_new_object>(), "CyCity* (int iID)")
+		.def("getCapitalCity", &CyPlayer::getCapitalCity, python::return_value_policy<python::manage_new_object>(), "CyCity* ()") // lfgr 11/2022: Fixed docstring
 		.def("getCitiesLost", &CyPlayer::getCitiesLost, "int ()")
 
 		.def("getWinsVsBarbs", &CyPlayer::getWinsVsBarbs, "int ()")
