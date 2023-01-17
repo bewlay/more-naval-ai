@@ -956,9 +956,35 @@ void CvGame::cycleCities(bool bForward, bool bAdd) const
 
 		pLoopCity = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).nextCity(&iLoop, !bForward);
 
+		if( GC.getDefineINT( "CITY_CYCLING_SEPARATE_SETTLEMENTS", 1 ) )
+		{
+			// Skip all settlements if pHeadSelectedCity is NOT a settlement, or vice versa
+			while( pLoopCity != NULL && pHeadSelectedCity->isSettlement() != pLoopCity->isSettlement() )
+			{
+				pLoopCity = GET_PLAYER( pHeadSelectedCity->getOwnerINLINE() ).nextCity( &iLoop, !bForward );
+			}
+		}
+
 		if (pLoopCity == NULL)
 		{
+			// Back to the start
 			pLoopCity = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).firstCity(&iLoop, !bForward);
+
+			if( GC.getDefineINT( "CITY_CYCLING_SEPARATE_SETTLEMENTS", 1 ) ) // TODO: Define CITY_CYCLING_SEPARATE_SETTLEMENTS
+			{
+				// Now switching from or to settlements
+				// Skip all settlements if pHeadSelectedCity IS a settlement, or vice versa
+				while( pLoopCity != NULL && pHeadSelectedCity->isSettlement() == pLoopCity->isSettlement() )
+				{
+					pLoopCity = GET_PLAYER( pHeadSelectedCity->getOwnerINLINE() ).nextCity( &iLoop, !bForward );
+				}
+
+				// There are no cities of the desired type
+				if (pLoopCity == NULL)
+				{
+					pLoopCity = GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).firstCity(&iLoop, !bForward);
+				}
+			}
 		}
 
 		if ((pLoopCity != NULL) && (pLoopCity != pHeadSelectedCity))

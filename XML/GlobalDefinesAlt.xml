@@ -1043,4 +1043,9 @@
 		<DefineName>ALLOW_SHOW_CREATED_BUILDING_HELP</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
+    <!-- If 1, city cycles first goes through non-settlements, then settlements. -->
+    <Define>
+        <DefineName>CITY_CYCLING_SEPARATE_SETTLEMENTS</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+    </Define>
 </Civ4Defines>
