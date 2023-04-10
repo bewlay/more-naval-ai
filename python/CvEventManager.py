@@ -2748,7 +2748,7 @@ class CvEventManager:
 		cityName = popupReturn.getEditBoxString(0)
 		city.setName(cityName, not userData[1])
 		if CyGame().GetWorldBuilderMode() and not CyGame().isInAdvancedStart():
-			WBCityEditScreen.WBCityEditScreen().placeStats()
+			WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).placeStats() # lfgr fix: Added constructor parameter
 ## Platy Builder ##
 
 #Magister Start
@@ -2846,7 +2846,7 @@ class CvEventManager:
 		sScript = popupReturn.getEditBoxString(0)
 		pCity = gc.getPlayer(userData[0]).getCity(userData[1])
 		pCity.setScriptData(CvUtil.convertToStr(sScript))
-		WBCityEditScreen.WBCityEditScreen().placeScript()
+		WBCityEditScreen.WBCityEditScreen(CvPlatyBuilderScreen.CvWorldBuilderScreen()).placeScript() # lfgr fix: Added constructor parameter
 		return
 
 	def __eventWBUnitScriptPopupApply(self, playerID, userData, popupReturn):
