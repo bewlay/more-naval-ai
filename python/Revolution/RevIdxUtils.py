@@ -850,8 +850,7 @@ class CityRevIdxHelper :
 		if self._pCity.foodDifference( True ) < 0 and abs( self._pCity.foodDifference( True ) ) > self._pCity.getFood() :
 			if not self._pCity.isSettlement() :
 				return 100
-		else :
-			return 0
+		return 0
 
 	def _computeGoldenAgeRevIdx( self ) :
 		# type: () -> int
