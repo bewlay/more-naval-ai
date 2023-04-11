@@ -10699,7 +10699,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		{
 			szHelpText.append(NEWLINE);
 			CvWString szTempBuffer;
-			szHelpText.append( gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_MOD", (int) (100 * kCivic.getRevIdxNationalityMod()) ) );
+			szHelpText.append( gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_MOD", kCivic.getRevIdxNationalityMod()) );
 		}
 		
 		//  Revolution Bad Religion Modifier

@@ -823,9 +823,9 @@
 	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevIdxSwitchTo" content="textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxNationalityMod" content="textOnly"/>
-	<ElementType name="iRevIdxBadReligionMod" content="textOnly"/>
-	<ElementType name="iRevIdxGoodReligionMod" content="textOnly"/>
+	<ElementType name="iRevIdxNationalityMod" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxBadReligionMod" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxGoodReligionMod" content="textOnly" dt:type="int"/>
 	<ElementType name="fRevViolentMod" content="textOnly"/>
 	<ElementType name="iRevReligiousFreedom" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevLaborFreedom" content="textOnly" dt:type="int"/>
