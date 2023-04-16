@@ -411,7 +411,7 @@ class CityRevIdxHelper :
 		if iCityDistRaw is not None :
 			iDistMod = gc.getWorldInfo( CyMap().getWorldSize() ).getDistanceMaintenancePercent()
 			iMaxPlotDist = CyMap().maxPlotDistance()
-			iAdjDistTimes100 = iCityDistRaw * (100 + iDistMod) / iMaxPlotDist
+			iAdjDistTimes100 = iCityDistRaw * iDistMod / iMaxPlotDist
 			szHelp += u"\n" + getText( "Distance to palace: %d1", iAdjDistTimes100 )
 		else :
 			iAdjDistTimes100 = 100
