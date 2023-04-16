@@ -1419,16 +1419,18 @@ def reqFeast(caster):
 # lfgr 04/2021
 def helpFeast( lpUnits ) :
 	# type: (List[CyUnit]) -> unicode
+	eFeastSpell = gc.getInfoTypeForString( "SPELL_FEAST" )
+	lpUnits = [pUnit for pUnit in lpUnits if pUnit.canCast( eFeastSpell, False )] # TODO: Should be handled in SDK
 	if len( lpUnits ) > 0 :
 		pCity = lpUnits[0].plot().getPlotCity()
 		if pCity is not None and not pCity.isNone() :
 			iMaxFeastXP = pCity.getPopulation() - 3
 			if iMaxFeastXP > 0 :
-				if len( lpUnits ) == 1 :
+				iNumUnitsGain = min( iMaxFeastXP, len( lpUnits ) )
+				if iNumUnitsGain == 1 :
 					return PyHelpers.getText( "TXT_KEY_FEAST_XP", iMaxFeastXP )
 				else :
-					iNumUnitsGain = min( iMaxFeastXP-1, len( lpUnits ) )
-					iMinFeastXP = max( 1, iMaxFeastXP - len( lpUnits ) + 1 )
+					iMinFeastXP = max( 1, iMaxFeastXP - iNumUnitsGain + 1 )
 					return PyHelpers.getText( "TXT_KEY_FEAST_XP_MULTI", iNumUnitsGain, iMinFeastXP, iMaxFeastXP )
 	return PyHelpers.getText( "TXT_KEY_SPELL_FEAST_HELP" )
 
