@@ -549,7 +549,8 @@ void CyInfoPythonInterface1()
 		.def("getPrereqReligion", &CvCivicInfo::getPrereqReligion, "int ()")
 //FfH: End Add
 
-
+		// lfgr Revolution effects 04/2023
+		.def("getRevIdxEffects", &CvCivicInfo::getRevIdxEffects, "CvRevolutionEffects ()")
 		;
 
 	python::class_<CvUnitClassInfo, python::bases<CvInfoBase> >("CvUnitClassInfo")
@@ -646,18 +647,6 @@ void CyInfoPythonInterface1()
 		.def("getBombardDefenseModifier", &CvBuildingInfo::getBombardDefenseModifier, "int ()")
 		.def("getAllCityDefenseModifier", &CvBuildingInfo::getAllCityDefenseModifier, "int ()")
 		.def("getEspionageDefenseModifier", &CvBuildingInfo::getEspionageDefenseModifier, "int ()")
-/********************************************************************************/
-/**		REVDCM									4/09/10				phungus420	*/
-/**																				*/
-/**		Building Effects														*/
-/********************************************************************************/
-		.def("getRevIdxLocal", &CvBuildingInfo::getRevIdxLocal, "int ()")
-		.def("getRevIdxNational", &CvBuildingInfo::getRevIdxNational, "int ()")
-		.def("getRevIdxDistanceModifier", &CvBuildingInfo::getRevIdxDistanceModifier, "int ()")
-/********************************************************************************/
-/**		REVDCM									END								*/
-/********************************************************************************/
-
 		.def("getMissionType", &CvBuildingInfo::getMissionType, "int ()")
 		.def("getVoteSourceType", &CvBuildingInfo::getVoteSourceType, "int ()")
 
@@ -741,6 +730,10 @@ void CyInfoPythonInterface1()
 		.def("getBonusYieldModifier", &CvBuildingInfo::getBonusYieldModifier, "int (int i, int j)")
 
 		.def("getArtInfo", &CvBuildingInfo::getArtInfo,  python::return_value_policy<python::reference_existing_object>())
+
+		// lfgr Revolution effects 04/2023
+		.def("getRevIdxEffects", &CvBuildingInfo::getRevIdxEffects, "CvRevolutionEffects ()")
+		.def("getRevIdxEffectsAllCities", &CvBuildingInfo::getRevIdxEffectsAllCities, "CvRevolutionEffects ()")
 		;
 
 	python::class_<CvSpecialBuildingInfo, python::bases<CvInfoBase> >("CvSpecialBuildingInfo")

@@ -167,11 +167,42 @@
 	<ElementType name="iBombardDefense" content="textOnly" dt:type="int"/>
 	<ElementType name="iAllCityDefense" content="textOnly" dt:type="int"/>
 	<ElementType name="iEspionageDefense" content="textOnly" dt:type="int"/>
-	<!-- RevDCM Building Effects -->
-	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>
-	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>
-	<!-- RevDCM Building Effects -->
+<!-- lfgr Revolution effects 05/2023 -->
+	<ElementType name="iRevIdxPerTurn" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityOwned" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHolyCityHeathenOwned" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHappinessMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxHappinessCapChange" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxUnhappinessMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxLocationMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxBadReligionMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxGoodReligionMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxNationalityMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxGarrisonMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxGarrisonCapChange" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxDisorderMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxCrimeMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxCultureRateMod" content= "textOnly" dt:type="int"/>
+	<ElementType name="iRevIdxCultureRateCapChange" content= "textOnly" dt:type="int"/>
+	<ElementType name="RevIdxEffectsAllCities" content="eltOnly">
+		<element type="iRevIdxPerTurn" minOccurs="0"/>
+		<element type="iRevIdxHolyCityOwned" minOccurs="0"/>
+		<element type="iRevIdxHolyCityHeathenOwned" minOccurs="0"/>
+		<element type="iRevIdxHappinessMod" minOccurs="0"/>
+		<element type="iRevIdxHappinessCapChange" minOccurs="0"/>
+		<element type="iRevIdxUnhappinessMod" minOccurs="0"/>
+		<element type="iRevIdxLocationMod" minOccurs="0"/>
+		<element type="iRevIdxBadReligionMod" minOccurs="0"/>
+		<element type="iRevIdxGoodReligionMod" minOccurs="0"/>
+		<element type="iRevIdxNationalityMod" minOccurs="0"/>
+		<element type="iRevIdxGarrisonMod" minOccurs="0"/>
+		<element type="iRevIdxGarrisonCapChange" minOccurs="0"/>
+		<element type="iRevIdxDisorderMod" minOccurs="0"/>
+		<element type="iRevIdxCrimeMod" minOccurs="0"/>
+		<element type="iRevIdxCultureRateMod" minOccurs="0"/>
+		<element type="iRevIdxCultureRateCapChange" minOccurs="0"/>
+	</ElementType>
+<!-- lfgr end -->
 	<ElementType name="iAsset" content="textOnly" dt:type="int"/>
 	<ElementType name="iPower" content="textOnly" dt:type="int"/>
 	<ElementType name="fVisibilityPriority" content="textOnly"/>
@@ -530,11 +561,25 @@
 		<element type="iBombardDefense"/>
 		<element type="iAllCityDefense"/>
 		<element type="iEspionageDefense"/>
-		<!-- RevDCM Building Effects -->
-		<element type="iRevIdxLocal" minOccurs="0"/>
-		<element type="iRevIdxNational" minOccurs="0"/>
-		<element type="iRevIdxDistanceModifier" minOccurs="0"/>
-		<!-- RevDCM end -->
+<!-- lfgr Revolution effects 05/2023 -->
+		<element type="iRevIdxPerTurn" minOccurs="0"/>
+		<element type="iRevIdxHolyCityOwned" minOccurs="0"/>
+		<element type="iRevIdxHolyCityHeathenOwned" minOccurs="0"/>
+		<element type="iRevIdxHappinessMod" minOccurs="0"/>
+		<element type="iRevIdxHappinessCapChange" minOccurs="0"/>
+		<element type="iRevIdxUnhappinessMod" minOccurs="0"/>
+		<element type="iRevIdxLocationMod" minOccurs="0"/>
+		<element type="iRevIdxBadReligionMod" minOccurs="0"/>
+		<element type="iRevIdxGoodReligionMod" minOccurs="0"/>
+		<element type="iRevIdxNationalityMod" minOccurs="0"/>
+		<element type="iRevIdxGarrisonMod" minOccurs="0"/>
+		<element type="iRevIdxGarrisonCapChange" minOccurs="0"/>
+		<element type="iRevIdxDisorderMod" minOccurs="0"/>
+		<element type="iRevIdxCrimeMod" minOccurs="0"/>
+		<element type="iRevIdxCultureRateMod" minOccurs="0"/>
+		<element type="iRevIdxCultureRateCapChange" minOccurs="0"/>
+		<element type="RevIdxEffectsAllCities" minOccurs="0"/>
+<!-- lfgr end -->
 		<element type="iAsset"/>
 		<element type="iPower"/>
 		<element type="fVisibilityPriority"/>

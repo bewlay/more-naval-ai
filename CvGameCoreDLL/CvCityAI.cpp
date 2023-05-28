@@ -5623,13 +5623,14 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 				// Revolutions
 				if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 				{
+					// LFGR_TODO: Consider other effects
 					// Local RevIndex - positive numbers are bad
-					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxLocal() / 100));
+					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxEffects().getRevIdxPerTurn() / 100));
 
 					// National RevIndex
 					// LFGR_TODO: National rev idx doesn't mean anything anymore. Should replace this with *average* rev idx.
 					//iValue += (-(kOwner.getRevIdxNational() * kBuilding.getRevIdxNational()) / (isGovernmentCenter() ? 50 : 100));
-					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxNational()) / (isGovernmentCenter() ? 50 : 100));
+					iValue += (-(getLocalRevIndex() * kBuilding.getRevIdxEffectsAllCities().getRevIdxPerTurn()) / (isGovernmentCenter() ? 50 : 100));
 
 					// Crime
 					iValue += (-(getLocalRevIndex() * (getCrime() / 10)));

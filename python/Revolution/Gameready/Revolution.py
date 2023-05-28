@@ -341,7 +341,7 @@ class Revolution :
 			popup.launch(bCreateOkButton = False)
 			# End additions by Caesium et al
 
-	def revWatchHandler( self, iPlayerID, netUserData, popupReturn ) :
+	def revWatchHandler( self, iPlayerID, netUserData, popupReturn ) : # LFGR_TODO: Where is this used?
 			if( self.iNationalismTech == None ) :
 				self.loadInfo()
 
@@ -1226,7 +1226,7 @@ class Revolution :
 			revIdxHist['Nationality'] = [iNationalityIdx] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
 
 			# Health
-			revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO: remove
+			revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO
 
 			# Garrison
 			iGarIdx = pCityHelper.computeGarrisonRevIdx()
@@ -1250,9 +1250,9 @@ class Revolution :
 					posList.append( ( iCrimeIdx, "Low Crime" ) )
 
 			# Various
-			civicIdx, civicPosList, civicNegList = pCityHelper.computeVariousTooltipData()
-			posList.extend( civicPosList )
-			negList.extend( civicNegList )
+			# civicIdx, civicPosList, civicNegList = pCityHelper.computeVariousTooltipData()
+			# posList.extend( civicPosList )
+			# negList.extend( civicNegList )
 
 			# Adjust index accumulation for varying game speeds
 			# lfgr note: This includes feedback. Before, feedback was left out of LocalRevIdx
@@ -1274,7 +1274,6 @@ class Revolution :
 				pCity.setRevolutionIndex( 2*self.alwaysViolentThreshold )
 
 			iPrevRevIdx = pCity.getRevolutionIndex()
-			revIdxAvg = pCity.getRevIndexAverage()
 
 			# RevolutionDCM - city advisor text conditioning
 			cityString = pCity.getName()# + " \t"
@@ -1290,20 +1289,6 @@ class Revolution :
 				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
 			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
 				cityString += " (%d)"%(iPrevRevIdx)
-
-			# lfgr 11/2022: Disabled
-			# #RevolutionDCM - city advisor text conditioning
-			# cityString += '  ' + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + ' '
-			# if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-			# 	cityString += " %d "%((iPrevRevIdx - revIdxAvg))
-			# if( (iPrevRevIdx - revIdxAvg) <= -self.showTrend ) :
-			# 	cityString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
-			# elif( (iPrevRevIdx - revIdxAvg) > self.showTrend ) :
-			# 	cityString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
-			# else :
-			# 	cityString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-			# if( game.isDebugMode() ) :
-			# 	cityString += "  (%d, %d)"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
 
 			# Enable only for debugging rev index histories
 			if False :
@@ -1365,7 +1350,9 @@ class Revolution :
 
 		return totalString
 
+	# LFGR_TODO: Either totally remove this totatally, or make it some weighted city average, only used for display
 	def updateCivStability( self, iGameTurn, iPlayer, bIsRevWatch = False, bVerbose = False ) :
+		# LFGR_TODO: returned string is not used
 		"""
 		Update the revolution effects for the entire empire.
 		If bIsRevWatch, returns a string showing the factors for civ stability.
@@ -1705,7 +1692,7 @@ class Revolution :
 		if( not instigator == None ) :
 			self.pickRevolutionStyle( pPlayer, instigator, revReadyCities )
 
-		elif( len(warnCities) > 0 ) :
+		elif( len(warnCities) > 0 ) : # LFGR_TODO: Update this
 			for pCity in warnCities :
 				RevData.updateCityVal( pCity, 'WarningCounter', self.warnTurns )
 
@@ -1857,6 +1844,7 @@ class Revolution :
 					revInCapital = (revInCapital or pCity.isCapital())
 
 		# Peaceful or violent?
+		# LFGR_TODO: Rewrite this part, lots of unnecessary (and confusing) ifs here.
 		bPeaceful = True
 		instRevIdx = instigator.getRevolutionIndex()
 		instLocalIdx = instigator.getLocalRevIndex()
@@ -1868,7 +1856,7 @@ class Revolution :
 		elif( instigator.getNumRevolts(iPlayer) == 0 ) :
 			bPeaceful = True
 		else :
-			if( bPeaceful ) :
+			if( bPeaceful ) : # lfgr: Always True
 				modNumUnhappy = RevUtils.getModNumUnhappy( instigator, self.warWearinessMod )
 				if( int(200*modNumUnhappy/instigator.getPopulation()) > game.getSorenRandNum( 100, 'Rev' ) ) :
 					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent due to Unhappiness")
@@ -1878,14 +1866,14 @@ class Revolution :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent due to rapidly deteriorating situation")
 				bPeaceful = False
 			if( bPeaceful and len(revCities) == 1 ) :
-				bPeaceful = True
+				bPeaceful = True # lfgr: Does nothing
 			elif( bPeaceful ) :
 				lowerThresh = int( .8*self.alwaysViolentThreshold )
 
 				civicsMod = RevUtils.getCivicsViolentRevMod( iPlayer )
 				lowerThresh += int(math.floor( civicsMod*self.alwaysViolentThreshold  + .5 ))
 
-				if( instLocalIdx > self.badLocalThreshold ) :
+				if( instLocalIdx > self.badLocalThreshold ) : # lfgr: Never true
 					lowerThresh -= int(math.floor( .05*self.alwaysViolentThreshold + .5 ))
 				elif( instLocalIdx < 0 ) :
 					lowerThresh += int(math.floor( .10*self.alwaysViolentThreshold + .5 ))

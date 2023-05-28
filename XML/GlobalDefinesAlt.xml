@@ -1047,5 +1047,10 @@
     <Define>
         <DefineName>CITY_CYCLING_SEPARATE_SETTLEMENTS</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
-    </Define>
+	</Define>
+	<!-- lfgr Revolution effects 05/2023: Base instability/turn for every city -->
+	<Define>
+		<DefineName>BASE_REV_IDX</DefineName>
+		<iDefineIntVal>-7</iDefineIntVal>
+	</Define>
 </Civ4Defines>

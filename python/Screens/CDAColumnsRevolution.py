@@ -10,6 +10,8 @@ import FontUtil
 
 from CDAColumns import CDAColumn
 from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr
+import RevUtils
+
 
 artFileMgr = CyArtFileMgr()
 gc = CyGlobalContext()
@@ -60,7 +62,16 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, getText( "TXT_KEY_CDA_COLUMN_REV_IDX" ) )
 
 	def compute_value_and_tooltip( self, pCity, **kwargs ) :
-		return unicode( pCity.getRevolutionIndex() ), u""
+		# LFGR_TODO: Not entirely accurate
+		iRevIdx = pCity.getRevolutionIndex()
+		if iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
+			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
+		elif iRevIdx >= RevUtils.revInstigatorThreshold :
+			return getText( "[COLOR_WARNING_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]May instigate a revolt[COLOR_REVERT]" )
+		elif iRevIdx >= RevUtils.alwaysViolentThreshold :
+			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]Violent revolution expected![COLOR_REVERT]" )
+		else :
+			return getText( "%d1", iRevIdx ), getText( "May join an existing revolt" )
 
 	@property
 	def type( self ) :
@@ -93,6 +104,10 @@ def makeColumns() :
 
 		RevIdxCityHelperCombinedCDAColumn( "REV_CRIME", 50, u"<font=2>%s</font>" % FontUtil.getChar( "badgold" ),
 				CityRevIdxHelper.computeCrimeRevIdxAndHelp ),
+
+		RevIdxCityHelperCombinedCDAColumn( "REV_CULTURE_RATE", 50,
+				u"<font=2>%s</font>" % FontUtil.getChar( "commerce culture" ),
+				CityRevIdxHelper.computeCultureRateRevIdxAndHelp ),
 
 		RevIdxCityHelperCombinedCDAColumn( "REV_VARIOUS", 50,
 				u"<img=%s size=16></img>" % artFileMgr.getInterfaceArtInfo( "INTERFACE_BTN_CIVICS" ).getPath(),

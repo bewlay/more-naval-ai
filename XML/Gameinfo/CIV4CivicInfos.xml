@@ -84,24 +84,14 @@
             </ImprovementYieldChanges>
 				    <!-- Revolution Mod Start -->
 						<bDisallowInquisitions>0</bDisallowInquisitions>
-						<iRevIdxLocal>2</iRevIdxLocal>
-						<iRevIdxNational>2</iRevIdxNational>
-						<iRevIdxDistanceModifier>25</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
-						<fRevViolentMod>0</fRevViolentMod>
-						<iRevReligiousFreedom>0</iRevReligiousFreedom>
-						<iRevLaborFreedom>0</iRevLaborFreedom>
-						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
 						<iRevDemocracyLevel>-10</iRevDemocracyLevel>
 						<bCommunism>0</bCommunism>
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxLocationMod>10</iRevIdxLocationMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_DESPOT</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -195,16 +185,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>1</iRevIdxNational>
-						<iRevIdxDistanceModifier>10</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>50</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
-						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
 						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
@@ -213,6 +193,11 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>1</iRevIdxPerTurn>
+			<iRevIdxLocationMod>-50</iRevIdxLocationMod>
+			<iRevIdxNationalityMod>50</iRevIdxNationalityMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -309,16 +294,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>2</iRevIdxNational>
-						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
-						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
 						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
@@ -327,6 +302,9 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxLocationMod>25</iRevIdxLocationMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -425,16 +403,6 @@
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>2</iRevIdxLocal>
-						<iRevIdxNational>3</iRevIdxNational>
-						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
-						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
 						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
@@ -443,6 +411,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>5</iRevIdxPerTurn>
+			<iRevIdxLocationMod>-25</iRevIdxLocationMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_MONARCH</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -537,16 +509,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>4</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>4</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>50</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>50</iRevIdxGoodReligionMod>
-						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-20</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
 						<iRevEnvironmentalProtection>0</iRevEnvironmentalProtection>
@@ -555,6 +517,12 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxHolyCityOwned>-4</iRevIdxHolyCityOwned>
+			<iRevIdxHolyCityHeathenOwned>4</iRevIdxHolyCityHeathenOwned>
+			<iRevIdxBadReligionMod>50</iRevIdxBadReligionMod>
+			<iRevIdxGoodReligionMod>50</iRevIdxGoodReligionMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -648,15 +616,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>-2</iRevIdxLocal>
-						<iRevIdxNational>-2</iRevIdxNational>
-						<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-30</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>-20</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -666,6 +625,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>1</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>-4</iRevIdxPerTurn>
+			<iRevIdxLocationMod>25</iRevIdxLocationMod>
+            <!-- lfgr end -->
             <WeLoveTheKing>TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER</WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -783,15 +746,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>2</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>1</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>-5</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -801,6 +755,9 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxGoodReligionMod>25</iRevIdxGoodReligionMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -891,16 +848,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<bDisallowInquisitions>1</bDisallowInquisitions>
-						<iRevIdxLocal>-1</iRevIdxLocal>
-						<iRevIdxNational>-1</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-0.5</fRevViolentMod>
 						<iRevReligiousFreedom>5</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -910,6 +857,11 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<iRevIdxGarrisonMod>-50</iRevIdxGarrisonMod>
+			<iRevIdxGarrisonCapChange>-5</iRevIdxGarrisonCapChange>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1004,15 +956,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>-1</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1022,6 +965,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			<iRevIdxNationalityMod>25</iRevIdxNationalityMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1115,15 +1062,7 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>2</iRevIdxLocal>
-						<iRevIdxNational>1</iRevIdxNational>
-						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>5</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>200</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
+						<iRevIdxSwitchTo>150</iRevIdxSwitchTo>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
@@ -1133,6 +1072,14 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+            <iRevIdxPerTurn>2</iRevIdxPerTurn>
+			<iRevIdxHappinessMod>-25</iRevIdxHappinessMod>
+			<iRevIdxHappinessCapChange>0</iRevIdxHappinessCapChange>
+			<iRevIdxUnhappinessMod>-25</iRevIdxUnhappinessMod>
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+			<iRevIdxGarrisonCapChange>5</iRevIdxGarrisonCapChange>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1231,15 +1178,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>-3</iRevIdxLocal>
-						<iRevIdxNational>3</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>100</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1249,6 +1187,12 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxPerTurn>1</iRevIdxPerTurn>
+			<iRevIdxHappinessMod>25</iRevIdxHappinessMod>
+			<iRevIdxHappinessCapChange>2</iRevIdxHappinessCapChange>
+			<iRevIdxUnhappinessMod>25</iRevIdxUnhappinessMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1354,15 +1298,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1372,6 +1307,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxHappinessMod>25</iRevIdxHappinessMod>
+			<iRevIdxUnhappinessMod>25</iRevIdxUnhappinessMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1476,15 +1415,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -1591,15 +1521,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>-1</iRevIdxLocal>
-						<iRevIdxNational>-1</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>20</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>10</iRevLaborFreedom>
@@ -1609,6 +1530,10 @@
 						<bFreeSpeech>1</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxCultureRateMod>50</iRevIdxCultureRateMod>
+			<iRevIdxCultureRateCapChange>5</iRevIdxCultureRateCapChange>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1699,15 +1624,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>-1</iRevIdxLocal>
-						<iRevIdxNational>-2</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-10</iRevLaborFreedom>
@@ -1717,6 +1633,12 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxPerTurn>-3</iRevIdxPerTurn>
+			<iRevIdxBadReligionMod>20</iRevIdxBadReligionMod>
+			<iRevIdxGoodReligionMod>20</iRevIdxGoodReligionMod>
+			<iRevIdxGarrisonMod>20</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>1</bNoDiplomacyWithEnemies>
@@ -1807,15 +1729,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>-1</iRevIdxLocal>
-						<iRevIdxNational>1</iRevIdxNational>
-						<iRevIdxDistanceModifier>10</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-5</iRevLaborFreedom>
@@ -1825,6 +1738,9 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxLocationMod>10</iRevIdxLocationMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -1915,15 +1831,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2035,15 +1942,6 @@
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>3</iRevIdxLocal>
-						<iRevIdxNational>1</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>50</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-20</iRevLaborFreedom>
@@ -2053,6 +1951,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxPerTurn>2</iRevIdxPerTurn>
+			<iRevIdxGarrisonCapChange>2</iRevIdxGarrisonCapChange>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2155,15 +2057,6 @@
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>-2</iRevIdxNational>
-						<iRevIdxDistanceModifier>-25</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2173,6 +2066,9 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>1</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxGoodReligionMod>25</iRevIdxGoodReligionMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2270,15 +2166,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>-20</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>-0.3</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2288,6 +2175,12 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxPerTurn>2</iRevIdxPerTurn>
+			<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+			<iRevIdxGarrisonCapChange>2</iRevIdxGarrisonCapChange>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2385,15 +2278,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>1</iRevIdxLocal>
-						<iRevIdxNational>3</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>20</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>-3</iRevLaborFreedom>
@@ -2513,15 +2397,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>2</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2621,15 +2496,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>2</iRevIdxLocal>
-						<iRevIdxNational>3</iRevIdxNational>
-						<iRevIdxDistanceModifier>20</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>40</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>20</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0.5</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2737,15 +2603,6 @@
                 </ImprovementYieldChange>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2845,15 +2702,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>1</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -2863,6 +2711,10 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxPerTurn>1</iRevIdxPerTurn>
+			<iRevIdxNationalityMod>-10</iRevIdxNationalityMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -2960,15 +2812,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>10</iRevLaborFreedom>
@@ -3071,15 +2914,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>0</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>-20</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -3195,15 +3029,6 @@
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
 						<!-- Revolution Mod Start -->
-						<iRevIdxLocal>0</iRevIdxLocal>
-						<iRevIdxNational>-2</iRevIdxNational>
-						<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-						<iRevIdxHolyCityGood>0</iRevIdxHolyCityGood>
-						<iRevIdxHolyCityBad>0</iRevIdxHolyCityBad>
-						<iRevIdxSwitchTo>0</iRevIdxSwitchTo>
-						<iRevIdxNationalityMod>0</iRevIdxNationalityMod>
-						<iRevIdxBadReligionMod>0</iRevIdxBadReligionMod>
-						<iRevIdxGoodReligionMod>0</iRevIdxGoodReligionMod>
 						<fRevViolentMod>0</fRevViolentMod>
 						<iRevReligiousFreedom>0</iRevReligiousFreedom>
 						<iRevLaborFreedom>0</iRevLaborFreedom>
@@ -3213,6 +3038,9 @@
 						<bFreeSpeech>0</bFreeSpeech>
 						<bCanDoElection>0</bCanDoElection>
 						<!-- Revolution Mod End -->
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxGoodReligionMod>25</iRevIdxGoodReligionMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -3391,6 +3219,9 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxHappinessMod>25</iRevIdxHappinessMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>0</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>
@@ -3480,6 +3311,9 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
+            <!-- lfgr Revolution effects 04/2023 -->
+			<iRevIdxCrimeMod>-25</iRevIdxCrimeMod>
+            <!-- lfgr end -->
             <WeLoveTheKing></WeLoveTheKing>
             <bHidden>1</bHidden>
             <bNoDiplomacyWithEnemies>0</bNoDiplomacyWithEnemies>

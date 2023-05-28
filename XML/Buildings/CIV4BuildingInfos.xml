@@ -128,11 +128,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-3</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>6</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -589,6 +587,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -823,6 +824,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -1061,6 +1065,12 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -1315,6 +1325,12 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-3</iRevIdxPerTurn>
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -1570,6 +1586,12 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-4</iRevIdxPerTurn>
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -1825,6 +1847,12 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-8</iRevIdxPerTurn>
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -2080,6 +2108,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-10</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -2779,11 +2812,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -3008,11 +3039,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-2</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-2</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -3240,6 +3269,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>50</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -3464,6 +3496,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxCrimeMod>-25</iRevIdxCrimeMod>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -3691,6 +3728,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>14</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -3924,6 +3966,10 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxHappinessMod>10</iRevIdxHappinessMod>
+			<iRevIdxUnhappinessMod>10</iRevIdxUnhappinessMod>
+			<!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -5086,6 +5132,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxLocationMod>-25</iRevIdxLocationMod>
+            <!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -5530,6 +5579,10 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxHappinessMod>-25</iRevIdxHappinessMod>
+			<iRevIdxUnhappinessMod>-25</iRevIdxUnhappinessMod>
+            <!-- lfgr end -->
 			<iAsset>3</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -5977,11 +6030,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -6202,6 +6253,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -8512,6 +8566,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxDisorderMod>-50</iRevIdxDisorderMod>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -8753,6 +8812,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -8985,11 +9047,10 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-10</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			<iRevIdxLocationMod>-10</iRevIdxLocationMod>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -9214,11 +9275,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-10</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			<iRevIdxUnhappinessMod>-50</iRevIdxUnhappinessMod>
+			<iRevIdxLocationMod>-10</iRevIdxLocationMod>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -10335,6 +10396,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -10580,11 +10644,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-10</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -12553,11 +12615,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>2</fVisibilityPriority>
@@ -13004,6 +13064,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -13236,11 +13301,6 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-2</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -17488,6 +17548,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-3</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -17718,6 +17781,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -20186,11 +20252,6 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -21335,6 +21396,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-3</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -21569,6 +21633,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxCrimeMod>-100</iRevIdxCrimeMod>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -21818,11 +21885,6 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>2</fVisibilityPriority>
@@ -22489,6 +22551,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>3</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -22732,6 +22797,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>3</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -22971,6 +23039,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>3</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -23214,11 +23285,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -23441,11 +23510,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -23668,11 +23735,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -23895,11 +23960,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -24122,11 +24185,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -24349,11 +24410,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -24576,11 +24635,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -24803,11 +24860,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -25030,11 +25085,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -25257,11 +25310,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -25484,11 +25535,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>1000</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -25717,11 +25766,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>20</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -25944,11 +25991,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-5</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -26171,11 +26216,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -26401,11 +26444,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -26628,11 +26669,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -26855,11 +26894,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -27082,11 +27119,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>1000</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -27312,11 +27347,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -27539,11 +27572,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -27830,11 +27861,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-5</iRevIdxLocal>
-			<iRevIdxNational>-2</iRevIdxNational>
-			<iRevIdxDistanceModifier>0</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-5</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>0</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10000</fVisibilityPriority>
@@ -28289,6 +28318,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxUnhappinessMod>-50</iRevIdxUnhappinessMod>
+			<!-- lfgr end -->
 			<iAsset>12</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -29673,6 +29705,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-3</iRevIdxPerTurn>
+			<!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -30359,11 +30394,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>1</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>5</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -30591,6 +30624,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxCultureRateMod>25</iRevIdxCultureRateMod>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -31496,6 +31534,11 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+			<!-- lfgr Revolution effects 05/2023 -->
+			<RevIdxEffectsAllCities>
+				<iRevIdxGarrisonCapChange>2</iRevIdxGarrisonCapChange>
+			</RevIdxEffectsAllCities>
+			<!-- lfgr end -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -32867,6 +32910,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -33109,6 +33155,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -33581,6 +33630,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -33816,6 +33868,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -34051,6 +34106,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>10</fVisibilityPriority>
@@ -34293,6 +34351,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
+            <!-- lfgr end -->
 			<iAsset>4</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>2</fVisibilityPriority>
@@ -36155,11 +36216,6 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-10</iRevIdxLocal>
-			<iRevIdxNational>-1</iRevIdxNational>
-			<iRevIdxDistanceModifier>-50</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>
@@ -37511,6 +37567,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>2</fVisibilityPriority>
@@ -37731,6 +37790,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>2</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -37954,6 +38016,9 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
+            <!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
+            <!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>2</fVisibilityPriority>
@@ -38174,11 +38239,10 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-4</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
+			<!-- lfgr Revolution effects 05/2023 -->
+			<iRevIdxPerTurn>-4</iRevIdxPerTurn>
+			<iRevIdxLocationMod>-20</iRevIdxLocationMod>
+			<!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>1</fVisibilityPriority>
@@ -38714,7 +38778,7 @@
 			</SpecialistCommerceChanges>
 		</BuildingInfo>
 		<BuildingInfo>
-			<BuildingClass>BUILDINGCLASS_WINTER_PALACE</BuildingClass>
+				<BuildingClass>BUILDINGCLASS_WINTER_PALACE</BuildingClass>
 			<Type>BUILDING_WINTER_PALACE</Type>
 			<SpecialBuildingType>NONE</SpecialBuildingType>
 			<Description>TXT_KEY_BUILDING_WINTER_PALACE</Description>
@@ -38835,11 +38899,6 @@
 			<iBombardDefense>0</iBombardDefense>
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
-			<!-- RevolutionDCM Building Effects  -->
-			<iRevIdxLocal>-2</iRevIdxLocal>
-			<iRevIdxNational>0</iRevIdxNational>
-			<iRevIdxDistanceModifier>-20</iRevIdxDistanceModifier>
-			<!-- RevolutionDCM End  -->
 			<iAsset>8</iAsset>
 			<iPower>0</iPower>
 			<fVisibilityPriority>100</fVisibilityPriority>

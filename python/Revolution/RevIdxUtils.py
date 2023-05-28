@@ -45,16 +45,11 @@ National rev idx changes:
 
 from CvPythonExtensions import *
 
-# Just for IDE, does only work with python 2.7
-try : from typing import *
-except ImportError : pass
-
-import math
+import itertools
 
 from PyHelpers import getText, PyPlayer
 
 import BugCore
-import CvUtil
 #import GCUtils
 import RevDefs
 import RevUtils
@@ -118,35 +113,7 @@ def coloredRevIdxFactorStr( iRevIdx ) :
 	else :
 		return sRevIdx
 
-def effectsToIdxAndHelp( effects ) :
-	# type: ( Iterable[Tuple[CvInfoBase, int]] ) -> Tuple[int, unicode]
-	""" Aggregate a set of (info, iEffect) tuples into a total effect and help text. """
-	iTotalIdx = 0
-	szHelp = u""
-	for info, iRevIdx in effects :
-		iTotalIdx += iRevIdx
-		if szHelp != u"" : szHelp += u"\n"
-		szHelp += getText( "[ICON_BULLET]%s1: %s2", info.getTextKey(), coloredRevIdxFactorStr( iRevIdx ) )
-	return iTotalIdx, szHelp
-
-def effectsToRevWatchData( effects ) : # TODO: Deprecated
-	# type: ( Iterable[Tuple[Union[CvInfoBase, unicode], int]] ) -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
-	""" Aggregate a set of (info, iEffect) tuples into a total effect, a positive list, and negative list. """
-	iTotal = 0
-	posList = []
-	negList = []
-	for cause, iRevIdx in effects :
-		iTotal += iRevIdx
-		if isinstance( cause, CvInfoBase ) :
-			desc = cause.getDescription()
-		else :
-			desc = cause
-		if iRevIdx > 0 :
-			negList.append( (iRevIdx, desc) )
-		else :
-			posList.append( (iRevIdx, desc) )
-	return iTotal, posList, negList
-
+# TODO: Move this code below. It's only used once.
 def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False ) :
 	# type (int, CyPlayer) -> (int, unicode)
 	"""
@@ -158,7 +125,7 @@ def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False
 	szHelp = u""
 
 	# Adjust index accumulation for varying game speeds
-	fGameSpeedMod = RevUtils.getGameSpeedMod()
+	fGameSpeedMod = RevUtils.getGameSpeedMod() # TODO: Remove floating-point arithmetic
 	if fGameSpeedMod != 1 :
 		szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", modAsPercent( fGameSpeedMod ) )
 
@@ -178,14 +145,14 @@ def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False
 
 	if szHelp != u"" :
 		if bColorFinalIdx :
-			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %s1", coloredRevIdxFactorStr( iAdjustedIdx ) )
+			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iAdjustedIdx ) )
 		else :
-			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %D1", iAdjustedIdx )
+			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %D1[ICON_INSTABILITY]", iAdjustedIdx )
 
 	return iAdjustedIdx, szHelp
 
 def modAsPercent( fMod ) :
-	""" Converts a modifier such as 0.7 to a percentage such as -30 """
+	""" Converts a modifier (such as 0.7) to a percentage (such as -30) """
 	return int( ( fMod - 1 ) * 100 )
 
 def canRevolt( pCity ) :
@@ -194,6 +161,29 @@ def canRevolt( pCity ) :
 		return False
 
 	return True
+
+def computeInfoRevEffectsAndHelp( lpInfoList, valueFunc, szTemplate, bColor ) :
+	# type: (List[CvInfoBase], Callable[[CvInfoBase], int], str, bool) -> Iterator[Tuple[int, unicode]]
+	""" Generic function to compute and add up effects from a list of infos. """
+
+	for pInfo in lpInfoList :
+		iValue = valueFunc( pInfo )
+		if iValue != 0 :
+			if bColor :
+				value = coloredRevIdxFactorStr( iValue )
+			else :
+				value = iValue
+			yield ( iValue, getText( szTemplate, value, pInfo.getDescription() ) )
+
+def sumValuesAndHelp( *ltValuesAndHelp ) :
+	# type: (Tuple[int, unicode]) -> Tuple[int, unicode]
+	""" Helper function for component-wise summing. """
+	iValue = 0
+	szHelp = u""
+	for iLoopValue, szLoopHelp in ltValuesAndHelp :
+		iValue += iLoopValue
+		szHelp += szLoopHelp
+	return iValue, szHelp
 
 
 
@@ -206,7 +196,7 @@ class NationalEffectBuildingsInfoCache :
 		self._leBuildings = []
 		for eBuilding in range( gc.getNumBuildingInfos() ) :
 			kBuilding = gc.getBuildingInfo( eBuilding )
-			if kBuilding.getRevIdxNational() != 0 :
+			if not kBuilding.getRevIdxEffectsAllCities().is_zero() :
 				self._leBuildings.append( eBuilding )
 
 	def __iter__( self ) :
@@ -231,21 +221,15 @@ class PlayerRevIdxCache :
 	def _buildingsWithNationalEffects( self ) :
 		""" Un-cached function"""
 		for eBuilding in NationalEffectBuildingsInfoCache.getInstance() :
-			iCount = 0
+			# TODO: Count and merge multiple instances of the same building?
 			for pCity in PyPlayer( self._ePlayer ).iterCities() :
 				if pCity.isHasBuilding( eBuilding ) :
-					iCount += 1
-
-			if iCount > 0 :
-				kBuilding = gc.getBuildingInfo( eBuilding )
-				iRevIdx = kBuilding.getRevIdxNational()
-				if iRevIdx != 0 :
-					yield kBuilding, iRevIdx * iCount
+					yield gc.getBuildingInfo( eBuilding )
 
 	def buildingsWithNationalEffects( self ) :
 		# type: () -> Sequence[Tuple[CvBuildingInfo, int]]
 		"""
-		Returns a collection of buildings and associated RevIndices that have a nationwide effect.
+		Returns a collection of buildings that have a nationwide effect.
 		"""
 		if self._buildingsCache is None :
 			self._buildingsCache = tuple( self._buildingsWithNationalEffects() )
@@ -286,15 +270,85 @@ class CityRevIdxHelper :
 		return self._pCity
 
 	def cannotRevoltStr( self ) :
-		# type: () -> Optional[str]
+		# type: () -> Optional[unicode]
 		"""
 		If the city can (generally) revolt, returns None. Otherwise, returns a string explaining why it can't.
 		"""
 		if self._pCity.isSettlement() and self._pCity.getOwner() == self._pCity.getOriginalOwner() :
-			return "Settlements you founded cannot revolt" # TODO: Translation
+			return getText( "Settlements you founded cannot revolt" )
 		return None
 
 
+	### Generic RevIdx functions
+	
+	def computeCivicEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
+		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
+		return computeInfoRevEffectsAndHelp(
+				self._pyOwner.iterCivicInfos(),
+				lambda pCivic : revEffectsFunc( pCivic.getRevIdxEffects() ),
+				szTemplate, bColor )
+	
+	def computeLocalBuildingEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
+		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
+		return computeInfoRevEffectsAndHelp(
+				self._lpBuildings,
+				lambda pBuilding : revEffectsFunc( pBuilding.getRevIdxEffects() ),
+				szTemplate, bColor )
+	
+	def computeNationalBuildingEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
+		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
+		return computeInfoRevEffectsAndHelp(
+			self._pPlayerCache.buildingsWithNationalEffects(),
+			lambda pBuilding : revEffectsFunc( pBuilding.getRevIdxEffectsAllCities() ),
+			szTemplate, bColor )
+	
+	def computeGenericEffectsAndHelp( self, revEffectsFunc, szCivicHelp, szLocalBuildingHelp, szNationalBuildingHelp, bColor ) :
+		# type: (Callable[[CvRevolutionEffects], int], str, str, str, bool) -> Iterable[Tuple[int, unicode]]
+		return itertools.chain( 
+				self.computeCivicEffectsAndHelp( revEffectsFunc, szCivicHelp, bColor ),
+				self.computeLocalBuildingEffectsAndHelp( revEffectsFunc, szLocalBuildingHelp, bColor ),
+				self.computeNationalBuildingEffectsAndHelp( revEffectsFunc, szNationalBuildingHelp, bColor )
+			)
+		# TODO: religions, traits...?
+	
+	def computeGenericModifiersTimes100AndHelp( self, revEffectsFunc ) :
+		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
+		return sumValuesAndHelp(
+			*self.computeGenericEffectsAndHelp( revEffectsFunc,
+				"[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]",
+				"[ICON_BULLET]%D1% from [COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]",
+				"[ICON_BULLET]%D1% from [COLOR_BUILDING_TEXT]%s2[COLOR_REVERT] (national)", False ) )
+	
+	def computeGenericCapChangeAndHelp( self, revEffectsFunc ) :
+		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
+		return sumValuesAndHelp(
+			*self.computeGenericEffectsAndHelp( revEffectsFunc,
+				"[ICON_BULLET][COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]: %D1",
+				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %D1",
+				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %D1 in all cities", False ) )
+	
+	def computeGenericPerTurnAndHelp( self, revEffectsFunc ) :
+		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
+		return sumValuesAndHelp(
+			*self.computeGenericEffectsAndHelp( revEffectsFunc,
+				"[ICON_BULLET][COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]: %s1[ICON_INSTABILITY]",
+				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %s1[ICON_INSTABILITY]",
+				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %s1[ICON_INSTABILITY] in all cities", True ) )
+
+	def _modifiedCapAndHelp( self, iBaseCap, capChangeFunc ) :
+		iCapChange, szCapChangeHelp = self.computeGenericCapChangeAndHelp( capChangeFunc )
+		iCap = iBaseCap + iCapChange
+
+		if szCapChangeHelp :
+			szHelp = u"\n" + getText( "Base cap: %d1", iBaseCap ) + szCapChangeHelp
+		else :
+			szHelp = u"\n" + getText( "Cap: %d1", iBaseCap )
+
+		return iCap, szHelp
+
+
+	### Specific RevIdx functions
+	
 	def computeHappinessRevIdx( self ) :
 		return self.computeHappinessRevIdxAndHelp()[0]
 
@@ -310,12 +364,15 @@ class CityRevIdxHelper :
 				szHelp += u"\n"
 				szHelp += getText( "[ICON_BULLET]%D1% from recent acquisition (%d2 turns)",
 						iRecentAcquisitionMod, self._iTurnsSinceAcquisition )
-
-		if self._pCity.isUnhappyProduction() :
-			iUnhappyProduction = -50 # TODO: Separate into new tag?
-			szHelp += u"\n"
-			szHelp += getText( "[ICON_BULLET]%D1% from unhappiness production", iUnhappyProduction ) # TODO: say Building
-			iMod += iUnhappyProduction
+		
+		if bUnhappiness :
+			effectsFunc = CvRevolutionEffects.getRevIdxUnhappinessMod
+		else :
+			effectsFunc = CvRevolutionEffects.getRevIdxHappinessMod
+		
+		iExtraMod, szExtraHelp = self.computeGenericModifiersTimes100AndHelp( effectsFunc )
+		iMod += iExtraMod
+		szHelp += szExtraHelp
 
 		return iMod, szHelp
 
@@ -324,7 +381,6 @@ class CityRevIdxHelper :
 
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Happiness/Unhappiness[COLOR_REVERT]" )
 
-		# TODO: Remove all the floating point arithmetic, maybe simplify
 		iNumUnhappy = self._pCity.unhappyLevel(0) - self._pCity.happyLevel()
 		#iNumUnhappy = RevUtils.getModNumUnhappy( self._pCity, RevOpt.getWarWearinessMod() )
 
@@ -340,56 +396,63 @@ class CityRevIdxHelper :
 			szHelp += u"\n"
 			szHelp += getText( "Ignoring some factors: %d1[ICON_UNHAPPY]", iNumUnhappy )
 
-			iBaseHappyIdx = 100 * iNumUnhappy // self._pCity.getPopulation()
-
-			# Cap
-			iCap = min( 100, 10 * self._pCity.getPopulation() )
-			if iBaseHappyIdx > iCap :
-				iCappedHappyIdx = iCap
-				szCapHelp = u"\n" + getText( "[ICON_BULLET]Max. from population: %D1[ICON_INSTABILITY]", iCap )
-			else :
-				iCappedHappyIdx = iBaseHappyIdx
-				szCapHelp = u""
+			# Base effect
+			iUnhappyPerPopTimes100 = 100 * iNumUnhappy // self._pCity.getPopulation()
+			szHelp += u"\n" + getText( "[ICON_UNHAPPY] per population: %s1", "%.2f" % ( iUnhappyPerPopTimes100 / 100. ) )
+			iBaseHappyIdx = iUnhappyPerPopTimes100
+			szHelp += u"\n"
+			szHelp += getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseHappyIdx ) )
 
 			# Modifiers
 			iModTimes100, szModHelp = self.computeHappinessModifiersTimes100AndHelp( bUnhappiness = True )
-			iHappyIdx = iCappedHappyIdx * max( 0, iModTimes100 ) // 100
+			iIdx = iBaseHappyIdx * max( 0, iModTimes100 ) // 100
+			szHelp += szModHelp
 
-			# Possibly add subtotal
-			if szCapHelp or szModHelp :
-				szHelp += u"\n"
-				szHelp += getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseHappyIdx ) )
-				szHelp += szCapHelp
-				szHelp += szModHelp
 
+			# Cap
+			iCap = min( 100, 10 * self._pCity.getPopulation() )
+			szHelp += NL_SEPARATOR
+			szHelp += u"\n" + getText( "Cap from population: %d1", iCap )
+			iIdx = min( iIdx, iCap )
+
+			# Total
 			szHelp += NL_SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "From unhappiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iHappyIdx ) )
-			return iHappyIdx, szHelp
+			szHelp += getText( "From unhappiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iIdx ) )
+			return iIdx, szHelp
 		elif iNumUnhappy < 0 :
 			szHelp += u"\n"
 			szHelp += getText( "Excess happiness: %d1[ICON_HAPPY]", -iNumUnhappy )
 
-			iBaseHappyIdx = min( 10, 10 * iNumUnhappy // self._pCity.getPopulation() )
+			# Base effect
+			iHappyPerPopTimes100 = -100 * iNumUnhappy // self._pCity.getPopulation()
+			szHelp += u"\n" + getText( "[ICON_HAPPY] per population: %s1", "%.2f" % ( iHappyPerPopTimes100 / 100. ) )
+			iBaseHappyIdx = -iHappyPerPopTimes100 // 10
+
+			# Subtotal
+			szHelp += u"\n"
+			szHelp += getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseHappyIdx ) )
 
 			# Modifiers
 			iModTimes100, szModHelp = self.computeHappinessModifiersTimes100AndHelp( bUnhappiness = False )
-			iHappyIdx = iBaseHappyIdx * max( 0, iModTimes100 ) // 100
+			iIdx = iBaseHappyIdx * max( 0, iModTimes100 ) // 100
+			szHelp += szModHelp
 
-			# Possibly add subtotal
-			if szModHelp :
-				szHelp += u"\n"
-				szHelp += getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseHappyIdx ) )
-				szHelp += szModHelp
-			
+			# Cap
+			iBaseCap = 10  # TODO: Make define
+			iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxHappinessCapChange )
+			iIdx = max( -iCap, iIdx )
+			szHelp += NL_SEPARATOR
+			szHelp += szCapHelp
+
+			# Total
 			szHelp += NL_SEPARATOR
 			szHelp += u"\n"
-			szHelp += getText( "From happiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iHappyIdx ) )
+			szHelp += getText( "From happiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iIdx ) )
 
-			return iHappyIdx, szHelp
+			return iIdx, szHelp
 		else :
 			return 0, szHelp + u"\n" + getText( "City is neither happy nor unhappy" )
-
 
 	def _cityDistance(self, pOtherCity ) :
 		# type: (CyCity) -> int
@@ -434,14 +497,10 @@ class CityRevIdxHelper :
 			iAirliftMod = -50 # TODO: Make setting
 			iMod += iAirliftMod
 			szModHelp += u"\n" + getText( "[ICON_BULLET]%D1% from teleportation", iAirliftMod )
-
-		for pCivic in self._pyOwner.iterCivicInfos() :
-			iCivicMod = pCivic.getRevIdxDistanceModifier()
-			if iCivicMod != 0 :
-				iMod += iCivicMod
-				szModHelp += u"\n"
-				szModHelp += getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]",
-						iCivicMod, pCivic.getDescription() )
+		
+		iGenMod, szGenHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxLocationMod )
+		iMod += iGenMod
+		szModHelp += szGenHelp
 
 		if szModHelp :
 			szHelp += u"\n" + getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
@@ -509,6 +568,7 @@ class CityRevIdxHelper :
 			self._computeReligionConflictCache()
 		return self._dCachePresentReligionConflict.get( (eReligion1, eReligion2), 0 )
 
+	# TODO: Split into good and bad effects (+/- in table header)
 	def computeReligionRevIndexAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		eStateReligion = self._pOwner.getStateReligion()
@@ -523,7 +583,7 @@ class CityRevIdxHelper :
 
 			pStateReligion = gc.getReligionInfo( eStateReligion )
 
-			# Prepartion: do we own the holy city?
+			# Preparation: do we own the holy city?
 			bOwnHolyCity = False
 			bInfidelsOwnHolyCity = False
 			pStateHolyCity = game.getHolyCity( eStateReligion )
@@ -555,20 +615,43 @@ class CityRevIdxHelper :
 					iGoodIdx += iHolyWarIdx
 					lszGoodHelpLines.append( getText( "War against infidels: %D1[ICON_INSTABILITY]", iHolyWarIdx ) )
 
-			# Holy city bonus
-			for pCivic in self._pyOwner.iterCivicInfos() :
-				iGoodHCIdx = - pCivic.getRevIdxHolyCityGood()
-				iBadHCIdx = pCivic.getRevIdxHolyCityBad()
-				if bOwnHolyCity and iGoodHCIdx != 0 :
-					iGoodIdx += iGoodHCIdx
-					lszGoodHelpLines.append( getText(
-							"[COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], we own the %F2 holy city: %D3[ICON_INSTABILITY]",
-							pCivic.getDescription(), pStateReligion.getChar(), iGoodHCIdx ) )
-				elif bInfidelsOwnHolyCity and iBadHCIdx :
-					iBadIdx += iBadHCIdx
-					lszBadHelpLines.append( getText(
-							"[COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], infidels own the %F2 holy city: %D3[ICON_INSTABILITY]",
-							pCivic.getDescription(), pStateReligion.getChar(), iBadHCIdx ) )
+			# Holy city ownership
+			# TODO: Use helper functions
+			# TODO: Should not benefit from religion modifiers. Maybe move to various effects?
+			if bOwnHolyCity :
+				iHolyCityIdx, szHolyCityHelp = sumValuesAndHelp( *itertools.chain(
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
+						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY]",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
+						for pInfo in self._pyOwner.iterCivicInfos() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
+						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY] in all cities",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
+						for pInfo in self._lpBuildings if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
+						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY] in all cities",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
+						for pInfo in self._pPlayerCache.buildingsWithNationalEffects() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 )
+				) )
+				iGoodIdx += iHolyCityIdx
+				lszGoodHelpLines.append( szHolyCityHelp )
+			if bInfidelsOwnHolyCity :
+				iHolyCityIdx, szHolyCityHelp = sumValuesAndHelp( *itertools.chain(
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
+						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY]",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
+						for pInfo in self._pyOwner.iterCivicInfos() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
+						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY] in all cities",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
+						for pInfo in self._lpBuildings if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
+						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY] in all cities",
+							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
+						for pInfo in self._pPlayerCache.buildingsWithNationalEffects() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 )
+				) )
+				iBadIdx += iHolyCityIdx
+				lszBadHelpLines.append( szHolyCityHelp )
 
 			# Non-state rels in city
 			leReligionsInCity = []
@@ -599,23 +682,14 @@ class CityRevIdxHelper :
 			lszBadHelpLines.append( getText( "Bad effects: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBadIdx ) ) )
 
 			# Civic mods
-			iGoodMod = 100
-			iBadMod = 100
-			for pCivic in self._pyOwner.iterCivicInfos() :
-				iCivicGoodMod = pCivic.getRevIdxGoodReligionMod()
-				iCivicBadMod = pCivic.getRevIdxBadReligionMod()
-				if iCivicGoodMod != 0 :
-					iGoodMod += iCivicGoodMod
-					lszGoodHelpLines.append( getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2_civic[COLOR_REVERT]",
-							iCivicGoodMod, pCivic.getDescription() ) )
-				if iCivicBadMod != 0 :
-					iBadMod += iCivicBadMod
-					lszGoodHelpLines.append( getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2_civic[COLOR_REVERT]",
-							iCivicBadMod, pCivic.getDescription() ) )
+			iGoodMod, szGoodMod = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxGoodReligionMod )
+			iBadMod, szBadMod = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxBadReligionMod )
+			lszGoodHelpLines.append( szGoodMod.strip() ) # TODO: Not a line...
+			lszBadHelpLines.append( szBadMod.strip() )
 
 			# Apply mods
-			iGoodIdx = iGoodIdx * iGoodMod // 100
-			iBadIdx = iBadIdx * iBadMod // 100
+			iGoodIdx = iGoodIdx * ( iGoodMod + 100 ) // 100
+			iBadIdx = iBadIdx * ( iBadMod + 100 ) // 100
 
 			lszHelpLines.extend( lszGoodHelpLines )
 			if len( lszGoodHelpLines ) > 0 :
@@ -644,6 +718,8 @@ class CityRevIdxHelper :
 	def computeNationalityRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
+		# TODO: Now only negative, update CvRevolutionEffects.getRevIdxNationalityMod help text
+
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Nationality[COLOR_REVERT]")
 
 		# Calculate adjusted culture percent
@@ -666,26 +742,16 @@ class CityRevIdxHelper :
 		szHelp += u"\n" + getText( "Foreign nationality (adj.): %d1%", 100 - iCulturePercent )
 
 		# Base idx
-		iBaseIdx = (100 - iCulturePercent)**2 // 500 - 3
+		iBaseIdx = (100 - iCulturePercent)**2 // 500
 
-		# Modifiers (only for instability, TODO?)
-		if iBaseIdx > 0 :
-			iMod = 100
-			szModHelp = u""
-			for pCivic in self._pyOwner.iterCivicInfos() :
-				iCivicMod = pCivic.getRevIdxNationalityMod()
-				if iCivicMod != 0 :
-					iMod += iCivicMod
-					szModHelp += u"\n"
-					szModHelp += getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]", iCivicMod, pCivic.getDescription() )
+		# Modifiers
+		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxNationalityMod )
 
-			if szModHelp :
-				szHelp += u"\n" + getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
-				szHelp += szModHelp
+		if szModHelp :
+			szHelp += u"\n" + getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
+			szHelp += szModHelp
 
-			iNatIdx = iBaseIdx * max( 0, iMod ) // 100
-		else :
-			iNatIdx = iBaseIdx
+		iNatIdx = iBaseIdx * max( 0, 100 + iMod ) // 100
 
 		szHelp += NL_SEPARATOR
 		szHelp += u"\n" + getText( "Nationality effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iNatIdx ) )
@@ -711,33 +777,20 @@ class CityRevIdxHelper :
 
 		iBaseIdx = min( 0, iPopPenalty - iNumDefenders )
 
-		# Modifiers and cap
-		iMod = 100
-		szModHelp = u""
-		iCap = 10 # TODO: Make define
-		for pCivic in self._pyOwner.iterCivicInfos() :
-			iCivicMod = 0 # TODO
-			if iCivicMod != 0 :
-				iMod += iCivicMod
-				szModHelp += u"\n" + getText( "[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]",
-						iCivicMod, pCivic.getDescription() )
-
-			# TODO: cap change from civic
-
-		for pBuilding in self._lpBuildings :
-			iBuildingMod = pBuilding.getDefenseModifier() # TODO: Use separate tag
-			if iBuildingMod != 0 :
-				iMod += iBuildingMod
-				szModHelp += u"\n" + getText( "[ICON_BULLET]%D1% from [COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]",
-						iBuildingMod, pBuilding.getDescription() )
+		# Modifiers
+		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxGarrisonMod )
 
 		if szModHelp :
 			szHelp += u"\n" + getText( "Base effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
 			szHelp += szModHelp
+		
+		# Cap
+		iBaseCap = 10 # TODO: Make define
+		iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxGarrisonCapChange )
+		szHelp += szCapHelp
 
-		iGarIdx = min( iCap, iBaseIdx * max( 0, iMod ) // 100 )
-		szHelp += u"\n" + getText( "Garrison effect: %s1[ICON_INSTABILITY] (max: %d2)",
-				coloredRevIdxFactorStr( iGarIdx ), iCap )
+		iGarIdx = max( -iCap, iBaseIdx * max( 0, 100 + iMod ) // 100 )
+		szHelp += u"\n" + getText( "Garrison effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iGarIdx ) )
 
 		return iGarIdx, szHelp
 
@@ -771,6 +824,10 @@ class CityRevIdxHelper :
 				iPastRevoltMod = -90 # TODO: Make define
 				iModTimes100 += iPastRevoltMod
 				szHelp += u"\n" + getText( "[ICON_BULLET]%D1% from past revolutions", iPastRevoltMod )
+			
+			iGenMod, szGenModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxDisorderMod )
+			iModTimes100 += iGenMod
+			szHelp += szGenModHelp
 
 			if iModTimes100 != 100 :
 				iDisorderIdx = iDisorderIdx * iModTimes100 // 100
@@ -795,26 +852,25 @@ class CityRevIdxHelper :
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Crime[COLOR_REVERT]" )
 
 		# LFGR_TODO: Make configurable
-		iUsualCityCrime = 20  # This crime level means no stability bonus/malus
 		iCrimeCap = 100  # No crime above this will be counted
 		iCrimeFactorPercent = 10
 		iCityCrime = min( self._pCity.getCrime(), iCrimeCap )
 
-		iBaseCrimeIdx = (iCityCrime - iUsualCityCrime) * iCrimeFactorPercent // 100
+		iBaseCrimeIdx = iCityCrime * iCrimeFactorPercent // 100
+		szHelp += u"\n" + getText( "Effective crime (max. %d2): %d1", iCityCrime, iCrimeCap )
 
 		# Modifiers
-		iMod = 100
-		szModHelp = u""
+		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxCrimeMod )
 		# TODO: Un-hardcode
 		eStateReligion = self._pOwner.getStateReligion()
 		if eStateReligion == gc.getInfoTypeForString( "RELIGION_COUNCIL_OF_ESUS" ) :
-			if self._pCity.isHasReligion( self._pOwner.getStateReligion() ) :
+			if self._pCity.isHasReligion( eStateReligion ) :
 				iRelMod = -50
 				iMod += iRelMod
 				szModHelp += u"\n" + getText( "[ICON_BULLET]%D1% from %F2",
 						iRelMod, gc.getReligionInfo( eStateReligion ).getChar() )
 
-		iCrimeIdx = iBaseCrimeIdx * iMod // 100
+		iCrimeIdx = iBaseCrimeIdx * ( iMod + 100 ) // 100
 		if szModHelp :
 			szHelp += u"\n" + getText( "Base crime effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iCrimeIdx ) )
 			szHelp += szModHelp
@@ -829,6 +885,30 @@ class CityRevIdxHelper :
 		return self.computeCrimeRevIdxAndHelp()[0]
 
 
+	def computeCultureRateRevIdxAndHelp( self ) :
+		# type: () -> (int, int)
+		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Culture Rate[COLOR_REVERT]" )
+
+		iCultRate = self._pCity.getCommerceRate( CommerceTypes.COMMERCE_CULTURE )
+		szHelp += u"\n" + getText( "%d1 [ICON_CULTURE]/Turn", iCultRate )
+
+		iBaseIdx = -isqrt( 2 * iCultRate )
+		szHelp += u"\n" + getText( "Base culture rate effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
+
+		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxCultureRateMod )
+		iIdx = iBaseIdx * ( iMod + 100 ) // 100
+		szHelp += szModHelp
+
+		iBaseCap = 10 # TODO: Define
+		iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxCultureRateCapChange )
+		szHelp += szCapHelp
+
+		iIdx = max( iIdx, -iCap )
+		szHelp += u"\n" + getText( "Culture Rate effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iIdx ) )
+
+		return iIdx, szHelp
+
+
 	def _computeHealthRevIdxAndCap( self ) :
 		# type: () -> Tuple[int, int]
 		iCap = 10 # TODO: Make define
@@ -838,12 +918,6 @@ class CityRevIdxHelper :
 		else :
 			iHealthIdx = 0
 		return iHealthIdx, iCap
-
-	def _computeCultureRateAndRevIdx( self ) :
-		# type: () -> (int, int)
-		iCultRate = self._pCity.getCommerceRate( CommerceTypes.COMMERCE_CULTURE )
-		iCultIdx = -isqrt( 2 * iCultRate )
-		return iCultRate, iCultIdx
 
 	def _computeStarvingRevIdx( self ) :
 		# type: () -> int
@@ -874,6 +948,10 @@ class CityRevIdxHelper :
 	def _computeSimpleFactorsWithEffect( self ) :
 		# type: () -> Generator[Tuple[str, int]]
 		""" Returns various simple factors with description and RevIdx. """
+		
+		iBaseIdx = gc.getDefineINT( "BASE_REV_IDX" )
+		yield "Base effect", iBaseIdx
+		
 		iStarvingIdx = self._computeStarvingRevIdx()
 		if iStarvingIdx != 0 :
 			yield "TXT_KEY_REV_WATCH_STARVATION", iStarvingIdx
@@ -882,36 +960,23 @@ class CityRevIdxHelper :
 		if iGoldenAgeIdx != 0 :
 			yield "Golden Age", iGoldenAgeIdx
 
-		iCultureRate, iCultureRevIdx = self._computeCultureRateAndRevIdx()
-		if iCultureRevIdx != 0 :
-			yield getText( "%d1 [ICON_CULTURE]/Turn", iCultureRate ), iCultureRevIdx
-
 		iSizeIdx = self._computeEmpireSizeRevIdx()
 		if iSizeIdx < 0 :
 			yield "Small empire", iSizeIdx
 		elif iSizeIdx > 0 :
 			yield "Large empire", iSizeIdx
 
-	def _buildingsWithEffect( self ) :
-		# type: () -> Iterator[Tuple[CvBuildingInfo, int]]
-		for pBuilding in self._lpBuildings :
-			iRevIdx = pBuilding.getRevIdxLocal()
-			if iRevIdx != 0 :
-				yield pBuilding, iRevIdx
-
-	def _civicsWithEffect( self ) :
-		# type: () -> Iterator[Tuple[CvCivicInfo, int]]
-		""" Iterates over tuples (eCivic, iRevIdx) """
-		for pCivic in self._pyOwner.iterCivicInfos() :
-			iRevIdx = pCivic.getRevIdxLocal() + pCivic.getRevIdxNational() # TODO
-			if iRevIdx != 0 :
-				yield pCivic, iRevIdx
-
 	def computeVariousRevIdxAndHelp( self ) :
 		iVariousIdx = 0
-		szHelp = u""
+		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Various effects[COLOR_REVERT]" )
 
 		szVariousHelp = u""
+
+		# Simple things
+		for szDesc, iLoopIdx in self._computeSimpleFactorsWithEffect() :
+			iVariousIdx += iLoopIdx
+			szVariousHelp += u"\n" + getText( "[ICON_BULLET]%s1: %s2[ICON_INSTABILITY]",
+					szDesc, coloredRevIdxFactorStr( iLoopIdx ) )
 
 		# Health
 		iHealthIdx, iCap = self._computeHealthRevIdxAndCap()
@@ -920,73 +985,18 @@ class CityRevIdxHelper :
 			szVariousHelp += u"\n" + getText( "[ICON_BULLET]Unhealthiness: %s1[ICON_INSTABILITY] (max: %d2)",
 					coloredRevIdxFactorStr( iHealthIdx ), iCap )
 
-		# Simple things
-		for szDesc, iLoopIdx in self._computeSimpleFactorsWithEffect() :
-			iVariousIdx += iLoopIdx
-			szVariousHelp += u"\n" + getText( "[ICON_BULLET]%s1: %s2[ICON_INSTABILITY]",
-					szDesc, coloredRevIdxFactorStr( iLoopIdx ) )
+		# Buildings/civics/... with local effects
+		iGenIdx, szGenHelp = self.computeGenericPerTurnAndHelp( CvRevolutionEffects.getRevIdxPerTurn )
+		iVariousIdx += iGenIdx
+		if szGenHelp :
+			szVariousHelp += u"\n" + szGenHelp
 
 		if szVariousHelp :
-			if szHelp : szHelp += u"\n"
-			szHelp += getText( "[COLOR_HIGHLIGHT_TEXT]Various effects[COLOR_REVERT]" )
 			szHelp += szVariousHelp
-
-		# Buildings with local effects
-		szLocalBuildingsHelp = u""
-		for pInfo, iLoopIdx in self._buildingsWithEffect() :
-			iVariousIdx += iLoopIdx
-			szLocalBuildingsHelp += u"\n" + getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT]: %s2[ICON_INSTABILITY]",
-				pInfo.getTextKey(), coloredRevIdxFactorStr( iLoopIdx ) )
-		if szLocalBuildingsHelp :
-			if szHelp : szHelp += u"\n"
-			szHelp += getText( "[COLOR_HIGHLIGHT_TEXT]Local Buildings[COLOR_REVERT]" )
-			szHelp += szLocalBuildingsHelp
-
-		# Buildings with national effects
-		szNationalBuildingsHelp = u""
-		for pInfo, iLoopIdx in self._pPlayerCache.buildingsWithNationalEffects() :
-			iVariousIdx += iLoopIdx
-			szNationalBuildingsHelp += u"\n" + getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT]: %s2[ICON_INSTABILITY]",
-				pInfo.getTextKey(), coloredRevIdxFactorStr( iLoopIdx ) )
-		if szNationalBuildingsHelp :
-			if szHelp : szHelp += u"\n"
-			szHelp += getText( "[COLOR_HIGHLIGHT_TEXT]National Buildings[COLOR_REVERT]" )
-			szHelp += szNationalBuildingsHelp
-
-		# Civics
-		szCivicHelp = u""
-		for pInfo, iLoopIdx in self._civicsWithEffect() :
-			iVariousIdx += iLoopIdx
-			szCivicHelp += u"\n" + getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT]: %s2[ICON_INSTABILITY]",
-				pInfo.getTextKey(), coloredRevIdxFactorStr( iLoopIdx ) )
-		if szCivicHelp :
-			if szHelp : szHelp += u"\n"
-			szHelp += getText( "[COLOR_HIGHLIGHT_TEXT]Civics[COLOR_REVERT]" )
-			szHelp += szCivicHelp
-
+		else :
+			szHelp += getText( "(none)" ) # TODO?
 
 		return iVariousIdx, szHelp
-
-	def computeVariousTooltipData( self ) :
-		# type: () -> Tuple[int, List[Tuple[int, unicode]], List[Tuple[int, unicode]]]
-		""" Special function for city tooltip """
-
-		ltEffects = []
-
-		# Simple things
-		for szDesc, iLoopIdx in self._computeSimpleFactorsWithEffect() :
-			if isinstance( szDesc, str ) :
-				szDesc = getText( szDesc )
-			else :
-				assert type( szDesc ) == unicode
-			ltEffects.append( ( szDesc, iLoopIdx ) )
-
-		# Civics, buildings
-		ltEffects.extend( self._buildingsWithEffect() )
-		ltEffects.extend( self._pPlayerCache.buildingsWithNationalEffects() )
-		ltEffects.extend( self._civicsWithEffect() )
-
-		return effectsToRevWatchData( ltEffects )
 
 
 	def computeRevIdxAndFinalModifierHelp( self ) :
@@ -1000,6 +1010,7 @@ class CityRevIdxHelper :
 			self.computeGarrisonRevIdx(),
 			self.computeDisorderRevIdx(),
 			self.computeCrimeRevIdx(),
+			self.computeCultureRateRevIdxAndHelp()[0],
 			self.computeVariousRevIdxAndHelp()[0]
 		] )
 		szHelp = getText( "Sum of all effects: %D1[ICON_INSTABILITY]", iIdxSum )
@@ -1027,3 +1038,45 @@ class CityRevIdxHelper :
 	def computeRevIdx( self ) :
 		# type: () -> int
 		return self.computeRevIdxAndFinalModifierHelp()[0]
+	
+	def computeRevIdxPopupHelp( self ) :
+		# type: () -> unicode
+
+		# Check whether city can revolt at all
+		szCannotRevolt = self.cannotRevoltStr()
+		if szCannotRevolt is not None :
+			return szCannotRevolt
+
+		# Record lists of (#, string type) effects, seperate for positive and negative
+		ltEffects = [
+			( self.computeHappinessRevIdx(), getText( "TXT_KEY_REV_WATCH_HAPPINESS" ) ),
+			( self.computeLocationRevIdx(), getText( "TXT_KEY_REV_WATCH_DISTANT" ) ),
+			( self.computeReligionRevIdx(), getText( "Religion" ) ),
+			( self.computeNationalityRevIdx(), getText( "TXT_KEY_REV_WATCH_NATIONALITY" ) ),
+			( self.computeGarrisonRevIdx(), getText( "TXT_KEY_REV_WATCH_GARRISON" ) ),
+			( self.computeDisorderRevIdx(), getText( "TXT_KEY_REV_WATCH_DISORDER" ) ),
+			( self.computeCrimeRevIdx(), getText( "Crime" ) ),
+			( self.computeCultureRateRevIdxAndHelp()[0], getText( "Culture Rate" ) )
+		]
+		
+		ltEffects.extend( ( iEffect, getText( szDesc ) ) for szDesc, iEffect in self._computeSimpleFactorsWithEffect() )
+		ltEffects.extend( self.computeGenericEffectsAndHelp( CvRevolutionEffects.getRevIdxPerTurn, "%s2", "%s2", "%s2 (national)", False ) )
+		
+		ltPosEffects = [ (iEffect, szDesc) for iEffect, szDesc in ltEffects if iEffect < 0]
+		ltNegEffects = [ (iEffect, szDesc) for iEffect, szDesc in ltEffects if iEffect > 0]
+		
+		ltPosEffects.sort()
+		ltNegEffects.sort( reverse = True )
+		
+		# Create text
+		szTooltip = u""
+		
+		szTooltip += u"<color=0,230,0,255> " + getText( "TXT_KEY_REV_WATCH_POSITIVE" ) + u"<color=255,255,255,255> "
+		szTooltip += ", ".join( "%s: %s" % ( szDesc, coloredRevIdxFactorStr( iEffect ) ) for iEffect, szDesc in ltPosEffects )
+
+		szTooltip += u"\n<color=255,10,10,255> " + getText( "TXT_KEY_REV_WATCH_NEGATIVE" ) + u"<color=255,255,255,255> "
+		szTooltip += ", ".join( "%s: %s" % ( szDesc, coloredRevIdxFactorStr( iEffect ) ) for iEffect, szDesc in ltNegEffects )
+		
+		szTooltip += u"\n\n" + self.computeRevIdxAndFinalModifierHelp()[1]
+		
+		return szTooltip

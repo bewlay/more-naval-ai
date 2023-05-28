@@ -18,6 +18,9 @@
 #include "CvInfos.h"
 //#include "CvEnums.h"
 
+// lfgr 04/2023
+#include "CvInfosRevolution.h"
+
 #pragma warning( disable: 4251 )	// needs to have dll-interface to be used by clients of class
 
 class CvCity;
@@ -197,6 +200,9 @@ public:
 	DllExport void setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvCity* pCity);
 	DllExport void setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit);
 	DllExport void setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvUnit* pUnit);
+
+	// lfgr Revolution effects 04/2023
+	void parseRevolutionEffectsHelp( CvWStringBuffer& szBuffer, const CvRevolutionEffects& kEffects, bool bAllCities );
 
 	DllExport void buildObsoleteString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false );
 	DllExport void buildEnableBonusString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false);

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Help for revolution effects of civics etc. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_PER_TURN</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_PER_TURN_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HOLY_CITY_OWNED</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn if we own our holy city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HOLY_CITY_OWNED_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn in all cities if we own our holy city</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HOLY_CITY_HEATHEN_OWNED</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn if heathens own our holy city</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HOLY_CITY_HEATHEN_OWNED_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] per turn in all cities if heathens own our holy city</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_UN_OR_HAPPINESS_MOD</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from [ICON_HAPPY]/[ICON_UNHAPPY]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_UN_OR_HAPPINESS_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from [ICON_HAPPY]/[ICON_UNHAPPY] in all cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HAPPINESS_MOD</Tag>
+		<English>[ICON_BULLET]%D1% stability from [ICON_HAPPY]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HAPPINESS_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% stability from [ICON_HAPPY] in all cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_UNHAPPINESS_MOD</Tag>
+		<English>[ICON_BULLET]%D1% instability from [ICON_UNHAPPY]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_UNHAPPINESS_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% instability from [ICON_UNHAPPY] in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HAPPINESS_CAP_CHANGE</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from [ICON_HAPPY]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_HAPPINESS_CAP_CHANGE_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from [ICON_HAPPY] in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_LOCATION_MOD</Tag>
+		<English>[ICON_BULLET]%D1% instability from distance</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_LOCATION_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% instability from distance in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_RELIGION_MOD</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from [ICON_RELIGION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_RELIGION_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from [ICON_RELIGION] in all cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GOOD_RELIGION_MOD</Tag>
+		<English>[ICON_BULLET]%D1% stability from state[ICON_RELIGION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GOOD_RELIGION_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% stability from state[ICON_RELIGION] in all cities</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_BAD_RELIGION_MOD</Tag>
+		<English>[ICON_BULLET]%D1% instability from non-state[ICON_RELIGION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_BAD_RELIGION_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% instability from non-state[ICON_RELIGION] in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_NATIONALITY</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from nationality</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_NATIONALITY_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from nationality in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GARRISON_MOD</Tag>
+		<English>[ICON_BULLET]%D1% stability from garrison</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GARRISON_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% stability from garrison in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GARRISON_CAP_CHANGE</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from garrison</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_GARRISON_CAP_CHANGE_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from garrison in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_DISORDER_MOD</Tag>
+		<English>[ICON_BULLET]%D1% instability from disorder</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_DISORDER_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% instability from disorder in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CRIME_MOD</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from crime</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CRIME_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% (in)stability from crime in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CULTURE_RATE_MOD</Tag>
+		<English>[ICON_BULLET]%D1% stability from [ICON_CULTURE]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CULTURE_RATE_MOD_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1% stability from [ICON_CULTURE] in all cities</English>
+	</TEXT>
+
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CULTURE_RATE_CAP_CHANGE</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from [ICON_CULTURE]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HELP_REV_IDX_CULTURE_RATE_CAP_CHANGE_ALL_CITIES</Tag>
+		<English>[ICON_BULLET]%D1 maximum stability from [ICON_CULTURE] in all cities</English>
+	</TEXT>
+</Civ4GameText>

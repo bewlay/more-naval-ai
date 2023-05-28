@@ -929,4 +929,25 @@ void CyInfoPythonInterface3()
 		.def("getLoading", &CvMainMenuInfo::getLoading, "string ()")
 		.def("getLoadingSlideshow", &CvMainMenuInfo::getLoadingSlideshow, "string ()")
 		;
+
+	// lfgr Revolution effects 04/2023
+	python::class_<CvRevolutionEffects>("CvRevolutionEffects")
+		.def("is_zero", &CvRevolutionEffects::is_zero, "bool ()")
+		.def( "getRevIdxPerTurn", &CvRevolutionEffects::getRevIdxPerTurn, "int ()" )
+		.def( "getRevIdxHolyCityOwned", &CvRevolutionEffects::getRevIdxHolyCityOwned, "int ()" )
+		.def( "getRevIdxHolyCityHeathenOwned", &CvRevolutionEffects::getRevIdxHolyCityHeathenOwned, "int ()" )
+		.def( "getRevIdxHappinessMod", &CvRevolutionEffects::getRevIdxHappinessMod, "int ()" )
+		.def( "getRevIdxHappinessCapChange", &CvRevolutionEffects::getRevIdxHappinessCapChange, "int ()" )
+		.def( "getRevIdxUnhappinessMod", &CvRevolutionEffects::getRevIdxUnhappinessMod, "int ()" )
+		.def( "getRevIdxLocationMod", &CvRevolutionEffects::getRevIdxLocationMod, "int ()" )
+		.def( "getRevIdxBadReligionMod", &CvRevolutionEffects::getRevIdxBadReligionMod, "int ()" )
+		.def( "getRevIdxGoodReligionMod", &CvRevolutionEffects::getRevIdxGoodReligionMod, "int ()" )
+		.def( "getRevIdxNationalityMod", &CvRevolutionEffects::getRevIdxNationalityMod, "int ()" )
+		.def( "getRevIdxGarrisonMod", &CvRevolutionEffects::getRevIdxGarrisonMod, "int ()" )
+		.def( "getRevIdxGarrisonCapChange", &CvRevolutionEffects::getRevIdxGarrisonCapChange, "int ()" )
+		.def( "getRevIdxDisorderMod", &CvRevolutionEffects::getRevIdxDisorderMod, "int ()" )
+		.def( "getRevIdxCrimeMod", &CvRevolutionEffects::getRevIdxCrimeMod, "int ()" )
+		.def( "getRevIdxCultureRateMod", &CvRevolutionEffects::getRevIdxCultureRateMod, "int ()" )
+		.def( "getRevIdxCultureRateCapChange", &CvRevolutionEffects::getRevIdxCultureRateCapChange, "int ()" )
+		;
 }

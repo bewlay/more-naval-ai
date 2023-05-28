@@ -16,6 +16,9 @@
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 #pragma warning( disable: 4127 )
 
+// lfgr Revolution effects 04/2023
+#include "CvInfosRevolution.h"
+
 class CvXMLLoadUtility;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1957,6 +1960,7 @@ public:
 /*                                                                                              */
 /* RevCivicEffects                                                                              */
 /************************************************************************************************/
+	// TODO: Remove
 	bool isDisallowInquisitions() const;
 	int getRevIdxLocal() const;
 	int getRevIdxNational() const;
@@ -2038,6 +2042,9 @@ public:
 	bool isSpecialistValid(int i) const;								// Exposed to Python
 
 	int getImprovementYieldChanges(int i, int j) const;				// Exposed to Python
+
+	// lfgr Revolution effects 04/2023
+	CvRevolutionEffects getRevIdxEffects() const;
 
 	void read(FDataStreamBase* stream);
 	void write(FDataStreamBase* stream);
@@ -2160,6 +2167,8 @@ protected:
 
 	int** m_ppiImprovementYieldChanges;
 
+	// lfgr Revolution effects 04/2023
+	CvRevolutionEffects m_kRevIdxEffects;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2344,18 +2353,6 @@ public:
 	int getAllCityDefenseModifier() const;				// Exposed to Python
 	int getEspionageDefenseModifier() const;					// Exposed to Python
 
-/********************************************************************************/
-/**		REVDCM									4/09/10				phungus420	*/
-/**																				*/
-/**		Building Effects														*/
-/********************************************************************************/
-	int getRevIdxLocal() const;					// Exposed to Python
-	int getRevIdxNational() const;					// Exposed to Python
-	int getRevIdxDistanceModifier() const;					// Exposed to Python
-/********************************************************************************/
-/**		REVDCM									END								*/
-/********************************************************************************/
-
 	int getMissionType() const;											// Exposed to Python
 	void setMissionType(int iNewType);
 	int getVoteSourceType() const;				// Exposed to Python
@@ -2487,6 +2484,10 @@ public:
 	int getBonusYieldModifier(int i, int j) const;				// Exposed to Python
 	int* getBonusYieldModifierArray(int i) const;
 
+	// lfgr Revolution effects 04/2023
+	CvRevolutionEffects getRevIdxEffects() const;
+	CvRevolutionEffects getRevIdxEffectsAllCities() const;
+
 	// Other
 
 	const CvArtInfoBuilding* getArtInfo() const;
@@ -2588,18 +2589,6 @@ protected:
 	int m_iBombardDefenseModifier;
 	int m_iAllCityDefenseModifier;
 	int m_iEspionageDefenseModifier;
-
-/********************************************************************************/
-/**		REVDCM									4/09/10				phungus420	*/
-/**																				*/
-/**		Building Effects														*/
-/********************************************************************************/
-	int m_iRevIdxLocal;
-	int m_iRevIdxNational;
-	int m_iRevIdxDistanceModifier;
-/********************************************************************************/
-/**		REVDCM									END								*/
-/********************************************************************************/
 
 	int m_iMissionType;
 	int m_iVoteSourceType;
@@ -2708,6 +2697,9 @@ protected:
 	int** m_ppaiSpecialistYieldChange;
 	int** m_ppaiBonusYieldModifier;
 
+	// lfgr Revolution effects 04/2023
+	CvRevolutionEffects m_kRevIdxEffects;
+	CvRevolutionEffects m_kRevIdxEffectsAllCities;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -443,6 +443,263 @@ void CvGameTextMgr::setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvU
 }
 
 
+// lfgr Revolution effects 04/2023
+void CvGameTextMgr::parseRevolutionEffectsHelp( CvWStringBuffer& szBuffer, const CvRevolutionEffects& kEffects, bool bAllCities )
+{
+	if( kEffects.getRevIdxPerTurn() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_PER_TURN", kEffects.getRevIdxPerTurn() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_PER_TURN_ALL_CITIES", kEffects.getRevIdxPerTurn() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxHolyCityOwned() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HOLY_CITY_OWNED", kEffects.getRevIdxHolyCityOwned() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HOLY_CITY_OWNED_ALL_CITIES", kEffects.getRevIdxHolyCityOwned() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxHolyCityHeathenOwned() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HOLY_CITY_HEATHEN_OWNED", kEffects.getRevIdxHolyCityHeathenOwned() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HOLY_CITY_HEATHEN_OWNED_ALL_CITIES", kEffects.getRevIdxHolyCityHeathenOwned() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxHappinessMod() == kEffects.getRevIdxUnhappinessMod() )
+	{
+		if( kEffects.getRevIdxHappinessMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_UN_OR_HAPPINESS_MOD", kEffects.getRevIdxHappinessMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_UN_OR_HAPPINESS_MOD_ALL_CITIES", kEffects.getRevIdxHappinessMod() ) );
+			}
+		}
+
+	}
+	else
+	{
+		if( kEffects.getRevIdxHappinessMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HAPPINESS_MOD", kEffects.getRevIdxHappinessMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HAPPINESS_MOD_ALL_CITIES", kEffects.getRevIdxHappinessMod() ) );
+			}
+		}
+
+		if( kEffects.getRevIdxUnhappinessMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_UNHAPPINESS_MOD", kEffects.getRevIdxUnhappinessMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_UNHAPPINESS_MOD_ALL_CITIES", kEffects.getRevIdxUnhappinessMod() ) );
+			}
+		}
+
+	}
+
+	if( kEffects.getRevIdxHappinessCapChange() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HAPPINESS_CAP_CHANGE", kEffects.getRevIdxHappinessCapChange() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_HAPPINESS_CAP_CHANGE_ALL_CITIES", kEffects.getRevIdxHappinessCapChange() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxLocationMod() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_LOCATION_MOD", kEffects.getRevIdxLocationMod() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_LOCATION_MOD_ALL_CITIES", kEffects.getRevIdxLocationMod() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxGoodReligionMod() == kEffects.getRevIdxBadReligionMod() )
+	{
+		if( kEffects.getRevIdxGoodReligionMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_RELIGION_MOD", kEffects.getRevIdxGoodReligionMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_RELIGION_MOD_ALL_CITIES", kEffects.getRevIdxGoodReligionMod() ) );
+			}
+		}
+
+	}
+	else
+	{
+		if( kEffects.getRevIdxGoodReligionMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GOOD_RELIGION_MOD", kEffects.getRevIdxGoodReligionMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GOOD_RELIGION_MOD_ALL_CITIES", kEffects.getRevIdxGoodReligionMod() ) );
+			}
+		}
+
+		if( kEffects.getRevIdxBadReligionMod() != 0 )
+		{
+			if( !bAllCities )
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_BAD_RELIGION_MOD", kEffects.getRevIdxBadReligionMod() ) );
+			}
+			else
+			{
+				szBuffer.append( NEWLINE );
+				szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_BAD_RELIGION_MOD_ALL_CITIES", kEffects.getRevIdxBadReligionMod() ) );
+			}
+		}
+
+	}
+
+	if( kEffects.getRevIdxGarrisonMod() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GARRISON_MOD", kEffects.getRevIdxGarrisonMod() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GARRISON_MOD_ALL_CITIES", kEffects.getRevIdxGarrisonMod() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxGarrisonCapChange() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GARRISON_CAP_CHANGE", kEffects.getRevIdxGarrisonCapChange() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_GARRISON_CAP_CHANGE_ALL_CITIES", kEffects.getRevIdxGarrisonCapChange() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxDisorderMod() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_DISORDER_MOD", kEffects.getRevIdxDisorderMod() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_DISORDER_MOD_ALL_CITIES", kEffects.getRevIdxDisorderMod() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxCrimeMod() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CRIME_MOD", kEffects.getRevIdxCrimeMod() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CRIME_MOD_ALL_CITIES", kEffects.getRevIdxCrimeMod() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxCultureRateMod() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CULTURE_RATE_MOD", kEffects.getRevIdxCultureRateMod() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CULTURE_RATE_MOD_ALL_CITIES", kEffects.getRevIdxCultureRateMod() ) );
+		}
+	}
+
+	if( kEffects.getRevIdxCultureRateCapChange() != 0 )
+	{
+		if( !bAllCities )
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CULTURE_RATE_CAP_CHANGE", kEffects.getRevIdxCultureRateCapChange() ) );
+		}
+		else
+		{
+			szBuffer.append( NEWLINE );
+			szBuffer.append( gDLL->getText( "TXT_KEY_HELP_REV_IDX_CULTURE_RATE_CAP_CHANGE_ALL_CITIES", kEffects.getRevIdxCultureRateCapChange() ) );
+		}
+	}
+}
+
+
 void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, bool bOneLine, bool bShort)
 {
 	PROFILE_FUNC();
@@ -11167,6 +11424,12 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 
+	// lfgr Revolution effects 04/2023
+	if( GC.getGameINLINE().getActivePlayer() == NO_PLAYER || GC.getGameINLINE().isOption( GAMEOPTION_REVOLUTIONS ) )
+	{
+		parseRevolutionEffectsHelp( szHelpText, kCivic.getRevIdxEffects(), true );
+	}
+
 	if (!CvWString(kCivic.getHelp()).empty())
 	{
 		szHelpText.append(CvWString::format(L"%s%s", NEWLINE, kCivic.getHelp()).c_str());
@@ -14345,56 +14608,6 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_HURRY_ANGER_MOD", kBuilding.getHurryAngerModifier()));
 	}
 
-// Start Revolutions
-	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
-	{
-		//  Revolution Local Index Modifiers
-		if (0 != kBuilding.getRevIdxLocal())
-		{
-			if ( kBuilding.getRevIdxLocal() > 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_REV_INDEX_LOCAL_PENALTY", kBuilding.getRevIdxLocal()));
-			}
-			if ( kBuilding.getRevIdxLocal() < 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_REV_INDEX_LOCAL_BONUS", abs(kBuilding.getRevIdxLocal())));
-			}
-		}
-		
-		//  Revolution National Index Modifiers
-		if (0 != kBuilding.getRevIdxNational())
-		{
-			if ( kBuilding.getRevIdxNational() > 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", kBuilding.getRevIdxNational()));
-			}
-			if ( kBuilding.getRevIdxNational() < 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(kBuilding.getRevIdxNational())));
-			}
-		}
-		
-		//  Revolution City Distance Modifier
-		if (0 != kBuilding.getRevIdxDistanceModifier())
-		{
-			if ( kBuilding.getRevIdxDistanceModifier() < 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", kBuilding.getRevIdxDistanceModifier()));
-			}
-			if ( kBuilding.getRevIdxDistanceModifier() > 0 )
-			{
-				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(kBuilding.getRevIdxDistanceModifier())));
-			}
-		}
-	}
-// End Revolutions
-
 
 
 	if (kBuilding.getWarWearinessModifier() != 0)
@@ -14984,6 +15197,13 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 		}
 	}
 
+	// lfgr Revolution effects 04/2023
+	if (GC.getGameINLINE().getActivePlayer() == NO_PLAYER || GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
+	{
+		parseRevolutionEffectsHelp(szBuffer, kBuilding.getRevIdxEffects(), false);
+		parseRevolutionEffectsHelp(szBuffer, kBuilding.getRevIdxEffectsAllCities(), true);
+	}
+
 	if (!CvWString(kBuilding.getHelp()).empty())
 	{
 		szBuffer.append(NEWLINE);
@@ -15222,7 +15442,6 @@ void CvGameTextMgr::setBuildingHelpActual(CvWStringBuffer &szBuffer, BuildingTyp
 			}
 		}
 	}
-
 }
 
 void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, bool bCivilopediaText, bool bTechChooserText, const CvCity* pCity)
