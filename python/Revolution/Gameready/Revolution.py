@@ -1815,8 +1815,7 @@ class Revolution :
 		# type: (CyCity, List[CyCity]) -> bool
 		iInstRevIdx = pInstigatorCity.getRevolutionIndex()
 		iInstLocalIdx = pInstigatorCity.getLocalRevIndex()
-		pCityHelper = RevIdxUtils.CityRevIdxHelper( pInstigatorCity, RevIdxUtils.PlayerRevIdxCache( pInstigatorCity.getOwner() ) )
-
+		
 		if iInstRevIdx > self.alwaysViolentThreshold :
 			# Situation really bad
 			if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Violent, above always violent threshold" )

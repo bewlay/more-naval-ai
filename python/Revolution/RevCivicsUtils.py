@@ -63,8 +63,8 @@ def getCivicsHolyCityEffects( iPlayer ) :
 		iCivic = pPlayer.getCivics(i)
 		if( iCivic >= 0 ) :
 			kCivic = gc.getCivicInfo(iCivic)
-			goodEffect += kCivic.getRevIdxHolyCityGood()
-			badEffect += kCivic.getRevIdxHolyCityBad()
+			goodEffect += kCivic.getRevIdxEffects().getRevIdxHolyCityOwned()
+			badEffect += kCivic.getRevIdxEffects().getRevIdxHolyCityHeathenOwned()
 
 	return [goodEffect,badEffect]
 
