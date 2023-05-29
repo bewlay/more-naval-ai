@@ -2,9 +2,18 @@
 
 This document contains an overview of new and changed XML tags in MNAI-U. It includes new and changed tags in Fall from Heaven 2 and MNAI that are still present in MNAI-U, as well as some BtS tags. It is still work in progress. For other BtS tags, see e.g. civfantics' [modiki](http://modiki.civfanatics.com/index.php?title=Civ4_XML_Reference).
 
+### Buildings/CIV4BuildingInfos.xml
+
+#### Tags
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| [Revolution tags](#revolution-effect-tags) | Effects applied to the city with this building. | Added in MNAI |
+| `<RevIdxEffectsAllCities> ... </RevIdxEffectsAllCities>` | [Revolution tags](#revolution-effect-tags) that are applied to each city, once for each instance of this building. | Added in MNAI |
+
 ### Events/CIV4EventInfos.xml
 
-**Tags**
+#### Tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
@@ -13,7 +22,7 @@ This document contains an overview of new and changed XML tags in MNAI-U. It inc
 
 ### Gameinfo/CIV4CivicInfos.xml
 
-**Tags**
+#### Tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
@@ -22,10 +31,27 @@ This document contains an overview of new and changed XML tags in MNAI-U. It inc
 | `<iRevEnvironmentalProtection>Z</iRevEnvironmentalProtection>` | `Z` should be between -10 and 10. Certain peaceful revolutionaries might ask for a civic with higher environmental protection. | Added in MNAI via RevDCM, adapted in MNAI-U. |
 | `<iRevDemocracyLevel>Z</iRevDemocracyLevel>` | `Z` should be between -10 and 10. Colonists and other peaceful revolutionaries might ask for a civic with higher democracy level. When switching between two civics with differently signed democracy level, the effect from `<iRevIdxSwitchTo>` is increased in cities with location and nationality instability. | Added in MNAI via RevDCM, adapted in MNAI-U. |
 | `<fRevIdxNationalityMod>X</fRevIdxNationalityMod>` | Increases or decreases instability from nationality. | Added in MNAI via RevDCM |
+| `<iRevIdxSwitchTo>Z</iRevIdxSwitchTo>` | Changes the revolution index in all cities by `Z` when switching to this civic. | Added in MNAI via RevDCM |
+| [Revolution tags](#revolution-effect-tags) | Effects applied to all cities when the civic is active. | Added in MNAI via RevDCM |
+
+#### Tags maybe to be removed
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| `<bDisallowInquisitions>1</bDisallowInquisitions>` | TODO | Added in MNAI via RevDCM |
+| `<bCommunism>1</bCommunism>` | TODO | Added in MNAI via RevDCM |
+| `<bFreeSpeech>1</bFreeSpeech>` | TODO | Added in MNAI via RevDCM |
+| `<bCanDoElection>1</bCanDoElection>` | TODO | Added in MNAI via RevDCM |
+
+#### Removed tags
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| `<fRevViolentMod>R</fRevViolentMod>` | When deciding whether a revolution is violent or not, the threshold is changed by a favro of `R` | Added in MNAI via RevDCM, removed in favor of `<iRevViolentMod>` |
 
 ### Gameinfo/CIV4EraInfos.xml
 
-**Tags**
+#### Tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
@@ -38,7 +64,7 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 
 "This resolution" always refers to the resolution containing the tag. "Member" refers to members of the VoteSource where the resolution was passed.
 
-**Tags**
+#### Tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
@@ -70,7 +96,7 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 | `<bTradeMap>1</bTradeMap>` | When passed, all members share their maps immediately. This resolution can be passed repeatedly. AI players only vote for this resolution if they would be willing (in principle) to trade maps with all other members. | Added in MNAI via Advanced Diplomacy 2 |
 | `<bCultureNeedsEmptyRadius>1</bCultureNeedsEmptyRadius>` | Cities of members don't spread culture to plots that are owned by other players that do the same (due to this or some other resolution). | Added in MNAI via Advanced Diplomacy 2 |
 
-**Removed tags**
+#### Removed tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
@@ -83,11 +109,35 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 
 ### Units/CIV4SpellInfos.xml
 
-**Tags**
+#### Tags
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
 | `<bAbility>1</bAbility>` | Can be cast even if spellcasting is disabled (e.g. through the Stasis worldspell). Created units do not gain promotions based on `<PromotionSummonPerk>`. Immunity to magic doesn't affect this spell. |
+
+
+### Revolution effect tags
+
+(Used by various infos)
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| `<iRevIdxPerTurn>Z</iRevIdxPerTurn>` | Flat RevIdx change every turn in every city. | To be added in MNAI-U |
+| `<iRevIdxHolyCityOwned>Z</iRevIdxHolyCityOwned>` | RevIdx/turn if we own our holy city. | To be added in MNAI-U |
+| `<iRevIdxHolyCityHeathenOwned>Z</iRevIdxHolyCityHeathenOwned>` | RevIdx/turn if a heathen player owns our holy city | To be added in MNAI-UM |
+| `<iRevIdxHappinessMod>Z</iRevIdxHappinessMod>` | `Z` should be at least -100. Percent modifier for stability from happines.s | To be added in MNAI-U |
+| `<iRevIdxHappinessCapChange>Z</iRevIdxHappinessCapChange>` | Changes the maximum stability/turn that can be gained from happiness. | To be added in MNAI-U |
+| `<iRevIdxUnhappinessMod>Z</iRevIdxUnhappinessMod>` | `Z` should be at least -100.  Percent modifier for instability from unhapiness. | To be added in MNAI-U |
+| `<iRevIdxLocationMod>Z</iRevIdxLocationMod>` | `Z` should be at least -100.  Percent modifier for instability from location/distance. | To be added in MNAI-U |
+| `<iRevIdxBadReligionMod>Z</iRevIdxBadReligionMod>` | `Z` should be at least -100. Percent modifier for instability from religion. | To be added in MNAI-U |
+| `<iRevIdxGoodReligionMod>Z</iRevIdxGoodReligionMod>` | `Z` should be at least -100. Percent modifier for stability from religion. | To be added in MNAI-U |
+| `<iRevIdxNationalityMod>Z</iRevIdxNationalityMod>` | `Z` should be at least -100. Percent modifier for stability and instability from nationality. | To be added in MNAI-U |
+| `<iRevIdxGarrisonMod>Z</iRevIdxGarrisonMod>` | `Z` should be at least -100. Percent modifier for stability and instability from garrison. | To be added in MNAI-U |
+| `<iRevIdxGarrisonCapChange>Z</iRevIdxGarrisonCapChange>` | Changes the maximum stability/turn that can be gained from garrison. | To be added in MNAI-U |
+| `<iRevIdxDisorderMod>Z</iRevIdxDisorderMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | To be added in MNAI-U |
+| `<iRevIdxCrimeMod>Z</iRevIdxCrimeMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | To be added in MNAI-U |
+| `<iRevIdxCultureRateMod>Z</iRevIdxCultureRateMod>` | `Z` should be at least -100. Percent modifier for stability from culture rate. | To be added in MNAI-U |
+| `<iRevIdxCultureRateCapChange>Z</iRevIdxCultureRateCapChange>` | Changes the maximum stability/turn that can be gained from culture rate. | To be added in MNAI-U |
 
 
 Sources (other than the code itself):
