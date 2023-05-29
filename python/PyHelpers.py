@@ -350,7 +350,7 @@ class PyPlayer( AbstractDelegator ) :
 	
 	# lfgr 04/2020
 	def iterCities( self ) :
-		# type: ( PyPlayer ) -> Generator[PyCity]
+		# type: ( PyPlayer ) -> Iterator[PyCity]
 		loopCity, it = self.player.firstCity( False )
 		while loopCity :
 			if not loopCity.isNone() and loopCity.getOwner() == self.getID() : #only valid cities
@@ -359,7 +359,7 @@ class PyPlayer( AbstractDelegator ) :
 
 	# lfgr 11/2022
 	def iterCivPyPlayersAtWar( self ) :
-		# type: () -> Generator[PyPlayer]
+		# type: () -> Iterator[PyPlayer]
 		for ePlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
 			if self.getTeam().isAtWar( gc.getPlayer( ePlayer ).getTeam() ) :
 				yield PyPlayer( ePlayer )
@@ -445,7 +445,7 @@ class PyPlayer( AbstractDelegator ) :
 
 	# Improved PyHelpers 11/2022 lfgr
 	def iterCivics( self ) :
-		# type: () -> Generator[int]
+		# type: () -> Iterator[int]
 		for eCivicOption in range( 0, gc.getNumCivicOptionInfos() ) :
 			eCivic = self.getCivics( eCivicOption )
 			if eCivic != -1 :
@@ -453,7 +453,7 @@ class PyPlayer( AbstractDelegator ) :
 
 	# Improved PyHelpers 11/2022 lfgr
 	def iterCivicInfos( self ) :
-		# type: () -> Generator[CvCivicInfo]
+		# type: () -> Iterator[CvCivicInfo]
 		for eCivic in self.iterCivics() :
 			yield gc.getCivicInfo( eCivic )
 

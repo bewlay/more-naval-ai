@@ -266,7 +266,8 @@ void CyGamePythonInterface()
 
 		.def("isInAdvancedStart", &CyGame::isInAdvancedStart, "bool")
 
-		.def("getHolyCity", &CyGame::getHolyCity, python::return_value_policy<python::manage_new_object>(), "CyCity getHolyCity()")
+		// lfgr 05/2023: fixed documentation
+		.def("getHolyCity", &CyGame::getHolyCity, python::return_value_policy<python::manage_new_object>(), "CyCity getHolyCity(int /*ReligionTypes*/ eReligion)")
 		.def("setHolyCity", &CyGame::setHolyCity, "void (int eIndex, CyCity *pNewValue, bAnnounce) - Sets holy city for religion eIndex to pNewValue")
 		.def("clearHolyCity", &CyGame::clearHolyCity, "void (int eIndex) - clears the holy city for religion eIndex")
 

@@ -6,6 +6,7 @@
 <!-- by jdog5000 -->
 <!-- -->
 <Civ4Defines xmlns="x-schema:CIV4GlobalDefinesSchema.xml">
+	<!-- lfgr FIXME: this file does not load -->
 	<Define>
 		<DefineName>TECH_DIFFUSION_ENABLE</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>

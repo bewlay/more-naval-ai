@@ -2,44 +2,6 @@
 Refactor of RevIdx part of Revolution modcomp, for Fall from Heaven 2/MNAI
 
 All calculations for local and national RevIdx will ultimately be moved here.
-
-Below are changes made, most here, some still in Revolution.py.
-
-Local rev idx changes:
-* Removed effects of hardcoded "Nationalism", "Liberalism" and "Scientific Method" techs.
-* Instability from nationality no longer reduces the garrison RevIdx cap
-* Removed small capital malus in later eras ("To help remove late game tiny civs" -- we don't want that)
-* Removed malus for small cities that used to be large
-* Streamlined small city bonus
-* No unhappiness malus in city with disorder.
-* Removed colony malus, "revolutionary spirit
-* Current era not subtracted from culture rate
-* Removed malus from negative food per turn
-* Simplified and streamlined unhealthiness, nationality, health and garrison indices
-* No increased civic malus if "better" civics are available
-* Building effects not disabled from wrong PrereqCiv or PrereqTrait
-* Slightly changed combination of final general and human modifiers (does nothing by default)
-* Slightly changed the religion bonus when at war
-* Slightly changed the unhappiness malus, now uses the new DLL method CyCity.unhappyLevelForRevIdx()
-* Route bonus in location RevIdx now considers all technology changes to the city's actual route
-* Location rev idx incorporates civ size more smoothly
-* Civic/Building location rev idx boni now do what they seem
-* Location rev idx calculates distance from nearest gov. center, not only capital
-* Location rev idx can't be negative (a good comm bonus otherwise makes the bonus worse)
-* Settlements do not get RevIdx from starvation (since they always starve down to 1 pop after conquest)
-
-National rev idx changes:
-* Removed distinction between RevIdx and Stability. The latter was almost, but not quite, the negation of the former.
-	Stability seemed to have no effect other than for display purposes. Now Stability = -RevIdx.
-* Streamlined small empire bonus and apply it to RevIdx (not just stability)
-* Culture spending is now actually added to the national RevIdx
-* Removed wonky "financial trouble" factor.
-* No increased civic malus if "better" civics are available
-* Civics now added to national RevIdx (instead of only "stability")
-* Building effects not disabled from wrong PrereqCiv or PrereqTrait
-* Removed late-game penalty for players with large military
-* Removed (only partly working) anarchy penalty of 100 (40 for rebels) (LFGR_TODO: Should be added as an RevIdx-changing event)
-* Slightly changed combination of final general and human modifiers (does nothing by default)
 """
 
 
