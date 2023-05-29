@@ -1962,7 +1962,7 @@ public:
 /************************************************************************************************/
 	bool isDisallowInquisitions() const;
 	int getRevIdxSwitchTo() const;
-	float getRevViolentMod() const;
+	int getRevViolentMod() const; // lfgr 05/2023: Made int modifier
 	int getRevReligiousFreedom() const;
 	int getRevLaborFreedom() const;
 	int getRevEnvironmentalProtection() const;
@@ -2088,7 +2088,7 @@ protected:
 /************************************************************************************************/
 	int m_bDisallowInquisitions;
 	int m_iRevIdxSwitchTo;
-	int m_fRevViolentMod;
+	int m_iRevViolentMod; // lfgr 05/2023: Made int modifier
 	int m_iRevReligiousFreedom;
 	int m_iRevLaborFreedom;
 	int m_iRevEnvironmentalProtection;

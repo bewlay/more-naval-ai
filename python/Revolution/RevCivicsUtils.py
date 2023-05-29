@@ -68,26 +68,6 @@ def getCivicsHolyCityEffects( iPlayer ) :
 
 	return [goodEffect,badEffect]
 
-def getCivicsViolentRevMod( iPlayer ) :
-
-	pPlayer = gc.getPlayer(iPlayer)
-
-	if( pPlayer.isNone() ) :
-		return 0
-
-	if( pPlayer.getNumCities() == 0 ) :
-		return 0
-
-	vioMod = 0
-
-	for i in range(0,gc.getNumCivicOptionInfos()) :
-		iCivic = pPlayer.getCivics(i)
-		if( iCivic >= 0 ) :
-			kCivic = gc.getCivicInfo(iCivic)
-			vioMod += kCivic.getRevViolentMod()
-
-	return vioMod
-
 def canDoCommunism( iPlayer ) :
 	pPlayer = gc.getPlayer(iPlayer)
 

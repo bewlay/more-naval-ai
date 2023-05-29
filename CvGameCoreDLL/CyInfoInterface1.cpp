@@ -494,7 +494,7 @@ void CyInfoPythonInterface1()
 /************************************************************************************************/
 		.def("isDisallowInquisitions", &CvCivicInfo::isDisallowInquisitions, "bool ()")
 		.def("getRevIdxSwitchTo", &CvCivicInfo::getRevIdxSwitchTo, "int ()")
-		.def("getRevViolentMod", &CvCivicInfo::getRevViolentMod, "float ()")
+		.def("getRevViolentMod", &CvCivicInfo::getRevViolentMod, "int ()")
 		.def("getRevReligiousFreedom", &CvCivicInfo::getRevReligiousFreedom, "int ()")
 		.def("getRevLaborFreedom", &CvCivicInfo::getRevLaborFreedom, "int ()")
 		.def("getRevEnvironmentalProtection", &CvCivicInfo::getRevEnvironmentalProtection, "int ()")

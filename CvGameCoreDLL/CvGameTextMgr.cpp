@@ -10863,38 +10863,8 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 		szHelpText.append(NEWLINE);
 		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_EXPERIENCE_IN_BORDERS", kCivic.getExpInBorderModifier()));
 	}
-	
-/************************************************************************************************/
-/* REVDCM                                 02/16/10                                phungus420    */
-/*                                                                                              */
-/* RevCivic Effects                                                                             */
-/************************************************************************************************/
-	if (kCivic.isDisallowInquisitions())
-	{
-		szHelpText.append(NEWLINE);
-		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
-	}
 
-	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
-	{
-		//  Revolution Switch to Modifier
-		if (0 != kCivic.getRevIdxSwitchTo())
-		{
-			if (kCivic.getRevIdxSwitchTo() < 0)
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS", abs(kCivic.getRevIdxSwitchTo())));
-			}
-			if (kCivic.getRevIdxSwitchTo() > 0)
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", kCivic.getRevIdxSwitchTo()));
-			}
-		}
-	}
-/************************************************************************************************/
-/* REVDCM                                  END                                                  */
-/************************************************************************************************/
+	// lfgr 05/2023: Moved revolution help down
 
 	//	War Weariness
 	if (kCivic.getWarWearinessModifier() != 0)
@@ -11339,10 +11309,43 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 /* Advanced Diplomacy         END                                                               */
 /************************************************************************************************/
 
+
+/************************************************************************************************/
+/* REVDCM                                 02/16/10                                phungus420    */
+/*                                                                                              */
+/* RevCivic Effects                                                                             */
+/************************************************************************************************/
+	if (kCivic.isDisallowInquisitions())
+	{
+		szHelpText.append(NEWLINE);
+		szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_DISALLOW_INQUISITONS"));
+	}
+/************************************************************************************************/
+/* REVDCM                                  END                                                  */
+/************************************************************************************************/
+
 	// lfgr Revolution effects 04/2023
 	if( GC.getGameINLINE().getActivePlayer() == NO_PLAYER || GC.getGameINLINE().isOption( GAMEOPTION_REVOLUTIONS ) )
 	{
 		parseRevolutionEffectsHelp( szHelpText, kCivic.getRevIdxEffects(), true );
+
+		//  Revolution Switch to Modifier
+		if (kCivic.getRevIdxSwitchTo() < 0)
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_BONUS", abs(kCivic.getRevIdxSwitchTo())));
+		}
+		if (kCivic.getRevIdxSwitchTo() > 0)
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", kCivic.getRevIdxSwitchTo()));
+		}
+
+		if( kCivic.getRevViolentMod() != 0 )
+		{
+			szHelpText.append( NEWLINE );
+			szHelpText.append( gDLL->getText( "TXT_KEY_CIVIC_REV_VIOLENT_MOD", kCivic.getRevViolentMod() ) );
+		}
 	}
 
 	if (!CvWString(kCivic.getHelp()).empty())

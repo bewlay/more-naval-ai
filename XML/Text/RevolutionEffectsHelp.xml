@@ -158,4 +158,8 @@
 		<Tag>TXT_KEY_HELP_REV_IDX_CULTURE_RATE_CAP_CHANGE_ALL_CITIES</Tag>
 		<English>[ICON_BULLET]%D1 maximum stability from [ICON_CULTURE] in all cities</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIVIC_REV_VIOLENT_MOD</Tag>
+		<English>[ICON_BULLET]%D1% to the lower threshold for violent revolutions</English>
+	</TEXT>
 </Civ4GameText>

@@ -818,7 +818,7 @@
 <!--DPII < Revolution Mod Start > -->
 	<ElementType name="bDisallowInquisitions" content= "textOnly" dt:type="boolean"/>
 	<ElementType name="iRevIdxSwitchTo" content="textOnly" dt:type="int"/>
-	<ElementType name="fRevViolentMod" content="textOnly"/>
+	<ElementType name="iRevViolentMod" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevReligiousFreedom" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevLaborFreedom" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevEnvironmentalProtection" content="textOnly" dt:type="int"/>
@@ -925,7 +925,7 @@
 <!-- DPII < Revolution Mod Start > -->
 		<element type="bDisallowInquisitions" minOccurs="0"/>
 		<element type="iRevIdxSwitchTo" minOccurs="0"/>
-		<element type="fRevViolentMod" minOccurs="0"/>
+		<element type="iRevViolentMod" minOccurs="0"/>
 		<element type="iRevReligiousFreedom" minOccurs="0"/>
 		<element type="iRevLaborFreedom" minOccurs="0"/>
 		<element type="iRevEnvironmentalProtection" minOccurs="0"/>

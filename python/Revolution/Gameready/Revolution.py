@@ -1810,6 +1810,55 @@ class Revolution :
 # END Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
 
+	# lfgr 06/2023 refactoring
+	def isRevolutionPeaceful( self, pInstigatorCity, lpRevCities ) :
+		# type: (CyCity, List[CyCity]) -> bool
+		iInstRevIdx = pInstigatorCity.getRevolutionIndex()
+		iInstLocalIdx = pInstigatorCity.getLocalRevIndex()
+		pCityHelper = RevIdxUtils.CityRevIdxHelper( pInstigatorCity, RevIdxUtils.PlayerRevIdxCache( pInstigatorCity.getOwner() ) )
+
+		if iInstRevIdx > self.alwaysViolentThreshold :
+			# Situation really bad
+			if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Violent, above always violent threshold" )
+			return False
+		elif pInstigatorCity.getNumRevolts( pInstigatorCity.getOwner() ) == 0 :
+			# First revolution is always peaceful
+			return True
+		else :
+			modNumUnhappy = RevUtils.getModNumUnhappy( pInstigatorCity, self.warWearinessMod ) # LFGR_TODO: Use different func
+			if int( 200 * modNumUnhappy / pInstigatorCity.getPopulation() ) > game.getSorenRandNum( 100, 'Rev' ) :
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Violent due to Unhappiness" )
+				return False
+
+			if iInstLocalIdx > self.badLocalThreshold :
+				# Situation deteriorating rapidly
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Violent due to rapidly deteriorating situation" )
+				return False
+
+			if len( lpRevCities ) == 1 :
+				# Single city is not violent except for the above reasons
+				return True
+
+			# Compute violent modifier
+			iViolentThresholdMod = 80
+
+			for pCivic in PyPlayer( pInstigatorCity.getOwner() ).iterCivicInfos() :
+				iViolentThresholdMod += int( pCivic.getRevViolentMod() * 100 ) # LFGR_TODO
+
+			if iInstLocalIdx < 0 :
+				iViolentThresholdMod += 10
+
+			iViolentThreshold = self.alwaysViolentThreshold * iViolentThresholdMod // 100
+
+			if iInstRevIdx > iViolentThreshold :
+				iOdds = 100 * (iInstRevIdx - iViolentThreshold) / (self.alwaysViolentThreshold - iViolentThreshold)
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Odds for violence are %d" % iOdds )
+				if game.getSorenRandNum( 100, 'Rev' ) < iOdds :
+					return False
+
+			return True
+
+
 	def pickRevolutionStyle( self, pPlayer, instigator, revReadyCities ) :
 		bReinstatedOnRevolution = False
 #-------------------------------------------------------------------------------------------------
@@ -1844,45 +1893,7 @@ class Revolution :
 					revInCapital = (revInCapital or pCity.isCapital())
 
 		# Peaceful or violent?
-		# LFGR_TODO: Rewrite this part, lots of unnecessary (and confusing) ifs here.
-		bPeaceful = True
-		instRevIdx = instigator.getRevolutionIndex()
-		instLocalIdx = instigator.getLocalRevIndex()
-
-		if( instRevIdx > self.alwaysViolentThreshold ) :
-			# Situation really bad
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent, above always violent threshold")
-			bPeaceful = False
-		elif( instigator.getNumRevolts(iPlayer) == 0 ) :
-			bPeaceful = True
-		else :
-			if( bPeaceful ) : # lfgr: Always True
-				modNumUnhappy = RevUtils.getModNumUnhappy( instigator, self.warWearinessMod )
-				if( int(200*modNumUnhappy/instigator.getPopulation()) > game.getSorenRandNum( 100, 'Rev' ) ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent due to Unhappiness")
-					bPeaceful = False
-			if( bPeaceful and instLocalIdx > self.badLocalThreshold ) :
-				# Situation deteriorating rapidly
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Violent due to rapidly deteriorating situation")
-				bPeaceful = False
-			if( bPeaceful and len(revCities) == 1 ) :
-				bPeaceful = True # lfgr: Does nothing
-			elif( bPeaceful ) :
-				lowerThresh = int( .8*self.alwaysViolentThreshold )
-
-				civicsMod = RevUtils.getCivicsViolentRevMod( iPlayer )
-				lowerThresh += int(math.floor( civicsMod*self.alwaysViolentThreshold  + .5 ))
-
-				if( instLocalIdx > self.badLocalThreshold ) : # lfgr: Never true
-					lowerThresh -= int(math.floor( .05*self.alwaysViolentThreshold + .5 ))
-				elif( instLocalIdx < 0 ) :
-					lowerThresh += int(math.floor( .10*self.alwaysViolentThreshold + .5 ))
-
-				if( instRevIdx > lowerThresh ) :
-					odds = (100*(instRevIdx - lowerThresh))/(self.alwaysViolentThreshold-lowerThresh)
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Odds for violence are %d"%(odds))
-					if( odds > game.getSorenRandNum( 100, 'Rev' ) ) :
-						bPeaceful = False
+		bPeaceful = self.isRevolutionPeaceful( instigator, revCities ) # lfgr 06/2023 refactoring
 
 
 		if( bPeaceful ) :

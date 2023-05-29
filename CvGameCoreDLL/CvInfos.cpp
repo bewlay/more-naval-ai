@@ -7940,7 +7940,7 @@ m_iExpInBorderModifier(0),
 /************************************************************************************************/
 m_bDisallowInquisitions(false),
 m_iRevIdxSwitchTo(0),
-m_fRevViolentMod(0),
+m_iRevViolentMod(0), // lfgr 05/2023: Made int modifier
 m_iRevReligiousFreedom(0),
 m_iRevLaborFreedom(0),
 m_iRevEnvironmentalProtection(0),
@@ -8225,9 +8225,10 @@ int CvCivicInfo::getRevIdxSwitchTo() const
 	return m_iRevIdxSwitchTo;
 }
 
-float CvCivicInfo::getRevViolentMod() const
+// lfgr 05/2023: Made int modifier
+int CvCivicInfo::getRevViolentMod() const
 {
-	return m_fRevViolentMod; // LFGR_TODO: unexpected conversion!
+	return m_iRevViolentMod;
 }
 
 int CvCivicInfo::getRevReligiousFreedom() const
@@ -8566,7 +8567,7 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 /************************************************************************************************/
 	stream->Read(&m_bDisallowInquisitions);
 	stream->Read(&m_iRevIdxSwitchTo);
-	stream->Read(&m_fRevViolentMod);
+	stream->Read(&m_iRevViolentMod); // lfgr 05/2023: Made int modifier
 	stream->Read(&m_iRevReligiousFreedom);
 	stream->Read(&m_iRevLaborFreedom);
 	stream->Read(&m_iRevEnvironmentalProtection);
@@ -8730,7 +8731,7 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 /************************************************************************************************/
 	stream->Write(&m_bDisallowInquisitions);
 	stream->Write(&m_iRevIdxSwitchTo);
-	stream->Write(&m_fRevViolentMod);
+	stream->Write(&m_iRevViolentMod); // lfgr 05/2023: Made int modifier
 	stream->Write(&m_iRevReligiousFreedom);
 	stream->Write(&m_iRevLaborFreedom);
 	stream->Write(&m_iRevEnvironmentalProtection);
@@ -8876,7 +8877,7 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 /************************************************************************************************/
 	pXML->GetChildXmlValByName(&m_bDisallowInquisitions, "bDisallowInquisitions");
 	pXML->GetChildXmlValByName(&m_iRevIdxSwitchTo, "iRevIdxSwitchTo");
-	pXML->GetChildXmlValByName(&m_fRevViolentMod, "fRevViolentMod");
+	pXML->GetChildXmlValByName(&m_iRevViolentMod, "iRevViolentMod"); // lfgr 05/2023: Made int modifier
 	pXML->GetChildXmlValByName(&m_iRevReligiousFreedom, "iRevReligiousFreedom");
 	pXML->GetChildXmlValByName(&m_iRevLaborFreedom, "iRevLaborFreedom");
 	pXML->GetChildXmlValByName(&m_iRevEnvironmentalProtection, "iRevEnvironmentalProtection");
