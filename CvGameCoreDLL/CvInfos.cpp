@@ -7939,15 +7939,7 @@ m_iExpInBorderModifier(0),
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 m_bDisallowInquisitions(false),
-m_iRevIdxLocal(0),
-m_iRevIdxNational(0),
-m_iRevIdxDistanceModifier(0),
-m_iRevIdxHolyCityGood(0),
-m_iRevIdxHolyCityBad(0),
 m_iRevIdxSwitchTo(0),
-m_iRevIdxNationalityMod(0),
-m_iRevIdxGoodReligionMod(0),
-m_iRevIdxBadReligionMod(0),
 m_fRevViolentMod(0),
 m_iRevReligiousFreedom(0),
 m_iRevLaborFreedom(0),
@@ -8228,49 +8220,9 @@ bool CvCivicInfo::isDisallowInquisitions() const
 	return m_bDisallowInquisitions;
 }
 
-int CvCivicInfo::getRevIdxLocal() const
-{
-	return m_iRevIdxLocal;
-}
-
-int CvCivicInfo::getRevIdxNational() const
-{
-	return m_iRevIdxNational;
-}
-
-int CvCivicInfo::getRevIdxDistanceModifier() const
-{
-	return m_iRevIdxDistanceModifier;
-}
-
-int CvCivicInfo::getRevIdxHolyCityGood() const
-{
-	return m_iRevIdxHolyCityGood;
-}
-
-int CvCivicInfo::getRevIdxHolyCityBad() const
-{
-	return m_iRevIdxHolyCityBad;
-}
-
 int CvCivicInfo::getRevIdxSwitchTo() const
 {
 	return m_iRevIdxSwitchTo;
-}
-
-int CvCivicInfo::getRevIdxNationalityMod() const
-{
-	return m_iRevIdxNationalityMod;
-}
-
-int CvCivicInfo::getRevIdxBadReligionMod() const
-{
-	return m_iRevIdxBadReligionMod;
-}
-
-int CvCivicInfo::getRevIdxGoodReligionMod() const
-{
-	return m_iRevIdxGoodReligionMod;
 }
 
 float CvCivicInfo::getRevViolentMod() const
@@ -8613,15 +8565,7 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	stream->Read(&m_bDisallowInquisitions);
-	stream->Read(&m_iRevIdxLocal);
-	stream->Read(&m_iRevIdxNational);
-	stream->Read(&m_iRevIdxDistanceModifier);
-	stream->Read(&m_iRevIdxHolyCityGood);
-	stream->Read(&m_iRevIdxHolyCityBad);
 	stream->Read(&m_iRevIdxSwitchTo);
-	stream->Read(&m_iRevIdxNationalityMod);
-	stream->Read(&m_iRevIdxBadReligionMod);
-	stream->Read(&m_iRevIdxGoodReligionMod);
 	stream->Read(&m_fRevViolentMod);
 	stream->Read(&m_iRevReligiousFreedom);
 	stream->Read(&m_iRevLaborFreedom);
@@ -8785,15 +8729,7 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	stream->Write(&m_bDisallowInquisitions);
-	stream->Write(&m_iRevIdxLocal);
-	stream->Write(&m_iRevIdxNational);
-	stream->Write(&m_iRevIdxDistanceModifier);
-	stream->Write(&m_iRevIdxHolyCityGood);
-	stream->Write(&m_iRevIdxHolyCityBad);
 	stream->Write(&m_iRevIdxSwitchTo);
-	stream->Write(&m_iRevIdxNationalityMod);
-	stream->Write(&m_iRevIdxBadReligionMod);
-	stream->Write(&m_iRevIdxGoodReligionMod);
 	stream->Write(&m_fRevViolentMod);
 	stream->Write(&m_iRevReligiousFreedom);
 	stream->Write(&m_iRevLaborFreedom);
@@ -8939,15 +8875,7 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	pXML->GetChildXmlValByName(&m_bDisallowInquisitions, "bDisallowInquisitions");
-	pXML->GetChildXmlValByName(&m_iRevIdxLocal, "iRevIdxLocal");
-	pXML->GetChildXmlValByName(&m_iRevIdxNational, "iRevIdxNational");
-	pXML->GetChildXmlValByName(&m_iRevIdxDistanceModifier, "iRevIdxDistanceModifier");
-	pXML->GetChildXmlValByName(&m_iRevIdxHolyCityGood, "iRevIdxHolyCityGood");
-	pXML->GetChildXmlValByName(&m_iRevIdxHolyCityBad, "iRevIdxHolyCityBad");
 	pXML->GetChildXmlValByName(&m_iRevIdxSwitchTo, "iRevIdxSwitchTo");
-	pXML->GetChildXmlValByName(&m_iRevIdxNationalityMod, "iRevIdxNationalityMod");
-	pXML->GetChildXmlValByName(&m_iRevIdxBadReligionMod, "iRevIdxBadReligionMod");
-	pXML->GetChildXmlValByName(&m_iRevIdxGoodReligionMod, "iRevIdxGoodReligionMod");
 	pXML->GetChildXmlValByName(&m_fRevViolentMod, "fRevViolentMod");
 	pXML->GetChildXmlValByName(&m_iRevReligiousFreedom, "iRevReligiousFreedom");
 	pXML->GetChildXmlValByName(&m_iRevLaborFreedom, "iRevLaborFreedom");

@@ -16732,10 +16732,11 @@ int CvPlayerAI::AI_RevCalcCivicRelEffect(CivicTypes eCivic) const
 	{
 		int iRelScore = 0;
 
-		int iRelGoodMod = GC.getCivicInfo(eCivic).getRevIdxGoodReligionMod();
-		int iRelBadMod = GC.getCivicInfo(eCivic).getRevIdxBadReligionMod();
-		int iHolyCityGood = GC.getCivicInfo(eCivic).getRevIdxHolyCityGood();
-		int iHolyCityBad = GC.getCivicInfo(eCivic).getRevIdxHolyCityBad();
+		// lfgr 05/2023: Replaced old field access with RevolutionEffects
+		int iRelGoodMod = GC.getCivicInfo(eCivic).getRevIdxEffects().getRevIdxGoodReligionMod();
+		int iRelBadMod = GC.getCivicInfo(eCivic).getRevIdxEffects().getRevIdxBadReligionMod();
+		int iHolyCityGood = GC.getCivicInfo(eCivic).getRevIdxEffects().getRevIdxHolyCityOwned();
+		int iHolyCityBad = GC.getCivicInfo(eCivic).getRevIdxEffects().getRevIdxHolyCityHeathenOwned();
 
 		ReligionTypes eStateReligion = getStateReligion();
 

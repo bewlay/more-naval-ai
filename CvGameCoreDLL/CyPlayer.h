@@ -347,14 +347,6 @@ public:
 /* Player Functions                                                                             */
 /************************************************************************************************/
 	bool isNonStateReligionCommerce() const;
-	int getRevIdxLocal();
-	int getRevIdxNational();
-	int getRevIdxDistanceModifier();
-	int getRevIdxHolyCityGood();
-	int getRevIdxHolyCityBad();
-	float getRevIdxNationalityMod();
-	float getRevIdxBadReligionMod();
-	float getRevIdxGoodReligionMod();
 	bool canInquisition();
 /************************************************************************************************/
 /* REVDCM                                  END                                                  */

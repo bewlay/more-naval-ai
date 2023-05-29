@@ -817,15 +817,7 @@
 	</ElementType>
 <!--DPII < Revolution Mod Start > -->
 	<ElementType name="bDisallowInquisitions" content= "textOnly" dt:type="boolean"/>
-<!--	<ElementType name="iRevIdxLocal" content= "textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxNational" content= "textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxDistanceModifier" content= "textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxHolyCityGood" content="textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxHolyCityBad" content="textOnly" dt:type="int"/>-->
 	<ElementType name="iRevIdxSwitchTo" content="textOnly" dt:type="int"/>
-<!--	<ElementType name="iRevIdxNationalityMod" content="textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxBadReligionMod" content="textOnly" dt:type="int"/>-->
-<!--	<ElementType name="iRevIdxGoodReligionMod" content="textOnly" dt:type="int"/>-->
 	<ElementType name="fRevViolentMod" content="textOnly"/>
 	<ElementType name="iRevReligiousFreedom" content="textOnly" dt:type="int"/>
 	<ElementType name="iRevLaborFreedom" content="textOnly" dt:type="int"/>
@@ -932,15 +924,7 @@
 		<element type="ImprovementYieldChanges"/>
 <!-- DPII < Revolution Mod Start > -->
 		<element type="bDisallowInquisitions" minOccurs="0"/>
-<!--		<element type="iRevIdxLocal" minOccurs="0"/>-->
-<!--		<element type="iRevIdxNational" minOccurs="0"/>-->
-<!--		<element type="iRevIdxDistanceModifier" minOccurs="0"/>-->
-<!--		<element type="iRevIdxHolyCityGood" minOccurs="0"/>-->
-<!--		<element type="iRevIdxHolyCityBad" minOccurs="0"/>-->
 		<element type="iRevIdxSwitchTo" minOccurs="0"/>
-<!--		<element type="iRevIdxNationalityMod" minOccurs="0"/>-->
-<!--		<element type="iRevIdxBadReligionMod" minOccurs="0"/>-->
-<!--		<element type="iRevIdxGoodReligionMod" minOccurs="0"/>-->
 		<element type="fRevViolentMod" minOccurs="0"/>
 		<element type="iRevReligiousFreedom" minOccurs="0"/>
 		<element type="iRevLaborFreedom" minOccurs="0"/>

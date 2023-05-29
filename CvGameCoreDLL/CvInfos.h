@@ -1960,17 +1960,8 @@ public:
 /*                                                                                              */
 /* RevCivicEffects                                                                              */
 /************************************************************************************************/
-	// TODO: Remove
 	bool isDisallowInquisitions() const;
-	int getRevIdxLocal() const;
-	int getRevIdxNational() const;
-	int getRevIdxDistanceModifier() const;
-	int getRevIdxHolyCityGood() const;
-	int getRevIdxHolyCityBad() const;
 	int getRevIdxSwitchTo() const;
-	int getRevIdxNationalityMod() const;
-	int getRevIdxBadReligionMod() const;
-	int getRevIdxGoodReligionMod() const;
 	float getRevViolentMod() const;
 	int getRevReligiousFreedom() const;
 	int getRevLaborFreedom() const;
@@ -2096,15 +2087,7 @@ protected:
 /* RevCivic Effects                                                                             */
 /************************************************************************************************/
 	int m_bDisallowInquisitions;
-	int m_iRevIdxLocal;
-	int m_iRevIdxNational;
-	int m_iRevIdxDistanceModifier;
-	int m_iRevIdxHolyCityGood;
-	int m_iRevIdxHolyCityBad;
 	int m_iRevIdxSwitchTo;
-	int m_iRevIdxNationalityMod;
-	int m_iRevIdxGoodReligionMod;
-	int m_iRevIdxBadReligionMod;
 	int m_fRevViolentMod;
 	int m_iRevReligiousFreedom;
 	int m_iRevLaborFreedom;

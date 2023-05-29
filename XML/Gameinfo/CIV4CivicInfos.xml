@@ -82,8 +82,7 @@
             </FeatureHappinessChanges>
             <ImprovementYieldChanges>
             </ImprovementYieldChanges>
-				    <!-- Revolution Mod Start -->
-						<bDisallowInquisitions>0</bDisallowInquisitions>
+                <!-- Revolution Mod Start -->
 						<iRevDemocracyLevel>-10</iRevDemocracyLevel>
 						<bCommunism>0</bCommunism>
 						<bFreeSpeech>0</bFreeSpeech>

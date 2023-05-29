@@ -10877,65 +10877,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	if (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS))
 	{
-		//  Revolution Local Civic Index Modifiers
-		if (0 != kCivic.getRevIdxLocal())
-		{
-			if ( kCivic.getRevIdxLocal() > 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_PENALTY", kCivic.getRevIdxLocal()));
-			}
-			if ( kCivic.getRevIdxLocal() < 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_LOCAL_BONUS", abs(kCivic.getRevIdxLocal())));
-			}
-		}
-		
-		//  Revolution National Civic Index Modifiers
-		if (0 != kCivic.getRevIdxNational())
-		{
-			if ( kCivic.getRevIdxNational() > 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_PENALTY", kCivic.getRevIdxNational()));
-			}
-			if ( kCivic.getRevIdxNational() < 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_INDEX_NATIONAL_BONUS", abs(kCivic.getRevIdxNational())));
-			}
-		}
-		
-		//  Revolution City Distance Modifier
-		if (0 != kCivic.getRevIdxDistanceModifier())
-		{
-			if ( kCivic.getRevIdxDistanceModifier() < 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_GOOD_MOD", kCivic.getRevIdxDistanceModifier()));
-			}
-			if ( kCivic.getRevIdxDistanceModifier() > 0 )
-			{
-				szHelpText.append(NEWLINE);
-				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_CITY_DISTANCE_BAD_MOD", abs(kCivic.getRevIdxDistanceModifier())));
-			}
-		}
-		
-		//  Revolution Good Holy City Modifier
-		if (0 != kCivic.getRevIdxHolyCityGood())
-		{
-			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_HOLY_CITY", kCivic.getRevIdxHolyCityGood()));
-		}
-		
-		//  Revolution Bad Holy City Modifier
-		if (0 != kCivic.getRevIdxHolyCityBad())
-		{
-			szHelpText.append(NEWLINE);
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_HOLY_CITY", kCivic.getRevIdxHolyCityBad()));
-		}
-		
 		//  Revolution Switch to Modifier
 		if (0 != kCivic.getRevIdxSwitchTo())
 		{
@@ -10949,32 +10890,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 				szHelpText.append(NEWLINE);
 				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_SWITCH_TO_PENALTY", kCivic.getRevIdxSwitchTo()));
 			}
-		}
-		//  Revolution Nationality Modifier
-		// REVOLUTION_REFACTORING 03/2021 lfgr: More precise messages
-		if (0 != kCivic.getRevIdxNationalityMod())
-		{
-			szHelpText.append(NEWLINE);
-			CvWString szTempBuffer;
-			szHelpText.append( gDLL->getText("TXT_KEY_CIVIC_REV_NATIONALITY_MOD", kCivic.getRevIdxNationalityMod()) );
-		}
-		
-		//  Revolution Bad Religion Modifier
-		if (0 != kCivic.getRevIdxBadReligionMod())
-		{
-			szHelpText.append(NEWLINE);
-			CvWString szTempBuffer;
-			szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxBadReligionMod());
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_BAD_RELIGION_MOD", szTempBuffer.GetCString()));
-		}
-		
-		//  Revolution Good Religion Modifier
-		if (0 != kCivic.getRevIdxGoodReligionMod())
-		{
-			szHelpText.append(NEWLINE);
-			CvWString szTempBuffer;
-			szTempBuffer.Format(L"%.0f", 100 * kCivic.getRevIdxGoodReligionMod());
-			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REV_GOOD_RELIGION_MOD", szTempBuffer.GetCString()));
 		}
 	}
 /************************************************************************************************/
