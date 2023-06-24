@@ -144,7 +144,7 @@ def sumValuesAndHelp( *ltValuesAndHelp ) :
 	szHelp = u""
 	for iLoopValue, szLoopHelp in ltValuesAndHelp :
 		iValue += iLoopValue
-		szHelp += szLoopHelp
+		szHelp += u"\n" + szLoopHelp
 	return iValue, szHelp
 
 
@@ -951,7 +951,7 @@ class CityRevIdxHelper :
 		iGenIdx, szGenHelp = self.computeGenericPerTurnAndHelp( CvRevolutionEffects.getRevIdxPerTurn )
 		iVariousIdx += iGenIdx
 		if szGenHelp :
-			szVariousHelp += u"\n" + szGenHelp
+			szVariousHelp += szGenHelp
 
 		if szVariousHelp :
 			szHelp += szVariousHelp
