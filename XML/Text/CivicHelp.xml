@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for Civic help text and pedia -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_CIVIC_PREREQ_WAR</Tag>
+		<English>[COLOR_RED]Must be at War[COLOR_REVERT]</English>
+		<French>[COLOR_RED]Doit &#234;tre en guerre[COLOR_REVERT]</French>
+		<German>[COLOR_RED]Muss sich im Krieg befinden[COLOR_REVERT]</German>
+		<Spanish>[COLOR_RED]Se debe estar en guerra[COLOR_REVERT]</Spanish>
+	</TEXT>
+</Civ4GameText>

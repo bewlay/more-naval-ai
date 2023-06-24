@@ -3821,13 +3821,6 @@
 		<Spanish>El Gran Consejo se funda cuando la religi&#243;n Emp&#237;rea es creada. Despu&#233;s de que cualquier jugador bueno o neutral haya investigado el Honor puede unirse a &#233;l.[NEWLINE][NEWLINE]Ser miembro del Gran Consejo garantiza una significante bonificaci&#243;n de diplomacia con los otros miembros. Tambi&#233;n fuerza a los miembros a cumplir con cualquier resoluci&#243;n que el Gran Consejo haya votado y accedido, a menos que el jugador quiera desafiar y dejar al Consejo. Todas estas resoluciones pueden ser poderosas y estrictas. Los jugadores que pretendan seguir siendo miembros del Gran Consejo deber&#237;an disfrutar de las ventajas de las amistades que permite, pero tambi&#233;n estar sujetos bajo su control. Esto es al menos para mantener las relaciones requeridas para ser votados como dirigentes del consejo y seleccionar ellos mismos los decretos.[NEWLINE][NEWLINE]Cada miembro del Gran Consejo tiene un voto en las resoluciones. Tanto el h&#233;roe Emp&#237;reo Chalid Astrakein como el h&#233;roe Malakim Teut&#243;rix garantizan a los jugadores que los controlen un voto adicional de cada uno en el Gran Consejo.[NEWLINE][NEWLINE]El Gran Consejo puede votar en las siguientes resoluciones:[NEWLINE][NEWLINE][TAB]Dirigente del Consejo: El dirigente del consejo selecciona las dem&#225;s resoluciones[NEWLINE][TAB]Forzar Guerra: Forzar la guerra sobre un no-miembro[NEWLINE][TAB]Asignar Ciudad: Devolver el control de una ciudad a un miembro[NEWLINE][TAB]Moneda &#218;nica: +1 ruta comercial en todas las ciudades[NEWLINE][TAB]Mercados Abiertos: Rutas comerciales con todas las ciudades extranjeras[NEWLINE][TAB]Doctrina Global de Curanderos P&#250;blicos: Todos los miembros deben adoptar la doctrina Curanderos P&#250;blicos[NEWLINE][TAB]Doctrina Global de Libertad: Todos los miembros deben adoptar la doctrina Libertad[NEWLINE][TAB]Pacto de Defensa Mutua entre todos los miembros: Todos los miembros entran en un Pacto de Defensa Mutua[NEWLINE][TAB]Ilegalizar el man&#225; de Muerte: Ning&#250;n miembro puede usar man&#225; de Muerte[NEWLINE][TAB]Ilegalizar el man&#225; de Entrop&#237;a: Ning&#250;n miembro puede usar man&#225; de Entrop&#237;a[NEWLINE][TAB]Ilegalizar el man&#225; de Sombra: Ning&#250;n miembro puede usar el man&#225; Sombr&#237;o</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVIC_PREREQ_WAR</Tag>
-		<English>[COLOR_WARNING_TEXT]Must be at War[COLOR_REVERT]</English>
-		<French>[COLOR_WARNING_TEXT]Doit &#234;tre en guerre[COLOR_REVERT]</French>
-		<German>[COLOR_WARNING_TEXT]Muss sich im Krieg befinden[COLOR_REVERT]</German>
-		<Spanish>[COLOR_WARNING_TEXT]Se debe estar en guerra[COLOR_REVERT]</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_CIVIC_RELIGION</Tag>
 		<English>Religion</English>
 		<Spanish>

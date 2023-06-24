@@ -10573,7 +10573,7 @@ void CvGameTextMgr::parseSpellHelp( CvWStringBuffer &szBuffer, SpellTypes eSpell
 // lfgr UI 11/2020: For "Allows civic" buttons in Tech tree.
 void CvGameTextMgr::parseSingleCivicRevealHelp( CvWStringBuffer &szBuffer, CivicTypes eCivic )
 {
-	szBuffer.appendfmt( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivicInfo( eCivic ).getDescription() );
+	szBuffer.appendfmt( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_CIVIC_TEXT"), GC.getCivicInfo( eCivic ).getDescription() );
 
 	CvWStringBuffer szCivicHelpText;
 	GAMETEXT.parseCivicInfo( szCivicHelpText, eCivic, true, true, true ); // bCiviliopedia=true to hide tech prereq
@@ -10623,6 +10623,50 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 					szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getTechInfo((TechTypes)kCivic.getTechPrereq()).getTextKeyWide()));
 				}
 			}
+		}
+
+		// lfgr 06/2023: Moved some FfH prereqs here
+		if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
+		{
+			if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() != kCivic.getPrereqCivilization())
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getCivilizationInfo((CivilizationTypes)kCivic.getPrereqCivilization()).getDescription()));
+			}
+		}
+		if (kCivic.getPrereqReligion() != NO_RELIGION)
+		{
+			if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != kCivic.getPrereqReligion())
+			{
+				szHelpText.append(NEWLINE);
+				szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getReligionInfo((ReligionTypes)kCivic.getPrereqReligion()).getDescription()));
+			}
+		}
+	}
+
+	// lfgr 06/2023: Moved some FfH prereqs here
+	if (kCivic.getBlockAlignment() != NO_ALIGNMENT)
+	{
+		if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() == kCivic.getBlockAlignment())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BLOCKS", GC.getAlignmentInfo((AlignmentTypes)kCivic.getBlockAlignment()).getDescription()));
+		}
+	}
+	if (kCivic.getPrereqAlignment() != NO_ALIGNMENT)
+	{
+		if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() != kCivic.getPrereqAlignment())
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getAlignmentInfo((AlignmentTypes)kCivic.getPrereqAlignment()).getDescription()));
+		}
+	}
+	if (kCivic.isPrereqWar())
+	{
+		if (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).getAtWarCount(true) > 0))
+		{
+			szHelpText.append(NEWLINE);
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_PREREQ_WAR"));
 		}
 	}
 
@@ -11221,46 +11265,8 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	}
 
 //FfH: Added by Kael 08/11/2007
-    if (kCivic.isPrereqWar())
-    {
-        if (!bPlayerContext || !(GET_TEAM(GC.getGameINLINE().getActiveTeam()).getAtWarCount(true) > 0))
-        {
-            szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_PREREQ_WAR"));
-        }
-    }
-    if (kCivic.getBlockAlignment() != NO_ALIGNMENT)
-    {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() == kCivic.getBlockAlignment())
-        {
-            szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_BLOCKS", GC.getAlignmentInfo((AlignmentTypes)kCivic.getBlockAlignment()).getDescription()));
-        }
-    }
-    if (kCivic.getPrereqAlignment() != NO_ALIGNMENT)
-    {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getAlignment() != kCivic.getPrereqAlignment())
-        {
-            szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getAlignmentInfo((AlignmentTypes)kCivic.getPrereqAlignment()).getDescription()));
-        }
-    }
-    if (kCivic.getPrereqCivilization() != NO_CIVILIZATION)
-    {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType() != kCivic.getPrereqCivilization())
-        {
-            szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getCivilizationInfo((CivilizationTypes)kCivic.getPrereqCivilization()).getDescription()));
-        }
-    }
-    if (kCivic.getPrereqReligion() != NO_RELIGION)
-    {
-        if (!bPlayerContext || GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getStateReligion() != kCivic.getPrereqReligion())
-        {
-            szHelpText.append(NEWLINE);
-            szHelpText.append(gDLL->getText("TXT_KEY_CIVIC_REQUIRES", GC.getReligionInfo((ReligionTypes)kCivic.getPrereqReligion()).getDescription()));
-        }
-    }
+	// lfgr 06/2023: Moved requirements up
+
     if (kCivic.isNoDiplomacyWithEnemies())
     {
         szHelpText.append(NEWLINE);
