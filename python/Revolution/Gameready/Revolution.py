@@ -1875,6 +1875,8 @@ class Revolution :
 		revCities.append(instigator)
 		revInCapital = instigator.isCapital()
 
+		instRevIdx = instigator.getRevolutionIndex()
+
 		# Who will join them?  City must be either in area with instigator, or close to instigator but not in homeland
 		# City must also be able to revolt now (not recently revolted)
 		for pCity in revReadyCities :
