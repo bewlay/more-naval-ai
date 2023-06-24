@@ -277,10 +277,6 @@
 					get="getDNCLevel">
 				<change module="DynamicCivNames" function="setOption"/>
 			</list>
-			<option id="TeamNaming" key="TeamNaming" type="boolean" default="True"
-				get="isTeamNaming" set="setTeamNaming">
-				<change module="DynamicCivNames" function="setOption"/>
-			</option>
 			<option id="LeaveHumanPlayerName" key="LeaveHumanPlayerName" type="boolean" default="False"
 				get="isLeaveHumanPlayerName" set="setLeaveHumanPlayerName"/>
 			<option id="EmpireDefaultName" key="EmpireDefaultName" type="boolean" default="True"

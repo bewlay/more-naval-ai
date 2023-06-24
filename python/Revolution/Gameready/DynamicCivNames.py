@@ -194,14 +194,6 @@ class DescGenerator :
 			if self.LOG_DEBUG : CvUtil.pyPrint( "  DCN - Giving game start name" )
 			yield localText.getText( "TXT_KEY_DCN_TRIBE", tArgs )
 		else :
-			if RevOpt.isTeamNaming() :
-				# Team naming
-				sTeamDesc = self.generateTeamDesc( ePlayer )
-				if sTeamDesc is not None :
-					if self.LOG_DEBUG : CvUtil.pyPrint( "  DCN - Naming by team" )
-					yield sTeamDesc
-					return
-			
 			if self.LOG_DEBUG : CvUtil.pyPrint( "  DCN - player not of special type" )
 			if iCreativityLevel <= 2 :
 				for sDesc in self.generateDescsLfgr( ePlayer, iCreativityLevel, tArgs ) :
@@ -209,31 +201,6 @@ class DescGenerator :
 			else :
 				for sDesc in self.generateDescsTholal( ePlayer ) :
 					yield sDesc
-	
-	def generateTeamDesc( self, ePlayer ) :
-		"""
-		Function to generate special names for players in a multi-player team
-		"""
-		pPlayer = gc.getPlayer( ePlayer )
-		
-		pTeam = gc.getTeam( pPlayer.getTeam() )
-		if pTeam.getNumMembers() > 1 :  # and pTeam.getPermanentAllianceTradingCount() > 0 ) :
-			if self.LOG_DEBUG : CvUtil.pyPrint( "DCN - Multiple players on team" )
-			
-			# LFGR_TODO: Translate, prevent too long names
-			# LFGR_TODO: Remove? Different order is weird, same names are dumb
-			eLeader = pTeam.getLeaderID()
-			sNewName = gc.getPlayer( eLeader ).getCivilizationAdjective( 0 )
-			for iLoopPlayer in range( 0, gc.getMAX_CIV_PLAYERS() ) :
-				if iLoopPlayer != eLeader and gc.getPlayer( iLoopPlayer ).getTeam() == pTeam.getID() :
-					sLoopAdj = gc.getPlayer( iLoopPlayer ).getCivilizationAdjective( 0 )
-					if not sLoopAdj in sNewName :  # prevent Luchuirp-Luchuirp Alliance
-						sNewName += "-" + sLoopAdj
-			
-			sNewName += " " + localText.getText( "TXT_KEY_DCN_ALLIANCE", () )
-			return sNewName
-		else :
-			return None
 	
 	def makeLfgrArgs( self, ePlayer ) :
 		"""
@@ -816,13 +783,6 @@ class DynamicCivNames :
 						CvUtil.pyPrint("  DCN - Graduating from game start name Player %d"%(iPlayer))
 						self.recalcNameWithMessage(iPlayer)
 						return"""
-		
-			# lfgr: Alliances
-			if RevOpt.isTeamNaming() :
-				if pPlayer.isAlive() and gc.getTeam( pPlayer.getTeam() ).getNumMembers() == 2 :
-					if not "Alliance" in pPlayer.getCivilizationDescription( 0 ) :
-						CvUtil.pyPrint( "  DCN - Changing name from Alliance of Player %d" % iPlayer )
-						self.recalcNameWithMessage( iPlayer )
 
 	def onCityAcquired( self, argsList):
 		'City Acquired'

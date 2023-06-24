@@ -62,9 +62,8 @@ class BugScoreOptionsTab(BugOptionsTab.BugOptionsTab):
 					CyTranslator().getText( "TXT_KEY_BUG_DNC_DISABLED_MULTIPLAYER", () ) )
 		else :
 			self.addTextDropdown(screen, col1, col1, "Revolution__DNCLevel")
-			self.addCheckbox(screen, col2, "Revolution__TeamNaming")
-			self.addCheckbox(screen, col3, "Revolution__LeaveHumanPlayerName")
-			self.addCheckbox(screen, col4, "Revolution__EmpireDefaultName")
+			self.addCheckbox(screen, col2, "Revolution__LeaveHumanPlayerName")
+			self.addCheckbox(screen, col3, "Revolution__EmpireDefaultName")
 		
 		screen.attachHSeparator(column, column + "Sep2")
 		# lfgr end
