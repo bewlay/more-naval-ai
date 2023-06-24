@@ -1551,9 +1551,14 @@ class Revolution :
 		if( pPlayer.getNumCities() == 0 ) :
 			return
 
-		#if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking %s for revolutions"%(pPlayer.getCivilizationDescription(0)))
+		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking %s for revolutions"%(pPlayer.getCivilizationDescription(0)))
 		playerPy = PyPlayer( iPlayer )
 		cityList = playerPy.getCityList()
+		
+		# lfgr 06/2023: No revolutions while Elohim Sanctuary spell is active
+		if pPlayer.getSanctuaryTimer() > 0 :
+			if( self.LOG_DEBUG ) : CvUtil.pyPrint( "    No revolutions: Sanctuary is active" )
+			return
 
 		revReadyCities = list()
 		revInstigatorCities = list()
