@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Text for specific improvements. -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_AIFON_ISLE</Tag>
+		<English>Maenalus</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_AIFON_ISLE_PEDIA</Tag>
+		<English>Now barren this isle was once the home of the Aifons, a race of men sacred to the water god Danalin. The Aifons disappeared entirely in the Age of Magic, but no one knows the cause of their extinction.</English>
+		<German>Heute unfruchtbar war diese Insel einst die Heimat der Aifon, ein Volk von Menschen, das den Wassergott Danalin verehrte. Die Aifon verschwanden w&#228;hrend des Zeitalters der Magie vollst&#228;ndig, aber niemand wei&#223;, was die Ursache ihrer Ausl&#246;schung war.</German>
+		<Spanish>Esta isla devastada fue hace tiempo el hogar de los Aifon, una raza de hombres sagrados para el dios del agua Danalin. Los Aifons desaparecieron por completo en la Era de la Magia, pero nadie conoce la causa de su extinci&#243;n.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BARROW</Tag>
+		<English>Barrow</English>
+		<French>Tumulus</French>
+		<German>Grabh&#252;gel</German>
+		<Spanish>
+			<Text>T&#250;mulo:T&#250;mulos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BARROW_PEDIA</Tag>
+		<English>Spawns skeletons and more powerful undead if the barrow isn't eliminated.</English>
+		<French>[ICON_BULLET]G&#233;n&#232;rent des squelettes et des morts-vivants plus puissants s'ils ne sont &#233;limin&#233;s.</French>
+		<German>Ein Grabh&#252;gel sollte zerst&#246;rt werden eh ihm Skelette und st&#228;rkere Untote entsteigen.</German>
+		<Spanish>Genera esqueletos y muertos vivientes m&#225;s poderosos si el t&#250;mulo no es eliminado.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BEAR_DEN</Tag>
+		<English>Bear Den</English>
+		<French>Antre d'Ours</French>
+		<German>B&#228;renh&#246;hle</German>
+		<Spanish>
+			<Text>Guarida de Osos:Guaridas de Osos</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BEAR_DEN_PEDIA</Tag>
+		<English>Spawns bears if it isn't eliminated.</English>
+		<French>[ICON_BULLET]Engendre des Ours s'il n'est pas d&#233;truit.</French>
+		<German>Erzeugt B&#228;ren wenn es nicht zerst&#246;rt wird.</German>
+		<Spanish>Genera osos si no es eliminada.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BRADELINES_WELL</Tag>
+		<English>Bradeline's Well</English>
+		<German>
+			<Text>Bradelines Brunnen</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Pozo de Bradeline</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BRADELINES_WELL_PEDIA</Tag>
+		<English>The bottomless well is said to reach all the way down into the underworld of Arawn, where those unclaimed by any god spend their afterlife. Only those brave enough to explore the well can find out what dwells between that world and this.</English>
+		<German>Es hei&#223;t, der bodenlose Brunnen reicht bis tief hinunter in die Unterwelt von Arawn, wo jene Seelen, die von keinem Gott beansprucht werden, ihr Leben nach dem Tode verbringen. Nur jene, die mutig genug sind, um in den Brunnen hinabzusteigen, k&#246;nnen herausfinden, was zwischen ihrer und dieser Welt haust.</German>
+		<Spanish>Se dice que este pozo sin fondo llega hasta el inframundo de Arawn, el lugar donde aquellos que no son reclamados por ning&#250;n dios van despu&#233;s de la muerte. Solamente los que son lo bastante valientes como para explorar el pozo pueden descubrir lo que se esconde entre ese mundo y el nuestro.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BROKEN_SEPULCHER</Tag>
+		<English>Broken Sepulcher</English>
+		<French>S&#233;pulture profan&#233;e</French>
+		<German>
+			<Text>Gesch&#228;ndetes Grab</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Sepulcro Profanado</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_BROKEN_SEPULCHER_PEDIA</Tag>
+		<English>Though Barbatos, master of death magic, was imprisoned in the Sepulcher in the Age of Magic it has not weathered the Age of Ice well. Now the stone block that Kylorin used to seal the tomb is shattered and the catacombs beneath lie open.</English>
+		<German>Obwohl Barbatos, Meister der Todesmagie, im Zeitalter der Magie in dieses Grab eingesperrt wurde, hat es das Zeitalter des Eises nicht besonders gut &#252;berstanden. Nun ist der Steinblock, mit dem Kylorin das Grab einst versiegelte, zerbrochen und die Katakomben darunter sind freigelegt.</German>
+		<Spanish>Aunque Barbatos, maestro de la magia de Muerte, fue encerrado en el Sepulcro durante la Edad de la Magia, &#233;ste no ha sobrevivido a la Edad del Hielo intacto. La piedra que Kylorin us&#243; para sellar la tumba ha sido destruida, y las catacumbas est&#225;n abiertas.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_CAGE</Tag>
+		<English>Cage</English>
+		<German>
+			<Text>K&#228;fig</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Jaula:Jaulas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_CAGE_PEDIA</Tag>
+		<English>Units can be trapped within a cage.</English>
+		<German>In einem K&#228;fig k&#246;nnen Einheiten gefangen werden.</German>
+		<Spanish>La jaula puede encerrar a algunas unidades.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_CASTLE</Tag>
+		<English>Castle</English>
+		<French>Ch&#226;teau</French>
+		<German>Schlo&#223;</German>
+		<Spanish>
+			<Text>Castillo:Castillos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_CHANCE_DISCOVER</Tag>
+		<English>[ICON_BULLET]1 in %D1% chance of discovering[SPACE]</English>
+		<French>[ICON_BULLET]1 sur %D1% chances de d&#233;couvrir[SPACE]</French>
+		<German>[ICON_BULLET]1 bei %D1% Chance entdeckt zu werden[SPACE]</German>
+		<Spanish>[ICON_BULLET]1 de %D1% probabilidades de descubrir[SPACE]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_CITADEL</Tag>
+		<English>Citadel</English>
+		<French>Citadelle</French>
+		<German>Zitadelle</German>
+		<Spanish>
+			<Text>Ciudadela:Ciudadelas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_DRAGON_BONES</Tag>
+		<English>Dragon Bones</English>
+		<French>Os de Dragon</French>
+		<German>Drachenknochen</German>
+		<Spanish>
+			<Text>Huesos de Dragones</Text>
+			<Gender>Male</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_DRAGON_BONES_PEDIA</Tag>
+		<English>.....Once I set the sea alight[NEWLINE]with a single fiery breath[NEWLINE]Once I was so mighty[NEWLINE]that I thought my name was death[NEWLINE]Sing out loud until you're heard[NEWLINE]the song of melancholy bliss,[NEWLINE]For the mighty and the middling[NEWLINE]all shall come to this....[NEWLINE][NEWLINE]- Inscription left by the Dragons Bones</English>
+		<German>....Einst setzt' ich das Meer in Flammen,[NEWLINE]mit einem einz'gen Atemzug.[NEWLINE]Einst war ich so &#252;berm&#228;chtig,[NEWLINE]ich brachte Tod in meinen Flug.[NEWLINE]Singet laut, bis man euch h&#246;rt,[NEWLINE]das Lied der traurigen Gl&#252;ckseligkeit.[NEWLINE]All die M&#228;cht'gen und die Armen,[NEWLINE]enden so, nach ihrer Zeit....[NEWLINE][NEWLINE] - Inschrift, gefunden bei den Knochen eines Gro&#223;en Drachen</German>
+		<Spanish>.....Una vez hice arder al mar[NEWLINE]con un &#250;nico aliento fiero[NEWLINE]Una vez fui tan poderoso[NEWLINE]que pens&#233; que mi nombre era muerte[NEWLINE]Cantad alto hasta que se&#225;is escuchados[NEWLINE]la canci&#243;n de la dicha melanc&#243;lica,[NEWLINE]Para el poderoso y el mediocre[NEWLINE]todos acabar&#225;n as&#237;....[NEWLINE][NEWLINE]- Inscripci&#243;n dejada en los Huesos de los Dragones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_DUNGEON</Tag>
+		<English>Dungeon</English>
+		<German>
+			<Text>Burgverlies</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Mazmorra:Mazmorras</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_DUNGEON_PEDIA</Tag>
+		<English>There are thousands of different kinds of dungeons spread across Erebus, some abandoned with forgotten treasures available for the taking, others are the lairs for dark creatures. The only way to tell the difference between the two is to explore them.</English>
+		<German>Es gibt Tausende verschiedene Arten von Dungeons &#252;berall auf Erebus, einige verlassen, aber gef&#252;llt mit vergessenen Sch&#228;tzen f&#252;r denjenigen, der sie sich nehmen m&#246;chte, andere sind Heimat f&#252;r dunkle Kreaturen. Der einzige Weg, um den Unterschied zwischen beiden herauszufinden, ist, sie zu erkunden.</German>
+		<Spanish>Hay miles de tipos de mazmorras dispersos por Erebus; algunas ocultan olvidados tesoros disponibles para los exploradores, mientras que otras son el hogar de siniestras criaturas. La &#250;nica manera de descubrir qu&#233; esconde una mazmorra es explorarla.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_ENCLAVE</Tag>
+		<English>Enclave</English>
+		<German>Enklave</German>
+		<Spanish>
+			<Text>Enclave:Enclaves</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_EVOLVES_PREREQ_CIV</Tag>
+		<English>[ICON_BULLET]Becomes a [COLOR_HIGHLIGHT_TEXT][LINK=literal]%s1_ImpName[\LINK][COLOR_REVERT] in %d2_Num [NUM2:Turn:Turns] (%s3_CivName only)</English>
+		<German>[ICON_BULLET]Wird in %d2_Num [NUM2:Runde:Runden] [COLOR_HIGHLIGHT_TEXT][LINK=literal]%s1_ImpName[\LINK][COLOR_REVERT] (nur %s3_CivName)</German>
+		<Spanish>[ICON_BULLET]Se convierte en [COLOR_HIGHLIGHT_TEXT][LINK=literal]%s1_ImpName[\LINK][COLOR_REVERT] en %d2_Num [NUM2:Turno:Turnos] (s&#243;lo %s3_CivName)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GOBLIN_FORT</Tag>
+		<English>Goblin Fort</English>
+		<German>
+			<Text>Goblin-Festung</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Fuerte Goblin:Fuertes Goblin</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GOBLIN_FORT_PEDIA</Tag>
+		<English>Although normally goblins aren't strong enough to pose a real threat to armies the Scorpion Clan goblins have two advantages that allow them to claim their land. First they are organized better than other goblin tribes, and the only ones to build fortifications in the wilderness. And secondly is the greasy poison they coat their weapons with. The creation of the poison is a secret of the Scorpion Clan shamans, and so far the secret has been well kept.</English>
+		<German>Obwohl Goblins normalerweise nicht stark genug sind, um eine wirkliche Gefahr f&#252;r eine Armee darzustellen, verf&#252;gen die Goblins des Skorpionklans &#252;ber zwei Vorteile, die ihnen erlauben, ihr Land zu beanspruchen. Erstens sind sie besser organisiert als andere Goblinst&#228;mme und die einzigen, die in der Wildnis Festungen errichten k&#246;nnen. Und zweitens streichen sie ihre Waffen mit einem z&#228;hfl&#252;ssigen Gift ein. Die Herstellung des Giftes ist ein Geheimnis der Schamanen des Skorpionklans, und bis jetzt wurde dieses Geheimnis gut geh&#252;tet.</German>
+		<Spanish>Aunque normalmente los goblins no son lo suficientemente fuertes como para suponer una amenaza real a los ej&#233;rcitos, los goblins del Clan Escorpi&#243;n tienen dos ventajas que les permiten reclamar sus territorios. El primero es que est&#225;n m&#225;s organizados que otras tribus de goblins, y que son los &#250;nicos que construyen fortificaciones en las tierras salvajes. El segundo es el espeso veneno con el que recubren sus armas. La creaci&#243;n del veneno es un secreto de los chamanes del Clan Escorpi&#243;n, y por ahora el secreto ha estado bien guardado.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GRAVEYARD</Tag>
+		<English>Graveyard</English>
+		<German>Friedhof</German>
+		<Spanish>
+			<Text>Cementerio:Cementerios</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GRAVEYARD_PEDIA</Tag>
+		<English>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Host of the Einherjar. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</English>
+		<French>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Law Bringer. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</French>
+		<German>Wird der Zauber "Skelett erschaffen" auf einem Friedhof gewirkt, erheben sich 3 Skelette aus der Erde. Der Zauber "Heiligen" gew&#228;hrt einen kostenlosen Rechtsprecher, wenn er auf einem Friedhof gewirkt wird. Der Zauber "Auferstehung" gew&#228;hrt einen kostenlosen Waffenmeister, wenn er auf einem Friedhof gewirkt wird. Einen Friedhof zu pl&#252;ndern, erbringt zuf&#228;llige Ergebnisse.</German>
+		<Italian>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Law Bringer. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</Italian>
+		<Spanish>Al lanzar Alzar Esqueleto sobre un cementerio obtendr&#225;s 3 Esqueletos. El lanzar Santificar sobre un cementerio otorga un gratis un Einherjar. Saquear un cementerio produce resultados aleatorios. Lanzar Resurrecci&#243;n en un cementerio produce un Campe&#243;n gratis.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GUARDIAN</Tag>
+		<English>Guardian of Pristin Pass</English>
+		<German>
+			<Text>W&#228;chter des Pristinuspasses</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Guardi&#225;n del Paso Pristino</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_GUARDIAN_PEDIA</Tag>
+		<English>Beware the Guardian of Pristin Pass, foul creatures roost in its alcoves and they are likely to swoop down on those who come too close to the stone giant.</English>
+		<German>Vorsicht vor dem W&#228;chter des Pristinpasses. &#220;ble Kreaturen leben in seinen Nischen und sie werden wahrscheinlich auf jene herabfahren, die dem steinernen Giganten zu nahe kommen.</German>
+		<Spanish>Cuidado con el Guardi&#225;n del Paso Pristino; infectas criaturas anidan en sus nichos y se abatir&#225;n sobre aquellos que se acerquen demasiado al gigante de piedra.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_HEAL_RATE_CHANGE</Tag>
+		<English>[ICON_BULLET]%D1% heal rate</English>
+		<French>[ICON_BULLET]%D1% taux de soin</French>
+		<German>[ICON_BULLET]%D1% Heilungsrate</German>
+		<Spanish>[ICON_BULLET]%D1% tasa de curaci&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_HELLFIRE</Tag>
+		<English>Hellfire</English>
+		<French>Feu d'Enfer</French>
+		<German>H&#246;llenfeuer</German>
+		<Spanish>
+			<Text>Fuego Infernal:Fuegos Infernales</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_HELLFIRE_PEDIA</Tag>
+		<English>Spawns demons if it isn't eliminated.</English>
+		<French>[ICON_BULLET]G&#233;n&#232;rent des d&#233;mons s'ils ne sont pas &#233;limin&#233;s</French>
+		<German>Erzeugt D&#228;monen bis es Zerst&#246;rt wird</German>
+		<Spanish>Genera demonios si no es eliminado.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_JUNGLE_ALTAR</Tag>
+		<English>Jungle Altar</English>
+		<German>Dschungelaltar</German>
+		<Spanish>
+			<Text>Altar de la Selva:Altares de la Selva</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_LETUM_FRIGUS</Tag>
+		<English>Letum Frigus</English>
+		<Spanish>
+			<Text>Letum Frigus</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_LETUM_FRIGUS_PEDIA</Tag>
+		<English>There is nothing left here but echoes of the battles that have been fought here. This is where Kylorin met Mulcarn in the final battle that killed a god. Wild men live in the caves around the site and claim that someday their god will return.</English>
+		<French>Il ne reste ici rien d'autre que les echos des batailles qui se sont d&#233;roul&#233;es l&#224;. C'est ici que Kylorin rencontra Mulcarn dans le combat final qui tua un dieu. les sauvages vivent dans des grottes alentours et soutiennent que leur dieu reviendra un jour.</French>
+		<German>Hier ist nichts mehr &#252;brig ausser den Echos der K&#228;mpfe die hier ausgetragen wurden. Hier traf Kylorin Mulcarn im letzten Kampf, der einen Gott get&#246;tet hat. Wilde Barbaren leben in H&#246;hlen um die St&#228;tte herum und behaupten, dass ihr Gott eines Tages zur&#252;ckkehren wird.</German>
+		<Spanish>Aqu&#237; no queda nada aparte de los ecos de las batallas que han tenido lugar aqu&#237;. Aqu&#237; es donde Kylorin se enfrent&#243; a Mulcarn en la batalla final que mat&#243; a un dios. Hombres salvajes viven en las cuevas de alrededor y aseguran que alg&#250;n d&#237;a su dios volver&#225;.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_LION_DEN</Tag>
+		<English>Lion Den</English>
+		<French>Antre de Lion</French>
+		<German>L&#246;wenh&#246;hle</German>
+		<Spanish>
+			<Text>Guarida de Leones:Guaridas de Leones</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_LION_DEN_PEDIA</Tag>
+		<English>Spawns lions if it isn't eliminated.</English>
+		<French>[ICON_BULLET]Engendre des Lions s'il n'est pas d&#233;truit.</French>
+		<German>Erzeugt L&#246;wen wenn es nicht zerst&#246;rt wird.</German>
+		<Spanish>Genera leones si no es eliminado.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MAELSTROM</Tag>
+		<English>Maelstrom</English>
+		<German>Strudel</German>
+		<Spanish>
+			<Text>Maelstrom</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MAELSTROM_PEDIA</Tag>
+		<English>Ships do well to avoid the swirling Maelstrom, though sailors claim ships that pass through it often come out on seas in different parts of the world.</English>
+		<French>Les vaisseaux font bien d'&#233;viter le tourbillonant Maelstrom, pourtant les marins racontent que les vaisseaux qui le traversent ressortent sur des mers des quatres coins du monde.</French>
+		<German>Schiffe t&#228;ten gut daran den wirbelden Strudel zu meiden, obwohl Matrosen behaupten, das Schiffe die hindurch fahren in anderen Meeren an anderen Orten der Welt herauskommen w&#252;rden.</German>
+		<Spanish>Los barcos hacen bien en evitar los remolinos, aunque los marineros aseguran que barcos han pasado a trav&#233;s de ellos para despu&#233;s salir sobre el mar en distintas partes del mundo.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_AIR</Tag>
+		<English>Air Node</English>
+		<French>Noeud d'Air</French>
+		<German>Manabrunnen Luftmagie</German>
+		<Spanish>
+			<Text>Nodo de Aire:Nodos de Aire</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_BODY</Tag>
+		<English>Body Node</English>
+		<French>Noeud de Corps</French>
+		<German>Manabrunnen K&#246;rpermagie</German>
+		<Spanish>
+			<Text>Nodo de Cuerpo:Nodos de Cuerpo</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_CHAOS</Tag>
+		<English>Chaos Node</English>
+		<French>Noeud de Chaos</French>
+		<German>Manabrunnen Chaosmagie</German>
+		<Spanish>
+			<Text>Nodo de Caos:Nodos de Caos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_DEATH</Tag>
+		<English>Death Node</English>
+		<French>Noeud de Mort</French>
+		<German>Manabrunnen Todesmagie</German>
+		<Spanish>
+			<Text>Nodo de Muerte:Nodos de Muerte</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_EARTH</Tag>
+		<English>Earth Node</English>
+		<French>Noeud de Terre</French>
+		<German>Manabrunnen Erdmagie</German>
+		<Spanish>
+			<Text>Nodo de Tierra:Nodos de Tierra</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_ENCHANTMENT</Tag>
+		<English>Enchantment Node</English>
+		<French>Noeud d'Enchantement</French>
+		<German>Manabrunnen Verzauberungsmagie</German>
+		<Spanish>
+			<Text>Nodo de Encantamiento:Nodos de Encantamiento</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_ENTROPY</Tag>
+		<English>Entropy Node</English>
+		<French>Noeud d'Entropie</French>
+		<German>Manabrunnen Entropiemagie</German>
+		<Spanish>
+			<Text>Nodo de Entrop&#237;a:Nodos de Entrop&#237;a</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_FIRE</Tag>
+		<English>Fire Node</English>
+		<French>Noeud de Feu</French>
+		<German>Manabrunnen Feuermagie</German>
+		<Spanish>
+			<Text>Nodo de Fuego:Nodos de Fuego</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_LAW</Tag>
+		<English>Law Node</English>
+		<French>Noeud de Loi</French>
+		<German>Manabrunnen Ordnungsmagie</German>
+		<Spanish>
+			<Text>Nodo de Ley:Nodos de Ley</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_LIFE</Tag>
+		<English>Life Node</English>
+		<French>Noeud de Vie</French>
+		<German>Manabrunnen Lebensmagie</German>
+		<Spanish>
+			<Text>Nodo de Vida:Nodos de Vida</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_METAMAGIC</Tag>
+		<English>Metamagic Node</English>
+		<French>Noeud de M&#233;tamagie</French>
+		<German>Manabrunnen Metamagie</German>
+		<Spanish>
+			<Text>Nodo de Metamagia:Nodos de Metamagia</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_MIND</Tag>
+		<English>Mind Node</English>
+		<French>Noeud de Pens&#233;e</French>
+		<German>Manabrunnen Geistesmagie</German>
+		<Spanish>
+			<Text>Nodo de Mente:Nodos de Mente</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_NATURE</Tag>
+		<English>Nature Node</English>
+		<French>Noeud de Nature</French>
+		<German>Manabrunnen Naturmagie</German>
+		<Spanish>
+			<Text>Nodo de Naturaleza:Nodos de Naturaleza</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_SHADOW</Tag>
+		<English>Shadow Node</English>
+		<French>Noeud d'Ombre</French>
+		<German>Manabrunnen Schattenmagie</German>
+		<Spanish>
+			<Text>Nodo de Sombra:Nodos de Sombra</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_SPIRIT</Tag>
+		<English>Spirit Node</English>
+		<French>Noeud d'Esprit</French>
+		<German>Manabrunnen Seelenmagie</German>
+		<Spanish>
+			<Text>Nodo de Esp&#237;ritu:Nodos de Esp&#237;ritu</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_SUN</Tag>
+		<English>Sun Node</English>
+		<French>Noeud de Soleil</French>
+		<German>Manabrunnen Sonnenmagie</German>
+		<Spanish>
+			<Text>Nodo de Sol:Nodos de Sol</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MANA_WATER</Tag>
+		<English>Water Node</English>
+		<French>Noeud d'Eau</French>
+		<German>Manabrunnen Wassermagie</German>
+		<Spanish>
+			<Text>Nodo de Agua:Nodos de Agua</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MIRROR_OF_HEAVEN</Tag>
+		<English>Mirror of Heaven</English>
+		<French>Miroir du Paradis</French>
+		<German>Himmelsspiegel</German>
+		<Spanish>
+			<Text>Espejo del Cielo</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MIRROR_OF_HEAVEN_PEDIA</Tag>
+		<English>When in great need the Malakim seek guidance by heading alone into the desert. Though they risk death they often receive visions or enlightenment. The most holy of these wildlands is the Mirror of Heaven, a desert so hot the sands have melted to a smooth glass sea.</English>
+		<French>Lorsqu'ils sont dans le besoin , les Malakim recherchent des conseils en partant seul dans le d&#233;sert. Bien qu'ils risquent la mort , ils ont souvent des visions ou des illuminations. La plus sainte de ces terres sauvages est le Miroir du Paradis, un d&#233;sert si chaud que les sables se sont fondus en une mer de verre lisse.</French>
+		<German>In gro&#223;en N&#246;ten suchen die Malakim Rat, indem sie alleine in der W&#252;ste wandeln. Obwohl sie ihren Tod riskieren erlangen sie oft Erleuchtung oder bekommen Visionen. Die heiligste aller Ein&#246;den ist der Himmelsspiegel, eine W&#252;ste so hei&#223;, dass der Sand zu einem glatten Glassee geschmolzen ist.</German>
+		<Spanish>En momentos de gran necesidad, los Malakim buscan gu&#237;a viajando en solitario hacia el desierto. A&#250;n a riesgo de morir, reciben visiones o iluminaci&#243;n. Lo m&#225;s sagrado de estas tierras inh&#243;spitas es el Espejo del Cielo, un desierto tan caliente que las arenas se han fundido en un liso mar de cristal.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MONSTER_SKELETON</Tag>
+		<English>Ancient Skeleton</English>
+		<German>Antikes Skelett</German>
+		<Spanish>
+			<Text>Esqueleto Antiguo</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_MUSHROOMS</Tag>
+		<English>Mushrooms</English>
+		<German>Pilze</German>
+		<Spanish>
+			<Text>Setas</Text>
+			<Gender>Female</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_NECROTOTEM</Tag>
+		<English>Necrototem</English>
+		<German>
+			<Text>Todes-Totem</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Necrot&#243;tem:Necrot&#243;tems</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_NECROTOTEM_PEDIA</Tag>
+		<English>The totems are said to be manufactured in hell itself and planted here in Erebus as a sign of hell's growing power. Regardless of their origin their effect is felt by any that come near, an overpowering fear that sends even the bravest running away from the totem</English>
+		<German>Es hei&#223;t, die Totems werden in der H&#246;lle selbst hergestellt und hier auf Erebus als Zeichen der wachsenden Macht der H&#246;lle aufgestellt. Ungeachtet ihrer Herkunft ist ihr Effekt bei jedem zu beobachten, der sich ihnen n&#228;hert, ein &#252;berw&#228;ltigendes Angstgef&#252;hl, das selbst die Mutigsten vor dem Totem davonrennen l&#228;sst.</German>
+		<Spanish>Se dice que estos t&#243;tems han sido fabricados en el mismo infierno, y que han sido plantados sobre Erebus como se&#241;al del creciente poder del infierno. Sin importar su origen, su efecto es sentido por cualquiera que se acerque; un terror insuperable que pone incluso a los m&#225;s valerosos a huir.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_ODIOS_PRISON</Tag>
+		<English>Odio's Prison</English>
+		<French>Prison d'Odio</French>
+		<German>Odios Gef&#228;ngnis</German>
+		<Spanish>
+			<Text>Prisi&#243;n de Odio</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_ODIOS_PRISON_PEDIA</Tag>
+		<English>When the gods met at the seven pines they called a truce in the Godswar. The divine armies withdrew to their sacred lands and humanity had a hint of the peaceful times that would come. But the greatest of Aeron's angels, the archangel Odio, ignored his lord's command. He was given over to his bloodlust and led an army of Ira into the lands of Kilmorph.[PARAGRAPH:1]"What means the words of one who does not rule his own home? If Aeron is to share our council he must withdraw his ara from Odio"[PARAGRAPH1:]The gods agreed with Kilmorph and Aeron's protection was removed from the raging Odio, in that instant the queen of gems reached out and pulled Odio into the earth. There she left him transformed to stone, eternal testament to the power of the gods and the cost of defying their will.</English>
+		<German>Als die G&#246;tter sich an den sieben Tannen trafen, riefen sie einen Waffenstillstand im G&#246;tterkrieg aus. Die g&#246;ttlichen Armeen zogen sich in ihre geweihten L&#228;nder zur&#252;ck und die Menschheit erhielt einen Vorgeschmack auf die friedvollen Zeiten, die folgen sollten. Aber der Oberste der Engel Aerons, der Erzengel Odio, verweigerte seinem Herren den Gehorsam. Er verfiel der Blutlust und f&#252;hrte eine Armee von Ira in die L&#228;nder Kilmorphs.[PARAGRAPH:1]"Was bedeuten die Worte eines Gottes, der nicht sein eigenes Heim regiert? Wenn Aeron unseren Rat folgt, muss er Odio seinen Segen entziehen."[PARAGRAPH1:]Die G&#246;tter pflichteten Kilmorph bei und Aerons Schutz wurde aufgehoben und in just diesem Augenblick, griff die K&#246;nigin der Juwelen nach dem tobenden Odio und zog ihn in die Erde. Dort verwandelte sie ihn in Stein, zu einem ewiges Zeugnis der Macht der G&#246;tter und einem Mahnmal f&#252;r jene, die sich gegen ihren Willen richten.</German>
+		<Spanish>Cuando los dioses se encontraron en los Siete Pinos declararon una tregua para la guerra de los dioses. Los ej&#233;rcitos divinos se retiraron a sus tierras sagradas y la humanidad tuvo una se&#241;al de que vendr&#237;an tiempos de paz y tranquilidad. Pero el m&#225;s grande de los &#225;ngeles de Aeron, el arc&#225;ngel Odio, ignor&#243; las &#243;rdenes de su se&#241;or. Estaba pose&#237;do por su sed de sangre y lider&#243; un ej&#233;rcito de Ira hacia las tierras de Kilmorph.[PARAGRAPH:1]"&#191;Qu&#233; significado tienen las palabras de alguien que no gobierna su propio hogar? Si Aeron va a formar parte de nuestro consejo debe retirar su protecci&#243;n a Odio"[PARAGRAPH1:]Los dioses estuvieron de acuerdo con Kilmorph y la protecci&#243;n de Aeron sobre el irascible Odio fue revocada; en ese instante la reina de las gemas extendi&#243; su mano y tir&#243; de &#233;l hacia dentro de la tierra. All&#237; le dej&#243; transformado en piedra, un recuerdo eterno del poder de los dioses y el coste de desafiar su voluntad.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PENGUINS</Tag>
+		<English>Penguins</English>
+		<German>Pinguine</German>
+		<Spanish>
+			<Text>Ping&#252;inos</Text>
+			<Gender>Male</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PIRATE_COVE</Tag>
+		<English>Pirate Cove</English>
+		<French>Crique Pirate</French>
+		<German>Piratenbucht</German>
+		<Spanish>
+			<Text>Cala Pirata:Calas Piratas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PIRATE_COVE_PEDIA</Tag>
+		<English>Pirate Coves are available to civilizations that start with the seafaring tech (the Lanun).[NEWLINE][ICON_BULLET]While in a cove ships gain a defensive bonus, increased healing, and a slightly better sight range.[NEWLINE][ICON_BULLET]A cove can't be built within 3 tiles of another cove.</English>
+		<French>[ICON_BULLET]La Crique Pirate est seulement disponible pour les civilisations qui commencent avec la technologie Navigation (les Lanuns). Cela permet aux ouvriers de cr&#233;er une crique sur une case de c&#244;te (poss&#233;d&#233;e par le joueur ou non poss&#233;d&#233;e) dans laquelle les navires peuvent entrer. Tant qu'ils sont dans la crique, les navires gagnent en d&#233;fense, augmente le taux de gu&#233;rison et un champ de vision l&#233;g&#232;rement meilleur. Si une crique est dans une case poss&#233;d&#233;e par le joueur, elle fournit une petite quantit&#233; d'or. Une crique ne peut &#234;tre construite &#224; moins de trois cases d'une autre crique.</French>
+		<German>Die Piratenbucht steht nur Zivilisationen zur Verf&#252;gung, die mit der Bootsbau-Technologie beginnen (die Lanun) [NEWLINE][ICON_BULLET] W&#228;hrend Schiffe in einer Bucht liegen, erhalten sie einen Defensivbonus und eine leicht erh&#246;hte Sichtweite, au&#223;erdem sie heilen schneller.[NEWLINE][ICON_BULLET] Eine Bucht muss mindestens 3 Gel&#228;ndefelder Abstand zur n&#228;chsten haben.</German>
+		<Spanish>Las Calas Piratas est&#225;n disponibles solamente para las civilizaciones que comiencen con la tecnolog&#237;a Mariner&#237;a (es decir, los Lanun).[NEWLINE][ICON_BULLET]Mientras est&#225;n en una cala, los barcos tienen un bonificador a la defensa, curaci&#243;n incrementada y un rango de visi&#243;n ligeramente aumentado[NEWLINE][ICON_BULLET]Una cala no se puede construir a tres o menos casillas de distancia de otra cala.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PIRATE_HARBOR</Tag>
+		<English>Pirate Harbor</English>
+		<French>Port de Pirates</French>
+		<German>Piratenhafen</German>
+		<Spanish>
+			<Text>Puerto Pirata:Puertos Pirata</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PIRATE_PORT</Tag>
+		<English>Pirate Port</English>
+		<French>Grand port de Pirates</French>
+		<German>Piratendock</German>
+		<Spanish>
+			<Text>Muelle Pirata:Muelles Pirata</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_POOL_OF_TEARS</Tag>
+		<English>Pool of Tears</English>
+		<French>Bassin de Larmes</French>
+		<German>See der Tr&#228;nen</German>
+		<Spanish>
+			<Text>Estanque de las L&#225;grimas</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_POOL_OF_TEARS_HELP</Tag>
+		<English>[ICON_BULLET]Cures Disease[NEWLINE][ICON_BULLET]Cures Plague[NEWLINE][ICON_BULLET]Cures Poison</English>
+		<Spanish>[ICON_BULLET]Cura las Enfermedades[NEWLINE][ICON_BULLET]Cura la Plaga[NEWLINE][ICON_BULLET]Cura el Veneno</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_POOL_OF_TEARS_PEDIA</Tag>
+		<English>Chapter 1: Fall of Mammon Cycle[NEWLINE][NEWLINE]Mammon sat in the shadow of a great mountain. He liked creation, the smells of fresh earth and growing things, the mix of warm sunlight and cool breezes. But a world is more than the material and his mind was exploring one of his own creations, mathematics.[NEWLINE][NEWLINE]The One had removed the power of creation from them, but the gods were still powerful. Though the laws of Erebus were set, they could easily bend them. But in time they would return to their natural state. Mammon wished he could remake some of the laws he had applied, and even now played with changing them and watched the impact of his changes on the clouds that drifted overhead. The way the clouds split, funneled, dispersed and moved were minutely changed by the slightest of his adjustments.[NEWLINE][NEWLINE]As the god of foresight Mammon watched the world play out due to his tiny changes. The clouds shadow that uncovered a mother mouse a second sooner. The hawk that spotted the now uncovered mouse. The mouse that would die in the hawks claws. The mouse babies that would starve without their mother. The seeds that would not be eaten by the mice. The plants that would now grow from those seeds.[NEWLINE][NEWLINE]The clouds rolled towards the west, they were bone white and hung low in the sky. All except a single cloud that traveled east, seemingly ignoring all natural laws. Mammon considered the futures changed by the defiant cloud. Weather patterns changed, storms that would and wouldn't occur now. The changed world that existed because of that cloud.[NEWLINE][NEWLINE]"Would you be so quick to change everything if you knew the implications of your actions?" Mammon asked the sky.[NEWLINE][NEWLINE]Tali, god of the air, smiled down at the serious god, "I suspect that everything turns out the same no matter what we do."[NEWLINE][NEWLINE]Mammon frowned, "That is not true."[NEWLINE][NEWLINE]But secretly Mammon wondered if Tali was right.[NEWLINE][NEWLINE]A distant ceremony beckoned to both the gods. All the gods gathered around a shallow pool and with a thought Mammon and Tali joined them.[NEWLINE][NEWLINE]Within the pool a woman floated, perfect of form with smooth, pale skin and long, black hair. She was to be Gabella, formed by Aeron into the first woman and she was receiving a blessing from each of the gods.[NEWLINE][NEWLINE]Bhall, goddess of fire, floated in the pool with Gabella and fire danced across the pools surface and shimmered in its depths. Bhall held the sleeping Gabella and whispered into her ear, "I give you the capacity for passion and love, that you can give these gifts to others and can receive them to yourself."[NEWLINE][NEWLINE]At that she kissed Gabella gently on the forehead. Gabella continued to float as Bhall let go and stepped out of the pool. Ceridwen came next, floating above the pool she allowed the long tendrils of her gown to reach down and lift Gabella gently to her.[NEWLINE][NEWLINE]Oghma was watching Mammon closely. The two were as close as their precepts, Oghma was knowledge of everything that was and Mammon was the god of knowledge of everything that will be. The thin line of the present separated their dominions and because of that the gods had a close affinity for each other.[NEWLINE][NEWLINE]Deciding that something had changed Oghma whispered to Mammon, "You seem bothered."[NEWLINE][NEWLINE]Nemed spoke to all the gathered gods before Mammon could respond.[NEWLINE][NEWLINE]"I mean to give her eternal life. That mankind can share our immortality and live without death."[NEWLINE][NEWLINE]The gods considered, all life in creation was meant to be temporary. They were not making gods, but a world with seasons and cycles. Arawn was the first to respond.[NEWLINE][NEWLINE]"They have not known heaven, but they will yearn for it. Are you sure that our creation is so perfect that it should be unending?"[NEWLINE][NEWLINE]At that the gods all began speaking at once. Only Agares, who watched without comment, and Mammon stayed out of the conversation. Mammon already knew the outcome. It was the same as any major decision they had to make, they would ask him. It was Nemed who asked.[NEWLINE][NEWLINE]"Mammon, what do you foresee for Gabella and her children? Should she live eternal, or live only for a time within creation?"[NEWLINE][NEWLINE]For the first time Mammon was afraid to answer. Something was wrong, and for one who always knew the future being blind to it terrified him. Mammon could see the creation of Gabella, could see her rebellion and refusal to submit to the plan of the gods. Beyond that he saw the rebellion of Agares, and his attempt to challenge the One. He saw the One standing in creation, judging the world. But he couldn't see anything beyond that moment. If there was any future beyond that he was blind to it. Mammon suspected that the One unmade them and creation. He suspected that he was seeing his own death.[NEWLINE][NEWLINE]In regards to Gabella's immortality, for the time that Mammon could see there was no difference. With or without eternal life Gabella would refuse to become the mother of humanity. With either option she would live until Mammon's vision failed him. She would live as long as Mammon would.[NEWLINE][NEWLINE]Rather than admit that his vision was gone, rather than tell the gods that Agares would betray them, that they would all die, Mammon pretended to know and for the first time gave advice without knowing if it was correct.[NEWLINE][NEWLINE]"Allow them to be immortal, they should not fear death." Mammon was beginning to know that fear to well himself.[NEWLINE][NEWLINE]Arawn seemed bothered by the response but said nothing. Nemed entered the pool, embraced Gabella and whispered into her ear. From that moment she was as immortal as a single god could make her.[NEWLINE][NEWLINE]Mammon was next. He walked across the surface of the pool and sat down at Gabella's side.[NEWLINE][NEWLINE]"Wake child." He said softly.[NEWLINE][NEWLINE]Gabella sat up and her eyes fluttered open. She was still in the daze of birth and likely wouldn't see or remember him, but he wanted to see her eyes. Aeron had fashioned her body perfectly, she was beautiful, strong and unique in feature.[NEWLINE][NEWLINE]"I give you..." Mammon leaned close, so that no one could overhear, "I give you nothing, so that you might always wonder and won't know the pleasures and the pains of the future."[NEWLINE][NEWLINE]Gabella lay back down in the pool and returned to her sleep. Agares was the last to give his blessing and he stepped into the pool. At his touch the water changed to a blend of black and gold, a beautiful labyrinth or bright gold veins appearing and disappearing into emptiness. The gold strands caressed Gabella's body and again her eyes fluttered open to meet Agares's gaze.[NEWLINE][NEWLINE]"I give you hope, a belief in what can be, that you will not know despair."[NEWLINE][NEWLINE]Oghma was watching Mammon closely, he would be the only one who knew that Mammon didn't give a gift to Gabella. Similarly Mammon watched Agares, searching unsuccessfully for some hint of his future betrayal.[NEWLINE][NEWLINE][LINK=SPELL_ESCAPE]Chapter 2: Fall of Mammon Cycle[\LINK][NEWLINE][LINK=IMPROVEMENT_SEVEN_PINES]Chapter 3: Fall of Mammon Cycle[\LINK][NEWLINE][LINK=BUILDING_ALTAR_OF_THE_LUONNOTAR]Chapter 4: Fall of Mammon Cycle[\LINK]</English>
+		<German>W&#228;hrend des Zeitalters der Magie versammelten sich die Engel von Sirona um die Qualen der Welt zu lindern. Der See wurde aus ihren Tr&#228;nen gebildet und man sagt, dass er jeden heilen kann, der in ihm untertaucht.[NEWLINE][ICON_BULLET]Heilt Krankheit[NEWLINE][ICON_BULLET]Heilt Schw&#228;chung[NEWLINE][ICON_BULLET]Heilt Verseuchung[NEWLINE][ICON_BULLET]Heilt Vergiftung</German>
+		<Spanish>Durante la Edad de la Magia, los &#225;ngeles de Sirona se reunieron aqu&#237; para curar las dolencias del mundo. El estanque estaba formado por sus l&#225;grimas y se dice que puede curar a cualquiera que se ba&#241;e en &#233;l.[NEWLINE][ICON_BULLET]Cura Enfermedad[NEWLINE][ICON_BULLET]Cura Enervaci&#243;n[NEWLINE][ICON_BULLET]Cura Plaga[NEWLINE][ICON_BULLET]Cura Veneno</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PORTAL</Tag>
+		<English>Portal</English>
+		<Spanish>
+			<Text>Portal:Portales</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PREREQ_CIVILIZATION</Tag>
+		<English>[ICON_BULLET]Requires %s1_civilization civilization</English>
+		<German>[ICON_BULLET]erfordert die Zivilization der %s1_civilization</German>
+		<Spanish>[ICON_BULLET]Requiere la civilizaci&#243;n %s1_civilization</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PYRE_OF_THE_SERAPHIC</Tag>
+		<English>Pyre of the Seraphic</English>
+		<French>Bucher des S&#233;raphins</French>
+		<German>Scheiterhaufen der Engel</German>
+		<Spanish>
+			<Text>Pira de los Serafines</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_PYRE_OF_THE_SERAPHIC_PEDIA</Tag>
+		<English>What was once a grand temple of Bhall now has no references to her name. The inscriptions have been worn off, the murals covered in crude orcish paintings. But the fire that burns atop the temple cannot be extinguished, and the Clan is said to sacrifice angels to Bhall at the Pyre.</English>
+		<French>Ce qui fut un grand temple de Bhall n'a maintenant plus de r&#233;f&#233;rence &#224; son nom. Les inscriptions ont &#233;t&#233; effac&#233;es, les murs couverts de peintures orcs. Mais le feu qui brule au sommet du temple ne peut etre &#233;teint, et on dit que le Clan sacrifie des anges &#224; Bhall sur ce Bucher.</French>
+		<German>Was einst ein gro&#223;er Tempel der Bhall war, tr&#228;gt nun keine Hinweis mehr auf ihren Namen. Die Inschriften sind abgenutzt und die Wandmalereien sind von grobschl&#228;chtigen, orkischen Schmierereien bedeckt. Aber das Feuer, das auf der Spitze des Tempels brennt, kann nicht gel&#246;scht werden und es wird gesagt, das dort der Clan Engel zu Ehren Bhalls opfert</German>
+		<Spanish>Lo que una vez fue el gran templo a Bhall ahora no tiene ninguna referencia a su nombre. Las inscripciones han sido desgastadas, los murales cubiertos de crueles pinturas orcas. Pero el fuego que arde en el tejado del templo no puede ser extinguido, y se dice que el Clan sacrifica &#225;ngeles a Bhall en la Pira.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_RANGE_DEFENSE_MODIFIER</Tag>
+		<English>[ICON_BULLET]%D1% strength to all units within %D2 tiles</English>
+		<French>[ICON_BULLET]%D1% force &#224; toutes les unit&#233;s dans un rayon de %D2 cases</French>
+		<German>[ICON_BULLET]%D1% St&#228;rke f&#252;r alle Einheiten innerhalb %D2 Gel&#228;ndefeldern</German>
+		<Spanish>[ICON_BULLET]%D1% de fuerza a todas las unidades a un alcance de %D2 casillas</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_REMNANTS_OF_PATRIA</Tag>
+		<English>Remnants of Patria</English>
+		<French>Restes de Patria</French>
+		<German>&#220;berreste des Vaterlandes</German>
+		<Spanish>
+			<Text>Reliquias de Patria</Text>
+			<Gender>Female</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_REMNANTS_OF_PATRIA_PEDIA</Tag>
+		<English>Once mankind was joined in a single empire. These jade statues are the last symbols of this great empire, and will remind your people of what mankind is capable of.</English>
+		<French>A une &#233;poque , l'humanit&#233; &#233;tait r&#233;unie en un seul empire. Ces statues de jade sont les derniers syboles de cet immense empire, et rappellereont &#224; votre peuple ce dont est capable l'humanit&#233;.</French>
+		<German>Einst war die gesamte Menschheit in einem einzigen Imperium vereint. Diese Jadestatuen sind die letzten &#220;berbleibsel dieses gro&#223;en Reiches und wird deine Leute daran erinnern, zu was die Menschheit f&#228;hig ist.</German>
+		<Spanish>Hace mucho tiempo la humanidad estaba unida en un solo imperio. Estas estatuas de jade son los &#250;ltimos s&#237;mbolos de este gran imperio, y recordar&#225;n a vuestro pueblo de lo que es capaz la humanidad.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_RING_OF_CARCER</Tag>
+		<English>Ring of Carcer</English>
+		<German>Kerker des Lichts</German>
+		<Spanish>
+			<Text>Anillo de Carcer</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_RING_OF_CARCER_PEDIA</Tag>
+		<English>In the frozen wastes explorers have reported seeing a beautiful glow in the night sky. There have been many stories about the source of this glow, the passing of spirits from this world to the next, the shimmering of the sleeping sun, the remains of Mulcarn himself.[PARAGRAPH:1]But the truth is that far into the wastes there exists a ring of starlight, the Ring of Carcer. And trapped within is Brigit, the archangel of Bhall whom Bhall was unwilling to kill in her fall. Those seeking evidence that the queen of fire is not completely lost to the whispers of Agares cite her preservation of Brigit as their evidence. Others say that if Brigit can be freed she could kill Bhall and claim her dominion for herself. And we would once again have a goddess of holy fire.[PARAGRAPH:1]But these are only stories, shared on cold snowy nights. For there is none so far who is capable of passing through the Ring of Carcer and freeing the trapped archangel.</English>
+		<German>Entdecker berichteten von einer wundersch&#246;nen Leuchterscheinung am Nachthimmel &#252;ber den gefrorenen Ein&#246;den des Nordens. Es gibt viele Geschichten &#252;ber die Entstehung dieses Leuchtens, das Vorr&#252;berziehen von Geistern von dieser zur n&#228;chsten Welt, das Schimmern der schlafenden Sonne oder sogar die Gebeine Mulcarns.[PARAGRAPH:1]Aber die Wahrheit ist, dass tief in den &#214;dlanden ein Ring aus Sternenlicht existiert, der Kerker des Lichts. Und in ihm gefangen ist Brigit, der Erzengel von Bhall, den zu t&#246;ten Bhall nicht bereit war, als sie fiel. Diejenigen, die Beweise daf&#252;r suchen, dass die K&#246;nigin des Feuers nicht den Einfl&#252;sterungen von Agares verfiel, ziehen die Bewahrung von Brigit als ihre Beweise heran. Andere sind der Meinung, dass Brigit, sollte sie befreit werden k&#246;nnen, in der Lage w&#228;re Bhall zu t&#246;ten und ihre Dom&#228;ne f&#252;r sich zu beanspruchen. Dann w&#252;rden wir wieder eine G&#246;ttin des heiligen Feuers haben.[PARAGRAPH:1]Aber das sind nur Geschichten, die in kalten verschneiten N&#228;chten erz&#228;hlt werden. Denn bisher gibt es niemanden, der in der Lage w&#228;re den Kerker des Lichts zu betreten und Brigit zu befreien.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_RUINS</Tag>
+		<English>Ruins</English>
+		<French>Ruines</French>
+		<German>Ruinen</German>
+		<Spanish>
+			<Text>Ruina:Ruinas</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_RUINS_PEDIA</Tag>
+		<English>Ruins will spawn lizardmen if it isn't eliminated.</English>
+		<French>[ICON_BULLET]Les Ruines g&#233;n&#232;reront des hommes-l&#233;zards s'ils ne sont pas &#233;limin&#233;s</French>
+		<German>Ruinen sollten zerst&#246;rt werden eh ihnen Echsenkrieger entsteigen.</German>
+		<Spanish>Las ruinas generar&#225;n hombres lagarto si no son eliminadas.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SEVEN_PINES</Tag>
+		<English>Seven Pines</English>
+		<German>
+			<Text>Sieben Kiefern</Text>
+			<Gender>Female</Gender>
+			<Plural>1</Plural>
+		</German>
+		<Spanish>
+			<Text>Siete Pinos</Text>
+			<Gender>Male</Gender>
+			<Plural>1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SEVEN_PINES_HELP</Tag>
+		<English>[ICON_BULLET]The owner of the Seven Pines may call a council here that will end all wars he is in. This can only be done once per game. A unit must be in this tile to use this ability.</English>
+		<Spanish>[ICON_BULLET]El propietario de los Siete Pinos puede crear un concilio que terminar&#225; todas las guerras en las que est&#233;. &#201;sto solamente puede hacerse una vez por partida. Una unidad debe de estar en esta casilla para poder usar esta habilidad.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SEVEN_PINES_PEDIA</Tag>
+		<English>[LINK=IMPROVEMENT_POOL_OF_TEARS]Chapter 1: Fall of Mammon Cycle[\LINK][NEWLINE][LINK=SPELL_ESCAPE]Chapter 2: Fall of Mammon Cycle[\LINK][NEWLINE][NEWLINE]Chapter 3: Fall of Mammon Cycle[NEWLINE][NEWLINE]The gods argued again and eventually agreed to create another wife for Nemed. This time the gifts were to be less than those given to Gabella, so she wouldn't be pulled in different directions by each of their aspects. And she would be mortal in form so that whatever she chose, she would not have a permanent impact on creation. Her soul was to remain immortal, and Arawn agreed to tend to her soul, and those of the mortal generations that would follow her.[NEWLINE][NEWLINE]They named her Anesidora and she was as gentle as Gabella was fierce. Nemed built a farm on the edge of a great river for them to share. It was bordered by seven great pine trees and the gods frequently visited the farm. It was a favorite place for squirrels to play and they could often be seen chasing each other along the buildings and trees, or chattering noisily at anyone who passed, god or man.[NEWLINE][NEWLINE]One day Agares and Mammon stood by the river's edge and the squirrels chattered at them. One even came to Agares's foot, looking up at the powerful god and squeaking as if laying out all the worlds problems for him. Agares simply smiled at the tiny creature and offered him a small nut, which the squirrel happily accepted before hopping away.[NEWLINE][NEWLINE]"The One will return to creation soon." Mammon commented.[NEWLINE][NEWLINE]Agares nodded.[NEWLINE][NEWLINE]"When he does, you will rebel against him."[NEWLINE][NEWLINE]Agares stayed silent to this. The two gods sat and watched the squirrels battle, the nut Agares had given one had caused them to start quarreling with each other over it.[NEWLINE][NEWLINE]Finally Agares asked, "How does it end?"[NEWLINE][NEWLINE]"I don't know" Mammon answered, "I see you rebel, I see him considering creation and then nothing. I can't see a future for anyone beyond that moment. I believe he kills us all and unmakes creation."[NEWLINE][NEWLINE]Agares nodded, then asked "What do you think we should have done with Gabella?"[NEWLINE][NEWLINE]"You mean, what should the One do with you?"[NEWLINE][NEWLINE]Agares simply responded, "Yes."[NEWLINE][NEWLINE]"I don't know. I love creation, I don't want to see it lost. But questions of morality are better suited for the dominions of other gods." Then after a pause Mammon added, "I'm afraid of dying. Were we ever not alive?"[NEWLINE][NEWLINE]Agares shrugged. "I will speak to those that defended Gabella. If they value life and freedom over obedience then they may be allies."[NEWLINE][NEWLINE]Before Agares left Mammon stopped him, "Did you curse Gabella? Were you the reason she wouldn't submit?"[NEWLINE][NEWLINE]"No" he answered, "I thought it was you. But maybe Aeron didn't want another taking his perfect creation. Or maybe it was Ceridwen, who is always incomprehensible."[NEWLINE][NEWLINE]"Maybe" Mammon echoed, but Agares was already gone. Alone, Mammon sat and watched the squirrels continue to fight over the nut.[NEWLINE][NEWLINE][LINK=BUILDING_ALTAR_OF_THE_LUONNOTAR]Chapter 4: Fall of Mammon Cycle[\LINK]</English>
+		<German>Dies ist der Ort, an dem sich die G&#246;tter gegen Ende des Zeitalters der Drachen trafen. Hier wurde der Pakt unterzeichnet und hier verlie&#223; Cassiel die Dienste seines Gottes. Trotz der Ereignisse, die hier stattfanden, besteht eine tiefe Ehrfurcht vor dieser Lichtung, die die Herzen aller Menschen bes&#228;nftigt.[NEWLINE][NEWLINE]Der Besitzer der Sieben Kiefern kann hier eine Versammlung einberufen, die alle Kriege beendet, an denen er beteiligt ist. Dies kann einmal pro Partie geschehen.</German>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SHIP_WRECK</Tag>
+		<English>Ship Wreck</English>
+		<German>
+			<Text>Schiffswrack</Text>
+			<Gender>Neuter</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Naufragio:Naufragios</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SHIP_WRECK_PEDIA</Tag>
+		<English>Some occurred decades ago, for some it was centuries. In either case treasures may remain among the wreckage or monsters may lay in wait beneath them.</English>
+		<German>F&#252;r manche geschah es vor Jahrzehnten, f&#252;r andere waren es Jahrhunderte. In jedem Fall k&#246;nnen entweder Sch&#228;tze in den Tr&#252;mmern verborgen sein oder Monster in ihnen lauern.</German>
+		<Spanish>Es posible que ocurriera hace d&#233;cadas, o puede tener siglos. En cualquier caso puede esconder tesoros, o es posible que oculte monstruos.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SMOKE</Tag>
+		<English>Smoke</English>
+		<French>Fum&#233;e</French>
+		<German>Rauch</German>
+		<Spanish>
+			<Text>Humo</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SMOKE_PEDIA</Tag>
+		<English>Smoke is an early indication that a tile could burst into flames.</English>
+		<French>La Fum&#233;e est une indication pr&#233;ventive qu'une case peut s'incendier.</French>
+		<German>Rauch ist ein fr&#252;hes Zeichen daf&#252;r das ein Feld bald in Flammen stehen k&#246;nnte.</German>
+		<Spanish>El humo es una indicaci&#243;n previa de que una casilla podr&#237;a incendiarse.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SNAKE_PILLAR</Tag>
+		<English>Snake Pillar</English>
+		<French>Pilier Serpent</French>
+		<German>Schlangens&#228;ule</German>
+		<Spanish>
+			<Text>Pilar Serpentino</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_SPAWN_UNIT_TYPE</Tag>
+		<English>[ICON_BULLET]Spawns %s1_unit barbarian units until eliminated</English>
+		<French>[ICON_BULLET]g&#233;n&#232;re des %s1_unit barbares until jusqu'&#224; ce qu'il soit d&#233;truit</French>
+		<German>[ICON_BULLET]Erzeugt %s1_unit Barbaren-Einheiten bis es zerst&#246;rt wird</German>
+		<Spanish>[ICON_BULLET]Genera %s1_unit unidades b&#225;rbaras hasta que es eliminado.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_STANDING_STONES</Tag>
+		<English>Standing Stones</English>
+		<German>
+			<Text>Monolith</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</German>
+		<Spanish>
+			<Text>Monolito:Monolitos</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_STANDING_STONES_PEDIA</Tag>
+		<English>Built long ago by the gentle Calculpech the stones remain, though its creators have long since withdrawn into Kilmorph's vault.</English>
+		<German>Vor langer Zeit vom vornehmen Calculpech errichtet, stehen die Steine noch immer, obwohl sich ihre Erbauer schon lange in Kilmorphs H&#246;hlen zur&#252;ckgezogen haben.</German>
+		<Spanish>Constru&#237;das hace tiempo por el sabio Calculpech las piedras permanecen erguidas, aunque sus creadores hace mucho tiempo que se marcharon a la b&#243;veda de Kilmorph.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_TOMB_OF_SUCELLUS</Tag>
+		<English>Tomb of Sucellus</English>
+		<French>Tombeau de Sucellus</French>
+		<German>Grab des Sucellus</German>
+		<Spanish>
+			<Text>Tumba de Sucellus</Text>
+			<Gender>Female</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_TOMB_OF_SUCELLUS_PEDIA</Tag>
+		<English>The site of Sucellus' resurrection, the empty tomb is still strongly influenced by the dead god's magic and acts like a Life mana node for the owning empire.</English>
+		<French>Le lieu de la r&#233;surrection de Sucellus, le tombeau vide poss&#232;de toujours une forte influence de la magie des anciens dieux et agit comme un Noeud de Vie pour l'empire le poss&#233;dant.</French>
+		<German>Der Ort der Auferstehung des Sucellus, das leere Grab ist immer noch erf&#252;llt von der Magie des toten Gottes und wirkt f&#252;r den Besitzer wie ein Brunnen der Lebensmagie.</German>
+		<Spanish>El lugar de la resurrecci&#243;n de Sucellus, la tumba vac&#237;a a&#250;n est&#225; fuertemente influenciada por la magia del dios muerto y act&#250;a como un nodo de man&#225; de Vida para el imperio que lo posee.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_TOWER</Tag>
+		<English>Ancient Tower</English>
+		<French>Tour Ancestrale</French>
+		<German>Uralter Turm</German>
+		<Spanish>
+			<Text>Torre de Observaci&#243;n:Torres de Observaci&#243;n</Text>
+			<Gender>Female</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_TOWER_PEDIA</Tag>
+		<English>[TAB]Built to guard the borders of countries that have long since passed away, the towers still offer a remarkable view of the surrounding lands.</English>
+		<French>[TAB]Construites depuis bien longtemps pour surveiller les fronti&#232;res des pays, les tours offrent toujours une vision remarquable des terres environnantes.</French>
+		<German>[TAB]Gebaut, um die Grenzen von lange verschollenen L&#228;ndern zu bewachen, erm&#246;glichen diese T&#252;rme immer noch einen au&#223;ergew&#246;hnlichen Ausblick auf das Land.</German>
+		<Spanish>[TAB]Construidas para vigilar las fronteras de pa&#237;ses desaparecidos hace ya tiempo, las torres a&#250;n ofrecen una vista destacable de las tierras de alrededor.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_UNIQUE</Tag>
+		<English>[ICON_BULLET]World Improvement</English>
+		<French>[ICON_BULLET]Am&#233;nagement Mondial</French>
+		<German>[ICON_BULLET]Welt-Modernisierung</German>
+		<Spanish>[ICON_BULLET]Lugar &#218;nico</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_VISIBILITY_CHANGE</Tag>
+		<English>[ICON_BULLET]%D1 to unit visibility range</English>
+		<French>[ICON_BULLET]%D1 au champ de vision de l'unit&#233;</French>
+		<German>[ICON_BULLET]%D1 f&#252;r Einheiten in Sichtweite</German>
+		<Spanish>[ICON_BULLET]%D1 al alcance de visibilidad de la unidad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_WARNING_POST</Tag>
+		<English>Warning Post</English>
+		<German>Warnzeichen</German>
+		<Spanish>
+			<Text>Cartel de Advertencia:Carteles de Advertencia</Text>
+			<Gender>Male</Gender>
+			<Plural>0:1</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_YGGDRASIL</Tag>
+		<English>Yggdrasil</English>
+		<German>Weltenbaum Yggdrasil</German>
+		<Spanish>
+			<Text>Yggdrasil</Text>
+			<Gender>Male</Gender>
+			<Plural>0</Plural>
+		</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMPROVEMENT_YGGDRASIL_PEDIA</Tag>
+		<English>Eternal Yggdrasil was undimmed by the Age of Ice. Its fruit still blooms and becomes a staple of any empire lucky enough to claim it.</English>
+		<French>L'eternel Yggdrasil a &#233;t&#233; &#233;pargn&#233; par l'Age de Glace. Ses fruits s'&#233;panouissent toujours et deviennentun produit incontournable pour tout empire assez chanceux pour le poss&#233;der.</French>
+		<German>Die Pracht des Weltenbaumes Yggdrasil konnte durch das Zeitalter des Eises nicht gemindert werden. Er bl&#252;ht immer noch. Er tr&#228;gt immer noch Fr&#252;chte. Er wird das Prachtst&#252;ck eines jeden Reiches sein, was gl&#252;cklich ist, ihn f&#252;r sich zu beanspruchen</German>
+		<Spanish>El Eterno Yggdrasil no fue da&#241;ado por la Edad de Hielo. Sus frutas a&#250;n crecen y se convierten en algo inestimable para cualquier imperio lo suficientemente afortunado como para poseerlo.</Spanish>
+	</TEXT>
+</Civ4GameText>
