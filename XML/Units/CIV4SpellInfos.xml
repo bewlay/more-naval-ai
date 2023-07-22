@@ -1320,7 +1320,7 @@
             <iChangePopulation>-1</iChangePopulation>
             <PyResult>spellFeast(pCaster)</PyResult>
             <PyRequirement>reqFeast(pCaster)</PyRequirement>
-            <PyHelp>helpFeast(lpUnits)</PyHelp>
+            <PyHelp>helpFeast(lpCasters)</PyHelp>
             <Effect>EFFECT_SACRIFICE</Effect>
             <Sound>AS3D_SPELL_FEAST</Sound>
             <Button>Art/Interface/Buttons/Spells/Feast.dds</Button>

@@ -81,8 +81,12 @@ def getSpellHelp( argsList ) :
 	pSpell = gc.getSpellInfo( eSpell )
 	pPlayer = gc.getPlayer( ePlayer )
 	lpUnits = []
+	lpCasters = []
 	for eUnit in leUnits :
-		lpUnits.append( pPlayer.getUnit( eUnit ) )
+		pUnit = pPlayer.getUnit( eUnit )
+		lpUnits.append( pUnit )
+		if pUnit.canCast( eSpell, False ) :
+			lpCasters.append( pUnit )
 	return eval( pSpell.getPyHelp() )
 # SpellPyHelp END
 
@@ -1417,16 +1421,15 @@ def reqFeast(caster):
 	return True
 
 # lfgr 04/2021
-def helpFeast( lpUnits ) :
+def helpFeast( lpCasters ) :
 	# type: (List[CyUnit]) -> unicode
 	eFeastSpell = gc.getInfoTypeForString( "SPELL_FEAST" )
-	lpUnits = [pUnit for pUnit in lpUnits if pUnit.canCast( eFeastSpell, False )] # TODO: Should be handled in SDK
-	if len( lpUnits ) > 0 :
-		pCity = lpUnits[0].plot().getPlotCity()
+	if len( lpCasters ) > 0 :
+		pCity = lpCasters[0].plot().getPlotCity()
 		if pCity is not None and not pCity.isNone() :
 			iMaxFeastXP = pCity.getPopulation() - 3
 			if iMaxFeastXP > 0 :
-				iNumUnitsGain = min( iMaxFeastXP, len( lpUnits ) )
+				iNumUnitsGain = min( iMaxFeastXP, len( lpCasters ) )
 				if iNumUnitsGain == 1 :
 					return PyHelpers.getText( "TXT_KEY_FEAST_XP", iMaxFeastXP )
 				else :
