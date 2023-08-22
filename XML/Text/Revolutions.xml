@@ -12,4 +12,44 @@
 		<Tag>TXT_KEY_CDA_COLUMN_REV_NATIONAL_PER_TURN</Tag>
 		<English>Nat./T</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_HAPPINESS</Tag>
+		<English>[H2]Happiness/Unhappiness[\H2]In most cases, the easiest way to keep your cities from revolting is through happiness. On the other hand, excess unhappiness majorly contributes to instability, unless special buildings or civics are used to counter the effect. [NEWLINE]Both effects are much more noticeable for smaller cities, since they're proportional to excess [ICON_HAPPY]/[ICON_UNHAPPY] divided by population size.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_LOCATION</Tag>
+		<English>[H2]Location[\H2]Each city that is not your capital or a government center (i.e., has %s1) gets a location penalty depending on the distance to the nearest capital or government center. Ways of reducing the location penalty is to connect your cities via roads, rivers, the sea, or teleportation (via %s2). Also, some buildings and civics directly increase or reduce the penalty.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_RELIGION</Tag>
+		<English>[H2]Religion[\H2]Cities with your state religion get a stability bonus. All other religions cause instability, depending on the level of animosity to your state religion. The worst penalty comes from %s1 vs. %s2. Even if your state religion is neither, they will still cause a small amount of instability.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_NATIONALITY</Tag>
+		<English>[H2]Nationality[\H2]Foreign culture in your cities causes instability. The effect increases quadratically with increasing percentage, so small amounts of foreign culture should not be a problem. Culture from your team members does not count as foreign. Moreover, culture from vassals and other players with your civilization (with whom you're at peace) count partially.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_GARRISON</Tag>
+		<English>[H2]Garrison[\H2]Stationing troops in a city improves stability. Your citizens take one unit per five population points for granted; you need more units to increase stability (though less units do not cause instability).</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_DISORDER</Tag>
+		<English>[H2]Disorder[\H2]Disorder causes a lot of instability, especially in cities that haven't revolted yet. Since instability again causes revolts, this can quickly snowball into an uprising. Some units can spread culture (%s1), which also ends revolts - it might be handy to have some of those at the ready.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_MISC</Tag>
+		<English>[H2]Other effects[\H2] [ICON_BULLET]Culture rate provides some stability. The effect grows with the square root of the actual culture rate, so you get diminishing returns when investing a lot in culture.[NEWLINE] [ICON_BULLET]Excess unhealthiness causes a small amount of instability.[NEWLINE] [ICON_BULLET]A golden age provides a big statbility bonus in all cities.[NEWLINE] [ICON_BULLET]If the number of cities is small, you get a small statbility bonus in all cities, whereas a large amount of cities causes a small penalty (the exact meaning of "small" and "large" depends on the map sizue.[NEWLINE] [ICON_BULLET]Various buildings and civics provide a flat stability bonus or instability penalty every turn.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_</Tag>
+		<English>TODO</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_</Tag>
+		<English>TODO</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_</Tag>
+		<English>TODO</English>
+	</TEXT>
 </Civ4GameText>

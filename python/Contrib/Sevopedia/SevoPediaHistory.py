@@ -46,6 +46,11 @@ class SevoPediaHistory:
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, "", "", True, True, self.X_TEXT, self.Y_TEXT, self.W_TEXT, self.H_TEXT, PanelStyles.PANEL_STYLE_BLUE50)
 		szText = self.getCivilopedia(iEntry)
+		# lfgr 07/2023
+		import RevConcept
+		if iEntry == gc.getInfoTypeForString( "CONCEPT_REVOLUTIONS" ) :
+			szText += u"\n\n" + RevConcept.makeRevConceptText()
+		# lfgr end
 		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
 
