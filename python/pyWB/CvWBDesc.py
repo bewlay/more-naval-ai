@@ -619,7 +619,7 @@ class CvTeamDesc:
 
 #############
 class CvPlayerDesc:
-	def __init__(self):
+	def __init__(self, iDefaultTeam = -1 ): # lfgr 08/2023: Add default team for missing players
 		self.szCivDesc = ""
 		self.szCivShortDesc = ""
 		self.szLeaderName = ""
@@ -630,7 +630,7 @@ class CvPlayerDesc:
 		self.leaderType = "NONE"
 		self.civType = "NONE"
 		self.handicap = gc.getHandicapInfo(gc.getDefineINT("STANDARD_HANDICAP")).getType()
-		self.team = -1		# team index
+		self.team = iDefaultTeam # lfgr 08/2023: Add default team for missing players
 		self.color = "NONE"
 		self.artStyle = "NONE"
 		self.isPlayableCiv = 1
@@ -804,11 +804,9 @@ class CvPlayerDesc:
 
 	def read(self, f):
 		"read in player data"
-		self.__init__()
 		parser = CvWBParser()
-		# lfgr 07/2019: fail early
 		if parser.findNextTokenValue(f, "BeginPlayer") == -1 :
-			raise RuntimeError( "Could not read player" )
+			return False # lfgr 08/2023
 		else :
 			while (true):
 				nextLine = parser.getNextLine(f)
@@ -1082,6 +1080,7 @@ class CvPlayerDesc:
 
 				if parser.findTokenValue(toks, "EndPlayer") != -1:
 					break
+			return True # lfgr 08/2023
 
 #############
 class CvUnitDesc:
@@ -2848,12 +2847,14 @@ class CvWBDesc:
 				break
 			self.teamsDesc.append(teamsDesc)
 
+		# lfgr 08/2023: Some changes to add missing players with default team
 		print "Reading players desc"
-		self.playersDesc = []
+		filePos = f.tell()
+		self.playersDesc = [CvPlayerDesc(i) for i in range( iNumPlayers )]
 		for i in range(iNumPlayers):
-			playerDesc = CvPlayerDesc()
-			playerDesc.read(f)				# read player info
-			self.playersDesc.append(playerDesc)
+			if not self.playersDesc[i].read(f) : # read player info
+				f.seek(filePos) # backup
+				break
 	## Platy Builder ##
 
 		print "Reading map desc"

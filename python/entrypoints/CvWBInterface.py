@@ -235,7 +235,8 @@ def readAndApplyDesc(argsList):
 
 ########## Temudjin START
 	print "--- readAndApplyDesc(argsList) ---"
-	if not adjustMap( fileName ): return -1
+	# lfgr 08/2023: Disable, this may try to overwrite the file (possibly in a location it's not allowed to)
+	#if not adjustMap( fileName ): return -1
 ########## Temudjin END
 
 	if WBDesc.read(fileName) < 0:
@@ -251,7 +252,8 @@ def readDesc(argsList):
 
 ########## Temudjin START
 	print "--- readDesc(argsList) ---"
-	if not adjustMap( fileName ): return -1
+	# lfgr 08/2023: Disable, this may try to overwrite the file (possibly in a location it's not allowed to)
+	#if not adjustMap( fileName ): return -1
 ########## Temudjin END
 
 	if (fileName!=lastFileRead):
