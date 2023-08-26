@@ -997,7 +997,21 @@ class CityRevIdxHelper :
 		] )
 		szHelp = getText( "Sum of all effects: %D1[ICON_INSTABILITY]", iIdxSum )
 
-		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iIdxSum, self._pOwner, bColorFinalIdx = True )
+		# Total-RevIdx modifiers
+		iMod = 100
+		szModHelp = u""
+		if iIdxSum > 0 and self._pOwner.isRebel() :
+			iRebelMod = -90 # TODO: define
+			iMod += iRebelMod
+			szModHelp += getText( "[ICON_BULLET]Active revolution: %D1%%", iRebelMod )
+
+		iModifiedSum = iIdxSum * iMod // 100
+		if szModHelp != u"" :
+			szHelp += u"\n" + szModHelp
+			szHelp += NL_SEPARATOR + u"\n" + getText( "Pre-final: %D1[ICON_INSTABILITY]", iModifiedSum )
+
+		# Game speed (and similar) adjustments
+		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iModifiedSum, self._pOwner, bColorFinalIdx = True )
 		szHelp += szAdjustHelp
 
 		# Feedback
