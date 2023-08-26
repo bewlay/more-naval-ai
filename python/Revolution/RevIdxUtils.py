@@ -237,7 +237,6 @@ class CityRevIdxHelper :
 		self._pOwnerTeam = gc.getTeam( self._eOwnerTeam )
 		self._iTurnsSinceAcquisition = game.getGameTurn() - pCity.getGameTurnAcquired()
 
-		# self._leBuildings = []
 		self._lpBuildings = []
 		for eBuilding in xrange( gc.getNumBuildingInfos() ) :
 			if self._pCity.isHasBuilding( eBuilding ) :
@@ -399,7 +398,7 @@ class CityRevIdxHelper :
 			szHelp += getText( "Excess happiness: %d1[ICON_HAPPY]", -iNumUnhappy )
 
 			# Base effect
-			iHappyPerPopTimes100 = -100 * iNumUnhappy // self._pCity.getPopulation()
+			iHappyPerPopTimes100 = 100 * -iNumUnhappy // self._pCity.getPopulation()
 			szHelp += u"\n" + getText( "[ICON_HAPPY] per population: %s1", "%.2f" % ( iHappyPerPopTimes100 / 100. ) )
 			iBaseHappyIdx = -iHappyPerPopTimes100 // 10
 
@@ -821,7 +820,7 @@ class CityRevIdxHelper :
 
 	def computeCrimeRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
-		""" RevIdx from crime; -2 to +8. """
+		""" RevIdx from crime; 0 to +10. """
 
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Crime[COLOR_REVERT]" )
 
