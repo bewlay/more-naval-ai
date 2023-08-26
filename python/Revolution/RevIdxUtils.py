@@ -332,14 +332,6 @@ class CityRevIdxHelper :
 		# type: (bool) -> Tuple[int, unicode]
 		iMod = 100
 		szHelp = u""
-
-		if bUnhappiness :
-			iRecentAcquisitionMod = min( 2*(self._iTurnsSinceAcquisition - 15), 0 ) # TODO: Make this a general effect for all instability?
-			if iRecentAcquisitionMod < 0 :
-				iMod += iRecentAcquisitionMod
-				szHelp += u"\n"
-				szHelp += getText( "[ICON_BULLET]%D1% from recent acquisition (%d2 turns)",
-						iRecentAcquisitionMod, self._iTurnsSinceAcquisition )
 		
 		if bUnhappiness :
 			effectsFunc = CvRevolutionEffects.getRevIdxUnhappinessMod
@@ -1000,11 +992,20 @@ class CityRevIdxHelper :
 		# Total-RevIdx modifiers
 		iMod = 100
 		szModHelp = u""
+
 		if iIdxSum > 0 and self._pOwner.isRebel() :
-			iRebelMod = -90 # TODO: define
+			iRebelMod = -90 # TODO: make define
 			iMod += iRebelMod
 			szModHelp += getText( "[ICON_BULLET]Active revolution: %D1%%", iRebelMod )
 
+		if iIdxSum > 0 :
+			iRecentAcquisitionMod = min( 2*(self._iTurnsSinceAcquisition - 15), 0 )
+			if iRecentAcquisitionMod < 0 :
+				iMod += iRecentAcquisitionMod
+				szModHelp += u"\n" + getText( "[ICON_BULLET]Recent acquisition (%d2 turns): %D1%",
+						iRecentAcquisitionMod, self._iTurnsSinceAcquisition )
+
+		iMod = max( 0, iMod )
 		iModifiedSum = iIdxSum * iMod // 100
 		if szModHelp != u"" :
 			szHelp += u"\n" + szModHelp
