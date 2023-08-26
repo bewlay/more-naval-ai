@@ -153,6 +153,9 @@ def playerCannotRevoltStr( pPlayer ) :
 	if pPlayer.getDisableProduction() > 0 :
 		return "No revolutions (Stasis)"
 
+	if pPlayer.getCivilizationType() == gc.getInfoTypeForString( "CIVILIZATION_INFERNAL") :
+		return "Demons do not revolt" # TODO: Tie to demonic citizens via XML
+
 	return None
 
 def cityCannotRevoltStr( pCity ) :
