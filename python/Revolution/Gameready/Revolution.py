@@ -1158,7 +1158,7 @@ class Revolution :
 			pCityHelper = RevIdxUtils.CityRevIdxHelper( pCity, pPlayerCache )
 
 			# Settlements do not get rev points unless there are a conquered city
-			s = pCityHelper.cannotRevoltStr()
+			s = RevIdxUtils.cityCannotRevoltStr( pCity )
 			if s is not None :
 				cityString = '\n\n' + pCity.getName() + ": " + s
 				totalString += cityString
@@ -1554,10 +1554,11 @@ class Revolution :
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Checking %s for revolutions"%(pPlayer.getCivilizationDescription(0)))
 		playerPy = PyPlayer( iPlayer )
 		cityList = playerPy.getCityList()
-		
-		# lfgr 06/2023: No revolutions while Elohim Sanctuary spell is active
-		if pPlayer.getSanctuaryTimer() > 0 :
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint( "    No revolutions: Sanctuary is active" )
+
+		# lfgr 08/2023: Check if player can revolt at all
+		szCannotRevolt = RevIdxUtils.playerCannotRevoltStr( pPlayer )
+		if szCannotRevolt :
+			if self.LOG_DEBUG : CvUtil.pyPrint( "    " + szCannotRevolt )
 			return
 
 		revReadyCities = list()

@@ -117,13 +117,6 @@ def modAsPercent( fMod ) :
 	""" Converts a modifier (such as 0.7) to a percentage (such as -30) """
 	return int( ( fMod - 1 ) * 100 )
 
-def canRevolt( pCity ) :
-	# type: ( CyCity ) -> bool
-	if pCity.isSettlement() and pCity.getOwner() == pCity.getOriginalOwner() :
-		return False
-
-	return True
-
 def computeInfoRevEffectsAndHelp( lpInfoList, valueFunc, szTemplate, bColor ) :
 	# type: (List[CvInfoBase], Callable[[CvInfoBase], int], str, bool) -> Iterator[Tuple[int, unicode]]
 	""" Generic function to compute and add up effects from a list of infos. """
@@ -147,6 +140,34 @@ def sumValuesAndHelp( *ltValuesAndHelp ) :
 		szHelp += u"\n" + szLoopHelp
 	return iValue, szHelp
 
+
+def playerCannotRevoltStr( pPlayer ) :
+	# type: (CyPlayer) -> Optional[unicode]
+	"""
+	If cities of this player can (generally) revolt, return None. Otherwise, return a string explaining why they can't.
+	"""
+
+	if pPlayer.getSanctuaryTimer() > 0 :
+		return "No revolutions (Sanctuary)"
+
+	if pPlayer.getDisableProduction() > 0 :
+		return "No revolutions (Stasis)"
+
+	return None
+
+def cityCannotRevoltStr( pCity ) :
+	# type: (CyCity) -> Optional[unicode]
+	"""
+	If the city can accumulate RevIdx, return None. Otherwise, return a string explaining why it can't.
+	"""
+	if pCity.isSettlement() and pCity.getOwner() == pCity.getOriginalOwner() :
+		return getText( "Settlements you founded cannot revolt" )
+
+	szPlayerStr = playerCannotRevoltStr( gc.getPlayer( pCity.getOwner() ) )
+	if szPlayerStr :
+		return szPlayerStr
+
+	return None
 
 
 class NationalEffectBuildingsInfoCache :
@@ -230,15 +251,6 @@ class CityRevIdxHelper :
 	def getCity( self ) :
 		# type: () -> CyCity
 		return self._pCity
-
-	def cannotRevoltStr( self ) :
-		# type: () -> Optional[unicode]
-		"""
-		If the city can (generally) revolt, returns None. Otherwise, returns a string explaining why it can't.
-		"""
-		if self._pCity.isSettlement() and self._pCity.getOwner() == self._pCity.getOriginalOwner() :
-			return getText( "Settlements you founded cannot revolt" )
-		return None
 
 
 	### Generic RevIdx functions
@@ -964,6 +976,12 @@ class CityRevIdxHelper :
 	def computeRevIdxAndFinalModifierHelp( self ) :
 		# type () -> Tuple[int, unicode]
 		""" The total RevIdx (per turn) of this city. The help string only contains final adjustments. """
+
+		# Check whether city can revolt at all
+		szCannotRevolt = cityCannotRevoltStr( self._pCity )
+		if szCannotRevolt is not None :
+			return 0, getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
+
 		iIdxSum = sum( [ # TODO: Caching
 			self.computeHappinessRevIdx(),
 			self.computeLocationRevIdx(),
@@ -1005,7 +1023,7 @@ class CityRevIdxHelper :
 		# type: () -> unicode
 
 		# Check whether city can revolt at all
-		szCannotRevolt = self.cannotRevoltStr()
+		szCannotRevolt = cityCannotRevoltStr()
 		if szCannotRevolt is not None :
 			return szCannotRevolt
 

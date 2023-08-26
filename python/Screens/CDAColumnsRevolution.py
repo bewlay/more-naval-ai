@@ -9,7 +9,7 @@ from PyHelpers import getText
 import FontUtil
 
 from CDAColumns import CDAColumn
-from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr
+from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr, cityCannotRevoltStr
 import RevUtils
 
 
@@ -64,7 +64,11 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 	def compute_value_and_tooltip( self, pCity, **kwargs ) :
 		# LFGR_TODO: Not entirely accurate
 		iRevIdx = pCity.getRevolutionIndex()
-		if iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
+
+		szCannotRevolt = cityCannotRevoltStr( pCity )
+		if szCannotRevolt :
+			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
+		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
 			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
 		elif iRevIdx >= RevUtils.revInstigatorThreshold :
 			return getText( "[COLOR_WARNING_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]May instigate a revolt[COLOR_REVERT]" )
