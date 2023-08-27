@@ -4375,7 +4375,7 @@ class CvMainInterface:
 
 # < Revolution Mod Start >
 				if( game.isOption(GameOptionTypes.GAMEOPTION_REVOLUTIONS) and not RevInstances.RevolutionInst == None ) :
-					RevInstances.RevolutionInst.updateLocalRevIndices( CyGame().getGameTurn(), pHeadSelectedCity.getOwner(), subCityList = [pHeadSelectedCity], bIsRevWatch = True)
+					RevInstances.RevolutionInst.updateLocalRevIndices( CyGame().getGameTurn(), pHeadSelectedCity.getOwner(), subCityList = [pHeadSelectedCity], bNoApply = True)
 
 					divisor = RevInstances.RevolutionInst.revInstigatorThreshold
 					revIndex = pHeadSelectedCity.getRevolutionIndex()
@@ -6051,8 +6051,6 @@ class CvMainInterface:
 				self.hideRevWatchInfoPane()
 
 			if(inputClass.getNotifyCode() == NotifyCode.NOTIFY_CLICKED and inputClass.getFunctionName() == "RevWatchButton"):
-				#RevolutionDCM - fire new RevWatch screen
-				#RevInstances.RevolutionInst.showRevWatchPopup(gc.getActivePlayer().getID())
 				CvScreensInterface.showRevolutionWatchAdvisor(self)
 
 			if ( inputClass.getNotifyCode() == NotifyCode.NOTIFY_CURSOR_MOVE_ON and inputClass.getFunctionName() == "RevStatusButton"):

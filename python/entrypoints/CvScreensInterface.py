@@ -314,7 +314,6 @@ def createRevolutionWatchAdvisor():
 	"""Creates the Revolution Watch Advisor."""
 	global revolutionWatchAdvisor
 	if revolutionWatchAdvisor is None:
-		import RevolutionWatchAdvisor
 		# LFGR_TODO: Handle popup on bribe stuff
 		import CvCustomizableDomesticAdvisor
 		revolutionWatchAdvisor = CvCustomizableDomesticAdvisor.CvCustomizableDomesticAdvisor( sName = "Rev",

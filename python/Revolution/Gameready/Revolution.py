@@ -186,7 +186,6 @@ class Revolution :
 		self.customEM.setPopupHandler( RevDefs.revolutionPopup, ["revolutionPopup",self.revolutionPopupHandler,self.blankHandler] )
 		self.customEM.setPopupHandler( RevDefs.joinHumanPopup, ["joinHumanPopup",self.joinHumanHandler,self.blankHandler] )
 		self.customEM.setPopupHandler( RevDefs.controlLostPopup, ["controlLostPopup",self.controlLostHandler,self.blankHandler] )
-		self.customEM.setPopupHandler( RevDefs.revWatchPopup, ["revWatchPopup", self.revWatchHandler, self.blankHandler] )
 
 		self.customEM.setPopupHandler( RevDefs.pickCityPopup, ["pickCityPopup", self.pickCityHandler, self.blankHandler] )
 		self.customEM.setPopupHandler( RevDefs.bribeCityPopup, ["bribeCityPopup", self.bribeCityHandler, self.blankHandler] )
@@ -264,114 +263,8 @@ class Revolution :
 			#RevolutionDCM
 			if( theKey == int(InputTypes.KB_G) and self.customEM.bShift and self.customEM.bCtrl ) :
 				# multiplayer warning, need to tell other computers about any city bribery
-				#self.showRevWatchPopup( game.getActivePlayer() )
 				CvScreensInterface.showRevolutionWatchAdvisor(self)
 
-
-
-	def showRevWatchPopup( self, iPlayer ) :
-		if (self.isLocalHumanPlayer(iPlayer)):
-			playerPy = PyPlayer( iPlayer )
-			cityList = playerPy.getCityList()
-			danger  = "<color=255,0,0,255>"  + localText.getText("TXT_KEY_REV_WATCH_DANGER", ()) + ':\n' + "<color=255,255,255,255>"
-			warning = "<color=245,245,0,255>" + '\n' + localText.getText("TXT_KEY_REV_WATCH_WARNING", ()) + ':\n' + "<color=255,255,255,255>"
-			safe	= "<color=0,230,0,255>"   + '\n' + localText.getText("TXT_KEY_REV_WATCH_SAFE", ()) + ':\n' + "<color=255,255,255,255>"
-
-			self.updateLocalRevIndices( game.getGameTurn(), iPlayer, bIsRevWatch = True )
-
-			revIdxCityList = list()
-			for city in cityList :
-				pCity = city.GetCy()
-				revIdx = pCity.getRevolutionIndex()
-				revIdxCityList.append( (revIdx,pCity) )
-
-			revIdxCityList.sort()
-			revIdxCityList.reverse()
-
-			for revIdx,pCity in revIdxCityList :
-
-				localRevIdx = pCity.getLocalRevIndex()
-				deltaTrend = deltaTrend = revIdx - pCity.getRevIndexAverage()
-
-				if( revIdx >= self.revInstigatorThreshold ) :
-					if( deltaTrend > self.showTrend ) :
-						if( revIdx >= self.alwaysViolentThreshold ) :
-							danger += "<color=255,0,0,255>" + "  %s"%(pCity.getName()) + "<color=255,255,255,255>"
-						else :
-							danger += "<color=255,120,0,255>" + "  %s"%(pCity.getName()) + "<color=255,255,255,255>"
-					else :
-						danger += "  %s"%(pCity.getName())
-
-					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : danger += "  \t(%d)"%(revIdx)
-					danger += "\n"
-				elif( revIdx >= int(math.floor(self.revReadyFrac*self.revInstigatorThreshold + .5)) ) :
-					if( deltaTrend > self.showTrend ) :
-						warning += "<color=255,120,0,255>" + "  %s"%(pCity.getName()) + "<color=255,255,255,255>"
-					else :
-						warning += "  %s"%(pCity.getName())
-
-					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : warning += "  \t(%d)"%(revIdx)
-					warning += "\n"
-				else :
-					if( deltaTrend > self.showTrend ) :
-						safe += "<color=255,120,0,255>" + "  %s"%(pCity.getName()) + "<color=255,255,255,255>"
-					else :
-						safe += "  %s"%(pCity.getName())
-
-					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) : safe += "  \t(%d)"%(revIdx)
-					safe += "\n"
-
-			# Additions by Caesium et al
-			caesiumtR = CyUserProfile().getResolutionString(CyUserProfile().getResolution())
-			caesiumtextResolution = caesiumtR.split('x')
-			caesiumpasx = int(caesiumtextResolution[0])/10
-			caesiumpasy = int(caesiumtextResolution[1])/10
-			popup = PyPopup.PyPopup(RevDefs.revWatchPopup, contextType = EventContextTypes.EVENTCONTEXT_ALL, bDynamic = False)
-			width = int(max([350,2.5*caesiumpasx]))
-			height = int(max([450,3.5*caesiumpasy]))
-			if( self.centerPopups ) : popup.setPosition(3*caesiumpasx,3*caesiumpasy)
-			else : popup.setPosition(int(caesiumtextResolution[0]) - width - 35,120)
-			popup.setSize( width, height )
-			popup.setHeaderString( localText.getText("TXT_KEY_REV_WATCH_TITLE", ()) )
-			popup.setBodyString( danger + warning + safe )
-			popup.addSeparator()
-			popup.addButton( localText.getText("TXT_KEY_REV_WATCH_DETAIL", ()) )
-			popup.addButton( localText.getText("TXT_KEY_REV_WATCH_BRIBE", ()) )
-			popup.addButton( 'OK' )
-			popup.launch(bCreateOkButton = False)
-			# End additions by Caesium et al
-
-	def revWatchHandler( self, iPlayerID, netUserData, popupReturn ) : # LFGR_TODO: Where is this used?
-			if( self.iNationalismTech == None ) :
-				self.loadInfo()
-
-			civString = self.updateCivStability( game.getGameTurn(), iPlayerID, bIsRevWatch = True )
-			cityString = self.updateLocalRevIndices( game.getGameTurn(), iPlayerID, bIsRevWatch = True )
-
-			if (self.isLocalHumanPlayer(iPlayerID)):
-				if( popupReturn.getButtonClicked() == 0 ):
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Showing detailed rev watch for player %d"%(iPlayerID))
-					# Additions by Caesium et al
-					caesiumtR = CyUserProfile().getResolutionString(CyUserProfile().getResolution())
-					caesiumtextResolution = caesiumtR.split('x')
-					caesiumpasx = int(caesiumtextResolution[0])/10
-					caesiumpasy = int(caesiumtextResolution[1])/10
-					popup = PyPopup.PyPopup()
-					width = int(max([350,3*caesiumpasx]))
-					height = int(max([450,3.5*caesiumpasy]))
-					if( self.centerPopups ) : popup.setPosition(3*caesiumpasx,3*caesiumpasy)
-					else : popup.setPosition(int(caesiumtextResolution[0]) - width - 35,120)
-					popup.setSize( width, height )
-					popup.setHeaderString( gc.getPlayer(iPlayerID).getCivilizationDescription(0) )
-					# popup.createTable(2,1,1)
-					# popup.addTableCellText(1,1,civString,1)
-					# popup.addTableCellText(2,1,cityString,1)
-					# popup.completeTableAndAttach(1)
-					popup.setBodyString( civString + '\n\n' + cityString )
-					popup.launch()
-					# End additions by Caesium et al
-				elif( popupReturn.getButtonClicked() == 1 ):
-					self.showPickCityPopup( iPlayerID )
 
 	def showPickCityPopup( self, iPlayer ) :
 		if (self.isLocalHumanPlayer(iPlayer)):
@@ -630,7 +523,7 @@ class Revolution :
 
 		owner,playerType,pCity,bConquest,bTrade = argsList
 
-		self.updateLocalRevIndices( game.getGameTurn(), pCity.getOwner(), subCityList = [pCity], bIsRevWatch = True )
+		self.updateLocalRevIndices( game.getGameTurn(), pCity.getOwner(), subCityList = [pCity], bNoApply = True )
 
 ##--- Player turn functions ---------------------------------------
 
@@ -1067,7 +960,6 @@ class Revolution :
 
 		self.updateRevolutionCounters( iGameTurn, iPlayer )
 		self.updateLocalRevIndices( iGameTurn, iPlayer )
-		self.updateCivStability( iGameTurn, iPlayer )
 		self.checkForBribes( iGameTurn, iPlayer )
 		self.checkForRevolution( iGameTurn, iPlayer )
 
@@ -1100,19 +992,22 @@ class Revolution :
 			if( pCity.getReinforcementCounter() > 0 ) :
 				pCity.changeReinforcementCounter(-1)
 
-	def updateLocalRevIndices( self, iGameTurn, iPlayer, subCityList = None, bIsRevWatch = False ) :
+	# lfgr 08/2023: Removed RevIdx string building, some refactoring.
+	def updateLocalRevIndices( self, iGameTurn, iPlayer, subCityList = None, bNoApply = False ) :
+		# type: (int, int, Optional[List[CyCity]], bool) -> None
 		"""
-		Updates the revolution effects local to each city
-		If bIsRevWatch, returns a string showing the factors for city stability.
-		If not bIsRevWatch, apply rev idx per current turn, and update history.
+		Updates the revolution effects local to each city.
 		If subCityList is not None, only consider the cities in subCityList
+		Always cities' LocalRevIdx (i.e., per turn). Adjusts RevIdx (total) if out of bounds.
+		If not bNoApply, apply rev idx per current turn, and update history.
 		"""
+		# LFGR_TODO: This is currently used in updateCityScreen(). This will probably cause OOS errors
 
 		# Includes some "Lemmy101 RevolutionMP edit"s
 
 		pPlayer = gc.getPlayer(iPlayer)
-		if( pPlayer.getNumCities() == 0 ) :
-			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
+		if pPlayer.getNumCities() == 0 :
+			return
 
 		playerPy = PyPlayer( iPlayer )
 
@@ -1121,27 +1016,14 @@ class Revolution :
 		if capital is None or capital.isNone() :
 			# LFGR_TODO: Don't return here!
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - WARNING!  %s have cities but no capital on turn %d"%(pPlayer.getCivilizationDescription(0),iGameTurn))
-			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
+			return
 
-		if( self.iNationalismTech == None ) :
+		# Make sure cache is loaded
+		if self.iNationalismTech is None :
 			self.loadInfo()
-
-		# phungus -start
-		[civSizeValue, iCivEffRadius] = RevUtils.computeCivSize(iPlayer)
-		civSizeValue *= self.civSizeModifier
-		[civSizeRawVal, iCivEffRadRaw] = RevUtils.computeCivSizeRaw(iPlayer)
-		civSizeRawVal *= self.civSizeModifier
-		if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have civ size value %.2f, era mod %.2f"%(pPlayer.getCivilizationDescription(0),civSizeValue,max( [0, 0.85-0.20*pPlayer.getCurrentRealEra()] )))
-		#phungus -end
-
-		# Prepare string that holds RevWatch text for cities
-		totalString = ""
 
 		if subCityList is None :
 			cityList = playerPy.getCityList()
-			totalString = localText.getText("TXT_KEY_REV_WATCH_CITY_BY_CITY",())
-			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-				totalString += '  ' + localText.getText("TXT_KEY_REV_WATCH_DEBUG_NOTE",())
 		else :
 			cityList = subCityList
 		
@@ -1157,326 +1039,47 @@ class Revolution :
 			# 05/2020 lfgr: REV_REFACTORING
 			pCityHelper = RevIdxUtils.CityRevIdxHelper( pCity, pPlayerCache )
 
-			# Settlements do not get rev points unless there are a conquered city
-			s = RevIdxUtils.cityCannotRevoltStr( pCity )
-			if s is not None :
-				cityString = '\n\n' + pCity.getName() + ": " + s
-				totalString += cityString
+			# Check if city can revolt at all
+			if RevIdxUtils.cityCannotRevoltStr( pCity ) is not None :
 				continue
-
-			# Incase interturn stuff set out of range
-			if( pCity.getRevolutionIndex() < 0 ) :
-				pCity.setRevolutionIndex( 0 )
-			elif( pCity.getRevolutionIndex() > (2*self.alwaysViolentThreshold) ) :
-				pCity.setRevolutionIndex( (2*self.alwaysViolentThreshold) )
 
 			# RevIdx history and previous revIdx
 			revIdxHist = RevData.getCityVal( pCity, 'RevIdxHistory' )
 			if revIdxHist is None :
 				revIdxHist = RevDefs.initRevIdxHistory()
 
-			# Record lists of (#, string type) effects, seperate for positive and negative
-			posList = list()
-			negList = list()
-
 			### MAIN COMPUTATION
-			# Fill history (changes only applied if not bRevWatch) or build help string (TODO: Help string deprecated)
-
-			# Happiness
-			iHappyIdx = pCityHelper.computeHappinessRevIdx()
-			if bIsRevWatch :
-				if iHappyIdx > 0 :
-					negList.append( (iHappyIdx, localText.getText( "TXT_KEY_REV_WATCH_HAPPINESS", () )) )
-				elif iHappyIdx < 0 :
-					posList.append( (iHappyIdx, localText.getText( "TXT_KEY_REV_WATCH_HAPPINESS", () )) )
-			revIdxHist['Happiness'] = [iHappyIdx] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
-
-			# Location ("distance", though it is much more)
-			# lfgr 03/2021: Added connection to capital here.
-			# phungus -start
-			iLocationRevIdx = pCityHelper.computeLocationRevIdx()
-			if bIsRevWatch and iLocationRevIdx > 0 :
-				negList.append( (iLocationRevIdx, localText.getText( "TXT_KEY_REV_WATCH_DISTANT", () )) )
-			revIdxHist['Location'] = [iLocationRevIdx] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
-			# phungus -end
-
-			# TODO: Remove
-			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
-
-			# Religion
-			iRelIdx = pCityHelper.computeReligionRevIdx()
-
-			if bIsRevWatch :
-				if iRelIdx < 0 :
-					posList.append( (iRelIdx, localText.getText( "Religion", () )) ) # TODO: Text tags
-				elif iRelIdx > 0 :
-					negList.append( (iRelIdx, localText.getText( "Religion", () )) ) # TODO: Text tags
-
-			revIdxHist['Religion'] = [iRelIdx] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
-
-			# Nationality
-			iNationalityIdx = pCityHelper.computeNationalityRevIdx()
-
-			if bIsRevWatch :
-				if iNationalityIdx > 0 :
-					negList.append( (iNationalityIdx, localText.getText("TXT_KEY_REV_WATCH_NATIONALITY",())) )
-				elif iNationalityIdx < 0 :
-					posList.append( (iNationalityIdx, localText.getText("TXT_KEY_REV_WATCH_NATIONALITY",())) )
-
-			revIdxHist['Nationality'] = [iNationalityIdx] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
-
-			# Health
+			# Fill history (LFGR_TODO: Not if bNotApply?)
+			revIdxHist['Happiness'] = [pCityHelper.computeHappinessRevIdx()] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
+			revIdxHist['Location'] = [pCityHelper.computeLocationRevIdx()] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
+			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1] # TODO: Remove
+			revIdxHist['Religion'] = [pCityHelper.computeReligionRevIdx()] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
+			revIdxHist['Nationality'] = [pCityHelper.computeNationalityRevIdx()] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
 			revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO
+			revIdxHist['Garrison'] = [pCityHelper.computeGarrisonRevIdx()] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
+			revIdxHist['Disorder'] = [pCityHelper.computeDisorderRevIdx()] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
+			iCrimeIdx = pCityHelper.computeCrimeRevIdx() # LFGR_TODO: History?
 
-			# Garrison
-			iGarIdx = pCityHelper.computeGarrisonRevIdx()
-			if bIsRevWatch and iGarIdx != 0 :
-				posList.append( (iGarIdx, localText.getText("TXT_KEY_REV_WATCH_GARRISON",())) )
-			revIdxHist['Garrison'] = [iGarIdx] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Health'][0] += 0 # TODO
-
-			# Disorder
-			iDisorderIdx = pCityHelper.computeDisorderRevIdx()
-			if bIsRevWatch and iDisorderIdx != 0 :
-				negList.append( (iDisorderIdx, localText.getText("TXT_KEY_REV_WATCH_DISORDER",())) )
-			revIdxHist['Disorder'] = [iDisorderIdx] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
-
-			# Crime
-			iCrimeIdx = pCityHelper.computeCrimeRevIdx()
-			if bIsRevWatch :
-				if iCrimeIdx > 0 :
-					negList.append( ( iCrimeIdx, "Crime" ) )
-				elif iCrimeIdx < 0 :
-					posList.append( ( iCrimeIdx, "Low Crime" ) )
-
-			# Various
-			# civicIdx, civicPosList, civicNegList = pCityHelper.computeVariousTooltipData()
-			# posList.extend( civicPosList )
-			# negList.extend( civicNegList )
-
-			# Adjust index accumulation for varying game speeds
 			# lfgr note: This includes feedback. Before, feedback was left out of LocalRevIdx
 			iLocalRevIdx = pCityHelper.computeRevIdx()
 
 			# Update local RevIndex whenever called
-			# LFGR_TODO: This seems fishy, and probably is a recipe for OOS errors
 			pCity.setLocalRevIndex( iLocalRevIdx )
 
-			if( not bIsRevWatch ) :
-				# Change revolution indices based on local effects
-				pCity.changeRevolutionIndex( iLocalRevIdx )
-				pCity.updateRevIndexAverage()
-				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
+			# Change revolution indices based on local effects
+			pCity.changeRevolutionIndex( iLocalRevIdx )
+			pCity.updateRevIndexAverage()
 
-			if( pCity.getRevolutionIndex() < 0 ) :
+			RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
+
+			# LFGR_TODO: Not if bNoApply?
+			# Incase interturn stuff set out of range
+			if pCity.getRevolutionIndex() < 0 :
 				pCity.setRevolutionIndex( 0 )
-			elif( pCity.getRevolutionIndex() > 2*self.alwaysViolentThreshold ) :
+			elif pCity.getRevolutionIndex() > 2*self.alwaysViolentThreshold :
 				pCity.setRevolutionIndex( 2*self.alwaysViolentThreshold )
 
-			iPrevRevIdx = pCity.getRevolutionIndex()
-
-			# RevolutionDCM - city advisor text conditioning
-			cityString = pCity.getName()# + " \t"
-			if( iPrevRevIdx >= self.alwaysViolentThreshold ) :
-				cityString += ':  ' + "<color=230,0,0,255>"   + localText.getText("TXT_KEY_REV_WATCH_DANGER",()) + " " + "<color=255,255,255,255>"
-			elif( iPrevRevIdx >= self.revInstigatorThreshold ) :
-				# RevolutionDCM - city advisor text conditioning
-				cityString += ':  ' + "<color=230,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_DANGER",()) + " " + "<color=255,255,255,255>"
-			elif( iPrevRevIdx >= int(self.revReadyFrac*self.revInstigatorThreshold) ) :
-				cityString += ':  ' + "<color=245,245,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WARNING",()) + " " + "<color=255,255,255,255>"
-			else :
-				#RevolutionDCM - city advisor text conditioning
-				cityString += ':  ' + localText.getText("TXT_KEY_REV_WATCH_SAFE",()) + ' '
-			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-				cityString += " (%d)"%(iPrevRevIdx)
-
-			# Enable only for debugging rev index histories
-			if False :
-				cityString += '\n'
-				for (key,value) in revIdxHist.iteritems() :
-					cityString += key + ': ' + str(value) + ', '
-			else :
-				# Add in specfic strings in strength order
-				posList.sort()
-				cityString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
-				for [i,pos] in enumerate(posList) :
-					if( i == 0 ) :
-						cityString += '  '
-					else :
-						cityString += ', '
-
-					if( pos[0] < -10 ) :
-						cityString += "<color=20,230,20,255>"
-					elif( pos[0] < -5 ) :
-						cityString += "<color=50,230,50,255>"
-					elif( pos[0] < -2 ) :
-						cityString += "<color=100,230,100,255>"
-					else :
-						cityString += "<color=150,230,150,255>"
-					cityString += pos[1]
-					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-						cityString += " %d"%(pos[0])
-
-				negList.sort()
-				negList.reverse()
-				cityString += "\n<color=255,0,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_NEGATIVE",())
-				for [i,neg] in enumerate(negList) :
-					if( i == 0 ) :
-						cityString += '  '
-					else :
-						cityString += ', '
-
-					if( neg[0] > 20 ) :
-						cityString += "<color=255,10,10,255>"
-					elif( neg[0] > 10 ) :
-						cityString += "<color=225,50,50,255>"
-					elif( neg[0] > 5 ) :
-						cityString += "<color=225,75,75,255>"
-					elif( neg[0] > 2 ) :
-						cityString += "<color=225,100,100,255>"
-					else :
-						cityString += "<color=225,150,150,255>"
-					cityString += neg[1]
-					if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-						cityString += " %d"%(neg[0])
-
-			cityString += "<color=255,255,255,255>"
-
-			# lfgr 11/2022: Show total rev idx
-			totalIdx = sum( idx for idx, _ in posList ) + sum( idx for idx, _ in negList )
-			cityString += "\n " + localText.getText( "TXT_KEY_REV_WATCH_TOTAL", (totalIdx,) )
-
-			totalString += cityString
-
-		return totalString
-
-	# LFGR_TODO: Either totally remove this totatally, or make it some weighted city average, only used for display
-	def updateCivStability( self, iGameTurn, iPlayer, bIsRevWatch = False, bVerbose = False ) :
-		# LFGR_TODO: returned string is not used
-		"""
-		Update the revolution effects for the entire empire.
-		If bIsRevWatch, returns a string showing the factors for civ stability.
-		If not bIsRevWatch, update the player's stability, and also add the civ stability to all cities.
-
-		REVOLUTION_REFACTORING 03/2021 lfgr: Moved most stuff to RevIdxUtils
-		"""
-
-		posList = list()
-		negList = list()
-
-		# Adjust index accumulation for varying game speeds
-		gameSpeedMod = RevUtils.getGameSpeedMod()
-		#print "Revolt - Game speed mod is ", self.gameSpeedMod
-
-		pPlayer = gc.getPlayer(iPlayer)
-		if( pPlayer.getNumCities() == 0 ) :
-			return localText.getText("TXT_KEY_REV_WATCH_NO_CITIES",())
-
-		iCivRevIdx = 0 # TODO
-
-		if( not bIsRevWatch ) :
-			for city in PyPlayer(iPlayer).getCityList() :
-				pCity = city.GetCy()
-#-------------------------------------------------------------------------------------------------
-# Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-				pCity.changeRevolutionIndex( int(iCivRevIdx) )
-#-------------------------------------------------------------------------------------------------
-# END Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-				#revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
-				#revIdxHist['Events'][0] += revIdxHistEvents
-				#RevData.updateCityVal(pCity,'RevIdxHistory',revIdxHist)
-
-		# LFGR_TODO?
-		#centerVal = 500
-		#feedback = (centerVal - pPlayer.getStabilityIndex())/20
-
-		iCivStabilityIdx = -iCivRevIdx
-		if( not bIsRevWatch ) :
-			pPlayer.changeStabilityIndex( iCivStabilityIdx )
-			pPlayer.updateStabilityIndexAverage()
-
-
-		iStability = pPlayer.getStabilityIndex()
-		civString = localText.getText("TXT_KEY_REV_WATCH_CIV_STABILITY",()) + ' '
-		if( iStability > 750 ) :
-			civString += localText.getText("TXT_KEY_REV_WATCH_VERY_STABLE",())
-		elif( iStability > 570 ) :
-			civString += localText.getText("TXT_KEY_REV_WATCH_STABLE",())
-		elif( iStability > 430 ) :
-			civString += localText.getText("TXT_KEY_REV_WATCH_NEUTRAL",())
-		elif( iStability > 250 ) :
-			civString += localText.getText("TXT_KEY_REV_WATCH_UNSTABLE",())
-		else :
-			civString += localText.getText("TXT_KEY_REV_WATCH_DANGEROUSLY_UNSTABLE",())
-
-		if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-			civString += " (%d)  Net: %d"%(iStability,iCivStabilityIdx)
-		#RevolutionDCM - text conditioning
-		# lfgr 11/2022: Disabled
-		# civString += "  "
-		# #civString += "  " + localText.getText("TXT_KEY_REV_WATCH_TREND",()) + " "
-		# if( (iStability - pPlayer.getStabilityIndexAverage()) > self.showStabilityTrend ) :
-		# 	civString += "<color=0,230,0,255>" + localText.getText("TXT_KEY_REV_WATCH_IMPROVING",()) + "<color=255,255,255,255>"
-		# elif( (iStability - pPlayer.getStabilityIndexAverage()) <= -self.showStabilityTrend ) :
-		# 	civString += "<color=255,120,0,255>" + localText.getText("TXT_KEY_REV_WATCH_WORSENING",()) + "<color=255,255,255,255>"
-		# else :
-		# 	civString += localText.getText("TXT_KEY_REV_WATCH_FLAT",())
-		#
-		# if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-		# 	civString += " (%d)"%(iStability - pPlayer.getStabilityIndexAverage())
-
-		civString += "\n<color=0,230,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_POSITIVE",())
-		posList.sort()
-		posList.reverse()
-		for [i,pos] in enumerate(posList) :
-			if( i == 0 ) :
-				civString += '  '
-			else :
-				civString += ', '
-
-			if( pos[0] > 10 ) :
-				civString += "<color=20,230,20,255>"
-			elif( pos[0] > 5 ) :
-				civString += "<color=50,230,50,255>"
-			elif( pos[0] > 2 ) :
-				civString += "<color=100,230,100,255>"
-			else :
-				civString += "<color=150,230,150,255>"
-			civString += pos[1]
-			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-				civString += " %d"%(pos[0])
-
-		civString += "\n<color=255,0,0,255>" + " " + localText.getText("TXT_KEY_REV_WATCH_NEGATIVE",())
-		negList.sort()
-		for [i,neg] in enumerate(negList) :
-			if( i == 0 ) :
-				civString += '  '
-			else :
-				civString += ', '
-
-			if( neg[0] < -20 ) :
-				civString += "<color=255,10,10,255>"
-			elif( neg[0] < -10 ) :
-				civString += "<color=255,50,50,255>"
-			elif( neg[0] < -5 ) :
-				civString += "<color=255,75,75,255>"
-			elif( neg[0] < -2 ) :
-				civString += "<color=255,100,100,255>"
-			else :
-				civString += "<color=255,150,150,255>"
-			civString += neg[1]
-			if( RevOpt.isShowRevIndexInPopup or game.isDebugMode() ) :
-				civString += " %d"%(neg[0])
-
-		civString += "<color=255,255,255,255>"
-
-		# lfgr 11/2022: Show total rev idx
-		totalIdx = sum( idx for idx, _ in posList ) + sum( idx for idx, _ in negList )
-		civString += "\n " + localText.getText( "TXT_KEY_REV_WATCH_TOTAL", (totalIdx,) )
-
-		return civString
+	# LFGR_TODO: CyPlayer.changeStabilityIndex() and CyPlayer.updateStabilityIndexAverage() are now (almost) unused
 
 	def checkForBribes( self, iGameTurn, iPlayer ) :
 
@@ -1604,7 +1207,7 @@ class Revolution :
 
 		instigator = None
 
-		# TODO: turn this and instigator bit above into a function, when revolt odds > 0 then is an instigator
+		# LFGR_TODO: turn this and instigator bit above into a function, when revolt odds > 0 then is an instigator
 		if( len(revInstigatorCities) > 0 ) :
 			for pCity in revInstigatorCities :
 				revIdx = pCity.getRevolutionIndex()
@@ -1824,6 +1427,7 @@ class Revolution :
 			return False
 		elif pInstigatorCity.getNumRevolts( pInstigatorCity.getOwner() ) == 0 :
 			# First revolution is always peaceful
+			if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Peaceful, first revolution" )
 			return True
 		else :
 			modNumUnhappy = RevUtils.getModNumUnhappy( pInstigatorCity, self.warWearinessMod ) # LFGR_TODO: Use different func
@@ -1838,13 +1442,14 @@ class Revolution :
 
 			if len( lpRevCities ) == 1 :
 				# Single city is not violent except for the above reasons
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Peaceful, single city" )
 				return True
 
 			# Compute violent modifier
 			iViolentThresholdMod = 80
 
 			for pCivic in PyPlayer( pInstigatorCity.getOwner() ).iterCivicInfos() :
-				iViolentThresholdMod += int( pCivic.getRevViolentMod() * 100 ) # LFGR_TODO
+				iViolentThresholdMod += pCivic.getRevViolentMod()
 
 			if iInstLocalIdx < 0 :
 				iViolentThresholdMod += 10
