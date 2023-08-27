@@ -336,14 +336,22 @@ void CyInfoPythonInterface2()
 		.def("getArtDefineTag", &CvImprovementInfo::getArtDefineTag, "string ()")
 
 //FfH: Added by Kael 09/27/2007
+// lfgr 08/2023: Reordered and added some functions
+		.def("isRequiresPeak", &CvImprovementInfo::isRequiresPeak, "bool ()")
 		.def("isUnique", &CvImprovementInfo::isUnique, "bool ()")
-		.def("getBonusConvert", &CvImprovementInfo::getBonusConvert, "int ()")
 		.def("isExploreTarget", &CvImprovementInfo::isExploreTarget, "bool ()")
-		.def("getPrereqCivilization", &CvImprovementInfo::getPrereqCivilization, "bool ()")
+		.def("getAppearanceProbability", &CvImprovementInfo::getAppearanceProbability, "int ()")
+		.def("getBonusConvert", &CvImprovementInfo::getBonusConvert, "int ()")
+		.def("getFeatureUpgrade", &CvImprovementInfo::getFeatureUpgrade, "int ()")
+		.def("getFreeSpawnPromotion", &CvImprovementInfo::getFreeSpawnPromotion, "int ()")
+		.def("getHealRateChange", &CvImprovementInfo::getHealRateChange, "int ()")
+		.def("getPrereqCivilization", &CvImprovementInfo::getPrereqCivilization, "int ()")
+		.def("getRange", &CvImprovementInfo::getRange, "int ()")
+		.def("getRangeDefenseModifier", &CvImprovementInfo::getRangeDefenseModifier, "int ()")
+		.def("getSpawnUnitType", &CvImprovementInfo::getSpawnUnitType, "int ()")
+		.def("getVisibilityChange", &CvImprovementInfo::getVisibilityChange, "int ()")
 		.def("getPythonAtRange", &CvImprovementInfo::getPythonAtRange, "string ()")
 		.def("getPythonOnMove", &CvImprovementInfo::getPythonOnMove, "string ()")
-		.def("getSpawnUnitType", &CvImprovementInfo::getSpawnUnitType, "string ()")
-		.def("getFreeSpawnPromotion", &CvImprovementInfo::getFreeSpawnPromotion, "string ()")
 //FfH: End Add
 
 		// Arrays
