@@ -1040,7 +1040,7 @@ class CityRevIdxHelper :
 		# type: () -> unicode
 
 		# Check whether city can revolt at all
-		szCannotRevolt = cityCannotRevoltStr()
+		szCannotRevolt = cityCannotRevoltStr( self._pCity )
 		if szCannotRevolt is not None :
 			return szCannotRevolt
 
