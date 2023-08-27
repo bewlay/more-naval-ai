@@ -837,10 +837,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_IMPROVEMENT_SPAWN_UNIT_TYPE</Tag>
-		<English>[ICON_BULLET]Spawns %s1_unit barbarian units until eliminated</English>
-		<French>[ICON_BULLET]g&#233;n&#232;re des %s1_unit barbares until jusqu'&#224; ce qu'il soit d&#233;truit</French>
-		<German>[ICON_BULLET]Erzeugt %s1_unit Barbaren-Einheiten bis es zerst&#246;rt wird</German>
-		<Spanish>[ICON_BULLET]Genera %s1_unit unidades b&#225;rbaras hasta que es eliminado.</Spanish>
+		<English>[ICON_BULLET]Spawns [LINK=literal]%s1_unit[\LINK] barbarian units until eliminated</English>
+		<French>[ICON_BULLET]g&#233;n&#232;re des [LINK=literal]%s1_unit[\LINK] barbares until jusqu'&#224; ce qu'il soit d&#233;truit</French>
+		<German>[ICON_BULLET]Erzeugt [LINK=literal]%s1_unit[\LINK] Barbaren-Einheiten bis es zerst&#246;rt wird</German>
+		<Spanish>[ICON_BULLET]Genera [LINK=literal]%s1_unit[\LINK] unidades b&#225;rbaras hasta que es eliminado.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_IMPROVEMENT_STANDING_STONES</Tag>
