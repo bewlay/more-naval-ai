@@ -2606,7 +2606,10 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 
-			if (iPlotSettlerCount == 0 && (!bDanger || plot()->getNumDefenders(getOwnerINLINE()) >= 4)&& !bRoomToGrow)
+			// lfgr 08/2023: Experimental AI
+			bool bMayBuildSettler = !bRoomToGrow || GC.getGameINLINE().isOption( GAMEOPTION_EXPERIMENTAL_AI );
+
+			if (iPlotSettlerCount == 0 && (!bDanger || plot()->getNumDefenders(getOwnerINLINE()) >= 4)&& bMayBuildSettler)
 			{
 				if ((iNumSettlers < iMaxSettlers) && !bSlowSettlerProduction)
 				{

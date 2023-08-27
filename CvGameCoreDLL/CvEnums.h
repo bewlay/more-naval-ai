@@ -907,6 +907,9 @@ enum GameOptionTypes				// Exposed to Python
 // Ruthless AI split 02/2022 lfgr
 	GAMEOPTION_RUTHLESS_AI,
 
+// Experimental AI 08/2023 lfgr
+	GAMEOPTION_EXPERIMENTAL_AI,
+
 // Dummy gameoptions for mod use
 	GAMEOPTION_DUMMY_01,
 	GAMEOPTION_DUMMY_02,
@@ -946,7 +949,6 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_DUMMY_36,
 	GAMEOPTION_DUMMY_37,
 	GAMEOPTION_DUMMY_38,
-	GAMEOPTION_DUMMY_39,
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES

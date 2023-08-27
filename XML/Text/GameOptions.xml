@@ -9,4 +9,12 @@
 		<Tag>TXT_KEY_GAME_OPTION_RUTHLESS_AI_HELP</Tag>
 		<English>AI plays to win, largely ignoring attitude.</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_EXPERIMENTAL_AI</Tag>
+		<English>Better expansion AI (Experimental)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GAME_OPTION_EXPERIMENTAL_AI_HELP</Tag>
+		<English>Small change to help AI expand better.</English>
+	</TEXT>
 </Civ4GameText>
