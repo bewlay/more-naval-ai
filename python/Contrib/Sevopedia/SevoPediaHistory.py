@@ -49,7 +49,7 @@ class SevoPediaHistory:
 		# lfgr 07/2023
 		import RevConcept
 		if iEntry == gc.getInfoTypeForString( "CONCEPT_REVOLUTIONS" ) :
-			szText += u"\n\n" + RevConcept.makeRevConceptText()
+			szText += u"\n" + RevConcept.makeRevConceptText()
 		# lfgr end
 		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 

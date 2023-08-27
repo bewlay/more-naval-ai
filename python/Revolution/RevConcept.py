@@ -5,9 +5,15 @@ from CvPythonExtensions import *
 import GCUtils
 from PyHelpers import getText
 
+import RevUtils
+
 
 gc = CyGlobalContext()
 gcu = GCUtils.GCUtils()
+
+
+NL = getText( "[NEWLINE]" )
+NL2 = NL + NL
 
 
 def makeInfoLink( pInfo ) :
@@ -33,40 +39,40 @@ class RevConcept :
 	
 	def makeRevConceptText( self ) :
 		# type: () -> unicode
-		szResult = u"" # TODO: General stuff. Copy over some from old concept page.
+		szResult = u""
 
-		# TODO: Mention revolution screen
+		szRevAdvisorShortcut = "Ctrl+Shift+G"
 
-		# TODO: Mention effects buildings/civics; mention caps (garrison example)
+		# Mechanics
+		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_MECHANICS", szRevAdvisorShortcut, RevUtils.revInstigatorThreshold )
 
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_HAPPINESS" )
-		szResult += getText( "[NEWLINE]" )
+		# FfH integration
+		szResult += NL + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_FFH_INTEGRATION" )
+
+		# Factors
+		szResult += NL + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_FACTORS" )
+
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_HAPPINESS" )
 
 		szGovCenters = makeOrList( [makeBuildingLink( eBuilding ) for eBuilding in range( gc.getNumBuildingInfos() )
 									if gc.getBuildingInfo( eBuilding ).isGovernmentCenter() and not gc.getBuildingInfo( eBuilding ).isCapital()] )
 		szTeleportBuildings = makeOrList( [makeBuildingLink( eBuilding ) for eBuilding in range( gc.getNumBuildingInfos() ) if gc.getBuildingInfo( eBuilding ).getAirlift() > 0] )
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_LOCATION" , szGovCenters, szTeleportBuildings )
-		szResult += getText( "[NEWLINE]" )
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_LOCATION" , szGovCenters, szTeleportBuildings )
 
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_RELIGION",
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_RELIGION",
 				makeInfoLink( gcu.getReligionInfo( "RELIGION_THE_ORDER" ) ),
 				makeInfoLink( gcu.getReligionInfo( "RELIGION_THE_ASHEN_VEIL" ) ) )
-		szResult += getText( "[NEWLINE]" )
 
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_NATIONALITY" )
-		szResult += getText( "[NEWLINE]" )
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_NATIONALITY" )
 
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_GARRISON" )
-		szResult += getText( "[NEWLINE]" )
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_GARRISON" )
 
 		szGreatWorkUnits = u", ".join( makeInfoLink( gc.getUnitInfo( eUnit ) ) for eUnit in self.leSortedUnits if gc.getUnitInfo( eUnit ).getGreatWorkCulture() > 0 )
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_DISORDER", szGreatWorkUnits )
-		szResult += getText( "[NEWLINE]" )
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_DISORDER", szGreatWorkUnits )
 
-		szResult += getText( "TXT_KEY_REVOLUTIONS_CONCEPT_MISC" )
-		# szResult += getText( "[NEWLINE]" )
+		szResult += NL2 + getText( "TXT_KEY_REVOLUTIONS_CONCEPT_MISC" )
 
-		# TODO: Strategy tips, mention some civ/civic-specific strategies, e.g. Calabim/sacrifice the weak.
+		szResult += NL + getText( r"TXT_KEY_REVOLUTIONS_CONCEPT_STRATEGY" )
 
 		return szResult
 
