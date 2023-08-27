@@ -1716,11 +1716,7 @@ class Revolution :
 				bodStr = localText.getText("TXT_KEY_REV_WARN_NEWS",()) + ' '
 				bodStr += getCityTextList(warnCities) + ' '
 				bodStr += ' ' + localText.getText("TXT_KEY_REV_WARN_CONTEMPLATING",())
-				cityStrings = self.updateLocalRevIndices( game.getGameTurn(), pPlayer.getID(), subCityList = warnCities, bIsRevWatch = True )
-				bodStr += cityStrings
-				bodStr += '\n\n' + localText.getText("TXT_KEY_REV_WARN_CIV_WIDE",()) + '\n'
-				civString = self.updateCivStability( game.getGameTurn(), pPlayer.getID(), bIsRevWatch = True )
-				bodStr += civString
+				# lfgr 08/2023: Removed RevIdx overview
 				if( pTeam.getAtWarCount(True) > 0 ) :
 					bodStr += '\n\n' + localText.getText("TXT_KEY_REV_WARN_WARS",())
 				else :

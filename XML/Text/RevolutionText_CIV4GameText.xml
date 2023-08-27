@@ -210,14 +210,6 @@
 		<Spanish>est&#225;n ansiosos por rebelarse.  A&#250;n no deber&#237;a ser muy tarde para mantener el orden, si tomas medidas para mejorar la situaci&#243;n local.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_REV_WARN_CIV_WIDE</Tag>
-		<English>There are also civ-wide things you might consider:</English>
-		<French>Il y a &#233;galement des choses civ-larges que vous pourriez consid&#233;rer :</French>
-		<German>Es gibt auch Civ-weite Dinge, die Sie beachten sollten:</German>
-		<Italian>Ci sono altre cose pi&#249; generali da considerare:</Italian>
-		<Spanish>Deber&#237;as considerar que tambi&#233;n hay asuntos que inciden sobre el gobierno de tu civilizaci&#243;n en general:</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_REV_WARN_WARS</Tag>
 		<English>While victory in our current wars may calm the cities cries, the shame of losing another city to our enemies could erode our support.  Carefully consider your chances for a quick victory.</English>
 		<French>Tandis que la victoire dans nos guerres courantes peut calmer les cris de villes, la honte de perdre une autre ville &#224; nos ennemis pourrait &#233;roder notre appui.  Consid&#233;rez soigneusement vos chances pour une victoire rapide.</French>
