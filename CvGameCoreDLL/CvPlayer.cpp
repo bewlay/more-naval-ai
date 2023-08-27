@@ -6605,6 +6605,10 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 		break;
 
 	case TRADE_WAR:
+		// lfgr 08/2023
+		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+			return false;
+		}
 		if (!(GET_TEAM(getTeam()).isHuman()))
 		{
 			if (!(GET_TEAM(getTeam()).isAVassal()))
@@ -6637,6 +6641,10 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 /** Advanced Diplomacy       START															     */
 /*************************************************************************************************/
 	case TRADE_WAR_PREPARE: // byFra
+		// lfgr 08/2023
+		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+			return false;
+		}
 		if (!(GET_TEAM(getTeam()).isHuman()))
 		{
 			if (!(GET_TEAM(getTeam()).isAVassal()))
@@ -26705,6 +26713,10 @@ void CvPlayer::buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 			break;
 
 		case TRADE_WAR:
+			// lfgr 08/2023
+			if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+				break;
+			}
 			if (!isHuman())
 			{
 				for (int j = 0; j < MAX_CIV_TEAMS; j++)
@@ -26728,6 +26740,10 @@ void CvPlayer::buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 /** Advanced Diplomacy       START															     */
 /*************************************************************************************************/
 		case TRADE_WAR_PREPARE:
+			// lfgr 08/2023
+			if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+				break;
+			}
 			if (!isHuman())
 			{
 				for (int j = 0; j < MAX_CIV_TEAMS; j++)

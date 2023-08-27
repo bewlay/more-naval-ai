@@ -960,6 +960,12 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 		break;
 
 	case TRADE_WAR:
+		// lfgr 08/2023:
+		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+			FAssertMsg( false, "War bribe even though forbidden via XML!" );
+			return;
+		}
+
 		if( gTeamLogLevel >= 2 )
 		{
 			logBBAI("      Team %d (%S) declares war on team %d due to TRADE_WAR with %d (%S)", GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eFromPlayer).getCivilizationDescription(0), trade.m_iData, eToPlayer, GET_PLAYER(eToPlayer).getCivilizationDescription(0) );
@@ -1000,6 +1006,11 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 /*************************************************************************************************/
 	//byFra
 	case TRADE_WAR_PREPARE:
+		// lfgr 08/2023:
+		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+			FAssertMsg( false, "War preparation bribe even though forbidden via XML!" );
+			return;
+		}
 		if( gTeamLogLevel >= 2 )
 		{
 			logBBAI("      Team %d (%S) prepares war on team %d due to TRADE_WAR with %d (%S)", GET_PLAYER(eFromPlayer).getTeam(), GET_PLAYER(eFromPlayer).getCivilizationDescription(0), trade.m_iData, eToPlayer, GET_PLAYER(eToPlayer).getCivilizationDescription(0) );
