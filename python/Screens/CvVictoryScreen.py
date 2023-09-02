@@ -1508,7 +1508,13 @@ class CvVictoryScreen( GenericAdvisorScreen ) : # lfgr 09/2019: Full-screen advi
 						theirBestCities = []
 						
 					iRow = screen.appendTableRow(szTable)
-					screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (victory.getNumCultureCities(), gc.getCultureLevelInfo(victory.getCityCulture()).getTextKey())), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					# lfgr 08/2023: Specify required culture for culture level
+					screen.setTableText(szTable, 0, iRow,
+							localText.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (
+									victory.getNumCultureCities(),
+									gc.getCultureLevelInfo(victory.getCityCulture()).getTextKey(),
+									gc.getCultureLevelInfo(victory.getCityCulture()).getSpeedThreshold(CyGame().getGameSpeedType()))),
+							"", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
 					for i in range(victory.getNumCultureCities()):
 						if (len(ourBestCities) > i):

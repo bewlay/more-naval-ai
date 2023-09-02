@@ -25,4 +25,12 @@
 		<Tag>TXT_KEY_MESSAGE_DIFFICULTY_CHANGE_FLEX_INCR</Tag>
 		<English>(flex. %d1 turns, incr. %d2 turns)</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VICTORY_SCREEN_CITY_CULTURE</Tag>
+		<English>%d1 cities with %s2 Culture (%d3)</English>
+		<French>%d1 villes avec un niveau de culture %s2 (%d3)</French>
+		<German>%d1 St&#228;dte mit Kulturstufe %s2 (%d3)</German>
+		<Italian>%d1 citt&#224; con cultura %s2 (%d3)</Italian>
+		<Spanish>%d1 ciudades con cultura %s2 (%d3)</Spanish>
+	</TEXT>
 </Civ4GameText>
