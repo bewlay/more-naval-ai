@@ -407,7 +407,7 @@ class CityRevIdxHelper :
 			szHelp += szModHelp
 
 			# Cap
-			iBaseCap = 10  # TODO: Make define
+			iBaseCap = 20  # TODO: Make define
 			iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxHappinessCapChange )
 			iIdx = max( -iCap, iIdx )
 			szHelp += NL_SEPARATOR
@@ -447,9 +447,15 @@ class CityRevIdxHelper :
 		else :
 			iAdjDistTimes100 = 100
 			szHelp += u"\n" + getText( "You don't have a palace!" )
+		
+		iPopFactor = 8 + isqrt( 4 * self._pCity.getPopulation() )
+		szHelp += u"\n" + getText( "Population modifier: %d1", iPopFactor )
+		
+		iBaseFactor = 125 # TODO: Make define
 
 		# Base instability
-		iBaseIdx = 135 * iAdjDistTimes100 * ( 7 + self._pCity.getPopulation() ) // 1000
+		#iBaseIdx = 135 * iAdjDistTimes100 * ( 7 + self._pCity.getPopulation() ) // 1000
+		iBaseIdx = iBaseFactor * iAdjDistTimes100 * iPopFactor // 1000
 
 		# Modifiers
 		iMod = 100
@@ -477,7 +483,7 @@ class CityRevIdxHelper :
 		iLocationRevIdx = iBaseIdx * max( 0, iMod ) // 100
 
 		# Cap
-		iCap = 100 # TODO: Make setting
+		iCap = 50 # TODO: Make setting
 		iLocationRevIdx = min( iCap, iLocationRevIdx )
 
 		szHelp += NL_SEPARATOR
@@ -911,7 +917,7 @@ class CityRevIdxHelper :
 				iNumCitiesTimes4 += 4
 		iTargetNumCities = gc.getWorldInfo( CyMap().getWorldSize() ).getTargetNumCities()
 
-		return max( -2, iNumCitiesTimes4 // iTargetNumCities - 4 )
+		return min( 5, max( -2, iNumCitiesTimes4 // iTargetNumCities - 4 ) )
 
 	def _computeSimpleFactorsWithEffect( self ) :
 		# type: () -> Generator[Tuple[str, int]]
