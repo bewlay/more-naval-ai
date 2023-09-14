@@ -657,6 +657,8 @@ public:
 	bool isBlocksGifting() const;
 	bool isUpgradeOutsideBorders() const;
 	// End MNAI
+
+	int getRevGarrisonValue() const; // lfgr 09/2023 Extra revolution tags
 	
 	bool isPromotionImmune( int /*PromotionTypes*/ ePromotion ); // XML_LISTS 07/2019 lfgr
 
@@ -806,6 +808,8 @@ protected:
 	bool m_bBlocksGifting;
 	bool m_bUpgradeOutsideBorders;
 	// End MNAI
+
+	int m_iRevGarrisonValue; // lfgr 09/2023 Extra revolution tags
 
 	// Arrays
 

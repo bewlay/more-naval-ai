@@ -9961,6 +9961,11 @@ void CvGameTextMgr::parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes
 	}
 //FfH: End Add
 
+	if( kPromotionInfo.getRevGarrisonValue() != 0 ) { // lfgr 09/2023 Extra revolution tags
+		szBuffer.append( pcNewline );
+		szBuffer.append( gDLL->getText( "TXT_KEY_PROMOTION_GARRISON_REV_IDX", -kPromotionInfo.getRevGarrisonValue() ) );
+	}
+
 	if (wcslen(kPromotionInfo.getHelp()) > 0)
 	{
 		szBuffer.append(pcNewline);

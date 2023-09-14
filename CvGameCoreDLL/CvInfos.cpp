@@ -1924,9 +1924,9 @@ m_bAllowsMoveLimitedBorders(false),
 m_bCastingBlocked(false),
 m_bBlocksUpgrade (false),
 m_bBlocksGifting (false),
-m_bUpgradeOutsideBorders(false)
+m_bUpgradeOutsideBorders(false),
 // End MNAI
-
+m_iRevGarrisonValue(0) // lfgr 09/2023 Extra revolution tags
 {
 }
 
@@ -2610,6 +2610,12 @@ bool CvPromotionInfo::isUpgradeOutsideBorders() const
 }
 // End MNAI
 
+// lfgr 09/2023 Extra revolution tags
+int CvPromotionInfo::getRevGarrisonValue() const
+{
+	return m_iRevGarrisonValue;
+}
+
 // Arrays
 
 int CvPromotionInfo::getTerrainAttackPercent(int i) const
@@ -3180,6 +3186,7 @@ bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bBlocksUpgrade, "bBlocksUpgrade");
 	pXML->GetChildXmlValByName(&m_bBlocksGifting, "bBlocksGifting");
 	pXML->GetChildXmlValByName(&m_bUpgradeOutsideBorders, "bUpgradeOutsideBorders");
+	pXML->GetChildXmlValByName(&m_iRevGarrisonValue, "iRevGarrisonValue"); // lfgr 09/2023 Extra revolution tags
 	// End MNAI
 
 	return true;

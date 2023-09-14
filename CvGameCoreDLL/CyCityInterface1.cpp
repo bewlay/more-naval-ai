@@ -578,5 +578,7 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 /* Afforess	                     END                                                            */
 /************************************************************************************************/
 
+// lfgr 09/2023 Extra revolution tags
+		.def("getTotalRevGarrisonValue", &CyCity::getTotalRevGarrisonValue, "int ()" )
 		;
 }

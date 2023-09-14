@@ -63,6 +63,10 @@ public:
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
+
+	// lfgr 09/2023 Extra revolution tags
+	int getTotalRevGarrisonValue() const;
+
 	void createGreatPeople(int /*UnitTypes*/ eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience);
 
 	void doTask(int /*TaskTypes*/ eTask, int iData1, int iData2, bool bOption);

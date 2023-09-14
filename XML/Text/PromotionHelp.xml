@@ -18,4 +18,8 @@
 		<English>[ICON_BULLET]Requires level %d1 or higher</English>
 		<Spanish>[ICON_BULLET]Requiere nivel %d1 o superior</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTION_GARRISON_REV_IDX</Tag>
+		<English>[ICON_BULLET]%D1[ICON_INSTABILITY] when stationed in a city</English>
+	</TEXT>
 </Civ4GameText>

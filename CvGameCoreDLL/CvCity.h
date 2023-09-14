@@ -1134,6 +1134,9 @@ public:
 	int getRevTrend();
 // End REVOLUTIONS
 
+	// lfgr 09/2023 Extra revolution tags
+	int getTotalRevGarrisonValue() const;
+
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 

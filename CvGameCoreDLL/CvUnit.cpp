@@ -20239,6 +20239,21 @@ int CvUnit::getMiscastChance() const {
 	return std::max( 0, iMiscastChance );
 }
 
+// lfgr 09/2023 Extra revolution tags
+int CvUnit::getRevGarrisonValue() const
+{
+	int iGarrisonValue = 1;
+
+	// LFGR_TODO: Make more efficient for next savegame-breaking release
+	for( int ePromotion = 0; ePromotion < GC.getNumPromotionInfos(); ePromotion++ ) {
+		if( isHasPromotion( (PromotionTypes) ePromotion ) ) {
+			iGarrisonValue += GC.getPromotionInfo( (PromotionTypes) ePromotion ).getRevGarrisonValue();
+		}
+	}
+
+	return iGarrisonValue;
+}
+
 // lfgr 01/2022: Refactoring
 bool CvUnit::isNoUpkeep() const
 {

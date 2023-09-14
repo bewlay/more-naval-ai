@@ -982,6 +982,7 @@
 	<ElementType name="iSpellCasterXP" content="textOnly" dt:type="int"/>
 	<ElementType name="iSpellDamageModify" content="textOnly" dt:type="int"/>
 	<ElementType name="iWorkRateModify" content="textOnly" dt:type="int"/>
+	<ElementType name="iRevGarrisonValue" content="textOnly" dt:type="int"/> <!--lfgr 09/2023 Extra revolution tags -->
 	<ElementType name="CaptureUnitCombat" content="textOnly"/>
 	<ElementType name="PromotionCombatApply" content="textOnly"/>
 	<ElementType name="PromotionImmune1" content="textOnly"/>
@@ -1138,6 +1139,7 @@
 		<element type="iSpellDamageModify" minOccurs="0"/>
 		<element type="iWorkRateModify" minOccurs="0"/>		
 		<element type="iMiscastChance" minOccurs="0"/> <!-- MiscastChance 10/2019 lfgr -->
+		<element type="iRevGarrisonValue" minOccurs="0"/> <!--lfgr 09/2023 Extra revolution tags -->
 		<element type="CaptureUnitCombat" minOccurs="0"/>
 		<element type="PromotionCombatApply" minOccurs="0"/>
 		<element type="PromotionImmune1" minOccurs="0"/>

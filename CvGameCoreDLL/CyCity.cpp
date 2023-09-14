@@ -206,6 +206,12 @@ bool CyCity::isRecentlyAcquired()
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
 
+// lfgr 09/2023 Extra revolution tags
+int CyCity::getTotalRevGarrisonValue() const
+{
+	return m_pCity ? m_pCity->getTotalRevGarrisonValue() : 0;
+}
+
 void CyCity::createGreatPeople(int /*UnitTypes*/ eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience)
 {
 	if (m_pCity)

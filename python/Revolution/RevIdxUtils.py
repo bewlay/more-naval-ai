@@ -742,14 +742,14 @@ class CityRevIdxHelper :
 
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Garrison[COLOR_REVERT]" )
 
-		iNumDefenders = self._pCity.plot().getNumDefenders( self._eOwner )
-		szHelp += u"\n" + getText( "Number of defenders: %d1", iNumDefenders )
+		iGarrisonValue = self._pCity.getTotalRevGarrisonValue()
+		szHelp += u"\n" + getText( "Stationed units value: %d1", iGarrisonValue )
 
 		iPopPenalty = self._pCity.getPopulation() // 5
 		if iPopPenalty > 0 :
 			szHelp += u"\n" + getText( "Size penalty: %d1", iPopPenalty )
 
-		iBaseIdx = min( 0, iPopPenalty - iNumDefenders )
+		iBaseIdx = min( 0, iPopPenalty - iGarrisonValue )
 
 		# Modifiers
 		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxGarrisonMod )

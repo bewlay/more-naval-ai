@@ -942,6 +942,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>,Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,2</Button>
+            <iRevGarrisonValue>1</iRevGarrisonValue>
             <PromotionNextLevel>PROMOTION_CITY_GARRISON2</PromotionNextLevel>
         </PromotionInfo>
         <PromotionInfo>
@@ -957,6 +958,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>,Art/Interface/Buttons/Promotions/CityGarrison2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,2</Button>
+            <iRevGarrisonValue>1</iRevGarrisonValue>
             <PromotionNextLevel>PROMOTION_CITY_GARRISON3</PromotionNextLevel>
         </PromotionInfo>
         <PromotionInfo>
@@ -978,6 +980,7 @@
                 </UnitCombat>
             </UnitCombats>
             <Button>,Art/Interface/Buttons/Promotions/CityGarrison3.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,2</Button>
+            <iRevGarrisonValue>1</iRevGarrisonValue>
         </PromotionInfo>
         <PromotionInfo>
             <Type>PROMOTION_CITY_RAIDER1</Type>
@@ -3317,6 +3320,7 @@
             <Button>Art/Interface/Buttons/Promotions/Guardsman.dds</Button>
             <bTargetWeakestUnitCounter>1</bTargetWeakestUnitCounter>
             <iBetterDefenderThanPercent>100</iBetterDefenderThanPercent>
+            <iRevGarrisonValue>5</iRevGarrisonValue>
         </PromotionInfo>
         <PromotionInfo>
             <Type>PROMOTION_GUERILLA1</Type>

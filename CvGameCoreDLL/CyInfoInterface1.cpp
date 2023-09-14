@@ -186,6 +186,9 @@ void CyInfoPythonInterface1()
 		.def("getExpireChance", &CvPromotionInfo::getExpireChance, "int ()") //MNAI
 //FfH: End Add
 
+		// lfgr 09/2023 Extra revolution tags
+		.def("getRevGarrisonValue", &CvPromotionInfo::getRevGarrisonValue, "int ()")
+
 		// Arrays
 
 		.def("getTerrainAttackPercent", &CvPromotionInfo::getTerrainAttackPercent, "int (int i)")

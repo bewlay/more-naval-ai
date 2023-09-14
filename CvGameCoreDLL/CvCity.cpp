@@ -17871,3 +17871,18 @@ int CvCity::getRevTrend()
 	return iDeltaTrend;
 }
 // End REVOLUTIONS
+
+// lfgr 09/2023 Extra revolution tags
+int CvCity::getTotalRevGarrisonValue() const
+{
+	CLLNode<IDInfo>* pUnitNode;
+	CvUnit* pLoopUnit;
+
+	int iValue = 0;
+
+	for( CLLNode<IDInfo>* pUnitNode = plot()->headUnitNode(); pUnitNode != NULL; pUnitNode = plot()->nextUnitNode( pUnitNode ) ) {
+		iValue += ::getUnit( pUnitNode->m_data )->getRevGarrisonValue();
+	}
+
+	return iValue;
+}
