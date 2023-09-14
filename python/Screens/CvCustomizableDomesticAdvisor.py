@@ -2536,19 +2536,23 @@ class CvCustomizableDomesticAdvisor:
 			pPlayerCache = RevIdxUtils.PlayerRevIdxCache( gc.getActivePlayer().getID() )
 			lCitiesWithHelpers = [(cityList[i].city, RevIdxUtils.CityRevIdxHelper( cityList[i].city, pPlayerCache ) )
 					for i in cityRange]
+
+			# lfgr 09/2023: Measure time
+			start_all_cols = time.clock()
 			
 			# Loop through the columns first. This is unintuitive, but faster.
 			for value, key in columns:
 				
 				try:
 					columnDef = self.COLUMNS_LIST[self.COLUMNS_INDEX[key]]
+
+					# lfgr 09/2023: Measure time
+					start = time.clock()
 					
 					# CDA_REFACTOR 03/2021 lfgr
 					if isinstance( columnDef, CDAColumns.CDAColumn ) :
 						if not columnDef.is_valid( gc.getActivePlayer() ) :
 							continue
-
-						start = time.clock()
 
 						# Make header
 						if columnDef.button is not None :
@@ -2587,9 +2591,8 @@ class CvCustomizableDomesticAdvisor:
 						
 						iColHeaderX += self.columnWidth[key]
 
-						end = time.clock()
-						BugUtil.debug("Computing column %s: %f.3s" % ( columnDef.name, end - start ) )
-						
+						# lfgr 09/2023: Measure time
+						BugUtil.debug( "Computing column %20s: %f.3s" % (columnDef.name, time.clock() - start) )
 						continue # TODO: elif block
 					
 					type = columnDef[2]
@@ -2659,10 +2662,16 @@ class CvCustomizableDomesticAdvisor:
 							szValue = colorFunc(unicode(calcFunc(cityList[i].city, key, columnDef[7])), key)
 							funcTableWrite (page, value + 1, i, szValue, "", WidgetTypes.WIDGET_GENERAL, -1, -1, justify)
 
+					# lfgr 09/2023: Measure time
+					BugUtil.debug( "Computing column %20s: %f.3s" % (columnDef[0], time.clock() - start) )
+
 				except KeyError: # LFGR_TODO: Bad idea, hides evaluation errors
 					continue
 				except TypeError:
 					continue
+
+			# lfgr 09/2023: Measure time
+			BugUtil.debug( "Computing all columns: %.3f", time.clock() - start_all_cols )
 
 			# Finally, display the specialist controls,
 			if self.PAGES[self.currentPageNum]["showSpecControls"]:

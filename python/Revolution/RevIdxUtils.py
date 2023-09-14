@@ -196,6 +196,21 @@ class NationalEffectBuildingsInfoCache :
 		return NationalEffectBuildingsInfoCache._instance
 
 
+def cached_method( func ) :
+	def rfunc( *args, **kwargs ) :
+		assert len( args ) >= 1
+		obj = args[0]
+		# if not hasattr( obj, "__cache_funcs" ) :
+		# 	obj.__cache_funcs = {}
+		if not hasattr( obj, "__cache_vals" ) :
+			obj.__cache_vals = {}
+		if func.__name__ not in obj.__cache_vals :
+			obj.__cache_vals[func.__name__] = func( *args, **kwargs )
+			assert not hasattr( obj.__cache_vals[func.__name__], "next" ), "Cached value is probably a generator!"
+		return obj.__cache_vals[func.__name__]
+	return rfunc
+
+
 class PlayerRevIdxCache :
 	""" Caches buildings with national rev effect for a single player. """
 	def __init__( self, ePlayer ) :
@@ -203,6 +218,8 @@ class PlayerRevIdxCache :
 		self._ePlayer = ePlayer
 		self._pPlayer = gc.getPlayer( ePlayer )
 		self._buildingsCache = None
+
+		self._lpGovernmentCenters = [pCity for pCity in PyPlayer( self._ePlayer ).iterCities() if pCity.isGovernmentCenter()]
 
 	def _buildingsWithNationalEffects( self ) :
 		""" Un-cached function"""
@@ -220,6 +237,11 @@ class PlayerRevIdxCache :
 		if self._buildingsCache is None :
 			self._buildingsCache = tuple( self._buildingsWithNationalEffects() )
 		return self._buildingsCache
+
+	@cached_method
+	def governmentCenters( self ) :
+		# type: () -> Sequence[CyCity]
+		return tuple( pCity for pCity in PyPlayer( self._ePlayer ).iterCities() if pCity.isGovernmentCenter() )
 
 
 class CityRevIdxHelper :
@@ -240,11 +262,12 @@ class CityRevIdxHelper :
 		self._pOwnerTeam = gc.getTeam( self._eOwnerTeam )
 		self._iTurnsSinceAcquisition = game.getGameTurn() - pCity.getGameTurnAcquired()
 
-		self._lpBuildings = []
+		self._lpBuildingsWithLocalEffect = []
 		for eBuilding in xrange( gc.getNumBuildingInfos() ) :
 			if self._pCity.isHasBuilding( eBuilding ) :
-				# self._leBuildings.append( eBuilding )
-				self._lpBuildings.append( gc.getBuildingInfo( eBuilding ) )
+				pInfo = gc.getBuildingInfo( eBuilding )
+				if not pInfo.getRevIdxEffects().is_zero() :
+					self._lpBuildingsWithLocalEffect.append( pInfo )
 
 		# Caching
 		self._dCacheStateReligionConflict = None # type: Optional[Dict[Tuple[int, int], int]]
@@ -267,7 +290,7 @@ class CityRevIdxHelper :
 	def computeLocalBuildingEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
 		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
 		return computeInfoRevEffectsAndHelp(
-				self._lpBuildings,
+				self._lpBuildingsWithLocalEffect,
 				lambda pBuilding : revEffectsFunc( pBuilding.getRevIdxEffects() ),
 				szTemplate, bColor )
 	
@@ -344,6 +367,7 @@ class CityRevIdxHelper :
 
 		return iMod, szHelp
 
+	@cached_method
 	def computeHappinessRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -422,10 +446,12 @@ class CityRevIdxHelper :
 		else :
 			return 0, szHelp + u"\n" + getText( "City is neither happy nor unhappy" )
 
+
 	def _cityDistance(self, pOtherCity ) :
 		# type: (CyCity) -> int
 		return plotDistance( self._pCity.getX(), self._pCity.getY(), pOtherCity.getX(), pOtherCity.getY() )
 
+	@cached_method
 	def computeLocationRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -433,11 +459,10 @@ class CityRevIdxHelper :
 
 		# Raw distance to government center
 		iCityDistRaw = None
-		for pyCity in self._pyOwner.iterCities() :
-			if pyCity.isGovernmentCenter() :
-				fDist = self._cityDistance( pyCity.GetCy() )
-				if iCityDistRaw is None or iCityDistRaw > fDist :
-					iCityDistRaw = fDist
+		for pyCity in self._pPlayerCache.governmentCenters() :
+			fDist = self._cityDistance( pyCity.GetCy() )
+			if iCityDistRaw is None or iCityDistRaw > fDist :
+				iCityDistRaw = fDist
 
 		if iCityDistRaw is not None :
 			iDistMod = gc.getWorldInfo( CyMap().getWorldSize() ).getDistanceMaintenancePercent()
@@ -543,6 +568,7 @@ class CityRevIdxHelper :
 		return self._dCachePresentReligionConflict.get( (eReligion1, eReligion2), 0 )
 
 	# TODO: Split into good and bad effects (+/- in table header)
+	@cached_method
 	def computeReligionRevIndexAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		eStateReligion = self._pOwner.getStateReligion()
@@ -598,10 +624,10 @@ class CityRevIdxHelper :
 						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY]",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
 						for pInfo in self._pyOwner.iterCivicInfos() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
-					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
+					(( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
 						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY] in all cities",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
-						for pInfo in self._lpBuildings if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					 for pInfo in self._lpBuildingsWithLocalEffect if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0),
 					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
 						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY] in all cities",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
@@ -615,10 +641,10 @@ class CityRevIdxHelper :
 						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY]",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
 						for pInfo in self._pyOwner.iterCivicInfos() if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
-					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
+					(( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
 						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY] in all cities",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
-						for pInfo in self._lpBuildings if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0 ),
+					 for pInfo in self._lpBuildingsWithLocalEffect if pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() != 0),
 					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
 						getText( "[ICON_BULLET][COLOR_BUILDING_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY] in all cities",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
@@ -689,6 +715,7 @@ class CityRevIdxHelper :
 		return self.computeReligionRevIndexAndHelp()[1]
 
 
+	@cached_method
 	def computeNationalityRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -737,6 +764,7 @@ class CityRevIdxHelper :
 		return self.computeNationalityRevIdxAndHelp()[0]
 
 
+	@cached_method
 	def computeGarrisonRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -773,6 +801,7 @@ class CityRevIdxHelper :
 		return self.computeGarrisonRevIdxAndHelp()[0]
 
 
+	@cached_method
 	def computeDisorderRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -819,6 +848,7 @@ class CityRevIdxHelper :
 		return self.computeDisorderRevIdxAndHelp()[0]
 
 
+	@cached_method
 	def computeCrimeRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		""" RevIdx from crime; 0 to +10. """
@@ -859,6 +889,7 @@ class CityRevIdxHelper :
 		return self.computeCrimeRevIdxAndHelp()[0]
 
 
+	@cached_method
 	def computeCultureRateRevIdxAndHelp( self ) :
 		# type: () -> (int, int)
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Culture Rate[COLOR_REVERT]" )
@@ -940,6 +971,7 @@ class CityRevIdxHelper :
 		elif iSizeIdx > 0 :
 			yield "Large empire", iSizeIdx
 
+	@cached_method
 	def computeVariousRevIdxAndHelp( self ) :
 		iVariousIdx = 0
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Various effects[COLOR_REVERT]" )
