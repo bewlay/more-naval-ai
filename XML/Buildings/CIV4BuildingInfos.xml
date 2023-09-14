@@ -6031,7 +6031,7 @@
 			<iAllCityDefense>0</iAllCityDefense>
 			<iEspionageDefense>0</iEspionageDefense>
             <!-- lfgr Revolution effects 05/2023 -->
-			<iRevIdxPerTurn>1</iRevIdxPerTurn>
+			<iRevIdxPerTurn>-1</iRevIdxPerTurn>
             <!-- lfgr end -->
 			<iAsset>1</iAsset>
 			<iPower>0</iPower>
