@@ -198,7 +198,8 @@ class NationalEffectBuildingsInfoCache :
 
 def cached_method( func ) :
 	def rfunc( *args, **kwargs ) :
-		assert len( args ) >= 1
+		assert len( args ) == 1 # TODO: Allow more sophisticated caching?
+		assert len( kwargs ) == 0
 		obj = args[0]
 		# if not hasattr( obj, "__cache_funcs" ) :
 		# 	obj.__cache_funcs = {}
@@ -1014,7 +1015,7 @@ class CityRevIdxHelper :
 		if szCannotRevolt is not None :
 			return 0, getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
 
-		iIdxSum = sum( [ # TODO: Caching
+		iIdxSum = sum( [
 			self.computeHappinessRevIdx(),
 			self.computeLocationRevIdx(),
 			self.computeReligionRevIdx(),

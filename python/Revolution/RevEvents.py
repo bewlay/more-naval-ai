@@ -823,6 +823,7 @@ def playerCityLost( player, pCity, bConquest = True ) :
 
 		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Loss of %s by %s (%d bConq): %d rev idx change"%(pCity.getName(),player.getCivilizationDescription(0),bConquest,iRevIdxChange))
 
+		# TODO: Move to cityAcquired
 		for city in PyPlayer(iPlayer).getCityList() :
 			pLoopCity = city.GetCy()
 			pLoopCity.changeRevolutionIndex( iRevIdxChange )

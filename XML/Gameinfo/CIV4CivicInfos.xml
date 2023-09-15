@@ -1072,7 +1072,6 @@
             <!-- lfgr Revolution effects 04/2023 -->
             <iRevIdxPerTurn>2</iRevIdxPerTurn>
 			<iRevIdxHappinessMod>-25</iRevIdxHappinessMod>
-			<iRevIdxHappinessCapChange>0</iRevIdxHappinessCapChange>
 			<iRevIdxUnhappinessMod>-25</iRevIdxUnhappinessMod>
 			<iRevIdxGarrisonMod>25</iRevIdxGarrisonMod>
 			<iRevIdxGarrisonCapChange>5</iRevIdxGarrisonCapChange>
