@@ -433,7 +433,7 @@ class CityRevIdxHelper :
 			szHelp += szModHelp
 
 			# Cap
-			iBaseCap = 20  # TODO: Make define
+			iBaseCap = 20 # TODO: Make define
 			iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxHappinessCapChange )
 			iIdx = max( -iCap, iIdx )
 			szHelp += NL_SEPARATOR
