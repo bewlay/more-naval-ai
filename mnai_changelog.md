@@ -1,5 +1,54 @@
 # Changelog
 
+## 2.9.2u
+
+### Gameplay
+* Added MapScriptTools to main release
+* Revamped Revolution stability system
+* No revolutions or (in)stability accumulation while in stasis or while Elohim Sanctuary spell is active
+* Infernal cities do not revolt
+* Added experimental AI option that makes AI slightly better at expansion (thanks to f1rpo)
+
+### UI
+* Remove old RevolutionWatchAdvisor with extra Revolution-focused copy of CustomizableDomesticAdvisor
+* Revamped Revolution concept page
+* New instability icon for Revolution
+* Performance improvements for RevIdx calculations, in particular for the advisor
+* Add proper instability symbol
+* Revolution warning popup no longer displays current factors
+* City cycling first goes through non-settlements, then settlements (request by LightAcolyte)
+* Removed broken "Team naming" option from Dynamic Civ Names
+* In victory screen, specify required culture for cultural victory
+* Fixed Lizardman strategy text (report by Deaf Metal)
+* Warrens help text now correctly states that it only applies to living units
+* Fixed and improved Feast spell help
+* Fixed Pirate Cove wiki (report by LightAcolyte)
+* Added/removed some mismatched quotation marks
+* Show `<AnyoneProjectPrereq>` button in project pedia (MagisterCultuum)
+* Some minor general improvements to civic and improvement pedia and help text
+
+### Bugfixes
+* Spell help error in pedia if COUNT_SUMMONS_PER_CASTER set to 
+* AI-controlled (raging) units that cannot attack don't attempt to
+* Error when editing city name or city script data in WB (report by DuskTreader)
+* Reading maps with non-standard player number no longer requires writing access to the map file
+* Various minor technical fixes
+
+### AI
+* Fixed an AI bug related to finding a paths to cities
+* Barbarian UNITAI_ANIMAL units (including Pristin Pass Gargoyles) now cannot enter non-barbarian cities
+
+### Code
+* Refactored old stability update code for Revolutions
+* New GlobalDefine NO_WAR_TRADE that disables war and war preparation bribes completely (for MagisterCultuum)
+* Exposed `CvPlayer::getInflationModifier()`, `CvPlayer::changeInflationModifier()`
+* Exposed most or all new FfH functions for CvCivicInfo, CvImprovementInfo, and CvUnitInfo (request by MagisterCultuum)
+* Added method `GyGlobalContext::getInfoTypeForStringNoAsserts()` to allow multi-mod mapscripts to check for existence of info types without triggering assertion errors
+* Added "Revolution Effect" tags to buildings and civics, removed old tags. See `doc/tags.md` for documentation. Could be extended (e.g.) to traits and religions in the future.
+* Changed some existing revolution tags from floats to ints.
+* Allow passing available casters to spell python help (via the `lpCasters` variable)
+* More BBAI logging
+
 
 ## 2.9.1u
 
