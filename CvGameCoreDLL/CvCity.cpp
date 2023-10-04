@@ -5247,7 +5247,7 @@ int CvCity::getRevIndexPercentAnger(int iExtra) const
 {
 	int iAnger = 0;
 	int iLocalAdjust = std::min((getLocalRevIndex()*3)/4,getLocalRevIndex()/2);
-	iLocalAdjust = std::min(iLocalAdjust,10);
+	iLocalAdjust = std::max( 0, std::min( 10, iLocalAdjust ) ); // lfgr fix 09/2023
 
 	iAnger = (int)((12.5+iLocalAdjust)*(getRevolutionIndex() - 325))/750;
 	iAnger = std::max(0,iAnger);
