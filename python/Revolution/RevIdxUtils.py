@@ -403,7 +403,8 @@ class CityRevIdxHelper :
 
 
 			# Cap
-			iCap = min( 100, 10 * self._pCity.getPopulation() )
+			# TODO: Make define. Should stay less than disorder instability
+			iCap = min( 30, 3 * self._pCity.getPopulation() )
 			szHelp += NL_SEPARATOR
 			szHelp += u"\n" + getText( "Cap from population: %d1", iCap )
 			iIdx = min( iIdx, iCap )
@@ -788,7 +789,7 @@ class CityRevIdxHelper :
 			szHelp += szModHelp
 		
 		# Cap
-		iBaseCap = 10 # TODO: Make define
+		iBaseCap = 20 # TODO: Make define
 		iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxGarrisonCapChange )
 		szHelp += szCapHelp
 
@@ -810,13 +811,8 @@ class CityRevIdxHelper :
 
 		if self._pCity.getOccupationTimer() > 0 :
 
-			iTurns = min( 15, self._iTurnsSinceAcquisition )
-			iDisorderIdx = 5 * iTurns
-			if iTurns < 15 :
-				szHelp += u"\n" + getText( "Disorder (acquired %D1 [NUM1:turn:turns] ago): %s2[ICON_INSTABILITY]",
-						iTurns, coloredRevIdxFactorStr( iDisorderIdx ) )
-			else :
-				szHelp += u"\n" + getText( "Disorder: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iDisorderIdx ) )
+			iDisorderIdx = 30 # TODO? Should stay higher than unhappiness cap
+			szHelp += u"\n" + getText( "Disorder: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iDisorderIdx ) )
 
 			# Modifiers
 			iModTimes100 = 100
@@ -824,10 +820,6 @@ class CityRevIdxHelper :
 				iRebelMod = -90 # TODO: Make define
 				iModTimes100 += iRebelMod
 				szHelp += u"\n" + getText( "[ICON_BULLET]%D1% since we are rebels", iRebelMod )
-			elif self._pCity.getRevolutionCounter() > 0 :
-				iPastRevoltMod = -90 # TODO: Make define
-				iModTimes100 += iPastRevoltMod
-				szHelp += u"\n" + getText( "[ICON_BULLET]%D1% from past revolutions", iPastRevoltMod )
 			
 			iGenMod, szGenModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxDisorderMod )
 			iModTimes100 += iGenMod
@@ -929,7 +921,8 @@ class CityRevIdxHelper :
 		# type: () -> int
 		if self._pCity.foodDifference( True ) < 0 and abs( self._pCity.foodDifference( True ) ) > self._pCity.getFood() :
 			if not self._pCity.isSettlement() :
-				return 100
+				# TODO: Was 100, but that is too punishing for newly acquired cities.
+				return 10
 		return 0
 
 	def _computeGoldenAgeRevIdx( self ) :
@@ -1038,7 +1031,7 @@ class CityRevIdxHelper :
 			szModHelp += getText( "[ICON_BULLET]Active revolution: %D1%%", iRebelMod )
 
 		if iIdxSum > 0 :
-			iRecentAcquisitionMod = min( 2*(self._iTurnsSinceAcquisition - 15), 0 )
+			iRecentAcquisitionMod = min( 3*(self._iTurnsSinceAcquisition - 20), 0 )
 			if iRecentAcquisitionMod < 0 :
 				iMod += iRecentAcquisitionMod
 				szModHelp += u"\n" + getText( "[ICON_BULLET]Recent acquisition (%d2 turns): %D1%",
