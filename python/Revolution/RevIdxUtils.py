@@ -1019,7 +1019,8 @@ class CityRevIdxHelper :
 			self.computeCultureRateRevIdxAndHelp()[0],
 			self.computeVariousRevIdxAndHelp()[0]
 		] )
-		szHelp = getText( "Sum of all effects: %D1[ICON_INSTABILITY]", iIdxSum )
+		iIdxSum = min( 100, iIdxSum )
+		szHelp = getText( "Sum of all effects (max. 100): %D1[ICON_INSTABILITY]", iIdxSum )
 
 		# Total-RevIdx modifiers
 		iMod = 100
@@ -1028,6 +1029,7 @@ class CityRevIdxHelper :
 		if iIdxSum > 0 and self._pOwner.isRebel() :
 			iRebelMod = -90 # TODO: make define
 			iMod += iRebelMod
+			szModHelp += u"\n"
 			szModHelp += getText( "[ICON_BULLET]Active revolution: %D1%%", iRebelMod )
 
 		if iIdxSum > 0 :
@@ -1040,7 +1042,7 @@ class CityRevIdxHelper :
 		iMod = max( 0, iMod )
 		iModifiedSum = iIdxSum * iMod // 100
 		if szModHelp != u"" :
-			szHelp += u"\n" + szModHelp
+			szHelp += szModHelp
 			szHelp += NL_SEPARATOR + u"\n" + getText( "Pre-final: %D1[ICON_INSTABILITY]", iModifiedSum )
 
 		# Game speed (and similar) adjustments

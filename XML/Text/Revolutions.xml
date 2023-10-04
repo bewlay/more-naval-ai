@@ -30,7 +30,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_LOCATION</Tag>
-		<English>[BOLD]Location.[\BOLD] Each city that is not your capital or a government center (i.e., has %s1) gets a location penalty depending on the distance to the nearest capital or government center. Ways of reducing the location penalty is to connect your cities via roads, rivers, the sea, or teleportation (via %s2).</English>
+		<English>[BOLD]Location.[\BOLD] Each city that is not your capital or a government center (i.e., has %s1) gets a location penalty depending on the distance to the nearest capital (or government center). Size is also a factor; large cities get a larger location penalty. Ways of reducing the location penalty is to connect your cities via roads, rivers, the sea, or teleportation (via %s2).</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_RELIGION</Tag>
@@ -42,7 +42,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_GARRISON</Tag>
-		<English>[BOLD]Garrison.[\BOLD] Stationing troops in a city improves stability. Your citizens take one unit per five population points for granted; you need more units to increase stability (though less units do not cause instability).</English>
+		<English>[BOLD]Garrison.[\BOLD] Stationing troops in a city improves stability. Your citizens take one unit per five population points for granted; you need more units to increase stability (though less units do not cause instability). Some promotions increase your units' stability bonus.</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REVOLUTIONS_CONCEPT_DISORDER</Tag>

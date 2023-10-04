@@ -845,20 +845,18 @@
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_REINFORCEMENTS</Tag>
 		<English>Rebel reinforcements for %s1_leader spotted outside of %s2_city</English>
-		<French>Renforts rebelles for %s1_leader rep&#233;r&#233;s dehors de</French>
-		<German>Rebellenverst&#228;rkungen wurden gesichtet for %s1_leader vor den Toren von</German>
-		<Italian>Rinforzi ribelli for %s1_leader avvistati vicino </Italian>
-		<Spanish>&#161;Refuerzos rebeldes for %s1_leader avistados en el exterior de</Spanish>
-		<Finnish>Rebel reinforcements for %s1_leader spotted outside of</Finnish>
+		<French>Renforts rebelles for %s1_leader rep&#233;r&#233;s dehors de %s2_city</French>
+		<German>Rebellenverst&#228;rkungen wurden gesichtet for %s1_leader vor den Toren von %s2_city</German>
+		<Italian>Rinforzi ribelli for %s1_leader avvistati vicino %s2_city</Italian>
+		<Spanish>&#161;Refuerzos rebeldes for %s1_leader avistados en el exterior de %s2_city</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS</Tag>
 		<English>%s1_civ reinforcements join your cause outside of %s2_city</English>
-		<French>Les renforts joignent votre cause dehors de</French>
-		<German>Verst&#228;rkungen schlie&#223;en sich Ihrer Sache an, vor den Toren von</German>
-		<Italian>Rinforzi si uniscono al tuo esercito, nei pressi di </Italian>
-		<Spanish>&#161;Refuerzos se han unido a tu causa en el exterior de</Spanish>
-		<Finnish>Reinforcements join your cause outside of</Finnish>
+		<French>Les renforts joignent votre cause dehors de %s2_city</French>
+		<German>Verst&#228;rkungen schlie&#223;en sich Ihrer Sache an, vor den Toren von %s2_city</German>
+		<Italian>Rinforzi si uniscono al tuo esercito, nei pressi di %s2_city</Italian>
+		<Spanish>&#161;Refuerzos se han unido a tu causa en el exterior de %s2_city</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_SMALL_REVOLT</Tag>

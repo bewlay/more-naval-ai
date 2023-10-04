@@ -75,7 +75,7 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 		elif iRevIdx >= RevUtils.alwaysViolentThreshold :
 			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]Violent revolution expected![COLOR_REVERT]" )
 		else :
-			return getText( "%d1", iRevIdx ), getText( "May join an existing revolt" )
+			return getText( "%d1", iRevIdx ), getText( "May join a revolt" )
 
 	@property
 	def type( self ) :
