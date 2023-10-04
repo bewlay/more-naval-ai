@@ -107,6 +107,15 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 | `<bPacificRule>1</bPacificRule>` | Doesn't seem to do anything | Added in MNAI via Advanced Diplomacy 2. Removed as it doesn't fit into FfH. |
 
 
+### Units/CIV4PromotionInfos.xml
+
+#### Tags
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| `<iRevGarrisonValue>N</iRevGarrisonValue>` | `N` must not be negative. When the unit is in a city, the city gains `N` stability each turn. This is capped and modified by the usual garrison stability rules. | New in MNAI 2.9.2u |
+
+
 ### Units/CIV4SpellInfos.xml
 
 #### Tags
