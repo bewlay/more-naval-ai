@@ -963,7 +963,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 		// lfgr 08/2023:
 		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
 			FAssertMsg( false, "War bribe even though forbidden via XML!" );
-			return;
+			return false;
 		}
 
 		if( gTeamLogLevel >= 2 )
@@ -1009,7 +1009,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 		// lfgr 08/2023:
 		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
 			FAssertMsg( false, "War preparation bribe even though forbidden via XML!" );
-			return;
+			return false;
 		}
 		if( gTeamLogLevel >= 2 )
 		{
