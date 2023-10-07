@@ -1128,9 +1128,10 @@
             <Help>TXT_KEY_SPELL_ESCAPE_HELP</Help>
             <UnitPrereq>UNIT_CHANTER</UnitPrereq>
             <bAllowAI>1</bAllowAI>
+            <iAIWeight>200</iAIWeight>
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
-            <PyResult>spellTeleport(pCaster,'Capital')</PyResult>
+            <PyResult>spellEscape(pCaster)</PyResult>
             <PyRequirement>reqEscape(pCaster)</PyRequirement>
             <Effect>EFFECT_SPELL2</Effect>
             <Sound>AS3D_SPELL_ESCAPE</Sound>

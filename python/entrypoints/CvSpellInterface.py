@@ -1336,14 +1336,24 @@ def spellEntertain(caster):
 		pPlayer2.changeGold(iGold)
 	pCity.changeHappinessTimer(2)
 
-def reqEscape(caster):
-	if caster.getOwner() == gc.getBARBARIAN_PLAYER():
+# lfgr 10/2023: fixed
+def reqEscape( pCaster ):
+	pCapital = gc.getPlayer( pCaster.getOwner() ).getCapitalCity() # type: CyCity
+	if pCapital is None or pCapital.isNone() :
 		return False
-	pPlayer = gc.getPlayer(caster.getOwner())
-	if pPlayer.isHuman() == False:
-		if caster.getDamage() >= 50:
+
+	if ( pCapital.plot().getX(), pCapital.plot().getY() ) == ( pCaster.getX(), pCaster.getY() ) :
+		return False
+
+	if not gc.getPlayer( pCaster.getOwner() ).isHuman() :
+		if pCaster.getDamage() <= 50:
 			return False
 	return True
+
+# lfgr 10/2023: renamed and simplified
+def spellEscape( pCaster ):
+	# type: (CyUnit) -> None
+	pCaster.doEscape()
 
 def reqExploreLair(caster):
 	if caster.isOnlyDefensive():
@@ -3467,12 +3477,6 @@ def spellTaunt(caster):
 											if not pUnit.isResisted(caster, iSpell):
 												pUnit.setHasPromotion(gc.getInfoTypeForString('PROMOTION_ENRAGED'),true)
 												pUnit.attack(pPlot, False)
-
-def spellTeleport(caster,loc):
-	player = caster.getOwner()
-	pPlayer = gc.getPlayer(player)
-	pCity = pPlayer.getCapitalCity()
-	caster.setXY(pCity.getX(), pCity.getY(), False, True, True)
 
 def reqTeachSpellcasting(caster):
 	iAnimal = gc.getInfoTypeForString('UNITCOMBAT_ANIMAL')
