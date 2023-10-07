@@ -131,22 +131,22 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 
 | Tag(s) | Description | History |
 | --- | --- | --- |
-| `<iRevIdxPerTurn>Z</iRevIdxPerTurn>` | Flat RevIdx change every turn in every city. | To be added in MNAI-U |
-| `<iRevIdxHolyCityOwned>Z</iRevIdxHolyCityOwned>` | RevIdx/turn if we own our holy city. | To be added in MNAI-U |
-| `<iRevIdxHolyCityHeathenOwned>Z</iRevIdxHolyCityHeathenOwned>` | RevIdx/turn if a heathen player owns our holy city | To be added in MNAI-UM |
-| `<iRevIdxHappinessMod>Z</iRevIdxHappinessMod>` | `Z` should be at least -100. Percent modifier for stability from happines.s | To be added in MNAI-U |
-| `<iRevIdxHappinessCapChange>Z</iRevIdxHappinessCapChange>` | Changes the maximum stability/turn that can be gained from happiness. | To be added in MNAI-U |
-| `<iRevIdxUnhappinessMod>Z</iRevIdxUnhappinessMod>` | `Z` should be at least -100.  Percent modifier for instability from unhapiness. | To be added in MNAI-U |
-| `<iRevIdxLocationMod>Z</iRevIdxLocationMod>` | `Z` should be at least -100.  Percent modifier for instability from location/distance. | To be added in MNAI-U |
-| `<iRevIdxBadReligionMod>Z</iRevIdxBadReligionMod>` | `Z` should be at least -100. Percent modifier for instability from religion. | To be added in MNAI-U |
-| `<iRevIdxGoodReligionMod>Z</iRevIdxGoodReligionMod>` | `Z` should be at least -100. Percent modifier for stability from religion. | To be added in MNAI-U |
-| `<iRevIdxNationalityMod>Z</iRevIdxNationalityMod>` | `Z` should be at least -100. Percent modifier for stability and instability from nationality. | To be added in MNAI-U |
-| `<iRevIdxGarrisonMod>Z</iRevIdxGarrisonMod>` | `Z` should be at least -100. Percent modifier for stability and instability from garrison. | To be added in MNAI-U |
-| `<iRevIdxGarrisonCapChange>Z</iRevIdxGarrisonCapChange>` | Changes the maximum stability/turn that can be gained from garrison. | To be added in MNAI-U |
-| `<iRevIdxDisorderMod>Z</iRevIdxDisorderMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | To be added in MNAI-U |
-| `<iRevIdxCrimeMod>Z</iRevIdxCrimeMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | To be added in MNAI-U |
-| `<iRevIdxCultureRateMod>Z</iRevIdxCultureRateMod>` | `Z` should be at least -100. Percent modifier for stability from culture rate. | To be added in MNAI-U |
-| `<iRevIdxCultureRateCapChange>Z</iRevIdxCultureRateCapChange>` | Changes the maximum stability/turn that can be gained from culture rate. | To be added in MNAI-U |
+| `<iRevIdxPerTurn>Z</iRevIdxPerTurn>` | Flat RevIdx change every turn in every city. | New in MNAI 2.9.2u |
+| `<iRevIdxHolyCityOwned>Z</iRevIdxHolyCityOwned>` | RevIdx/turn if we own our holy city. | New in MNAI 2.9.2u |
+| `<iRevIdxHolyCityHeathenOwned>Z</iRevIdxHolyCityHeathenOwned>` | RevIdx/turn if a heathen player owns our holy city | New in MNAI 2.9.2uM |
+| `<iRevIdxHappinessMod>Z</iRevIdxHappinessMod>` | `Z` should be at least -100. Percent modifier for stability from happines.s | New in MNAI 2.9.2u |
+| `<iRevIdxHappinessCapChange>Z</iRevIdxHappinessCapChange>` | Changes the maximum stability/turn that can be gained from happiness. | New in MNAI 2.9.2u |
+| `<iRevIdxUnhappinessMod>Z</iRevIdxUnhappinessMod>` | `Z` should be at least -100.  Percent modifier for instability from unhapiness. | New in MNAI 2.9.2u |
+| `<iRevIdxLocationMod>Z</iRevIdxLocationMod>` | `Z` should be at least -100.  Percent modifier for instability from location/distance. | New in MNAI 2.9.2u |
+| `<iRevIdxBadReligionMod>Z</iRevIdxBadReligionMod>` | `Z` should be at least -100. Percent modifier for instability from religion. | New in MNAI 2.9.2u |
+| `<iRevIdxGoodReligionMod>Z</iRevIdxGoodReligionMod>` | `Z` should be at least -100. Percent modifier for stability from religion. | New in MNAI 2.9.2u |
+| `<iRevIdxNationalityMod>Z</iRevIdxNationalityMod>` | `Z` should be at least -100. Percent modifier for stability and instability from nationality. | New in MNAI 2.9.2u |
+| `<iRevIdxGarrisonMod>Z</iRevIdxGarrisonMod>` | `Z` should be at least -100. Percent modifier for stability and instability from garrison. | New in MNAI 2.9.2u |
+| `<iRevIdxGarrisonCapChange>Z</iRevIdxGarrisonCapChange>` | Changes the maximum stability/turn that can be gained from garrison. | New in MNAI 2.9.2u |
+| `<iRevIdxDisorderMod>Z</iRevIdxDisorderMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | New in MNAI 2.9.2u |
+| `<iRevIdxCrimeMod>Z</iRevIdxCrimeMod>` | `Z` should be at least -100. Percent modifier for stability and instability from crime. | New in MNAI 2.9.2u |
+| `<iRevIdxCultureRateMod>Z</iRevIdxCultureRateMod>` | `Z` should be at least -100. Percent modifier for stability from culture rate. | New in MNAI 2.9.2u |
+| `<iRevIdxCultureRateCapChange>Z</iRevIdxCultureRateCapChange>` | Changes the maximum stability/turn that can be gained from culture rate. | New in MNAI 2.9.2u |
 
 
 Sources (other than the code itself):
