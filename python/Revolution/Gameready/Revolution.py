@@ -1001,6 +1001,8 @@ class Revolution :
 		Always cities' LocalRevIdx (i.e., per turn). Adjusts RevIdx (total) if out of bounds.
 		If not bNoApply, apply rev idx per current turn, and update history.
 		"""
+		# LFGR_TODO: if bNoApply, this only updates LocalRevIndex [per turn]. Probably can still cause OOS errors, and
+		#  may not even be useful.
 		# LFGR_TODO: This is currently used in updateCityScreen(). This will probably cause OOS errors
 
 		# Includes some "Lemmy101 RevolutionMP edit"s
@@ -1050,15 +1052,16 @@ class Revolution :
 
 			### MAIN COMPUTATION
 			# Fill history (LFGR_TODO: Not if bNotApply?)
-			revIdxHist['Happiness'] = [pCityHelper.computeHappinessRevIdx()] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Location'] = [pCityHelper.computeLocationRevIdx()] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1] # TODO: Remove
-			revIdxHist['Religion'] = [pCityHelper.computeReligionRevIdx()] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Nationality'] = [pCityHelper.computeNationalityRevIdx()] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO
-			revIdxHist['Garrison'] = [pCityHelper.computeGarrisonRevIdx()] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
-			revIdxHist['Disorder'] = [pCityHelper.computeDisorderRevIdx()] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
-			iCrimeIdx = pCityHelper.computeCrimeRevIdx() # LFGR_TODO: History?
+			if not bNoApply :
+				revIdxHist['Happiness'] = [pCityHelper.computeHappinessRevIdx()] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
+				revIdxHist['Location'] = [pCityHelper.computeLocationRevIdx()] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
+				revIdxHist['Colony'] = [0] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1] # TODO: Remove
+				revIdxHist['Religion'] = [pCityHelper.computeReligionRevIdx()] + revIdxHist['Religion'][0:RevDefs.revIdxHistLen-1]
+				revIdxHist['Nationality'] = [pCityHelper.computeNationalityRevIdx()] + revIdxHist['Nationality'][0:RevDefs.revIdxHistLen-1]
+				revIdxHist['Health'] = [0] + revIdxHist['Health'][0:RevDefs.revIdxHistLen-1] # LFGR_TODO
+				revIdxHist['Garrison'] = [pCityHelper.computeGarrisonRevIdx()] + revIdxHist['Garrison'][0:RevDefs.revIdxHistLen-1]
+				revIdxHist['Disorder'] = [pCityHelper.computeDisorderRevIdx()] + revIdxHist['Disorder'][0:RevDefs.revIdxHistLen-1]
+				iCrimeIdx = pCityHelper.computeCrimeRevIdx() # LFGR_TODO: History?
 
 			# lfgr note: This includes feedback. Before, feedback was left out of LocalRevIdx
 			iLocalRevIdx = pCityHelper.computeRevIdx()
@@ -1066,18 +1069,18 @@ class Revolution :
 			# Update local RevIndex whenever called
 			pCity.setLocalRevIndex( iLocalRevIdx )
 
-			# Change revolution indices based on local effects
-			pCity.changeRevolutionIndex( iLocalRevIdx )
-			pCity.updateRevIndexAverage()
-
-			RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
-
-			# LFGR_TODO: Not if bNoApply?
-			# Incase interturn stuff set out of range
-			if pCity.getRevolutionIndex() < 0 :
-				pCity.setRevolutionIndex( 0 )
-			elif pCity.getRevolutionIndex() > 2*self.alwaysViolentThreshold :
-				pCity.setRevolutionIndex( 2*self.alwaysViolentThreshold )
+			if not bNoApply :
+				# Change revolution indices based on local effects
+				pCity.changeRevolutionIndex( iLocalRevIdx )
+				pCity.updateRevIndexAverage()
+	
+				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
+	
+				# Incase interturn stuff set out of range
+				if pCity.getRevolutionIndex() < 0 :
+					pCity.setRevolutionIndex( 0 )
+				elif pCity.getRevolutionIndex() > 2*self.alwaysViolentThreshold :
+					pCity.setRevolutionIndex( 2*self.alwaysViolentThreshold )
 
 	# LFGR_TODO: CyPlayer.changeStabilityIndex() and CyPlayer.updateStabilityIndexAverage() are now (almost) unused
 
