@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.9.2-1u
+
+### Bugfixes
+* Fixed Escape spell and let AI use it properly (thanks to Alekseyev_, Magister Cultuum)
+* Stop applying revolution effects when changing production in a city (thanks to Xirema)
+
 ## 2.9.2u
 
 ### Gameplay
