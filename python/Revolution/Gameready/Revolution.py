@@ -5125,6 +5125,7 @@ class Revolution :
 
 ##--- Revolutionary spawning functions ---------------------------------------
 
+	# lfgr: Cleanup
 	def prepareRevolution( self, pPlayer, iRevoltIdx, cityList, pRevPlayer, bIsJoinWar = False, switchToRevs = False ) :
 		# Store revolution data, so rev starts with new civs turn
 		cityIDList = list()
@@ -5136,14 +5137,14 @@ class Revolution :
 		spawnList.append([pPlayer.getID(), iRevoltIdx])
 		RevData.revObjectSetVal( pRevPlayer, 'SpawnList', spawnList )
 
-		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Stored revolt spawn data for rev player %d, revolt against player %d idx %d"%(pRevPlayer.getID(),pPlayer.getID(),iRevoltIdx))
+		if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Stored revolt spawn data for rev player %d, revolt against player %d idx %d" % (pRevPlayer.getID(), pPlayer.getID(), iRevoltIdx) )
 
-		if( self.isLocalHumanPlayer(pPlayer.getID()) and (game.getAIAutoPlay(game.getActivePlayer()) == 0 )):
+		if self.isLocalHumanPlayer( pPlayer.getID() ) and game.getAIAutoPlay( game.getActivePlayer() ) == 0 :
 			# Threatening popup to remind player what's coming
 
 			bodStr = getCityTextList(cityList, bPreCity = True, bPostIs = True) + ' '
 
-			if( pRevPlayer.isAlive() ) :
+			if pRevPlayer.isAlive() :
 				bodStr += localText.getText("TXT_KEY_REV_JOINING_WAR",())%(pRevPlayer.getCivilizationDescription(0))
 			else :
 				bodStr += localText.getText("TXT_KEY_REV_PREPARING_WAR",())
@@ -5170,46 +5171,35 @@ class Revolution :
 					iDamage = min([iDamage,90])
 					iDamage = max([iDamage,iPreDamage])
 					unit.setDamage( iDamage, pRevPlayer.getID() )
+					# LFGR_TODO: Don't injure heroes?
 
-		# pRevTeam = gc.getTeam( pRevPlayer.getTeam() )
-		# if( not pRevTeam.isAtWar(pPlayer.getTeam()) ) :
-			# pRevTeam.declareWar( pPlayer.getTeam(), True, WarPlanTypes.NO_WARPLAN )
-			# if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - The %s revolutionaries declare war on the %s!"%(pRevPlayer.getCivilizationAdjective(0),pPlayer.getCivilizationDescription(0)))
-
-
+	# lfgr: cleanup
 	def launchRevolution( self, iRevPlayer ) :
 
 		pRevPlayer = gc.getPlayer( iRevPlayer )
 
-		if( not RevData.revObjectExists(pRevPlayer) ) :
-			print "Error: Launch revolution called for player %d with no rev instance"%(iRevPlayer)
-			assert( False )
-
 		spawnList = RevData.revObjectGetVal( pRevPlayer, 'SpawnList' )
+		assert spawnList is not None and len( spawnList ) > 0, "Error:  Launch revolution called for player %d with no rev data"%(iRevPlayer)
+
 		newSpawnList = list()
 
-		if( spawnList == None or len(spawnList) == 0 ) :
-			print "Error:  Launch revolution called for player %d with no rev data"%(iRevPlayer)
-			assert( False )
-
 		for [iPlayer,iRevoltIdx] in spawnList :
-
 			pPlayer = gc.getPlayer(iPlayer)
 
-			if( not pPlayer.isAlive() ) :
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - WARNING!  Player %d is dead, revolt %d canceled"%(iPlayer,iRevoltIdx))
+			if not pPlayer.isAlive() :
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - WARNING!  Player %d is dead, revolt %d canceled" % (iPlayer, iRevoltIdx) )
 				continue
 
 			try :
 				revoltData = RevData.revObjectGetVal(pPlayer, 'RevoltDict')[iRevoltIdx]
 			except KeyError :
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Error! Player %d does not have a revolt of index %d"%(iPlayer,iRevoltIdx))
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Error! Player %d does not have a revolt of index %d" % (iPlayer, iRevoltIdx) )
 				continue
 
-			if( revoltData.iRevTurn <= game.getGameTurn() ) :
+			if revoltData.iRevTurn <= game.getGameTurn() :
 				# It's on!  Spawn revolutionaries
-				if( not revoltData.dict.get('iRevPlayer',-1) == pRevPlayer.getID() ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Error! pRevPlayer %d does not match revolt data iRevPlayer %d"%(pRevPlayer.getID(),revoltData.dict.get('iRevPlayer',-1)))
+				if revoltData.dict.get( 'iRevPlayer', -1 ) == pRevPlayer.getID() :
+					if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Error! pRevPlayer %d does not match revolt data iRevPlayer %d" % (pRevPlayer.getID(), revoltData.dict.get( 'iRevPlayer', -1 )) )
 
 				cityIDList = revoltData.cityList
 				bIsJoinWar = revoltData.dict.get('bIsJoinWar',False)
@@ -5220,9 +5210,9 @@ class Revolution :
 					try :
 						cityList.append( pPlayer.getCity(iCity) )
 					except :
-						print "Error:  Couldn't find city #%d"%(iCity)
+						print "Error:  Couldn't find city #%d"%(iCity) # LFGR_TODO: This can happen sometimes, right?
 
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Found launchable revolt spawn data for player %d, starting spawn against player %d idx %d"%(pRevPlayer.getID(),iPlayer,iRevoltIdx))
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Found launchable revolt spawn data for player %d, starting spawn against player %d idx %d" % (pRevPlayer.getID(), iPlayer, iRevoltIdx) )
 
 				self.spawnRevolutionaries( cityList, pPlayer, pRevPlayer, bIsJoinWar, switchToRevs )
 
@@ -5231,14 +5221,14 @@ class Revolution :
 
 		RevData.revObjectSetVal( pRevPlayer, 'SpawnList', newSpawnList )
 
+	# lfgr: cleanup
 	def spawnRevolutionaries( self, cityList, pPlayer, pRevPlayer, bIsJoinWar = False, switchToRevs = False ) :
 
-		if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Spawning revolutionaries for %d cities in %s"%(len(cityList),pPlayer.getCivilizationDescription(0)))
+		if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Spawning revolutionaries for %d cities in %s" % (len( cityList ), pPlayer.getCivilizationDescription( 0 )) )
 
-		if( self.LOG_DEBUG ) :
-			if( pPlayer.isBarbarian() ) :
-				print "Error: attempted spawning of revs for barb player"
-				return
+		if pPlayer.isBarbarian() :
+			if self.LOG_DEBUG : print "Error: attempted spawning of revs for barb player"
+			return
 
 		# Enable only for debugging revolts
 		if( False ) :
@@ -5266,46 +5256,20 @@ class Revolution :
 
 		cityList = newCityList
 
-		# Order by rev index after instigator
-		if( len(cityList) > 2 ) :
-			revIdxCityList = list()
-			for pCity in cityList[1:] :
-				revIdx = pCity.getRevolutionIndex()
-#-------------------------------------------------------------------------------------------------
-# Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-				revIdxCityList.append( pCity )
-
-			revIdxCityList.sort(key=lambda i: (i.getRevolutionIndex(), i.getName()))
-#-------------------------------------------------------------------------------------------------
-# END Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-			revIdxCityList.reverse()
-
-			newCityList = list()
-			# Start with instigator
-			newCityList.append(cityList[0])
-			for cityEntry in revIdxCityList :
-#-------------------------------------------------------------------------------------------------
-# Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-				newCityList.append(cityEntry)
-#-------------------------------------------------------------------------------------------------
-# END Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-
-			cityList = newCityList
-
-		if( len(cityList) == 0 ) :
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - WARNING: Revolt cancelled cause no cities in updated list!")
+		if len( cityList ) == 0 :
+			if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - WARNING: Revolt cancelled cause no cities in updated list!" )
 			return
-		else :
-			cityString = ''
-			for pCity in cityList :
-				cityString += pCity.getName() + ', '
-			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Cities in revolt: " + cityString )
 
-		if( not bIsBarbRev and switchToRevs == True ) :
+		# Order by rev index after instigator
+		if len( cityList ) > 2 :
+			revIdxCityList = cityList[1:]
+			revIdxCityList.sort(key=lambda i: (-i.getRevolutionIndex(), i.getName()))
+			cityList = cityList[0] + revIdxCityList
+
+		if self.LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Cities in revolt: " + ", ".join( pCity.getName() for pCity in cityList ) )
+
+		# Possibly switch human to rebels
+		if not bIsBarbRev and switchToRevs == True :
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
@@ -5315,59 +5279,54 @@ class Revolution :
 # END Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
 
-		if( not bIsBarbRev and not bIsJoinWar and pRevPlayer.getNumCities() < 4 ) :
+		# Some bookkeeping
+		if not bIsBarbRev and not bIsJoinWar and pRevPlayer.getNumCities() < 4 :
 			# Record rev turn for this player
 			RevData.initPlayer( pRevPlayer )
 			RevData.revObjectSetVal( pRevPlayer, 'RevolutionTurn', game.getGameTurn() )
 
-			if( len(cityList) < 3 ) :
-				# try :
-					# cityString = str(cityList[0].getName())
-				# except [UnicodeDecodeError,UnicodeEncodeError] :
-					# cityString = None
-				cityString = CvUtil.convertToStr(cityList[0].getName())
-			else :
-				cityString = None
-
-			if( not pRevPlayer.isAlive() ) :
+			# LFGR_TODO: Check what exactly is happening here
+			if not pRevPlayer.isAlive() :
+				if len( cityList ) < 3 :
+					cityString = CvUtil.convertToStr(cityList[0].getName())
+				else :
+					cityString = None
 				RevData.revObjectSetVal( pRevPlayer, 'CapitalName', cityString )
-			if( RevData.revObjectGetVal(pRevPlayer, 'MotherlandID') == None ) :
+			if RevData.revObjectGetVal( pRevPlayer, 'MotherlandID' ) is None :
 				RevData.revObjectSetVal( pRevPlayer, 'MotherlandID', pPlayer.getID() )
 
 		bJoinRev = True
-		if( not pRevPlayer.isAlive() and not bIsBarbRev ) :
+		# Possibly create revolutionary player
+		if not pRevPlayer.isAlive() and not bIsBarbRev :
 			# Fires naming logic for new civ, so messages get the right name
-			if( True ) :
-				# Must call setNewPlayerAlive to avoid having DLL set this player alive with setPlayerAlive which calls its turn and the turns of all players with higher numbers
-				# Instead, this way makes it alive so it takes its next turn in turn
 
-				# Add replay message
-				mess = localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + '!'
-				mess += "  " + localText.getText("TXT_KEY_REV_MESS_RISEN",(pRevPlayer.getCivilizationDescription(0), pRevPlayer.getNameKey()))
-				game.addReplayMessage( ReplayMessageTypes.REPLAY_MESSAGE_MAJOR_EVENT, pRevPlayer.getID(), mess, cityList[0].getX(), cityList[0].getY(), gc.getInfoTypeForString("COLOR_WARNING_TEXT"))
+			# Must call setNewPlayerAlive to avoid having DLL set this player alive with setPlayerAlive which calls its turn and the turns of all players with higher numbers
+			# Instead, this way makes it alive so it takes its next turn in turn
 
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player alive")
-				pRevPlayer.setIsRebel( True )
-				if( SdToolKitCustom.sdObjectExists( 'BarbarianCiv', pPlayer ) and not RevInstances.BarbarianCivInst == None ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player as barb civ since motherland is")
-					RevInstances.BarbarianCivInst.setupSavedData( pRevPlayer.getID(), bSetupComplete = 1 )
-				if( pPlayer.isMinorCiv() ) :
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player as minor civ since motherland is")
-					pRevTeam.setIsMinorCiv( True, False )
-					if( SdToolKitCustom.sdObjectExists( 'BarbarianCiv', game ) ) :
-						# If motherland is on always minor list, put rebel on as well
-						alwaysMinorList = SdToolKitCustom.sdObjectGetVal( "BarbarianCiv", game, "AlwaysMinorList" )
-						if( not alwaysMinorList == None and pPlayer.getID() in alwaysMinorList ) :
-							alwaysMinorList.append(pRevPlayer.getID())
-							SdToolKitCustom.sdObjectSetVal( "BarbarianCiv", game, "AlwaysMinorList", alwaysMinorList )
-				else :
-					if( pRevPlayer.isMinorCiv() ) :
-						if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - pRevPlayer was minor civ, changing")
-						pRevTeam.setIsMinorCiv( False, False )
-				pRevPlayer.setNewPlayerAlive(True)
+			# Add replay message
+			mess = localText.getText("TXT_KEY_REV_MESS_VIOLENT",()) + ' ' + PyPlayer(pPlayer.getID()).getCivilizationName() + '!'
+			mess += "  " + localText.getText("TXT_KEY_REV_MESS_RISEN",(pRevPlayer.getCivilizationDescription(0), pRevPlayer.getNameKey()))
+			game.addReplayMessage( ReplayMessageTypes.REPLAY_MESSAGE_MAJOR_EVENT, pRevPlayer.getID(), mess, cityList[0].getX(), cityList[0].getY(), gc.getInfoTypeForString("COLOR_WARNING_TEXT"))
 
+			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player alive")
+			pRevPlayer.setIsRebel( True )
+			if( SdToolKitCustom.sdObjectExists( 'BarbarianCiv', pPlayer ) and not RevInstances.BarbarianCivInst == None ) :
+				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player as barb civ since motherland is")
+				RevInstances.BarbarianCivInst.setupSavedData( pRevPlayer.getID(), bSetupComplete = 1 )
+			if( pPlayer.isMinorCiv() ) :
+				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Setting new rebel player as minor civ since motherland is")
+				pRevTeam.setIsMinorCiv( True, False )
+				if( SdToolKitCustom.sdObjectExists( 'BarbarianCiv', game ) ) :
+					# If motherland is on always minor list, put rebel on as well
+					alwaysMinorList = SdToolKitCustom.sdObjectGetVal( "BarbarianCiv", game, "AlwaysMinorList" )
+					if( not alwaysMinorList == None and pPlayer.getID() in alwaysMinorList ) :
+						alwaysMinorList.append(pRevPlayer.getID())
+						SdToolKitCustom.sdObjectSetVal( "BarbarianCiv", game, "AlwaysMinorList", alwaysMinorList )
 			else :
-				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Not setting new rebel player alive")
+				if( pRevPlayer.isMinorCiv() ) :
+					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - pRevPlayer was minor civ, changing")
+					pRevTeam.setIsMinorCiv( False, False )
+			pRevPlayer.setNewPlayerAlive(True)
 
 			bJoinRev = False
 
@@ -5536,7 +5495,7 @@ class Revolution :
 				# Put them anywhere nearby, this will only fail on single plot islands
 				spawnablePlots = RevUtils.getSpawnablePlots( ix, iy, pRevPlayer, bLand = True, bIncludePlot = False, bIncludeCities = False, bSameArea = True, iRange = 3, iSpawnPlotOwner = -1, bCheckForEnemy = False )
 
-			pCity.setOccupationTimer(0)
+			pCity.setOccupationTimer(0) # LFGR_TODO: ?
 
 			revSpawnLoc = None
 			if( len(spawnablePlots) > 0 ) :
@@ -5576,7 +5535,7 @@ class Revolution :
 
 			iNumUnits = iNumUnits2
 			
-			iNumUnit = iNumUnits * 2
+			iNumUnit = iNumUnits * 2 # LFGR_TODO: typo?
 
 			iNumDefenders = RevUtils.getNumDefendersNearPlot(ix,iy,pPlayer.getID())
 
@@ -5602,9 +5561,8 @@ class Revolution :
 
 			if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revised enlistment: %d, num defenders nearby: %d"%(iNumUnits,iNumDefenders))
 
+			# Determine whether revolutionaries take control of the city
 			revControl = False
-			# Determine who controls city, revs or player
-
 			if( iNumUnits == 0 ) :
 				# No actual rebels for this city, just disorder
 				revControl = False
@@ -5620,7 +5578,7 @@ class Revolution :
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No where to spawn rebels, so they get city")
 				revControl = True
 			elif( True ) :
-				# Config option
+				# Config option (LFGR_TODO)
 				revControl = False
 			else :
 				# Compare strength of revolution and garrison
