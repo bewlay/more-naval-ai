@@ -176,3 +176,9 @@ def changeCityVal(pCity, var, delta):
 		return revObjectChangeVal( pCity, var, delta )
 
 	return success
+
+def getRevolutionPlayer( pCity ) :
+	return getCityVal( pCity, "RevolutionPlayer" )
+
+def setRevolutionPlayer( pCity, ePlayer ) :
+	setCityVal( pCity, "RevolutionPlayer", ePlayer )

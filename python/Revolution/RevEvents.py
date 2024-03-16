@@ -212,9 +212,8 @@ def onSetPlayerAlive( argsList ) :
 
 				for city in cityList :
 					pCity = city.GetCy()
-					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
 					revTurn = RevData.getCityVal( pCity, "RevolutionTurn" )
-					if( revCiv == pPlayer.getCivilizationType() and revTurn > 0 ) :
+					if( RevData.getRevolutionPlayer( pCity ) == iPlayerID and revTurn > 0 ) :
 						if( LOG_DEBUG ) : CvUtil.pyPrint("Rev - The dying %s are the rebel type for %s"%(pPlayer.getCivilizationDescription(0),pCity.getName()))
 						if( gc.getTeam(pPlayer.getTeam()).isAtWar(pCity.getOwner()) ) :
 							revIdx = pCity.getRevolutionIndex()
@@ -327,20 +326,20 @@ def onChangeWar( argsList ):
 		if( not bIsWar ) :
 			# Check if this is peaceful end to a revolution
 			onTeamList = list()
-			onTeamCivs = list()
+			onTeamIds = set()
 			onRivalTeamList = list()
-			onRivalTeamCivs = list()
+			onRivaLTeamIds = set()
 			for i in range(0,gc.getMAX_CIV_PLAYERS()) :
 				pPlayer = gc.getPlayer(i)
 				if( pPlayer.getTeam() == iTeam and pPlayer.isAlive() ) :
 					# On team declaring peace
 					onTeamList.append(pPlayer)
-					onTeamCivs.append(pPlayer.getCivilizationType())
+					onTeamIds.add( i )
 
 				elif( pPlayer.getTeam() == iRivalTeam and pPlayer.isAlive() ) :
 					# On team accepting peace
 					onRivalTeamList.append(pPlayer)
-					onRivalTeamCivs.append(pPlayer.getCivilizationType())
+					onRivaLTeamIds.add( i )
 
 			# REVOLUTION_ALERTS 03/2021 lfgr
 			szTeamStr = u"/".join( pPlayer.getName() for pPlayer in onTeamList )
@@ -356,8 +355,7 @@ def onChangeWar( argsList ):
 				cityList = playerPy.getCityList()
 				for city in cityList :
 					pCity = city.GetCy()
-					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
-					if( revCiv in onRivalTeamCivs ) :
+					if( RevData.getRevolutionPlayer( pCity ) in onRivaLTeamIds ) :
 						if( not RevData.getCityVal( pCity, "RevolutionTurn" ) == None ) :
 							if( game.getGameTurn() - RevData.getCityVal( pCity, "RevolutionTurn" ) < 30 ) :
 								# City recently rebelled for civ now at peace
@@ -405,8 +403,7 @@ def onChangeWar( argsList ):
 				cityList = playerPy.getCityList()
 				for city in cityList :
 					pCity = city.GetCy()
-					revCiv = RevData.getCityVal( pCity, "RevolutionCiv" )
-					if( revCiv in onTeamCivs ) :
+					if( RevData.getRevolutionPlayer( pCity ) in onTeamIds ) :
 						if( not RevData.getCityVal( pCity, "RevolutionTurn" ) == None ) :
 							if( game.getGameTurn() - RevData.getCityVal( pCity, "RevolutionTurn" ) < 30 ) :
 								# City recently rebelled for civ now at peace
@@ -482,9 +479,9 @@ def onCityAcquired( argsList ):
 		updateRevolutionIndices( argsList )
 
 		# Init city script data (unit spawn counter, rebel player)
-		iRevCiv = RevData.getCityVal(pCity, 'RevolutionCiv')
+		iRevPlayer = RevData.getRevolutionPlayer( pCity )
 		RevData.initCity(pCity)
-		RevData.setCityVal( pCity, 'RevolutionCiv', iRevCiv )
+		RevData.setRevolutionPlayer( pCity, iRevPlayer )
 		
 		iTurns = pCity.getOccupationTimer()
 		#if( LOG_DEBUG ) : CvUtil.pyPrint("Revolt - Occupations timer is currently %d"%(iTurns))
@@ -515,7 +512,7 @@ def checkRebelBonuses( argsList ) :
 					cultOwner = gc.getPlayer( pCity.findHighestCulture() )
 					#if( LOG_DEBUG ) : CvUtil.pyPrint("Revolt - City %s culturally dominated by %s!"%(pCity.getName(),cultOwner.getCivilizationDescription(0)))
 
-		elif( newOwnerCiv == RevData.getCityVal(pCity, 'RevolutionCiv') ) :
+		elif newOwnerID == RevData.getRevolutionPlayer( pCity ):
 
 			# TODO: Check whether revolt is active in RevoltData
 			if( (pCity.getReinforcementCounter() > 0 or (pCity.unhappyLevel(0) - pCity.happyLevel()) > 0) ) :
@@ -694,7 +691,7 @@ def updateRevolutionIndices( argsList ) :
 				changeRevIdx -= 25
 		
 		
-		if( newOwner.isRebel() and newOwnerCiv == RevData.getCityVal(pCity, 'RevolutionCiv') ) :
+		if( newOwner.isRebel() and newOwnerID == RevData.getRevolutionPlayer( pCity ) ) :
 			changeRevIdx -= 50
 			newRevIdx -= 200
 		elif( newOwnerID == pCity.getOriginalOwner() ) :
@@ -753,7 +750,7 @@ def updateRevolutionIndices( argsList ) :
 			for listCity in PyPlayer( oldOwnerID ).getCityList() :
 				pListCity = listCity.GetCy()
 				reinfCount = pListCity.getReinforcementCounter()
-				if( reinfCount > 2 and RevData.getCityVal(pListCity, 'RevolutionCiv') == newOwner.getCivilizationType() ) :
+				if( reinfCount > 2 and RevData.getRevolutionPlayer( pListCity ) == newOwnerID ) :
 					if( reinfCount < 5 ) :
 						reinfCount = 2
 					else :
@@ -1021,7 +1018,7 @@ def checkForAssimilation(  ) :
 					if( not motherLandID == None and gc.getTeam(playerI.getTeam()).isAtWar(gc.getPlayer(motherLandID).getTeam()) ) :
 						for city in PyPlayer( motherLandID ).getCityList() :
 							pCity = city.GetCy()
-							if( RevData.getCityVal(pCity, 'RevolutionCiv') == playerI.getCivilizationType() ) :
+							if( RevData.getRevolutionPlayer( pCity ) == idx ) :
 								revTurn = RevData.getCityVal(pCity, 'RevolutionTurn')
 								if( not revTurn == None and game.getGameTurn() - revTurn < 25 ) :
 									# Odds decrease if more rebel cities are uncaptured

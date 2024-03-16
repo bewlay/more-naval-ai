@@ -106,7 +106,7 @@ cityData['PrevRevIndex'] = 0
 cityData['RevIdxHistory'] = None
 # Data about past revolutions
 # TODO: change to list
-cityData['RevolutionCiv'] = None
+cityData['RevolutionPlayer'] = -1 # lfgr 03/2024: Store player instead of civilization type, there might be multiple players with same civ.
 cityData['RevolutionTurn'] = None
 # Counters to control timing for various features
 cityData['WarningCounter'] = 0
