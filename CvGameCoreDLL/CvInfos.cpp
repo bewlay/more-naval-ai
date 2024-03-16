@@ -20966,6 +20966,7 @@ m_bIgnoreFood(false),
 m_bInsane(false),
 m_bSelectable(false),
 m_bSprawling(false),
+m_bAllUnitsFreePromotion(false),
 m_iFreeXPFromCombat(0),
 m_iMaxCities(-1),
 m_iPillagingGold(0),
@@ -21106,6 +21107,10 @@ bool CvTraitInfo::isSprawling() const
 {
 	return m_bSprawling;
 }
+bool CvTraitInfo::isAllUnitsFreePromotion() const
+{
+	return m_bAllUnitsFreePromotion;
+}
 
 int CvTraitInfo::getFreeXPFromCombat() const
 {
@@ -21201,6 +21206,7 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bIgnoreFood, "bIgnoreFood");
 	pXML->GetChildXmlValByName(&m_bInsane, "bInsane");
 	pXML->GetChildXmlValByName(&m_bSelectable, "bSelectable");
+	pXML->GetChildXmlValByName(&m_bAllUnitsFreePromotion, "bAllUnitsFreePromotion");
 	pXML->GetChildXmlValByName(&m_bSprawling, "bSprawling");
 	pXML->GetChildXmlValByName(&m_iFreeXPFromCombat, "iFreeXPFromCombat");
 	pXML->GetChildXmlValByName(&m_iMaxCities, "iMaxCities");

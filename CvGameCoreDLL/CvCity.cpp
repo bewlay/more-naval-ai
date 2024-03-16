@@ -17485,13 +17485,15 @@ void CvCity::applyBuildEffects(CvUnit* pUnit)
 		}
 		if (GC.getCivilizationInfo(getCivilizationType()).getCivTrait() != NO_TRAIT)
 		{
-			for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
+			CvTraitInfo& kTrait = GC.getTraitInfo( ( (TraitTypes) GC.getCivilizationInfo( getCivilizationType() ).getCivTrait() ) );
+
+			for( int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); iPromotion++ )
 			{
-				if (GC.getTraitInfo((TraitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivTrait()).isFreePromotion(iI))
+				if( kTrait.isFreePromotion(iPromotion) )
 				{
-					if ((pUnit->getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivTrait()).isFreePromotionUnitCombat(pUnit->getUnitCombatType()))
+					if( kTrait.isAllUnitsFreePromotion() || ( (pUnit->getUnitCombatType() != NO_UNITCOMBAT) && kTrait.isFreePromotionUnitCombat( pUnit->getUnitCombatType() ) ) )
 					{
-						pUnit->setHasPromotion(((PromotionTypes)iI), true);
+						pUnit->setHasPromotion( (PromotionTypes)iPromotion, true );
 					}
 				}
 			}

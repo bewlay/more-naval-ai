@@ -8033,6 +8033,12 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 		if (bFoundPromotion)
 		{
 			szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_FREE_PROMOTIONS", szTempBuffer.GetCString()));
+			if( kTraitInfo.isAllUnitsFreePromotion() )
+			{
+				szTempBuffer.Format(L"\n        %c", gDLL->getSymbolID(BULLET_CHAR));
+				szHelpString.append( szTempBuffer );
+				szHelpString.append( gDLL->getText("TXT_KEY_TRAIT_FREE_PROMOTIONS_ALL_UNITS" ) );
+			}
 
 			for (iJ = 0; iJ < GC.getNumUnitCombatInfos(); iJ++)
 			{

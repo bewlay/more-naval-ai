@@ -11,6 +11,14 @@ This document contains an overview of new and changed XML tags in MNAI-U. It inc
 | [Revolution tags](#revolution-effect-tags) | Effects applied to the city with this building. | Added in MNAI |
 | `<RevIdxEffectsAllCities> ... </RevIdxEffectsAllCities>` | [Revolution tags](#revolution-effect-tags) that are applied to each city, once for each instance of this building. | Added in MNAI |
 
+### Civilizations/CIV4TraitInfos.xml
+
+#### Tags
+
+| Tag(s) | Description | History |
+| --- | --- | --- |
+| `<bAllUnitsFreePromotion>1</bAllUnitsFreePromotion>` | Add free promotions to *all* units, not just those specified in `<FreePromotionUnitCombats>`. | Added in MNAI |
+
 ### Events/CIV4EventInfos.xml
 
 #### Tags

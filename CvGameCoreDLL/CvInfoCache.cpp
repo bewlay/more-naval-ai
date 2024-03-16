@@ -64,7 +64,8 @@ namespace info_ai {
 		{
 			if (GC.getTraitInfo(eTrait).isFreePromotion(iK))
 			{
-				if (GC.getTraitInfo(eTrait).isFreePromotionUnitCombat(eUnitCombat))
+				if( GC.getTraitInfo( eTrait ).isAllUnitsFreePromotion() ||
+						GC.getTraitInfo(eTrait ).isFreePromotionUnitCombat(eUnitCombat ) )
 				{
 					iTraitMod += 10;
 				}

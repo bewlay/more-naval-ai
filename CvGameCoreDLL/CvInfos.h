@@ -5407,6 +5407,7 @@ public:
     bool isInsane() const;
     bool isSelectable() const;
     bool isSprawling() const;
+	bool isAllUnitsFreePromotion() const;
     int getFreeXPFromCombat() const;
     int getMaxCities() const;
     int getPillagingGold() const;
@@ -5451,6 +5452,7 @@ protected:
 	bool m_bInsane;
 	bool m_bSelectable;
 	bool m_bSprawling;
+	bool m_bAllUnitsFreePromotion;
 	int m_iFreeXPFromCombat;
 	int m_iMaxCities;
 	int m_iPillagingGold;

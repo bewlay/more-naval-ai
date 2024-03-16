@@ -7941,7 +7941,8 @@ int CvPlayerAI::AI_techUnitValue( TechTypes eTech, int iPathLength, bool &bEnabl
 					// account for traits
 					for (int iJ = 0; iJ < GC.getNumTraitInfos(); iJ++)
 					{
-						if ((kLoopUnit.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(kLoopUnit.getUnitCombatType()))
+						if ( GC.getTraitInfo((TraitTypes) iJ).isAllUnitsFreePromotion() ||
+							((kLoopUnit.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(kLoopUnit.getUnitCombatType())))
 						{
 							if (hasTrait((TraitTypes)iJ))
 							{
@@ -26895,7 +26896,8 @@ UnitTypes CvPlayerAI::AI_bestAdvancedStartUnitAI(CvPlot* pPlot, UnitAITypes eUni
 								{
 									if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
 									{
-										if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+										if ( GC.getTraitInfo((TraitTypes) iJ).isAllUnitsFreePromotion() ||
+											((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType())))
 										{
 											iPromotionValue += 15;
 											break;
@@ -29298,7 +29300,8 @@ int CvPlayerAI::AI_trueCombatValue(UnitTypes eUnit) const
 				{
 					if (GC.getPromotionInfo((PromotionTypes)iK).getExtraCombatStr() != 0)
 					{
-						if ((GC.getUnitInfo(eUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes)iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eUnit).getUnitCombatType()))
+						if ( GC.getTraitInfo((TraitTypes) iJ).isAllUnitsFreePromotion() ||
+							((GC.getUnitInfo(eUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eUnit).getUnitCombatType())))
 						{
 							iCombat += GC.getPromotionInfo((PromotionTypes)iK).getExtraCombatStr();
 						}

@@ -4393,7 +4393,8 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 											{
 												if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK) && !GC.getUnitInfo(eLoopUnit).getFreePromotions((PromotionTypes)iK))
 												{
-													if ((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+													if ( GC.getTraitInfo((TraitTypes) iJ).isAllUnitsFreePromotion() ||
+														((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType())))
 													{
 														iPromotionValue += 10;
 														break;
@@ -5199,7 +5200,8 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 											{
 												if (GC.getTraitInfo((TraitTypes) iJ).isFreePromotion(iK))
 												{
-													if ((kUnitInfo.getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType()))
+													if ( GC.getTraitInfo((TraitTypes) iJ).isAllUnitsFreePromotion() ||
+														((GC.getUnitInfo(eLoopUnit).getUnitCombatType() != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iJ).isFreePromotionUnitCombat(GC.getUnitInfo(eLoopUnit).getUnitCombatType())))
 													{
 														iUnitTempValue += 3;
 													}
