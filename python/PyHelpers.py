@@ -12,6 +12,14 @@ def getText( szTag, *args ) :
 	# type: (str, Any) -> unicode
 	return localText.getText( szTag, tuple( args ) )
 
+# lfgr 03/2021: Helper function
+def all( bs ) :
+	# type: ( Iterable[bool] ) -> bool
+	for b in bs :
+		if not b :
+			return False
+	return True
+
 
 # Improved PyHelpers 04/2020 lfgr: Allow calling underlying CyPlayer, CyGame, ... directly
 class AbstractDelegator( object ) :

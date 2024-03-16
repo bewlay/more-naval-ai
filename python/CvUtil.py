@@ -243,11 +243,13 @@ def findInfoTypeNum(infoGetter, numInfos, typeStr):
 	pyAssert( infoGetter( idx ).getType() == typeStr, "Not the right type: %s" %(typeStr,) )
 	return idx
 
-# lfgr 10/2019
+# lfgr 10/2019 - 03/2024
 def findCivilizationNum( sTypeStr ) :
+	# type: (str) -> int
 	return findInfoTypeNum( gc.getCivilizationInfo, gc.getNumCivilizationInfos(), sTypeStr )
 	
 def findLeaderNum( sTypeStr ) :
+	# type: (str) -> int
 	return findInfoTypeNum( gc.getLeaderHeadInfo, gc.getNumLeaderHeadInfos(), sTypeStr )
 # lfgr end
 

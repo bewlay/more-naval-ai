@@ -7,6 +7,7 @@ import Popup as PyPopup
 import CvScreensInterface
 import sys
 import PyHelpers
+from PyHelpers import all
 import CustomFunctions
 import ScenarioFunctions
 
@@ -18,14 +19,6 @@ gc = CyGlobalContext()
 cf = CustomFunctions.CustomFunctions()
 sf = ScenarioFunctions.ScenarioFunctions()
 
-
-# lfgr 03/2021: Helper function
-def all( bs ) :
-	# type: ( Iterable[bool] ) -> bool
-	for b in bs :
-		if not b :
-			return False
-	return True
 
 Blizzards = Blizzards.Blizzards()		#Added in Blizzards: TC01
 
