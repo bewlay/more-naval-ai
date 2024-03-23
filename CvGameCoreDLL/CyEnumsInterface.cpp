@@ -2225,4 +2225,9 @@ void CyEnumsPythonInterface()
 		.value("ADVANCEDSTARTACTION_VISIBILITY", ADVANCEDSTARTACTION_VISIBILITY)
 		.value("ADVANCEDSTARTACTION_AUTOMATE", ADVANCEDSTARTACTION_AUTOMATE)
 		;
+	
+	// lfgr 04/2024
+	python::enum_<DamageTypes>("DamageTypes")
+		.value("NO_DAMAGE", NO_DAMAGE)
+		;
 }

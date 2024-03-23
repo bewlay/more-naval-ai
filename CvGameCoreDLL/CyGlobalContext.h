@@ -236,6 +236,7 @@ public:
 	int getNumMainMenus() const { return GC.getNumMainMenus(); }
 	int getNumInvisibleInfos() const { return GC.getNumInvisibleInfos(); }
 	int getNumVoteSourceInfos() const { return GC.getNumVoteSourceInfos(); }
+	int getNumDamageTypeInfos() const { return GC.getNumDamageTypeInfos(); } // lfgr 04/2024
 
 	// ArtInfos
 	int getNumInterfaceArtInfos() const { return ARTFILEMGR.getNumInterfaceArtInfos(); }
