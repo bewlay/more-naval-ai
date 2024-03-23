@@ -261,10 +261,10 @@ void CyGamePythonInterface()
 		.def("isSpecialBuildingValid", &CyGame::isSpecialBuildingValid)
 		.def("makeSpecialBuildingValid", &CyGame::makeSpecialBuildingValid)
 
-		.def("isNukesValid", &CyGame::isNukesValid, "bool")
+		.def("isNukesValid", &CyGame::isNukesValid, "bool ()")
 		.def("makeNukesValid", &CyGame::makeNukesValid, " void (bool bValid)")
 
-		.def("isInAdvancedStart", &CyGame::isInAdvancedStart, "bool")
+		.def("isInAdvancedStart", &CyGame::isInAdvancedStart, "bool ()")
 
 		// lfgr 05/2023: fixed documentation
 		.def("getHolyCity", &CyGame::getHolyCity, python::return_value_policy<python::manage_new_object>(), "CyCity getHolyCity(int /*ReligionTypes*/ eReligion)")
@@ -328,7 +328,7 @@ void CyGamePythonInterface()
 		.def("changeHumanPlayer", &CyGame::changeHumanPlayer, "void ( int /*PlayerTypes*/ eOldHuman, int /*PlayerTypes*/ eNewHuman )" )
 		.def("addReplayMessage", &CyGame::addReplayMessage, "void (int /*ReplayMessageTypes*/ eType, int /*PlayerTypes*/ ePlayer, std::wstring pszText, int iPlotX, int iPlotY, int /*ColorTypes*/ eColor)" )
 		.def("log", &CyGame::log, "void log(str)")
-		.def("logw", &CyGame::logw, "void log(wstring str)")
+		.def("logw", &CyGame::logw, "void logw(wstring str)")
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
