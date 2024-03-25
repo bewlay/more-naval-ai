@@ -83,10 +83,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_FREE_PROMOTION_PICK</Tag>
-		<English>[ICON_BULLET]Unit starts with %D1 free [NUM1:promotion:promotions]</English>
-		<French>[ICON_BULLET]L'unit&#233; commence avec %D1 [NUM1:promotion:promotions] [NUM1:gratuite:gratuites]</French>
-		<German>[ICON_BULLET]Einheit startet mit %D1 [NUM1:freien:freien] [NUM1:Bef&#246;rderung:Bef&#246;rderungen]</German>
-		<Spanish>[ICON_BULLET]Esta unidad empieza con %D1 [NUM1:promoci&#243;n:promociones] [NUM1:gratuita:gratuitas]</Spanish>
+		<English>[ICON_BULLET]Unit starts with %d1 free [NUM1:promotion:promotions]</English>
+		<French>[ICON_BULLET]L'unit&#233; commence avec %d1 [NUM1:promotion:promotions] [NUM1:gratuite:gratuites]</French>
+		<German>[ICON_BULLET]Einheit startet mit %d1 [NUM1:freien:freien] [NUM1:Bef&#246;rderung:Bef&#246;rderungen]</German>
+		<Spanish>[ICON_BULLET]Esta unidad empieza con %d1 [NUM1:promoci&#243;n:promociones] [NUM1:gratuita:gratuitas]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_GOLD_FROM_COMBAT</Tag>
