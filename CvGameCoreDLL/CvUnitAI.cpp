@@ -3003,7 +3003,7 @@ void CvUnitAI::AI_barbAttackMove()
 	// don't wander aimlessly in Clan territory, please
 	if (bFriendlyTerritory)
 	{
-		if (AI_goToTargetCity(0, 12))
+		if (AI_goToTargetCity(MOVE_THROUGH_ENEMY, 12))
 		{
 			return;
 		}
@@ -3046,7 +3046,7 @@ void CvUnitAI::AI_barbAttackMove()
 			return;
 		}
 
-		if (AI_goToTargetCity(0, 12))
+		if (AI_goToTargetCity(MOVE_THROUGH_ENEMY, 12))
 		{
 			return;
 		}
