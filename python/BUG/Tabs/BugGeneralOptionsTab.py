@@ -30,11 +30,11 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addSpacer(screen, left, "General1")
 		self.createTechSplashPanel(screen, left)
 		self.addSpacer(screen, left, "General2")
-		self.createMiscellaneousPanel(screen, left)
+		self.createAutoSavePanel(screen, left)
 		
-		self.createAutoSavePanel(screen, center)
-		self.addSpacer(screen, center, "General3")
 		self.createActionsPanel(screen, center)
+		self.addSpacer(screen, center, "General3")
+		self.createMiscellaneousPanel(screen, center)
 		
 		self.createInfoPanePanel(screen, right)
 		self.addSpacer(screen, right, "General4")
@@ -54,11 +54,13 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 	def createLeaderheadPanel(self, screen, panel):
 		self.addLabel(screen, panel, "Leaderheads", "Leaderheads:")
 		self.addCheckbox(screen, panel, "MiscHover__LeaderheadHiddenAttitude")
-		self.addCheckbox(screen, panel, "MiscHover__LeaderheadWorstEnemy")
-		self.addCheckbox(screen, panel, "MiscHover__LeaderheadDefensivePacts")
+		# LFGR_TODO: Both these options are apparently not actually implemented anywhere.
+		# self.addCheckbox(screen, panel, "MiscHover__LeaderheadWorstEnemy")
+		# self.addCheckbox(screen, panel, "MiscHover__LeaderheadDefensivePacts")
 		
 	def createAutoSavePanel(self, screen, panel):
 		self.addLabel(screen, panel, "AutoSave", "AutoSave:")
+		# LFGR_TODO: Doesn't seem to work. In any case, there is AutoSave_INITIAL
 		self.addCheckbox(screen, panel, "AutoSave__CreateStartSave")
 		self.addCheckbox(screen, panel, "AutoSave__CreateEndSave")
 		self.addCheckbox(screen, panel, "AutoSave__CreateExitSave")
@@ -67,9 +69,11 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 	def createActionsPanel(self, screen, panel):
 		if(not game.isNetworkMultiPlayer()):
 			self.addLabel(screen, panel, "Actions", "Actions:")
-			self.addCheckbox(screen, panel, "Actions__AskDeclareWarUnits")
-			self.addCheckbox(screen, panel, "Actions__SentryHealing")
-			self.addCheckbox(screen, panel, "Actions__SentryHealingOnlyNeutral", True)
+			# LFGR_TODO: Does not work for unknown reasons. Check CvGame::selectionListMove and CvUnit::getDeclareWarMove
+			# self.addCheckbox(screen, panel, "Actions__AskDeclareWarUnits")
+			# The following two are not used anywhere. LFGR_TODO: Implement? Check other mods?
+			# self.addCheckbox(screen, panel, "Actions__SentryHealing")
+			# self.addCheckbox(screen, panel, "Actions__SentryHealingOnlyNeutral", True)
 			self.addCheckbox(screen, panel, "Actions__PreChopForests")
 			self.addCheckbox(screen, panel, "Actions__PreChopImprovements")
 		
