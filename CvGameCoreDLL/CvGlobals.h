@@ -11,6 +11,9 @@
 // All globals and global types should be contained in this class
 //
 
+// OptDefines 03/2024 lfgr
+#include "CvDefinesCache.h"
+
 class FProfiler;
 class CvDLLUtilityIFaceBase;
 class CvRandom;
@@ -1324,7 +1327,10 @@ protected:
 	int m_iTECH_COST_FIRST_KNOWN_PREREQ_MODIFIER;
 	int m_iTECH_COST_KNOWN_PREREQ_MODIFIER;
 	int m_iTECH_COST_MODIFIER;
-	
+
+// OptDefines 03/2024 lfgr
+public :
+	CvDefinesCache defines;
 };
 
 extern CvGlobals gGlobals;	// for debugging

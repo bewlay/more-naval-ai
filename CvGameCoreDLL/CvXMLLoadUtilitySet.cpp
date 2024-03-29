@@ -160,6 +160,9 @@ bool CvXMLLoadUtility::ReadGlobalDefines(const TCHAR* szXMLFileName, CvCacheObje
 		logMsg("Read GobalDefines from cache");
 	}
 
+	// OptDefines 03/2024 lfgr
+	GC.defines.init();
+
 	return true;
 }
 
