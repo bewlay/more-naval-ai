@@ -1778,11 +1778,11 @@ int CvTeamAI::AI_endWarVal(TeamTypes eTeam) const
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 
 	if (isHuman())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 	}
 	else
 	{
@@ -1837,13 +1837,13 @@ int CvTeamAI::AI_minorKeepWarVal(TeamTypes eTeam) const
 					iPower /= 3;
 				}
 
-				if( GET_TEAM(eTeam).AI_getWarSuccess(getID()) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") || GC.getGameINLINE().getSorenRandNum(AI_maxWarRand()/100, "Keep war on minor") == 0 )
+				if( GET_TEAM(eTeam).AI_getWarSuccess(getID()) > GC.defines.iWAR_SUCCESS_CITY_CAPTURING || GC.getGameINLINE().getSorenRandNum(AI_maxWarRand()/100, "Keep war on minor") == 0 )
 				{
 					if (GET_TEAM(eTeam).getDefensivePower() < ((iPower * AI_maxWarNearbyPowerRatio()) / 100))
 					{
 						int iNoWarRoll = GC.getGameINLINE().getSorenRandNum(100, "AI No War") - 20;
 						iNoWarRoll += (bAggressive ? 10 : 0);
-						iNoWarRoll += ((AI_getWarSuccess(eTeam) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING")) ? 10 : 0);
+						iNoWarRoll += ((AI_getWarSuccess(eTeam) > GC.defines.iWAR_SUCCESS_CITY_CAPTURING) ? 10 : 0);
 						iNoWarRoll -= (bIsGetBetterUnits ? 15 : 0);
 						iNoWarRoll = range(iNoWarRoll, 0, 99);
 
@@ -1969,11 +1969,11 @@ int CvTeamAI::AI_techTradeVal(TechTypes eTech, TeamTypes eTeam) const
 	iValue *= std::max(0, (GC.getTechInfo(eTech).getAITradeModifier() + 100));
 	iValue /= 100;
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 
 	if (isHuman())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 	}
 	else
 	{
@@ -2265,11 +2265,11 @@ int CvTeamAI::AI_mapTradeVal(TeamTypes eTeam) const
 		iValue /= 2;
 	}
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 
 	if (isHuman())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 	}
 	else
 	{
@@ -2734,7 +2734,7 @@ DenialTypes CvTeamAI::AI_surrenderTrade(TeamTypes eTeam, int iPowerMultiplier) c
 /* Diplomacy AI                                                                                 */
 /************************************************************************************************/
 /* original BTS code
-		if (AI_getWarSuccess(eTeam) + 4 * GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") > GET_TEAM(eTeam).AI_getWarSuccess(getID()))
+		if (AI_getWarSuccess(eTeam) + 4 * GC.defines.iWAR_SUCCESS_CITY_CAPTURING > GET_TEAM(eTeam).AI_getWarSuccess(getID()))
 		{
 			return DENIAL_JOKING;
 		}
@@ -2863,7 +2863,7 @@ int CvTeamAI::AI_getWarSuccessRating() const
 			iMilitaryUnits += kLoopPlayer.getNumMilitaryUnits();
 		}
 	}
-	int iSuccessScale = iMilitaryUnits * GC.getDefineINT("WAR_SUCCESS_ATTACKING") / 5;
+	int iSuccessScale = iMilitaryUnits * GC.defines.iWAR_SUCCESS_ATTACKING / 5;
 
 	int iThisTeamPower = getPower(true);
 	int iScore = 0;
@@ -3177,7 +3177,7 @@ bool CvTeamAI::AI_acceptSurrender( TeamTypes eSurrenderTeam )
 			{
 				if (isAtWar((TeamTypes)iI))
 				{
-					if( GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > 5*GC.getDefineINT("WAR_SUCCESS_ATTACKING") )
+					if( GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > 5*GC.defines.iWAR_SUCCESS_ATTACKING )
 					{
 						iWarCount++;
 					}
@@ -3451,11 +3451,11 @@ int CvTeamAI::AI_makePeaceTradeVal(TeamTypes ePeaceTeam, TeamTypes eTeam) const
 	iValue *= 40;
 	iValue /= (GET_TEAM(eTeam).AI_getAtWarCounter(ePeaceTeam) + 10);
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 
 	if (isHuman())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 	}
 	else
 	{
@@ -3662,7 +3662,7 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 	iValue *= 60 + (140 * GC.getGameINLINE().getGameTurn()) / std::max(1, GC.getGameINLINE().getEstimateEndTurn());
 	iValue /= 100;
 
-	iValue -= (iValue % GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+	iValue -= (iValue % GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 
 /*************************************************************************************************/
 /** Advanced Diplomacy       START                                                  			 */
@@ -3678,7 +3678,7 @@ int CvTeamAI::AI_declareWarTradeVal(TeamTypes eWarTeam, TeamTypes eTeam) const
 
 	if (isHuman())
 	{
-		return std::max(iValue, GC.getDefineINT("DIPLOMACY_VALUE_REMAINDER"));
+		return std::max(iValue, GC.defines.iDIPLOMACY_VALUE_REMAINDER);
 	}
 	else
 	{
@@ -5797,7 +5797,7 @@ void CvTeamAI::AI_doWar()
 										if( AI_getAtWarCounter((TeamTypes)iI) > std::max(10, (14 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getVictoryDelayPercent())/100) )
 										{
 											// If nothing is happening in war
-											if( AI_getWarSuccess((TeamTypes)iI) + GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) < 2*GC.getDefineINT("WAR_SUCCESS_ATTACKING") )
+											if( AI_getWarSuccess((TeamTypes)iI) + GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) < 2*GC.defines.iWAR_SUCCESS_ATTACKING )
 											{
 												if( (GC.getGameINLINE().getSorenRandNum(8, "AI Make Peace 1") == 0) )
 												{

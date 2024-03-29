@@ -721,12 +721,12 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 	FAssert((iAttackerStrength + iDefenderStrength) > 0);
 	FAssert((iAttackerFirepower + iDefenderFirepower) > 0);
 
-	iDefenderOdds = ((GC.getDefineINT("COMBAT_DIE_SIDES") * iDefenderStrength) / (iAttackerStrength + iDefenderStrength));
+	iDefenderOdds = ((GC.defines.iCOMBAT_DIE_SIDES * iDefenderStrength) / (iAttackerStrength + iDefenderStrength));
 	if (iDefenderOdds == 0)
 	{
 		return 1000;
 	}
-	iAttackerOdds = GC.getDefineINT("COMBAT_DIE_SIDES") - iDefenderOdds;
+	iAttackerOdds = GC.defines.iCOMBAT_DIE_SIDES - iDefenderOdds;
 	if (iAttackerOdds == 0)
 	{
 		return 0;
@@ -737,8 +737,8 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 	// calculate damage done in one round
 	//////
 
-	iDamageToAttacker = std::max(1,((GC.getDefineINT("COMBAT_DAMAGE") * (iDefenderFirepower + iStrengthFactor)) / (iAttackerFirepower + iStrengthFactor)));
-	iDamageToDefender = std::max(1,((GC.getDefineINT("COMBAT_DAMAGE") * (iAttackerFirepower + iStrengthFactor)) / (iDefenderFirepower + iStrengthFactor)));
+	iDamageToAttacker = std::max(1,((GC.defines.iCOMBAT_DAMAGE * (iDefenderFirepower + iStrengthFactor)) / (iAttackerFirepower + iStrengthFactor)));
+	iDamageToDefender = std::max(1,((GC.defines.iCOMBAT_DAMAGE * (iAttackerFirepower + iStrengthFactor)) / (iDefenderFirepower + iStrengthFactor)));
 
 	// calculate needed rounds.
 	// Needed rounds = round_up(health/damage)
@@ -794,7 +794,7 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 					// this needs to be in floating point math
 					//////
 
-					fOddsEvent = ((float)getBinomialCoefficient(iFirstStrikes, iI3)) * pow((((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES")), iI3) * pow((1.0f - (((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES"))), (iFirstStrikes - iI3));
+					fOddsEvent = ((float)getBinomialCoefficient(iFirstStrikes, iI3)) * pow((((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES), iI3) * pow((1.0f - (((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES)), (iFirstStrikes - iI3));
 
 					// calculate chance assuming iI3 first strike hits: fOddsAfterEvent
 					//////
@@ -819,7 +819,7 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 							// this needs to be in floating point math
 							//////
 
-							fOddsAfterEvent += ((float)getBinomialCoefficient((iMaxRounds - iI3), iI4)) * pow((((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES")), iI4) * pow((1.0f - (((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES"))), ((iMaxRounds - iI3) - iI4));
+							fOddsAfterEvent += ((float)getBinomialCoefficient((iMaxRounds - iI3), iI4)) * pow((((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES), iI4) * pow((1.0f - (((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES)), ((iMaxRounds - iI3) - iI4));
 						}
 					}
 
@@ -858,7 +858,7 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 						// this needs to be in floating point math
 						//////
 
-						fOddsEvent = ((float)getBinomialCoefficient(iFirstStrikes, iI3)) * pow((((float)iDefenderOdds) / GC.getDefineINT("COMBAT_DIE_SIDES")), iI3) * pow((1.0f - (((float)iDefenderOdds) / GC.getDefineINT("COMBAT_DIE_SIDES"))), (iFirstStrikes - iI3));
+						fOddsEvent = ((float)getBinomialCoefficient(iFirstStrikes, iI3)) * pow((((float)iDefenderOdds) / GC.defines.iCOMBAT_DIE_SIDES), iI3) * pow((1.0f - (((float)iDefenderOdds) / GC.defines.iCOMBAT_DIE_SIDES)), (iFirstStrikes - iI3));
 
 						// calculate chance assuming iI3 first strike hits: fOddsAfterEvent
 						//////
@@ -878,7 +878,7 @@ int getCombatOdds(CvUnit* pAttacker, CvUnit* pDefender)
 							// this needs to be in floating point math
 							//////
 
-							fOddsAfterEvent += ((float)getBinomialCoefficient((iMaxRounds - iI3), iI4)) * pow((((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES")), iI4) * pow((1.0f - (((float)iAttackerOdds) / GC.getDefineINT("COMBAT_DIE_SIDES"))), ((iMaxRounds - iI3) - iI4));
+							fOddsAfterEvent += ((float)getBinomialCoefficient((iMaxRounds - iI3), iI4)) * pow((((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES), iI4) * pow((1.0f - (((float)iAttackerOdds) / GC.defines.iCOMBAT_DIE_SIDES)), ((iMaxRounds - iI3) - iI4));
 						}
 
 						// Multiply these together, round them properly, and add
@@ -940,13 +940,13 @@ float getCombatOddsSpecific(CvUnit* pAttacker, CvUnit* pDefender, int n_A, int n
     iDefenderFirepower = pDefender->currFirepower(pDefender->plot(), pAttacker);
 
     iStrengthFactor = ((iAttackerFirepower + iDefenderFirepower + 1) / 2);
-    iDamageToAttacker = std::max(1,((GC.getDefineINT("COMBAT_DAMAGE") * (iDefenderFirepower + iStrengthFactor)) / (iAttackerFirepower + iStrengthFactor)));
-    iDamageToDefender = std::max(1,((GC.getDefineINT("COMBAT_DAMAGE") * (iAttackerFirepower + iStrengthFactor)) / (iDefenderFirepower + iStrengthFactor)));
+    iDamageToAttacker = std::max(1,((GC.defines.iCOMBAT_DAMAGE * (iDefenderFirepower + iStrengthFactor)) / (iAttackerFirepower + iStrengthFactor)));
+    iDamageToDefender = std::max(1,((GC.defines.iCOMBAT_DAMAGE * (iAttackerFirepower + iStrengthFactor)) / (iDefenderFirepower + iStrengthFactor)));
 
-    iDefenderOdds = ((GC.getDefineINT("COMBAT_DIE_SIDES") * iDefenderStrength) / (iAttackerStrength + iDefenderStrength));
-    iAttackerOdds = GC.getDefineINT("COMBAT_DIE_SIDES") - iDefenderOdds;
+    iDefenderOdds = ((GC.defines.iCOMBAT_DIE_SIDES * iDefenderStrength) / (iAttackerStrength + iDefenderStrength));
+    iAttackerOdds = GC.defines.iCOMBAT_DIE_SIDES - iDefenderOdds;
 
-    if (GC.getDefineINT("ACO_IgnoreBarbFreeWins")==0)
+    if (GC.defines.iACO_IgnoreBarbFreeWins==0)
     {
         if (pDefender->isBarbarian())
         {
@@ -956,8 +956,8 @@ float getCombatOddsSpecific(CvUnit* pAttacker, CvUnit* pDefender, int n_A, int n
                 //attacker is not barb and attacker player has free wins left
                 //I have assumed in the following code only one of the units (attacker and defender) can be a barbarian
 
-                iDefenderOdds = std::min((10 * GC.getDefineINT("COMBAT_DIE_SIDES")) / 100, iDefenderOdds);
-                iAttackerOdds = std::max((90 * GC.getDefineINT("COMBAT_DIE_SIDES")) / 100, iAttackerOdds);
+                iDefenderOdds = std::min((10 * GC.defines.iCOMBAT_DIE_SIDES) / 100, iDefenderOdds);
+                iAttackerOdds = std::max((90 * GC.defines.iCOMBAT_DIE_SIDES) / 100, iAttackerOdds);
             }
         }
         else if (pAttacker->isBarbarian())
@@ -966,8 +966,8 @@ float getCombatOddsSpecific(CvUnit* pAttacker, CvUnit* pDefender, int n_A, int n
             if (!GET_PLAYER(pDefender->getOwnerINLINE()).isBarbarian() && GET_PLAYER(pDefender->getOwnerINLINE()).getWinsVsBarbs() < GC.getHandicapInfo(GET_PLAYER(pDefender->getOwnerINLINE()).getHandicapType()).getFreeWinsVsBarbs())
             {
                 //defender is not barbarian and defender has free wins left and attacker is barbarian
-                iAttackerOdds = std::min((10 * GC.getDefineINT("COMBAT_DIE_SIDES")) / 100, iAttackerOdds);
-                iDefenderOdds = std::max((90 * GC.getDefineINT("COMBAT_DIE_SIDES")) / 100, iDefenderOdds);
+                iAttackerOdds = std::min((10 * GC.defines.iCOMBAT_DIE_SIDES) / 100, iAttackerOdds);
+                iDefenderOdds = std::max((90 * GC.defines.iCOMBAT_DIE_SIDES) / 100, iDefenderOdds);
             }
         }
     }
@@ -991,8 +991,8 @@ float getCombatOddsSpecific(CvUnit* pAttacker, CvUnit* pDefender, int n_A, int n
     DefFSC = (pAttacker->immuneToFirstStrikes()) ? 0 : (pDefender->chanceFirstStrikes());
 
 
-    float P_A = (float)iAttackerOdds / GC.getDefineINT("COMBAT_DIE_SIDES");
-    float P_D = (float)iDefenderOdds / GC.getDefineINT("COMBAT_DIE_SIDES");
+    float P_A = (float)iAttackerOdds / GC.defines.iCOMBAT_DIE_SIDES;
+    float P_D = (float)iDefenderOdds / GC.defines.iCOMBAT_DIE_SIDES;
     float answer = 0.0f;
     if (n_A < N_A && n_D == iNeededRoundsAttacker)   // (1) Defender dies or is taken to combat limit
     {
@@ -1143,7 +1143,7 @@ int getEspionageModifier(TeamTypes eOurTeam, TeamTypes eTargetTeam)
 	int iTargetPoints = GET_TEAM(eTargetTeam).getEspionagePointsEver();
 	int iOurPoints = GET_TEAM(eOurTeam).getEspionagePointsEver();
 
-	int iModifier = GC.getDefineINT("ESPIONAGE_SPENDING_MULTIPLIER") * (2 * iTargetPoints + iOurPoints);
+	int iModifier = GC.defines.iESPIONAGE_SPENDING_MULTIPLIER * (2 * iTargetPoints + iOurPoints);
 	iModifier /= std::max(1, iTargetPoints + 2 * iOurPoints);
 	return iModifier;
 }
@@ -2438,7 +2438,7 @@ int baseYieldToSymbol(int iNumYieldTypes, int iYieldStack)
 	int iReturn;	// holds the return value we will be calculating
 
 	// get the base value for the iReturn value
-	iReturn = iNumYieldTypes * GC.getDefineINT("MAX_YIELD_STACK");
+	iReturn = iNumYieldTypes * GC.defines.iMAX_YIELD_STACK;
 	// then add the offset to the return value
 	iReturn += iYieldStack;
 
@@ -2552,7 +2552,7 @@ int getTurnMonthForGame(int iGameTurn, int iStartYear, CalendarTypes eCalendar, 
 		break;
 
 	case CALENDAR_WEEKS:
-		iTurnMonth += iGameTurn / GC.getDefineINT("WEEKS_PER_MONTHS");
+		iTurnMonth += iGameTurn / GC.defines.iWEEKS_PER_MONTHS;
 		break;
 
 	default:

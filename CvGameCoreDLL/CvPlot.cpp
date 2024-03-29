@@ -109,7 +109,7 @@ CvPlot::CvPlot()
 /*************************************************************************************************/
     if (!c_bPirateCoveTypesLoaded)
     {
-        ImprovementTypes ePirateCove = (ImprovementTypes)GC.getDefineINT("PIRATE_COVE_IMPROVEMENT");
+        ImprovementTypes ePirateCove = (ImprovementTypes)GC.defines.iPIRATE_COVE_IMPROVEMENT;
 
         while (ePirateCove != NO_IMPROVEMENT)
         {
@@ -544,7 +544,7 @@ void CvPlot::doTurn()
                 CvArea* pArea = GC.getMapINLINE().getArea(getArea());
                 if (pArea->getNumUnownedTiles() > 0)
                 {
-                    int iTiles = GC.getDefineINT("TILES_PER_SPAWN");
+                    int iTiles = GC.defines.iTILES_PER_SPAWN;
                     if (GC.getUnitInfo((UnitTypes)iUnit).isAnimal())
                     {
                         iTiles *= 2;
@@ -597,7 +597,7 @@ void CvPlot::doTurn()
 								}
 								if (pUnit->isAnimal())
                                 {
-                                    pUnit->setHasPromotion((PromotionTypes)GC.getDefineINT("HIDDEN_NATIONALITY_PROMOTION"), true);
+                                    pUnit->setHasPromotion((PromotionTypes)GC.defines.iHIDDEN_NATIONALITY_PROMOTION, true);
 									pUnit->AI_setUnitAIType(UNITAI_ANIMAL);		
                                 }
 								if (!bDefended)
@@ -612,7 +612,7 @@ void CvPlot::doTurn()
         }
         if (GC.getImprovementInfo(eImprovement).getFeatureUpgrade() != NO_FEATURE)
         {
-            if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
+            if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.defines.iFEATURE_UPGRADE_CHANCE)
             {
                 setFeatureType((FeatureTypes)GC.getImprovementInfo(eImprovement).getFeatureUpgrade());
                 setImprovementType(NO_IMPROVEMENT);
@@ -625,7 +625,7 @@ void CvPlot::doTurn()
 	// Super Forts begin *bombard*
 	if (!isBombarded() && getDefenseDamage() > 0)
 	{
-		changeDefenseDamage(-(GC.getDefineINT("CITY_DEFENSE_DAMAGE_HEAL_RATE")));
+		changeDefenseDamage(-(GC.defines.iCITY_DEFENSE_DAMAGE_HEAL_RATE));
 	}
 	setBombarded(false);
 	// Super Forts end
@@ -952,7 +952,7 @@ void CvPlot::updateFog()
 		}
 		else
 		{
-			int cityScreenFogEnabled = GC.getDefineINT("CITY_SCREEN_FOG_ENABLED");
+			int cityScreenFogEnabled = GC.defines.iCITY_SCREEN_FOG_ENABLED;
 			if (cityScreenFogEnabled && gDLL->getInterfaceIFace()->isCityScreenUp() && (gDLL->getInterfaceIFace()->getHeadSelectedCity() != getWorkingCity()))
 			{
 				gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
@@ -1088,7 +1088,7 @@ void CvPlot::updateSymbols()
 
 	if(maxYield>0)
 	{
-		int maxYieldStack = GC.getDefineINT("MAX_YIELD_STACK");
+		int maxYieldStack = GC.defines.iMAX_YIELD_STACK;
 		int layers = maxYield /maxYieldStack + 1;
 
 		CvSymbol *pSymbol= NULL;
@@ -1330,10 +1330,10 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 					{
 						if (NO_FEATURE == pLoopPlot->getFeatureType() || !GC.getFeatureInfo(pLoopPlot->getFeatureType()).isNukeImmune())
 						{
-							if (GC.getGameINLINE().getSorenRandNum(100, "Nuke Fallout") < GC.getDefineINT("NUKE_FALLOUT_PROB"))
+							if (GC.getGameINLINE().getSorenRandNum(100, "Nuke Fallout") < GC.defines.iNUKE_FALLOUT_PROB)
 							{
 								pLoopPlot->setImprovementType(NO_IMPROVEMENT);
-								pLoopPlot->setFeatureType((FeatureTypes)(GC.getDefineINT("NUKE_FEATURE")));
+								pLoopPlot->setFeatureType((FeatureTypes)(GC.defines.iNUKE_FEATURE));
 							}
 						}
 					}
@@ -1362,7 +1362,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 						{
 							if (!pLoopUnit->isNukeImmune() && !pLoopUnit->isDelayedDeath())
 							{
-								iNukeDamage = (GC.getDefineINT("NUKE_UNIT_DAMAGE_BASE") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_1"), "Nuke Damage 1") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_UNIT_DAMAGE_RAND_2"), "Nuke Damage 2"));
+								iNukeDamage = (GC.defines.iNUKE_UNIT_DAMAGE_BASE + GC.getGameINLINE().getSorenRandNum(GC.defines.iNUKE_UNIT_DAMAGE_RAND_1, "Nuke Damage 1") + GC.getGameINLINE().getSorenRandNum(GC.defines.iNUKE_UNIT_DAMAGE_RAND_2, "Nuke Damage 2"));
 
 								if (pLoopCity != NULL)
 								{
@@ -1374,7 +1374,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 								{
 									pLoopUnit->changeDamage(iNukeDamage, ((pNukeUnit != NULL) ? pNukeUnit->getOwnerINLINE() : NO_PLAYER));
 								}
-								else if (iNukeDamage >= GC.getDefineINT("NUKE_NON_COMBAT_DEATH_THRESHOLD"))
+								else if (iNukeDamage >= GC.defines.iNUKE_NON_COMBAT_DEATH_THRESHOLD)
 								{
 									logBBAI("    Killing %S -- nuke explosion (Unit %d - plot: %d, %d)",
 											pLoopUnit->getName().GetCString(), pLoopUnit->getID(), pLoopUnit->getX(), pLoopUnit->getY());
@@ -1393,7 +1393,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 						{
 							if (!(GC.getBuildingInfo((BuildingTypes) iI).isNukeImmune()))
 							{
-								if (GC.getGameINLINE().getSorenRandNum(100, "Building Nuked") < GC.getDefineINT("NUKE_BUILDING_DESTRUCTION_PROB"))
+								if (GC.getGameINLINE().getSorenRandNum(100, "Building Nuked") < GC.defines.iNUKE_BUILDING_DESTRUCTION_PROB)
 								{
 									pLoopCity->setNumRealBuilding(((BuildingTypes)iI), pLoopCity->getNumRealBuilding((BuildingTypes)iI) - 1);
 								}
@@ -1401,7 +1401,7 @@ void CvPlot::nukeExplosion(int iRange, CvUnit* pNukeUnit)
 						}
 					}
 
-					iNukedPopulation = ((pLoopCity->getPopulation() * (GC.getDefineINT("NUKE_POPULATION_DEATH_BASE") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_POPULATION_DEATH_RAND_1"), "Population Nuked 1") + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("NUKE_POPULATION_DEATH_RAND_2"), "Population Nuked 2"))) / 100);
+					iNukedPopulation = ((pLoopCity->getPopulation() * (GC.defines.iNUKE_POPULATION_DEATH_BASE + GC.getGameINLINE().getSorenRandNum(GC.defines.iNUKE_POPULATION_DEATH_RAND_1, "Population Nuked 1") + GC.getGameINLINE().getSorenRandNum(GC.defines.iNUKE_POPULATION_DEATH_RAND_2, "Population Nuked 2"))) / 100);
 
 					iNukedPopulation *= std::max(0, (pLoopCity->getNukeModifier() + 100));
 					iNukedPopulation /= 100;
@@ -2384,7 +2384,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 				{
 					if (GET_PLAYER(pHolyCity->getOwnerINLINE()).getStateReligion() == iI)
 					{
-						changeAdjacentSight(pHolyCity->getTeam(), GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NO_INVISIBLE);
+						changeAdjacentSight(pHolyCity->getTeam(), GC.defines.iPLOT_VISIBILITY_RANGE, bIncrement, NO_INVISIBLE);
 					}
 				}
 			}
@@ -2403,7 +2403,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
                     {
                         if (GET_PLAYER(pHolyCity->getOwnerINLINE()).getStateReligion() == iI)
                         {
-                            changeAdjacentSight(pHolyCity->getTeam(), GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
+                            changeAdjacentSight(pHolyCity->getTeam(), GC.defines.iPLOT_VISIBILITY_RANGE, bIncrement, NULL, bUpdatePlotGroups);
                         }
                     }
 				}
@@ -2416,7 +2416,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 		{
 			if (GET_TEAM(getTeam()).isVassal((TeamTypes)iI))
 			{
-				changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
+				changeAdjacentSight((TeamTypes)iI, GC.defines.iPLOT_VISIBILITY_RANGE, bIncrement, NULL, bUpdatePlotGroups);
 			}
 		}
 
@@ -2426,7 +2426,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 			if (pCity->getEspionageVisibility((TeamTypes)iI))
 			{
 				// Passive Effect: enough EPs gives you visibility into someone's cities
-				changeAdjacentSight((TeamTypes)iI, GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
+				changeAdjacentSight((TeamTypes)iI, GC.defines.iPLOT_VISIBILITY_RANGE, bIncrement, NULL, bUpdatePlotGroups);
 			}
 		}
 	}
@@ -2434,7 +2434,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 	// Owned
 	if (isOwned())
 	{
-		changeAdjacentSight(getTeam(), GC.getDefineINT("PLOT_VISIBILITY_RANGE"), bIncrement, NULL, bUpdatePlotGroups);
+		changeAdjacentSight(getTeam(), GC.defines.iPLOT_VISIBILITY_RANGE, bIncrement, NULL, bUpdatePlotGroups);
 	}
 
 	pUnitNode = headUnitNode();
@@ -2451,7 +2451,7 @@ void CvPlot::updateSight(bool bIncrement, bool bUpdatePlotGroups)
 
 	if (getReconCount() > 0)
 	{
-		int iRange = GC.getDefineINT("RECON_VISIBILITY_RANGE");
+		int iRange = GC.defines.iRECON_VISIBILITY_RANGE;
 		for (iI = 0; iI < MAX_PLAYERS; ++iI)
 		{
 			for(pLoopUnit = GET_PLAYER((PlayerTypes)iI).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER((PlayerTypes)iI).nextUnit(&iLoop))
@@ -2471,13 +2471,13 @@ void CvPlot::updateSeeFromSight(bool bIncrement, bool bUpdatePlotGroups)
 	CvPlot* pLoopPlot;
 	int iDX, iDY;
 
-	int iRange = GC.getDefineINT("UNIT_VISIBILITY_RANGE") + 1;
+	int iRange = GC.defines.iUNIT_VISIBILITY_RANGE + 1;
 	for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos(); ++iPromotion)
 	{
 		iRange += GC.getPromotionInfo((PromotionTypes)iPromotion).getVisibilityChange();
 	}
 
-	iRange = std::max(GC.getDefineINT("RECON_VISIBILITY_RANGE") + 1, iRange);
+	iRange = std::max(GC.defines.iRECON_VISIBILITY_RANGE + 1, iRange);
 
 	for (iDX = -iRange; iDX <= iRange; iDX++)
 	{
@@ -2585,9 +2585,9 @@ bool CvPlot::canHaveBonus(BonusTypes eBonus, bool bIgnoreLatitude) const
 //FfH: Added by Kael 12/18/2008
     if (isCity())
     {
-        if (GC.getDefineINT("BONUS_MANA") != -1)
+        if (GC.defines.iBONUS_MANA != -1)
         {
-            if (eBonus == GC.getDefineINT("BONUS_MANA"))
+            if (eBonus == GC.defines.iBONUS_MANA)
             {
                 return false;
             }
@@ -3189,12 +3189,12 @@ int CvPlot::getFeatureProduction(BuildTypes eBuild, TeamTypes eTeam, CvCity** pp
 	iProduction *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFeatureProductionPercent();
 	iProduction /= 100;
 
-	iProduction *= std::min((GC.getDefineINT("BASE_FEATURE_PRODUCTION_PERCENT") + (GC.getDefineINT("FEATURE_PRODUCTION_PERCENT_MULTIPLIER") * (*ppCity)->getPopulation())), 100);
+	iProduction *= std::min((GC.defines.iBASE_FEATURE_PRODUCTION_PERCENT + (GC.defines.iFEATURE_PRODUCTION_PERCENT_MULTIPLIER * (*ppCity)->getPopulation())), 100);
 	iProduction /= 100;
 
 	if (getTeam() != eTeam)
 	{
-		iProduction *= GC.getDefineINT("DIFFERENT_TEAM_FEATURE_PRODUCTION_PERCENT");
+		iProduction *= GC.defines.iDIFFERENT_TEAM_FEATURE_PRODUCTION_PERCENT;
 		iProduction /= 100;
 	}
 
@@ -5509,7 +5509,7 @@ int CvPlot::getOwnershipDuration() const
 // Whether this plot is counted as score. True if owner controlled it since OWNERSHIP_SCORE_DURATION_THRESHOLD turns.
 bool CvPlot::isOwnershipScore() const
 {
-	return (getOwnershipDuration() >= GC.getDefineINT("OWNERSHIP_SCORE_DURATION_THRESHOLD"));
+	return (getOwnershipDuration() >= GC.defines.iOWNERSHIP_SCORE_DURATION_THRESHOLD);
 }
 
 
@@ -5960,7 +5960,7 @@ bool CvPlot::isPotentialCityWorkForArea(CvArea* pArea) const
 
 		if (pLoopPlot != NULL)
 		{
-			if (!(pLoopPlot->isWater()) || GC.getDefineINT("WATER_POTENTIAL_CITY_WORK_FOR_AREA"))
+			if (!(pLoopPlot->isWater()) || GC.defines.iWATER_POTENTIAL_CITY_WORK_FOR_AREA)
 			{
 				if (pLoopPlot->area() == pArea)
 				{
@@ -6153,7 +6153,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 
 				if (eBestUnit != NO_UNIT)
 				{
-					iFreeUnits = (GC.getDefineINT("BASE_REVOLT_FREE_UNITS") + ((pNewCity->getHighestPopulation() * GC.getDefineINT("REVOLT_FREE_UNITS_PERCENT")) / 100));
+					iFreeUnits = (GC.defines.iBASE_REVOLT_FREE_UNITS + ((pNewCity->getHighestPopulation() * GC.defines.iREVOLT_FREE_UNITS_PERCENT) / 100));
 
 					for (iI = 0; iI < iFreeUnits; ++iI)
 					{
@@ -6168,7 +6168,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 
 			if (isOwned())
 			{
-				changeAdjacentSight(getTeam(), GC.getDefineINT("PLOT_VISIBILITY_RANGE"), false, NULL, bUpdatePlotGroup);
+				changeAdjacentSight(getTeam(), GC.defines.iPLOT_VISIBILITY_RANGE, false, NULL, bUpdatePlotGroup);
 
 				if (area())
 				{
@@ -6236,7 +6236,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 
 			if (isOwned())
 			{
-				changeAdjacentSight(getTeam(), GC.getDefineINT("PLOT_VISIBILITY_RANGE"), true, NULL, bUpdatePlotGroup);
+				changeAdjacentSight(getTeam(), GC.defines.iPLOT_VISIBILITY_RANGE, true, NULL, bUpdatePlotGroup);
 
 				if (area())
 				{
@@ -6434,16 +6434,16 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 			{
 				if (isAdjacentToLand())
 				{
-					setTerrainType(((TerrainTypes)(GC.getDefineINT("SHALLOW_WATER_TERRAIN"))), bRecalculate, bRebuildGraphics);
+					setTerrainType(((TerrainTypes)(GC.defines.iSHALLOW_WATER_TERRAIN)), bRecalculate, bRebuildGraphics);
 				}
 				else
 				{
-					setTerrainType(((TerrainTypes)(GC.getDefineINT("DEEP_WATER_TERRAIN"))), bRecalculate, bRebuildGraphics);
+					setTerrainType(((TerrainTypes)(GC.defines.iDEEP_WATER_TERRAIN)), bRecalculate, bRebuildGraphics);
 				}
 			}
 			else
 			{
-				setTerrainType(((TerrainTypes)(GC.getDefineINT("LAND_TERRAIN"))), bRecalculate, bRebuildGraphics);
+				setTerrainType(((TerrainTypes)(GC.defines.iLAND_TERRAIN)), bRecalculate, bRebuildGraphics);
 			}
 		}
 
@@ -6463,11 +6463,11 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 						{
 							if (pLoopPlot->isAdjacentToLand())
 							{
-								pLoopPlot->setTerrainType(((TerrainTypes)(GC.getDefineINT("SHALLOW_WATER_TERRAIN"))), bRecalculate, bRebuildGraphics);
+								pLoopPlot->setTerrainType(((TerrainTypes)(GC.defines.iSHALLOW_WATER_TERRAIN)), bRecalculate, bRebuildGraphics);
 							}
 							else
 							{
-								pLoopPlot->setTerrainType(((TerrainTypes)(GC.getDefineINT("DEEP_WATER_TERRAIN"))), bRecalculate, bRebuildGraphics);
+								pLoopPlot->setTerrainType(((TerrainTypes)(GC.defines.iDEEP_WATER_TERRAIN)), bRecalculate, bRebuildGraphics);
 							}
 						}
 					}
@@ -7182,7 +7182,7 @@ void CvPlot::updateCityRoute(bool bUpdatePlotGroup)
 
 		if (eCityRoute == NO_ROUTE)
 		{
-			eCityRoute = ((RouteTypes)(GC.getDefineINT("INITIAL_CITY_ROUTE_TYPE")));
+			eCityRoute = ((RouteTypes)(GC.defines.iINITIAL_CITY_ROUTE_TYPE));
 		}
 
 		setRouteType(eCityRoute, bUpdatePlotGroup);
@@ -7908,7 +7908,7 @@ int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 		{
 			if (iYield >= GET_PLAYER(ePlayer).getExtraYieldThreshold(eYield))
 			{
-				iYield += GC.getDefineINT("EXTRA_YIELD");
+				iYield += GC.defines.iEXTRA_YIELD;
 			}
 		}
 
@@ -10132,10 +10132,10 @@ void CvPlot::doFeature()
 	/* Gamespeed scaling                                                                            */
 	/************************************************************************************************/
 	/* original bts code
-					if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
+					if (GC.getGameINLINE().getSorenRandNum(100, "Feature Upgrade") < GC.defines.iFEATURE_UPGRADE_CHANCE)
 	*/
 					int iOdds = (100 * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFeatureProductionPercent())/100;
-					if (GC.getGameINLINE().getSorenRandNum(iOdds, "Feature Upgrade") < GC.getDefineINT("FEATURE_UPGRADE_CHANCE"))
+					if (GC.getGameINLINE().getSorenRandNum(iOdds, "Feature Upgrade") < GC.defines.iFEATURE_UPGRADE_CHANCE)
 	/************************************************************************************************/
 	/* UNOFFICIAL_PATCH                        END                                                  */
 	/************************************************************************************************/
@@ -10146,11 +10146,11 @@ void CvPlot::doFeature()
 				}
             }
         }
-        if (GC.getDefineINT("FLAMES_FEATURE") != -1  && GC.getDefineINT("FLAMES_SPREAD_EFFECT") != -1)
+        if (GC.defines.iFLAMES_FEATURE != -1  && GC.defines.iFLAMES_SPREAD_EFFECT != -1)
         {
-            if (getFeatureType() == GC.getDefineINT("FLAMES_FEATURE"))
+            if (getFeatureType() == GC.defines.iFLAMES_FEATURE)
             {
-                if (GC.getGameINLINE().getSorenRandNum(100, "Flames Spread") < GC.getDefineINT("FLAMES_SPREAD_CHANCE"))
+                if (GC.getGameINLINE().getSorenRandNum(100, "Flames Spread") < GC.defines.iFLAMES_SPREAD_CHANCE)
                 {
                     CvPlot* pAdjacentPlot;
                     for (int iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
@@ -10164,23 +10164,23 @@ void CvPlot::doFeature()
                                 {
                                     if (pAdjacentPlot->getImprovementType() == NO_IMPROVEMENT)
                                     {
-                                        pAdjacentPlot->setImprovementType((ImprovementTypes)GC.getDefineINT("FLAMES_SPREAD_EFFECT"));
+                                        pAdjacentPlot->setImprovementType((ImprovementTypes)GC.defines.iFLAMES_SPREAD_EFFECT);
                                     }
                                 }
                             }
                         }
                     }
                 }
-                if (!GC.getFeatureInfo((FeatureTypes)GC.getDefineINT("FLAMES_FEATURE")).isTerrain(getTerrainType()))
+                if (!GC.getFeatureInfo((FeatureTypes)GC.defines.iFLAMES_FEATURE).isTerrain(getTerrainType()))
                 {
-                    if (GC.getGameINLINE().getSorenRandNum(100, "Flames Spread") < GC.getDefineINT("FLAMES_EXPIRE_CHANCE"))
+                    if (GC.getGameINLINE().getSorenRandNum(100, "Flames Spread") < GC.defines.iFLAMES_EXPIRE_CHANCE)
                     {
                         setFeatureType(NO_FEATURE);
-                        if (GC.getDefineINT("FLAMES_EXPIRE_EFFECT") != -1)
+                        if (GC.defines.iFLAMES_EXPIRE_EFFECT != -1)
                         {
-                            if (canHaveFeature((FeatureTypes)GC.getDefineINT("FLAMES_EXPIRE_EFFECT")))
+                            if (canHaveFeature((FeatureTypes)GC.defines.iFLAMES_EXPIRE_EFFECT))
                             {
-                                setFeatureType((FeatureTypes)GC.getDefineINT("FLAMES_EXPIRE_EFFECT"), -1);
+                                setFeatureType((FeatureTypes)GC.defines.iFLAMES_EXPIRE_EFFECT, -1);
                             }
                         }
                         if (getFeatureType() == NO_FEATURE)
@@ -10328,7 +10328,7 @@ void CvPlot::doCulture()
 	if(GC.getGameINLINE().isOption(GAMEOPTION_ADVANCED_TACTICS) && eImprovement != NO_IMPROVEMENT)
 	{
 		// Check for a fort culture flip
-		if(GC.getImprovementInfo(eImprovement).isActsAsCity() && (getOwnershipDuration() > GC.getDefineINT("SUPER_FORTS_DURATION_BEFORE_REVOLT")))
+		if(GC.getImprovementInfo(eImprovement).isActsAsCity() && (getOwnershipDuration() > GC.defines.iSUPER_FORTS_DURATION_BEFORE_REVOLT))
 		{
 			eCulturalOwner = calculateCulturalOwner();
 			if(eCulturalOwner != NO_PLAYER)
@@ -10441,10 +10441,10 @@ void CvPlot::doCulture()
 /* Change only applies when Revolution is running                                               */
 /************************************************************************************************/
 /* original code
-							if (pCity->isBarbarian() || (!(GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING)) && (GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || !(pCity->isEverOwned(eCulturalOwner))) && (pCity->getNumRevolts(eCulturalOwner) >= GC.getDefineINT("NUM_WARNING_REVOLTS"))))
+							if (pCity->isBarbarian() || (!(GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING)) && (GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || !(pCity->isEverOwned(eCulturalOwner))) && (pCity->getNumRevolts(eCulturalOwner) >= GC.defines.iNUM_WARNING_REVOLTS)))
 */
 							// Disable classic city flip by culture when Revolution is running
-							if ( (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS)) && (pCity->isBarbarian() || (!(GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING)) && (GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || !(pCity->isEverOwned(eCulturalOwner))) && (pCity->getNumRevolts(eCulturalOwner) >= GC.getDefineINT("NUM_WARNING_REVOLTS")))) )
+							if ( (GC.getGameINLINE().isOption(GAMEOPTION_REVOLUTIONS)) && (pCity->isBarbarian() || (!(GC.getGameINLINE().isOption(GAMEOPTION_NO_CITY_FLIPPING)) && (GC.getGameINLINE().isOption(GAMEOPTION_FLIPPING_AFTER_CONQUEST) || !(pCity->isEverOwned(eCulturalOwner))) && (pCity->getNumRevolts(eCulturalOwner) >= GC.defines.iNUM_WARNING_REVOLTS))) )
 /************************************************************************************************/
 /* REVOLUTION_MOD                          END                                                  */
 /************************************************************************************************/
@@ -10462,7 +10462,7 @@ void CvPlot::doCulture()
 							else
 							{
 								pCity->changeNumRevolts(eCulturalOwner, 1);
-								pCity->changeOccupationTimer(GC.getDefineINT("BASE_REVOLT_OCCUPATION_TURNS") + ((iCityStrength * GC.getDefineINT("REVOLT_OCCUPATION_TURNS_PERCENT")) / 100));
+								pCity->changeOccupationTimer(GC.defines.iBASE_REVOLT_OCCUPATION_TURNS + ((iCityStrength * GC.defines.iREVOLT_OCCUPATION_TURNS_PERCENT) / 100));
 
 								// XXX announce for all seen cities?
 								szBuffer = gDLL->getText("TXT_KEY_MISC_REVOLT_IN_CITY", GET_PLAYER(eCulturalOwner).getCivilizationAdjective(), pCity->getNameKey());
@@ -11275,11 +11275,11 @@ void CvPlot::getVisibleImprovementState(ImprovementTypes& eType, bool& bWorked)
 			{
 				if (isWater())
 				{
-					eType = ((ImprovementTypes)(GC.getDefineINT("WATER_IMPROVEMENT")));
+					eType = ((ImprovementTypes)(GC.defines.iWATER_IMPROVEMENT));
 				}
 				else
 				{
-					eType = ((ImprovementTypes)(GC.getDefineINT("LAND_IMPROVEMENT")));
+					eType = ((ImprovementTypes)(GC.defines.iLAND_IMPROVEMENT));
 				}
 			}
 		}
@@ -11396,7 +11396,7 @@ int CvPlot::calculateMaxYield(YieldTypes eYield) const
 	}
 	if (iExtraYieldThreshold > 0 && iMaxYield > iExtraYieldThreshold)
 	{
-		iMaxYield += GC.getDefineINT("EXTRA_YIELD");
+		iMaxYield += GC.defines.iEXTRA_YIELD;
 	}
 
 	return iMaxYield;
@@ -12099,7 +12099,7 @@ int CvPlot::airUnitSpaceAvailable(TeamTypes eTeam) const
 	}
 	else
 	{
-		iMaxUnits = GC.getDefineINT("CITY_AIR_UNIT_CAPACITY");
+		iMaxUnits = GC.defines.iCITY_AIR_UNIT_CAPACITY;
 	}
 
 	return (iMaxUnits - countNumAirUnits(eTeam));

@@ -58,7 +58,7 @@ void CvDLLWidgetData::parseHelp(CvWStringBuffer &szBuffer, CvWidgetDataStruct &w
 		break;
 
 	case WIDGET_PLOT_LIST_SHIFT:
-		szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CTRL_SHIFT", (GC.getDefineINT("MAX_PLOT_LIST_SIZE") - 1)));
+		szBuffer.assign(gDLL->getText("TXT_KEY_MISC_CTRL_SHIFT", (GC.defines.iMAX_PLOT_LIST_SIZE - 1)));
 		break;
 
 	case WIDGET_CITY_SCROLL:
@@ -732,7 +732,7 @@ bool CvDLLWidgetData::executeAction( CvWidgetDataStruct &widgetDataStruct )
 		break;
 
 	case WIDGET_PLOT_LIST_SHIFT:
-		gDLL->getInterfaceIFace()->changePlotListColumn(widgetDataStruct.m_iData1 * ((gDLL->ctrlKey()) ? (GC.getDefineINT("MAX_PLOT_LIST_SIZE") - 1) : 1));
+		gDLL->getInterfaceIFace()->changePlotListColumn(widgetDataStruct.m_iData1 * ((gDLL->ctrlKey()) ? (GC.defines.iMAX_PLOT_LIST_SIZE - 1) : 1));
 		break;
 
 	case WIDGET_CITY_SCROLL:
@@ -2144,7 +2144,7 @@ void CvDLLWidgetData::parseHurryHelp(CvWidgetDataStruct &widgetDataStruct, CvWSt
 		if (iHurryAngerLength > 0)
 		{
 			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_ANGER_TURNS", GC.getDefineINT("HURRY_POP_ANGER"), (iHurryAngerLength + pHeadSelectedCity->getHurryAngerTimer())));
+			szBuffer.append(gDLL->getText("TXT_KEY_MISC_ANGER_TURNS", GC.defines.iHURRY_POP_ANGER, (iHurryAngerLength + pHeadSelectedCity->getHurryAngerTimer())));
 		}
 
 		if (!(pHeadSelectedCity->isProductionUnit()) && !(pHeadSelectedCity->isProductionBuilding()))
@@ -2217,7 +2217,7 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 			if (iConscriptAngerLength > 0)
 			{
 				szBuffer.append(NEWLINE);
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_ANGER_TURNS", GC.getDefineINT("CONSCRIPT_POP_ANGER"), (iConscriptAngerLength + pHeadSelectedCity->getConscriptAngerTimer())));
+				szBuffer.append(gDLL->getText("TXT_KEY_MISC_ANGER_TURNS", GC.defines.iCONSCRIPT_POP_ANGER, (iConscriptAngerLength + pHeadSelectedCity->getConscriptAngerTimer())));
 			}
 
 			iMinCityPopulation = pHeadSelectedCity->conscriptMinCityPopulation();
@@ -2228,7 +2228,7 @@ void CvDLLWidgetData::parseConscriptHelp(CvWidgetDataStruct &widgetDataStruct, C
 				szBuffer.append(gDLL->getText("TXT_KEY_MISC_MIN_CITY_POP", iMinCityPopulation));
 			}
 
-			iMinCulturePercent = GC.getDefineINT("CONSCRIPT_MIN_CULTURE_PERCENT");
+			iMinCulturePercent = GC.defines.iCONSCRIPT_MIN_CULTURE_PERCENT;
 
 			if (pHeadSelectedCity->plot()->calculateTeamCulturePercent(pHeadSelectedCity->getTeam()) < iMinCulturePercent)
 			{
@@ -3582,7 +3582,7 @@ void CvDLLWidgetData::parseChangeSpecialistHelp(CvWidgetDataStruct &widgetDataSt
 			GAMETEXT.parseSpecialistHelpActual(szBuffer, ((SpecialistTypes)(widgetDataStruct.m_iData1)), pHeadSelectedCity, false, widgetDataStruct.m_iData2);
 // BUG - Specialist Actual Effects - end
 
-			if (widgetDataStruct.m_iData1 != GC.getDefineINT("DEFAULT_SPECIALIST"))
+			if (widgetDataStruct.m_iData1 != GC.defines.iDEFAULT_SPECIALIST)
 			{
 				if (!(GET_PLAYER(pHeadSelectedCity->getOwnerINLINE()).isSpecialistValid((SpecialistTypes)(widgetDataStruct.m_iData1))))
 				{
@@ -5154,7 +5154,7 @@ void CvDLLWidgetData::parseTradeItem(CvWidgetDataStruct &widgetDataStruct, CvWSt
 			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_PERMANENT_ALLIANCE"));
 			break;
 		case TRADE_PEACE_TREATY:
-			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_PEACE_TREATY", GC.getDefineINT("PEACE_TREATY_LENGTH")));
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_PEACE_TREATY", GC.defines.iPEACE_TREATY_LENGTH));
 			break;
 /************************************************************************************************/
 /* Afforess	                  Start		 06/16/10                                               */
@@ -5492,7 +5492,7 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 			int iDesiredCulture = pHeadSelectedCity->plot()->countTotalCulture() - iOwnerCulture;
 			if( iOwnerCulture < iDesiredCulture ) {
 				// LFGR_TODO: Should probably be function, see CvCity::doPlotCulture
-				int iFreeCultureRate = GC.getDefineINT("CITY_FREE_CULTURE_GROWTH_FACTOR");
+				int iFreeCultureRate = GC.defines.iCITY_FREE_CULTURE_GROWTH_FACTOR;
 				int iCultureRate = pHeadSelectedCity->getCommerceRate( COMMERCE_CULTURE );
 				int iCulturePerTurn = ( eCultureLevel - 1 ) * iFreeCultureRate + iCultureRate + 1;
 				if( iCulturePerTurn > 0 ) {

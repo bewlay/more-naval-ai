@@ -326,7 +326,7 @@ void CvSelectionGroup::doTurn()
 					pLoopUnit = ::getUnit(pUnitNode->m_data);
 					pUnitNode = nextUnitNode(pUnitNode);
 
-					iWaitTurns = (GC.getDefineINT("MIN_TIMER_UNIT_DOUBLE_MOVES") - (GC.getGameINLINE().getTurnSlice() - pLoopUnit->getLastMoveTurn()));
+					iWaitTurns = (GC.defines.iMIN_TIMER_UNIT_DOUBLE_MOVES - (GC.getGameINLINE().getTurnSlice() - pLoopUnit->getLastMoveTurn()));
 
 					if (iWaitTurns > iBestWaitTurns)
 					{
@@ -3830,7 +3830,7 @@ bool CvSelectionGroup::groupAttack(int iX, int iY, int iFlags, bool& bFailedAlre
 /**																								**/
 /**						                                            							**/
 /*************************************************************************************************/
-                        if(GC.getDefineINT("USE_DOCOMBAT_CALLBACK")==1)
+                        if(GC.defines.iUSE_DOCOMBAT_CALLBACK==1)
                         {
                             CySelectionGroup* pyGroup = new CySelectionGroup(this);
                             CyPlot* pyPlot = new CyPlot(pDestPlot);
@@ -4072,7 +4072,7 @@ bool CvSelectionGroup::groupBuild(BuildTypes eBuild)
 		{
 			if (GET_PLAYER(getOwnerINLINE()).isOption(PLAYEROPTION_SAFE_AUTOMATION))
 			{
-				if ((pPlot->getImprovementType() != NO_IMPROVEMENT) && (pPlot->getImprovementType() != (ImprovementTypes)(GC.getDefineINT("RUINS_IMPROVEMENT"))))
+				if ((pPlot->getImprovementType() != NO_IMPROVEMENT) && (pPlot->getImprovementType() != (ImprovementTypes)(GC.defines.iRUINS_IMPROVEMENT)))
 				{
 				    BonusTypes eBonus = (BonusTypes)pPlot->getNonObsoleteBonusType(GET_PLAYER(getOwnerINLINE()).getTeam());
 				    if ((eBonus == NO_BONUS) || !GC.getImprovementInfo(eImprovement).isImprovementBonusTrade(eBonus))

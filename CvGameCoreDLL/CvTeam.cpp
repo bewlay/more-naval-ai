@@ -1371,10 +1371,10 @@ void CvTeam::doTurn()
 /* Bugfix                                                                                       */
 /************************************************************************************************/
 /* original bts code
-					changeResearchProgress(((TechTypes)iI), ((getResearchCost((TechTypes)iI) * ((GC.getDefineINT("BARBARIAN_FREE_TECH_PERCENT") * iCount) / iPossibleCount)) / 100), getLeaderID());
+					changeResearchProgress(((TechTypes)iI), ((getResearchCost((TechTypes)iI) * ((GC.defines.iBARBARIAN_FREE_TECH_PERCENT * iCount) / iPossibleCount)) / 100), getLeaderID());
 */
 					// From Mongoose SDK, BarbarianPassiveTechFix
-					changeResearchProgress((TechTypes)iI, std::max((getResearchCost((TechTypes)iI) * GC.getDefineINT("BARBARIAN_FREE_TECH_PERCENT") * iCount) / (100 * iPossibleCount), 1), getLeaderID());
+					changeResearchProgress((TechTypes)iI, std::max((getResearchCost((TechTypes)iI) * GC.defines.iBARBARIAN_FREE_TECH_PERCENT * iCount) / (100 * iPossibleCount), 1), getLeaderID());
 /************************************************************************************************/
 /* UNOFFICIAL_PATCH                        END                                                  */
 /************************************************************************************************/
@@ -3342,25 +3342,25 @@ bool CvTeam::canVassalRevolt(TeamTypes eMaster) const
 
 	if (isVassal(eMaster))
 	{
-		if (100 * getTotalLand(false) < GC.getDefineINT("VASSAL_REVOLT_OWN_LOSSES_FACTOR") * getVassalPower())
+		if (100 * getTotalLand(false) < GC.defines.iVASSAL_REVOLT_OWN_LOSSES_FACTOR * getVassalPower())
 		{
 			return true;
 		}
 
-		if (100 * kMaster.getTotalLand() < GC.getDefineINT("VASSAL_REVOLT_MASTER_LOSSES_FACTOR") * getMasterPower())
+		if (100 * kMaster.getTotalLand() < GC.defines.iVASSAL_REVOLT_MASTER_LOSSES_FACTOR * getMasterPower())
 		{
 			return true;
 		}
 	}
 
-	if (GC.getDefineINT("FREE_VASSAL_LAND_PERCENT") < 0 ||
-		100 * getTotalLand(false) < kMaster.getTotalLand(false) * GC.getDefineINT("FREE_VASSAL_LAND_PERCENT"))
+	if (GC.defines.iFREE_VASSAL_LAND_PERCENT < 0 ||
+		100 * getTotalLand(false) < kMaster.getTotalLand(false) * GC.defines.iFREE_VASSAL_LAND_PERCENT)
 	{
 		return false;
 	}
 
-	if (GC.getDefineINT("FREE_VASSAL_POPULATION_PERCENT") < 0 ||
-		100 * getTotalPopulation(false) < kMaster.getTotalPopulation(false) * GC.getDefineINT("FREE_VASSAL_POPULATION_PERCENT"))
+	if (GC.defines.iFREE_VASSAL_POPULATION_PERCENT < 0 ||
+		100 * getTotalPopulation(false) < kMaster.getTotalPopulation(false) * GC.defines.iFREE_VASSAL_POPULATION_PERCENT)
 	{
 		return false;
 	}
@@ -3846,7 +3846,7 @@ int CvTeam::getResearchCost(TechTypes eTech) const
 	iCost *= GC.getEraInfo(GC.getGameINLINE().getStartEra()).getResearchPercent();
 	iCost /= 100;
 
-	iCost *= std::max(0, ((GC.getDefineINT("TECH_COST_EXTRA_TEAM_MEMBER_MODIFIER") * (getNumMembers() - 1)) + 100));
+	iCost *= std::max(0, ((GC.defines.iTECH_COST_EXTRA_TEAM_MEMBER_MODIFIER * (getNumMembers() - 1)) + 100));
 	iCost /= 100;
 
 	return std::max(1, iCost);
@@ -4141,7 +4141,7 @@ void CvTeam::setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck )
 								{
 									if( GET_TEAM((TeamTypes)iI).AI_endWarVal(getID()) < (GET_TEAM(getID()).AI_endWarVal((TeamTypes)iI))/2 )
 									{
-										if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") )
+										if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.defines.iWAR_SUCCESS_CITY_CAPTURING )
 										{
 											bPeace = false;
 										}
@@ -4208,7 +4208,7 @@ void CvTeam::setIsMinorCiv( bool bNewValue, bool bDoBarbCivCheck )
 							}
 						}
 
-						if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.getDefineINT("WAR_SUCCESS_CITY_CAPTURING") )
+						if( iCount > 2 || GET_TEAM((TeamTypes)iI).AI_getWarSuccess(getID()) > GC.defines.iWAR_SUCCESS_CITY_CAPTURING )
 						{
 							logMsg("  Barb civ %d decides to keep war on victim Team %d", getID(), eBarbCivVictim);
 							declareWar((TeamTypes)iI, true, WARPLAN_TOTAL); 
@@ -4332,7 +4332,7 @@ HandicapTypes CvTeam::getHandicapType() const
 	}
 	else
 	{
-		return ((HandicapTypes)(GC.getDefineINT("STANDARD_HANDICAP")));
+		return ((HandicapTypes)(GC.defines.iSTANDARD_HANDICAP));
 	}
 }
 
@@ -7503,7 +7503,7 @@ void CvTeam::doWarWeariness()
 	{
 		if (getWarWeariness((TeamTypes)iI) > 0)
 		{
-			changeWarWeariness(((TeamTypes)iI), 100 * GC.getDefineINT("WW_DECAY_RATE"));
+			changeWarWeariness(((TeamTypes)iI), 100 * GC.defines.iWW_DECAY_RATE);
 
 /********************************************************************************/
 /**		REVOLUTION_MOD							6/22/08				jdog5000	*/
@@ -7514,7 +7514,7 @@ void CvTeam::doWarWeariness()
 			// War weariness decays faster when enemy can't fight, usually a rebel with just spies
 			if ( ( !(GET_TEAM((TeamTypes)iI).isAlive()) || GET_TEAM((TeamTypes)iI).getNumMilitaryUnits() == 0 ) || !isAtWar((TeamTypes)iI) || GC.getGameINLINE().isOption(GAMEOPTION_ALWAYS_WAR) || GC.getGameINLINE().isOption(GAMEOPTION_NO_CHANGING_WAR_PEACE))
 			{
-				setWarWeariness(((TeamTypes)iI), ((getWarWeariness((TeamTypes)iI) * GC.getDefineINT("WW_DECAY_PEACE_PERCENT")) / 100));
+				setWarWeariness(((TeamTypes)iI), ((getWarWeariness((TeamTypes)iI) * GC.defines.iWW_DECAY_PEACE_PERCENT) / 100));
 			}
 /********************************************************************************/
 /**		REVOLUTION_MOD							END								*/
@@ -7651,9 +7651,9 @@ void CvTeam::testCircumnavigated()
 
 	if (GC.getGameINLINE().getElapsedGameTurns() > 0)
 	{
-		if (GC.getDefineINT("CIRCUMNAVIGATE_FREE_MOVES") != 0)
+		if (GC.defines.iCIRCUMNAVIGATE_FREE_MOVES != 0)
 		{
-			changeExtraMoves(DOMAIN_SEA, GC.getDefineINT("CIRCUMNAVIGATE_FREE_MOVES"));
+			changeExtraMoves(DOMAIN_SEA, GC.defines.iCIRCUMNAVIGATE_FREE_MOVES);
 
 			for (int iI = 0; iI < MAX_PLAYERS; iI++)
 			{
@@ -7661,7 +7661,7 @@ void CvTeam::testCircumnavigated()
 				{
 					if (getID() == GET_PLAYER((PlayerTypes)iI).getTeam())
 					{
-						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_CIRC_GLOBE", GC.getDefineINT("CIRCUMNAVIGATE_FREE_MOVES"));
+						szBuffer = gDLL->getText("TXT_KEY_MISC_YOU_CIRC_GLOBE", GC.defines.iCIRCUMNAVIGATE_FREE_MOVES);
 					}
 					else if (isHasMet(GET_PLAYER((PlayerTypes)iI).getTeam()))
 					{
@@ -8855,7 +8855,7 @@ void CvTeam::setHiredWarAlly(TeamTypes eIndex, bool bNewVal)
 	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
 	if (bNewVal)
 	{
-		int iMemoryTurns = GC.getDefineINT("REMEMBER_WAR_ALLY_TURNS");
+		int iMemoryTurns = GC.defines.iREMEMBER_WAR_ALLY_TURNS;
 		iMemoryTurns *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getConstructPercent();
 		iMemoryTurns /= 100;
 		m_aiHiredWarAlly[eIndex] = iMemoryTurns;

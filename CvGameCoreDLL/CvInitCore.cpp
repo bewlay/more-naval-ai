@@ -602,12 +602,12 @@ void CvInitCore::resetGame()
 
 	// Standard game parameters
 	m_eWorldSize = NO_WORLDSIZE;											// STANDARD_ option?
-	m_eClimate = (ClimateTypes)GC.getDefineINT("STANDARD_CLIMATE");			// NO_ option?
-	m_eSeaLevel = (SeaLevelTypes)GC.getDefineINT("STANDARD_SEALEVEL");		// NO_ option?
-	m_eEra = (EraTypes)GC.getDefineINT("STANDARD_ERA");						// NO_ option?
-	m_eGameSpeed = (GameSpeedTypes)GC.getDefineINT("STANDARD_GAMESPEED");	// NO_ option?
-	m_eTurnTimer = (TurnTimerTypes)GC.getDefineINT("STANDARD_TURNTIMER");	// NO_ option?
-	m_eCalendar = (CalendarTypes)GC.getDefineINT("STANDARD_CALENDAR");		// NO_ option?
+	m_eClimate = (ClimateTypes)GC.defines.iSTANDARD_CLIMATE;			// NO_ option?
+	m_eSeaLevel = (SeaLevelTypes)GC.defines.iSTANDARD_SEALEVEL;		// NO_ option?
+	m_eEra = (EraTypes)GC.defines.iSTANDARD_ERA;						// NO_ option?
+	m_eGameSpeed = (GameSpeedTypes)GC.defines.iSTANDARD_GAMESPEED;	// NO_ option?
+	m_eTurnTimer = (TurnTimerTypes)GC.defines.iSTANDARD_TURNTIMER;	// NO_ option?
+	m_eCalendar = (CalendarTypes)GC.defines.iSTANDARD_CALENDAR;		// NO_ option?
 
 	// Map-specific custom parameters
 	clearCustomMapOptions();
@@ -760,7 +760,7 @@ void CvInitCore::resetPlayer(PlayerTypes eID)
 		m_aeCiv[eID] = NO_CIVILIZATION;
 		m_aeLeader[eID] = NO_LEADER;
 		m_aeTeam[eID] = (TeamTypes)eID;
-		m_aeHandicap[eID] = (HandicapTypes)GC.getDefineINT("STANDARD_HANDICAP");
+		m_aeHandicap[eID] = (HandicapTypes)GC.defines.iSTANDARD_HANDICAP;
 		m_aeColor[eID] = NO_PLAYERCOLOR;
 		m_aeArtStyle[eID] = NO_ARTSTYLE;
 

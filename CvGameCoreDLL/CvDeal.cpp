@@ -301,7 +301,7 @@ void CvDeal::doTurn()
 	{
 		if (getLengthSecondTrades() > 0)
 		{
-			iValue = (GET_PLAYER(getFirstPlayer()).AI_dealVal(getSecondPlayer(), getSecondTrades()) / GC.getDefineINT("PEACE_TREATY_LENGTH"));
+			iValue = (GET_PLAYER(getFirstPlayer()).AI_dealVal(getSecondPlayer(), getSecondTrades()) / GC.defines.iPEACE_TREATY_LENGTH);
 
 			if (getLengthFirstTrades() > 0)
 			{
@@ -315,7 +315,7 @@ void CvDeal::doTurn()
 
 		if (getLengthFirstTrades() > 0)
 		{
-			iValue = (GET_PLAYER(getSecondPlayer()).AI_dealVal(getFirstPlayer(), getFirstTrades()) / GC.getDefineINT("PEACE_TREATY_LENGTH"));
+			iValue = (GET_PLAYER(getSecondPlayer()).AI_dealVal(getFirstPlayer(), getFirstTrades()) / GC.defines.iPEACE_TREATY_LENGTH);
 
 			if (getLengthSecondTrades() > 0)
 			{
@@ -400,7 +400,7 @@ void CvDeal::verify()
 
 	if (bPOW)
 	{
-		if (getInitialGameTurn() + GC.getDefineINT("POW_EXCHANGE_LENGTH") <= GC.getGameINLINE().getGameTurn())
+		if (getInitialGameTurn() + GC.defines.iPOW_EXCHANGE_LENGTH <= GC.getGameINLINE().getGameTurn())
 		{
 			kill(true);
 		}
@@ -961,7 +961,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 
 	case TRADE_WAR:
 		// lfgr 08/2023:
-		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+		if( GC.defines.iNO_WAR_TRADE ) {
 			FAssertMsg( false, "War bribe even though forbidden via XML!" );
 			return false;
 		}
@@ -1007,7 +1007,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	//byFra
 	case TRADE_WAR_PREPARE:
 		// lfgr 08/2023:
-		if( GC.getDefineINT( "NO_WAR_TRADE", 0 ) ) {
+		if( GC.defines.iNO_WAR_TRADE ) {
 			FAssertMsg( false, "War preparation bribe even though forbidden via XML!" );
 			return false;
 		}
@@ -1057,9 +1057,9 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 
 		GET_PLAYER(eFromPlayer).revolution(paeNewCivics, true);
 
-		if (GET_PLAYER(eFromPlayer).AI_getCivicTimer() < GC.getDefineINT("PEACE_TREATY_LENGTH"))
+		if (GET_PLAYER(eFromPlayer).AI_getCivicTimer() < GC.defines.iPEACE_TREATY_LENGTH)
 		{
-			GET_PLAYER(eFromPlayer).AI_setCivicTimer(GC.getDefineINT("PEACE_TREATY_LENGTH"));
+			GET_PLAYER(eFromPlayer).AI_setCivicTimer(GC.defines.iPEACE_TREATY_LENGTH);
 		}
 
 		if( gTeamLogLevel >= 2 )
@@ -1073,9 +1073,9 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	case TRADE_RELIGION:
 		GET_PLAYER(eFromPlayer).convert((ReligionTypes)trade.m_iData);
 
-		if (GET_PLAYER(eFromPlayer).AI_getReligionTimer() < GC.getDefineINT("PEACE_TREATY_LENGTH"))
+		if (GET_PLAYER(eFromPlayer).AI_getReligionTimer() < GC.defines.iPEACE_TREATY_LENGTH)
 		{
-			GET_PLAYER(eFromPlayer).AI_setReligionTimer(GC.getDefineINT("PEACE_TREATY_LENGTH"));
+			GET_PLAYER(eFromPlayer).AI_setReligionTimer(GC.defines.iPEACE_TREATY_LENGTH);
 		}
 
 		if( gTeamLogLevel >= 2 )
@@ -1740,7 +1740,7 @@ bool CvDeal::isCancelable(PlayerTypes eByPlayer, CvWString* pszReason)
 
 int CvDeal::turnsToCancel(PlayerTypes eByPlayer)
 {
-	return (getInitialGameTurn() + GC.getDefineINT("PEACE_TREATY_LENGTH") - GC.getGameINLINE().getGameTurn());
+	return (getInitialGameTurn() + GC.defines.iPEACE_TREATY_LENGTH - GC.getGameINLINE().getGameTurn());
 }
 
 // static

@@ -17240,7 +17240,7 @@ int CvYieldInfo::getColorType() const
 
 const TCHAR* CvYieldInfo::getSymbolPath(int i) const
 {
-	FAssertMsg(i < GC.getDefineINT("MAX_YIELD_STACK"), "Index out of bounds");
+	FAssertMsg(i < GC.defines.iMAX_YIELD_STACK, "Index out of bounds");
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_paszSymbolPath ? m_paszSymbolPath[i] : -1;
 }
@@ -17275,14 +17275,14 @@ bool CvYieldInfo::read(CvXMLLoadUtility* pXML)
 		if (pXML->SkipToNextVal())
 		{
 			iNumSibs = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
-			FAssertMsg((0 < GC.getDefineINT("MAX_YIELD_STACK")) ,"Allocating zero or less memory in SetGlobalYieldInfo");
-			m_paszSymbolPath = new CvString[GC.getDefineINT("MAX_YIELD_STACK")];
+			FAssertMsg((0 < GC.defines.iMAX_YIELD_STACK) ,"Allocating zero or less memory in SetGlobalYieldInfo");
+			m_paszSymbolPath = new CvString[GC.defines.iMAX_YIELD_STACK];
 
 			if (0 < iNumSibs)
 			{
 				if (pXML->GetChildXmlVal(szTextVal))
 				{
-					FAssertMsg((iNumSibs <= GC.getDefineINT("MAX_YIELD_STACK")) ,"There are more siblings than memory allocated for them in SetGlobalYieldInfo");
+					FAssertMsg((iNumSibs <= GC.defines.iMAX_YIELD_STACK) ,"There are more siblings than memory allocated for them in SetGlobalYieldInfo");
 					for (j=0;j<iNumSibs;j++)
 					{
 						m_paszSymbolPath[j] = szTextVal;

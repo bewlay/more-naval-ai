@@ -285,7 +285,7 @@ void CvGame::updateColoredPlots()
 									ImprovementTypes ePlotImprovement = pLoopPlot->getImprovementType();
 									RouteTypes ePlotRoute = pLoopPlot->getRouteType();
 
-									if (ePlotImprovement == GC.getDefineINT("RUINS_IMPROVEMENT"))
+									if (ePlotImprovement == GC.defines.iRUINS_IMPROVEMENT)
 									{
 										ePlotImprovement = NO_IMPROVEMENT;
 									}
@@ -637,7 +637,7 @@ void CvGame::updateColoredPlots()
 
 		if (pHeadSelectedUnit->isBlockading())
 		{
-			int iBlockadeRange = GC.getDefineINT("SHIP_BLOCKADE_RANGE");
+			int iBlockadeRange = GC.defines.iSHIP_BLOCKADE_RANGE;
 
 			for (int iPlayer = 0; iPlayer < MAX_CIV_PLAYERS; ++iPlayer)
 			{
@@ -1942,7 +1942,7 @@ void CvGame::doControl(ControlTypes eControl)
 
 					if (pUnit->getOwnerINLINE() == getActivePlayer())
 					{
-						if (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pUnit->getLastMoveTurn() > GC.getDefineINT("MIN_TIMER_UNIT_DOUBLE_MOVES"))
+						if (!isMPOption(MPOPTION_SIMULTANEOUS_TURNS) || getTurnSlice() - pUnit->getLastMoveTurn() > GC.defines.iMIN_TIMER_UNIT_DOUBLE_MOVES)
 						{
 							if (pUnit->isHurt())
 							{
@@ -3046,7 +3046,7 @@ int CvGame::getSoundtrackSpace() const
 
 bool CvGame::isSoundtrackOverride(CvString& strSoundtrack) const
 {
-	if (GC.getDefineINT("VICTORY_SOUNDTRACK_AVAILABLE") != 0)
+	if (GC.defines.iVICTORY_SOUNDTRACK_AVAILABLE != 0)
 	{
 		if (getGameState() == GAMESTATE_EXTENDED || getGameState() == GAMESTATE_OVER)
 		{
@@ -3269,7 +3269,7 @@ void CvGame::handleCityScreenPlotPicked(CvCity* pCity, CvPlot* pPlot, bool bAlt,
 		{
 			CvMessageControl::getInstance().sendDoTask(pCity->getID(), TASK_CHANGE_WORKING_PLOT, iIndex, -1, false, bAlt, bShift, bCtrl);
 		}
-		else if (GC.getDefineINT("CITY_SCREEN_CLICK_WILL_EXIT"))
+		else if (GC.defines.iCITY_SCREEN_CLICK_WILL_EXIT)
 		{
 			gDLL->getInterfaceIFace()->clearSelectedCities();
 		}
