@@ -2750,6 +2750,7 @@ FVariableSystem* CvGlobals::getDefinesVarSystem()
 
 void CvGlobals::cacheGlobals()
 {
+	// LFGR_TODO: Should be folded into the OptDefines component
 	m_iMOVE_DENOMINATOR = getDefineINT("MOVE_DENOMINATOR");
 	m_iNUM_UNIT_PREREQ_OR_BONUSES = getDefineINT("NUM_UNIT_PREREQ_OR_BONUSES");
 	m_iNUM_BUILDING_PREREQ_OR_BONUSES = getDefineINT("NUM_BUILDING_PREREQ_OR_BONUSES");

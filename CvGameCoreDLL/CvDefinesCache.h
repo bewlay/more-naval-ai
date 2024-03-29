@@ -7,7 +7,8 @@
 
 class CvDefinesCache {
 public :
-	void init();
+	void init(); // Called after reading defines from CvGlobalDefines.xml, etc.
+	void init_delayed(); // Called after reading other info stuff
 
 #include "CvDefines_fields.inc"
 };
