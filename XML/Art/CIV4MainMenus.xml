@@ -42,5 +42,14 @@
 			<Loading>MAINMENU_LOAD_BTS</Loading>
 			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
 		</MainMenu>		
+		<MainMenu>
+			<Type>MAIN_MENU_BLANK</Type>
+			<Description>Blank (debug)</Description>
+			<Scene>MAINMENU_SCENE_BLANK</Scene>
+			<SceneNoShader>MAINMENU_SCENE_BLANK</SceneNoShader>
+			<Soundtrack>AS2D_OPENING_MENU</Soundtrack>
+			<Loading>MAINMENU_LOAD_BTS</Loading>
+			<LoadingSlideshow>MAINMENU_SLIDESHOW_LOAD_BTS</LoadingSlideshow>
+		</MainMenu>
 	</MainMenus>
 </Civ4MainMenus>

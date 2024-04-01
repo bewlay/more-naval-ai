@@ -1079,6 +1079,10 @@
 			<Path>Art/Interface/Main Menu/Sphener/CIV4MainMenuBG.nif</Path>
 		</InterfaceArtInfo>
 		<InterfaceArtInfo>
+			<Type>MAINMENU_SCENE_BLANK</Type>
+			<Path></Path>
+		</InterfaceArtInfo>
+		<InterfaceArtInfo>
 			<Type>MAINMENU_SP</Type>
 			<Path>Art/Interface/Main Menu/CIV4MainMenuSinglePlayer.kfm</Path>
 		</InterfaceArtInfo>
