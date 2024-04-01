@@ -1058,4 +1058,18 @@
 		<DefineName>NO_WAR_TRADE</DefineName>
 		<iDefineIntVal>0</iDefineIntVal>
 	</Define>
+    <!-- lfgr 04/2024: When considering training a unit, in certain situations, we'll check if a building is available
+        that enables a better unit.
+        Default: 80; Should be between 0 and 100 -->
+    <Define>
+        <DefineName>AI_ENABLER_BUILDING_BASIC_ODDS</DefineName>
+        <iDefineIntVal>80</iDefineIntVal>
+    </Define>
+	<!-- lfgr 03/2024: When considering constructing a building to enable a unit type, the new unit type's value should
+		be this many % of the best currently trainable unit.
+		Default: 110; values below 100 don't make sense. -->
+	<Define>
+		<DefineName>AI_ENABLER_BUILDING_THRESHOLD</DefineName>
+		<iDefineIntVal>110</iDefineIntVal>
+	</Define>
 </Civ4Defines>

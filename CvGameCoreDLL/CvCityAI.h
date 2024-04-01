@@ -38,6 +38,9 @@ public:
 	UnitTypes AI_bestUnit(bool bAsync = false, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR, UnitAITypes* peBestUnitAI = NULL);
 	UnitTypes AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync = false, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR);
 
+	// lfgr 03/2024
+	std::pair<BuildingTypes, int> AI_bestEnablerBuildingWithUnitValue( UnitAITypes eUnitAI ) const;
+
 	BuildingTypes AI_bestBuilding(int iFocusFlags = 0, int iMaxTurns = 0, bool bAsync = false, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR);
 	BuildingTypes AI_bestBuildingThreshold(int iFocusFlags = 0, int iMaxTurns = 0, int iMinThreshold = 0, bool bAsync = false, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR);
 
@@ -225,7 +228,8 @@ protected:
 /*                                                                                              */
 /* City AI                                                                                      */
 /************************************************************************************************/
-	bool AI_chooseUnit(UnitAITypes eUnitAI = NO_UNITAI, int iOdds = -1);
+	// lfgr 03/2024: iEnablerBuildingOdds are the odds (percent) of trying to construct a building that enables better units
+	bool AI_chooseUnit(UnitAITypes eUnitAI = NO_UNITAI, int iOdds = -1, int iEnablerBuildingOdds = 0);
 	bool AI_chooseUnit(UnitTypes eUnit, UnitAITypes eUnitAI);
 	
 	bool AI_chooseDefender();

@@ -99,6 +99,9 @@ private :
 	ValType* m_aMap;
 };
 
+typedef std::pair<BuildingTypes, UnitTypes> BuildingUnitPair;
+typedef std::pair<BuildingClassTypes, UnitTypes> BuildingClassUnitPair;
+
 class CvInfoCache {
 public :
 	CvInfoCache();
@@ -110,10 +113,21 @@ public :
 	int AI_getUnitValueFromFreePromotions( UnitTypes eUnit, UnitAITypes eUnitAI ) const;
 	bool AI_isUnitAmphib( UnitTypes eUnit ) const;
 
+	const std::vector<BuildingUnitPair>& getUnitsWithBuildingPrereqs() const {
+		return m_vtUnitBuildingPrereqCache;
+	}
+	const std::vector<BuildingClassUnitPair>& getUnitsWithBuildingClassPrereqs() const{
+		return m_vtUnitBuildingClassPrereqCache;
+	}
+
 private :
 	Fixed2DEnumMap<UnitCombatTypes, TraitTypes, int> m_aiUnitValueFromTraitCache;
 	Fixed2DEnumMap<UnitTypes, UnitAITypes, int> m_aiUnitValueFromFreePromotionsCache;
 	FixedEnumMap<UnitTypes, bool> m_aiUnitAmphibCache;
+
+	// Buildings and building classes that enable units
+	std::vector<BuildingUnitPair> m_vtUnitBuildingPrereqCache;
+	std::vector<BuildingClassUnitPair> m_vtUnitBuildingClassPrereqCache;
 };
 
 void initInfoCache();

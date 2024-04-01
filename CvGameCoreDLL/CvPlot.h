@@ -576,8 +576,9 @@ public:
 	bool canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer) const;
 	bool canApplyEvent(EventTypes eEvent) const;
 	void applyEvent(EventTypes eEvent);
-
-	bool canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const;
+	
+	// lfgr 03/2024: bIgnoreBuildings
+	bool canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreBuildings = false) const;
 
 	bool isEspionageCounterSpy(TeamTypes eTeam) const;
 

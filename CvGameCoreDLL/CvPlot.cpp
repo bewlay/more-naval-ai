@@ -11802,7 +11802,7 @@ void CvPlot::applyEvent(EventTypes eEvent)
 }
 
 // bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
-bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
+bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreBuildings) const
 {
 	CvCity* pCity = getPlotCity();
 	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
@@ -11941,29 +11941,12 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible) const
 //				}
 //			}
 //		}
-        bool bValid = true;
-        if (isOwned())
-        {
-            if (!GET_PLAYER(getOwnerINLINE()).isHuman())
-            {
-/*************************************************************************************************/
-/**	Xienwolf Tweak							02/01/09											**/
-/**																								**/
-/**			Ensures that Barbarian Cities do not devote themselves to building Empires			**/
-/*************************************************************************************************/
-/**								---- Start Original Code ----									**
-                if (GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_BUILDING_PREREQS))
-/**								----  End Original Code  ----									**/
-                if (GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_BUILDING_PREREQS) || GET_PLAYER(getOwnerINLINE()).isBarbarian())
-/*************************************************************************************************/
-/**	Tweak									END													**/
-/*************************************************************************************************/
-                {
-                    bValid = false;
-                }
-            }
-        }
-        if (bValid)
+		// lfgr 03/2024, Xienwolf 02/01/09
+		bool bCheckBuildings = !bIgnoreBuildings
+			&& !GET_PLAYER(getOwnerINLINE()).isBarbarian()
+			&& ( GET_PLAYER(getOwnerINLINE()).isHuman() || !GC.getGameINLINE().isOption(GAMEOPTION_AI_NO_BUILDING_PREREQS) );
+
+        if (bCheckBuildings)
         {
             if (kUnit.getPrereqBuilding() != NO_BUILDING)
             {

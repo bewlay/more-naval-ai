@@ -13,9 +13,26 @@ CvInfoCache::~CvInfoCache() {
 }
 
 void CvInfoCache::init() {
+	// AI_unitValue stuff
 	m_aiUnitValueFromTraitCache.init( info_ai::AI_calcUnitValueFromTrait );
 	m_aiUnitValueFromFreePromotionsCache.init( info_ai::AI_calcUnitValueFromFreePromotions );
 	m_aiUnitAmphibCache.init( info_ai::AI_checkUnitAmphib );
+
+	// Unit prereqs
+	for( int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++ ) {
+		UnitTypes eUnit = (UnitTypes) iUnit;
+		CvUnitInfo& kUnit = GC.getUnitInfo( eUnit );
+		BuildingTypes ePrereqBuilding = (BuildingTypes) kUnit.getPrereqBuilding();
+		BuildingClassTypes ePrereqBuildingClass = (BuildingClassTypes) kUnit.getPrereqBuildingClass();
+		if( ePrereqBuilding != NO_BUILDING ) {
+			m_vtUnitBuildingPrereqCache.push_back( BuildingUnitPair( ePrereqBuilding, eUnit ) );
+			//logBBAI( "CACHE: %s requires %s", kUnit.getType(), GC.getBuildingInfo( ePrereqBuilding ).getType() );
+		}
+		if( ePrereqBuildingClass != NO_BUILDINGCLASS ) {
+			m_vtUnitBuildingClassPrereqCache.push_back( BuildingClassUnitPair( ePrereqBuildingClass, eUnit ) );
+			//logBBAI( "CACHE: %s requires %s", kUnit.getType(), GC.getBuildingClassInfo( ePrereqBuildingClass ).getType() );
+		}
+	}
 }
 
 
@@ -47,10 +64,6 @@ bool CvInfoCache::AI_isUnitAmphib( UnitTypes eUnit ) const {
 
 // Static instance
 CvInfoCache instance;
-
-void initInfoCache() {
-	instance.init();
-}
 
 CvInfoCache& getInfoCache() {
 	return instance;

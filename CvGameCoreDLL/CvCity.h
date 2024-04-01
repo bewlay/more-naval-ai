@@ -109,10 +109,13 @@ public:
 	bool isTeamWondersMaxed() const;																							// Exposed to Python
 	bool isNationalWondersMaxed() const;																					// Exposed to Python
 	bool isBuildingsMaxed() const;																								// Exposed to Python
-	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false) const;					// Exposed to Python
+	// lfgr 03/2024: bIgnoreBuildings
+	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false,
+		bool bIgnoreBuildings = false) const;					// Exposed to Python
 
 //FfH: Added by Kael 08/15/2007
-	bool canUpgrade(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false) const;
+// lfgr 03/2024: bIgnoreBuildings
+	bool canUpgrade(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bIgnoreBuildings = false) const;
 //FfH: End Modify
 
 	bool canTrain(UnitCombatTypes eUnitCombat) const;

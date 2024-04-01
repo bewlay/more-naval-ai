@@ -14,6 +14,8 @@
 #include "CvInfos.h"
 #include "FProfiler.h"
 
+#include "CvInfoCache.h"
+
 #include "CvDLLPythonIFaceBase.h"
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLFAStarIFaceBase.h"
@@ -1802,20 +1804,26 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 */
+
+	// lfgr 04/2024: Basic odds to build "enabler" buildings that allow better units
+	int iBasicEnablerBuildingOdds = GC.getDefineINT( "AI_ENABLER_BUILDING_BASIC_ODDS", 80 );
 	
 	//minimal defense.
 	if (!bLandWar && !bCrushStrategy && !bFinancialTrouble)
 	{
 		if (iPlotCityDefenderCount < (iPlotSettlerCount * 5)) // lfgr 02/2022: only build anything if there actually are settlers
 		{
+			// lfgr 03/2024: Possibly build a building first
+			int iEnablerBuildingOdds = iBasicEnablerBuildingOdds / 2;
+
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S needs escort for existing settler", getName().GetCString());
-			if (AI_chooseUnit(UNITAI_CITY_DEFENSE))
+			if (AI_chooseUnit(UNITAI_CITY_DEFENSE, -1, iEnablerBuildingOdds))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses escort existing settler 1 defense", getName().GetCString());
 				return;
 			}
 
-			if (AI_chooseUnit(UNITAI_ATTACK))
+			if (AI_chooseUnit(UNITAI_ATTACK, -1, iEnablerBuildingOdds))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses escort existing settler 1 attack", getName().GetCString());
 				return;
@@ -1938,6 +1946,7 @@ void CvCityAI::AI_chooseProduction()
 		}
 	}
 
+	// lfgr note: Vassals can focus on non-military buildings
 	if( GET_TEAM(getTeam()).isAVassal() && GET_TEAM(getTeam()).isCapitulated() )
 	{
 //>>>>Better AI: Modified by Denev 2010/03/31
@@ -2029,7 +2038,7 @@ void CvCityAI::AI_chooseProduction()
 		// Minimal attack force, both land and sea
 		int iAttackNeeded = 1;
 
-		if (GC.getGameINLINE().getCurrentEra() > 0)
+		if (GET_PLAYER( getOwnerINLINE() ).getCurrentRealEra() > 0) // lfgr 03/2024: Replace by real era
 		{
 			iAttackNeeded++;
 		}
@@ -2074,7 +2083,9 @@ void CvCityAI::AI_chooseProduction()
 		{
 			if (kPlayer.AI_getFundedPercent() > 50)
 			{
-    			if (AI_chooseUnit(UNITAI_ATTACK)) // TODO: Before we do this, we should probably build prereq buildings
+				// lfgr 03/2024: Possibly build a building first
+				int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds;
+    			if (AI_chooseUnit(UNITAI_ATTACK, -1, iEnablerBuildingOdds))
     			{
 					if( gCityLogLevel >= 2 ) logBBAI("      City %S uses danger minimal attack (%d needed)", getName().GetCString(), iAttackNeeded);
     				return;
@@ -2172,7 +2183,9 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 
-			if (AI_chooseUnit(UNITAI_ATTACK_CITY, (iBuildUnitProb + (iWarSuccessModifier * 5))))
+			// lfgr 03/2024: Possibly build a building first
+			int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds * ( iBuildUnitProb + iWarSuccessModifier * 5 ) / 100;
+			if (AI_chooseUnit(UNITAI_ATTACK_CITY, iBuildUnitProb + iWarSuccessModifier * 5, iEnablerBuildingOdds))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses Conquest pick! (have/want %d/%d conquest units - modifier: %d))",getName().GetCString(),GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST), iNeedConq, iWarSuccessModifier);
 				return;
@@ -2472,11 +2485,14 @@ void CvCityAI::AI_chooseProduction()
 			int iAttackCityCount = kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY);
 			int iAttackCount = iAttackCityCount + kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK);
 
+			// lfgr 03/2024: Possibly build a building first
+			int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds;
+
 			if( (iAttackCount) == 0 )
 			{
 				if( !bFinancialTrouble )
 				{
-					if (AI_chooseUnit(UNITAI_ATTACK, iStartAttackStackRand))
+					if (AI_chooseUnit(UNITAI_ATTACK, iStartAttackStackRand, iEnablerBuildingOdds))
 					{
 						return;
 					}
@@ -2486,7 +2502,7 @@ void CvCityAI::AI_chooseProduction()
 			{
 				if( (iAttackCount > 1) && (iAttackCityCount == 0) )
 				{
-					if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+					if (AI_chooseUnit(UNITAI_ATTACK_CITY, -1, iEnablerBuildingOdds))
 					{
 						if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose start city attack stack", getName().GetCString());
 						return;
@@ -2509,13 +2525,13 @@ void CvCityAI::AI_chooseProduction()
 
 					if (iAttackCount < iAttackWanted)
 					{
-						if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+						if (AI_chooseUnit(UNITAI_ATTACK_CITY, -1, iEnablerBuildingOdds))
 						{
 							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack (ATTACK_CITY)(H/N : %d / %d)", getName().GetCString(), iAttackCount, iAttackWanted);
 							return;
 						}
 
-						if (AI_chooseUnit(UNITAI_ATTACK))
+						if (AI_chooseUnit(UNITAI_ATTACK, -1, iEnablerBuildingOdds))
 						{
 							if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose add to city attack stack(ATTACK)(H/N : %d / %d)", getName().GetCString(), iAttackCount, iAttackWanted);
 							return;
@@ -2764,7 +2780,9 @@ void CvCityAI::AI_chooseProduction()
         {
             if (kPlayer.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK) == 0)
             {
-                if (AI_chooseUnit(UNITAI_ATTACK))
+				// lfgr 03/2024: Possibly build a building first
+				int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds;
+                if (AI_chooseUnit(UNITAI_ATTACK, -1, iEnablerBuildingOdds))
                 {
                     return;
                 }
@@ -3668,7 +3686,9 @@ void CvCityAI::AI_chooseProduction()
 		if (GET_PLAYER(getOwnerINLINE()).countGroupFlagUnits(GROUPFLAG_CONQUEST) < (iNumCities * (kPlayer.AI_getFundedPercent() / 6)))
 		{
 			if( gCityLogLevel >= 2 ) logBBAI("      City %S trying for ATTACK_CITY due to Warplan", getName().GetCString());
-			if (AI_chooseUnit(UNITAI_ATTACK_CITY))
+			// lfgr 03/2024: Possibly build a building first
+			int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds;
+			if (AI_chooseUnit(UNITAI_ATTACK_CITY, -1, iEnablerBuildingOdds))
 			{
 				if( gCityLogLevel >= 2 ) logBBAI("      City %S uses choose unit ATTACK_CITY due to Warplan", getName().GetCString());
 				return;
@@ -3769,7 +3789,9 @@ void CvCityAI::AI_chooseProduction()
 
 	if (plot()->plotCheck(PUF_isUnitAIType, UNITAI_CITY_COUNTER, -1, getOwnerINLINE()) == NULL)
 	{
-		if (AI_chooseUnit(UNITAI_CITY_COUNTER))
+		// lfgr 03/2024: Possibly build a building first
+		int iEnablerBuildingOdds = bDanger ? 0 : iBasicEnablerBuildingOdds;
+		if (AI_chooseUnit(UNITAI_CITY_COUNTER, -1, iEnablerBuildingOdds))
 		{
 			return;
 		}
@@ -4507,6 +4529,47 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 	return eBestUnit;
 }
 
+std::pair<BuildingTypes, int> CvCityAI::AI_bestEnablerBuildingWithUnitValue( UnitAITypes eUnitAI ) const {
+	BuildingTypes eBestBuilding = NO_BUILDING;
+	int iBestValue = 0;
+	CvPlayerAI& kOwner = GET_PLAYER( getOwnerINLINE() );
+
+	const std::vector<BuildingUnitPair>& vtBuildings = getInfoCache().getUnitsWithBuildingPrereqs();
+	for( size_t i = 0; i < vtBuildings.size(); i++ ) {
+		BuildingTypes eBuilding = vtBuildings[i].first;
+		UnitTypes eUnit = vtBuildings[i].second;
+		if( canConstruct( eBuilding ) && !canTrain( eUnit ) ) {
+			if( canTrain( eUnit, /*bContinue*/ false, /*bTestVisible*/ false, /*bIgnoreCost*/ false, /*bIgnoreUpgrades*/ false, /*bIgnoreBuildings*/ true ) ) {
+				// eBuilding enables eUnit (unless eUnit requires more than one building)
+				int iValue = kOwner.AI_unitValue( eUnit, eUnitAI, area() );
+				if( iValue > iBestValue ) {
+					eBestBuilding = eBuilding;
+					iBestValue = iValue;
+				}
+			}
+		}
+	}
+
+	const std::vector<BuildingClassUnitPair>& vtBuildingClasses = getInfoCache().getUnitsWithBuildingClassPrereqs();
+	for( size_t i = 0; i < vtBuildingClasses.size(); i++ ) {
+		BuildingTypes eBuilding = (BuildingTypes) GC.getCivilizationInfo( kOwner.getCivilizationType() ).getCivilizationBuildings( vtBuildingClasses[i].first );
+		if( eBuilding != NO_BUILDING ) {
+			UnitTypes eUnit = vtBuildingClasses[i].second;
+			if( canConstruct( eBuilding ) && !canTrain( eUnit ) ) {
+				if( canTrain( eUnit, /*bContinue*/ false, /*bTestVisible*/ false, /*bIgnoreCost*/ false, /*bIgnoreUpgrades*/ false, /*bIgnoreBuildings*/ true ) ) {
+					// eBuilding enables eUnit (unless eUnit requires more than one building)
+					int iValue = kOwner.AI_unitValue( eUnit, eUnitAI, area() );
+					if( iValue > iBestValue ) {
+						eBestBuilding = eBuilding;
+						iBestValue = iValue;
+					}
+				}
+			}
+		}
+	}
+
+	return std::pair<BuildingTypes, int>( eBestBuilding, iBestValue );
+}
 
 BuildingTypes CvCityAI::AI_bestBuilding(int iFocusFlags, int iMaxTurns, bool bAsync, AdvisorTypes eIgnoreAdvisor)
 {
@@ -9776,7 +9839,7 @@ void CvCityAI::AI_doEmphasize()
 /*                                                                                              */
 /* City AI                                                                                      */
 /************************************************************************************************/
-bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds)
+bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds, int iEnablerBuildingOdds )
 {
 	UnitTypes eBestUnit;
 
@@ -9787,6 +9850,36 @@ bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds)
 	else
 	{
 		eBestUnit = AI_bestUnit(false, NO_ADVISOR, &eUnitAI);
+	}
+
+	int iBestValue;
+	if( eBestUnit != NO_UNIT ) {
+		iBestValue = GET_PLAYER( getOwnerINLINE() ).AI_unitValue( eBestUnit, eUnitAI, area() );
+	}
+	else {
+		iBestValue = 0;
+	}
+
+	// lfgr 03/2024
+	if( GC.getGameINLINE().isOption( GAMEOPTION_EXPERIMENTAL_AI ) ) {
+		if( iEnablerBuildingOdds > 0 && ( eBestUnit == NO_UNIT || GC.getGameINLINE().getSorenRandNum(100, "City AI choose enabler building") < iEnablerBuildingOdds ) ) {
+			FAssert( eUnitAI != NO_UNITAI );
+			// Try constructing a building that improves our unit choice
+			std::pair<BuildingTypes, int> tEnabler = AI_bestEnablerBuildingWithUnitValue( eUnitAI );
+			if( tEnabler.first != NO_BUILDING ) {
+				int iThreshold = iBestValue * GC.getDefineINT( "AI_ENABLER_BUILDING_THRESHOLD", 110 ) / 100;
+				if( tEnabler.second > iThreshold ) {
+					if( gCityLogLevel >= 2 ) {
+						logBBAI("      City %S choosing to construct %s instead of training %s (%s)", getName().GetCString(),
+							GC.getBuildingInfo( tEnabler.first ).getType(),
+							eBestUnit == NO_UNIT ? "NO_UNIT" : GC.getUnitInfo( eBestUnit ).getType(),
+							GC.getUnitAIInfo( eUnitAI ).getType() );
+					}
+
+					pushOrder( ORDER_CONSTRUCT, tEnabler.first, -1, false, false, false );
+				}
+			}
+		}
 	}
 
 	if (eBestUnit != NO_UNIT)

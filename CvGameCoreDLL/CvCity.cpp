@@ -2226,8 +2226,7 @@ bool CvCity::isBuildingsMaxed() const
 
 //FfH: Modified by Kael 08/07/2007
 // bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
-//bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const
-bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const
+bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bIgnoreBuildings) const
 {
 	if (eUnit == NO_UNIT)
 	{
@@ -2244,11 +2243,11 @@ bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool b
     {
         return false;
     }
-    return canUpgrade(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades);
+    return canUpgrade(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades, bIgnoreBuildings);
 }
 
 // bTestVisible: only testing whether visible e.g. in city screen (weaker conditions!)
-bool CvCity::canUpgrade(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const
+bool CvCity::canUpgrade(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bIgnoreBuildings) const
 //FfH: End Modify
 
 {
@@ -2297,12 +2296,13 @@ bool CvCity::canUpgrade(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		}
 	}
 
-	if (!plot()->canTrain(eUnit, bContinue, bTestVisible))
+	if (!plot()->canTrain(eUnit, bContinue, bTestVisible, bIgnoreBuildings))
 	{
 		return false;
 	}
 
 //FfH: Added by Kael 09/26/2007
+	// LFGR_TODO: Shouldn't all this be in CvPlayer::canTrain()?
 	if (kUnitInfo.getPrereqCiv() != NO_CIVILIZATION)
 	{
 	    if (kUnitInfo.getPrereqCiv() != getCivilizationType())

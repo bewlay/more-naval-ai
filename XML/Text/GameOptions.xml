@@ -11,10 +11,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_EXPERIMENTAL_AI</Tag>
-		<English>Better expansion AI (Experimental)</English>
+		<English>Experimental AI</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_GAME_OPTION_EXPERIMENTAL_AI_HELP</Tag>
-		<English>Small change to help AI expand better.</English>
+		<English>AI should be slightly better at expanding and build more required buildings such as Training Yards (Experimental)</English>
 	</TEXT>
 </Civ4GameText>
