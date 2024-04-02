@@ -1072,4 +1072,10 @@
 		<DefineName>AI_ENABLER_BUILDING_THRESHOLD</DefineName>
 		<iDefineIntVal>110</iDefineIntVal>
 	</Define>
+    <!-- Apply certain experimental AI features only to this player. Useful for testing.
+        Default: -1 (all players) -->
+    <Define>
+        <DefineName>EXPERIMENTAL_AI_ONLY_PLAYER</DefineName>
+        <iDefineIntVal>-1</iDefineIntVal>
+    </Define>
 </Civ4Defines>

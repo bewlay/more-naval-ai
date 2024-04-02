@@ -9861,7 +9861,8 @@ bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds, int iEnablerBuildin
 	}
 
 	// lfgr 03/2024
-	if( GC.getGameINLINE().isOption( GAMEOPTION_EXPERIMENTAL_AI ) ) {
+	int eExperimentalPlayer = GC.getDefineINT( "EXPERIMENTAL_AI_ONLY_PLAYER", -1 );
+	if( GC.getGameINLINE().isOption( GAMEOPTION_EXPERIMENTAL_AI ) && ( eExperimentalPlayer == -1 || getOwnerINLINE() == eExperimentalPlayer ) ) {
 		if( iEnablerBuildingOdds > 0 && ( eBestUnit == NO_UNIT || GC.getGameINLINE().getSorenRandNum(100, "City AI choose enabler building") < iEnablerBuildingOdds ) ) {
 			FAssert( eUnitAI != NO_UNITAI );
 			// Try constructing a building that improves our unit choice
