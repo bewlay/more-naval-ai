@@ -9878,6 +9878,7 @@ bool CvCityAI::AI_chooseUnit(UnitAITypes eUnitAI, int iOdds, int iEnablerBuildin
 					}
 
 					pushOrder( ORDER_CONSTRUCT, tEnabler.first, -1, false, false, false );
+					return true;
 				}
 			}
 		}
