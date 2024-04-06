@@ -8237,6 +8237,11 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	UnitClassTypes eUnitClass = (UnitClassTypes)kUnit.getUnitClassType();
 	int iI;
 
+	// lfgr 04/2024: Allow disabling heroes (for debugging purposes)
+	if( GC.getGameINLINE().isOption( GAMEOPTION_NO_HEROES ) && kUnit.getFreePromotions( GC.getInfoTypeForString( "PROMOTION_HERO" ) ) ) {
+		return false;
+	}
+
 	//FAssert(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) == eUnit);
 
 //FfH: Modified by Kael 05/09/2008

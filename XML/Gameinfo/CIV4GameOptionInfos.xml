@@ -629,8 +629,15 @@
 			<bDefault>0</bDefault>
 			<bVisible>1</bVisible>
 		</GameOptionInfo>
+		<GameOptionInfo>
+			<Type>GAMEOPTION_NO_HEROES</Type>
+			<Description>No Heroes</Description>
+			<Help>Disables Hero units (for debugging)</Help>
+			<bDefault>0</bDefault>
+			<bVisible>0</bVisible>
+		</GameOptionInfo>
 		<!-- DUMMY GAMEOPTIONS
-			Can be edited, including <Type>. Do not change the number of gameoptions. -->
+			May be edited, including <Type>. Do not change the number of gameoptions. -->
 		<GameOptionInfo>
 			<Type>GAMEOPTION_DUMMY_01</Type>
 			<Description>Dummy</Description>
@@ -885,13 +892,6 @@
 		</GameOptionInfo>
 		<GameOptionInfo>
 			<Type>GAMEOPTION_DUMMY_37</Type>
-			<Description>Dummy</Description>
-			<Help>Dummy</Help>
-			<bDefault>0</bDefault>
-			<bVisible>0</bVisible>
-		</GameOptionInfo>
-		<GameOptionInfo>
-			<Type>GAMEOPTION_DUMMY_38</Type>
 			<Description>Dummy</Description>
 			<Help>Dummy</Help>
 			<bDefault>0</bDefault>

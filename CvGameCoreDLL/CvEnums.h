@@ -910,6 +910,9 @@ enum GameOptionTypes				// Exposed to Python
 // Experimental AI 08/2023 lfgr
 	GAMEOPTION_EXPERIMENTAL_AI,
 
+// lfgr 04/2024
+	GAMEOPTION_NO_HEROES,
+
 // Dummy gameoptions for mod use
 	GAMEOPTION_DUMMY_01,
 	GAMEOPTION_DUMMY_02,
@@ -948,7 +951,6 @@ enum GameOptionTypes				// Exposed to Python
 	GAMEOPTION_DUMMY_35,
 	GAMEOPTION_DUMMY_36,
 	GAMEOPTION_DUMMY_37,
-	GAMEOPTION_DUMMY_38,
 
 #ifdef _USRDLL
 	NUM_GAMEOPTION_TYPES
