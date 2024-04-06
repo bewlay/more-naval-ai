@@ -8322,6 +8322,15 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 		return false;
 	}
 
+	// lfgr 04/2024: Moved here from CvCity::canTrain
+	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_SETTLERS))
+	{
+		if (kUnit.isFound())
+		{
+			return false;
+		}
+	}
+
 	if (!bTestVisible)
 	{
 		if (GC.getGameINLINE().isUnitClassMaxedOut(eUnitClass, (GET_TEAM(getTeam()).getUnitClassMaking(eUnitClass) + ((bContinue) ? -1 : 0))))

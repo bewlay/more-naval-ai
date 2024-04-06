@@ -2302,20 +2302,12 @@ bool CvCity::canUpgrade(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	}
 
 //FfH: Added by Kael 09/26/2007
-	// LFGR_TODO: Shouldn't all this be in CvPlayer::canTrain()?
 	if (kUnitInfo.getPrereqCiv() != NO_CIVILIZATION)
 	{
 	    if (kUnitInfo.getPrereqCiv() != getCivilizationType())
 	    {
 	        return false;
 	    }
-	}
-	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_SETTLERS))
-	{
-        if (kUnitInfo.isFound())
-        {
-            return false;
-        }
 	}
     UnitClassTypes eUnitClass = ((UnitClassTypes)(kUnitInfo.getUnitClassType()));
     if (::isWorldUnitClass(eUnitClass))
