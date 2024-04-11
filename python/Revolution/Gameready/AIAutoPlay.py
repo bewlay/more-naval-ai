@@ -169,9 +169,17 @@ class AIAutoPlay :
 
 	def onVictory( self, argsList ) :
 		self.checkPlayer()
+		# lfgr tweaked
+		if RevOpt.isStopOnVictory() :
+			for ePlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
+				gc.getGame().setAIAutoPlay( ePlayer, 0 )
+		
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
 #-------------------------------------------------------------------------------------------------
+		# LFGR_TODO: The following does not work
+		# (Parameter count of setForcedAIAutoPlay() is incorrect; probably isHumanDisabled() doesn't work like the
+		#   author thought)
 		for idx in range(0,gc.getMAX_CIV_PLAYERS()) :
 			playerI = gc.getPlayer(idx)
 			if(playerI.isHuman() and playerI.isHumanDisabled()):

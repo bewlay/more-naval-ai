@@ -240,6 +240,8 @@
 				get="isSaveAllDeaths" set="setSaveAllDeaths"/>
 			<option id="Refortify" key="Refortify" type="boolean" default="True"
 				get="isRefortify" set="setRefortify"/>
+			<option id="StopOnVictory" type="boolean" default="False"/>
+			<option id="StopOnRevolution" type="boolean" default="False"/>
 		</section>
 
 		<section id="ChangePlayer">

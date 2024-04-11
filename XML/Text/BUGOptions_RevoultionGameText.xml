@@ -793,6 +793,22 @@
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__REFORTIFY_HOVER</Tag>
 		<English>Refortifies units when human takes control from AIAutoplay</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__STOPONVICTORY_TEXT</Tag>
+		<English>on Victory</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__STOPONVICTORY_HOVER</Tag>
+		<English>Stop AIAutoplay when somebody wins the game</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__STOPONREVOLUTION_TEXT</Tag>
+		<English>on Revolution</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__STOPONREVOLUTION_HOVER</Tag>
+		<English>Stop AIAutoplay when a revolution occurs</English>
+	</TEXT>
 
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_REVOLUTION__CHANGEPLAYERENABLE_TEXT</Tag>
