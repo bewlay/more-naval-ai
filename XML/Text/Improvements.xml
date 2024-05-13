@@ -223,9 +223,7 @@
 	<TEXT>
 		<Tag>TXT_KEY_IMPROVEMENT_GRAVEYARD_PEDIA</Tag>
 		<English>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Host of the Einherjar. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</English>
-		<French>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Law Bringer. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</French>
-		<German>Wird der Zauber "Skelett erschaffen" auf einem Friedhof gewirkt, erheben sich 3 Skelette aus der Erde. Der Zauber "Heiligen" gew&#228;hrt einen kostenlosen Rechtsprecher, wenn er auf einem Friedhof gewirkt wird. Der Zauber "Auferstehung" gew&#228;hrt einen kostenlosen Waffenmeister, wenn er auf einem Friedhof gewirkt wird. Einen Friedhof zu pl&#252;ndern, erbringt zuf&#228;llige Ergebnisse.</German>
-		<Italian>Casting Raise Skeleton on a graveyard will grant you 3 skeletons. Casting Sanctify on a graveyard grants a free Law Bringer. Robbing a graveyard produces random results. Casting Resurrection in a graveyard produces a free Champion.</Italian>
+		<German>Wird der Zauber "Skelett erschaffen" auf einem Friedhof gewirkt, erheben sich 3 Skelette aus der Erde. Der Zauber "Heiligen" gew&#228;hrt eine kostenlose Heerschar der Einherjar, wenn er auf einem Friedhof gewirkt wird. Der Zauber "Auferstehung" gew&#228;hrt einen kostenlosen Waffenmeister, wenn er auf einem Friedhof gewirkt wird. Einen Friedhof zu pl&#252;ndern, erbringt zuf&#228;llige Ergebnisse.</German>
 		<Spanish>Al lanzar Alzar Esqueleto sobre un cementerio obtendr&#225;s 3 Esqueletos. El lanzar Santificar sobre un cementerio otorga un gratis un Einherjar. Saquear un cementerio produce resultados aleatorios. Lanzar Resurrecci&#243;n en un cementerio produce un Campe&#243;n gratis.</Spanish>
 	</TEXT>
 	<TEXT>
