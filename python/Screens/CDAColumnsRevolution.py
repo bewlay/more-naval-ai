@@ -68,12 +68,15 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 		szCannotRevolt = cityCannotRevoltStr( pCity )
 		if szCannotRevolt :
 			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
+		elif pCity.getReinforcementCounter() > 0 :
+			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), \
+					getText( "[COLOR_NEGATIVE_TEXT]City in Revolt![COLOR_REVERT][NEWLINE]Reinforcements in %d1 [NUM1:turn:turns] expected", pCity.getReinforcementCounter() )
 		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
 			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
 		elif iRevIdx >= RevUtils.revInstigatorThreshold :
 			return getText( "[COLOR_WARNING_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]May instigate a revolt[COLOR_REVERT]" )
 		elif iRevIdx >= RevUtils.alwaysViolentThreshold :
-			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]Violent revolution expected![COLOR_REVERT]" )
+			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_NEGATIVE_TEXT]Violent revolution expected![COLOR_REVERT]" )
 		else :
 			return getText( "%d1", iRevIdx ), getText( "May join a revolt" )
 
