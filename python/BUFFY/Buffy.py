@@ -13,8 +13,6 @@ from CvPythonExtensions import *
 import BugCore
 import BugPath
 import BugUtil
-import CvUtil
-import GameUtil
 import os.path
 
 gc = CyGlobalContext()

@@ -136,7 +136,6 @@
 from CvPythonExtensions import *
 from BugPath import isMac
 import ColorUtil
-import CvEventInterface
 import sys
 import time
 import traceback
@@ -848,6 +847,7 @@ def doHotSeatCheck(args):
 	iGameTurn, ePlayer = args
 	game = gc.getGame()
 	if game.isHotSeat() and ePlayer == game.getActivePlayer():
+		import CvEventInterface # lfgr 05/2024: Avoid circular import
 		CvEventInterface.getEventManager().fireEvent("SwitchHotSeatPlayer", ePlayer)
 
 def isNoEspionage():

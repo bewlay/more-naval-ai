@@ -35,7 +35,6 @@ import BugDll
 import BugInit
 import BugTypes
 import BugUtil
-import CvEventInterface
 import types
 
 # BUG - Mac Support - start
@@ -544,6 +543,7 @@ class EventsHandler(HandlerWithArgs):
 	def handle(self, element, module, clazz, dll):
 		dll = BugDll.decode(dll)
 		if self.isDllOkay(element, dll):
+			import CvEventInterface # lfgr 05/2024: Avoid circular import
 			BugUtil.callFunction(module, clazz, CvEventInterface.getEventManager(), *element.args, **element.kwargs)
 		else:
 			BugUtil.info("BugConfig - ignoring <%s> from %s.%s, requires dll version %s", element.tag, module, clazz, self.resolveDll(element, dll))
@@ -562,6 +562,7 @@ class EventHandler(HandlerWithArgs):
 	def handle(self, element, type, module, function, dll):
 		dll = BugDll.decode(dll)
 		if self.isDllOkay(element, dll):
+			import CvEventInterface # lfgr 05/2024: Avoid circular import
 			CvEventInterface.getEventManager().addEventHandler(type, BugUtil.getFunction(module, function, True, *element.args, **element.kwargs))
 		else:
 			BugUtil.info("BugConfig - ignoring <%s> %s, requires dll version %s", element.tag, type, self.resolveDll(element, dll))
