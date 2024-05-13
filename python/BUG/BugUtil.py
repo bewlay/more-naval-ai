@@ -576,6 +576,28 @@ class Timer:
 		return self
 
 
+# lfgr 04/2024: Function profiler decorator
+# Use one of the following:
+#   @profile
+#   @profile( parent = "class-name-or-path" )
+def profile( func = None, parent = None ) :
+	# type: (Optional[Callable], Optional[str]) -> Callable
+	def decorator( inner_func ) :
+		def _profiled_func( *args, **kwargs ) :
+			name = inner_func.__name__
+			if parent is not None :
+				name = parent + "." + name
+			timer = Timer( name )
+			ret = inner_func( *args, **kwargs )
+			timer.log()
+			return ret
+		return _profiled_func
+	if func is None :
+		return decorator
+	else :
+		return decorator( func )
+
+
 ## Binding and Calling Functions Dynamically
 ##
 ## (looking up module and function/class by name rather than directly in Python
