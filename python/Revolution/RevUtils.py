@@ -529,209 +529,6 @@ def getHandoverUnitTypes( city, pPlayer, compPlayer = None, bSilent = False ) :
 
 		return [iWorker,iBestDefender,iCounter,iAttack]
 
-def getUprisingUnitTypes( pCity, pRevPlayer, isCheckEnemy, bSilent = False ) :
-		# Returns list of units that can be given to violent rebel uprisings, odds of giving are set by the relative number of times a unit type appears in list
-
-		spawnableUnits = list()
-		trainableUnits = list()
-
-		owner = gc.getPlayer( pCity.getOwner() )
-		ownerPy = PyPlayer( pCity.getOwner() )
-		iOwnerEra = owner.getCurrentRealEra()
-
-		bIsBarb = pRevPlayer.isBarbarian()
-		enemyPy = None
-		if( isCheckEnemy and not bIsBarb ) :
-			enemyPy = PyPlayer( pRevPlayer.getID() )
-
-		for unitClass in range(0,gc.getNumUnitClassInfos()) :
-#			ownerUnitType = gc.getCivilizationInfo( owner.getCivilizationType() ).getCivilizationUnits(unitClass)
-			ownerUnitType = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-			
-			if ownerUnitType == -1:
-#				ownerUnitType = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-				ownerUnitType = gc.getCivilizationInfo( owner.getCivilizationType() ).getCivilizationUnits(unitClass)
-				
-			ownerUnits = ownerPy.getUnitsOfType( ownerUnitType )
-			unitInfo = gc.getUnitInfo(ownerUnitType)
-			
-			if( gc.getUnitClassInfo(unitClass).getMaxGlobalInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxPlayerInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxTeamInstances() > 0 ) :
-				continue
-
-			if( unitInfo == None ) :
-				continue
-
-			if (unitInfo.getPrereqReligion() != ReligionTypes.NO_RELIGION):
-				continue
-				
-			if( not unitInfo.getDomainType() == DomainTypes.DOMAIN_LAND ) :
-				continue
-			
-#			if( gc.getUnitClassInfo(unitClass).getMaxGlobalInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxPlayerInstances() > 0 or gc.getUnitClassInfo(unitClass).getMaxTeamInstances() > 0 ) :
-#				continue
-
-			# First check what units there are nearby
-			if( not unitInfo.getPrereqAndTech() == TechTypes.NO_TECH ) :
-				unitTechInfo = gc.getTechInfo( unitInfo.getPrereqAndTech() )
-
-				if( unitTechInfo.getEra() > iOwnerEra - 3 ) :
-					#if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel: %s requires knowledge of %s"%(unitInfo.getDescription(),unitTechInfo.getDescription()))
-					if( len(ownerUnits) > 0 ) :
-						if( ownerUnits[0].canAttack() ) :
-							if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Owner has %d %s"%(len(ownerUnits),PyInfo.UnitInfo(ownerUnitType).getDescription()))
-
-							if( unitInfo.getUnitAIType(UnitAITypes.UNITAI_ATTACK) or unitInfo.getUnitAIType(UnitAITypes.UNITAI_COUNTER) ):
-
-								# Probability of spawning units based on those nearby
-								for unit in ownerUnits :
-									if( plotDistance( unit.getX(), unit.getY(), pCity.getX(), pCity.getY() ) < 7 ) :
-										if( bIsBarb ) :
-											spawnUnitID = ownerUnitType
-										else :
-											spawnUnitID = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-										spawnableUnits.append( spawnUnitID )
-										
-										if spawnUnitID != -1:
-											if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn from owner %s"%(PyInfo.UnitInfo(spawnUnitID).getDescription()))
-											
-										if( unitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE ) :
-											if( unitTechInfo.getEra() == iOwnerEra ) :
-												if( spawnableUnits.count( spawnUnitID ) > 1 ) :
-													break
-											else :
-												if( spawnableUnits.count( spawnUnitID ) > 3 ) :
-													break
-										else :
-											if( unitTechInfo.getEra() == iOwnerEra ) :
-												if( spawnableUnits.count( spawnUnitID ) > 3 ) :
-													break
-											else :
-												if( spawnableUnits.count( spawnUnitID ) > 5 ) :
-													break
-
-								if( unitTechInfo.getEra() < iOwnerEra and unitTechInfo.getEra() >= iOwnerEra - 2) :
-									# Can spawn old units from further away
-									for unit in ownerUnits :
-										if( unit.area().getID() == pCity.area().getID() ):
-											if( bIsBarb ) :
-												spawnUnitID = ownerUnitType
-											else :
-												spawnUnitID = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-
-											if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Outdated unit in Area %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
-											if( pCity.canTrain(ownerUnitType,False,False) ) :
-												spawnableUnits.append( spawnUnitID )
-												if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn outdated unit from Area buildable %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
-
-											break
-
-					if( not enemyPy == None ) :
-						enemyUnitType = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-						enemyUnits = enemyPy.getUnitsOfType( enemyUnitType )
-						if( len( enemyUnits ) > 0 ) :
-							if( enemyUnits[0].canAttack() ) :
-								if( unitInfo.getUnitAIType( UnitAITypes.UNITAI_ATTACK )  ):
-									iCount = 0
-									for unit in enemyUnits :
-										if( plotDistance( unit.getX(), unit.getY(), pCity.getX(), pCity.getY() ) < 7 ) :
-											spawnableUnits.append( enemyUnitType )
-											if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can spawn from enemy %s"%(PyInfo.UnitInfo(enemyUnitType).getDescription()))
-
-											iCount += 1
-											if( unitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE and iCount > 1 ) :
-												break
-											elif( iCount > 3 ) :
-												break
-
-			if( pCity.canTrain(ownerUnitType,False,False) ):
-				if( unitInfo.getUnitAIType( UnitAITypes.UNITAI_ATTACK ) ):
-					if( bIsBarb ) :
-						spawnUnitID = ownerUnitType
-					else :
-						spawnUnitID = gc.getCivilizationInfo( pRevPlayer.getCivilizationType() ).getCivilizationUnits(unitClass)
-
-					trainableUnits.append( spawnUnitID )
-					if( unitInfo.getCombat() > 4 ) :
-						trainableUnits.append( spawnUnitID )
-						if( unitInfo.getCombat() > 15 ) :
-							trainableUnits.append( spawnUnitID )
-					if( LOG_DEBUG and not bSilent ) : CvUtil.pyPrint("Rebel:  Can build %s"%(PyInfo.UnitInfo(ownerUnitType).getDescription()))
-
-		if( len(spawnableUnits) < 1 ) :
-			spawnableUnits = trainableUnits
-
-		return spawnableUnits
-
-def giveRebelUnitFreePromotion( pUnit ) :
-	# TODO: Add provisions for hilly/forested cities giving special promotions
-	global iCommando, iGuerilla3, iWoodsman3, iSentry, iDrill2
-
-	if( iGuerilla3 == None ) :
-		try :
-			iGuerilla3 = CvUtil.findInfoTypeNum(gc.getPromotionInfo,gc.getNumPromotionInfos(),RevDefs.sXMLGuerrilla3)
-		except :
-			pass
-
-	if( iWoodsman3 == None ) :
-		try :
-			iWoodsman3 = CvUtil.findInfoTypeNum(gc.getPromotionInfo,gc.getNumPromotionInfos(),RevDefs.sXMLWoodsman3)
-		except :
-			pass
-
-	if( iSentry == None ) :
-		try :
-			iSentry = CvUtil.findInfoTypeNum(gc.getPromotionInfo,gc.getNumPromotionInfos(),RevDefs.sXMLSentry)
-		except :
-			pass
-
-	if( iDrill2 == None ) :
-		try :
-			iDrill2 = CvUtil.findInfoTypeNum(gc.getPromotionInfo,gc.getNumPromotionInfos(),RevDefs.sXMLDrill2)
-		except :
-			pass
-
-	if( iCommando == None ) :
-		try :
-			iCommando = CvUtil.findInfoTypeNum(gc.getPromotionInfo,gc.getNumPromotionInfos(),RevDefs.sXMLCommando)
-		except :
-			pass
-
-	if( not iGuerilla3 == None and pUnit.isPromotionValid(iGuerilla3) and  25 > game.getSorenRandNum(100,'Revolt - Promotion odds') ) :
-		pUnit.setHasPromotion( iGuerilla3, True )
-		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Guerilla3 promotion"%(pUnit.getName()))
-		return
-
-	if( not iWoodsman3 == None and pUnit.isPromotionValid(iWoodsman3) and  30 > game.getSorenRandNum(100,'Revolt - Promotion odds') ) :
-		pUnit.setHasPromotion( iWoodsman3, True )
-		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Woodsman3 promotion"%(pUnit.getName()))
-		return
-
-	if( not iSentry == None and pUnit.isPromotionValid(iSentry) and  40 > game.getSorenRandNum(100,'Revolt - Promotion odds') ) :
-		pUnit.setHasPromotion( iSentry, True )
-		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Sentry promotion"%(pUnit.getName()))
-		return
-
-	if( not iCommando == None and pUnit.isPromotionValid(iCommando) and  40 > game.getSorenRandNum(100,'Revolt - Promotion odds') ) :
-		pUnit.setHasPromotion( iCommando, True )
-		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Commando promotion"%(pUnit.getName()))
-		return
-
-	if( not iDrill2 == None and pUnit.isPromotionValid(iDrill2) ) :
-		pUnit.setHasPromotion( iDrill2, True )
-		if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Drill2 promotion"%(pUnit.getName()))
-		return
-	else :
-		if( not iSentry == None and pUnit.isPromotionValid(iSentry) ) :
-			pUnit.setHasPromotion( iSentry, True )
-			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Sentry promotion"%(pUnit.getName()))
-			return
-		elif( not iCommando == None and pUnit.isPromotionValid(iCommando) ) :
-			pUnit.setHasPromotion( iCommando, True )
-			if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - %s starting with Commando promotion"%(pUnit.getName()))
-			return
-
-	if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - No promotion possible for %s"%(pUnit.getName()))
-
 
 def computeWarOdds( attacker, victim, area, allowAttackerVassal = True, allowVictimVassal = True, allowBreakVassal = True ) :
 
@@ -833,57 +630,47 @@ def computeWarOdds( attacker, victim, area, allowAttackerVassal = True, allowVic
 		return [warOdds,attackerTeam,victimTeam]
 
 
-def giveTechs( toPlayer, fromPlayer, expensiveVars = [1,3], doTakeAway = True ) :
+# lfgr 04/2024: Tweaked
+# Previous values (not so suitable for FfH): iNumDenyExpensive = 1, iNumRandDenyExpensive = 3
+def giveTechs( toPlayer, fromPlayer, iNumDenyExpensive = 0, iNumRandDenyExpensive = 1, doTakeAway = True ) :
+		# LFGR_TODO: Should probably give even expesive ones with some probability; FfH rewards beelining military techs
 
 		# Give all techs known by fromPlayer, except a few of the most expensive
-		knownTechs = list()
-		mostExpensive = list()
-		minMostExpensive = 0
-		numMostExpensive = expensiveVars[0] + game.getSorenRandNum(expensiveVars[1],'Rev: Pick num techs')
+		leGiveTechs = list()
 
 		fromPlayerTeam = gc.getTeam( fromPlayer.getTeam() )
 		toPlayerTeam = gc.getTeam( toPlayer.getTeam() )
 
-		for techID in range(0,gc.getNumTechInfos()) :
-			if gc.getCivilizationInfo(toPlayer.getCivilizationType()).isCivilizationFreeTechs(techID):
-				knownTechs.append( techID )
-			elif toPlayer.canEverResearch( techID):
-				if( fromPlayerTeam.isHasTech( techID ) ) :
-					knownTechs.append( techID )
-					if( gc.getTechInfo( techID ).getResearchCost() > minMostExpensive ) :
-						if( len(mostExpensive) < numMostExpensive ) :
-							mostExpensive.append( techID )
-						else :
-							for j in range(0,len(mostExpensive)) :
-								if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() == minMostExpensive ) :
-									mostExpensive.remove( mostExpensive[j] )
-									break
-							mostExpensive.append( techID )
-							minMostExpensive = gc.getTechInfo( mostExpensive[0] ).getResearchCost()
-							for j in range(0,len(mostExpensive)) :
-								if( gc.getTechInfo( mostExpensive[j] ).getResearchCost() < minMostExpensive ) :
-									minMostExpensive = gc.getTechInfo( mostExpensive[j] ).getResearchCost()
-
-			if( doTakeAway and toPlayerTeam.isHasTech(techID) and toPlayerTeam.getNumMembers() == 1 ) :
+		for eTech in xrange( gc.getNumTechInfos() ) :
+			if doTakeAway and toPlayerTeam.isHasTech( eTech ) and toPlayerTeam.getNumMembers() == 1 :
 				# take away all techs
 				#if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Taking away %s"%(PyInfo.TechnologyInfo(techID).getDescription()))
-				toPlayerTeam.setHasTech(techID,False,toPlayer.getID(),False,False)
+				toPlayerTeam.setHasTech( eTech, False, toPlayer.getID(), False, False )
 
-		if( doTakeAway ) :
-			if( not toPlayer.getTechScore() == 0 ) :
+			if gc.getCivilizationInfo( toPlayer.getCivilizationType() ).isCivilizationFreeTechs( eTech ):
+				leGiveTechs.append( eTech )
+			elif toPlayer.canEverResearch( eTech ) and not toPlayerTeam.isHasTech( eTech ) and fromPlayerTeam.isHasTech( eTech ) :
+				leGiveTechs.append( eTech )
+
+		if doTakeAway :
+			if toPlayer.getTechScore() != 0 :
 				# Shouldn't have to do this, but tech scores never came out to zero for reincarnated civs ...
 				if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Resetting tech score ...")
 				toPlayer.changeTechScore( -toPlayer.getTechScore() )
 
-		for techID in knownTechs :
-			if( not techID in mostExpensive ) :
-				#if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Giving rev %s"%(PyInfo.TechnologyInfo(techID).getDescription()))
-				toPlayerTeam.setHasTech(techID,True,toPlayer.getID(),False,False)
-			else :
-				if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - NOT giving rev all of %s"%(PyInfo.TechnologyInfo(techID).getDescription()))
-				techCost = toPlayerTeam.getResearchCost( techID )
+
+		leGiveTechs.sort( key = lambda eTech : -gc.getTechInfo( eTech ).getResearchCost() )
+		iNumDenyExpensive += game.getSorenRandNum(iNumRandDenyExpensive, 'Rev: Pick denied techs' )
+
+		for idx, eTech in enumerate( leGiveTechs ) :
+			if idx < iNumDenyExpensive :
+				if LOG_DEBUG : CvUtil.pyPrint( "  Revolt - NOT giving rev all of %s" % (PyInfo.TechnologyInfo( eTech ).getDescription()) )
+				techCost = toPlayerTeam.getResearchCost( eTech )
 				maxFreeResearch = techCost*0.75
-				toPlayerTeam.setResearchProgress( techID, game.getSorenRandNum(int(maxFreeResearch),'RevUtils: free research'), toPlayer.getID() )
+				toPlayerTeam.setResearchProgress( eTech, game.getSorenRandNum(int(maxFreeResearch),'RevUtils: free research'), toPlayer.getID() )
+			else :
+				if LOG_DEBUG : CvUtil.pyPrint( "  Revolt - Giving rev %s" % (PyInfo.TechnologyInfo( eTech ).getDescription()) )
+				toPlayerTeam.setHasTech(eTech,True,toPlayer.getID(),False,False)
 
 
 ########################## City helper functions ###############################
@@ -1095,6 +882,7 @@ def doRevRequestDeniedPenalty( pCity, capitalArea, revIdxInc = 100, bExtraHomela
 	else :
 		pCity.changeRevolutionIndex( int(max([revIdxInc + 12*min([localRevIdx,20]), .5*revIdxInc])) )
 
+	# Increase rev-related anger to 3*deniedTurns, but change no more than 2*deniedTurns
 	if( pCity.getRevRequestAngerTimer() < 3*deniedTurns ) :
 		pCity.changeRevRequestAngerTimer( min([2*deniedTurns, 3*deniedTurns - pCity.getRevRequestAngerTimer()]) )
 	pCity.changeRevolutionCounter( deniedTurns )
@@ -1219,35 +1007,6 @@ def debugHandoverUnitTypes( cityStr, iTakeoverPlayer, bDoOwnerAsComp ) :
 					compPlayer = gc.getPlayer(idx)
 
 				unitList = getHandoverUnitTypes( pCity, takeoverPlayer, compPlayer, False )
-
-				unitStr = "["
-				for unitType in unitList :
-					unitStr += "%s, "%(PyInfo.UnitInfo(unitType).getDescription())
-				unitStr += "]"
-
-				CvUtil.pyPrint( unitStr )
-
-				return
-
-	print "Did not find city %s"%(cityStr)
-
-def debugUprisingUnitTypes( cityStr, iRevPlayer, bCheckEnemy ) :
-
-	pRevPlayer = gc.getPlayer(iRevPlayer)
-
-	for idx in range(0,gc.getMAX_PLAYERS()) :
-
-		pyOwner = PyPlayer( idx )
-		cityList = pyOwner.getCityList()
-
-		for city in cityList :
-			pCity = city.GetCy()
-			if( cityStr in pCity.getName() ) :
-				CvUtil.pyPrint( "Found city %s owned by %s"%(cityStr,gc.getPlayer(idx).getCivilizationDescription(0)) )
-				CvUtil.pyPrint( "Initiating mock revolt by %s"%(pRevPlayer.getCivilizationDescription(0)) )
-
-
-				unitList = getUprisingUnitTypes( pCity, pRevPlayer, bCheckEnemy, False )
 
 				unitStr = "["
 				for unitType in unitList :

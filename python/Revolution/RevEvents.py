@@ -490,6 +490,8 @@ def onCityAcquired( argsList ):
 
 def checkRebelBonuses( argsList ) :
 		# Give bonuses to a rebel player who successfully captures one of their rebellious cities
+		# LFGR_TODO: Move to RevSpawning
+		# LFGR_TODO: Randomly spread religion
 		owner,playerType,pCity,bConquest,bTrade = argsList
 
 		newOwnerID = pCity.getOwner()
@@ -734,6 +736,7 @@ def updateRevolutionIndices( argsList ) :
 		
 		if( newOwner.isRebel() ) :
 			if( newOwner.getNumCities() > 1 and RevData.revObjectGetVal( newOwner, 'CapitalName' ) == CvUtil.convertToStr(pCity.getName()) ) :
+				# LFGR_TODO: Too fragile for my taste.
 				# Rebel has captured their instigator city, make this their capital
 				if( LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Rebel %s have captured their instigator city, %s!  Moving capital."%(newOwner.getCivilizationDescription(0),pCity.getName()))
 				if( newOwner.isHuman() ) :

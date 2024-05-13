@@ -171,6 +171,7 @@ class AIAutoPlay :
 		self.checkPlayer()
 		# lfgr tweaked
 		if RevOpt.isStopOnVictory() :
+			CvUtil.pyPrint( "Stopping autoplay on victory" )
 			for ePlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
 				gc.getGame().setAIAutoPlay( ePlayer, 0 )
 		

@@ -72,12 +72,6 @@ sXMLIron = 'TECH_IRON_WORKING'
 sXMLGuilds = 'TECH_GUILDS'
 
 # Promotions
-# Given to rebel units
-sXMLWoodsman3 = 'PROMOTION_WOODSMAN2'
-sXMLSentry = 'PROMOTION_SENTRY'
-sXMLDrill2 = 'PROMOTION_DRILL2'
-sXMLGuerilla3 = 'PROMOTION_GUERILLA2'
-sXMLCommando = 'PROMOTION_COMMANDO'
 # Given to viking style BarbCivs
 sXMLAmphibious = 'PROMOTION_AMPHIBIOUS'
 
