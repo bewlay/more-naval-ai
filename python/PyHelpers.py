@@ -6,6 +6,8 @@ import CvUtil
 gc = CyGlobalContext()
 localText = CyTranslator()
 
+CIV_PLAYERS = range( gc.getMAX_CIV_PLAYERS() )
+
 
 # Improved PyHelpers 05/2020 lfgr: getText with varargs
 def getText( szTag, *args ) :
@@ -19,6 +21,20 @@ def all( bs ) :
 		if not b :
 			return False
 	return True
+
+# lfgr 04/2024: Helper function
+def any( bs ) :
+	# type: ( Iterable[bool] ) -> bool
+	for b in bs :
+		if b :
+			return True
+	return False
+
+# lfgr 04/2024: Helper function
+def sorenRandChoice( l, msg = None ) :
+	# type: ( Sequence, str ) -> Any
+	assert len( l ) > 0
+	return l[gc.getGame().getSorenRandNum( len( l ), msg or "Random choice" )]
 
 
 # Improved PyHelpers 04/2020 lfgr: Allow calling underlying CyPlayer, CyGame, ... directly

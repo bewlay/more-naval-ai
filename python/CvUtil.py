@@ -5,7 +5,6 @@
 import traceback
 
 # for file ops
-import os
 import sys
 
 # For Civ game code access
@@ -243,7 +242,19 @@ def findInfoTypeNum(infoGetter, numInfos, typeStr):
 	pyAssert( infoGetter( idx ).getType() == typeStr, "Not the right type: %s" %(typeStr,) )
 	return idx
 
-# lfgr 10/2019 - 03/2024
+# lfgr 10/2019 - 04/2024
+def findBonusNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getBonusInfo, gc.getNumBonusInfos(), sTypeStr )
+
+def findBuildingNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getBuildingInfo, gc.getNumBuildingInfos(), sTypeStr )
+
+def findBuildingClassNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getBuildingClassInfo, gc.getNumBuildingClassInfos(), sTypeStr )
+
 def findCivilizationNum( sTypeStr ) :
 	# type: (str) -> int
 	return findInfoTypeNum( gc.getCivilizationInfo, gc.getNumCivilizationInfos(), sTypeStr )
@@ -251,6 +262,14 @@ def findCivilizationNum( sTypeStr ) :
 def findLeaderNum( sTypeStr ) :
 	# type: (str) -> int
 	return findInfoTypeNum( gc.getLeaderHeadInfo, gc.getNumLeaderHeadInfos(), sTypeStr )
+
+def findPromotionNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getPromotionInfo, gc.getNumPromotionInfos, sTypeStr )
+
+def findUnitClassNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getUnitClassInfo, gc.getNumUnitClassInfos, sTypeStr )
 # lfgr end
 
 def getInfo(strInfoType, strInfoName):	# returns info for InfoType
