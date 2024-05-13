@@ -4387,7 +4387,7 @@ class CvMainInterface:
 						deltaTrend = 0
 					adjIndex = max([revIndex - abs(deltaTrend),0])
 
-					print "RevStatus bar: ", revIndex, pHeadSelectedCity.getLocalRevIndex(), deltaTrend, adjIndex
+					# print "RevStatus bar: ", revIndex, pHeadSelectedCity.getLocalRevIndex(), deltaTrend, adjIndex
 
 					dangerRed  = "<color=230,0,0,255>" + localText.getText("TXT_KEY_REV_WATCH_DANGER", ())  + "<color=255,255,255,255>"
 					danger  = "<color=230,120,0,255>"  + localText.getText("TXT_KEY_REV_WATCH_DANGER", ())  + "<color=255,255,255,255>"
@@ -4414,7 +4414,7 @@ class CvMainInterface:
 					screen.setStackedBarColorsRGB( "RevStatusBar1", 0, 100, 100, 100, 255 )
 					screen.setBarPercentage( "RevStatusBar1", 0, fPercent1 )
 
-					print "Percentages: ", fPercent1, fPercent2
+					# print "Percentages: ", fPercent1, fPercent2
 
 					if( deltaTrend < 0 ) :
 						screen.setStackedBarColorsRGB( "RevStatusBar1", 1, 0, 230, 0, 255 )
@@ -4440,7 +4440,7 @@ class CvMainInterface:
 						szBuffer = szBuffer + szTempBuffer
 					szNewBuffer = "<font=4>"
 					szNewBuffer = szNewBuffer + szBuffer
-					szNewBuffer = szNewBuffer + "</font>"
+					szNewBuffer = szNewBuffer + "</font>" # LFGR_TODO: unused
 					screen.setLabel( "DefenseText", "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 270, 40, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_HELP_DEFENSE, -1, -1 )
 					screen.show( "DefenseText" )
 

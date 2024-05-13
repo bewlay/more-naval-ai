@@ -908,7 +908,7 @@ class CvSomnium:
 
                 pLeftPlayer = gc.getPlayer(iPlayer)
                 iPlayerGold = pLeftPlayer.getGold()
-		iLeftPlayerTeam = pLeftPlayer.getTeam()
+                iLeftPlayerTeam = pLeftPlayer.getTeam()
                 iRightPlayerTeam = pRightPlayer.getTeam()
                 if iRightPlayerTeam == iLeftPlayerTeam : return [["gold", [iGold for iGold in self.gameAIGoldAntes if iGold <= iPlayerGold]]]
 
@@ -938,7 +938,7 @@ class CvSomnium:
                 pLeftPlayer = gc.getPlayer(iPlayer)
                 iLeftGold = pLeftPlayer.getGold()
                 iRightGold = pRightPlayer.getGold()
-		iLeftPlayerTeam = pLeftPlayer.getTeam()
+                iLeftPlayerTeam = pLeftPlayer.getTeam()
                 iRightPlayerTeam = pRightPlayer.getTeam()
 
                 lGoldAntes = [["gold", [iGold for iGold in self.gameMPGoldAntes if (iGold <= iLeftGold) and (iGold <= iRightGold)]]]
