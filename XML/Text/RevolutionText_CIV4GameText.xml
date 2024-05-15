@@ -161,18 +161,18 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_PREPARING_WAR</Tag>
-		<English>preparing for WAR!!!  You should make your final preparations, as the rebels will strike very soon ...</English>
-		<French>eparing pour la GUERRE ! ! !  Vous devriez faire vos pr&#233;parations finales, car les rebelles frapperont tr&#232;s bient&#244;t...</French>
-		<German>KRIEGSVORBEREITUNGEN!!!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sehr bald zuschlagen werden...</German>
-		<Italian>preparandosi alla GUERRA!!!  Affretta i tuoi preparativi, poich&#232; i ribelli colpiranno molto presto ...</Italian>
+		<English>preparing for WAR!  You should make your final preparations, as the rebels will strike very soon ...</English>
+		<French>eparing pour la GUERRE !  Vous devriez faire vos pr&#233;parations finales, car les rebelles frapperont tr&#232;s bient&#244;t...</French>
+		<German>KRIEGSVORBEREITUNGEN!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sehr bald zuschlagen werden...</German>
+		<Italian>preparandosi alla GUERRA!  Affretta i tuoi preparativi, poich&#232; i ribelli colpiranno molto presto ...</Italian>
 		<Spanish>preparandose para la GUERRA.  Deber&#237;as hacer las &#250;ltimas preparaciones, dado que los rebeldes atacar&#225;n muy pronto ...</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_JOINING_WAR</Tag>
-		<English>preparing for WAR!!!  You should make your final preparations, as the rebels will join the %s very soon ...</English>
-		<French>pr&#233;paration &#224; la GUERRE ! ! !  Vous devriez faire vos pr&#233;parations finales, car les rebelles joindront le %s tr&#232;s bient&#244;t...</French>
-		<German>KRIEGSVORBEREITUNGEN!!!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sich sehr bald mit %s vereinen werden ...</German>
-		<Italian>preparandosi alla GUERRA!!!  Affretta i tuoi preparativi, poich&#232; i ribelli si uniranno al/la %s molto presto ...</Italian>
+		<English>preparing for WAR!  You should make your final preparations, as the rebels will join the %s very soon ...</English>
+		<French>pr&#233;paration &#224; la GUERRE !  Vous devriez faire vos pr&#233;parations finales, car les rebelles joindront le %s tr&#232;s bient&#244;t...</French>
+		<German>KRIEGSVORBEREITUNGEN!  Sie sollten Ihre Vorbereitungen abschlie&#223;en, da die Aufr&#252;hrer sich sehr bald mit %s vereinen werden ...</German>
+		<Italian>preparandosi alla GUERRA!  Affretta i tuoi preparativi, poich&#232; i ribelli si uniranno al/la %s molto presto ...</Italian>
 		<Spanish>preparandose para la GUERRA.  Deber&#237;as hacer las &#250;ltimas preparaciones, dado que los rebeldes se uniran a la %s muy pronto ...</Spanish>
 	</TEXT>
 	<TEXT>
@@ -876,9 +876,9 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_REV_MESS_CEDE</Tag>
-		<English>Under pressure from rebel groups, %s have ceded control of %s to %s!</English>
+		<English>Under pressure from rebel groups, %s has ceded control of %s to %s!</English>
 		<French>Sous pression des groupes rebelles, %s ont c&#233;d&#233; la commande de %s to %s!</French>
-		<German>Unter dem Druck von Rebellengruppen haben %s die Kontrolle von %s an %s &#252;bergeben!</German>
+		<German>Unter dem Druck von Rebellengruppen hat %s die Kontrolle von %s an %s &#252;bergeben!</German>
 		<Italian>Sotto pressione di gruppi ribelli, %s ha ceduto il controllo di %s a: %s!</Italian>
 		<Spanish>&#161;Bajo la presi&#243;n de grupos rebeldes, %s ha cedido el control de %s a: %s!</Spanish>
 	</TEXT>

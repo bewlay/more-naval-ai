@@ -6,6 +6,7 @@ import BugUtil
 import CvUtil
 import RevData
 import RevDefs
+import RevMessages
 import RevUnits
 import RevUtils
 
@@ -155,14 +156,14 @@ def createRebelUnits( pCity, pRevPlayer, iX, iY, iNumUnits, iRebelsIn3 = 0, iReb
 	citySpawnCache = RevUnits.CitySpawnCache( pCity, pRevPlayer, iNumUnits, iRebelsIn3, iRebelsIn6 )
 	lpNewUnits = []
 
+	# Counter
+	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iNumUnits // 4, "COUNTER_DEFENSE", iX, iY ) )
+
 	# Healers
 	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 2, iNumUnits // 5 ), "HEALER", iX, iY, bOptional = True ) )
 	
 	# Support
 	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 1, iNumUnits // 8 ), "SUPPORT", iX, iY, bOptional = True ) )
-	
-	# Counter
-	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iNumUnits // 4, "COUNTER_DEFENSE", iX, iY ) )
 
 	# Bulk of the army (always >= 50% of units)
 	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iNumUnits - len( lpNewUnits ), "ATTACK", iX, iY ) )
@@ -180,16 +181,18 @@ def createRebelCityUnits( pCity, pRevPlayer, iNumUnits ) :
 	lpNewUnits = []
 	
 	# Defenders
-	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 2, iNumUnits // 3 ), "CITY_DEFENSE", iX, iY ) )
+	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iNumUnits // 2, "CITY_DEFENSE", iX, iY ) )
+
+	iRemainingUnits = iNumUnits - len( lpNewUnits )
+
+	# Counter defense
+	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iRemainingUnits // 2, "COUNTER_DEFENSE", iX, iY ) )
 
 	# Healers
-	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 1, iNumUnits // 8 ), "HEALER", iX, iY, bOptional = True ) )
+	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 1, iRemainingUnits // 4 ), "HEALER", iX, iY, bOptional = True ) )
 
 	# Support
-	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 1, iNumUnits // 6 ), "SUPPORT", iX, iY, bOptional = True ) )
-	
-	# Counter defense
-	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 2, iNumUnits // 4 ), "COUNTER_DEFENSE", iX, iY ) )
+	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( min( 1, iRemainingUnits // 5 ), "SUPPORT", iX, iY, bOptional = True ) )
 	
 	# Attackers (remainder)
 	lpNewUnits.extend( citySpawnCache.spawnUnitsByRule( iNumUnits - len( lpNewUnits ), "ATTACK", iX, iY ) )
@@ -260,76 +263,7 @@ def evacuateEnemyUnits( iX, iY, pPlayer, bInjure = False, bAllowAtWar = False, b
 
 ### Main functions
 
-# lfgr: Extracted from Revolution.py
-def announceRevolutionaries( eMotherPlayer, pRevPlayer, iX, iY, bJoinRev ) :
-	# type: ( int, CyPlayer, int, int, bool ) -> None
-	""" Announce revolution to all players """
-	for ePlayer in xrange( gc.getMAX_CIV_PLAYERS() ) :
-		if gc.getPlayer( ePlayer ) is None :
-			continue
-		# LFGR_TODO: Better text handling
-		if gc.getPlayer( ePlayer ).canContact( eMotherPlayer ) or ePlayer == eMotherPlayer :
-			eColor = 7
-			if pRevPlayer.isBarbarian() :
-				if ePlayer == eMotherPlayer :
-					mess = "<color=255,0,0,255>" + getText( "TXT_KEY_REV_MESS_YOU_BARB" )
-				else :
-					mess = "<color=255,0,0,255>" + getText( "TXT_KEY_REV_MESS_VIOLENT" ) + ' ' + PyPlayer( eMotherPlayer ).getCivilizationName() + '!!!'
-					mess += "  " + getText("TXT_KEY_REV_MESS_BARB" )
-			else :
-				if ePlayer == eMotherPlayer :
-					mess = "<color=255,0,0,255>"
-					if bJoinRev :
-						mess += getText("TXT_KEY_REV_MESS_JOIN",pRevPlayer.getNameKey(), pRevPlayer.getCivilizationDescription(0) )
-					else :
-						mess += getText("TXT_KEY_REV_MESS_YOU_RISEN", pRevPlayer.getNameKey(), pRevPlayer.getCivilizationDescription(0) )
-				else :
-					mess = ""
-
-					if ePlayer == pRevPlayer.getID() :
-						mess += "<color=0,255,0,255>"
-						eColor = 8
-					else :
-						mess += "<color=255,0,0,255>"
-						eColor = 7
-
-					mess += getText( "TXT_KEY_REV_MESS_VIOLENT" ) + ' ' + PyPlayer( eMotherPlayer ).getCivilizationName() + '!!!'
-					if bJoinRev :
-						mess += "  " + getText( "TXT_KEY_REV_MESS_JOIN",pRevPlayer.getName(), pRevPlayer.getCivilizationDescription(0) )
-					else :
-						mess += "  " + getText("TXT_KEY_REV_MESS_RISEN", pRevPlayer.getCivilizationDescription(0), pRevPlayer.getNameKey() )
-
-			if ePlayer == eMotherPlayer :
-				CyInterface().addMessage(ePlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(eColor), iX, iY, True, True)
-			elif ePlayer == pRevPlayer.getID() :
-				CyInterface().addMessage(ePlayer, true, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(eColor), iX, iY, False, False)
-			else :
-				CyInterface().addMessage(ePlayer, false, gc.getDefineINT("EVENT_MESSAGE_TIME"), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(eColor), -1, -1, False, False)
-
-# lfgr: Extracted from Revolution.py
-def announceReinforcements( pCity, pRevPlayer ) :
-	# type: (CyCity, CyPlayer) -> None
-	pRevTeam = gc.getTeam( pRevPlayer.getTeam() )
-	
-	for ePlayer in CIV_PLAYERS :
-		msg = None
-		bImportant = True
-		bPositive = False
-		if pCity.getOwner() == ePlayer :
-			msg = getText( "TXT_KEY_REV_MESS_REINFORCEMENTS",pRevPlayer.getNameKey(), pCity.getName() )
-		elif pRevTeam.isAtWar( gc.getPlayer( ePlayer ).getTeam() ) and pRevPlayer.canContact( ePlayer ) :
-			msg = getText( "TXT_KEY_REV_MESS_REINFORCEMENTS",pRevPlayer.getNameKey(), pCity.getName() )
-			bImportant = False
-		elif pRevPlayer.getID() == ePlayer :
-			msg = getText( "TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",pRevPlayer.getCivilizationDescription(0), pCity.getName() )
-			bPositive = True
-		
-		if msg :
-			CyInterface().addMessage( ePlayer, bImportant, gc.getDefineINT("EVENT_MESSAGE_TIME"), msg,
-					bImportant and "AS2D_CITY_REVOLT" or None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT,
-					bImportant and CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath() or None,
-					bPositive and ColorTypes(8) or ColorTypes(7), pCity.getX(), pCity.getY(), bImportant, bImportant )
-
+# LFGR_TODO: Move elsewhere
 # lfgr: Extracted from Revolution.py
 def setupRevPlayer( pMotherPlayer, pRevPlayer, lpCities, bIsJoinWar ) :
 	# type: ( CyPlayer, CyPlayer, Sequence[CyCity], bool ) -> None
@@ -510,6 +444,8 @@ def spawnRevolutionaries( pCity, iRevCityIdx, pRevPlayer, bJoinRev ) :
 		# Some revs die when taking control of city
 		iNumUnits = min( 1, iNumUnits * 9 // 10 )
 
+		# LFGR_TODO: This part is repeated in Revolution.py, reuse!
+
 		# Turn off rebellious city capture logic, all components handled here
 		RevData.setRevolutionPlayer( pCity, -1 )
 
@@ -682,7 +618,7 @@ def spawnReinforcements( pCity, pRevPlayer, iRebelsIn3, iRebelsIn6 ) :
 	iSpawnX, iSpawnY = revSpawnLoc
 
 	# Announcements to all relevant players
-	announceReinforcements( pCity, pRevPlayer )
+	RevMessages.announceReinforcements( pCity, pRevPlayer )
 
 	# Compute number of spawned units
 	iNumUnits = getNumReinforceUnits( pCity, pRevPlayer, iRebelsIn3 )
@@ -699,6 +635,7 @@ def spawnReinforcements( pCity, pRevPlayer, iRebelsIn3, iRebelsIn6 ) :
 	
 	return lpNewUnits
 
+# LFGR_TODO: Move elsewhere
 # lfgr: extracted from Revolution.py
 def applyEndRevoltEffect( pCity, iRevIdxFactor, iRevIdxPerTurnFactor, iMinEffect, bRealEnd = True ) :
 	# type: (CyCity, int, int, int, bool) -> None

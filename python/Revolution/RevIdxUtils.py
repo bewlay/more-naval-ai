@@ -24,13 +24,43 @@ gc = CyGlobalContext()
 game = CyGame()
 
 
-# Constants
-SEPARATOR = u"-----------------------"
-NL_SEPARATOR = u"\n" + SEPARATOR
+# Gameplay-related constants
+BUYOFF_REV_IDX_BONUS = 200
+BUYOFF_MAX_REV_IDX = int( RevDefs.revReadyFrac * RevDefs.revInstigatorThreshold )
+
+
+# Helper constants
+_SEPARATOR = u"-----------------------"
+_NL_SEPARATOR = u"\n" + _SEPARATOR
+
+
+# Event-based functions
+
+def calmDownCity( pCity, iPercent, bHandedOver = False ) :
+	# type: ( CyCity, int, bool ) -> None
+	"""
+	Reduce RevIdx in the given city by the given percentage of the previous RevIdx.
+	Also caps RevIdx by the instigator threshold, or a lower value if bHandedOver is True.
+	"""
+	iNewRevIdx = pCity.getRevolutionIndex() * (100-iPercent) / 100
+	if bHandedOver :
+		iCap = int( .8 * RevDefs.revReadyFrac * RevDefs.revInstigatorThreshold )
+	else :
+		iCap = RevDefs.revInstigatorThreshold
+	pCity.setRevolutionIndex( min( iNewRevIdx, iCap ) )
+
+	if pCity.getNumRevolts( pCity.getOwner() ) > 2 :
+		pCity.changeNumRevolts( pCity.getOwner(), -2 )
+	elif pCity.getNumRevolts( pCity.getOwner() ) > 0 :
+		pCity.changeNumRevolts( pCity.getOwner(), -1 )
+
+	# Other changes handled by acquired city logic
+
+
 
 
 # Source: https://stackoverflow.com/questions/15390807/integer-square-root-in-python
-def isqrt( n ) :
+def _isqrt( n ) :
 	"""
 	Newton's method for exact integer square root.
 	Avoids floating-point arithmetic for multiplayer
@@ -76,7 +106,7 @@ def coloredRevIdxFactorStr( iRevIdx ) :
 		return sRevIdx
 
 # TODO: Move this code below. It's only used once.
-def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False ) :
+def _adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False ) :
 	# type (int, CyPlayer) -> (int, unicode)
 	"""
 	Adjust given raw RevIdx for Game speed and other modifiers. Used for both local and national RevIdx.
@@ -89,13 +119,13 @@ def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False
 	# Adjust index accumulation for varying game speeds
 	fGameSpeedMod = RevUtils.getGameSpeedMod() # TODO: Remove floating-point arithmetic
 	if fGameSpeedMod != 1 :
-		szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", modAsPercent( fGameSpeedMod ) )
+		szHelp += u"\n" + getText( "[ICON_BULLET]Game speed modifier: %D1%", _modAsPercent( fGameSpeedMod ) )
 
 	fMod = RevOpt.getIndexModifier()  # TODO: Make constant
 	if pPlayer.isHuman() :
 		fMod *= RevOpt.getHumanIndexModifier()  # TODO: Make constant
 	if fMod != 1 :
-		szHelp += u"\n" + getText( "[ICON_BULLET]Modifier: %D1%", modAsPercent( fMod ) )
+		szHelp += u"\n" + getText( "[ICON_BULLET]Modifier: %D1%", _modAsPercent( fMod ) )
 
 	iOffset = int( RevOpt.getIndexOffset() )  # TODO: Make int constant
 	if pPlayer.isHuman() :
@@ -107,17 +137,17 @@ def adjustedRevIdxAndFinalModifierHelp( iRawIdx, pPlayer, bColorFinalIdx = False
 
 	if szHelp != u"" :
 		if bColorFinalIdx :
-			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iAdjustedIdx ) )
+			szHelp += _NL_SEPARATOR + u"\n" + getText( "Adjusted: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iAdjustedIdx ) )
 		else :
-			szHelp += NL_SEPARATOR + u"\n" + getText( "Adjusted: %D1[ICON_INSTABILITY]", iAdjustedIdx )
+			szHelp += _NL_SEPARATOR + u"\n" + getText( "Adjusted: %D1[ICON_INSTABILITY]", iAdjustedIdx )
 
 	return iAdjustedIdx, szHelp
 
-def modAsPercent( fMod ) :
+def _modAsPercent( fMod ) :
 	""" Converts a modifier (such as 0.7) to a percentage (such as -30) """
 	return int( ( fMod - 1 ) * 100 )
 
-def computeInfoRevEffectsAndHelp( lpInfoList, valueFunc, szTemplate, bColor ) :
+def _computeInfoRevEffectsAndHelp( lpInfoList, valueFunc, szTemplate, bColor ) :
 	# type: (List[CvInfoBase], Callable[[CvInfoBase], int], str, bool) -> Iterator[Tuple[int, unicode]]
 	""" Generic function to compute and add up effects from a list of infos. """
 
@@ -130,7 +160,7 @@ def computeInfoRevEffectsAndHelp( lpInfoList, valueFunc, szTemplate, bColor ) :
 				value = iValue
 			yield ( iValue, getText( szTemplate, value, pInfo.getDescription() ) )
 
-def sumValuesAndHelp( *ltValuesAndHelp ) :
+def _sumValuesAndHelp( *ltValuesAndHelp ) :
 	# type: (Tuple[int, unicode]) -> Tuple[int, unicode]
 	""" Helper function for component-wise summing. """
 	iValue = 0
@@ -196,7 +226,7 @@ class NationalEffectBuildingsInfoCache :
 		return NationalEffectBuildingsInfoCache._instance
 
 
-def cached_method( func ) :
+def _cached_method( func ) :
 	def rfunc( *args, **kwargs ) :
 		assert len( args ) == 1 # TODO: Allow more sophisticated caching?
 		assert len( kwargs ) == 0
@@ -239,7 +269,7 @@ class PlayerRevIdxCache :
 			self._buildingsCache = tuple( self._buildingsWithNationalEffects() )
 		return self._buildingsCache
 
-	@cached_method
+	@_cached_method
 	def governmentCenters( self ) :
 		# type: () -> Sequence[CyCity]
 		return tuple( pCity for pCity in PyPlayer( self._ePlayer ).iterCities() if pCity.isGovernmentCenter() )
@@ -283,21 +313,21 @@ class CityRevIdxHelper :
 	
 	def computeCivicEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
 		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
-		return computeInfoRevEffectsAndHelp(
+		return _computeInfoRevEffectsAndHelp(
 				self._pyOwner.iterCivicInfos(),
 				lambda pCivic : revEffectsFunc( pCivic.getRevIdxEffects() ),
 				szTemplate, bColor )
 	
 	def computeLocalBuildingEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
 		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
-		return computeInfoRevEffectsAndHelp(
+		return _computeInfoRevEffectsAndHelp(
 				self._lpBuildingsWithLocalEffect,
 				lambda pBuilding : revEffectsFunc( pBuilding.getRevIdxEffects() ),
 				szTemplate, bColor )
 	
 	def computeNationalBuildingEffectsAndHelp( self, revEffectsFunc, szTemplate, bColor ) :
 		# type: (Callable[[CvRevolutionEffects], int], str, bool) -> Iterator[Tuple[int, unicode]]
-		return computeInfoRevEffectsAndHelp(
+		return _computeInfoRevEffectsAndHelp(
 			self._pPlayerCache.buildingsWithNationalEffects(),
 			lambda pBuilding : revEffectsFunc( pBuilding.getRevIdxEffectsAllCities() ),
 			szTemplate, bColor )
@@ -313,7 +343,7 @@ class CityRevIdxHelper :
 	
 	def computeGenericModifiersTimes100AndHelp( self, revEffectsFunc ) :
 		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
-		return sumValuesAndHelp(
+		return _sumValuesAndHelp(
 			*self.computeGenericEffectsAndHelp( revEffectsFunc,
 				"[ICON_BULLET]%D1% from [COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]",
 				"[ICON_BULLET]%D1% from [COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]",
@@ -321,7 +351,7 @@ class CityRevIdxHelper :
 	
 	def computeGenericCapChangeAndHelp( self, revEffectsFunc ) :
 		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
-		return sumValuesAndHelp(
+		return _sumValuesAndHelp(
 			*self.computeGenericEffectsAndHelp( revEffectsFunc,
 				"[ICON_BULLET][COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]: %D1",
 				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %D1",
@@ -329,7 +359,7 @@ class CityRevIdxHelper :
 	
 	def computeGenericPerTurnAndHelp( self, revEffectsFunc ) :
 		# type: (Callable[[CvRevolutionEffects], int]) -> Tuple[int, unicode]
-		return sumValuesAndHelp(
+		return _sumValuesAndHelp(
 			*self.computeGenericEffectsAndHelp( revEffectsFunc,
 				"[ICON_BULLET][COLOR_CIVIC_TEXT]%s2[COLOR_REVERT]: %s1[ICON_INSTABILITY]",
 				"[ICON_BULLET][COLOR_BUILDING_TEXT]%s2[COLOR_REVERT]: %s1[ICON_INSTABILITY]",
@@ -368,7 +398,7 @@ class CityRevIdxHelper :
 
 		return iMod, szHelp
 
-	@cached_method
+	@_cached_method
 	def computeHappinessRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -405,12 +435,12 @@ class CityRevIdxHelper :
 			# Cap
 			# TODO: Make define. Should stay less than disorder instability
 			iCap = min( 30, 3 * self._pCity.getPopulation() )
-			szHelp += NL_SEPARATOR
+			szHelp += _NL_SEPARATOR
 			szHelp += u"\n" + getText( "Cap from population: %d1", iCap )
 			iIdx = min( iIdx, iCap )
 
 			# Total
-			szHelp += NL_SEPARATOR
+			szHelp += _NL_SEPARATOR
 			szHelp += u"\n"
 			szHelp += getText( "From unhappiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iIdx ) )
 			return iIdx, szHelp
@@ -436,11 +466,11 @@ class CityRevIdxHelper :
 			iBaseCap = 20 # TODO: Make define
 			iCap, szCapHelp = self._modifiedCapAndHelp( iBaseCap, CvRevolutionEffects.getRevIdxHappinessCapChange )
 			iIdx = max( -iCap, iIdx )
-			szHelp += NL_SEPARATOR
+			szHelp += _NL_SEPARATOR
 			szHelp += szCapHelp
 
 			# Total
-			szHelp += NL_SEPARATOR
+			szHelp += _NL_SEPARATOR
 			szHelp += u"\n"
 			szHelp += getText( "From happiness: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iIdx ) )
 
@@ -453,7 +483,7 @@ class CityRevIdxHelper :
 		# type: (CyCity) -> int
 		return plotDistance( self._pCity.getX(), self._pCity.getY(), pOtherCity.getX(), pOtherCity.getY() )
 
-	@cached_method
+	@_cached_method
 	def computeLocationRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -475,7 +505,7 @@ class CityRevIdxHelper :
 			iAdjDistTimes100 = 100
 			szHelp += u"\n" + getText( "You don't have a palace!" )
 		
-		iPopFactor = 8 + isqrt( 4 * self._pCity.getPopulation() )
+		iPopFactor = 8 + _isqrt( 4 * self._pCity.getPopulation() )
 		szHelp += u"\n" + getText( "Population modifier: %d1", iPopFactor )
 		
 		iBaseFactor = 125 # TODO: Make define
@@ -513,7 +543,7 @@ class CityRevIdxHelper :
 		iCap = 50 # TODO: Make setting
 		iLocationRevIdx = min( iCap, iLocationRevIdx )
 
-		szHelp += NL_SEPARATOR
+		szHelp += _NL_SEPARATOR
 		szHelp += u"\n" + getText( "Location effect: %s1[ICON_INSTABILITY] (max: %d2)", coloredRevIdxFactorStr( iLocationRevIdx ), iCap )
 
 		return iLocationRevIdx, szHelp
@@ -570,7 +600,7 @@ class CityRevIdxHelper :
 		return self._dCachePresentReligionConflict.get( (eReligion1, eReligion2), 0 )
 
 	# TODO: Split into good and bad effects (+/- in table header)
-	@cached_method
+	@_cached_method
 	def computeReligionRevIndexAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		eStateReligion = self._pOwner.getStateReligion()
@@ -621,7 +651,7 @@ class CityRevIdxHelper :
 			# TODO: Use helper functions
 			# TODO: Should not benefit from religion modifiers. Maybe move to various effects?
 			if bOwnHolyCity :
-				iHolyCityIdx, szHolyCityHelp = sumValuesAndHelp( *itertools.chain(
+				iHolyCityIdx, szHolyCityHelp = _sumValuesAndHelp( *itertools.chain(
 					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned(),
 						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], we own %F2: %s3[ICON_INSTABILITY]",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityOwned() ) ) )
@@ -638,7 +668,7 @@ class CityRevIdxHelper :
 				iGoodIdx += iHolyCityIdx
 				lszGoodHelpLines.append( szHolyCityHelp )
 			if bInfidelsOwnHolyCity :
-				iHolyCityIdx, szHolyCityHelp = sumValuesAndHelp( *itertools.chain(
+				iHolyCityIdx, szHolyCityHelp = _sumValuesAndHelp( *itertools.chain(
 					( ( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned(),
 						getText( "[ICON_BULLET][COLOR_CIVIC_TEXT]%s1[COLOR_REVERT], infidels own %F2: %s3[ICON_INSTABILITY]",
 							pInfo.getDescription(), pStateReligion.getHolyCityChar(), coloredRevIdxFactorStr( pInfo.getRevIdxEffects().getRevIdxHolyCityHeathenOwned() ) ) )
@@ -695,10 +725,10 @@ class CityRevIdxHelper :
 
 			lszHelpLines.extend( lszGoodHelpLines )
 			if len( lszGoodHelpLines ) > 0 :
-				lszHelpLines.append( SEPARATOR )
+				lszHelpLines.append( _SEPARATOR )
 			lszHelpLines.extend( lszBadHelpLines )
 			if len( lszBadHelpLines ) > 0 :
-				lszHelpLines.append( SEPARATOR )
+				lszHelpLines.append( _SEPARATOR )
 
 			iRelIdx = iGoodIdx + iBadIdx
 			lszHelpLines.append( getText( "Religion effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iRelIdx ) ) )
@@ -717,7 +747,7 @@ class CityRevIdxHelper :
 		return self.computeReligionRevIndexAndHelp()[1]
 
 
-	@cached_method
+	@_cached_method
 	def computeNationalityRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -756,7 +786,7 @@ class CityRevIdxHelper :
 
 		iNatIdx = iBaseIdx * max( 0, 100 + iMod ) // 100
 
-		szHelp += NL_SEPARATOR
+		szHelp += _NL_SEPARATOR
 		szHelp += u"\n" + getText( "Nationality effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iNatIdx ) )
 
 		return iNatIdx, szHelp
@@ -766,7 +796,7 @@ class CityRevIdxHelper :
 		return self.computeNationalityRevIdxAndHelp()[0]
 
 
-	@cached_method
+	@_cached_method
 	def computeGarrisonRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -803,7 +833,7 @@ class CityRevIdxHelper :
 		return self.computeGarrisonRevIdxAndHelp()[0]
 
 
-	@cached_method
+	@_cached_method
 	def computeDisorderRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 
@@ -828,7 +858,7 @@ class CityRevIdxHelper :
 			if iModTimes100 != 100 :
 				iDisorderIdx = iDisorderIdx * iModTimes100 // 100
 
-				szHelp += NL_SEPARATOR
+				szHelp += _NL_SEPARATOR
 				szHelp += u"\n" + getText( "Disorder effect: %s1", coloredRevIdxFactorStr( iDisorderIdx ) )
 		else :
 			iDisorderIdx = 0
@@ -841,7 +871,7 @@ class CityRevIdxHelper :
 		return self.computeDisorderRevIdxAndHelp()[0]
 
 
-	@cached_method
+	@_cached_method
 	def computeCrimeRevIdxAndHelp( self ) :
 		# type: () -> Tuple[int, unicode]
 		""" RevIdx from crime; 0 to +10. """
@@ -871,7 +901,7 @@ class CityRevIdxHelper :
 		if szModHelp :
 			szHelp += u"\n" + getText( "Base crime effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iCrimeIdx ) )
 			szHelp += szModHelp
-			szHelp += NL_SEPARATOR
+			szHelp += _NL_SEPARATOR
 
 		szHelp += u"\n" + getText( "Crime effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iCrimeIdx ) )
 
@@ -882,7 +912,7 @@ class CityRevIdxHelper :
 		return self.computeCrimeRevIdxAndHelp()[0]
 
 
-	@cached_method
+	@_cached_method
 	def computeCultureRateRevIdxAndHelp( self ) :
 		# type: () -> (int, int)
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Culture Rate[COLOR_REVERT]" )
@@ -890,7 +920,7 @@ class CityRevIdxHelper :
 		iCultRate = self._pCity.getCommerceRate( CommerceTypes.COMMERCE_CULTURE )
 		szHelp += u"\n" + getText( "%d1 [ICON_CULTURE]/Turn", iCultRate )
 
-		iBaseIdx = -isqrt( 2 * iCultRate )
+		iBaseIdx = -_isqrt( 2 * iCultRate )
 		szHelp += u"\n" + getText( "Base culture rate effect: %s1[ICON_INSTABILITY]", coloredRevIdxFactorStr( iBaseIdx ) )
 
 		iMod, szModHelp = self.computeGenericModifiersTimes100AndHelp( CvRevolutionEffects.getRevIdxCultureRateMod )
@@ -965,7 +995,7 @@ class CityRevIdxHelper :
 		elif iSizeIdx > 0 :
 			yield "Large empire", iSizeIdx
 
-	@cached_method
+	@_cached_method
 	def computeVariousRevIdxAndHelp( self ) :
 		iVariousIdx = 0
 		szHelp = getText( "[COLOR_HIGHLIGHT_TEXT]Various effects[COLOR_REVERT]" )
@@ -1043,10 +1073,10 @@ class CityRevIdxHelper :
 		iModifiedSum = iIdxSum * iMod // 100
 		if szModHelp != u"" :
 			szHelp += szModHelp
-			szHelp += NL_SEPARATOR + u"\n" + getText( "Pre-final: %D1[ICON_INSTABILITY]", iModifiedSum )
+			szHelp += _NL_SEPARATOR + u"\n" + getText( "Pre-final: %D1[ICON_INSTABILITY]", iModifiedSum )
 
 		# Game speed (and similar) adjustments
-		iAdjustedIdx, szAdjustHelp = adjustedRevIdxAndFinalModifierHelp( iModifiedSum, self._pOwner, bColorFinalIdx = True )
+		iAdjustedIdx, szAdjustHelp = _adjustedRevIdxAndFinalModifierHelp( iModifiedSum, self._pOwner, bColorFinalIdx = True )
 		szHelp += szAdjustHelp
 
 		# Feedback

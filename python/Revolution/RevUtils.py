@@ -871,6 +871,8 @@ def getModNumUnhappy( pCity, wwMod = 2.0, silent = False ) :
 	else :
 		return modNumUnhappy
 
+
+# LFGR_TODO: Move to RevIdxUtils
 def doRevRequestDeniedPenalty( pCity, capitalArea, revIdxInc = 100, bExtraHomeland = False, bExtraColony = False ) :
 
 	localRevIdx = pCity.getLocalRevIndex()

@@ -144,6 +144,7 @@ unitData = dict()
 
 # Container for data passed by revolution popups
 
+# LFGR_TODO: This is kinda silly. Should be refactored. But that will probably break savegames!
 class RevoltData :
 
 	def __init__( self, iPlayer, iRevTurn, cityList, revType, bPeaceful, specialDataDict = dict() ) :
@@ -176,6 +177,45 @@ class RevoltData :
 
 		self.dict = self.toDict()
 
+	@property
+	def bVassal( self ) :
+		return self.dict.get( "vassalStyle" ) is not None
+
+	@property
+	def bCapitulatedVassal( self ) :
+		return self.dict.get( "vassalStyle" ) == "free"
+
+	@property
+	def bFreeVassal( self ) :
+		return self.dict.get( "vassalStyle" ) == "capitulated"
+
+	@property
+	def bDidBuyOff( self ) :
+		return self.dict.get( "bDidBuyOff", False )
+
+	@property
+	def bIsJoinWar( self ) :
+		return self.dict.get( "bIsJoinWar", False )
+
+	@property
+	def bOfferPeace( self ) :
+		return self.dict.get( "bOfferPeace", False )
+
+	@property
+	def iJoinPlayer( self ) :
+		return self.dict.get( "iJoinPlayer" )
+
+	@property
+	def iRevPlayer( self ) :
+		return self.dict["iRevPlayer"]
+
+	@property
+	def leHandoverCities( self ) :
+		return self.dict.get( "HandoverCities", [] )
+
+	def getRevPlayer( self ) :
+		# type: () -> CyPlayer
+		return gc.getPlayer( self.iRevPlayer )
 
 	def toDict( self ) :
 
@@ -207,6 +247,9 @@ class RevoltData :
 				self.specialDataDict[key] = value
 
 		self.dict = self.toDict()
+
+	def __str__( self ) :
+		return str( self.toDict() )
 
 ## ---------- Revolution constants ---------- ##
 # Changing these values is not recommended

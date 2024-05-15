@@ -178,7 +178,7 @@ def myExceptHook(type, value, tb):
 def pyPrint(stuff):
 	# < Revolution Mod Start >
 	# Attempt to silence encoding errors for some city names after Python reload
-	stuff = 'PY:' + convertToStr(stuff) + "\n"
+	stuff = 'PY:' + str( convertToStr(stuff) ) + "\n"
 	# < Revolution Mod End >
 	sys.stdout.write(stuff)
 
