@@ -2926,6 +2926,7 @@ enum CivilopediaPageTypes		// Exposed to Python
 	NUM_CIVILOPEDIA_PAGE_TYPES
 };
 
+// Note (from f1rpo/AdvCiv): Should add only to the end of this enum
 enum ActionSubTypes					// Exposed to Python
 {
 	NO_ACTIONSUBTYPE = -1,
@@ -2935,9 +2936,6 @@ enum ActionSubTypes					// Exposed to Python
 	ACTIONSUBTYPE_BUILD,
 	ACTIONSUBTYPE_PROMOTION,
 
-//FfH: Added by Kael 07/23/2007
-	ACTIONSUBTYPE_SPELL,
-//FfH: End Add
 	ACTIONSUBTYPE_UNIT,
 	ACTIONSUBTYPE_RELIGION,
 	ACTIONSUBTYPE_CORPORATION,
@@ -2946,6 +2944,11 @@ enum ActionSubTypes					// Exposed to Python
 	ACTIONSUBTYPE_CONTROL,
 	ACTIONSUBTYPE_AUTOMATE,
 	ACTIONSUBTYPE_MISSION,
+
+//FfH: Added by Kael 07/23/2007
+	// lfgr fix 2024: Moved to the end
+	ACTIONSUBTYPE_SPELL,
+//FfH: End Add
 
 #ifdef _USRDLL
 	NUM_ACTIONSUBTYPES
