@@ -480,7 +480,7 @@ def makeRule_ATTACK() :
 			"UNITCLASS_HORSE_ARCHER",
 			"UNITCLASS_ARQUEBUS"
 		],
-		_prereqPlayerCanTrain,
+		_prereqPlayerCanTrain, # TODO: Bonus prereq (also other rules)
 		chainGenerators( generateWeaponPromotions, FixedPromotionGenerator( "PROMOTION_COMBAT1" ) ),
 		UnitStrengthEvaluator( bAttack = True, bCity = True ),
 		RandomPromotionGenerator( # 2 free promotions on average

@@ -4529,6 +4529,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync, AdvisorTypes
 	return eBestUnit;
 }
 
+// LFGR_TODO: Allow ignoring national/world units?
 std::pair<BuildingTypes, int> CvCityAI::AI_bestEnablerBuildingWithUnitValue( UnitAITypes eUnitAI ) const {
 	BuildingTypes eBestBuilding = NO_BUILDING;
 	int iBestValue = 0;

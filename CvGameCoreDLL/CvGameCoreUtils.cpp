@@ -273,6 +273,7 @@ bool isPromotionValid(PromotionTypes ePromotion, UnitTypes eUnit, bool bLeader)
 		return false;
 	}
 
+	// LFGR_TODO: Cache?
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 		if (kUnit.getFreePromotions(iI))

@@ -64,7 +64,7 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 
 		.def("getNewCityName", &CyPlayer::getNewCityName, "wstring ()")
 
-		.def("initUnit", &CyPlayer::initUnit, python::return_value_policy<python::manage_new_object>(), "CyUnit* initUnit(UnitTypes iIndex, plotX, plotY, UnitAITypes iIndex)  - place Unit at X,Y   NOTE: Always use UnitAITypes.NO_UNITAI")
+		.def("initUnit", &CyPlayer::initUnit, python::return_value_policy<python::manage_new_object>(), "CyUnit* initUnit(UnitTypes eUnit, plotX, plotY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection)  - place Unit at X,Y   NOTE: Always use UnitAITypes.NO_UNITAI")
 		.def("disbandUnit", &CyPlayer::disbandUnit, "void (bool bAnnounce)")
 
 		.def("killUnits", &CyPlayer::killUnits, "void ()")
