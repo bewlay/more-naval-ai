@@ -894,7 +894,15 @@ void CvUnitAI::AI_upgrade()
 	// I've reversed the order of iteration because the stronger units are typically later in the list
 	for (UnitClassTypes i = (UnitClassTypes)(GC.getNumUnitClassInfos()-1); i >= 0; i=(UnitClassTypes)(i-1))
 	{
+		// LFGR_TODO: This doesn't respect Assimilation.
 		UnitTypes eLoopUnit = (UnitTypes)kCivInfo.getCivilizationUnits(i);
+
+		// lfgr 05/2024: optimization
+		// LFGR_TODO: This also does not respect Assimilation
+		if( !upgradeAvailable( getUnitType(), i ) )
+		{
+			continue;
+		}
 
 		if (eLoopUnit != NO_UNIT)
 		{
