@@ -27,6 +27,7 @@
 #include "CvPopupInfo.h"
 #include "CvArtFileMgr.h"
 
+#include "CvInfoCache.h" // lfgr 05/2024
 #include "CvInfoUtils.h" // lfgr 04/2020
 
 // BUG - start
@@ -8904,40 +8905,12 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 }
 
 
+// LFGR_TODO: Cache this? Could be slow for deep upgrade trees.
 bool CvUnit::upgradeAvailable(UnitTypes eFromUnit, UnitClassTypes eToUnitClass, int iCount) const
 {
-	UnitTypes eLoopUnit;
-	int iI;
-	int numUnitClassInfos = GC.getNumUnitClassInfos();
-
-	if (iCount > numUnitClassInfos)
-	{
-		return false;
-	}
-
-	CvUnitInfo &fromUnitInfo = GC.getUnitInfo(eFromUnit);
-
-	if (fromUnitInfo.getUpgradeUnitClass(eToUnitClass))
-	{
-		return true;
-	}
-
-	for (iI = 0; iI < numUnitClassInfos; iI++)
-	{
-		if (fromUnitInfo.getUpgradeUnitClass(iI))
-		{
-			eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
-
-			if (eLoopUnit != NO_UNIT)
-			{
-				if (upgradeAvailable(eLoopUnit, eToUnitClass, (iCount + 1)))
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+	PROFILE_FUNC()
+	
+	return getInfoCache().upgradeAvailable( getCivilizationType(), eFromUnit, eToUnitClass );
 }
 
 

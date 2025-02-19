@@ -18,6 +18,8 @@ void CvInfoCache::init() {
 	m_aiUnitValueFromFreePromotionsCache.init( info_ai::AI_calcUnitValueFromFreePromotions );
 	m_aiUnitAmphibCache.init( info_ai::AI_checkUnitAmphib );
 
+	m_abUnitUpgradeCache.init( info::upgradeAvailable );
+
 	// Unit prereqs
 	for( int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++ ) {
 		UnitTypes eUnit = (UnitTypes) iUnit;
@@ -54,9 +56,17 @@ int CvInfoCache::AI_getUnitValueFromFreePromotions( UnitTypes eUnit, UnitAITypes
 
 bool CvInfoCache::AI_isUnitAmphib( UnitTypes eUnit ) const {
 #ifdef NO_CACHING
-	return info_ai::AI_checkUnitAmphib; // TODO
+	return info_ai::AI_checkUnitAmphib( eUnit );
 #else
 	return m_aiUnitAmphibCache.at( eUnit );
+#endif
+}
+
+bool CvInfoCache::upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass ) const {
+#ifdef NO_CACHING
+	return info::upgradeAvailable( eCivilization, eFromUnit, eToUnitClass );
+#else
+	return m_abUnitUpgradeCache.at( eCivilization, eFromUnit, eToUnitClass );
 #endif
 }
 
@@ -136,5 +146,52 @@ namespace info_ai {
 			}
 		}
 		return false;
+	}
+}
+
+// Other calculations that do not depend on game state
+namespace info {
+	// Whether a unit of the given type can upgrade to the given class for a player of the given civ.
+	// Mostly copied from CvUnit::upgradeAvailable
+	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass, int iCount )
+	{
+		UnitTypes eLoopUnit;
+		int iI;
+		int numUnitClassInfos = GC.getNumUnitClassInfos();
+
+		if (iCount > numUnitClassInfos)
+		{
+			return false;
+		}
+
+		CvUnitInfo &fromUnitInfo = GC.getUnitInfo(eFromUnit);
+
+		if (fromUnitInfo.getUpgradeUnitClass(eToUnitClass))
+		{
+			return true;
+		}
+
+		for (iI = 0; iI < numUnitClassInfos; iI++)
+		{
+			if (fromUnitInfo.getUpgradeUnitClass(iI))
+			{
+				eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(eCivilization).getCivilizationUnits(iI)));
+
+				if (eLoopUnit != NO_UNIT)
+				{
+					if (upgradeAvailable(eCivilization, eLoopUnit, eToUnitClass, (iCount + 1)))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	// Need this for function pointer usage
+	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass )
+	{
+		return upgradeAvailable( eCivilization, eFromUnit, eToUnitClass, 0 );
 	}
 }
