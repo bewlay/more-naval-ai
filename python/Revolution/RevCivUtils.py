@@ -48,7 +48,7 @@ class RevCivUtils :
 
 	# Returns the chosen civilization type and a list of possible leaders. It does not perform any random number calls.
 	def getNewCivAndLeaderList( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
-		if( LOG_DEBUG ) : print "RevCivUtils.getNewCivAndLeaderList( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
+		if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils.getNewCivAndLeaderList( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) )
 
 		# find available civs
 
@@ -63,22 +63,22 @@ class RevCivUtils :
 			iScore = self.rcd.lpCivRules[iCiv].getScore( iOldCivType, iRace, iSplitType, iReligion, iPlotX, iPlotY )
 			if( iScore == SCORE_NOT_ALLOWED ) :
 				liNotAllowedCivs.append( iCiv )
-				if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has not-allowed score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
+				if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has not-allowed score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 			else :
 				if( iScore > iBestScore ) :
 					iBestScore = iScore
 					liGoodCivs.extend( liBestCivs )
 					liBestCivs = list()
 					liBestCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has best score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has best score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 				elif( iScore == iBestScore ) :
 					liBestCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has good score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has good score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 				elif( iScore >= 0 ) :
 					liGoodCivs.append( iCiv )
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has okay score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has okay score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 				else :
-					if( LOG_DEBUG ) : print "RevCivUtils: Civ %s has bad score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has bad score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 
 		# shuffle and put lists together
 		random.shuffle( liBestCivs )
@@ -91,44 +91,44 @@ class RevCivUtils :
 			random.shuffle( liNotAllowedCivs )
 			liCivs.extend( liNotAllowedCivs )
 
-		print "RevCivUtils: liCivs:"
-		print liCivs
+		CvUtil.pyPrint( "RevCivUtils: liCivs:" )
+		CvUtil.pyPrint( liCivs )
 
 		for iNewCiv in liCivs :
-			if( LOG_DEBUG ) : print "RevCivUtils: Trying Civ %d" % ( iNewCiv )
+			if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Trying Civ %d" % ( iNewCiv ) )
 			liLeaders = self.rcd.lpCivRules[iNewCiv].getLeaderList( iSplitType, iReligion )
 
 			# prefer minor leaders
 			liMinorLeaders = list()
 			for iLeader in liLeaders :
 				if( iLeader in self.rcd.liMinorLeaders[iNewCiv] ) :
-					if( LOG_DEBUG ) : print "leader %s is minor leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "leader %s is minor leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() ) )
 					liMinorLeaders.append( iLeader )
 				else :
-					if( LOG_DEBUG ) : print "leader %s is major leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() )
+					if( LOG_DEBUG ) : CvUtil.pyPrint( "leader %s is major leader" % ( gc.getLeaderHeadInfo( iLeader ).getType() ) )
 
 			liNewLeaders = []
 			if( len( liMinorLeaders ) > 0 ) :
-				if( LOG_DEBUG ) : print "Choosing minor leader list"
+				if( LOG_DEBUG ) : CvUtil.pyPrint( "Choosing minor leader list" )
 				liNewLeaders = liMinorLeaders
 			elif( len( liLeaders ) > 0 ) :
-				if( LOG_DEBUG ) : print "Choosing major leader list"
+				if( LOG_DEBUG ) : CvUtil.pyPrint( "Choosing major leader list" )
 				liNewLeaders = liLeaders
 
 			return iNewCiv, liNewLeaders
 
-		if( LOG_DEBUG ) : print 'RevCivUtils: No civ available, returning (-1, [])'
+		if( LOG_DEBUG ) : CvUtil.pyPrint( 'RevCivUtils: No civ available, returning (-1, [])' )
 		return -1, []
 
 
 	# Returns the chosen civilization type and a possible leader. It performs random number calls.
 	def chooseNewCivAndLeader( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
-		if LOG_DEBUG: print "RevCivUtils.chooseNewCivAndLeader( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY )
+		if LOG_DEBUG: CvUtil.pyPrint( "RevCivUtils.chooseNewCivAndLeader( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) )
 		iNewCivIdx, liNewLeaders = self.getNewCivAndLeaderList(iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY)
 		iNewLeader = -1
 		if len(liNewLeaders) > 0:
 			iNewLeader = liNewLeaders[game.getSorenRandNum(len(liNewLeaders), 'RevCivUtils: pick leader from chosen leaders list')]
-		if LOG_DEBUG: print "RevCivUtils: Returning Civ %d and Leader %d" % (iNewCivIdx, iNewLeader)
+		if LOG_DEBUG: CvUtil.pyPrint( "RevCivUtils: Returning Civ %d and Leader %d" % (iNewCivIdx, iNewLeader) )
 		return iNewCivIdx, iNewLeader
 
 
@@ -154,17 +154,17 @@ class RevCivRule :
 	def getScore( self, iOldCivilization, iCultureRace, iSplitType, iReligion, iPlotX, iPlotY ) :
 		# check if any leaders are available
 		if( len( self.getLeaderList( iSplitType, -1 ) ) == 0 and iSplitType != SPLIT_PUPPET ) :
-			print "\tSCORE_NOT_AVAILABLE: No more leaders"
+			CvUtil.pyPrint( "\tSCORE_NOT_AVAILABLE: No more leaders" )
 			return SCORE_NOT_AVAILABLE
 
 		# check if civ is blocked as rebel
 		if( self.bNoRevolt ) :
-			print "\tSCORE_NOT_AVAILABLE: Civ cannot revolt"
+			CvUtil.pyPrint( "\tSCORE_NOT_AVAILABLE: Civ cannot revolt" )
 			return SCORE_NOT_AVAILABLE
 
 		# check if civ is same as parent and split is not allowed
 		if( iSplitType == SPLIT_NOT_ALLOWED and self.iCiv == iOldCivilization ) :
-			print "\tSCORE_NOT_ALLOWED: split civ not allowed"
+			CvUtil.pyPrint( "\tSCORE_NOT_ALLOWED: split civ not allowed" )
 			return SCORE_NOT_ALLOWED
 
 		# check if civ is already alive (only if new civ would not be a splinter civ)?
@@ -173,49 +173,49 @@ class RevCivRule :
 			for i in range( 0, gc.getMAX_CIV_PLAYERS() ) :
 				if( gc.getPlayer( i ).getCivilizationType() == self.iCiv ) :
 					if( ( gc.getPlayer( i ).isAlive() ) or ( gc.getPlayer( i ).isEverAlive() ) or ( RevData.revObjectExists( gc.getPlayer( i ) ) ) ) :
-						print "\tSCORE_NOT_ALLOWED civ already alive"
+						CvUtil.pyPrint( "\tSCORE_NOT_ALLOWED civ already alive" )
 						return SCORE_NOT_ALLOWED
 
 		# check if non-agnostic leaders are availble for a religious revolution
 		if( iReligion != -1 and len( self.getLeaderList( iSplitType, iReligion ) ) == 0 ) :
-			print "\tSCORE_NOT_ALLOWED: there are only agnostic or no leaders available"
+			CvUtil.pyPrint( "\tSCORE_NOT_ALLOWED: there are only agnostic or no leaders available" )
 			return SCORE_NOT_ALLOWED
 
 		# check for blocked religions
 		if( iReligion in self.liBlockedReligions ) :
-			print "\tSCORE_NOT_ALLOWED: bad religion"
+			CvUtil.pyPrint( "\tSCORE_NOT_ALLOWED: bad religion" )
 			return SCORE_NOT_ALLOWED
 
 		iScore = 0
 		
 		if( ( iSplitType == SPLIT_FORCED or iSplitType == SPLIT_PUPPET ) and self.iCiv == iOldCivilization ) :
-			print "\tScore: +%d: SPLIT_FORCED addition" % ( SCORE_SPLIT_FORCED )
+			CvUtil.pyPrint( "\tScore: +%d: SPLIT_FORCED addition" % ( SCORE_SPLIT_FORCED ) )
 			iScore += SCORE_SPLIT_FORCED
 		elif( iSplitType == SPLIT_ALLOWED and self.iCiv == iOldCivilization ) :
-			print "\tScore: +%d: SPLIT_ALLOWED addition" % ( SCORE_SPLIT_ALLOWED )
+			CvUtil.pyPrint( "\tScore: +%d: SPLIT_ALLOWED addition" % ( SCORE_SPLIT_ALLOWED ) )
 			iScore += SCORE_SPLIT_ALLOWED
 
 		if( iReligion in self.liReligions ) :
-			print "\tScore: +%d: Religion addition" % ( SCORE_RELIGION )
+			CvUtil.pyPrint( "\tScore: +%d: Religion addition" % ( SCORE_RELIGION ) )
 			iScore += SCORE_RELIGION
 
 		if( self.iRace != None ) :
 			if( iCultureRace == self.iRace ) :
-				print "\tScore: +%d: Same race addition" % ( SCORE_SAME_RACE )
+				CvUtil.pyPrint( "\tScore: +%d: Same race addition" % ( SCORE_SAME_RACE ) )
 				iScore += SCORE_SAME_RACE
 
 		if( iCultureRace in self.liGoodRaces ) :
-			print "\tScore: +%d: Aligned race addition" % ( SCORE_GOOD_RACE )
+			CvUtil.pyPrint( "\tScore: +%d: Aligned race addition" % ( SCORE_GOOD_RACE ) )
 			iScore += SCORE_GOOD_RACE
 
 		iAreaRadius = 3
 		fTerrainScore = TerrainFlavorUtil.getPlotScore( self.iCiv, iPlotX, iPlotY, self.pCivTerrainPreference, iAreaRadius )
 		fTerrainScore *= TERRAIN_SCORE_FACTOR
 		if( fTerrainScore > 0 ) :
-			print "\tScore: +%d: Terrain addition" % ( int( fTerrainScore + 0.5 ) )
+			CvUtil.pyPrint( "\tScore: +%d: Terrain addition" % ( int( fTerrainScore + 0.5 ) ) )
 			iScore += int( fTerrainScore + 0.5 )
 		else :
-			print "\tScore: %d: Terrain subtraction" % ( int( fTerrainScore + 0.5 ) )
+			CvUtil.pyPrint( "\tScore: %d: Terrain subtraction" % ( int( fTerrainScore + 0.5 ) ) )
 			iScore += int( fTerrainScore - 0.5 )
 
 		if( iScore >= 0 ) :

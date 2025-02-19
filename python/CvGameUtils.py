@@ -1145,10 +1145,14 @@ class CvGameUtils:
 		pPlayer = gc.getPlayer(iPlayer)
 		iCiv = pPlayer.getCivilizationType()
 
+		LOG_DEBUG = True
+
 		if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_TERRAFORMER'):
 			# LFGR_TODO: Automated units may attack (probably while moving)
 
 			# TERRAFORMING 03/2021 lfgr: Refactored and tweaked
+
+			if LOG_DEBUG : CvUtil.pyPrint( "  Terraform - %s tries to terraform" % pUnit.getName() )
 
 			# Useful constants
 			eSpellSpring = gc.getInfoTypeForString('SPELL_SPRING')
@@ -1170,7 +1174,7 @@ class CvGameUtils:
 
 			bIllians = iCiv == gc.getInfoTypeForString( "CIVILIZATION_ILLIANS" )
 			bInfernal = iCiv == gc.getInfoTypeForString( "CIVILIZATION_INFERNAL" )
-			bFoL = pPlayer.getStateReligion() == gc.getInfoTypeForString( "RELIGION_FELLOWSHIP_OF_LEAVES" )
+			# bFoL = pPlayer.getStateReligion() == gc.getInfoTypeForString( "RELIGION_FELLOWSHIP_OF_LEAVES" )
 			bMaintainBloomForest = gc.getCivilizationInfo( iCiv ).isMaintainFeatures( eBloomForest )
 
 			# Catch leftover priests of leaves
@@ -1203,7 +1207,7 @@ class CvGameUtils:
 					if eFeature == -1 and pPlot.canHaveFeature( eBloomForest ) :
 						if bMaintainBloomForest :
 							yield eSpellBloom # Elves want to bloom everywhere
-						if eImprovement == -1 and eBonus == -1 and eTerrain != eGrass :
+						elif eImprovement == -1 and eBonus == -1 and eTerrain != eGrass :
 							yield eSpellBloom # Can't bloom over improvements and don't want to bloom over boni or grass
 
 			def hasSpellForPlot( pPlot ) :
@@ -1215,9 +1219,11 @@ class CvGameUtils:
 			# Try casting a spell!
 			for eSpell in iterSpellsForPlot( pUnitPlot ) :
 				if pUnit.canCast( eSpell, False ) :
+					if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   Casting %s right here" % gc.getSpellInfo( eSpell ).getDescription() )
 					pUnit.cast( eSpell )
 
 			if not pUnit.canMove() :
+				if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   Cannot move, skipping turn" )
 				pUnit.getGroup().pushMission( MissionTypes.MISSION_SKIP, -1, -1, 0, False,
 					False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
 				return 1
@@ -1234,6 +1240,7 @@ class CvGameUtils:
 					if pPlot.isVisibleEnemyUnit( iPlayer ) : continue
 
 					if hasSpellForPlot( pPlot ) :
+						if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   Found a spell for %d|%d, moving there" % ( pPlot.getX(), pPlot.getY() ) )
 						pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, pPlot.getX(), pPlot.getY(), 0, False,
 							False, MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
 						return 1
@@ -1244,7 +1251,6 @@ class CvGameUtils:
 			for pyCity in PyPlayer( iPlayer ).iterCities() :
 				if pUnit.generatePath( pyCity.plot(), 0, True, None ) :
 					iCount = 0 # Count number of terraformable plots
-					# LFGR_TODO: Should create and expose CyCity.getNumCityPlots() (using ::calculateNumCityPlots())
 					for iI in range( 1, pyCity.getNumCityPlots() ) :
 						pPlot = pyCity.getCityIndexPlot( iI )
 						if pPlot.isNone() : continue
@@ -1257,6 +1263,7 @@ class CvGameUtils:
 							iCount += 1
 
 					if iCount > 0 :
+						if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   City %s has %d terraformable plots" % ( pyCity.getName(), iCount ) )
 						if not pyCity.isSettlement() :
 							iCount += 1000 # Always prefer non-settlements
 						if iCount > iBestCount :
@@ -1268,9 +1275,12 @@ class CvGameUtils:
 				iCX = pCPlot.getX()
 				iCY = pCPlot.getY()
 				if iCX != pUnit.getX() or iCY != pUnit.getY() :
+					if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   Moving to city %s" % pBestCity.getName() )
 					pUnit.getGroup().pushMission( MissionTypes.MISSION_MOVE_TO, iCX, iCY, 0, False, False,
 						MissionAITypes.NO_MISSIONAI, pUnit.plot(), pUnit )
 					return 1
+				else :
+					if LOG_DEBUG : CvUtil.pyPrint( "  Terraform -   Already at city %s..." % pBestCity.getName() )
 
 		return 0
 
