@@ -8708,12 +8708,16 @@ void CvPlot::changeBlockadedCount(TeamTypes eTeam, int iChange)
 		//FAssert(getBlockadedCount(eTeam) >= 0);
 		FAssert(getBlockadedCount(eTeam) == 0 || isWater());
 
+		/* lfgr 05/2024: Disabled hack; probably caused problems where a blockade lingers, that is
+			more problematic than a negative blockade count.
 		// Hack so that never get negative blockade counts as a result of fixing issue causing
 		// rare permanent blockades.
 		if( getBlockadedCount(eTeam) < 0 )
 		{
 			m_aiBlockadedCount[eTeam] = 0;
 		}
+		*/
+		FAssert( m_aiBlockadedCount[eTeam] >= 0 );
 /************************************************************************************************/
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
