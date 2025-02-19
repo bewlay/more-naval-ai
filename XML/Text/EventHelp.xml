@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Text for specific Civilizations -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_EVENT_CRIME</Tag>
+		<English>[ICON_BULLET]%D1 to the Crime Rate in %s2_city</English>
+		<French>[ICON_BULLET]%D1 au taux de Crimes dans %s2_city</French>
+		<German>[ICON_BULLET]%D1 zur Verbrechensrate in %s2_city</German>
+		<Spanish>[ICON_BULLET]%D1 al &#205;ndice de Criminalidad en %s2_city</Spanish>
+	</TEXT>
+</Civ4GameText>

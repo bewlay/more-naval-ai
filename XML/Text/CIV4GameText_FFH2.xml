@@ -5667,13 +5667,6 @@
 		<Spanish>Las plegarias a Kilmorph transformar&#225;n las monedas falsificadas de plomo en oro.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_EVENT_CRIME</Tag>
-		<English>[ICON_BULLET]%D1 to the Crime Rate</English>
-		<French>[ICON_BULLET]%D1 au taux de Crimes</French>
-		<German>[ICON_BULLET]%D1 zur Verbrechensrate</German>
-		<Spanish>[ICON_BULLET]%D1 al &#205;ndice de Criminalidad</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_EVENT_CRIME_DECREASE</Tag>
 		<English>The governor of %s2_city reports that crime has decreased in his city. He credits the reduction to the vigilance of the city watch.</English>
 		<German>Der B&#252;rgermeister der Stadt %s2_city berichtet, dass die Verbrechen in seiner Stadt zur&#252;ckgegangen sind. Er f&#252;hrt diesen R&#252;ckgang auf die Wachsamkeit der Stadtwache zur&#252;ck.</German>

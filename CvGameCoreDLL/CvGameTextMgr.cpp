@@ -22944,7 +22944,7 @@ void CvGameTextMgr::setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, i
 	if (kEvent.getCrime() != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_EVENT_CRIME", kEvent.getCrime()));
+		szBuffer.append(gDLL->getText("TXT_KEY_EVENT_CRIME", kEvent.getCrime(), szCity));
 	}
 	if (kEvent.getGlobalCounter() != 0)
 	{
