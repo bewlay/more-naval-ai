@@ -28235,11 +28235,12 @@ bool CvUnitAI::AI_pickupEquipment(int iRange)
             if (ispell != NO_SPELL)
             {
                 cast(ispell);
-			}
-			// lfgr 03/2024: Prevent crash when spell kills unit
-			// LFGR_TODO: There are probably other cases where this might happen.
-			if( !GC.getSpellInfo( (SpellTypes) ispell ).isSacrificeCaster() ) {
-				getGroup()->pushMission(MISSION_SKIP);
+
+				// lfgr 03/2024: Prevent crash when spell kills unit
+				// LFGR_TODO: There are probably other cases where this might happen.
+				if( !GC.getSpellInfo( (SpellTypes) ispell ).isSacrificeCaster() ) {
+					getGroup()->pushMission(MISSION_SKIP);
+				}
 			}
 			return true;
 		}
