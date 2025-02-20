@@ -16530,7 +16530,7 @@ bool CvUnit::canCast(int spell, bool bTestVisible)
     }
     if (kSpell.getUnitInStackPrereq() != NO_UNIT)
     {
-        if (getUnitType() == kSpell.getUnitInStackPrereq()) // LFGR_TODO: Document this
+        if (getUnitType() == kSpell.getUnitInStackPrereq())
         {
             return false;
         }

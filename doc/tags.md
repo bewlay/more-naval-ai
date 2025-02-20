@@ -131,6 +131,7 @@ Contains resolutions that can be passed by the Organizations (VoteSources) defin
 | Tag(s) | Description | History |
 | --- | --- | --- |
 | `<bAbility>1</bAbility>` | Can be cast even if spellcasting is disabled (e.g. through the Stasis worldspell). Created units do not gain promotions based on `<PromotionSummonPerk>`. Immunity to magic doesn't affect this spell. |
+| ` <UnitInStackPrereq>UNIT_X</UnitInStackPrereq>` | Requires a unit of type `UNIT_X` in the same stack, and the caster must not be of type `UNIT_X` | Added in FfH2 |
 
 
 ### Revolution effect tags
