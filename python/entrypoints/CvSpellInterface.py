@@ -780,6 +780,10 @@ def spellCallOfTheGrave(caster):
 				CyEngine().triggerEffect(gc.getInfoTypeForString('EFFECT_SACRIFICE'),pPlot.getPoint())
 
 def reqCommanderJoin(caster):
+	# lfgr 02/2025
+	if caster.baseCombatStr() == 0 :
+		return False
+
 	pPlayer = gc.getPlayer(caster.getOwner())
 	pPlot = caster.plot()
 	if caster.isHasPromotion(gc.getInfoTypeForString('PROMOTION_GREAT_COMMANDER')):
@@ -792,7 +796,7 @@ def reqCommanderJoin(caster):
 			pCommander = pUnit
 	if pCommander == -1:
 		return False
-	if pCommander.isHasCasted():
+	if pCommander.isHasCasted(): # TODO: Should be tested in XML
 		return False
 	if pPlayer.isHuman() == False:
 		if caster.baseCombatStr() <= 5:
