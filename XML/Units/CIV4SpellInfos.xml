@@ -400,7 +400,6 @@
             <bDisplayWhenDisabled>1</bDisplayWhenDisabled>
             <bHasCasted>1</bHasCasted>
             <bSacrificeCaster>1</bSacrificeCaster>
-            <bNoInterruptUnitCycling>1</bNoInterruptUnitCycling>
             <PyResult>spellCallForm(pCaster)</PyResult>
             <PyRequirement>reqCallForm(pCaster)</PyRequirement>
             <Effect>EFFECT_ENTROPY_SUMMON</Effect>
@@ -2777,7 +2776,6 @@
             <bHasCasted>1</bHasCasted>
             <CreateUnitType>UNIT_SEVERED_SOUL</CreateUnitType>
             <iCreateUnitNum>1</iCreateUnitNum>
-            <bNoInterruptUnitCycling>1</bNoInterruptUnitCycling>
             <Effect>EFFECT_ENTROPY_SUMMON</Effect>
             <Sound>AS3D_SPELL_DEFILE</Sound>
             <Button>Art/Interface/Buttons/Units/Severed Soul.dds</Button>
