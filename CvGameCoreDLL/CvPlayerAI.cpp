@@ -26282,12 +26282,13 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 
 			if (NO_UNIT != eUpgradeUnitType)
 			{
-				// is it better?
-				int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea, true);
-				if (iUpgradeValue > iUnitValue)
+				// lfgr 11/2025: Swapped two ifs for better performance
+				// is this a valid upgrade?
+				if (pLoopUnit->upgradeAvailable(eUnitType, eUpgradeUnitClassType))
 				{
-					// is this a valid upgrade?
-					if (pLoopUnit->upgradeAvailable(eUnitType, eUpgradeUnitClassType))
+					// is it better?
+					int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea, true);
+					if (iUpgradeValue > iUnitValue)
 					{
 						// can we actually make this upgrade?
 						bool bCanUpgrade = false;
