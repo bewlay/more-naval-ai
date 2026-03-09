@@ -49,11 +49,10 @@ struct ProfileSample
 	LONGLONG StartTime; // The current open profile start time
 	LONGLONG Accumulator; // All samples this frame added together
 	bool bRegistered; // True if this sample is registered at the profiler
-#else
+#else // not CUSTOM_PROFILER
 	double			StartTime;				// The current open profile start time
 	double			Accumulator;			// All samples this frame added together
 
-	// Not used by CUSTOM_PROFILER
 	double			ChildrenSampleTime;		// Time taken by all children
 	unsigned int	NumParents;				// Number of profile Parents
 	bool			Added;					// true when added to the list

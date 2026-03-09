@@ -26229,6 +26229,8 @@ int CvPlayerAI::AI_getEnemyPlotStrength(CvPlot* pPlot, int iRange, bool bDefensi
 
 int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 {
+	PROFILE_FUNC()
+
 	if (m_iUpgradeUnitsCacheTurn == GC.getGameINLINE().getGameTurn() && m_iUpgradeUnitsCachedExpThreshold == iExpThreshold)
 	{
 		return m_iUpgradeUnitsCachedGold;

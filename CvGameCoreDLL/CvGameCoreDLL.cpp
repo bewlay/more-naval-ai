@@ -225,17 +225,19 @@ namespace custom_profiler
 		gDLL->logMsg( "custom_profile.log", buffer.c_str() );
 		for( size_t i = 0; i < vpSamples.size(); i++ )
 		{
-			buffer.Format( "%7ld\t%7u\t%3d\t%s",
-				(long) (vpSamples.at(i)->Accumulator * 1000 / measurementFreq.QuadPart), // ms
-				vpSamples.at(i)->ProfileInstances,
-				vpSamples.at(i)->OpenProfiles,
-				vpSamples.at(i)->Name );
-			gDLL->logMsg( "custom_profile.log", buffer.c_str(), false, false );
+			if( vpSamples.at(i)->ProfileInstances >= 1 ) {
+				buffer.Format( "%7ld\t%7u\t%3d\t%s",
+					(long) (vpSamples.at(i)->Accumulator * 1000 / measurementFreq.QuadPart), // ms
+					vpSamples.at(i)->ProfileInstances,
+					vpSamples.at(i)->OpenProfiles,
+					vpSamples.at(i)->Name );
+				gDLL->logMsg( "custom_profile.log", buffer.c_str(), false, false );
+			}
 		}
 	}
 	
 	// Special "total turn time" sample
-	ProfileSample turnSample( "Turn" );
+	ProfileSample turnSample( "Full turn or sample interval" );
 	
 } // end namespace custom_profiler
 #endif // CUSTOM_PROFILER

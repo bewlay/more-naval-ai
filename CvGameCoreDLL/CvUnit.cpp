@@ -9111,6 +9111,8 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 // NULL result means the upgrade is not possible
 CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue) const
 {
+	PROFILE_FUNC()
+
 	if (eUnit == NO_UNIT)
 	{
 		return false;

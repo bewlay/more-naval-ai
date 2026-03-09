@@ -13,6 +13,7 @@ CvInfoCache::~CvInfoCache() {
 }
 
 void CvInfoCache::init() {
+	PROFILE_FUNC();
 	// AI_unitValue stuff
 	m_aiUnitValueFromTraitCache.init( info_ai::AI_calcUnitValueFromTrait );
 	m_aiUnitValueFromFreePromotionsCache.init( info_ai::AI_calcUnitValueFromFreePromotions );
