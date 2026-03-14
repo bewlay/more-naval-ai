@@ -161,8 +161,6 @@ public :
 	int AI_getUnitValueFromFreePromotions( UnitTypes eUnit, UnitAITypes eUnitAI ) const;
 	bool AI_isUnitAmphib( UnitTypes eUnit ) const;
 
-	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass ) const;
-
 	const std::vector<BuildingUnitPair>& getUnitsWithBuildingPrereqs() const {
 		return m_vtUnitBuildingPrereqCache;
 	}
@@ -170,16 +168,20 @@ public :
 		return m_vtUnitBuildingClassPrereqCache;
 	}
 
+	// Get all units the unit can upgrade to, including though several upgrades. Store them in the result vector.
+	void computeAvailableUpgrades( CivilizationTypes eCivilization, UnitTypes eFromUnit, std::vector<UnitTypes>& result );
+
 private :
 	Fixed2DEnumMap<UnitCombatTypes, TraitTypes, int> m_aiUnitValueFromTraitCache;
 	Fixed2DEnumMap<UnitTypes, UnitAITypes, int> m_aiUnitValueFromFreePromotionsCache;
 	FixedEnumMap<UnitTypes, bool> m_aiUnitAmphibCache;
 
-	Fixed3DEnumMap<CivilizationTypes, UnitTypes, UnitClassTypes, bool> m_abUnitUpgradeCache;
-
 	// Buildings and building classes that enable units
 	std::vector<BuildingUnitPair> m_vtUnitBuildingPrereqCache;
 	std::vector<BuildingClassUnitPair> m_vtUnitBuildingClassPrereqCache;
+
+	// Direct upgrades by UnitType
+	std::vector<std::vector<UnitClassTypes> > m_aeUnitClassUpgradesByUnit;
 };
 
 CvInfoCache& getInfoCache();
@@ -195,7 +197,7 @@ namespace info_ai {
 // Other calculations that do not depend on game state
 namespace info {
 	// Whether a unit of the given type can upgrade to the given class for a player of the given civ.
-	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass );
+	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass, int iCount = 0 );
 }
 
 #endif /* CVINFOCACHE_H_ */

@@ -4,12 +4,44 @@
 
 #include "CvInfoCache.h"
 
+#include <algorithm>
+#include <set>
+
 #include "BetterBTSAI.h"
+
+// Uncomment to enable regression testing and a tweak to restore behavior of previous versions (at little cost)
+//#define INFOCACHE_TESTING
 
 CvInfoCache::CvInfoCache() {
 }
 
 CvInfoCache::~CvInfoCache() {
+}
+
+// Regression testing
+void test_CvInfoCache() {
+	for( int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++ ) {
+		for( int iCiv = 0; iCiv < GC.getNumCivilizationInfos(); iCiv++ ) {
+			// Get cached upgrade list
+			std::vector<UnitTypes> dest;
+			getInfoCache().computeAvailableUpgrades( (CivilizationTypes) iCiv, (UnitTypes) iUnit, dest );
+
+			// Make it into a bool vector
+			std::vector<bool> abUpgrades( GC.getNumUnitInfos() );
+			for( size_t i = 0; i < dest.size(); i++ ) {
+				abUpgrades[dest[i]] = true;
+			}
+
+			// Now check against old method
+			for( int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++ ) {
+				int iUpgradeUnit = GC.getCivilizationInfo( (CivilizationTypes) iCiv ).getCivilizationUnits( iUnitClass );
+				if( iUpgradeUnit != NO_UNIT ) {
+					FAssert( info::upgradeAvailable( (CivilizationTypes) iCiv, (UnitTypes) iUnit, (UnitClassTypes) iUnitClass ) == abUpgrades[iUpgradeUnit] )
+				}
+			}
+		}
+	}
+	logBBAI( "CvInfoCache regression testing finished successfully" );
 }
 
 void CvInfoCache::init() {
@@ -18,8 +50,6 @@ void CvInfoCache::init() {
 	m_aiUnitValueFromTraitCache.init( info_ai::AI_calcUnitValueFromTrait );
 	m_aiUnitValueFromFreePromotionsCache.init( info_ai::AI_calcUnitValueFromFreePromotions );
 	m_aiUnitAmphibCache.init( info_ai::AI_checkUnitAmphib );
-
-	m_abUnitUpgradeCache.init( info::upgradeAvailable );
 
 	// Unit prereqs
 	for( int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++ ) {
@@ -36,6 +66,20 @@ void CvInfoCache::init() {
 			//logBBAI( "CACHE: %s requires %s", kUnit.getType(), GC.getBuildingClassInfo( ePrereqBuildingClass ).getType() );
 		}
 	}
+
+	// Compute all unit upgrades as lists
+	for( int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++ ) {
+		m_aeUnitClassUpgradesByUnit.push_back( std::vector<UnitClassTypes>() );
+		for( int iUnitClass = 0; iUnitClass < GC.getNumUnitClassInfos(); iUnitClass++ ) {
+			if( GC.getUnitInfo( (UnitTypes) iUnit ).getUpgradeUnitClass( (UnitClassTypes) iUnitClass ) ) {
+				m_aeUnitClassUpgradesByUnit.back().push_back( (UnitClassTypes) iUnitClass );
+			}
+		}
+	}
+
+#ifdef INFOCACHE_TESTING
+	test_CvInfoCache();
+#endif
 }
 
 
@@ -63,11 +107,48 @@ bool CvInfoCache::AI_isUnitAmphib( UnitTypes eUnit ) const {
 #endif
 }
 
-bool CvInfoCache::upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass ) const {
-#ifdef NO_CACHING
-	return info::upgradeAvailable( eCivilization, eFromUnit, eToUnitClass );
-#else
-	return m_abUnitUpgradeCache.at( eCivilization, eFromUnit, eToUnitClass );
+
+// Comparison function to sort units by unitclass. Used only for compatibility with old behavior.
+struct cmp_units_by_class {
+	bool operator()( const UnitTypes& a, const UnitTypes& b ) {
+		return GC.getUnitInfo( a ).getUnitClassType() < GC.getUnitInfo( b ).getUnitClassType();
+	}
+};
+
+void CvInfoCache::computeAvailableUpgrades( CivilizationTypes eCivilization, UnitTypes eFromUnit, std::vector<UnitTypes>& result )
+{
+	CvCivilizationInfo& kCiv = GC.getCivilizationInfo( eCivilization );
+
+	// lfgr: Uncomment this to revert to the original implementation
+	//for( int eClass = 0; eClass < GC.getNumUnitClassInfos(); eClass++ ) {
+	//	if( info::upgradeAvailable( eCivilization, eFromUnit, (UnitClassTypes) eClass ) ) {
+	//		UnitTypes eUnit = (UnitTypes) GC.getCivilizationInfo( eCivilization ).getCivilizationUnits( eClass );
+	//		if( eUnit != NO_UNIT ) {
+	//			result.push_back( eUnit );
+	//		}
+	//	}
+	//}
+
+	// Find all updates via graph traversal, using cached upgrades ("edges") from precomputation
+	std::vector<UnitTypes> unit_queue;
+	unit_queue.push_back( eFromUnit );
+	std::set<UnitTypes> found; // lfgr: Does not seem to compile with unordered_set
+	while( unit_queue.size() > 0 ) {
+		UnitTypes eUnit = unit_queue.back();
+		unit_queue.pop_back();
+		const std::vector<UnitClassTypes>& veUpgrades = m_aeUnitClassUpgradesByUnit[eUnit];
+		for( size_t i = 0; i < veUpgrades.size(); i++ ) {
+			UnitTypes eUpgradeUnit = (UnitTypes) kCiv.getCivilizationUnits( veUpgrades[i] );
+			if( eUpgradeUnit != NO_UNIT && found.find( eUpgradeUnit ) == found.end() ) {
+				result.push_back( eUpgradeUnit );
+				found.insert( eUpgradeUnit );
+				unit_queue.push_back( eUpgradeUnit );
+			}
+		}
+	}
+
+#ifdef INFOCACHE_TESTING
+	std::sort( result.begin(), result.end(), cmp_units_by_class() );
 #endif
 }
 
@@ -153,6 +234,7 @@ namespace info_ai {
 // Other calculations that do not depend on game state
 namespace info {
 	// Whether a unit of the given type can upgrade to the given class for a player of the given civ.
+	// Old implementation, replaced with CvInfoCache::computeAvailableUpgrades in most places, and also used for regression testing
 	// Mostly copied from CvUnit::upgradeAvailable
 	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass, int iCount )
 	{
@@ -188,11 +270,5 @@ namespace info {
 			}
 		}
 		return false;
-	}
-
-	// Need this for function pointer usage
-	bool upgradeAvailable( CivilizationTypes eCivilization, UnitTypes eFromUnit, UnitClassTypes eToUnitClass )
-	{
-		return upgradeAvailable( eCivilization, eFromUnit, eToUnitClass, 0 );
 	}
 }

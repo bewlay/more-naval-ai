@@ -32,6 +32,9 @@
 /* BETTER_BTS_AI_MOD                       END                                                  */
 /************************************************************************************************/
 
+// lfgr 03/2026
+#include "CvInfoCache.h"
+
 #define FOUND_RANGE				(7)
 
 // Public Functions...
@@ -885,37 +888,33 @@ void CvUnitAI::AI_upgrade()
 	int iBestValue = kPlayer.AI_unitValue(getUnitType(), eUnitAI, pArea, true) * 100;
 	UnitTypes eBestUnit = NO_UNIT;
 
+	// lfgr 03/2026: Unit upgrade caching
+	// LFGR_TODO: This does not respect assimilation
+	std::vector<UnitTypes> veUpgradeUnits;
+	getInfoCache().computeAvailableUpgrades( kPlayer.getCivilizationType(), getUnitType(), veUpgradeUnits );
+
+	// lfgr: The following are K-Mod comments
 	// Note: the original code did two passes, presumably for speed reasons.
 	// In the first pass, they checked only units which were flagged with the right unitAI.
 	// Then, only if no such units were found, they checked all other units.
 	//
 	// I'm just jumping straight to the second (slower) pass, because most of the time no upgrades are available at all and so both passes would be used anyway.
 	//
-	// I've reversed the order of iteration because the stronger units are typically later in the list
-	for (UnitClassTypes i = (UnitClassTypes)(GC.getNumUnitClassInfos()-1); i >= 0; i=(UnitClassTypes)(i-1))
+	// I've reversed the order of iteration because the stronger units are typically later in the list (lfgr: kept that, even though it should do almost nothing)
+	for( int i = veUpgradeUnits.size()-1; i >= 0; i-- )
 	{
-		// LFGR_TODO: This doesn't respect Assimilation.
-		UnitTypes eLoopUnit = (UnitTypes)kCivInfo.getCivilizationUnits(i);
+		UnitTypes eLoopUnit = veUpgradeUnits[i];
 
-		// lfgr 05/2024: optimization
-		// LFGR_TODO: This also does not respect Assimilation
-		if( !upgradeAvailable( getUnitType(), i ) )
+		int iValue = kPlayer.AI_unitValue(eLoopUnit, eUnitAI, pArea, true);
+		// use a random factor. less than 100, so that the upgrade must be better than the current unit.
+		iValue *= 80 + GC.getGameINLINE().getSorenRandNum(21, "AI Upgrade");
+
+		// (believe it or not, AI_unitValue is faster than canUpgrade.)
+		// LFGR_TODO: Is this really true in FfH?
+		if (iValue > iBestValue && canUpgrade(eLoopUnit))
 		{
-			continue;
-		}
-
-		if (eLoopUnit != NO_UNIT)
-		{
-			int iValue = kPlayer.AI_unitValue(eLoopUnit, eUnitAI, pArea, true);
-			// use a random factor. less than 100, so that the upgrade must be better than the current unit.
-			iValue *= 80 + GC.getGameINLINE().getSorenRandNum(21, "AI Upgrade");
-
-			// (believe it or not, AI_unitValue is faster than canUpgrade.)
-			if (iValue > iBestValue && canUpgrade(eLoopUnit))
-			{
-				iBestValue = iValue;
-				eBestUnit = eLoopUnit;
-			}
+			iBestValue = iValue;
+			eBestUnit = eLoopUnit;
 		}
 	}
 

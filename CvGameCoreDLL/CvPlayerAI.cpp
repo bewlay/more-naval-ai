@@ -26275,43 +26275,38 @@ int CvPlayerAI::AI_goldToUpgradeAllUnits(int iExpThreshold) const
 		CvArea* pUnitArea = pLoopUnit->area();
 		int iUnitValue = AI_unitValue(eUnitType, eUnitAIType, pUnitArea, true);
 
-		for (int iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
+		// lfgr 03/2026: Unit upgrade caching
+		// LFGR_TODO: This does not respect assimilation
+		std::vector<UnitTypes> veUpgradeUnits;
+		getInfoCache().computeAvailableUpgrades( getCivilizationType(), pLoopUnit->getUnitType(), veUpgradeUnits );
+
+		for( size_t i = 0; i < veUpgradeUnits.size(); i++ )
 		{
-			UnitClassTypes eUpgradeUnitClassType = (UnitClassTypes) iI;
-			UnitTypes eUpgradeUnitType = (UnitTypes)(kCivilizationInfo.getCivilizationUnits(iI));
-
-			if (NO_UNIT != eUpgradeUnitType)
+			UnitTypes eUpgradeUnitType = veUpgradeUnits[i];
+			// Is the upgrade better?
+			int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea, true);
+			if (iUpgradeValue > iUnitValue)
 			{
-				// lfgr 11/2025: Swapped two ifs for better performance
-				// is this a valid upgrade?
-				if (pLoopUnit->upgradeAvailable(eUnitType, eUpgradeUnitClassType))
+				// can we actually make this upgrade?
+				bool bCanUpgrade = false;
+				CvCity* pCapitalCity = getCapitalCity();
+				if (pCapitalCity != NULL && pCapitalCity->canTrain(eUpgradeUnitType))
 				{
-					// is it better?
-					int iUpgradeValue = AI_unitValue(eUpgradeUnitType, eUnitAIType, pUnitArea, true);
-					if (iUpgradeValue > iUnitValue)
+					bCanUpgrade = true;
+				}
+				else
+				{
+					CvCity* pCloseCity = GC.getMapINLINE().findCity(pLoopUnit->getX_INLINE(), pLoopUnit->getY_INLINE(), getID(), NO_TEAM, true, (pLoopUnit->getDomainType() == DOMAIN_SEA));
+					if (pCloseCity != NULL && pCloseCity->canTrain(eUpgradeUnitType))
 					{
-						// can we actually make this upgrade?
-						bool bCanUpgrade = false;
-						CvCity* pCapitalCity = getCapitalCity();
-						if (pCapitalCity != NULL && pCapitalCity->canTrain(eUpgradeUnitType))
-						{
-							bCanUpgrade = true;
-						}
-						else
-						{
-							CvCity* pCloseCity = GC.getMapINLINE().findCity(pLoopUnit->getX_INLINE(), pLoopUnit->getY_INLINE(), getID(), NO_TEAM, true, (pLoopUnit->getDomainType() == DOMAIN_SEA));
-							if (pCloseCity != NULL && pCloseCity->canTrain(eUpgradeUnitType))
-							{
-								bCanUpgrade = true;
-							}
-						}
-
-						if (bCanUpgrade)
-						{
-							iUnitGold += pLoopUnit->upgradePrice(eUpgradeUnitType);
-							iUnitUpgradePossibilities++;
-						}
+						bCanUpgrade = true;
 					}
+				}
+
+				if (bCanUpgrade)
+				{
+					iUnitGold += pLoopUnit->upgradePrice(eUpgradeUnitType);
+					iUnitUpgradePossibilities++;
 				}
 			}
 		}

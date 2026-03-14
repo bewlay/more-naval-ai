@@ -8905,12 +8905,12 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 }
 
 
-// LFGR_TODO: Cache this? Could be slow for deep upgrade trees.
+// lfgr note: Slow function, use CvInfoCache::computeAvailableUpgrades if possible. iCount variable is unused, but kept for compatability (especially python)
 bool CvUnit::upgradeAvailable(UnitTypes eFromUnit, UnitClassTypes eToUnitClass, int iCount) const
 {
 	PROFILE_FUNC()
 	
-	return getInfoCache().upgradeAvailable( getCivilizationType(), eFromUnit, eToUnitClass );
+	return info::upgradeAvailable( getCivilizationType(), eFromUnit, eToUnitClass );
 }
 
 
