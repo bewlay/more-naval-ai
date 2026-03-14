@@ -4282,7 +4282,7 @@ class Revolution :
 						bIsBarbRev = pJoinPlayer.isBarbarian()
 
 						# Hand over cities
-						cityList = RevPlayerUtils.cedeCities( cityList, pJoinPlayer, not bIsBarbRev and not bGaveMap )
+						cityList = RevPlayerUtils.cedeCities( cityList, pJoinPlayer, not bIsBarbRev )
 
 						# Joined player likes that
 						if not bIsBarbRev :
