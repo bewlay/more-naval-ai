@@ -1,5 +1,46 @@
 # Changelog
 
+## 2.9.3u
+
+### Gameplay
+* Revolutions: New unit spawning system, able to spawn e.g. religious units and mages based on circumstances
+* Can no longer add great commander to strength-zero units
+
+### UI
+* "Free promotion" help no longer shows plus sign
+* Disabled and rearranged some BUG options
+* New BUG options to stop AIAutoplay on victory or revolution
+* Do not always ask for switching players when dying
+* Revolutions: Show expected turns until reinforcements in revolution advisor
+* Mention affected city when an event changes crime rate
+* Always enable AIAutoPlay settings (not only in debug mode)
+* Advisor no longer suggests giving cities to players we cannot contact (report by Dominus the Mentat@civfanatics)
+* Severed soul spells no longer interrupt unit cycling
+
+### Bugfixes
+* Same-civ revolutions now correctly produce reinforcements
+* Fixes a crash where a unit tries to pick up equipment, but changes its mind at the last second to cast a spell that kills it instead
+* F keys to switch advisors work again (thanks to f1rpo)
+* Blockades no longer linger (report by DuskTreader@civfanatics)
+* Fixed a startup crash on linux/wine (report by Xirema@civfanatics)
+* Revolutions: Fixed a python error
+
+### AI
+* Confusing barbarian AI by positioning units at chokepoints no longer works in most cases (thanks to Sezren@civfanatics)
+* Experimental AI option: Before training a unit, consider constructing a building enabling better units
+* Performance improvements to AI upgrade selection
+
+### Code
+* Added ``<bAllUnitsFreePromotion>`` trait tag to grant free promotion to all units (used for Homeland trait)
+* ``DamageTypes`` enum and all useful ``CvTechInfo`` and ``CvPromotionInfo`` methods exposed to python
+* Now caches all DefineINTs with default values
+* Added blank main menu background for debugging
+* Various AI testing/debugging improvements, including map mirroring and no heroes option (for balance) and better logging
+* Revolutions: Refactoring along with new unit spawning system; the relevant files are ``RevSpawning.py`` and ``RevUnits.py``
+* Revolutions: Refactored "independence style" code
+* Improved the custom profiler
+* Misc code cleanup/refactoring
+
 ## 2.9.2-1u
 
 ### Bugfixes
