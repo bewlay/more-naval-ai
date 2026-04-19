@@ -307,8 +307,10 @@ def getGameData():
 
 	t=t+(len(WBDesc.gameDesc.options),)
 	for i in range(len(WBDesc.gameDesc.options)):
-		option = CvUtil.findInfoTypeNum(gc.getGameOptionInfo, gc.getNumGameOptionInfos(), WBDesc.gameDesc.options[i])
-		t=t+(option,)
+		# lfgr 04/2026: Compatability
+		option = CvWBDesc.compat_findInfoTypeNum( WBDesc.gameDesc.options[i], WBDesc.gameDesc.bCompat, gc.getGameOptionInfo, gc.getNumGameOptionInfos() )
+		if option is not None :
+			t=t+(option,)
 
 	t=t+(len(WBDesc.gameDesc.mpOptions),)
 	for i in range(len(WBDesc.gameDesc.mpOptions)):

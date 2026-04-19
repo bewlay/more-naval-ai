@@ -21,11 +21,81 @@ iNumPlayers = gc.getMAX_CIV_PLAYERS()
 iNumTeams = gc.getMAX_CIV_TEAMS()
 #Magister Stop
 
+
+# lfgr 04/2026: Compatibility stuff
+_IGNORE_TYPE_STRINGS = set( [
+	"BUILDING_CAMINUS_AUREUS", # No good replacement
+	"CIVICOPTION_COMPASSION", # Fully removed
+	"GAMEOPTION_NO_TIER_4_UNITS", # Removed, no replacement
+	"PROMOTION_PUPPETEER", # No good replacement, puppets are tied to Balseraph civ
+	"TECH_ARMORED_CAVALRY", # Removed; had warhorses as a requirement, which is now the final cavalry tech
+	"TECH_TRACKING", # Removed, probably for good reason
+] )
+_REPLACE_TYPE_STRINGS = {
+	"BUILDING_BEAR_TOTEM" : "BUILDING_TRAINING_YARD", # Not a perfect replacement
+	"BUILDING_BOWYER" : "BUILDING_ARCHERY_RANGE",
+	"BUILDING_HIPPODROME" : "BUILDING_STABLE", # Not a perfect replacement
+	"BUILDING_MACHINISTS_SHOP" : "BUILDING_FORGE", # Not a perfect replacement
+	"BUILDING_OBELISK" : "BUILDING_MONUMENT",
+	"BUILDING_STABLE_HIPPUS" : "BUILDING_STABLE",
+	"BUILDING_TRAINING_YARD_BANNOR" : "BUILDING_TRAINING_YARD",
+	"BUILDING_WEAPONSMITH" : "BUILDING_TRAINING_YARD", # Not a perfect replacement
+	"PROMOTION_ARCANE" : "PROMOTION_POTENCY",
+	"UNIT_BARBATOS" : "UNIT_LICH", # Gets extra changes in compatUnitApply()
+	"UNIT_PUPPETEER" : "UNIT_MAGE"
+}
+def _findInfoTypeNum( sType, infoGetter, iNumInfos ) :
+	if infoGetter is not None :
+		assert iNumInfos is not None
+		return CvUtil.findInfoTypeNum( infoGetter, iNumInfos, sType )
+	else :
+		return gc.getInfoTypeForString( sType )
+def compat_findInfoTypeNum( sType, bCompat, infoGetter, iNumInfos ) :
+	"""
+	Compatibility function. If bCompat is True, tries to replace nonexisting infotypes. May return None if to indicate
+	that the referenced thing should be ignored altogether. Returns -1 if it doesn't know what to do.
+	"""
+	if not bCompat :
+		return _findInfoTypeNum( sType, infoGetter, iNumInfos )
+	else :
+		iType = gc.getInfoTypeForStringNoAsserts( sType )
+		if iType != -1 :
+			return _findInfoTypeNum( sType, infoGetter, iNumInfos ) # Run checks
+		if sType in _IGNORE_TYPE_STRINGS or sType.startswith( "CORPORATION" ) : # All corporations should be removed
+			CvUtil.pyPrint( "WB-Compat: Ignored type '%s'" % sType )
+			return None
+		if sType in _REPLACE_TYPE_STRINGS :
+			CvUtil.pyPrint( "WB-Compat: Replacing type '%s' with '%s'" % ( sType, _REPLACE_TYPE_STRINGS[sType] ) )
+		sType = _REPLACE_TYPE_STRINGS[sType]
+		return _findInfoTypeNum( sType, infoGetter, iNumInfos ) # Trigger rightful assertion if this doesn't exist
+
+# Old unit names for flavor
+_UNIT_NAMES = {
+	"UNIT_BARBATOS" : "Barbatos",
+	"UNIT_PUPPETEER" : "Puppeteer"
+}
+def compatUnitApply( sType, unit ) :
+	# type: ( str, CyUnit ) -> None
+	""" Post-processing of old units for compatibility. Note: Promotions should be in the scenario, including items. """
+	if sType in _UNIT_NAMES :
+		CvUtil.pyPrint( "WB-Compat: Setting unit name to %s" % _UNIT_NAMES[sType] )
+		unit.setName( _UNIT_NAMES[sType] )
+	if sType == "UNIT_BARBATOS" :
+		CvUtil.pyPrint( "WB-Compat: Post-processing Barbatos" )
+		unit.setBaseCombatStr( 7 )
+		unit.setBaseCombatStrDefense( 7 )
+		unit.setHasPromotion( gc.getInfoTypeForString( "PROMOTION_HELD" ), True )
+
+
 #############
-def getPlayer(idx):
+# lfgr 04/2026: In compatibility mode, assume invalid players are barbarian.
+# (in older versions, the barbarian player index is different)
+def getPlayer( idx, bCompat = False ):
 	"helper function which wraps get player in case of bad index"
 	if (gc.getPlayer(idx).isAlive()):
 		return gc.getPlayer(idx)
+	elif bCompat :
+		return gc.getPlayer( gc.getBARBARIAN_PLAYER() )
 	return None
 
 #############
@@ -105,6 +175,7 @@ class CvGameDesc:
 		self.szDescription = ""
 		self.szModPath = ""
 		self.iRandom = 0
+		self.bCompat = False # lfgr 04/2026
 #Magister Start
 		self.iGlobalCounter = 0
 		self.iGlobalLimitCounter = 0
@@ -239,6 +310,12 @@ class CvGameDesc:
 				v = parser.findTokenValue(toks, "TargetScore")
 				if v!=-1:
 					self.targetScore = int(v)
+					continue
+
+				# lfgr 04/2024
+				v = parser.findTokenValue(toks, "FfHCompatibilityMode")
+				if v!=-1:
+					self.bCompat = bool(int(v)) # 0 for False, 1 for True
 					continue
 
 #Magister Start
@@ -619,7 +696,10 @@ class CvTeamDesc:
 
 #############
 class CvPlayerDesc:
-	def __init__(self, iDefaultTeam = -1 ): # lfgr 08/2023: Add default team for missing players
+	# lfgr 08/2023: Add default team for missing players
+	# lfgr 04/2026: Compatibility mode
+	def __init__(self, iDefaultTeam = -1, bCompat = False ):
+		self.bCompat = bCompat 
 		self.szCivDesc = ""
 		self.szCivShortDesc = ""
 		self.szLeaderName = ""
@@ -1027,13 +1107,14 @@ class CvPlayerDesc:
 
 				v = parser.findTokenValue(toks, "CivicOption")
 				if v!=-1:
-					iCivicOptionType = gc.getInfoTypeForString(v)
-
-					v = parser.findTokenValue(toks, "Civic")
-					if v!=-1:
-						iCivicType = gc.getInfoTypeForString(v)
-						self.aaiCivics.append([iCivicOptionType,iCivicType])
-						continue
+					# lfgr 04/2026
+					iCivicOptionType = compat_findInfoTypeNum( v, self.bCompat, gc.getCivicOptionInfo, gc.getNumCivicOptionInfos() )
+					if iCivicOptionType is not None and iCivicOptionType != -1 :
+						v = parser.findTokenValue(toks, "Civic")
+						if v!=-1:
+							iCivicType = gc.getInfoTypeForString(v)
+							self.aaiCivics.append([iCivicOptionType,iCivicType])
+							continue
 
 				v = parser.findTokenValue(toks, "AttitudePlayer")
 				if v!=-1:
@@ -1085,7 +1166,9 @@ class CvPlayerDesc:
 #############
 class CvUnitDesc:
 	"unit WB serialization"
-	def __init__(self):
+	# lfgr 04/2026: Compatibility mode
+	def __init__(self, bCompat = False):
+		self.bCompat = bCompat
 		self.plotX = -1
 		self.plotY = -1
 		self.unitType = None
@@ -1193,7 +1276,7 @@ class CvUnitDesc:
 
 	def read(self, f, pX, pY):
 		"read in unit data - at this point the first line 'BeginUnit' has already been read"
-		self.__init__()
+		self.__init__( self.bCompat ) # lfgr 04/2026: ... why?
 		self.plotX = pX
 		self.plotY = pY
 		CvUtil.pyAssert(self.plotX>=0 and self.plotY>=0, "invalid plot coords")
@@ -1351,11 +1434,12 @@ class CvUnitDesc:
 
 	def apply(self):
 		"after reading, this will actually apply the data"
-		player = getPlayer(self.owner)
+		player = getPlayer( self.owner, self.bCompat )
 		if (player):
 			# print ("unit apply %d %d" %(self.plotX, self.plotY))
 			CvUtil.pyAssert(self.plotX>=0 and self.plotY>=0, "invalid plot coords")
-			unitTypeNum = CvUtil.findInfoTypeNum(gc.getUnitInfo, gc.getNumUnitInfos(), self.unitType)
+			# lfgr 04/2026
+			unitTypeNum = compat_findInfoTypeNum( self.unitType, self.bCompat, gc.getUnitInfo, gc.getNumUnitInfos() )
 			if (unitTypeNum < 0):
 				unit = None
 			else:
@@ -1366,6 +1450,8 @@ class CvUnitDesc:
 
 				unit = player.initUnit(unitTypeNum, self.plotX, self.plotY, UnitAITypes(eUnitAI), self.facingDirection)
 			if unit:
+				if self.bCompat :
+					compatUnitApply( self.unitType, unit )
 				if (self.szName != None):
 					unit.setName(self.szName)
 				#leader unit type
@@ -1382,8 +1468,10 @@ class CvUnitDesc:
 				if self.experience != -1:
 					unit.setExperience(self.experience, -1)
 				for promo in self.promotionType:
-					promotionTypeNum = CvUtil.findInfoTypeNum(gc.getPromotionInfo, gc.getNumPromotionInfos(), promo)
-					unit.setHasPromotion(promotionTypeNum, True)
+					# lfgr 04/2026
+					promotionTypeNum = compat_findInfoTypeNum( promo, self.bCompat, gc.getPromotionInfo, gc.getNumPromotionInfos() )
+					if promotionTypeNum is not None and promotionTypeNum != -1 :
+						unit.setHasPromotion(promotionTypeNum, True)
 				if self.isSleep:
 					unit.getGroup().setActivityType(ActivityTypes.ACTIVITY_SLEEP)
 				elif self.isIntercept:
@@ -1432,11 +1520,15 @@ class CvUnitDesc:
 					while unit.isImmortal():
 						unit.changeImmortal(-1)
 #Magister Stop
+		else :
+			raise Exception( "Unit player unknown: %d" % self.owner )
 
 ############
 class CvCityDesc:
 	"serializes city data"
-	def __init__(self):
+	# lfgr 04/2026 Compatibility mode
+	def __init__(self, bCompat = False):
+		self.bCompat = bCompat
 		self.city = None
 		self.owner = None
 		self.name = None
@@ -1556,7 +1648,7 @@ class CvCityDesc:
 
 	def read(self, f, iX, iY):
 		"read in city data - at this point the first line 'BeginCity' has already been read"
-		self.__init__()
+		self.__init__( self.bCompat ) # lfgr 04/2026: ... why?
 		self.plotX=iX
 		self.plotY=iY
 		parser = CvWBParser()
@@ -1729,7 +1821,7 @@ class CvCityDesc:
 
 	def apply(self, bSpecial):
 		"after reading, this will actually apply the data"
-		player = getPlayer(self.owner)
+		player = getPlayer( self.owner, self.bCompat )
 		if (player):
 
 #FfH: Added by Kael 12/23/2008
@@ -1747,6 +1839,8 @@ class CvCityDesc:
 #FfH: End Add
 
 			self.city = player.initCity(self.plotX, self.plotY)
+		else : # lfgr 04/2026: Better error message
+			raise Exception( "City owner unknown: %d" % self.owner )
 
 		if (self.name != None):
 			self.city.setName(self.name, False)
@@ -1758,8 +1852,10 @@ class CvCityDesc:
 			self.city.setCulture(item[0], item[1], true)
 
 		for bldg in (self.bldgType):
-			bldgTypeNum = CvUtil.findInfoTypeNum(gc.getBuildingInfo, gc.getNumBuildingInfos(), bldg)
-			self.city.setNumRealBuilding(bldgTypeNum, 1)
+			# lfgr 06/2026
+			bldgTypeNum = compat_findInfoTypeNum( bldg, self.bCompat, gc.getBuildingInfo, gc.getNumBuildingInfos() )
+			if bldgTypeNum is not None and bldgTypeNum != -1 :
+				self.city.setNumRealBuilding(bldgTypeNum, 1)
 
 		for religion in (self.religions):
 			religionTypeNum = CvUtil.findInfoTypeNum(gc.getReligionInfo, gc.getNumReligionInfos(), religion)
@@ -1770,12 +1866,16 @@ class CvCityDesc:
 			gc.getGame().setHolyCity(religionTypeNum, self.city, false)
 
 		for corporation in (self.corporations):
-			corporationTypeNum = CvUtil.findInfoTypeNum(gc.getCorporationInfo, gc.getNumCorporationInfos(), corporation)
-			self.city.setHasCorporation(corporationTypeNum, true, false, true)
+			# lfgr 04/2026
+			corporationTypeNum = compat_findInfoTypeNum( corporation, self.bCompat, gc.getCorporationInfo, gc.getNumCorporationInfos() )
+			if corporationTypeNum is not None and corporationTypeNum != -1 :
+				self.city.setHasCorporation(corporationTypeNum, true, false, true)
 
 		for headquarters in (self.headquarterCorporations):
-			corporationTypeNum = CvUtil.findInfoTypeNum(gc.getCorporationInfo, gc.getNumCorporationInfos(), headquarters)
-			gc.getGame().setHeadquarters(corporationTypeNum, self.city, false)
+			# lfgr 04/2026
+			corporationTypeNum = compat_findInfoTypeNum( headquarters, self.bCompat, gc.getCorporationInfo, gc.getNumCorporationInfos() )
+			if corporationTypeNum is not None and corporationTypeNum != -1 :
+				gc.getGame().setHeadquarters(corporationTypeNum, self.city, false)
 
 		for iSpecialist in self.freeSpecialists:
 			specialistTypeNum = CvUtil.findInfoTypeNum(gc.getSpecialistInfo, gc.getNumSpecialistInfos(), iSpecialist)
@@ -1831,7 +1931,9 @@ class CvCityDesc:
 ###########
 class CvPlotDesc:
 	"serializes plot data"
-	def __init__(self):
+	# lfgr 04/2026: Compatibility mode
+	def __init__( self, bCompat = False ):
+		self.bCompat = bCompat
 		self.iX = -1
 		self.iY = -1
 		self.riverNSDirection = CardinalDirectionTypes.NO_CARDINALDIRECTION
@@ -2006,7 +2108,7 @@ class CvPlotDesc:
 
 	def read(self, f):
 		"read in a plot desc"
-		self.__init__()
+		self.__init__( self.bCompat ) # lfgr 04/2026: ... why?
 		parser = CvWBParser()
 		if parser.findNextToken(f, "BeginPlot")==false:
 			return false	# no more plots
@@ -2193,7 +2295,7 @@ class CvPlotDesc:
 			# Units
 			v = parser.findTokenValue(toks, "BeginUnit")
 			if v!=-1:
-				unitDesc = CvUnitDesc()
+				unitDesc = CvUnitDesc( self.bCompat ) # lfgr 04/2026
 				unitDesc.read(f, self.iX, self.iY)
 				self.unitDescs.append(unitDesc)
 				continue
@@ -2201,7 +2303,7 @@ class CvPlotDesc:
 			# City
 			v = parser.findTokenValue(toks, "BeginCity")
 			if v!=-1:
-				self.cityDesc = CvCityDesc()
+				self.cityDesc = CvCityDesc( self.bCompat )
 				self.cityDesc.read(f, self.iX, self.iY)
 				continue
 
@@ -2649,10 +2751,17 @@ class CvWBDesc:
 		for iTeamLoop in xrange(len(self.teamsDesc)):
 			pTeam = gc.getTeam(iTeamLoop)
 			pWBTeam = self.teamsDesc[iTeamLoop]
+			
+			# lfgr 04/2026: Teams without members will cause crashes when receiving techs etc.
+			if pTeam.getLeaderID() == -1 :
+				CvUtil.pyPrint( "WB: Skipping empty team %d" % iTeamLoop )
+				continue
 
 			for techTypeTag in pWBTeam.techTypes:
-				techType = CvUtil.findInfoTypeNum(gc.getTechInfo, gc.getNumTechInfos(), techTypeTag)
-				pTeam.setHasTech(techType, true, PlayerTypes.NO_PLAYER, false, false)
+				# lfgr 04/2026
+				techType = compat_findInfoTypeNum( techTypeTag, self.gameDesc.bCompat, gc.getTechInfo, gc.getNumTechInfos() )
+				if techType is not None and techType != -1 :
+					pTeam.setHasTech(techType, true, PlayerTypes.NO_PLAYER, false, false)
 			for item in pWBTeam.aaiEspionageAgainstTeams:
 				pTeam.setEspionagePointsAgainstTeam(item[0], item[1])
 			for item in pWBTeam.bContactWithTeamList:
@@ -2661,8 +2770,16 @@ class CvWBDesc:
 				pTeam.declareWar(item, false, WarPlanTypes.NO_WARPLAN)
 			for item in pWBTeam.bPermanentWarPeaceList:
 				pTeam.setPermanentWarPeace(item, true)
-			for item in pWBTeam.bOpenBordersWithTeamList:
-				pTeam.signOpenBorders(item)
+			for eTeam in pWBTeam.bOpenBordersWithTeamList:
+				# lfgr 04/2026: Team without leader specified
+				if gc.getTeam( eTeam ).getLeaderID() == -1 :
+					msg = "Team %d tries to sign open borders with empty team %d" % ( iTeamLoop, eTeam )
+					if self.gameDesc.bCompat : # Gracefully handle this error if in compatibility mode
+						CvUtil.pyPrint( "WB-Compat: WARNING: " + msg )
+						continue
+					else :
+						raise Exception( msg )
+				pTeam.signOpenBorders(eTeam)
 			for item in pWBTeam.bDefensivePactWithTeamList:
 				pTeam.signDefensivePact(item)
 			for item in pWBTeam.bVassalOfTeamList:
@@ -2848,9 +2965,10 @@ class CvWBDesc:
 			self.teamsDesc.append(teamsDesc)
 
 		# lfgr 08/2023: Some changes to add missing players with default team
+		# lfgr 04/2026: Compatibility mode
 		print "Reading players desc"
 		filePos = f.tell()
-		self.playersDesc = [CvPlayerDesc(i) for i in range( iNumPlayers )]
+		self.playersDesc = [CvPlayerDesc(i, bCompat = self.gameDesc.bCompat) for i in range( iNumPlayers )]
 		for i in range(iNumPlayers):
 			if not self.playersDesc[i].read(f) : # read player info
 				f.seek(filePos) # backup
@@ -2863,7 +2981,7 @@ class CvWBDesc:
 		print("Reading/creating %d plot descs" %(self.mapDesc.numPlotsWritten,))
 		self.plotDesc = []
 		for i in range(self.mapDesc.numPlotsWritten):
-			pDesc = CvPlotDesc()
+			pDesc = CvPlotDesc( bCompat = self.gameDesc.bCompat ) # lfgr 04/2026
 			if pDesc.read(f)==True:
 				self.plotDesc.append(pDesc)
 			else:
