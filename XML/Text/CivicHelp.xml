@@ -8,4 +8,11 @@
 		<German>[COLOR_RED]Muss sich im Krieg befinden[COLOR_REVERT]</German>
 		<Spanish>[COLOR_RED]Se debe estar en guerra[COLOR_REVERT]</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CIVIC_FOOD_CONSUMPTION_PER_POPULATION</Tag>
+		<English>[ICON_BULLET]%d1 food consumed per population (instead of %d2)</English>
+		<French>[ICON_BULLET]%d1 nourriture consomm&#233;e par citoyen (au lieu de %d2)</French>
+		<German>[ICON_BULLET]%d1 verbrauchte Nahrung pro B&#252;rger (anstatt %d2)</German>
+		<Spanish>[ICON_BULLET]%d1 de comida consumida por ciudadano (en lugar de %d2)</Spanish>
+	</TEXT>
 </Civ4GameText>

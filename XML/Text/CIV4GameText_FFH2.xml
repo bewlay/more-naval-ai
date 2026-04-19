@@ -3608,13 +3608,6 @@
 		<Spanish>La Cruzada s&#243;lo puede adoptarse cuando se est&#225; en guerra. Potencia la producci&#243;n militar y reduce el hast&#237;o b&#233;lico de la civilizaci&#243;n. Tampoco permite la construcci&#243;n de unidades y edificios no militares mientras al mismo tiempo se puede acceder a algunas unidades especiales. Una vez en una cruzada, el jugador no puede iniciar la diplomacia con los l&#237;deres con los que est&#225; en guerra. (S&#243;lo para Bannor)</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVIC_FOOD_CONSUMPTION_PER_POPULATION</Tag>
-		<English>[ICON_BULLET]%D1 food consumed per population (instead of %D2)</English>
-		<French>[ICON_BULLET]%D1 nourriture consomm&#233;e par citoyen (au lieu de %D2)</French>
-		<German>[ICON_BULLET]%D1 verbrauchte Nahrung pro B&#252;rger (anstatt %D2)</German>
-		<Spanish>[ICON_BULLET]%D1 de comida consumida por ciudadano (en lugar de %D2)</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_CIVIC_FOREIGN_TRADE</Tag>
 		<English>Foreign Trade</English>
 		<French>Commerce Ext&#233;rieur</French>
