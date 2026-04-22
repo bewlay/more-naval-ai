@@ -33,4 +33,16 @@
 		<Italian>%d1 citt&#224; con cultura %s2 (%d3)</Italian>
 		<Spanish>%d1 ciudades con cultura %s2 (%d3)</Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_FAVORITE_RELIGION</Tag>
+		<English>Favorite Religion:</English>
+		<German>Lieblings-Religion:</German>
+		<Spanish>Religi&#243;n Favorita:</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_FAVORITE_RELIGIONS</Tag>
+		<English>Favorite Religions:</English>
+		<German>Lieblings-Religionen:</German>
+		<Spanish>Religiones Favoritas:</Spanish>
+	</TEXT>
 </Civ4GameText>

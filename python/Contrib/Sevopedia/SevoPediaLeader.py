@@ -50,7 +50,7 @@ class SevoPediaLeader:
 		self.X_CIVIC = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + X_MERGIN
 		self.Y_CIVIC = self.Y_LEADERHEAD_PANE
 		self.W_CIVIC = self.top.R_PEDIA_PAGE - self.X_CIVIC
-		self.H_CIVIC = 80
+		self.H_CIVIC = 105
 
 		self.X_TRAITS = self.X_LEADERHEAD_PANE + self.W_LEADERHEAD_PANE + X_MERGIN
 		self.Y_TRAITS = self.Y_CIVIC + self.H_CIVIC + Y_MERGIN
@@ -155,6 +155,7 @@ class SevoPediaLeader:
 			screen.addMultilineText(listName, szCivicText, self.X_CIVIC+5, self.Y_CIVIC+30, self.W_CIVIC-10, self.H_CIVIC-10, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 		"""
 		screen.addPanel(panelName, localText.getText("TXT_KEY_PEDIA_FAV_CIVIC", ()), "", True, True, self.X_CIVIC, self.Y_CIVIC, self.W_CIVIC, self.H_CIVIC, PanelStyles.PANEL_STYLE_BLUE50)
+		szCivicText = u""
 		iCivic = gc.getLeaderHeadInfo(self.iLeader).getFavoriteCivic()
 		if (-1 != iCivic):
 			szCivicText = u"<link=" + gc.getCivicInfo(iCivic).getType() + ">" + gc.getCivicInfo(iCivic).getDescription() + u"</link>"
@@ -163,11 +164,43 @@ class SevoPediaLeader:
 		if (-1 != iWonder):
 			szWonderText = u"<link=" + gc.getBuildingInfo(iWonder).getType() + ">" + gc.getBuildingInfo(iWonder).getDescription() + u"</link>"
 			szCivicText += u"\n" + localText.getText("TXT_KEY_MISC_FAVORITE_WONDER", ()) + u" " + szWonderText
+			
+		# lfgr 03/2026: Show favourite religions
+		eFavReligion = gc.getLeaderHeadInfo(self.iLeader).getFavoriteReligion()
+		if eFavReligion != -1 :
+			leReligions = [eFavReligion]
+		else :
+			iMax = -99
+			leReligions = []
+			for eRel in range( gc.getNumReligionInfos() ) :
+				iVal = gc.getLeaderHeadInfo(self.iLeader).getReligionWeightModifier( eRel )
+				if iVal > iMax :
+					leReligions = [eRel]
+					iMax = iVal
+				elif iVal == iMax :
+					leReligions.append( eRel )
+			if len( leReligions ) == gc.getNumReligionInfos() :
+				leReligions = [] # No favorite
+		
+		if len( leReligions ) > 0 :
+			if len( szCivicText ) > 0 :
+				szCivicText += u"\n"
+			szReligionText = u""
+			for eRel in leReligions :
+				if szReligionText != u"" :
+					szReligionText += u", "
+				szReligionText += u"<link=" + gc.getReligionInfo(eRel).getType() + ">" + gc.getReligionInfo(eRel).getDescription() + u"</link>"
+			if len( leReligions ) == 1 :
+				szCivicText += localText.getText("TXT_KEY_MISC_FAVORITE_RELIGION", ())
+			else :
+				szCivicText += localText.getText("TXT_KEY_MISC_FAVORITE_RELIGIONS", ())
+			szCivicText += u" " + szReligionText
+		
+		if len( szCivicText ) > 0 :
 			listName = self.top.getNextWidgetName()
 			screen.addMultilineText(listName, szCivicText, self.X_CIVIC + 5, self.Y_CIVIC + 30, self.W_CIVIC - 5, self.H_CIVIC - 32, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 ##--------	BUGFfH: End Modify
-
-
+			
 ##--------	BUGFfH: Deleted by Denev 2009/10/05
 			"""
 	def placeReligion(self):
