@@ -155,7 +155,7 @@ class RevDCMOptionsTab(BugOptionsTab.BugOptionsTab):
 					self.addFloatDropdown(screen, col11, col12, "Revolution__RevCultureModifier")
 					self.addLabel(screen, left, "Revolution__Revolution", "Rebellion Odds:")
 					col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12 = self.addMultiColumnLayout(screen, right, 12, "Rebellion Odds")
-					self.addFloatDropdown(screen, col1, col2, "Revolution__ChanceModifier")
+					# self.addFloatDropdown(screen, col1, col2, "Revolution__ChanceModifier")
 					self.addIntDropdown(screen, col3, col4, "Revolution__CivicsOdds")
 					self.addIntDropdown(screen, col5, col6, "Revolution__ReligionOdds")
 					self.addIntDropdown(screen, col7, col8, "Revolution__LeaderOdds")

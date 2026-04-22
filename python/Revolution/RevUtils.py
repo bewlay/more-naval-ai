@@ -39,7 +39,7 @@ iSentry = None
 iDrill2 = None
 
 revReadyFrac = .6
-revInstigatorThreshold = 1000
+revInstigatorThreshold = 1000 # lfgr note: Also defined in RevDefs.
 alwaysViolentThreshold = 1700
 badLocalThreshold = 8
 deniedTurns = 5

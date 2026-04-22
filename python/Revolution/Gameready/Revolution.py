@@ -22,6 +22,7 @@ import CvScreensInterface
 # lfgr
 import RevCivUtils
 import RevIdxUtils
+import RevStart
 import InterfaceUtils
 # lfgr end
 
@@ -124,7 +125,7 @@ class Revolution :
 		self.humanIdxModifier = RevOpt.getHumanIndexModifier()
 		self.humanIdxOffset = RevOpt.getHumanIndexOffset()
 		# Change chances a revolution occurs given conditions
-		self.chanceModifier = RevOpt.getChanceModifier()
+		# self.chanceModifier = RevOpt.getChanceModifier()
 		# Change strength of revolutions that resort to violence
 		self.strengthModifier = RevOpt.getStrengthModifier()
 		# Change number of rebel reinforcement units
@@ -148,7 +149,7 @@ class Revolution :
 		# Change the initial strength of rev culture in a captured city (1.0 = 50% nationality)
 		self.revCultureModifier = RevOpt.getCultureRateModifier()
 
-		self.iRevRoll = 20000
+		# self.iRevRoll = 20000
 
 		# Stores human leader type when human loses control of civ
 		self.humanLeaderType = None
@@ -986,147 +987,63 @@ class Revolution :
 		revInstigatorCities = list()
 		warnCities = list()
 
-		capRevIdx = 0
-
 		for city in cityList :
 			pCity = city.GetCy()
 			
 			# lfgr 04/2026: Check if city can revolt
-			# FIXME: use RevIdxUtils
-			# lfgr settlements
-			if( pCity.isSettlement() and ( pCity.getOwner() == pCity.getOriginalOwner() ) ) :
+			szCannotRevolt = RevIdxUtils.cityCannotRevoltStr( pCity )
+			if szCannotRevolt :
+				if self.LOG_DEBUG : CvUtil.pyPrint( "    " + szCannotRevolt )
 				continue
-			# end lfgr
 
-			revIdx = pCity.getRevolutionIndex()
-			prevRevIdx = RevData.getCityVal(pCity, 'PrevRevIndex')
-			localRevIdx = pCity.getLocalRevIndex()
+			# Get RevIdx for last two turns, advance
+			iRevIdx = pCity.getRevolutionIndex()
+			iPrevRevIdx = RevData.getCityVal(pCity, 'PrevRevIndex')
+			RevData.updateCityVal( pCity, 'PrevRevIndex', iRevIdx )
 
-			numUnhappy = RevUtils.getModNumUnhappy( pCity, self.warWearinessMod )
-			# LFGR_TODO: Simplify
-			if( numUnhappy > 0 ) :
-				cityThreshold = max([int( self.revInstigatorThreshold - 2.5*self.revInstigatorThreshold*numUnhappy/pCity.getPopulation() ),int(self.revInstigatorThreshold/6.0)])
-			elif( localRevIdx > 60 and pCity.getPopulation() < pCity.getHighestPopulation() - 1 ) :
-				cityThreshold = max([int( self.revInstigatorThreshold*50/(1.0*localRevIdx)), int(self.revInstigatorThreshold/2.0)])
-			else :
-				cityThreshold = self.revInstigatorThreshold
-
-			if( revIdx >= int( self.warnFrac*cityThreshold ) and pCity.getRevolutionCounter() == 0 ) :
-				if(  RevData.getCityVal(pCity, 'WarningCounter') == 0 ) :
-					# Warn human of impending revolution (note can't instigate on warning turn)
-					if( self.LOG_DEBUG ) : CvUtil.pyPrint("  REVOLT - %s (%s) is over %d warning threshold in year %d!!!!"%(pCity.getName(),pPlayer.getCivilizationDescription(0),int( self.warnFrac*cityThreshold ),game.getGameTurnYear()))
-					warnCities.append(pCity)
-				elif( revIdx > cityThreshold and prevRevIdx > cityThreshold ) :
-					# City meets instigator criteria
-					revInstigatorCities.append(pCity)
-
-			if( revIdx > int(self.revReadyFrac*cityThreshold) and prevRevIdx > int(self.revReadyFrac*cityThreshold) and pCity.getRevolutionCounter() == 0 ) :
-				# City meets revolution ready criteria
+			# lfgr 04/2026: Removed adjustments to the threshold based on unhappiness and rapid increases
+			# Simpler and more transparent seems better for this.
+			# self.revInstigatorThreshold is 1000 by default
+			iWarningThreshold = int( self.warnFrac * self.revInstigatorThreshold ) # default: 900
+			iRevReadyThreshold = int( self.revReadyFrac * self.revInstigatorThreshold ) # default: 600
+			
+			# lfgr 04/2026: First check for instigation, so this is not dependent on the warning counter.
+			if pCity.getRevolutionCounter() == 0 and min( iRevIdx, iPrevRevIdx ) > self.revInstigatorThreshold :
+				# City meets instigator criterion
+				revInstigatorCities.append(pCity)
+			elif pCity.getRevolutionCounter() <= 3 and iRevIdx >= iWarningThreshold and RevData.getCityVal(pCity, 'WarningCounter') == 0 :
+				if self.LOG_DEBUG : CvUtil.pyPrint( "  REVOLT - %s (%s) is over %d warning threshold in year %d!!!!" % (
+					pCity.getName(), pPlayer.getCivilizationDescription( 0 ), int( iWarningThreshold ), game.getGameTurnYear()) )
+				warnCities.append(pCity)
+			
+			if pCity.getRevolutionCounter() == 0 and min( iRevIdx, iPrevRevIdx ) > iRevReadyThreshold :
+				# City meets revolution ready criterion
 				revReadyCities.append( pCity )
 
-			RevData.updateCityVal( pCity, 'PrevRevIndex', revIdx )
+
+		# lfgr 04/2026: Give every possible instigator a fair chance
+		CvUtil.shuffleSequence( revInstigatorCities )
 
 		instigator = None
+		for pCity in revInstigatorCities :
+			# lfgr 04/2026: Vastly simplified and outsourced
+			odds = RevStart.getInstigationOddsIn1000( pCity )
 
-		# LFGR_TODO: turn this and instigator bit above into a function, when revolt odds > 0 then is an instigator
-		if( len(revInstigatorCities) > 0 ) :
-			for pCity in revInstigatorCities :
-				revIdx = pCity.getRevolutionIndex()
-				localRevIdx = pCity.getLocalRevIndex()
-				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
+			if odds > game.getSorenRandNum( 1000, 'Revolt - do revolution?' ) :
+				if self.LOG_DEBUG :
+					iRevIdx = pCity.getRevolutionIndex()
+					CvUtil.pyPrint("  REVOLT - %s (%s) has decided to launch a revolution with index %d and odds %.1f in year %d!!!!"%(pCity.getName(),pPlayer.getCivilizationDescription(0),iRevIdx,odds/10.0,game.getGameTurnYear()))
+				instigator = pCity
+				break
 
-				gsm = RevUtils.getGameSpeedMod()
-
-				odds = (1000.0*revIdx)/(self.iRevRoll)
-				factors = ""
-
-				if( localRevIdx < 0 ) :
-					if( localRevIdx < -gsm*self.badLocalThreshold ) :
-						odds -= 1.5*localRevIdx + 30
-						if( odds > 0 ) :
-							odds = odds/4
-						factors += 'Quickly imp local, '
-					else :
-						odds -= 1.5*localRevIdx
-						odds = odds/2
-						factors += 'Imp local, '
-
-				elif( localRevIdx > gsm*self.badLocalThreshold ) :
-
-					odds *= 2.0
-					factors += 'Bad local, '
-
-					avgHappiness = 0
-					for happi in revIdxHist['Happiness'] :
-						avgHappiness += happi
-					avgHappiness /= len(revIdxHist['Happiness'])
-
-					if( revIdxHist['Health'][0] > 20 ) :
-						odds = max([250.0,odds*2.5])
-						factors += 'Starvation, '
-					elif( revIdxHist['Disorder'][0] > 20 ) :
-						odds = max([180.0,odds*1.8])
-						factors += 'Disorder, '
-					elif( avgHappiness > 12 ) :
-						odds = max([120.0,odds*1.5])
-						factors += 'Unhappy, '
-					elif( localRevIdx > gsm*max([int(2.5*self.badLocalThreshold),12]) ) :
-						odds *= 1.5
-						factors += 'Quickly worsening local, '
-
-					if( revIdxHist['Garrison'] < -5 ) :
-						odds *= 0.6
-						odds = min([odds,150.0])
-						factors += 'Very strong gar, '
-					elif( revIdxHist['Garrison'] < -3 ) :
-						odds *= 0.8
-						odds = min([odds,200.0])
-						factors += 'Strong gar, '
-
-				odds = int( self.chanceModifier*odds )
-
-				eventSum = 0
-				for event in revIdxHist['Events'] :
-					eventSum += event
-
-				if( eventSum < -50 ) :
-					odds *= 0.75
-					factors += 'Very pos events, '
-				elif( eventSum < -20 ) :
-					odds *= 0.9
-					factors += 'Pos events, '
-				elif( eventSum > 300 ) :
-					if( revIdxHist['Events'][0] > 330 ) :
-						odds = min([ odds*4.0, max([odds,300]) ])
-						factors += 'Lost capital, '
-					else :
-						odds *= 2.0
-						factors += 'Ext neg events, '
-				elif( eventSum > 120 ) :
-					odds *= 1.2
-					factors += 'Very Neg events, '
-				elif( eventSum > 50 ) :
-					odds *= 1.1
-					factors += 'Neg events, '
-
-				# Do revolution?
-				odds = min([odds, 500])
-
-				if( odds > game.getSorenRandNum( 1000, 'Revolt - do revolution?' ) ) :
-					if( self.LOG_DEBUG ) :
-						CvUtil.pyPrint("  REVOLT - %s (%s) has decided to launch a revolution with index %d (%d local) and odds %.1f in year %d!!!!"%(pCity.getName(),pPlayer.getCivilizationDescription(0),revIdx,localRevIdx,odds/10.0,game.getGameTurnYear()))
-						CvUtil.pyPrint("  REVOLT - Factors effecting timing: %s"%(factors))
-					instigator = pCity
-					break
-
-		if( not instigator == None ) :
+		if instigator is not None :
+			# LFGR_TODO: Outsource
 			self.pickRevolutionStyle( pPlayer, instigator, revReadyCities )
-
-		elif( len(warnCities) > 0 ) : # LFGR_TODO: Update this
-			for pCity in warnCities :
+		elif len( warnCities ) > 0 :
+			for pCity in warnCities : # Wait until warning again
 				RevData.updateCityVal( pCity, 'WarningCounter', self.warnTurns )
 
-			if( self.isLocalHumanPlayer(pPlayer.getID())  ) :
+			if self.isLocalHumanPlayer( pPlayer.getID() ) :
 				pTeam = gc.getTeam( pPlayer.getTeam() )
 				# Additions by Caesium et al
 				caesiumtR = CyUserProfile().getResolutionString(CyUserProfile().getResolution())
@@ -1141,11 +1058,11 @@ class Revolution :
 				bodStr += getCityTextList(warnCities) + ' '
 				bodStr += ' ' + localText.getText("TXT_KEY_REV_WARN_CONTEMPLATING",())
 				# lfgr 08/2023: Removed RevIdx overview
-				if( pTeam.getAtWarCount(True) > 0 ) :
+				if pTeam.getAtWarCount( True ) > 0 :
 					bodStr += '\n\n' + localText.getText("TXT_KEY_REV_WARN_WARS",())
 				else :
 					bodStr += '\n\n' + localText.getText("TXT_KEY_REV_WARN_GLORY",())
-					if( pPlayer.getCitiesLost() > 0 ) :
+					if pPlayer.getCitiesLost() > 0 :
 						bodStr += "  " + localText.getText("TXT_KEY_REV_WARN_LOST",())
 					bodStr += '  ' + localText.getText("TXT_KEY_REV_WARN_TEMPORARY",())
 				popup.setBodyString( bodStr )
@@ -1239,15 +1156,6 @@ class Revolution :
 
 
 	def pickRevolutionStyle( self, pPlayer, instigator, revReadyCities ) :
-		bReinstatedOnRevolution = False
-#-------------------------------------------------------------------------------------------------
-# Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-	   # MOVED ELSEWHERE
-#-------------------------------------------------------------------------------------------------
-# END Lemmy101 RevolutionMP edit
-#-------------------------------------------------------------------------------------------------
-
 		iPlayer = pPlayer.getID()
 		pTeam = gc.getTeam( pPlayer.getTeam() )
 
@@ -2307,7 +2215,7 @@ class Revolution :
 
 							return
 
-				if( self.leaderRevolution and not bReinstatedOnRevolution ) : #and (len(revCities) == pPlayer.getNumCities() or len(revCities) > (pPlayer.getNumCities()+1)/3) ) :
+				if self.leaderRevolution : #and (len(revCities) == pPlayer.getNumCities() or len(revCities) > (pPlayer.getNumCities()+1)/3) ) :
 					# All or most cities in revolt
 					if( not pPlayer.isHuman() or self.humanLeaderRevolution ) :
 						# Ask for change of leader

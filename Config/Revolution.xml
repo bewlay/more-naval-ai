@@ -160,9 +160,9 @@
 			<list id="RevCultureModifier" key="RevCultureModifier" type="float" default="1.0"
 				listType="float" values="0.00,1.10,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.50,3.00,3.50,4.00,5.00" format="%.2f"  
 				get="getRevCultureModifier" set="setRevCultureModifier"/>
-			<list id="ChanceModifier" key="ChanceModifier" type="float" default="1.00"
-				listType="float" values="0.00,1.10,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.50,3.00,3.50,4.00,5.00" format="%.2f" 
-				get="getChanceModifier" set="setChanceModifier"/>
+<!--			<list id="ChanceModifier" key="ChanceModifier" type="float" default="1.00"-->
+<!--				listType="float" values="0.00,1.10,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00,2.50,3.00,3.50,4.00,5.00" format="%.2f" -->
+<!--				get="getChanceModifier" set="setChanceModifier"/>-->
 			<list id="CivicsOdds" key="CivicsOdds" type="int" default="0"
 				values="-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90,100"
 				get="getCivicsOdds" set="setCivicsOdds"/>

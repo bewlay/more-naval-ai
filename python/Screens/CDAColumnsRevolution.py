@@ -10,6 +10,7 @@ import FontUtil
 
 from CDAColumns import CDAColumn
 from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr, cityCannotRevoltStr
+import RevStart
 import RevUtils
 
 
@@ -62,23 +63,47 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, getText( "TXT_KEY_CDA_COLUMN_REV_IDX" ) )
 
 	def compute_value_and_tooltip( self, pCity, **kwargs ) :
-		# LFGR_TODO: Not entirely accurate
 		iRevIdx = pCity.getRevolutionIndex()
+		iInstigationOdds = RevStart.getInstigationOddsIn1000( pCity )
+		if iInstigationOdds > 0 :
+			iInstigationOdds = max( 1, iInstigationOdds / 10 ) # Always put 1% when positive chance
 
 		szCannotRevolt = cityCannotRevoltStr( pCity )
+
 		if szCannotRevolt :
-			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
+			szValueColor = "COLOR_POSITIVE_TEXT"
 		elif pCity.getReinforcementCounter() > 0 :
-			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), \
-					getText( "[COLOR_NEGATIVE_TEXT]City in Revolt![COLOR_REVERT][NEWLINE]Reinforcements in %d1 [NUM1:turn:turns] expected", pCity.getReinforcementCounter() )
+			szValueColor = "COLOR_NEGATIVE_TEXT"
 		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
-			return getText( "[COLOR_POSITIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
-		elif iRevIdx >= RevUtils.revInstigatorThreshold :
-			return getText( "[COLOR_WARNING_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_WARNING_TEXT]May instigate a revolt[COLOR_REVERT]" )
-		elif iRevIdx >= RevUtils.alwaysViolentThreshold :
-			return getText( "[COLOR_NEGATIVE_TEXT]%d1[COLOR_REVERT]", iRevIdx ), getText( "[COLOR_NEGATIVE_TEXT]Violent revolution expected![COLOR_REVERT]" )
+			szValueColor = "COLOR_POSITIVE_TEXT"
+		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.alwaysViolentThreshold :
+			szValueColor = "COLOR_NEGATIVE_TEXT"
+		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.revInstigatorThreshold :
+			szValueColor = "COLOR_PLAYER_YELLOW_TEXT"
 		else :
-			return getText( "%d1", iRevIdx ), getText( "May join a revolt" )
+			szValueColor = None
+		
+		
+		if szCannotRevolt :
+			szTooltip = getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
+		elif pCity.getReinforcementCounter() > 0 :
+			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]City in Revolt![COLOR_REVERT][NEWLINE]Reinforcements in %d1 [NUM1:turn:turns] expected", pCity.getReinforcementCounter() )
+		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
+			szTooltip = getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
+		elif pCity.getRevolutionCounter() > 1 : # When it's 1, there could already be a revolution next turn
+			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]Will not revolt for the next %d1 turns", pCity.getRevolutionCounter() )
+		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.alwaysViolentThreshold :
+			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]Violent revolution expected![NEWLINE]%d1% chance per turn[COLOR_REVERT]", iInstigationOdds )
+		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.revInstigatorThreshold :
+			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May instigate a revolt.[NEWLINE]%d1% chance per turn[COLOR_REVERT]", iInstigationOdds )
+		else :
+			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May join a revolt[COLOR_REVERT]" )
+		
+		if szValueColor is not None :
+			szValue = getText( "[" + szValueColor + "]%d1[COLOR_REVERT]", iRevIdx )
+		else :
+			szValue = getText( "%d1", iRevIdx )
+		return szValue, szTooltip
 
 	@property
 	def type( self ) :
