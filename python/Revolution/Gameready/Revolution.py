@@ -105,7 +105,6 @@ class Revolution :
 		self.revInstigatorThreshold = RevDefs.revInstigatorThreshold
 		self.alwaysViolentThreshold = RevDefs.alwaysViolentThreshold
 		self.badLocalThreshold = RevDefs.badLocalThreshold
-		self.showLocalEffect = 2
 		self.showTrend = 5
 		self.showStabilityTrend = 2
 		self.warWearinessMod = RevOpt.getWarWearinessMod()
@@ -158,12 +157,6 @@ class Revolution :
 		# Network protocol header
 		self.netRevolutionPopupProtocol = 100
 		self.netControlLostPopupProtocol = 101
-
-		######################
-		# These are initialized on first end of game turn
-		self.iNationalismTech = None
-		self.iLiberalismTech = None
-		self.iSciMethodTech = None
 
 		############# Register events and popups ##############
 		# City and civ events
@@ -244,13 +237,10 @@ class Revolution :
 	def loadInfo( self ) :
 		# Function loads info required by other components
 		if( self.LOG_DEBUG ) : CvUtil.pyPrint( "  Loading revolution data" )
-
-
-		self.iNationalismTech = CvUtil.findInfoTypeNum(gc.getTechInfo,gc.getNumTechInfos(), RevDefs.sXMLNationalism)
-		self.iLiberalismTech = CvUtil.findInfoTypeNum(gc.getTechInfo,gc.getNumTechInfos(), RevDefs.sXMLLiberalism)
-		self.iSciMethodTech = CvUtil.findInfoTypeNum(gc.getTechInfo,gc.getNumTechInfos(), RevDefs.sXMLSciMethod)
-
-		self.showLocalEffect = int( self.showLocalEffect*RevUtils.getGameSpeedMod() )
+		
+		# lfgr 04/2026: Nothing to do currently, but keeping this for possibly later use.
+		
+		# NOTE: This is called unconditionally. Need to check here whether we have already loaded everything!
 
 
 ##--- Keyboard handling and Rev Watch popup -------------------------------------------
@@ -436,11 +426,7 @@ class Revolution :
 ##--- Standard Event handling functions -------------------------------------------
 
 	def onEndGameTurn( self, argsList ) :
-
-		if( self.iNationalismTech == None ) :
-			self.loadInfo()
-
-		self.topCivAdjustments( )
+		self.loadInfo()
 
 
 	def onBeginPlayerTurn( self, argsList ) :
@@ -785,8 +771,7 @@ class Revolution :
 		if( gc.getPlayer(iPlayer).isBarbarian() ) :
 			return
 
-		if( self.iNationalismTech == None ) :
-			self.loadInfo()
+		self.loadInfo()
 
 		if( self.LOG_DEBUG and iGameTurn%25 == 0 and iPlayer == 0 ) : CvUtil.pyPrint("  Revolt - Rev index report for year %d"%(game.getGameTurnYear()))
 
@@ -853,8 +838,7 @@ class Revolution :
 			return
 
 		# Make sure cache is loaded
-		if self.iNationalismTech is None :
-			self.loadInfo()
+		self.loadInfo()
 
 		if subCityList is None :
 			cityList = playerPy.getCityList()
@@ -883,7 +867,7 @@ class Revolution :
 				revIdxHist = RevDefs.initRevIdxHistory()
 
 			### MAIN COMPUTATION
-			# Fill history (LFGR_TODO: Not if bNotApply?)
+			# Fill history
 			if not bNoApply :
 				revIdxHist['Happiness'] = [pCityHelper.computeHappinessRevIdx()] + revIdxHist['Happiness'][0:RevDefs.revIdxHistLen-1]
 				revIdxHist['Location'] = [pCityHelper.computeLocationRevIdx()] + revIdxHist['Location'][0:RevDefs.revIdxHistLen-1]
@@ -914,8 +898,7 @@ class Revolution :
 				elif pCity.getRevolutionIndex() > 2*self.alwaysViolentThreshold :
 					pCity.setRevolutionIndex( 2*self.alwaysViolentThreshold )
 
-	# LFGR_TODO: CyPlayer.changeStabilityIndex() and CyPlayer.updateStabilityIndexAverage() are now (almost) unused
-
+	# lfgr: For AI players, think about bribing a city
 	def checkForBribes( self, iGameTurn, iPlayer ) :
 
 		pPlayer = gc.getPlayer( iPlayer )
@@ -1007,7 +990,9 @@ class Revolution :
 
 		for city in cityList :
 			pCity = city.GetCy()
-
+			
+			# lfgr 04/2026: Check if city can revolt
+			# FIXME: use RevIdxUtils
 			# lfgr settlements
 			if( pCity.isSettlement() and ( pCity.getOwner() == pCity.getOriginalOwner() ) ) :
 				continue
@@ -1018,6 +1003,7 @@ class Revolution :
 			localRevIdx = pCity.getLocalRevIndex()
 
 			numUnhappy = RevUtils.getModNumUnhappy( pCity, self.warWearinessMod )
+			# LFGR_TODO: Simplify
 			if( numUnhappy > 0 ) :
 				cityThreshold = max([int( self.revInstigatorThreshold - 2.5*self.revInstigatorThreshold*numUnhappy/pCity.getPopulation() ),int(self.revInstigatorThreshold/6.0)])
 			elif( localRevIdx > 60 and pCity.getPopulation() < pCity.getHighestPopulation() - 1 ) :
@@ -1186,54 +1172,6 @@ class Revolution :
 
 
 ##--- Game turn functions  ---------------------------------------------------
-
-	def topCivAdjustments( self ) :
-		# Penalty on top score/power to help keep game even
-		# Benefit for highest culture
-
-		powerList = list()
-		cultureList = list()
-		scoreList = list()
-
-		for iPlayer in range(0,gc.getMAX_CIV_PLAYERS()) :
-			pPlayer = gc.getPlayer( iPlayer )
-			if( pPlayer.isAlive() and not pPlayer.getNumCities() == 0 ) :
-				powerList.append((pPlayer.getPower(),iPlayer))
-				cultureList.append((pPlayer.countTotalCulture(),iPlayer))
-				scoreList.append((game.getPlayerScore(iPlayer),iPlayer))
-
-
-		powerList.sort()
-		powerList.reverse()
-		cultureList.sort()
-		cultureList.reverse()
-		scoreList.sort()
-		scoreList.reverse()
-
-		iNumTopPlayers = (game.countCivPlayersAlive() - 4)/3
-		if( self.LOG_DEBUG and game.getGameTurn()%25 == 0 ) : CvUtil.pyPrint("  Revolt - Adjustments for top %d players"%(iNumTopPlayers))
-
-		for [iRank,listElement] in enumerate(powerList[0:iNumTopPlayers]) :
-			[iPower,iPlayer] = listElement
-			if( (3*iPower)/2 > powerList[0][0] ) :
-				iPowerEffect = 3 - (3*iRank)/iNumTopPlayers
-				if( self.LOG_DEBUG and game.getGameTurn()%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have %dth most power, effect: %d"%(gc.getPlayer(iPlayer).getCivilizationDescription(0),iRank+1,-iPowerEffect))
-				gc.getPlayer(iPlayer).changeStabilityIndex(-iPowerEffect)
-
-		for [iRank,listElement] in enumerate(cultureList[0:iNumTopPlayers]) :
-			[iCulture,iPlayer] = listElement
-			if( (3*iCulture)/2 > cultureList[0][0] ) :
-				iCultureEffect = 3 - (3*iRank)/iNumTopPlayers
-				if( self.LOG_DEBUG and game.getGameTurn()%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have %dth most culture, effect: %d"%(gc.getPlayer(iPlayer).getCivilizationDescription(0),iRank+1,iCultureEffect))
-				gc.getPlayer(iPlayer).changeStabilityIndex(iCultureEffect)
-
-		for [iRank,listElement] in enumerate(scoreList[0:iNumTopPlayers]) :
-			[iScore,iPlayer] = listElement
-			if( (3*iScore)/2 > scoreList[0][0] ) :
-				iScoreEffect = 3 - (3*iRank)/iNumTopPlayers
-				if( self.LOG_DEBUG and game.getGameTurn()%25 == 0 ) : CvUtil.pyPrint("  Revolt - %s have %dth highest score, effect: %d"%(gc.getPlayer(iPlayer).getCivilizationDescription(0),iRank+1,-iScoreEffect))
-				gc.getPlayer(iPlayer).changeStabilityIndex(-iScoreEffect)
-
 
 #-------------------------------------------------------------------------------------------------
 # Lemmy101 RevolutionMP edit
@@ -1961,7 +1899,7 @@ class Revolution :
 				# Revolution in homeland
 				if( self.LOG_DEBUG ) : CvUtil.pyPrint("  Revolt - Revolution in homeland")
 	
-				if( bPeaceful and not gc.getTeam(pPlayer.getTeam()).isHasTech(self.iNationalismTech) ) :
+				if bPeaceful :
 					[goodEffect,badEffect] = RevUtils.getCivicsHolyCityEffects( iPlayer )
 					if( badEffect > 0 ) :
 						stateRel = pPlayer.getStateReligion()

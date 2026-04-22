@@ -59,9 +59,6 @@ sXMLMonument = 'BUILDINGCLASS_MONUMENT'
 # Techs
 # Used by Rev, weight of nationality effects increases after discovery
 sXMLNationalism = 'TECH_CODE_OF_LAWS'
-# Used by Rev, weight of religious effects decreases after each discovery
-sXMLLiberalism = 'TECH_EDUCATION'
-sXMLSciMethod = 'TECH_SANITATION'
 # Given to BarbCivs under varying circumstances
 sXMLSailing = 'TECH_SAILING'
 sXMLWheel = 'TECH_ENGINEERING'

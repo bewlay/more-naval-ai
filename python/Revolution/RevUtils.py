@@ -14,9 +14,6 @@ import SdToolKitCustom
 import RevInstances
 # Other Util files
 from RevCivicsUtils import *
-#phungus Rev Trait Effects
-#from RevTraitsUtils import *
-#Rev Trait End
 import BugCore
 
 # globals
