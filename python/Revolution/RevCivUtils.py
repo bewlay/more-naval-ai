@@ -6,8 +6,6 @@ import RevDefs
 import RevData
 import TerrainFlavorUtil
 
-import random
-
 # globals
 gc = CyGlobalContext()
 game = CyGame()
@@ -46,7 +44,7 @@ class RevCivUtils :
 		self.rcd = RevCivDefines()
 
 
-	# Returns the chosen civilization type and a list of possible leaders. It does not perform any random number calls.
+	# Returns the chosen civilization type and a list of possible leaders, in semi-random order
 	def getNewCivAndLeaderList( self, iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) :
 		if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils.getNewCivAndLeaderList( iOldCivType=%i, iCultureOwnerCivType=%i, iSplitType=%i, iReligion=%i, iPlotX=%i, iPlotY=%i )"%( iOldCivType, iCultureOwnerCivType, iSplitType, iReligion, iPlotX, iPlotY ) )
 
@@ -81,14 +79,14 @@ class RevCivUtils :
 					if( LOG_DEBUG ) : CvUtil.pyPrint( "RevCivUtils: Civ %s has bad score(%d)" % ( gc.getCivilizationInfo( iCiv ).getType(), iScore ) )
 
 		# shuffle and put lists together
-		random.shuffle( liBestCivs )
-		random.shuffle( liGoodCivs )
+		CvUtil.shuffleSequence( liBestCivs )
+		CvUtil.shuffleSequence( liGoodCivs )
 
 		liCivs = liBestCivs
 		liCivs.extend( liGoodCivs )
 
 		if( USE_NOT_ALLOWED ) :
-			random.shuffle( liNotAllowedCivs )
+			CvUtil.shuffleSequence( liNotAllowedCivs )
 			liCivs.extend( liNotAllowedCivs )
 
 		CvUtil.pyPrint( "RevCivUtils: liCivs:" )
