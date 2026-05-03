@@ -18368,7 +18368,7 @@
 		<English>Buy a Slave</English>
 		<French>Acheter un Esclave</French>
 		<German>Sklave Kaufen</German>
-		<Spanish>[ICON_BULLET]Crea una unidad de Esclavo</Spanish>
+		<Spanish>Comprar Esclavo</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_SPELL_SLAVE_TRADE_BUY_HELP</Tag>
