@@ -98,13 +98,15 @@ cityData['RevIdxHistory'] = None
 # Data about past revolutions
 # TODO: change to list
 cityData['RevolutionPlayer'] = -1 # lfgr 03/2024: Store player instead of civilization type, there might be multiple players with same civ.
-cityData['RevolutionTurn'] = None
+cityData['RevolutionTurn'] = None # lfgr note: The last time this city spawned revolutionaries
 # Counters to control timing for various features
 cityData['WarningCounter'] = 0
 cityData['SmallRevoltCounter'] = 0
 # Bribe info
 cityData['BribeTurn'] = None
 cityData['TurnBribeCosts'] = None
+# lfgr 04/2026: Only for UI, True when city is about to launch a revolution, reset every turn.
+cityData['RevBrewing'] = False
 
 revIdxHistKeyList = ['Happiness', 'Location', 'Colony', 'Nationality', 'Religion', 'Health', 'Garrison', 'Disorder', 'RevoltEffects', 'Events']
 revIdxHistLen = 5

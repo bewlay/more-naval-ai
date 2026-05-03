@@ -10,6 +10,7 @@ import FontUtil
 
 from CDAColumns import CDAColumn
 from RevIdxUtils import CityRevIdxHelper, coloredRevIdxFactorStr, cityCannotRevoltStr
+import RevData
 import RevStart
 import RevUtils
 
@@ -88,6 +89,8 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 			szTooltip = getText( "[COLOR_POSITIVE_TEXT]%s1[COLOR_REVERT]", szCannotRevolt )
 		elif pCity.getReinforcementCounter() > 0 :
 			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]City in Revolt![COLOR_REVERT][NEWLINE]Reinforcements in %d1 [NUM1:turn:turns] expected", pCity.getReinforcementCounter() )
+		elif RevData.getCityVal( pCity, 'RevBrewing' ) :
+			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]City will revolt next turn![COLOR_REVERT]" )
 		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
 			szTooltip = getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
 		elif pCity.getRevolutionCounter() > 1 : # When it's 1, there could already be a revolution next turn
