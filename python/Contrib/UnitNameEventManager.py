@@ -5,7 +5,8 @@
 ## Naming Convention
 ##  - ^civ4^ - no naming convention, uses standard civ4
 ##  - ^rd^ - random name
-##  - ^rc^ - random civ related name
+##  - ^rc^ - random civ related name (fully random name as fallback)
+##  - ^ru^ - random name based on civ, race, etc. (fully random name as fallback)
 ##  - ^ct^ - City
 ##  - ^cv^ - Civilization
 ##  - ^ut^ - unit (eg Archer)
@@ -75,9 +76,9 @@ import BugCore
 import PlayerUtil
 import Roman
 import RandomNameUtils
-import random
 import Popup as PyPopup
 import BugData
+import SdToolKitCustom
 
 
 SD_MOD_ID = "UnitCnt"
@@ -190,6 +191,7 @@ class BuildUnitName(AbstractBuildUnitName):
 		eventManager.addEventHandler("unitBuilt", self.onUnitBuilt)
 		eventManager.addEventHandler("cityBuilt", self.onCityBuilt)
 		eventManager.addEventHandler("goodyReceived", self.onGoodyReceived)
+		eventManager.addEventHandler( "unitPromoted", self.onUnitPromoted ) # lfgr 05/2026: May rename high-level units
 
 		self.eventMgr = eventManager
 		self.config = None
@@ -305,6 +307,26 @@ class BuildUnitName(AbstractBuildUnitName):
 							if zsUnitName:
 								pUnit.setName(zsUnitName)
 
+	def onUnitPromoted(self, argsList):
+		# lfgr 05/2026
+		pUnit, _iPromotion = argsList
+		
+		if UnitNamingOpt.isEnabled() and pUnit.getLevel() >= UnitNamingOpt.getHighLevelThreshold() :
+			conv = UnitNamingOpt.getHighLevel()
+			if conv and conv != "DEFAULT" :
+				if not SdToolKitCustom.sdObjectGetValOrDefault( "UnitNaming", pUnit, "hadHighLevelRename", False ) :
+					# Find closest city
+					iBestDist = None
+					pBestCity = None
+					for pyCity in PyHelpers.PyPlayer( pUnit.getOwner() ).iterCities() :
+						iDist = plotDistance( pUnit.getX(), pUnit.getY(), pyCity.getX(), pyCity.getY() )
+						if iBestDist is None or iDist < iBestDist :
+							pBestCity = pyCity.GetCy()
+							iBestDist = iDist
+					sUnitName = UnitReName().getUnitName( conv, pUnit, pBestCity, True )
+					if sUnitName :
+						pUnit.setName( sUnitName )
+						SdToolKitCustom.sdObjectSetValWithInit( "UnitNaming", pUnit, "hadHighLevelRename", True )
 
 
 class UnitReName(object):
@@ -319,7 +341,10 @@ class UnitReName(object):
 		zsUnitCombat = self.getUnitCombat(pUnit)
 		zsUnitDomain = BugUtil.getPlainText("TXT_KEY_BUG_UNIT_NAMING_" + gc.getDomainInfo(pUnit.getDomainType()).getType())
 		zsUnit = PyInfo.UnitInfo(pUnit.getUnitType()).getDescription()
-		zsCity = pCity.getName()
+		if pCity is not None :
+			zsCity = pCity.getName()
+		else :
+			zsCity = u""
 
 		#BUGPrint("Civ(%s)" % (zsCiv))
 		#BUGPrint("Leader(%s)" % (zsLeader))
@@ -343,7 +368,7 @@ class UnitReName(object):
 ##  - ^rd^ - random name
 #		check if random naming convention is required
 		if not (zsName.find("^rd^") == -1):
-			zsRandomName = RandomNameUtils.getRandomName()
+			zsRandomName = RandomNameUtils.generateRandomDefaultName()
 			zsName = zsName.replace("^rd^", zsRandomName)
 
 
@@ -352,8 +377,15 @@ class UnitReName(object):
 ##  - ^rc^ - random civ related name
 #		check if random civ related naming convention is required
 		if not (zsName.find("^rc^") == -1):
-			zsRandomName = RandomNameUtils.getRandomCivilizationName(pPlayer.getCivilizationType())
+			zsRandomName = RandomNameUtils.generateRandomCivilizationName(pPlayer.getCivilizationType())
+			if zsRandomName is None :
+				zsRandomName = RandomNameUtils.generateRandomDefaultName()
 			zsName = zsName.replace("^rc^", zsRandomName)
+
+##  - ^rr^ - random unit-dependent name name
+		if not (zsName.find( "^ru^" ) == -1) :
+			zsRandomName = RandomNameUtils.generateRandomUnitName( pUnit )
+			zsName = zsName.replace( "^ru^", zsRandomName )
 
 		#BUGPrint("UnitNameEM-C [" + zsName + "]")
 
@@ -530,6 +562,8 @@ class UnitReName(object):
 		if (ziLow > ziHigh): return ziLow
 
 #		return the value
+		# lfgr 05/2026: Make this deterministic
+		return ziLow + gc.getGame().getSorenRandNum( ziHigh - ziLow + 1, "random unit name" )
 		return random.randint(ziLow, ziHigh)
 
 

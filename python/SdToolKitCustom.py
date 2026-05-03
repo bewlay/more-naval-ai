@@ -364,3 +364,18 @@ def sdObjectUpdateVal( ModID, object, var, val ):
 	else :
 		print 'Error: object not initialized with var: %s'%(var)
 	return False
+
+
+# lfgr 05/2026: Helper functions
+def sdObjectGetValOrDefault( ModID, object, var, default ) :
+	if not sdObjectExists( ModID, object ) :
+		return default
+	else :
+		return sdObjectGetVal( ModID, object, var )
+
+def sdObjectSetValWithInit( ModID, object, var, val ) :
+	if not sdObjectExists( ModID, object ) :
+		return sdObjectInit( ModID, object, { var : val } )
+	else :
+		return sdObjectSetVal( ModID, object, var, val )
+	

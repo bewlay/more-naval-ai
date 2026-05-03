@@ -41,3 +41,6 @@ class BugUnitNameOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_DISCIPLE")
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_ADEPT")
 		self.addTextEdit(screen, columnL, columnR, "UnitNaming__Combat_ANIMAL")
+		self.addTextEdit(screen, columnL, columnR, "UnitNaming__HighLevel")
+		self.addIntDropdown(screen, columnL, columnR, "UnitNaming__HighLevelThreshold", True, "LAYOUT_LEFT")
+		# self.addSlider( screen, columnL, columnR, "UnitNaming__HighLevelThreshold", min = 2, max = 20 )

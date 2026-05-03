@@ -229,6 +229,11 @@ def shuffleSequence( l ) :
 		j = i + CyGame().getSorenRandNum( len( l ) - i, "Shuffle list" )
 		l[i], l[j] = l[j], l[i]
 
+
+# lfgr 05/2026
+def randomElement( l, msg = "none" ) :
+	return l[CyGame().getSorenRandNum( len( l ), msg )]
+
 def spawnUnit(iUnit, pPlot, pPlayer):
 	pPlayer.initUnit(iUnit, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 	return 1
