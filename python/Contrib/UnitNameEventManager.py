@@ -212,25 +212,27 @@ class BuildUnitName(AbstractBuildUnitName):
 		'Unit Completed'
 
 		pCity = argsList[0]
-		pUnit = argsList[1]
+		pUnit = argsList[1] # type: CyUnit
 		iPlayer = pUnit.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
 		lUnitReName = UnitReName()
 
 		#BUGPrint("onUnitBuild-A")
 
-		if (pUnit == None
-		or pUnit.isNone()):
+		if pUnit is None or pUnit.isNone():
 			return
 
-## Dont rename Heros
-		if pUnit.getUnitAIType() == gc.getInfoTypeForString('UNITAI_HERO'):
+		# Don't rename world units (lfgr 05/2026: instead of UNITAI_HERO units)
+		if gc.getUnitClassInfo( pUnit.getUnitClassType() ).getMaxGlobalInstances() > 0:
+			return
+		
+		# lfgr 05/2026: Don't rename units lead by a commander
+		if pUnit.isHasPromotion( CvUtil.findPromotionNum( "PROMOTION_GREAT_COMMANDER" ) ) :
 			return
 
 		#BUGPrint("onUnitBuild-B %s %s %s" % (iPlayer, CyGame().getActivePlayer(), UnitNamingOpt.isEnabled()))
 
-		if not (iPlayer == CyGame().getActivePlayer()
-		and UnitNamingOpt.isEnabled()):
+		if not (iPlayer == CyGame().getActivePlayer() and UnitNamingOpt.isEnabled()):
 			return
 
 		#BUGPrint("onUnitBuild-C")
@@ -248,7 +250,7 @@ class BuildUnitName(AbstractBuildUnitName):
 
 		#BUGPrint("onUnitBuild-D")
 
-		if not (zsUnitName == ""):
+		if zsUnitName != "":
 			pUnit.setName(zsUnitName)
 
 		#BUGPrint("onUnitBuild-E")
