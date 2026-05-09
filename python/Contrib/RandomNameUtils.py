@@ -138,13 +138,14 @@ def generateRandomUnitName( pUnit ) :
 	# type: (CyUnit) -> unicode
 	bFemale = isFemale( pUnit )
 
+	eRace = pUnit.getRace()
+	if eRace != -1 :
+		lsNames = _RACE_NAMES[bFemale].get( gc.getPromotionInfo( eRace ).getType(), None )
+		if lsNames :
+			return CvUtil.randomElement( lsNames )
+
 	eCiv = gc.getPlayer( pUnit.getOwner() ).getCivilizationType()
 	lsNames = _CIVILIZATION_NAMES[bFemale].get( gc.getCivilizationInfo( eCiv ).getType(), None )
-	if lsNames :
-		return CvUtil.randomElement( lsNames )
-
-	eRace = pUnit.getRace()
-	lsNames = _RACE_NAMES[bFemale].get( gc.getPromotionInfo( eRace ).getType(), None )
 	if lsNames :
 		return CvUtil.randomElement( lsNames )
 
