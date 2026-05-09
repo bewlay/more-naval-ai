@@ -72,6 +72,11 @@ _RACE_NAMES_MALE = {
 	"PROMOTION_UNDEAD" : ()
 }
 
+_RACE_NAMES = {
+	False : _RACE_NAMES_MALE,
+	True : _RACE_NAMES_FEMALE
+}
+
 # LFGR_TODO: Extra names based on unit art, like lamia, musteval, possibly goblins, frostlings?
 
 _CIVILIZATION_NAMES_FEMALE = {
@@ -103,6 +108,11 @@ _CIVILIZATION_NAMES_MALE = {
 	"CIVILIZATION_BARBARIAN" : ()
 }
 
+_CIVILIZATION_NAMES = {
+	False : _CIVILIZATION_NAMES_MALE,
+	True : _CIVILIZATION_NAMES_FEMALE
+}
+
 def isFemale( pUnit ) :
 	# type: (CyUnit) -> bool
 	art = pUnit.getPrincipalCurrentArtInfo() # type: CvArtInfoUnit
@@ -129,15 +139,23 @@ def generateRandomUnitName( pUnit ) :
 	bFemale = isFemale( pUnit )
 
 	eCiv = gc.getPlayer( pUnit.getOwner() ).getCivilizationType()
-	dNames = bFemale and _CIVILIZATION_NAMES_FEMALE or _CIVILIZATION_NAMES_MALE
-	lsNames = dNames.get( gc.getCivilizationInfo( eCiv ).getType(), None )
+	lsNames = _CIVILIZATION_NAMES[bFemale].get( gc.getCivilizationInfo( eCiv ).getType(), None )
 	if lsNames :
 		return CvUtil.randomElement( lsNames )
 
 	eRace = pUnit.getRace()
-	dNames = bFemale and _RACE_NAMES_FEMALE or _RACE_NAMES_MALE
-	lsNames = dNames.get( gc.getPromotionInfo( eRace ).getType(), None )
+	lsNames = _RACE_NAMES[bFemale].get( gc.getPromotionInfo( eRace ).getType(), None )
 	if lsNames :
 		return CvUtil.randomElement( lsNames )
 
 	return generateRandomDefaultName()
+
+def generateRandomLeaderHeadName( pPlayer ) :
+	# type: (CyPlayer) -> Optional[unicode]
+	bFemale = gc.getLeaderHeadInfo( pPlayer.getLeaderType() ).isFemale()
+	eCiv = pPlayer.getCivilizationType()
+	lsNames = _CIVILIZATION_NAMES[bFemale].get( gc.getCivilizationInfo( eCiv ).getType(), None )
+	if lsNames :
+		return CvUtil.randomElement( lsNames )
+	return None
+	

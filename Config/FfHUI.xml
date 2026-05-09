@@ -30,6 +30,9 @@
 			<option id="ShowSpellCreatedUnitHelp" type="boolean" default="True" />
 			<option id="ShowSpellCreatedBuildingHelp" type="boolean" default="True" />
 		</section>
+		<section id="Names">
+			<option id="RandomDuplicateLeaderNames" type="boolean" default="True"/>
+		</section>
 	</options>
 
 	<!-- Khazad vault text -->

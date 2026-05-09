@@ -73,4 +73,12 @@
 		<Tag>TXT_KEY_BUG_OPT_FFHUI__SHOWTURNSUNTILDIFFICULTYCHANGE_HOVER</Tag>
 		<English>If Flexible Difficulty or Increasing Difficulty is enabled, show the number of turns until the next change along with the current difficulty</English>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__RANDOMDUPLICATELEADERNAMES_TEXT</Tag>
+		<English>Randomize duplicate leader names</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_FFHUI__RANDOMDUPLICATELEADERNAMES_HOVER</Tag>
+		<English>Give duplicate leaders (created manually when starting a game or through revolutions) random names. If turned off, these leaders will be distinguished with roman numerals (e.g.: Alexis, Alexis II, Alexis III, ...)</English>
+	</TEXT>
 </Civ4GameText>

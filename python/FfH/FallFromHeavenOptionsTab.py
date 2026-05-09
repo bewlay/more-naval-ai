@@ -37,3 +37,4 @@ class FallFromHeavenOptionsTab( BugOptionsTab.BugOptionsTab ) :
 		if gc.getDefineINT( "ALLOW_SHOW_CREATED_BUILDING_HELP" ) :
 			self.addCheckbox( screen, column, "FfHUI__ShowSpellCreatedBuildingHelp" )
 		self.addTextDropdown( screen, column, column, "FfHUI__PlotHelpNumUnits" )
+		self.addCheckbox( screen, column, "FfHUI__RandomDuplicateLeaderNames" )

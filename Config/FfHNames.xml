@@ -11,4 +11,6 @@
 
 	<event type="setPlayerAlive" function="onSetPlayerAlive"/>
 	<event type="GameStart" function="onGameStart"/>
+	
+	<!-- Options are in FfHUI.xml. LFGR_TODO: Probably can just merge the two modules? -->
 </mod>

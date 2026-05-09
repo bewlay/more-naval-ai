@@ -178,6 +178,7 @@ void CyInfoPythonInterface3()
 		.def("getPermanentTrait", &CvLeaderHeadInfo::getPermanentTrait, "int ()")
 		//FfH Card Game: Added by Sto 08/08/2008
 		.def("getSomniumAggressiveness", &CvLeaderHeadInfo::getSomniumAggressiveness, "int ()")
+		.def("isFemale", &CvLeaderHeadInfo::isFemale, "bool ()") // lfgr 05/2026
 //FfH: End Add
         .def("getReligionWeightModifier", &CvLeaderHeadInfo::getReligionWeightModifier, "int (int i)")
 
