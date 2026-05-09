@@ -272,6 +272,10 @@ def findPromotionNum( sTypeStr ) :
 	# type: (str) -> int
 	return findInfoTypeNum( gc.getPromotionInfo, gc.getNumPromotionInfos, sTypeStr )
 
+def findUnitNum( sTypeStr ) :
+	# type: (str) -> int
+	return findInfoTypeNum( gc.getUnitInfo, gc.getNumUnitInfos, sTypeStr )
+
 def findUnitClassNum( sTypeStr ) :
 	# type: (str) -> int
 	return findInfoTypeNum( gc.getUnitClassInfo, gc.getNumUnitClassInfos, sTypeStr )

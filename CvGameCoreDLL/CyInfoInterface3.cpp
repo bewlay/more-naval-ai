@@ -442,6 +442,7 @@ void CyInfoPythonInterface3()
 	python::class_<CvArtInfoUnit, python::bases<CvArtInfoScalableAsset> >("CvArtInfoUnit")
 		.def("getInterfaceScale", &CvArtInfoUnit::getInterfaceScale, "float ()")
 		.def("getKFM", &CvArtInfoUnit::getKFM, "string ()")
+		.def("isFemale", &CvArtInfoUnit::isFemale, "bool ()") // lfgr 05/2026
 		;
 
 	python::class_<CvArtInfoBuilding, python::bases<CvArtInfoScalableAsset> >("CvArtInfoBuilding")

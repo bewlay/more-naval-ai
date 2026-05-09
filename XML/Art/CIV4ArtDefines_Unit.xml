@@ -773,6 +773,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ADEPT_GRIGORI</Type>
@@ -1005,6 +1006,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ADVENTURER</Type>
@@ -1571,6 +1573,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ARCHMAGE</Type>
@@ -1808,6 +1811,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ARQUEBUS</Type>
@@ -2251,6 +2255,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_AUREALIS</Type>
@@ -3127,6 +3132,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_BERSERKER</Type>
@@ -4179,6 +4185,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_CHANTER</Type>
@@ -5189,6 +5196,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_CRUSADER</Type>
@@ -5848,6 +5856,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>0</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_DUIN</Type>
@@ -8004,6 +8013,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>0</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_HUNTER</Type>
@@ -8121,6 +8131,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_HUNTER_GRIGORI</Type>
@@ -8331,6 +8342,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_HYBOREM</Type>
@@ -8663,6 +8675,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_IMP</Type>
@@ -9541,6 +9554,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_LOSHA</Type>
@@ -9734,6 +9748,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ARCHMAGE_GRIGORI</Type>
@@ -10192,6 +10207,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_MAROS</Type>
@@ -11963,6 +11979,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_RANTINE</Type>
@@ -12511,6 +12528,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_SCOUT_GRIGORI</Type>
@@ -12792,6 +12810,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_SEA_SERPENT</Type>
@@ -13092,6 +13111,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_SETTLER_FEMALE</Type>
@@ -13305,6 +13325,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_SETTLER_MALE</Type>
@@ -14199,6 +14220,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_TAR_DEMON</Type>
@@ -14927,6 +14949,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_WAR_MACHINE</Type>
@@ -15418,6 +15441,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_WATER_ELEMENTAL</Type>
@@ -15907,6 +15931,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>0</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_WRAITH</Type>

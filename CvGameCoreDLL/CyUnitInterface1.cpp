@@ -405,6 +405,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 
 		.def("getArtInfo", &CyUnit::getArtInfo,  python::return_value_policy<python::reference_existing_object>(), "CvArtInfoUnit* (int i, eEra)")
 		.def("getButton", &CyUnit::getButton, "std::string ()")
+		.def("getPrincipalCurrentArtInfo", &CyUnit::getPrincipalCurrentArtInfo,  python::return_value_policy<python::reference_existing_object>(), "CvArtInfoUnit* ()")
 		
 
 //FfH Spell System: Added by Kael 07/23/2007
@@ -447,7 +448,7 @@ void CyUnitPythonInterface1(python::class_<CyUnit>& x)
 		.def("setDuration", &CyUnit::setDuration, "void (int i)")
 		.def("setFortifyTurns", &CyUnit::setFortifyTurns, "void (int iNewValue)")
 		.def("setHasCasted", &CyUnit::setHasCasted, "void (bool bNewValue)")
-		.def("getUnitArtStyleType", &CyUnit::getUnitArtStyleType, "void ()")
+		.def("getUnitArtStyleType", &CyUnit::getUnitArtStyleType, "int /*UnitArtStyleTypes*/ ()")
 		.def("setUnitArtStyleType", &CyUnit::setUnitArtStyleType, "void (int iStyle)")
 		.def("setWeapons", &CyUnit::setWeapons, "void ()")
 

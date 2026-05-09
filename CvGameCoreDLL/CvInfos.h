@@ -5976,6 +5976,9 @@ public:
 	DllExport int getSelectionSoundScriptId() const;
 	DllExport int getActionSoundScriptId() const;
 
+	// lfgr 05/2026
+	bool isFemale() const;
+
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 protected:
 	CvString m_szShaderNIF;		//!< The NIF used if the graphics card supports shaders
@@ -6010,6 +6013,9 @@ protected:
 	int m_iPatrolSoundTag;
 	int m_iSelectionSoundScriptId;
 	int m_iActionSoundScriptId;
+
+	// lfgr 05/2026
+	bool m_bFemale;
 };
 
 class CvArtInfoBuilding : public CvArtInfoScalableAsset

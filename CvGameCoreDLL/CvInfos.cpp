@@ -22434,7 +22434,9 @@ m_iRunLoopSoundTag(0),
 m_iRunEndSoundTag(0),
 m_iSelectionSoundScriptId(0),
 m_iActionSoundScriptId(0),
-m_iPatrolSoundTag(0)
+m_iPatrolSoundTag(0),
+// lfgr 05/2026
+m_bFemale(false)
 {
 }
 
@@ -22617,6 +22619,9 @@ bool CvArtInfoUnit::read(CvXMLLoadUtility* pXML)
 		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
 	}
 
+	// lfgr 05/2026
+	pXML->GetChildXmlValByName( &m_bFemale, "bFemale" );
+
 	return true;
 }
 
@@ -22653,6 +22658,11 @@ int CvArtInfoUnit::getSelectionSoundScriptId() const
 int CvArtInfoUnit::getActionSoundScriptId() const
 {
 	return m_iActionSoundScriptId;
+}
+
+// lfgr 05/2026
+bool CvArtInfoUnit::isFemale() const {
+	return m_bFemale;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

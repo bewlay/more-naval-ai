@@ -404,8 +404,12 @@ public:
 	int /*UnitAITypes*/ getUnitAIType();
 	void setUnitAIType(int /*UnitAITypes*/ iNewValue);
 
-	const CvArtInfoUnit* getArtInfo(int i, EraTypes eEra) const;
+	const CvArtInfoUnit* getArtInfo(int i, EraTypes eEra) const; // lfgr note: Can this ever be called? How do I get an EraTypes in python?
 	std::string getButton() const;
+
+	// lfgr 05/2026: Get the ArtInfo of the first unit in the owner's current era
+	const CvArtInfoUnit* getPrincipalCurrentArtInfo() const;
+
 
 //FfH Spell System: Added by Kael 07/23/2007
     void attack(CyPlot* pPlot, bool bQuick);

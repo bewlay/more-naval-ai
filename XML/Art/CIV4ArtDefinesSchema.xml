@@ -179,6 +179,7 @@
 	<ElementType name="MiscArtInfos" content="eltOnly">
 		<element type="MiscArtInfo" minOccurs="0" maxOccurs="*"/>
 	</ElementType>
+	<ElementType name="bFemale" content="textOnly" dt:type="boolean"/> <!-- lfgr 05/2026 -->
 	<ElementType name="UnitArtInfo" content="eltOnly">
 		<element type="Type"/>
 <!-- XMLCOPY				02/20/2008			MRGENIE		-->
@@ -210,6 +211,7 @@
 		<element type="PatrolSound" minOccurs="0" maxOccurs="1"/>
 		<element type="SelectionSound" minOccurs="0" maxOccurs="1"/>
 		<element type="ActionSound" minOccurs="0" maxOccurs="1"/>
+		<element type="bFemale" minOccurs="0" maxOccurs="1"/> <!-- lfgr 05/2026 -->
 	</ElementType>
 	<ElementType name="UnitArtInfos" content="eltOnly">
 		<element type="UnitArtInfo" minOccurs="0" maxOccurs="*"/>

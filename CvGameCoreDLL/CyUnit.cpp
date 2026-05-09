@@ -1713,6 +1713,11 @@ std::string CyUnit::getButton() const
 	return m_pUnit ? m_pUnit->getButton() : "";
 }
 
+// lfgr 05/2026
+const CvArtInfoUnit* CyUnit::getPrincipalCurrentArtInfo() const {
+	return m_pUnit ? m_pUnit->getArtInfo( 0, GET_PLAYER( m_pUnit->getOwnerINLINE() ).getCurrentRealEra() ) : NULL;
+}
+
 //FfH Spell System: Added by Kael 07/23/2007
 void CyUnit::attack(CyPlot* pPlot, bool bQuick)
 {
