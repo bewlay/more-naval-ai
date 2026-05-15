@@ -63,7 +63,9 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 	def __init__( self ) :
 		super( RevIdxTotalCDAColumn, self ).__init__( "REV_TOTAL", 55, getText( "TXT_KEY_CDA_COLUMN_REV_IDX" ) )
 
-	def compute_value_and_tooltip( self, pCity, **kwargs ) :
+	def compute_value_and_tooltip( self, pCity, pCityHelper = None, **kwargs ) :
+		assert pCityHelper is not None
+		
 		iRevIdx = pCity.getRevolutionIndex()
 		iInstigationOdds = RevStart.getInstigationOddsIn1000( pCity )
 		if iInstigationOdds > 0 :
@@ -91,16 +93,32 @@ class RevIdxTotalCDAColumn( RevolutionCDAColumn ) :
 			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]City in Revolt![COLOR_REVERT][NEWLINE]Reinforcements in %d1 [NUM1:turn:turns] expected", pCity.getReinforcementCounter() )
 		elif RevData.getCityVal( pCity, 'RevBrewing' ) :
 			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]City will revolt next turn![COLOR_REVERT]" )
-		elif iRevIdx <= RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac :
-			szTooltip = getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
-		elif pCity.getRevolutionCounter() > 1 : # When it's 1, there could already be a revolution next turn
-			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]Will not revolt for the next %d1 turns", pCity.getRevolutionCounter() )
-		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.alwaysViolentThreshold :
-			szTooltip = getText( "[COLOR_NEGATIVE_TEXT]Violent revolution expected![NEWLINE]%d1% chance per turn[COLOR_REVERT]", iInstigationOdds )
-		elif iInstigationOdds > 0 and iRevIdx >= RevUtils.revInstigatorThreshold :
-			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May instigate a revolt.[NEWLINE]%d1% chance per turn[COLOR_REVERT]", iInstigationOdds )
 		else :
-			szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May join a revolt[COLOR_REVERT]" )
+			iJoinThreshold = int( RevUtils.revInstigatorThreshold * RevUtils.revReadyFrac )
+			if iRevIdx < iJoinThreshold :
+				szTooltip = getText( "[COLOR_POSITIVE_TEXT]No revolts expected[COLOR_REVERT]" )
+			elif iInstigationOdds > 0 and iRevIdx >= RevUtils.alwaysViolentThreshold :
+				szTooltip = getText( "[COLOR_NEGATIVE_TEXT]Violent revolution expected![NEWLINE]%d1% chance per turn[COLOR_REVERT]",
+					iInstigationOdds )
+			elif iInstigationOdds > 0 and iRevIdx >= RevUtils.revInstigatorThreshold :
+				szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May instigate a revolt.[NEWLINE]%d1% chance per turn[COLOR_REVERT]",
+					iInstigationOdds )
+			else :
+				szTooltip = getText( "[COLOR_PLAYER_YELLOW_TEXT]May join a revolt[COLOR_REVERT]" )
+
+			iRevIdxPerTurn = pCityHelper.computeRevIdx()
+			if iRevIdxPerTurn > 0 :
+				if iRevIdx < iJoinThreshold :
+					iTurns = 1 + (iJoinThreshold-iRevIdx-1) / iRevIdxPerTurn
+					szTooltip += getText( "[NEWLINE][ICON_BULLET]May join revolt at %d1 (%d2 turns)", iJoinThreshold, iTurns)
+				if iRevIdx < RevUtils.revInstigatorThreshold :
+					iTurns = 1 + (RevUtils.revInstigatorThreshold-iRevIdx-1) / iRevIdxPerTurn
+					szTooltip += getText( "[NEWLINE][ICON_BULLET]May instigate revolt at %d1 (%d2 turns)", RevUtils.revInstigatorThreshold, iTurns)
+			if pCity.getRevolutionCounter() == 2 : # When it's 1, there could already be a revolution next turn
+				szTooltip += getText( "[NEWLINE][ICON_BULLET]Will not revolt the next turn" )
+			if pCity.getRevolutionCounter() > 2 :
+				szTooltip += getText( "[NEWLINE][ICON_BULLET]Will not revolt for the next %d1 turns", pCity.getRevolutionCounter() - 1 )
+		
 		
 		if szValueColor is not None :
 			szValue = getText( "[" + szValueColor + "]%d1[COLOR_REVERT]", iRevIdx )
