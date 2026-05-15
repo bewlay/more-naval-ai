@@ -700,6 +700,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ADEPT_CLAN_OF_EMBERS</Type>
@@ -1644,6 +1645,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_ARCHMAGE_CLAN_OF_EMBERS</Type>
@@ -9676,6 +9678,7 @@
                 <AudioRunTypeLoop/>
                 <AudioRunTypeEnd/>
             </AudioRunSounds>
+            <bFemale>1</bFemale>
         </UnitArtInfo>
         <UnitArtInfo>
             <Type>ART_DEF_UNIT_MAGE_CLAN_OF_EMBERS</Type>

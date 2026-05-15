@@ -174,6 +174,26 @@ class UnitNameEventManager:
 		return
 
 
+def _canRename( pUnit ) :
+	# type: (CyUnit) -> bool
+	""" Whether we are allowed to rename the given unit. """
+	
+	if pUnit is None or pUnit.isNone():
+		return False
+
+	# Don't rename world units (lfgr 05/2026: instead of UNITAI_HERO units)
+	if gc.getUnitClassInfo( pUnit.getUnitClassType() ).getMaxGlobalInstances() > 0:
+		return False
+	
+	# lfgr 05/2026: Don't rename units lead by a commander
+	if pUnit.isHasPromotion( CvUtil.findPromotionNum( "PROMOTION_GREAT_COMMANDER" ) ) :
+		return False
+	
+	# Only rename active human player units, and only if unit naming is enabled
+	if not ( pUnit.getOwner() == CyGame().getActivePlayer() and UnitNamingOpt.isEnabled() ):
+		return False
+	
+	return True
 
 
 
@@ -215,25 +235,11 @@ class BuildUnitName(AbstractBuildUnitName):
 		pUnit = argsList[1] # type: CyUnit
 		iPlayer = pUnit.getOwner()
 		pPlayer = gc.getPlayer(iPlayer)
+
+		if not _canRename( pUnit ) :
+			return
+
 		lUnitReName = UnitReName()
-
-		#BUGPrint("onUnitBuild-A")
-
-		if pUnit is None or pUnit.isNone():
-			return
-
-		# Don't rename world units (lfgr 05/2026: instead of UNITAI_HERO units)
-		if gc.getUnitClassInfo( pUnit.getUnitClassType() ).getMaxGlobalInstances() > 0:
-			return
-		
-		# lfgr 05/2026: Don't rename units lead by a commander
-		if pUnit.isHasPromotion( CvUtil.findPromotionNum( "PROMOTION_GREAT_COMMANDER" ) ) :
-			return
-
-		#BUGPrint("onUnitBuild-B %s %s %s" % (iPlayer, CyGame().getActivePlayer(), UnitNamingOpt.isEnabled()))
-
-		if not (iPlayer == CyGame().getActivePlayer() and UnitNamingOpt.isEnabled()):
-			return
 
 		#BUGPrint("onUnitBuild-C")
 
@@ -300,7 +306,7 @@ class BuildUnitName(AbstractBuildUnitName):
 				zsEra = gc.getEraInfo(pPlayer.getCurrentRealEra()).getType()
 				for i in range(pPlot.getNumUnits()):
 					pUnit = pPlot.getUnit(i)
-					if pUnit and not pUnit.isNone() and pUnit.getOwner() == iPlayer:
+					if _canRename( pUnit ) and pUnit.getOwner() == iPlayer :
 						if pUnit.getNameNoDesc() == "":
 							zsUnitCombat = lUnitReName.getUnitCombat(pUnit)
 							zsUnitClass = gc.getUnitClassInfo(pUnit.getUnitClassType()).getType()
@@ -313,7 +319,7 @@ class BuildUnitName(AbstractBuildUnitName):
 		# lfgr 05/2026
 		pUnit, _iPromotion = argsList
 		
-		if UnitNamingOpt.isEnabled() and pUnit.getLevel() >= UnitNamingOpt.getHighLevelThreshold() :
+		if _canRename( pUnit ) and pUnit.getLevel() >= UnitNamingOpt.getHighLevelThreshold() :
 			conv = UnitNamingOpt.getHighLevel()
 			if conv and conv != "DEFAULT" :
 				if not SdToolKitCustom.sdObjectGetValOrDefault( "UnitNaming", pUnit, "hadHighLevelRename", False ) :
